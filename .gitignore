@@ -1,14 +1,10 @@
 # Don't check auto-generated stuff into git
 .parcel-cache/
-cypress-coverage/
 coverage/
 build/
-build-ext/
 build-dev/
 node_modules/
-stats.json
-.pnp
-.pnp.js
+.vscode/
 .idea/
 
 # misc
@@ -19,19 +15,3 @@ yarn-error.log*
 *~
 \#*
 .\#*
-
-# Docker
-/node
-/docker/oasis-node/node
-
-# Local debug
-debug*.c
-
-# Cypress
-/cypress/screenshots/
-/cypress/videos/
-/.nyc_output/
-/instrumented/
-
-# Megalinter
-megalinter-reports/
