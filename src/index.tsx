@@ -14,7 +14,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: '/dashboard',
-    element: <div>dashboard</div>,
+    element: <div>dashboard {process.env.REACT_APP_BUILD_SHA}</div>,
   },
 ];
 

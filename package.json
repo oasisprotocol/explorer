@@ -41,6 +41,7 @@
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.8.1",
     "@parcel/transformer-webmanifest": "^2.8.1",
+    "@types/node": "^18.11.13",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "parcel": "^2.8.1",
