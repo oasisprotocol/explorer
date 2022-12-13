@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/lukaw3d/parcel-bundler-json-schemas/main/package_schema.json",
+  "name": "explorer-frontend",
+  "version": "0.0.0-development",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oasisprotocol/explorer-frontend.git"
+  },
+  "scripts": {
+    "build": "node ./internals/scripts/build.js",
+    "clean": "rm -rf build/ .parcel-cache",
+    "start": "parcel --dist-dir build-dev",
+    "checkTs": "tsc --noEmit"
+  },
+  "targets": {
+    "web": {
+      "source": "public/index.html",
+      "distDir": "./build",
+      "context": "browser",
+      "scopeHoist": false
+    }
+  },
+  "browserslist": {
+    "production": [
+      "defaults",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.5"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.8.1",
+    "@parcel/transformer-webmanifest": "^2.8.1",
+    "@types/node": "^18.11.13",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "parcel": "^2.8.1",
+    "process": "^0.11.10",
+    "typescript": "^4.9.4"
+  }
+}
