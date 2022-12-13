@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node ./internals/scripts/build.js",
     "clean": "rm -rf build/ .parcel-cache",
-    "start": "parcel --dist-dir build-dev",
+    "start": "parcel --dist-dir build-dev --no-cache",
     "checkTs": "tsc --noEmit"
   },
   "targets": {
