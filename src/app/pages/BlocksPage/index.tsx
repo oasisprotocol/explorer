@@ -1,4 +1,4 @@
-import { useGetEmeraldBlocks } from '../../../oasis-indexer/generated/api';
+import { useGetEmeraldBlocks } from '../../../oasis-indexer/api';
 import { ResultPageLayout } from '../../components/PageLayout/ResultPageLayout';
 
 export function BlocksPage() {
