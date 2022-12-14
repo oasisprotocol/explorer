@@ -1,0 +1,6 @@
+.parcel-cache/
+build/
+build-dev/
+node_modules/
+yarn.lock
+src/oasis-indexer/generated/
