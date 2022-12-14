@@ -6,6 +6,12 @@ declare module '@mui/material/Divider' {
   }
 }
 
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    footer: true
+  }
+}
+
 export const defaultTheme = createTheme({
   palette: {
     background: {
@@ -195,6 +201,19 @@ export const defaultTheme = createTheme({
           color: '#3f4284',
         },
       },
+    },
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: 'footer' },
+          style: () => ({
+            color: '#fff',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '140%',
+          }),
+        },
+      ],
     },
     MuiUseMediaQuery: {
       defaultProps: {
