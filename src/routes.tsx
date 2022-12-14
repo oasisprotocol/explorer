@@ -1,14 +1,26 @@
 import { RouteObject } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
+import { PageLayout } from './app/components/PageLayout'
 import { BlocksPage } from './app/pages/BlocksPage'
+import { DashboardPage } from './app/pages/DashboardPage'
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <HomePage></HomePage>,
+    element: <HomePage />,
   },
   {
-    path: '/blocks',
-    element: <BlocksPage></BlocksPage>,
+    path: '/:network', // how we finally call consensus and paratimes in general?
+    element: <PageLayout />,
+    children: [
+      {
+        path: 'blocks',
+        element: <BlocksPage />,
+      },
+      {
+        path: 'dashboard',
+        element: <DashboardPage />,
+      },
+    ],
   },
 ]
