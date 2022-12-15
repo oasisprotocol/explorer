@@ -4,13 +4,17 @@ import { PageLayout } from './app/components/PageLayout'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 
+export interface NetworkParams {
+  network: string
+}
+
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <HomePage />,
   },
   {
-    path: '/:network', // how we finally call consensus and paratimes in general?
+    path: ':network', // how we finally call consensus and paratimes in general?
     element: <PageLayout />,
     children: [
       {
