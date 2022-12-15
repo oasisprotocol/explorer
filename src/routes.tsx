@@ -4,7 +4,7 @@ import { PageLayout } from './app/components/PageLayout'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 
-export interface NetworkParams {
+export type NetworkParams = {
   network: string
 }
 
@@ -22,7 +22,7 @@ export const routes: RouteObject[] = [
         element: <BlocksPage />,
       },
       {
-        path: 'dashboard',
+        path: '',
         element: <DashboardPage />,
       },
     ],

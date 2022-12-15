@@ -12,6 +12,12 @@ declare module '@mui/material/Typography' {
   }
 }
 
+declare module '@mui/material/Paper' {
+  interface PaperPropsVariantOverrides {
+    content: true
+  }
+}
+
 export const defaultTheme = createTheme({
   palette: {
     background: {
@@ -120,6 +126,8 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           borderRadius: 12,
           padding: `${theme.spacing(4)} ${theme.spacing(5)} 0`,
+          marginBottom: theme.spacing(4),
+          boxShadow: 'none',
         }),
       },
     },
@@ -165,7 +173,7 @@ export const defaultTheme = createTheme({
             borderWidth: 1,
             borderColor: '#fff',
             borderStyle: 'dashed',
-            marginBottom: theme.spacing(4),
+            marginBottom: theme.spacing(5),
           }),
         },
       ],
@@ -179,6 +187,16 @@ export const defaultTheme = createTheme({
       },
     },
     MuiPaper: {
+      variants: [
+        {
+          props: { variant: 'content' },
+          style: () => ({
+            backgroundColor: '#E6EDF3',
+            boxShadow: 'none',
+            color: '#5c6098',
+          }),
+        },
+      ],
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,

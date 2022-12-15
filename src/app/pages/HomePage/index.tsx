@@ -8,7 +8,7 @@ export function HomePage() {
         <Link to="/emerald/blocks">blocks</Link>
       </div>
       <div>
-        <Link to="/emerald/dashboard">dashboard</Link>
+        <Link to="/emerald">dashboard</Link>
       </div>
     </div>
   )

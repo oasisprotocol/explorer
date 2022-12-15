@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
