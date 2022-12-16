@@ -6,10 +6,11 @@ import { LatestBlocks } from './LatestBlocks'
 import { LatestTransactions } from './LatestTransactions'
 import { TransactionsPerSecond } from './TransactionsPerSecond'
 import { AverageTransactionSize } from './AverageTransactionSize'
+import { PageLayout } from '../../components/PageLayout'
 
 export function DashboardPage() {
   return (
-    <>
+    <PageLayout>
       <Divider variant="layout" />
       <LatestTransactions />
       <Grid container spacing={4}>
@@ -23,6 +24,6 @@ export function DashboardPage() {
       <TransactionsPerSecond />
       <AverageTransactionSize />
       <Social />
-    </>
+    </PageLayout>
   )
 }

@@ -1,10 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import blockchainImage from './images/blockchain.svg'
-import { NetworkParams } from '../../../routes'
+import { emeraldRoute } from '../../../routes'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -18,16 +18,15 @@ const StyledCircle = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(4),
 }))
 
-const getLabel = (network: string) => {
-  switch (network) {
-    case 'emerald':
-      return 'Emerald'
+const getLabel = (pathname: string) => {
+  if (pathname.startsWith(emeraldRoute)) {
+    return 'Emerald'
   }
 }
 
 export function NetworkHeader() {
-  const { network } = useParams<keyof NetworkParams>()
-  const label = getLabel(network!)
+  const { pathname } = useLocation()
+  const label = getLabel(pathname)
 
   return (
     <Box sx={{ display: 'flex' }}>

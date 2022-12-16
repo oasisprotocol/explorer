@@ -1,15 +1,13 @@
-import { Outlet } from 'react-router-dom'
+import { ReactNode } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import Box from '@mui/material/Box'
 
-export function PageLayout() {
+export function PageLayout({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ pt: 5, px: '5%' }}>
       <Header />
-      <main>
-        <Outlet />
-      </main>
+      <main>{children}</main>
       <Footer />
     </Box>
   )
