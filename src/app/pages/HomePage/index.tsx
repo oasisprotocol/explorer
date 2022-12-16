@@ -4,7 +4,12 @@ export function HomePage() {
   return (
     <div>
       <h1>home</h1>
-      <div><Link to="/blocks">blocks</Link></div>
+      <div>
+        <Link to="/emerald/blocks">blocks</Link>
+      </div>
+      <div>
+        <Link to="/emerald">dashboard</Link>
+      </div>
     </div>
   )
 }
