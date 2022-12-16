@@ -70,7 +70,7 @@ export function LearningMaterials() {
               description="The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
               title="What is the Emerald network?"
               url={getDocsLink('emerald')}
-              sx={{ height: 1 }}
+              sx={{ height: '100%' }}
             />
           </Grid>
           <Grid xs={12} md={6}>

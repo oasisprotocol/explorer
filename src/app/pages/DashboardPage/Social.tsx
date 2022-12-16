@@ -59,8 +59,8 @@ export function Social() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            width: 1,
-            height: 1,
+            width: '100%',
+            height: '100%',
           }}
         >
           <SocialLink label="Telegram" href="https://t.me/oasisprotocolcommunity" img={telegram} />
