@@ -29,7 +29,7 @@ and run
 
 ```sh
 make start-docker-e2e
-# open http://localhost:8008/v1/
+REACT_APP_API=http://localhost:8008/v1/ yarn start
 ```
 
 </details>
