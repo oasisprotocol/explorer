@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "orval"
+    "generate": "orval"
   },
   "dependencies": {
     "orval": "^6.10.3"
