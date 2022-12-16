@@ -209,6 +209,7 @@ export const defaultTheme = createTheme({
         root: {
           borderColor: '#f1f4f9',
           color: '#06152b',
+          whiteSpace: 'nowrap',
           a: {
             color: '#3333C4',
             fontWeight: 600,

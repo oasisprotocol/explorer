@@ -6,6 +6,8 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -50,14 +52,27 @@ type TableProps = {
   rows?: TableRowProps[]
 }
 
+const stickyColumnStyles = {
+  position: 'sticky',
+  left: 0,
+  backgroundColor: '#ECF1F6',
+}
+
 export const Table: FC<TableProps> = ({ columns, isLoading, name, rows }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <TableContainer>
       <MuiTable aria-label={name}>
         <TableHead>
           <TableRow>
-            {columns.map(column => (
-              <TableCell key={column.content} align={column.align}>
+            {columns.map((column, index) => (
+              <TableCell
+                key={column.content}
+                align={column.align}
+                sx={!index && isMobile ? stickyColumnStyles : undefined}
+              >
                 {column.content}
               </TableCell>
             ))}
@@ -67,8 +82,12 @@ export const Table: FC<TableProps> = ({ columns, isLoading, name, rows }) => {
           {!rows && isLoading && <SkeletonTableRows rowsNumber={5} columnsNumber={5} />}
           {rows?.map(row => (
             <TableRow key={row.key}>
-              {row.data.map(cell => (
-                <TableCell key={cell.key} align={cell.align}>
+              {row.data.map((cell, index) => (
+                <TableCell
+                  key={cell.key}
+                  align={cell.align}
+                  sx={!index && isMobile ? stickyColumnStyles : undefined}
+                >
                   {cell.content}
                 </TableCell>
               ))}
