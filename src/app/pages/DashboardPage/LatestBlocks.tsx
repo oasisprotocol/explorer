@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom'
-import { formatDistance } from 'date-fns'
+import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -13,29 +13,34 @@ export function LatestBlocks() {
     key: block.hash!,
     data: [
       {
+        content: '',
+        key: 'fill',
+      },
+      {
+        align: TableCellAlign.Right,
         content: (
           <Link component={RouterLink} to="blocks">
             {block.round}
           </Link>
         ),
-        key: 'round',
+        key: 'block',
       },
       {
-        content: (
-          <Link component={RouterLink} to="blocks">
-            {block.hash?.substring(0, 8)}
-          </Link>
-        ),
-        key: 'hash',
+        align: TableCellAlign.Right,
+        content: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+          addSuffix: true,
+        }),
+        key: 'age',
       },
       {
+        align: TableCellAlign.Right,
         content: block.num_transactions,
         key: 'txs',
       },
       {
         align: TableCellAlign.Right,
-        content: formatDistance(new Date(block.timestamp!), new Date(), { addSuffix: true }),
-        key: 'time',
+        content: `${block.size_bytes} bytes`,
+        key: 'size',
       },
     ],
   }))
@@ -55,10 +60,11 @@ export function LatestBlocks() {
       <CardContent>
         <Table
           columns={[
-            { content: 'Round' },
-            { content: 'Hash' },
-            { content: 'Txs' },
-            { content: 'Time', align: TableCellAlign.Right },
+            { content: 'Fill' },
+            { content: 'Block', align: TableCellAlign.Right },
+            { content: 'Age', align: TableCellAlign.Right },
+            { content: 'Txs', align: TableCellAlign.Right },
+            { content: 'Size', align: TableCellAlign.Right },
           ]}
           rows={tableRows}
           name="Latest Blocks"
