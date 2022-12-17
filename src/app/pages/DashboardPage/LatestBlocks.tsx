@@ -5,7 +5,10 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { Table, TableCellAlign } from '../../components/Table'
+import { VerticalProgressBar } from '../../components/ProgressBar'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+
+const gasLimit = 1000000 // temporary value
 
 export function LatestBlocks() {
   const blocksQuery = useGetEmeraldBlocks({ limit: 5 })
@@ -13,7 +16,7 @@ export function LatestBlocks() {
     key: block.hash!,
     data: [
       {
-        content: '',
+        content: <VerticalProgressBar variant="determinate" value={(100 * block.gas_used!) / gasLimit} />,
         key: 'fill',
       },
       {
