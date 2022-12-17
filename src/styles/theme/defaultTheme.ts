@@ -210,6 +210,7 @@ export const defaultTheme = createTheme({
           borderColor: '#f1f4f9',
           color: '#06152b',
           a: {
+            color: '#3333C4',
             fontWeight: 600,
             textDecoration: 'none',
           },
