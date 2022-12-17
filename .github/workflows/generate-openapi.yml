@@ -1,0 +1,41 @@
+name: generate-openapi
+
+on:
+  # Triggered weekly or manually in https://github.com/oasisprotocol/explorer-frontend/actions/workflows/generate-openapi.yml
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1'
+
+jobs:
+  generate-openapi:
+    if: github.repository == 'oasisprotocol/explorer-frontend' # Disable cronjob on forks
+    runs-on: ubuntu-latest
+    permissions: # Limit secrets.GITHUB_TOKEN permissions
+      contents: write
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: src/oasis-indexer
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+          cache-dependency-path: src/oasis-indexer/yarn.lock
+      - run: yarn install --frozen-lockfile
+      - run: yarn generate
+      - name: Create Pull Request with updated API bindings
+        # https://github.com/peter-evans/create-pull-request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          branch: generate-openapi
+          commit-message: 'Update API bindings'
+          title: 'Update API bindings'
+          body: |
+            Created by https://github.com/oasisprotocol/explorer-frontend/blob/master/.github/workflows/generate-openapi.yml
+
+            If CI actions and checks don't run in this PR: close it and reopen.
+            https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs
+          labels: bot
