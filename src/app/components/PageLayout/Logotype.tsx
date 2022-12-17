@@ -10,7 +10,7 @@ export function Logotype() {
       component={RouterLink}
       sx={{
         textDecoration: 'none',
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
       }}
