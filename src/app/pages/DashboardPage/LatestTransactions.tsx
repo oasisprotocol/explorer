@@ -86,7 +86,16 @@ export function LatestTransactions() {
 
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title="Latest Transactions" />
+      <CardHeader
+        disableTypography
+        component="h3"
+        title="Latest Transactions"
+        action={
+          <Link component={RouterLink} to="transactions">
+            View all
+          </Link>
+        }
+      />
       <CardContent>
         <Table
           columns={tableColumns}
