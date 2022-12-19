@@ -204,12 +204,27 @@ export const defaultTheme = createTheme({
         }),
       },
     },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#F4F5F7',
+          border: '1px solid #8988dd',
+          borderRadius: 5,
+        },
+        bar: {
+          backgroundColor: '#3333C4',
+          borderRadius: 5,
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         root: {
           borderColor: '#f1f4f9',
           color: '#06152b',
+          whiteSpace: 'nowrap',
           a: {
+            color: '#3333C4',
             fontWeight: 600,
             textDecoration: 'none',
           },
