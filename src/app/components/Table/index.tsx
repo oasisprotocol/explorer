@@ -47,9 +47,11 @@ type TableProps = {
     content: string
     align?: TableCellAlign
   }[]
+  columnsNumber?: number
   name: string
   isLoading: boolean
   rows?: TableRowProps[]
+  rowsNumber?: number
 }
 
 const stickyColumnStyles = {
@@ -58,7 +60,7 @@ const stickyColumnStyles = {
   backgroundColor: '#ECF1F6',
 }
 
-export const Table: FC<TableProps> = ({ columns, isLoading, name, rows }) => {
+export const Table: FC<TableProps> = ({ columns, isLoading, name, rows, rowsNumber = 5 }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -79,7 +81,7 @@ export const Table: FC<TableProps> = ({ columns, isLoading, name, rows }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {!rows && isLoading && <SkeletonTableRows rowsNumber={5} columnsNumber={5} />}
+          {!rows && isLoading && <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />}
           {rows?.map(row => (
             <TableRow key={row.key}>
               {row.data.map((cell, index) => (

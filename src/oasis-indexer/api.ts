@@ -1,9 +1,9 @@
 /** @file Wrappers around generated API */
 
-import { UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
-import { paraTimesConfig } from '../config';
-import * as generated from './generated/api';
+import { UseQueryOptions } from '@tanstack/react-query'
+import { AxiosResponse } from 'axios'
+import { paraTimesConfig } from '../config'
+import * as generated from './generated/api'
 
 export * from './generated/api'
 
@@ -14,7 +14,7 @@ function fromBaseUnits(baseUnits: string, decimals: number): string {
 
 export const useGetEmeraldTransactions = (
   params?: generated.GetEmeraldTransactionsParams,
-  options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeTransactionList>> }
+  options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeTransactionList>> },
 ) => {
   const result = generated.useGetEmeraldTransactions(params, options)
   if (result.data) {
@@ -27,9 +27,12 @@ export const useGetEmeraldTransactions = (
           transactions: result.data.data.transactions?.map(tx => {
             return {
               ...tx,
+              fee_amount: tx.fee_amount
+                ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
+                : undefined,
               amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
             }
-          })
+          }),
         },
       },
     }
