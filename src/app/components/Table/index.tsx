@@ -52,6 +52,7 @@ type TableProps = {
   isLoading: boolean
   rows?: TableRowProps[]
   rowsNumber?: number
+  stickyColumn?: boolean
 }
 
 const stickyColumnStyles = {
@@ -60,7 +61,14 @@ const stickyColumnStyles = {
   backgroundColor: '#ECF1F6',
 }
 
-export const Table: FC<TableProps> = ({ columns, isLoading, name, rows, rowsNumber = 5 }) => {
+export const Table: FC<TableProps> = ({
+  columns,
+  isLoading,
+  name,
+  rows,
+  rowsNumber = 5,
+  stickyColumn = false,
+}) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -73,7 +81,7 @@ export const Table: FC<TableProps> = ({ columns, isLoading, name, rows, rowsNumb
               <TableCell
                 key={column.content}
                 align={column.align}
-                sx={!index && isMobile ? stickyColumnStyles : undefined}
+                sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
               >
                 {column.content}
               </TableCell>
@@ -88,7 +96,7 @@ export const Table: FC<TableProps> = ({ columns, isLoading, name, rows, rowsNumb
                 <TableCell
                   key={cell.key}
                   align={cell.align}
-                  sx={!index && isMobile ? stickyColumnStyles : undefined}
+                  sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
                 >
                   {cell.content}
                 </TableCell>
