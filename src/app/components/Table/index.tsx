@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -58,7 +59,7 @@ type TableProps = {
 const stickyColumnStyles = {
   position: 'sticky',
   left: 0,
-  backgroundColor: '#ECF1F6',
+  backgroundColor: COLORS.antiFlashWhite,
 }
 
 export const Table: FC<TableProps> = ({

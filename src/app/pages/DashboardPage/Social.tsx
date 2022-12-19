@@ -11,6 +11,7 @@ import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
+import { COLORS } from '../../../styles/theme/colors'
 
 type SocialLinkProps = {
   label: string
@@ -23,7 +24,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
   return (
     <Link
       href={href}
-      color="#fff"
+      color={COLORS.white}
       underline="none"
       sx={{ display: 'flex', flexDirection: 'column', mx: isMobile ? 5 : 0, mt: isMobile ? 4 : 0 }}
       rel="noopener noreferrer"
@@ -48,17 +49,19 @@ export function Social() {
         px: isMobile ? 5 : 6,
         pt: 5,
         pb: isMobile ? 4 : 5,
-        border: 'solid 1px #fff',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderColor: COLORS.white,
         borderRadius: 12,
         backgroundImage: `url(${social})`,
         backgroundSize: 'cover',
       }}
     >
       <Grid xs={12} md={4}>
-        <Typography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color="#fff">
+        <Typography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color={COLORS.white}>
           Join us
         </Typography>
-        <Typography color="#fff" sx={{ maxWidth: 230 }}>
+        <Typography color={COLORS.white} sx={{ maxWidth: 230 }}>
           Be part of the community and stay in the loop on everything Oasis
         </Typography>
       </Grid>

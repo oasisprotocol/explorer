@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'success',
@@ -13,7 +14,7 @@ const StyledBox = styled(Box, {
   width: '28px',
   height: '28px',
   fontSize: '15px',
-  backgroundColor: success ? '#E8FAF3' : '#FAE8E8',
+  backgroundColor: success ? COLORS.honeydew : COLORS.linen,
   borderRadius: 10,
 }))
 
