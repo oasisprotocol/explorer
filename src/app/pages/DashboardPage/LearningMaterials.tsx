@@ -74,21 +74,19 @@ export function LearningMaterials() {
             />
           </Grid>
           <Grid xs={12} md={6}>
-            <Grid container spacing={3}>
-              <Grid>
-                <LearningSection
-                  description="Rose is the currency powering the Emerald network."
-                  title="What is the ROSE token?"
-                  url={getDocsLink('token')}
-                />
-              </Grid>
-              <Grid>
-                <LearningSection
-                  description="Rose is the currency powering the Emerald network."
-                  title="How to Transfer ROSE into a ParaTime"
-                  url={getDocsLink('transfer')}
-                />
-              </Grid>
+            <Grid>
+              <LearningSection
+                description="Rose is the currency powering the Emerald network."
+                title="What is the ROSE token?"
+                url={getDocsLink('token')}
+              />
+            </Grid>
+            <Grid>
+              <LearningSection
+                description="Rose is the currency powering the Emerald network."
+                title="How to Transfer ROSE into a ParaTime"
+                url={getDocsLink('transfer')}
+              />
             </Grid>
           </Grid>
         </Grid>

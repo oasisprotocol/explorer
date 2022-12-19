@@ -4,7 +4,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 
-const StyledBox = styled(Box)(({ success }: { success: boolean }) => ({
+const StyledBox = styled(Box, {
+  shouldForwardProp: prop => prop !== 'success',
+})(({ success }: { success: boolean }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
