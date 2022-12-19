@@ -1,13 +1,13 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { AppTypography } from '../AppTypography/AppTypography'
+import { AppBox } from '../AppBox/AppBox'
 
 export function Footer() {
   return (
     <footer>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 6 }}>
-        <Typography variant="footer">Version: {process.env.REACT_APP_BUILD_SHA}</Typography>
-        <Typography variant="footer">Oasis Protocol Foundation | 2022</Typography>
-      </Box>
+      <AppBox sx={{ display: 'flex', justifyContent: 'space-between', p: 6 }}>
+        <AppTypography variant="footer">Version: {process.env.REACT_APP_BUILD_SHA}</AppTypography>
+        <AppTypography variant="footer">Oasis Protocol Foundation | 2022</AppTypography>
+      </AppBox>
     </footer>
   )
 }

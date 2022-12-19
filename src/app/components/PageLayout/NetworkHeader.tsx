@@ -1,12 +1,12 @@
 import { useLocation } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import blockchainImage from './images/blockchain.svg'
 import { emeraldRoute } from '../../../routes'
+import { AppTypography } from '../AppTypography/AppTypography'
+import { AppBox } from '../AppBox/AppBox'
 
-const StyledCircle = styled(Box)(({ theme }) => ({
+const StyledCircle = styled(AppBox)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -29,38 +29,38 @@ export function NetworkHeader() {
   const label = getLabel(pathname)
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <AppBox sx={{ display: 'flex' }}>
       <StyledCircle>
         <img src={blockchainImage} alt={label} />
       </StyledCircle>
-      <Box>
-        <Box
+      <AppBox>
+        <AppBox
           sx={{
             display: 'flex',
             alignItems: 'center',
           }}
         >
-          <Typography variant="h2" sx={{ pr: 4 }}>
+          <AppTypography variant="h2" sx={{ pr: 4 }}>
             {label}
-          </Typography>
+          </AppTypography>
 
-          <Box
+          <AppBox
             sx={{
               display: 'flex',
               alignItems: 'center',
             }}
           >
-            <Typography sx={{ fontSize: 10, color: '#8f8cdf', mr: 3 }} component="span">
+            <AppTypography sx={{ fontSize: 10, color: '#8f8cdf', mr: 3 }} component="span">
               ParaTime Online
-            </Typography>
+            </AppTypography>
             <CheckCircleIcon color="success" sx={{ fontSize: 16 }} />
-          </Box>
-        </Box>
-        <Typography sx={{ fontSize: 11, color: '#fff' }}>
+          </AppBox>
+        </AppBox>
+        <AppTypography sx={{ fontSize: 11, color: '#fff' }}>
           The official confidential EVM Compatible ParaTime providing a smart contract development
           environment.
-        </Typography>
-      </Box>
-    </Box>
+        </AppTypography>
+      </AppBox>
+    </AppBox>
   )
 }

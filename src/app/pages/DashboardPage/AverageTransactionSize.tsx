@@ -1,12 +1,12 @@
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import { AppCard } from '../../components/AppCard/AppCard'
+import { AppCardHeader } from '../../components/AppCardHeader/AppCardHeader'
+import { AppCardContent } from '../../components/AppCardContent/AppCardContent'
 
 export function AverageTransactionSize() {
   return (
-    <Card>
-      <CardHeader disableTypography component="h3" title="Average Transaction Size" />
-      <CardContent></CardContent>
-    </Card>
+    <AppCard>
+      <AppCardHeader disableTypography component="h3" title="Average Transaction Size" />
+      <AppCardContent></AppCardContent>
+    </AppCard>
   )
 }

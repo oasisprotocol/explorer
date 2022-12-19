@@ -1,12 +1,12 @@
 import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import Link from '@mui/material/Link'
 import { Table, TableCellAlign } from '../../components/Table'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+import { AppCard } from '../../components/AppCard/AppCard'
+import { AppCardHeader } from '../../components/AppCardHeader/AppCardHeader'
+import { AppLink } from '../../components/AppLink/AppLink'
+import { AppCardContent } from '../../components/AppCardContent/AppCardContent'
 
 const gasLimit = 1000000 // temporary value
 
@@ -22,9 +22,9 @@ export function LatestBlocks() {
       {
         align: TableCellAlign.Right,
         content: (
-          <Link component={RouterLink} to="blocks">
+          <AppLink component={RouterLink} to="blocks">
             {block.round}
-          </Link>
+          </AppLink>
         ),
         key: 'block',
       },
@@ -49,18 +49,18 @@ export function LatestBlocks() {
   }))
 
   return (
-    <Card>
-      <CardHeader
+    <AppCard>
+      <AppCardHeader
         disableTypography
         component="h3"
         title="Latest Blocks"
         action={
-          <Link component={RouterLink} to="blocks">
+          <AppLink component={RouterLink} to="blocks">
             View all
-          </Link>
+          </AppLink>
         }
       />
-      <CardContent>
+      <AppCardContent>
         <Table
           columns={[
             { content: 'Fill' },
@@ -73,7 +73,7 @@ export function LatestBlocks() {
           name="Latest Blocks"
           isLoading={blocksQuery.isLoading}
         />
-      </CardContent>
-    </Card>
+      </AppCardContent>
+    </AppCard>
   )
 }

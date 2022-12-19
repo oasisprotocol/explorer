@@ -1,14 +1,14 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Unstable_Grid2'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import social from './images/social.png'
 import telegram from './images/telegram.svg'
 import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
+import { AppLink } from '../../components/AppLink/AppLink'
+import { AppBox } from '../../components/AppBox/AppBox'
+import { AppTypography } from '../../components/AppTypography/AppTypography'
+import { AppGrid2 } from '../../components/AppGrid2/AppGrid2'
 
 type SocialLinkProps = {
   label: string
@@ -18,7 +18,7 @@ type SocialLinkProps = {
 
 const SocialLink: FC<SocialLinkProps> = ({ label, href, img }) => {
   return (
-    <Link
+    <AppLink
       href={href}
       color="#fff"
       underline="none"
@@ -28,13 +28,13 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, img }) => {
     >
       <img src={img} alt={label} height={40} />
       {label}
-    </Link>
+    </AppLink>
   )
 }
 
 export function Social() {
   return (
-    <Grid
+    <AppGrid2
       container
       sx={{
         px: 6,
@@ -45,16 +45,16 @@ export function Social() {
         backgroundSize: 'cover',
       }}
     >
-      <Grid xs={12} md={4}>
-        <Typography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color="#fff">
+      <AppGrid2 xs={12} md={4}>
+        <AppTypography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color="#fff">
           Join us
-        </Typography>
-        <Typography color="#fff" sx={{ maxWidth: 230 }}>
+        </AppTypography>
+        <AppTypography color="#fff" sx={{ maxWidth: 230 }}>
           Be part of the community and stay in the loop on everything Oasis
-        </Typography>
-      </Grid>
-      <Grid xs={12} md={8}>
-        <Box
+        </AppTypography>
+      </AppGrid2>
+      <AppGrid2 xs={12} md={8}>
+        <AppBox
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -72,8 +72,8 @@ export function Social() {
             img={youtube}
           />
           <SocialLink label="Reddit" href="https://www.reddit.com/r/oasisnetwork/" img={reddit} />
-        </Box>
-      </Grid>
-    </Grid>
+        </AppBox>
+      </AppGrid2>
+    </AppGrid2>
   )
 }
