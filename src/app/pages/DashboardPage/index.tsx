@@ -4,7 +4,7 @@ import { Social } from './Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestBlocks } from './LatestBlocks'
 import { LatestTransactions } from './LatestTransactions'
-import { TransactionsPerSecond } from './TransactionsPerSecond'
+import { TransactionsStats } from './TransactionsStats'
 import { AverageTransactionSize } from './AverageTransactionSize'
 import { PageLayout } from '../../components/PageLayout'
 
@@ -21,7 +21,7 @@ export function DashboardPage() {
           <LatestBlocks />
         </Grid>
       </Grid>
-      <TransactionsPerSecond />
+      <TransactionsStats />
       <AverageTransactionSize />
       <Social />
     </PageLayout>
