@@ -9,6 +9,13 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 
 const gasLimit = 1000000 // temporary value
+const tableColumns = [
+  { content: 'Fill' },
+  { content: 'Block', align: TableCellAlign.Right },
+  { content: 'Age', align: TableCellAlign.Right },
+  { content: 'Txs', align: TableCellAlign.Right },
+  { content: 'Size', align: TableCellAlign.Right },
+]
 
 export function LatestBlocks() {
   const blocksQuery = useGetEmeraldBlocks({ limit: 5 })
@@ -62,13 +69,7 @@ export function LatestBlocks() {
       />
       <CardContent>
         <Table
-          columns={[
-            { content: 'Fill' },
-            { content: 'Block', align: TableCellAlign.Right },
-            { content: 'Age', align: TableCellAlign.Right },
-            { content: 'Txs', align: TableCellAlign.Right },
-            { content: 'Size', align: TableCellAlign.Right },
-          ]}
+          columns={tableColumns}
           rows={tableRows}
           name="Latest Blocks"
           isLoading={blocksQuery.isLoading}
