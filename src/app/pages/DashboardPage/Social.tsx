@@ -5,7 +5,7 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
-import social from './images/social.png'
+import backgroundSocial from './images/background-social.png'
 import telegram from './images/telegram.svg'
 import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
@@ -53,7 +53,7 @@ export function Social() {
         borderWidth: '1px',
         borderColor: COLORS.white,
         borderRadius: 12,
-        backgroundImage: `url(${social})`,
+        backgroundImage: `url(${backgroundSocial})`,
         backgroundSize: 'cover',
       }}
     >
