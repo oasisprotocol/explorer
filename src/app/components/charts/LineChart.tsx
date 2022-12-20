@@ -4,11 +4,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { Margin } from 'recharts/types/util/types'
-
-// TODO: Consolidate colors
-const colors = {
-  navyBlueExtraDark: '#000062'
-}
+import { COLORS } from '../../../styles/theme/colors'
+import { memo } from 'react'
 
 export interface LineChartDataPoint {
   label: string;
@@ -18,8 +15,9 @@ export interface LineChartDataPoint {
 interface LineChartProps {
   data: LineChartDataPoint[];
   margin?: Margin;
+  strokeWidth?: number | string;
 }
-export const LineChart: React.FC<LineChartProps> = ({ data, margin }) => (
+const LineChart: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 }) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsLineChart
       data={data}
@@ -28,10 +26,13 @@ export const LineChart: React.FC<LineChartProps> = ({ data, margin }) => (
       <Line
         type="monotone"
         dataKey="value"
-        stroke={colors.navyBlueExtraDark}
-        strokeWidth={1.09}
+        stroke={COLORS.navyBlueExtraDark}
+        strokeWidth={strokeWidth}
         dot={false}
       />
+      {/*TODO: Tooltip & dot*/}
     </RechartsLineChart>
   </ResponsiveContainer>
 );
+
+export default memo(LineChart);

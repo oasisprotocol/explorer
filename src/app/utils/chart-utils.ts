@@ -12,6 +12,10 @@ export abstract class ChartUtils {
   private static DEFAULT_INTERVAL_MINUTES = 5;
 
   static getLimitByDuration = (duration: ChartDuration = ChartDuration.TODAY, intervalMinutes = ChartUtils.DEFAULT_INTERVAL_MINUTES) => {
+    if(intervalMinutes <= 0) {
+      throw new Error('Invalid parameter [intervalMinutes], should be a positive integer');
+    }
+
     return duration / intervalMinutes;
   }
 }
