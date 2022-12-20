@@ -15,9 +15,15 @@ interface PercentageGainProps {
   percentage: number;
 }
 
-const PercentageGainBox = styled(Box)<{ gain: Gain }>(({ gain, theme }) => ({
+interface PercentageGainBoxProps {
+  gain: Gain;
+}
+
+const PercentageGainBox = styled(Box, {
+  shouldForwardProp: prop => !(['gain'] as [keyof PercentageGainBoxProps]).includes(prop as keyof PercentageGainBoxProps),
+})<PercentageGainBoxProps>(({ gain, theme }) => ({
   borderRadius: '9px',
-  padding: '7px 10px 6px',
+  padding: theme.spacing(3),
   display: 'flex',
   gap: '2px',
   justifyContent: 'center',
@@ -36,7 +42,7 @@ const PercentageGainLabel = styled(Typography)(() => ({
   lineHeight: '18px'
 }))
 
-const PercentageGain: FC<PercentageGainProps> = ({ percentage }) => {
+const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
   const gain = PercentageGainUtils.getGainFromPercentage(percentage);
 
   return (
@@ -47,4 +53,4 @@ const PercentageGain: FC<PercentageGainProps> = ({ percentage }) => {
   )
 }
 
-export default memo(PercentageGain)
+export const PercentageGain = memo(PercentageGainCmp)

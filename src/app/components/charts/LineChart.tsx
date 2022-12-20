@@ -17,7 +17,7 @@ interface LineChartProps {
   margin?: Margin;
   strokeWidth?: number | string;
 }
-const LineChart: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 }) => (
+const LineChartCmp: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 }) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsLineChart
       data={data}
@@ -35,4 +35,4 @@ const LineChart: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 }) 
   </ResponsiveContainer>
 );
 
-export default memo(LineChart);
+export const LineChart = memo(LineChartCmp);
