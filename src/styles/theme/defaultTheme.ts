@@ -32,7 +32,7 @@ export const defaultTheme = createTheme({
     success: {
       main: '#4cd4a9',
       contrastText: '#fff',
-    },
+    }
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
