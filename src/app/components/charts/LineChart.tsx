@@ -12,7 +12,6 @@ import ActiveDotIcon from '../../icons/ActiveDotIcon'
 
 interface LineChartProps<T extends object> extends Formatters {
   data: T[];
-
   dataKey: keyof T;
   margin?: Margin;
   strokeWidth?: number | string;

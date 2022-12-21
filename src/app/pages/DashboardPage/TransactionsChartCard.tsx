@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useGetConsensusStatsTps } from '../../../oasis-indexer/generated/api'
+import { TpsCheckpoint, useGetConsensusStatsTps } from '../../../oasis-indexer/generated/api'
 import { ChartUtils } from '../../utils/chart-utils'
 import { CardActions } from '@mui/material'
 import { LineChart } from '../../components/charts/LineChart'
@@ -25,45 +25,31 @@ export const TransactionsChartCard = () => {
     limit: ChartUtils.getLimitByDuration(),
   })
 
-  const lineChartData =
-    data?.data.tps_checkpoints?.map(({ tx_volume, timestamp }) => ({
-      label: intlDateFormat(new Date(timestamp!)),
-      value: tx_volume ?? 0,
-    })) ?? null
+  const lineChartData = data?.data.tps_checkpoints ?? null
 
-  const totalTransactions =
-    data?.data.tps_checkpoints?.reduce((acc, curr) => {
-      return acc + (curr?.tx_volume ?? 0)
-    }, 0) ?? 0
+  const totalTransactions = data?.data.tps_checkpoints?.reduce((acc, curr) => {
+    return acc + (curr?.tx_volume ?? 0)
+  }, 0) ?? 0
+
 
   return (
     <Card sx={{ p: 0 }}>
       <CardHeader component="h5" title={t('transactions.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <CardContent sx={{ pt: 4 }}>
-        {lineChartData !== null && (
-          <LineChart
-            data={lineChartData}
-            margin={{ left: 0, right: isMobile ? 80 : 40 }}
-            strokeWidth={1.09}
-          ></LineChart>
-        )}
+        {lineChartData !== null &&
+          <LineChart<TpsCheckpoint> dataKey={'tx_volume'} data={lineChartData}
+                                    margin={{ left: 0, right: isMobile ? 80 : 40 }} strokeWidth={1.09}
+                                    formatters={{
+                                      data: (value: number) => `${value} TPS`,
+                                      label: (value: string) => intlDateFormat(new Date(value)),
+                                    }}
+          />}
       </CardContent>
       <CardActions>
         <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-            px: 3,
-            pb: 3,
-          }}
-        >
+          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', px: 3, pb: 3 }}>
           <PercentageGain percentage={23} />
-          <Typography
-            variant="h2"
-            sx={{ pr: 4, fontWeight: 'fontWeightRegular', color: COLORS.brandExtraDark }}
-          >
+          <Typography variant='h2' sx={{ pr: 4, fontWeight: 'fontWeightRegular', color: COLORS.brandExtraDark }}>
             {totalTransactions}
           </Typography>
         </Box>
