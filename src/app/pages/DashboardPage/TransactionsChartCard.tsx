@@ -42,7 +42,7 @@ export const TransactionsChartCard = () => {
       </CardContent>
       <CardActions>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', px: 3, pb: 3 }}>
-          <PercentageGain percentage={-23} />
+          <PercentageGain percentage={23} />
           <Typography variant="h2" sx={{ pr: 4, fontWeight: 'fontWeightRegular', color: COLORS.navyBlueExtraDark }}>
             {totalTransactions}
           </Typography>

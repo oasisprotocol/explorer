@@ -5,4 +5,13 @@ export abstract class PercentageGainUtils {
     return percentage >= 0 ? Gain.POSITIVE : Gain.NEGATIVE;
   }
 
+  static getColorFromGain(gain: Gain) {
+    switch (gain) {
+      case Gain.NEGATIVE:
+        return 'error';
+      case Gain.POSITIVE:
+      default:
+        return 'success';
+    }
+  }
 }

@@ -1,11 +1,9 @@
 import { FC, memo } from 'react'
-import Box from '@mui/material/Box'
 import ArrowIcon from '../../icons/ArrowIcon'
 import { styled } from '@mui/material/styles'
-import { Gain, GainToArrowDirectionMap } from './types'
+import { GainToArrowDirectionMap } from './types'
 import { PercentageGainUtils } from './percentage-gain-utils'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
+import { Chip } from '@mui/material'
 
 interface PercentageGainProps {
   /**
@@ -15,41 +13,21 @@ interface PercentageGainProps {
   percentage: number;
 }
 
-interface PercentageGainBoxProps {
-  gain: Gain;
-}
-
-const PercentageGainBox = styled(Box, {
-  shouldForwardProp: prop => !(['gain'] as [keyof PercentageGainBoxProps]).includes(prop as keyof PercentageGainBoxProps),
-})<PercentageGainBoxProps>(({ gain, theme }) => ({
+const PercentageGainChip = styled(Chip)(({ theme }) => ({
   borderRadius: '9px',
   padding: theme.spacing(3),
-  display: 'flex',
   gap: '2px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  ...(gain === Gain.POSITIVE ? {
-    backgroundColor: theme.palette.success.main
-  } : {
-    backgroundColor: theme.palette.error.main
-  }),
-  color: COLORS.white
-}));
-
-const PercentageGainLabel = styled(Typography)(() => ({
-  fontWeight: 500,
-  fontSize: '15px',
-  lineHeight: '18px'
+  span: {
+    padding: 0
+  }
 }))
 
 const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
-  const gain = PercentageGainUtils.getGainFromPercentage(percentage);
+  const gain = PercentageGainUtils.getGainFromPercentage(percentage)
 
   return (
-    <PercentageGainBox gain={gain}>
-      <ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />
-      <PercentageGainLabel>{percentage}%</PercentageGainLabel>
-    </PercentageGainBox>
+    <PercentageGainChip color={PercentageGainUtils.getColorFromGain(gain)}
+                        icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />} label={`${percentage}%`} />
   )
 }
 
