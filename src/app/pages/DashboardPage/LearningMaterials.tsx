@@ -10,14 +10,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { docs } from '../../utils/externalLinks'
 
-const docsUrl = 'https://docs.oasis.io/'
-const docsPages = {
-  emerald: 'dapp/emerald/',
-  token: 'general/oasis-network/token-metrics-and-distribution',
-  transfer: 'general/manage-tokens/how-to-transfer-rose-into-paratime',
-}
-const getDocsLink = (document: keyof typeof docsPages) => `${docsUrl}${docsPages[document]}`
 const StyledLink = styled(Link)(() => ({
   width: '44px',
   height: '44px',
@@ -62,7 +56,7 @@ export const LearningMaterials = () => {
         component="h3"
         title={t('learningMaterials.header')}
         action={
-          <Link href={docsUrl} rel="noopener noreferrer" target="_blank">
+          <Link href={docs.home} rel="noopener noreferrer" target="_blank">
             {t('learningMaterials.learningCenter')}
           </Link>
         }
@@ -73,7 +67,7 @@ export const LearningMaterials = () => {
             <LearningSection
               description={t('learningMaterials.emerald.description')}
               title={t('learningMaterials.emerald.header')}
-              url={getDocsLink('emerald')}
+              url={docs.emerald}
               sx={{ height: '100%' }}
             />
           </Grid>
@@ -82,14 +76,14 @@ export const LearningMaterials = () => {
               <LearningSection
                 description={t('learningMaterials.token.description')}
                 title={t('learningMaterials.emerald.header')}
-                url={getDocsLink('token')}
+                url={docs.token}
               />
             </Grid>
             <Grid>
               <LearningSection
                 description={t('learningMaterials.transfer.description')}
                 title={t('learningMaterials.transfer.header')}
-                url={getDocsLink('transfer')}
+                url={docs.paraTimeTransfer}
               />
             </Grid>
           </Grid>

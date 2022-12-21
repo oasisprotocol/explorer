@@ -13,6 +13,7 @@ import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
 import { COLORS } from '../../../styles/theme/colors'
+import { socialMedia } from '../../utils/externalLinks'
 
 type SocialLinkProps = {
   label: string
@@ -81,33 +82,28 @@ export const Social: FC = () => {
           <SocialLink
             isMobile={isMobile}
             label={t('social.telegram')}
-            href="https://t.me/oasisprotocolcommunity"
+            href={socialMedia.telegram}
             img={telegram}
           />
           <SocialLink
             isMobile={isMobile}
             label={t('social.twitter')}
-            href="https://twitter.com/oasisprotocol"
+            href={socialMedia.twitter}
             img={twitter}
           />
           <SocialLink
             isMobile={isMobile}
             label={t('social.discord')}
-            href="https://discord.gg/BQCxwhT5wS"
+            href={socialMedia.discord}
             img={discord}
           />
           <SocialLink
             isMobile={isMobile}
             label={t('social.youtube')}
-            href="https://www.youtube.com/channel/UC35UFPcZ2F1wjPxhPrSsESQ"
+            href={socialMedia.youtube}
             img={youtube}
           />
-          <SocialLink
-            isMobile={isMobile}
-            label={t('social.reddit')}
-            href="https://www.reddit.com/r/oasisnetwork/"
-            img={reddit}
-          />
+          <SocialLink isMobile={isMobile} label={t('social.reddit')} href={socialMedia.reddit} img={reddit} />
         </Box>
       </Grid>
     </Grid>
