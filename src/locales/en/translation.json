@@ -76,5 +76,9 @@
   "transactionStats": {
     "header": "Transactions Per Day",
     "tooltip": "{{value}} tx/day"
+  },
+  "transactionsTpsChart": {
+    "header": "Transactions",
+    "tooltip": "{{value}} TPS"
   }
 }

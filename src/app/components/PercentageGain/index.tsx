@@ -1,8 +1,7 @@
 import { FC, memo } from 'react'
 import ArrowIcon from '../../icons/ArrowIcon'
-import { styled } from '@mui/material/styles'
-import { GainToArrowDirectionMap } from './types'
-import { PercentageGainUtils } from './percentage-gain-utils'
+import { Gain, GainToArrowDirectionMap } from './types'
+import { getGainFromPercentage } from './percentage-gain-utils'
 import { Chip } from '@mui/material'
 
 interface PercentageGainProps {
@@ -10,24 +9,19 @@ interface PercentageGainProps {
    * Positive percentage shows green box with up arrow
    * Negative percentage shows red box with down arrow
    */
-  percentage: number;
+  percentage: number
 }
 
-const PercentageGainChip = styled(Chip)(({ theme }) => ({
-  borderRadius: '9px',
-  padding: theme.spacing(3),
-  gap: '2px',
-  span: {
-    padding: 0
-  }
-}))
-
 const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
-  const gain = PercentageGainUtils.getGainFromPercentage(percentage)
+  const gain = getGainFromPercentage(percentage)
 
   return (
-    <PercentageGainChip color={PercentageGainUtils.getColorFromGain(gain)}
-                        icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />} label={`${percentage}%`} />
+    <Chip
+      sx={{ p: 3 }}
+      color={gain === Gain.POSITIVE ? 'success' : 'error'}
+      icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />}
+      label={`${percentage}%`}
+    />
   )
 }
 

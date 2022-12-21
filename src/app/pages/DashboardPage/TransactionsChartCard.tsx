@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useGetConsensusStatsTps } from '../../../oasis-indexer/generated/api'
+import { TpsCheckpoint, useGetConsensusStatsTps } from '../../../oasis-indexer/generated/api'
 import { ChartUtils } from '../../utils/chart-utils'
 import { CardActions } from '@mui/material'
 import { LineChart } from '../../components/charts/LineChart'
@@ -25,11 +25,7 @@ export const TransactionsChartCard = () => {
     limit: ChartUtils.getLimitByDuration(),
   })
 
-  const lineChartData =
-    data?.data.tps_checkpoints?.map(({ tx_volume, timestamp }) => ({
-      label: intlDateFormat(new Date(timestamp!)),
-      value: tx_volume ?? 0,
-    })) ?? null
+  const lineChartData = data?.data.tps_checkpoints ?? null
 
   const totalTransactions =
     data?.data.tps_checkpoints?.reduce((acc, curr) => {
@@ -38,14 +34,19 @@ export const TransactionsChartCard = () => {
 
   return (
     <Card sx={{ p: 0 }}>
-      <CardHeader component="h5" title={t('transactions.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
+      <CardHeader component="h5" title={t('transactionsTpsChart.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <CardContent sx={{ pt: 4 }}>
         {lineChartData !== null && (
-          <LineChart
+          <LineChart<TpsCheckpoint>
+            dataKey="tx_volume"
             data={lineChartData}
             margin={{ left: 0, right: isMobile ? 80 : 40 }}
             strokeWidth={1.09}
-          ></LineChart>
+            formatters={{
+              data: (value: number) => t('transactionsTpsChart.tooltip', { value }),
+              label: (value: string) => intlDateFormat(new Date(value)),
+            }}
+          />
         )}
       </CardContent>
       <CardActions>

@@ -165,6 +165,10 @@ export const defaultTheme = createTheme({
           fontSize: '15px',
           lineHeight: '18px',
           borderRadius: 9,
+          gap: 2,
+        },
+        label: {
+          padding: 0,
         },
       },
     },
