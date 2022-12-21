@@ -1,27 +1,26 @@
-import {
-  LineChart as RechartsLineChart,
-  Line,
-  ResponsiveContainer, Tooltip,
-} from 'recharts'
+import { LineChart as RechartsLineChart, Line, ResponsiveContainer, Tooltip } from 'recharts'
 import { Margin } from 'recharts/types/util/types'
 import { COLORS } from '../../../styles/theme/colors'
 import { memo, ReactElement } from 'react'
 import { Formatters, TooltipContent } from './Tooltip'
 import ActiveDotIcon from '../../icons/ActiveDotIcon'
 
-
 interface LineChartProps<T extends object> extends Formatters {
-  data: T[];
-  dataKey: keyof T;
-  margin?: Margin;
-  strokeWidth?: number | string;
+  data: T[]
+  dataKey: keyof T
+  margin?: Margin
+  strokeWidth?: number | string
 }
-const LineChartCmp = <T extends object>({ data, margin, strokeWidth = 1, dataKey, formatters }: LineChartProps<T>): ReactElement => (
+
+const LineChartCmp = <T extends object>({
+  data,
+  margin,
+  strokeWidth = 1,
+  dataKey,
+  formatters,
+}: LineChartProps<T>): ReactElement => (
   <ResponsiveContainer width="100%" aspect={4}>
-    <RechartsLineChart
-      data={data}
-      margin={margin}
-    >
+    <RechartsLineChart data={data} margin={margin}>
       <Line
         type="monotone"
         dataKey={dataKey as string}
@@ -38,6 +37,6 @@ const LineChartCmp = <T extends object>({ data, margin, strokeWidth = 1, dataKey
       />
     </RechartsLineChart>
   </ResponsiveContainer>
-);
+)
 
-export const LineChart = memo(LineChartCmp) as typeof LineChartCmp;
+export const LineChart = memo(LineChartCmp) as typeof LineChartCmp

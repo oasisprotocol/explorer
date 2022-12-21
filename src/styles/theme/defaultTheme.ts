@@ -162,15 +162,14 @@ export const defaultTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          padding: 3,
           fontSize: '15px',
           lineHeight: '18px',
           borderRadius: 9,
-          gap: 2
+          gap: 2,
         },
         label: {
-          padding: 0
-        }
+          padding: 0,
+        },
       },
     },
     MuiDivider: {

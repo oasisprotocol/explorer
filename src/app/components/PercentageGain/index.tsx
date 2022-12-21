@@ -9,15 +9,19 @@ interface PercentageGainProps {
    * Positive percentage shows green box with up arrow
    * Negative percentage shows red box with down arrow
    */
-  percentage: number;
+  percentage: number
 }
 
 const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
   const gain = getGainFromPercentage(percentage)
 
   return (
-    <Chip color={gain === Gain.POSITIVE ? 'success' : 'error'}
-          icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />} label={`${percentage}%`} />
+    <Chip
+      sx={{ p: 3 }}
+      color={gain === Gain.POSITIVE ? 'success' : 'error'}
+      icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />}
+      label={`${percentage}%`}
+    />
   )
 }
 
