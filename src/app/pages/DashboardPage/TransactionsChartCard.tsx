@@ -5,13 +5,13 @@ import { useGetConsensusStatsTps } from '../../../oasis-indexer/generated/api'
 import { ChartUtils } from '../../utils/chart-utils'
 import { CardActions } from '@mui/material'
 import { LineChart } from '../../components/charts/LineChart'
-import { DateTimeUtils } from '../../utils/date-time-utils'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { PercentageGain } from '../../components/PercentageGain'
+import { intlDateFormat } from '../../utils/dateFormatter'
 
 export const TransactionsChartCard = () => {
   const theme = useTheme()
@@ -24,7 +24,7 @@ export const TransactionsChartCard = () => {
   })
 
   const lineChartData = data?.data.tps_checkpoints?.map(({ tx_volume, timestamp }) => ({
-    label: DateTimeUtils.format(new Date(timestamp!)),
+    label: intlDateFormat(new Date(timestamp!)),
     value: tx_volume ?? 0,
   })) ?? null
 
