@@ -62,7 +62,16 @@
   },
   "transactions": {
     "header": "Transactions",
-    "latest": "Latest Transactions"
+    "latest": "Latest Transactions",
+    "method": {
+      "consensusaccounts": {
+        "transaction": "Transaction"
+      },
+      "evm": {
+        "call": "Contract Call",
+        "create": "Contract Creation"
+      }
+    }
   },
   "transactionStats": {
     "header": "Transactions Per Day",

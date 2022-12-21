@@ -9,6 +9,7 @@ import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { trimLongString } from '../../utils/trimLongString'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 
 export const LatestTransactions: FC = () => {
   const { t } = useTranslation()
@@ -53,7 +54,7 @@ export const LatestTransactions: FC = () => {
         key: 'age',
       },
       {
-        content: transaction.method,
+        content: <RuntimeTransactionLabel method={transaction.method!} />,
         key: 'type',
       },
       {
