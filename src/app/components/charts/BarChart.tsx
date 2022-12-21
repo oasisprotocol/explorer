@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from 'recharts'
 import { TooltipContent, type Formatters } from './Tooltip'
+import { COLORS } from '../../../styles/theme/colors'
 
 export type BarChartProps = Formatters & {
   data: any[]
@@ -17,9 +18,9 @@ export type BarChartProps = Formatters & {
 export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsBarChart data={data} margin={{ right: 0, bottom: 0 }}>
-      <CartesianGrid vertical={false} stroke="#f0f3f5" />
+      <CartesianGrid vertical={false} stroke={COLORS.spaceCadet} />
       <YAxis
-        tick={{ fill: '#3333C4', strokeWidth: 0, fontWeight: 600 }}
+        tick={{ fill: COLORS.brandDark, strokeWidth: 0, fontWeight: 600 }}
         axisLine={false}
         tickLine={false}
         type="number"
@@ -31,7 +32,7 @@ export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
         content={<TooltipContent formatters={formatters} />}
         offset={15}
       />
-      <Bar dataKey={dataKey} barSize={12} fill="#3138bc" radius={[10, 10, 0, 0]} />
+      <Bar dataKey={dataKey} barSize={12} fill={COLORS.denimBlue} radius={[10, 10, 0, 0]} />
     </RechartsBarChart>
   </ResponsiveContainer>
 )

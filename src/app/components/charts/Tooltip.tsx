@@ -2,15 +2,16 @@ import { TooltipProps } from 'recharts'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   display: 'inline-flex',
   flexDirection: 'column',
   padding: `${theme.spacing(3)} ${theme.spacing(6)}`,
-  background: '#0f0f5f',
+  background: COLORS.spaceCadet,
   boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)',
   borderRadius: '8px',
-  color: '#fff',
+  color: COLORS.white,
   textAlign: 'center',
 }))
 

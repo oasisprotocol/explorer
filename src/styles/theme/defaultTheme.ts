@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import { COLORS } from './colors'
 
 declare module '@mui/material/Divider' {
   interface DividerPropsVariantOverrides {
@@ -21,18 +22,18 @@ declare module '@mui/material/Paper' {
 export const defaultTheme = createTheme({
   palette: {
     background: {
-      default: '#3038c3',
+      default: COLORS.persianBlue,
     },
     primary: {
-      main: '#0092F6',
+      main: COLORS.brandMedium,
     },
     secondary: {
-      main: '#d9d9d9',
+      main: COLORS.lightSilver,
     },
     success: {
-      main: '#4cd4a9',
-      contrastText: '#fff',
-    }
+      main: COLORS.eucalyptus,
+      contrastText: COLORS.white,
+    },
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
@@ -47,31 +48,31 @@ export const defaultTheme = createTheme({
       fontSize: '24px',
       fontWeight: 500,
       lineHeight: '140%',
-      color: '#fff',
+      color: COLORS.white,
     },
     h2: {
       fontSize: '24px',
       fontWeight: 500,
       lineHeight: '140%',
-      color: '#fff',
+      color: COLORS.white,
     },
     h3: {
       fontSize: '24px',
       fontWeight: 600,
       lineHeight: '140%',
-      color: '#000062',
+      color: COLORS.brandExtraDark,
     },
     h4: {
       fontSize: '18px',
       fontWeight: 600,
-      color: '#000062',
+      color: COLORS.brandExtraDark,
       lineHeight: '26px',
     },
     h5: {
       fontSize: '16px',
       fontWeight: 700,
       lineHeight: '20px',
-      color: '#000062',
+      color: COLORS.brandExtraDark,
     },
   },
   components: {
@@ -87,8 +88,8 @@ export const defaultTheme = createTheme({
           height: '47px',
           borderRadius: 47,
           '&:disabled': {
-            backgroundColor: '#c5c7ca',
-            color: '#fff',
+            backgroundColor: COLORS.lavenderGray,
+            color: COLORS.white,
           },
         },
       },
@@ -97,22 +98,24 @@ export const defaultTheme = createTheme({
           props: { color: 'primary' },
           style: () => ({
             '&:hover': {
-              backgroundColor: '#3333C4',
+              backgroundColor: COLORS.brandDark,
             },
             '&:active': {
-              backgroundColor: '#000062',
+              backgroundColor: COLORS.brandExtraDark,
             },
           }),
         },
         {
           props: { color: 'secondary' },
           style: () => ({
-            border: '1px solid #000062',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: COLORS.brandExtraDark,
             '&:hover': {
-              backgroundColor: '#e2e2e2',
+              backgroundColor: COLORS.platinum,
             },
             '&:active': {
-              backgroundColor: '#ececec',
+              backgroundColor: COLORS.brightGray2,
             },
             '&:disabled': {
               border: 'none',
@@ -141,7 +144,7 @@ export const defaultTheme = createTheme({
     MuiCardHeader: {
       styleOverrides: {
         root: ({ theme }) => ({
-          color: '#000062',
+          color: COLORS.brandExtraDark,
           fontWeight: 600,
           fontSize: '24px',
           margin: 0,
@@ -152,7 +155,7 @@ export const defaultTheme = createTheme({
           margin: 0,
           fontWeight: 400,
           fontSize: '16px',
-          color: '#000062',
+          color: COLORS.brandExtraDark,
         },
       },
     },
@@ -171,7 +174,7 @@ export const defaultTheme = createTheme({
           props: { variant: 'layout' },
           style: ({ theme }) => ({
             borderWidth: 1,
-            borderColor: '#fff',
+            borderColor: COLORS.white,
             borderStyle: 'dashed',
             marginBottom: theme.spacing(5),
           }),
@@ -181,8 +184,8 @@ export const defaultTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: '#000062',
-          textDecorationColor: '#000062',
+          color: COLORS.brandExtraDark,
+          textDecorationColor: COLORS.brandExtraDark,
         },
       },
     },
@@ -191,9 +194,9 @@ export const defaultTheme = createTheme({
         {
           props: { variant: 'content' },
           style: () => ({
-            backgroundColor: '#E6EDF3',
+            backgroundColor: COLORS.brightGray,
             boxShadow: 'none',
-            color: '#5c6098',
+            color: COLORS.darkBlueGray,
           }),
         },
       ],
@@ -207,12 +210,14 @@ export const defaultTheme = createTheme({
     MuiLinearProgress: {
       styleOverrides: {
         root: {
-          backgroundColor: '#F4F5F7',
-          border: '1px solid #8988dd',
+          backgroundColor: COLORS.grayLight,
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: COLORS.vistaBlue,
           borderRadius: 5,
         },
         bar: {
-          backgroundColor: '#3333C4',
+          backgroundColor: COLORS.brandDark,
           borderRadius: 5,
         },
       },
@@ -220,18 +225,18 @@ export const defaultTheme = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root: {
-          borderColor: '#f1f4f9',
-          color: '#06152b',
+          borderColor: COLORS.antiFlashWhite2,
+          color: COLORS.grayExtraDark,
           whiteSpace: 'nowrap',
           a: {
-            color: '#3333C4',
+            color: COLORS.brandDark,
             fontWeight: 600,
             textDecoration: 'none',
           },
         },
         head: {
           border: 0,
-          color: '#3f4284',
+          color: COLORS.darkSlateBlue,
         },
       },
     },
@@ -240,7 +245,7 @@ export const defaultTheme = createTheme({
         {
           props: { variant: 'footer' },
           style: () => ({
-            color: '#fff',
+            color: COLORS.white,
             fontWeight: 400,
             fontSize: '14px',
             lineHeight: '140%',

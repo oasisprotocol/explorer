@@ -8,6 +8,7 @@ import Paper, { type PaperProps } from '@mui/material/Paper'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
 const docsUrl = 'https://docs.oasis.io/'
 const docsPages = {
@@ -24,11 +25,11 @@ const StyledLink = styled(Link)(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   marginLeft: 'auto',
-  backgroundColor: '#3333C4',
-  color: '#fff',
+  backgroundColor: COLORS.brandDark,
+  color: COLORS.white,
   boxShadow: '0px 10px 8px rgba(117, 60, 239, 0.1)',
   '&:hover': {
-    backgroundColor: '#222199',
+    backgroundColor: COLORS.cosmicCobalt,
   },
 }))
 

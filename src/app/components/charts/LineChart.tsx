@@ -26,7 +26,7 @@ const LineChartCmp: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 
       <Line
         type="monotone"
         dataKey="value"
-        stroke={COLORS.navyBlueExtraDark}
+        stroke={COLORS.brandExtraDark}
         strokeWidth={strokeWidth}
         dot={false}
       />
