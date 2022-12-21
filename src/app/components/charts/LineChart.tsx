@@ -1,23 +1,23 @@
 import {
   LineChart as RechartsLineChart,
   Line,
-  ResponsiveContainer,
-} from 'recharts';
+  ResponsiveContainer, Tooltip,
+} from 'recharts'
 import { Margin } from 'recharts/types/util/types'
 import { COLORS } from '../../../styles/theme/colors'
-import { memo } from 'react'
+import { memo, ReactElement } from 'react'
+import { Formatters, TooltipContent } from './Tooltip'
+import ActiveDotIcon from '../../icons/ActiveDotIcon'
 
-export interface LineChartDataPoint {
-  label: string;
-  value: string | number;
-}
 
-interface LineChartProps {
-  data: LineChartDataPoint[];
+interface LineChartProps<T extends object> extends Formatters {
+  data: T[];
+
+  dataKey: keyof T;
   margin?: Margin;
   strokeWidth?: number | string;
 }
-const LineChartCmp: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 }) => (
+const LineChartCmp = <T extends object>({ data, margin, strokeWidth = 1, dataKey, formatters }: LineChartProps<T>): ReactElement => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsLineChart
       data={data}
@@ -25,14 +25,20 @@ const LineChartCmp: React.FC<LineChartProps> = ({ data, margin, strokeWidth = 1 
     >
       <Line
         type="monotone"
-        dataKey="value"
+        dataKey={dataKey as string}
         stroke={COLORS.brandExtraDark}
         strokeWidth={strokeWidth}
         dot={false}
+        activeDot={<ActiveDotIcon />}
       />
-      {/*TODO: Tooltip & dot*/}
+      <Tooltip
+        cursor={false}
+        wrapperStyle={{ outline: 'none' }}
+        content={<TooltipContent formatters={formatters} />}
+        offset={15}
+      />
     </RechartsLineChart>
   </ResponsiveContainer>
 );
 
-export const LineChart = memo(LineChartCmp);
+export const LineChart = memo(LineChartCmp) as typeof LineChartCmp;
