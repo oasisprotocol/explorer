@@ -18,7 +18,7 @@ export type BarChartProps = Formatters & {
 export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsBarChart data={data} margin={{ right: 0, bottom: 0 }}>
-      <CartesianGrid vertical={false} stroke={COLORS.spaceCadet} />
+      <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />
       <YAxis
         tick={{ fill: COLORS.brandDark, strokeWidth: 0, fontWeight: 600 }}
         axisLine={false}
