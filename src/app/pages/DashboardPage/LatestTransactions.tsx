@@ -15,10 +15,10 @@ export const LatestTransactions: FC = () => {
   const { t } = useTranslation()
   const transactionsQuery = useGetEmeraldTransactions({ limit: 5 })
   const tableColumns = [
-    { content: t('common.table..status') },
-    { content: t('common.table..hash') },
+    { content: t('common.table.status') },
+    { content: t('common.table.hash') },
     { content: t('common.table.block') },
-    { content: t('common.age') },
+    { content: t('common.table.age') },
     { content: t('common.table.type') },
     { content: t('common.table.from') },
     { content: t('common.table.to') },

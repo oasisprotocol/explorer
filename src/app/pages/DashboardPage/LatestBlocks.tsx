@@ -74,7 +74,7 @@ export const LatestBlocks: FC = () => {
         <Table
           columns={tableColumns}
           rows={tableRows}
-          name={t('blocks.header')}
+          name={t('blocks.latest')}
           isLoading={blocksQuery.isLoading}
         />
       </CardContent>
