@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Card from '@mui/material/Card'
@@ -10,16 +11,17 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 
 const gasLimit = 1000000 // temporary value
-const tableColumns = [
-  { content: 'Fill' },
-  { content: 'Block', align: TableCellAlign.Right },
-  { content: 'Age', align: TableCellAlign.Right },
-  { content: 'Txs', align: TableCellAlign.Right },
-  { content: 'Size', align: TableCellAlign.Right },
-]
 
 export const LatestBlocks: FC = () => {
+  const { t } = useTranslation()
   const blocksQuery = useGetEmeraldBlocks({ limit: 5 })
+  const tableColumns = [
+    { content: t('common.table.fill') },
+    { content: t('common.table.block'), align: TableCellAlign.Right },
+    { content: t('common.table.age'), align: TableCellAlign.Right },
+    { content: t('common.table.txs'), align: TableCellAlign.Right },
+    { content: t('common.table.size'), align: TableCellAlign.Right },
+  ]
   const tableRows = blocksQuery.data?.data.blocks?.map(block => ({
     key: block.hash!,
     data: [
@@ -50,7 +52,7 @@ export const LatestBlocks: FC = () => {
       },
       {
         align: TableCellAlign.Right,
-        content: `${block.size_bytes} bytes`,
+        content: t('common.table.bytes', { value: block.size_bytes }),
         key: 'size',
       },
     ],
@@ -61,10 +63,10 @@ export const LatestBlocks: FC = () => {
       <CardHeader
         disableTypography
         component="h3"
-        title="Latest Blocks"
+        title={t('blocks.latest')}
         action={
           <Link component={RouterLink} to="blocks">
-            View all
+            {t('common.viewAll')}
           </Link>
         }
       />
@@ -72,7 +74,7 @@ export const LatestBlocks: FC = () => {
         <Table
           columns={tableColumns}
           rows={tableRows}
-          name="Latest Blocks"
+          name={t('blocks.header')}
           isLoading={blocksQuery.isLoading}
         />
       </CardContent>

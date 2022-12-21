@@ -1,1 +1,71 @@
-{}
+{
+  "averageTransactionSize": {
+    "header": "Average Transaction Size"
+  },
+  "blocks": {
+    "latest:": "Latest Blocks"
+  },
+  "common": {
+    "emerald": "Emerald",
+    "table": {
+      "age": "Age",
+      "block": "Block",
+      "bytes": "{{value}} bytes",
+      "fill": "Fill",
+      "from": "From",
+      "hash": "Hash",
+      "size": "Size",
+      "status": "Status",
+      "to": "To",
+      "txnFee": "Txn Fee",
+      "txs": "Txs",
+      "type": "Type",
+      "value": "Value",
+      "valueInRose": "{{value}} ROSE"
+    },
+    "viewAll": "View All"
+  },
+  "footer": {
+    "mobileTitle": "OPF",
+    "title": "Oasis Protocol Foundation",
+    "version": "Version: {{buildSha}}"
+  },
+  "learningMaterials": {
+    "emerald": {
+      "header": "What is the Emerald network?",
+      "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
+    },
+    "header": "Learning materials",
+    "learningCenter": "Access Learning Center",
+    "token": {
+      "header": "What is the ROSE token?",
+      "description": "Rose is the currency powering the Emerald network."
+    },
+    "transfer": {
+      "header": "How to Transfer ROSE into a ParaTime?",
+      "description": "Rose is the currency powering the Emerald network."
+    }
+  },
+  "pageTitle": "Oasis Blockchain Explorer",
+  "pageHeader": {
+    "status": "ParaTime Online",
+    "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment."
+  },
+  "social": {
+    "description": "Be part of the community and stay in the loop on everything Oasis",
+    "discord": "Discord",
+    "header": "Join us",
+    "reddit": "Reddit",
+    "telegram": "Telegram",
+    "twitter": "Twitter",
+    "youtube": "Youtube"
+  },
+  "transactions": {
+    "header": "Transactions",
+    "latest": "Latest Transactions"
+  },
+  "transactionStats": {
+    "header": "Transactions Per Day",
+    "tooltip": "{{value}} tx/day"
+  }
+}

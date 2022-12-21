@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
 import Link from '@mui/material/Link'
@@ -39,6 +40,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
 }
 
 export const Social: FC = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -59,10 +61,10 @@ export const Social: FC = () => {
     >
       <Grid xs={12} md={4}>
         <Typography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color={COLORS.white}>
-          Join us
+          {t('social.header')}
         </Typography>
         <Typography color={COLORS.white} sx={{ maxWidth: 230 }}>
-          Be part of the community and stay in the loop on everything Oasis
+          {t('social.description')}
         </Typography>
       </Grid>
       <Grid xs={12} md={8}>
@@ -78,31 +80,31 @@ export const Social: FC = () => {
         >
           <SocialLink
             isMobile={isMobile}
-            label="Telegram"
+            label={t('social.telegram')}
             href="https://t.me/oasisprotocolcommunity"
             img={telegram}
           />
           <SocialLink
             isMobile={isMobile}
-            label="Twitter"
+            label={t('social.twitter')}
             href="https://twitter.com/oasisprotocol"
             img={twitter}
           />
           <SocialLink
             isMobile={isMobile}
-            label="Discord"
+            label={t('social.discord')}
             href="https://discord.gg/BQCxwhT5wS"
             img={discord}
           />
           <SocialLink
             isMobile={isMobile}
-            label="Youtube"
+            label={t('social.youtube')}
             href="https://www.youtube.com/channel/UC35UFPcZ2F1wjPxhPrSsESQ"
             img={youtube}
           />
           <SocialLink
             isMobile={isMobile}
-            label="Reddit"
+            label={t('social.reddit')}
             href="https://www.reddit.com/r/oasisnetwork/"
             img={reddit}
           />

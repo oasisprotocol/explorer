@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -51,45 +52,49 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
   )
 }
 
-export const LearningMaterials = () => (
-  <Card>
-    <CardHeader
-      disableTypography
-      component="h3"
-      title="Learning materials"
-      action={
-        <Link href={docsUrl} rel="noopener noreferrer" target="_blank">
-          Access Learning Center
-        </Link>
-      }
-    />
-    <CardContent>
-      <Grid container spacing={3}>
-        <Grid xs={12} md={6}>
-          <LearningSection
-            description="The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
-            title="What is the Emerald network?"
-            url={getDocsLink('emerald')}
-            sx={{ height: '100%' }}
-          />
-        </Grid>
-        <Grid xs={12} md={6}>
-          <Grid>
+export const LearningMaterials = () => {
+  const { t } = useTranslation()
+
+  return (
+    <Card>
+      <CardHeader
+        disableTypography
+        component="h3"
+        title={t('learningMaterials.header')}
+        action={
+          <Link href={docsUrl} rel="noopener noreferrer" target="_blank">
+            {t('learningMaterials.learningCenter')}
+          </Link>
+        }
+      />
+      <CardContent>
+        <Grid container spacing={3}>
+          <Grid xs={12} md={6}>
             <LearningSection
-              description="Rose is the currency powering the Emerald network."
-              title="What is the ROSE token?"
-              url={getDocsLink('token')}
+              description={t('learningMaterials.emerald.description')}
+              title={t('learningMaterials.emerald.header')}
+              url={getDocsLink('emerald')}
+              sx={{ height: '100%' }}
             />
           </Grid>
-          <Grid>
-            <LearningSection
-              description="Rose is the currency powering the Emerald network."
-              title="How to Transfer ROSE into a ParaTime"
-              url={getDocsLink('transfer')}
-            />
+          <Grid xs={12} md={6}>
+            <Grid>
+              <LearningSection
+                description={t('learningMaterials.token.description')}
+                title={t('learningMaterials.emerald.header')}
+                url={getDocsLink('token')}
+              />
+            </Grid>
+            <Grid>
+              <LearningSection
+                description={t('learningMaterials.transfer.description')}
+                title={t('learningMaterials.transfer.header')}
+                url={getDocsLink('transfer')}
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </CardContent>
-  </Card>
-)
+      </CardContent>
+    </Card>
+  )
+}
