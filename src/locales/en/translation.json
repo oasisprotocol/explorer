@@ -3,7 +3,7 @@
     "header": "Average Transaction Size"
   },
   "blocks": {
-    "latest:": "Latest Blocks"
+    "latest": "Latest Blocks"
   },
   "common": {
     "emerald": "Emerald",
