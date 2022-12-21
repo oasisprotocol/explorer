@@ -17,7 +17,7 @@ const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
 
   return (
     <Chip color={gain === Gain.POSITIVE ? 'success' : 'error'}
-                        icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />} label={`${percentage}%`} />
+          icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />} label={`${percentage}%`} />
   )
 }
 
