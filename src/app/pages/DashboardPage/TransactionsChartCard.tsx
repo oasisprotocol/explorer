@@ -34,7 +34,7 @@ export const TransactionsChartCard = () => {
 
   return (
     <Card sx={{ p: 0 }}>
-      <CardHeader component="h5" title={t('transactions.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
+      <CardHeader component="h5" title={t('transactionsTpsChart.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <CardContent sx={{ pt: 4 }}>
         {lineChartData !== null && (
           <LineChart<TpsCheckpoint>
@@ -43,7 +43,7 @@ export const TransactionsChartCard = () => {
             margin={{ left: 0, right: isMobile ? 80 : 40 }}
             strokeWidth={1.09}
             formatters={{
-              data: (value: number) => `${value} TPS`,
+              data: (value: number) => t('transactionsTpsChart.tooltip', { value }),
               label: (value: string) => intlDateFormat(new Date(value)),
             }}
           />
