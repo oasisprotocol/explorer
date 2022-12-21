@@ -7,6 +7,8 @@ import { ThemeProvider } from '@mui/system'
 import CssBaseline from '@mui/material/CssBaseline'
 import { routes } from './routes'
 import { defaultTheme } from './styles/theme'
+// Initialize languages
+import './locales/i18n'
 
 Axios.defaults.baseURL = process.env.REACT_APP_API
 const queryClient = new QueryClient({})

@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -20,15 +22,16 @@ const StyledCircle = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(4),
 }))
 
-const getLabel = (pathname: string) => {
+const getLabel = (t: TFunction, pathname: string) => {
   if (pathname.startsWith(emeraldRoute)) {
-    return 'Emerald'
+    return t('common.emerald')
   }
 }
 
 export const NetworkHeader: FC = () => {
+  const { t } = useTranslation()
   const { pathname } = useLocation()
-  const label = getLabel(pathname)
+  const label = getLabel(t, pathname)
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -53,15 +56,12 @@ export const NetworkHeader: FC = () => {
             }}
           >
             <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
-              ParaTime Online
+              {t('pageHeader.status')}
             </Typography>
             <CheckCircleIcon color="success" sx={{ fontSize: 16 }} />
           </Box>
         </Box>
-        <Typography sx={{ fontSize: 11, color: COLORS.white }}>
-          The official confidential EVM Compatible ParaTime providing a smart contract development
-          environment.
-        </Typography>
+        <Typography sx={{ fontSize: 11, color: COLORS.white }}>{t('pageHeader.emerald')}</Typography>
       </Box>
     </Box>
   )
