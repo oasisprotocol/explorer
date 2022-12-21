@@ -51,47 +51,45 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
   )
 }
 
-export function LearningMaterials() {
-  return (
-    <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title="Learning materials"
-        action={
-          <Link href={docsUrl} rel="noopener noreferrer" target="_blank">
-            Access Learning Center
-          </Link>
-        }
-      />
-      <CardContent>
-        <Grid container spacing={3}>
-          <Grid xs={12} md={6}>
+export const LearningMaterials = () => (
+  <Card>
+    <CardHeader
+      disableTypography
+      component="h3"
+      title="Learning materials"
+      action={
+        <Link href={docsUrl} rel="noopener noreferrer" target="_blank">
+          Access Learning Center
+        </Link>
+      }
+    />
+    <CardContent>
+      <Grid container spacing={3}>
+        <Grid xs={12} md={6}>
+          <LearningSection
+            description="The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
+            title="What is the Emerald network?"
+            url={getDocsLink('emerald')}
+            sx={{ height: '100%' }}
+          />
+        </Grid>
+        <Grid xs={12} md={6}>
+          <Grid>
             <LearningSection
-              description="The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
-              title="What is the Emerald network?"
-              url={getDocsLink('emerald')}
-              sx={{ height: '100%' }}
+              description="Rose is the currency powering the Emerald network."
+              title="What is the ROSE token?"
+              url={getDocsLink('token')}
             />
           </Grid>
-          <Grid xs={12} md={6}>
-            <Grid>
-              <LearningSection
-                description="Rose is the currency powering the Emerald network."
-                title="What is the ROSE token?"
-                url={getDocsLink('token')}
-              />
-            </Grid>
-            <Grid>
-              <LearningSection
-                description="Rose is the currency powering the Emerald network."
-                title="How to Transfer ROSE into a ParaTime"
-                url={getDocsLink('transfer')}
-              />
-            </Grid>
+          <Grid>
+            <LearningSection
+              description="Rose is the currency powering the Emerald network."
+              title="How to Transfer ROSE into a ParaTime"
+              url={getDocsLink('transfer')}
+            />
           </Grid>
         </Grid>
-      </CardContent>
-    </Card>
-  )
-}
+      </Grid>
+    </CardContent>
+  </Card>
+)
