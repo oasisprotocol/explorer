@@ -1,4 +1,8 @@
-# Oasis Explorer Frontend
+# Oasis Explorer
+
+Official explorer for the Oasis Network.
+
+:warning: **Oasis Explorer is currently in development and is not available yet.**
 
 ## Oasis Indexer API
 
@@ -33,4 +37,3 @@ REACT_APP_API=http://localhost:8008/v1/ yarn start
 ```
 
 </details>
-
