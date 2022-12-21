@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Card from '@mui/material/Card'
@@ -17,7 +18,7 @@ const tableColumns = [
   { content: 'Size', align: TableCellAlign.Right },
 ]
 
-export function LatestBlocks() {
+export const LatestBlocks: FC = () => {
   const blocksQuery = useGetEmeraldBlocks({ limit: 5 })
   const tableRows = blocksQuery.data?.data.blocks?.map(block => ({
     key: block.hash!,

@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -20,7 +21,7 @@ const tableColumns = [
   { content: 'Value' },
 ]
 
-export function LatestTransactions() {
+export const LatestTransactions: FC = () => {
   const transactionsQuery = useGetEmeraldTransactions({ limit: 5 })
   const tableRows = transactionsQuery.data?.data.transactions?.map(transaction => ({
     key: transaction.hash!,

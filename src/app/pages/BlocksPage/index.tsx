@@ -1,7 +1,8 @@
+import { FC } from 'react'
 import { PageLayout } from '../../components/PageLayout'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 
-export function BlocksPage() {
+export const BlocksPage: FC = () => {
   const { data } = useGetEmeraldBlocks({}, { query: { refetchInterval: 5000 } })
   return (
     <PageLayout>

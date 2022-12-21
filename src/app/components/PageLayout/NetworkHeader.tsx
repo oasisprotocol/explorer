@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -25,7 +26,7 @@ const getLabel = (pathname: string) => {
   }
 }
 
-export function NetworkHeader() {
+export const NetworkHeader: FC = () => {
   const { pathname } = useLocation()
   const label = getLabel(pathname)
 

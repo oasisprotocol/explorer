@@ -1,8 +1,9 @@
+import { FC } from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 
-export function Header() {
+export const Header: FC = () => {
   return (
     <header>
       <Grid container sx={{ px: 6, pb: 5 }}>

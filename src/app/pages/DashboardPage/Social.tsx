@@ -38,7 +38,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
   )
 }
 
-export function Social() {
+export const Social: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 

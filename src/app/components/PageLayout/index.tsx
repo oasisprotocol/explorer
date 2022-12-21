@@ -1,11 +1,11 @@
-import { ReactNode } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
-export function PageLayout({ children }: { children: ReactNode }) {
+export const PageLayout: FC<PropsWithChildren> = ({ children }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
