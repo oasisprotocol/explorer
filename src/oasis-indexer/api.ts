@@ -4,6 +4,7 @@ import { UseQueryOptions } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
+import { useSearchParams } from 'react-router-dom'
 
 export * from './generated/api'
 
@@ -16,7 +17,11 @@ export const useGetEmeraldTransactions = (
   params?: generated.GetEmeraldTransactionsParams,
   options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeTransactionList>> },
 ) => {
-  const result = generated.useGetEmeraldTransactions(params, options)
+  const [searchParams] = useSearchParams()
+  const offsetSearchQuery = searchParams.get('offset')
+  const offset = offsetSearchQuery ? parseInt(offsetSearchQuery, 10) : 0
+
+  const result = generated.useGetEmeraldTransactions({ ...params, offset }, options)
   if (result.data) {
     return {
       ...result,
