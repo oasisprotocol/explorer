@@ -15,18 +15,19 @@ export const DashboardPage: FC = () => {
     <PageLayout>
       <ParatimeSnaphosts />
 
-    <Divider variant="layout" />
-    <LatestTransactions />
-    <Grid container spacing={4}>
-      <Grid item xs={12} md={6}>
-        <LearningMaterials />
+      <Divider variant="layout" />
+      <LatestTransactions />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <LearningMaterials />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <LatestBlocks />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <LatestBlocks />
-      </Grid>
-    </Grid>
-    <TransactionsStats />
-    <AverageTransactionSize />
-    <Social />
-  </PageLayout>
-)
+      <TransactionsStats />
+      <AverageTransactionSize />
+      <Social />
+    </PageLayout>
+  )
+}
