@@ -3,7 +3,7 @@ import SelectUnstyled, { SelectUnstyledProps, selectUnstyledClasses } from '@mui
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled, Box } from '@mui/system'
-import { ForwardedRef, forwardRef, memo, ReactElement, useId } from 'react'
+import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import { SlotComponentProps } from '@mui/base/utils'
@@ -124,14 +124,26 @@ interface SelectProps<T extends SelectOptionBase> {
   label?: string
   options: T[]
   defaultValue?: T['value']
+  handleChange?: (selectedOption: T['value'] | null) => void
 }
 
 const SelectCmp = <T extends SelectOptionBase>({
   label,
   options,
   defaultValue,
+  handleChange,
 }: SelectProps<T>): ReactElement => {
   const selectId = useId()
+
+  const onChange = useCallback(
+    (
+      _: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
+      selectedValue: T['value'] | null,
+    ) => {
+      handleChange?.(selectedValue)
+    },
+    [handleChange],
+  )
 
   return (
     <Box>
@@ -140,7 +152,7 @@ const SelectCmp = <T extends SelectOptionBase>({
           <Typography variant="body2">{label}</Typography>
         </label>
       )}
-      <CustomSelect<T['value']> defaultValue={defaultValue} id={selectId}>
+      <CustomSelect<T['value']> id={selectId} defaultValue={defaultValue} onChange={onChange}>
         {options.map(({ label, value }) => (
           <StyledOption key={value} value={value}>
             <Typography variant="select">{label}</Typography>

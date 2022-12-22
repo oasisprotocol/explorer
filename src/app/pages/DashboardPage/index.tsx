@@ -8,43 +8,12 @@ import { LatestTransactions } from './LatestTransactions'
 import { TransactionsStats } from './TransactionsStats'
 import { AverageTransactionSize } from './AverageTransactionSize'
 import { PageLayout } from '../../components/PageLayout'
-import { TransactionsChartCard } from './TransactionsChartCard'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
-import { DurationSelect } from '../../components/DurationSelect'
-import { Button } from '@mui/material'
+import { ParatimeSnaphosts } from './ParatimeSnaphosts'
 
 export const DashboardPage: FC = () => {
   return (
     <PageLayout>
-      <Grid container spacing="2">
-        <Grid item>
-          <Typography variant="h3" sx={{ color: COLORS.white }}>
-            Paratime Snapshot
-          </Typography>
-        </Grid>
-        <Grid item>
-          <DurationSelect />
-        </Grid>
-        <Grid item>
-          <Button color="secondary">Button</Button>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing="10px">
-        <Grid item xs={12} md={3}>
-          <TransactionsChartCard />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          Active accounts
-        </Grid>
-        <Grid item xs={12} md={3}>
-          Compute nodes
-        </Grid>
-        <Grid item xs={12} md={3}>
-          ROSE Price
-        </Grid>
-      </Grid>
+      <ParatimeSnaphosts />
 
     <Divider variant="layout" />
     <LatestTransactions />
