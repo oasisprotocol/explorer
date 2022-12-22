@@ -12,16 +12,22 @@ import { TransactionsChartCard } from './TransactionsChartCard'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from '../../components/DurationSelect'
+import { Button } from '@mui/material'
 
 export const DashboardPage: FC = () => {
   return (
     <PageLayout>
       <Grid container spacing="2">
         <Grid item>
-          <Typography variant="h3" sx={{color: COLORS.white}}>Paratime Snapshot</Typography>
+          <Typography variant="h3" sx={{ color: COLORS.white }}>
+            Paratime Snapshot
+          </Typography>
         </Grid>
         <Grid item>
           <DurationSelect />
+        </Grid>
+        <Grid item>
+          <Button color="secondary">Button</Button>
         </Grid>
       </Grid>
 
