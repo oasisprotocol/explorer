@@ -80,43 +80,47 @@ export const Table: FC<TableProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <TableContainer>
-      <MuiTable aria-label={name}>
-        <TableHead>
-          <TableRow>
-            {columns.map((column, index) => (
-              <TableCell
-                key={column.content}
-                align={column.align}
-                sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
-              >
-                {column.content}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {!rows && isLoading && <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />}
-          {rows?.map(row => (
-            <TableRow key={row.key}>
-              {row.data.map((cell, index) => (
+    <>
+      <TableContainer>
+        <MuiTable aria-label={name}>
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => (
                 <TableCell
-                  key={cell.key}
-                  align={cell.align}
+                  key={column.content}
+                  align={column.align}
                   sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
                 >
-                  {cell.content}
+                  {column.content}
                 </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </MuiTable>
+          </TableHead>
+          <TableBody>
+            {!rows && isLoading && (
+              <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
+            )}
+            {rows?.map(row => (
+              <TableRow key={row.key}>
+                {row.data.map((cell, index) => (
+                  <TableCell
+                    key={cell.key}
+                    align={cell.align}
+                    sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
+                  >
+                    {cell.content}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
       {!!pagination?.numberOfAllTransactions && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <TablePagination count={pagination.numberOfAllTransactions} rowsNumber={rowsNumber} />
         </Box>
       )}
-    </TableContainer>
+    </>
   )
 }
