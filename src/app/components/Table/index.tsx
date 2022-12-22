@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import TableContainer from '@mui/material/TableContainer'
 import MuiTable from '@mui/material/Table'
@@ -9,6 +10,7 @@ import TableCell from '@mui/material/TableCell'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { TablePagination } from './TablePagination'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -51,6 +53,9 @@ type TableProps = {
   columnsNumber?: number
   name: string
   isLoading: boolean
+  pagination?: {
+    numberOfItems: number
+  }
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
@@ -66,6 +71,7 @@ export const Table: FC<TableProps> = ({
   columns,
   isLoading,
   name,
+  pagination,
   rows,
   rowsNumber = 5,
   stickyColumn = false,
@@ -106,6 +112,11 @@ export const Table: FC<TableProps> = ({
           ))}
         </TableBody>
       </MuiTable>
+      {pagination && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <TablePagination count={pagination.numberOfItems} rowsNumber={rowsNumber} />
+        </Box>
+      )}
     </TableContainer>
   )
 }
