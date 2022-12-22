@@ -22,7 +22,6 @@ export const TransactionsPage: FC = () => {
             transactions={transactionsQuery.data?.data.transactions}
             isLoading={transactionsQuery.isLoading}
             limit={limit}
-            numberOfAllTransactions={100} // missing in API
           />
         </CardContent>
       </Card>

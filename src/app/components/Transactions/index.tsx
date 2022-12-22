@@ -11,15 +11,10 @@ import { RuntimeTransactionList } from '../../../oasis-indexer/generated/api'
 type TransactionProps = RuntimeTransactionList & {
   isLoading: boolean
   limit: number
-  numberOfAllTransactions?: number
+  pagination?: boolean
 }
 
-export const Transactions: FC<TransactionProps> = ({
-  isLoading,
-  limit,
-  numberOfAllTransactions = 0,
-  transactions,
-}) => {
+export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination = true, transactions }) => {
   const { t } = useTranslation()
 
   const tableColumns = [
@@ -102,9 +97,7 @@ export const Transactions: FC<TransactionProps> = ({
       rowsNumber={limit}
       name={t('transactions.latest')}
       isLoading={isLoading}
-      pagination={{
-        numberOfAllTransactions,
-      }}
+      pagination={pagination}
     />
   )
 }

@@ -53,9 +53,7 @@ type TableProps = {
   columnsNumber?: number
   name: string
   isLoading: boolean
-  pagination?: {
-    numberOfAllTransactions: number
-  }
+  pagination?: boolean
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
@@ -116,9 +114,12 @@ export const Table: FC<TableProps> = ({
           </TableBody>
         </MuiTable>
       </TableContainer>
-      {!!pagination?.numberOfAllTransactions && (
+      {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TablePagination count={pagination.numberOfAllTransactions} rowsNumber={rowsNumber} />
+          <TablePagination
+            count={100} // hardcoded total number of pages
+            rowsNumber={rowsNumber}
+          />
         </Box>
       )}
     </>

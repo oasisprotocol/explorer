@@ -35,6 +35,7 @@ export const LatestTransactions: FC = () => {
           transactions={transactionsQuery.data?.data.transactions}
           isLoading={transactionsQuery.isLoading}
           limit={limit}
+          pagination={false}
         />
       </CardContent>
     </Card>
