@@ -44,3 +44,14 @@ export const useGetEmeraldTransactions = (
   }
   return result
 }
+
+export const useGetEmeraldBlocks = (
+  params?: generated.GetEmeraldBlocksParams,
+  options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeBlockList>> },
+) => {
+  const [searchParams] = useSearchParams()
+  const offsetSearchQuery = searchParams.get('offset')
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
+
+  return generated.useGetEmeraldBlocks({ ...params, offset }, options)
+}
