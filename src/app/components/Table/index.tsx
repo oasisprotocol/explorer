@@ -112,7 +112,7 @@ export const Table: FC<TableProps> = ({
           ))}
         </TableBody>
       </MuiTable>
-      {pagination && (
+      {!!pagination?.numberOfAllTransactions && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <TablePagination count={pagination.numberOfAllTransactions} rowsNumber={rowsNumber} />
         </Box>
