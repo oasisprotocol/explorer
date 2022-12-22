@@ -31,7 +31,7 @@ export const Transactions: FC<TransactionProps> = ({
     { content: t('common.table.from') },
     { content: t('common.table.to') },
     { content: t('common.table.txnFee') },
-    { content: t('common.table.value') },
+    { align: TableCellAlign.Right, content: t('common.table.value') },
   ]
   const tableRows = transactions?.map(transaction => ({
     key: transaction.hash!,
