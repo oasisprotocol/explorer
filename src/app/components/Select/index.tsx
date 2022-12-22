@@ -3,7 +3,7 @@ import SelectUnstyled, { SelectUnstyledProps, selectUnstyledClasses } from '@mui
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled, Box } from '@mui/system'
-import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
+import { ForwardedRef, forwardRef, memo, PropsWithChildren, ReactElement, useCallback, useId } from 'react'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import { SlotComponentProps } from '@mui/base/utils'
@@ -14,6 +14,7 @@ import {
 import { COLORS } from '../../../styles/theme/colors'
 import chevronUp from '../../icons/chevron-up.svg'
 import chevronDown from '../../icons/chevron-down.svg'
+import { useTranslation } from 'react-i18next'
 
 const StyledButton = styled(Button)(({ theme }) => ({
   height: '36px',
@@ -83,17 +84,17 @@ const TertiaryButton = forwardRef(
     {
       children,
       ...restProps
-    }: SlotComponentProps<'button', SelectUnstyledComponentsPropsOverrides, SelectUnstyledOwnerState<{}>> &
-      any,
+    }: PropsWithChildren<
+      SlotComponentProps<'button', SelectUnstyledComponentsPropsOverrides, SelectUnstyledOwnerState<{}>>
+    >,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
+    const { t } = useTranslation()
+
     return (
-      <StyledButton
-        ref={ref}
-        color={'tertiary' as any /* Type 'string' is not assignable to type */}
-        {...restProps}
-      >
-        <Typography variant="select">{children ? children : 'Select'}</Typography>
+      // @ts-expect-error TS2322
+      <StyledButton ref={ref} color={'tertiary'} {...restProps}>
+        <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
       </StyledButton>
     )
   },

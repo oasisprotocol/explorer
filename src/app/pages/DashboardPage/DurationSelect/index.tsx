@@ -2,6 +2,7 @@ import { FC, memo } from 'react'
 import { Select, SelectOptionBase } from '../../../components/Select'
 import { ChartDuration } from '../../../utils/chart-utils'
 import { useConstant } from '../../../hooks/useConstant'
+import { useTranslation } from 'react-i18next'
 
 interface DurationOption extends SelectOptionBase {
   label: string
@@ -14,21 +15,23 @@ interface DurationSelectProps {
 }
 
 const DurationSelectCmp: FC<DurationSelectProps> = ({ defaultValue = ChartDuration.TODAY, handleChange }) => {
+  const { t } = useTranslation()
+
   const options = useConstant<DurationOption[]>(() => [
     {
-      label: 'Today',
+      label: t('chartDuration.today'),
       value: ChartDuration.TODAY,
     },
     {
-      label: 'This week',
+      label: t('chartDuration.thisWeek'),
       value: ChartDuration.WEEK,
     },
     {
-      label: 'This month',
+      label: t('chartDuration.thisMonth'),
       value: ChartDuration.MONTH,
     },
     {
-      label: 'All time',
+      label: t('chartDuration.allTime'),
       value: ChartDuration.ALL_TIME,
     },
   ])

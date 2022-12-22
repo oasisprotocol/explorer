@@ -5,8 +5,10 @@ import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { ChartDuration } from '../../utils/chart-utils'
+import { useTranslation } from 'react-i18next'
 
 export const ParatimeSnaphosts: FC = () => {
+  const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.TODAY)
 
   const handleDurationSelectedChange = useCallback((duration: ChartDuration | null) => {
@@ -22,7 +24,7 @@ export const ParatimeSnaphosts: FC = () => {
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item>
           <Typography variant="h3" sx={{ color: COLORS.white }}>
-            Paratime Snapshot
+            {t('.paratimeSnaphosts.header')}
           </Typography>
         </Grid>
         <Grid item>
@@ -34,15 +36,9 @@ export const ParatimeSnaphosts: FC = () => {
         <Grid item xs={12} md={3}>
           <TransactionsChartCard chartDuration={chartDuration} />
         </Grid>
-        <Grid item xs={12} md={3}>
-          Active accounts
-        </Grid>
-        <Grid item xs={12} md={3}>
-          Compute nodes
-        </Grid>
-        <Grid item xs={12} md={3}>
-          ROSE Price
-        </Grid>
+        <Grid item xs={12} md={3}></Grid>
+        <Grid item xs={12} md={3}></Grid>
+        <Grid item xs={12} md={3}></Grid>
       </Grid>
     </>
   )
