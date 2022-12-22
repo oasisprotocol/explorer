@@ -51,6 +51,10 @@
     "status": "ParaTime Online",
     "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment."
   },
+  "pagination": {
+    "first": "First",
+    "last": "Last"
+  },
   "social": {
     "description": "Be part of the community and stay in the loop on everything Oasis",
     "discord": "Discord",
