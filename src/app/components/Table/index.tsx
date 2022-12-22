@@ -54,7 +54,7 @@ type TableProps = {
   name: string
   isLoading: boolean
   pagination?: {
-    numberOfItems: number
+    numberOfAllTransactions: number
   }
   rows?: TableRowProps[]
   rowsNumber?: number
@@ -114,7 +114,7 @@ export const Table: FC<TableProps> = ({
       </MuiTable>
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TablePagination count={pagination.numberOfItems} rowsNumber={rowsNumber} />
+          <TablePagination count={pagination.numberOfAllTransactions} rowsNumber={rowsNumber} />
         </Box>
       )}
     </TableContainer>
