@@ -25,6 +25,7 @@ export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
         tickLine={false}
         type="number"
         padding={{ bottom: 20 }}
+        tickMargin={0}
       />
       <Tooltip
         cursor={false}
