@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/system'
 import CssBaseline from '@mui/material/CssBaseline'
 import { routes } from './routes'
 import { defaultTheme } from './styles/theme'
+import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
 
