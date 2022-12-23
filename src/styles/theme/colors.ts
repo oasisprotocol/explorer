@@ -1,7 +1,7 @@
 // Name of the colors -> https://www.color-name.com/
 // For consistency use lowercase characters
 
-export const COLORS = {
+export const COLORS: { [colorName: string]: string } = {
   antiFlashWhite2: '#f1f4f9',
   antiFlashWhite3: '#f0f3f5',
   antiFlashWhite: '#ecf1f6',

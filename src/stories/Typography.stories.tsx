@@ -3,7 +3,7 @@ import { ComponentMeta } from '@storybook/react'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../styles/theme/colors'
 import Box from '@mui/material/Box'
-import { Story } from '@storybook/react/dist/ts3.9/client/preview/types-6-0'
+import { Story } from '@storybook/react'
 
 type TypographyStory = ComponentProps<typeof Typography> & {
   darkMode: boolean
