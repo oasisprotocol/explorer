@@ -34,6 +34,9 @@
       "last 1 safari version"
     ]
   },
+  "resolutions": {
+    "**/@emotion/styled": "^11.10.5"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
