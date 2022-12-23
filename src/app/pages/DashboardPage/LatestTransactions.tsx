@@ -5,14 +5,11 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import { Table, TableCellAlign } from '../../components/Table'
-import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
-import { trimLongString } from '../../utils/trimLongString'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
-import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { Transactions } from '../../components/Transactions'
+import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 
-const limit = 5
+const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestTransactions: FC = () => {
   const { t } = useTranslation()

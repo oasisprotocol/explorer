@@ -40,16 +40,17 @@ type TableCellProps = {
   key: string
 }
 
-type TableRowProps = {
+export type TableRowProps = {
   key: string
   data: TableCellProps[]
 }
 
+export type TableColProps = {
+  content: string
+  align?: TableCellAlign
+}
 type TableProps = {
-  columns: {
-    content: string
-    align?: TableCellAlign
-  }[]
+  columns: TableColProps[]
   columnsNumber?: number
   name: string
   isLoading: boolean
@@ -117,7 +118,7 @@ export const Table: FC<TableProps> = ({
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <TablePagination
-            count={100} // hardcoded total number of pages
+            count={100} // TODO: fix hardcoded total number of pages
             rowsNumber={rowsNumber}
           />
         </Box>

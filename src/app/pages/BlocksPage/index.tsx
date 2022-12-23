@@ -1,19 +1,39 @@
-import { Link } from 'react-router-dom'
 import { FC } from 'react'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
 import { PageLayout } from '../../components/PageLayout'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
-import { emeraldRoute } from '../../../routes'
+import { useTranslation } from 'react-i18next'
+import CardContent from '@mui/material/CardContent'
+
+import { Blocks } from '../../components/Blocks'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+
+const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const BlocksPage: FC = () => {
-  const { data } = useGetEmeraldBlocks({}, { query: { refetchInterval: 5000 } })
+  const { t } = useTranslation()
+  const blocksQuery = useGetEmeraldBlocks(
+    {
+      limit: PAGE_SIZE,
+    },
+    { query: { refetchInterval: 5000 } },
+  )
+
   return (
     <PageLayout>
-      <h1>Latest Blocks</h1>
-      {data?.data.blocks?.map(block => (
-        <div key={block.hash + ' ' + block.timestamp}>
-          <Link to={`${emeraldRoute}/blocks/${encodeURIComponent(block.round!)}`}>{block.round}</Link>
-        </div>
-      ))}
+      <Card>
+        <CardHeader disableTypography component="h3" title={t('blocks.latest')} />
+        <CardContent>
+          <Blocks
+            isLoading={blocksQuery.isLoading}
+            blocks={blocksQuery.data?.data?.blocks}
+            limit={PAGE_SIZE}
+            verbose={true}
+            pagination={true}
+          />
+        </CardContent>
+      </Card>
     </PageLayout>
   )
 }
