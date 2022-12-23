@@ -45,7 +45,7 @@ export const NetworkHeader: FC = () => {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h2" sx={{ pr: 4 }}>
+          <Typography variant="h2" color={COLORS.white} sx={{ pr: 4 }}>
             {label}
           </Typography>
 

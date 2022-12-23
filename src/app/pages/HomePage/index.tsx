@@ -1,9 +1,13 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import Typography from '@mui/material/Typography'
+import { COLORS } from '../../../styles/theme/colors'
 
 export const HomePage: FC = () => (
   <div>
-    <h1>home</h1>
+    <Typography variant="h1" color={COLORS.white}>
+      home
+    </Typography>
     <div>
       <Link to="/emerald/blocks">blocks</Link>
     </div>

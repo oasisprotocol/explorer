@@ -66,10 +66,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           }}
         >
           <PercentageGain percentage={23} />
-          <Typography
-            variant="h2"
-            sx={{ pr: 4, fontWeight: 'fontWeightRegular', color: COLORS.brandExtraDark }}
-          >
+          <Typography variant="h2" sx={{ pr: 4, fontWeight: 'fontWeightRegular' }}>
             {totalTransactions}
           </Typography>
         </Box>
