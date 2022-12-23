@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import TableContainer from '@mui/material/TableContainer'
 import MuiTable from '@mui/material/Table'
@@ -9,6 +10,7 @@ import TableCell from '@mui/material/TableCell'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { TablePagination } from './TablePagination'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -51,6 +53,7 @@ type TableProps = {
   columnsNumber?: number
   name: string
   isLoading: boolean
+  pagination?: boolean
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
@@ -66,6 +69,7 @@ export const Table: FC<TableProps> = ({
   columns,
   isLoading,
   name,
+  pagination,
   rows,
   rowsNumber = 5,
   stickyColumn = false,
@@ -74,38 +78,50 @@ export const Table: FC<TableProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <TableContainer>
-      <MuiTable aria-label={name}>
-        <TableHead>
-          <TableRow>
-            {columns.map((column, index) => (
-              <TableCell
-                key={column.content}
-                align={column.align}
-                sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
-              >
-                {column.content}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {!rows && isLoading && <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />}
-          {rows?.map(row => (
-            <TableRow key={row.key}>
-              {row.data.map((cell, index) => (
+    <>
+      <TableContainer>
+        <MuiTable aria-label={name}>
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => (
                 <TableCell
-                  key={cell.key}
-                  align={cell.align}
+                  key={column.content}
+                  align={column.align}
                   sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
                 >
-                  {cell.content}
+                  {column.content}
                 </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </MuiTable>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {!rows && isLoading && (
+              <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
+            )}
+            {rows?.map(row => (
+              <TableRow key={row.key}>
+                {row.data.map((cell, index) => (
+                  <TableCell
+                    key={cell.key}
+                    align={cell.align}
+                    sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
+                  >
+                    {cell.content}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
+      {pagination && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <TablePagination
+            count={100} // hardcoded total number of pages
+            rowsNumber={rowsNumber}
+          />
+        </Box>
+      )}
+    </>
   )
 }

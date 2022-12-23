@@ -29,5 +29,6 @@ export const COLORS = {
   vistaBlue: '#8988dd',
   white: '#ffffff',
   spaceCadet: '#0f0f5f',
-  denimBlue: '#3138bc'
+  denimBlue: '#3138bc',
+  disabledPagination: '#7575a7',
 }

@@ -5,8 +5,8 @@ import { TFunction } from 'i18next'
 enum RuntimeTransactionMethod {
   Call = 'evm.Call',
   Create = 'evm.Create',
-  Deposit = 'consensusaccounts.Deposit',
-  Withdraw = 'consensusaccounts.Withdraw',
+  Deposit = 'consensus.Deposit',
+  Withdraw = 'consensus.Withdraw',
 }
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string) => {
