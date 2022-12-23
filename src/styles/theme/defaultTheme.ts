@@ -1,5 +1,18 @@
 import { createTheme } from '@mui/material/styles'
 import { COLORS } from './colors'
+import { PaletteColorOptions } from '@mui/material/styles/createPalette'
+
+declare module '@mui/material/styles/createPalette' {
+  export interface PaletteOptions {
+    tertiary: PaletteColorOptions
+  }
+}
+
+declare module '@mui/material/Button' {
+  export interface ButtonPropsColorOverrides {
+    tertiary: true
+  }
+}
 
 declare module '@mui/material/Divider' {
   interface DividerPropsVariantOverrides {
@@ -10,6 +23,7 @@ declare module '@mui/material/Divider' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     footer: true
+    select: true
   }
 }
 
@@ -32,6 +46,10 @@ export const defaultTheme = createTheme({
     },
     success: {
       main: COLORS.eucalyptus,
+      contrastText: COLORS.white,
+    },
+    tertiary: {
+      main: COLORS.brandLight,
       contrastText: COLORS.white,
     },
   },
@@ -116,6 +134,26 @@ export const defaultTheme = createTheme({
             },
             '&:active': {
               backgroundColor: COLORS.brightGray2,
+            },
+            '&:disabled': {
+              border: 'none',
+            },
+          }),
+        },
+        {
+          props: { color: 'tertiary' },
+          style: () => ({
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: COLORS.brandLight,
+            backgroundColor: COLORS.brandLight,
+            '&:hover': {
+              backgroundColor: COLORS.brandExtraDark,
+              borderColor: COLORS.brandExtraDark,
+            },
+            '&:active': {
+              backgroundColor: COLORS.brandExtraDark,
+              borderColor: COLORS.brandExtraDark,
             },
             '&:disabled': {
               border: 'none',
@@ -253,6 +291,15 @@ export const defaultTheme = createTheme({
             fontWeight: 400,
             fontSize: '14px',
             lineHeight: '140%',
+          }),
+        },
+        {
+          props: { variant: 'select' },
+          style: () => ({
+            color: COLORS.white,
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '20px',
           }),
         },
       ],

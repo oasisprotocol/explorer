@@ -8,37 +8,26 @@ import { LatestTransactions } from './LatestTransactions'
 import { TransactionsStats } from './TransactionsStats'
 import { AverageTransactionSize } from './AverageTransactionSize'
 import { PageLayout } from '../../components/PageLayout'
-import { TransactionsChartCard } from './TransactionsChartCard'
+import { ParatimeSnaphosts } from './ParatimeSnaphosts'
 
-export const DashboardPage: FC = () => (
-  <PageLayout>
-    <Grid container spacing="10px">
-      <Grid item xs={12} md={3}>
-        <TransactionsChartCard />
-      </Grid>
-      <Grid item xs={12} md={3}>
-        Active accounts
-      </Grid>
-      <Grid item xs={12} md={3}>
-        Compute nodes
-      </Grid>
-      <Grid item xs={12} md={3}>
-        ROSE Price
-      </Grid>
-    </Grid>
+export const DashboardPage: FC = () => {
+  return (
+    <PageLayout>
+      <ParatimeSnaphosts />
 
-    <Divider variant="layout" />
-    <LatestTransactions />
-    <Grid container spacing={4}>
-      <Grid item xs={12} md={6}>
-        <LearningMaterials />
+      <Divider variant="layout" />
+      <LatestTransactions />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <LearningMaterials />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <LatestBlocks />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <LatestBlocks />
-      </Grid>
-    </Grid>
-    <TransactionsStats />
-    <AverageTransactionSize />
-    <Social />
-  </PageLayout>
-)
+      <TransactionsStats />
+      <AverageTransactionSize />
+      <Social />
+    </PageLayout>
+  )
+}

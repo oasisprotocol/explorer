@@ -80,5 +80,17 @@
   "transactionsTpsChart": {
     "header": "Transactions",
     "tooltip": "{{value}} TPS"
+  },
+  "select": {
+    "placeholder": "Select"
+  },
+  "chartDuration": {
+    "today": "Today",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "allTime": "All time"
+  },
+  "paratimeSnaphosts": {
+    "header": "Paratime Snapshot"
   }
 }
