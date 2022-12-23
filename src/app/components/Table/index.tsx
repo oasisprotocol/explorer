@@ -117,7 +117,7 @@ export const Table: FC<TableProps> = ({
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <TablePagination
-            count={100} // hardcoded total number of pages
+            count={100} // TODO: fix hardcoded total number of pages
             rowsNumber={rowsNumber}
           />
         </Box>
