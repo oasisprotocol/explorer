@@ -17,11 +17,17 @@ export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber })
     <Pagination
       count={count}
       page={page}
-      onChange={(e, newPage) =>
-        setSearchParams({
-          offset: `${(newPage - 1) * rowsNumber}`,
-        })
-      }
+      onChange={(e, newPage) => {
+        const newOffset = (newPage - 1) * rowsNumber
+        if (newOffset) {
+          setSearchParams({
+            offset: `${newOffset}`,
+          })
+        } else {
+          searchParams.delete('offset')
+          setSearchParams(searchParams)
+        }
+      }}
     />
   )
 }
