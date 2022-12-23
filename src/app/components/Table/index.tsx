@@ -40,16 +40,17 @@ type TableCellProps = {
   key: string
 }
 
-type TableRowProps = {
+export type TableRowProps = {
   key: string
   data: TableCellProps[]
 }
 
+export type TableColProps = {
+  content: string
+  align?: TableCellAlign
+}
 type TableProps = {
-  columns: {
-    content: string
-    align?: TableCellAlign
-  }[]
+  columns: TableColProps[]
   columnsNumber?: number
   name: string
   isLoading: boolean
