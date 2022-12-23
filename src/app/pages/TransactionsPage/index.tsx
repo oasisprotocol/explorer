@@ -6,8 +6,9 @@ import CardContent from '@mui/material/CardContent'
 import { PageLayout } from '../../components/PageLayout'
 import { Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 
-const limit = 10
+const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const TransactionsPage: FC = () => {
   const { t } = useTranslation()

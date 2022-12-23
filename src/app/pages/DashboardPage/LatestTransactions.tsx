@@ -7,8 +7,9 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
+import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 
-const limit = 5
+const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestTransactions: FC = () => {
   const { t } = useTranslation()
