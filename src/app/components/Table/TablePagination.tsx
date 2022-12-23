@@ -10,8 +10,8 @@ type TablePaginationProps = {
 export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const offsetSearchQuery = searchParams.get('offset')
-  const offset = offsetSearchQuery ? parseInt(offsetSearchQuery, 10) : 0
-  const page = offset / rowsNumber + 1
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
+  const page = offset ? offset / rowsNumber + 1 : 1
 
   return (
     <Pagination

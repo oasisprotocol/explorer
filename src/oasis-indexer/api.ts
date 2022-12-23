@@ -19,7 +19,7 @@ export const useGetEmeraldTransactions = (
 ) => {
   const [searchParams] = useSearchParams()
   const offsetSearchQuery = searchParams.get('offset')
-  const offset = offsetSearchQuery ? parseInt(offsetSearchQuery, 10) : 0
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
 
   const result = generated.useGetEmeraldTransactions({ ...params, offset }, options)
   if (result.data) {
