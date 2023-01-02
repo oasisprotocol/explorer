@@ -1,14 +1,14 @@
 name: generate-openapi
 
 on:
-  # Triggered weekly or manually in https://github.com/oasisprotocol/explorer-frontend/actions/workflows/generate-openapi.yml
+  # Triggered weekly or manually in https://github.com/oasisprotocol/explorer/actions/workflows/generate-openapi.yml
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 1'
 
 jobs:
   generate-openapi:
-    if: github.repository == 'oasisprotocol/explorer-frontend' # Disable cronjob on forks
+    if: github.repository == 'oasisprotocol/explorer' # Disable cronjob on forks
     runs-on: ubuntu-latest
     permissions: # Limit secrets.GITHUB_TOKEN permissions
       contents: write
@@ -34,7 +34,7 @@ jobs:
           commit-message: 'Update API bindings'
           title: 'Update API bindings'
           body: |
-            Created by https://github.com/oasisprotocol/explorer-frontend/blob/master/.github/workflows/generate-openapi.yml
+            Created by https://github.com/oasisprotocol/explorer/blob/master/.github/workflows/generate-openapi.yml
 
             If CI actions and checks don't run in this PR: close it and reopen.
             https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs
