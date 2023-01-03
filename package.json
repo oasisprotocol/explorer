@@ -76,6 +76,7 @@
     "parcel": "^2.8.1",
     "prettier": "^2.8.1",
     "process": "^0.11.10",
+    "storybook-addon-react-router-v6": "^0.2.1",
     "typescript": "^4.9.4"
   }
 }

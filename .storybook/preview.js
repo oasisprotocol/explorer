@@ -11,6 +11,8 @@ export const parameters = {
   },
 }
 
+import '../src/locales/i18n'
+
 export const decorators = [
   Story => (
     <ThemeProvider theme={defaultTheme}>

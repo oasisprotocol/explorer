@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import { ButtonTypeMap } from '@mui/material/Button/Button'
 
 export default {
-  title: 'Example/Button',
+  title: 'Example/Buttons',
   component: Button,
 } as ComponentMeta<typeof Button>
 
