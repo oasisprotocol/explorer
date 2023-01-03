@@ -26,7 +26,7 @@ Primary.argTypes = {
 export const Secondary = Template.bind({})
 Secondary.args = {
   children: 'Secondary',
-  color: 'primary',
+  color: 'secondary',
   size: 'small',
 }
 Primary.argTypes = {
@@ -39,7 +39,7 @@ Primary.argTypes = {
 export const Tertiary = Template.bind({})
 Tertiary.args = {
   children: 'Tertiary',
-  color: 'primary',
+  color: 'tertiary',
   size: 'small',
 }
 Primary.argTypes = {
