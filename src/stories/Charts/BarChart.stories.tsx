@@ -1,11 +1,11 @@
 import { ComponentMeta, Story } from '@storybook/react'
 import Box from '@mui/material/Box'
 import React from 'react'
-import { intlDateFormat } from '../app/utils/dateFormatter'
-import { BarChart } from '../app/components/charts/BarChart'
+import { intlDateFormat } from '../../app/utils/dateFormatter'
+import { BarChart } from '../../app/components/charts/BarChart'
 
 export default {
-  title: 'Example/BarChart',
+  title: 'Example/Charts/BarChart',
   component: BarChart,
 } as ComponentMeta<typeof BarChart>
 
@@ -48,7 +48,7 @@ const timeData: TimeDataItem[] = [
 const Template: Story<typeof BarChart> = args => {
   return (
     <Box sx={{ width: '500px' }}>
-      <BarChart data={[]} dataKey={'y'} {...args} />
+      <BarChart<TimeDataItem> data={[]} dataKey={'y'} {...args} />
     </Box>
   )
 }

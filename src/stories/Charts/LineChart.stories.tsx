@@ -1,11 +1,11 @@
 import { ComponentMeta, Story } from '@storybook/react'
 import Box from '@mui/material/Box'
 import React from 'react'
-import { LineChart } from '../app/components/charts/LineChart'
-import { intlDateFormat } from '../app/utils/dateFormatter'
+import { LineChart } from '../../app/components/charts/LineChart'
+import { intlDateFormat } from '../../app/utils/dateFormatter'
 
 export default {
-  title: 'Example/LineChart',
+  title: 'Example/Charts/LineChart',
   component: LineChart,
 } as ComponentMeta<typeof LineChart>
 
