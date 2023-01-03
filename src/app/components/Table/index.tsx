@@ -43,6 +43,7 @@ type TableCellProps = {
 export type TableRowProps = {
   key: string
   data: TableCellProps[]
+  markAsNew?: boolean
 }
 
 export type TableColProps = {
@@ -100,7 +101,10 @@ export const Table: FC<TableProps> = ({
               <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
-              <TableRow key={row.key}>
+              <TableRow
+                key={row.key}
+                sx={{ backgroundColor: row.markAsNew ? COLORS.newItemBackground : COLORS.white }}
+              >
                 {row.data.map((cell, index) => (
                   <TableCell
                     key={cell.key}

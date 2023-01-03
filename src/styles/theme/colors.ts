@@ -31,4 +31,5 @@ export const COLORS = {
   spaceCadet: '#0f0f5f',
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',
+  newItemBackground: '#e0f5ee',
 }

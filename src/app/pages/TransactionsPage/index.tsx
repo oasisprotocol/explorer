@@ -6,18 +6,42 @@ import CardContent from '@mui/material/CardContent'
 import { PageLayout } from '../../components/PageLayout'
 import { Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const TransactionsPage: FC = () => {
   const { t } = useTranslation()
-  const transactionsQuery = useGetEmeraldTransactions({ limit: limit })
+  const transactionsQuery = useGetEmeraldTransactions(
+    { limit: limit },
+    {
+      query: {
+        refetchInterval: REFETCH_INTERVAL,
+        structuralSharing: (previousState, nextState) => {
+          if (!previousState) {
+            return nextState
+          }
+          return {
+            ...nextState,
+            data: {
+              transactions: nextState.data?.transactions?.map(tx => {
+                return {
+                  ...tx,
+                  markAsNew: !previousState.data?.transactions?.some(prevTx => prevTx.hash === tx.hash),
+                }
+              }),
+            },
+          }
+        },
+      },
+    },
+  )
 
   return (
     <PageLayout>
       <Card>
         <CardHeader disableTypography component="h3" title={t('transactions.latest')} />
+
         <CardContent>
           <Transactions
             transactions={transactionsQuery.data?.data.transactions}

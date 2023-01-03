@@ -6,12 +6,17 @@ import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { trimLongString } from '../../utils/trimLongString'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { RuntimeTransactionList } from '../../../oasis-indexer/generated/api'
+import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
 
-type TransactionProps = RuntimeTransactionList & {
+type TableRuntimeTransaction = RuntimeTransaction & {
+  markAsNew?: boolean
+}
+
+type TransactionProps = {
   isLoading: boolean
   limit: number
   pagination?: boolean
+  transactions?: TableRuntimeTransaction[]
 }
 
 export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination = true, transactions }) => {
@@ -88,6 +93,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'value',
       },
     ],
+    markAsNew: transaction.markAsNew,
   }))
 
   return (
