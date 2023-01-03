@@ -7,6 +7,9 @@ module.exports = {
     'storybook-addon-react-router-v6',
   ],
   framework: '@storybook/react',
+  core: {
+    builder: '@storybook/builder-webpack5',
+  },
   features: {
     emotionAlias: false,
   },
