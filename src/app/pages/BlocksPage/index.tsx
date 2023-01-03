@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import CardContent from '@mui/material/CardContent'
 
 import { Blocks } from '../../components/Blocks'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -17,7 +17,7 @@ export const BlocksPage: FC = () => {
     {
       limit: PAGE_SIZE,
     },
-    { query: { refetchInterval: 5000 } },
+    { query: { refetchInterval: REFETCH_INTERVAL } },
   )
 
   return (
