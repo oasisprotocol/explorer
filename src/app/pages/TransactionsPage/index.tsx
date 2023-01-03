@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
 import { Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
@@ -39,9 +40,9 @@ export const TransactionsPage: FC = () => {
 
   return (
     <PageLayout>
+      <Divider variant="layout" />
       <Card>
         <CardHeader disableTypography component="h3" title={t('transactions.latest')} />
-
         <CardContent>
           <Transactions
             transactions={transactionsQuery.data?.data.transactions}
