@@ -111,6 +111,11 @@ export const defaultTheme = createTheme({
             color: COLORS.white,
           },
         },
+        containedPrimary: {
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: COLORS.grayMedium,
+        },
       },
       variants: [
         {
@@ -335,6 +340,58 @@ export const defaultTheme = createTheme({
       defaultProps: {
         noSsr: true,
       },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+        input: {
+          padding: '0 !important',
+          backgroundColor: COLORS.white,
+        },
+        adornedStart: ({ theme }) => ({
+          padding: theme.spacing(4),
+        }),
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+        notchedOutline: {
+          border: 'none',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          borderRadius: '46px',
+          ':focus-within': {
+            boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
+          },
+          backgroundColor: COLORS.white,
+        },
+      },
+    },
+    MuiInputAdornment: {
+      variants: [
+        {
+          props: { position: 'start' },
+          style: ({ theme }) => ({
+            padding: theme.spacing(4),
+          }),
+        },
+        {
+          props: { position: 'end' },
+          style: {
+            height: '100%',
+            maxHeight: '100%',
+          },
+        },
+      ],
     },
   },
 })
