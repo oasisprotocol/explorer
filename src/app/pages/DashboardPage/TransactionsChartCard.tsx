@@ -10,7 +10,6 @@ import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
 import { PercentageGain } from '../../components/PercentageGain'
 import { intlDateFormat } from '../../utils/dateFormatter'
 import { FC, memo } from 'react'
@@ -66,10 +65,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           }}
         >
           <PercentageGain percentage={23} />
-          <Typography
-            variant="h2"
-            sx={{ pr: 4, fontWeight: 'fontWeightRegular', color: COLORS.brandExtraDark }}
-          >
+          <Typography variant="h2" sx={{ pr: 4, fontWeight: 'fontWeightRegular' }}>
             {totalTransactions}
           </Typography>
         </Box>

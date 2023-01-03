@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import {
   BarChart as RechartsBarChart,
   Bar,
@@ -10,12 +10,12 @@ import {
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 
-export type BarChartProps = Formatters & {
-  data: any[]
-  dataKey: string
+interface BarChartProps<T extends object> extends Formatters {
+  data: T[]
+  dataKey: keyof T
 }
 
-export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
+const BarChartCmp = <T extends object>({ data, dataKey, formatters }: BarChartProps<T>) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsBarChart data={data} margin={{ right: 0, bottom: 0 }}>
       <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />
@@ -33,7 +33,9 @@ export const BarChart: FC<BarChartProps> = ({ data, dataKey, formatters }) => (
         content={<TooltipContent formatters={formatters} />}
         offset={15}
       />
-      <Bar dataKey={dataKey} barSize={12} fill={COLORS.denimBlue} radius={[10, 10, 0, 0]} />
+      <Bar dataKey={dataKey as string} barSize={12} fill={COLORS.denimBlue} radius={[10, 10, 0, 0]} />
     </RechartsBarChart>
   </ResponsiveContainer>
 )
+
+export const BarChart = memo(BarChartCmp) as typeof BarChartCmp

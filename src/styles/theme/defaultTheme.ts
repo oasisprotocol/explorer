@@ -66,13 +66,13 @@ export const defaultTheme = createTheme({
       fontSize: '24px',
       fontWeight: 500,
       lineHeight: '140%',
-      color: COLORS.white,
+      color: COLORS.brandExtraDark,
     },
     h2: {
       fontSize: '24px',
       fontWeight: 500,
       lineHeight: '140%',
-      color: COLORS.white,
+      color: COLORS.brandExtraDark,
     },
     h3: {
       fontSize: '24px',
