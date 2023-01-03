@@ -9,7 +9,10 @@
   "blocks": {
     "latest": "Latest Blocks"
   },
-  "clipboard": { "label": "Copy to clipboard", "success": "Copied!" },
+  "clipboard": {
+    "label": "Copy to clipboard",
+    "success": "Copied!"
+  },
   "common": {
     "age": "Age",
     "block": "Block",
@@ -106,5 +109,13 @@
   },
   "paraTimeSnapshot": {
     "header": "ParaTime Snapshot"
+  },
+  "home": {
+    "header": "Oasis Blockchain Explorer"
+  },
+  "search": {
+    "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
+    "searchButtonText": "Search",
+    "searchTermRequired": "Search term is required!"
   }
 }
