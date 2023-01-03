@@ -15,8 +15,6 @@ interface BarChartProps<T extends object> extends Formatters {
   dataKey: keyof T
 }
 
-// const LineChartCmp = <T extends object>({
-
 const BarChartCmp = <T extends object>({ data, dataKey, formatters }: BarChartProps<T>) => (
   <ResponsiveContainer width="100%" aspect={4}>
     <RechartsBarChart data={data} margin={{ right: 0, bottom: 0 }}>
