@@ -282,6 +282,22 @@ export const defaultTheme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        arrow: {
+          color: COLORS.brandExtraDark,
+        },
+        tooltip: ({ theme }) => ({
+          backgroundColor: COLORS.brandExtraDark,
+          borderRadius: theme.spacing(3),
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          fontSize: '13px',
+          fontWeight: 700,
+          maxWidth: '400px',
+          padding: theme.spacing(3, 4),
+        }),
+      },
+    },
     MuiTypography: {
       variants: [
         {
