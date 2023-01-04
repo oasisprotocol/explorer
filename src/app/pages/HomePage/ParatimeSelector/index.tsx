@@ -7,8 +7,9 @@ import { Graph } from './Graph'
 
 const ParatimeSelectorGlow = styled(Box)(() => ({
   position: 'relative',
-  width: '645px',
-  height: '645px',
+  width: '80vh',
+  height: '80vh',
+  marginTop: '-17vh',
   backgroundImage: `url("${paratimeSelectorGlow}")`,
   backgroundSize: 'contain',
   backgroundPosition: 'center',
@@ -17,8 +18,8 @@ const ParatimeSelectorGlow = styled(Box)(() => ({
 
 const ParatimeSelectorGlobe = styled(Box)(() => ({
   position: 'absolute',
-  width: '60%',
-  paddingBottom: '60%',
+  width: '65%',
+  paddingBottom: '65%',
   left: '50%',
   bottom: '8%',
   transform: 'translateX(-50%)',
@@ -26,24 +27,15 @@ const ParatimeSelectorGlobe = styled(Box)(() => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
-}))
-
-const ParatimeSelectorGraphContainer = styled(Box)(() => ({
-  position: 'absolute',
-  width: '85%',
-  height: '70%',
-  left: '50%',
-  top: '50%',
-  transform: 'translateX(-50%) translateY(-50%)',
+  overflow: 'hidden',
+  borderRadius: '50%',
 }))
 
 const ParatimeSelectorCmp = () => {
   return (
     <ParatimeSelectorGlow>
       <ParatimeSelectorGlobe>
-        <ParatimeSelectorGraphContainer>
-          <Graph disabled={false} />
-        </ParatimeSelectorGraphContainer>
+        <Graph />
       </ParatimeSelectorGlobe>
     </ParatimeSelectorGlow>
   )

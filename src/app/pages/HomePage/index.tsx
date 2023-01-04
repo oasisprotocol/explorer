@@ -9,7 +9,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
 import { ParatimeSelector } from './ParatimeSelector'
 
-const HomepageLayout = styled(Box)(() => ({
+const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -17,6 +17,8 @@ const HomepageLayout = styled(Box)(() => ({
   alignItems: 'center',
   width: '100vw',
   height: '100vh',
+  paddingTop: '15vh',
+  paddingBottom: theme.spacing(4),
   backgroundColor: COLORS.brandDark,
   '&::before': {
     content: '" "',
@@ -36,13 +38,19 @@ export const HomePage: FC = () => {
 
   return (
     <HomepageLayout>
-      <Logotype>
-        <Typography variant="h1" color={COLORS.white}>
-          {t('home.header')}
-        </Typography>
-      </Logotype>
-      <Search onSearchSubmit={onSearchSubmit} />
-      <ParatimeSelector />
+      <Box sx={{ zIndex: 3, mb: '60px' }}>
+        <Logotype>
+          <Typography variant="h1" color={COLORS.white}>
+            {t('home.header')}
+          </Typography>
+        </Logotype>
+      </Box>
+      <Box sx={{ zIndex: 2, width: '50vw' }}>
+        <Search onSearchSubmit={onSearchSubmit} />
+      </Box>
+      <Box sx={{ zIndex: 1 }}>
+        <ParatimeSelector />
+      </Box>
     </HomepageLayout>
   )
 }
