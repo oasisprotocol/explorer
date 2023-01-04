@@ -61,7 +61,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       {
         content: (
           <Link component={RouterLink} to="transaction">
-            {trimLongString(transaction.hash!, 4, 4, '-')}
+            {trimLongString(transaction.hash!, 6, 6)}
           </Link>
         ),
 
@@ -95,7 +95,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
             }}
           >
             <Link component={RouterLink} to="account">
-              {trimLongString(transaction.sender_0!, 10, 0)}
+              {trimLongString(transaction.sender_0!, 6, 6)}
             </Link>
             <StyledCircle>
               <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
@@ -108,7 +108,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       {
         content: (
           <Link component={RouterLink} to="account">
-            {trimLongString(transaction.to!, 10, 0)}
+            {trimLongString(transaction.to!, 6, 6)}
           </Link>
         ),
         key: 'to',
