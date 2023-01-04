@@ -22,6 +22,7 @@ export const COLORS: { [colorName: string]: string } = {
   grayLight: '#f4f5f7',
   honeydew: '#e8faf3',
   lavenderGray: '#c5c7ca',
+  lightGreen: '#e0f5ee',
   lightSilver: '#d9d9d9',
   linen: '#fae8e8',
   persianBlue: '#3038c3',
@@ -31,5 +32,4 @@ export const COLORS: { [colorName: string]: string } = {
   spaceCadet: '#0f0f5f',
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',
-  newItemBackground: '#e0f5ee',
 }

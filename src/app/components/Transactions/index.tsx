@@ -1,12 +1,30 @@
 import { FC } from 'react'
+import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { trimLongString } from '../../utils/trimLongString'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
+import ArrowIcon, { ArrowDirection } from '../../icons/ArrowIcon'
+import { COLORS } from '../../../styles/theme/colors'
+
+const StyledCircle = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  right: `-${theme.spacing(5)}`,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: theme.spacing(5),
+  height: theme.spacing(5),
+  color: COLORS.eucalyptus,
+  backgroundColor: COLORS.lightGreen,
+  borderRadius: theme.spacing(5),
+  margin: theme.spacing(3),
+}))
 
 type TableRuntimeTransaction = RuntimeTransaction & {
   markAsNew?: boolean
@@ -28,8 +46,8 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
     { content: t('common.table.block') },
     { content: t('common.table.age') },
     { content: t('common.table.type') },
-    { content: t('common.table.from') },
-    { content: t('common.table.to') },
+    { content: t('common.table.from'), width: '150px' },
+    { content: t('common.table.to'), width: '150px' },
     { content: t('common.table.txnFee') },
     { align: TableCellAlign.Right, content: t('common.table.value') },
   ]
@@ -66,10 +84,23 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'type',
       },
       {
+        align: TableCellAlign.Right,
         content: (
-          <Link component={RouterLink} to="account">
-            {trimLongString(transaction.sender_0!, 10, 0)}
-          </Link>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              pr: 4,
+            }}
+          >
+            <Link component={RouterLink} to="account">
+              {trimLongString(transaction.sender_0!, 10, 0)}
+            </Link>
+            <StyledCircle>
+              <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
+            </StyledCircle>
+          </Box>
         ),
 
         key: 'from',

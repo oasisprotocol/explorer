@@ -49,6 +49,7 @@ export type TableRowProps = {
 export type TableColProps = {
   content: string
   align?: TableCellAlign
+  width?: string
 }
 type TableProps = {
   columns: TableColProps[]
@@ -65,6 +66,7 @@ const stickyColumnStyles = {
   position: 'sticky',
   left: 0,
   backgroundColor: COLORS.antiFlashWhite,
+  zIndex: 1,
 }
 
 export const Table: FC<TableProps> = ({
@@ -89,7 +91,10 @@ export const Table: FC<TableProps> = ({
                 <TableCell
                   key={column.content}
                   align={column.align}
-                  sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
+                  sx={{
+                    width: column.width || 'auto',
+                    ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
+                  }}
                 >
                   {column.content}
                 </TableCell>
@@ -103,7 +108,7 @@ export const Table: FC<TableProps> = ({
             {rows?.map(row => (
               <TableRow
                 key={row.key}
-                sx={{ backgroundColor: row.markAsNew ? COLORS.newItemBackground : COLORS.white }}
+                sx={{ backgroundColor: row.markAsNew ? COLORS.lightGreen : COLORS.white }}
               >
                 {row.data.map((cell, index) => (
                   <TableCell
