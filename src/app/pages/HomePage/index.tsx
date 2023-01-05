@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -33,8 +33,13 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
+  const [searchHasFocus, setSearchHasFocus] = useState(false)
 
-  const onSearchSubmit = (searchTerm: string) => {}
+  const onSearchSubmit = useCallback((searchTerm: string) => {}, [])
+
+  const onFocusChange = useCallback((hasFocus: boolean) => {
+    setSearchHasFocus(hasFocus)
+  }, [])
 
   return (
     <HomepageLayout>
@@ -46,10 +51,10 @@ export const HomePage: FC = () => {
         </Logotype>
       </Box>
       <Box sx={{ zIndex: 2, width: '50vw' }}>
-        <Search onSearchSubmit={onSearchSubmit} />
+        <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
       </Box>
       <Box sx={{ zIndex: 1 }}>
-        <ParatimeSelector />
+        <ParatimeSelector disabled={searchHasFocus} />
       </Box>
     </HomepageLayout>
   )
