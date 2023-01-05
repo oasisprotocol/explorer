@@ -111,11 +111,12 @@
     "header": "ParaTime Snapshot"
   },
   "home": {
-    "header": "Oasis Blockchain Explorer"
+    "header": "Oasis Blockchain Explorer",
+    "exploreBtnText": "Explore Metaverse"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
-    "searchButtonText": "Search",
+    "searchBtnText": "Search",
     "searchTermRequired": "Search term is required!"
   }
 }

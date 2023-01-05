@@ -5,6 +5,7 @@ import { GraphUtils } from './graph-utils'
 
 interface GraphProps {
   disabled?: boolean
+  transparent?: boolean
 }
 
 interface GraphSvgProps extends GraphProps {
@@ -13,13 +14,19 @@ interface GraphSvgProps extends GraphProps {
 
 const GraphStyled = styled('svg', {
   shouldForwardProp: prop =>
-    !(['disabled', 'graphEndpoint'] as (keyof GraphSvgProps)[]).includes(prop as keyof GraphSvgProps),
-})<GraphSvgProps>(({ disabled, graphEndpoint }) => ({
+    !(['disabled', 'transparent', 'graphEndpoint'] as (keyof GraphSvgProps)[]).includes(
+      prop as keyof GraphSvgProps,
+    ),
+})<GraphSvgProps>(({ disabled, transparent, graphEndpoint }) => ({
   position: 'absolute',
-  ...(disabled
+  ...(disabled || transparent
+    ? {
+        pointerEvents: 'none',
+      }
+    : {}),
+  ...(transparent
     ? {
         opacity: 0.25,
-        pointerEvents: 'none',
       }
     : {
         'g[id], circle[id]': {
@@ -43,7 +50,7 @@ const GraphStyled = styled('svg', {
   },
 }))
 
-const GraphCmp: FC<GraphProps> = ({ disabled = false }) => {
+const GraphCmp: FC<GraphProps> = ({ disabled = false, transparent = false }) => {
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
@@ -61,6 +68,7 @@ const GraphCmp: FC<GraphProps> = ({ disabled = false }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       disabled={disabled}
+      transparent={transparent}
       graphEndpoint={selectedGraphEndpoint}
       preserveAspectRatio="xMidYMid meet"
     >

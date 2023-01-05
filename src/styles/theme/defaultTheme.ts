@@ -115,6 +115,10 @@ export const defaultTheme = createTheme({
           borderWidth: '1px',
           borderStyle: 'solid',
           borderColor: COLORS.grayMedium,
+          textTransform: 'capitalize',
+        },
+        containedSecondary: {
+          textTransform: 'capitalize',
         },
       },
       variants: [
@@ -143,6 +147,21 @@ export const defaultTheme = createTheme({
             },
             '&:disabled': {
               border: 'none',
+            },
+          }),
+        },
+        {
+          props: { color: 'secondary', variant: 'contained' },
+          style: () => ({
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: COLORS.grayLight,
+            backgroundColor: COLORS.brandExtraDark,
+            color: COLORS.white,
+            '&:hover': {
+              borderColor: COLORS.brandExtraDark,
+              backgroundColor: COLORS.white,
+              color: COLORS.brandExtraDark,
             },
           }),
         },

@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, memo, useRef, useState } from 'react'
+import React, { FC, FocusEventHandler, FormEvent, memo, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
 import SearchIcon from '../../icons/SearchIcon'
@@ -11,19 +11,27 @@ const SearchForm = styled('form')(() => ({
 }))
 
 const SearchButton = styled(Button)(({ theme }) => ({
-  textTransform: 'none',
   paddingLeft: theme.spacing(5),
   paddingRight: theme.spacing(5),
 }))
 
 export interface SearchProps {
   onSearchSubmit: (searchTerm: string) => void
+  onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ onSearchSubmit }) => {
+const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const [hasError, setHasError] = useState(false)
+
+  const onFocus = () => {
+    onFocusChange?.(true)
+  }
+
+  const onBlur = () => {
+    onFocusChange?.(false)
+  }
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -45,6 +53,8 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit }) => {
       <TextField
         InputProps={{
           inputRef,
+          onFocus,
+          onBlur,
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon />
@@ -53,7 +63,7 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit }) => {
           endAdornment: (
             <InputAdornment position="end">
               <SearchButton color="primary" variant="contained" type="submit">
-                {t('search.searchButtonText')}
+                {t('search.searchBtnText')}
               </SearchButton>
             </InputAdornment>
           ),
