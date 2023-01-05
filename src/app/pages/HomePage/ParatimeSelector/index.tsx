@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParatimeSelectorStep } from './types'
 import { ParatimeSelectorUtils } from './paratime-selector-utils'
-import { StyledOptions } from '@emotion/styled/dist/emotion-styled.cjs'
+
 interface ParatimeSelectorProps {
   disabled: boolean
 }

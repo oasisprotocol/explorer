@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles'
 import { FC, memo, useState } from 'react'
 import { GraphEndpoint } from './types'
 import { GraphUtils } from './graph-utils'
+import { useNavigate } from 'react-router-dom'
 
 interface GraphProps {
   disabled?: boolean
@@ -48,29 +49,36 @@ const GraphStyled = styled('svg', {
       opacity: '1',
     },
   },
+  transform: GraphUtils.getSvgTransform(graphEndpoint),
+  transition: 'transform 1s ease-in-out',
 }))
 
 const GraphCmp: FC<GraphProps> = ({ disabled = false, transparent = false }) => {
+  const navigate = useNavigate()
+
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
+    if (selectedGraphEndpoint === graphEndpoint && selectedGraphEndpoint !== GraphEndpoint.CONSENSUS) {
+      navigate(`/${graphEndpoint}`)
+
+      return
+    }
+
     setSelectedGraphEndpoint(graphEndpoint)
   }
-
-  // TODO: Animate viewBox
-  const viewBox = GraphUtils.getSvgViewBox(selectedGraphEndpoint)
 
   return (
     <GraphStyled
       width="100%"
       height="100%"
-      viewBox={viewBox}
+      viewBox="0 0 396 326"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       disabled={disabled}
       transparent={transparent}
       graphEndpoint={selectedGraphEndpoint}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="xMidYMid slice"
     >
       <path d="M196.527 63.9798L156.802 38.2004" stroke="url(#linearGradient1)" strokeWidth="0.845226" />
       <path d="M196.527 63.98L236.253 35.4536" stroke="url(#linearGradient2)" strokeWidth="0.845226" />
