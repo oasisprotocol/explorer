@@ -3,7 +3,9 @@ import { useSearchParams } from 'react-router-dom'
 import { Pagination } from '../Pagination'
 
 type TablePaginationProps = {
+  /** Number of pages */
   count: number
+  /** Page size */
   rowsNumber: number
 }
 
