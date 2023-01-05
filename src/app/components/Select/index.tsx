@@ -3,14 +3,9 @@ import SelectUnstyled, { SelectUnstyledProps, selectUnstyledClasses } from '@mui
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled, Box } from '@mui/system'
-import { ForwardedRef, forwardRef, memo, PropsWithChildren, ReactElement, useCallback, useId } from 'react'
+import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
 import Typography from '@mui/material/Typography'
-import { Button } from '@mui/material'
-import { SlotComponentProps } from '@mui/base/utils'
-import {
-  SelectUnstyledComponentsPropsOverrides,
-  SelectUnstyledOwnerState,
-} from '@mui/base/SelectUnstyled/SelectUnstyled.types'
+import Button, { ButtonProps } from '@mui/material/Button'
 import { COLORS } from '../../../styles/theme/colors'
 import chevronUp from '../../icons/chevron-up.svg'
 import chevronDown from '../../icons/chevron-down.svg'
@@ -84,9 +79,7 @@ const TertiaryButton = forwardRef(
     {
       children,
       ...restProps
-    }: PropsWithChildren<
-      SlotComponentProps<'button', SelectUnstyledComponentsPropsOverrides, SelectUnstyledOwnerState<{}>>
-    >,
+    }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
     const { t } = useTranslation()
