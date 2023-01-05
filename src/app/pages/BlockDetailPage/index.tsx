@@ -7,6 +7,7 @@ import Skeleton from '@mui/material/Skeleton'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
+import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -56,7 +57,9 @@ export function BlockDetailPage() {
               <dd>{block.num_transactions} transactions</dd>
 
               <dt>Hash</dt>
-              <dd>0x{block.hash}</dd>
+              <dd>
+                <CopyToClipboard value={`0x${block.hash}`} />
+              </dd>
 
               <dt>Gas Used</dt>
               <dd>{block.gas_used?.toLocaleString()}</dd>
