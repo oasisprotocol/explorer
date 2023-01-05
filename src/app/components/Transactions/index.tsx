@@ -6,8 +6,8 @@ import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
-import { trimLongString } from '../../utils/trimLongString'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
+import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
 import ArrowIcon, { ArrowDirection } from '../../icons/ArrowIcon'
 import { COLORS } from '../../../styles/theme/colors'
@@ -39,7 +39,6 @@ type TransactionProps = {
 
 export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination = true, transactions }) => {
   const { t } = useTranslation()
-
   const tableColumns = [
     { content: t('common.table.status') },
     { content: t('common.table.hash') },
@@ -59,11 +58,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'success',
       },
       {
-        content: (
-          <Link component={RouterLink} to="transaction">
-            {trimLongString(transaction.hash!, 6, 6)}
-          </Link>
-        ),
+        content: <TrimLinkLabel label={transaction.hash!} to="transaction" />,
 
         key: 'hash',
       },
@@ -94,9 +89,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
               pr: 4,
             }}
           >
-            <Link component={RouterLink} to="account">
-              {trimLongString(transaction.sender_0!, 6, 6)}
-            </Link>
+            <TrimLinkLabel label={transaction.sender_0!} to="account" />
             <StyledCircle>
               <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
             </StyledCircle>
@@ -106,11 +99,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'from',
       },
       {
-        content: (
-          <Link component={RouterLink} to="account">
-            {trimLongString(transaction.to!, 6, 6)}
-          </Link>
-        ),
+        content: <TrimLinkLabel label={transaction.to!} to="account" />,
         key: 'to',
       },
       {
