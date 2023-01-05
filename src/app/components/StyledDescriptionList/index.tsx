@@ -17,7 +17,9 @@ interface Props {
   descriptionWidth?: string
 }
 
-const InlineDescriptionList = styled('dl')<Props>`
+const InlineDescriptionList = styled('dl', {
+  shouldForwardProp: prop => prop !== 'titleWidth' && prop !== 'descriptionWidth',
+})<Props>`
   display: grid;
   grid-template-columns:
     ${props => props.titleWidth ?? 'max-content'}
