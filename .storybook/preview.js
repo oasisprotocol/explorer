@@ -1,5 +1,5 @@
 import { defaultTheme } from '../src/styles/theme'
-import { ThemeProvider } from '@mui/system'
+import { ThemeProvider } from '@mui/material/styles'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

@@ -1,10 +1,12 @@
 import { createTheme } from '@mui/material/styles'
 import { COLORS } from './colors'
-import { PaletteColorOptions } from '@mui/material/styles/createPalette'
 
-declare module '@mui/material/styles/createPalette' {
-  export interface PaletteOptions {
-    tertiary: PaletteColorOptions
+declare module '@mui/material/styles' {
+  interface Palette {
+    tertiary: Palette['primary'];
+  }
+  interface PaletteOptions {
+    tertiary?: PaletteOptions['primary'];
   }
 }
 
