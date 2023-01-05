@@ -81,7 +81,6 @@ export type TableColProps = {
 }
 type TableProps = {
   columns: TableColProps[]
-  columnsNumber?: number
   name: string
   isLoading: boolean
   pagination?: boolean
