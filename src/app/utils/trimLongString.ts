@@ -1,4 +1,4 @@
-export function trimLongString(value: string, trimStart = 10, trimEnd = 8, splice = '...') {
+export function trimLongString(value: string, trimStart = 10, trimEnd = 8, ellipsis = '...') {
   if (!value) {
     return
   }
@@ -7,5 +7,5 @@ export function trimLongString(value: string, trimStart = 10, trimEnd = 8, splic
     return value
   }
 
-  return `${value.slice(0, trimStart)}${splice}${trimEnd ? value.slice(-trimEnd) : ''}`
+  return `${value.slice(0, trimStart)}${ellipsis}${trimEnd ? value.slice(-trimEnd) : ''}`
 }
