@@ -17,7 +17,7 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string) => {
       return t('transactions.method.evm.create')
     case RuntimeTransactionMethod.Deposit:
     case RuntimeTransactionMethod.Withdraw:
-      return t('transactions.method.consensusaccounts.transaction')
+      return t('transactions.method.consensus.transaction')
     default:
       return ''
   }
