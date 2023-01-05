@@ -8,12 +8,12 @@ import { LatestTransactions } from './LatestTransactions'
 import { TransactionsStats } from './TransactionsStats'
 import { AverageTransactionSize } from './AverageTransactionSize'
 import { PageLayout } from '../../components/PageLayout'
-import { ParatimeSnaphosts } from './ParatimeSnaphosts'
+import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 
 export const DashboardPage: FC = () => {
   return (
     <PageLayout>
-      <ParatimeSnaphosts />
+      <ParaTimeSnapshot />
 
       <Divider variant="layout" />
       <LatestTransactions />

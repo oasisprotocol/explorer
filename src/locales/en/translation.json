@@ -99,7 +99,7 @@
     "thisMonth": "This month",
     "allTime": "All time"
   },
-  "paratimeSnaphosts": {
-    "header": "Paratime Snapshot"
+  "paraTimeSnapshot": {
+    "header": "ParaTime Snapshot"
   }
 }
