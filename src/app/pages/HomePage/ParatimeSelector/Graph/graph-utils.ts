@@ -1,17 +1,17 @@
 import { GraphEndpoint } from './types'
 
 export abstract class GraphUtils {
-  static getSvgViewBox(graphEndpoint: GraphEndpoint): string {
+  static getSvgTransform(graphEndpoint: GraphEndpoint): string {
     switch (graphEndpoint) {
       case GraphEndpoint.EMERALD:
-        return '120 0 150 150'
+        return 'scale(2) translate(0%, 25%)'
       case GraphEndpoint.CIPHER:
-        return '220 50 150 150'
+        return 'scale(2) translate(-30%, 10%)'
       case GraphEndpoint.SAPPHIRE:
-        return '50 150 150 150'
+        return 'scale(2) translate(20%, -20%)'
       case GraphEndpoint.CONSENSUS:
       default:
-        return '0 0 396 326'
+        return 'scale(1)'
     }
   }
 }
