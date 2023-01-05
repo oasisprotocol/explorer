@@ -5,6 +5,7 @@
   "blocks": {
     "latest": "Latest Blocks"
   },
+  "clipboard": { "label": "Copy to clipboard", "success": "Copied!" },
   "common": {
     "emerald": "Emerald",
     "table": {
