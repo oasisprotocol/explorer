@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import { COLORS } from '../../../styles/theme/colors'
-import { useSearchParams } from 'react-router-dom'
 
 const StyledList = styled('ul')(({ theme }) => ({
   listStyle: 'none',

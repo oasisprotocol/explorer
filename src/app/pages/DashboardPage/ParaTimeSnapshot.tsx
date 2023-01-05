@@ -8,7 +8,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 
-export const ParatimeSnaphosts: FC = () => {
+export const ParaTimeSnapshot: FC = () => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
@@ -26,7 +26,7 @@ export const ParatimeSnaphosts: FC = () => {
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item>
           <Typography variant="h3" sx={{ color: COLORS.white }}>
-            {t('paratimeSnaphosts.header')}
+            {t('paraTimeSnapshot.header')}
           </Typography>
         </Grid>
         <Grid item>

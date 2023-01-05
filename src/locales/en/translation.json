@@ -5,6 +5,7 @@
   "blocks": {
     "latest": "Latest Blocks"
   },
+  "clipboard": { "label": "Copy to clipboard", "success": "Copied!" },
   "common": {
     "emerald": "Emerald",
     "table": {
@@ -73,7 +74,7 @@
     "header": "Transactions",
     "latest": "Latest Transactions",
     "method": {
-      "consensusaccounts": {
+      "consensus": {
         "transaction": "Transaction"
       },
       "evm": {
@@ -99,7 +100,7 @@
     "thisMonth": "This month",
     "allTime": "All time"
   },
-  "paratimeSnaphosts": {
-    "header": "Paratime Snapshot"
+  "paraTimeSnapshot": {
+    "header": "ParaTime Snapshot"
   }
 }

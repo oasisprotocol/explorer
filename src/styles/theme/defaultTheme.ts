@@ -97,7 +97,6 @@ export const defaultTheme = createTheme({
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        disableRipple: true,
       },
       styleOverrides: {
         root: {
@@ -161,6 +160,11 @@ export const defaultTheme = createTheme({
           }),
         },
       ],
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
     },
     MuiCard: {
       styleOverrides: {
@@ -280,6 +284,22 @@ export const defaultTheme = createTheme({
           border: 0,
           color: COLORS.darkSlateBlue,
         },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        arrow: {
+          color: COLORS.brandExtraDark,
+        },
+        tooltip: ({ theme }) => ({
+          backgroundColor: COLORS.brandExtraDark,
+          borderRadius: theme.spacing(3),
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          fontSize: '13px',
+          fontWeight: 700,
+          maxWidth: '400px',
+          padding: theme.spacing(3, 4),
+        }),
       },
     },
     MuiTypography: {
