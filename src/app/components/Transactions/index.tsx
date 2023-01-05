@@ -11,6 +11,7 @@ import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
 import ArrowIcon, { ArrowDirection } from '../../icons/ArrowIcon'
 import { COLORS } from '../../../styles/theme/colors'
+import { emeraldRoute } from '../../../routes'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -64,7 +65,10 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       },
       {
         content: (
-          <Link component={RouterLink} to="block">
+          <Link
+            component={RouterLink}
+            to={`${emeraldRoute}/blocks/${encodeURIComponent(transaction.round!)}`}
+          >
             {transaction.round}
           </Link>
         ),
