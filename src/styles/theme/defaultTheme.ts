@@ -381,11 +381,11 @@ export const defaultTheme = createTheme({
           padding: 0,
         },
         input: {
-          padding: '0 !important',
           backgroundColor: COLORS.white,
           color: COLORS.grayDark,
-          '&::placeholder': {
-            color: 'rgba(49,67,90,0.7)',
+          opacity: 0.7,
+          '&:focus': {
+            opacity: 1,
           },
         },
         adornedStart: ({ theme }) => ({
