@@ -17,7 +17,7 @@ type BlocksProps = RuntimeBlockList & {
   pagination?: boolean
 }
 
-const gasLimit = 1000000 // TODO temporary value
+const gasLimit = 10000000 // TODO temporary value, 22020096 for consensus
 
 export const Blocks = (props: BlocksProps) => {
   const { isLoading, blocks, verbose, pagination, limit } = props
