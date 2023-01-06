@@ -1,7 +1,7 @@
 // Name of the colors -> https://www.color-name.com/
 // For consistency use lowercase characters
 
-export const COLORS: { [colorName: string]: string } = {
+export const COLORS = {
   antiFlashWhite2: '#f1f4f9',
   antiFlashWhite3: '#f0f3f5',
   antiFlashWhite: '#ecf1f6',
@@ -34,4 +34,4 @@ export const COLORS: { [colorName: string]: string } = {
   spaceCadet: '#0f0f5f',
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',
-}
+} satisfies { [colorName: string]: string }
