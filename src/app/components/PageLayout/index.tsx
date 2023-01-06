@@ -10,7 +10,7 @@ export const PageLayout: FC<PropsWithChildren> = ({ children }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <Box sx={{ pt: 5, px: isMobile ? 0 : '5%' }}>
+    <Box sx={{ pt: isMobile ? 4 : 5, px: isMobile ? 0 : '5%' }}>
       <Header />
       <main>{children}</main>
       <Footer />
