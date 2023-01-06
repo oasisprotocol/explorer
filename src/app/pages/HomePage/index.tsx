@@ -1,7 +1,5 @@
 import { FC, useCallback, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
-import Typography from '@mui/material/Typography'
-import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import background from './images/background.svg'
@@ -45,7 +43,6 @@ const FooterStyled = styled(Box)(() => ({
 }))
 
 export const HomePage: FC = () => {
-  const { t } = useTranslation()
   const navigate = useNavigate()
   const [searchHasFocus, setSearchHasFocus] = useState(false)
 

@@ -5,11 +5,8 @@ import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
 
 export const Header: FC = () => {
-  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
