@@ -6,7 +6,7 @@ import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import { RuntimeBlockList } from '../../../oasis-indexer/generated/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
-import { trimLongString } from '../../utils/trimLongString'
+import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { intlDateFormat } from '../../utils/dateFormatter'
 import { emeraldRoute } from '../../../routes'
 
@@ -71,11 +71,7 @@ export const Blocks = (props: BlocksProps) => {
       ...(verbose
         ? [
             {
-              content: (
-                <Link component={RouterLink} to={block.hash!}>
-                  {trimLongString(block.hash!, 4, 4, '-')}
-                </Link>
-              ), // TODO: do we want linking to blocks by hash?
+              content: <TrimLinkLabel label={block.hash!} to={block.hash!} />, // TODO: do we want linking to blocks by hash?
               // If yes, what should be the URL scheme for that?
               key: 'hash',
             },
