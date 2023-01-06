@@ -383,9 +383,8 @@ export const defaultTheme = createTheme({
         input: {
           backgroundColor: COLORS.white,
           color: COLORS.grayDark,
-          opacity: 0.7,
-          '&:focus': {
-            opacity: 1,
+          '&::placeholder': {
+            color: COLORS.grayDark07A,
           },
         },
         adornedStart: ({ theme }) => ({
