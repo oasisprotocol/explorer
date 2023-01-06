@@ -1,4 +1,4 @@
-import React, { FC, FocusEventHandler, FormEvent, memo, useRef, useState } from 'react'
+import { FC, FormEvent, memo, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
 import SearchIcon from '../../icons/SearchIcon'
