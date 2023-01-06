@@ -8,7 +8,8 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { intlDateFormat } from '../../utils/dateFormatter'
-import { emeraldRoute } from '../../../routes'
+import { RouteUtils } from '../../utils/route-utils'
+import { ParaTime } from '../../../config'
 
 type BlocksProps = RuntimeBlockList & {
   isLoading: boolean
@@ -46,7 +47,7 @@ export const Blocks = (props: BlocksProps) => {
       {
         align: TableCellAlign.Right,
         content: (
-          <Link component={RouterLink} to={`${emeraldRoute}/blocks/${encodeURIComponent(block.round!)}`}>
+          <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round!, ParaTime.Emerald)}>
             {block.round}
           </Link>
         ),

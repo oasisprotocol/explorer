@@ -8,6 +8,10 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
+import { GraphEndpoint } from './Graph/types'
+import ChevronIcon from '../../../icons/ChevronIcon'
+import { ArrowDirection } from '../../../icons/types'
+import Fade from '@mui/material/Fade'
 
 interface ParaTimeSelectorProps {
   disabled: boolean
@@ -57,18 +61,49 @@ const ExploreBtn = styled(Button)(({ theme }) => ({
   width: 'max-content',
 }))
 
+const ZoomOutBtn = styled(Button)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(4),
+  left: '50%',
+  transform: 'translateX(-50%)',
+}))
+
+const ZoomOutBtnFade = styled(Fade)(() => ({
+  transitionDelay: '500ms !important',
+}))
+
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ENABLE_EXPLORE)
+  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
   const onExploreClick = () => {
     setStep(ParaTimeSelectorStep.EXPLORE)
   }
 
+  const onZoomOutClick = () => {
+    setSelectedGraphEndpoint(GraphEndpoint.CONSENSUS)
+  }
+
   return (
     <ParaTimeSelectorGlow disabled={disabled}>
       <ParaTimeSelectorGlobe>
-        <Graph disabled={disabled} transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)} />
+        <Graph
+          disabled={disabled}
+          transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
+          selectedGraphEndpoint={selectedGraphEndpoint}
+          setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+        />
+        <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(selectedGraphEndpoint)}>
+          <ZoomOutBtn
+            variant="text"
+            color="secondary"
+            startIcon={<ChevronIcon arrowDirection={ArrowDirection.LEFT} />}
+            onClick={onZoomOutClick}
+          >
+            {t('home.zoomOutBtnText')}
+          </ZoomOutBtn>
+        </ZoomOutBtnFade>
         {ParaTimeSelectorUtils.showExploreBtn(step) && (
           <ExploreBtn
             color="secondary"

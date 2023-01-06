@@ -108,7 +108,8 @@
   },
   "home": {
     "header": "Oasis Blockchain Explorer",
-    "exploreBtnText": "Explore Metaverse"
+    "exploreBtnText": "Explore Metaverse",
+    "zoomOutBtnText": "Zoom out"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
