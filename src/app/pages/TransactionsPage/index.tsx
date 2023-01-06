@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
+import { SubPageCard } from '../../components/SubPageCard'
 import { Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
@@ -13,6 +13,8 @@ const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const TransactionsPage: FC = () => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const transactionsQuery = useGetEmeraldTransactions(
     { limit: limit },
     {
@@ -40,17 +42,14 @@ export const TransactionsPage: FC = () => {
 
   return (
     <PageLayout>
-      <Divider variant="layout" />
-      <Card>
-        <CardHeader disableTypography component="h3" title={t('transactions.latest')} />
-        <CardContent>
-          <Transactions
-            transactions={transactionsQuery.data?.data.transactions}
-            isLoading={transactionsQuery.isLoading}
-            limit={limit}
-          />
-        </CardContent>
-      </Card>
+      {!isMobile && <Divider variant="layout" />}
+      <SubPageCard title={t('transactions.latest')}>
+        <Transactions
+          transactions={transactionsQuery.data?.data.transactions}
+          isLoading={transactionsQuery.isLoading}
+          limit={limit}
+        />
+      </SubPageCard>
     </PageLayout>
   )
 }

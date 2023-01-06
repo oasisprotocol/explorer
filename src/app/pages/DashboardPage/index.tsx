@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import { Social } from './Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestBlocks } from './LatestBlocks'
@@ -11,11 +13,14 @@ import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 
 export const DashboardPage: FC = () => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <PageLayout>
       <ParaTimeSnapshot />
 
-      <Divider variant="layout" />
+      {!isMobile && <Divider variant="layout" />}
       <LatestTransactions />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
