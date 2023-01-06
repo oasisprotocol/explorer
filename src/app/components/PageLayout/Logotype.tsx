@@ -25,14 +25,12 @@ export const Logotype: FC = () => {
         gap: 4,
       }}
     >
-      <>
-        <img src={logotype} alt="logo" height={logoSize} width={logoSize} />
-        {!isMobile && (
-          <Typography variant="h1" color={COLORS.white}>
-            {t('pageTitle')}
-          </Typography>
-        )}
-      </>
+      <img src={logotype} alt="logo" height={logoSize} width={logoSize} />
+      {!isMobile && (
+        <Typography variant="h1" color={COLORS.white}>
+          {t('pageTitle')}
+        </Typography>
+      )}
     </Link>
   )
 }
