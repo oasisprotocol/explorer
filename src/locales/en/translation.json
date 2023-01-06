@@ -111,8 +111,7 @@
     "header": "ParaTime Snapshot"
   },
   "home": {
-    "header": "Oasis Blockchain Explorer",
-    "exploreBtnText": "Explore Metaverse",
+    "exploreBtnText": "Explore Oasis",
     "zoomOutBtnText": "Zoom out"
   },
   "search": {
