@@ -72,11 +72,7 @@ export const HomePage: FC = () => {
     <HomepageLayout>
       <Content>
         <Box sx={{ zIndex: 3, mb: '60px', textAlign: 'center' }}>
-          <Logotype>
-            <Typography variant="h1" color={COLORS.white}>
-              {t('home.header')}
-            </Typography>
-          </Logotype>
+          <Logotype />
         </Box>
         <Box sx={{ zIndex: 2, width: '50vw' }}>
           <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
