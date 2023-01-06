@@ -3,6 +3,8 @@ import { FC, memo, useState } from 'react'
 import { GraphEndpoint } from './types'
 import { GraphUtils } from './graph-utils'
 import { useNavigate } from 'react-router-dom'
+import { RouteUtils } from '../../../../utils/route-utils'
+import { ParaTime } from '../../../../../config'
 
 interface GraphProps {
   disabled?: boolean
@@ -59,7 +61,10 @@ const GraphCmp: FC<GraphProps> = ({ disabled = false, transparent = false }) => 
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
-    if (selectedGraphEndpoint === graphEndpoint && selectedGraphEndpoint !== GraphEndpoint.CONSENSUS) {
+    if (
+      selectedGraphEndpoint === graphEndpoint &&
+      RouteUtils.getEnabledParaTimes().includes(selectedGraphEndpoint as unknown as ParaTime)
+    ) {
       navigate(`/${graphEndpoint}`)
 
       return

@@ -4,17 +4,14 @@ import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
-import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
-import { ParaTime } from './config'
-
-const enabledParaTimes: ParaTime[] = [ParaTime.Emerald, ParaTime.Sapphire, ParaTime.Cipher]
+import { RouteUtils } from './app/utils/route-utils'
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <HomePage />,
   },
-  ...enabledParaTimes
+  ...RouteUtils.getEnabledParaTimes()
     .map(paraTime => [
       {
         path: `/${paraTime}`,
