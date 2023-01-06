@@ -4,23 +4,13 @@ import { TFunction } from 'i18next'
 import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CheckIcon from '@mui/icons-material/Check'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import blockchainImage from './images/blockchain.svg'
+import { Circle } from '../Circle'
 import { emeraldRoute } from '../../../routes'
 import { COLORS } from '../../../styles/theme/colors'
-
-const StyledCircle = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: theme.spacing(6),
-  minWidth: theme.spacing(6),
-  height: theme.spacing(6),
-  backgroundColor: COLORS.white,
-  borderRadius: theme.spacing(5),
-  marginRight: theme.spacing(4),
-}))
 
 const getLabel = (t: TFunction, pathname: string) => {
   if (pathname.startsWith(emeraldRoute)) {
@@ -30,14 +20,18 @@ const getLabel = (t: TFunction, pathname: string) => {
 
 export const NetworkHeader: FC = () => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { pathname } = useLocation()
   const label = getLabel(t, pathname)
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <StyledCircle>
-        <img src={blockchainImage} alt={label} />
-      </StyledCircle>
+    <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start' }}>
+      {!isMobile && (
+        <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
+          <img src={blockchainImage} alt={label} />
+        </Circle>
+      )}
       <Box>
         <Box
           sx={{
@@ -45,7 +39,11 @@ export const NetworkHeader: FC = () => {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h2" color={COLORS.white} sx={{ pr: 4 }}>
+          <Typography
+            variant="h2"
+            color={COLORS.white}
+            sx={{ pr: isMobile ? 3 : 4, fontSize: isMobile ? '16px' : '24px' }}
+          >
             {label}
           </Typography>
 
@@ -55,13 +53,19 @@ export const NetworkHeader: FC = () => {
               alignItems: 'center',
             }}
           >
-            <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
-              {t('pageHeader.status')}
-            </Typography>
-            <CheckCircleIcon color="success" sx={{ fontSize: 16 }} />
+            {!isMobile && (
+              <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
+                {t('pageHeader.status')}
+              </Typography>
+            )}
+            <Circle color={COLORS.eucalyptus} size={4}>
+              <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
+            </Circle>
           </Box>
         </Box>
-        <Typography sx={{ fontSize: 11, color: COLORS.white }}>{t('pageHeader.emerald')}</Typography>
+        {!isMobile && (
+          <Typography sx={{ fontSize: 11, color: COLORS.white }}>{t('pageHeader.emerald')}</Typography>
+        )}
       </Box>
     </Box>
   )
