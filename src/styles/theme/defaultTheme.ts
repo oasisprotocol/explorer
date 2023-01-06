@@ -175,6 +175,9 @@ export const defaultTheme = createTheme({
             '&:hover': {
               backgroundColor: 'transparent',
             },
+            '&:disabled': {
+              backgroundColor: 'transparent',
+            },
           }),
         },
         {

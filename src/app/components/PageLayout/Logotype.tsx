@@ -24,7 +24,7 @@ export const Logotype: FC<PropsWithChildren> = ({ children }) => {
     >
       <>
         <img src={logotype} alt="logo" height={logoSize} width={logoSize} />
-        {!isMobile && { children }}
+        {!isMobile && children}
       </>
     </Link>
   )

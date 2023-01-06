@@ -100,6 +100,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
             color="secondary"
             startIcon={<ChevronIcon arrowDirection={ArrowDirection.LEFT} />}
             onClick={onZoomOutClick}
+            disabled={disabled}
           >
             {t('home.zoomOutBtnText')}
           </ZoomOutBtn>
