@@ -8,17 +8,14 @@ import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
 import { ParatimeSelector } from './ParatimeSelector'
+import { Footer } from '../../components/PageLayout/Footer'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
   width: '100vw',
   height: '100vh',
-  paddingTop: '15vh',
-  paddingBottom: theme.spacing(4),
   backgroundColor: COLORS.brandDark,
   '&::before': {
     content: '" "',
@@ -29,6 +26,20 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
   },
+}))
+
+const Content = styled(Box)(() => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  flex: '1 1 0',
+}))
+
+const FooterStyled = styled(Box)(() => ({
+  width: '100%',
+  flex: '0 0 0',
 }))
 
 export const HomePage: FC = () => {
@@ -43,19 +54,24 @@ export const HomePage: FC = () => {
 
   return (
     <HomepageLayout>
-      <Box sx={{ zIndex: 3, mb: '60px' }}>
-        <Logotype>
-          <Typography variant="h1" color={COLORS.white}>
-            {t('home.header')}
-          </Typography>
-        </Logotype>
-      </Box>
-      <Box sx={{ zIndex: 2, width: '50vw' }}>
-        <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
-      </Box>
-      <Box sx={{ zIndex: 1 }}>
-        <ParatimeSelector disabled={searchHasFocus} />
-      </Box>
+      <Content>
+        <Box sx={{ zIndex: 3, mb: '60px', textAlign: 'center' }}>
+          <Logotype>
+            <Typography variant="h1" color={COLORS.white}>
+              {t('home.header')}
+            </Typography>
+          </Logotype>
+        </Box>
+        <Box sx={{ zIndex: 2, width: '50vw' }}>
+          <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
+        </Box>
+        <Box sx={{ zIndex: 1 }}>
+          <ParatimeSelector disabled={searchHasFocus} />
+        </Box>
+      </Content>
+      <FooterStyled>
+        <Footer />
+      </FooterStyled>
     </HomepageLayout>
   )
 }

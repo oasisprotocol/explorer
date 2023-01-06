@@ -4,11 +4,13 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { useConstant } from '../../hooks/useConstant'
 
 export const Footer: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const currentYear = useConstant(() => new Date().getFullYear())
 
   return (
     <footer>
@@ -20,7 +22,7 @@ export const Footer: FC = () => {
         )}
 
         <Typography variant="footer">
-          {isMobile ? t('footer.mobileTitle') : t('footer.title')} | 2022
+          {isMobile ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
         </Typography>
       </Box>
     </footer>
