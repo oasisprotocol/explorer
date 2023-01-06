@@ -6,17 +6,17 @@ import paratimeSelectorGlobe from './images/paratime-selector-globe.svg'
 import { Graph } from './Graph'
 import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
-import { ParatimeSelectorStep } from './types'
-import { ParatimeSelectorUtils } from './paratime-selector-utils'
+import { ParaTimeSelectorStep } from './types'
+import { ParaTimeSelectorUtils } from './para-time-selector-utils'
 
-interface ParatimeSelectorProps {
+interface ParaTimeSelectorProps {
   disabled: boolean
 }
 
-const ParatimeSelectorGlow = styled(Box, {
+const ParaTimeSelectorGlow = styled(Box, {
   shouldForwardProp: (prop: string) =>
-    !(['disabled'] as (keyof ParatimeSelectorProps)[]).includes(prop as keyof ParatimeSelectorProps),
-})<ParatimeSelectorProps>(({ disabled }) => ({
+    !(['disabled'] as (keyof ParaTimeSelectorProps)[]).includes(prop as keyof ParaTimeSelectorProps),
+})<ParaTimeSelectorProps>(({ disabled }) => ({
   position: 'relative',
   width: '80vh',
   height: '80vh',
@@ -32,7 +32,7 @@ const ParatimeSelectorGlow = styled(Box, {
     : {}),
 }))
 
-const ParatimeSelectorGlobe = styled(Box)(() => ({
+const ParaTimeSelectorGlobe = styled(Box)(() => ({
   position: 'absolute',
   width: '65%',
   paddingBottom: '65%',
@@ -57,19 +57,19 @@ const ExploreBtn = styled(Button)(({ theme }) => ({
   width: 'max-content',
 }))
 
-const ParatimeSelectorCmp: FC<ParatimeSelectorProps> = ({ disabled }) => {
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
-  const [step, setStep] = useState<ParatimeSelectorStep>(ParatimeSelectorStep.ENABLE_EXPLORE)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ENABLE_EXPLORE)
 
   const onExploreClick = () => {
-    setStep(ParatimeSelectorStep.EXPLORE)
+    setStep(ParaTimeSelectorStep.EXPLORE)
   }
 
   return (
-    <ParatimeSelectorGlow disabled={disabled}>
-      <ParatimeSelectorGlobe>
-        <Graph disabled={disabled} transparent={ParatimeSelectorUtils.getIsGraphTransparent(step)} />
-        {ParatimeSelectorUtils.showExploreBtn(step) && (
+    <ParaTimeSelectorGlow disabled={disabled}>
+      <ParaTimeSelectorGlobe>
+        <Graph disabled={disabled} transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)} />
+        {ParaTimeSelectorUtils.showExploreBtn(step) && (
           <ExploreBtn
             color="secondary"
             variant="contained"
@@ -79,9 +79,9 @@ const ParatimeSelectorCmp: FC<ParatimeSelectorProps> = ({ disabled }) => {
             {t('home.exploreBtnText')}
           </ExploreBtn>
         )}
-      </ParatimeSelectorGlobe>
-    </ParatimeSelectorGlow>
+      </ParaTimeSelectorGlobe>
+    </ParaTimeSelectorGlow>
   )
 }
 
-export const ParatimeSelector = memo(ParatimeSelectorCmp)
+export const ParaTimeSelector = memo(ParaTimeSelectorCmp)

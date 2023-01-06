@@ -1,4 +1,4 @@
-export enum ParatimeSelectorStep {
+export enum ParaTimeSelectorStep {
   /**
    * Animation in progress
    */

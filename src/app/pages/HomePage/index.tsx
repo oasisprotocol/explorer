@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
-import { ParatimeSelector } from './ParatimeSelector'
+import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import { useNavigate } from 'react-router-dom'
 import { SearchUtils } from '../../components/Search/search-utils'
@@ -82,7 +82,7 @@ export const HomePage: FC = () => {
           <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
         </Box>
         <Box sx={{ zIndex: 1 }}>
-          <ParatimeSelector disabled={searchHasFocus} />
+          <ParaTimeSelector disabled={searchHasFocus} />
         </Box>
       </Content>
       <FooterStyled>
