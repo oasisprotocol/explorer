@@ -38,4 +38,8 @@ export const routes: RouteObject[] = [
       },
     ])
     .flat(),
+  {
+    path: `/blocks/:blockHeight`,
+    element: <BlockDetailPage />,
+  },
 ]

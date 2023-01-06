@@ -9,8 +9,10 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
 import { ParatimeSelector } from './ParatimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
+import { useNavigate } from 'react-router-dom'
+import { SearchUtils } from '../../components/Search/search-utils'
 
-const HomepageLayout = styled(Box)(({ theme }) => ({
+const HomepageLayout = styled(Box)(() => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -44,13 +46,27 @@ const FooterStyled = styled(Box)(() => ({
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [searchHasFocus, setSearchHasFocus] = useState(false)
 
-  const onSearchSubmit = useCallback((searchTerm: string) => {}, [])
+  const onSearchSubmit = useCallback(
+    (searchTerm: string) => {
+      try {
+        const navigateTo = SearchUtils.navigateTo(searchTerm)
+        navigate(navigateTo)
+      } catch (ex) {
+        console.error(ex)
+      }
+    },
+    [navigate],
+  )
 
-  const onFocusChange = useCallback((hasFocus: boolean) => {
-    setSearchHasFocus(hasFocus)
-  }, [])
+  const onFocusChange = useCallback(
+    (hasFocus: boolean) => {
+      setSearchHasFocus(hasFocus)
+    },
+    [setSearchHasFocus],
+  )
 
   return (
     <HomepageLayout>
