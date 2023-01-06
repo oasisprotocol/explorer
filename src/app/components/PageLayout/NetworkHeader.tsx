@@ -8,12 +8,12 @@ import CheckIcon from '@mui/icons-material/Check'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import blockchainImage from './images/blockchain.svg'
-import { Circle } from '../Circle'
-import { emeraldRoute } from '../../../routes'
 import { COLORS } from '../../../styles/theme/colors'
+import { ParaTime } from '../../../config'
+import { Circle } from '../Circle'
 
 const getLabel = (t: TFunction, pathname: string) => {
-  if (pathname.startsWith(emeraldRoute)) {
+  if (pathname.startsWith(`/${ParaTime.Emerald}`)) {
     return t('common.emerald')
   }
 }

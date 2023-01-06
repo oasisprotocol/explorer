@@ -167,6 +167,17 @@ export const defaultTheme = createTheme({
           }),
         },
         {
+          props: { color: 'secondary', variant: 'text' },
+          style: () => ({
+            color: COLORS.white,
+            borderWidth: '0',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }),
+        },
+        {
           props: { color: 'tertiary' },
           style: () => ({
             borderWidth: '1px',

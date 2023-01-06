@@ -1,17 +1,23 @@
 import { styled } from '@mui/material/styles'
-import { FC, memo, useState } from 'react'
+import { Dispatch, FC, memo, SetStateAction } from 'react'
 import { GraphEndpoint } from './types'
 import { GraphUtils } from './graph-utils'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { ParaTime } from '../../../../../config'
 
-interface GraphProps {
+interface GraphBaseProps {
   disabled?: boolean
   transparent?: boolean
 }
 
-interface GraphSvgProps extends GraphProps {
+interface GraphProps extends GraphBaseProps {
+  // TODO: Consider moving this to a state management solution
+  selectedGraphEndpoint: GraphEndpoint
+  setSelectedGraphEndpoint: Dispatch<SetStateAction<GraphEndpoint>>
+}
+
+interface GraphSvgProps extends GraphBaseProps {
   graphEndpoint: GraphEndpoint
 }
 
@@ -55,10 +61,13 @@ const GraphStyled = styled('svg', {
   transition: 'transform 1s ease-in-out',
 }))
 
-const GraphCmp: FC<GraphProps> = ({ disabled = false, transparent = false }) => {
+const GraphCmp: FC<GraphProps> = ({
+  disabled = false,
+  transparent = false,
+  selectedGraphEndpoint,
+  setSelectedGraphEndpoint,
+}) => {
   const navigate = useNavigate()
-
-  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
     if (
