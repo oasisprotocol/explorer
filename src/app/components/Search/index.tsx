@@ -55,6 +55,9 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
           inputRef,
           onFocus,
           onBlur,
+          inputProps: {
+            sx: { p: 0 },
+          },
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon />
