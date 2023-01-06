@@ -3,10 +3,11 @@ import { COLORS } from './colors'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    tertiary: Palette['primary'];
+    tertiary: Palette['primary']
   }
+
   interface PaletteOptions {
-    tertiary?: PaletteOptions['primary'];
+    tertiary?: PaletteOptions['primary']
   }
 }
 
@@ -368,6 +369,10 @@ export const defaultTheme = createTheme({
         input: {
           padding: '0 !important',
           backgroundColor: COLORS.white,
+          color: COLORS.grayDark,
+          '&::placeholder': {
+            color: 'rgba(49,67,90,0.7)',
+          },
         },
         adornedStart: ({ theme }) => ({
           padding: theme.spacing(4),
