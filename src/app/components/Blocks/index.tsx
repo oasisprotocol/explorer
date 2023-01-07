@@ -3,14 +3,22 @@ import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 
-import { RuntimeBlockList } from '../../../oasis-indexer/generated/api'
+import { RuntimeBlock } from '../../../oasis-indexer/generated/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { intlDateFormat } from '../../utils/dateFormatter'
 import { emeraldRoute } from '../../../routes'
 
-type BlocksProps = RuntimeBlockList & {
+export type TableRuntimeBlock = RuntimeBlock & {
+  markAsNew?: boolean
+}
+
+export type TableRuntimeBlockList = {
+  blocks?: TableRuntimeBlock[]
+}
+
+type BlocksProps = TableRuntimeBlockList & {
   isLoading: boolean
   limit: number
   verbose?: boolean
@@ -111,6 +119,7 @@ export const Blocks = (props: BlocksProps) => {
           ]
         : []),
     ],
+    markAsNew: block.markAsNew,
   }))
 
   return (
