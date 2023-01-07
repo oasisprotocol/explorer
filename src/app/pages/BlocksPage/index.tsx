@@ -28,9 +28,7 @@ export const BlocksPage: FC = () => {
           if (!previousState) {
             return nextState
           }
-          const oldBlocks = previousState.data?.blocks || []
-          const oldBlockIds = new Set<number>()
-          oldBlocks.forEach(block => oldBlockIds.add(block.round!))
+          const oldBlockIds = new Set<number>(previousState.data?.blocks?.map(block => block.round!))
           return {
             ...nextState,
             data: {

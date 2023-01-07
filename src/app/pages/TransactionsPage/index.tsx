@@ -24,13 +24,14 @@ export const TransactionsPage: FC = () => {
           if (!previousState) {
             return nextState
           }
+          const oldTxHashes = new Set(previousState.data?.transactions?.map(tx => tx.hash!))
           return {
             ...nextState,
             data: {
               transactions: nextState.data?.transactions?.map(tx => {
                 return {
                   ...tx,
-                  markAsNew: !previousState.data?.transactions?.some(prevTx => prevTx.hash === tx.hash),
+                  markAsNew: !oldTxHashes.has(tx.hash!),
                 }
               }),
             },
