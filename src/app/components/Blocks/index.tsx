@@ -41,7 +41,6 @@ export const Blocks = (props: BlocksProps) => {
     { content: t('common.table.txs'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.table.gasUsed') }] : []),
     { content: t('common.table.size'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.table.totalSent') }] : []),
   ]
 
   const tableRows = blocks?.map(block => ({
@@ -110,14 +109,6 @@ export const Blocks = (props: BlocksProps) => {
         content: t('common.table.bytes', { value: block.size_bytes }),
         key: 'size',
       },
-      ...(verbose
-        ? [
-            {
-              content: '100 ROSE', // TODO: how do I get total sent?
-              key: 'totalSent',
-            },
-          ]
-        : []),
     ],
     markAsNew: block.markAsNew,
   }))

@@ -22,7 +22,6 @@
       "status": "Status",
       "timestamp": "Timestamp",
       "to": "To",
-      "totalSent": "Total Sent",
       "txnFee": "Txn Fee",
       "txs": "Txs",
       "type": "Type",
