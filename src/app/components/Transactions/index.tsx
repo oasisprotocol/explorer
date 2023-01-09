@@ -93,7 +93,10 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
               pr: 4,
             }}
           >
-            <TrimLinkLabel label={transaction.sender_0!} to="account" />
+            <TrimLinkLabel
+              label={transaction.sender_0!}
+              to={`${emeraldRoute}/account/${transaction.sender_0}`}
+            />
             <StyledCircle>
               <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
             </StyledCircle>
@@ -103,7 +106,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'from',
       },
       {
-        content: <TrimLinkLabel label={transaction.to!} to="account" />,
+        content: <TrimLinkLabel label={transaction.to!} to={`${emeraldRoute}/account/${transaction.to!}`} />,
         key: 'to',
       },
       {
