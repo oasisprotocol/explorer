@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import Skeleton from '@mui/material/Skeleton'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
+import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 // TODO: replace with an appropriate API
@@ -26,47 +24,44 @@ export function BlockDetailPage() {
 
   return (
     <PageLayout>
-      <Card>
-        <CardHeader disableTypography component="h3" title="Block" />
+      <SubPageCard title="Block">
         {isLoading && (
-          <CardContent>
+          <>
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          </CardContent>
+          </>
         )}
         {block && (
-          <CardContent>
-            <StyledDescriptionList titleWidth="200px">
-              <dt>Block</dt>
-              <dd>{block.round}</dd>
+          <StyledDescriptionList titleWidth="200px">
+            <dt>Block</dt>
+            <dd>{block.round}</dd>
 
-              <dt>Age</dt>
-              <dd>
-                {formatDistanceStrict(new Date(block.timestamp!), new Date(), {
-                  addSuffix: true,
-                })}
-              </dd>
+            <dt>Age</dt>
+            <dd>
+              {formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+                addSuffix: true,
+              })}
+            </dd>
 
-              <dt>Size</dt>
-              <dd>{block.size_bytes?.toLocaleString()} bytes</dd>
+            <dt>Size</dt>
+            <dd>{block.size_bytes?.toLocaleString()} bytes</dd>
 
-              <dt>Transactions</dt>
-              <dd>{block.num_transactions} transactions</dd>
+            <dt>Transactions</dt>
+            <dd>{block.num_transactions} transactions</dd>
 
-              <dt>Hash</dt>
-              <dd>
-                <CopyToClipboard value={`0x${block.hash}`} />
-              </dd>
+            <dt>Hash</dt>
+            <dd>
+              <CopyToClipboard value={`0x${block.hash}`} />
+            </dd>
 
-              <dt>Gas Used</dt>
-              <dd>{block.gas_used?.toLocaleString()}</dd>
-            </StyledDescriptionList>
-          </CardContent>
+            <dt>Gas Used</dt>
+            <dd>{block.gas_used?.toLocaleString()}</dd>
+          </StyledDescriptionList>
         )}
-      </Card>
+      </SubPageCard>
     </PageLayout>
   )
 }
