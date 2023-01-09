@@ -5,6 +5,7 @@ import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
+import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 
 export const emeraldRoute = '/emerald'
 
@@ -24,6 +25,10 @@ export const routes: RouteObject[] = [
   {
     path: `${emeraldRoute}/blocks/:blockHeight`,
     element: <BlockDetailPage />,
+  },
+  {
+    path: `${emeraldRoute}/account/:address`,
+    element: <AccountDetailsPage />,
   },
   {
     path: `${emeraldRoute}/transactions`,
