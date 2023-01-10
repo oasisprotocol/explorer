@@ -6,7 +6,7 @@ import { ButtonTypeMap } from '@mui/material/Button/Button'
 export default {
   title: 'Example/Buttons',
   component: Button,
-} as ComponentMeta<typeof Button>
+} satisfies ComponentMeta<typeof Button>
 
 const Template: ComponentStory<typeof Button> = args => <Button {...args} />
 
