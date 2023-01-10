@@ -27,7 +27,7 @@ export const BlockDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard title={t('common.table.block')}>
+      <SubPageCard title={t('common.block')}>
         {isLoading && (
           <>
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
@@ -39,28 +39,28 @@ export const BlockDetailPage: FC = () => {
         )}
         {block && (
           <StyledDescriptionList titleWidth="200px">
-            <dt>{t('common.table.block')}</dt>
+            <dt>{t('common.block')}</dt>
             <dd>{block.round}</dd>
 
-            <dt>{t('common.table.age')}</dt>
+            <dt>{t('common.age')}</dt>
             <dd>
               {formatDistanceStrict(new Date(block.timestamp!), new Date(), {
                 addSuffix: true,
               })}
             </dd>
 
-            <dt>{t('common.table.size')}</dt>
-            <dd>{t('common.table.bytes', { value: block.size_bytes?.toLocaleString() })}</dd>
+            <dt>{t('common.size')}</dt>
+            <dd>{t('common.bytes', { value: block.size_bytes?.toLocaleString() })}</dd>
 
-            <dt>{t('common.table.transactions')}</dt>
-            <dd>{t('common.table.transactionsNumber', { value: block.num_transactions })}</dd>
+            <dt>{t('common.transactions')}</dt>
+            <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
 
-            <dt>{t('common.table.hash')}</dt>
+            <dt>{t('common.hash')}</dt>
             <dd>
               <CopyToClipboard value={`0x${block.hash}`} />
             </dd>
 
-            <dt>{t('common.table.gasUsed')}</dt>
+            <dt>{t('common.gasUsed')}</dt>
             <dd>{block.gas_used?.toLocaleString()}</dd>
           </StyledDescriptionList>
         )}

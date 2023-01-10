@@ -41,15 +41,15 @@ type TransactionProps = {
 export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination = true, transactions }) => {
   const { t } = useTranslation()
   const tableColumns = [
-    { content: t('common.table.status') },
-    { content: t('common.table.hash') },
-    { content: t('common.table.block') },
-    { content: t('common.table.age') },
-    { content: t('common.table.type') },
-    { content: t('common.table.from'), width: '150px' },
-    { content: t('common.table.to'), width: '150px' },
-    { content: t('common.table.txnFee') },
-    { align: TableCellAlign.Right, content: t('common.table.value') },
+    { content: t('common.status') },
+    { content: t('common.hash') },
+    { content: t('common.block') },
+    { content: t('common.age') },
+    { content: t('common.type') },
+    { content: t('common.from'), width: '150px' },
+    { content: t('common.to'), width: '150px' },
+    { content: t('common.txnFee') },
+    { align: TableCellAlign.Right, content: t('common.value') },
   ]
   const tableRows = transactions?.map(transaction => ({
     key: transaction.hash!,
@@ -108,12 +108,12 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       },
       {
         align: TableCellAlign.Right,
-        content: t('common.table.valueInRose', { value: transaction.fee_amount }),
+        content: t('common.valueInRose', { value: transaction.fee_amount }),
         key: 'fee_amount',
       },
       {
         align: TableCellAlign.Right,
-        content: t('common.table.valueInRose', { value: transaction.amount }),
+        content: t('common.valueInRose', { value: transaction.amount }),
         key: 'value',
       },
     ],
