@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
 interface Props {
   /**
@@ -31,27 +32,23 @@ const InlineDescriptionList = styled('dl', {
 `
 
 export const StyledDescriptionList = styled(InlineDescriptionList)`
-  dt {
-    ${({ theme }) => theme.typography.body1}
-    color: #31435a;
-
+  && dt,
+  && dd {
     padding-top: ${({ theme }) => theme.spacing(4)};
     padding-bottom: ${({ theme }) => theme.spacing(4)};
-    box-shadow: 0px 1px 0px #f4f5f7;
+    font-size: 14px;
+
+    box-shadow: 0px 1px 0px ${COLORS.grayLight};
     :last-of-type {
       box-shadow: none;
     }
   }
 
-  dd {
-    ${({ theme }) => theme.typography.body1}
-    color: #000062;
+  dt {
+    color: ${COLORS.grayDark};
+  }
 
-    padding-top: ${({ theme }) => theme.spacing(4)};
-    padding-bottom: ${({ theme }) => theme.spacing(4)};
-    box-shadow: 0px 1px 0px #f4f5f7;
-    :last-of-type {
-      box-shadow: none;
-    }
+  dd {
+    color: ${COLORS.brandExtraDark};
   }
 `
