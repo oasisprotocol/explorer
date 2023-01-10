@@ -1,13 +1,12 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
-
 import logotype from './images/logo.svg'
+import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
+import { useTranslation } from 'react-i18next'
 
 export const Logotype: FC = () => {
   const { t } = useTranslation()

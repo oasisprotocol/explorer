@@ -1,11 +1,6 @@
 import { styled, css } from '@mui/material/styles'
 import { FC, memo } from 'react'
-
-export enum ArrowDirection {
-  UP,
-  DOWN,
-  RIGHT,
-}
+import { ArrowDirection } from './types'
 
 interface ArrowProps {
   arrowDirection?: ArrowDirection
@@ -14,6 +9,7 @@ interface ArrowProps {
 const ArrowSvgIcon = styled('svg')<ArrowProps>(
   ({ arrowDirection }) => css`
     ${arrowDirection === ArrowDirection.DOWN && `transform: rotate(180deg)`}
+    ${arrowDirection === ArrowDirection.LEFT && `transform: rotate(-90deg)`}
     ${arrowDirection === ArrowDirection.RIGHT && `transform: rotate(90deg)`}
   `,
 )
