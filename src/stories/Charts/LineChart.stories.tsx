@@ -7,7 +7,7 @@ import { intlDateFormat } from '../../app/utils/dateFormatter'
 export default {
   title: 'Example/Charts/LineChart',
   component: LineChart,
-} as ComponentMeta<typeof LineChart>
+} satisfies ComponentMeta<typeof LineChart>
 
 interface TimeDataItem {
   x: Date
