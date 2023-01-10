@@ -246,17 +246,17 @@ export const defaultTheme = createTheme({
       variants: [
         {
           props: { variant: 'content' },
-          style: () => ({
+          style: ({ theme }) => ({
             backgroundColor: COLORS.brightGray,
             boxShadow: 'none',
             color: COLORS.darkBlueGray,
+            padding: theme.spacing(4),
           }),
         },
       ],
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: () => ({
           borderRadius: 12,
-          padding: theme.spacing(4),
         }),
       },
     },
