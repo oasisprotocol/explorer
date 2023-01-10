@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { staking } from '@oasisprotocol/client'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -12,10 +13,18 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { Transactions } from '../../components/Transactions'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { JazzIcon } from '../../components/JazzIcon'
 import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 
+export const addressToNumber = (address: string) => {
+  // https://github.com/oasisprotocol/oasis-wallet-ext/blob/da7ad67/src/popup/component/AccountIcon/index.js#L26
+  const addressU8 = staking.addressFromBech32(address)
+  const seed = addressU8[20] | (addressU8[19] << 8) | (addressU8[18] << 16) | (addressU8[17] << 24)
+
+  return seed
+}
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
@@ -38,7 +47,9 @@ export const AccountDetailsPage: FC = () => {
         {account && (
           <CardContent>
             <StyledDescriptionList>
-              <dt>icon</dt>
+              <dt>
+                <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address!)} />
+              </dt>
               <dd>
                 <CopyToClipboard value={account.address!} />
               </dd>
