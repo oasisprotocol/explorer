@@ -1,4 +1,4 @@
-export function trimLongString(value: string, trimStart = 10, trimEnd = 8, ellipsis = '...') {
+export function trimLongString(value: string, trimStart = 6, trimEnd = 6, ellipsis = '...') {
   if (!value) {
     return
   }

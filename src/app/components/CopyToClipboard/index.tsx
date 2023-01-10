@@ -8,10 +8,11 @@ import IconButton from '@mui/material/IconButton'
 const clipboardTooltipDuration = 2000
 
 type CopyToClipboardProps = {
+  label?: string
   value: string
 }
 
-export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value }) => {
+export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
   const { t } = useTranslation()
   let timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
@@ -42,7 +43,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value }) => {
       onClick={handleCopyToClipboard}
       sx={{ display: 'inline-flex', alignItems: 'center' }}
     >
-      {value}
+      {label || value}
       <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
         <IconButton color="inherit" aria-label={ariaLabel}>
           <ContentCopyIcon fontSize="small" />

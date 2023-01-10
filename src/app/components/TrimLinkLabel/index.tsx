@@ -13,7 +13,7 @@ export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   return (
     <Tooltip arrow placement="top" title={label}>
       <Link component={RouterLink} to={to}>
-        {trimLongString(label, 6, 6)}
+        {trimLongString(label)}
       </Link>
     </Tooltip>
   )
