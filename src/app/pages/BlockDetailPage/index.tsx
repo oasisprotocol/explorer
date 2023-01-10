@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Skeleton from '@mui/material/Skeleton'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -21,6 +23,8 @@ function useGetEmeraldBlockByHeight(blockHeight: number) {
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetEmeraldBlockByHeight(blockHeight)
   const block = data.data
@@ -38,7 +42,7 @@ export const BlockDetailPage: FC = () => {
           </>
         )}
         {block && (
-          <StyledDescriptionList titleWidth="200px">
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.block')}</dt>
             <dd>{block.round}</dd>
 

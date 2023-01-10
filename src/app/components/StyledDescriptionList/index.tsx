@@ -31,24 +31,26 @@ const InlineDescriptionList = styled('dl', {
   }
 `
 
-export const StyledDescriptionList = styled(InlineDescriptionList)`
-  && dt,
-  && dd {
-    padding-top: ${({ theme }) => theme.spacing(4)};
-    padding-bottom: ${({ theme }) => theme.spacing(4)};
-    font-size: 14px;
-
-    box-shadow: 0px 1px 0px ${COLORS.grayLight};
-    :last-of-type {
-      box-shadow: none;
-    }
-  }
-
-  dt {
-    color: ${COLORS.grayDark};
-  }
-
-  dd {
-    color: ${COLORS.brandExtraDark};
-  }
-`
+export const StyledDescriptionList = styled(InlineDescriptionList)(({ theme }) => ({
+  'dt, dd': {
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '14px',
+    boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
+    ':last-of-type': {
+      boxShadow: 'none',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: `${theme.spacing(3)} 0`,
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: `${theme.spacing(4)} 0`,
+    },
+  },
+  dt: {
+    color: COLORS.grayDark,
+  },
+  dd: {
+    color: COLORS.brandExtraDark,
+  },
+}))
