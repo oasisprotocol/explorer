@@ -22,6 +22,8 @@
       "status": "Status",
       "timestamp": "Timestamp",
       "to": "To",
+      "transactions": "Transactions",
+      "transactionsNumber": "{{value}} transactions",
       "txnFee": "Txn Fee",
       "txs": "Txs",
       "type": "Type",

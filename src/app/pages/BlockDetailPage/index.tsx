@@ -1,3 +1,5 @@
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Skeleton from '@mui/material/Skeleton'
@@ -17,14 +19,15 @@ function useGetEmeraldBlockByHeight(blockHeight: number) {
   }
 }
 
-export function BlockDetailPage() {
+export const BlockDetailPage: FC = () => {
+  const { t } = useTranslation()
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetEmeraldBlockByHeight(blockHeight)
   const block = data.data
 
   return (
     <PageLayout>
-      <SubPageCard title="Block">
+      <SubPageCard title={t('common.table.block')}>
         {isLoading && (
           <>
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
@@ -36,28 +39,28 @@ export function BlockDetailPage() {
         )}
         {block && (
           <StyledDescriptionList titleWidth="200px">
-            <dt>Block</dt>
+            <dt>{t('common.table.block')}</dt>
             <dd>{block.round}</dd>
 
-            <dt>Age</dt>
+            <dt>{t('common.table.age')}</dt>
             <dd>
               {formatDistanceStrict(new Date(block.timestamp!), new Date(), {
                 addSuffix: true,
               })}
             </dd>
 
-            <dt>Size</dt>
-            <dd>{block.size_bytes?.toLocaleString()} bytes</dd>
+            <dt>{t('common.table.size')}</dt>
+            <dd>{t('common.table.bytes', { value: block.size_bytes?.toLocaleString() })}</dd>
 
-            <dt>Transactions</dt>
-            <dd>{block.num_transactions} transactions</dd>
+            <dt>{t('common.table.transactions')}</dt>
+            <dd>{t('common.table.transactionsNumber', { value: block.num_transactions })}</dd>
 
-            <dt>Hash</dt>
+            <dt>{t('common.table.hash')}</dt>
             <dd>
               <CopyToClipboard value={`0x${block.hash}`} />
             </dd>
 
-            <dt>Gas Used</dt>
+            <dt>{t('common.table.gasUsed')}</dt>
             <dd>{block.gas_used?.toLocaleString()}</dd>
           </StyledDescriptionList>
         )}
