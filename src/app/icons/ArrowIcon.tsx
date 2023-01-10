@@ -22,7 +22,7 @@ const ArrowIcon: FC<ArrowProps> = ({ arrowDirection = ArrowDirection.UP }) => {
   return (
     <ArrowSvgIcon
       arrowDirection={arrowDirection}
-      width="8"
+      width="13"
       height="13"
       viewBox="0 0 8 13"
       fill="none"
