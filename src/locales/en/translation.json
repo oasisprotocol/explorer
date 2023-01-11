@@ -1,4 +1,8 @@
 {
+  "account": {
+    "title": "Account",
+    "transactionsListTitle": "Account Transactions"
+  },
   "averageTransactionSize": {
     "header": "Average Transaction Size"
   },
