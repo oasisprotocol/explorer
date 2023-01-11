@@ -3,10 +3,10 @@ import { COLORS } from './colors'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    tertiary: Palette['primary'];
+    tertiary: Palette['primary']
   }
   interface PaletteOptions {
-    tertiary?: PaletteOptions['primary'];
+    tertiary?: PaletteOptions['primary']
   }
 }
 
@@ -218,6 +218,10 @@ export const defaultTheme = createTheme({
         },
         label: {
           padding: 0,
+        },
+        icon: {
+          marginLeft: 0,
+          marginRight: 0,
         },
       },
     },
