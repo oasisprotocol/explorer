@@ -6,7 +6,7 @@ import { ButtonTypeMap } from '@mui/material/Button/Button'
 export default {
   title: 'Example/Buttons',
   component: Button,
-} as ComponentMeta<typeof Button>
+} satisfies ComponentMeta<typeof Button>
 
 const Template: ComponentStory<typeof Button> = args => <Button {...args} />
 
@@ -19,7 +19,7 @@ Primary.args = {
 Primary.argTypes = {
   size: {
     control: 'select',
-    options: ['small', 'medium', 'large'] as unknown as ButtonTypeMap['props']['size'],
+    options: ['small', 'medium', 'large'] satisfies ButtonTypeMap['props']['size'][],
   },
 }
 
@@ -29,10 +29,10 @@ Secondary.args = {
   color: 'secondary',
   size: 'small',
 }
-Primary.argTypes = {
+Secondary.argTypes = {
   size: {
     control: 'select',
-    options: ['small', 'medium', 'large'] as unknown as ButtonTypeMap['props']['size'],
+    options: ['small', 'medium', 'large'] satisfies ButtonTypeMap['props']['size'][],
   },
 }
 
@@ -42,9 +42,9 @@ Tertiary.args = {
   color: 'tertiary',
   size: 'small',
 }
-Primary.argTypes = {
+Tertiary.argTypes = {
   size: {
     control: 'select',
-    options: ['small', 'medium', 'large'] as unknown as ButtonTypeMap['props']['size'],
+    options: ['small', 'medium', 'large'] satisfies ButtonTypeMap['props']['size'][],
   },
 }
