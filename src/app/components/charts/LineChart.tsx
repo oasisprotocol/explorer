@@ -3,7 +3,6 @@ import { Margin } from 'recharts/types/util/types'
 import { COLORS } from '../../../styles/theme/colors'
 import { memo, ReactElement } from 'react'
 import { Formatters, TooltipContent } from './Tooltip'
-import ActiveDotIcon from '../../icons/ActiveDotIcon'
 
 interface LineChartProps<T extends object> extends Formatters {
   data: T[]
@@ -27,7 +26,7 @@ const LineChartCmp = <T extends object>({
         stroke={COLORS.brandExtraDark}
         strokeWidth={strokeWidth}
         dot={false}
-        activeDot={<ActiveDotIcon />}
+        activeDot={{ r: 5, fill: '#000062', strokeWidth: 20, stroke: '#0000621A' }}
       />
       <Tooltip
         cursor={false}
