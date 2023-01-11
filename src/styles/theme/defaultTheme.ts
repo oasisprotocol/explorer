@@ -431,6 +431,23 @@ export const defaultTheme = createTheme({
         },
       ],
     },
+    MuiPagination: {
+      variants: [
+        {
+          props: { showFirstButton: true, showLastButton: true },
+          style: {
+            // Swap First and Previous page buttons
+            'li:nth-of-type(2)': {
+              order: -1,
+            },
+            // Swap Last and Next page buttons
+            'li:nth-last-of-type(2)': {
+              order: 1,
+            },
+          },
+        },
+      ],
+    },
     MuiPaginationItem: {
       variants: [
         {
