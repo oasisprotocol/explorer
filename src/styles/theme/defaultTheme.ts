@@ -431,5 +431,28 @@ export const defaultTheme = createTheme({
         },
       ],
     },
+    MuiPaginationItem: {
+      variants: [
+        {
+          props: { selected: false },
+          style: {
+            color: COLORS.brandExtraDark,
+          },
+        },
+        {
+          props: { selected: true },
+          style: {
+            backgroundColor: 'unset !important',
+            color: COLORS.disabledPagination,
+          },
+        },
+        {
+          props: { type: 'page' },
+          style: {
+            minWidth: 0,
+          },
+        },
+      ],
+    },
   },
 })

@@ -1,6 +1,8 @@
+import Pagination from '@mui/material/Pagination'
+import PaginationItem from '@mui/material/PaginationItem'
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
-import { Pagination } from '../Pagination'
 
 type TablePaginationProps = {
   /** Number of pages */
@@ -10,6 +12,7 @@ type TablePaginationProps = {
 }
 
 export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber }) => {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const offsetSearchQuery = searchParams.get('offset')
   const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
@@ -30,6 +33,19 @@ export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber })
           setSearchParams(searchParams)
         }
       }}
+      renderItem={item => (
+        <PaginationItem
+          slots={{
+            first: () => <>{t('pagination.first')}</>,
+            last: () => <>{t('pagination.last')}</>,
+          }}
+          {...item}
+        />
+      )}
+      showFirstButton
+      showLastButton
+      size="small"
+      sx={{ marginTop: 5 }}
     />
   )
 }
