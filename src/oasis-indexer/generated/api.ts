@@ -20,13 +20,11 @@ import type {
   UseQueryResult,
   QueryKey
 } from '@tanstack/react-query'
-export type GetConsensusStatsDailyVolumeParams = { limit?: number; offset?: number };
-
-export type GetConsensusStatsTpsParams = { limit?: number; offset?: number };
+export type GetConsensusStatsTxVolumeParams = { limit?: number; offset?: number; bucket_size_seconds?: number };
 
 export type GetEmeraldTokensParams = { limit?: number; offset?: number };
 
-export type GetEmeraldTransactionsParams = { limit?: number; offset?: number; block?: number };
+export type GetEmeraldTransactionsParams = { limit?: number; offset?: number; block?: number; rel?: string };
 
 export type GetEmeraldBlocksParams = { limit?: number; offset?: number; from?: number; to?: number; after?: string; before?: string };
 
@@ -43,6 +41,33 @@ export type GetConsensusValidatorsParams = { limit?: number; offset?: number };
 export type GetConsensusEntitiesEntityIdNodesParams = { limit?: number; offset?: number };
 
 export type GetConsensusEntitiesParams = { limit?: number; offset?: number };
+
+export type GetConsensusEventsType = typeof GetConsensusEventsType[keyof typeof GetConsensusEventsType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetConsensusEventsType = {
+  governanceproposal_executed: 'governance.proposal_executed',
+  governanceproposal_finalized: 'governance.proposal_finalized',
+  governanceproposal_submitted: 'governance.proposal_submitted',
+  governancevote: 'governance.vote',
+  registryentity: 'registry.entity',
+  registrynode_unfrozen: 'registry.node_unfrozen',
+  registrynode: 'registry.node',
+  registryruntime: 'registry.runtime',
+  roothashexecution_discrepancy: 'roothash.execution_discrepancy',
+  roothashexecutor_committed: 'roothash.executor_committed',
+  roothashfinalized: 'roothash.finalized',
+  stakingallowance_change: 'staking.allowance_change',
+  stakingburn: 'staking.burn',
+  stakingescrowadd: 'staking.escrow.add',
+  stakingescrowdebonding_start: 'staking.escrow.debonding_start',
+  stakingescrowreclaim: 'staking.escrow.reclaim',
+  stakingescrowtake: 'staking.escrow.take',
+  stakingtransfer: 'staking.transfer',
+} as const;
+
+export type GetConsensusEventsParams = { limit?: number; offset?: number; block?: number; tx_index?: number; tx_hash?: string; rel?: string; type?: GetConsensusEventsType };
 
 export type GetConsensusTransactionsMethod = typeof GetConsensusTransactionsMethod[keyof typeof GetConsensusTransactionsMethod];
 
@@ -102,27 +127,43 @@ export interface VolumeList {
   volumes?: Volume[];
 }
 
-export interface TpsCheckpoint {
-  /** The timestamp anchoring this TPS measurement window. */
-  timestamp?: string;
-  /** The transaction volume in this measurement window. */
-  tx_volume?: number;
-}
-
 /**
- * A list of TPS checkpoint windows.
+ * The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
 
  */
-export interface TpsCheckpoints {
-  /** The length, in minutes, of each TPS measurement window. */
-  interval_minutes?: number;
-  /** The list of TPS checkpoint windows. */
-  tps_checkpoints?: TpsCheckpoint[];
-}
+export type RuntimeTokenType = typeof RuntimeTokenType[keyof typeof RuntimeTokenType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RuntimeTokenType = {
+  ERC20: 'ERC20',
+  ERC721: 'ERC721',
+  ERC1155: 'ERC1155',
+} as const;
 
 export interface RuntimeToken {
   /** The Oasis address of this token's contract. */
-  token_addr?: string;
+  contract_addr?: string;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type?: RuntimeTokenType;
+  /** The total number of base units available. */
+  total_supply?: string;
   /** The number of addresses that have a nonzero balance of this token,
 as calculated from Transfer events.
  */
@@ -144,30 +185,41 @@ export interface RuntimeTokenList {
 export interface RuntimeTransaction {
   /** The block round at which this transaction was executed. */
   round?: number;
+  /** The second-granular consensus time when this tx's block was proposed. */
+  timestamp?: string;
   /** The Oasis cryptographic hash of this transaction's encoding. */
   hash?: string;
   /** The Ethereum cryptographic hash of this transaction's encoding.
 Absent for non-Ethereum-format transactions.
  */
   eth_hash?: string;
-  /** The Oasis address of this transaction's 0th signer. */
+  /** The Oasis address of this transaction's 0th signer.
+Unlike Ethereum, Oasis natively supports multiple-signature transactions.
+However, the great majority of transactions only have a single signer in practice.
+Retrieving the other signers is currently not supported by this API.
+ */
   sender_0?: string;
   /** The nonce used with this transaction's 0th signer, to prevent replay. */
   nonce_0?: number;
   /** The fee that this transaction's sender committed to pay to execute
 it (total, native denomination, ParaTime base units, as a string).
  */
-  fee_amount?: string;
+  fee?: string;
   /** The maximum gas that this transaction's sender committed to use to
 execute it.
  */
-  fee_gas?: number;
+  gas_limit?: number;
   /** The method that was called. */
   method?: string;
   /** The method call body. */
   body?: string;
   /** A reasonable "to" Oasis address associated with this transaction,
-if applicable. The meaning varies based on the transaction method.
+if applicable. The meaning varies based on the transaction method. Some notable examples:
+  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is a consensus (!) account receiving the funds.
+  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
+  - For `method = "evm.Call"`, this is the address of the called smart contract
  */
   to?: string;
   /** A reasonable "amount" associated with this transaction, if
@@ -261,7 +313,7 @@ export interface Proposal {
   /** The epoch at which the proposed upgrade will happen. */
   epoch?: number;
   /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal. 
+cancelling an existing proposal.
  */
   cancels?: number;
   /** The epoch at which this proposal was created. */
@@ -310,14 +362,85 @@ export interface Allowance {
 }
 
 /**
+ * Name of the runtime.
+ */
+export type RuntimeBalanceRuntime = typeof RuntimeBalanceRuntime[keyof typeof RuntimeBalanceRuntime];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RuntimeBalanceRuntime = {
+  emerald: 'emerald',
+} as const;
+
+/**
+ * Balance of an account in a runtime.
+ */
+export interface RuntimeBalance {
+  /** Number of base units held; as a string. */
+  amount?: string;
+  /** Name of the runtime. */
+  runtime?: RuntimeBalanceRuntime;
+  /** Unique dentifier for the token. For EVM tokens, this is their eth address. */
+  token_id?: Blob;
+  /** The token ticker symbol. Not guaranteed to be unique across distinct tokens. */
+  token_symbol?: string;
+}
+
+export type AddressDerivationContext = typeof AddressDerivationContext[keyof typeof AddressDerivationContext];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const AddressDerivationContext = {
+  'oasis-coreaddress_staking': 'oasis-core/address: staking',
+  'oasis-runtime-sdkaddress_secp256k1eth': 'oasis-runtime-sdk/address: secp256k1eth',
+  'oasis-runtime-sdkaddress_sr25519': 'oasis-runtime-sdk/address: sr25519',
+  'oasis-runtime-sdkaddress_multisig': 'oasis-runtime-sdk/address: multisig',
+  'oasis-runtime-sdkaddress_module': 'oasis-runtime-sdk/address: module',
+  'oasis-runtime-sdkaddress_runtime': 'oasis-runtime-sdk/address: runtime',
+} as const;
+
+/**
+ * The data from which a consensus-style address (`oasis1...`)
+was derived. Notably, for EVM runtimes like Sapphire,
+this links the oasis address and the Ethereum address.
+
+Oasis addresses are derived from a piece of data, such as an ed25519
+public key or an Ethereum address. For example, [this](https://github.com/oasisprotocol/oasis-sdk/blob/b37e6da699df331f5a2ac62793f8be099c68469c/client-sdk/go/helpers/address.go#L90-L91)
+is how an Ethereum is converted to an oasis address. The type of underlying data usually also
+determines how the signatuers for this address are verified.
+
+Consensus supports only "staking addresses" (`context="oasis-core/address: staking"`
+below; always ed25519-backed).
+Runtimes support all types. This means that every consensus address is also
+valid in every runtime. For example, in EVM runtimes, you can use staking
+addresses, but only with oasis tools (e.g. a wallet); EVM contracts such as
+ERC20 tokens or tools such as Metamask cannot interact with staking addresses.
+
+ */
+export interface AddressPreimage {
+  /** The method by which the oasis address was derived from `address_data`.
+ */
+  context?: AddressDerivationContext;
+  /** Version of the `context`. */
+  context_version?: number | null;
+  /** The hex-encoded data from which the oasis address was derived.
+When `context = "oasis-runtime-sdk/address: secp256k1eth"`, this
+is the Ethereum address (without the leading `0x`). All-lowercase.
+ */
+  address_data?: string;
+}
+
+/**
  * A consensus layer account.
 
  */
 export interface Account {
   /** The staking address for this account. */
   address?: string;
+  address_preimage?: AddressPreimage;
   /** A nonce used to prevent replay. */
   nonce?: number;
+  runtime_balances?: RuntimeBalance[];
   /** The available balance, in base units. */
   available?: number;
   /** The active escrow balance, in base units. */
@@ -448,6 +571,46 @@ export interface EntityList {
 }
 
 /**
+ * The event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
+This object will conform to one of the `*Event` types two levels down
+the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
+
+ */
+export type ConsensusEventBody = { [key: string]: any };
+
+/**
+ * An event emitted by the consensus layer.
+
+ */
+export interface ConsensusEvent {
+  /** The block height at which this event was generated. */
+  block?: number;
+  /** 0-based index of this event's originating transaction within its block.
+Absent if the event did not originate from a transaction.
+ */
+  tx_index?: number | null;
+  /** Hash of this event's originating transaction.
+Absent if the event did not originate from a transaction.
+ */
+  tx_hash?: string | null;
+  /** The event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
+This object will conform to one of the `*Event` types two levels down
+the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
+ */
+  body?: ConsensusEventBody;
+}
+
+/**
+ * A list of consensus events.
+
+ */
+export interface ConsensusEventList {
+  events?: ConsensusEvent[];
+}
+
+/**
  * The method that was called.
  */
 export type TransactionMethod = typeof TransactionMethod[keyof typeof TransactionMethod];
@@ -479,9 +642,17 @@ export const TransactionMethod = {
  */
 export interface Transaction {
   /** The block height at which this transaction was executed. */
-  height?: number;
+  block?: number;
+  /** 0-based index of this transaction in its block */
+  index?: number;
+  /** The second-granular consensus time this tx's block, i.e. roughly when the
+[block was proposed](https://github.com/tendermint/tendermint/blob/v0.34.x/spec/core/data_structures.md#header).
+ */
+  timestamp?: string;
   /** The cryptographic hash of this transaction's encoding. */
   hash?: string;
+  /** The address of who sent this transaction. */
+  sender?: string;
   /** The nonce used with this transaction, to prevent replay. */
   nonce?: number;
   /** The fee that this transaction's sender committed
@@ -491,7 +662,7 @@ to pay to execute it.
   /** The method that was called. */
   method?: TransactionMethod;
   /** The method call body. */
-  body?: string;
+  body?: Blob;
   /** Whether this transaction successfully executed. */
   success?: boolean;
 }
@@ -524,7 +695,7 @@ export interface DebondingDelegation {
 
  */
 export interface DebondingDelegationList {
-  transactions?: DebondingDelegation[];
+  delegations?: DebondingDelegation[];
 }
 
 /**
@@ -545,7 +716,7 @@ export interface Delegation {
 
  */
 export interface DelegationList {
-  transactions?: Delegation[];
+  delegations?: Delegation[];
 }
 
 /**
@@ -559,6 +730,8 @@ export interface Block {
   hash?: string;
   /** The second-granular consensus time. */
   timestamp?: string;
+  /** Number of transactions in the block. */
+  num_transactions?: number;
 }
 
 /**
@@ -782,6 +955,47 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>> = ({ signal }) => getConsensusTransactionsTxHash(txHash, { signal, ...axiosOptions });
 
   const query = useQuery<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>(queryKey, queryFn, {enabled: !!(txHash), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of consensus events.
+ */
+export const getConsensusEvents = (
+    params?: GetConsensusEventsParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ConsensusEventList>> => {
+    return axios.get(
+      `/consensus/events`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+
+export const getGetConsensusEventsQueryKey = (params?: GetConsensusEventsParams,) => [`/consensus/events`, ...(params ? [params]: [])];
+
+    
+export type GetConsensusEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEvents>>>
+export type GetConsensusEventsQueryError = AxiosError<ApiError>
+
+export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = AxiosError<ApiError>>(
+ params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetConsensusEventsQueryKey(params);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEvents>>> = ({ signal }) => getConsensusEvents(params, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1521,80 +1735,39 @@ export const useGetEmeraldTokens = <TData = Awaited<ReturnType<typeof getEmerald
 
 
 /**
- * @summary Returns the consensus layer TPS for each 5 minute interval.
+ * @summary Returns the consensus layer transaction volume at daily granularity
  */
-export const getConsensusStatsTps = (
-    params?: GetConsensusStatsTpsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<TpsCheckpoints>> => {
-    return axios.get(
-      `/consensus/stats/tps`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
-
-export const getGetConsensusStatsTpsQueryKey = (params?: GetConsensusStatsTpsParams,) => [`/consensus/stats/tps`, ...(params ? [params]: [])];
-
-    
-export type GetConsensusStatsTpsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusStatsTps>>>
-export type GetConsensusStatsTpsQueryError = AxiosError<ApiError>
-
-export const useGetConsensusStatsTps = <TData = Awaited<ReturnType<typeof getConsensusStatsTps>>, TError = AxiosError<ApiError>>(
- params?: GetConsensusStatsTpsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusStatsTps>>, TError, TData>, axios?: AxiosRequestConfig}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-
-  const {query: queryOptions, axios: axiosOptions} = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getGetConsensusStatsTpsQueryKey(params);
-
-  
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusStatsTps>>> = ({ signal }) => getConsensusStatsTps(params, { signal, ...axiosOptions });
-
-  const query = useQuery<Awaited<ReturnType<typeof getConsensusStatsTps>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryKey;
-
-  return query;
-}
-
-
-/**
- * @summary Returns the consensus layer daily transaction volume for each day.
- */
-export const getConsensusStatsDailyVolume = (
-    params?: GetConsensusStatsDailyVolumeParams, options?: AxiosRequestConfig
+export const getConsensusStatsTxVolume = (
+    params?: GetConsensusStatsTxVolumeParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<VolumeList>> => {
     return axios.get(
-      `/consensus/stats/daily_volume`,{
+      `/consensus/stats/tx_volume`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetConsensusStatsDailyVolumeQueryKey = (params?: GetConsensusStatsDailyVolumeParams,) => [`/consensus/stats/daily_volume`, ...(params ? [params]: [])];
+export const getGetConsensusStatsTxVolumeQueryKey = (params?: GetConsensusStatsTxVolumeParams,) => [`/consensus/stats/tx_volume`, ...(params ? [params]: [])];
 
     
-export type GetConsensusStatsDailyVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusStatsDailyVolume>>>
-export type GetConsensusStatsDailyVolumeQueryError = AxiosError<ApiError>
+export type GetConsensusStatsTxVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>>
+export type GetConsensusStatsTxVolumeQueryError = AxiosError<ApiError>
 
-export const useGetConsensusStatsDailyVolume = <TData = Awaited<ReturnType<typeof getConsensusStatsDailyVolume>>, TError = AxiosError<ApiError>>(
- params?: GetConsensusStatsDailyVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusStatsDailyVolume>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusStatsTxVolume = <TData = Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError = AxiosError<ApiError>>(
+ params?: GetConsensusStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetConsensusStatsDailyVolumeQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetConsensusStatsTxVolumeQueryKey(params);
 
   
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusStatsDailyVolume>>> = ({ signal }) => getConsensusStatsDailyVolume(params, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>> = ({ signal }) => getConsensusStatsTxVolume(params, { signal, ...axiosOptions });
 
-  const query = useQuery<Awaited<ReturnType<typeof getConsensusStatsDailyVolume>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
