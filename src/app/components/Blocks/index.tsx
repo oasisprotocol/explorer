@@ -32,15 +32,15 @@ export const Blocks = (props: BlocksProps) => {
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
-    { content: t('common.table.fill') },
-    { content: t('common.table.block'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.table.timestamp') }] : []),
-    ...(verbose ? [{ content: t('common.table.height') }] : []),
-    ...(verbose ? [{ content: t('common.table.hash') }] : []),
-    { content: t('common.table.age'), align: TableCellAlign.Right },
-    { content: t('common.table.txs'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.table.gasUsed') }] : []),
-    { content: t('common.table.size'), align: TableCellAlign.Right },
+    { content: t('common.fill') },
+    { content: t('common.block'), align: TableCellAlign.Right },
+    ...(verbose ? [{ content: t('common.timestamp') }] : []),
+    ...(verbose ? [{ content: t('common.height') }] : []),
+    ...(verbose ? [{ content: t('common.hash') }] : []),
+    { content: t('common.age'), align: TableCellAlign.Right },
+    { content: t('common.txs'), align: TableCellAlign.Right },
+    ...(verbose ? [{ content: t('common.gasUsed') }] : []),
+    { content: t('common.size'), align: TableCellAlign.Right },
   ]
 
   const tableRows = blocks?.map(block => ({
@@ -106,7 +106,7 @@ export const Blocks = (props: BlocksProps) => {
         : []),
       {
         align: TableCellAlign.Right,
-        content: t('common.table.bytes', { value: block.size_bytes }),
+        content: t('common.bytes', { value: block.size_bytes }),
         key: 'size',
       },
     ],
