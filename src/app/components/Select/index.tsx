@@ -13,7 +13,6 @@ import chevronDown from '../../icons/chevron-down.svg'
 import { useTranslation } from 'react-i18next'
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  height: '36px',
   minWidth: '135px',
   padding: `${theme.spacing(4)} ${theme.spacing(4)}`,
   borderRadius: '12px',
@@ -52,7 +51,6 @@ const StyledListbox = styled('ul')(({ theme }) => ({
 const StyledOption = styled(OptionUnstyled)(({ theme }) => ({
   boxSizing: 'border-box',
   listStyle: 'none',
-  height: '36px',
   padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
   borderRadius: '12px',
   cursor: 'default',
