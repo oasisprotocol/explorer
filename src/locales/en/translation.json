@@ -87,6 +87,9 @@
       }
     }
   },
+  "transaction": {
+    "header": "Transaction"
+  },
   "transactionStats": {
     "header": "Transactions Per Day",
     "tooltip": "{{value}} tx/day"

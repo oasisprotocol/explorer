@@ -3,6 +3,7 @@ import { HomePage } from './app/pages/HomePage'
 
 import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
+import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
@@ -33,5 +34,9 @@ export const routes: RouteObject[] = [
   {
     path: `${emeraldRoute}/transactions`,
     element: <TransactionsPage />,
+  },
+  {
+    path: `${emeraldRoute}/transactions/:hash`,
+    element: <TransactionDetailPage />,
   },
 ]
