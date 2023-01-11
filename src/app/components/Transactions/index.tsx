@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
-import ArrowIcon, { ArrowDirection } from '../../icons/ArrowIcon'
 import { COLORS } from '../../../styles/theme/colors'
 import { emeraldRoute } from '../../../routes'
 
@@ -98,7 +98,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
               to={`${emeraldRoute}/account/${transaction.sender_0}`}
             />
             <StyledCircle>
-              <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
+              <ArrowForwardIcon fontSize="inherit" />
             </StyledCircle>
           </Box>
         ),
