@@ -16,6 +16,7 @@ const HomepageLayout = styled(Box)(() => ({
   flexDirection: 'column',
   width: '100vw',
   height: '100vh',
+  minHeight: '800px',
   backgroundColor: COLORS.brandDark,
   '&::before': {
     content: '" "',
