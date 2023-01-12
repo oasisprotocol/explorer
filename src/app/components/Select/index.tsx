@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 const StyledButton = styled(Button)(({ theme }) => ({
   height: '36px',
   minWidth: '135px',
-  padding: `${theme.spacing(4)} ${theme.spacing(4)}`,
+  padding: `0 ${theme.spacing(4)}`,
   borderRadius: '12px',
   color: COLORS.white,
   textTransform: 'none',
@@ -50,10 +50,12 @@ const StyledListbox = styled('ul')(({ theme }) => ({
 }))
 
 const StyledOption = styled(OptionUnstyled)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
   boxSizing: 'border-box',
   listStyle: 'none',
   height: '36px',
-  padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
+  padding: `0 ${theme.spacing(4)}`,
   borderRadius: '12px',
   cursor: 'default',
   color: COLORS.white,
