@@ -74,6 +74,8 @@ const ZoomOutBtnFade = styled(Fade)(() => ({
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
+  const exploreBtnTextTranslated = t('home.exploreBtnText')
+
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ENABLE_EXPLORE)
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
 
@@ -110,7 +112,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
             color="secondary"
             variant="contained"
             onClick={onExploreClick}
-            aria-label={t('home.exploreBtnText') ?? undefined}
+            aria-label={exploreBtnTextTranslated}
           >
             {t('home.exploreBtnText')}
           </ExploreBtn>

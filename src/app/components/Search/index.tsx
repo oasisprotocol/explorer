@@ -22,6 +22,9 @@ export interface SearchProps {
 
 const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
   const { t } = useTranslation()
+  const searchPlaceholderTranslated = t('search.placeholder')
+  const searchTermRequiredTranslated = t('search.searchTermRequired')
+
   const inputRef = useRef<HTMLInputElement>(null)
   const [hasError, setHasError] = useState(false)
 
@@ -49,7 +52,7 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
   }
 
   return (
-    <SearchForm onSubmit={onFormSubmit} role="search" aria-label={t('search.placeholder') ?? undefined}>
+    <SearchForm onSubmit={onFormSubmit} role="search" aria-label={searchPlaceholderTranslated}>
       <TextField
         InputProps={{
           inputRef,
@@ -71,10 +74,10 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
             </InputAdornment>
           ),
         }}
-        placeholder={t('search.placeholder') ?? undefined}
+        placeholder={searchPlaceholderTranslated}
         fullWidth
         error={hasError}
-        aria-errormessage={t('search.searchTermRequired') ?? undefined}
+        aria-errormessage={searchTermRequiredTranslated}
       />
     </SearchForm>
     /*TODO: Add error message*/
