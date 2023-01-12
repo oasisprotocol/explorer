@@ -7,7 +7,7 @@ export abstract class SearchUtils {
    * Receives a search term and returns a matching path
    * @param searchTerm
    */
-  static navigateTo(searchTerm: string): string {
+  static getNavigationPath(searchTerm: string): string {
     if (searchTerm.match(SearchUtils.BLOCK_REGEX)) {
       const blockNumber = parseInt(searchTerm, 10)
 

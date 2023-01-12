@@ -50,7 +50,7 @@ export const HomePage: FC = () => {
   const onSearchSubmit = useCallback(
     (searchTerm: string) => {
       try {
-        const navigateTo = SearchUtils.navigateTo(searchTerm)
+        const navigateTo = SearchUtils.getNavigationPath(searchTerm)
         navigate(navigateTo)
       } catch (ex) {
         console.error(ex)
