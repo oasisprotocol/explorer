@@ -3,10 +3,11 @@ import { COLORS } from './colors'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    tertiary: Palette['primary'];
+    tertiary: Palette['primary']
   }
+
   interface PaletteOptions {
-    tertiary?: PaletteOptions['primary'];
+    tertiary?: PaletteOptions['primary']
   }
 }
 
@@ -111,6 +112,15 @@ export const defaultTheme = createTheme({
             color: COLORS.white,
           },
         },
+        containedPrimary: {
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: COLORS.grayMedium,
+          textTransform: 'capitalize',
+        },
+        containedSecondary: {
+          textTransform: 'capitalize',
+        },
       },
       variants: [
         {
@@ -138,6 +148,35 @@ export const defaultTheme = createTheme({
             },
             '&:disabled': {
               border: 'none',
+            },
+          }),
+        },
+        {
+          props: { color: 'secondary', variant: 'contained' },
+          style: () => ({
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: COLORS.grayLight,
+            backgroundColor: COLORS.brandExtraDark,
+            color: COLORS.white,
+            '&:hover': {
+              borderColor: COLORS.brandExtraDark,
+              backgroundColor: COLORS.white,
+              color: COLORS.brandExtraDark,
+            },
+          }),
+        },
+        {
+          props: { color: 'secondary', variant: 'text' },
+          style: () => ({
+            color: COLORS.white,
+            borderWidth: '0',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+            '&:disabled': {
+              backgroundColor: 'transparent',
             },
           }),
         },
@@ -335,6 +374,58 @@ export const defaultTheme = createTheme({
       defaultProps: {
         noSsr: true,
       },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+        input: {
+          backgroundColor: COLORS.white,
+          color: COLORS.grayDark,
+          '&::placeholder': {
+            color: COLORS.grayDark07A,
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+        notchedOutline: {
+          border: 'none',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          borderRadius: '46px',
+          ':focus-within': {
+            boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
+          },
+          backgroundColor: COLORS.white,
+        },
+      },
+    },
+    MuiInputAdornment: {
+      variants: [
+        {
+          props: { position: 'start' },
+          style: ({ theme }) => ({
+            padding: theme.spacing(4),
+          }),
+        },
+        {
+          props: { position: 'end' },
+          style: {
+            height: '100%',
+            maxHeight: '100%',
+          },
+        },
+      ],
     },
   },
 })

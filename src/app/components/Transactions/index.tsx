@@ -9,9 +9,11 @@ import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
-import ArrowIcon, { ArrowDirection } from '../../icons/ArrowIcon'
+import ArrowIcon from '../../icons/ArrowIcon'
 import { COLORS } from '../../../styles/theme/colors'
-import { emeraldRoute } from '../../../routes'
+import { ArrowDirection } from '../../icons/types'
+import { RouteUtils } from '../../utils/route-utils'
+import { ParaTime } from '../../../config'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -65,10 +67,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       },
       {
         content: (
-          <Link
-            component={RouterLink}
-            to={`${emeraldRoute}/blocks/${encodeURIComponent(transaction.round!)}`}
-          >
+          <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round!, ParaTime.Emerald)}>
             {transaction.round}
           </Link>
         ),
@@ -95,7 +94,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
           >
             <TrimLinkLabel
               label={transaction.sender_0!}
-              to={`${emeraldRoute}/account/${transaction.sender_0}`}
+              to={RouteUtils.getAccountRoute(transaction.sender_0!, ParaTime.Emerald)}
             />
             <StyledCircle>
               <ArrowIcon arrowDirection={ArrowDirection.RIGHT} />
@@ -106,7 +105,12 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'from',
       },
       {
-        content: <TrimLinkLabel label={transaction.to!} to={`${emeraldRoute}/account/${transaction.to!}`} />,
+        content: (
+          <TrimLinkLabel
+            label={transaction.to!}
+            to={RouteUtils.getAccountRoute(transaction.to!, ParaTime.Emerald)}
+          />
+        ),
         key: 'to',
       },
       {

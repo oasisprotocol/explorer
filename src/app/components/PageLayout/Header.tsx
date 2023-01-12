@@ -4,6 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
+import { useTranslation } from 'react-i18next'
 
 export const Header: FC = () => {
   const theme = useTheme()
