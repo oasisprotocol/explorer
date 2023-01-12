@@ -387,9 +387,6 @@ export const defaultTheme = createTheme({
             color: COLORS.grayDark07A,
           },
         },
-        adornedStart: ({ theme }) => ({
-          padding: theme.spacing(4),
-        }),
       },
     },
     MuiOutlinedInput: {
