@@ -9,7 +9,7 @@ export default {
   title: 'Example/Table',
   component: Table,
   decorators: [withRouter],
-} as ComponentMeta<typeof Table>
+} satisfies ComponentMeta<typeof Table>
 
 const columns: TableColProps[] = [{ content: 'Status' }, { content: 'Date', align: TableCellAlign.Right }]
 const data = [

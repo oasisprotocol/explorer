@@ -19,11 +19,9 @@ const ColorContainer = styled(Box)(({ theme }) => ({
 }))
 
 const Template: Story = () => {
-  const colorNames = Object.keys(COLORS)
-
   return (
     <ColorContainer>
-      {colorNames.map(colorName => (
+      {Object.entries(COLORS).map(([colorName, colorValue]) => (
         <Box
           key={colorName}
           sx={{
@@ -31,7 +29,7 @@ const Template: Story = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: COLORS[colorName],
+            backgroundColor: colorValue,
             borderRadius: 1,
             width: '100px',
             height: '100px',

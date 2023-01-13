@@ -7,7 +7,7 @@ import { BarChart } from '../../app/components/charts/BarChart'
 export default {
   title: 'Example/Charts/BarChart',
   component: BarChart,
-} as ComponentMeta<typeof BarChart>
+} satisfies ComponentMeta<typeof BarChart>
 
 interface TimeDataItem {
   x: Date

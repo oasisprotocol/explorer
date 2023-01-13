@@ -12,7 +12,7 @@ type TypographyStory = ComponentProps<typeof Typography> & {
 export default {
   title: 'Example/Typography',
   component: Typography,
-} as ComponentMeta<typeof Typography>
+} satisfies ComponentMeta<typeof Typography>
 
 const Template: Story<TypographyStory> = args => {
   const { darkMode } = args
