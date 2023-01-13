@@ -258,6 +258,10 @@ export const defaultTheme = createTheme({
         label: {
           padding: 0,
         },
+        icon: {
+          marginLeft: 0,
+          marginRight: 0,
+        },
       },
     },
     MuiDivider: {
