@@ -1,10 +1,11 @@
 import { FC, FormEvent, memo, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
-import SearchIcon from '../../icons/SearchIcon'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
+import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
+import { COLORS } from '../../../styles/theme/colors'
 
 const SearchForm = styled('form')(() => ({
   width: '100%',
@@ -63,7 +64,7 @@ const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
           },
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon sx={{ color: COLORS.grayMedium }} />
             </InputAdornment>
           ),
           endAdornment: (
