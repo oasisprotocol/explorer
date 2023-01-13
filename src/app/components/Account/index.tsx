@@ -26,7 +26,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <StyledDescriptionList>
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
       <dt>
         <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address!)} />
       </dt>
