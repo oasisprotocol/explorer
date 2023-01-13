@@ -11212,6 +11212,11 @@ react-merge-refs@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
   integrity sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==
 
+react-quick-pinch-zoom@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-4.6.0.tgz#a8652be8e41fe668bb45420e355068f6bf2270ce"
+  integrity sha512-M3woYVzWt8Kh6FCAytBtJJ4KC/5noG98GpI8ZTxTIE2sjR1XRPjV0NpFRhFgxPQpDvD+lkMp63sxP130uhafaw==
+
 react-redux@^8.0.5:
   version "8.0.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.5.tgz#e5fb8331993a019b8aaf2e167a93d10af469c7bd"

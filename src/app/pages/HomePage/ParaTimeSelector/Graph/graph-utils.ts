@@ -4,14 +4,14 @@ export abstract class GraphUtils {
   static getSvgTransform(graphEndpoint: GraphEndpoint): string {
     switch (graphEndpoint) {
       case GraphEndpoint.EMERALD:
-        return 'scale(2) translate(1%, 25%)'
+        return 'scale3d(2, 2, 2) translate3d(1%, 25%, 0)'
       case GraphEndpoint.CIPHER:
-        return 'scale(2) translate(-33%, 10%)'
+        return 'scale3d(2, 2, 2) translate3d(-33%, 10%, 0)'
       case GraphEndpoint.SAPPHIRE:
-        return 'scale(2) translate(23%, -20%)'
+        return 'scale3d(2, 2, 2) translate3d(23%, -20%, 0)'
       case GraphEndpoint.CONSENSUS:
       default:
-        return 'scale(1)'
+        return 'scale3d(1, 1, 1)'
     }
   }
 }
