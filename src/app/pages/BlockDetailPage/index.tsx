@@ -31,7 +31,7 @@ export const BlockDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard title={t('common.block')}>
+      <SubPageCard featured title={t('common.block')}>
         {isLoading && (
           <>
             <Skeleton variant="text" height={30} sx={{ my: 4 }} />
