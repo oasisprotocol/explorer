@@ -1,8 +1,7 @@
 import { FC, memo } from 'react'
-import ArrowIcon from '../../icons/ArrowIcon'
-import { Gain, GainToArrowDirectionMap } from './types'
-import { getGainFromPercentage } from './percentage-gain-utils'
 import { Chip } from '@mui/material'
+import NorthIcon from '@mui/icons-material/North'
+import SouthIcon from '@mui/icons-material/South'
 
 interface PercentageGainProps {
   /**
@@ -13,13 +12,13 @@ interface PercentageGainProps {
 }
 
 const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
-  const gain = getGainFromPercentage(percentage)
+  const gain = percentage >= 0
 
   return (
     <Chip
       sx={{ p: 3 }}
-      color={gain === Gain.POSITIVE ? 'success' : 'error'}
-      icon={<ArrowIcon arrowDirection={GainToArrowDirectionMap[gain]} />}
+      color={gain ? 'success' : 'error'}
+      icon={gain ? <NorthIcon sx={{ fontSize: '14px' }} /> : <SouthIcon sx={{ fontSize: '14px' }} />}
       label={`${percentage}%`}
     />
   )
