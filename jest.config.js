@@ -19,7 +19,7 @@ const config = {
     '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/internals/jest/babelTransform.js',
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@ledgerhq/hw-transport-webusb|cborg|grommet/es6|grommet-icons/es6)/)',
+    '/node_modules/(?!(cborg)/)',
   ],
 }
 

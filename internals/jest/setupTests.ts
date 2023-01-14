@@ -4,22 +4,13 @@
 import '@testing-library/jest-dom/extend-expect'
 
 import 'react-app-polyfill/stable'
-import 'portable-fetch'
-
-import 'jest-styled-components'
 
 // Init i18n for the tests needing it
-import 'locales/i18n'
+import '../../src/locales/i18n'
 
 require('dotenv').config()
-process.env.REACT_APP_LOCALNET = '1'
 
 global.TextEncoder = require('util').TextEncoder
 global.TextDecoder = require('util').TextDecoder
 window.TextDecoder = global.TextDecoder
 window.TextEncoder = global.TextEncoder
-
-global.fetch = require('portable-fetch')
-window.fetch = require('portable-fetch')
-
-global.window.scrollTo = () => {}
