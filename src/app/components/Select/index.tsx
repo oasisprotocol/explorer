@@ -11,9 +11,9 @@ import Box from '@mui/material/Box'
 import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { COLORS } from '../../../styles/theme/colors'
-import chevronUp from '../../icons/chevron-up.svg'
-import chevronDown from '../../icons/chevron-down.svg'
 import { useTranslation } from 'react-i18next'
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -26,18 +26,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   justifyContent: 'space-between',
   [`&.${selectUnstyledClasses.focusVisible}`]: {
     backgroundColor: COLORS.brandExtraDark,
-  },
-  [`&.${selectUnstyledClasses.expanded}`]: {
-    '&::after': {
-      content: `url("${chevronUp}")`,
-    },
-  },
-  '&::after': {
-    position: 'absolute',
-    right: theme.spacing(3),
-    top: 'calc(50% + 3px)',
-    transform: 'translateY(-50%)',
-    content: `url("${chevronDown}")`,
   },
 }))
 
@@ -82,12 +70,16 @@ const StyledPopper = styled(PopperUnstyled)`
 `
 
 const TertiaryButton = forwardRef(
-  ({ children, ...restProps }: SelectUnstyledRootSlotProps<{}>, ref: ForwardedRef<HTMLButtonElement>) => {
+  (
+    { children, ownerState, ...restProps }: SelectUnstyledRootSlotProps<{}>,
+    ref: ForwardedRef<HTMLButtonElement>,
+  ) => {
     const { t } = useTranslation()
 
     return (
       <StyledButton {...restProps} ref={ref} color={'tertiary'}>
         <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
+        {ownerState.open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </StyledButton>
     )
   },
