@@ -9,9 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
 import { GraphEndpoint } from './Graph/types'
-import ChevronIcon from '../../../icons/ChevronIcon'
-import { ArrowDirection } from '../../../icons/types'
 import Fade from '@mui/material/Fade'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 
 interface ParaTimeSelectorProps {
   disabled: boolean
@@ -100,7 +99,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
           <ZoomOutBtn
             variant="text"
             color="secondary"
-            startIcon={<ChevronIcon arrowDirection={ArrowDirection.LEFT} />}
+            startIcon={<ChevronLeftIcon />}
             onClick={onZoomOutClick}
             disabled={disabled}
           >
