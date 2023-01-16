@@ -64,8 +64,12 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'success',
       },
       {
-        content: <TrimLinkLabel label={transaction.hash!} to="transaction" />,
-
+        content: (
+          <TrimLinkLabel
+            label={transaction.hash!}
+            to={RouteUtils.getTransactionRoute(transaction.hash!, ParaTime.Emerald)}
+          />
+        ),
         key: 'hash',
       },
       {

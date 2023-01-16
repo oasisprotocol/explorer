@@ -7,6 +7,10 @@ export abstract class RouteUtils {
     return `${paraTime ? `/${paraTime}` : ''}/blocks/${encodeURIComponent(blockHeight)}`
   }
 
+  static getTransactionRoute = (txHash: string, paraTime: ParaTime | null = null) => {
+    return `${paraTime ? `/${paraTime}` : ''}/transactions/${encodeURIComponent(txHash)}`
+  }
+
   static getAccountRoute = (sender: string, paraTime: ParaTime | null = null) => {
     return `${paraTime ? `/${paraTime}` : ''}/account/${encodeURIComponent(sender)}`
   }
