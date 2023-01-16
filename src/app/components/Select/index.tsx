@@ -1,12 +1,16 @@
 import * as React from 'react'
-import SelectUnstyled, { SelectUnstyledProps, selectUnstyledClasses } from '@mui/base/SelectUnstyled'
+import SelectUnstyled, {
+  SelectUnstyledProps,
+  selectUnstyledClasses,
+  SelectUnstyledRootSlotProps,
+} from '@mui/base/SelectUnstyled'
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
 import Typography from '@mui/material/Typography'
-import Button, { ButtonProps } from '@mui/material/Button'
+import Button from '@mui/material/Button'
 import { COLORS } from '../../../styles/theme/colors'
 import chevronUp from '../../icons/chevron-up.svg'
 import chevronDown from '../../icons/chevron-down.svg'
@@ -78,17 +82,11 @@ const StyledPopper = styled(PopperUnstyled)`
 `
 
 const TertiaryButton = forwardRef(
-  (
-    {
-      children,
-      ...restProps
-    }: ButtonProps,
-    ref: ForwardedRef<HTMLButtonElement>,
-  ) => {
+  ({ children, ...restProps }: SelectUnstyledRootSlotProps<{}>, ref: ForwardedRef<HTMLButtonElement>) => {
     const { t } = useTranslation()
 
     return (
-      <StyledButton ref={ref} color={'tertiary'} {...restProps}>
+      <StyledButton {...restProps} ref={ref} color={'tertiary'}>
         <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
       </StyledButton>
     )
