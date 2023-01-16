@@ -17,7 +17,7 @@ export const Footer: FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', px: isMobile ? 4 : 6, py: 5 }}>
         {process.env.REACT_APP_BUILD_SHA && (
           <Typography variant="footer">
-            {t('version', { buildSha: process.env.REACT_APP_BUILD_SHA.substring(0, 7) })}
+            {t('footer.version', { buildSha: process.env.REACT_APP_BUILD_SHA.substring(0, 7) })}
           </Typography>
         )}
 
