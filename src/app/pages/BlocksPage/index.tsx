@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import Divider from '@mui/material/Divider'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -17,7 +16,7 @@ export const BlocksPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
-  const blocksQuery: UseQueryResult<AxiosResponse<TableRuntimeBlockList>> = useGetEmeraldBlocks(
+  const blocksQuery = useGetEmeraldBlocks<AxiosResponse<TableRuntimeBlockList>>(
     {
       limit: PAGE_SIZE,
     },
@@ -25,17 +24,14 @@ export const BlocksPage: FC = () => {
       query: {
         refetchInterval: REFETCH_INTERVAL,
         structuralSharing: (previousState, nextState) => {
-          if (!previousState) {
-            return nextState
-          }
-          const oldBlockIds = new Set<number>(previousState.data?.blocks?.map(block => block.round!))
+          const oldBlockIds = new Set(previousState?.data?.blocks?.map(block => block.round!))
           return {
             ...nextState,
             data: {
               blocks: nextState.data?.blocks?.map(block => {
                 return {
                   ...block,
-                  markAsNew: !oldBlockIds.has(block.round!),
+                  markAsNew: previousState ? !oldBlockIds.has(block.round!) : false,
                 }
               }),
             },

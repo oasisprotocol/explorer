@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 
-import { RuntimeBlock } from '../../../oasis-indexer/generated/api'
+import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'

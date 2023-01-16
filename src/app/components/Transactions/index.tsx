@@ -9,7 +9,7 @@ import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
-import { RuntimeTransaction } from '../../../oasis-indexer/generated/api'
+import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { ParaTime } from '../../../config'
@@ -32,7 +32,11 @@ type TableRuntimeTransaction = RuntimeTransaction & {
   markAsNew?: boolean
 }
 
-type TransactionProps = {
+export type TableRuntimeTransactionList = {
+  transactions?: TableRuntimeTransaction[]
+}
+
+type TransactionProps = TableRuntimeTransactionList & {
   isLoading: boolean
   limit: number
   pagination?: boolean

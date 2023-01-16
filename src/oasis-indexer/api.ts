@@ -1,7 +1,6 @@
 /** @file Wrappers around generated API */
 
-import { UseQueryOptions } from '@tanstack/react-query'
-import { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { useSearchParams } from 'react-router-dom'
@@ -17,42 +16,48 @@ function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
   return value.toFixed()
 }
 
-export const useGetEmeraldTransactions = (
-  params?: generated.GetEmeraldTransactionsParams,
-  options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeTransactionList>> },
-) => {
+function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
+  if (arrayOrItem == null) return []
+  if (!Array.isArray(arrayOrItem)) return [arrayOrItem]
+  return arrayOrItem
+}
+
+export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactions = (params?, options?) => {
   const [searchParams] = useSearchParams()
   const offsetSearchQuery = searchParams.get('offset')
   const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
 
-  const result = generated.useGetEmeraldTransactions({ ...params, offset }, options)
-  if (result.data) {
-    return {
-      ...result,
-      data: {
-        ...result.data,
-        data: {
-          ...result.data.data,
-          transactions: result.data.data.transactions?.map(tx => {
+  const result = generated.useGetEmeraldTransactions(
+    { ...params, offset },
+    {
+      ...options,
+      axios: {
+        ...options?.axios,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.RuntimeTransactionList) => {
             return {
-              ...tx,
-              fee_amount: tx.fee_amount
-                ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
-                : undefined,
-              amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
+              ...data,
+              transactions: data.transactions?.map(tx => {
+                return {
+                  ...tx,
+                  fee_amount: tx.fee_amount
+                    ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
+                    : undefined,
+                  amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
+                }
+              }),
             }
-          }),
-        },
+          },
+          ...arrayify(options?.axios?.transformResponse),
+        ],
       },
-    }
-  }
+    },
+  )
   return result
 }
 
-export const useGetEmeraldBlocks = (
-  params?: generated.GetEmeraldBlocksParams,
-  options?: { query: UseQueryOptions<AxiosResponse<generated.RuntimeBlockList>> },
-) => {
+export const useGetEmeraldBlocks: typeof generated.useGetEmeraldBlocks = (params?, options?) => {
   const [searchParams] = useSearchParams()
   const offsetSearchQuery = searchParams.get('offset')
   const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
