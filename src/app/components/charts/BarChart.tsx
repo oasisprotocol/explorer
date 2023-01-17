@@ -20,7 +20,7 @@ const BarChartCmp = <T extends object>({ data, dataKey, formatters }: BarChartPr
     <RechartsBarChart data={data} margin={{ right: 0, bottom: 0 }}>
       <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />
       <YAxis
-        tick={{ fill: COLORS.brandDark, strokeWidth: 0, fontWeight: 600 }}
+        tick={{ fill: COLORS.brandDark, strokeWidth: 0, fontWeight: 600, fontStyle: 'italic' }}
         axisLine={false}
         tickLine={false}
         type="number"
