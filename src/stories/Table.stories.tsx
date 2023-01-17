@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import Box from '@mui/material/Box'
 import React from 'react'
 import { Table, TableCellAlign, TableColProps, TableRowProps } from '../app/components/Table'
@@ -80,10 +80,10 @@ const rows: TableRowProps[] = data?.map(rowData => ({
   ],
 }))
 
-const Template: Story<typeof Table> = args => {
+const Template: ComponentStory<typeof Table> = args => {
   return (
     <Box sx={{ width: '500px' }}>
-      <Table columns={[]} name="" isLoading={false} {...args} />
+      <Table {...args} />
     </Box>
   )
 }
@@ -94,7 +94,6 @@ SampleTable.parameters = {
   searchParams: { offset: '1' },
 }
 SampleTable.args = {
-  // @ts-expect-error TS2322
   columns,
   rows,
   isLoading: false,
