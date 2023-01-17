@@ -9,6 +9,7 @@ import { TableRuntimeTransactionList, Transactions } from '../../components/Tran
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { AxiosResponse } from 'axios'
+import { useSearchParams } from 'react-router-dom'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -16,8 +17,11 @@ export const TransactionsPage: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [searchParams] = useSearchParams()
+  const offsetSearchQuery = searchParams.get('offset')
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
   const transactionsQuery = useGetEmeraldTransactions<AxiosResponse<TableRuntimeTransactionList>>(
-    { limit: limit },
+    { limit, offset },
     {
       query: {
         refetchInterval: REFETCH_INTERVAL,

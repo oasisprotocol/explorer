@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -21,12 +21,16 @@ export const AccountDetailsPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
+  const [searchParams] = useSearchParams()
+  const offsetSearchQuery = searchParams.get('offset')
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
   // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
   const rosePriceQuery = useGetRosePrice()
   const transactionsQuery = useGetEmeraldTransactions({
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    offset: offset,
     // TODO: filtering is not implemented in API yet
     // @ts-expect-error
     rel: address,

@@ -9,6 +9,7 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { Blocks, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
+import { useSearchParams } from 'react-router-dom'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -16,9 +17,13 @@ export const BlocksPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+  const offsetSearchQuery = searchParams.get('offset')
+  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
   const blocksQuery = useGetEmeraldBlocks<AxiosResponse<TableRuntimeBlockList>>(
     {
       limit: PAGE_SIZE,
+      offset: offset,
     },
     {
       query: {
