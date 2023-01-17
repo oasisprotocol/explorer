@@ -32,7 +32,7 @@ export const AccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard title={t('account.title')}>
+      <SubPageCard featured title={t('account.title')}>
         {accountQuery.isLoading && <Skeleton variant="text" height={30} sx={{ my: 4 }} />}
         {account && (
           <CardContent>
