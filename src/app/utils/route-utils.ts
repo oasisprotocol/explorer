@@ -7,6 +7,14 @@ export abstract class RouteUtils {
     return `/${paraTime}`
   }
 
+  static getLatestTransactionsRoute = (paraTime: ParaTime) => {
+    return `/${paraTime}/transactions`
+  }
+
+  static getLatestBlocksRoute = (paraTime: ParaTime) => {
+    return `/${paraTime}/blocks`
+  }
+
   static getBlockRoute = (blockHeight: number, paraTime: ParaTime | null = null) => {
     return `${paraTime ? `/${paraTime}` : ''}/blocks/${encodeURIComponent(blockHeight)}`
   }
