@@ -51,6 +51,10 @@ export const TransactionsPage: FC = () => {
           transactions={transactionsQuery.data?.data.transactions}
           isLoading={transactionsQuery.isLoading}
           limit={limit}
+          pagination={{
+            selectedPage: pagination.selectedPage,
+            linkToPage: pagination.linkToPage,
+          }}
         />
       </SubPageCard>
     </PageLayout>

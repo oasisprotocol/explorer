@@ -22,15 +22,15 @@ export const AccountDetailsPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const txsPagination = useSearchParamsPagination('page')
+  const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
   const rosePriceQuery = useGetRosePrice()
   const transactionsQuery = useGetEmeraldTransactions({
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    offset: offset,
+    offset: txsOffset,
     // TODO: filtering is not implemented in API yet
     // @ts-expect-error
     rel: address,
@@ -53,7 +53,10 @@ export const AccountDetailsPage: FC = () => {
             transactions={transactionsQuery.data?.data.transactions}
             isLoading={transactionsQuery.isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={true}
+            pagination={{
+              selectedPage: txsPagination.selectedPage,
+              linkToPage: txsPagination.linkToPage,
+            }}
           />
         </CardContent>
       </Card>

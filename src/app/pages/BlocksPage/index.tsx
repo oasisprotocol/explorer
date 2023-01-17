@@ -55,7 +55,10 @@ export const BlocksPage: FC = () => {
           blocks={blocksQuery.data?.data?.blocks}
           limit={PAGE_SIZE}
           verbose={true}
-          pagination={true}
+          pagination={{
+            selectedPage: pagination.selectedPage,
+            linkToPage: pagination.linkToPage,
+          }}
         />
       </SubPageCard>
     </PageLayout>

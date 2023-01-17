@@ -3,7 +3,6 @@
 import axios from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { useSearchParams } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 
 export * from './generated/api'

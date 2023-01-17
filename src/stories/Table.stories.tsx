@@ -89,14 +89,13 @@ const Template: ComponentStory<typeof Table> = args => {
 }
 
 export const SampleTable = Template.bind({})
-SampleTable.parameters = {
-  routePath: '/table',
-  searchParams: { page: '1' },
-}
 SampleTable.args = {
   columns,
   rows,
   isLoading: false,
   name: 'Sample table',
-  pagination: true,
+  pagination: {
+    selectedPage: 5,
+    linkToPage: page => ({ search: `?page=${page}` }),
+  },
 }

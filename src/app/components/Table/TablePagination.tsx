@@ -2,23 +2,20 @@ import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { useSearchParamsPagination } from './useSearchParamsPagination'
+import { Link, To } from 'react-router-dom'
 
-type TablePaginationProps = {
-  /** Number of pages */
-  count: number
-  /** Page size */
-  rowsNumber: number
+export type TablePaginationProps = {
+  numberOfPages?: number
+  selectedPage: number
+  linkToPage: (page: number) => To
 }
 
-export const TablePagination: FC<TablePaginationProps> = ({ count }) => {
+export const TablePagination: FC<TablePaginationProps> = ({ numberOfPages, selectedPage, linkToPage }) => {
   const { t } = useTranslation()
-  const { selectedPage, linkToPage } = useSearchParamsPagination('page')
 
   return (
     <Pagination
-      count={count}
+      count={numberOfPages}
       page={selectedPage}
       renderItem={item => (
         <PaginationItem
