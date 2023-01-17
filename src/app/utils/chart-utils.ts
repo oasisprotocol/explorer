@@ -2,10 +2,10 @@
  * Chart durations defined in minutes
  */
 export enum ChartDuration {
-  TODAY = 1440,
-  WEEK = 10080,
-  MONTH = 43200, // Defined as 30 days, should be more dynamic depending on the month
-  ALL_TIME = 525600, // Defined as a full year
+  TODAY = 24 * 60,
+  WEEK = 7 * 24 * 60,
+  MONTH = 30 * 24 * 60, // Defined as 30 days, should be more dynamic depending on the month
+  ALL_TIME = 365 * 24 * 60, // Defined as a full year
 }
 
 export abstract class ChartUtils {
