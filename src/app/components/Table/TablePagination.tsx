@@ -15,14 +15,12 @@ type TablePaginationProps = {
 export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber }) => {
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
-  const page = offset ? offset / rowsNumber + 1 : 1
+  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
 
   return (
     <Pagination
       count={count}
-      page={page}
+      page={selectedPage}
       renderItem={item => (
         <PaginationItem
           slots={{
@@ -30,7 +28,7 @@ export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber })
             last: () => <>{t('pagination.last')}</>,
           }}
           component={Link}
-          to={{ search: item.page && item.page > 1 ? `?offset=${(item.page - 1) * rowsNumber}` : '' }}
+          to={{ search: item.page && item.page > 1 ? `?page=${item.page}` : '' }}
           {...item}
         />
       )}

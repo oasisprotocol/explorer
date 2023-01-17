@@ -18,8 +18,8 @@ export const TransactionsPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
+  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
+  const offset = (selectedPage - 1) * limit
   const transactionsQuery = useGetEmeraldTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     { limit, offset },
     {

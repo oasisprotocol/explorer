@@ -18,8 +18,8 @@ export const BlocksPage: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
+  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
+  const offset = (selectedPage - 1) * PAGE_SIZE
   const blocksQuery = useGetEmeraldBlocks<AxiosResponse<TableRuntimeBlockList>>(
     {
       limit: PAGE_SIZE,

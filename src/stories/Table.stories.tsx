@@ -91,7 +91,7 @@ const Template: ComponentStory<typeof Table> = args => {
 export const SampleTable = Template.bind({})
 SampleTable.parameters = {
   routePath: '/table',
-  searchParams: { offset: '1' },
+  searchParams: { page: '1' },
 }
 SampleTable.args = {
   columns,

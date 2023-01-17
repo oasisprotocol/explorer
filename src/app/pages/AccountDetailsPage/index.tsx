@@ -22,8 +22,8 @@ export const AccountDetailsPage: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
   const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
+  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
+  const offset = (selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
