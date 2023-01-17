@@ -115,7 +115,9 @@
     "header": "ParaTime Snapshot"
   },
   "home": {
+    "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
+    "txn": "Txn",
     "zoomOutBtnText": "Zoom out"
   },
   "search": {

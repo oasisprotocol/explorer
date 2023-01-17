@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { Dispatch, FC, memo, SetStateAction } from 'react'
 import { GraphEndpoint } from './types'
@@ -68,6 +69,7 @@ const GraphCmp: FC<GraphProps> = ({
   selectedGraphEndpoint,
   setSelectedGraphEndpoint,
 }) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
@@ -151,7 +153,7 @@ const GraphCmp: FC<GraphProps> = ({
             fill="#06152B"
           />
           <text x="232" y="38" fill="#fff" fontSize="4px">
-            Txn
+            {t('home.txn')}
           </text>
         </Link>
         <Link to={RouteUtils.getLatestBlocksRoute(ParaTime.Emerald)}>
@@ -170,7 +172,7 @@ const GraphCmp: FC<GraphProps> = ({
             fill="#06152B"
           />
           <text x="151" y="39" fill="#fff" fontSize="4px">
-            Blocks
+            {t('home.blocks')}
           </text>
         </Link>
       </g>
