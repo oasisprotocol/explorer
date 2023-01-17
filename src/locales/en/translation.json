@@ -33,7 +33,7 @@
     "transactions": "Transactions",
     "transactionsNumber": "{{value}} transactions",
     "txnFee": "Txn Fee",
-    "txs": "Txs",
+    "txs": "Transactions",
     "type": "Type",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
