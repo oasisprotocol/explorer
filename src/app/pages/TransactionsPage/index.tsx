@@ -8,8 +8,8 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
+import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AxiosResponse } from 'axios'
-import { useSearchParams } from 'react-router-dom'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -17,9 +17,9 @@ export const TransactionsPage: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [searchParams] = useSearchParams()
-  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
-  const offset = (selectedPage - 1) * limit
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * limit
+
   const transactionsQuery = useGetEmeraldTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     { limit, offset },
     {

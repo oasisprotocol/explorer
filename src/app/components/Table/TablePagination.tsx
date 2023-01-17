@@ -2,8 +2,8 @@ import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { useSearchParamsPagination } from './useSearchParamsPagination'
 
 type TablePaginationProps = {
   /** Number of pages */
@@ -12,10 +12,9 @@ type TablePaginationProps = {
   rowsNumber: number
 }
 
-export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber }) => {
+export const TablePagination: FC<TablePaginationProps> = ({ count }) => {
   const { t } = useTranslation()
-  const [searchParams] = useSearchParams()
-  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
+  const { selectedPage, linkToPage } = useSearchParamsPagination('page')
 
   return (
     <Pagination
@@ -28,7 +27,7 @@ export const TablePagination: FC<TablePaginationProps> = ({ count, rowsNumber })
             last: () => <>{t('pagination.last')}</>,
           }}
           component={Link}
-          to={{ search: item.page && item.page > 1 ? `?page=${item.page}` : '' }}
+          to={item.page == null ? '' : linkToPage(item.page)}
           {...item}
         />
       )}

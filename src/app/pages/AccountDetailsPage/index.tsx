@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -15,15 +15,15 @@ import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
-  const [searchParams] = useSearchParams()
-  const selectedPage = parseInt(searchParams.get('page') ?? '1', 10)
-  const offset = (selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
