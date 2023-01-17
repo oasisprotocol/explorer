@@ -411,6 +411,7 @@ export const defaultTheme = createTheme({
             boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
           },
           backgroundColor: COLORS.white,
+          transition: 'box-shadow 250ms ease-in-out',
         },
       },
     },

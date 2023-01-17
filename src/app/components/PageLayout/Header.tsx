@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
-import { useTranslation } from 'react-i18next'
+import { Search } from '../../components/Search'
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -19,7 +19,9 @@ export const Header: FC = () => {
         <Grid xs={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <NetworkHeader />
         </Grid>
-        <Grid xs={8}>{/* Search Placeholder */}</Grid>
+        <Grid xs={8}>
+          <Search />
+        </Grid>
       </Grid>
     </header>
   )
