@@ -26,14 +26,14 @@ export const TransactionsPage: FC = () => {
       query: {
         refetchInterval: REFETCH_INTERVAL,
         structuralSharing: (previousState, nextState) => {
-          const oldTxHashes = new Set(previousState?.data?.transactions?.map(tx => tx.hash!))
+          const oldTxHashes = new Set(previousState?.data.transactions.map(tx => tx.hash))
           return {
             ...nextState,
             data: {
-              transactions: nextState.data?.transactions?.map(tx => {
+              transactions: nextState.data.transactions.map(tx => {
                 return {
                   ...tx,
-                  markAsNew: previousState ? !oldTxHashes.has(tx.hash!) : false,
+                  markAsNew: previousState ? !oldTxHashes.has(tx.hash) : false,
                 }
               }),
             },

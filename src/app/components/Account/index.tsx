@@ -33,12 +33,12 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
       <dt>
-        <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address!)} />
+        <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
       </dt>
       <dd>
         <CopyToClipboard
-          label={isMobile ? trimLongString(account.address!) : account.address}
-          value={account.address!}
+          label={isMobile ? trimLongString(account.address) : account.address}
+          value={account.address}
         />
       </dd>
       {roseFiatValue && (

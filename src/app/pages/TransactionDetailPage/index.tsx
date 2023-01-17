@@ -40,7 +40,7 @@ export const TransactionDetailPage: FC = () => {
 
             <dt>{t('common.status')}</dt>
             <dd>
-              <TransactionStatusIcon success={transaction.success!} />
+              <TransactionStatusIcon success={transaction.success} />
             </dd>
 
             <dt>{t('common.block')}</dt>
@@ -48,7 +48,7 @@ export const TransactionDetailPage: FC = () => {
 
             <dt>{t('common.type')}</dt>
             <dd>
-              <RuntimeTransactionLabel method={transaction.method!} />
+              <RuntimeTransactionLabel method={transaction.method} />
             </dd>
 
             <dt>{t('common.from')}</dt>
@@ -58,7 +58,7 @@ export const TransactionDetailPage: FC = () => {
             <dd>{transaction.to}</dd>
 
             <dt>{t('common.txnFee')}</dt>
-            <dd>{t('common.valueInRose', { value: transaction.fee_amount })}</dd>
+            <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
 
             <dt>{t('common.value')}</dt>
             <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>

@@ -14,7 +14,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
   const blockQuery = useGetEmeraldBlocks({ to: blockHeight, limit: 1 })
-  const block = blockQuery.data?.data?.blocks?.[0]!
+  const block = blockQuery.data?.data.blocks[0]
   return {
     ...blockQuery,
     data: { data: block },
@@ -49,8 +49,8 @@ export const BlockDetailPage: FC = () => {
             <dt>{t('common.timestamp')}</dt>
             <dd>
               {t('common.formattedBlockTimestamp', {
-                timestamp: new Date(block.timestamp!),
-                distance: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+                timestamp: new Date(block.timestamp),
+                distance: formatDistanceStrict(new Date(block.timestamp), new Date(), {
                   addSuffix: true,
                 }),
                 formatParams: {
@@ -67,7 +67,7 @@ export const BlockDetailPage: FC = () => {
             </dd>
 
             <dt>{t('common.size')}</dt>
-            <dd>{t('common.bytes', { value: block.size_bytes?.toLocaleString() })}</dd>
+            <dd>{t('common.bytes', { value: block.size_bytes.toLocaleString() })}</dd>
 
             <dt>{t('common.transactions')}</dt>
             <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
@@ -78,7 +78,7 @@ export const BlockDetailPage: FC = () => {
             </dd>
 
             <dt>{t('common.gasUsed')}</dt>
-            <dd>{block.gas_used?.toLocaleString()}</dd>
+            <dd>{block.gas_used.toLocaleString()}</dd>
           </StyledDescriptionList>
         )}
       </SubPageCard>

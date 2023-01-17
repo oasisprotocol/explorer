@@ -5,8 +5,6 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Skeleton from '@mui/material/Skeleton'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
@@ -19,8 +17,6 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -31,8 +27,6 @@ export const AccountDetailsPage: FC = () => {
   const transactionsQuery = useGetEmeraldTransactions({
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     offset: txsOffset,
-    // TODO: filtering is not implemented in API yet
-    // @ts-expect-error
     rel: address,
   })
 

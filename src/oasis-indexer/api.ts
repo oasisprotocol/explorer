@@ -31,12 +31,10 @@ export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactio
         (data: generated.RuntimeTransactionList) => {
           return {
             ...data,
-            transactions: data.transactions?.map(tx => {
+            transactions: data.transactions.map(tx => {
               return {
                 ...tx,
-                fee_amount: tx.fee_amount
-                  ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
-                  : undefined,
+                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald.decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
               }
             }),
