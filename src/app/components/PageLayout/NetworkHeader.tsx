@@ -26,7 +26,7 @@ export const NetworkHeader: FC = () => {
   const label = getLabel(t, pathname)
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start' }}>
+    <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start', pr: isMobile ? 0 : 4 }}>
       {!isMobile && (
         <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
           <img src={blockchainImage} alt={label} />
