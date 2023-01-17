@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import Box from '@mui/material/Box'
 import React from 'react'
 import { LineChart } from '../../app/components/charts/LineChart'
@@ -45,10 +45,10 @@ const timeData: TimeDataItem[] = [
   },
 ]
 
-const Template: Story<typeof LineChart<any>> = args => {
+const Template: ComponentStory<typeof LineChart<TimeDataItem>> = args => {
   return (
     <Box sx={{ width: '500px' }}>
-      <LineChart<TimeDataItem> data={[]} dataKey={'y'} {...args} />
+      <LineChart {...args} />
     </Box>
   )
 }
