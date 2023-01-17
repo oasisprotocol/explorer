@@ -2,12 +2,10 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
-
 import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
-import { intlDateFormat } from '../../utils/dateFormatter'
 import { RouteUtils } from '../../utils/route-utils'
 import { ParaTime } from '../../../config'
 
@@ -63,7 +61,9 @@ export const Blocks = (props: BlocksProps) => {
       ...(verbose
         ? [
             {
-              content: intlDateFormat(new Date(block.timestamp!)),
+              content: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+                addSuffix: true,
+              }),
               key: 'timestamp',
             },
           ]

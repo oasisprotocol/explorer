@@ -46,10 +46,23 @@ export const BlockDetailPage: FC = () => {
             <dt>{t('common.block')}</dt>
             <dd>{block.round}</dd>
 
-            <dt>{t('common.age')}</dt>
+            <dt>{t('common.timestamp')}</dt>
             <dd>
-              {formatDistanceStrict(new Date(block.timestamp!), new Date(), {
-                addSuffix: true,
+              {t('common.formattedBlockTimestamp', {
+                timestamp: new Date(block.timestamp!),
+                distance: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+                  addSuffix: true,
+                }),
+                formatParams: {
+                  timestamp: {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    timeZoneName: 'short',
+                  },
+                },
               })}
             </dd>
 

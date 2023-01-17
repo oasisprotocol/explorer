@@ -20,6 +20,7 @@
     "chain": "Chain",
     "emerald": "Emerald",
     "fill": "Fill",
+    "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
     "from": "From",
     "gasUsed": "Gas used",
     "hash": "Hash",
