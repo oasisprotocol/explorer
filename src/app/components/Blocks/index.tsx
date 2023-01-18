@@ -2,12 +2,10 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
-
 import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
-import { intlDateFormat } from '../../utils/dateFormatter'
 import { RouteUtils } from '../../utils/route-utils'
 import { ParaTime } from '../../../config'
 
@@ -35,13 +33,11 @@ export const Blocks = (props: BlocksProps) => {
   const tableColumns: TableColProps[] = [
     { content: t('common.fill') },
     { content: t('common.block'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.timestamp') }] : []),
-    ...(verbose ? [{ content: t('common.height') }] : []),
-    ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.age'), align: TableCellAlign.Right },
     { content: t('common.txs'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.gasUsed') }] : []),
+    ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
+    ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
   ]
 
   const tableRows = blocks?.map(block => ({
@@ -60,22 +56,18 @@ export const Blocks = (props: BlocksProps) => {
         ),
         key: 'block',
       },
-      ...(verbose
-        ? [
-            {
-              content: intlDateFormat(new Date(block.timestamp!)),
-              key: 'timestamp',
-            },
-          ]
-        : []),
-      ...(verbose
-        ? [
-            {
-              content: 1234, // TODO: how do I get block height?
-              key: 'height',
-            },
-          ]
-        : []),
+      {
+        align: TableCellAlign.Right,
+        content: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+          addSuffix: true,
+        }),
+        key: 'timestamp',
+      },
+      {
+        align: TableCellAlign.Right,
+        content: block.num_transactions,
+        key: 'txs',
+      },
       ...(verbose
         ? [
             {
@@ -87,29 +79,18 @@ export const Blocks = (props: BlocksProps) => {
         : []),
       {
         align: TableCellAlign.Right,
-        content: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
-          addSuffix: true,
-        }),
-        key: 'age',
-      },
-      {
-        align: TableCellAlign.Right,
-        content: block.num_transactions,
-        key: 'txs',
+        content: t('common.bytes', { value: block.size_bytes }),
+        key: 'size',
       },
       ...(verbose
         ? [
             {
+              align: TableCellAlign.Right,
               content: block.gas_used,
               key: 'gasUsed',
             },
           ]
         : []),
-      {
-        align: TableCellAlign.Right,
-        content: t('common.bytes', { value: block.size_bytes }),
-        key: 'size',
-      },
     ],
     markAsNew: block.markAsNew,
   }))

@@ -20,6 +20,7 @@
     "chain": "Chain",
     "emerald": "Emerald",
     "fill": "Fill",
+    "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
     "from": "From",
     "gasUsed": "Gas used",
     "hash": "Hash",
@@ -32,7 +33,7 @@
     "transactions": "Transactions",
     "transactionsNumber": "{{value}} transactions",
     "txnFee": "Txn Fee",
-    "txs": "Txs",
+    "txs": "Transactions",
     "type": "Type",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
@@ -114,7 +115,9 @@
     "header": "ParaTime Snapshot"
   },
   "home": {
+    "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
+    "txn": "Txn",
     "zoomOutBtnText": "Zoom out"
   },
   "search": {

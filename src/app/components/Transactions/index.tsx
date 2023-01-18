@@ -49,7 +49,6 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
     { content: t('common.status') },
     { content: t('common.hash') },
     { content: t('common.block') },
-    { content: t('common.age') },
     { content: t('common.type') },
     { content: t('common.from'), width: '150px' },
     { content: t('common.to'), width: '150px' },
@@ -79,10 +78,6 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
           </Link>
         ),
         key: 'round',
-      },
-      {
-        content: '-',
-        key: 'age',
       },
       {
         content: <RuntimeTransactionLabel method={transaction.method!} />,

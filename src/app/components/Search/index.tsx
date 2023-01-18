@@ -1,4 +1,5 @@
 import { FC, FormEvent, memo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -6,6 +7,7 @@ import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
+import { SearchUtils } from '../../components/Search/search-utils'
 
 const SearchForm = styled('form')(() => ({
   width: '100%',
@@ -17,17 +19,24 @@ const SearchButton = styled(Button)(({ theme }) => ({
 }))
 
 export interface SearchProps {
-  onSearchSubmit: (searchTerm: string) => void
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ onSearchSubmit, onFocusChange }) => {
+const SearchCmp: FC<SearchProps> = ({ onFocusChange }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const searchPlaceholderTranslated = t('search.placeholder')
   const searchTermRequiredTranslated = t('search.searchTermRequired')
-
   const inputRef = useRef<HTMLInputElement>(null)
   const [hasError, setHasError] = useState(false)
+  const onSearchSubmit = (searchTerm: string) => {
+    try {
+      const navigateTo = SearchUtils.getNavigationPath(searchTerm)
+      navigate(navigateTo)
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
   const onFocus = () => {
     onFocusChange?.(true)

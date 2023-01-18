@@ -7,8 +7,6 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
 import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
-import { useNavigate } from 'react-router-dom'
-import { SearchUtils } from '../../components/Search/search-utils'
 
 const HomepageLayout = styled(Box)(() => ({
   position: 'relative',
@@ -44,20 +42,7 @@ const FooterStyled = styled(Box)(() => ({
 }))
 
 export const HomePage: FC = () => {
-  const navigate = useNavigate()
   const [searchHasFocus, setSearchHasFocus] = useState(false)
-
-  const onSearchSubmit = useCallback(
-    (searchTerm: string) => {
-      try {
-        const navigateTo = SearchUtils.getNavigationPath(searchTerm)
-        navigate(navigateTo)
-      } catch (ex) {
-        console.error(ex)
-      }
-    },
-    [navigate],
-  )
 
   const onFocusChange = useCallback(
     (hasFocus: boolean) => {
@@ -73,7 +58,7 @@ export const HomePage: FC = () => {
           <Logotype />
         </Box>
         <Box sx={{ zIndex: 2, width: '50vw' }}>
-          <Search onFocusChange={onFocusChange} onSearchSubmit={onSearchSubmit} />
+          <Search onFocusChange={onFocusChange} />
         </Box>
         <Box sx={{ zIndex: 1 }}>
           <ParaTimeSelector disabled={searchHasFocus} />
