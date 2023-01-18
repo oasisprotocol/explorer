@@ -25,3 +25,10 @@ export const durationToQueryParams = {
     limit: 365, // Defined as a full year
   },
 } satisfies { [duration in ChartDuration]: GetConsensusStatsTxVolumeParams }
+
+export const chartDurationToDaysMap = {
+  [ChartDuration.TODAY]: 1,
+  [ChartDuration.WEEK]: 7,
+  [ChartDuration.MONTH]: 30,
+  [ChartDuration.ALL_TIME]: 365,
+}
