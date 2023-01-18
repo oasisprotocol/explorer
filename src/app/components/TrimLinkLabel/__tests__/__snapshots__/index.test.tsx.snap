@@ -3,10 +3,12 @@
 exports[`TrimLinkLabel snapshot 1`] = `
 .emotion-0-MuiTypography-root-MuiLink-root {
   margin: 0;
-  color: #1976d2;
+  color: #0092f6;
   -webkit-text-decoration: underline;
   text-decoration: underline;
-  text-decoration-color: rgba(25, 118, 210, 0.4);
+  text-decoration-color: rgba(0, 146, 246, 0.4);
+  color: #000062;
+  text-decoration-color: #000062;
 }
 
 .emotion-0-MuiTypography-root-MuiLink-root:hover {
