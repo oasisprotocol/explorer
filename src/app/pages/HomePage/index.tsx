@@ -1,19 +1,20 @@
 import { FC, useCallback, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
 import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   width: '100vw',
-  height: '100vh',
+  height: 'fill-available',
   backgroundColor: COLORS.brandDark,
   overflow: 'hidden',
   '&::before': {
@@ -26,6 +27,7 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
     backgroundRepeat: 'no-repeat',
   },
   [theme.breakpoints.up('sm')]: {
+    height: '100vh',
     minHeight: '800px',
     overflow: 'unset',
   },
@@ -41,10 +43,14 @@ const Content = styled(Box)(({ theme }) => ({
   padding: `0 ${theme.spacing(4)}`,
 }))
 
-const LogotypeBox = styled(Box)(({theme}) => ({
-  zIndex: 3, marginBottom: 40, textAlign: 'center',
+const LogotypeBox = styled(Box)(({ theme }) => ({
+  zIndex: 3,
+  marginBottom: 40,
+  textAlign: 'center',
+  marginTop: 60,
   [theme.breakpoints.up('sm')]: {
     marginBottom: 60,
+    marginTop: 'unset'
   },
 }))
 
@@ -63,6 +69,8 @@ const FooterStyled = styled(Box)(() => ({
 
 export const HomePage: FC = () => {
   const [searchHasFocus, setSearchHasFocus] = useState(false)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const onFocusChange = useCallback(
     (hasFocus: boolean) => {
@@ -84,9 +92,11 @@ export const HomePage: FC = () => {
           <ParaTimeSelector disabled={searchHasFocus} />
         </Box>
       </Content>
-      <FooterStyled>
-        <Footer />
-      </FooterStyled>
+      {!isMobile && (
+        <FooterStyled>
+          <Footer />
+        </FooterStyled>
+      )}
     </HomepageLayout>
   )
 }

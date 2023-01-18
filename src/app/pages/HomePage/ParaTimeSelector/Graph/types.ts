@@ -1,6 +1,11 @@
-export enum GraphEndpoint {
-  CONSENSUS = 'consensus',
-  CIPHER = 'cipher',
-  EMERALD = 'emerald',
-  SAPPHIRE = 'sapphire',
+import { ParaTime } from '../../../../../config'
+
+export enum ConsensusParaTime {
+  Consensus = 'consensus',
 }
+
+export const GraphEndpoint = {
+  ...ParaTime, ...ConsensusParaTime
+}
+
+export type GraphEndpoint = ParaTime | ConsensusParaTime;

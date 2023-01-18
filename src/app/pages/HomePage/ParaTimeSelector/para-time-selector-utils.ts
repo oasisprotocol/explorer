@@ -4,7 +4,7 @@ import { GraphEndpoint } from './Graph/types'
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
     switch (step) {
-      case ParaTimeSelectorStep.EXPLORE:
+      case ParaTimeSelectorStep.Explore:
         return false
       default:
         return true
@@ -13,18 +13,22 @@ export abstract class ParaTimeSelectorUtils {
 
   static showExploreBtn(step: ParaTimeSelectorStep) {
     switch (step) {
-      case ParaTimeSelectorStep.ENABLE_EXPLORE:
+      case ParaTimeSelectorStep.EnableExplore:
         return true
       default:
         return false
     }
   }
 
-  static showZoomOutBtn(endpoint: GraphEndpoint) {
+  static showZoomOutBtn(isMobile: boolean, endpoint?: GraphEndpoint) {
+    if(isMobile) {
+      return false;
+    }
+
     switch (endpoint) {
-      case GraphEndpoint.SAPPHIRE:
-      case GraphEndpoint.EMERALD:
-      case GraphEndpoint.CIPHER:
+      case GraphEndpoint.Sapphire:
+      case GraphEndpoint.Emerald:
+      case GraphEndpoint.Cipher:
         return true
       default:
         return false

@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useRef, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import paratimeSelectorGlow from './images/paratime-selector-glow.svg'
@@ -11,9 +11,11 @@ import { ParaTimeSelectorUtils } from './para-time-selector-utils'
 import { GraphEndpoint } from './Graph/types'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom'
-import { UpdateAction } from 'react-quick-pinch-zoom/esm/PinchZoom/types'
+import QuickPinchZoom from 'react-quick-pinch-zoom'
+import PinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import { GraphUtils } from './Graph/graph-utils'
+import useResizeObserver from 'use-resize-observer'
 
 interface ParaTimeSelectorProps {
   disabled: boolean
@@ -22,11 +24,11 @@ interface ParaTimeSelectorProps {
 const ParaTimeSelectorGlow = styled(Box, {
   shouldForwardProp: (prop: string) =>
     !(['disabled'] as (keyof ParaTimeSelectorProps)[]).includes(prop as keyof ParaTimeSelectorProps),
-})<ParaTimeSelectorProps>(({ disabled }) => ({
+})<ParaTimeSelectorProps>(({ disabled, theme }) => ({
   position: 'relative',
-  width: '80vh',
-  height: '80vh',
-  marginTop: '-17vh',
+  width: '130vw',
+  height: '130vw',
+  marginTop: '-10vh',
   backgroundImage: `url("${paratimeSelectorGlow}")`,
   backgroundSize: 'contain',
   backgroundPosition: 'center',
@@ -36,6 +38,11 @@ const ParaTimeSelectorGlow = styled(Box, {
         opacity: 0.25,
       }
     : {}),
+  [theme.breakpoints.up('sm')]: {
+    width: '80vh',
+    height: '80vh',
+    marginTop: '-17vh',
+  }
 }))
 
 const ParaTimeSelectorGlobe = styled(Box)(() => ({
@@ -88,69 +95,84 @@ const QuickPinchZoomInner = styled('div')(() => ({
 }))
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
-  const graphRef = useRef<any>(null)
+  const graphRef = useRef<SVGSVGElement & HTMLElement>(null);
+  const quickPinchZoomRef = useRef<PinchZoom>(null);
+  const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ENABLE_EXPLORE)
-  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
 
-  const onExploreClick = () => {
-    setStep(ParaTimeSelectorStep.EXPLORE)
-  }
+  const { width, height } = useResizeObserver<SVGSVGElement>({
+    ref: graphRef
+  })
 
-  const onZoomOutClick = () => {
-    setSelectedGraphEndpoint(GraphEndpoint.CONSENSUS)
-  }
-
-  const onUpdate = useCallback(({ x, y, scale }: UpdateAction) => {
-    console.log('{ x, y, scale }', { x, y, scale })
-    const { current } = graphRef
-
-    if (current) {
-      const value = make3dTransformValue({ x, y, scale })
-
-      current.style.setProperty('transform', value)
-      console.log('transform', value)
+  useEffect(() => {
+    if (selectedGraphEndpoint) {
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, {width, height}));
     }
+  }, [selectedGraphEndpoint])
+
+  const onExploreClick = useCallback(() => {
+    setStep(ParaTimeSelectorStep.Explore)
+  }, []);
+
+  const onZoomOutClick = useCallback(() => {
+    setSelectedGraphEndpoint(GraphEndpoint.Consensus)
   }, [])
 
-  const graphCmp = (
+  const onUpdate = useCallback(
+    ({ x, y, scale }: UpdateAction) => {
+      if (!isMobile) {
+        return
+      }
+
+      const transformValue = make3dTransformValue({ x, y, scale });
+      quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
+    },
+    [width, height, isMobile],
+  )
+
+  const graphCmp = useMemo(() => (
     <Graph
-      disabled={false}
-      transparent={false}
+      ref={graphRef}
+      disabled={disabled}
+      transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
       selectedGraphEndpoint={selectedGraphEndpoint}
       setSelectedGraphEndpoint={setSelectedGraphEndpoint}
     />
-  )
+  ), [disabled, step, selectedGraphEndpoint, setSelectedGraphEndpoint]);
 
-  const graphPinchZoom = isMobile ? (
+  const graphPinchZoom = useMemo(() => (isMobile ? (
     <QuickPinchZoomOuter>
-      <QuickPinchZoom onUpdate={onUpdate}>
-        <QuickPinchZoomInner ref={graphRef}>{graphCmp}</QuickPinchZoomInner>
+      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onUpdate} maxZoom={2} minZoom={0.5} >
+        <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>{graphCmp}</QuickPinchZoomInner>
       </QuickPinchZoom>
     </QuickPinchZoomOuter>
   ) : (
     graphCmp
-  )
+  )), [isMobile, onUpdate, graphCmp]);
 
   return (
     <ParaTimeSelectorGlow disabled={disabled}>
       <ParaTimeSelectorGlobe>
         {graphPinchZoom}
-        <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(selectedGraphEndpoint)}>
-          <ZoomOutBtn
-            variant="text"
-            color="secondary"
-            startIcon={<ChevronLeftIcon />}
-            onClick={onZoomOutClick}
-            disabled={disabled}
-          >
-            {t('home.zoomOutBtnText')}
-          </ZoomOutBtn>
-        </ZoomOutBtnFade>
+        {!isMobile && (
+          <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
+            <ZoomOutBtn
+              variant="text"
+              color="secondary"
+              startIcon={<ChevronLeftIcon />}
+              onClick={onZoomOutClick}
+              disabled={disabled}
+            >
+              {t('home.zoomOutBtnText')}
+            </ZoomOutBtn>
+          </ZoomOutBtnFade>
+        )}
         {ParaTimeSelectorUtils.showExploreBtn(step) && (
           <ExploreBtn
             color="secondary"
