@@ -16,7 +16,7 @@
   "common": {
     "age": "Age",
     "block": "Block",
-    "bytes": "{{value}} bytes",
+    "bytes": "{{value, number}}",
     "chain": "Chain",
     "emerald": "Emerald",
     "fiatValue": "Fiat value",

@@ -81,7 +81,16 @@ export const Blocks = (props: BlocksProps) => {
         : []),
       {
         align: TableCellAlign.Right,
-        content: t('common.bytes', { value: block.size_bytes }),
+        content: t('common.bytes', {
+          value: block.size_bytes,
+          formatParams: {
+            value: {
+              style: 'unit',
+              unit: 'byte',
+              unitDisplay: 'long',
+            },
+          },
+        }),
         key: 'size',
       },
       ...(verbose

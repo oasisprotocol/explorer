@@ -81,7 +81,18 @@ export const BlockDetailPage: FC = () => {
             </dd>
 
             <dt>{t('common.size')}</dt>
-            <dd>{t('common.bytes', { value: block.size_bytes.toLocaleString() })}</dd>
+            <dd>
+              {t('common.bytes', {
+                value: block.size_bytes,
+                formatParams: {
+                  value: {
+                    style: 'unit',
+                    unit: 'byte',
+                    unitDisplay: 'long',
+                  },
+                },
+              })}
+            </dd>
 
             <dt>{t('common.transactions')}</dt>
             <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
