@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrimLinkLabel snapshot 1`] = `
+.emotion-0-MuiTypography-root-MuiLink-root {
+  margin: 0;
+  color: #0092f6;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 146, 246, 0.4);
+  color: #000062;
+  text-decoration-color: #000062;
+}
+
+.emotion-0-MuiTypography-root-MuiLink-root:hover {
+  text-decoration-color: inherit;
+}
+
+<div>
+  <a
+    aria-label="oasis1qq2vzcvxn0js5unsch5me2xz4kr43vcasv0d5eq4"
+    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways emotion-0-MuiTypography-root-MuiLink-root"
+    data-mui-internal-clone-element="true"
+    href="/home"
+  >
+    oasis1...0d5eq4
+  </a>
+</div>
+`;
