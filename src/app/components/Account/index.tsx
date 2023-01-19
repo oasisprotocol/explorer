@@ -7,7 +7,6 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { trimLongString } from '../../utils/trimLongString'
-import { intlCurrencyFormat } from '../../utils/numberFormatter'
 import { Account as ConsensusAccount } from '../../../oasis-indexer/api'
 
 export const addressToNumber = (address: string) => {
