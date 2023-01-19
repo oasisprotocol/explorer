@@ -40,3 +40,22 @@ test('formatting fiat currency with i18n', () => {
 
   expect(result.current).toBe('$123.46')
 })
+
+test('formatting block sizes with i18n', () => {
+  const { result } = renderHook(() => {
+    const { t } = useTranslation()
+    return t('does_not_exist.use_default', '{{size, number}}', {
+      size: 12345,
+      formatParams: {
+        size: {
+          style: 'unit',
+          unit: 'byte',
+          unitDisplay: 'long',
+          locale: 'en-US',
+        },
+      },
+    })
+  })
+
+  expect(result.current).toBe('12,345 bytes')
+})
