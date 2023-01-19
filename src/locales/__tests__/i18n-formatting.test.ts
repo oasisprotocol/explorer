@@ -23,3 +23,20 @@ test('formatting dates with i18n', () => {
 
   expect(result.current).toBe('January 2, 2022, 3:04 AM UTC')
 })
+
+test('formatting fiat currency with i18n', () => {
+  const { result } = renderHook(() => {
+    const { t } = useTranslation()
+    return t('does_not_exist.use_default', '{{value, currency}}', {
+      value: 123.456789,
+      formatParams: {
+        value: {
+          currency: 'USD',
+          locale: 'en-US',
+        },
+      },
+    })
+  })
+
+  expect(result.current).toBe('$123.46')
+})
