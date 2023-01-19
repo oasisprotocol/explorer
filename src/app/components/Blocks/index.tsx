@@ -8,6 +8,7 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import { ParaTime } from '../../../config'
+import { TablePaginationProps } from '../Table/TablePagination'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -21,7 +22,7 @@ type BlocksProps = TableRuntimeBlockList & {
   isLoading: boolean
   limit: number
   verbose?: boolean
-  pagination?: boolean
+  pagination: false | TablePaginationProps
 }
 
 const gasLimit = 10000000 // TODO temporary value, 22020096 for consensus

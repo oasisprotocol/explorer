@@ -13,6 +13,7 @@ import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { ParaTime } from '../../../config'
+import { TablePaginationProps } from '../Table/TablePagination'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -39,11 +40,11 @@ export type TableRuntimeTransactionList = {
 type TransactionProps = TableRuntimeTransactionList & {
   isLoading: boolean
   limit: number
-  pagination?: boolean
+  pagination: false | TablePaginationProps
   transactions?: TableRuntimeTransaction[]
 }
 
-export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination = true, transactions }) => {
+export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination, transactions }) => {
   const { t } = useTranslation()
   const tableColumns = [
     { content: t('common.status') },

@@ -11,7 +11,7 @@ import TableCell from '@mui/material/TableCell'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { TablePagination } from './TablePagination'
+import { TablePagination, TablePaginationProps } from './TablePagination'
 import { REFETCH_INTERVAL } from '../../config'
 
 type SkeletonTableRowsProps = {
@@ -83,7 +83,7 @@ type TableProps = {
   columns: TableColProps[]
   name: string
   isLoading: boolean
-  pagination?: boolean
+  pagination: false | TablePaginationProps
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
@@ -151,8 +151,9 @@ export const Table: FC<TableProps> = ({
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <TablePagination
-            count={100} // TODO: fix hardcoded total number of pages
-            rowsNumber={rowsNumber}
+            numberOfPages={pagination.numberOfPages ?? 100} // TODO: fix hardcoded total number of pages
+            selectedPage={pagination.selectedPage}
+            linkToPage={pagination.linkToPage}
           />
         </Box>
       )}

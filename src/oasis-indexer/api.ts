@@ -3,7 +3,6 @@
 import axios from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { useSearchParams } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 
 export * from './generated/api'
@@ -23,44 +22,29 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
 }
 
 export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactions = (params?, options?) => {
-  const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
-
-  const result = generated.useGetEmeraldTransactions(
-    { ...params, offset },
-    {
-      ...options,
-      axios: {
-        ...options?.axios,
-        transformResponse: [
-          ...arrayify(axios.defaults.transformResponse),
-          (data: generated.RuntimeTransactionList) => {
-            return {
-              ...data,
-              transactions: data.transactions?.map(tx => {
-                return {
-                  ...tx,
-                  fee_amount: tx.fee_amount
-                    ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
-                    : undefined,
-                  amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
-                }
-              }),
-            }
-          },
-          ...arrayify(options?.axios?.transformResponse),
-        ],
-      },
+  const result = generated.useGetEmeraldTransactions(params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeTransactionList) => {
+          return {
+            ...data,
+            transactions: data.transactions?.map(tx => {
+              return {
+                ...tx,
+                fee_amount: tx.fee_amount
+                  ? fromBaseUnits(tx.fee_amount, paraTimesConfig.emerald.decimals)
+                  : undefined,
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald.decimals) : undefined,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
     },
-  )
+  })
   return result
-}
-
-export const useGetEmeraldBlocks: typeof generated.useGetEmeraldBlocks = (params?, options?) => {
-  const [searchParams] = useSearchParams()
-  const offsetSearchQuery = searchParams.get('offset')
-  const offset = (offsetSearchQuery && parseInt(offsetSearchQuery, 10)) || 0
-
-  return generated.useGetEmeraldBlocks({ ...params, offset }, options)
 }

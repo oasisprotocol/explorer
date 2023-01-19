@@ -28,7 +28,12 @@ export const LatestBlocks: FC = () => {
         }
       />
       <CardContent>
-        <Blocks isLoading={blocksQuery.isLoading} blocks={blocksQuery.data?.data.blocks} limit={limit} />
+        <Blocks
+          isLoading={blocksQuery.isLoading}
+          blocks={blocksQuery.data?.data.blocks}
+          limit={limit}
+          pagination={false}
+        />
       </CardContent>
     </Card>
   )
