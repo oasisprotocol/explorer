@@ -19,6 +19,8 @@
     "bytes": "{{value}} bytes",
     "chain": "Chain",
     "emerald": "Emerald",
+    "fiatValue": "Fiat value",
+    "fiatValueInUSD": "{{value, currency}}",
     "fill": "Fill",
     "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
     "from": "From",

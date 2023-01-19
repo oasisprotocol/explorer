@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { staking } from '@oasisprotocol/client'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
@@ -6,6 +7,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { trimLongString } from '../../utils/trimLongString'
+import { intlCurrencyFormat } from '../../utils/numberFormatter'
 import { Account as ConsensusAccount } from '../../../oasis-indexer/api'
 
 export const addressToNumber = (address: string) => {
@@ -17,13 +19,16 @@ export const addressToNumber = (address: string) => {
 }
 
 type AccountProps = {
-  // switch to Emerald when endpoint is ready
+  // TODO: switch to Emerald when endpoint is ready
   account: ConsensusAccount
+  roseFiatValue?: number
 }
 
-export const Account: FC<AccountProps> = ({ account }) => {
+export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const mockedRuntimeBalance = 1000 // TODO: replace with real value when API is ready
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
@@ -36,6 +41,21 @@ export const Account: FC<AccountProps> = ({ account }) => {
           value={account.address!}
         />
       </dd>
+      {roseFiatValue && (
+        <>
+          <dt>{t('common.fiatValue')}</dt>
+          <dd>
+            {t('common.fiatValueInUSD', {
+              value: mockedRuntimeBalance * roseFiatValue,
+              formatParams: {
+                value: {
+                  currency: 'USD',
+                },
+              },
+            })}
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }

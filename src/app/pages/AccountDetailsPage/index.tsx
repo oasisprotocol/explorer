@@ -13,6 +13,7 @@ import { Account } from '../../components/Account'
 import { Transactions } from '../../components/Transactions'
 import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { useGetRosePrice } from '../../../coin-gecko/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 
 export const AccountDetailsPage: FC = () => {
@@ -20,12 +21,13 @@ export const AccountDetailsPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { address } = useParams()
-  // switch to Emerald when API is ready
+  // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
+  const rosePriceQuery = useGetRosePrice()
   const transactionsQuery = useGetEmeraldTransactions({
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    // filtering is not implemented in API yet
+    // TODO: filtering is not implemented in API yet
     // @ts-expect-error
     rel: address,
   })
@@ -36,7 +38,7 @@ export const AccountDetailsPage: FC = () => {
         {accountQuery.isLoading && <Skeleton variant="text" height={30} sx={{ my: 4 }} />}
         {account && (
           <CardContent>
-            <Account account={account} />
+            <Account account={account} roseFiatValue={rosePriceQuery.data} />
           </CardContent>
         )}
       </SubPageCard>
