@@ -1,24 +1,27 @@
-/**
- * Chart durations defined in minutes
- */
+import { GetConsensusStatsTxVolumeParams } from '../../oasis-indexer/api'
+
 export enum ChartDuration {
-  TODAY = 24 * 60,
-  WEEK = 7 * 24 * 60,
-  MONTH = 30 * 24 * 60, // Defined as 30 days, should be more dynamic depending on the month
-  ALL_TIME = 365 * 24 * 60, // Defined as a full year
+  TODAY = 'TODAY',
+  WEEK = 'WEEK',
+  MONTH = 'MONTH',
+  ALL_TIME = 'ALL_TIME',
 }
 
-export abstract class ChartUtils {
-  private static DEFAULT_INTERVAL_MINUTES = 5
-
-  static getLimitByDuration = (
-    duration: ChartDuration = ChartDuration.TODAY,
-    intervalMinutes = ChartUtils.DEFAULT_INTERVAL_MINUTES,
-  ) => {
-    if (intervalMinutes <= 0) {
-      throw new Error('Invalid parameter [intervalMinutes], should be a positive integer')
-    }
-
-    return duration / intervalMinutes
-  }
-}
+export const durationToQueryParams = {
+  [ChartDuration.TODAY]: {
+    bucket_size_seconds: 60 * 60,
+    limit: 24,
+  },
+  [ChartDuration.WEEK]: {
+    bucket_size_seconds: 24 * 60 * 60,
+    limit: 7,
+  },
+  [ChartDuration.MONTH]: {
+    bucket_size_seconds: 24 * 60 * 60,
+    limit: 30, // Defined as 30 days, should be more dynamic depending on the month
+  },
+  [ChartDuration.ALL_TIME]: {
+    bucket_size_seconds: 24 * 60 * 60,
+    limit: 365, // Defined as a full year
+  },
+} satisfies { [duration in ChartDuration]: GetConsensusStatsTxVolumeParams }

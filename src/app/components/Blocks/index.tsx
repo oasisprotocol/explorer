@@ -15,10 +15,11 @@ export type TableRuntimeBlock = RuntimeBlock & {
 }
 
 export type TableRuntimeBlockList = {
-  blocks?: TableRuntimeBlock[]
+  blocks: TableRuntimeBlock[]
 }
 
-type BlocksProps = TableRuntimeBlockList & {
+type BlocksProps = {
+  blocks?: TableRuntimeBlock[]
   isLoading: boolean
   limit: number
   verbose?: boolean
@@ -42,16 +43,16 @@ export const Blocks = (props: BlocksProps) => {
   ]
 
   const tableRows = blocks?.map(block => ({
-    key: block.hash!,
+    key: block.hash,
     data: [
       {
-        content: <VerticalProgressBar variant="determinate" value={(100 * block.gas_used!) / gasLimit} />,
+        content: <VerticalProgressBar variant="determinate" value={(100 * block.gas_used) / gasLimit} />,
         key: 'fill',
       },
       {
         align: TableCellAlign.Right,
         content: (
-          <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round!, ParaTime.Emerald)}>
+          <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}>
             {block.round}
           </Link>
         ),
@@ -59,7 +60,7 @@ export const Blocks = (props: BlocksProps) => {
       },
       {
         align: TableCellAlign.Right,
-        content: formatDistanceStrict(new Date(block.timestamp!), new Date(), {
+        content: formatDistanceStrict(new Date(block.timestamp), new Date(), {
           addSuffix: true,
         }),
         key: 'timestamp',
@@ -72,7 +73,7 @@ export const Blocks = (props: BlocksProps) => {
       ...(verbose
         ? [
             {
-              content: <TrimLinkLabel label={block.hash!} to={block.hash!} />, // TODO: do we want linking to blocks by hash?
+              content: <TrimLinkLabel label={block.hash} to={block.hash} />, // TODO: do we want linking to blocks by hash?
               // If yes, what should be the URL scheme for that?
               key: 'hash',
             },

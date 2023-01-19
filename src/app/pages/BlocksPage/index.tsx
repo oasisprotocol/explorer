@@ -29,14 +29,14 @@ export const BlocksPage: FC = () => {
       query: {
         refetchInterval: REFETCH_INTERVAL,
         structuralSharing: (previousState, nextState) => {
-          const oldBlockIds = new Set(previousState?.data?.blocks?.map(block => block.round!))
+          const oldBlockIds = new Set(previousState?.data.blocks.map(block => block.round))
           return {
             ...nextState,
             data: {
-              blocks: nextState.data?.blocks?.map(block => {
+              blocks: nextState.data.blocks.map(block => {
                 return {
                   ...block,
-                  markAsNew: previousState ? !oldBlockIds.has(block.round!) : false,
+                  markAsNew: previousState ? !oldBlockIds.has(block.round) : false,
                 }
               }),
             },
@@ -52,7 +52,7 @@ export const BlocksPage: FC = () => {
       <SubPageCard title={t('blocks.latest')}>
         <Blocks
           isLoading={blocksQuery.isLoading}
-          blocks={blocksQuery.data?.data?.blocks}
+          blocks={blocksQuery.data?.data.blocks}
           limit={PAGE_SIZE}
           verbose={true}
           pagination={{

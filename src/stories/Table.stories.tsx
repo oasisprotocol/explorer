@@ -65,7 +65,7 @@ const data = [
   },
 ]
 
-const rows: TableRowProps[] = data?.map(rowData => ({
+const rows: TableRowProps[] = data.map(rowData => ({
   key: rowData.id!,
   data: [
     {

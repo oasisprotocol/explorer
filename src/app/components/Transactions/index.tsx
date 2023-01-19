@@ -34,14 +34,14 @@ type TableRuntimeTransaction = RuntimeTransaction & {
 }
 
 export type TableRuntimeTransactionList = {
-  transactions?: TableRuntimeTransaction[]
+  transactions: TableRuntimeTransaction[]
 }
 
-type TransactionProps = TableRuntimeTransactionList & {
+type TransactionProps = {
+  transactions?: TableRuntimeTransaction[]
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
-  transactions?: TableRuntimeTransaction[]
 }
 
 export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination, transactions }) => {
@@ -57,31 +57,31 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
     { align: TableCellAlign.Right, content: t('common.value') },
   ]
   const tableRows = transactions?.map(transaction => ({
-    key: transaction.hash!,
+    key: transaction.hash,
     data: [
       {
-        content: <TransactionStatusIcon success={transaction.success!} />,
+        content: <TransactionStatusIcon success={transaction.success} />,
         key: 'success',
       },
       {
         content: (
           <TrimLinkLabel
-            label={transaction.hash!}
-            to={RouteUtils.getTransactionRoute(transaction.hash!, ParaTime.Emerald)}
+            label={transaction.hash}
+            to={RouteUtils.getTransactionRoute(transaction.hash, ParaTime.Emerald)}
           />
         ),
         key: 'hash',
       },
       {
         content: (
-          <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round!, ParaTime.Emerald)}>
+          <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}>
             {transaction.round}
           </Link>
         ),
         key: 'round',
       },
       {
-        content: <RuntimeTransactionLabel method={transaction.method!} />,
+        content: <RuntimeTransactionLabel method={transaction.method} />,
         key: 'type',
       },
       {
@@ -96,8 +96,8 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
             }}
           >
             <TrimLinkLabel
-              label={transaction.sender_0!}
-              to={RouteUtils.getAccountRoute(transaction.sender_0!, ParaTime.Emerald)}
+              label={transaction.sender_0}
+              to={RouteUtils.getAccountRoute(transaction.sender_0, ParaTime.Emerald)}
             />
             <StyledCircle>
               <ArrowForwardIcon fontSize="inherit" />
@@ -118,7 +118,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
       },
       {
         align: TableCellAlign.Right,
-        content: t('common.valueInRose', { value: transaction.fee_amount }),
+        content: t('common.valueInRose', { value: transaction.fee }),
         key: 'fee_amount',
       },
       {
