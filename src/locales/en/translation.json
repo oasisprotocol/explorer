@@ -35,7 +35,6 @@
     "transactions": "Transactions",
     "transactionsNumber": "{{value}} transactions",
     "txnFee": "Txn Fee",
-    "txs": "Transactions",
     "type": "Type",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
@@ -81,7 +80,6 @@
     "youtube": "Youtube"
   },
   "transactions": {
-    "header": "Transactions",
     "latest": "Latest Transactions",
     "method": {
       "consensus": {
@@ -101,7 +99,6 @@
     "tooltip": "{{value}} tx/day"
   },
   "transactionsTpsChart": {
-    "header": "Transactions",
     "tooltip": "{{value}} TPS"
   },
   "select": {
