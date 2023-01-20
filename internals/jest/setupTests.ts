@@ -9,6 +9,15 @@ import * as emotionJestUtils from '@emotion/jest'
 
 // Init i18n for the tests needing it
 import '../../src/locales/i18n'
+import i18next from 'i18next'
+i18next.init({
+  interpolation: {
+    defaultVariables: {
+      timeZone: 'UTC',
+      locale: 'en-US',
+    },
+  },
+})
 
 global.TextEncoder = require('util').TextEncoder
 global.TextDecoder = require('util').TextDecoder
