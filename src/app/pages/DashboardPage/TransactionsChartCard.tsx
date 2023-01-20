@@ -29,7 +29,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const lineChartData = data?.data.buckets.map(bucket => {
     return {
       bucket_start: bucket.start,
-      volume_per_second: bucket.volume / statsParams.bucket_size_seconds
+      volume_per_second: bucket.volume / statsParams.bucket_size_seconds,
     }
   })
 
@@ -37,7 +37,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
 
   return (
     <Card sx={{ p: 0 }}>
-      <CardHeader component="h5" title={t('transactionsTpsChart.header')} sx={{ pb: 0, pl: 4, pt: 4 }} />
+      <CardHeader component="h5" title={t('common.transactions')} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <CardContent sx={{ pt: 4 }}>
         {lineChartData && (
           <LineChart

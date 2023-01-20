@@ -36,7 +36,7 @@ export const Blocks = (props: BlocksProps) => {
     { content: t('common.fill') },
     { content: t('common.block'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
-    { content: t('common.txs'), align: TableCellAlign.Right },
+    { content: t('common.transactions'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
