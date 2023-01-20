@@ -1,6 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Skeleton from '@mui/material/Skeleton'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -10,6 +13,10 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { Transactions } from '../../components/Transactions'
+import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -28,6 +35,13 @@ export const BlockDetailPage: FC = () => {
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetEmeraldBlockByHeight(blockHeight)
   const block = data.data
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const transactionsQuery = useGetEmeraldTransactions({
+    block: blockHeight,
+    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    offset,
+  })
 
   return (
     <PageLayout>
@@ -82,6 +96,20 @@ export const BlockDetailPage: FC = () => {
           </StyledDescriptionList>
         )}
       </SubPageCard>
+      <Card>
+        <CardHeader disableTypography component="h3" title={t('common.transactions')} />
+        <CardContent>
+          <Transactions
+            transactions={transactionsQuery.data?.data.transactions}
+            isLoading={transactionsQuery.isLoading}
+            limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+            pagination={{
+              selectedPage: pagination.selectedPage,
+              linkToPage: pagination.linkToPage,
+            }}
+          />
+        </CardContent>
+      </Card>
     </PageLayout>
   )
 }
