@@ -8,7 +8,7 @@ import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Skeleton from '@mui/material/Skeleton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
-import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+import { RuntimeBlock, useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -29,73 +29,20 @@ function useGetEmeraldBlockByHeight(blockHeight: number) {
 }
 
 export const BlockDetailPage: FC = () => {
-  const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetEmeraldBlockByHeight(blockHeight)
   const block = data.data
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const txsPagination = useSearchParamsPagination('page')
+  const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    offset,
+    offset: txsOffset,
   })
 
   return (
     <PageLayout>
-      <SubPageCard featured title={t('common.block')}>
-        {isLoading && (
-          <>
-            <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-            <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-            <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-            <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-            <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          </>
-        )}
-        {block && (
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-            <dt>{t('common.block')}</dt>
-            <dd>{block.round}</dd>
-
-            <dt>{t('common.timestamp')}</dt>
-            <dd>
-              {t('common.formattedBlockTimestamp', {
-                timestamp: new Date(block.timestamp),
-                distance: formatDistanceStrict(new Date(block.timestamp), new Date(), {
-                  addSuffix: true,
-                }),
-                formatParams: {
-                  timestamp: {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    timeZoneName: 'short',
-                  },
-                },
-              })}
-            </dd>
-
-            <dt>{t('common.size')}</dt>
-            <dd>{t('common.bytes', { value: block.size_bytes.toLocaleString() })}</dd>
-
-            <dt>{t('common.transactions')}</dt>
-            <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
-
-            <dt>{t('common.hash')}</dt>
-            <dd>
-              <CopyToClipboard value={`0x${block.hash}`} />
-            </dd>
-
-            <dt>{t('common.gasUsed')}</dt>
-            <dd>{block.gas_used.toLocaleString()}</dd>
-          </StyledDescriptionList>
-        )}
-      </SubPageCard>
+      <BlockDetailView isLoading={isLoading} block={block}></BlockDetailView>
       <Card>
         <CardHeader disableTypography component="h3" title={t('common.transactions')} />
         <CardContent>
@@ -104,12 +51,85 @@ export const BlockDetailPage: FC = () => {
             isLoading={transactionsQuery.isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
             pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
+              selectedPage: txsPagination.selectedPage,
+              linkToPage: txsPagination.linkToPage,
             }}
           />
         </CardContent>
       </Card>
     </PageLayout>
+  )
+}
+
+export const BlockDetailView: FC<{
+  isLoading: boolean
+  block: RuntimeBlock | undefined
+}> = ({ isLoading, block }) => {
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  return (
+    <SubPageCard featured title={t('common.block')}>
+      {isLoading && (
+        <>
+          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+        </>
+      )}
+      {block && (
+        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <dt>{t('common.block')}</dt>
+          <dd>{block.round}</dd>
+
+          <dt>{t('common.timestamp')}</dt>
+          <dd>
+            {t('common.formattedBlockTimestamp', {
+              timestamp: new Date(block.timestamp),
+              distance: formatDistanceStrict(new Date(block.timestamp), new Date(), {
+                addSuffix: true,
+              }),
+              formatParams: {
+                timestamp: {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  timeZoneName: 'short',
+                },
+              },
+            })}
+          </dd>
+
+          <dt>{t('common.size')}</dt>
+          <dd>
+            {t('common.bytes', {
+              value: block.size_bytes,
+              formatParams: {
+                value: {
+                  style: 'unit',
+                  unit: 'byte',
+                  unitDisplay: 'long',
+                },
+              },
+            })}
+          </dd>
+
+          <dt>{t('common.transactions')}</dt>
+          <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
+
+          <dt>{t('common.hash')}</dt>
+          <dd>
+            <CopyToClipboard value={`0x${block.hash}`} />
+          </dd>
+
+          <dt>{t('common.gasUsed')}</dt>
+          <dd>{block.gas_used.toLocaleString()}</dd>
+        </StyledDescriptionList>
+      )}
+    </SubPageCard>
   )
 }
