@@ -29,6 +29,7 @@ function useGetEmeraldBlockByHeight(blockHeight: number) {
 }
 
 export const BlockDetailPage: FC = () => {
+  const { t } = useTranslation()
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetEmeraldBlockByHeight(blockHeight)
   const block = data.data
