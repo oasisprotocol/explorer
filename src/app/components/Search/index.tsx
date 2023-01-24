@@ -27,12 +27,10 @@ const SearchForm = styled('form', {
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
-        right: theme.spacing(4),
-
         ...(expanded
           ? {
-              left: theme.spacing(4),
-              width: `calc(100% - ${theme.spacing(4)} - ${theme.spacing(4)})`,
+              left: 0,
+              width: '100%',
             }
           : {}),
       }
