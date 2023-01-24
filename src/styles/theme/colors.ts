@@ -35,4 +35,5 @@ export const COLORS = {
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',
   purpleBackground: '#e0e0f4',
+  inactiveTab: '#e5e5f6',
 } satisfies { [colorName: string]: string }
