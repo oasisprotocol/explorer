@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { renderHook } from '@testing-library/react'
 
+/** Narrow No-Brake Space */
+const NNBSP = '\u202F'
+
 test('formatting dates with i18n', () => {
   const { result } = renderHook(() => {
     const { t } = useTranslation()
@@ -21,7 +24,7 @@ test('formatting dates with i18n', () => {
     })
   })
 
-  expect(result.current).toBe('April 23, 2022, 12:20 PM UTC')
+  expect(result.current).toBe(`April 23, 2022 at 12:20${NNBSP}PM UTC`)
 })
 
 test('formatting fiat currency with i18n', () => {
