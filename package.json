@@ -12,6 +12,8 @@
     "clean": "rm -rf build/ .parcel-cache",
     "start": "parcel --dist-dir build-dev --no-cache",
     "checkTs": "tsc --noEmit",
+    "lint": "prettier src internals --check",
+    "lint:fix": "prettier src internals --write",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
