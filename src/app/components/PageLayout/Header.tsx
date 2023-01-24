@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
-import { Search } from '../../components/Search'
+import { Search } from '../Search'
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -22,7 +22,7 @@ export const Header: FC = () => {
         </Grid>
         {!isMobile && (
           <Grid sm={12} md={8}>
-            <Search />
+            <Search variant="icon" />
           </Grid>
         )}
       </Grid>

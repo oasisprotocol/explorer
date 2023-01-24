@@ -1,4 +1,4 @@
-import { FC, FormEvent, memo, useRef, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, memo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
@@ -10,6 +10,8 @@ import { COLORS } from '../../../styles/theme/colors'
 import { SearchUtils } from './search-utils'
 import { StandardTextFieldProps } from '@mui/material/TextField/TextField'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import IconButton from '@mui/material/IconButton'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -23,7 +25,7 @@ interface SearchFormProps extends StyledBaseProps {}
 const SearchForm = styled('form', {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['expanded', 'searchVariant'] as (keyof SearchFormProps)[]).includes(prop as keyof SearchFormProps),
-})<SearchFormProps>(({ theme, searchVariant, expanded }) => ({
+})<SearchFormProps>(({ searchVariant, expanded }) => ({
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
@@ -99,8 +101,12 @@ const SearchButton = styled(Button, {
   minWidth: 'unset',
   padding: '12px',
   [theme.breakpoints.up('sm')]: {
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
+    ...(searchVariant === 'button'
+      ? {
+          paddingLeft: theme.spacing(5),
+          paddingRight: theme.spacing(5),
+        }
+      : {}),
   },
   ...(searchVariant === 'expandable'
     ? {
@@ -124,8 +130,8 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const searchTermRequiredTranslated = t('search.searchTermRequired')
-  const inputRef = useRef<HTMLInputElement>(null)
   const blurTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [value, setValue] = useState('')
   const [expanded, setExpanded] = useState(variant !== 'expandable')
   const [hasError, setHasError] = useState(false)
 
@@ -138,6 +144,10 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
     }
   }
 
+  /**
+   * Delays setting expanded in case of blur on icon and switching focus to the input
+   * @param fn
+   */
   const setBlurTimeout = (fn: () => void) => {
     if (variant !== 'expandable') {
       return
@@ -148,6 +158,10 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
     }
 
     blurTimeoutRef.current = setTimeout(fn, blurTimeout)
+  }
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
   }
 
   const onFocus = () => {
@@ -177,14 +191,13 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
 
     setHasError(false)
 
-    const searchTerm = inputRef.current?.value
-    if (!searchTerm) {
+    if (!value) {
       setHasError(true)
 
       return
     }
 
-    onSearchSubmit(searchTerm)
+    onSearchSubmit(value)
   }
 
   const onSearchButtonClick = () => {
@@ -193,6 +206,10 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
     } else {
       setExpanded(true)
     }
+  }
+
+  const onClearValue = () => {
+    setValue('')
   }
 
   const startAdornment = variant === 'button' && (
@@ -217,8 +234,9 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
         searchVariant={variant}
         hasStartAdornment={!!startAdornment}
         InputProps={{
+          value,
+          onChange,
           disabled,
-          inputRef,
           onFocus,
           onBlur,
           inputProps: {
@@ -227,18 +245,25 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
           startAdornment,
           endAdornment: (
             <InputEndAdornment position="end" expanded={expanded} searchVariant={variant}>
-              <SearchButton
-                disabled={disabled}
-                expanded={expanded}
-                searchVariant={variant}
-                color="primary"
-                variant="contained"
-                type="submit"
-                onClick={onSearchButtonClick}
-                onBlur={onSearchButtonBlur}
-              >
-                {searchButtonContent}
-              </SearchButton>
+              <>
+                {variant === 'icon' && value && (
+                  <IconButton color="inherit" onClick={onClearValue}>
+                    <HighlightOffIcon />
+                  </IconButton>
+                )}
+                <SearchButton
+                  disabled={disabled}
+                  expanded={expanded}
+                  searchVariant={variant}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  onClick={onSearchButtonClick}
+                  onBlur={onSearchButtonBlur}
+                >
+                  {searchButtonContent}
+                </SearchButton>
+              </>
             </InputEndAdornment>
           ),
         }}
