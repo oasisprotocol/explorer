@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import CardContent from '@mui/material/CardContent'
 import Skeleton from '@mui/material/Skeleton'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
+import { RouterTabs } from '../../components/RouterTabs'
 import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
-import { TransactionsCard } from './TransactionsCard'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -28,7 +28,13 @@ export const AccountDetailsPage: FC = () => {
           </CardContent>
         )}
       </SubPageCard>
-      <TransactionsCard />
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: useHref('') },
+          { label: t('account.erc-20'), to: useHref('tokens/erc-20') },
+          { label: t('account.erc-721'), to: useHref('tokens/erc-721') },
+        ]}
+      />
     </PageLayout>
   )
 }

@@ -6,6 +6,8 @@ import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
+import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
+import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
 import { RouteUtils } from './app/utils/route-utils'
 
 export const routes: RouteObject[] = [
@@ -30,6 +32,20 @@ export const routes: RouteObject[] = [
       {
         path: `${paraTime}/account/:address`,
         element: <AccountDetailsPage />,
+        children: [
+          {
+            path: '',
+            element: <TransactionsCard />,
+          },
+          {
+            path: 'tokens/erc-20',
+            element: <TokensCard type="erc-20" />,
+          },
+          {
+            path: 'tokens/erc-721',
+            element: <TokensCard type="erc-721" />,
+          },
+        ],
       },
       {
         path: `/${paraTime}/transactions`,
