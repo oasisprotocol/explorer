@@ -36,6 +36,12 @@ declare module '@mui/material/Paper' {
   }
 }
 
+declare module '@mui/material/Chip' {
+  export interface ChipPropsColorOverrides {
+    tertiary: true
+  }
+}
+
 export const defaultTheme = createTheme({
   palette: {
     background: {
@@ -248,13 +254,24 @@ export const defaultTheme = createTheme({
       },
     },
     MuiChip: {
+      variants: [
+        {
+          props: { color: 'tertiary' },
+          style: ({ theme }) => ({
+            color: COLORS.brandExtraDark,
+            backgroundColor: COLORS.purpleBackground,
+            borderColor: COLORS.brandDark,
+          }),
+        },
+      ],
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           fontSize: '15px',
           lineHeight: '18px',
           borderRadius: 9,
           gap: 2,
-        },
+          padding: theme.spacing(3),
+        }),
         label: {
           padding: 0,
         },

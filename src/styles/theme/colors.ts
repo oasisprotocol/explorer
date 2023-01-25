@@ -34,4 +34,5 @@ export const COLORS = {
   spaceCadet: '#0f0f5f',
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',
+  purpleBackground: '#e0e0f4',
 } satisfies { [colorName: string]: string }
