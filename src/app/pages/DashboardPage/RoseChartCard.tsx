@@ -26,12 +26,6 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
   const rosePriceQuery = useGetRosePrice()
   const roseMarketChartQuery = useGetRoseMarketChart({
     days: chartDurationToDaysMap[chartDuration],
-    // https://www.coingecko.com/api/documentations/v3#/coins/get_coins__id__market_chart
-    // Change interval to daily data points if chart duration is greater or equal to a week
-    interval:
-      chartDurationToDaysMap[chartDuration] >= chartDurationToDaysMap[ChartDuration.WEEK]
-        ? 'daily'
-        : undefined,
   })
   const lineChartData = roseMarketChartQuery.data?.map(item => ({
     timestamp: item[0],

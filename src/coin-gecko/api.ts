@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
+import { ChartDuration, chartDurationToDaysMap } from '../app/utils/chart-utils'
 
 type GetRosePriceParams = {
   ids: string
@@ -27,7 +28,7 @@ export const getRosePrice = (params: GetRosePriceParams): Promise<AxiosResponse<
 type GetRoseMarketChartParams = {
   days: number
   vs_currency: string
-  interval?: undefined | 'daily'
+  interval: undefined | 'daily'
 }
 
 type GetRoseMarketChartProp = [number, number][]
@@ -63,7 +64,7 @@ export function useGetRosePrice() {
   )
 }
 
-export function useGetRoseMarketChart(params: Pick<GetRoseMarketChartParams, 'days' | 'interval'>) {
+export function useGetRoseMarketChart(params: Pick<GetRoseMarketChartParams, 'days'>) {
   return useQuery<
     Awaited<ReturnType<typeof getGetRoseMarketChart>>,
     AxiosError<unknown>,
@@ -72,7 +73,10 @@ export function useGetRoseMarketChart(params: Pick<GetRoseMarketChartParams, 'da
     ['roseMarketChart', params.days],
     () =>
       getGetRoseMarketChart({
-        ...params,
+        days: params.days,
+        // https://www.coingecko.com/api/documentations/v3#/coins/get_coins__id__market_chart
+        // Change interval to daily data points if chart duration is greater or equal to a week
+        interval: params.days >= chartDurationToDaysMap[ChartDuration.WEEK] ? 'daily' : undefined,
         vs_currency: 'usd',
       }),
     {
