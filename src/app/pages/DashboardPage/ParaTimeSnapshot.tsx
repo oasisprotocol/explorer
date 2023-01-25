@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
+import { RoseChartCard } from './RoseChartCard'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
@@ -51,7 +52,9 @@ export const ParaTimeSnapshot: FC = () => {
         </Grid>
         <Grid item xs={12} md={3}></Grid>
         <Grid item xs={12} md={3}></Grid>
-        <Grid item xs={12} md={3}></Grid>
+        <Grid item xs={12} md={3}>
+          <RoseChartCard chartDuration={chartDuration} />
+        </Grid>
       </Grid>
     </>
   )
