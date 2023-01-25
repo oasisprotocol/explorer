@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, memo, useEffect, useRef, useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import paratimeSelectorGlow from './images/paratime-selector-glow.svg'
@@ -42,7 +42,7 @@ const ParaTimeSelectorGlow = styled(Box, {
     width: '80vh',
     height: '80vh',
     marginTop: '-17vh',
-  }
+  },
 }))
 
 const ParaTimeSelectorGlobe = styled(Box)(() => ({
@@ -95,9 +95,9 @@ const QuickPinchZoomInner = styled('div')(() => ({
 }))
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
-  const graphRef = useRef<SVGSVGElement & HTMLElement>(null);
-  const quickPinchZoomRef = useRef<PinchZoom>(null);
-  const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null);
+  const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
+  const quickPinchZoomRef = useRef<PinchZoom>(null)
+  const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -107,36 +107,33 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
-    ref: graphRef
+    ref: graphRef,
   })
 
   useEffect(() => {
     if (selectedGraphEndpoint) {
-      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, {width, height}));
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
     }
   }, [selectedGraphEndpoint])
 
-  const onExploreClick = useCallback(() => {
+  const onExploreClick = () => {
     setStep(ParaTimeSelectorStep.Explore)
-  }, []);
+  }
 
-  const onZoomOutClick = useCallback(() => {
+  const onZoomOutClick = () => {
     setSelectedGraphEndpoint(GraphEndpoint.Consensus)
-  }, [])
+  }
 
-  const onUpdate = useCallback(
-    ({ x, y, scale }: UpdateAction) => {
-      if (!isMobile) {
-        return
-      }
+  const onUpdate = ({ x, y, scale }: UpdateAction) => {
+    if (!isMobile) {
+      return
+    }
 
-      const transformValue = make3dTransformValue({ x, y, scale });
-      quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
-    },
-    [width, height, isMobile],
-  )
+    const transformValue = make3dTransformValue({ x, y, scale })
+    quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
+  }
 
-  const graphCmp = useMemo(() => (
+  const graphCmp = (
     <Graph
       ref={graphRef}
       disabled={disabled}
@@ -144,17 +141,17 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
       selectedGraphEndpoint={selectedGraphEndpoint}
       setSelectedGraphEndpoint={setSelectedGraphEndpoint}
     />
-  ), [disabled, step, selectedGraphEndpoint, setSelectedGraphEndpoint]);
+  )
 
-  const graphPinchZoom = useMemo(() => (isMobile ? (
+  const graphPinchZoom = isMobile ? (
     <QuickPinchZoomOuter>
-      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onUpdate} maxZoom={2} minZoom={0.5} >
+      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onUpdate} maxZoom={2} minZoom={0.5}>
         <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>{graphCmp}</QuickPinchZoomInner>
       </QuickPinchZoom>
     </QuickPinchZoomOuter>
   ) : (
     graphCmp
-  )), [isMobile, onUpdate, graphCmp]);
+  )
 
   return (
     <ParaTimeSelectorGlow disabled={disabled}>
