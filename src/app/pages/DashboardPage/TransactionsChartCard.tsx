@@ -36,7 +36,6 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           dataKey="volume_per_second"
           data={lineChartData}
           margin={{ left: 0, right: isMobile ? 80 : 40 }}
-          strokeWidth={1.09}
           formatters={{
             data: (value: number) => t('transactionsTpsChart.tooltip', { value }),
             label: (value: string) => intlDateFormat(new Date(value)),
