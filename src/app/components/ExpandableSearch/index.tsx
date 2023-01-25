@@ -10,15 +10,15 @@ const ExpandableSearchBox = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  '> div:nth-child(1)': {
+  '> div:nth-of-type(1)': {
     flex: '0 1 calc(100% - 50px)',
   },
-  '> div:nth-child(2)': {
+  '> div:nth-of-type(2)': {
     flex: '0 1 50px',
     height: '47px',
   },
   [theme.breakpoints.up('sm')]: {
-    '> div:nth-child(1)': {
+    '> div:nth-of-type(1)': {
       flex: '0 1 100%',
     },
   },
