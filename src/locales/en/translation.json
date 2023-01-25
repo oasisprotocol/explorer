@@ -1,6 +1,9 @@
 {
   "account": {
+    "showMore": "+ {{counter}} more",
+    "noTokens": "This account holds no tokens",
     "title": "Account",
+    "tokens": "Tokens",
     "transactionsListTitle": "Account Transactions"
   },
   "averageTransactionSize": {
