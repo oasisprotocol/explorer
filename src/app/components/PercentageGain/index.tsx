@@ -16,7 +16,6 @@ const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
 
   return (
     <Chip
-      sx={{ p: 3 }}
       color={gain ? 'success' : 'error'}
       icon={gain ? <NorthIcon sx={{ fontSize: '14px' }} /> : <SouthIcon sx={{ fontSize: '14px' }} />}
       label={`${percentage}%`}

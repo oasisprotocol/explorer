@@ -7,8 +7,8 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { trimLongString } from '../../utils/trimLongString'
-import { intlCurrencyFormat } from '../../utils/numberFormatter'
 import { Account as ConsensusAccount } from '../../../oasis-indexer/api'
+import { TokenPills } from './TokenPills'
 
 export const addressToNumber = (address: string) => {
   // https://github.com/oasisprotocol/oasis-wallet-ext/blob/da7ad67/src/popup/component/AccountIcon/index.js#L26
@@ -56,6 +56,10 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           </dd>
         </>
       )}
+      <dt>{t('account.tokens')}</dt>
+      <dd>
+        <TokenPills erc20={[]} erc721={[]} />
+      </dd>
     </StyledDescriptionList>
   )
 }
