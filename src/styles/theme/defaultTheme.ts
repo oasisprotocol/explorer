@@ -350,6 +350,7 @@ export const defaultTheme = createTheme({
         head: {
           border: 0,
           color: COLORS.darkSlateBlue,
+          fontWeight: 400,
         },
       },
     },
