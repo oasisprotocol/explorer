@@ -17,19 +17,19 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
   height: 'fill-available',
   backgroundColor: COLORS.brandDark,
   overflow: 'hidden',
-  '&::before': {
-    content: '" "',
-    position: 'absolute',
-    inset: 0,
-    backgroundImage: `url("${background}")`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  },
   [theme.breakpoints.up('sm')]: {
     height: '100vh',
     minHeight: '800px',
     overflow: 'unset',
+    '&::before': {
+      content: '" "',
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `url("${background}")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    },
   },
 }))
 
