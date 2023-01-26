@@ -11,8 +11,10 @@ onlyRunOnCI('externalLinks', () => {
   it('file should contain groups of links as objects', () => {
     expect(Object.entries(externalLinksModule).length).toBeGreaterThan(0)
     for (const [linksGroupName, linksGroup] of Object.entries(externalLinksModule)) {
+      expect(typeof linksGroup).toBe('object')
       expect(Object.entries(linksGroup).length).toBeGreaterThan(0)
       for (const [linkName, url] of Object.entries(linksGroup)) {
+        expect(typeof url).toBe('string')
         expect(url).toMatch(/^https:/)
       }
     }
