@@ -11,8 +11,7 @@ import { ParaTimeSelectorUtils } from './para-time-selector-utils'
 import { GraphEndpoint } from './Graph/types'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import QuickPinchZoom from 'react-quick-pinch-zoom'
-import PinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
+import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
@@ -96,7 +95,7 @@ const QuickPinchZoomInner = styled('div')(() => ({
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
-  const quickPinchZoomRef = useRef<PinchZoom>(null)
+  const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
