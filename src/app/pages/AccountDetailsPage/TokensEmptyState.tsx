@@ -32,7 +32,7 @@ export const TokensEmptyState: FC<TokensEmptyStateProps> = ({ label }) => {
   return (
     <StyledBox>
       <ReportGmailerrorredIcon sx={{ color: COLORS.brandDark, fontSize: '55px' }} />
-      <Typography sx={{ color: COLORS.grayDark }}>This account holds no {label} tokens.</Typography>
+      <Typography sx={{ color: COLORS.grayDark }}>{t('account.emptyTokenList', { token: label })}</Typography>
     </StyledBox>
   )
 }
