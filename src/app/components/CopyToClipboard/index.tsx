@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import IconButton from '@mui/material/IconButton'
+import { COLORS } from '../../../styles/theme/colors'
 
 const clipboardTooltipDuration = 2000
 
@@ -46,7 +47,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
       {label || value}
       <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
         <IconButton color="inherit" aria-label={ariaLabel}>
-          <ContentCopyIcon fontSize="small" />
+          <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark }} />
         </IconButton>
       </Tooltip>
     </Box>
