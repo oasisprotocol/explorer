@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
-import { Dispatch, forwardRef, ForwardRefRenderFunction, memo, SetStateAction, useCallback } from 'react'
+import { forwardRef, ForwardRefRenderFunction, memo } from 'react'
 import { GraphEndpoint } from './types'
 import { GraphUtils } from './graph-utils'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ interface GraphBaseProps {
 interface GraphProps extends GraphBaseProps {
   // TODO: Consider moving this to a state management solution
   selectedGraphEndpoint?: GraphEndpoint
-  setSelectedGraphEndpoint: Dispatch<SetStateAction<GraphEndpoint | undefined>>
+  setSelectedGraphEndpoint: (value: GraphEndpoint) => void
 }
 
 interface GraphSvgProps extends GraphBaseProps {
