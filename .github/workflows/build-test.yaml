@@ -15,8 +15,18 @@ jobs:
         with:
           node-version: 18.x
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile | tee yarn-install-out
       - run: yarn lint
       - run: yarn checkTs
       - run: yarn test
-      - run: yarn build
+      - run: yarn build | tee yarn-build-out
+      - name: Print yarn install time
+        run: |
+          echo '```sh' >> $GITHUB_STEP_SUMMARY
+          cat yarn-install-out | tee -a $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: Print bundle size
+        run: |
+          echo '```sh' >> $GITHUB_STEP_SUMMARY
+          cat yarn-build-out | tee -a $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
