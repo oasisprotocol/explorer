@@ -123,11 +123,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
     setSelectedGraphEndpoint(GraphEndpoint.Consensus)
   }
 
-  const onUpdate = ({ x, y, scale }: UpdateAction) => {
-    if (!isMobile) {
-      return
-    }
-
+  const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
     const transformValue = make3dTransformValue({ x, y, scale })
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
@@ -144,7 +140,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
 
   const graphPinchZoom = isMobile ? (
     <QuickPinchZoomOuter>
-      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onUpdate} maxZoom={2} minZoom={0.5}>
+      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
         <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>{graphCmp}</QuickPinchZoomInner>
       </QuickPinchZoom>
     </QuickPinchZoomOuter>
