@@ -1,11 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { staking } from '@oasisprotocol/client'
+import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
+import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { trimLongString } from '../../utils/trimLongString'
 import { Account as ConsensusAccount } from '../../../oasis-indexer/api'
 
@@ -16,6 +19,12 @@ export const addressToNumber = (address: string) => {
 
   return seed
 }
+
+const StyledBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  flex: 1,
+}))
 
 type AccountProps = {
   // TODO: switch to Emerald when endpoint is ready
@@ -44,14 +53,17 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
         <>
           <dt>{t('common.fiatValue')}</dt>
           <dd>
-            {t('common.fiatValueInUSD', {
-              value: mockedRuntimeBalance * roseFiatValue,
-              formatParams: {
-                value: {
-                  currency: 'USD',
+            <StyledBox>
+              {t('common.fiatValueInUSD', {
+                value: mockedRuntimeBalance * roseFiatValue,
+                formatParams: {
+                  value: {
+                    currency: 'USD',
+                  },
                 },
-              },
-            })}
+              })}
+              <CoinGeckoReferral />
+            </StyledBox>
           </dd>
         </>
       )}
