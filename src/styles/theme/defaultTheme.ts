@@ -489,5 +489,41 @@ export const defaultTheme = createTheme({
         },
       ],
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          // neglect the default border radius of sibling element (Card component in most cases)
+          '&& + *': {
+            borderTopLeftRadius: 0,
+          },
+        },
+        indicator: {
+          display: 'none',
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '&.Mui-selected': {
+            color: COLORS.brandExtraDark,
+            backgroundColor: COLORS.white,
+          },
+
+          color: COLORS.brandDark,
+          backgroundColor: COLORS.inactiveTab,
+          marginRight: theme.spacing(2),
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+          textTransform: 'capitalize',
+          [theme.breakpoints.down('sm')]: {
+            padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
+          },
+          [theme.breakpoints.up('sm')]: {
+            padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+          },
+        }),
+      },
+    },
   },
 })
