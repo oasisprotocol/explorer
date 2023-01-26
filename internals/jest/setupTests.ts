@@ -31,6 +31,6 @@ expect.addSnapshotSerializer(
     // the meaningful part of class name
     classNameReplacer(className, index) {
       return className.replace(/^css-.+?-/, `emotion-${index}-`)
-    }
-  })
+    },
+  }),
 )

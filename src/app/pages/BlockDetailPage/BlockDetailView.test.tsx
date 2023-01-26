@@ -16,6 +16,6 @@ test('BlockDetailView should display formatted values', () => {
     />,
   )
   expect(container).toHaveTextContent('1158800')
-  expect(container).toHaveTextContent('April 23, 2022, 12:20 PM UTC (9 months ago)')
+  expect(container).toHaveTextContent('April 23, 2022 at 12:20 PM UTC (9 months ago)')
   expect(container).toHaveTextContent('6,434 bytes')
 })
