@@ -15,3 +15,5 @@ export const docs = {
   token: `${docsUrl}general/oasis-network/token-metrics-and-distribution`,
   paraTimeTransfer: `${docsUrl}general/manage-tokens/how-to-transfer-rose-into-paratime`,
 }
+
+export const referrals = { coinGecko: 'https://www.coingecko.com' }
