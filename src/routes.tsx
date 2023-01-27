@@ -39,11 +39,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: 'tokens/erc-20',
-            element: <TokensCard type="erc-20" />,
+            element: <TokensCard type="ERC20" />,
           },
           {
             path: 'tokens/erc-721',
-            element: <TokensCard type="erc-721" />,
+            element: <TokensCard type="ERC721" />,
           },
         ],
       },

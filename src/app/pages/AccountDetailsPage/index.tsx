@@ -31,8 +31,8 @@ export const AccountDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: useHref('') },
-          { label: t('account.erc-20'), to: useHref('tokens/erc-20') },
-          { label: t('account.erc-721'), to: useHref('tokens/erc-721') },
+          { label: t('account.ERC20'), to: useHref('tokens/erc-20') },
+          { label: t('account.ERC721'), to: useHref('tokens/erc-721') },
         ]}
       />
     </PageLayout>
