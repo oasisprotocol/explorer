@@ -37,18 +37,4 @@ export abstract class GraphUtils {
         return initialValue;
     }
   }
-
-  static getSvgTransform(graphEndpoint?: GraphEndpoint): string {
-    switch (graphEndpoint) {
-      case GraphEndpoint.Emerald:
-        return 'scale3d(2, 2, 1) translate3d(1%, 25%, 0)'
-      case GraphEndpoint.Cipher:
-        return 'scale3d(2, 2, 1) translate3d(-33%, 10%, 0)'
-      case GraphEndpoint.Sapphire:
-        return 'scale3d(2, 2, 1) translate3d(23%, -20%, 0)'
-      case GraphEndpoint.Consensus:
-      default:
-        return 'scale3d(1, 1, 1)'
-    }
-  }
 }

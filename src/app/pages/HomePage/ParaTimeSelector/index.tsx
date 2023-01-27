@@ -128,30 +128,22 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
-  const graphCmp = (
-    <Graph
-      ref={graphRef}
-      disabled={disabled}
-      transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-      selectedGraphEndpoint={selectedGraphEndpoint}
-      setSelectedGraphEndpoint={setSelectedGraphEndpoint}
-    />
-  )
-
-  const graphPinchZoom = isMobile ? (
-    <QuickPinchZoomOuter>
-      <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
-        <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>{graphCmp}</QuickPinchZoomInner>
-      </QuickPinchZoom>
-    </QuickPinchZoomOuter>
-  ) : (
-    graphCmp
-  )
-
   return (
     <ParaTimeSelectorGlow disabled={disabled}>
       <ParaTimeSelectorGlobe>
-        {graphPinchZoom}
+        <QuickPinchZoomOuter>
+          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
+            <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
+              <Graph
+                ref={graphRef}
+                disabled={disabled}
+                transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
+                selectedGraphEndpoint={selectedGraphEndpoint}
+                setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+              />
+            </QuickPinchZoomInner>
+          </QuickPinchZoom>
+        </QuickPinchZoomOuter>
         {!isMobile && (
           <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
             <ZoomOutBtn

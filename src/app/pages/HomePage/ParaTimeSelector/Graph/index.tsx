@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { forwardRef, ForwardRefRenderFunction, memo } from 'react'
 import { GraphEndpoint } from './types'
-import { GraphUtils } from './graph-utils'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { ParaTime } from '../../../../../config'
@@ -28,7 +27,7 @@ const GraphStyled = styled('svg', {
     !(['disabled', 'transparent', 'graphEndpoint'] as (keyof GraphSvgProps)[]).includes(
       prop as keyof GraphSvgProps,
     ),
-})<GraphSvgProps>(({ theme, disabled, transparent, graphEndpoint }) => ({
+})<GraphSvgProps>(({ disabled, transparent, graphEndpoint }) => ({
   position: 'absolute',
   inset: 0,
   ...(disabled || transparent
@@ -59,11 +58,6 @@ const GraphStyled = styled('svg', {
     '&:hover': {
       opacity: '1',
     },
-  },
-  [theme.breakpoints.up('sm')]: {
-    transform: GraphUtils.getSvgTransform(graphEndpoint),
-    transition: 'transform 1s ease-in-out',
-    inset: 'unset',
   },
 }))
 
