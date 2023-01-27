@@ -18,6 +18,11 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   },
 }))
 
+const StyledCardContent = styled(CardContent)(({ theme }) => ({
+  position: 'relative',
+  paddingTop: theme.spacing(4),
+}))
+
 type SnapshotCardProps = PropsWithChildren & {
   label: string
   title: string
@@ -28,7 +33,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({ children, title, percentag
   return (
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
-      <CardContent sx={{ pt: 4 }}>{children}</CardContent>
+      <StyledCardContent>{children}</StyledCardContent>
       <CardActions>
         <Box
           sx={{

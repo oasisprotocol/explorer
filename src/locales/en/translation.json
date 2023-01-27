@@ -19,6 +19,7 @@
     "label": "Copy to clipboard",
     "success": "Copied!"
   },
+  "coinGeckoReferral": "Data from <CoinGeckoLink>CoinGecko</CoinGeckoLink>",
   "common": {
     "age": "Age",
     "block": "Block",

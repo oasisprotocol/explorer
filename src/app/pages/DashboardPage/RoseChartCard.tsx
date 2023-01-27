@@ -3,10 +3,18 @@ import { useTranslation } from 'react-i18next'
 import { ChartDuration, chartDurationToDaysMap } from '../../utils/chart-utils'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { LineChart } from '../../components/charts/LineChart'
+import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { SnapshotCard } from './SnapshotCard'
 import { useGetRosePrice, useGetRoseMarketChart } from '../../../coin-gecko/api'
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: `-${theme.spacing(2)}`,
+  left: theme.spacing(4),
+}))
 
 type RoseChartCardProps = {
   chartDuration: ChartDuration
@@ -49,32 +57,37 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
       percentage={percentage}
       title={t('roseChart.header')}
     >
-      <Box sx={{ minHeight: '70px' }}>
-        {lineChartData && (
-          <LineChart
-            dataKey="value"
-            data={lineChartData}
-            margin={{ left: 0, right: isMobile ? 80 : 40, top: 15, bottom: 15 }}
-            formatters={{
-              data: (value: number) =>
-                t('common.fiatValueInUSD', {
-                  value,
-                  formatParams: formatFiatRoseParams,
-                }),
-              label: (value: string) =>
-                t('common.formattedDateTime', {
-                  timestamp: new Date(value),
-                  formatParams: {
-                    timestamp: {
-                      dateStyle: 'short',
-                      timeStyle: 'short',
+      <>
+        <StyledBox>
+          <CoinGeckoReferral />
+        </StyledBox>
+        <Box sx={{ minHeight: '70px' }}>
+          {lineChartData && (
+            <LineChart
+              dataKey="value"
+              data={lineChartData}
+              margin={{ left: 0, right: isMobile ? 80 : 40, top: 15, bottom: 15 }}
+              formatters={{
+                data: (value: number) =>
+                  t('common.fiatValueInUSD', {
+                    value,
+                    formatParams: formatFiatRoseParams,
+                  }),
+                label: (value: string) =>
+                  t('common.formattedDateTime', {
+                    timestamp: new Date(value),
+                    formatParams: {
+                      timestamp: {
+                        dateStyle: 'short',
+                        timeStyle: 'short',
+                      },
                     },
-                  },
-                }),
-            }}
-          />
-        )}
-      </Box>
+                  }),
+              }}
+            />
+          )}
+        </Box>
+      </>
     </SnapshotCard>
   )
 }
