@@ -1,4 +1,4 @@
-import { LineChart as RechartsLineChart, Line, ResponsiveContainer, Tooltip } from 'recharts'
+import { LineChart as RechartsLineChart, Line, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import { Margin } from 'recharts/types/util/types'
 import { COLORS } from '../../../styles/theme/colors'
 import { memo, ReactElement } from 'react'
@@ -14,7 +14,7 @@ interface LineChartProps<T extends object> extends Formatters {
 const LineChartCmp = <T extends object>({
   data,
   margin,
-  strokeWidth = 1,
+  strokeWidth = 2,
   dataKey,
   formatters,
 }: LineChartProps<T>): ReactElement => (
@@ -23,11 +23,12 @@ const LineChartCmp = <T extends object>({
       <Line
         type="monotone"
         dataKey={dataKey as string}
-        stroke={COLORS.brandExtraDark}
+        stroke={COLORS.brandDark}
         strokeWidth={strokeWidth}
         dot={false}
-        activeDot={{ r: 5, fill: '#000062', strokeWidth: 20, stroke: '#0000621A' }}
+        activeDot={{ r: 5, fill: COLORS.brandExtraDark, strokeWidth: 20, stroke: '#0000621A' }}
       />
+      <YAxis domain={['dataMin', 'dataMax']} axisLine={false} tickLine={false} tick={false} mirror={true} />
       <Tooltip
         cursor={false}
         wrapperStyle={{ outline: 'none' }}

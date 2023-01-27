@@ -29,6 +29,7 @@
     "fiatValueInUSD": "{{value, currency}}",
     "fill": "Fill",
     "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
+    "formattedDateTime": "{{timestamp, dateTime}}",
     "from": "From",
     "gasUsed": "Gas used",
     "hash": "Hash",
@@ -75,6 +76,9 @@
   "pagination": {
     "first": "First",
     "last": "Last"
+  },
+  "roseChart": {
+    "header": "Current ROSE Price"
   },
   "social": {
     "description": "Be part of the community and stay in the loop on everything Oasis",

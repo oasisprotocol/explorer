@@ -12,13 +12,14 @@ interface PercentageGainProps {
 }
 
 const PercentageGainCmp: FC<PercentageGainProps> = ({ percentage }) => {
-  const gain = percentage >= 0
+  const roundedPercentage = Math.round(percentage * 100) / 100
+  const gain = roundedPercentage >= 0
 
   return (
     <Chip
       color={gain ? 'success' : 'error'}
       icon={gain ? <NorthIcon sx={{ fontSize: '14px' }} /> : <SouthIcon sx={{ fontSize: '14px' }} />}
-      label={`${percentage}%`}
+      label={`${roundedPercentage}%`}
     />
   )
 }
