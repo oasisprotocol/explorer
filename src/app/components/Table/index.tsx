@@ -108,6 +108,10 @@ export const Table: FC<TableProps> = ({
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
+  if (!isLoading && !rows?.length) {
+    return null
+  }
+
   return (
     <>
       <TableContainer>
