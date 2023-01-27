@@ -16,7 +16,7 @@ export const Logotype: FC<LogotypeProps> = ({ showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const showTypography = showText ?? !isMobile;
+  const showTypography = showText ?? !isMobile
   const logoSize = isMobile ? 32 : 40
 
   return (

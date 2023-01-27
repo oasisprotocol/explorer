@@ -5,7 +5,8 @@ export enum ConsensusParaTime {
 }
 
 export const GraphEndpoint = {
-  ...ParaTime, ...ConsensusParaTime
+  ...ParaTime,
+  ...ConsensusParaTime,
 }
 
-export type GraphEndpoint = ParaTime | ConsensusParaTime;
+export type GraphEndpoint = ParaTime | ConsensusParaTime

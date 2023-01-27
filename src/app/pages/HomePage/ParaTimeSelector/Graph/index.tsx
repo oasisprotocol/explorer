@@ -79,7 +79,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     }
 
     setSelectedGraphEndpoint(graphEndpoint)
-  };
+  }
 
   return (
     <GraphStyled

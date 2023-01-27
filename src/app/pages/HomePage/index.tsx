@@ -50,7 +50,7 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
   marginTop: 60,
   [theme.breakpoints.up('sm')]: {
     marginBottom: 60,
-    marginTop: 'unset'
+    marginTop: 'unset',
   },
 }))
 

@@ -21,8 +21,8 @@ export abstract class ParaTimeSelectorUtils {
   }
 
   static showZoomOutBtn(isMobile: boolean, endpoint?: GraphEndpoint) {
-    if(isMobile) {
-      return false;
+    if (isMobile) {
+      return false
     }
 
     switch (endpoint) {
