@@ -3,9 +3,20 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
+
+const FooterBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'space-between',
+  padding: `${theme.spacing(5)} ${theme.spacing(4)}`,
+  [theme.breakpoints.up('sm')]: {
+    flex: '0 1 100%',
+    padding: `${theme.spacing(5)} ${theme.spacing(6)}`,
+  },
+}))
 
 export const Footer: FC = () => {
   const { t } = useTranslation()
@@ -15,9 +26,7 @@ export const Footer: FC = () => {
 
   return (
     <footer>
-      <Box
-        sx={{ display: 'flex', width: '100%', justifyContent: 'space-between', px: isMobile ? 4 : 6, py: 5 }}
-      >
+      <FooterBox>
         {isMobile ? (
           <AppendMobileSearch>
             <Typography variant="footer">
@@ -37,7 +46,7 @@ export const Footer: FC = () => {
             </Typography>
           </>
         )}
-      </Box>
+      </FooterBox>
     </footer>
   )
 }
