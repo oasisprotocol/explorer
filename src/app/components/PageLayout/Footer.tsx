@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
-import { ExpandableSearch } from '../ExpandableSearch'
+import { AppendMobileSearch } from '../AppendMobileSearch'
 
 export const Footer: FC = () => {
   const { t } = useTranslation()
@@ -19,11 +19,11 @@ export const Footer: FC = () => {
         sx={{ display: 'flex', width: '100%', justifyContent: 'space-between', px: isMobile ? 4 : 6, py: 5 }}
       >
         {isMobile ? (
-          <ExpandableSearch>
+          <AppendMobileSearch>
             <Typography variant="footer">
               {isMobile ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>
-          </ExpandableSearch>
+          </AppendMobileSearch>
         ) : (
           <>
             {process.env.REACT_APP_BUILD_SHA && (
