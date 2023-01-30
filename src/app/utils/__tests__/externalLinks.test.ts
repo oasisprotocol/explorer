@@ -2,6 +2,7 @@ import nodeFetch from 'node-fetch'
 import * as externalLinksModule from '../externalLinks'
 
 jest.setTimeout(30_000)
+jest.retryTimes(3) // Reddit is unreliable
 
 // Requesting external links is sometimes slow; and links will rarely break.
 // So only run this on CI, so local tests remain quick.
