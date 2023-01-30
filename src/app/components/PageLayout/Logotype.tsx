@@ -8,10 +8,15 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
 
-export const Logotype: FC = () => {
+interface LogotypeProps {
+  showText?: true
+}
+
+export const Logotype: FC<LogotypeProps> = ({ showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const showTypography = showText ?? !isMobile
   const logoSize = isMobile ? 32 : 40
 
   return (
@@ -26,7 +31,7 @@ export const Logotype: FC = () => {
       }}
     >
       <img src={logotype} alt="logo" height={logoSize} width={logoSize} />
-      {!isMobile && (
+      {showTypography && (
         <Typography variant="h1" color={COLORS.white}>
           {t('pageTitle')}
         </Typography>

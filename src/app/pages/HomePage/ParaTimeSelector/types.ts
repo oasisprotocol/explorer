@@ -1,14 +1,10 @@
 export enum ParaTimeSelectorStep {
   /**
-   * Animation in progress
-   */
-  ANIMATING,
-  /**
    * Graph interactions disabled - explore button shown on top of graph
    */
-  ENABLE_EXPLORE,
+  EnableExplore,
   /**
    * Graph interactions enabled
    */
-  EXPLORE,
+  Explore,
 }

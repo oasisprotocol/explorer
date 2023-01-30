@@ -1,5 +1,5 @@
-import { FC, memo, useState } from 'react'
-import { styled } from '@mui/material/styles'
+import { FC, memo, useEffect, useRef, useState } from 'react'
+import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import paratimeSelectorGlow from './images/paratime-selector-glow.svg'
 import paratimeSelectorGlobe from './images/paratime-selector-globe.svg'
@@ -10,7 +10,11 @@ import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
 import { GraphEndpoint } from './Graph/types'
 import Fade from '@mui/material/Fade'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import { GraphUtils } from './Graph/graph-utils'
+import useResizeObserver from 'use-resize-observer'
 
 interface ParaTimeSelectorProps {
   disabled: boolean
@@ -19,11 +23,11 @@ interface ParaTimeSelectorProps {
 const ParaTimeSelectorGlow = styled(Box, {
   shouldForwardProp: (prop: string) =>
     !(['disabled'] as (keyof ParaTimeSelectorProps)[]).includes(prop as keyof ParaTimeSelectorProps),
-})<ParaTimeSelectorProps>(({ disabled }) => ({
+})<ParaTimeSelectorProps>(({ disabled, theme }) => ({
   position: 'relative',
-  width: '80vh',
-  height: '80vh',
-  marginTop: '-17vh',
+  width: '130vw',
+  height: '130vw',
+  marginTop: '-10vh',
   backgroundImage: `url("${paratimeSelectorGlow}")`,
   backgroundSize: 'contain',
   backgroundPosition: 'center',
@@ -33,6 +37,11 @@ const ParaTimeSelectorGlow = styled(Box, {
         opacity: 0.25,
       }
     : {}),
+  [theme.breakpoints.up('sm')]: {
+    width: '80vh',
+    height: '80vh',
+    marginTop: '-17vh',
+  },
 }))
 
 const ParaTimeSelectorGlobe = styled(Box)(() => ({
@@ -71,41 +80,83 @@ const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
 
+const QuickPinchZoomOuter = styled('div')(() => ({
+  '> div': {
+    position: 'absolute',
+    inset: 0,
+  },
+}))
+
+const QuickPinchZoomInner = styled('div')(() => ({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+}))
+
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
+  const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
+  const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
+  const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ENABLE_EXPLORE)
-  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>(GraphEndpoint.CONSENSUS)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
+
+  const { width, height } = useResizeObserver<SVGSVGElement>({
+    ref: graphRef,
+  })
+
+  useEffect(() => {
+    if (selectedGraphEndpoint) {
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
+    }
+  }, [selectedGraphEndpoint])
 
   const onExploreClick = () => {
-    setStep(ParaTimeSelectorStep.EXPLORE)
+    setStep(ParaTimeSelectorStep.Explore)
   }
 
   const onZoomOutClick = () => {
-    setSelectedGraphEndpoint(GraphEndpoint.CONSENSUS)
+    setSelectedGraphEndpoint(GraphEndpoint.Consensus)
+  }
+
+  const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
+    const transformValue = make3dTransformValue({ x, y, scale })
+    quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
   return (
     <ParaTimeSelectorGlow disabled={disabled}>
       <ParaTimeSelectorGlobe>
-        <Graph
-          disabled={disabled}
-          transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-          selectedGraphEndpoint={selectedGraphEndpoint}
-          setSelectedGraphEndpoint={setSelectedGraphEndpoint}
-        />
-        <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(selectedGraphEndpoint)}>
-          <ZoomOutBtn
-            variant="text"
-            color="secondary"
-            startIcon={<ChevronLeftIcon />}
-            onClick={onZoomOutClick}
-            disabled={disabled}
-          >
-            {t('home.zoomOutBtnText')}
-          </ZoomOutBtn>
-        </ZoomOutBtnFade>
+        <QuickPinchZoomOuter>
+          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
+            <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
+              <Graph
+                ref={graphRef}
+                disabled={disabled}
+                transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
+                selectedGraphEndpoint={selectedGraphEndpoint}
+                setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+              />
+            </QuickPinchZoomInner>
+          </QuickPinchZoom>
+        </QuickPinchZoomOuter>
+        {!isMobile && (
+          <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
+            <ZoomOutBtn
+              variant="text"
+              color="secondary"
+              startIcon={<ChevronLeftIcon />}
+              onClick={onZoomOutClick}
+              disabled={disabled}
+            >
+              {t('home.zoomOutBtnText')}
+            </ZoomOutBtn>
+          </ZoomOutBtnFade>
+        )}
         {ParaTimeSelectorUtils.showExploreBtn(step) && (
           <ExploreBtn
             color="secondary"
