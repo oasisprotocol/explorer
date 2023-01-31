@@ -3,7 +3,6 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { BarChart } from '../../components/charts/BarChart'
-import { intlDateFormat } from '../../utils/dateFormatter'
 import { useGetConsensusStatsTxVolume } from '../../../oasis-indexer/api'
 
 export function TransactionsStats() {
@@ -21,7 +20,10 @@ export function TransactionsStats() {
             dataKey="volume"
             formatters={{
               data: (value: number) => t('transactionStats.tooltip', { value }),
-              label: (value: string) => intlDateFormat(new Date(value)),
+              label: (value: string) =>
+                t('common.formattedDateTime', {
+                  timestamp: new Date(value),
+                }),
             }}
           />
         )}

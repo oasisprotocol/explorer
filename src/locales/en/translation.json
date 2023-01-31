@@ -10,7 +10,8 @@
     "transactionsListTitle": "Account Transactions"
   },
   "averageTransactionSize": {
-    "header": "Average Transaction Size"
+    "header": "Average Transaction Size",
+    "tooltip": "Average Tx Size: {{value, number}}"
   },
   "blocks": {
     "latest": "Latest Blocks"
