@@ -382,6 +382,16 @@ is the Ethereum address (without the leading `0x`). All-lowercase.
   address_data: string;
 }
 
+export interface Token {
+  balance: string
+  runtime: string
+  token_contract_addr: string
+  token_name: string
+  token_symbol: string
+  token_type: string
+  token_decimals: number
+}
+
 /**
  * A consensus layer account.
 
@@ -405,6 +415,8 @@ export interface Account {
   debonding_delegations_balance: string;
   /** The allowances made by this account. */
   allowances: Allowance[];
+   /** mocked runtime balances types */
+   runtime_evm_balance: Token[];
 }
 
 /**

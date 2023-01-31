@@ -1,55 +1,44 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Chip from '@mui/material/Chip'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
+import { ShowMoreTokensLink } from './ShowMoreTokensLink'
+import { type Token } from '../../../oasis-indexer/generated/api'
 
-export const StyledLink = styled(Link)(({ theme }) => ({
-  color: COLORS.brandDark,
-  fontWeight: 600,
-  textDecoration: 'none',
-  marginLeft: theme.spacing(4),
-}))
-
-type Token = {
-  balance: number
-  label: string
-}
 type TokenPillsProps = {
-  erc20: Token[]
-  erc721: Token[]
+  tokens: Token[]
 }
 
-export const TokenPills: FC<TokenPillsProps> = ({ erc20, erc721 }) => {
+const prioritizedTokensSymbols = ['ROSE', 'WROSE', 'ETH']
+
+export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
   const { t } = useTranslation()
-  // TODO: add logic for showing more tokens
-  const hasTokens = !!(erc20.length || erc721.length)
-  const pills: Token[] = []
-  const showMoreCounter = 0
+
+  if (!tokens) {
+    return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
+  }
+
+  const prioritizedPills = tokens?.filter(item => prioritizedTokensSymbols.includes(item.token_symbol))
+  const numberOfMissingPills = prioritizedTokensSymbols.length - prioritizedPills.length
+  const additionalPills = numberOfMissingPills
+    ? tokens
+        .filter(item => !prioritizedTokensSymbols.includes(item.token_symbol))
+        .slice(0, numberOfMissingPills)
+    : []
+  const pills = [...prioritizedPills, ...additionalPills]
 
   return (
     <>
-      {!hasTokens && <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>}
-      {hasTokens && (
-        <>
-          {pills.map((token, index) => (
-            <Chip
-              key={token.label + index}
-              sx={{ mr: 2 }}
-              label={`${token.label} ${token.balance}`}
-              variant="outlined"
-              color="tertiary"
-            />
-          ))}
-          {showMoreCounter && (
-            <StyledLink href="#" color="inherit">
-              {t('account.showMore', { counter: showMoreCounter })}
-            </StyledLink>
-          )}
-        </>
-      )}
+      {pills.map(item => (
+        <Chip
+          key={item.token_contract_addr}
+          sx={{ mr: 2 }}
+          label={`${item.balance} ${item.token_name}`}
+          variant="outlined"
+          color="tertiary"
+        />
+      ))}
+      <ShowMoreTokensLink tokens={tokens} pills={pills} />
     </>
   )
 }

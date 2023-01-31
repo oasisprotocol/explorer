@@ -1,7 +1,8 @@
 {
   "account": {
-    "erc-20": "ERC-20",
-    "erc-721": "ERC-721",
+    "emptyTokenList": "This account holds no {{token}} tokens.",
+    "ERC20": "ERC-20",
+    "ERC721": "ERC-721",
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
     "title": "Account",
@@ -23,6 +24,7 @@
   "coinGeckoReferral": "Data from <CoinGeckoLink>CoinGecko</CoinGeckoLink>",
   "common": {
     "age": "Age",
+    "balance": "Balance",
     "block": "Block",
     "bytes": "{{value, number}}",
     "chain": "Chain",
@@ -36,8 +38,11 @@
     "gasUsed": "Gas used",
     "hash": "Hash",
     "height": "Height",
+    "name": "Name",
     "size": "Size",
+    "smartContract": "Smart Contract",
     "status": "Status",
+    "ticker": "Ticker",
     "timestamp": "Timestamp",
     "to": "To",
     "totalSent": "Total Sent",
