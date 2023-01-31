@@ -19,10 +19,11 @@ const SearchButton = styled(Button)(({ theme }) => ({
 }))
 
 export interface SearchProps {
+  disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ onFocusChange }) => {
+const SearchCmp: FC<SearchProps> = ({ disabled, onFocusChange }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const searchPlaceholderTranslated = t('search.placeholder')
@@ -65,6 +66,7 @@ const SearchCmp: FC<SearchProps> = ({ onFocusChange }) => {
     <SearchForm onSubmit={onFormSubmit} role="search" aria-label={searchPlaceholderTranslated}>
       <TextField
         InputProps={{
+          disabled,
           inputRef,
           onFocus,
           onBlur,
@@ -78,7 +80,7 @@ const SearchCmp: FC<SearchProps> = ({ onFocusChange }) => {
           ),
           endAdornment: (
             <InputAdornment position="end">
-              <SearchButton color="primary" variant="contained" type="submit">
+              <SearchButton disabled={disabled} color="primary" variant="contained" type="submit">
                 {t('search.searchBtnText')}
               </SearchButton>
             </InputAdornment>

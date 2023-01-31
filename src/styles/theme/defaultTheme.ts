@@ -123,6 +123,9 @@ export const defaultTheme = createTheme({
           borderStyle: 'solid',
           borderColor: COLORS.grayMedium,
           textTransform: 'capitalize',
+          ':disabled': {
+            backgroundColor: COLORS.disabledPrimaryButton,
+          },
         },
         containedSecondary: {
           textTransform: 'capitalize',
