@@ -37,4 +37,5 @@ export const COLORS = {
   purpleBackground: '#e0e0f4',
   inactiveTab: '#e5e5f6',
   disabledPrimaryButton: '#c6e3fa',
+  errorIndicatorBackground: '#d44c4c',
 } satisfies { [colorName: string]: string }

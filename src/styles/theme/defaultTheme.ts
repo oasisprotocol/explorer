@@ -103,6 +103,29 @@ export const defaultTheme = createTheme({
     },
   },
   components: {
+    MuiAlert: {
+      variants: [
+        {
+          props: { severity: 'error' },
+          style: () => ({
+            color: COLORS.errorIndicatorBackground,
+          }),
+        },
+      ],
+      styleOverrides: {
+        root: ({ theme }) => ({
+          padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+          borderRadius: 10,
+        }),
+        icon: {
+          padding: 0,
+        },
+        message: {
+          padding: 0,
+          fontSize: '14px',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
