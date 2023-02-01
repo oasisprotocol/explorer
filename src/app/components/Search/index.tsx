@@ -153,7 +153,10 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   }
 
   const startAdornment = variant === 'button' && (
-    <InputAdornment position="start">
+    <InputAdornment
+      position="start"
+      disablePointerEvents // Pass clicks through, so it focuses the input
+    >
       <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
     </InputAdornment>
   )
