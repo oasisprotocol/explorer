@@ -64,7 +64,7 @@ export const defaultTheme = createTheme({
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
-    fontFamily: `"Euclid Circular B", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"FigtreeVariable", "Roboto", "Helvetica", "Arial", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
     fontWeightBold: 500,
