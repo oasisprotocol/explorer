@@ -108,7 +108,7 @@ export const BlockDetailView: FC<{
           <dt>{t('common.size')}</dt>
           <dd>
             {t('common.bytes', {
-              value: block.size_bytes,
+              value: block.size,
               formatParams: {
                 value: {
                   style: 'unit',
