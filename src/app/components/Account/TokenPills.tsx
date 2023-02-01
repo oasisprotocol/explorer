@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
-import { type Token } from '../../../oasis-indexer/generated/api'
+import { type Token } from '../../../oasis-indexer/api'
 
 type TokenPillsProps = {
   tokens: Token[]
@@ -18,11 +18,13 @@ export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
     return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
   }
 
-  const prioritizedPills = tokens?.filter(item => prioritizedTokensSymbols.includes(item.token_symbol))
+  const prioritizedPills = tokens?.filter(
+    item => item.token_symbol && prioritizedTokensSymbols.includes(item.token_symbol),
+  )
   const numberOfMissingPills = prioritizedTokensSymbols.length - prioritizedPills.length
   const additionalPills = numberOfMissingPills
     ? tokens
-        .filter(item => !prioritizedTokensSymbols.includes(item.token_symbol))
+        .filter(item => !item.token_symbol || !prioritizedTokensSymbols.includes(item.token_symbol))
         .slice(0, numberOfMissingPills)
     : []
   const pills = [...prioritizedPills, ...additionalPills]

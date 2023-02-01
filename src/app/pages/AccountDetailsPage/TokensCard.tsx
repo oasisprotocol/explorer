@@ -27,7 +27,7 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
     { align: TableCellAlign.Right, content: t('common.ticker') },
   ]
   const accountQuery = useGetConsensusAccountsAddress(address!)
-  const runtimeEvmBalance = accountQuery.data?.data.runtime_evm_balance?.filter(
+  const runtimeEvmBalance = accountQuery.data?.data.runtime_evm_balances?.filter(
     item => item.token_type === type && item.runtime === ParaTime.Emerald,
   )
   const tableRows = runtimeEvmBalance?.map(item => ({

@@ -1,8 +1,9 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
+import { Token } from '../../../../oasis-indexer/api'
 
-const mockedToken1 = {
+const mockedToken1: Token = {
   balance: '1123.5',
   runtime: 'emerald',
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly1',
@@ -12,7 +13,7 @@ const mockedToken1 = {
   token_decimals: 18,
 }
 
-const mockedToken2 = {
+const mockedToken2: Token = {
   balance: '65913.17',
   runtime: 'emerald',
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly2',
@@ -22,7 +23,7 @@ const mockedToken2 = {
   token_decimals: 18,
 }
 
-const mockedToken3 = {
+const mockedToken3: Token = {
   balance: '0.012345',
   runtime: 'emerald',
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly3',
