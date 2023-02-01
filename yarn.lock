@@ -2012,7 +2012,20 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@oasisprotocol/client@0.1.1-alpha.2":
+"@oasisprotocol/client-rt@0.2.1-alpha.2":
+  version "0.2.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-0.2.1-alpha.2.tgz#acbf9fafdbe0d68e910be3f90c33992086a567f6"
+  integrity sha512-BZHx4OhIg+gFCo6x/RvAPN2iLCp0OeEwQTIoCszvU8V4ZlhcNn3gHZi8mcCPC//HKuTR3awkbG8VRWfWyN7Fqg==
+  dependencies:
+    "@oasisprotocol/client" "^0.1.1-alpha.1"
+    deoxysii "^0.0.2"
+    elliptic "^6.5.3"
+    js-sha512 "^0.8.0"
+    randombytes "^2.0.1"
+    sha3 "^2.1.4"
+    tweetnacl "^1.0.3"
+
+"@oasisprotocol/client@0.1.1-alpha.2", "@oasisprotocol/client@^0.1.1-alpha.1":
   version "0.1.1-alpha.2"
   resolved "https://registry.yarnpkg.com/@oasisprotocol/client/-/client-0.1.1-alpha.2.tgz#0b5807253bc138710528eeaaec0233607aec00c7"
   integrity sha512-iKFOjMvBWVs7eVSd+H/wWthuYeXXCcJZ0AxX4anLu+UQvmaXUzzbGwiM1YH3XkpJsYhrIDebU/L8WUr7C21LuA==
@@ -5295,6 +5308,13 @@ bs-logger@0.x:
   dependencies:
     fast-json-stable-stringify "2.x"
 
+bsaes@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/bsaes/-/bsaes-0.0.2.tgz#c243720b2bd8612d6486dbab1dfa0682b0d43149"
+  integrity sha512-iVxJFMOvCUG85sX2UVpZ9IgvH6Jjc5xpd/W8pALvFE7zfCqHkV7hW3M2XZtpg9biPS0K4Eka96bbNNgLohcpgQ==
+  dependencies:
+    uint32 "^0.2.1"
+
 bser@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.1.1.tgz#e6787da20ece9d07998533cfd9de6f5c38f4bc05"
@@ -5311,6 +5331,14 @@ buffer-xor@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha512-571s0T7nZWK6vB67HI5dyUF7wXiNcfaPPPTl6zYCNApANjIvYJTg7hlud/+cJpdAhS7dVzqMLmfhfHR3rAcOjQ==
+
+buffer@6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
+  integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.2.1"
 
 buffer@^4.3.0:
   version "4.9.2"
@@ -6413,6 +6441,14 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==
+
+deoxysii@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/deoxysii/-/deoxysii-0.0.2.tgz#bfdb65ed7808a03fb88622595b5a4ba682b6778b"
+  integrity sha512-mMob/2wDZBatPC48g188hFt5xxrbfYMl9L+XQGOZuHPU4ScCHpAKkbZiAU1yg/kROj6nPKZp5eItuNI3LdU7vA==
+  dependencies:
+    bsaes "0.0.2"
+    uint32 "^0.2.1"
 
 depd@2.0.0:
   version "2.0.0"
@@ -8039,7 +8075,7 @@ icss-utils@^5.0.0, icss-utils@^5.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
   integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
 
-ieee754@^1.1.13, ieee754@^1.1.4:
+ieee754@^1.1.13, ieee754@^1.1.4, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
@@ -11922,6 +11958,13 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+sha3@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/sha3/-/sha3-2.1.4.tgz#000fac0fe7c2feac1f48a25e7a31b52a6492cc8f"
+  integrity sha512-S8cNxbyb0UGUM2VhRD4Poe5N58gJnJsLJ5vC7FYWGUmGhcsj4++WaIOBFVDxlG0W3To6xBuiRh+i0Qp2oNCOtg==
+  dependencies:
+    buffer "6.0.3"
+
 shallow-clone@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/shallow-clone/-/shallow-clone-3.0.1.tgz#8f2981ad92531f55035b01fb230769a40e02efa3"
@@ -12777,6 +12820,11 @@ uglify-js@^3.1.4:
   version "3.17.4"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.4.tgz#61678cf5fa3f5b7eb789bb345df29afb8257c22c"
   integrity sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==
+
+uint32@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/uint32/-/uint32-0.2.1.tgz#e618d802d7fffd28b708fccecc7315608bac47f2"
+  integrity sha512-d3i8kc/4s1CFW5g3FctmF1Bu2GVXGBMTn82JY2BW0ZtTtI8pRx1YWGPCFBwRF4uYVSJ7ua4y+qYEPqS+x+3w7Q==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
