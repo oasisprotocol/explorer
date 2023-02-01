@@ -20,9 +20,11 @@ import type {
   UseQueryResult,
   QueryKey
 } from '@tanstack/react-query'
-export type GetConsensusStatsTxVolumeParams = { limit?: number; offset?: number; bucket_size_seconds?: number };
+export type GetLayerStatsTxVolumeParams = { limit?: number; offset?: number; bucket_size_seconds?: number };
 
-export type GetEmeraldTokensParams = { limit?: number; offset?: number };
+export type GetEmeraldEvmTokensParams = { limit?: number; offset?: number };
+
+export type GetEmeraldEventsParams = { limit?: number; offset?: number; block?: number; tx_index?: number; tx_hash?: string; rel?: string; type?: RuntimeEventType; evm_log_signature?: string };
 
 export type GetEmeraldTransactionsParams = { limit?: number; offset?: number; block?: number; rel?: string };
 
@@ -34,6 +36,10 @@ export type GetConsensusProposalsParams = { limit?: number; offset?: number; sub
 
 export type GetConsensusEpochsParams = { limit?: number; offset?: number };
 
+export type GetConsensusAccountsAddressDebondingDelegationsParams = { limit?: number; offset?: number };
+
+export type GetConsensusAccountsAddressDelegationsParams = { limit?: number; offset?: number };
+
 export type GetConsensusAccountsParams = { limit?: number; offset?: number; minAvailable?: string; maxAvailable?: string; minEscrow?: string; maxEscrow?: string; minDebonding?: string; maxDebonding?: string; minTotalBalance?: string; maxTotalBalance?: string };
 
 export type GetConsensusValidatorsParams = { limit?: number; offset?: number };
@@ -44,30 +50,25 @@ export type GetConsensusEntitiesParams = { limit?: number; offset?: number };
 
 export type GetConsensusEventsParams = { limit?: number; offset?: number; block?: number; tx_index?: number; tx_hash?: string; rel?: string; type?: ConsensusEventType };
 
-export type GetConsensusTransactionsParams = { limit?: number; offset?: number; block?: number; method?: ConsensusTxMethod; sender?: string; minFee?: number; maxFee?: number; code?: number };
+export type GetConsensusTransactionsParams = { limit?: number; offset?: number; block?: number; method?: ConsensusTxMethod; sender?: string; rel?: string; minFee?: string; maxFee?: string; code?: number };
 
 export type GetConsensusBlocksParams = { limit?: number; offset?: number; from?: number; to?: number; after?: string; before?: string };
 
 /**
- * A server error occurred.
+ * An empty response indicating that the requested resource was not found.
  */
-export type ServerErrorResponse = ApiError;
+export type NotFoundErrorResponse = unknown;
 
-/**
- * No results found.
- */
-export type NotFoundResponse = ApiError;
-
-/**
- * Invalid request.
- */
-export type InvalidRequestResponse = ApiError;
+export type HumanReadableErrorResponse = {
+  /** An error message. */
+  msg: string;
+};
 
 export interface TxVolume {
   /** The date for this daily transaction volume measurement. */
-  start: string;
+  bucket_start: string;
   /** The transaction volume on this day. */
-  volume: number;
+  tx_volume: number;
 }
 
 /**
@@ -81,13 +82,17 @@ export interface TxVolumeList {
 }
 
 /**
- * A list of ERC-20 tokens on a runtime.
-
+ * A list of tokens in a runtime.
  */
-export interface RuntimeTokenList {
-  tokens: RuntimeToken[];
+export interface EvmTokenList {
+  /** A list of L2 EVM tokens (ERC-20, ERC-271, ...). */
+  evm_tokens: EvmToken[];
 }
 
+/**
+ * The type of a EVM token.
+
+ */
 export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
 
 
@@ -96,11 +101,14 @@ export const EvmTokenType = {
   ERC20: 'ERC20',
   ERC721: 'ERC721',
   ERC1155: 'ERC1155',
+  OasisSdk: 'OasisSdk',
 } as const;
 
-export interface RuntimeToken {
+export interface EvmToken {
   /** The Oasis address of this token's contract. */
   contract_addr: string;
+  /** The EVM address of this token's contract. Encoded as a lowercase hex string. */
+  evm_contract_addr: string;
   /** Name of the token, as provided by token contract's `name()` method. */
   name?: string;
   /** Symbol of the token, as provided by token contract's `symbol()` method. */
@@ -136,6 +144,7 @@ export type RuntimeTransactionBody = { [key: string]: any };
 export interface RuntimeTransaction {
   /** The block round at which this transaction was executed. */
   round: number;
+  /** The 0-based index of this transaction in the block. */
   index: number;
   /** The second-granular consensus time when this tx's block was proposed. */
   timestamp: string;
@@ -191,6 +200,77 @@ export interface RuntimeTransactionList {
   transactions: RuntimeTransaction[];
 }
 
+export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RuntimeEventType = {
+  accountstransfer: 'accounts.transfer',
+  accountsburn: 'accounts.burn',
+  accountsmint: 'accounts.mint',
+  consensus_accountsdeposit: 'consensus_accounts.deposit',
+  consensus_accountswithdraw: 'consensus_accounts.withdraw',
+  coregas_used: 'core.gas_used',
+  evmlog: 'evm.log',
+} as const;
+
+/**
+ * The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer` 
+and `Approve`.
+Absent if the event type is not `evm.log`.
+
+ */
+export type RuntimeEventEvmLogParams = { [key: string]: any };
+
+/**
+ * The decoded event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+This object will conform to one of the `*Event` types two levels down
+the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
+OR `evm > Event`.
+
+ */
+export type RuntimeEventBody = { [key: string]: any };
+
+/**
+ * An event emitted by the runtime layer
+ */
+export interface RuntimeEvent {
+  /** The block height at which this event was generated. */
+  round: number;
+  /** Hash of this event's originating transaction
+Absent if the event did not originate from a transaction.
+ */
+  tx_hash?: string | null;
+  /** The type of the event. */
+  type: RuntimeEventType;
+  /** The decoded event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+This object will conform to one of the `*Event` types two levels down
+the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
+OR `evm > Event`.
+ */
+  body: RuntimeEventBody;
+  /** If the event type is `evm.log`, this field describes the human-readable type of evm event, e.g.
+`Transfer`. We currently only support two types of evm events, ERC20 `Transfer` and `Approve`.
+Absent if the event type is not `evm.log`.
+ */
+  evm_log_name?: string | null;
+  /** The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer` 
+and `Approve`.
+Absent if the event type is not `evm.log`.
+ */
+  evm_log_params?: RuntimeEventEvmLogParams;
+}
+
+/**
+ * A list of runtime events.
+
+ */
+export interface RuntimeEventList {
+  events: RuntimeEvent[];
+}
+
 /**
  * A ParaTime block.
 
@@ -205,7 +285,7 @@ export interface RuntimeBlock {
   /** The number of transactions in the block. */
   num_transactions: number;
   /** The total byte size of all transactions in the block. */
-  size_bytes: number;
+  size: number;
   /** The total gas used by all transactions in the block. */
   gas_used: number;
 }
@@ -260,13 +340,13 @@ export interface Proposal {
   deposit: string;
   /** The name of the upgrade handler. */
   handler?: string;
-  target: ProposalTarget;
+  target?: ProposalTarget;
   /** The epoch at which the proposed upgrade will happen. */
   epoch?: number;
   /** The proposal to cancel, if this proposal proposes
 cancelling an existing proposal.
  */
-  cancels: number;
+  cancels?: number;
   /** The epoch at which this proposal was created. */
   created_at: number;
   /** The epoch at which voting for this proposal will close. */
@@ -326,16 +406,72 @@ export const RuntimeName = {
 } as const;
 
 /**
- * Balance of an account in a runtime.
+ * Balance of an account for a specific runtime and EVM token.
  */
-export interface RuntimeBalance {
-  /** Number of base units held; as a string. */
-  amount: string;
+export interface RuntimeEvmBalance {
+  /** Number of tokens held, in base units. */
+  balance: string;
   runtime: RuntimeName;
-  /** Unique identifier for the token. For EVM tokens, this is their eth address. */
-  token_id: string;
-  /** The token ticker symbol. Not guaranteed to be unique across distinct tokens. */
+  /** The EVM address of this token's contract. Encoded as a lowercase hex string. */
+  token_contract_addr: string;
+  /** The token ticker symbol. Not guaranteed to be unique across distinct EVM tokens. */
+  token_symbol?: string;
+  /** The name of the token. Not guaranteed to be unique across distinct EVM tokens. */
+  token_name?: string;
+  token_type?: EvmTokenType;
+  /** The number of decimals of precision for this token. */
+  token_decimals: number;
+}
+
+/**
+ * Balance of an account for a specific runtime and oasis-sdk token (e.g. ROSE).
+ */
+export interface RuntimeSdkBalance {
+  /** Number of tokens held, in base units. */
+  balance: string;
+  runtime: RuntimeName;
+  /** The token ticker symbol. Unique across all oasis-sdk tokens in the same runtime. */
   token_symbol: string;
+  /** The number of decimals of precision for this token. */
+  token_decimals: number;
+}
+
+/**
+ * A consensus layer account.
+
+ */
+export interface Account {
+  /** The staking address for this account. */
+  address: string;
+  address_preimage?: AddressPreimage;
+  /** A nonce used to prevent replay. */
+  nonce: number;
+  /** The balances of this account in each runtime, as managed by oasis-sdk.
+NOTE 1: This field is omitted for efficiency when listing multiple accounts.
+NOTE 2: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
+ */
+  runtime_sdk_balances?: RuntimeSdkBalance[];
+  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
+NOTE 1: This field is omitted for efficiency when listing multiple accounts.
+NOTE 2: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
+ */
+  runtime_evm_balances?: RuntimeEvmBalance[];
+  /** The available balance, in base units. */
+  available: string;
+  /** The active escrow balance, in base units. */
+  escrow: string;
+  /** The debonding escrow balance, in base units. */
+  debonding: string;
+  /** The delegations balance, in base units.
+For efficiency, this field is omitted when listing multiple-accounts.
+ */
+  delegations_balance?: string;
+  /** The debonding delegations balance, in base units.
+For efficiency, this field is omitted when listing multiple-accounts.
+ */
+  debonding_delegations_balance?: string;
+  /** The allowances made by this account. */
+  allowances: Allowance[];
 }
 
 export type AddressDerivationContext = typeof AddressDerivationContext[keyof typeof AddressDerivationContext];
@@ -375,48 +511,11 @@ export interface AddressPreimage {
   context: AddressDerivationContext;
   /** Version of the `context`. */
   context_version?: number | null;
-  /** The hex-encoded data from which the oasis address was derived.
+  /** The base64-encoded data from which the oasis address was derived.
 When `context = "oasis-runtime-sdk/address: secp256k1eth"`, this
-is the Ethereum address (without the leading `0x`). All-lowercase.
+is the Ethereum address (in base64, not hex!).
  */
   address_data: string;
-}
-
-export interface Token {
-  balance: string
-  runtime: string
-  token_contract_addr: string
-  token_name: string
-  token_symbol: string
-  token_type: string
-  token_decimals: number
-}
-
-/**
- * A consensus layer account.
-
- */
-export interface Account {
-  /** The staking address for this account. */
-  address: string;
-  address_preimage: AddressPreimage;
-  /** A nonce used to prevent replay. */
-  nonce: number;
-  runtime_balances: RuntimeBalance[];
-  /** The available balance, in base units. */
-  available: string;
-  /** The active escrow balance, in base units. */
-  escrow: string;
-  /** The debonding escrow balance, in base units. */
-  debonding: string;
-  /** The delegations balance, in base units. */
-  delegations_balance: string;
-  /** The debonding delegations balance, in base units. */
-  debonding_delegations_balance: string;
-  /** The allowances made by this account. */
-  allowances: Allowance[];
-   /** mocked runtime balances types */
-   runtime_evm_balance: Token[];
 }
 
 /**
@@ -555,11 +654,13 @@ export interface ConsensusEvent {
   /** 0-based index of this event's originating transaction within its block.
 Absent if the event did not originate from a transaction.
  */
-  tx_index: number | null;
+  tx_index?: number | null;
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
-  tx_hash: string | null;
+  tx_hash?: string | null;
+  /** The type of the event. */
+  type: ConsensusEventType;
   /** The event contents. This spec does not encode the many possible types;
 instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
 This object will conform to one of the `*Event` types two levels down
@@ -739,10 +840,14 @@ export interface Status {
   latest_update: string;
 }
 
-export interface ApiError {
-  /** An error message. */
-  msg?: string;
-}
+export type Layer = typeof Layer[keyof typeof Layer];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const Layer = {
+  consensus: 'consensus',
+  emerald: 'emerald',
+} as const;
 
 
 
@@ -754,7 +859,7 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 /**
  * @summary Returns the indexer status.
  */
-export const get = (
+export const getStatus = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Status>> => {
     return axios.get(
@@ -763,26 +868,26 @@ export const get = (
   }
 
 
-export const getGetQueryKey = () => [`/`];
+export const getGetStatusQueryKey = () => [`/`];
 
+    
+export type GetStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getStatus>>>
+export type GetStatusQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export type GetQueryResult = NonNullable<Awaited<ReturnType<typeof get>>>
-export type GetQueryError = AxiosError<ApiError>
-
-export const useGet = <TData = Awaited<ReturnType<typeof get>>, TError = AxiosError<ApiError>>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof get>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetStatusQueryKey();
 
+  
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatus>>> = ({ signal }) => getStatus({ signal, ...axiosOptions });
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof get>>> = ({ signal }) => get({ signal, ...axiosOptions });
-
-  const query = useQuery<Awaited<ReturnType<typeof get>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getStatus>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -806,11 +911,11 @@ export const getConsensusBlocks = (
 
 export const getGetConsensusBlocksQueryKey = (params?: GetConsensusBlocksParams,) => [`/consensus/blocks`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusBlocks>>>
-export type GetConsensusBlocksQueryError = AxiosError<ApiError>
+export type GetConsensusBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -819,7 +924,7 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConse
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusBlocksQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocks>>> = ({ signal }) => getConsensusBlocks(params, { signal, ...axiosOptions });
 
@@ -845,11 +950,11 @@ export const getConsensusBlocksHeight = (
 
 export const getGetConsensusBlocksHeightQueryKey = (height: number,) => [`/consensus/blocks/${height}`];
 
-
+    
 export type GetConsensusBlocksHeightQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusBlocksHeight>>>
-export type GetConsensusBlocksHeightQueryError = AxiosError<ApiError>
+export type GetConsensusBlocksHeightQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -858,7 +963,7 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof ge
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusBlocksHeightQueryKey(height);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocksHeight>>> = ({ signal }) => getConsensusBlocksHeight(height, { signal, ...axiosOptions });
 
@@ -886,11 +991,11 @@ export const getConsensusTransactions = (
 
 export const getGetConsensusTransactionsQueryKey = (params?: GetConsensusTransactionsParams,) => [`/consensus/transactions`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusTransactions>>>
-export type GetConsensusTransactionsQueryError = AxiosError<ApiError>
+export type GetConsensusTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -899,7 +1004,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof ge
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusTransactionsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactions>>> = ({ signal }) => getConsensusTransactions(params, { signal, ...axiosOptions });
 
@@ -925,11 +1030,11 @@ export const getConsensusTransactionsTxHash = (
 
 export const getGetConsensusTransactionsTxHashQueryKey = (txHash: string,) => [`/consensus/transactions/${txHash}`];
 
-
+    
 export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>>
-export type GetConsensusTransactionsTxHashQueryError = AxiosError<ApiError>
+export type GetConsensusTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -938,7 +1043,7 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusTransactionsTxHashQueryKey(txHash);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>> = ({ signal }) => getConsensusTransactionsTxHash(txHash, { signal, ...axiosOptions });
 
@@ -966,11 +1071,11 @@ export const getConsensusEvents = (
 
 export const getGetConsensusEventsQueryKey = (params?: GetConsensusEventsParams,) => [`/consensus/events`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEvents>>>
-export type GetConsensusEventsQueryError = AxiosError<ApiError>
+export type GetConsensusEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -979,7 +1084,7 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConse
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEventsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEvents>>> = ({ signal }) => getConsensusEvents(params, { signal, ...axiosOptions });
 
@@ -1007,11 +1112,11 @@ export const getConsensusEntities = (
 
 export const getGetConsensusEntitiesQueryKey = (params?: GetConsensusEntitiesParams,) => [`/consensus/entities`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusEntitiesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntities>>>
-export type GetConsensusEntitiesQueryError = AxiosError<ApiError>
+export type GetConsensusEntitiesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1020,7 +1125,7 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getCon
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEntitiesQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntities>>> = ({ signal }) => getConsensusEntities(params, { signal, ...axiosOptions });
 
@@ -1046,11 +1151,11 @@ export const getConsensusEntitiesEntityId = (
 
 export const getGetConsensusEntitiesEntityIdQueryKey = (entityId: string,) => [`/consensus/entities/${entityId}`];
 
-
+    
 export type GetConsensusEntitiesEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>>
-export type GetConsensusEntitiesEntityIdQueryError = AxiosError<ApiError>
+export type GetConsensusEntitiesEntityIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1059,7 +1164,7 @@ export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeo
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdQueryKey(entityId);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>> = ({ signal }) => getConsensusEntitiesEntityId(entityId, { signal, ...axiosOptions });
 
@@ -1089,11 +1194,11 @@ export const getConsensusEntitiesEntityIdNodes = (
 export const getGetConsensusEntitiesEntityIdNodesQueryKey = (entityId: string,
     params?: GetConsensusEntitiesEntityIdNodesParams,) => [`/consensus/entities/${entityId}/nodes`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusEntitiesEntityIdNodesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>>
-export type GetConsensusEntitiesEntityIdNodesQueryError = AxiosError<ApiError>
+export type GetConsensusEntitiesEntityIdNodesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  entityId: string,
     params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, axios?: AxiosRequestConfig}
 
@@ -1103,7 +1208,7 @@ export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesQueryKey(entityId,params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>> = ({ signal }) => getConsensusEntitiesEntityIdNodes(entityId,params, { signal, ...axiosOptions });
 
@@ -1131,11 +1236,11 @@ export const getConsensusEntitiesEntityIdNodesNodeId = (
 export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey = (entityId: string,
     nodeId: string,) => [`/consensus/entities/${entityId}/nodes/${nodeId}`];
 
-
+    
 export type GetConsensusEntitiesEntityIdNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>>
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = AxiosError<ApiError>
+export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  entityId: string,
     nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, axios?: AxiosRequestConfig}
 
@@ -1145,7 +1250,7 @@ export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<Retur
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey(entityId,nodeId);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>> = ({ signal }) => getConsensusEntitiesEntityIdNodesNodeId(entityId,nodeId, { signal, ...axiosOptions });
 
@@ -1173,11 +1278,11 @@ export const getConsensusValidators = (
 
 export const getGetConsensusValidatorsQueryKey = (params?: GetConsensusValidatorsParams,) => [`/consensus/validators`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidators>>>
-export type GetConsensusValidatorsQueryError = AxiosError<ApiError>
+export type GetConsensusValidatorsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1186,7 +1291,7 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getC
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusValidatorsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidators>>> = ({ signal }) => getConsensusValidators(params, { signal, ...axiosOptions });
 
@@ -1212,11 +1317,11 @@ export const getConsensusValidatorsEntityId = (
 
 export const getGetConsensusValidatorsEntityIdQueryKey = (entityId: string,) => [`/consensus/validators/${entityId}`];
 
-
+    
 export type GetConsensusValidatorsEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>>
-export type GetConsensusValidatorsEntityIdQueryError = AxiosError<ApiError>
+export type GetConsensusValidatorsEntityIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1225,7 +1330,7 @@ export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typ
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusValidatorsEntityIdQueryKey(entityId);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>> = ({ signal }) => getConsensusValidatorsEntityId(entityId, { signal, ...axiosOptions });
 
@@ -1253,11 +1358,11 @@ export const getConsensusAccounts = (
 
 export const getGetConsensusAccountsQueryKey = (params?: GetConsensusAccountsParams,) => [`/consensus/accounts`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusAccountsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccounts>>>
-export type GetConsensusAccountsQueryError = AxiosError<ApiError>
+export type GetConsensusAccountsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1266,7 +1371,7 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getCon
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccounts>>> = ({ signal }) => getConsensusAccounts(params, { signal, ...axiosOptions });
 
@@ -1292,11 +1397,11 @@ export const getConsensusAccountsAddress = (
 
 export const getGetConsensusAccountsAddressQueryKey = (address: string,) => [`/consensus/accounts/${address}`];
 
-
+    
 export type GetConsensusAccountsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddress>>>
-export type GetConsensusAccountsAddressQueryError = AxiosError<ApiError>
+export type GetConsensusAccountsAddressQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1305,7 +1410,7 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsAddressQueryKey(address);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddress>>> = ({ signal }) => getConsensusAccountsAddress(address, { signal, ...axiosOptions });
 
@@ -1321,32 +1426,37 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
  * @summary Returns an account's delegations.
  */
 export const getConsensusAccountsAddressDelegations = (
-    address: string, options?: AxiosRequestConfig
+    address: string,
+    params?: GetConsensusAccountsAddressDelegationsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DelegationList>> => {
     return axios.get(
-      `/consensus/accounts/${address}/delegations`,options
+      `/consensus/accounts/${address}/delegations`,{
+    ...options,
+        params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetConsensusAccountsAddressDelegationsQueryKey = (address: string,) => [`/consensus/accounts/${address}/delegations`];
+export const getGetConsensusAccountsAddressDelegationsQueryKey = (address: string,
+    params?: GetConsensusAccountsAddressDelegationsParams,) => [`/consensus/accounts/${address}/delegations`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusAccountsAddressDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>>
-export type GetConsensusAccountsAddressDelegationsQueryError = AxiosError<ApiError>
+export type GetConsensusAccountsAddressDelegationsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = AxiosError<ApiError>>(
- address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ address: string,
+    params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsAddressDelegationsQueryKey(address);
+  const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsAddressDelegationsQueryKey(address,params);
 
+  
 
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>> = ({ signal }) => getConsensusAccountsAddressDelegations(address, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>> = ({ signal }) => getConsensusAccountsAddressDelegations(address,params, { signal, ...axiosOptions });
 
   const query = useQuery<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>(queryKey, queryFn, {enabled: !!(address), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -1360,32 +1470,37 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
  * @summary Returns an account's debonding delegations.
  */
 export const getConsensusAccountsAddressDebondingDelegations = (
-    address: string, options?: AxiosRequestConfig
+    address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DebondingDelegationList>> => {
     return axios.get(
-      `/consensus/accounts/${address}/debonding_delegations`,options
+      `/consensus/accounts/${address}/debonding_delegations`,{
+    ...options,
+        params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (address: string,) => [`/consensus/accounts/${address}/debonding_delegations`];
+export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams,) => [`/consensus/accounts/${address}/debonding_delegations`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusAccountsAddressDebondingDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>>
-export type GetConsensusAccountsAddressDebondingDelegationsQueryError = AxiosError<ApiError>
+export type GetConsensusAccountsAddressDebondingDelegationsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = AxiosError<ApiError>>(
- address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsAddressDebondingDelegationsQueryKey(address);
+  const queryKey = queryOptions?.queryKey ?? getGetConsensusAccountsAddressDebondingDelegationsQueryKey(address,params);
 
+  
 
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegations(address, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegations(address,params, { signal, ...axiosOptions });
 
   const query = useQuery<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>(queryKey, queryFn, {enabled: !!(address), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -1411,11 +1526,11 @@ export const getConsensusEpochs = (
 
 export const getGetConsensusEpochsQueryKey = (params?: GetConsensusEpochsParams,) => [`/consensus/epochs`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusEpochsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEpochs>>>
-export type GetConsensusEpochsQueryError = AxiosError<ApiError>
+export type GetConsensusEpochsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1424,7 +1539,7 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConse
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEpochsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochs>>> = ({ signal }) => getConsensusEpochs(params, { signal, ...axiosOptions });
 
@@ -1450,11 +1565,11 @@ export const getConsensusEpochsEpoch = (
 
 export const getGetConsensusEpochsEpochQueryKey = (epoch: number,) => [`/consensus/epochs/${epoch}`];
 
-
+    
 export type GetConsensusEpochsEpochQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>>
-export type GetConsensusEpochsEpochQueryError = AxiosError<ApiError>
+export type GetConsensusEpochsEpochQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1463,7 +1578,7 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof get
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusEpochsEpochQueryKey(epoch);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>> = ({ signal }) => getConsensusEpochsEpoch(epoch, { signal, ...axiosOptions });
 
@@ -1491,11 +1606,11 @@ export const getConsensusProposals = (
 
 export const getGetConsensusProposalsQueryKey = (params?: GetConsensusProposalsParams,) => [`/consensus/proposals`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusProposalsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposals>>>
-export type GetConsensusProposalsQueryError = AxiosError<ApiError>
+export type GetConsensusProposalsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1504,7 +1619,7 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getCo
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusProposalsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposals>>> = ({ signal }) => getConsensusProposals(params, { signal, ...axiosOptions });
 
@@ -1530,11 +1645,11 @@ export const getConsensusProposalsProposalId = (
 
 export const getGetConsensusProposalsProposalIdQueryKey = (proposalId: number,) => [`/consensus/proposals/${proposalId}`];
 
-
+    
 export type GetConsensusProposalsProposalIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>>
-export type GetConsensusProposalsProposalIdQueryError = AxiosError<ApiError>
+export type GetConsensusProposalsProposalIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1543,7 +1658,7 @@ export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<ty
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusProposalsProposalIdQueryKey(proposalId);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>> = ({ signal }) => getConsensusProposalsProposalId(proposalId, { signal, ...axiosOptions });
 
@@ -1573,11 +1688,11 @@ export const getConsensusProposalsProposalIdVotes = (
 export const getGetConsensusProposalsProposalIdVotesQueryKey = (proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams,) => [`/consensus/proposals/${proposalId}/votes`, ...(params ? [params]: [])];
 
-
+    
 export type GetConsensusProposalsProposalIdVotesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>>
-export type GetConsensusProposalsProposalIdVotesQueryError = AxiosError<ApiError>
+export type GetConsensusProposalsProposalIdVotesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = AxiosError<ApiError>>(
+export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData>, axios?: AxiosRequestConfig}
 
@@ -1587,7 +1702,7 @@ export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnTy
 
   const queryKey = queryOptions?.queryKey ?? getGetConsensusProposalsProposalIdVotesQueryKey(proposalId,params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>> = ({ signal }) => getConsensusProposalsProposalIdVotes(proposalId,params, { signal, ...axiosOptions });
 
@@ -1615,11 +1730,11 @@ export const getEmeraldBlocks = (
 
 export const getGetEmeraldBlocksQueryKey = (params?: GetEmeraldBlocksParams,) => [`/emerald/blocks`, ...(params ? [params]: [])];
 
-
+    
 export type GetEmeraldBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldBlocks>>>
-export type GetEmeraldBlocksQueryError = AxiosError<ApiError>
+export type GetEmeraldBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldBlocks = <TData = Awaited<ReturnType<typeof getEmeraldBlocks>>, TError = AxiosError<ApiError>>(
+export const useGetEmeraldBlocks = <TData = Awaited<ReturnType<typeof getEmeraldBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetEmeraldBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1628,7 +1743,7 @@ export const useGetEmeraldBlocks = <TData = Awaited<ReturnType<typeof getEmerald
 
   const queryKey = queryOptions?.queryKey ?? getGetEmeraldBlocksQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldBlocks>>> = ({ signal }) => getEmeraldBlocks(params, { signal, ...axiosOptions });
 
@@ -1656,11 +1771,11 @@ export const getEmeraldTransactions = (
 
 export const getGetEmeraldTransactionsQueryKey = (params?: GetEmeraldTransactionsParams,) => [`/emerald/transactions`, ...(params ? [params]: [])];
 
-
+    
 export type GetEmeraldTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldTransactions>>>
-export type GetEmeraldTransactionsQueryError = AxiosError<ApiError>
+export type GetEmeraldTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getEmeraldTransactions>>, TError = AxiosError<ApiError>>(
+export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getEmeraldTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  params?: GetEmeraldTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -1669,7 +1784,7 @@ export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getE
 
   const queryKey = queryOptions?.queryKey ?? getGetEmeraldTransactionsQueryKey(params);
 
-
+  
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldTransactions>>> = ({ signal }) => getEmeraldTransactions(params, { signal, ...axiosOptions });
 
@@ -1682,39 +1797,39 @@ export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getE
 
 
 /**
- * @summary Returns a list of ERC-20 tokens on Emerald.
+ * @summary Returns a list of Emerald events.
  */
-export const getEmeraldTokens = (
-    params?: GetEmeraldTokensParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeTokenList>> => {
+export const getEmeraldEvents = (
+    params?: GetEmeraldEventsParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RuntimeEventList>> => {
     return axios.get(
-      `/emerald/tokens`,{
+      `/emerald/events`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetEmeraldTokensQueryKey = (params?: GetEmeraldTokensParams,) => [`/emerald/tokens`, ...(params ? [params]: [])];
+export const getGetEmeraldEventsQueryKey = (params?: GetEmeraldEventsParams,) => [`/emerald/events`, ...(params ? [params]: [])];
 
+    
+export type GetEmeraldEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldEvents>>>
+export type GetEmeraldEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export type GetEmeraldTokensQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldTokens>>>
-export type GetEmeraldTokensQueryError = AxiosError<ApiError>
-
-export const useGetEmeraldTokens = <TData = Awaited<ReturnType<typeof getEmeraldTokens>>, TError = AxiosError<ApiError>>(
- params?: GetEmeraldTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldTokens>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetEmeraldEvents = <TData = Awaited<ReturnType<typeof getEmeraldEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ params?: GetEmeraldEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldEvents>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldTokensQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetEmeraldEventsQueryKey(params);
 
+  
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldEvents>>> = ({ signal }) => getEmeraldEvents(params, { signal, ...axiosOptions });
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldTokens>>> = ({ signal }) => getEmeraldTokens(params, { signal, ...axiosOptions });
-
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldTokens>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getEmeraldEvents>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1723,39 +1838,124 @@ export const useGetEmeraldTokens = <TData = Awaited<ReturnType<typeof getEmerald
 
 
 /**
- * @summary Returns the consensus layer transaction volume at daily granularity
+ * @summary Returns an Emerald transaction with the given transaction hash.
  */
-export const getConsensusStatsTxVolume = (
-    params?: GetConsensusStatsTxVolumeParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<TxVolumeList>> => {
+export const getEmeraldTransactionsTxHash = (
+    txHash: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RuntimeTransaction>> => {
     return axios.get(
-      `/consensus/stats/tx_volume`,{
+      `/emerald/transactions/${txHash}`,options
+    );
+  }
+
+
+export const getGetEmeraldTransactionsTxHashQueryKey = (txHash: string,) => [`/emerald/transactions/${txHash}`];
+
+    
+export type GetEmeraldTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>>
+export type GetEmeraldTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetEmeraldTransactionsTxHash = <TData = Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetEmeraldTransactionsTxHashQueryKey(txHash);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>> = ({ signal }) => getEmeraldTransactionsTxHash(txHash, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError, TData>(queryKey, queryFn, {enabled: !!(txHash), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of EVM (ERC-20, ...) tokens on Emerald.
+ */
+export const getEmeraldEvmTokens = (
+    params?: GetEmeraldEvmTokensParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<EvmTokenList>> => {
+    return axios.get(
+      `/emerald/evm_tokens`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetConsensusStatsTxVolumeQueryKey = (params?: GetConsensusStatsTxVolumeParams,) => [`/consensus/stats/tx_volume`, ...(params ? [params]: [])];
+export const getGetEmeraldEvmTokensQueryKey = (params?: GetEmeraldEvmTokensParams,) => [`/emerald/evm_tokens`, ...(params ? [params]: [])];
 
+    
+export type GetEmeraldEvmTokensQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldEvmTokens>>>
+export type GetEmeraldEvmTokensQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export type GetConsensusStatsTxVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>>
-export type GetConsensusStatsTxVolumeQueryError = AxiosError<ApiError>
-
-export const useGetConsensusStatsTxVolume = <TData = Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError = AxiosError<ApiError>>(
- params?: GetConsensusStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetEmeraldEvmTokens = <TData = Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ params?: GetEmeraldEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetConsensusStatsTxVolumeQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetEmeraldEvmTokensQueryKey(params);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldEvmTokens>>> = ({ signal }) => getEmeraldEvmTokens(params, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
 
 
+/**
+ * @summary Returns a timeline of the transaction volume at the chosen granularity,
+for either consensus or one of the paratimes.
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>> = ({ signal }) => getConsensusStatsTxVolume(params, { signal, ...axiosOptions });
+ */
+export const getLayerStatsTxVolume = (
+    layer: Layer,
+    params?: GetLayerStatsTxVolumeParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TxVolumeList>> => {
+    return axios.get(
+      `/${layer}/stats/tx_volume`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
 
-  const query = useQuery<Awaited<ReturnType<typeof getConsensusStatsTxVolume>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+export const getGetLayerStatsTxVolumeQueryKey = (layer: Layer,
+    params?: GetLayerStatsTxVolumeParams,) => [`/${layer}/stats/tx_volume`, ...(params ? [params]: [])];
+
+    
+export type GetLayerStatsTxVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof getLayerStatsTxVolume>>>
+export type GetLayerStatsTxVolumeQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetLayerStatsTxVolume = <TData = Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ layer: Layer,
+    params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetLayerStatsTxVolumeQueryKey(layer,params);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsTxVolume>>> = ({ signal }) => getLayerStatsTxVolume(layer,params, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>(queryKey, queryFn, {enabled: !!(layer), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
