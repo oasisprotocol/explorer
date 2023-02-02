@@ -9,7 +9,7 @@ import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { OfflineIndicator } from './OfflineIndicator'
-import { useGet } from '../../../oasis-indexer/api'
+import { useGetStatus } from '../../../oasis-indexer/api'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -70,7 +70,7 @@ const FooterStyled = styled(Box)(() => ({
 }))
 
 export const HomePage: FC = () => {
-  const apiStatusQuery = useGet()
+  const apiStatusQuery = useGetStatus()
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
