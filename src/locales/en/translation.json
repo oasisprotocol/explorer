@@ -131,6 +131,7 @@
     "header": "ParaTime Snapshot"
   },
   "home": {
+    "apiOffline": "Our API is offline. We’re trying to reconnect",
     "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
     "txn": "Txn",
