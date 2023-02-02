@@ -49,7 +49,7 @@ const ParaTimeSelectorGlobe = styled(Box)(() => ({
   width: '65%',
   paddingBottom: '65%',
   left: '50%',
-  bottom: '8%',
+  bottom: '6%',
   transform: 'translateX(-50%)',
   backgroundImage: `url("${paratimeSelectorGlobe}")`,
   backgroundSize: 'cover',

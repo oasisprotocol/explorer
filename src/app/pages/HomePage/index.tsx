@@ -8,6 +8,8 @@ import { Search } from '../../components/Search'
 import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { OfflineIndicator } from './OfflineIndicator'
+import { useGet } from '../../../oasis-indexer/api'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -68,10 +70,11 @@ const FooterStyled = styled(Box)(() => ({
 }))
 
 export const HomePage: FC = () => {
+  const apiStatusQuery = useGet()
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
+  const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
   const onFocusChange = useCallback(
     (hasFocus: boolean) => {
       setSearchHasFocus(hasFocus)
@@ -85,9 +88,16 @@ export const HomePage: FC = () => {
         <LogotypeBox>
           <Logotype showText />
         </LogotypeBox>
-        <SearchInputBox>
-          <Search onFocusChange={onFocusChange} />
-        </SearchInputBox>
+        <Box sx={{ zIndex: 2 }}>
+          <SearchInputBox>
+            <Search disabled={isApiOffline} onFocusChange={onFocusChange} />
+          </SearchInputBox>
+          {isApiOffline && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <OfflineIndicator />
+            </Box>
+          )}
+        </Box>
         <Box sx={{ zIndex: 1 }}>
           <ParaTimeSelector disabled={searchHasFocus} />
         </Box>
