@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { BlockDetailView } from './'
+import { BlockDetailView } from '../'
 
 describe('BlockDetailView', () => {
   beforeEach(() => {
