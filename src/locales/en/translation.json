@@ -37,6 +37,7 @@
     "formattedDateTime": "{{timestamp, dateTime}}",
     "from": "From",
     "gasUsed": "Gas used",
+    "gasLimit": "Gas limit",
     "hash": "Hash",
     "height": "Height",
     "name": "Name",
@@ -111,7 +112,8 @@
     }
   },
   "transaction": {
-    "header": "Transaction"
+    "header": "Transaction",
+    "multiWarning": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
   },
   "transactionStats": {
     "header": "Transactions Per Day",
