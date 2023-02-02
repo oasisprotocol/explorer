@@ -6,7 +6,7 @@
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
     "title": "Account",
-    "tokens": "Tokens",
+    "evmTokens": "EVM tokens",
     "tokensListTitle": "{{token}} Tokens",
     "transactionsListTitle": "Account Transactions"
   },
