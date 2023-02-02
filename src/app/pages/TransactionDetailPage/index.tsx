@@ -2,24 +2,20 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Skeleton from '@mui/material/Skeleton'
-import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { useGetEmeraldTransactionsTxHash } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 
-// TODO: replace with an appropriate API
-function useGetEmeraldTransactionsByHash(hash: string) {
-  // Returns array to simulate that hash may not be unique.
-  return useGetEmeraldTransactions({ limit: 2 })
-}
-
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
   const hash = useParams().hash!
-  const { isLoading, data } = useGetEmeraldTransactionsByHash(hash)
-  const transactions = data?.data.transactions
+  const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
+  // It feels unnatural, but I will wrap this in a list now, so that we can handle the
+  // "multiple txs with the same hash" situation later.
+  const transactions = data?.data ? [data.data] : []
 
   return (
     <PageLayout>
