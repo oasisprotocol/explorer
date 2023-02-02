@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -11,7 +11,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 
 export const TransactionsCard: FC = () => {
   const { t } = useTranslation()
-  const { address } = useParams()
+  const address = useLoaderData() as string
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
