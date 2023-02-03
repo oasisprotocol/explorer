@@ -5,6 +5,9 @@ import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import IconButton from '@mui/material/IconButton'
 import { COLORS } from '../../../styles/theme/colors'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { trimLongString } from '../../utils/trimLongString'
 
 const clipboardTooltipDuration = 2000
 
@@ -56,6 +59,9 @@ type CopyToClipboardProps = CopyToClipboardButtonProps & {
 export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
   let timeout = useRef<number | undefined>(undefined)
   const [isCopied, setIsCopied] = useState(false)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const handleCopyToClipboard = useCallback(() => {
     if (isCopied) {
       return
@@ -78,7 +84,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
       onClick={handleCopyToClipboard}
       sx={{ display: 'inline-flex', alignItems: 'center' }}
     >
-      {label || value}
+      {label || (isMobile ? trimLongString(value) : value)}
       <CopyToClipboardButton value={value} />
     </Box>
   )
