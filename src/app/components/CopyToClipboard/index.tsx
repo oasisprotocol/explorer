@@ -8,27 +8,61 @@ import { COLORS } from '../../../styles/theme/colors'
 
 const clipboardTooltipDuration = 2000
 
-type CopyToClipboardProps = {
-  label?: string
+type CopyToClipboardButtonProps = {
   value: string
 }
 
-export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
+const copyToClipboard = (value: string) => void window.navigator.clipboard.writeText(value)
+
+export const CopyToClipboardButton: FC<CopyToClipboardButtonProps> = ({ value }) => {
   const { t } = useTranslation()
   let timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
+  const [isCopied, setIsCopied] = useState(false)
+
+  const handleCopyToClipboard = useCallback(() => {
+    if (isCopied) {
+      return
+    }
+    copyToClipboard(value)
+    setIsCopied(true)
+  }, [value])
+
+  const hideTooltip = useCallback(
+    () => (timeout.current = window.setTimeout(() => setIsCopied(false), clipboardTooltipDuration)),
+    [],
+  )
+
+  useEffect(() => {
+    return () => {
+      if (timeout.current) {
+        window.clearTimeout(timeout.current)
+      }
+    }
+  }, [])
+  return (
+    <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
+      <IconButton color="inherit" aria-label={ariaLabel} onClick={handleCopyToClipboard}>
+        <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark }} />
+      </IconButton>
+    </Tooltip>
+  )
+}
+
+type CopyToClipboardProps = CopyToClipboardButtonProps & {
+  label?: string
+}
+
+export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
+  let timeout = useRef<number | undefined>(undefined)
   const [isCopied, setIsCopied] = useState(false)
   const handleCopyToClipboard = useCallback(() => {
     if (isCopied) {
       return
     }
-    window.navigator.clipboard.writeText(value)
+    copyToClipboard(value)
     setIsCopied(true)
   }, [value])
-  const hideTooltip = useCallback(
-    () => (timeout.current = window.setTimeout(() => setIsCopied(false), clipboardTooltipDuration)),
-    [],
-  )
 
   useEffect(() => {
     return () => {
@@ -45,11 +79,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
       sx={{ display: 'inline-flex', alignItems: 'center' }}
     >
       {label || value}
-      <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
-        <IconButton color="inherit" aria-label={ariaLabel}>
-          <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark }} />
-        </IconButton>
-      </Tooltip>
+      <CopyToClipboardButton value={value} />
     </Box>
   )
 }
