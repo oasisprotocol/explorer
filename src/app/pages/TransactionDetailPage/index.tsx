@@ -18,8 +18,7 @@ import { AccountLink } from '../../components/Account/AccountLink'
 import { Divider } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
-import { trimLongString } from '../../utils/trimLongString'
-import { CopyToClipboardButton } from '../../components/CopyToClipboard'
+import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -113,8 +112,7 @@ export const TransactionDetailPage: FC = () => {
           <StyledDescriptionList titleWidth="200px">
             <dt>{t('common.hash')}</dt>
             <dd>
-              {isMobile ? trimLongString(transaction.hash) : transaction.hash}
-              <CopyToClipboardButton value={transaction.hash} />
+              <CopyToClipboard value={transaction.hash} />
             </dd>
 
             <dt>{t('common.status')}</dt>
