@@ -6,16 +6,26 @@ import Link from '@mui/material/Link'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { ParaTime } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
+import { CopyToClipboardButton } from '../CopyToClipboard'
 
-export const AccountLink: FC<{ address: string; paratime: ParaTime }> = ({ address, paratime }) => {
+export const AccountLink: FC<{ address: string; paratime: ParaTime; copyToClipboard?: boolean }> = ({
+  address,
+  paratime,
+  copyToClipboard,
+}) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const to = RouteUtils.getAccountRoute(address, paratime)
-  return isMobile ? (
-    <TrimLinkLabel label={address} to={to} />
-  ) : (
-    <Link component={RouterLink} to={to}>
-      {address}
-    </Link>
+  return (
+    <>
+      {isMobile ? (
+        <TrimLinkLabel label={address} to={to} />
+      ) : (
+        <Link component={RouterLink} to={to}>
+          {address}
+        </Link>
+      )}
+      {copyToClipboard && <CopyToClipboardButton value={address} />}
+    </>
   )
 }
