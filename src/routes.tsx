@@ -8,7 +8,8 @@ import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
-import { RouteUtils, addressParamLoader } from './app/utils/route-utils'
+import { RouteUtils, addressParamLoader, blockHeightParamLoader } from './app/utils/route-utils'
+import { ErrorPage } from './app/pages/ErrorPage'
 
 export const routes: RouteObject[] = [
   {
@@ -28,10 +29,13 @@ export const routes: RouteObject[] = [
       {
         path: `/${paraTime}/blocks/:blockHeight`,
         element: <BlockDetailPage />,
+        errorElement: <ErrorPage />,
+        loader: blockHeightParamLoader,
       },
       {
         path: `${paraTime}/account/:address`,
         element: <AccountDetailsPage />,
+        errorElement: <ErrorPage />,
         loader: addressParamLoader,
         children: [
           {
