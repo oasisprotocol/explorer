@@ -1,11 +1,12 @@
 /** @file Wrappers around generated API */
 
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 
 export * from './generated/api'
+export type { RuntimeEvmBalance as Token } from './generated/api'
 
 function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
   const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
@@ -46,3 +47,12 @@ export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactio
   })
   return result
 }
+
+export interface FullConsensusAccount extends generated.Account {
+  runtime_evm_balances: generated.RuntimeEvmBalance[]
+}
+
+export const useGetConsensusAccountsAddress = generated.useGetConsensusAccountsAddress<
+  AxiosResponse<FullConsensusAccount>,
+  AxiosError<generated.HumanReadableErrorResponse | generated.NotFoundErrorResponse>
+>

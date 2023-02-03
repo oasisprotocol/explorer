@@ -1,4 +1,4 @@
-import { GetConsensusStatsTxVolumeParams } from '../../oasis-indexer/api'
+import { GetLayerStatsTxVolumeParams } from '../../oasis-indexer/api'
 
 export enum ChartDuration {
   TODAY = 'TODAY',
@@ -24,7 +24,7 @@ export const durationToQueryParams = {
     bucket_size_seconds: 24 * 60 * 60,
     limit: 365, // Defined as a full year
   },
-} satisfies { [duration in ChartDuration]: GetConsensusStatsTxVolumeParams }
+} satisfies { [duration in ChartDuration]: GetLayerStatsTxVolumeParams }
 
 export const chartDurationToDaysMap = {
   [ChartDuration.TODAY]: 1,

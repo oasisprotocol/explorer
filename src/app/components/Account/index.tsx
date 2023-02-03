@@ -10,7 +10,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { trimLongString } from '../../utils/trimLongString'
-import { Account as ConsensusAccount } from '../../../oasis-indexer/api'
+import { FullConsensusAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 
 export const addressToNumber = (address: string) => {
@@ -29,7 +29,7 @@ const StyledBox = styled(Box)(() => ({
 
 type AccountProps = {
   // TODO: switch to Emerald when endpoint is ready
-  account: ConsensusAccount
+  account: FullConsensusAccount
   roseFiatValue?: number
 }
 
@@ -70,7 +70,7 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
       )}
       <dt>{t('account.tokens')}</dt>
       <dd>
-        <TokenPills tokens={account.runtime_evm_balance} />
+        <TokenPills tokens={account.runtime_evm_balances} />
       </dd>
     </StyledDescriptionList>
   )

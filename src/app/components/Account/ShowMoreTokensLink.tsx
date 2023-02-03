@@ -3,7 +3,7 @@ import { useHref, Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { type Token } from '../../../oasis-indexer/generated/api'
+import { type Token } from '../../../oasis-indexer/api'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,

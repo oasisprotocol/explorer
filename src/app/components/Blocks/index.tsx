@@ -82,7 +82,7 @@ export const Blocks = (props: BlocksProps) => {
       {
         align: TableCellAlign.Right,
         content: t('common.bytes', {
-          value: block.size_bytes,
+          value: block.size,
           formatParams: {
             value: {
               style: 'unit',

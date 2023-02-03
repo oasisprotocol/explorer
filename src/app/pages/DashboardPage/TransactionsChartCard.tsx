@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useGetConsensusStatsTxVolume } from '../../../oasis-indexer/api'
+import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
 import { ChartDuration, durationToQueryParams } from '../../utils/chart-utils'
 import { LineChart } from '../../components/charts/LineChart'
 import { useTheme } from '@mui/material/styles'
@@ -17,17 +17,16 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
-  // TODO: Replace with Emerald stats
-  const { data } = useGetConsensusStatsTxVolume(statsParams)
+  const { data } = useGetLayerStatsTxVolume(Layer.emerald, statsParams)
 
   const lineChartData = data?.data.buckets.map(bucket => {
     return {
-      bucket_start: bucket.start,
-      volume_per_second: bucket.volume / statsParams.bucket_size_seconds,
+      bucket_start: bucket.bucket_start,
+      volume_per_second: bucket.tx_volume / statsParams.bucket_size_seconds,
     }
   })
 
-  const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.volume, 0) ?? 0
+  const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
 
   return (
     <SnapshotCard title={t('common.transactions')} percentage={23} label={totalTransactions.toString()}>

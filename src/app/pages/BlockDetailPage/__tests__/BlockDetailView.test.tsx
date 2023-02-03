@@ -20,7 +20,7 @@ describe('BlockDetailView', () => {
           hash: '194cdf5b6a75be37f0ee6ff52bb2680ec95a7c28a89c5214ba25809600c72f92',
           timestamp: '2022-04-23T12:20:56Z',
           num_transactions: 10,
-          size_bytes: 6434,
+          size: 6434,
           gas_used: 673539,
         }}
       />,

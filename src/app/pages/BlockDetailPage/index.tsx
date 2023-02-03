@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Skeleton from '@mui/material/Skeleton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
@@ -17,6 +16,7 @@ import { Transactions } from '../../components/Transactions'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -69,6 +69,7 @@ export const BlockDetailView: FC<{
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const formattedTime = useFormattedTimestampString(block?.timestamp)
   return (
     <SubPageCard featured title={t('common.block')}>
       {isLoading && (
@@ -86,29 +87,12 @@ export const BlockDetailView: FC<{
           <dd>{block.round}</dd>
 
           <dt>{t('common.timestamp')}</dt>
-          <dd>
-            {t('common.formattedBlockTimestamp', {
-              timestamp: new Date(block.timestamp),
-              distance: formatDistanceStrict(new Date(block.timestamp), new Date(), {
-                addSuffix: true,
-              }),
-              formatParams: {
-                timestamp: {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  timeZoneName: 'short',
-                },
-              },
-            })}
-          </dd>
+          <dd>{formattedTime}</dd>
 
           <dt>{t('common.size')}</dt>
           <dd>
             {t('common.bytes', {
-              value: block.size_bytes,
+              value: block.size,
               formatParams: {
                 value: {
                   style: 'unit',
