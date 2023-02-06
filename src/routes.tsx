@@ -8,7 +8,7 @@ import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
-import { RouteUtils } from './app/utils/route-utils'
+import { RouteUtils, addressParamLoader } from './app/utils/route-utils'
 
 export const routes: RouteObject[] = [
   {
@@ -32,10 +32,12 @@ export const routes: RouteObject[] = [
       {
         path: `${paraTime}/account/:address`,
         element: <AccountDetailsPage />,
+        loader: addressParamLoader,
         children: [
           {
             path: '',
             element: <TransactionsCard />,
+            loader: addressParamLoader,
           },
           {
             path: 'tokens/erc-20',

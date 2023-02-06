@@ -1,4 +1,6 @@
+import { LoaderFunctionArgs } from 'react-router-dom'
 import { ParaTime } from '../../config'
+import { getOasisAddress } from './helpers'
 
 export abstract class RouteUtils {
   private static ENABLED_PARA_TIMES: ParaTime[] = [ParaTime.Emerald, ParaTime.Sapphire, ParaTime.Cipher]
@@ -30,4 +32,9 @@ export abstract class RouteUtils {
   static getEnabledParaTimes(): ParaTime[] {
     return RouteUtils.ENABLED_PARA_TIMES
   }
+}
+
+export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  const address = await getOasisAddress(params.address!)
+  return address
 }

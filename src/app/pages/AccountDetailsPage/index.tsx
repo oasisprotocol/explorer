@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router-dom'
 import CardContent from '@mui/material/CardContent'
 import Skeleton from '@mui/material/Skeleton'
 import { PageLayout } from '../../components/PageLayout'
@@ -12,7 +12,7 @@ import { useGetRosePrice } from '../../../coin-gecko/api'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const { address } = useParams()
+  const address = useLoaderData() as string
   // TODO: switch to Emerald when API is ready
   const accountQuery = useGetConsensusAccountsAddress(address!)
   const account = accountQuery.data?.data
