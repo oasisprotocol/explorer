@@ -143,6 +143,7 @@
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
+    "mobilePlaceholder": "Search Address, Block, Txn, etc",
     "searchBtnText": "Search",
     "searchTermRequired": "Search term is required!"
   }

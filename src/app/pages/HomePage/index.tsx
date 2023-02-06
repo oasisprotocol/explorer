@@ -4,7 +4,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
-import { Search } from '../../components/Search'
+import { Search, SearchVariant } from '../../components/Search'
 import { ParaTimeSelector } from './ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -82,6 +82,8 @@ export const HomePage: FC = () => {
     [setSearchHasFocus],
   )
 
+  const searchVariant: SearchVariant = isMobile ? 'icon' : 'button'
+
   return (
     <HomepageLayout>
       <Content>
@@ -90,7 +92,7 @@ export const HomePage: FC = () => {
         </LogotypeBox>
         <Box sx={{ zIndex: 2 }}>
           <SearchInputBox>
-            <Search disabled={isApiOffline} onFocusChange={onFocusChange} />
+            <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
           </SearchInputBox>
           {isApiOffline && (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

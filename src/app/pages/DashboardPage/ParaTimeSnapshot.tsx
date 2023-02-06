@@ -11,6 +11,7 @@ import { RoseChartCard } from './RoseChartCard'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
+import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 
 export const ParaTimeSnapshot: FC = () => {
   const { t } = useTranslation()
@@ -29,12 +30,12 @@ export const ParaTimeSnapshot: FC = () => {
   return (
     <>
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
-        <Grid item>
-          <Box sx={{ pl: isMobile ? 4 : 0, pb: isMobile ? 3 : 0 }}>
+        <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
+          <AppendMobileSearch>
             <Typography variant="h3" sx={{ color: COLORS.white }}>
               {t('paraTimeSnapshot.header')}
             </Typography>
-          </Box>
+          </AppendMobileSearch>
         </Grid>
         <Grid item xs={12} md={8}>
           <Box sx={{ pl: isMobile ? 4 : 0, pb: isMobile ? 3 : 0 }}>

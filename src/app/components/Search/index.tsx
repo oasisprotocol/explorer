@@ -1,35 +1,126 @@
-import { FC, FormEvent, memo, useRef, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import { InputAdornment } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchUtils } from '../../components/Search/search-utils'
+import { SearchUtils } from './search-utils'
+import { StandardTextFieldProps } from '@mui/material/TextField/TextField'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import IconButton from '@mui/material/IconButton'
 
-const SearchForm = styled('form')(() => ({
-  width: '100%',
+export type SearchVariant = 'button' | 'icon' | 'expandable'
+
+interface StyledBaseProps {
+  searchVariant: SearchVariant
+}
+
+interface SearchFormProps extends StyledBaseProps {}
+
+const SearchForm = styled('form', {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['searchVariant'] as (keyof SearchFormProps)[]).includes(prop as keyof SearchFormProps),
+})<SearchFormProps>(({ searchVariant }) => ({
+  ...(searchVariant === 'expandable'
+    ? {
+        position: 'absolute',
+        ':hover, :focus-within': {
+          left: 0,
+          width: '100%',
+        },
+      }
+    : {
+        position: 'relative',
+        width: '100%',
+      }),
 }))
 
-const SearchButton = styled(Button)(({ theme }) => ({
-  paddingLeft: theme.spacing(5),
-  paddingRight: theme.spacing(5),
+interface SearchTextFieldProps extends StandardTextFieldProps {
+  searchVariant: SearchVariant
+  hasStartAdornment: boolean
+}
+
+const SearchTextField = styled(TextField, {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['searchVariant', 'hasStartAdornment'] as (keyof SearchTextFieldProps)[]).includes(
+      prop as keyof SearchTextFieldProps,
+    ),
+})<SearchTextFieldProps>(({ theme, searchVariant, hasStartAdornment }) => ({
+  ...(hasStartAdornment
+    ? {}
+    : {
+        paddingLeft: theme.spacing(4),
+      }),
+  ...(searchVariant === 'expandable'
+    ? {
+        ':not(:hover, :focus-within)': {
+          paddingLeft: 0,
+          input: {
+            display: 'none',
+          },
+        },
+      }
+    : {}),
+}))
+
+interface InputEndAdornmentProps extends StyledBaseProps {}
+
+const InputEndAdornment = styled(InputAdornment, {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['searchVariant'] as (keyof InputEndAdornmentProps)[]).includes(prop as keyof InputEndAdornmentProps),
+})<InputEndAdornmentProps>(({ searchVariant }) => ({
+  ...(searchVariant === 'expandable'
+    ? {
+        ':not(:hover, :focus-within)': {
+          marginLeft: 0,
+        },
+      }
+    : {}),
+}))
+
+interface SearchButtonProps extends StyledBaseProps {}
+
+const SearchButton = styled(Button, {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['searchVariant'] as (keyof SearchButtonProps)[]).includes(prop as keyof SearchButtonProps),
+})<SearchButtonProps>(({ theme, searchVariant }) => ({
+  minWidth: 'unset',
+  padding: '12px',
+  [theme.breakpoints.up('sm')]: {
+    ...(searchVariant === 'button'
+      ? {
+          paddingLeft: theme.spacing(5),
+          paddingRight: theme.spacing(5),
+        }
+      : {}),
+  },
+  ...(searchVariant === 'expandable'
+    ? {
+        backgroundColor: COLORS.brandDark,
+      }
+    : {}),
 }))
 
 export interface SearchProps {
+  variant: SearchVariant
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ disabled, onFocusChange }) => {
+const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const searchPlaceholderTranslated = t('search.placeholder')
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const searchTermRequiredTranslated = t('search.searchTermRequired')
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [value, setValue] = useState('')
   const [hasError, setHasError] = useState(false)
+
   const onSearchSubmit = (searchTerm: string) => {
     try {
       const navigateTo = SearchUtils.getNavigationPath(searchTerm)
@@ -39,51 +130,75 @@ const SearchCmp: FC<SearchProps> = ({ disabled, onFocusChange }) => {
     }
   }
 
-  const onFocus = () => {
-    onFocusChange?.(true)
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
   }
 
-  const onBlur = () => {
-    onFocusChange?.(false)
-  }
-
-  const onFormSubmit = (e: FormEvent) => {
-    e.preventDefault()
+  const onFormSubmit = (e?: FormEvent) => {
+    e?.preventDefault()
 
     setHasError(false)
 
-    const searchTerm = inputRef.current?.value
-    if (!searchTerm) {
+    if (!value) {
       setHasError(true)
 
       return
     }
 
-    onSearchSubmit(searchTerm)
+    onSearchSubmit(value)
   }
 
+  const onClearValue = () => {
+    setValue('')
+  }
+
+  const startAdornment = variant === 'button' && (
+    <InputAdornment position="start">
+      <SearchIcon sx={{ color: COLORS.grayMedium }} />
+    </InputAdornment>
+  )
+
+  const searchButtonContent =
+    variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMedium }} /> : t('search.searchBtnText')
+
   return (
-    <SearchForm onSubmit={onFormSubmit} role="search" aria-label={searchPlaceholderTranslated}>
-      <TextField
+    <SearchForm
+      searchVariant={variant}
+      onSubmit={onFormSubmit}
+      role="search"
+      aria-label={searchPlaceholderTranslated}
+    >
+      <SearchTextField
+        searchVariant={variant}
+        hasStartAdornment={!!startAdornment}
+        value={value}
+        onChange={onChange}
+        onFocus={() => onFocusChange?.(true)}
+        onBlur={() => onFocusChange?.(false)}
         InputProps={{
-          disabled,
-          inputRef,
-          onFocus,
-          onBlur,
           inputProps: {
             sx: { p: 0 },
           },
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon sx={{ color: COLORS.grayMedium }} />
-            </InputAdornment>
-          ),
+          startAdornment,
           endAdornment: (
-            <InputAdornment position="end">
-              <SearchButton disabled={disabled} color="primary" variant="contained" type="submit">
-                {t('search.searchBtnText')}
-              </SearchButton>
-            </InputAdornment>
+            <InputEndAdornment position="end" searchVariant={variant}>
+              <>
+                {variant === 'icon' && value && (
+                  <IconButton color="inherit" onClick={onClearValue}>
+                    <HighlightOffIcon />
+                  </IconButton>
+                )}
+                <SearchButton
+                  disabled={disabled}
+                  searchVariant={variant}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
+                  {searchButtonContent}
+                </SearchButton>
+              </>
+            </InputEndAdornment>
           ),
         }}
         placeholder={searchPlaceholderTranslated}
