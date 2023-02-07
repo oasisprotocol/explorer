@@ -9,6 +9,7 @@ export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
   fontWeight: 600,
   textDecoration: 'none',
+  whiteSpace: 'nowrap',
   marginLeft: theme.spacing(4),
 }))
 

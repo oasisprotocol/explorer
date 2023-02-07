@@ -40,14 +40,14 @@ const backgroundColorAnimation = keyframes`
 const backgroundColorAnimationDuration = `${Math.max(500, REFETCH_INTERVAL - 2000)}ms`
 
 type StyledTableRowProps = MuiTableRowProps & {
-  markAsNew?: boolean
+  highlight?: boolean
 }
 
 const StyledTableRow = styled(TableRow, {
-  shouldForwardProp: prop => prop !== 'markAsNew',
+  shouldForwardProp: prop => prop !== 'highlight',
 })<StyledTableRowProps>(
-  ({ markAsNew }) => css`
-    ${markAsNew &&
+  ({ highlight }) => css`
+    ${highlight &&
     css`
       animation-name: ${backgroundColorAnimation};
       animation-duration: ${backgroundColorAnimationDuration};
@@ -71,7 +71,7 @@ type TableCellProps = {
 export type TableRowProps = {
   key: string
   data: TableCellProps[]
-  markAsNew?: boolean
+  highlight?: boolean
 }
 
 export type TableColProps = {
@@ -137,7 +137,7 @@ export const Table: FC<TableProps> = ({
               <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
-              <StyledTableRow key={row.key} markAsNew={row.markAsNew}>
+              <StyledTableRow key={row.key} highlight={row.highlight}>
                 {row.data.map((cell, index) => (
                   <TableCell
                     key={cell.key}

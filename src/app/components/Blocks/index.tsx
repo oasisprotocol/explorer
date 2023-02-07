@@ -103,7 +103,7 @@ export const Blocks = (props: BlocksProps) => {
           ]
         : []),
     ],
-    markAsNew: block.markAsNew,
+    highlight: block.markAsNew,
   }))
 
   return (

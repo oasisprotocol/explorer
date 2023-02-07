@@ -127,7 +127,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         key: 'value',
       },
     ],
-    markAsNew: transaction.markAsNew,
+    highlight: transaction.markAsNew,
   }))
 
   return (

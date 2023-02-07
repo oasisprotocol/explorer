@@ -68,7 +68,7 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           </dd>
         </>
       )}
-      <dt>{t('account.tokens')}</dt>
+      <dt>{t('account.evmTokens')}</dt>
       <dd>
         <TokenPills tokens={account.runtime_evm_balances} />
       </dd>
