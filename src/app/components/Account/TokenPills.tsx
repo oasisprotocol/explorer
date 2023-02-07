@@ -9,25 +9,13 @@ type TokenPillsProps = {
   tokens: Token[]
 }
 
-const prioritizedTokensSymbols = ['ROSE', 'WROSE', 'ETH']
-
 export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
   const { t } = useTranslation()
-
-  if (!tokens) {
+  if (!tokens?.length) {
     return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
   }
 
-  const prioritizedPills = tokens?.filter(
-    item => item.token_symbol && prioritizedTokensSymbols.includes(item.token_symbol),
-  )
-  const numberOfMissingPills = prioritizedTokensSymbols.length - prioritizedPills.length
-  const additionalPills = numberOfMissingPills
-    ? tokens
-        .filter(item => !item.token_symbol || !prioritizedTokensSymbols.includes(item.token_symbol))
-        .slice(0, numberOfMissingPills)
-    : []
-  const pills = [...prioritizedPills, ...additionalPills]
+  const pills = tokens.slice(0, 3)
 
   return (
     <>
