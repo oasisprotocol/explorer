@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -17,7 +17,7 @@ type TokensCardProps = {
 
 export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
-  const { address } = useParams()
+  const address = useLoaderData() as string
   const tokenLabel = t(`account.${type}`)
   const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
   const tableColumns = [
