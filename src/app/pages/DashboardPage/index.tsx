@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
 import { Social } from './Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestBlocks } from './LatestBlocks'
@@ -12,27 +10,21 @@ import { AverageTransactionSize } from './AverageTransactionSize'
 import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 
-export const DashboardPage: FC = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-  return (
-    <PageLayout>
-      <ParaTimeSnapshot />
-
-      {!isMobile && <Divider variant="layout" />}
-      <LatestTransactions />
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
-          <LearningMaterials />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <LatestBlocks />
-        </Grid>
+export const DashboardPage: FC = () => (
+  <PageLayout>
+    <ParaTimeSnapshot />
+    <Divider variant="layout" />
+    <LatestTransactions />
+    <Grid container spacing={4}>
+      <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+        <LearningMaterials />
       </Grid>
-      <TransactionsStats />
-      <AverageTransactionSize />
-      <Social />
-    </PageLayout>
-  )
-}
+      <Grid item xs={12} md={6}>
+        <LatestBlocks />
+      </Grid>
+    </Grid>
+    <TransactionsStats />
+    <AverageTransactionSize />
+    <Social />
+  </PageLayout>
+)
