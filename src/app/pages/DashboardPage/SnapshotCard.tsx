@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import { PercentageGain } from '../../components/PercentageGain'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
+  flex: 1,
   // used to create a stronger selector to override default theme styles
   [theme.breakpoints.down('sm')]: {
     padding: 0,
