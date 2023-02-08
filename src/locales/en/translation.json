@@ -57,6 +57,13 @@
     "valueInRose": "{{value}} ROSE",
     "viewAll": "View All"
   },
+  "errors": {
+    "unknown": "Unknown error",
+    "invalidAddress": "Invalid address",
+    "invalidBlockHeight": "Invalid block height",
+    "invalidTxHash": "Invalid transaction hash",
+    "validateURL": "Please validate provided URL"
+  },
   "footer": {
     "mobileTitle": "OPF",
     "title": "Oasis Protocol Foundation",

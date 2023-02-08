@@ -1,7 +1,11 @@
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 
-export const isValidOasisAddress = (addr: string) => {
+export const isValidBlockHeight = (blockHeight: string): boolean => {
+  return !isNaN(Number(blockHeight))
+}
+
+export const isValidOasisAddress = (addr: string): boolean => {
   try {
     oasis.staking.addressFromBech32(addr)
     return true
