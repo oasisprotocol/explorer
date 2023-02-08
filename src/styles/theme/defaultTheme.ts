@@ -514,6 +514,18 @@ export const defaultTheme = createTheme({
             minWidth: 0,
           },
         },
+        {
+          props: { type: 'start-ellipsis', hidden: true },
+          style: {
+            display: 'none',
+          },
+        },
+        {
+          props: { type: 'end-ellipsis', hidden: true },
+          style: {
+            display: 'none',
+          },
+        },
       ],
     },
     MuiTabs: {

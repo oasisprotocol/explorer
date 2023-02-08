@@ -92,7 +92,9 @@
   },
   "pagination": {
     "first": "First",
-    "last": "Last"
+    "last": "Last",
+    "next": "Next",
+    "previous": "Prev"
   },
   "roseChart": {
     "header": "Current ROSE Price"
