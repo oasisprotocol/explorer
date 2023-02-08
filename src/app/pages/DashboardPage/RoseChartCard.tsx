@@ -24,7 +24,7 @@ const formatFiatRoseParams = {
   value: {
     currency: 'USD',
     maximumFractionDigits: 5,
-  },
+  } satisfies Intl.NumberFormatOptions,
 }
 
 export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
@@ -80,7 +80,7 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
                       timestamp: {
                         dateStyle: 'short',
                         timeStyle: 'short',
-                      },
+                      } satisfies Intl.DateTimeFormatOptions,
                     },
                   }),
               }}

@@ -24,7 +24,7 @@ export const useFormattedTimestamp = (timestamp: Date | undefined) => {
             hour: 'numeric',
             minute: 'numeric',
             timeZoneName: 'short',
-          },
+          } satisfies Intl.DateTimeFormatOptions,
         },
       })
 }

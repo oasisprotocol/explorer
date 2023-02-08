@@ -88,7 +88,7 @@ export const Blocks = (props: BlocksProps) => {
               style: 'unit',
               unit: 'byte',
               unitDisplay: 'long',
-            },
+            } satisfies Intl.NumberFormatOptions,
           },
         }),
         key: 'size',

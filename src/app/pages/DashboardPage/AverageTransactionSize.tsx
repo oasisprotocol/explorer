@@ -35,7 +35,7 @@ export const AverageTransactionSize: FC = () => {
                       style: 'unit',
                       unit: 'byte',
                       unitDisplay: 'long',
-                    },
+                    } satisfies Intl.NumberFormatOptions,
                   },
                 }),
               label: (value: string) =>

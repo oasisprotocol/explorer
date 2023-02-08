@@ -19,7 +19,7 @@ test('formatting dates with i18n', () => {
           timeZoneName: 'short',
           timeZone: 'UTC',
           locale: 'en-US',
-        },
+        } satisfies Intl.DateTimeFormatOptions & { locale?: Intl.BCP47LanguageTag },
       },
     })
   })
@@ -36,7 +36,7 @@ test('formatting fiat currency with i18n', () => {
         value: {
           currency: 'USD',
           locale: 'en-US',
-        },
+        } satisfies Intl.NumberFormatOptions & { locale?: Intl.BCP47LanguageTag },
       },
     })
   })
@@ -55,7 +55,7 @@ test('formatting block sizes with i18n', () => {
           unit: 'byte',
           unitDisplay: 'long',
           locale: 'en-US',
-        },
+        } satisfies Intl.NumberFormatOptions & { locale?: Intl.BCP47LanguageTag },
       },
     })
   })
