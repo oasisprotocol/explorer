@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
+import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -50,6 +51,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
     { content: t('common.status') },
     { content: t('common.hash') },
     { content: t('common.block') },
+    { content: t('common.age'), align: TableCellAlign.Right },
     { content: t('common.type') },
     { content: t('common.from'), width: '150px' },
     { content: t('common.to'), width: '150px' },
@@ -79,6 +81,13 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
           </Link>
         ),
         key: 'round',
+      },
+      {
+        align: TableCellAlign.Right,
+        content: formatDistanceStrict(new Date(transaction.timestamp), new Date(), {
+          addSuffix: true,
+        }),
+        key: 'timestamp',
       },
       {
         content: <RuntimeTransactionLabel method={transaction.method} />,
