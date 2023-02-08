@@ -14,7 +14,7 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { Transactions } from '../../components/Transactions'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, NUMBER_OF_ITEMS_WITH_NEXT_PAGE_VALIDATION } from '../../config'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 
@@ -37,7 +37,7 @@ export const BlockDetailPage: FC = () => {
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
     block: blockHeight,
-    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    limit: NUMBER_OF_ITEMS_WITH_NEXT_PAGE_VALIDATION,
     offset: txsOffset,
   })
 
@@ -52,6 +52,10 @@ export const BlockDetailPage: FC = () => {
             isLoading={transactionsQuery.isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
             pagination={{
+              prevNextOnly: true,
+              hasMore:
+                transactionsQuery.data?.data.transactions.length ===
+                NUMBER_OF_ITEMS_WITH_NEXT_PAGE_VALIDATION,
               selectedPage: txsPagination.selectedPage,
               linkToPage: txsPagination.linkToPage,
             }}
