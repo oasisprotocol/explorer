@@ -57,6 +57,12 @@
     "valueInRose": "{{value}} ROSE",
     "viewAll": "View All"
   },
+  "nodes": {
+    "title": "Active nodes",
+    "value": "{{value, number}}",
+    "inactive_one": "1 inactive node",
+    "inactive_other": "{{ count }} inactive nodes"
+  },
   "errors": {
     "unknown": "Unknown error",
     "invalidAddress": "Invalid address",

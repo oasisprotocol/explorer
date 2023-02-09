@@ -8,6 +8,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RoseChartCard } from './RoseChartCard'
+import { Nodes } from './Nodes'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
@@ -52,7 +53,9 @@ export const ParaTimeSnapshot: FC = () => {
           <TransactionsChartCard chartDuration={chartDuration} />
         </Grid>
         <Grid item xs={12} md={3}></Grid>
-        <Grid item xs={12} md={3}></Grid>
+        <Grid item xs={12} md={3}>
+          <Nodes />
+        </Grid>
         <Grid item xs={12} md={3}>
           <RoseChartCard chartDuration={chartDuration} />
         </Grid>
