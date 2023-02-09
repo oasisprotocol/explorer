@@ -60,7 +60,7 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
                 formatParams: {
                   value: {
                     currency: 'USD',
-                  },
+                  } satisfies Intl.NumberFormatOptions,
                 },
               })}
               <CoinGeckoReferral />
