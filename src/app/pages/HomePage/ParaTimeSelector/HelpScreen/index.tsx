@@ -86,7 +86,6 @@ const HelpScreen: FC = () => {
         steps={totalSteps}
         position="static"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1 }}
         backButton={<></>}
         nextButton={<></>}
       />

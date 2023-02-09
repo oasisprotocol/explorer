@@ -107,7 +107,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ShowHelpScreen)
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
 
   const { width, height } = useResizeObserver<SVGSVGElement>({

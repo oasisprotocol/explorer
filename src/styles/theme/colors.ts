@@ -31,6 +31,7 @@ export const COLORS = {
   platinum: '#e2e2e2',
   vistaBlue: '#8988dd',
   white: '#ffffff',
+  white025A: '#ffffff40',
   spaceCadet: '#0f0f5f',
   denimBlue: '#3138bc',
   disabledPagination: '#7575a7',

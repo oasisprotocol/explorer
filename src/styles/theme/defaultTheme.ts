@@ -552,5 +552,25 @@ export const defaultTheme = createTheme({
         }),
       },
     },
+    MuiMobileStepper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent'
+        },
+        dot: {
+          width: '30px',
+          height: '4px',
+          background: COLORS.white025A,
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: COLORS.grayMedium,
+          borderRadius: '4px',
+          boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)'
+        },
+        dotActive: {
+          background: COLORS.grayMedium
+        }
+      }
+    }
   },
 })
