@@ -144,7 +144,7 @@ export const defaultTheme = createTheme({
         containedPrimary: {
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: COLORS.grayMedium,
+          borderColor: COLORS.grayMediumLight,
           textTransform: 'capitalize',
           ':disabled': {
             backgroundColor: COLORS.disabledPrimaryButton,
