@@ -45,7 +45,7 @@ const validateAddressParam = (address: string) => {
   return isValid
 }
 
-const validateBlokHeightParam = (blockHeight: string) => {
+const validateBlockHeightParam = (blockHeight: string) => {
   const isValid = isValidBlockHeight(blockHeight)
   if (!isValid) {
     throw new AppError(AppErrors.InvalidBlockHeight)
@@ -61,5 +61,5 @@ export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
 }
 
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
-  return validateBlokHeightParam(params.blockHeight!)
+  return validateBlockHeightParam(params.blockHeight!)
 }
