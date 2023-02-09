@@ -150,7 +150,8 @@
     "helpScreen": {
       "navigate": "Navigate using your finger",
       "pinch": "Pinch to zoom in and out",
-      "tap": "Tap to view info"
+      "tap": "Tap to view info",
+      "getStarted": "Get Started"
     }
   },
   "search": {

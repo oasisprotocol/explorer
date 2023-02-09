@@ -11,15 +11,18 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { useConstant } from '../../../../hooks/useConstant'
 import SwipeableViews from 'react-swipeable-views'
+import Button from '@mui/material/Button'
+import { ParaTimeSelectorStep } from '../types'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
-  top: '50%',
+  top: '65%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  minHeight: '185px',
   width: '90%',
 }))
 
@@ -45,20 +48,28 @@ const steps = (t: TFunction): Step[] => [
 
 type AvailableSteps = 0 | 1 | 2
 
-const HelpScreen: FC = () => {
+interface HelpScreenProps {
+  setParaTimeStep: (value: ParaTimeSelectorStep) => void
+}
+
+const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const { t } = useTranslation()
   const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
   const allSteps = useConstant(() => steps(t))
   const totalSteps = allSteps.length
   const currentStep = allSteps[activeStep]
 
-  const onChangeSwipeableViewsIndex = (index: number) => {
+  const onChangeSwipeableIndex = (index: number) => {
     setActiveStep(index as AvailableSteps)
+  }
+
+  const onGetStartedClick = () => {
+    setParaTimeStep(ParaTimeSelectorStep.Explore)
   }
 
   return (
     <HelpScreenContainer>
-      <SwipeableViews index={activeStep} onChangeIndex={onChangeSwipeableViewsIndex}>
+      <SwipeableViews index={activeStep} onChangeIndex={onChangeSwipeableIndex}>
         {allSteps.map((step, index) => (
           <div key={step.label}>
             {Math.abs(activeStep - index) < totalSteps ? (
@@ -81,14 +92,22 @@ const HelpScreen: FC = () => {
       <Typography component="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
         {currentStep.label}
       </Typography>
-      <MobileStepper
-        variant="dots"
-        steps={totalSteps}
-        position="static"
-        activeStep={activeStep}
-        backButton={<></>}
-        nextButton={<></>}
-      />
+      {activeStep < 2 && (
+        <MobileStepper
+          variant="dots"
+          steps={totalSteps}
+          position="static"
+          activeStep={activeStep}
+          backButton={<></>}
+          nextButton={<></>}
+        />
+      )}
+      {activeStep > 1 && (
+        <Button variant="contained" color="primary" onClick={onGetStartedClick}>
+          {t('home.helpScreen.getStarted')}
+        </Button>
+      )}
+      ss
     </HelpScreenContainer>
   )
 }

@@ -555,7 +555,7 @@ export const defaultTheme = createTheme({
     MuiMobileStepper: {
       styleOverrides: {
         root: {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         },
         dot: {
           width: '30px',
@@ -565,12 +565,12 @@ export const defaultTheme = createTheme({
           borderStyle: 'solid',
           borderColor: COLORS.grayMedium,
           borderRadius: '4px',
-          boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)'
+          boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
         },
         dotActive: {
-          background: COLORS.grayMedium
-        }
-      }
-    }
+          background: COLORS.grayMedium,
+        },
+      },
+    },
   },
 })

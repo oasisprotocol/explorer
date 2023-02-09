@@ -176,7 +176,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
             {t('home.exploreBtnText')}
           </ExploreBtn>
         )}
-        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && <HelpScreen />}
+        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+          <HelpScreen setParaTimeStep={setStep} />
+        )}
       </ParaTimeSelectorGlobe>
     </ParaTimeSelectorGlow>
   )
