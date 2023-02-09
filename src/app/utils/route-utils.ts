@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
 import { ParaTime } from '../../config'
-import { getOasisAddress } from './helpers'
+import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 
@@ -54,6 +54,14 @@ const validateBlockHeightParam = (blockHeight: string) => {
   return isValid
 }
 
+const validateTxHashParam = (hash: string) => {
+  const isValid = isValidTxHash(hash)
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidTxHash)
+  }
+  return true
+}
+
 export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
   validateAddressParam(params.address!)
   const address = await getOasisAddress(params.address!)
@@ -62,4 +70,8 @@ export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
 
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
   return validateBlockHeightParam(params.blockHeight!)
+}
+
+export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  return validateTxHashParam(params.hash!)
 }

@@ -8,7 +8,12 @@ import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
-import { RouteUtils, addressParamLoader, blockHeightParamLoader } from './app/utils/route-utils'
+import {
+  RouteUtils,
+  addressParamLoader,
+  blockHeightParamLoader,
+  transactionParamLoader,
+} from './app/utils/route-utils'
 import { ErrorPage } from './app/pages/ErrorPage'
 
 export const routes: RouteObject[] = [
@@ -62,6 +67,8 @@ export const routes: RouteObject[] = [
       {
         path: `${paraTime}/transactions/:hash`,
         element: <TransactionDetailPage />,
+        errorElement: <ErrorPage />,
+        loader: transactionParamLoader,
       },
     ])
     .flat(),
