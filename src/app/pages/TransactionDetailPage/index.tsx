@@ -20,6 +20,7 @@ import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { EmptyState } from '../../components/EmptyState'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -87,10 +88,10 @@ export const TransactionDetailPage: FC = () => {
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
-    // TODO use proper error page
     return (
       <PageLayout>
-        <h1>404 - Transaction not found</h1>
+        <Divider variant="layout" />
+        <EmptyState title={t('errors.txNotFound')} description={t('errors.validateURL')} />
       </PageLayout>
     )
   }

@@ -62,6 +62,7 @@
     "invalidAddress": "Invalid address",
     "invalidBlockHeight": "Invalid block height",
     "invalidTxHash": "Invalid transaction hash",
+    "txNotFound": "Transaction not found",
     "validateURL": "Please validate provided URL"
   },
   "footer": {
