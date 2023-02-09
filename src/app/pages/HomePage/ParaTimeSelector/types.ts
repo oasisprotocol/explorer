@@ -12,9 +12,3 @@ export enum ParaTimeSelectorStep {
    */
   Explore,
 }
-
-export enum ParaTimeHelpScreenStep {
-  Step1,
-  Step2,
-  Step3,
-}

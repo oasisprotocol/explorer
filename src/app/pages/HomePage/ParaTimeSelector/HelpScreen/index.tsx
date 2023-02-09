@@ -1,5 +1,4 @@
 import { FC, useState } from 'react'
-import { ParaTimeHelpScreenStep } from '../types'
 import { useTranslation } from 'react-i18next'
 import helpScreenNavigate from '../images/help-screen-navigate.svg'
 import helpScreenPinch from '../images/help-screen-pinch.svg'
@@ -10,6 +9,8 @@ import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../../../styles/theme/colors'
+import { useConstant } from '../../../../hooks/useConstant'
+import SwipeableViews from 'react-swipeable-views'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -18,46 +19,71 @@ const HelpScreenContainer = styled(Box)(() => ({
   transform: 'translate(-50%, -50%)',
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+  width: '90%',
 }))
-
-const Stepper = styled(Box)(() => ({}))
 
 interface Step {
   icon: string
   label: string
 }
 
-const steps = (t: TFunction): { [key in ParaTimeHelpScreenStep]: Step } => ({
-  [ParaTimeHelpScreenStep.Step1]: {
+const steps = (t: TFunction): Step[] => [
+  {
     icon: helpScreenNavigate,
     label: t('home.helpScreen.navigate'),
   },
-  [ParaTimeHelpScreenStep.Step2]: {
+  {
     icon: helpScreenPinch,
     label: t('home.helpScreen.pinch'),
   },
-  [ParaTimeHelpScreenStep.Step3]: {
+  {
     icon: helpScreenTap,
     label: t('home.helpScreen.tap'),
   },
-})
+]
+
+type AvailableSteps = 0 | 1 | 2
 
 const HelpScreen: FC = () => {
   const { t } = useTranslation()
-  const [activeStep, setActiveStep] = useState(0)
-  const [step, setStep] = useState<ParaTimeHelpScreenStep>(ParaTimeHelpScreenStep.Step1)
+  const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
+  const allSteps = useConstant(() => steps(t))
+  const totalSteps = allSteps.length
+  const currentStep = allSteps[activeStep]
 
-  const currentStep = steps(t)[step]
+  const onChangeSwipeableViewsIndex = (index: number) => {
+    setActiveStep(index as AvailableSteps)
+  }
 
   return (
     <HelpScreenContainer>
-      <img src={currentStep.icon} alt={currentStep.label} />
-      <Typography component="h4" color={COLORS.white} sx={{ fontSize: '12px' }}>
+      <SwipeableViews index={activeStep} onChangeIndex={onChangeSwipeableViewsIndex}>
+        {allSteps.map((step, index) => (
+          <div key={step.label}>
+            {Math.abs(activeStep - index) < totalSteps ? (
+              <Box
+                component="img"
+                sx={{
+                  display: 'block',
+                  width: '100%',
+                  height: 50,
+                  overflow: 'hidden',
+                  marginBottom: 3,
+                }}
+                src={step.icon}
+                alt={step.label}
+              />
+            ) : null}
+          </div>
+        ))}
+      </SwipeableViews>
+      <Typography component="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
         {currentStep.label}
       </Typography>
       <MobileStepper
         variant="dots"
-        steps={3}
+        steps={totalSteps}
         position="static"
         activeStep={activeStep}
         sx={{ maxWidth: 400, flexGrow: 1 }}
