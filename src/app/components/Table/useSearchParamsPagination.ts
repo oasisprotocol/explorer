@@ -1,9 +1,16 @@
 import { To, useSearchParams } from 'react-router-dom'
+import { AppErrors } from '../../../types/errors'
 
 export function useSearchParamsPagination(paramName: string) {
   const [searchParams] = useSearchParams()
-  const selectedPage = parseInt(searchParams.get(paramName) ?? '1', 10)
-  if (isNaN(selectedPage)) throw new Error('400 Bad Request')
+  const selectedPageString = searchParams.get(paramName)
+  const selectedPage = parseInt(selectedPageString ?? '1', 10)
+  if (isNaN(selectedPage) || (!!selectedPageString && selectedPage.toString() !== selectedPageString)) {
+    // This would be nicer, but this would also trigger react-error-overlay (besides our error boundary).
+    // We don't want that, so now, we are stuck with throwing a string, instead of a proper error.
+    // throw new AppError(AppErrors.InvalidPageNumber)
+    throw AppErrors.InvalidPageNumber
+  }
 
   function linkToPage(page: number): To {
     const newSearchParams = new URLSearchParams(searchParams)

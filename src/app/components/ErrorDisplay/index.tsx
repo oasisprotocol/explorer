@@ -15,6 +15,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     message: t('errors.validateURL'),
   }),
   [AppErrors.InvalidTxHash]: t => ({ title: t('errors.invalidTxHash'), message: t('errors.validateURL') }),
+  [AppErrors.InvalidPageNumber]: t => ({
+    title: t('errors.invalidPageNumber'),
+    message: t('errors.validateURL'),
+  }),
 }
 
 export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
