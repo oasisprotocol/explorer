@@ -10,6 +10,7 @@ import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { Blocks, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+import { PaginationErrorPage } from '../../components/Table/PaginationError'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -18,6 +19,7 @@ export const BlocksPage: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
+  if (!pagination.valid) return <PaginationErrorPage />
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
 
   const blocksQuery = useGetEmeraldBlocks<AxiosResponse<TableRuntimeBlockList>>(

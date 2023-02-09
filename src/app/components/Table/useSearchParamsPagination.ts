@@ -1,9 +1,28 @@
 import { To, useSearchParams } from 'react-router-dom'
 
-export function useSearchParamsPagination(paramName: string) {
+interface PaginationStatusCore {
+  valid: boolean
+}
+
+interface InvalidPaginationStatus extends PaginationStatusCore {
+  valid: false
+}
+
+interface ValidPaginationStatus extends PaginationStatusCore {
+  valid: true
+  selectedPage: number
+  linkToPage: (page: number) => To
+}
+
+export type PaginationStatus = ValidPaginationStatus | InvalidPaginationStatus
+
+export function useSearchParamsPagination(paramName: string): PaginationStatus {
   const [searchParams] = useSearchParams()
-  const selectedPage = parseInt(searchParams.get(paramName) ?? '1', 10)
-  if (isNaN(selectedPage)) throw new Error('400 Bad Request')
+  const selectedPageString = searchParams.get(paramName)
+  const selectedPage = parseInt(selectedPageString ?? '1', 10)
+  if (isNaN(selectedPage) || (!!selectedPageString && selectedPage.toString() !== selectedPageString)) {
+    return { valid: false }
+  }
 
   function linkToPage(page: number): To {
     const newSearchParams = new URLSearchParams(searchParams)
@@ -15,5 +34,5 @@ export function useSearchParamsPagination(paramName: string) {
     return { search: newSearchParams.toString() }
   }
 
-  return { selectedPage, linkToPage }
+  return { valid: true, selectedPage, linkToPage }
 }

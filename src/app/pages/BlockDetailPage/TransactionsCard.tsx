@@ -8,10 +8,12 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
+import { PaginationError } from '../../components/Table/PaginationError'
 
 export const TransactionsCard: FC<{ blockHeight: number }> = ({ blockHeight }) => {
   const { t } = useTranslation()
   const txsPagination = useSearchParamsPagination('page')
+  if (!txsPagination.valid) return <PaginationError />
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
     block: blockHeight,
