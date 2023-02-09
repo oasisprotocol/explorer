@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { LineChart } from '../../components/charts/LineChart'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
+import { PercentageGain } from '../../components/PercentageGain'
 import { SnapshotCard } from './SnapshotCard'
 import { useGetRosePrice, useGetRoseMarketChart } from '../../../coin-gecko/api'
 
@@ -54,7 +55,7 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
             })
           : ''
       }
-      percentage={percentage}
+      badge={percentage && <PercentageGain percentage={percentage} />}
       title={t('roseChart.header')}
     >
       <>

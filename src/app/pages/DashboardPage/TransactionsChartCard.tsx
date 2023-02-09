@@ -7,6 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { intlDateFormat } from '../../utils/dateFormatter'
 import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
+import { PercentageGain } from '../../components/PercentageGain'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -29,7 +30,12 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
 
   return (
-    <SnapshotCard title={t('common.transactions')} percentage={23} label={totalTransactions.toString()}>
+    <SnapshotCard
+      title={t('common.transactions')}
+      // TODO: show real percentage value
+      badge={<PercentageGain percentage={23} />}
+      label={totalTransactions.toString()}
+    >
       {lineChartData && (
         <LineChart
           dataKey="volume_per_second"
