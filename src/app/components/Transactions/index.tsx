@@ -108,9 +108,11 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
               label={transaction.sender_0}
               to={RouteUtils.getAccountRoute(transaction.sender_0, ParaTime.Emerald)}
             />
-            <StyledCircle>
-              <ArrowForwardIcon fontSize="inherit" />
-            </StyledCircle>
+            {transaction.to && (
+              <StyledCircle>
+                <ArrowForwardIcon fontSize="inherit" />
+              </StyledCircle>
+            )}
           </Box>
         ),
 

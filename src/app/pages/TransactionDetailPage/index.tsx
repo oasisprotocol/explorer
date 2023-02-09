@@ -143,11 +143,15 @@ export const TransactionDetailPage: FC = () => {
               <CopyToClipboard value={transaction.sender_0} label={' '} />
             </dd>
 
-            <dt>{t('common.to')}</dt>
-            <dd>
-              <AccountLink address={transaction.to!} paratime={ParaTime.Emerald} />
-              <CopyToClipboard value={transaction.to!} label={' '} />
-            </dd>
+            {transaction.to && (
+              <>
+                <dt>{t('common.to')}</dt>
+                <dd>
+                  <AccountLink address={transaction.to} paratime={ParaTime.Emerald} />
+                  <CopyToClipboard value={transaction.to} label={' '} />
+                </dd>
+              </>
+            )}
 
             <dt>{t('common.value')}</dt>
             <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>
