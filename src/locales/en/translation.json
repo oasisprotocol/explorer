@@ -146,7 +146,12 @@
     "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
     "txn": "Txn",
-    "zoomOutBtnText": "Zoom out"
+    "zoomOutBtnText": "Zoom out",
+    "helpScreen": {
+      "navigate": "Navigate using your finger",
+      "pinch": "Pinch to zoom in and out",
+      "tap": "Tap to view info"
+    }
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",

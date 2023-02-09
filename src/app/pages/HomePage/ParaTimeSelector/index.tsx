@@ -15,6 +15,7 @@ import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
+import HelpScreen from './HelpScreen'
 
 interface ParaTimeSelectorProps {
   disabled: boolean
@@ -64,9 +65,13 @@ const ExploreBtn = styled(Button)(({ theme }) => ({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  paddingLeft: theme.spacing(6),
-  paddingRight: theme.spacing(6),
+  paddingLeft: theme.spacing(4),
+  paddingRight: theme.spacing(4),
   width: 'max-content',
+  [theme.breakpoints.up('sm')]: {
+    paddingLeft: theme.spacing(6),
+    paddingRight: theme.spacing(6),
+  },
 }))
 
 const ZoomOutBtn = styled(Button)(({ theme }) => ({
@@ -116,7 +121,11 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   }, [selectedGraphEndpoint])
 
   const onExploreClick = () => {
-    setStep(ParaTimeSelectorStep.Explore)
+    if (isMobile) {
+      setStep(ParaTimeSelectorStep.ShowHelpScreen)
+    } else {
+      setStep(ParaTimeSelectorStep.Explore)
+    }
   }
 
   const onZoomOutClick = () => {
@@ -167,6 +176,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
             {t('home.exploreBtnText')}
           </ExploreBtn>
         )}
+        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && <HelpScreen />}
       </ParaTimeSelectorGlobe>
     </ParaTimeSelectorGlow>
   )

@@ -20,6 +20,19 @@ export abstract class ParaTimeSelectorUtils {
     }
   }
 
+  static showMobileHelpScreen(step: ParaTimeSelectorStep, isMobile: boolean) {
+    if (!isMobile) {
+      return false
+    }
+
+    switch (step) {
+      case ParaTimeSelectorStep.ShowHelpScreen:
+        return true
+      default:
+        return false
+    }
+  }
+
   static showZoomOutBtn(isMobile: boolean, endpoint?: GraphEndpoint) {
     if (isMobile) {
       return false
