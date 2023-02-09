@@ -37,3 +37,5 @@ export const getOasisAddress = async (address: string): Promise<string> => {
     throw new Error('Invalid address')
   }
 }
+
+export const isValidTxHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
