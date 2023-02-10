@@ -1,9 +1,7 @@
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 
-export const isValidBlockHeight = (blockHeight: string): boolean => {
-  return !isNaN(Number(blockHeight))
-}
+export const isValidBlockHeight = (blockHeight: string): boolean => !isNaN(Number(blockHeight))
 
 export const isValidOasisAddress = (addr: string): boolean => {
   try {
