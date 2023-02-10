@@ -13,13 +13,16 @@ export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
       title: t('errors.invalidBlockHeight'),
       message: t('errors.validateURL'),
     },
-    [AppErrors.InvalidTxHash]: { title: t('errors.invalidTxHash'), message: t('errors.validateURL') },
+    [AppErrors.InvalidTxHash]: {
+      title: t('errors.invalidTxHash'),
+      message: t('errors.validateURLOrGoToFirstTab'),
+    },
   }
 
   return errorMap[error.code]
 }
 
-export const ErrorDisplay: FC<{ error: unknown }> = ({ error }) => {
+export const ErrorDisplay: FC<{ error: unknown; light?: boolean }> = ({ error, light }) => {
   const { t } = useTranslation()
 
   let errorPayload: ErrorPayload
@@ -35,7 +38,7 @@ export const ErrorDisplay: FC<{ error: unknown }> = ({ error }) => {
 
   const { title, message } = errorFormatter(t, errorPayload)
 
-  return <EmptyState title={title} description={message} />
+  return <EmptyState title={title} description={message} light={light} />
 }
 
 export const RoutingErrorDisplay: FC = () => <ErrorDisplay error={useRouteError()} />
