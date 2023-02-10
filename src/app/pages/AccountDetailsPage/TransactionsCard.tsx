@@ -10,11 +10,10 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { PaginationError } from '../../components/Table/PaginationError'
 
-export const TransactionsCard: FC = () => {
-  const { t } = useTranslation()
+const TransactionsList: FC = () => {
   const address = useLoaderData() as string
   const txsPagination = useSearchParamsPagination('page')
-  if (!txsPagination.valid) return <PaginationError />
+  if (!txsPagination.valid) return <PaginationError light={true} />
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
@@ -23,18 +22,25 @@ export const TransactionsCard: FC = () => {
   })
 
   return (
+    <Transactions
+      transactions={transactionsQuery.data?.data.transactions}
+      isLoading={transactionsQuery.isLoading}
+      limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+      pagination={{
+        selectedPage: txsPagination.selectedPage,
+        linkToPage: txsPagination.linkToPage,
+      }}
+    />
+  )
+}
+
+export const TransactionsCard: FC = () => {
+  const { t } = useTranslation()
+  return (
     <Card>
       <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
       <CardContent>
-        <Transactions
-          transactions={transactionsQuery.data?.data.transactions}
-          isLoading={transactionsQuery.isLoading}
-          limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-          pagination={{
-            selectedPage: txsPagination.selectedPage,
-            linkToPage: txsPagination.linkToPage,
-          }}
-        />
+        <TransactionsList />
       </CardContent>
     </Card>
   )
