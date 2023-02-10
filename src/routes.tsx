@@ -15,7 +15,6 @@ import {
   transactionParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
-import { RoutingErrorDisplay } from './app/components/ErrorDisplay'
 
 export const routes: RouteObject[] = [
   {
@@ -49,7 +48,6 @@ export const routes: RouteObject[] = [
             path: '',
             element: <TransactionsCard />,
             loader: addressParamLoader,
-            errorElement: <RoutingErrorDisplay />,
           },
           {
             path: 'tokens/erc-20',

@@ -8,10 +8,9 @@ import { Transactions } from '../../components/Transactions'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
-export const TransactionsCard: FC = () => {
-  const { t } = useTranslation()
-  const address = useLoaderData() as string
+export const TransactionsList: FC<{ address: string }> = ({ address }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   const transactionsQuery = useGetEmeraldTransactions({
@@ -19,20 +18,29 @@ export const TransactionsCard: FC = () => {
     offset: txsOffset,
     rel: address,
   })
+  return (
+    <Transactions
+      transactions={transactionsQuery.data?.data.transactions}
+      isLoading={transactionsQuery.isLoading}
+      limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+      pagination={{
+        selectedPage: txsPagination.selectedPage,
+        linkToPage: txsPagination.linkToPage,
+      }}
+    />
+  )
+}
 
+export const TransactionsCard: FC = () => {
+  const { t } = useTranslation()
+  const address = useLoaderData() as string
   return (
     <Card>
       <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
       <CardContent>
-        <Transactions
-          transactions={transactionsQuery.data?.data.transactions}
-          isLoading={transactionsQuery.isLoading}
-          limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-          pagination={{
-            selectedPage: txsPagination.selectedPage,
-            linkToPage: txsPagination.linkToPage,
-          }}
-        />
+        <ErrorBoundary light={true}>
+          <TransactionsList address={address} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

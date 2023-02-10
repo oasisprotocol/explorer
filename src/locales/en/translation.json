@@ -70,7 +70,8 @@
     "invalidPageNumber": "Invalid page number",
     "invalidTxHash": "Invalid transaction hash",
     "txNotFound": "Transaction not found",
-    "validateURL": "Please validate provided URL"
+    "validateURL": "Please validate provided URL",
+    "validateURLOrGoToFirstTab": "Please check the URL or load the first tab."
   },
   "footer": {
     "mobileTitle": "OPF",
