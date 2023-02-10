@@ -14,7 +14,7 @@ import {
   blockHeightParamLoader,
   transactionParamLoader,
 } from './app/utils/route-utils'
-import { ErrorPage } from './app/pages/ErrorPage'
+import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
 export const routes: RouteObject[] = [
   {
@@ -34,13 +34,13 @@ export const routes: RouteObject[] = [
       {
         path: `/${paraTime}/blocks/:blockHeight`,
         element: <BlockDetailPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <RoutingErrorPage />,
         loader: blockHeightParamLoader,
       },
       {
         path: `${paraTime}/account/:address`,
         element: <AccountDetailsPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <RoutingErrorPage />,
         loader: addressParamLoader,
         children: [
           {
@@ -67,7 +67,7 @@ export const routes: RouteObject[] = [
       {
         path: `${paraTime}/transactions/:hash`,
         element: <TransactionDetailPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <RoutingErrorPage />,
         loader: transactionParamLoader,
       },
     ])

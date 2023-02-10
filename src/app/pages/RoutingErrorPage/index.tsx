@@ -1,13 +1,13 @@
 import { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { RoutingErrorDisplay } from '../../components/ErrorDisplay'
 
-export const ErrorPage: FC = () => {
+export const RoutingErrorPage: FC = () => {
   return (
     <PageLayout>
       <Divider variant="layout" />
-      <ErrorBoundary />
+      <RoutingErrorDisplay />
     </PageLayout>
   )
 }

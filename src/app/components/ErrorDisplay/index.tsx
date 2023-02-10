@@ -19,9 +19,8 @@ export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
   return errorMap[error.code]
 }
 
-export const ErrorBoundary: FC = () => {
+export const ErrorDisplay: FC<{ error: unknown }> = ({ error }) => {
   const { t } = useTranslation()
-  const error = useRouteError()
 
   let errorPayload: ErrorPayload
   if (isRouteErrorResponse(error)) {
@@ -38,3 +37,5 @@ export const ErrorBoundary: FC = () => {
 
   return <EmptyState title={title} description={message} />
 }
+
+export const RoutingErrorDisplay: FC = () => <ErrorDisplay error={useRouteError()} />
