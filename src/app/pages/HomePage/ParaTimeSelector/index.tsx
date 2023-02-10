@@ -17,14 +17,14 @@ import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
 
-interface ParaTimeSelectorProps {
+interface ParaTimeSelectorBaseProps {
   disabled: boolean
 }
 
 const ParaTimeSelectorGlow = styled(Box, {
   shouldForwardProp: (prop: string) =>
-    !(['disabled'] as (keyof ParaTimeSelectorProps)[]).includes(prop as keyof ParaTimeSelectorProps),
-})<ParaTimeSelectorProps>(({ disabled, theme }) => ({
+    !(['disabled'] as (keyof ParaTimeSelectorBaseProps)[]).includes(prop as keyof ParaTimeSelectorBaseProps),
+})<ParaTimeSelectorBaseProps>(({ disabled, theme }) => ({
   position: 'relative',
   width: '130vw',
   height: '130vw',
@@ -98,7 +98,12 @@ const QuickPinchZoomInner = styled('div')(() => ({
   height: '100%',
 }))
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
+interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
+  step: ParaTimeSelectorStep
+  setStep: (value: ParaTimeSelectorStep) => void
+}
+
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -107,7 +112,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.ShowHelpScreen)
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
 
   const { width, height } = useResizeObserver<SVGSVGElement>({

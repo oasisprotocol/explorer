@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -10,6 +10,10 @@ import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { OfflineIndicator } from './OfflineIndicator'
 import { useGetStatus } from '../../../oasis-indexer/api'
+import IconButton from '@mui/material/IconButton'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import { useTranslation } from 'react-i18next'
+import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -56,33 +60,51 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
   },
 }))
 
-const SearchInputBox = styled(Box)(({ theme }) => ({
+const SearchInputContainer = styled(Box)(({ theme }) => ({
   zIndex: 2,
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+}))
+
+const SearchInputBox = styled(Box)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     width: '50vw',
   },
 }))
 
-const FooterStyled = styled(Box)(() => ({
+const FooterStyled = styled(Box)(({ theme }) => ({
   width: '100%',
   flex: '0 0 0',
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    paddingRight: theme.spacing(2),
+  },
 }))
 
 export const HomePage: FC = () => {
-  const apiStatusQuery = useGetStatus()
-  const [searchHasFocus, setSearchHasFocus] = useState(false)
   const theme = useTheme()
+  const { t } = useTranslation()
+  const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const apiStatusQuery = useGetStatus()
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
-  const onFocusChange = useCallback(
-    (hasFocus: boolean) => {
-      setSearchHasFocus(hasFocus)
-    },
-    [setSearchHasFocus],
-  )
+
+  const [searchHasFocus, setSearchHasFocus] = useState(false)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+
+  const onFocusChange = (hasFocus: boolean) => {
+    setSearchHasFocus(hasFocus)
+  }
+
+  const onToggleInfoScreenClick = () => {
+    setStep(ParaTimeSelectorStep.ShowHelpScreen)
+  }
 
   const searchVariant: SearchVariant = isMobile ? 'icon' : 'button'
+  const showInfoScreenBtn = isMobile && step !== ParaTimeSelectorStep.ShowHelpScreen
 
   return (
     <HomepageLayout>
@@ -90,7 +112,7 @@ export const HomePage: FC = () => {
         <LogotypeBox>
           <Logotype showText />
         </LogotypeBox>
-        <Box sx={{ zIndex: 2 }}>
+        <SearchInputContainer>
           <SearchInputBox>
             <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
           </SearchInputBox>
@@ -99,16 +121,20 @@ export const HomePage: FC = () => {
               <OfflineIndicator />
             </Box>
           )}
-        </Box>
+        </SearchInputContainer>
         <Box sx={{ zIndex: 1 }}>
-          <ParaTimeSelector disabled={searchHasFocus} />
+          <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
         </Box>
       </Content>
-      {!isMobile && (
-        <FooterStyled>
-          <Footer />
-        </FooterStyled>
-      )}
+
+      <FooterStyled>
+        {showInfoScreenBtn && (
+          <IconButton color="inherit" aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+            <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+          </IconButton>
+        )}
+        {!isMobile && <Footer />}
+      </FooterStyled>
     </HomepageLayout>
   )
 }
