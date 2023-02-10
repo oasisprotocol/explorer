@@ -32,7 +32,7 @@ export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactio
         (data: generated.RuntimeTransactionList) => {
           return {
             ...data,
-            transactions: data.transactions.map(tx => {
+            transactions: (data.transactions || []).map(tx => {
               return {
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald.decimals) : undefined,
