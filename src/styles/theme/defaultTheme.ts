@@ -144,7 +144,7 @@ export const defaultTheme = createTheme({
         containedPrimary: {
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: COLORS.grayMedium,
+          borderColor: COLORS.grayMediumLight,
           textTransform: 'capitalize',
           ':disabled': {
             backgroundColor: COLORS.disabledPrimaryButton,
@@ -283,10 +283,20 @@ export const defaultTheme = createTheme({
       variants: [
         {
           props: { color: 'tertiary' },
-          style: ({ theme }) => ({
+          style: () => ({
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.purpleBackground,
             borderColor: COLORS.brandDark,
+          }),
+        },
+        {
+          props: { variant: 'outlined' },
+          style: ({ theme }) => ({
+            color: COLORS.grayMedium,
+            fontWeight: 500,
+            backgroundColor: COLORS.grayMediumLight,
+            borderColor: COLORS.grayMedium,
+            borderWidth: theme.spacing(1),
           }),
         },
       ],
@@ -303,7 +313,7 @@ export const defaultTheme = createTheme({
         },
         icon: {
           marginLeft: 0,
-          marginRight: 0,
+          marginRight: 2,
         },
       },
     },

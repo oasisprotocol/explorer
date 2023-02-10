@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import { PercentageGain } from '../../components/PercentageGain'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
+  flex: 1,
   // used to create a stronger selector to override default theme styles
   [theme.breakpoints.down('sm')]: {
     padding: 0,
@@ -24,12 +25,12 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 }))
 
 type SnapshotCardProps = PropsWithChildren & {
-  label: string
+  badge?: ReactNode
+  label?: string
   title: string
-  percentage?: number
 }
 
-export const SnapshotCard: FC<SnapshotCardProps> = ({ children, title, percentage, label }) => {
+export const SnapshotCard: FC<SnapshotCardProps> = ({ badge, children, title, label }) => {
   return (
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
@@ -45,7 +46,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({ children, title, percentag
             pb: 3,
           }}
         >
-          <Box>{percentage && <PercentageGain percentage={percentage} />}</Box>
+          <Box>{badge}</Box>
           <Typography variant="h2" sx={{ pr: 4, fontWeight: 'fontWeightRegular' }}>
             {label}
           </Typography>

@@ -154,12 +154,12 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
 
   const startAdornment = variant === 'button' && (
     <InputAdornment position="start">
-      <SearchIcon sx={{ color: COLORS.grayMedium }} />
+      <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
     </InputAdornment>
   )
 
   const searchButtonContent =
-    variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMedium }} /> : t('search.searchBtnText')
+    variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMediumLight }} /> : t('search.searchBtnText')
 
   return (
     <SearchForm

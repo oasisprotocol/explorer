@@ -4,14 +4,20 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RoseChartCard } from './RoseChartCard'
+import { Nodes } from './Nodes'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
+
+const StyledGrid = styled(Grid)(() => ({
+  display: 'flex',
+}))
 
 export const ParaTimeSnapshot: FC = () => {
   const { t } = useTranslation()
@@ -47,15 +53,17 @@ export const ParaTimeSnapshot: FC = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={3}>
+      <Grid container rowSpacing={1} columnSpacing={4} sx={{ marginBottom: 4 }}>
+        <StyledGrid item xs={12} md={3}>
           <TransactionsChartCard chartDuration={chartDuration} />
-        </Grid>
-        <Grid item xs={12} md={3}></Grid>
-        <Grid item xs={12} md={3}></Grid>
-        <Grid item xs={12} md={3}>
+        </StyledGrid>
+        <StyledGrid item xs={12} md={3}></StyledGrid>
+        <StyledGrid item xs={12} md={3}>
+          <Nodes />
+        </StyledGrid>
+        <StyledGrid item xs={12} md={3}>
           <RoseChartCard chartDuration={chartDuration} />
-        </Grid>
+        </StyledGrid>
       </Grid>
     </>
   )
