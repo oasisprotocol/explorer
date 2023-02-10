@@ -13,7 +13,6 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -33,9 +32,7 @@ export const BlockDetailPage: FC = () => {
   return (
     <PageLayout>
       <BlockDetailView isLoading={isLoading} block={block}></BlockDetailView>
-      <ErrorBoundary>
-        <TransactionsCard blockHeight={blockHeight} />
-      </ErrorBoundary>
+      <TransactionsCard blockHeight={blockHeight} />
     </PageLayout>
   )
 }
