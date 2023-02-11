@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent, memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
-import { InputAdornment } from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment'
 import { styled, useTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
@@ -41,24 +41,17 @@ const SearchForm = styled('form', {
 
 interface SearchTextFieldProps extends StandardTextFieldProps {
   searchVariant: SearchVariant
-  hasStartAdornment: boolean
 }
 
 const SearchTextField = styled(TextField, {
   shouldForwardProp: (prop: PropertyKey) =>
-    !(['searchVariant', 'hasStartAdornment'] as (keyof SearchTextFieldProps)[]).includes(
+    !(['searchVariant'] as (keyof SearchTextFieldProps)[]).includes(
       prop as keyof SearchTextFieldProps,
     ),
-})<SearchTextFieldProps>(({ theme, searchVariant, hasStartAdornment }) => ({
-  ...(hasStartAdornment
-    ? {}
-    : {
-        paddingLeft: theme.spacing(4),
-      }),
+})<SearchTextFieldProps>(({ searchVariant }) => ({
   ...(searchVariant === 'expandable'
     ? {
         ':not(:hover, :focus-within)': {
-          paddingLeft: 0,
           input: {
             display: 'none',
           },
@@ -173,7 +166,6 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
     >
       <SearchTextField
         searchVariant={variant}
-        hasStartAdornment={!!startAdornment}
         value={value}
         onChange={onChange}
         onFocus={() => onFocusChange?.(true)}

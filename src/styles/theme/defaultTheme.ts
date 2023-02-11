@@ -459,24 +459,22 @@ export const defaultTheme = createTheme({
     },
     MuiTextField: {
       styleOverrides: {
-        root: {
-          borderRadius: '46px',
+        root: ({ theme }) => ({
+          borderRadius: '24px',
+          '.MuiInputBase-root > :first-child': {
+            // Prevent first child's edges overflowing due to border-radius
+            marginLeft: theme.spacing(4),
+          },
           ':focus-within': {
             boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
           },
           backgroundColor: COLORS.white,
           transition: 'box-shadow 250ms ease-in-out',
-        },
+        }),
       },
     },
     MuiInputAdornment: {
       variants: [
-        {
-          props: { position: 'start' },
-          style: ({ theme }) => ({
-            padding: theme.spacing(4),
-          }),
-        },
         {
           props: { position: 'end' },
           style: {
