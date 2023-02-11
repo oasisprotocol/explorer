@@ -28,6 +28,18 @@ const SearchForm = styled('form', {
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
+        // Collapsed
+        ':not(:hover, :focus-within)': {
+          '.MuiTextField-root': {
+            input: {
+              display: 'none',
+            },
+            '.MuiInputAdornment-positionEnd': {
+              marginLeft: 0,
+            },
+          },
+        },
+        // Expanded
         ':hover, :focus-within': {
           left: 0,
           width: '100%',
@@ -37,42 +49,6 @@ const SearchForm = styled('form', {
         position: 'relative',
         width: '100%',
       }),
-}))
-
-interface SearchTextFieldProps extends StandardTextFieldProps {
-  searchVariant: SearchVariant
-}
-
-const SearchTextField = styled(TextField, {
-  shouldForwardProp: (prop: PropertyKey) =>
-    !(['searchVariant'] as (keyof SearchTextFieldProps)[]).includes(
-      prop as keyof SearchTextFieldProps,
-    ),
-})<SearchTextFieldProps>(({ searchVariant }) => ({
-  ...(searchVariant === 'expandable'
-    ? {
-        ':not(:hover, :focus-within)': {
-          input: {
-            display: 'none',
-          },
-        },
-      }
-    : {}),
-}))
-
-interface InputEndAdornmentProps extends StyledBaseProps {}
-
-const InputEndAdornment = styled(InputAdornment, {
-  shouldForwardProp: (prop: PropertyKey) =>
-    !(['searchVariant'] as (keyof InputEndAdornmentProps)[]).includes(prop as keyof InputEndAdornmentProps),
-})<InputEndAdornmentProps>(({ searchVariant }) => ({
-  ...(searchVariant === 'expandable'
-    ? {
-        ':not(:hover, :focus-within)': {
-          marginLeft: 0,
-        },
-      }
-    : {}),
 }))
 
 interface SearchButtonProps extends StyledBaseProps {}
@@ -164,8 +140,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
       role="search"
       aria-label={searchPlaceholderTranslated}
     >
-      <SearchTextField
-        searchVariant={variant}
+      <TextField
         value={value}
         onChange={onChange}
         onFocus={() => onFocusChange?.(true)}
@@ -176,7 +151,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
           },
           startAdornment,
           endAdornment: (
-            <InputEndAdornment position="end" searchVariant={variant}>
+            <InputAdornment position="end">
               <>
                 {variant === 'icon' && value && (
                   <IconButton color="inherit" onClick={onClearValue}>
@@ -193,7 +168,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
                   {searchButtonContent}
                 </SearchButton>
               </>
-            </InputEndAdornment>
+            </InputAdornment>
           ),
         }}
         placeholder={searchPlaceholderTranslated}
