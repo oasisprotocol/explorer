@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
+import { isRouteErrorResponse } from 'react-router-dom'
 import { EmptyState } from '../EmptyState'
 import { AppError, AppErrors, ErrorPayload } from '../../../types/errors'
 import { TFunction } from 'i18next'
@@ -45,5 +45,3 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean }> = ({ error, l
 
   return <EmptyState title={title} description={message} light={light} />
 }
-
-export const RoutingErrorDisplay: FC = () => <ErrorDisplay error={useRouteError()} />
