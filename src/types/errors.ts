@@ -9,6 +9,7 @@ export enum AppErrors {
   InvalidAddress = 'invalid_address',
   InvalidBlockHeight = 'invalid_block_height',
   InvalidTxHash = 'invalid_tx_hash',
+  InvalidPageNumber = 'invalid_page_number',
 }
 
 export interface ErrorPayload {
