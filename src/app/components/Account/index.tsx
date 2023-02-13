@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
@@ -12,6 +13,7 @@ import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { trimLongString } from '../../utils/trimLongString'
 import { FullConsensusAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
+import { COLORS } from '../../../styles/theme/colors'
 
 export const addressToNumber = (address: string) => {
   // https://github.com/oasisprotocol/oasis-wallet-ext/blob/da7ad67/src/popup/component/AccountIcon/index.js#L26
@@ -47,7 +49,11 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
       </dt>
       <dd>
         <CopyToClipboard
-          label={isMobile ? trimLongString(account.address) : account.address}
+          label={
+            <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+              {isMobile ? trimLongString(account.address) : account.address}
+            </Typography>
+          }
           value={account.address}
         />
       </dd>
