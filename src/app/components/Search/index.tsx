@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent, memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
-import { InputAdornment } from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment'
 import { styled, useTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
@@ -28,6 +28,18 @@ const SearchForm = styled('form', {
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
+        // Collapsed
+        ':not(:hover, :focus-within)': {
+          '.MuiTextField-root': {
+            input: {
+              display: 'none',
+            },
+            '.MuiInputAdornment-positionEnd': {
+              marginLeft: 0,
+            },
+          },
+        },
+        // Expanded
         ':hover, :focus-within': {
           left: 0,
           width: '100%',
@@ -37,49 +49,6 @@ const SearchForm = styled('form', {
         position: 'relative',
         width: '100%',
       }),
-}))
-
-interface SearchTextFieldProps extends StandardTextFieldProps {
-  searchVariant: SearchVariant
-  hasStartAdornment: boolean
-}
-
-const SearchTextField = styled(TextField, {
-  shouldForwardProp: (prop: PropertyKey) =>
-    !(['searchVariant', 'hasStartAdornment'] as (keyof SearchTextFieldProps)[]).includes(
-      prop as keyof SearchTextFieldProps,
-    ),
-})<SearchTextFieldProps>(({ theme, searchVariant, hasStartAdornment }) => ({
-  ...(hasStartAdornment
-    ? {}
-    : {
-        paddingLeft: theme.spacing(4),
-      }),
-  ...(searchVariant === 'expandable'
-    ? {
-        ':not(:hover, :focus-within)': {
-          paddingLeft: 0,
-          input: {
-            display: 'none',
-          },
-        },
-      }
-    : {}),
-}))
-
-interface InputEndAdornmentProps extends StyledBaseProps {}
-
-const InputEndAdornment = styled(InputAdornment, {
-  shouldForwardProp: (prop: PropertyKey) =>
-    !(['searchVariant'] as (keyof InputEndAdornmentProps)[]).includes(prop as keyof InputEndAdornmentProps),
-})<InputEndAdornmentProps>(({ searchVariant }) => ({
-  ...(searchVariant === 'expandable'
-    ? {
-        ':not(:hover, :focus-within)': {
-          marginLeft: 0,
-        },
-      }
-    : {}),
 }))
 
 interface SearchButtonProps extends StyledBaseProps {}
@@ -153,7 +122,10 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   }
 
   const startAdornment = variant === 'button' && (
-    <InputAdornment position="start">
+    <InputAdornment
+      position="start"
+      disablePointerEvents // Pass clicks through, so it focuses the input
+    >
       <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
     </InputAdornment>
   )
@@ -168,9 +140,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
       role="search"
       aria-label={searchPlaceholderTranslated}
     >
-      <SearchTextField
-        searchVariant={variant}
-        hasStartAdornment={!!startAdornment}
+      <TextField
         value={value}
         onChange={onChange}
         onFocus={() => onFocusChange?.(true)}
@@ -181,7 +151,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
           },
           startAdornment,
           endAdornment: (
-            <InputEndAdornment position="end" searchVariant={variant}>
+            <InputAdornment position="end">
               <>
                 {variant === 'icon' && value && (
                   <IconButton color="inherit" onClick={onClearValue}>
@@ -198,7 +168,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
                   {searchButtonContent}
                 </SearchButton>
               </>
-            </InputEndAdornment>
+            </InputAdornment>
           ),
         }}
         placeholder={searchPlaceholderTranslated}
