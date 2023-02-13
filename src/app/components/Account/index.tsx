@@ -23,6 +23,7 @@ export const addressToNumber = (address: string) => {
 
 const StyledBox = styled(Box)(() => ({
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'space-between',
   flex: 1,
 }))
