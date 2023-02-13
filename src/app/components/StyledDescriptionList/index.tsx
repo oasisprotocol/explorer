@@ -35,7 +35,6 @@ export const StyledDescriptionList = styled(InlineDescriptionList)(({ theme }) =
   'dt, dd': {
     display: 'flex',
     alignItems: 'center',
-    fontSize: '14px',
     boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
     ':last-of-type': {
       boxShadow: 'none',
