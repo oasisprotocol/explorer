@@ -546,7 +546,8 @@ export const defaultTheme = createTheme({
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.white,
           },
-
+          fontSize: '16px',
+          fontWeight: 700,
           color: COLORS.brandDark,
           backgroundColor: COLORS.inactiveTab,
           marginRight: theme.spacing(2),
