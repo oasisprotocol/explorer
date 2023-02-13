@@ -290,10 +290,9 @@ export const defaultTheme = createTheme({
           }),
         },
         {
-          props: { variant: 'outlined' },
+          props: { color: 'primary' },
           style: ({ theme }) => ({
             color: COLORS.grayMedium,
-            fontWeight: 500,
             backgroundColor: COLORS.grayMediumLight,
             borderColor: COLORS.grayMedium,
             borderWidth: theme.spacing(1),
