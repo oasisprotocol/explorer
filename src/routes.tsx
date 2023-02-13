@@ -18,64 +18,64 @@ import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
 export const routes: RouteObject[] = [
   {
-    path: '/',
-    element: <HomePage />,
-  },
-  ...RouteUtils.getEnabledParaTimes()
-    .map(paraTime => [
+    errorElement: <RoutingErrorPage />,
+    children: [
       {
-        path: `/${paraTime}`,
-        element: <DashboardPage />,
+        path: '/',
+        element: <HomePage />,
       },
+      ...RouteUtils.getEnabledParaTimes()
+        .map(paraTime => [
+          {
+            path: `/${paraTime}`,
+            element: <DashboardPage />,
+          },
+          {
+            path: `/${paraTime}/blocks`,
+            element: <BlocksPage />,
+          },
+          {
+            path: `/${paraTime}/blocks/:blockHeight`,
+            element: <BlockDetailPage />,
+            loader: blockHeightParamLoader,
+          },
+          {
+            path: `${paraTime}/account/:address`,
+            element: <AccountDetailsPage />,
+            loader: addressParamLoader,
+            children: [
+              {
+                path: '',
+                element: <TransactionsCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-20',
+                element: <TokensCard type="ERC20" />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-721',
+                element: <TokensCard type="ERC721" />,
+                loader: addressParamLoader,
+              },
+            ],
+          },
+          {
+            path: `/${paraTime}/transactions`,
+            element: <TransactionsPage />,
+          },
+          {
+            path: `${paraTime}/transactions/:hash`,
+            element: <TransactionDetailPage />,
+            loader: transactionParamLoader,
+          },
+        ])
+        .flat(),
       {
-        path: `/${paraTime}/blocks`,
-        element: <BlocksPage />,
-        errorElement: <RoutingErrorPage />,
-      },
-      {
-        path: `/${paraTime}/blocks/:blockHeight`,
+        path: `/blocks/:blockHeight`,
         element: <BlockDetailPage />,
-        errorElement: <RoutingErrorPage />,
-        loader: blockHeightParamLoader,
       },
-      {
-        path: `${paraTime}/account/:address`,
-        element: <AccountDetailsPage />,
-        errorElement: <RoutingErrorPage />,
-        loader: addressParamLoader,
-        children: [
-          {
-            path: '',
-            element: <TransactionsCard />,
-            loader: addressParamLoader,
-          },
-          {
-            path: 'tokens/erc-20',
-            element: <TokensCard type="ERC20" />,
-            loader: addressParamLoader,
-          },
-          {
-            path: 'tokens/erc-721',
-            element: <TokensCard type="ERC721" />,
-            loader: addressParamLoader,
-          },
-        ],
-      },
-      {
-        path: `/${paraTime}/transactions`,
-        element: <TransactionsPage />,
-        errorElement: <RoutingErrorPage />,
-      },
-      {
-        path: `${paraTime}/transactions/:hash`,
-        element: <TransactionDetailPage />,
-        errorElement: <RoutingErrorPage />,
-        loader: transactionParamLoader,
-      },
-    ])
-    .flat(),
-  {
-    path: `/blocks/:blockHeight`,
-    element: <BlockDetailPage />,
+    ],
   },
 ]
