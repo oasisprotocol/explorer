@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
@@ -9,7 +9,7 @@ import { COLORS } from '../../../styles/theme/colors'
 const clipboardTooltipDuration = 2000
 
 type CopyToClipboardProps = {
-  label?: string
+  label?: ReactNode
   value: string
 }
 

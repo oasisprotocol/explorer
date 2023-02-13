@@ -55,7 +55,7 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
     { content: t('common.type') },
     { content: t('common.from'), width: '150px' },
     { content: t('common.to'), width: '150px' },
-    { content: t('common.txnFee') },
+    { content: t('common.txnFee'), align: TableCellAlign.Right },
     { align: TableCellAlign.Right, content: t('common.value') },
   ]
   const tableRows = transactions?.map(transaction => ({

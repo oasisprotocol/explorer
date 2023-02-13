@@ -243,7 +243,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,
-          marginBottom: theme.spacing(4),
+          marginBottom: theme.spacing(5),
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
             padding: `${theme.spacing(4)} ${theme.spacing(4)} 0`,
@@ -546,7 +546,8 @@ export const defaultTheme = createTheme({
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.white,
           },
-
+          fontSize: '16px',
+          fontWeight: 700,
           color: COLORS.brandDark,
           backgroundColor: COLORS.inactiveTab,
           marginRight: theme.spacing(2),
