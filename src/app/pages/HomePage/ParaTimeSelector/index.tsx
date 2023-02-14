@@ -124,6 +124,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
     }
   }, [selectedGraphEndpoint])
 
+  useEffect(() => {
+    // Switch from mobile -> desktop view while on help screen
+    if (!isMobile && step === ParaTimeSelectorStep.ShowHelpScreen) {
+      setStep(ParaTimeSelectorStep.Explore)
+    }
+  }, [isMobile])
+
   const onExploreClick = () => {
     if (isMobile) {
       setStep(ParaTimeSelectorStep.ShowHelpScreen)
