@@ -24,7 +24,7 @@ import { EmptyState } from '../../components/EmptyState'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
-  warningFlag?: boolean
+  warningMultipleTransactionsSameHash?: boolean
 }
 
 /**
@@ -44,7 +44,7 @@ function useWantedTransaction(transactions: RuntimeTransaction[]): TransactionSe
     const successfulOne = transactions.find(transaction => transaction.success)
     const latestOne = transactions.sort((a, b) => b.round - a.round)[0]
     return {
-      warningFlag: true,
+      warningMultipleTransactionsSameHash: true,
       wantedTransaction: successfulOne ?? latestOne,
     }
   }
@@ -63,7 +63,7 @@ export const TransactionDetailPage: FC = () => {
   const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
 
   const transactions = data?.data ? [data.data] : [] // TODO: simplify this when the API is updated to return a list
-  const { wantedTransaction: transaction, warningFlag } = useWantedTransaction(transactions)
+  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(transactions)
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
@@ -77,7 +77,9 @@ export const TransactionDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      {warningFlag && <StyledAlert severity={'error'}>{t('transaction.multiWarning')}</StyledAlert>}
+      {warningMultipleTransactionsSameHash && (
+        <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
+      )}
       {isLoading && (
         <SubPageCard title={t('transaction.header')}>
           <Skeleton variant="text" height={30} sx={{ my: 4 }} />
