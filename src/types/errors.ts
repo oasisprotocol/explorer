@@ -1,6 +1,6 @@
 export class AppError extends Error {
   constructor(public readonly type: AppErrors, message?: string, public readonly originalError?: Error) {
-    super(message)
+    super(message ?? type)
   }
 }
 
