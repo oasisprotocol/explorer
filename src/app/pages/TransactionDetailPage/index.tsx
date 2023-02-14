@@ -28,45 +28,24 @@ type TransactionSelectionResult = {
 }
 
 /**
- * Compare transactions according to their age (for sorting)
- */
-function compareTxAge(a: RuntimeTransaction, b: RuntimeTransaction) {
-  // As per definition, the timestamp of a transaction gives the time when
-  // the block was proposed, so we can't tell the age within the block.
-  // So we can just as well look for the block round number instead.
-
-  const roundA = a.round
-  const roundB = b.round
-
-  if (roundA > roundB) {
-    return 1
-  } else if (roundB > roundA) {
-    return -1
-  } else {
-    return 0
-  }
-}
-
-/**
  * Find the wanted transaction, in case there are more.
  *
  * Normally we want the successful one. If there is none, then the latest.
  */
 function useWantedTransaction(transactions: RuntimeTransaction[]): TransactionSelectionResult {
   if (!transactions.length) {
+    // Loading or error
     return {}
   } else if (transactions.length === 1) {
     return {
       wantedTransaction: transactions[0],
     }
   } else {
-    let wantedTransaction = transactions.find(transaction => transaction.success)
-    if (!wantedTransaction) {
-      wantedTransaction = transactions.sort(compareTxAge).at(-1)
-    }
+    const successfulOne = transactions.find(transaction => transaction.success)
+    const latestOne = transactions.sort((a, b) => b.round - a.round)[0]
     return {
       warningFlag: true,
-      wantedTransaction,
+      wantedTransaction: successfulOne ?? latestOne,
     }
   }
 }
