@@ -92,10 +92,6 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
     }
   }, [])
 
-  const onChangeSwipeableIndex = (index: number) => {
-    setActiveStep(index as AvailableSteps)
-  }
-
   const onGetStartedClick = () => {
     setParaTimeStep(ParaTimeSelectorStep.Explore)
   }
