@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
-import { type Token } from '../../../oasis-indexer/api'
+import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
 
 type TokenPillsProps = {
-  tokens: Token[]
+  tokens: RuntimeEvmBalance[] | undefined
 }
 
 export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
@@ -35,7 +35,7 @@ export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
 }
 
 type PillProps = {
-  pill: Token
+  pill: RuntimeEvmBalance
 }
 
 export const Pill: FC<PillProps> = ({ pill }) => {

@@ -11,7 +11,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { trimLongString } from '../../utils/trimLongString'
-import { FullConsensusAccount } from '../../../oasis-indexer/api'
+import { type Account as AccountDetailsProps } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -31,8 +31,7 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 type AccountProps = {
-  // TODO: switch to Emerald when endpoint is ready
-  account: FullConsensusAccount
+  account: AccountDetailsProps
   roseFiatValue?: number
 }
 

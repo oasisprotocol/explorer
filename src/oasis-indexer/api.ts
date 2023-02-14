@@ -48,11 +48,30 @@ export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactio
   return result
 }
 
-export interface FullConsensusAccount extends generated.Account {
-  runtime_evm_balances: generated.RuntimeEvmBalance[]
+export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAccountsAddress = (
+  params,
+  options?,
+) => {
+  const result = generated.useGetConsensusAccountsAddress(params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.Account) => {
+          return {
+            ...data,
+            runtime_evm_balances: data.runtime_evm_balances?.map(token => {
+              return {
+                ...token,
+                balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
+  return result
 }
-
-export const useGetConsensusAccountsAddress = generated.useGetConsensusAccountsAddress<
-  AxiosResponse<FullConsensusAccount>,
-  AxiosError<generated.HumanReadableErrorResponse | generated.NotFoundErrorResponse>
->
