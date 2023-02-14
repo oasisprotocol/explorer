@@ -129,7 +129,7 @@ export const HomePage: FC = () => {
 
       <FooterStyled>
         {showInfoScreenBtn && (
-          <IconButton color="inherit" aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+          <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
             <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
           </IconButton>
         )}

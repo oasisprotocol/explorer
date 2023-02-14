@@ -128,7 +128,6 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           {t('home.helpScreen.getStarted')}
         </Button>
       )}
-      ss
     </HelpScreenContainer>
   )
 }
