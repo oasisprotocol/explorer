@@ -10,28 +10,13 @@ type RouterTabsProps = {
   }[]
 }
 
-function useRouteMatch(patterns: string[]) {
-  const { pathname } = useLocation()
-
-  for (let i = 0; i < patterns.length; i += 1) {
-    const pattern = patterns[i]
-    const possibleMatch = matchPath(pattern, pathname)
-    if (possibleMatch !== null) {
-      return possibleMatch
-    }
-  }
-
-  return null
-}
-
 export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
-  const tabsPaths = tabs.flatMap(num => num.to)
-  const routeMatch = useRouteMatch(tabsPaths)
-  const currentTab = routeMatch?.pattern?.path
+  const { pathname } = useLocation()
+  const currentTab = tabs.find(tab => matchPath(tab.to, pathname))
 
   return (
     <>
-      <Tabs value={currentTab}>
+      <Tabs value={currentTab?.to}>
         {tabs.map(tab => (
           <Tab key={tab.to} component={RouterLink} value={tab.to} label={tab.label} to={tab.to} />
         ))}
