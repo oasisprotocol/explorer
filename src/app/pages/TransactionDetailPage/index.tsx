@@ -20,31 +20,11 @@ import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { EmptyState } from '../../components/EmptyState'
+import { AppErrors } from '../../../types/errors'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
-  warningFlag?: boolean
-}
-
-/**
- * Compare transactions according to their age (for sorting)
- */
-function compareTxAge(a: RuntimeTransaction, b: RuntimeTransaction) {
-  // As per definition, the timestamp of a transaction gives the time when
-  // the block was proposed, so we can't tell the age within the block.
-  // So we can just as well look for the block round number instead.
-
-  const roundA = a.round
-  const roundB = b.round
-
-  if (roundA > roundB) {
-    return 1
-  } else if (roundB > roundA) {
-    return -1
-  } else {
-    return 0
-  }
+  warningMultipleTransactionsSameHash?: boolean
 }
 
 /**
@@ -54,19 +34,18 @@ function compareTxAge(a: RuntimeTransaction, b: RuntimeTransaction) {
  */
 function useWantedTransaction(transactions: RuntimeTransaction[]): TransactionSelectionResult {
   if (!transactions.length) {
+    // Loading or error
     return {}
   } else if (transactions.length === 1) {
     return {
       wantedTransaction: transactions[0],
     }
   } else {
-    let wantedTransaction = transactions.find(transaction => transaction.success)
-    if (!wantedTransaction) {
-      wantedTransaction = transactions.sort(compareTxAge).at(-1)
-    }
+    const successfulOne = transactions.find(transaction => transaction.success)
+    const latestOne = transactions.sort((a, b) => b.round - a.round)[0]
     return {
-      warningFlag: true,
-      wantedTransaction,
+      warningMultipleTransactionsSameHash: true,
+      wantedTransaction: successfulOne ?? latestOne,
     }
   }
 }
@@ -84,21 +63,19 @@ export const TransactionDetailPage: FC = () => {
   const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
 
   const transactions = data?.data ? [data.data] : [] // TODO: simplify this when the API is updated to return a list
-  const { wantedTransaction: transaction, warningFlag } = useWantedTransaction(transactions)
+  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } =
+    useWantedTransaction(transactions)
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
-    return (
-      <PageLayout>
-        <Divider variant="layout" />
-        <EmptyState title={t('errors.txNotFound')} description={t('errors.validateURL')} />
-      </PageLayout>
-    )
+    throw AppErrors.NotFoundTxHash
   }
 
   return (
     <PageLayout>
-      {warningFlag && <StyledAlert severity={'error'}>{t('transaction.multiWarning')}</StyledAlert>}
+      {warningMultipleTransactionsSameHash && (
+        <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
+      )}
       {isLoading && (
         <SubPageCard title={t('transaction.header')}>
           <Skeleton variant="text" height={30} sx={{ my: 4 }} />

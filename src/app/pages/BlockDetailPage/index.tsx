@@ -13,11 +13,15 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
+import { AppErrors } from '../../../types/errors'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
   const blockQuery = useGetEmeraldBlocks({ to: blockHeight, limit: 1 })
   const block = blockQuery.data?.data.blocks[0]
+  if (block && block.round !== blockHeight) {
+    throw AppErrors.NotFoundBlockHeight
+  }
   return {
     ...blockQuery,
     data: { data: block },

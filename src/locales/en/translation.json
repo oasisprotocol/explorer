@@ -69,7 +69,8 @@
     "invalidBlockHeight": "Invalid block height",
     "invalidPageNumber": "Invalid page number",
     "invalidTxHash": "Invalid transaction hash",
-    "txNotFound": "Transaction not found",
+    "notFoundBlockHeight": "Block not found",
+    "notFoundTx": "Transaction not found",
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstTab": "Please check the URL or load the first tab."
   },
@@ -129,7 +130,7 @@
   },
   "transaction": {
     "header": "Transaction",
-    "multiWarning": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
+    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
   },
   "transactionStats": {
     "header": "Transactions Per Day",
