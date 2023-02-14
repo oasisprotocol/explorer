@@ -557,16 +557,16 @@ export const defaultTheme = createTheme({
         root: {
           backgroundColor: 'transparent',
         },
-        dot: {
+        dot: ({ theme }) => ({
           width: '30px',
           height: '4px',
           background: COLORS.white025A,
           borderWidth: '1px',
           borderStyle: 'solid',
           borderColor: COLORS.grayMedium,
-          borderRadius: '4px',
+          borderRadius: theme.spacing(2),
           boxShadow: '0 4px 50px 15px rgba(0, 0, 98, 0.54)',
-        },
+        }),
         dotActive: {
           background: COLORS.grayMedium,
         },
