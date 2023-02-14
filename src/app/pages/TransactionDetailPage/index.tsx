@@ -20,7 +20,7 @@ import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { EmptyState } from '../../components/EmptyState'
+import { AppErrors } from '../../../types/errors'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -63,16 +63,12 @@ export const TransactionDetailPage: FC = () => {
   const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
 
   const transactions = data?.data ? [data.data] : [] // TODO: simplify this when the API is updated to return a list
-  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(transactions)
+  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } =
+    useWantedTransaction(transactions)
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
-    return (
-      <PageLayout>
-        <Divider variant="layout" />
-        <EmptyState title={t('errors.txNotFound')} description={t('errors.validateURL')} />
-      </PageLayout>
-    )
+    throw AppErrors.NotFoundTxHash
   }
 
   return (
