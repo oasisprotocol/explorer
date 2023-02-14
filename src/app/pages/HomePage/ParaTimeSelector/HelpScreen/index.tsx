@@ -124,7 +124,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography component="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
+      <Typography variant="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (
