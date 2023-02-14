@@ -27,8 +27,8 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ tokens, pills 
   }
 
   // link to ERC20 tab otherwise if there are only ERC721 tokens not included in pills link to the ERC721
-  const pillsSymbols = new Set(pills.map(({ token_symbol }) => token_symbol))
-  const showMoreItems = tokens.filter(({ token_symbol }) => !pillsSymbols.has(token_symbol))
+  const pillsSymbols = new Set(pills.map(({ token_contract_addr }) => token_contract_addr))
+  const showMoreItems = tokens.filter(({ token_contract_addr }) => !pillsSymbols.has(token_contract_addr))
   const hasERC20 = showMoreItems.some(item => item.token_type === 'ERC20')
   const targetShowMoreLink = hasERC20 ? useHref('tokens/erc-20') : useHref('tokens/erc-721')
 
