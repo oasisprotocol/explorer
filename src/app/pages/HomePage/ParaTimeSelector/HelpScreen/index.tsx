@@ -133,8 +133,8 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           steps={totalSteps}
           position="static"
           activeStep={activeStep}
-          backButton={<></>}
-          nextButton={<></>}
+          backButton={null}
+          nextButton={null}
         />
       )}
       {activeStep > 1 && (
