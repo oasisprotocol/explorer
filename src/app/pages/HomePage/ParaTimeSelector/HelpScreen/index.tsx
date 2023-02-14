@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import helpScreenNavigate from '../images/help-screen-navigate.svg'
 import helpScreenPinch from '../images/help-screen-pinch.svg'
@@ -10,9 +10,23 @@ import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { useConstant } from '../../../../hooks/useConstant'
-import SwipeableViews from 'react-swipeable-views'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
+import Swiper from 'swiper/types/swiper-class'
+
+// declaration in d.ts file declaration not correctly recognized
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'swiper-container': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
+      'swiper-slide': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
+    }
+  }
+}
+
+interface SlideChangeEvent extends Event {
+  detail: [Swiper]
+}
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -24,6 +38,10 @@ const HelpScreenContainer = styled(Box)(() => ({
   alignItems: 'center',
   minHeight: '185px',
   width: '90%',
+}))
+
+const SwiperBox = styled(Box)(() => ({
+  width: '100%',
 }))
 
 interface Step {
@@ -59,6 +77,21 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const totalSteps = allSteps.length
   const currentStep = allSteps[activeStep]
 
+  const swiperElRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const handleSlideChange = (e: Event) => {
+      const [swiper] = (e as SlideChangeEvent).detail
+      setActiveStep(swiper.activeIndex as AvailableSteps)
+    }
+
+    swiperElRef.current?.addEventListener('slidechange', handleSlideChange)
+
+    return () => {
+      swiperElRef.current?.removeEventListener('slidechange', handleSlideChange)
+    }
+  }, [])
+
   const onChangeSwipeableIndex = (index: number) => {
     setActiveStep(index as AvailableSteps)
   }
@@ -69,26 +102,28 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
 
   return (
     <HelpScreenContainer>
-      <SwipeableViews index={activeStep} onChangeIndex={onChangeSwipeableIndex}>
-        {allSteps.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) < totalSteps ? (
-              <Box
-                component="img"
-                sx={{
-                  display: 'block',
-                  width: '100%',
-                  height: 50,
-                  overflow: 'hidden',
-                  marginBottom: 3,
-                }}
-                src={step.icon}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
-      </SwipeableViews>
+      <SwiperBox>
+        <swiper-container ref={swiperElRef} slides-per-view="1">
+          {allSteps.map((step, index) => (
+            <swiper-slide key={step.label}>
+              {Math.abs(activeStep - index) < totalSteps ? (
+                <Box
+                  component="img"
+                  sx={{
+                    display: 'block',
+                    width: '100%',
+                    height: 50,
+                    overflow: 'hidden',
+                    marginBottom: 3,
+                  }}
+                  src={step.icon}
+                  alt={step.label}
+                />
+              ) : null}
+            </swiper-slide>
+          ))}
+        </swiper-container>
+      </SwiperBox>
       <Typography component="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
         {currentStep.label}
       </Typography>
