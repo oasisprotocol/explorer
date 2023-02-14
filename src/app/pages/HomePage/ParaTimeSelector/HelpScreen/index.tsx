@@ -14,16 +14,6 @@ import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
 import Swiper from 'swiper/types/swiper-class'
 
-// declaration in d.ts file declaration not correctly recognized
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'swiper-container': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
-      'swiper-slide': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
-    }
-  }
-}
-
 interface SlideChangeEvent extends Event {
   detail: [Swiper]
 }
