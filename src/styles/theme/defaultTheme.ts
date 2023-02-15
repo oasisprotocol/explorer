@@ -460,9 +460,14 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: '24px',
-          '.MuiInputBase-root > :first-child': {
+          '.MuiInputBase-root': {
             // Prevent first child's edges overflowing due to border-radius
-            marginLeft: theme.spacing(4),
+            '&.MuiInputBase-adornedStart .MuiInputAdornment-positionStart': {
+              marginLeft: theme.spacing(4),
+            },
+            '&:not(.MuiInputBase-adornedStart) .MuiInputBase-input': {
+              marginLeft: theme.spacing(4),
+            },
           },
           ':focus-within': {
             boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
