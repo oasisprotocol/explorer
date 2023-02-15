@@ -56,6 +56,8 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           value={account.address}
         />
       </dd>
+      <dt>{t('account.chain')}</dt>
+      <dd>{t('common.emerald')}</dd>
       {roseFiatValue && (
         <>
           <dt>{t('common.fiatValue')}</dt>
@@ -74,10 +76,16 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           </dd>
         </>
       )}
+      <dt>{t('common.transactions')}</dt>
+      <dd>{/* TODO: waiting for API update */}</dd>
       <dt>{t('account.evmTokens')}</dt>
       <dd>
         <TokenPills tokens={account.runtime_evm_balances} />
       </dd>
+      <dt>{t('account.totalReceived')}</dt>
+      <dd>{/* TODO: waiting for API update */}</dd>
+      <dt>{t('account.totalSent')}</dt>
+      <dd>{/* TODO: waiting for API update */}</dd>
     </StyledDescriptionList>
   )
 }
