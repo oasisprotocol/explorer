@@ -11,7 +11,11 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { trimLongString } from '../../utils/trimLongString'
-import { type Account as AccountDetailsProps } from '../../../oasis-indexer/api'
+import {
+  type Account as AccountDetailsProps,
+  type RuntimeSdkBalance,
+  RuntimeName,
+} from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -35,11 +39,16 @@ type AccountProps = {
   roseFiatValue?: number
 }
 
+const getChainBalance = (runtime: string, balance?: RuntimeSdkBalance[]) => {
+  const chainBalance = balance?.find(chain => chain.runtime === runtime)
+  return chainBalance?.balance || '0'
+}
+
 export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const mockedRuntimeBalance = 1000 // TODO: replace with real value when API is ready
+  const balance = getChainBalance(RuntimeName.emerald, account.runtime_sdk_balances)
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
@@ -56,15 +65,19 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           value={account.address}
         />
       </dd>
+
       <dt>{t('account.chain')}</dt>
       <dd>{t('common.emerald')}</dd>
+
+      <dt>{t('common.balance')}</dt>
+      <dd>{t('common.valueInRose', { value: balance })}</dd>
       {roseFiatValue && (
         <>
           <dt>{t('common.fiatValue')}</dt>
           <dd>
             <StyledBox>
               {t('common.fiatValueInUSD', {
-                value: mockedRuntimeBalance * roseFiatValue,
+                value: parseFloat(balance) * roseFiatValue,
                 formatParams: {
                   value: {
                     currency: 'USD',
@@ -76,14 +89,18 @@ export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
           </dd>
         </>
       )}
+
       <dt>{t('common.transactions')}</dt>
       <dd>{/* TODO: waiting for API update */}</dd>
+
       <dt>{t('account.evmTokens')}</dt>
       <dd>
         <TokenPills tokens={account.runtime_evm_balances} />
       </dd>
+
       <dt>{t('account.totalReceived')}</dt>
       <dd>{/* TODO: waiting for API update */}</dd>
+
       <dt>{t('account.totalSent')}</dt>
       <dd>{/* TODO: waiting for API update */}</dd>
     </StyledDescriptionList>
