@@ -46,7 +46,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
     >
       {label || value}
       <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
-        <IconButton color="inherit" aria-label={ariaLabel}>
+        <IconButton color="inherit" aria-label={ariaLabel} sx={{ py: 0 }}>
           <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark }} />
         </IconButton>
       </Tooltip>

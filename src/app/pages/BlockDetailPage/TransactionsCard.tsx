@@ -28,6 +28,7 @@ const TransactionList: FC<{ blockHeight: number }> = ({ blockHeight }) => {
         selectedPage: txsPagination.selectedPage,
         linkToPage: txsPagination.linkToPage,
       }}
+      verbose={false}
     />
   )
 }

@@ -43,14 +43,21 @@ type TransactionProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  verbose?: boolean
 }
 
-export const Transactions: FC<TransactionProps> = ({ isLoading, limit, pagination, transactions }) => {
+export const Transactions: FC<TransactionProps> = ({
+  isLoading,
+  limit,
+  pagination,
+  transactions,
+  verbose = true,
+}) => {
   const { t } = useTranslation()
   const tableColumns = [
     { content: t('common.status') },
     { content: t('common.hash') },
-    { content: t('common.block') },
+    ...(verbose ? [{ content: t('common.block') }] : []),
     { content: t('common.age'), align: TableCellAlign.Right },
     { content: t('common.type') },
     { content: t('common.from'), width: '150px' },
@@ -74,14 +81,21 @@ export const Transactions: FC<TransactionProps> = ({ isLoading, limit, paginatio
         ),
         key: 'hash',
       },
-      {
-        content: (
-          <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}>
-            {transaction.round}
-          </Link>
-        ),
-        key: 'round',
-      },
+      ...(verbose
+        ? [
+            {
+              content: (
+                <Link
+                  component={RouterLink}
+                  to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
+                >
+                  {transaction.round}
+                </Link>
+              ),
+              key: 'round',
+            },
+          ]
+        : []),
       {
         align: TableCellAlign.Right,
         content: formatDistanceStrict(new Date(transaction.timestamp), new Date(), {
