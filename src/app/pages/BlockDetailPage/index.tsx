@@ -62,7 +62,7 @@ export const BlockDetailView: FC<{
       )}
       {block && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-          <dt>{t('common.block')}</dt>
+          <dt>{t('common.height')}</dt>
           <dd>{block.round}</dd>
 
           <dt>{t('common.timestamp')}</dt>
