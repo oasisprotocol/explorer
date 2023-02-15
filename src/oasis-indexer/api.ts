@@ -67,6 +67,12 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
                 balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
               }
             }),
+            runtime_sdk_balances: data.runtime_sdk_balances?.map(token => {
+              return {
+                ...token,
+                balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
+              }
+            }),
           }
         },
         ...arrayify(options?.axios?.transformResponse),

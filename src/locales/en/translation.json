@@ -1,5 +1,6 @@
 {
   "account": {
+    "chain": "Chain",
     "emptyTokenList": "This account holds no {{token}} tokens.",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
@@ -8,7 +9,9 @@
     "title": "Account",
     "evmTokens": "EVM tokens",
     "tokensListTitle": "{{token}} Tokens",
-    "transactionsListTitle": "Account Transactions"
+    "transactionsListTitle": "Account Transactions",
+    "totalReceived": "Total Received",
+    "totalSent": "Total Sent"
   },
   "averageTransactionSize": {
     "header": "Average Transaction Size",
