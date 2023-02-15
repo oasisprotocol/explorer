@@ -12,11 +12,7 @@ import { COLORS } from '../../../../../styles/theme/colors'
 import { useConstant } from '../../../../hooks/useConstant'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
-import Swiper from 'swiper/types/swiper-class'
-
-interface SlideChangeEvent extends Event {
-  detail: [Swiper]
-}
+import { SlideChangeEvent } from '../../../../../types/swiper'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -70,15 +66,15 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const swiperElRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const handleSlideChange = (e: Event) => {
-      const [swiper] = (e as SlideChangeEvent).detail
+    const handleSlideChange = (e: SlideChangeEvent) => {
+      const [swiper] = e.detail
       setActiveStep(swiper.activeIndex as AvailableSteps)
     }
 
-    swiperElRef.current?.addEventListener('slidechange', handleSlideChange)
+    swiperElRef.current?.addEventListener<'slidechange'>('slidechange', handleSlideChange)
 
     return () => {
-      swiperElRef.current?.removeEventListener('slidechange', handleSlideChange)
+      swiperElRef.current?.removeEventListener<'slidechange'>('slidechange', handleSlideChange)
     }
   }, [])
 
