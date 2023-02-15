@@ -4,19 +4,24 @@ import { useHref } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
-import { type Token } from '../../../oasis-indexer/api'
+import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
 
 type TokenPillsProps = {
-  tokens: Token[]
+  tokens: RuntimeEvmBalance[] | undefined
 }
 
 export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   if (!tokens?.length) {
     return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
   }
-  const pills = tokens.slice(0, 3)
+  const pills = tokens.slice(0, isMobile ? 1 : 3)
 
   return (
     <>
@@ -30,7 +35,7 @@ export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
 }
 
 type PillProps = {
-  pill: Token
+  pill: RuntimeEvmBalance
 }
 
 export const Pill: FC<PillProps> = ({ pill }) => {

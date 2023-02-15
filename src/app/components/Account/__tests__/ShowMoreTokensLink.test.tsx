@@ -33,6 +33,16 @@ const mockedToken3: Token = {
   token_decimals: 18,
 }
 
+const mockedToken4: Token = {
+  balance: '1123.5',
+  runtime: 'emerald',
+  token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly4',
+  token_name: 'ROSE',
+  token_symbol: 'ROSE',
+  token_type: 'ERC20',
+  token_decimals: 18,
+}
+
 describe('ShowMoreTokensLink', () => {
   it('should not render show more link', () => {
     const { rerender } = renderWithProviders(<ShowMoreTokensLink tokens={[]} pills={[]} />)
@@ -44,10 +54,13 @@ describe('ShowMoreTokensLink', () => {
 
   it('should render ERC20 link if there is any ERC20 token not included in pills', () => {
     renderWithProviders(
-      <ShowMoreTokensLink tokens={[mockedToken1, mockedToken2, mockedToken3]} pills={[mockedToken1]} />,
+      <ShowMoreTokensLink
+        tokens={[mockedToken1, mockedToken2, mockedToken3, mockedToken4]}
+        pills={[mockedToken1]}
+      />,
     )
 
-    expect(screen.getByText('+ 2 more')).toBeInTheDocument()
+    expect(screen.getByText('+ 3 more')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute('href', '/tokens/erc-20')
   })
 

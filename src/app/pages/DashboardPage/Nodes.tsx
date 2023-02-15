@@ -20,6 +20,7 @@ export const Nodes: FC = () => {
       title={t('nodes.title')}
       badge={
         <Chip
+          color="primary"
           icon={
             <Circle color={COLORS.grayMediumLight} size={4} sx={{ border: `2px solid ${COLORS.grayMedium}` }}>
               <BoltIcon sx={{ fontSize: '12px', color: COLORS.grayMedium }} />
