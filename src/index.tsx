@@ -15,9 +15,8 @@ import './locales/i18n'
 Axios.defaults.baseURL = process.env.REACT_APP_API
 const queryClient = new QueryClient({})
 
-import { register } from 'swiper/element/swiper-element'
-// register Swiper custom elements
-register()
+import { register as registerSwiperElements } from 'swiper/element/swiper-element'
+registerSwiperElements()
 
 const router = createBrowserRouter(routes)
 
