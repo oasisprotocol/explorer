@@ -14,15 +14,15 @@ type TransactionsWithExtra = AxiosResponse<{
   transactions: Array<RuntimeTransaction & { extraProperty: boolean }>
 }>
 
-export function expectStructuralSharingToHaveCorrectType() {
+export function ExpectStructuralSharingToHaveCorrectType() {
   const blocks = useGetEmeraldBlocks<BlocksWithExtra>(undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {
         // Previously returned value should have new property
-        prev?.data.blocks[0].extraProperty
+        expect(prev?.data.blocks[0].extraProperty).toBeDefined()
         // @ts-expect-error New data should not have it
-        next.data.blocks[0].extraProperty
+        expect(next.data.blocks[0].extraProperty).toBeUndefined()
 
         return {
           ...next,
@@ -34,20 +34,20 @@ export function expectStructuralSharingToHaveCorrectType() {
     },
   })
   // Should keep existing properties
-  blocks.data?.data.blocks[0].round
+  expect(blocks.data?.data.blocks[0].round).toBeDefined()
   // Should return new property
-  blocks.data?.data.blocks[0].extraProperty
+  expect(blocks.data?.data.blocks[0].extraProperty).toBeDefined()
   // @ts-expect-error Shouldn't allow everything
-  blocks.data?.data.blocks[0].typo
+  expect(blocks.data?.data.blocks[0].typo).toBeUndefined()
 
   const txs = useGetEmeraldTransactions<TransactionsWithExtra>(undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {
         // Previously returned value should have new property
-        prev?.data.transactions[0].extraProperty
+        expect(prev?.data.transactions[0].extraProperty).toBeDefined()
         // @ts-expect-error New data should not have it
-        next.data.transactions[0].extraProperty
+        expect(next.data.transactions[0].extraProperty).toBeUndefined()
 
         return {
           ...next,
@@ -59,9 +59,9 @@ export function expectStructuralSharingToHaveCorrectType() {
     },
   })
   // Should keep existing properties
-  txs.data?.data.transactions[0].method
+  expect(txs.data?.data.transactions[0].method).toBeDefined()
   // Should return new property
-  txs.data?.data.transactions[0].extraProperty
+  expect(txs.data?.data.transactions[0].extraProperty).toBeDefined()
   // @ts-expect-error Shouldn't allow everything
-  txs.data?.data.transactions[0].typo
+  expect(txs.data?.data.transactions[0].typo).toBeUndefined()
 }

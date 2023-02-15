@@ -5,9 +5,11 @@ import { Story } from '@storybook/react'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-export default {
+const story = {
   title: 'Example/Colors',
 }
+
+export default story
 
 const ColorContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

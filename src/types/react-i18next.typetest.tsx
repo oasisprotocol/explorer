@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next'
 
-export function expectTranslationsToHaveStrictType() {
+export function ExpectTranslationsToHaveStrictType() {
   const { t } = useTranslation()
   return (
     <>

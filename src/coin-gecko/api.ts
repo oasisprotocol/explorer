@@ -83,7 +83,7 @@ export function useGetRoseMarketChart(params: Pick<GetRoseMarketChartParams, 'da
       select: ({ data }) => {
         // for 1 day filter we want less granular data so line chart looks good
         if (params.days === 1) {
-          return data.prices.filter((value, index) => index % 12 == 0)
+          return data.prices.filter((value, index) => index % 12 === 0)
         }
         return data.prices
       },

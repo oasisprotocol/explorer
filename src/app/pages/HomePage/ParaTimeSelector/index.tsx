@@ -124,14 +124,14 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
     if (selectedGraphEndpoint) {
       quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
     }
-  }, [selectedGraphEndpoint])
+  }, [selectedGraphEndpoint, width, height])
 
   useEffect(() => {
     // Switch from mobile -> desktop view while on help screen
     if (!isMobile && step === ParaTimeSelectorStep.ShowHelpScreen) {
       setStep(ParaTimeSelectorStep.Explore)
     }
-  }, [isMobile])
+  }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
     if (isMobile) {

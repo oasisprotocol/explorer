@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import { register as registerSwiperElements } from 'swiper/element/swiper-element'
 import { routes } from './routes'
 import { defaultTheme } from './styles/theme'
 import './styles/index.css'
@@ -15,7 +16,6 @@ import './locales/i18n'
 Axios.defaults.baseURL = process.env.REACT_APP_API
 const queryClient = new QueryClient({})
 
-import { register as registerSwiperElements } from 'swiper/element/swiper-element'
 registerSwiperElements()
 
 const router = createBrowserRouter(routes)

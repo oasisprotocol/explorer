@@ -1,6 +1,6 @@
 /** @file Wrappers around generated API */
 
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'

@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Alert from '@mui/material/Alert'
-import Box from '@mui/material/Box'
 
 const StyledAlert = styled(Alert)(() => ({
   position: 'absolute',

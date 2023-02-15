@@ -20,6 +20,8 @@ type ShowMoreTokensLinkProps = {
 
 export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ tokens, pills }) => {
   const { t } = useTranslation()
+  const erc20link = useHref('tokens/erc-20')
+  const erc721Link = useHref('tokens/erc-721')
   const additionalTokensCounter = tokens.length - pills.length
 
   if (!additionalTokensCounter) {
@@ -30,7 +32,7 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ tokens, pills 
   const pillsSymbols = new Set(pills.map(({ token_contract_addr }) => token_contract_addr))
   const showMoreItems = tokens.filter(({ token_contract_addr }) => !pillsSymbols.has(token_contract_addr))
   const hasERC20 = showMoreItems.some(item => item.token_type === 'ERC20')
-  const targetShowMoreLink = hasERC20 ? useHref('tokens/erc-20') : useHref('tokens/erc-721')
+  const targetShowMoreLink = hasERC20 ? erc20link : erc721Link
 
   return (
     <StyledLink to={targetShowMoreLink} color="inherit">
