@@ -14,6 +14,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
+import { trimLongString } from '../../utils/trimLongString'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -87,7 +88,7 @@ export const BlockDetailView: FC<{
 
           <dt>{t('common.hash')}</dt>
           <dd>
-            <CopyToClipboard value={`0x${block.hash}`} />
+            <CopyToClipboard value={block.hash} label={isMobile ? trimLongString(block.hash) : block.hash} />
           </dd>
 
           <dt>{t('common.gasUsed')}</dt>
