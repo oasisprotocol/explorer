@@ -15,15 +15,16 @@ import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
+import HelpScreen from './HelpScreen'
 
-interface ParaTimeSelectorProps {
+interface ParaTimeSelectorBaseProps {
   disabled: boolean
 }
 
 const ParaTimeSelectorGlow = styled(Box, {
   shouldForwardProp: (prop: string) =>
-    !(['disabled'] as (keyof ParaTimeSelectorProps)[]).includes(prop as keyof ParaTimeSelectorProps),
-})<ParaTimeSelectorProps>(({ disabled, theme }) => ({
+    !(['disabled'] as (keyof ParaTimeSelectorBaseProps)[]).includes(prop as keyof ParaTimeSelectorBaseProps),
+})<ParaTimeSelectorBaseProps>(({ disabled, theme }) => ({
   position: 'relative',
   width: '130vw',
   height: '130vw',
@@ -64,9 +65,13 @@ const ExploreBtn = styled(Button)(({ theme }) => ({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  paddingLeft: theme.spacing(6),
-  paddingRight: theme.spacing(6),
+  paddingLeft: theme.spacing(4),
+  paddingRight: theme.spacing(4),
   width: 'max-content',
+  [theme.breakpoints.up('sm')]: {
+    paddingLeft: theme.spacing(6),
+    paddingRight: theme.spacing(6),
+  },
 }))
 
 const ZoomOutBtn = styled(Button)(({ theme }) => ({
@@ -93,7 +98,12 @@ const QuickPinchZoomInner = styled('div')(() => ({
   height: '100%',
 }))
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
+interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
+  step: ParaTimeSelectorStep
+  setStep: (value: ParaTimeSelectorStep) => void
+}
+
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -102,7 +112,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -115,8 +124,19 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
     }
   }, [selectedGraphEndpoint])
 
+  useEffect(() => {
+    // Switch from mobile -> desktop view while on help screen
+    if (!isMobile && step === ParaTimeSelectorStep.ShowHelpScreen) {
+      setStep(ParaTimeSelectorStep.Explore)
+    }
+  }, [isMobile])
+
   const onExploreClick = () => {
-    setStep(ParaTimeSelectorStep.Explore)
+    if (isMobile) {
+      setStep(ParaTimeSelectorStep.ShowHelpScreen)
+    } else {
+      setStep(ParaTimeSelectorStep.Explore)
+    }
   }
 
   const onZoomOutClick = () => {
@@ -166,6 +186,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled }) => {
           >
             {t('home.exploreBtnText')}
           </ExploreBtn>
+        )}
+        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+          <HelpScreen setParaTimeStep={setStep} />
         )}
       </ParaTimeSelectorGlobe>
     </ParaTimeSelectorGlow>

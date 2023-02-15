@@ -3,21 +3,19 @@ import { GraphEndpoint } from './Graph/types'
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
-    switch (step) {
-      case ParaTimeSelectorStep.Explore:
-        return false
-      default:
-        return true
-    }
+    return step !== ParaTimeSelectorStep.Explore
   }
 
   static showExploreBtn(step: ParaTimeSelectorStep) {
-    switch (step) {
-      case ParaTimeSelectorStep.EnableExplore:
-        return true
-      default:
-        return false
+    return step === ParaTimeSelectorStep.EnableExplore
+  }
+
+  static showMobileHelpScreen(step: ParaTimeSelectorStep, isMobile: boolean) {
+    if (!isMobile) {
+      return false
     }
+
+    return step === ParaTimeSelectorStep.ShowHelpScreen
   }
 
   static showZoomOutBtn(isMobile: boolean, endpoint?: GraphEndpoint) {

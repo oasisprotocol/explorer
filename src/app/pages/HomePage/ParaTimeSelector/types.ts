@@ -4,6 +4,10 @@ export enum ParaTimeSelectorStep {
    */
   EnableExplore,
   /**
+   * Show help screen
+   */
+  ShowHelpScreen,
+  /**
    * Graph interactions enabled
    */
   Explore,
