@@ -4,7 +4,7 @@ export enum ConsensusParaTime {
   Consensus = 'consensus',
 }
 
-export const GraphEndpoint = {
+export const GraphEndpoints = {
   ...ParaTime,
   ...ConsensusParaTime,
 }

@@ -1,5 +1,5 @@
 import { ParaTimeSelectorStep } from './types'
-import { GraphEndpoint } from './Graph/types'
+import { GraphEndpoints, GraphEndpoint } from './Graph/types'
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
@@ -24,9 +24,9 @@ export abstract class ParaTimeSelectorUtils {
     }
 
     switch (endpoint) {
-      case GraphEndpoint.Sapphire:
-      case GraphEndpoint.Emerald:
-      case GraphEndpoint.Cipher:
+      case GraphEndpoints.Sapphire:
+      case GraphEndpoints.Emerald:
+      case GraphEndpoints.Cipher:
         return true
       default:
         return false
