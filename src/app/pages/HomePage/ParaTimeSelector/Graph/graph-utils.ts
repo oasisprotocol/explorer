@@ -1,7 +1,14 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
 import { GraphEndpoint, GraphEndpoints } from './types'
+import { ParaTime } from '../../../../../config'
 
 export abstract class GraphUtils {
+  private static ENABLED_GRAPH_ENDPOINTS: GraphEndpoint[] = [ParaTime.Emerald]
+
+  static getEnabledGraphEndpoints(): GraphEndpoint[] {
+    return GraphUtils.ENABLED_GRAPH_ENDPOINTS
+  }
+
   static getScaleTo(
     graphEndpoint: GraphEndpoint,
     { width, height }: { width?: number; height?: number },

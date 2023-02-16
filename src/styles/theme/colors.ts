@@ -38,4 +38,6 @@ export const COLORS = {
   inactiveTab: '#e5e5f6',
   disabledPrimaryButton: '#c6e3fa',
   errorIndicatorBackground: '#d44c4c',
+  aqua: '#00feff',
+  shadowBlue: '#8484ab',
 } satisfies { [colorName: string]: string }

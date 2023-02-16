@@ -177,6 +177,17 @@
       "tap": "Tap to view info",
       "getStarted": "Get Started",
       "infoIconAria": "Toggle info screen"
+    },
+    "tooltip": {
+      "comingSoonAria": "Coming soon...",
+      "coming": "Coming",
+      "online": "Online",
+      "paraTimeOnline": "ParaTime Online",
+      "sapphireParaTimeAvailableSoon": "Searching through the Sapphire ParaTime is will be available soon.",
+      "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
+      "cipherParaTimeAvailableSoon": "Searching through the Cipher ParaTime is will be available soon.",
+      "discoverMore": "Discover more",
+      "consensusParaTimeDesc": "The layer is an interface that provides important services to other parts of Oasis Core."
     }
   },
   "search": {
