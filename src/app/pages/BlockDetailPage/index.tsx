@@ -1,9 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import Link from '@mui/material/Link'
 import { RuntimeBlock, useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -16,6 +17,7 @@ import { AppErrors } from '../../../types/errors'
 import { trimLongString } from '../../utils/trimLongString'
 import { COLORS } from '../../../styles/theme/colors'
 import { gasLimit } from '../../../config'
+import { transactionsContainerId } from './TransactionsCard'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -51,6 +53,8 @@ export const BlockDetailView: FC<{
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTime = useFormattedTimestampString(block?.timestamp)
+  const transactionsAnchor = `${useHref('')}#${transactionsContainerId}`
+
   return (
     <SubPageCard featured title={t('common.block')}>
       {isLoading && <TextSkeleton numberOfRows={7} />}
@@ -89,7 +93,11 @@ export const BlockDetailView: FC<{
           </dd>
 
           <dt>{t('common.transactions')}</dt>
-          <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
+          <dd>
+            <Link href={transactionsAnchor}>
+              {t('common.transactionsNumber', { value: block.num_transactions })}
+            </Link>
+          </dd>
 
           <dt>{t('common.gasUsed')}</dt>
           <dd>{block.gas_used.toLocaleString()}</dd>

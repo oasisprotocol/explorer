@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { BlockDetailView } from '../'
 
 describe('BlockDetailView', () => {
@@ -12,7 +13,7 @@ describe('BlockDetailView', () => {
   })
 
   it('should display formatted values', () => {
-    render(
+    renderWithProviders(
       <BlockDetailView
         isLoading={false}
         block={{
