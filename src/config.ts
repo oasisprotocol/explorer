@@ -61,9 +61,9 @@ const cipherConfig: ParaTimeConfig = {
 
 const sapphireConfig: ParaTimeConfig = {
   mainnet: {
-    address: undefined,
+    address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     gasLimit: 15_000_000,
-    runtimeId: undefined,
+    runtimeId: '000000000000000000000000000000000000000000000000f80306c9858e7279',
   },
   testnet: {
     address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd',
