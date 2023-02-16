@@ -333,8 +333,9 @@ export const defaultTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: COLORS.brandExtraDark,
-          textDecorationColor: COLORS.brandExtraDark,
+          color: COLORS.brandDark,
+          fontWeight: 700,
+          textDecoration: 'none',
         },
       },
     },
