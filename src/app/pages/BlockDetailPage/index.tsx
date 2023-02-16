@@ -67,6 +67,18 @@ export const BlockDetailView: FC<{
           <dt>{t('common.height')}</dt>
           <dd>{block.round}</dd>
 
+          <dt>{t('common.hash')}</dt>
+          <dd>
+            <CopyToClipboard
+              label={
+                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                  {isMobile ? trimLongString(block.hash) : block.hash}
+                </Typography>
+              }
+              value={block.hash}
+            />
+          </dd>
+
           <dt>{t('common.timestamp')}</dt>
           <dd>{formattedTime}</dd>
 
@@ -86,18 +98,6 @@ export const BlockDetailView: FC<{
 
           <dt>{t('common.transactions')}</dt>
           <dd>{t('common.transactionsNumber', { value: block.num_transactions })}</dd>
-
-          <dt>{t('common.hash')}</dt>
-          <dd>
-            <CopyToClipboard
-              label={
-                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  {isMobile ? trimLongString(block.hash) : block.hash}
-                </Typography>
-              }
-              value={block.hash}
-            />
-          </dd>
 
           <dt>{t('common.gasUsed')}</dt>
           <dd>{block.gas_used.toLocaleString()}</dd>
