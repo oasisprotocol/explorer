@@ -104,7 +104,7 @@ export const BlockDetailView: FC<{
           <dt>{t('common.transactions')}</dt>
           <dd>
             <Link href={transactionsAnchor}>
-              {t('common.transactionsNumber', { value: block.num_transactions })}
+              {t('common.transactionsNumber', { count: block.num_transactions })}
             </Link>
           </dd>
 
