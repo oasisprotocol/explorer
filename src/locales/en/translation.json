@@ -20,6 +20,9 @@
   "blocks": {
     "latest": "Latest Blocks"
   },
+  "block": {
+    "gasUsed": "{{value, number}} | {{percentage, number}}"
+  },
   "clipboard": {
     "label": "Copy to clipboard",
     "success": "Copied!"

@@ -100,7 +100,18 @@ export const BlockDetailView: FC<{
           </dd>
 
           <dt>{t('common.gasUsed')}</dt>
-          <dd>{block.gas_used.toLocaleString()}</dd>
+          <dd>
+            {t('block.gasUsed', {
+              value: block.gas_used,
+              percentage: block.gas_used / gasLimit,
+              formatParams: {
+                percentage: {
+                  style: 'percent',
+                  maximumFractionDigits: 2,
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })}
+          </dd>
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{gasLimit.toLocaleString()}</dd>
