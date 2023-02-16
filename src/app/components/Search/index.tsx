@@ -90,35 +90,22 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   const [value, setValue] = useState('')
   const [hasError, setHasError] = useState(false)
 
-  const onSearchSubmit = (searchTerm: string) => {
-    try {
-      const navigateTo = SearchUtils.getNavigationPath(searchTerm)
-      navigate(navigateTo)
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-
-    setHasError(false)
-
-    if (!value) {
-      setHasError(true)
-
-      return
+    const navigateTo = SearchUtils.getNavigationPath(value)
+    setHasError(!navigateTo)
+    if (navigateTo) {
+      navigate(navigateTo)
     }
-
-    onSearchSubmit(value)
   }
 
   const onClearValue = () => {
     setValue('')
+    setHasError(false)
   }
 
   const startAdornment = variant === 'button' && (

@@ -1,3 +1,4 @@
+import { ParaTime } from '../../../config'
 import {
   isValidBlockHeight,
   isValidBlockHash,
@@ -10,19 +11,18 @@ import { RouteUtils } from '../../utils/route-utils'
 export abstract class SearchUtils {
   /**
    * Receives a search term and returns a matching path
-   * @param searchTerm
    */
-  static getNavigationPath(searchTerm: string): string {
-    if (isValidBlockHeight(searchTerm)) {
-      const blockNumber = parseInt(searchTerm, 10)
-      return RouteUtils.getBlockRoute(blockNumber)
-    }
-    // TODO: Add address
-    // TODO: Add contract
-    // TODO: Txn hash
-    // TODO: Transaction ID
-
-    throw new Error('No known route matches your search term!')
+  static getNavigationPath(searchTerm: string): string | undefined {
+    const blockHeight = validateAndNormalize.blockHeight(searchTerm)
+    const txHash = validateAndNormalize.txHash(searchTerm)
+    const evmAccount = validateAndNormalize.evmAccount(searchTerm)
+    const consensusAccount = validateAndNormalize.consensusAccount(searchTerm)
+    if (blockHeight) return RouteUtils.getBlockRoute(parseInt(blockHeight, 10), ParaTime.Emerald)
+    if (txHash) return RouteUtils.getTransactionRoute(txHash, ParaTime.Emerald)
+    if (evmAccount) return RouteUtils.getAccountRoute(evmAccount, ParaTime.Emerald)
+    if (consensusAccount) return RouteUtils.getAccountRoute(consensusAccount, ParaTime.Emerald)
+    // TODO: block hash, contract, validator, event
+    return undefined
   }
 }
 
