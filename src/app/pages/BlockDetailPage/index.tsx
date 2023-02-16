@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
-import Skeleton from '@mui/material/Skeleton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { RuntimeBlock, useGetEmeraldBlocks } from '../../../oasis-indexer/api'
@@ -10,6 +9,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
@@ -53,15 +53,7 @@ export const BlockDetailView: FC<{
   const formattedTime = useFormattedTimestampString(block?.timestamp)
   return (
     <SubPageCard featured title={t('common.block')}>
-      {isLoading && (
-        <>
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-        </>
-      )}
+      {isLoading && <TextSkeleton numberOfRows={7} />}
       {block && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
           <dt>{t('common.height')}</dt>

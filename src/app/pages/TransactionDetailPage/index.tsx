@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Skeleton from '@mui/material/Skeleton'
 import { RuntimeTransaction, useGetEmeraldTransactionsTxHash } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -21,6 +20,7 @@ import { styled } from '@mui/material/styles'
 import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
+import { TextSkeleton } from '../../components/Skeleton'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -78,11 +78,7 @@ export const TransactionDetailPage: FC = () => {
       )}
       {isLoading && (
         <SubPageCard title={t('transaction.header')}>
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
-          <Skeleton variant="text" height={30} sx={{ my: 4 }} />
+          <TextSkeleton numberOfRows={10} />
         </SubPageCard>
       )}
       {transaction && (
