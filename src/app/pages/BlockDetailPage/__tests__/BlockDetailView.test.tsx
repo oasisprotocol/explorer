@@ -26,7 +26,7 @@ describe('BlockDetailView', () => {
         }}
       />,
     )
-    expect(screen.getByText('1158800')).toBeInTheDocument()
+    expect(screen.getByText('1,158,800')).toBeInTheDocument()
     expect(screen.getByText('April 23, 2022 at 12:20 PM UTC (9 months ago)')).toBeInTheDocument()
     expect(screen.getByText('6,434 bytes')).toBeInTheDocument()
   })

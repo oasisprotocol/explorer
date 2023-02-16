@@ -61,7 +61,16 @@ export const BlockDetailView: FC<{
       {block && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
           <dt>{t('common.height')}</dt>
-          <dd>{block.round}</dd>
+          <dd>
+            <CopyToClipboard
+              label={
+                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                  {block.round.toLocaleString()}
+                </Typography>
+              }
+              value={block.round.toString()}
+            />
+          </dd>
 
           <dt>{t('common.hash')}</dt>
           <dd>
