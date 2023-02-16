@@ -462,7 +462,11 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: '24px',
+          backgroundColor: COLORS.linen,
           '.MuiInputBase-root': {
+            borderRadius: '24px',
+            backgroundColor: COLORS.white,
+
             // Prevent first child's edges overflowing due to border-radius
             '&.MuiInputBase-adornedStart .MuiInputAdornment-positionStart': {
               marginLeft: theme.spacing(4),
@@ -474,7 +478,6 @@ export const defaultTheme = createTheme({
           ':focus-within': {
             boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
           },
-          backgroundColor: COLORS.white,
           transition: 'box-shadow 250ms ease-in-out',
         }),
       },

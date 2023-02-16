@@ -8,10 +8,10 @@ import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchUtils } from './search-utils'
-import { StandardTextFieldProps } from '@mui/material/TextField/TextField'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
+import { SearchSuggestions } from './SearchSuggestions'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -25,13 +25,17 @@ const SearchForm = styled('form', {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['searchVariant'] as (keyof SearchFormProps)[]).includes(prop as keyof SearchFormProps),
 })<SearchFormProps>(({ searchVariant }) => ({
+  // Approximate size of TextField without helperText, so helperText floats.
+  height: '47px',
+
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
+        zIndex: 1,
         // Collapsed
         ':not(:hover, :focus-within)': {
           '.MuiTextField-root': {
-            input: {
+            'input, .MuiFormHelperText-root': {
               display: 'none',
             },
             '.MuiInputAdornment-positionEnd': {
@@ -86,7 +90,6 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
-  const searchTermRequiredTranslated = t('search.searchTermRequired')
   const [value, setValue] = useState('')
   const [hasError, setHasError] = useState(false)
 
@@ -161,10 +164,26 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
         placeholder={searchPlaceholderTranslated}
         fullWidth
         error={hasError}
-        aria-errormessage={searchTermRequiredTranslated}
+        FormHelperTextProps={{
+          sx: {
+            marginTop: '10px',
+            marginBottom: '15px',
+            marginLeft: '17px',
+            marginRight: '17px',
+          },
+        }}
+        helperText={
+          hasError && (
+            <SearchSuggestions
+              onClickSuggestion={suggestion => {
+                setValue(suggestion)
+                setHasError(true)
+              }}
+            />
+          )
+        }
       />
     </SearchForm>
-    /*TODO: Add error message*/
   )
 }
 

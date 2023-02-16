@@ -176,6 +176,8 @@
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
     "mobilePlaceholder": "Search Address, Block, Txn, etc",
     "searchBtnText": "Search",
-    "searchTermRequired": "Search term is required!"
+    "searchTermInvalid": "Your search query is invalid.",
+    "searchSuggestionsLine1": "Please try to alter your search or try one of the examples:",
+    "searchSuggestionsLine2": "<TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <BlockLink><BlockIcon/> Block</BlockLink>, <AccountLink><AccountIcon/> Address</AccountLink>"
   }
 }
