@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent'
 import { CardActions } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { PercentageGain } from '../../components/PercentageGain'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   flex: 1,
