@@ -15,6 +15,7 @@ import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { trimLongString } from '../../utils/trimLongString'
 import { COLORS } from '../../../styles/theme/colors'
+import { gasLimit } from '../../../config'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
@@ -100,6 +101,9 @@ export const BlockDetailView: FC<{
 
           <dt>{t('common.gasUsed')}</dt>
           <dd>{block.gas_used.toLocaleString()}</dd>
+
+          <dt>{t('common.gasLimit')}</dt>
+          <dd>{gasLimit.toLocaleString()}</dd>
         </StyledDescriptionList>
       )}
     </SubPageCard>
