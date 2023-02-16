@@ -452,9 +452,9 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: {
           padding: 0,
-        },
-        notchedOutline: {
-          border: 'none',
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderWidth: '3px',
+          },
         },
       },
     },

@@ -35,7 +35,7 @@ const SearchForm = styled('form', {
         // Collapsed
         ':not(:hover, :focus-within)': {
           '.MuiTextField-root': {
-            'input, .MuiFormHelperText-root': {
+            'input, .MuiFormHelperText-root, .MuiOutlinedInput-notchedOutline': {
               display: 'none',
             },
             '.MuiInputAdornment-positionEnd': {
