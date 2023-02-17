@@ -303,6 +303,7 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           fontSize: '15px',
           lineHeight: '18px',
+          fontWeight: 400,
           borderRadius: 9,
           gap: 2,
           padding: theme.spacing(3),
@@ -332,8 +333,9 @@ export const defaultTheme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          color: COLORS.brandExtraDark,
-          textDecorationColor: COLORS.brandExtraDark,
+          color: COLORS.brandDark,
+          fontWeight: 700,
+          textDecoration: 'none',
         },
       },
     },

@@ -7,7 +7,7 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
-import { ParaTime } from '../../../config'
+import { ParaTime, gasLimit } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 export type TableRuntimeBlock = RuntimeBlock & {
@@ -25,8 +25,6 @@ type BlocksProps = {
   verbose?: boolean
   pagination: false | TablePaginationProps
 }
-
-const gasLimit = 10000000 // TODO temporary value, 22020096 for consensus
 
 export const Blocks = (props: BlocksProps) => {
   const { isLoading, blocks, verbose, pagination, limit } = props

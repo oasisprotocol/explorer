@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
-import CardContent from '@mui/material/CardContent'
-import Skeleton from '@mui/material/Skeleton'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
@@ -21,12 +19,7 @@ export const AccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('account.title')}>
-        {accountQuery.isLoading && <Skeleton variant="text" height={30} sx={{ my: 4 }} />}
-        {account && (
-          <CardContent>
-            <Account account={account} roseFiatValue={rosePriceQuery.data} />
-          </CardContent>
-        )}
+        <Account account={account} isLoading={accountQuery.isLoading} roseFiatValue={rosePriceQuery.data} />
       </SubPageCard>
       <RouterTabs
         tabs={[

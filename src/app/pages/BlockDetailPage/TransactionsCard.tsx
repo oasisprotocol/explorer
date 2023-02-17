@@ -10,6 +10,8 @@ import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
+export const transactionsContainerId = 'transactions'
+
 const TransactionList: FC<{ blockHeight: number }> = ({ blockHeight }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -36,7 +38,7 @@ const TransactionList: FC<{ blockHeight: number }> = ({ blockHeight }) => {
 export const TransactionsCard: FC<{ blockHeight: number }> = ({ blockHeight }) => {
   const { t } = useTranslation()
   return (
-    <Card>
+    <Card id={transactionsContainerId}>
       <CardHeader disableTypography component="h3" title={t('common.transactions')} />
       <CardContent>
         <ErrorBoundary light={true}>

@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { BlockDetailView } from '../'
 
 describe('BlockDetailView', () => {
@@ -12,7 +13,7 @@ describe('BlockDetailView', () => {
   })
 
   it('should display formatted values', () => {
-    render(
+    renderWithProviders(
       <BlockDetailView
         isLoading={false}
         block={{
@@ -25,7 +26,7 @@ describe('BlockDetailView', () => {
         }}
       />,
     )
-    expect(screen.getByText('1158800')).toBeInTheDocument()
+    expect(screen.getByText('1,158,800')).toBeInTheDocument()
     expect(screen.getByText('April 23, 2022 at 12:20 PM UTC (9 months ago)')).toBeInTheDocument()
     expect(screen.getByText('6,434 bytes')).toBeInTheDocument()
   })

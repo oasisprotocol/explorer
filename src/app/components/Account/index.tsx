@@ -10,6 +10,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
+import { TextSkeleton } from '../../components/Skeleton'
 import { trimLongString } from '../../utils/trimLongString'
 import {
   type Account as AccountDetailsProps,
@@ -35,7 +36,8 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 type AccountProps = {
-  account: AccountDetailsProps
+  account?: AccountDetailsProps
+  isLoading: boolean
   roseFiatValue?: number
 }
 
@@ -44,65 +46,70 @@ const getChainBalance = (runtime: string, balance?: RuntimeSdkBalance[]) => {
   return chainBalance?.balance || '0'
 }
 
-export const Account: FC<AccountProps> = ({ account, roseFiatValue }) => {
+export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const balance = getChainBalance(RuntimeName.emerald, account.runtime_sdk_balances)
+  const balance = account && getChainBalance(RuntimeName.emerald, account.runtime_sdk_balances)
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-      <dt>
-        <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
-      </dt>
-      <dd>
-        <CopyToClipboard
-          label={
-            <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              {isMobile ? trimLongString(account.address) : account.address}
-            </Typography>
-          }
-          value={account.address}
-        />
-      </dd>
-
-      <dt>{t('account.chain')}</dt>
-      <dd>{t('common.emerald')}</dd>
-
-      <dt>{t('common.balance')}</dt>
-      <dd>{t('common.valueInRose', { value: balance })}</dd>
-      {roseFiatValue && (
-        <>
-          <dt>{t('common.fiatValue')}</dt>
+    <>
+      {isLoading && <TextSkeleton numberOfRows={8} />}
+      {account && (
+        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <dt>
+            <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
+          </dt>
           <dd>
-            <StyledBox>
-              {t('common.fiatValueInUSD', {
-                value: parseFloat(balance) * roseFiatValue,
-                formatParams: {
-                  value: {
-                    currency: 'USD',
-                  } satisfies Intl.NumberFormatOptions,
-                },
-              })}
-              <CoinGeckoReferral />
-            </StyledBox>
+            <CopyToClipboard
+              label={
+                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                  {isMobile ? trimLongString(account.address) : account.address}
+                </Typography>
+              }
+              value={account.address}
+            />
           </dd>
-        </>
+
+          <dt>{t('account.chain')}</dt>
+          <dd>{t('common.emerald')}</dd>
+
+          <dt>{t('common.balance')}</dt>
+          <dd>{t('common.valueInRose', { value: balance })}</dd>
+          {roseFiatValue && balance && (
+            <>
+              <dt>{t('common.fiatValue')}</dt>
+              <dd>
+                <StyledBox>
+                  {t('common.fiatValueInUSD', {
+                    value: parseFloat(balance) * roseFiatValue,
+                    formatParams: {
+                      value: {
+                        currency: 'USD',
+                      } satisfies Intl.NumberFormatOptions,
+                    },
+                  })}
+                  <CoinGeckoReferral />
+                </StyledBox>
+              </dd>
+            </>
+          )}
+
+          <dt>{t('common.transactions')}</dt>
+          <dd>{/* TODO: waiting for API update */}</dd>
+
+          <dt>{t('account.evmTokens')}</dt>
+          <dd>
+            <TokenPills tokens={account.runtime_evm_balances} />
+          </dd>
+
+          <dt>{t('account.totalReceived')}</dt>
+          <dd>{/* TODO: waiting for API update */}</dd>
+
+          <dt>{t('account.totalSent')}</dt>
+          <dd>{/* TODO: waiting for API update */}</dd>
+        </StyledDescriptionList>
       )}
-
-      <dt>{t('common.transactions')}</dt>
-      <dd>{/* TODO: waiting for API update */}</dd>
-
-      <dt>{t('account.evmTokens')}</dt>
-      <dd>
-        <TokenPills tokens={account.runtime_evm_balances} />
-      </dd>
-
-      <dt>{t('account.totalReceived')}</dt>
-      <dd>{/* TODO: waiting for API update */}</dd>
-
-      <dt>{t('account.totalSent')}</dt>
-      <dd>{/* TODO: waiting for API update */}</dd>
-    </StyledDescriptionList>
+    </>
   )
 }
