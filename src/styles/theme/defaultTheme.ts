@@ -474,7 +474,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: '24px',
-          backgroundColor: COLORS.linen,
+          backgroundColor: COLORS.grayMediumLight,
           '.MuiInputBase-root': {
             borderRadius: '24px',
             backgroundColor: COLORS.white,

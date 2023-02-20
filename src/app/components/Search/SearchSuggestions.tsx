@@ -33,10 +33,6 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
 
   return (
     <span>
-      <Typography component="span" sx={{ color: COLORS.errorIndicatorBackground, fontSize: 12 }}>
-        {t('search.searchTermInvalid')}
-      </Typography>
-      <br></br>
       <Typography component="span" sx={{ color: COLORS.grayExtraDark, fontSize: 12 }}>
         {t('search.searchSuggestionsLine1')}&nbsp;
       </Typography>

@@ -163,7 +163,6 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
         }}
         placeholder={searchPlaceholderTranslated}
         fullWidth
-        error={hasError}
         FormHelperTextProps={{
           sx: {
             marginTop: '10px',
