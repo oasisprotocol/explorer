@@ -166,9 +166,9 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
         FormHelperTextProps={{
           sx: {
             marginTop: '10px',
-            marginBottom: '15px',
-            marginLeft: '17px',
-            marginRight: '17px',
+            marginBottom: '10px',
+            marginLeft: variant === 'button' ? '48px' : '17px',
+            marginRight: variant === 'button' ? '48px' : '17px',
           },
         }}
         helperText={
