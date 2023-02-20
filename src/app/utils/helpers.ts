@@ -1,9 +1,8 @@
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 
-export const isValidBlockHeight = (blockHeight: string): boolean => {
-  return !isNaN(Number(blockHeight))
-}
+export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
+export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
 
 export const isValidOasisAddress = (addr: string): boolean => {
   try {
@@ -14,6 +13,7 @@ export const isValidOasisAddress = (addr: string): boolean => {
   }
 }
 
+// TODO: validate checksums with @ethereumjs/util isValidChecksumAddress
 export const isValidEthAddress = (hexAddress: string): boolean => {
   return /^0x[0-9a-fA-F]{40}$/.test(hexAddress)
 }

@@ -25,7 +25,7 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       ...RouteUtils.getEnabledParaTimes()
-        .map(paraTime => [
+        .map((paraTime): RouteObject[] => [
           {
             path: `/${paraTime}`,
             element: <DashboardPage />,
