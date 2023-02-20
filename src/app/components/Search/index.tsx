@@ -84,7 +84,7 @@ export interface SearchProps {
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
+const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusChangeProp }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const theme = useTheme()
@@ -92,6 +92,12 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const [value, setValue] = useState('')
   const [hasError, setHasError] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const onFocusChange = (value: boolean) => {
+    setIsFocused(value)
+    onFocusChangeProp?.(value)
+  }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
@@ -116,7 +122,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
       position="start"
       disablePointerEvents // Pass clicks through, so it focuses the input
     >
-      <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
+      <SearchIcon sx={{ color: isFocused ? COLORS.grayMediumLight : COLORS.grayDark }} />
     </InputAdornment>
   )
 
@@ -133,8 +139,8 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
       <TextField
         value={value}
         onChange={onChange}
-        onFocus={() => onFocusChange?.(true)}
-        onBlur={() => onFocusChange?.(false)}
+        onFocus={() => onFocusChange(true)}
+        onBlur={() => onFocusChange(false)}
         InputProps={{
           inputProps: {
             sx: { p: 0 },
