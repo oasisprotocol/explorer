@@ -116,6 +116,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
+  const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
     ref: graphRef,
@@ -148,6 +149,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
     const transformValue = make3dTransformValue({ x, y, scale })
+    setScale(scale)
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
@@ -155,7 +157,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
     <ParaTimeSelectorGlow disabled={disabled}>
       <ParaTimeSelectorGlobe>
         <QuickPinchZoomOuter>
-          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
+          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
             <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
               <Graph
                 ref={graphRef}
@@ -163,6 +165,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
                 transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
                 selectedGraphEndpoint={selectedGraphEndpoint}
                 setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+                scale={scale}
               />
             </QuickPinchZoomInner>
           </QuickPinchZoom>
