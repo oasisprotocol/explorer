@@ -45,20 +45,20 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
           t={t}
           i18nKey="search.searchSuggestionsLine2"
           components={{
-            TransactionIcon: <RepeatIcon sx={{ fontSize: '15px' }} />,
-            TransactionLink: (
-              <SuggestionButton
-                variant="text"
-                color="inherit"
-                onClick={() => onClickSuggestion(suggestedTransaction)}
-              />
-            ),
             BlockIcon: <WidgetsIcon sx={{ fontSize: '15px' }} />,
             BlockLink: (
               <SuggestionButton
                 variant="text"
                 color="inherit"
                 onClick={() => onClickSuggestion(suggestedBlock)}
+              />
+            ),
+            TransactionIcon: <RepeatIcon sx={{ fontSize: '15px' }} />,
+            TransactionLink: (
+              <SuggestionButton
+                variant="text"
+                color="inherit"
+                onClick={() => onClickSuggestion(suggestedTransaction)}
               />
             ),
             AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '15px' }} />,

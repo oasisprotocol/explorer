@@ -178,6 +178,6 @@
     "mobilePlaceholder": "Search Address, Block, Txn, etc",
     "searchBtnText": "Search",
     "searchSuggestionsLine1": "Not sure what to look for? Try out a search:",
-    "searchSuggestionsLine2": "<TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <BlockLink><BlockIcon/> Block</BlockLink>, <AccountLink><AccountIcon/> Address</AccountLink>"
+    "searchSuggestionsLine2": "<BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>"
   }
 }
