@@ -22,7 +22,7 @@ export const AverageTransactionSize: FC = () => {
             cartesianGrid={true}
             strokeWidth={3}
             dataKey="tx_volume"
-            data={dailyVolumeQuery.data?.data.buckets}
+            data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
             margin={{ left: 16, right: 0, top: 16, bottom: 16 }}
             tickMargin={16}
             withLabels={true}
