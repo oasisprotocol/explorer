@@ -144,7 +144,7 @@
     "tooltip": "{{value}} tx/day"
   },
   "transactionsTpsChart": {
-    "tooltip": "{{value}} TPS"
+    "tooltip": "{{value, number}} TPS"
   },
   "select": {
     "placeholder": "Select"
