@@ -252,7 +252,7 @@ export const defaultTheme = createTheme({
             },
           },
           [theme.breakpoints.up('sm')]: {
-            padding: `${theme.spacing(4)} ${theme.spacing(5)} 0`,
+            padding: `${theme.spacing(5)} ${theme.spacing(5)} 0`,
           },
         }),
       },
