@@ -14,15 +14,26 @@ import { useTranslation } from 'react-i18next'
 import AdjustIcon from '@mui/icons-material/Adjust'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-export const EmeraldTooltip: FC<GraphTooltipExtendedProps> = ({ children, offsetWidth, offsetHeight }) => {
+export const EmeraldTooltip: FC<GraphTooltipExtendedProps> = ({
+  children,
+  offsetWidth,
+  offsetHeight,
+  open,
+  onOpen,
+  onClose,
+  onClick,
+}) => {
   const { t } = useTranslation()
 
   return (
     <GraphTooltip
       offsetWidth={offsetWidth}
       offsetHeight={offsetHeight}
+      open={open}
+      onOpen={onOpen}
+      onClose={onClose}
       title={
-        <GraphTooltipStyled>
+        <GraphTooltipStyled onClick={onClick}>
           <GraphTooltipIcon>
             <AdjustIcon fontSize="xxlarge" sx={{ color: COLORS.aqua }} />
             <Typography

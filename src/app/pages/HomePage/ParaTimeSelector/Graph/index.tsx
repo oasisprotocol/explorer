@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
-import { forwardRef, ForwardRefRenderFunction, memo, useEffect, useRef } from 'react'
+import { forwardRef, ForwardRefRenderFunction, memo, useEffect, useRef, useState } from 'react'
 import { GraphEndpoint, GraphEndpoints } from './types'
-import { useNavigate } from 'react-router-dom'
+import { ParaTime } from '../../../../../config'
 import { useConstant } from '../../../../hooks/useConstant'
 import { GraphUtils } from './graph-utils'
 import { RouteUtils } from '../../../../utils/route-utils'
@@ -82,6 +82,8 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const sapphireRef = useRef<SVGGElement>(null)
   const cipherRef = useRef<SVGGElement>(null)
 
+  const [showEmeraldTooltip, setShowEmeraldTooltip] = useState(false)
+
   const [emeraldRect, emeraldRefresh] = useGetBoundingClientRect(emeraldRef)
   const [sapphireRect, sapphireRefresh] = useGetBoundingClientRect(sapphireRef)
   const [cipherRect, cipherRefresh] = useGetBoundingClientRect(cipherRef)
@@ -119,6 +121,18 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     cipherDisabled: isGraphEndpointDisabled(GraphEndpoints.Cipher),
     sapphireDisabled: isGraphEndpointDisabled(GraphEndpoints.Sapphire),
   }))
+
+  const handleOpenEmeraldTooltip = () => {
+    if (selectedGraphEndpoint !== GraphEndpoints.Emerald) {
+      return false
+    }
+
+    setShowEmeraldTooltip(true)
+  }
+
+  const handleCloseEmeraldTooltip = () => {
+    setShowEmeraldTooltip(false)
+  }
 
   return (
     <GraphStyled
@@ -230,7 +244,16 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         strokeWidth="6.16169"
         strokeDasharray="0.27 2.71"
       />
-      <EmeraldTooltip offsetWidth={emeraldRect?.width} offsetHeight={emeraldRect?.height}>
+      <EmeraldTooltip
+        open={showEmeraldTooltip}
+        onOpen={handleOpenEmeraldTooltip}
+        onClose={handleCloseEmeraldTooltip}
+        onClick={() => {
+          onSelectGraphEndpoint(GraphEndpoints.Emerald)
+        }}
+        offsetWidth={emeraldRect?.width}
+        offsetHeight={emeraldRect?.height}
+      >
         <g
           ref={emeraldRef}
           filter="url(#filter0)"

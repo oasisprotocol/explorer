@@ -9,6 +9,7 @@ export const GraphTooltipStyled = styled(Box)(() => ({
   height: '100%',
   border: `1px solid ${COLORS.aqua}`,
   borderRadius: '0 12px 12px 0',
+  cursor: 'pointer',
 }))
 
 export const GraphTooltipIcon = styled(Box)(() => ({
@@ -55,6 +56,10 @@ export const GraphTooltipDescriptionText = styled(Box)(() => ({
 
 export interface GraphTooltipExtendedProps {
   children: TooltipProps['children']
+  open?: TooltipProps['open']
+  onOpen?: TooltipProps['onOpen']
+  onClose?: TooltipProps['onClose']
+  onClick?: TooltipProps['onClick']
   offsetWidth?: number
   offsetHeight?: number
 }
@@ -70,7 +75,7 @@ const GraphTooltipWrapper = styled(
       {children}
     </Tooltip>
   ),
-)(({ theme, offsetHeight, offsetWidth }) => ({
+)(({ offsetHeight, offsetWidth }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     position: 'absolute',
     width: 375,
@@ -91,17 +96,31 @@ const GraphTooltipWrapper = styled(
 interface GraphTooltipProps {
   title: TooltipProps['title']
   children: TooltipProps['children']
+  open?: TooltipProps['open']
+  onOpen?: TooltipProps['onOpen']
+  onClose?: TooltipProps['onClose']
   offsetWidth?: number
   offsetHeight?: number
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({ title, children, offsetWidth, offsetHeight }) => {
+export const GraphTooltip: FC<GraphTooltipProps> = ({
+  title,
+  children,
+  offsetWidth,
+  offsetHeight,
+  open,
+  onOpen,
+  onClose,
+}) => {
   return (
     <GraphTooltipWrapper
       placement="right-start"
       offsetWidth={offsetWidth}
       offsetHeight={offsetHeight}
       title={title}
+      open={open}
+      onOpen={onOpen}
+      onClose={onClose}
     >
       {children}
     </GraphTooltipWrapper>
