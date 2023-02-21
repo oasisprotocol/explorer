@@ -12,9 +12,17 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { COLORS } from '../../../../styles/theme/colors'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export const SapphireTooltip: FC<GraphTooltipExtendedProps> = ({ children, offsetWidth, offsetHeight }) => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  if (isMobile) {
+    return children
+  }
 
   return (
     <GraphTooltip

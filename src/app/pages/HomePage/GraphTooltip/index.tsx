@@ -54,12 +54,7 @@ export const GraphTooltipDescriptionText = styled(Box)(() => ({
   alignItems: 'center',
 }))
 
-export interface GraphTooltipExtendedProps {
-  children: TooltipProps['children']
-  open?: TooltipProps['open']
-  onOpen?: TooltipProps['onOpen']
-  onClose?: TooltipProps['onClose']
-  onClick?: TooltipProps['onClick']
+export interface GraphTooltipExtendedProps extends Omit<TooltipProps, 'title'> {
   offsetWidth?: number
   offsetHeight?: number
 }
@@ -93,35 +88,14 @@ const GraphTooltipWrapper = styled(
   },
 }))
 
-interface GraphTooltipProps {
-  title: TooltipProps['title']
-  children: TooltipProps['children']
-  open?: TooltipProps['open']
-  onOpen?: TooltipProps['onOpen']
-  onClose?: TooltipProps['onClose']
+interface GraphTooltipProps extends TooltipProps {
   offsetWidth?: number
   offsetHeight?: number
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({
-  title,
-  children,
-  offsetWidth,
-  offsetHeight,
-  open,
-  onOpen,
-  onClose,
-}) => {
+export const GraphTooltip: FC<GraphTooltipProps> = ({ children, ...restProps }) => {
   return (
-    <GraphTooltipWrapper
-      placement="right-start"
-      offsetWidth={offsetWidth}
-      offsetHeight={offsetHeight}
-      title={title}
-      open={open}
-      onOpen={onOpen}
-      onClose={onClose}
-    >
+    <GraphTooltipWrapper {...restProps} placement="right-start">
       {children}
     </GraphTooltipWrapper>
   )

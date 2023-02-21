@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import AdjustIcon from '@mui/icons-material/Adjust'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export const EmeraldTooltip: FC<GraphTooltipExtendedProps> = ({
   children,
@@ -24,6 +26,12 @@ export const EmeraldTooltip: FC<GraphTooltipExtendedProps> = ({
   onClick,
 }) => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  if (isMobile) {
+    return children
+  }
 
   return (
     <GraphTooltip
