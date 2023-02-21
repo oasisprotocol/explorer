@@ -21,16 +21,16 @@ const FooterBox = styled(Box)(({ theme }) => ({
 export const Footer: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const currentYear = useConstant(() => new Date().getFullYear())
 
   return (
     <footer>
       <FooterBox>
-        {isMobile ? (
+        {isTablet ? (
           <AppendMobileSearch>
             <Typography variant="footer">
-              {isMobile ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
+              {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>
           </AppendMobileSearch>
         ) : (
@@ -42,7 +42,7 @@ export const Footer: FC = () => {
             )}
 
             <Typography variant="footer">
-              {isMobile ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
+              {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>
           </>
         )}
