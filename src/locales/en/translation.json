@@ -46,6 +46,7 @@
     "gasLimit": "Gas limit",
     "hash": "Hash",
     "height": "Height",
+    "lessThanRoseAmount": "< {{value}} ROSE",
     "name": "Name",
     "size": "Size",
     "smartContract": "Smart Contract",
