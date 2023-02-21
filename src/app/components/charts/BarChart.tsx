@@ -12,7 +12,7 @@ import { COLORS } from '../../../styles/theme/colors'
 
 interface BarChartProps<T extends object> extends Formatters {
   data: T[]
-  dataKey: keyof T
+  dataKey: Extract<keyof T, string>
 }
 
 const BarChartCmp = <T extends object>({ data, dataKey, formatters }: BarChartProps<T>) => (
@@ -33,7 +33,7 @@ const BarChartCmp = <T extends object>({ data, dataKey, formatters }: BarChartPr
         content={<TooltipContent formatters={formatters} />}
         offset={15}
       />
-      <Bar dataKey={dataKey as string} barSize={12} fill={COLORS.denimBlue} radius={[10, 10, 0, 0]} />
+      <Bar dataKey={dataKey} barSize={12} fill={COLORS.denimBlue} radius={[10, 10, 0, 0]} />
     </RechartsBarChart>
   </ResponsiveContainer>
 )
