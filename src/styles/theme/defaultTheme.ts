@@ -247,6 +247,9 @@ export const defaultTheme = createTheme({
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
             padding: `${theme.spacing(4)} ${theme.spacing(4)} 0`,
+            ':has(table)': {
+              paddingRight: 0,
+            },
           },
           [theme.breakpoints.up('sm')]: {
             padding: `${theme.spacing(4)} ${theme.spacing(5)} 0`,
@@ -268,7 +271,7 @@ export const defaultTheme = createTheme({
           fontWeight: 600,
           fontSize: '24px',
           margin: 0,
-          padding: `0 0 ${theme.spacing(4)} 0`,
+          padding: `0 ${theme.spacing(4)} ${theme.spacing(4)} 0`,
         }),
         action: {
           alignSelf: 'center',
@@ -370,6 +373,15 @@ export const defaultTheme = createTheme({
           backgroundColor: COLORS.brandDark,
           borderRadius: 5,
         },
+      },
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(4),
+          },
+        }),
       },
     },
     MuiTableCell: {
