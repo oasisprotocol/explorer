@@ -20,7 +20,7 @@ export function TransactionsStats() {
       <CardContent>
         {dailyVolumeQuery.data?.data.buckets && (
           <BarChart
-            data={dailyVolumeQuery.data?.data.buckets}
+            data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
               data: (value: number) => t('transactionStats.tooltip', { value }),

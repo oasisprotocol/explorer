@@ -39,10 +39,18 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
       {lineChartData && (
         <LineChart
           dataKey="volume_per_second"
-          data={lineChartData}
+          data={lineChartData.slice().reverse()}
           margin={{ left: 0, right: isMobile ? 80 : 40 }}
           formatters={{
-            data: (value: number) => t('transactionsTpsChart.tooltip', { value }),
+            data: (value: number) =>
+              t('transactionsTpsChart.tooltip', {
+                value,
+                formatParams: {
+                  value: {
+                    maximumFractionDigits: 2,
+                  } satisfies Intl.NumberFormatOptions,
+                },
+              }),
             label: (value: string) => intlDateFormat(new Date(value)),
           }}
         />

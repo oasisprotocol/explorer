@@ -14,7 +14,7 @@ import { Formatters, TooltipContent } from './Tooltip'
 interface LineChartProps<T extends object> extends Formatters {
   cartesianGrid?: boolean
   data: T[]
-  dataKey: keyof T
+  dataKey: Extract<keyof T, string>
   margin?: Margin
   strokeWidth?: number | string
   tickMargin?: number
@@ -38,7 +38,7 @@ const LineChartCmp = <T extends object>({
       {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
       <Line
         type="monotone"
-        dataKey={dataKey as string}
+        dataKey={dataKey}
         stroke={COLORS.brandDark}
         strokeWidth={strokeWidth}
         dot={false}
