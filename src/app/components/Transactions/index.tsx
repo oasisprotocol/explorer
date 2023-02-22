@@ -63,8 +63,8 @@ export const Transactions: FC<TransactionProps> = ({
     { content: t('common.type') },
     { content: t('common.from'), width: '150px' },
     { content: t('common.to'), width: '150px' },
-    { content: t('common.txnFee'), align: TableCellAlign.Right },
-    { align: TableCellAlign.Right, content: t('common.value') },
+    { content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
+    { align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
   ]
   const tableRows = transactions?.map(transaction => ({
     key: transaction.hash,

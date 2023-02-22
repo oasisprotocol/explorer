@@ -18,13 +18,14 @@ type SkeletonTableRowsProps = {
   rowsNumber: number
   columnsNumber: number
 }
-
+// in designs table row has 61px height, but we need to take into account border and padding here
+const textSkeletonHeight = 28
 const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumber }) => (
   <>
     {[...Array(rowsNumber)].map((item, index) => (
       <TableRow key={index}>
         <TableCell colSpan={columnsNumber}>
-          <Skeleton variant="text" />
+          <Skeleton variant="text" height={textSkeletonHeight} />
         </TableCell>
       </TableRow>
     ))}
