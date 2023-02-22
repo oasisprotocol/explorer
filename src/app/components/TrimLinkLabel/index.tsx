@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Tooltip from '@mui/material/Tooltip'
 import { trimLongString } from '../../utils/trimLongString'
+import { Typography } from '@mui/material'
 
 type TrimLinkLabelProps = {
   label: string
@@ -13,7 +14,7 @@ export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   return (
     <Tooltip arrow placement="top" title={label}>
       <Link component={RouterLink} to={to}>
-        {trimLongString(label)}
+        <Typography variant="mono">{trimLongString(label)}</Typography>
       </Link>
     </Tooltip>
   )

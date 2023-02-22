@@ -90,7 +90,7 @@ export const Transactions: FC<TransactionProps> = ({
                   component={RouterLink}
                   to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
                 >
-                  {transaction.round}
+                  {transaction.round.toLocaleString()}
                 </Link>
               ),
               key: 'round',
