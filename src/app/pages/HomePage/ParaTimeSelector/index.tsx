@@ -16,7 +16,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
-import { SapphireMobileTooltip } from '../GraphTooltip/SapphireTooltip'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -117,7 +116,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
-  const [showMobileSapphireTooltip, setShowMobileSapphireTooltip] = useState(false)
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -168,8 +166,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
                   transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
                   selectedGraphEndpoint={selectedGraphEndpoint}
                   setSelectedGraphEndpoint={setSelectedGraphEndpoint}
-                  showMobileSapphireTooltip={showMobileSapphireTooltip}
-                  setShowMobileSapphireTooltip={setShowMobileSapphireTooltip}
                   scale={scale}
                 />
               </QuickPinchZoomInner>
@@ -203,9 +199,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           )}
         </ParaTimeSelectorGlobe>
       </ParaTimeSelectorGlow>
-      {showMobileSapphireTooltip && (
-        <SapphireMobileTooltip onClose={() => setShowMobileSapphireTooltip(false)} />
-      )}
     </>
   )
 }

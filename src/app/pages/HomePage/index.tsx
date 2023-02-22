@@ -14,6 +14,12 @@ import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
+import { MobileTooltipProvider, useMobileTooltip } from './providers/MobileTooltipProvider'
+import { SapphireGraphMobileTooltip } from './GraphTooltip/SapphireGraphTooltip'
+import { GraphEndpoint } from './ParaTimeSelector/Graph/types'
+import { EmeraldGraphMobileTooltip } from './GraphTooltip/EmeraldGraphTooltip'
+import { ConsensusGraphMobileTooltip } from './GraphTooltip/ConsensusGraphTooltip'
+import { CipherGraphMobileTooltip } from './GraphTooltip/CipherGraphTooltip'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -88,12 +94,16 @@ const FooterStyled = styled(Box)(({ theme }) => ({
   },
 }))
 
-export const HomePage: FC = () => {
+const HomePageCmp: FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const apiStatusQuery = useGetStatus()
+  const {
+    state: { showMobileTooltip },
+    setShowTooltip,
+  } = useMobileTooltip()
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
@@ -111,34 +121,54 @@ export const HomePage: FC = () => {
   const showInfoScreenBtn = isMobile && step !== ParaTimeSelectorStep.ShowHelpScreen
 
   return (
-    <HomepageLayout>
-      <Content>
-        <LogotypeBox>
-          <Logotype showText />
-        </LogotypeBox>
-        <SearchInputContainer>
-          <SearchInputBox>
-            <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
-          </SearchInputBox>
-          {isApiOffline && (
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <OfflineIndicator />
-            </Box>
-          )}
-        </SearchInputContainer>
-        <Box sx={{ zIndex: 1 }}>
-          <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
-        </Box>
-      </Content>
+    <>
+      <HomepageLayout>
+        <Content>
+          <LogotypeBox>
+            <Logotype showText />
+          </LogotypeBox>
+          <SearchInputContainer>
+            <SearchInputBox>
+              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+            </SearchInputBox>
+            {isApiOffline && (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <OfflineIndicator />
+              </Box>
+            )}
+          </SearchInputContainer>
+          <Box sx={{ zIndex: 1 }}>
+            <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
+          </Box>
+        </Content>
 
-      <FooterStyled>
-        {showInfoScreenBtn && (
-          <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-            <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-          </IconButton>
-        )}
-        {!isMobile && <Footer />}
-      </FooterStyled>
-    </HomepageLayout>
+        <FooterStyled>
+          {showInfoScreenBtn && (
+            <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+              <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+            </IconButton>
+          )}
+          {!isMobile && <Footer />}
+        </FooterStyled>
+      </HomepageLayout>
+      {showMobileTooltip.consensus && (
+        <ConsensusGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Consensus, false)} />
+      )}
+      {showMobileTooltip.emerald && (
+        <EmeraldGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Emerald, false)} />
+      )}
+      {showMobileTooltip.sapphire && (
+        <SapphireGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Sapphire, false)} />
+      )}
+      {showMobileTooltip.cipher && (
+        <CipherGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Cipher, false)} />
+      )}
+    </>
   )
 }
+
+export const HomePage: FC = () => (
+  <MobileTooltipProvider>
+    <HomePageCmp />
+  </MobileTooltipProvider>
+)

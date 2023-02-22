@@ -6,24 +6,23 @@ import {
   GraphTooltipIcon,
   GraphTooltipStyled,
   GraphTooltipText,
-  MobileGraphTooltip,
 } from './index'
 import { FC } from 'react'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { COLORS } from '../../../../styles/theme/colors'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import CloseIcon from '@mui/icons-material/Close'
+import { useTheme } from '@mui/material/styles'
+import { GraphTooltipMobile, GraphTooltipMobileProps } from './GraphTooltipMobile'
 
-const SapphireTooltipContent: FC = () => {
+const CipherGraphTooltipContent: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <GraphTooltipStyled isMobile={isMobile}>
+    <GraphTooltipStyled disabled isMobile={isMobile}>
       <GraphTooltipIcon isMobile={isMobile}>
         <AccessTimeIcon
           fontSize="xlarge"
@@ -31,10 +30,10 @@ const SapphireTooltipContent: FC = () => {
           aria-label={t('home.tooltip.comingSoonAria')}
         />
       </GraphTooltipIcon>
-      <GraphTooltipText disabled isMobile={isMobile}>
+      <GraphTooltipText isMobile={isMobile} disabled>
         <GraphTooltipHeaderText>
           <Typography variant="body2" color={COLORS.white}>
-            Sapphire
+            Cipher
           </Typography>
           <Typography component="span" sx={{ fontSize: '12px', opacity: 0.5 }} color={COLORS.white}>
             {t('home.tooltip.coming')}
@@ -42,7 +41,7 @@ const SapphireTooltipContent: FC = () => {
         </GraphTooltipHeaderText>
         <GraphTooltipDescriptionText>
           <Typography variant="caption" color={COLORS.white}>
-            {t('home.tooltip.sapphireParaTimeAvailableSoon')}
+            {t('home.tooltip.cipherParaTimeAvailableSoon')}
           </Typography>
         </GraphTooltipDescriptionText>
       </GraphTooltipText>
@@ -50,31 +49,12 @@ const SapphireTooltipContent: FC = () => {
   )
 }
 
-interface SapphireMobileTooltipProps {
-  onClose: () => void
-}
-
-export const SapphireMobileTooltip: FC<SapphireMobileTooltipProps> = ({ onClose }) => {
-  const { t } = useTranslation()
-
-  return (
-    <MobileGraphTooltip>
-      <CloseIcon
-        onClick={onClose}
-        fontSize="small"
-        sx={{ color: COLORS.white }}
-        aria-label={t('home.tooltip.close')}
-      />
-      <SapphireTooltipContent />
-    </MobileGraphTooltip>
-  )
-}
-
-export const SapphireGraphTooltip: FC<GraphTooltipExtendedProps> = ({
+export const CipherGraphTooltip: FC<GraphTooltipExtendedProps> = ({
   children,
   offsetWidth,
   offsetHeight,
 }) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -83,8 +63,14 @@ export const SapphireGraphTooltip: FC<GraphTooltipExtendedProps> = ({
   }
 
   return (
-    <GraphTooltip offsetWidth={offsetWidth} offsetHeight={offsetHeight} title={<SapphireTooltipContent />}>
+    <GraphTooltip offsetWidth={offsetWidth} offsetHeight={offsetHeight} title={<CipherGraphTooltipContent />}>
       {children}
     </GraphTooltip>
   )
 }
+
+export const CipherGraphMobileTooltip: FC<GraphTooltipMobileProps> = props => (
+  <GraphTooltipMobile {...props}>
+    <CipherGraphTooltipContent />
+  </GraphTooltipMobile>
+)

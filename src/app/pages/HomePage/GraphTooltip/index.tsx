@@ -6,7 +6,16 @@ import { COLORS } from '../../../../styles/theme/colors'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
+  disabled?: boolean
 }
+
+export const MobileBackdrop = styled(Box)(() => ({
+  position: 'fixed',
+  inset: 0,
+  backgroundColor: COLORS.black,
+  opacity: 0.3,
+  zIndex: 4,
+}))
 
 export const MobileGraphTooltip = styled(Box)(() => ({
   position: 'fixed',
@@ -14,21 +23,25 @@ export const MobileGraphTooltip = styled(Box)(() => ({
   left: 0,
   right: 0,
   height: 120,
+  zIndex: 4,
   '> svg': {
     position: 'fixed',
-    right: 20,
-    bottom: 130,
+    right: 10,
+    bottom: 125,
   },
 }))
 
 export const GraphTooltipStyled = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
-    !(['isMobile'] as (keyof GraphTooltipStyledProps)[]).includes(prop as keyof GraphTooltipStyledProps),
-})<GraphTooltipStyledProps>(({ isMobile }) => ({
+    !(['isMobile', 'disabled'] as (keyof GraphTooltipStyledProps)[]).includes(
+      prop as keyof GraphTooltipStyledProps,
+    ),
+})<GraphTooltipStyledProps>(({ isMobile, disabled }) => ({
   display: 'flex',
   height: '100%',
   border: `2px solid ${COLORS.aqua}`,
   borderRadius: isMobile ? '12px 12px 0 0' : '0 12px 12px 0',
+  cursor: disabled ? 'default' : 'pointer',
 }))
 
 export interface GraphTooltipIconProps {

@@ -40,4 +40,5 @@ export const COLORS = {
   errorIndicatorBackground: '#d44c4c',
   aqua: '#00feff',
   shadowBlue: '#8484ab',
+  black: '#000000',
 } satisfies { [colorName: string]: string }
