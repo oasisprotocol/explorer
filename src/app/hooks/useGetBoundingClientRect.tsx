@@ -10,7 +10,6 @@ export const useGetBoundingClientRect = <T extends SVGElement>(
     setRect(boundingClientRect)
   }
 
-  // TODO: Add window resize listener
   useLayoutEffect(() => {
     setBoundingRect()
   }, [])
