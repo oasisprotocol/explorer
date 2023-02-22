@@ -187,7 +187,8 @@
       "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
       "cipherParaTimeAvailableSoon": "Searching through the Cipher ParaTime is will be available soon.",
       "discoverMore": "Discover more",
-      "consensusParaTimeDesc": "The layer is an interface that provides important services to other parts of Oasis Core."
+      "consensusParaTimeDesc": "The layer is an interface that provides important services to other parts of Oasis Core.",
+      "close": "Close"
     }
   },
   "search": {

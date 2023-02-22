@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { forwardRef, ForwardRefRenderFunction, memo, useEffect, useRef, useState } from 'react'
 import { GraphEndpoint, GraphEndpoints } from './types'
 import { ParaTime } from '../../../../../config'
@@ -8,10 +8,11 @@ import { useConstant } from '../../../../hooks/useConstant'
 import { GraphUtils } from './graph-utils'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
-import { SapphireTooltip } from '../../GraphTooltip/SapphireTooltip'
+import { SapphireGraphTooltip } from '../../GraphTooltip/SapphireTooltip'
 import { EmeraldTooltip } from '../../GraphTooltip/EmeraldTooltip'
 import { CipherTooltip } from '../../GraphTooltip/CipherTooltip'
 import { ConsensusTooltip } from '../../GraphTooltip/ConsensusTooltip'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { Layer } from '../../../../../config'
 
 interface GraphBaseProps {
@@ -24,6 +25,8 @@ interface GraphProps extends GraphBaseProps {
   // TODO: Consider moving this to a state management solution
   selectedGraphEndpoint?: GraphEndpoint
   setSelectedGraphEndpoint: (value: GraphEndpoint) => void
+  showMobileSapphireTooltip: boolean
+  setShowMobileSapphireTooltip: (value: boolean) => void
 }
 
 interface GraphSvgProps extends GraphBaseProps {
@@ -35,7 +38,7 @@ const GraphStyled = styled('svg', {
     !(['disabled', 'transparent', 'graphEndpoint'] as (keyof GraphSvgProps)[]).includes(
       prop as keyof GraphSvgProps,
     ),
-})<GraphSvgProps>(({ disabled, transparent, graphEndpoint, scale }) => ({
+})<GraphSvgProps>(({ disabled, transparent, graphEndpoint }) => ({
   position: 'absolute',
   inset: 0,
   ...(disabled || transparent
@@ -70,11 +73,21 @@ const GraphStyled = styled('svg', {
 }))
 
 const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
-  { disabled = false, transparent = false, selectedGraphEndpoint, setSelectedGraphEndpoint, scale },
+  {
+    disabled = false,
+    transparent = false,
+    selectedGraphEndpoint,
+    setSelectedGraphEndpoint,
+    showMobileSapphireTooltip,
+    setShowMobileSapphireTooltip,
+    scale,
+  },
   ref,
 ) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const enabledGraphEndpoints = useConstant(() => GraphUtils.getEnabledGraphEndpoints())
   const consensusRef = useRef<SVGCircleElement>(null)
   const consensusRefInnerCircle = useRef<SVGCircleElement>(null)
@@ -99,7 +112,18 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     consensusInnerCircleRefresh()
   }, [scale])
 
+  useEffect(() => {
+    setShowEmeraldTooltip(false)
+    setShowMobileSapphireTooltip(false)
+  }, [isMobile])
+
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
+    if (isMobile) {
+      setShowMobileSapphireTooltip(true)
+
+      return
+    }
+
     if (
       selectedGraphEndpoint === graphEndpoint &&
       RouteUtils.getEnabledParaTimes().includes(selectedGraphEndpoint as unknown as Layer)
@@ -287,7 +311,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         d="M297.184 129.424C296.368 129.424 295.675 129.141 295.104 128.576C294.533 128.005 294.248 127.309 294.248 126.488C294.248 125.667 294.533 124.973 295.104 124.408C295.675 123.837 296.368 123.552 297.184 123.552C297.723 123.552 298.211 123.675 298.648 123.92C299.085 124.165 299.435 124.501 299.696 124.928L299.072 125.304C298.869 124.979 298.605 124.723 298.28 124.536C297.955 124.349 297.589 124.256 297.184 124.256C296.565 124.256 296.045 124.472 295.624 124.904C295.208 125.336 295 125.864 295 126.488C295 127.112 295.208 127.64 295.624 128.072C296.045 128.504 296.565 128.72 297.184 128.72C297.589 128.72 297.955 128.627 298.28 128.44C298.605 128.253 298.869 127.997 299.072 127.672L299.696 128.048C299.435 128.475 299.085 128.811 298.648 129.056C298.211 129.301 297.723 129.424 297.184 129.424ZM301.457 124.12C301.366 124.211 301.252 124.256 301.113 124.256C300.974 124.256 300.857 124.211 300.761 124.12C300.665 124.024 300.617 123.907 300.617 123.768C300.617 123.635 300.665 123.52 300.761 123.424C300.857 123.328 300.974 123.28 301.113 123.28C301.252 123.28 301.366 123.328 301.457 123.424C301.548 123.52 301.593 123.635 301.593 123.768C301.593 123.907 301.548 124.024 301.457 124.12ZM300.761 129.328V125.328H301.449V129.328H300.761ZM303.627 131H302.939V125.328H303.627V125.944C303.766 125.741 303.961 125.576 304.211 125.448C304.467 125.315 304.742 125.248 305.035 125.248C305.59 125.248 306.054 125.451 306.427 125.856C306.806 126.261 306.995 126.752 306.995 127.328C306.995 127.904 306.806 128.395 306.427 128.8C306.054 129.205 305.59 129.408 305.035 129.408C304.742 129.408 304.467 129.344 304.211 129.216C303.961 129.083 303.766 128.915 303.627 128.712V131ZM303.955 128.36C304.211 128.637 304.537 128.776 304.931 128.776C305.326 128.776 305.651 128.637 305.907 128.36C306.163 128.083 306.291 127.739 306.291 127.328C306.291 126.917 306.163 126.573 305.907 126.296C305.651 126.019 305.326 125.88 304.931 125.88C304.537 125.88 304.211 126.019 303.955 126.296C303.699 126.573 303.571 126.917 303.571 127.328C303.571 127.739 303.699 128.083 303.955 128.36ZM308.86 129.328H308.172V123.328H308.86V125.944C309.132 125.48 309.556 125.248 310.132 125.248C310.585 125.248 310.951 125.395 311.228 125.688C311.505 125.981 311.644 126.373 311.644 126.864V129.328H310.964V126.968C310.964 126.632 310.879 126.368 310.708 126.176C310.537 125.979 310.308 125.88 310.02 125.88C309.689 125.88 309.412 126.011 309.188 126.272C308.969 126.533 308.86 126.891 308.86 127.344V129.328ZM314.829 129.408C314.216 129.408 313.717 129.211 313.333 128.816C312.949 128.421 312.757 127.925 312.757 127.328C312.757 126.736 312.952 126.243 313.341 125.848C313.73 125.448 314.229 125.248 314.837 125.248C315.376 125.248 315.826 125.429 316.189 125.792C316.557 126.149 316.741 126.637 316.741 127.256C316.741 127.336 316.738 127.405 316.733 127.464H313.453C313.464 127.837 313.597 128.149 313.853 128.4C314.114 128.651 314.442 128.776 314.837 128.776C315.397 128.776 315.813 128.544 316.085 128.08L316.629 128.456C316.24 129.091 315.64 129.408 314.829 129.408ZM313.501 126.904H316.037C315.984 126.584 315.842 126.331 315.613 126.144C315.389 125.952 315.122 125.856 314.813 125.856C314.498 125.856 314.216 125.952 313.965 126.144C313.72 126.331 313.565 126.584 313.501 126.904ZM317.903 129.328V125.328H318.591V126.104C318.666 125.859 318.81 125.661 319.023 125.512C319.242 125.363 319.471 125.288 319.711 125.288C319.829 125.288 319.933 125.299 320.023 125.32V126.032C319.927 125.989 319.802 125.968 319.647 125.968C319.37 125.968 319.125 126.088 318.911 126.328C318.698 126.568 318.591 126.907 318.591 127.344V129.328H317.903Z"
         fill="white"
       />
-      <SapphireTooltip offsetWidth={sapphireRect?.width} offsetHeight={sapphireRect?.height}>
+      <SapphireGraphTooltip offsetWidth={sapphireRect?.width} offsetHeight={sapphireRect?.height}>
         <g
           ref={sapphireRef}
           filter="url(#filter2)"
@@ -297,7 +321,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         >
           <circle cx="124.683" cy="257.114" r="21.1306" fill="#000062" />
         </g>
-      </SapphireTooltip>
+      </SapphireGraphTooltip>
       <path
         id={`${GraphEndpoints.Sapphire}-label`}
         aria-disabled={sapphireDisabled}

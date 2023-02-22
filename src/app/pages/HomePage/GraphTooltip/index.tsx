@@ -4,15 +4,41 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../styles/theme/colors'
 
-export const GraphTooltipStyled = styled(Box)(() => ({
-  display: 'flex',
-  height: '100%',
-  border: `1px solid ${COLORS.aqua}`,
-  borderRadius: '0 12px 12px 0',
-  cursor: 'pointer',
+export interface GraphTooltipStyledProps {
+  isMobile: boolean
+}
+
+export const MobileGraphTooltip = styled(Box)(() => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 120,
+  '> svg': {
+    position: 'fixed',
+    right: 20,
+    bottom: 130,
+  },
 }))
 
-export const GraphTooltipIcon = styled(Box)(() => ({
+export const GraphTooltipStyled = styled(Box, {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['isMobile'] as (keyof GraphTooltipStyledProps)[]).includes(prop as keyof GraphTooltipStyledProps),
+})<GraphTooltipStyledProps>(({ isMobile }) => ({
+  display: 'flex',
+  height: '100%',
+  border: `2px solid ${COLORS.aqua}`,
+  borderRadius: isMobile ? '12px 12px 0 0' : '0 12px 12px 0',
+}))
+
+export interface GraphTooltipIconProps {
+  isMobile: boolean
+}
+
+export const GraphTooltipIcon = styled(Box, {
+  shouldForwardProp: (prop: PropertyKey) =>
+    !(['isMobile'] as (keyof GraphTooltipIconProps)[]).includes(prop as keyof GraphTooltipIconProps),
+})<GraphTooltipIconProps>(({ isMobile }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -20,25 +46,29 @@ export const GraphTooltipIcon = styled(Box)(() => ({
   alignItems: 'center',
   flex: '0 0 120px',
   height: '100%',
-  borderRight: `1px solid ${COLORS.aqua}`,
+  borderRight: `2px solid ${COLORS.aqua}`,
   backgroundColor: COLORS.brandExtraDark,
+  borderRadius: isMobile ? '12px 0 0 12px' : '0 0 0 0',
 }))
 
 interface GraphTooltipTextProps {
   disabled?: boolean
+  isMobile: boolean
 }
 
 export const GraphTooltipText = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
-    !(['disabled'] as (keyof GraphTooltipTextProps)[]).includes(prop as keyof GraphTooltipTextProps),
-})<GraphTooltipTextProps>(({ theme, disabled }) => ({
+    !(['disabled', 'isMobile'] as (keyof GraphTooltipTextProps)[]).includes(
+      prop as keyof GraphTooltipTextProps,
+    ),
+})<GraphTooltipTextProps>(({ theme, disabled, isMobile }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   flex: '0 1 100%',
   padding: theme.spacing(4),
   backgroundColor: disabled ? COLORS.shadowBlue : COLORS.brandExtraDark,
-  borderRadius: '0 12px 12px 0',
+  borderRadius: isMobile ? '0 12px 0 0' : '0 12px 12px 0',
 }))
 
 export const GraphTooltipHeaderText = styled(Box)(() => ({

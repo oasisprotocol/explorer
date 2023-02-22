@@ -16,6 +16,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
+import { SapphireMobileTooltip } from '../GraphTooltip/SapphireTooltip'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -116,6 +117,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
   const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
+  const [showMobileSapphireTooltip, setShowMobileSapphireTooltip] = useState(false)
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -154,50 +156,57 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   return (
-    <ParaTimeSelectorGlow disabled={disabled}>
-      <ParaTimeSelectorGlobe>
-        <QuickPinchZoomOuter>
-          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
-            <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
-              <Graph
-                ref={graphRef}
+    <>
+      <ParaTimeSelectorGlow disabled={disabled}>
+        <ParaTimeSelectorGlobe>
+          <QuickPinchZoomOuter>
+            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
+              <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
+                <Graph
+                  ref={graphRef}
+                  disabled={disabled}
+                  transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
+                  selectedGraphEndpoint={selectedGraphEndpoint}
+                  setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+                  showMobileSapphireTooltip={showMobileSapphireTooltip}
+                  setShowMobileSapphireTooltip={setShowMobileSapphireTooltip}
+                  scale={scale}
+                />
+              </QuickPinchZoomInner>
+            </QuickPinchZoom>
+          </QuickPinchZoomOuter>
+          {!isMobile && (
+            <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
+              <ZoomOutBtn
+                variant="text"
+                color="secondary"
+                startIcon={<ChevronLeftIcon />}
+                onClick={onZoomOutClick}
                 disabled={disabled}
-                transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-                selectedGraphEndpoint={selectedGraphEndpoint}
-                setSelectedGraphEndpoint={setSelectedGraphEndpoint}
-                scale={scale}
-              />
-            </QuickPinchZoomInner>
-          </QuickPinchZoom>
-        </QuickPinchZoomOuter>
-        {!isMobile && (
-          <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
-            <ZoomOutBtn
-              variant="text"
+              >
+                {t('home.zoomOutBtnText')}
+              </ZoomOutBtn>
+            </ZoomOutBtnFade>
+          )}
+          {ParaTimeSelectorUtils.showExploreBtn(step) && (
+            <ExploreBtn
               color="secondary"
-              startIcon={<ChevronLeftIcon />}
-              onClick={onZoomOutClick}
-              disabled={disabled}
+              variant="contained"
+              onClick={onExploreClick}
+              aria-label={exploreBtnTextTranslated}
             >
-              {t('home.zoomOutBtnText')}
-            </ZoomOutBtn>
-          </ZoomOutBtnFade>
-        )}
-        {ParaTimeSelectorUtils.showExploreBtn(step) && (
-          <ExploreBtn
-            color="secondary"
-            variant="contained"
-            onClick={onExploreClick}
-            aria-label={exploreBtnTextTranslated}
-          >
-            {t('home.exploreBtnText')}
-          </ExploreBtn>
-        )}
-        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
-          <HelpScreen setParaTimeStep={setStep} />
-        )}
-      </ParaTimeSelectorGlobe>
-    </ParaTimeSelectorGlow>
+              {t('home.exploreBtnText')}
+            </ExploreBtn>
+          )}
+          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+            <HelpScreen setParaTimeStep={setStep} />
+          )}
+        </ParaTimeSelectorGlobe>
+      </ParaTimeSelectorGlow>
+      {showMobileSapphireTooltip && (
+        <SapphireMobileTooltip onClose={() => setShowMobileSapphireTooltip(false)} />
+      )}
+    </>
   )
 }
 
