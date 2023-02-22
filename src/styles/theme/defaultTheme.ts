@@ -414,8 +414,8 @@ export const defaultTheme = createTheme({
           style: () => ({
             color: COLORS.white,
             fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '140%',
+            fontSize: '12px',
+            lineHeight: '18px',
           }),
         },
         {
