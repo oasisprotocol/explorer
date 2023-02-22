@@ -38,6 +38,7 @@ export const Blocks = (props: BlocksProps) => {
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
+    ...(verbose ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }] : []),
   ]
 
   const tableRows = blocks?.map(block => ({
@@ -51,7 +52,7 @@ export const Blocks = (props: BlocksProps) => {
         align: TableCellAlign.Right,
         content: (
           <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}>
-            {block.round}
+            {block.round.toLocaleString()}
           </Link>
         ),
         key: 'block',
@@ -95,8 +96,17 @@ export const Blocks = (props: BlocksProps) => {
         ? [
             {
               align: TableCellAlign.Right,
-              content: block.gas_used,
+              content: block.gas_used.toLocaleString(),
               key: 'gasUsed',
+            },
+          ]
+        : []),
+      ...(verbose
+        ? [
+            {
+              align: TableCellAlign.Right,
+              content: gasLimit.toLocaleString(),
+              key: 'gasLimit',
             },
           ]
         : []),
