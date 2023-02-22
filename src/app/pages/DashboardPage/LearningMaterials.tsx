@@ -37,10 +37,14 @@ type LearningSectionProps = PaperProps & {
 const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ...props }) => {
   return (
     <Paper variant="content" {...props}>
-      <Typography variant="h4">{title}</Typography>
-      <Typography variant="body2">{description}</Typography>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        {title}
+      </Typography>
+      <Typography variant="body2" sx={{ color: COLORS.grayMedium }}>
+        {description}
+      </Typography>
       <StyledLink href={url} rel="noopener noreferrer" target="_blank">
-        <ArrowForwardIcon />
+        <ArrowForwardIcon sx={{ fontSize: 16 }} />
       </StyledLink>
     </Paper>
   )
@@ -56,8 +60,13 @@ export const LearningMaterials = () => {
         component="h3"
         title={t('learningMaterials.header')}
         action={
-          <Link href={docs.home} rel="noopener noreferrer" target="_blank">
-            {t('learningMaterials.learningCenter')}
+          <Link
+            href={docs.home}
+            rel="noopener noreferrer"
+            target="_blank"
+            sx={{ color: COLORS.brandExtraDark }}
+          >
+            {t('common.viewAll')}
           </Link>
         }
       />

@@ -86,19 +86,19 @@ export const defaultTheme = createTheme({
     h3: {
       fontSize: '24px',
       fontWeight: 600,
-      lineHeight: '140%',
+      lineHeight: '32px',
       color: COLORS.brandExtraDark,
     },
     h4: {
       fontSize: '18px',
-      fontWeight: 600,
+      fontWeight: 700,
       color: COLORS.brandExtraDark,
-      lineHeight: '26px',
+      lineHeight: '22px',
     },
     h5: {
       fontSize: '16px',
       fontWeight: 700,
-      lineHeight: '20px',
+      lineHeight: '24px',
       color: COLORS.brandExtraDark,
     },
   },
@@ -265,7 +265,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
-          fontWeight: 600,
+          fontWeight: 700,
           fontSize: '24px',
           margin: 0,
           padding: `0 0 ${theme.spacing(4)} 0`,

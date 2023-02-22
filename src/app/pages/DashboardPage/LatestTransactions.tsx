@@ -8,6 +8,7 @@ import Link from '@mui/material/Link'
 import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
+import { COLORS } from '../../../styles/theme/colors'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -22,7 +23,7 @@ export const LatestTransactions: FC = () => {
         component="h3"
         title={t('transactions.latest')}
         action={
-          <Link component={RouterLink} to="transactions">
+          <Link component={RouterLink} to="transactions" sx={{ color: COLORS.brandExtraDark }}>
             View all
           </Link>
         }

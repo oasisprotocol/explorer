@@ -8,6 +8,7 @@ import Link from '@mui/material/Link'
 import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
 import { Blocks } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
+import { COLORS } from '../../../styles/theme/colors'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -22,7 +23,7 @@ export const LatestBlocks: FC = () => {
         component="h3"
         title={t('blocks.latest')}
         action={
-          <Link component={RouterLink} to="blocks">
+          <Link component={RouterLink} to="blocks" sx={{ color: COLORS.brandExtraDark }}>
             {t('common.viewAll')}
           </Link>
         }
