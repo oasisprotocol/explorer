@@ -18,7 +18,6 @@ export const COLORS = {
   darkSlateBlue: '#3f4284',
   eucalyptus: '#4cd4a9',
   grayDark: '#31435a',
-  grayDark07A: '#31435ab3',
   grayExtraDark: '#06152b',
   grayLight: '#f4f5f7',
   grayMedium: '#565b61',

@@ -443,7 +443,7 @@ export const defaultTheme = createTheme({
           backgroundColor: COLORS.white,
           color: COLORS.grayDark,
           '&::placeholder': {
-            color: COLORS.grayDark07A,
+            color: COLORS.grayDark,
           },
         },
       },
