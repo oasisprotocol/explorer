@@ -26,7 +26,6 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     height: '100vh',
     minHeight: '800px',
-    overflow: 'unset',
     '&::before': {
       content: '" "',
       position: 'absolute',
@@ -62,14 +61,19 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
 
 const SearchInputContainer = styled(Box)(({ theme }) => ({
   zIndex: 2,
-  [theme.breakpoints.down('md')]: {
-    width: '100%',
+  width: '100%',
+  [theme.breakpoints.up('md')]: {
+    width: 'auto',
   },
 }))
 
 const SearchInputBox = styled(Box)(({ theme }) => ({
   width: '100%',
+  margin: '0 auto',
   [theme.breakpoints.up('sm')]: {
+    width: '75vw',
+  },
+  [theme.breakpoints.up('md')]: {
     width: '50vw',
   },
 }))

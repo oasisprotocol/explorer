@@ -91,13 +91,12 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
               {Math.abs(activeStep - index) < totalSteps ? (
                 <Box
                   component="img"
-                  sx={{
+                  sx={theme => ({
                     display: 'block',
-                    width: '100%',
                     height: 50,
                     overflow: 'hidden',
-                    marginBottom: 3,
-                  }}
+                    margin: `0 auto ${theme.spacing(3)}`,
+                  })}
                   src={step.icon}
                   alt={step.label}
                 />
