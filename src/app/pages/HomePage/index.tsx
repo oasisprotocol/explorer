@@ -102,7 +102,7 @@ const HomePageCmp: FC = () => {
   const apiStatusQuery = useGetStatus()
   const {
     state: { showMobileTooltip },
-    setShowTooltip,
+    setShowMobileTooltip,
   } = useMobileTooltip()
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
@@ -152,16 +152,16 @@ const HomePageCmp: FC = () => {
         </FooterStyled>
       </HomepageLayout>
       {showMobileTooltip.consensus && (
-        <ConsensusGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Consensus, false)} />
+        <ConsensusGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Consensus, false)} />
       )}
       {showMobileTooltip.emerald && (
-        <EmeraldGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Emerald, false)} />
+        <EmeraldGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Emerald, false)} />
       )}
       {showMobileTooltip.sapphire && (
-        <SapphireGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Sapphire, false)} />
+        <SapphireGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Sapphire, false)} />
       )}
       {showMobileTooltip.cipher && (
-        <CipherGraphMobileTooltip onClose={() => setShowTooltip(GraphEndpoint.Cipher, false)} />
+        <CipherGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Cipher, false)} />
       )}
     </>
   )

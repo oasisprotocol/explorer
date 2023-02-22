@@ -54,7 +54,6 @@ export const CipherGraphTooltip: FC<GraphTooltipExtendedProps> = ({
   offsetWidth,
   offsetHeight,
 }) => {
-  const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 

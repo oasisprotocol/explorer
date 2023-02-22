@@ -7,7 +7,7 @@ interface MobileTooltipProviderState {
 
 interface MobileTooltipProviderContext {
   readonly state: MobileTooltipProviderState
-  setShowTooltip: (graphEndpoint: GraphEndpoint, show: boolean) => void
+  setShowMobileTooltip: (graphEndpoint: GraphEndpoint, show: boolean) => void
 }
 
 const mobileTooltipProviderInitialState: MobileTooltipProviderState = {
@@ -28,7 +28,7 @@ export const MobileTooltipProvider: FC<PropsWithChildren> = ({ children }) => {
     ...mobileTooltipProviderInitialState,
   })
 
-  const setShowTooltip = (graphEndpoint: GraphEndpoint, show: boolean) => {
+  const setShowMobileTooltip = (graphEndpoint: GraphEndpoint, show: boolean) => {
     setState(prevState => ({
       ...prevState,
       showMobileTooltip: {
@@ -40,7 +40,7 @@ export const MobileTooltipProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const providerState: MobileTooltipProviderContext = {
     state,
-    setShowTooltip,
+    setShowMobileTooltip,
   }
 
   return <MobileTooltipContext.Provider value={providerState}>{children}</MobileTooltipContext.Provider>

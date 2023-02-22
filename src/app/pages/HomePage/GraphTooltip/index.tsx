@@ -9,28 +9,6 @@ export interface GraphTooltipStyledProps {
   disabled?: boolean
 }
 
-export const MobileBackdrop = styled(Box)(() => ({
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: COLORS.black,
-  opacity: 0.3,
-  zIndex: 4,
-}))
-
-export const MobileGraphTooltip = styled(Box)(() => ({
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 120,
-  zIndex: 4,
-  '> svg': {
-    position: 'fixed',
-    right: 10,
-    bottom: 125,
-  },
-}))
-
 export const GraphTooltipStyled = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['isMobile', 'disabled'] as (keyof GraphTooltipStyledProps)[]).includes(
@@ -60,7 +38,7 @@ export const GraphTooltipIcon = styled(Box, {
   flex: '0 0 120px',
   height: '100%',
   borderRight: `2px solid ${COLORS.aqua}`,
-  backgroundColor: COLORS.brandExtraDark,
+  backgroundColor: COLORS.brandExtraDark + (isMobile ? '80' : ''),
   borderRadius: isMobile ? '12px 0 0 12px' : '0 0 0 0',
 }))
 
@@ -80,7 +58,7 @@ export const GraphTooltipText = styled(Box, {
   justifyContent: 'space-between',
   flex: '0 1 100%',
   padding: theme.spacing(4),
-  backgroundColor: disabled ? COLORS.shadowBlue : COLORS.brandExtraDark,
+  backgroundColor: (disabled ? COLORS.shadowBlue : COLORS.brandExtraDark) + (isMobile ? '80' : ''),
   borderRadius: isMobile ? '0 12px 0 0' : '0 12px 12px 0',
 }))
 
