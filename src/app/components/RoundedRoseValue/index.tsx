@@ -6,7 +6,7 @@ type RoundedRoseValueProps = {
   value?: string
 }
 
-const numberOfDecimals = 8
+const numberOfDecimals = 5
 
 export const RoundedRoseValue: FC<RoundedRoseValueProps> = ({ value }) => {
   const { t } = useTranslation()
