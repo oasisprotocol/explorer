@@ -64,7 +64,7 @@ export const BlockDetailView: FC<{
           <dd>
             <CopyToClipboard
               label={
-                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
                   {block.round.toLocaleString()}
                 </Typography>
               }
@@ -76,7 +76,7 @@ export const BlockDetailView: FC<{
           <dd>
             <CopyToClipboard
               label={
-                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
                   {isMobile ? trimLongString(block.hash) : block.hash}
                 </Typography>
               }
