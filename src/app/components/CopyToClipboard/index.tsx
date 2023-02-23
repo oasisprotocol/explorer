@@ -1,10 +1,10 @@
 import { FC, useCallback, useEffect, useRef, useState, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import IconButton from '@mui/material/IconButton'
 import { COLORS } from '../../../styles/theme/colors'
+import ButtonUnstyled from '@mui/base/ButtonUnstyled'
+import { styled } from '@mui/material/styles'
 
 const clipboardTooltipDuration = 2000
 
@@ -12,6 +12,12 @@ type CopyToClipboardProps = {
   label?: ReactNode
   value: string
 }
+
+const StyledButton = styled(ButtonUnstyled)(() => ({
+  border: 0,
+  background: 'none',
+  cursor: 'pointer',
+}))
 
 export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
   const { t } = useTranslation()
@@ -24,7 +30,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
     }
     window.navigator.clipboard.writeText(value)
     setIsCopied(true)
-  }, [value, isCopied])
+  }, [isCopied, value])
   const hideTooltip = useCallback(
     () => (timeout.current = window.setTimeout(() => setIsCopied(false), clipboardTooltipDuration)),
     [],
@@ -39,17 +45,16 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
   }, [])
 
   return (
-    <Box
-      component="span"
-      onClick={handleCopyToClipboard}
-      sx={{ display: 'inline-flex', alignItems: 'center' }}
-    >
-      {label || value}
-      <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="top" title={t('clipboard.success')}>
-        <IconButton color="inherit" aria-label={ariaLabel} sx={{ py: 0 }}>
-          <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark }} />
-        </IconButton>
-      </Tooltip>
-    </Box>
+    <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
+      <StyledButton
+        color="inherit"
+        onClick={handleCopyToClipboard}
+        aria-label={ariaLabel}
+        sx={{ display: 'inline-flex', alignItems: 'center' }}
+      >
+        {label || value}
+        <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark, ml: 4 }} />
+      </StyledButton>
+    </Tooltip>
   )
 }
