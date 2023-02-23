@@ -399,7 +399,7 @@ export const defaultTheme = createTheme({
         },
         head: {
           border: 0,
-          color: COLORS.darkSlateBlue,
+          color: COLORS.grayDark,
           fontWeight: 400,
         },
       },
