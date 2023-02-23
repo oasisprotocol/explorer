@@ -34,7 +34,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
       title={t('common.transactions')}
       // TODO: show real percentage value
       badge={<PercentageGain percentage={23} />}
-      label={totalTransactions.toString()}
+      label={totalTransactions.toLocaleString()}
     >
       {lineChartData && (
         <LineChart
