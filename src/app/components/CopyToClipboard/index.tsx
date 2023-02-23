@@ -17,6 +17,8 @@ const StyledButton = styled(ButtonUnstyled)(() => ({
   border: 0,
   background: 'none',
   cursor: 'pointer',
+  fontSize: 'inherit',
+  fontFamily: 'inherit',
 }))
 
 export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
@@ -53,7 +55,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
         sx={{ display: 'inline-flex', alignItems: 'center' }}
       >
         {label || value}
-        <ContentCopyIcon fontSize="small" sx={{ color: COLORS.brandDark, ml: 4 }} />
+        <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark, ml: 4 }} />
       </StyledButton>
     </Tooltip>
   )
