@@ -27,6 +27,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     footer: true
     select: true
+    mono: true
   }
 }
 
@@ -64,7 +65,7 @@ export const defaultTheme = createTheme({
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
-    fontFamily: `"FigtreeVariable", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"FigtreeVariable", "Helvetica", "Arial", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
     fontWeightBold: 500,
@@ -380,7 +381,7 @@ export const defaultTheme = createTheme({
           whiteSpace: 'nowrap',
           a: {
             color: COLORS.brandDark,
-            fontWeight: 600,
+            fontWeight: 700,
             textDecoration: 'none',
           },
         },
@@ -409,6 +410,13 @@ export const defaultTheme = createTheme({
     },
     MuiTypography: {
       variants: [
+        {
+          props: { variant: 'mono' },
+          style: () => ({
+            fontFamily: 'Roboto MonoVariable, monospace',
+            fontWeight: 700,
+          }),
+        },
         {
           props: { variant: 'footer' },
           style: () => ({
