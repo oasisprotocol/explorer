@@ -63,7 +63,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue })
           <dd>
             <CopyToClipboard
               label={
-                <Typography component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
                   {isMobile ? trimLongString(account.address) : account.address}
                 </Typography>
               }

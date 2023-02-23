@@ -1,6 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
@@ -38,6 +39,7 @@ export const Blocks = (props: BlocksProps) => {
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
+    ...(verbose ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }] : []),
   ]
 
   const tableRows = blocks?.map(block => ({
@@ -50,9 +52,11 @@ export const Blocks = (props: BlocksProps) => {
       {
         align: TableCellAlign.Right,
         content: (
-          <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}>
-            {block.round}
-          </Link>
+          <Typography variant="mono">
+            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}>
+              {block.round.toLocaleString()}
+            </Link>
+          </Typography>
         ),
         key: 'block',
       },
@@ -71,8 +75,14 @@ export const Blocks = (props: BlocksProps) => {
       ...(verbose
         ? [
             {
-              content: <TrimLinkLabel label={block.hash} to={block.hash} />, // TODO: do we want linking to blocks by hash?
-              // If yes, what should be the URL scheme for that?
+              content: (
+                <Typography variant="mono">
+                  <TrimLinkLabel
+                    label={block.hash}
+                    to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}
+                  />
+                </Typography>
+              ),
               key: 'hash',
             },
           ]
@@ -95,8 +105,17 @@ export const Blocks = (props: BlocksProps) => {
         ? [
             {
               align: TableCellAlign.Right,
-              content: block.gas_used,
+              content: block.gas_used.toLocaleString(),
               key: 'gasUsed',
+            },
+          ]
+        : []),
+      ...(verbose
+        ? [
+            {
+              align: TableCellAlign.Right,
+              content: gasLimit.toLocaleString(),
+              key: 'gasLimit',
             },
           ]
         : []),

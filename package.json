@@ -46,6 +46,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/figtree": "^4.5.3",
+    "@fontsource/roboto-mono": "^4.5.10",
     "@metamask/jazzicon": "^2.0.0",
     "@mui/base": "^5.0.0-alpha.111",
     "@mui/icons-material": "^5.11.0",

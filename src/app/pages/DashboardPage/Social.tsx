@@ -35,7 +35,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
         <img src={img} alt={label} height={40} />
       </Box>
-      <Typography sx={{ mb: isMobile ? 4 : 0 }}>{label}</Typography>
+      <Typography sx={{ fontSize: 18, fontWeight: 700, mb: isMobile ? 4 : 0 }}>{label}</Typography>
     </Link>
   )
 }
@@ -61,7 +61,7 @@ export const Social: FC = () => {
       }}
     >
       <Grid xs={12} md={4}>
-        <Typography sx={{ fontSize: 18, fontWeight: 600, mb: 3 }} color={COLORS.white}>
+        <Typography sx={{ fontSize: 18, fontWeight: 700, mb: 3 }} color={COLORS.white}>
           {t('social.header')}
         </Typography>
         <Typography color={COLORS.white} sx={{ maxWidth: 230 }}>

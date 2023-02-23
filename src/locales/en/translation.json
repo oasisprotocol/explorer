@@ -63,7 +63,7 @@
     "type": "Type",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
-    "viewAll": "View All"
+    "viewAll": "View all"
   },
   "nodes": {
     "title": "Active nodes",
@@ -93,7 +93,6 @@
       "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
     },
     "header": "Learning materials",
-    "learningCenter": "Access Learning Center",
     "token": {
       "header": "What is the ROSE token?",
       "description": "Rose is the currency powering the Emerald network."

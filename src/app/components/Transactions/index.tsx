@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
@@ -75,10 +76,12 @@ export const Transactions: FC<TransactionProps> = ({
       },
       {
         content: (
-          <TrimLinkLabel
-            label={transaction.hash}
-            to={RouteUtils.getTransactionRoute(transaction.hash, ParaTime.Emerald)}
-          />
+          <Typography variant="mono">
+            <TrimLinkLabel
+              label={transaction.hash}
+              to={RouteUtils.getTransactionRoute(transaction.hash, ParaTime.Emerald)}
+            />
+          </Typography>
         ),
         key: 'hash',
       },
@@ -86,12 +89,14 @@ export const Transactions: FC<TransactionProps> = ({
         ? [
             {
               content: (
-                <Link
-                  component={RouterLink}
-                  to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
-                >
-                  {transaction.round}
-                </Link>
+                <Typography variant="mono">
+                  <Link
+                    component={RouterLink}
+                    to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
+                  >
+                    {transaction.round.toLocaleString()}
+                  </Link>
+                </Typography>
               ),
               key: 'round',
             },
@@ -119,10 +124,12 @@ export const Transactions: FC<TransactionProps> = ({
               pr: 4,
             }}
           >
-            <TrimLinkLabel
-              label={transaction.sender_0}
-              to={RouteUtils.getAccountRoute(transaction.sender_0, ParaTime.Emerald)}
-            />
+            <Typography variant="mono">
+              <TrimLinkLabel
+                label={transaction.sender_0}
+                to={RouteUtils.getAccountRoute(transaction.sender_0, ParaTime.Emerald)}
+              />
+            </Typography>
             {transaction.to && (
               <StyledCircle>
                 <ArrowForwardIcon fontSize="inherit" />
@@ -135,10 +142,12 @@ export const Transactions: FC<TransactionProps> = ({
       },
       {
         content: (
-          <TrimLinkLabel
-            label={transaction.to!}
-            to={RouteUtils.getAccountRoute(transaction.to!, ParaTime.Emerald)}
-          />
+          <Typography variant="mono">
+            <TrimLinkLabel
+              label={transaction.to!}
+              to={RouteUtils.getAccountRoute(transaction.to!, ParaTime.Emerald)}
+            />
+          </Typography>
         ),
         key: 'to',
       },

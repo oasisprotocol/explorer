@@ -61,6 +61,7 @@ const ParaTimeSelectorGlobe = styled(Box)(() => ({
 }))
 
 const ExploreBtn = styled(Button)(({ theme }) => ({
+  fontWeight: 700,
   position: 'absolute',
   top: '50%',
   left: '50%',

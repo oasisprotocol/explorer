@@ -50,7 +50,7 @@ export const NetworkHeader: FC = () => {
             <Typography
               variant="h2"
               color={COLORS.white}
-              sx={{ pr: isMobile ? 3 : 4, fontSize: isMobile ? '16px' : '24px' }}
+              sx={{ pr: isMobile ? 3 : 4, fontSize: isMobile ? '16px' : '24px', fontWeight: 700 }}
             >
               {label}
             </Typography>
@@ -73,7 +73,9 @@ export const NetworkHeader: FC = () => {
           </Box>
         </Box>
         {!isMobile && (
-          <Typography sx={{ fontSize: 11, color: COLORS.white }}>{t('pageHeader.emerald')}</Typography>
+          <Typography sx={{ fontSize: 12, lineHeight: '18px', color: COLORS.white }}>
+            {t('pageHeader.emerald')}
+          </Typography>
         )}
       </Box>
     </Box>

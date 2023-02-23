@@ -27,6 +27,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     footer: true
     select: true
+    mono: true
   }
 }
 
@@ -64,7 +65,7 @@ export const defaultTheme = createTheme({
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
-    fontFamily: `"FigtreeVariable", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"FigtreeVariable", "Helvetica", "Arial", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
     fontWeightBold: 500,
@@ -86,19 +87,19 @@ export const defaultTheme = createTheme({
     h3: {
       fontSize: '24px',
       fontWeight: 600,
-      lineHeight: '140%',
+      lineHeight: '32px',
       color: COLORS.brandExtraDark,
     },
     h4: {
       fontSize: '18px',
-      fontWeight: 600,
+      fontWeight: 700,
       color: COLORS.brandExtraDark,
-      lineHeight: '26px',
+      lineHeight: '22px',
     },
     h5: {
       fontSize: '16px',
       fontWeight: 700,
-      lineHeight: '20px',
+      lineHeight: '24px',
       color: COLORS.brandExtraDark,
     },
   },
@@ -268,7 +269,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
-          fontWeight: 600,
+          fontWeight: 700,
           fontSize: '24px',
           margin: 0,
           padding: `0 ${theme.spacing(4)} ${theme.spacing(4)} 0`,
@@ -392,7 +393,7 @@ export const defaultTheme = createTheme({
           whiteSpace: 'nowrap',
           a: {
             color: COLORS.brandDark,
-            fontWeight: 600,
+            fontWeight: 700,
             textDecoration: 'none',
           },
         },
@@ -422,12 +423,19 @@ export const defaultTheme = createTheme({
     MuiTypography: {
       variants: [
         {
+          props: { variant: 'mono' },
+          style: () => ({
+            fontFamily: 'Roboto MonoVariable, monospace',
+            fontWeight: 700,
+          }),
+        },
+        {
           props: { variant: 'footer' },
           style: () => ({
             color: COLORS.white,
             fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '140%',
+            fontSize: '12px',
+            lineHeight: '18px',
           }),
         },
         {
@@ -455,7 +463,7 @@ export const defaultTheme = createTheme({
           backgroundColor: COLORS.white,
           color: COLORS.grayDark,
           '&::placeholder': {
-            color: COLORS.grayDark07A,
+            color: COLORS.grayDark,
           },
         },
       },

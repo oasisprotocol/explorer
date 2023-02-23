@@ -38,7 +38,7 @@ export const ParaTimeSnapshot: FC = () => {
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
           <AppendMobileSearch>
-            <Typography variant="h3" sx={{ color: COLORS.white }}>
+            <Typography variant="h3" sx={{ color: COLORS.white, fontWeight: 700 }}>
               {t('paraTimeSnapshot.header')}
             </Typography>
           </AppendMobileSearch>
