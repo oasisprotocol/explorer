@@ -272,7 +272,13 @@ export const defaultTheme = createTheme({
           fontWeight: 700,
           fontSize: '24px',
           margin: 0,
-          padding: `0 ${theme.spacing(4)} ${theme.spacing(4)} 0`,
+          paddingBottom: theme.spacing(4),
+          paddingLeft: 0,
+          paddingTop: 0,
+          paddingRight: 0,
+          [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(4),
+          },
         }),
         action: {
           alignSelf: 'center',
