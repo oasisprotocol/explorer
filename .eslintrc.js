@@ -11,11 +11,7 @@ const config = {
   ],
   parser: '@typescript-eslint/parser',
 
-  settings: {
-    // Warn about <a target="_blank" rel="noopener"> in components other than "a"
-    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md#custom-link-components
-    linkComponents: ['Chip', 'Link', 'SocialLink', 'StyledLink'],
-  },
+  settings: {},
   rules: {
     'no-restricted-imports': [
       'error',
@@ -40,7 +36,7 @@ const config = {
     ],
     'prefer-template': 'error',
 
-    'react/jsx-no-target-blank': ['error', { allowReferrer: true }],
+    'react/jsx-no-target-blank': 'off', // Not needed with modern browsers
     'react/react-in-jsx-scope': 'off', // Not needed after React v17
     'react/display-name': 'off', // TODO: Maybe enable
 
