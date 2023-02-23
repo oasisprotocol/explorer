@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useContext, useState } from 'react'
-import { GraphEndpoint } from '../ParaTimeSelector/Graph/types'
+import { GraphEndpoint, GraphEndpoints } from '../ParaTimeSelector/Graph/types'
 
 interface MobileTooltipProviderState {
   showMobileTooltip: { [key in GraphEndpoint]: boolean }
@@ -12,10 +12,10 @@ interface MobileTooltipProviderContext {
 
 const mobileTooltipProviderInitialState: MobileTooltipProviderState = {
   showMobileTooltip: {
-    [GraphEndpoint.Consensus]: false,
-    [GraphEndpoint.Emerald]: false,
-    [GraphEndpoint.Sapphire]: false,
-    [GraphEndpoint.Cipher]: false,
+    [GraphEndpoints.Consensus]: false,
+    [GraphEndpoints.Emerald]: false,
+    [GraphEndpoints.Sapphire]: false,
+    [GraphEndpoints.Cipher]: false,
   },
 }
 

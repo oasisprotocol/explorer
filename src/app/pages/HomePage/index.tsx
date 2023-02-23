@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
 import { MobileTooltipProvider, useMobileTooltip } from './providers/MobileTooltipProvider'
 import { SapphireGraphMobileTooltip } from './GraphTooltip/SapphireGraphTooltip'
-import { GraphEndpoint } from './ParaTimeSelector/Graph/types'
+import { GraphEndpoints } from './ParaTimeSelector/Graph/types'
 import { EmeraldGraphMobileTooltip } from './GraphTooltip/EmeraldGraphTooltip'
 import { ConsensusGraphMobileTooltip } from './GraphTooltip/ConsensusGraphTooltip'
 import { CipherGraphMobileTooltip } from './GraphTooltip/CipherGraphTooltip'
@@ -152,16 +152,16 @@ const HomePageCmp: FC = () => {
         </FooterStyled>
       </HomepageLayout>
       {showMobileTooltip.consensus && (
-        <ConsensusGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Consensus, false)} />
+        <ConsensusGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Consensus, false)} />
       )}
       {showMobileTooltip.emerald && (
-        <EmeraldGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Emerald, false)} />
+        <EmeraldGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Emerald, false)} />
       )}
       {showMobileTooltip.sapphire && (
-        <SapphireGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Sapphire, false)} />
+        <SapphireGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Sapphire, false)} />
       )}
       {showMobileTooltip.cipher && (
-        <CipherGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoint.Cipher, false)} />
+        <CipherGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Cipher, false)} />
       )}
     </>
   )

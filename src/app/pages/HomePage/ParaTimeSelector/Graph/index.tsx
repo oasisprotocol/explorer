@@ -106,10 +106,10 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   useEffect(() => {
     setShowEmeraldTooltip(false)
-    setShowMobileTooltip(GraphEndpoint.Consensus, false)
-    setShowMobileTooltip(GraphEndpoint.Emerald, false)
-    setShowMobileTooltip(GraphEndpoint.Cipher, false)
-    setShowMobileTooltip(GraphEndpoint.Sapphire, false)
+    setShowMobileTooltip(GraphEndpoints.Consensus, false)
+    setShowMobileTooltip(GraphEndpoints.Emerald, false)
+    setShowMobileTooltip(GraphEndpoints.Cipher, false)
+    setShowMobileTooltip(GraphEndpoints.Sapphire, false)
   }, [isMobile])
 
   const isGraphEndpointDisabled = (graphEndpoint: GraphEndpoint) => {
