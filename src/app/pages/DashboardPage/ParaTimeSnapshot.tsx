@@ -10,6 +10,7 @@ import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RoseChartCard } from './RoseChartCard'
 import { Nodes } from './Nodes'
+import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
@@ -58,7 +59,9 @@ export const ParaTimeSnapshot: FC = () => {
         <StyledGrid item xs={12} md={3}>
           <TransactionsChartCard chartDuration={chartDuration} />
         </StyledGrid>
-        <StyledGrid item xs={12} md={3}></StyledGrid>
+        <StyledGrid item xs={12} md={3}>
+          <ActiveAccounts />
+        </StyledGrid>
         <StyledGrid item xs={12} md={3}>
           <Nodes />
         </StyledGrid>
