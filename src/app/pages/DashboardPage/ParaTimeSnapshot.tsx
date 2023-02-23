@@ -53,7 +53,7 @@ export const ParaTimeSnapshot: FC = () => {
         </Grid>
       </Grid>
 
-      <Grid container rowSpacing={1} columnSpacing={4} sx={{ marginBottom: 4 }}>
+      <Grid container rowSpacing={1} columnSpacing={4}>
         <StyledGrid item xs={12} md={3}>
           <TransactionsChartCard chartDuration={chartDuration} />
         </StyledGrid>
