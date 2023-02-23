@@ -381,6 +381,7 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           [theme.breakpoints.down('sm')]: {
             paddingRight: theme.spacing(4),
+            marginLeft: `-${theme.spacing(4)}`,
           },
         }),
       },
