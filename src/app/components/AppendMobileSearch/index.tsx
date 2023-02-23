@@ -17,7 +17,7 @@ const SearchWrapper = styled(Box)(() => ({
   height: '47px',
 }))
 
-export const AppendMobileSearch: FC<PropsWithChildren<{}>> = ({ children }) => {
+export const AppendMobileSearch: FC<PropsWithChildren> = ({ children }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 

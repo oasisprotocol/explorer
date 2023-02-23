@@ -71,7 +71,7 @@ const StyledPopper = styled(PopperUnstyled)`
 
 const TertiaryButton = forwardRef(
   (
-    { children, ownerState, ...restProps }: SelectUnstyledRootSlotProps<{}>,
+    { children, ownerState, ...restProps }: SelectUnstyledRootSlotProps<object>,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
     const { t } = useTranslation()
@@ -85,7 +85,7 @@ const TertiaryButton = forwardRef(
   },
 )
 
-const CustomSelect = React.forwardRef(function CustomSelect<TValue extends {}>(
+const CustomSelect = React.forwardRef(function CustomSelect<TValue extends string | number>(
   props: SelectUnstyledProps<TValue>,
   ref: React.ForwardedRef<HTMLButtonElement>,
 ) {
@@ -97,7 +97,7 @@ const CustomSelect = React.forwardRef(function CustomSelect<TValue extends {}>(
   }
 
   return <SelectUnstyled {...props} ref={ref} slots={slots} />
-}) as <TValue extends {}>(
+}) as <TValue extends string | number>(
   props: SelectUnstyledProps<TValue> & React.RefAttributes<HTMLButtonElement>,
 ) => JSX.Element
 

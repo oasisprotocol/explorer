@@ -15,7 +15,7 @@ type CopyToClipboardProps = {
 
 export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
   const { t } = useTranslation()
-  let timeout = useRef<number | undefined>(undefined)
+  const timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
   const [isCopied, setIsCopied] = useState(false)
   const handleCopyToClipboard = useCallback(() => {
@@ -24,7 +24,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
     }
     window.navigator.clipboard.writeText(value)
     setIsCopied(true)
-  }, [value])
+  }, [value, isCopied])
   const hideTooltip = useCallback(
     () => (timeout.current = window.setTimeout(() => setIsCopied(false), clipboardTooltipDuration)),
     [],

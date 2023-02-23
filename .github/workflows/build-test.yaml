@@ -16,7 +16,7 @@ jobs:
           node-version: 18.x
           cache: 'yarn'
       - run: yarn install --frozen-lockfile | tee yarn-install-out
-      - run: yarn lint
+      - run: yarn lint --max-warnings 0
       - run: yarn checkTs
       - run: yarn test
       - run: yarn build | tee yarn-build-out

@@ -28,7 +28,7 @@ export const TooltipContent = ({ active, payload, formatters }: TooltipContentPr
   if (!active || !payload || !payload.length) {
     return null
   }
-  const { [payload[0].dataKey!]: value, ...rest } = payload[0]?.payload
+  const { [payload[0].dataKey!]: value, ...rest } = payload[0].payload
   const labelKey = Object.keys(rest)[0]
 
   return (

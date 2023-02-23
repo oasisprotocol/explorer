@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
-import { GraphEndpoint } from './Graph/types'
+import { GraphEndpoint, GraphEndpoints } from './Graph/types'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
@@ -124,14 +124,14 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
     if (selectedGraphEndpoint) {
       quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
     }
-  }, [selectedGraphEndpoint])
+  }, [selectedGraphEndpoint, width, height])
 
   useEffect(() => {
     // Switch from mobile -> desktop view while on help screen
     if (!isMobile && step === ParaTimeSelectorStep.ShowHelpScreen) {
       setStep(ParaTimeSelectorStep.Explore)
     }
-  }, [isMobile])
+  }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
     if (isMobile) {
@@ -142,7 +142,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onZoomOutClick = () => {
-    setSelectedGraphEndpoint(GraphEndpoint.Consensus)
+    setSelectedGraphEndpoint(GraphEndpoints.Consensus)
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {

@@ -71,10 +71,11 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
       setActiveStep(swiper.activeIndex as AvailableSteps)
     }
 
-    swiperElRef.current?.addEventListener<'slidechange'>('slidechange', handleSlideChange)
+    const swiperEl = swiperElRef.current
+    swiperEl?.addEventListener<'slidechange'>('slidechange', handleSlideChange)
 
     return () => {
-      swiperElRef.current?.removeEventListener<'slidechange'>('slidechange', handleSlideChange)
+      swiperEl?.removeEventListener<'slidechange'>('slidechange', handleSlideChange)
     }
   }, [])
 

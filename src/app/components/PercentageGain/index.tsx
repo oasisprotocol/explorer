@@ -1,5 +1,5 @@
 import { FC, memo } from 'react'
-import { Chip } from '@mui/material'
+import Chip from '@mui/material/Chip'
 import NorthIcon from '@mui/icons-material/North'
 import SouthIcon from '@mui/icons-material/South'
 

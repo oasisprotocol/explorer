@@ -1,5 +1,5 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
-import { GraphEndpoint } from './types'
+import { GraphEndpoint, GraphEndpoints } from './types'
 
 export abstract class GraphUtils {
   static getScaleTo(
@@ -17,25 +17,25 @@ export abstract class GraphUtils {
     }
 
     switch (graphEndpoint) {
-      case GraphEndpoint.Emerald:
+      case GraphEndpoints.Emerald:
         return {
           scale: 2,
           x: 0.5 * width,
           y: 0,
         }
-      case GraphEndpoint.Cipher:
+      case GraphEndpoints.Cipher:
         return {
           scale: 2,
           x: width,
           y: 0.4 * height,
         }
-      case GraphEndpoint.Sapphire:
+      case GraphEndpoints.Sapphire:
         return {
           scale: 2,
           x: 0.1 * width,
           y: height,
         }
-      case GraphEndpoint.Consensus:
+      case GraphEndpoints.Consensus:
       default:
         return initialValue
     }
