@@ -244,15 +244,16 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,
-          marginBottom: theme.spacing(5),
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
+            marginBottom: theme.spacing(4),
             padding: `${theme.spacing(4)} ${theme.spacing(4)} 0`,
             ':has(table)': {
               paddingRight: 0,
             },
           },
           [theme.breakpoints.up('sm')]: {
+            marginBottom: theme.spacing(5),
             padding: `${theme.spacing(5)} ${theme.spacing(5)} 0`,
           },
         }),
