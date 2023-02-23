@@ -89,20 +89,27 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   const [showEmeraldTooltip, setShowEmeraldTooltip] = useState(false)
 
-  const [emeraldRect, emeraldRefresh] = useGetBoundingClientRect(emeraldRef)
-  const [sapphireRect, sapphireRefresh] = useGetBoundingClientRect(sapphireRef)
-  const [cipherRect, cipherRefresh] = useGetBoundingClientRect(cipherRef)
-  const [consensusRect, consensusRefresh] = useGetBoundingClientRect(consensusRef)
-  const [consensusInnerCircleRect, consensusInnerCircleRefresh] =
+  const [emeraldRect, emeraldRectRefresh] = useGetBoundingClientRect(emeraldRef)
+  const [sapphireRect, sapphireRectRefresh] = useGetBoundingClientRect(sapphireRef)
+  const [cipherRect, cipherRectRefresh] = useGetBoundingClientRect(cipherRef)
+  const [consensusRect, consensusRectRefresh] = useGetBoundingClientRect(consensusRef)
+  const [consensusInnerCircleRect, consensusInnerCircleRectRefresh] =
     useGetBoundingClientRect(consensusRefInnerCircle)
 
   useEffect(() => {
-    emeraldRefresh()
-    sapphireRefresh()
-    cipherRefresh()
-    consensusRefresh()
-    consensusInnerCircleRefresh()
-  }, [scale])
+    emeraldRectRefresh()
+    sapphireRectRefresh()
+    cipherRectRefresh()
+    consensusRectRefresh()
+    consensusInnerCircleRectRefresh()
+  }, [
+    scale,
+    emeraldRectRefresh,
+    sapphireRectRefresh,
+    cipherRectRefresh,
+    consensusRectRefresh,
+    consensusInnerCircleRectRefresh,
+  ])
 
   useEffect(() => {
     setShowEmeraldTooltip(false)
@@ -110,7 +117,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     setShowMobileTooltip(GraphEndpoints.Emerald, false)
     setShowMobileTooltip(GraphEndpoints.Cipher, false)
     setShowMobileTooltip(GraphEndpoints.Sapphire, false)
-  }, [isMobile])
+  }, [isMobile, setShowMobileTooltip])
 
   const isGraphEndpointDisabled = (graphEndpoint: GraphEndpoint) => {
     return !enabledGraphEndpoints.includes(graphEndpoint)
