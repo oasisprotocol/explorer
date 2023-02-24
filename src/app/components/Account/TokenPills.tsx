@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
+import { RoundedBalance } from '../RoundedBalance'
 import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
 
 type TokenPillsProps = {
@@ -50,7 +51,11 @@ export const Pill: FC<PillProps> = ({ pill }) => {
       component={Link}
       href={href}
       key={pill.token_contract_addr}
-      label={`${pill.balance} ${pill.token_name}`}
+      label={
+        <>
+          <RoundedBalance value={pill.balance} /> {pill.token_name}
+        </>
+      }
       sx={{ mr: 2 }}
       variant="outlined"
     />
