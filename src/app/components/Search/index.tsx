@@ -28,11 +28,6 @@ const SearchForm = styled('form', {
   // Approximate size of TextField without helperText, so helperText floats.
   height: '47px',
 
-  // Show helper text when focused or filled.
-  ':not(:hover, :focus-within) :not(.MuiFormHelperText-filled).MuiFormHelperText-root': {
-    display: 'none',
-  },
-
   ...(searchVariant === 'expandable'
     ? {
         position: 'absolute',
@@ -176,11 +171,13 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
           },
         }}
         helperText={
-          <SearchSuggestions
-            onClickSuggestion={suggestion => {
-              setValue(suggestion)
-            }}
-          />
+          value && (
+            <SearchSuggestions
+              onClickSuggestion={suggestion => {
+                setValue(suggestion)
+              }}
+            />
+          )
         }
       />
     </SearchForm>
