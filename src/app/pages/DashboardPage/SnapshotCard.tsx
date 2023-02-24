@@ -8,19 +8,23 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
+  display: 'flex',
   flex: 1,
-  // used to create a stronger selector to override default theme styles
-  [theme.breakpoints.down('sm')]: {
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  '&': {
     padding: 0,
   },
+  height: 186,
   [theme.breakpoints.up('sm')]: {
-    padding: 0,
+    height: 186,
   },
 }))
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
   position: 'relative',
   paddingTop: theme.spacing(4),
+  height: 90,
 }))
 
 type SnapshotCardProps = PropsWithChildren & {
@@ -34,7 +38,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({ badge, children, title, la
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <StyledCardContent>{children}</StyledCardContent>
-      <CardActions>
+      <CardActions sx={{ minHeight: 60 }}>
         <Box
           sx={{
             display: 'flex',

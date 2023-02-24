@@ -62,32 +62,30 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
         <StyledBox>
           <CoinGeckoReferral />
         </StyledBox>
-        <Box sx={{ minHeight: '70px' }}>
-          {lineChartData && (
-            <LineChart
-              dataKey="value"
-              data={lineChartData}
-              margin={{ left: 0, right: isMobile ? 80 : 40 }}
-              formatters={{
-                data: (value: number) =>
-                  t('common.fiatValueInUSD', {
-                    value,
-                    formatParams: formatFiatRoseParams,
-                  }),
-                label: (value: string) =>
-                  t('common.formattedDateTime', {
-                    timestamp: new Date(value),
-                    formatParams: {
-                      timestamp: {
-                        dateStyle: 'short',
-                        timeStyle: 'short',
-                      } satisfies Intl.DateTimeFormatOptions,
-                    },
-                  }),
-              }}
-            />
-          )}
-        </Box>
+        {lineChartData && (
+          <LineChart
+            dataKey="value"
+            data={lineChartData}
+            margin={{ left: 0, right: isMobile ? 80 : 40 }}
+            formatters={{
+              data: (value: number) =>
+                t('common.fiatValueInUSD', {
+                  value,
+                  formatParams: formatFiatRoseParams,
+                }),
+              label: (value: string) =>
+                t('common.formattedDateTime', {
+                  timestamp: new Date(value),
+                  formatParams: {
+                    timestamp: {
+                      dateStyle: 'short',
+                      timeStyle: 'short',
+                    } satisfies Intl.DateTimeFormatOptions,
+                  },
+                }),
+            }}
+          />
+        )}
       </>
     </SnapshotCard>
   )

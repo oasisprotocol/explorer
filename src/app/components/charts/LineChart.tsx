@@ -33,7 +33,7 @@ const LineChartCmp = <T extends object>({
   tooltipActiveDotRadius = 5,
   withLabels,
 }: LineChartProps<T>): ReactElement => (
-  <ResponsiveContainer width="100%" aspect={4}>
+  <ResponsiveContainer width="100%">
     <RechartsLineChart data={data} margin={margin}>
       {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
       <Line

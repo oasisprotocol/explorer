@@ -5,7 +5,7 @@ import { LineChart } from '../../components/charts/LineChart'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { intlDateFormat } from '../../utils/dateFormatter'
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 
@@ -13,19 +13,20 @@ interface TransactionsChartCardProps {
   chartDuration: ChartDuration
 }
 
-const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
+export const TransactionsChartCard: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const statsParams = durationToQueryParams[chartDuration]
-  const { data } = useGetLayerStatsTxVolume(Layer.emerald, statsParams)
+  const { data } = useGetLayerStatsTxVolume(Layer.emerald, durationToQueryParams[chartDuration])
 
-  const lineChartData = data?.data.buckets.map(bucket => {
-    return {
-      bucket_start: bucket.bucket_start,
-      volume_per_second: bucket.tx_volume / statsParams.bucket_size_seconds,
-    }
-  })
+  const lineChartData = data?.data.buckets
+    .map(bucket => {
+      return {
+        bucket_start: bucket.bucket_start,
+        volume_per_second: bucket.tx_volume / durationToQueryParams[chartDuration].bucket_size_seconds,
+      }
+    })
+    .reverse()
 
   const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
 
@@ -39,7 +40,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
       {lineChartData && (
         <LineChart
           dataKey="volume_per_second"
-          data={lineChartData.slice().reverse()}
+          data={lineChartData}
           margin={{ left: 0, right: isMobile ? 80 : 40 }}
           formatters={{
             data: (value: number) =>
@@ -58,5 +59,3 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
     </SnapshotCard>
   )
 }
-
-export const TransactionsChartCard = memo(TransactionsChartCardCmp)
