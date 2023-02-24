@@ -21,7 +21,7 @@ const PlainTextButton = styled(Button)({
   height: '1em',
 })
 const SuggestionButton = styled(PlainTextButton)({
-  gap: '0.5ch', // Space after icon
+  gap: '0.2ch', // Space after icon
 })
 
 export interface SearchSuggestionsProps {
@@ -33,10 +33,6 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
 
   return (
     <span>
-      <Typography component="span" sx={{ color: COLORS.errorIndicatorBackground, fontSize: 12 }}>
-        {t('search.searchTermInvalid')}
-      </Typography>
-      <br></br>
       <Typography component="span" sx={{ color: COLORS.grayExtraDark, fontSize: 12 }}>
         {t('search.searchSuggestionsLine1')}&nbsp;
       </Typography>
@@ -49,15 +45,7 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
           t={t}
           i18nKey="search.searchSuggestionsLine2"
           components={{
-            TransactionIcon: <RepeatIcon sx={{ fontSize: '15px' }} />,
-            TransactionLink: (
-              <SuggestionButton
-                variant="text"
-                color="inherit"
-                onClick={() => onClickSuggestion(suggestedTransaction)}
-              />
-            ),
-            BlockIcon: <WidgetsIcon sx={{ fontSize: '15px' }} />,
+            BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
             BlockLink: (
               <SuggestionButton
                 variant="text"
@@ -65,7 +53,15 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
                 onClick={() => onClickSuggestion(suggestedBlock)}
               />
             ),
-            AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '15px' }} />,
+            TransactionIcon: <RepeatIcon sx={{ fontSize: '18px' }} />,
+            TransactionLink: (
+              <SuggestionButton
+                variant="text"
+                color="inherit"
+                onClick={() => onClickSuggestion(suggestedTransaction)}
+              />
+            ),
+            AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
             AccountLink: (
               <SuggestionButton
                 variant="text"

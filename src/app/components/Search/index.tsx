@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, memo, useState } from 'react'
+import { FC, FormEvent, memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -84,23 +84,23 @@ export interface SearchProps {
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
+const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusChangeProp }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const [value, setValue] = useState('')
-  const [hasError, setHasError] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+  const onFocusChange = (value: boolean) => {
+    setIsFocused(value)
+    onFocusChangeProp?.(value)
   }
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     const navigateTo = SearchUtils.getNavigationPath(value)
-    setHasError(!navigateTo)
     if (navigateTo) {
       navigate(navigateTo)
     }
@@ -108,7 +108,6 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
 
   const onClearValue = () => {
     setValue('')
-    setHasError(false)
   }
 
   const startAdornment = variant === 'button' && (
@@ -116,7 +115,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
       position="start"
       disablePointerEvents // Pass clicks through, so it focuses the input
     >
-      <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
+      <SearchIcon sx={{ color: isFocused ? COLORS.grayMediumLight : COLORS.grayDark }} />
     </InputAdornment>
   )
 
@@ -132,9 +131,9 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
     >
       <TextField
         value={value}
-        onChange={onChange}
-        onFocus={() => onFocusChange?.(true)}
-        onBlur={() => onFocusChange?.(false)}
+        onChange={e => setValue(e.target.value)}
+        onFocus={() => onFocusChange(true)}
+        onBlur={() => onFocusChange(false)}
         InputProps={{
           inputProps: {
             sx: { p: 0 },
@@ -163,21 +162,19 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange }) => {
         }}
         placeholder={searchPlaceholderTranslated}
         fullWidth
-        error={hasError}
         FormHelperTextProps={{
           sx: {
             marginTop: '10px',
-            marginBottom: '15px',
-            marginLeft: '17px',
-            marginRight: '17px',
+            marginBottom: '10px',
+            marginLeft: variant === 'button' ? '48px' : '17px',
+            marginRight: variant === 'button' ? '48px' : '17px',
           },
         }}
         helperText={
-          hasError && (
+          value && (
             <SearchSuggestions
               onClickSuggestion={suggestion => {
                 setValue(suggestion)
-                setHasError(true)
               }}
             />
           )
