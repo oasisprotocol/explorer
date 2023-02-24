@@ -16,9 +16,6 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     padding: 0,
   },
   height: 186,
-  [theme.breakpoints.up('sm')]: {
-    height: 186,
-  },
 }))
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
