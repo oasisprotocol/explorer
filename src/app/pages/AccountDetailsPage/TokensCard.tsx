@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 import { TokensEmptyState } from './TokensEmptyState'
 import { Table, TableCellAlign } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -43,7 +44,9 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
       {
         content: (
           <Box id={item.token_contract_addr}>
-            <CopyToClipboard value={item.token_contract_addr} />
+            <Typography variant="mono">
+              <CopyToClipboard value={item.token_contract_addr} />
+            </Typography>
           </Box>
         ),
         key: 'hash',

@@ -2,13 +2,13 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
 
-type RoundedRoseValueProps = {
+type RoundedBalanceProps = {
   value?: string
 }
 
 const numberOfDecimals = 5
 
-export const RoundedRoseValue: FC<RoundedRoseValueProps> = ({ value }) => {
+export const RoundedBalance: FC<RoundedBalanceProps> = ({ value }) => {
   const { t } = useTranslation()
 
   if (!value) {
