@@ -31,6 +31,10 @@ export abstract class RouteUtils {
     return `${paraTime ? `/${paraTime}` : ''}/account/${encodeURIComponent(sender)}`
   }
 
+  static getSearchRoute = (searchTerm: string) => {
+    return `/search?q=${encodeURIComponent(searchTerm)}`
+  }
+
   static getEnabledParaTimes(): Layer[] {
     return RouteUtils.ENABLED_PARA_TIMES
   }
@@ -64,6 +68,7 @@ const validateTxHashParam = (hash: string) => {
 
 export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
   validateAddressParam(params.address!)
+  // TODO: remove conversion when API supports querying by EVM address
   const address = await getOasisAddress(params.address!)
   return address
 }

@@ -8,12 +8,14 @@ import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
+import { SearchResultsPage } from './app/pages/SearchResultsPage'
 import {
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
   layerLoader,
 } from './app/utils/route-utils'
+import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
 export const routes: RouteObject[] = [
@@ -23,6 +25,11 @@ export const routes: RouteObject[] = [
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/search', // ?q=
+        element: <SearchResultsPage />,
+        loader: searchParamLoader,
       },
       {
         path: `/:layer`,

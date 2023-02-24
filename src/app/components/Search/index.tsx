@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchUtils } from './search-utils'
+import { RouteUtils } from '../../utils/route-utils'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
@@ -100,10 +100,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    const navigateTo = SearchUtils.getNavigationPath(value)
-    if (navigateTo) {
-      navigate(navigateTo)
-    }
+    navigate(RouteUtils.getSearchRoute(value))
   }
 
   const onClearValue = () => {

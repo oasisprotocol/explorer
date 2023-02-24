@@ -1,30 +1,12 @@
-import { Layer } from '../../../config'
+import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import {
   isValidBlockHeight,
   isValidBlockHash,
   isValidTxHash,
   isValidOasisAddress,
   isValidEthAddress,
+  getEvmBech32Address,
 } from '../../utils/helpers'
-import { RouteUtils } from '../../utils/route-utils'
-
-export abstract class SearchUtils {
-  /**
-   * Receives a search term and returns a matching path
-   */
-  static getNavigationPath(searchTerm: string): string | undefined {
-    const blockHeight = validateAndNormalize.blockHeight(searchTerm)
-    const txHash = validateAndNormalize.txHash(searchTerm)
-    const evmAccount = validateAndNormalize.evmAccount(searchTerm)
-    const consensusAccount = validateAndNormalize.consensusAccount(searchTerm)
-    if (blockHeight) return RouteUtils.getBlockRoute(parseInt(blockHeight, 10), Layer.Emerald)
-    if (txHash) return RouteUtils.getTransactionRoute(txHash, Layer.Emerald)
-    if (evmAccount) return RouteUtils.getAccountRoute(evmAccount, Layer.Emerald)
-    if (consensusAccount) return RouteUtils.getAccountRoute(consensusAccount, Layer.Emerald)
-    // TODO: block hash, contract, validator, event
-    return undefined
-  }
-}
 
 export const searchSuggestionTerms = {
   suggestedTransaction: 'b1e68ca814d913064bd6b9460efcb64b4c6d07f3b98fa659beed46164398a830',
@@ -79,4 +61,21 @@ export const validateAndNormalize = {
 
 export function isSearchValid(searchTerm: string) {
   return Object.values(validateAndNormalize).some(fn => !!fn(searchTerm))
+}
+
+export const searchParamLoader = async ({ request }: LoaderFunctionArgs) => {
+  const searchTerm = new URL(request.url).searchParams.get('q')?.trim() ?? ''
+  const normalized = Object.fromEntries(
+    Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(searchTerm)]),
+  ) as { [Key in keyof typeof validateAndNormalize]: string | undefined }
+  return {
+    ...normalized,
+    // TODO: remove conversion when API supports querying by EVM address
+    // TODO: without async conversion, this won't need to even be a loader
+    evmBech32Account: normalized.evmAccount ? await getEvmBech32Address(normalized.evmAccount) : undefined,
+  }
+}
+
+export const useParamSearch = () => {
+  return useLoaderData() as Awaited<ReturnType<typeof searchParamLoader>>
 }
