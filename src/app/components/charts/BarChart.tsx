@@ -30,7 +30,7 @@ const BarChartCmp = <T extends object>({
   withLabels,
   withBarBackground,
 }: BarChartProps<T>) => (
-  <ResponsiveContainer width="100%" aspect={4}>
+  <ResponsiveContainer width="100%">
     <RechartsBarChart data={data} margin={{ right: 8, bottom: 0, left: 8 }}>
       {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
       {withLabels && (

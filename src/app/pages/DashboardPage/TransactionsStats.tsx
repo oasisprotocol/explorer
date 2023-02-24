@@ -17,7 +17,7 @@ export function TransactionsStats() {
   return (
     <Card>
       <CardHeader disableTypography component="h3" title={t('transactionStats.header')} />
-      <CardContent>
+      <CardContent sx={{ height: 450 }}>
         {dailyVolumeQuery.data?.data.buckets && (
           <BarChart
             cartesianGrid

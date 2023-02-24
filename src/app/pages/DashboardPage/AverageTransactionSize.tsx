@@ -15,7 +15,7 @@ export const AverageTransactionSize: FC = () => {
   return (
     <Card>
       <CardHeader disableTypography component="h3" title={t('averageTransactionSize.header')} />
-      <CardContent>
+      <CardContent sx={{ height: 450 }}>
         {dailyVolumeQuery.data?.data.buckets && (
           <LineChart
             tooltipActiveDotRadius={9}
