@@ -26,6 +26,12 @@ export abstract class SearchUtils {
   }
 }
 
+export const searchSuggestionTerms = {
+  suggestedTransaction: 'b1e68ca814d913064bd6b9460efcb64b4c6d07f3b98fa659beed46164398a830',
+  suggestedBlock: '1396255',
+  suggestedAccount: '0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3',
+}
+
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
     const thousandSeparator = new Intl.NumberFormat().formatToParts(1234).find(p => p.type === 'group')?.value

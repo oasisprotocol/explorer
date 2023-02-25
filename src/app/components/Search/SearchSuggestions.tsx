@@ -8,10 +8,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import WidgetsIcon from '@mui/icons-material/Widgets'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
-
-const suggestedTransaction = 'b1e68ca814d913064bd6b9460efcb64b4c6d07f3b98fa659beed46164398a830'
-const suggestedBlock = '1396255'
-const suggestedAccount = '0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3'
+import { searchSuggestionTerms } from './search-utils'
 
 const PlainTextButton = styled(Button)({
   fontSize: 'inherit',
@@ -21,16 +18,22 @@ const PlainTextButton = styled(Button)({
   minWidth: 0,
   height: '1em',
 })
+PlainTextButton.defaultProps = {
+  variant: 'text',
+  color: 'inherit',
+}
+
 const SuggestionButton = styled(PlainTextButton)({
   gap: '0.2ch', // Space after icon
 })
 
-export interface SearchSuggestionsProps {
+interface Props {
   onClickSuggestion: (suggestion: string) => void
 }
 
-export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestion }) => {
+export const SearchSuggestions: FC<Props> = ({ onClickSuggestion }) => {
   const { t } = useTranslation()
+  const { suggestedBlock, suggestedTransaction, suggestedAccount } = searchSuggestionTerms
 
   return (
     <span>
@@ -42,29 +45,11 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
             // Make this the preferred line break point with inline-block.
             OptionalBreak: <Box as="span" sx={{ display: 'inline-block' }} />,
             BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
-            BlockLink: (
-              <SuggestionButton
-                variant="text"
-                color="inherit"
-                onClick={() => onClickSuggestion(suggestedBlock)}
-              />
-            ),
+            BlockLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedBlock)} />,
             TransactionIcon: <RepeatIcon sx={{ fontSize: '18px' }} />,
-            TransactionLink: (
-              <SuggestionButton
-                variant="text"
-                color="inherit"
-                onClick={() => onClickSuggestion(suggestedTransaction)}
-              />
-            ),
+            TransactionLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTransaction)} />,
             AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
-            AccountLink: (
-              <SuggestionButton
-                variant="text"
-                color="inherit"
-                onClick={() => onClickSuggestion(suggestedAccount)}
-              />
-            ),
+            AccountLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedAccount)} />,
           }}
         ></Trans>
       </Typography>
