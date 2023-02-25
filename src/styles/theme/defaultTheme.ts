@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import { COLORS } from './colors'
+import Fade from '@mui/material/Fade'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -429,6 +430,10 @@ export const defaultTheme = createTheme({
       },
     },
     MuiTooltip: {
+      defaultProps: {
+        TransitionComponent: Fade,
+        TransitionProps: { timeout: 600 },
+      },
       styleOverrides: {
         arrow: {
           color: COLORS.brandExtraDark,
