@@ -16,8 +16,11 @@ const StyledBox = styled(Box, {
   height: '28px',
   fontSize: '15px',
   backgroundColor: success ? COLORS.honeydew : COLORS.linen,
+  color: success ? COLORS.eucalyptus : COLORS.errorIndicatorBackground,
   borderRadius: 10,
   padding: 4,
+  paddingLeft: 12,
+  paddingRight: 12,
 }))
 
 type TransactionStatusIconProps = {
@@ -29,7 +32,12 @@ export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success,
   const { t } = useTranslation()
   return (
     <StyledBox success={success} withText={withText}>
-      {withText && <span>{success ? t('common.success') : t('common.failed')}</span>}
+      {withText && (
+        <span>
+          {success ? t('common.success') : t('common.failed')}
+          &nbsp;
+        </span>
+      )}
       {success ? (
         <CheckCircleIcon color="success" fontSize="inherit" />
       ) : (
