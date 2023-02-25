@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
@@ -34,17 +35,12 @@ export const SearchSuggestions: FC<SearchSuggestionsProps> = ({ onClickSuggestio
   return (
     <span>
       <Typography component="span" sx={{ color: COLORS.grayExtraDark, fontSize: 12 }}>
-        {t('search.searchSuggestionsLine1')}&nbsp;
-      </Typography>
-      <Typography
-        component="span"
-        // Make this the preferred line break point with inline-block.
-        sx={{ color: COLORS.grayExtraDark, fontSize: 12, display: 'inline-block' }}
-      >
         <Trans
           t={t}
-          i18nKey="search.searchSuggestionsLine2"
+          i18nKey="search.searchSuggestions"
           components={{
+            // Make this the preferred line break point with inline-block.
+            OptionalBreak: <Box as="span" sx={{ display: 'inline-block' }} />,
             BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
             BlockLink: (
               <SuggestionButton
