@@ -1,5 +1,5 @@
-import { FC, FormEvent, memo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC, FormEvent, memo, useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import { styled, useTheme } from '@mui/material/styles'
@@ -92,6 +92,11 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
+  const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
+
+  useEffect(() => {
+    setValue(valueInSearchParams)
+  }, [valueInSearchParams])
 
   const onFocusChange = (value: boolean) => {
     setIsFocused(value)
@@ -168,7 +173,8 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
           },
         }}
         helperText={
-          value && (
+          value &&
+          value !== valueInSearchParams && (
             <SearchSuggestionsButtons
               onClickSuggestion={suggestion => {
                 setValue(suggestion)
