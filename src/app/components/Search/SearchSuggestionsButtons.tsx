@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
@@ -9,6 +8,7 @@ import WidgetsIcon from '@mui/icons-material/Widgets'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import { searchSuggestionTerms } from './search-utils'
+import { OptionalBreak } from '../OptionalBreak'
 
 const PlainTextButton = styled(Button)({
   fontSize: 'inherit',
@@ -42,8 +42,7 @@ export const SearchSuggestionsButtons: FC<Props> = ({ onClickSuggestion }) => {
           t={t}
           i18nKey="search.searchSuggestions"
           components={{
-            // Make this the preferred line break point with inline-block.
-            OptionalBreak: <Box as="span" sx={{ display: 'inline-block' }} />,
+            OptionalBreak: <OptionalBreak />,
             BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
             BlockLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedBlock)} />,
             TransactionIcon: <RepeatIcon sx={{ fontSize: '18px' }} />,
