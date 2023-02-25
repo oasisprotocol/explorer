@@ -11,7 +11,7 @@ import { SearchUtils } from './search-utils'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
-import { SearchSuggestions } from './SearchSuggestions'
+import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -172,7 +172,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
         }}
         helperText={
           value && (
-            <SearchSuggestions
+            <SearchSuggestionsButtons
               onClickSuggestion={suggestion => {
                 setValue(suggestion)
               }}

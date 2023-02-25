@@ -31,7 +31,7 @@ interface Props {
   onClickSuggestion: (suggestion: string) => void
 }
 
-export const SearchSuggestions: FC<Props> = ({ onClickSuggestion }) => {
+export const SearchSuggestionsButtons: FC<Props> = ({ onClickSuggestion }) => {
   const { t } = useTranslation()
   const { suggestedBlock, suggestedTransaction, suggestedAccount } = searchSuggestionTerms
 
