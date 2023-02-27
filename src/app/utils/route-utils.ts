@@ -75,3 +75,22 @@ export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => 
 export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => {
   return validateTxHashParam(params.hash!)
 }
+
+export const paraTimeLoader = async (
+  args: LoaderFunctionArgs,
+  next?: (args: LoaderFunctionArgs) => Promise<string | boolean>,
+) => {
+  const {
+    params: { paraTime },
+  } = args
+
+  if (!paraTime || !RouteUtils.getEnabledParaTimes().includes(paraTime as ParaTime)) {
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
+  if (next) {
+    return await next(args)
+  }
+
+  return true
+}

@@ -12,6 +12,7 @@ export enum AppErrors {
   InvalidPageNumber = 'invalid_page_number',
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
+  InvalidUrl = 'invalid_url',
 }
 
 export interface ErrorPayload {

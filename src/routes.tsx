@@ -9,10 +9,10 @@ import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
 import {
-  RouteUtils,
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
+  paraTimeLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
@@ -24,54 +24,53 @@ export const routes: RouteObject[] = [
         path: '/',
         element: <HomePage />,
       },
-      ...RouteUtils.getEnabledParaTimes()
-        .map((paraTime): RouteObject[] => [
+      {
+        path: `/:paraTime`,
+        element: <DashboardPage />,
+        loader: paraTimeLoader,
+      },
+      {
+        path: `/:paraTime/blocks`,
+        element: <BlocksPage />,
+        loader: paraTimeLoader,
+      },
+      {
+        path: `/:paraTime/blocks/:blockHeight`,
+        element: <BlockDetailPage />,
+        loader: args => paraTimeLoader(args, blockHeightParamLoader),
+      },
+      {
+        path: `/:paraTime/account/:address`,
+        element: <AccountDetailsPage />,
+        loader: args => paraTimeLoader(args, addressParamLoader),
+        children: [
           {
-            path: `/${paraTime}`,
-            element: <DashboardPage />,
+            path: '',
+            element: <TransactionsCard />,
+            loader: args => paraTimeLoader(args, addressParamLoader),
           },
           {
-            path: `/${paraTime}/blocks`,
-            element: <BlocksPage />,
+            path: 'tokens/erc-20',
+            element: <TokensCard type="ERC20" />,
+            loader: args => paraTimeLoader(args, addressParamLoader),
           },
           {
-            path: `/${paraTime}/blocks/:blockHeight`,
-            element: <BlockDetailPage />,
-            loader: blockHeightParamLoader,
+            path: 'tokens/erc-721',
+            element: <TokensCard type="ERC721" />,
+            loader: args => paraTimeLoader(args, addressParamLoader),
           },
-          {
-            path: `${paraTime}/account/:address`,
-            element: <AccountDetailsPage />,
-            loader: addressParamLoader,
-            children: [
-              {
-                path: '',
-                element: <TransactionsCard />,
-                loader: addressParamLoader,
-              },
-              {
-                path: 'tokens/erc-20',
-                element: <TokensCard type="ERC20" />,
-                loader: addressParamLoader,
-              },
-              {
-                path: 'tokens/erc-721',
-                element: <TokensCard type="ERC721" />,
-                loader: addressParamLoader,
-              },
-            ],
-          },
-          {
-            path: `/${paraTime}/transactions`,
-            element: <TransactionsPage />,
-          },
-          {
-            path: `${paraTime}/transactions/:hash`,
-            element: <TransactionDetailPage />,
-            loader: transactionParamLoader,
-          },
-        ])
-        .flat(),
+        ],
+      },
+      {
+        path: `/:paraTime/transactions`,
+        element: <TransactionsPage />,
+        loader: paraTimeLoader,
+      },
+      {
+        path: `/:paraTime/transactions/:hash`,
+        element: <TransactionDetailPage />,
+        loader: args => paraTimeLoader(args, transactionParamLoader),
+      },
       {
         path: `/blocks/:blockHeight`,
         element: <BlockDetailPage />,
