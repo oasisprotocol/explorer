@@ -24,6 +24,7 @@ import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useLayerParam } from '../../hooks/useLayerParam'
@@ -62,6 +63,19 @@ function useWantedTransaction(
 
 const StyledAlert = styled(Alert)(() => ({
   marginBottom: '1em',
+}))
+
+const ErrorBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: '28px',
+  fontSize: '12px',
+  backgroundColor: COLORS.grayLight,
+  color: COLORS.errorIndicatorBackground,
+  borderRadius: 10,
+  paddingLeft: 12,
+  paddingRight: 12,
 }))
 
 export const TransactionDetailPage: FC = () => {
@@ -131,8 +145,13 @@ export const TransactionDetailView: FC<{
           </dd>
 
           <dt>{t('common.status')}</dt>
-          <dd>
+          <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
             <TransactionStatusIcon success={transaction.success} withText={true} />
+            {transaction.error && (
+              <ErrorBox>
+                {transaction.error.message} ({t('errors.code')} {transaction.error.code})
+              </ErrorBox>
+            )}
           </dd>
 
           <dt>{t('common.block')}</dt>
