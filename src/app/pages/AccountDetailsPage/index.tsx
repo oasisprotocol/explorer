@@ -6,7 +6,7 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useGetRosePrice } from '../../../coin-gecko/api'
-import { Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { RuntimeAccount, Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -18,7 +18,11 @@ export const AccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('account.title')}>
-        <Account account={account} isLoading={accountQuery.isLoading} roseFiatValue={rosePriceQuery.data} />
+        <AccountDetailsView
+          isLoading={accountQuery.isLoading}
+          account={account}
+          roseFiatValue={rosePriceQuery.data}
+        />
       </SubPageCard>
       <RouterTabs
         tabs={[
@@ -29,4 +33,12 @@ export const AccountDetailsPage: FC = () => {
       />
     </PageLayout>
   )
+}
+
+export const AccountDetailsView: FC<{
+  isLoading: boolean
+  account: RuntimeAccount | undefined
+  roseFiatValue: number | undefined
+}> = ({ isLoading, account, roseFiatValue }) => {
+  return <Account account={account} isLoading={isLoading} roseFiatValue={roseFiatValue} />
 }
