@@ -14,6 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { ParaTime } from '../../../config'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
+import { useParaTimeHref } from '../../hooks/useParaTimeHref'
 
 const getLabel = (t: TFunction, pathname: string) => {
   if (pathname.startsWith(`/${ParaTime.Emerald}`)) {
@@ -44,7 +45,7 @@ export const NetworkHeader: FC = () => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(ParaTime.Emerald)}
+            to={useParaTimeHref('/', ParaTime.Emerald)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography
