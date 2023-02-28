@@ -1,15 +1,15 @@
 export const consensusDecimals = 9
 
-type ParaTimeNetwork = {
+type LayerNetwork = {
   address: string | undefined
   gasLimit: number | undefined
   runtimeId: string | undefined
 }
 
-type ParaTimeConfig = {
-  mainnet: ParaTimeNetwork
-  testnet: ParaTimeNetwork
-  local: ParaTimeNetwork
+type LayerConfig = {
+  mainnet: LayerNetwork
+  testnet: LayerNetwork
+  local: LayerNetwork
   decimals: number
   type: RuntimeTypes
 }
@@ -19,7 +19,7 @@ export enum RuntimeTypes {
   Oasis = 'oasis',
 }
 
-const emeraldConfig: ParaTimeConfig = {
+const emeraldConfig: LayerConfig = {
   mainnet: {
     address: 'oasis1qzvlg0grjxwgjj58tx2xvmv26era6t2csqn22pte',
     gasLimit: 10_000_000,
@@ -39,7 +39,7 @@ const emeraldConfig: ParaTimeConfig = {
   type: RuntimeTypes.Evm,
 }
 
-const cipherConfig: ParaTimeConfig = {
+const cipherConfig: LayerConfig = {
   mainnet: {
     address: 'oasis1qrnu9yhwzap7rqh6tdcdcpz0zf86hwhycchkhvt8',
     gasLimit: undefined, // TODO: provide gas limit
@@ -59,7 +59,7 @@ const cipherConfig: ParaTimeConfig = {
   type: RuntimeTypes.Oasis,
 }
 
-const sapphireConfig: ParaTimeConfig = {
+const sapphireConfig: LayerConfig = {
   mainnet: {
     address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     gasLimit: 15_000_000,
@@ -80,21 +80,23 @@ const sapphireConfig: ParaTimeConfig = {
   type: RuntimeTypes.Evm,
 }
 
-export enum ParaTime {
+export enum Layer {
   Cipher = 'cipher',
   Emerald = 'emerald',
   Sapphire = 'sapphire',
+  Consensus = 'consensus',
 }
 
-type ParaTimesConfig = {
-  [key in ParaTime]: ParaTimeConfig
+type LayersConfig = {
+  [key in Layer]: LayerConfig | null
 }
 
-export const paraTimesConfig: ParaTimesConfig = {
-  [ParaTime.Cipher]: cipherConfig,
-  [ParaTime.Emerald]: emeraldConfig,
-  [ParaTime.Sapphire]: sapphireConfig,
+export const paraTimesConfig: LayersConfig = {
+  [Layer.Cipher]: cipherConfig,
+  [Layer.Emerald]: emeraldConfig,
+  [Layer.Sapphire]: sapphireConfig,
+  [Layer.Consensus]: null,
 }
 
 // TODO: refactor this when we have network specific builds and/or another paraTime is added
-export const gasLimit = paraTimesConfig[ParaTime.Emerald].mainnet.gasLimit!
+export const gasLimit = paraTimesConfig[Layer.Emerald]?.mainnet.gasLimit!

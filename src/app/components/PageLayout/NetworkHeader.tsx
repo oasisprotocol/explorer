@@ -11,12 +11,12 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import blockchainImage from './images/blockchain.svg'
 import { COLORS } from '../../../styles/theme/colors'
-import { ParaTime } from '../../../config'
+import { Layer } from '../../../config'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
 
 const getLabel = (t: TFunction, pathname: string) => {
-  if (pathname.startsWith(`/${ParaTime.Emerald}`)) {
+  if (pathname.startsWith(`/${Layer.Emerald}`)) {
     return t('common.emerald')
   }
 }
@@ -44,7 +44,7 @@ export const NetworkHeader: FC = () => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(ParaTime.Emerald)}
+            to={RouteUtils.getDashboardRoute(Layer.Emerald)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography

@@ -15,7 +15,7 @@ import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
-import { ParaTime } from '../../../config'
+import { Layer } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -79,7 +79,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.hash}
-              to={RouteUtils.getTransactionRoute(transaction.hash, ParaTime.Emerald)}
+              to={RouteUtils.getTransactionRoute(transaction.hash, Layer.Emerald)}
             />
           </Typography>
         ),
@@ -92,7 +92,7 @@ export const Transactions: FC<TransactionProps> = ({
                 <Typography variant="mono">
                   <Link
                     component={RouterLink}
-                    to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
+                    to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}
                   >
                     {transaction.round.toLocaleString()}
                   </Link>
@@ -127,7 +127,7 @@ export const Transactions: FC<TransactionProps> = ({
             <Typography variant="mono">
               <TrimLinkLabel
                 label={transaction.sender_0}
-                to={RouteUtils.getAccountRoute(transaction.sender_0, ParaTime.Emerald)}
+                to={RouteUtils.getAccountRoute(transaction.sender_0, Layer.Emerald)}
               />
             </Typography>
             {transaction.to && (
@@ -145,7 +145,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.to!}
-              to={RouteUtils.getAccountRoute(transaction.to!, ParaTime.Emerald)}
+              to={RouteUtils.getAccountRoute(transaction.to!, Layer.Emerald)}
             />
           </Typography>
         ),

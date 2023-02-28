@@ -1,37 +1,37 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { ParaTime } from '../../config'
+import { Layer } from '../../config'
 import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 
 export abstract class RouteUtils {
-  private static ENABLED_PARA_TIMES: ParaTime[] = [ParaTime.Emerald, ParaTime.Sapphire, ParaTime.Cipher]
+  private static ENABLED_PARA_TIMES: Layer[] = [Layer.Emerald, Layer.Sapphire, Layer.Cipher]
 
-  static getDashboardRoute = (paraTime: ParaTime) => {
+  static getDashboardRoute = (paraTime: Layer) => {
     return `/${paraTime}`
   }
 
-  static getLatestTransactionsRoute = (paraTime: ParaTime) => {
+  static getLatestTransactionsRoute = (paraTime: Layer) => {
     return `/${paraTime}/transactions`
   }
 
-  static getLatestBlocksRoute = (paraTime: ParaTime) => {
+  static getLatestBlocksRoute = (paraTime: Layer) => {
     return `/${paraTime}/blocks`
   }
 
-  static getBlockRoute = (blockHeight: number, paraTime: ParaTime | null = null) => {
+  static getBlockRoute = (blockHeight: number, paraTime: Layer | null = null) => {
     return `${paraTime ? `/${paraTime}` : ''}/blocks/${encodeURIComponent(blockHeight)}`
   }
 
-  static getTransactionRoute = (txHash: string, paraTime: ParaTime | null = null) => {
+  static getTransactionRoute = (txHash: string, paraTime: Layer | null = null) => {
     return `${paraTime ? `/${paraTime}` : ''}/transactions/${encodeURIComponent(txHash)}`
   }
 
-  static getAccountRoute = (sender: string, paraTime: ParaTime | null = null) => {
+  static getAccountRoute = (sender: string, paraTime: Layer | null = null) => {
     return `${paraTime ? `/${paraTime}` : ''}/account/${encodeURIComponent(sender)}`
   }
 
-  static getEnabledParaTimes(): ParaTime[] {
+  static getEnabledParaTimes(): Layer[] {
     return RouteUtils.ENABLED_PARA_TIMES
   }
 }
@@ -81,7 +81,7 @@ export const paraTimeLoader = async (args: LoaderFunctionArgs) => {
     params: { paraTime },
   } = args
 
-  if (!paraTime || !RouteUtils.getEnabledParaTimes().includes(paraTime as ParaTime)) {
+  if (!paraTime || !RouteUtils.getEnabledParaTimes().includes(paraTime as Layer)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

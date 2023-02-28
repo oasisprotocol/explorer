@@ -8,7 +8,7 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
-import { ParaTime, gasLimit } from '../../../config'
+import { Layer, gasLimit } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 export type TableRuntimeBlock = RuntimeBlock & {
@@ -53,7 +53,7 @@ export const Blocks = (props: BlocksProps) => {
         align: TableCellAlign.Right,
         content: (
           <Typography variant="mono">
-            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}>
+            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}>
               {block.round.toLocaleString()}
             </Link>
           </Typography>
@@ -79,7 +79,7 @@ export const Blocks = (props: BlocksProps) => {
                 <Typography variant="mono">
                   <TrimLinkLabel
                     label={block.hash}
-                    to={RouteUtils.getBlockRoute(block.round, ParaTime.Emerald)}
+                    to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}
                   />
                 </Typography>
               ),

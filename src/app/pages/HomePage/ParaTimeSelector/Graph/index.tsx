@@ -5,7 +5,7 @@ import { forwardRef, ForwardRefRenderFunction, memo } from 'react'
 import { GraphEndpoint, GraphEndpoints } from './types'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
-import { ParaTime } from '../../../../../config'
+import { Layer } from '../../../../../config'
 
 interface GraphBaseProps {
   disabled?: boolean
@@ -71,7 +71,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const onSelectGraphEndpoint = (graphEndpoint: GraphEndpoint) => {
     if (
       selectedGraphEndpoint === graphEndpoint &&
-      RouteUtils.getEnabledParaTimes().includes(selectedGraphEndpoint as unknown as ParaTime)
+      RouteUtils.getEnabledParaTimes().includes(selectedGraphEndpoint as unknown as Layer)
     ) {
       navigate(`/${graphEndpoint}`)
 
@@ -134,7 +134,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         fill="white"
       />
       <g style={{ pointerEvents: selectedGraphEndpoint === GraphEndpoints.Emerald ? 'auto' : 'none' }}>
-        <Link to={RouteUtils.getLatestTransactionsRoute(ParaTime.Emerald)}>
+        <Link to={RouteUtils.getLatestTransactionsRoute(Layer.Emerald)}>
           <circle
             cx="235.407"
             cy="36.3673"
@@ -153,7 +153,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             {t('home.txn')}
           </text>
         </Link>
-        <Link to={RouteUtils.getLatestBlocksRoute(ParaTime.Emerald)}>
+        <Link to={RouteUtils.getLatestBlocksRoute(Layer.Emerald)}>
           <circle
             cx="156.801"
             cy="37.6351"
