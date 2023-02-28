@@ -14,13 +14,14 @@ import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { AccountLink } from '../../components/Account/AccountLink'
-import Divider from '@mui/material/Divider'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
+import Typography from '@mui/material/Typography'
+import { COLORS } from '../../../styles/theme/colors'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -82,12 +83,17 @@ export const TransactionDetailPage: FC = () => {
         </SubPageCard>
       )}
       {transaction && (
-        <SubPageCard title={t('transaction.header')} key={`${transaction.round}_${transaction.index}`}>
-          {!isMobile && <Divider variant="fullWidth" />}
-          <StyledDescriptionList titleWidth="200px">
+        <SubPageCard
+          featured
+          title={t('transaction.header')}
+          key={`${transaction.round}_${transaction.index}`}
+        >
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.hash')}</dt>
             <dd>
-              {isMobile ? trimLongString(transaction.hash) : transaction.hash}
+              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                {isMobile ? trimLongString(transaction.hash) : transaction.hash}
+              </Typography>
               <CopyToClipboard value={transaction.hash} label={' '} />
             </dd>
 
@@ -98,9 +104,14 @@ export const TransactionDetailPage: FC = () => {
 
             <dt>{t('common.block')}</dt>
             <dd>
-              <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}>
-                {transaction.round}
-              </Link>
+              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                <Link
+                  component={RouterLink}
+                  to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
+                >
+                  {transaction.round.toLocaleString()}
+                </Link>
+              </Typography>
             </dd>
 
             <dt>{t('common.type')}</dt>
@@ -113,7 +124,9 @@ export const TransactionDetailPage: FC = () => {
 
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={transaction.sender_0} paratime={ParaTime.Emerald} />
+              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                <AccountLink address={transaction.sender_0} paratime={ParaTime.Emerald} />
+              </Typography>
               <CopyToClipboard value={transaction.sender_0} label={' '} />
             </dd>
 
@@ -121,7 +134,13 @@ export const TransactionDetailPage: FC = () => {
               <>
                 <dt>{t('common.to')}</dt>
                 <dd>
-                  <AccountLink address={transaction.to} paratime={ParaTime.Emerald} />
+                  <Typography
+                    variant="mono"
+                    component="span"
+                    sx={{ color: COLORS.brandDark, fontWeight: 700 }}
+                  >
+                    <AccountLink address={transaction.to} paratime={ParaTime.Emerald} />
+                  </Typography>
                   <CopyToClipboard value={transaction.to} label={' '} />
                 </dd>
               </>
