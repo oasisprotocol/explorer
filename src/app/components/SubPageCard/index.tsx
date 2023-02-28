@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -12,7 +12,7 @@ import { styled, css } from '@mui/material/styles'
 type StyledComponentProps = {
   featured?: boolean
 }
-type SubPageCardProps = PropsWithChildren & StyledComponentProps & { title: string }
+type SubPageCardProps = PropsWithChildren & StyledComponentProps & { title: ReactNode }
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'featured',
