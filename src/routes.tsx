@@ -26,50 +26,53 @@ export const routes: RouteObject[] = [
       },
       {
         path: `/:paraTime`,
-        element: <DashboardPage />,
         loader: paraTimeLoader,
-      },
-      {
-        path: `/:paraTime/blocks`,
-        element: <BlocksPage />,
-        loader: paraTimeLoader,
-      },
-      {
-        path: `/:paraTime/blocks/:blockHeight`,
-        element: <BlockDetailPage />,
-        loader: args => paraTimeLoader(args, blockHeightParamLoader),
-      },
-      {
-        path: `/:paraTime/account/:address`,
-        element: <AccountDetailsPage />,
-        loader: args => paraTimeLoader(args, addressParamLoader),
         children: [
           {
             path: '',
-            element: <TransactionsCard />,
-            loader: args => paraTimeLoader(args, addressParamLoader),
+            element: <DashboardPage />,
           },
           {
-            path: 'tokens/erc-20',
-            element: <TokensCard type="ERC20" />,
-            loader: args => paraTimeLoader(args, addressParamLoader),
+            path: `blocks`,
+            element: <BlocksPage />,
           },
           {
-            path: 'tokens/erc-721',
-            element: <TokensCard type="ERC721" />,
-            loader: args => paraTimeLoader(args, addressParamLoader),
+            path: `blocks/:blockHeight`,
+            element: <BlockDetailPage />,
+            loader: blockHeightParamLoader,
+          },
+          {
+            path: `account/:address`,
+            element: <AccountDetailsPage />,
+            loader: addressParamLoader,
+            children: [
+              {
+                path: '',
+                element: <TransactionsCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-20',
+                element: <TokensCard type="ERC20" />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-721',
+                element: <TokensCard type="ERC721" />,
+                loader: addressParamLoader,
+              },
+            ],
+          },
+          {
+            path: `transactions`,
+            element: <TransactionsPage />,
+          },
+          {
+            path: `transactions/:hash`,
+            element: <TransactionDetailPage />,
+            loader: transactionParamLoader,
           },
         ],
-      },
-      {
-        path: `/:paraTime/transactions`,
-        element: <TransactionsPage />,
-        loader: paraTimeLoader,
-      },
-      {
-        path: `/:paraTime/transactions/:hash`,
-        element: <TransactionDetailPage />,
-        loader: args => paraTimeLoader(args, transactionParamLoader),
       },
       {
         path: `/blocks/:blockHeight`,
