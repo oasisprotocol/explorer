@@ -21,6 +21,7 @@ import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
+import { useParaTimeLocation } from '../../hooks/useParaTimeLocation'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -59,6 +60,10 @@ export const TransactionDetailPage: FC = () => {
   const hash = useParams().hash!
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isEmerald, isSapphire, isCipher } = useParaTimeLocation()
+  console.log('isEmerald', isEmerald)
+  console.log('isSapphire', isSapphire)
+  console.log('isCipher', isCipher)
 
   const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
 
