@@ -13,7 +13,6 @@ import blockchainImage from './images/blockchain.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { ParaTime } from '../../../config'
 import { Circle } from '../Circle'
-import { RouteUtils } from '../../utils/route-utils'
 import { useParaTimeHref } from '../../hooks/useParaTimeHref'
 
 const getLabel = (t: TFunction, pathname: string) => {

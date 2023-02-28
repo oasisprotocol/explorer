@@ -2,7 +2,7 @@ import { useHref } from 'react-router-dom'
 import { ParaTime } from '../../config'
 import { useParaTimeLocation } from './useParaTimeLocation'
 
-export const useParaTimeHref = (href: string = '', paraTime?: ParaTime): ReturnType<typeof useHref> => {
+export const useParaTimeHref = (href = '', paraTime?: ParaTime): ReturnType<typeof useHref> => {
   const { isEmerald, isSapphire, isCipher } = useParaTimeLocation()
 
   const getParaTime = () => {
