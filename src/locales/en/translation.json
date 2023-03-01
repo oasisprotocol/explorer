@@ -156,7 +156,9 @@
     "today": "Today",
     "thisWeek": "This week",
     "thisMonth": "This month",
-    "allTime": "All time"
+    "allTime": "All time",
+    "week": "Week",
+    "month": "Month"
   },
   "paraTimeSnapshot": {
     "header": "ParaTime Snapshot"

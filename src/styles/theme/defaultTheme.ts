@@ -311,6 +311,15 @@ export const defaultTheme = createTheme({
         },
       ],
       styleOverrides: {
+        colorSecondary: {
+          color: COLORS.brandExtraDark,
+        },
+        filledSecondary: {
+          backgroundColor: COLORS.grayMediumLight,
+          ':hover': {
+            backgroundColor: COLORS.grayMediumLight,
+          },
+        },
         root: ({ theme }) => ({
           fontSize: '15px',
           lineHeight: '18px',
