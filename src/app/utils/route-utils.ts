@@ -76,12 +76,12 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
-export const paraTimeLoader = async (args: LoaderFunctionArgs) => {
+export const layerLoader = async (args: LoaderFunctionArgs) => {
   const {
-    params: { paraTime },
+    params: { layer },
   } = args
 
-  if (!paraTime || !RouteUtils.getEnabledParaTimes().includes(paraTime as Layer)) {
+  if (!layer || !RouteUtils.getEnabledParaTimes().includes(layer as Layer)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

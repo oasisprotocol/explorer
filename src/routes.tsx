@@ -12,7 +12,7 @@ import {
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
-  paraTimeLoader,
+  layerLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
@@ -25,8 +25,8 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: `/:paraTime`,
-        loader: paraTimeLoader,
+        path: `/:layer`,
+        loader: layerLoader,
         children: [
           {
             path: '',
