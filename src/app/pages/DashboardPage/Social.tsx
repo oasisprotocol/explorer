@@ -28,7 +28,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
       href={href}
       color={COLORS.white}
       underline="none"
-      sx={{ display: 'flex', flexDirection: 'column', mx: isMobile ? 5 : 0, mt: isMobile ? 4 : 0 }}
+      sx={{ display: 'flex', flexDirection: 'column', mx: isMobile ? 4 : 0, mt: isMobile ? 4 : 0 }}
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -55,7 +55,7 @@ export const Social: FC = () => {
         borderStyle: 'solid',
         borderWidth: '1px',
         borderColor: COLORS.white,
-        borderRadius: 12,
+        borderRadius: '12px',
         backgroundImage: `url(${backgroundSocial})`,
         backgroundSize: 'cover',
       }}

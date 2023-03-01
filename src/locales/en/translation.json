@@ -13,6 +13,9 @@
     "totalReceived": "Total Received",
     "totalSent": "Total Sent"
   },
+  "activeAccounts": {
+    "title": "Active Accounts"
+  },
   "averageTransactionSize": {
     "header": "Average Transaction Size",
     "tooltip": "Average Tx Size: {{value, number}}"

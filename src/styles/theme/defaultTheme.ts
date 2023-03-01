@@ -244,15 +244,16 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,
-          marginBottom: theme.spacing(5),
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
+            marginBottom: theme.spacing(4),
             padding: `${theme.spacing(4)} ${theme.spacing(4)} 0`,
             ':has(table)': {
               paddingRight: 0,
             },
           },
           [theme.breakpoints.up('sm')]: {
+            marginBottom: theme.spacing(5),
             padding: `${theme.spacing(5)} ${theme.spacing(5)} 0`,
           },
         }),
@@ -272,7 +273,13 @@ export const defaultTheme = createTheme({
           fontWeight: 700,
           fontSize: '24px',
           margin: 0,
-          padding: `0 ${theme.spacing(4)} ${theme.spacing(4)} 0`,
+          paddingBottom: theme.spacing(4),
+          paddingLeft: 0,
+          paddingTop: 0,
+          paddingRight: 0,
+          [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(4),
+          },
         }),
         action: {
           alignSelf: 'center',
@@ -381,6 +388,7 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           [theme.breakpoints.down('sm')]: {
             paddingRight: theme.spacing(4),
+            marginLeft: `-${theme.spacing(4)}`,
           },
         }),
       },

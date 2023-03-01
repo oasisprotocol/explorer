@@ -54,11 +54,7 @@ const LineChartCmp = <T extends object>({
         axisLine={false}
         tickLine={false}
         mirror={!withLabels}
-        tick={
-          withLabels
-            ? { fill: COLORS.brandDark, strokeWidth: 0, fontWeight: 600, fontStyle: 'italic' }
-            : false
-        }
+        tick={withLabels ? { fill: COLORS.brandDark, strokeWidth: 0 } : false}
         type="number"
         padding={{ bottom: 20 }}
         tickMargin={tickMargin}

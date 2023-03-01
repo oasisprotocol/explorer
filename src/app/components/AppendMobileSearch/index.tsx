@@ -8,7 +8,7 @@ const Layout = styled(Box)(() => ({
   position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   width: '100%',
 }))
 

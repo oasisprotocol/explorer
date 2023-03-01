@@ -37,7 +37,7 @@ type LearningSectionProps = PaperProps & {
 const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ...props }) => {
   return (
     <Paper variant="content" {...props}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
+      <Typography variant="h4" sx={{ mb: 4 }}>
         {title}
       </Typography>
       <Typography variant="body2" sx={{ color: COLORS.grayMedium }}>

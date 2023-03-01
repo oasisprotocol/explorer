@@ -14,7 +14,13 @@ import './styles/index.css'
 import './locales/i18n'
 
 Axios.defaults.baseURL = process.env.REACT_APP_API
-const queryClient = new QueryClient({})
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 registerSwiperElements()
 

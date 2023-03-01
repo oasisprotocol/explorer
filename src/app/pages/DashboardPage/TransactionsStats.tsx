@@ -20,6 +20,7 @@ export function TransactionsStats() {
       <CardContent>
         {dailyVolumeQuery.data?.data.buckets && (
           <BarChart
+            cartesianGrid
             data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
@@ -29,6 +30,7 @@ export function TransactionsStats() {
                   timestamp: new Date(value),
                 }),
             }}
+            withLabels
           />
         )}
       </CardContent>

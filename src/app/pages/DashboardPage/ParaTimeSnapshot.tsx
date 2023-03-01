@@ -10,6 +10,7 @@ import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RoseChartCard } from './RoseChartCard'
 import { Nodes } from './Nodes'
+import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
@@ -38,26 +39,29 @@ export const ParaTimeSnapshot: FC = () => {
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
           <AppendMobileSearch>
-            <Typography variant="h3" sx={{ color: COLORS.white, fontWeight: 700 }}>
-              {t('paraTimeSnapshot.header')}
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
+              <Typography
+                variant="h3"
+                sx={{ color: COLORS.white, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
+              >
+                {t('paraTimeSnapshot.header')}
+              </Typography>
+              <DurationSelect
+                defaultValue={defaultChartDurationValue}
+                handleChange={handleDurationSelectedChange}
+              />
+            </Box>
           </AppendMobileSearch>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Box sx={{ pl: isMobile ? 4 : 0, pb: isMobile ? 3 : 0 }}>
-            <DurationSelect
-              defaultValue={defaultChartDurationValue}
-              handleChange={handleDurationSelectedChange}
-            />
-          </Box>
         </Grid>
       </Grid>
 
-      <Grid container rowSpacing={1} columnSpacing={4} sx={{ marginBottom: 4 }}>
+      <Grid container rowSpacing={1} columnSpacing={4}>
         <StyledGrid item xs={12} md={3}>
           <TransactionsChartCard chartDuration={chartDuration} />
         </StyledGrid>
-        <StyledGrid item xs={12} md={3}></StyledGrid>
+        <StyledGrid item xs={12} md={3}>
+          <ActiveAccounts />
+        </StyledGrid>
         <StyledGrid item xs={12} md={3}>
           <Nodes />
         </StyledGrid>
