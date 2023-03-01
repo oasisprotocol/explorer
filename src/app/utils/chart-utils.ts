@@ -32,3 +32,5 @@ export const chartDurationToDaysMap = {
   [ChartDuration.MONTH]: 30,
   [ChartDuration.ALL_TIME]: 365,
 }
+
+export const chartUseQueryStaleTimeMs = durationToQueryParams[ChartDuration.TODAY].bucket_size_seconds * 1000

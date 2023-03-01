@@ -31,7 +31,7 @@ export const Nodes: FC = () => {
         />
       }
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
         <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
           {t('nodes.value', { value: activeNodes })}

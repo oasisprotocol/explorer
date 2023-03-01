@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
-import { ChartDuration, durationToQueryParams } from '../../utils/chart-utils'
+import { ChartDuration, chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { LineChart } from '../../components/charts/LineChart'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -18,7 +18,9 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
-  const { data } = useGetLayerStatsTxVolume(Layer.emerald, statsParams)
+  const { data } = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+    query: { staleTime: chartUseQueryStaleTimeMs },
+  })
 
   const lineChartData = data?.data.buckets.map(bucket => {
     return {
