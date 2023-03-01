@@ -20,7 +20,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   height: '36px',
   minWidth: '135px',
   padding: `0 ${theme.spacing(4)}`,
-  borderRadius: '12px',
+  borderRadius: '36px',
   color: COLORS.white,
   textTransform: 'none',
   justifyContent: 'space-between',
@@ -48,19 +48,21 @@ const StyledOption = styled(OptionUnstyled)(({ theme }) => ({
   listStyle: 'none',
   height: '36px',
   padding: `0 ${theme.spacing(4)}`,
-  borderRadius: '12px',
   cursor: 'default',
   color: COLORS.white,
   [`&:hover:not(.${optionUnstyledClasses.disabled})`]: {
     cursor: 'pointer',
   },
   [`&:hover:not(.${optionUnstyledClasses.disabled}),
-  &.${optionUnstyledClasses.selected},
   &.${optionUnstyledClasses.highlighted}`]: {
     backgroundColor: COLORS.brandExtraDark,
   },
   [`&.${optionUnstyledClasses.disabled}`]: {
     backgroundColor: COLORS.lavenderGray,
+  },
+  [`&&.${optionUnstyledClasses.selected}`]: {
+    opacity: 0.5,
+    backgroundColor: 'transparent',
   },
   transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 }))
