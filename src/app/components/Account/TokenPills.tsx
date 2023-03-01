@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
@@ -9,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
 import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
+import { useLayerHref } from '../../hooks/useLayerHref'
 
 type TokenPillsProps = {
   tokens: RuntimeEvmBalance[] | undefined
@@ -40,7 +40,7 @@ type PillProps = {
 }
 
 export const Pill: FC<PillProps> = ({ pill }) => {
-  const href = `${useHref(pill.token_type === 'ERC20' ? 'tokens/erc-20' : 'tokens/erc-721')}#${
+  const href = `${useLayerHref(pill.token_type === 'ERC20' ? 'tokens/erc-20' : 'tokens/erc-721')}#${
     pill.token_contract_addr
   }`
 
