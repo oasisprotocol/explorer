@@ -117,7 +117,9 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     setShowMobileTooltip(GraphEndpoints.Emerald, false)
     setShowMobileTooltip(GraphEndpoints.Cipher, false)
     setShowMobileTooltip(GraphEndpoints.Sapphire, false)
-  }, [isMobile, setShowMobileTooltip])
+    // should only close tooltips on isMobile change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
 
   const isGraphEndpointDisabled = (graphEndpoint: GraphEndpoint) => {
     return !enabledGraphEndpoints.includes(graphEndpoint)
