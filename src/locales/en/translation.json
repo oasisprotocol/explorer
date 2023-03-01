@@ -16,10 +16,6 @@
   "activeAccounts": {
     "title": "Active Accounts"
   },
-  "averageTransactionSize": {
-    "header": "Average Transaction Size",
-    "tooltip": "Average Tx Size: {{value, number}}"
-  },
   "blocks": {
     "latest": "Latest Blocks"
   },
@@ -125,6 +121,10 @@
     "telegram": "Telegram",
     "twitter": "Twitter",
     "youtube": "Youtube"
+  },
+  "totalTransactions": {
+    "header": "Total Transactions",
+    "tooltip": "{{value, number}} transactions"
   },
   "transactions": {
     "latest": "Latest Transactions",

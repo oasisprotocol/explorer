@@ -8,7 +8,7 @@ import { LearningMaterials } from './LearningMaterials'
 import { LatestBlocks } from './LatestBlocks'
 import { LatestTransactions } from './LatestTransactions'
 import { TransactionsStats } from './TransactionsStats'
-import { AverageTransactionSize } from './AverageTransactionSize'
+import { TotalTransactions } from './TotalTransactions'
 import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 
@@ -30,7 +30,7 @@ export const DashboardPage: FC = () => {
         </Grid>
       </Grid>
       <TransactionsStats />
-      <AverageTransactionSize />
+      <TotalTransactions />
       <Social />
     </PageLayout>
   )
