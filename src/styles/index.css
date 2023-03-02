@@ -1,6 +1,16 @@
 @import '../../node_modules/@fontsource/figtree/variable.css';
 @import '../../node_modules/@fontsource/roboto-mono/variable.css';
 
+/** Use Figtree for "…" instead of Roboto Mono. */
+@font-face {
+  font-family: 'Roboto MonoVariable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 700;
+  src: url('../../node_modules/@fontsource/figtree/files/figtree-latin-variable-wghtOnly-normal.woff2') format('woff2');
+  unicode-range: U+2026;
+}
+
 svg.recharts-surface {
   overflow: visible;
 }

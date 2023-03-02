@@ -1,8 +1,8 @@
-export function trimLongString(value: string, trimStart = 6, trimEnd = 6, ellipsis = '...') {
+export function trimLongString(value: string, trimStart = 6, trimEnd = 6, ellipsis = '…') {
   if (!value) {
     return
   }
-  const trimmedLength = trimStart + 3 + trimEnd
+  const trimmedLength = trimStart + ellipsis.length + trimEnd
   if (trimmedLength > value.length) {
     return value
   }
