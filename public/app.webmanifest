@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "short_name": "Oasis Network Explorer",
-  "name": "The official Oasis Network Explorer.",
+  "short_name": "Oasis Explorer",
+  "name": "Official explorer for the Oasis Network.",
   "icons": [
     {
       "src": "./favicon.ico",
