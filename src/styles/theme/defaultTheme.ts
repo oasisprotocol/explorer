@@ -21,6 +21,7 @@ declare module '@mui/material/Button' {
 declare module '@mui/material/Divider' {
   interface DividerPropsVariantOverrides {
     layout: true
+    card: true
   }
 }
 
@@ -366,6 +367,17 @@ export const defaultTheme = createTheme({
             borderColor: COLORS.white,
             borderStyle: 'dashed',
             marginBottom: theme.spacing(5),
+          }),
+        },
+        {
+          props: { variant: 'card' },
+          style: ({ theme }) => ({
+            borderColor: COLORS.brandDark,
+            borderStyle: 'dashed',
+            margin: '40px -12px',
+            [theme.breakpoints.down('sm')]: {
+              margin: '20px -12px',
+            },
           }),
         },
       ],

@@ -12,10 +12,17 @@ import {
   useGetRuntimeTransactionsTxHash,
   Runtime,
 } from '../../../oasis-indexer/api'
+import { useGetRosePrice } from '../../../coin-gecko/api'
+import { AccountDetailsView } from '../AccountDetailsPage'
+import { BlockDetailView } from '../BlockDetailPage'
+import { TransactionDetailView } from '../TransactionDetailPage'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
+import { RouteUtils } from '../../utils/route-utils'
+import { Layer } from '../../../config'
+import { ResultsGroup } from './ResultsGroup'
 
 type ConditionalResults<T> = { isLoading: boolean; results: T[] | undefined }
 export type SearchQueries = {
@@ -50,6 +57,7 @@ function useRuntimeAccountConditionally(address: string | undefined): Conditiona
 
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
+  const rosePriceQuery = useGetRosePrice()
   const searchQueries: SearchQueries = {
     emeraldBlockHeight: useBlocksConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
@@ -61,12 +69,15 @@ export const SearchResultsPage: FC = () => {
 
   useRedirectIfSingleResult(searchQueries)
 
-  return <SearchResultsView searchQueries={searchQueries}></SearchResultsView>
+  return (
+    <SearchResultsView searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data}></SearchResultsView>
+  )
 }
 
 export const SearchResultsView: FC<{
   searchQueries: SearchQueries
-}> = ({ searchQueries }) => {
+  roseFiatValue: number | undefined
+}> = ({ searchQueries, roseFiatValue }) => {
   const { t } = useTranslation()
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
   const hasNoResults = !isAnyLoading && Object.values(searchQueries).every(query => !query.results)
@@ -80,11 +91,40 @@ export const SearchResultsView: FC<{
         </SubPageCard>
       )}
 
-      {hasNoResults && (
-        <NoResults />
-      )}
+      {hasNoResults && <NoResults />}
 
-      {!isAnyLoading && !hasNoResults && <>TODO: Multiple results</>}
+      {!isAnyLoading && (
+        <>
+          <ResultsGroup
+            title={t('search.results.blocks.title')}
+            results={searchQueries.emeraldBlockHeight.results}
+            resultComponent={item => <BlockDetailView isLoading={false} block={item} />}
+            link={item => RouteUtils.getBlockRoute(item.round, Layer.Emerald)}
+            linkLabel={t('search.results.blocks.viewLink')}
+          ></ResultsGroup>
+
+          <ResultsGroup
+            title={t('search.results.transactions.title')}
+            results={searchQueries.emeraldTxHash.results}
+            resultComponent={item => <TransactionDetailView isLoading={false} transaction={item} />}
+            link={item => RouteUtils.getTransactionRoute(item.hash, Layer.Emerald)}
+            linkLabel={t('search.results.transactions.viewLink')}
+          ></ResultsGroup>
+
+          <ResultsGroup
+            title={t('search.results.accounts.title')}
+            results={[
+              ...(searchQueries.consensusAccount.results ?? []),
+              ...(searchQueries.evmBech32Account.results ?? []),
+            ]}
+            resultComponent={item => (
+              <AccountDetailsView isLoading={false} account={item} roseFiatValue={roseFiatValue} />
+            )}
+            link={item => RouteUtils.getAccountRoute(item.address, Layer.Emerald)}
+            linkLabel={t('search.results.accounts.viewLink')}
+          ></ResultsGroup>
+        </>
+      )}
     </PageLayout>
   )
 }
