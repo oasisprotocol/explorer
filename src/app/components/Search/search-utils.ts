@@ -28,6 +28,10 @@ export abstract class SearchUtils {
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
+    const thousandSeparator = new Intl.NumberFormat().formatToParts(1234).find(p => p.type === 'group')?.value
+    if (thousandSeparator && isValidBlockHeight(searchTerm.replaceAll(thousandSeparator, ''))) {
+      return searchTerm.replaceAll(thousandSeparator, '')
+    }
     if (isValidBlockHeight(searchTerm)) {
       return searchTerm
     }
