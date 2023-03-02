@@ -21,7 +21,7 @@ export const StyledCard = styled(Card)(({ theme }) => ({
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
   position: 'relative',
   paddingTop: theme.spacing(4),
-  height: 90,
+  height: '100%',
 }))
 
 type SnapshotCardProps = PropsWithChildren & {
