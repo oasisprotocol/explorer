@@ -53,7 +53,7 @@ export const Pill: FC<PillProps> = ({ pill }) => {
       key={pill.token_contract_addr}
       label={
         <>
-          <RoundedBalance value={pill.balance} /> {pill.token_name}
+          <RoundedBalance value={pill.balance} ticker={pill.token_symbol} />
         </>
       }
       sx={{ mr: 2 }}

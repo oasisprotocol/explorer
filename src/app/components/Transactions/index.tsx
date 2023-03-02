@@ -11,7 +11,7 @@ import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
-import { RoundedBalance } from '../../components/RoundedBalance'
+import { RoundedRoseBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
@@ -153,12 +153,12 @@ export const Transactions: FC<TransactionProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={transaction.fee} />,
+        content: <RoundedRoseBalance value={transaction.fee} />,
         key: 'fee_amount',
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={transaction.amount} />,
+        content: <RoundedRoseBalance value={transaction.amount} />,
         key: 'value',
       },
     ],
