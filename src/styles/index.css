@@ -4,3 +4,8 @@
 svg.recharts-surface {
   overflow: visible;
 }
+
+/* https://github.com/recharts/recharts/issues/2153 */
+.recharts-cartesian-grid-horizontal line:last-child {
+  stroke-opacity: 0;
+}

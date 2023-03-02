@@ -4,7 +4,6 @@ import { ChartDuration, chartUseQueryStaleTimeMs, durationToQueryParams } from '
 import { LineChart } from '../../components/charts/LineChart'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { intlDateFormat } from '../../utils/dateFormatter'
 import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
@@ -53,7 +52,10 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
                   } satisfies Intl.NumberFormatOptions,
                 },
               }),
-            label: (value: string) => intlDateFormat(new Date(value)),
+            label: (value: string) =>
+              t('common.formattedDateTime', {
+                timestamp: new Date(value),
+              }),
           }}
         />
       )}
