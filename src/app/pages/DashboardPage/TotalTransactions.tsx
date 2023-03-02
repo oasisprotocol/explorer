@@ -1,41 +1,33 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { LineChart } from '../../components/charts/LineChart'
 import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
-import { chartUseQueryStaleTimeMs } from '../../utils/chart-utils'
+import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from './DurationPills'
+import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
+import { ChartDuration } from '../../utils/chart-utils'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(
-    Layer.emerald,
-    {},
-    {
-      query: { staleTime: chartUseQueryStaleTimeMs },
+  const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.WEEK)
+  const statsParams = durationToQueryParams[chartDuration]
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+    query: {
+      keepPreviousData: true,
+      staleTime: chartUseQueryStaleTimeMs,
     },
-  )
+  })
 
   return (
     <Card>
-      <CardHeader
-        action={!isMobile && <DurationPills />}
+      <CardHeaderWithResponsiveActions
+        action={<DurationPills handleChange={setChartDuration} value={chartDuration} />}
         disableTypography
         component="h3"
         title={t('totalTransactions.header')}
       />
-      {isMobile && (
-        <Box sx={{ mb: 5 }}>
-          <DurationPills />
-        </Box>
-      )}
       <CardContent sx={{ height: 450 }}>
         {dailyVolumeQuery.data?.data.buckets && (
           <LineChart

@@ -15,7 +15,12 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   borderRadius: 4,
 }))
 
-export const DurationPills: FC = () => {
+type DurationPillsProps = {
+  handleChange: (duration: ChartDuration) => void
+  value?: ChartDuration
+}
+
+export const DurationPills: FC<DurationPillsProps> = ({ handleChange, value }) => {
   const { t } = useTranslation()
   const options = [
     {
@@ -37,7 +42,7 @@ export const DurationPills: FC = () => {
       {options.map(option => (
         <Chip
           key={option.value}
-          onClick={() => console.log('click')}
+          onClick={() => handleChange(option.value)}
           clickable
           color="secondary"
           label={
@@ -49,7 +54,7 @@ export const DurationPills: FC = () => {
             </Box>
           }
           sx={{ mr: 2 }}
-          variant="outlined"
+          variant={value === option.value ? 'outlined-selected' : 'outlined'}
         />
       ))}
     </>

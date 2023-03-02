@@ -41,6 +41,9 @@ declare module '@mui/material/Chip' {
   export interface ChipPropsColorOverrides {
     tertiary: true
   }
+  export interface ChipPropsVariantOverrides {
+    ['outlined-selected']: true
+  }
 }
 
 export const defaultTheme = createTheme({
@@ -282,7 +285,6 @@ export const defaultTheme = createTheme({
           },
         }),
         action: {
-          alignSelf: 'center',
           margin: 0,
           fontWeight: 400,
           fontSize: '16px',
@@ -309,17 +311,22 @@ export const defaultTheme = createTheme({
             borderWidth: theme.spacing(1),
           }),
         },
+        {
+          props: { variant: 'outlined-selected', color: 'secondary' },
+          style: () => ({
+            border: `solid 1px ${COLORS.grayMediumLight}`,
+            backgroundColor: COLORS.grayMediumLight,
+            ':hover': {
+              backgroundColor: COLORS.grayMediumLight,
+            },
+          }),
+        },
       ],
       styleOverrides: {
         colorSecondary: {
           color: COLORS.brandExtraDark,
         },
-        filledSecondary: {
-          backgroundColor: COLORS.grayMediumLight,
-          ':hover': {
-            backgroundColor: COLORS.grayMediumLight,
-          },
-        },
+
         root: ({ theme }) => ({
           fontSize: '15px',
           lineHeight: '18px',
