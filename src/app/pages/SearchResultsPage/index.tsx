@@ -22,6 +22,7 @@ import {
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
+import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 type ConditionalResults<T> = { isLoading: boolean; results: T[] | undefined }
 export type SearchQueries = {
@@ -65,7 +66,7 @@ export const SearchResultsPage: FC = () => {
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
   }
 
-  // TODO: if has one result, redirect to it
+  useRedirectIfSingleResult(searchQueries)
 
   return <SearchResultsView searchQueries={searchQueries}></SearchResultsView>
 }
@@ -104,9 +105,12 @@ export const SearchResultsView: FC<{
               <p>
                 <SearchSuggestionsLinks />
               </p>
-          </Box>
-        }
-      />
+            </Box>
+          }
+        />
+      )}
+
+      {!isAnyLoading && !hasNoResults && <>TODO: Multiple results</>}
     </PageLayout>
   )
 }
