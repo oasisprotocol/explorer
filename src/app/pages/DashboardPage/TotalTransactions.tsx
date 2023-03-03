@@ -11,7 +11,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
-  const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.WEEK)
+  const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
   const dailyVolumeQuery = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
     query: {
