@@ -156,7 +156,7 @@ const HomePageCmp: FC = () => {
       </HomepageLayout>
       {activeMobileGraphTooltip && (
         <GraphTooltipMobile
-          graphEndpoint={activeMobileGraphTooltip}
+          layer={activeMobileGraphTooltip}
           onClose={() => {
             setActiveMobileGraphTooltip(null)
           }}

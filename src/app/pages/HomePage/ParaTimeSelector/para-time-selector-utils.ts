@@ -1,5 +1,5 @@
 import { ParaTimeSelectorStep } from './types'
-import { GraphEndpoints, GraphEndpoint } from './Graph/types'
+import { Layer } from '../../../../config'
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
@@ -18,15 +18,15 @@ export abstract class ParaTimeSelectorUtils {
     return step === ParaTimeSelectorStep.ShowHelpScreen
   }
 
-  static showZoomOutBtn(isMobile: boolean, endpoint?: GraphEndpoint) {
+  static showZoomOutBtn(isMobile: boolean, layer?: Layer) {
     if (isMobile) {
       return false
     }
 
-    switch (endpoint) {
-      case GraphEndpoints.Sapphire:
-      case GraphEndpoints.Emerald:
-      case GraphEndpoints.Cipher:
+    switch (layer) {
+      case Layer.Sapphire:
+      case Layer.Emerald:
+      case Layer.Cipher:
         return true
       default:
         return false

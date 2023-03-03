@@ -1,13 +1,13 @@
 import { createContext, FC, PropsWithChildren, useContext, useState } from 'react'
-import { GraphEndpoint } from '../ParaTimeSelector/Graph/types'
+import { Layer } from '../../../../config'
 
 interface MobileTooltipProviderState {
-  activeMobileGraphTooltip: GraphEndpoint | null
+  activeMobileGraphTooltip: Layer | null
 }
 
 interface MobileTooltipProviderContext {
   readonly state: MobileTooltipProviderState
-  setActiveMobileGraphTooltip: (activeMobileGraphTooltip: GraphEndpoint | null) => void
+  setActiveMobileGraphTooltip: (activeMobileGraphTooltip: Layer | null) => void
 }
 
 const mobileTooltipProviderInitialState: MobileTooltipProviderState = {
@@ -23,7 +23,7 @@ export const MobileTooltipProvider: FC<PropsWithChildren> = ({ children }) => {
     ...mobileTooltipProviderInitialState,
   })
 
-  const setActiveMobileGraphTooltip = (activeMobileGraphTooltip: GraphEndpoint | null) => {
+  const setActiveMobileGraphTooltip = (activeMobileGraphTooltip: Layer | null) => {
     setState({ activeMobileGraphTooltip })
   }
 

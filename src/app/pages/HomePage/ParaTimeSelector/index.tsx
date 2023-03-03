@@ -8,7 +8,6 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
-import { GraphEndpoint, GraphEndpoints } from './Graph/types'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
@@ -16,6 +15,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
+import { Layer } from '../../../../config'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -115,7 +115,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
 
-  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
+  const [selectedLayer, setSelectedLayer] = useState<Layer>()
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -123,10 +123,10 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   })
 
   useEffect(() => {
-    if (selectedGraphEndpoint) {
-      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
+    if (selectedLayer) {
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedLayer, { width, height }))
     }
-  }, [selectedGraphEndpoint, width, height])
+  }, [selectedLayer, width, height])
 
   useEffect(() => {
     // Switch from mobile -> desktop view while on help screen
@@ -144,7 +144,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onZoomOutClick = () => {
-    setSelectedGraphEndpoint(GraphEndpoints.Consensus)
+    setSelectedLayer(Layer.Consensus)
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
@@ -164,15 +164,15 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
                   ref={graphRef}
                   disabled={disabled}
                   transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-                  selectedGraphEndpoint={selectedGraphEndpoint}
-                  setSelectedGraphEndpoint={setSelectedGraphEndpoint}
+                  selectedLayer={selectedLayer}
+                  setSelectedLayer={setSelectedLayer}
                   scale={scale}
                 />
               </QuickPinchZoomInner>
             </QuickPinchZoom>
           </QuickPinchZoomOuter>
           {!isMobile && (
-            <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
+            <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
               <ZoomOutBtn
                 variant="text"
                 color="secondary"

@@ -3,7 +3,6 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../styles/theme/colors'
-import { GraphEndpoint, GraphEndpoints } from '../ParaTimeSelector/Graph/types'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/material/Typography'
 import AdjustIcon from '@mui/icons-material/Adjust'
@@ -13,8 +12,8 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import * as React from 'react'
 import { RouteUtils } from '../../../utils/route-utils'
-import { ParaTime } from '../../../../config'
 import { useNavigate } from 'react-router-dom'
+import { Layer } from '../../../../config'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -116,15 +115,15 @@ const GraphTooltipWrapper = styled(
   },
 }))
 
-export const graphTooltipMap: {
-  [key in GraphEndpoint]: {
+export const layerTooltipMap: {
+  [key in Layer]: {
     disabled: boolean
     enableNavigation?: boolean
     header: GraphTooltipHeaderProps
     body: GraphTooltipBodyProps
   }
 } = {
-  [GraphEndpoints.Sapphire]: {
+  [Layer.Sapphire]: {
     disabled: true,
     header: {},
     body: {
@@ -133,7 +132,7 @@ export const graphTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.sapphireParaTimeAvailableSoon'),
     },
   },
-  [GraphEndpoints.Emerald]: {
+  [Layer.Emerald]: {
     disabled: false,
     enableNavigation: true,
     header: {
@@ -145,7 +144,7 @@ export const graphTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
     },
   },
-  [GraphEndpoints.Cipher]: {
+  [Layer.Cipher]: {
     disabled: true,
     header: {},
     body: {
@@ -154,7 +153,7 @@ export const graphTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
     },
   },
-  [GraphEndpoints.Consensus]: {
+  [Layer.Consensus]: {
     disabled: false,
     header: {},
     body: {
@@ -168,7 +167,7 @@ export const graphTooltipMap: {
 interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
   offsetWidth?: number
   offsetHeight?: number
-  graphEndpoint: GraphEndpoint
+  layer: Layer
 }
 
 interface GraphTooltipHeaderProps {
@@ -241,18 +240,18 @@ export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, bo
   )
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({ children, graphEndpoint, ...restProps }) => {
+export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restProps }) => {
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { header, body, disabled, enableNavigation } = graphTooltipMap[graphEndpoint]
+  const { header, body, disabled, enableNavigation } = layerTooltipMap[layer]
 
   const navigateTo = () => {
     if (!enableNavigation) {
       return
     }
 
-    navigate(RouteUtils.getDashboardRoute(graphEndpoint as ParaTime))
+    navigate(RouteUtils.getDashboardRoute(layer))
   }
 
   return (
