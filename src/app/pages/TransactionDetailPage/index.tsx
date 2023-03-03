@@ -7,7 +7,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { ParaTime } from '../../../config'
+import { Layer } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
 import Link from '@mui/material/Link'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
@@ -105,10 +105,7 @@ export const TransactionDetailPage: FC = () => {
             <dt>{t('common.block')}</dt>
             <dd>
               <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                <Link
-                  component={RouterLink}
-                  to={RouteUtils.getBlockRoute(transaction.round, ParaTime.Emerald)}
-                >
+                <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}>
                   {transaction.round.toLocaleString()}
                 </Link>
               </Typography>
@@ -125,7 +122,7 @@ export const TransactionDetailPage: FC = () => {
             <dt>{t('common.from')}</dt>
             <dd>
               <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                <AccountLink address={transaction.sender_0} paratime={ParaTime.Emerald} />
+                <AccountLink address={transaction.sender_0} paratime={Layer.Emerald} />
               </Typography>
               <CopyToClipboard value={transaction.sender_0} label={' '} />
             </dd>
@@ -139,7 +136,7 @@ export const TransactionDetailPage: FC = () => {
                     component="span"
                     sx={{ color: COLORS.brandDark, fontWeight: 700 }}
                   >
-                    <AccountLink address={transaction.to} paratime={ParaTime.Emerald} />
+                    <AccountLink address={transaction.to} paratime={Layer.Emerald} />
                   </Typography>
                   <CopyToClipboard value={transaction.to} label={' '} />
                 </dd>

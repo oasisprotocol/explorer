@@ -1,12 +1,8 @@
-import { ParaTime } from '../../../../../config'
+import { Layer } from '../../../../../config'
 
-export enum ConsensusParaTime {
-  Consensus = 'consensus',
-}
-
+// TODO: Remove after https://github.com/oasisprotocol/explorer/pull/143 closed
 export const GraphEndpoints = {
-  ...ParaTime,
-  ...ConsensusParaTime,
+  ...Layer,
 }
 
-export type GraphEndpoint = ParaTime | ConsensusParaTime
+export type GraphEndpoint = Layer

@@ -4,10 +4,10 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Link from '@mui/material/Link'
 import { TrimLinkLabel } from '../TrimLinkLabel'
-import { ParaTime } from '../../../config'
+import { Layer } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
 
-export const AccountLink: FC<{ address: string; paratime: ParaTime }> = ({ address, paratime }) => {
+export const AccountLink: FC<{ address: string; paratime: Layer }> = ({ address, paratime }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const to = RouteUtils.getAccountRoute(address, paratime)

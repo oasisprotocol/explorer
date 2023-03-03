@@ -24,6 +24,7 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     message: t('errors.validateURL'),
   }),
   [AppErrors.NotFoundTxHash]: t => ({ title: t('errors.notFoundTx'), message: t('errors.validateURL') }),
+  [AppErrors.InvalidUrl]: t => ({ title: t('errors.invalidUrl'), message: t('errors.validateURL') }),
 }
 
 export const errorFormatter = (t: TFunction, error: ErrorPayload) => {

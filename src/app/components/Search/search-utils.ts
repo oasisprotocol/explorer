@@ -1,4 +1,4 @@
-import { ParaTime } from '../../../config'
+import { Layer } from '../../../config'
 import {
   isValidBlockHeight,
   isValidBlockHash,
@@ -17,10 +17,10 @@ export abstract class SearchUtils {
     const txHash = validateAndNormalize.txHash(searchTerm)
     const evmAccount = validateAndNormalize.evmAccount(searchTerm)
     const consensusAccount = validateAndNormalize.consensusAccount(searchTerm)
-    if (blockHeight) return RouteUtils.getBlockRoute(parseInt(blockHeight, 10), ParaTime.Emerald)
-    if (txHash) return RouteUtils.getTransactionRoute(txHash, ParaTime.Emerald)
-    if (evmAccount) return RouteUtils.getAccountRoute(evmAccount, ParaTime.Emerald)
-    if (consensusAccount) return RouteUtils.getAccountRoute(consensusAccount, ParaTime.Emerald)
+    if (blockHeight) return RouteUtils.getBlockRoute(parseInt(blockHeight, 10), Layer.Emerald)
+    if (txHash) return RouteUtils.getTransactionRoute(txHash, Layer.Emerald)
+    if (evmAccount) return RouteUtils.getAccountRoute(evmAccount, Layer.Emerald)
+    if (consensusAccount) return RouteUtils.getAccountRoute(consensusAccount, Layer.Emerald)
     // TODO: block hash, contract, validator, event
     return undefined
   }

@@ -9,10 +9,10 @@ import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
 import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
 import {
-  RouteUtils,
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
+  layerLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 
@@ -24,23 +24,25 @@ export const routes: RouteObject[] = [
         path: '/',
         element: <HomePage />,
       },
-      ...RouteUtils.getEnabledParaTimes()
-        .map((paraTime): RouteObject[] => [
+      {
+        path: `/:layer`,
+        loader: layerLoader,
+        children: [
           {
-            path: `/${paraTime}`,
+            path: '',
             element: <DashboardPage />,
           },
           {
-            path: `/${paraTime}/blocks`,
+            path: `blocks`,
             element: <BlocksPage />,
           },
           {
-            path: `/${paraTime}/blocks/:blockHeight`,
+            path: `blocks/:blockHeight`,
             element: <BlockDetailPage />,
             loader: blockHeightParamLoader,
           },
           {
-            path: `${paraTime}/account/:address`,
+            path: `account/:address`,
             element: <AccountDetailsPage />,
             loader: addressParamLoader,
             children: [
@@ -62,16 +64,16 @@ export const routes: RouteObject[] = [
             ],
           },
           {
-            path: `/${paraTime}/transactions`,
+            path: `transactions`,
             element: <TransactionsPage />,
           },
           {
-            path: `${paraTime}/transactions/:hash`,
+            path: `transactions/:hash`,
             element: <TransactionDetailPage />,
             loader: transactionParamLoader,
           },
-        ])
-        .flat(),
+        ],
+      },
       {
         path: `/blocks/:blockHeight`,
         element: <BlockDetailPage />,

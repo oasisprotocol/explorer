@@ -80,7 +80,8 @@
     "notFoundBlockHeight": "Block not found",
     "notFoundTx": "Transaction not found",
     "validateURL": "Please validate provided URL",
-    "validateURLOrGoToFirstTab": "Please check the URL or load the first tab."
+    "validateURLOrGoToFirstTab": "Please check the URL or load the first tab.",
+    "invalidUrl": "Invalid URL"
   },
   "footer": {
     "mobileTitle": "OPF",
