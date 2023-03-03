@@ -141,7 +141,7 @@ export const graphTooltipMap: {
     },
     body: {
       title: (t: TFunction) => t('common.emerald'),
-      caption: (t: TFunction) => t('home.tooltip.paraTimeOnline'),
+      caption: (t: TFunction) => t('common.paraTimeOnline'),
       body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
     },
   },
