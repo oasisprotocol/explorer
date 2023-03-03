@@ -1,8 +1,9 @@
 import { Layer } from '../../config'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref } from 'react-router-dom'
+import { useLayer } from './useLayer'
 
 export const useLayerHref = (href = '', layer?: Layer): ReturnType<typeof useHref> => {
-  const { layer: layerParam } = useParams()
+  const layerParam = useLayer()
 
   const getLayerPrefix = () => {
     if (!href.startsWith('/')) {

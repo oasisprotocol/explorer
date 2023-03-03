@@ -1,10 +1,9 @@
 import { FC } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHref } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { type Token } from '../../../oasis-indexer/api'
-import { useLayerHref } from '../../hooks/useLayerHref'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -21,8 +20,8 @@ type ShowMoreTokensLinkProps = {
 
 export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ tokens, pills }) => {
   const { t } = useTranslation()
-  const erc20link = useLayerHref('tokens/erc-20')
-  const erc721Link = useLayerHref('tokens/erc-721')
+  const erc20link = useHref('tokens/erc-20')
+  const erc721Link = useHref('tokens/erc-721')
   const additionalTokensCounter = tokens.length - pills.length
 
   if (!additionalTokensCounter) {
