@@ -17,6 +17,13 @@ import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
 import { MobileTooltipProvider, useMobileTooltip } from './providers/MobileTooltipProvider'
 import { GraphTooltipMobile } from './GraphTooltip/GraphTooltipMobile'
 
+export const zIndexHomePage = {
+  paraTimeSelector: 1,
+  searchInput: 2,
+  logo: 3,
+  mobileTooltip: 4,
+}
+
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
@@ -51,7 +58,7 @@ const Content = styled(Box)(({ theme }) => ({
 }))
 
 const LogotypeBox = styled(Box)(({ theme }) => ({
-  zIndex: 3,
+  zIndex: zIndexHomePage.logo,
   marginBottom: 40,
   textAlign: 'center',
   marginTop: 60,
@@ -62,7 +69,7 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
 }))
 
 const SearchInputContainer = styled(Box)(({ theme }) => ({
-  zIndex: 2,
+  zIndex: zIndexHomePage.searchInput,
   width: '100%',
   [theme.breakpoints.up('md')]: {
     width: 'auto',
@@ -133,7 +140,7 @@ const HomePageCmp: FC = () => {
               </Box>
             )}
           </SearchInputContainer>
-          <Box sx={{ zIndex: 1 }}>
+          <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
             <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
           </Box>
         </Content>

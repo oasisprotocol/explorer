@@ -13,13 +13,14 @@ import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../utils/route-utils'
 import { ParaTime } from '../../../../config'
 import * as React from 'react'
+import { zIndexHomePage } from '../index'
 
 export const MobileBackdrop = styled(Box)(() => ({
   position: 'fixed',
   inset: 0,
   backgroundColor: COLORS.black,
   opacity: 0.3,
-  zIndex: 4,
+  zIndex: zIndexHomePage.mobileTooltip,
 }))
 
 export const MobileGraphTooltip = styled(Box)(({ theme }) => ({
@@ -28,7 +29,7 @@ export const MobileGraphTooltip = styled(Box)(({ theme }) => ({
   left: 0,
   right: 0,
   height: 120,
-  zIndex: 4,
+  zIndex: zIndexHomePage.mobileTooltip,
   '> button': {
     position: 'fixed',
     right: theme.spacing(2),
