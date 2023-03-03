@@ -6,7 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+import { Runtime, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
 import { Blocks, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -20,7 +20,8 @@ export const BlocksPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
 
-  const blocksQuery = useGetEmeraldBlocks<AxiosResponse<TableRuntimeBlockList>>(
+  const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
+    Runtime.emerald,
     {
       limit: PAGE_SIZE,
       offset: offset,

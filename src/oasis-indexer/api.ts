@@ -22,8 +22,12 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
-export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactions = (params?, options?) => {
-  const result = generated.useGetEmeraldTransactions(params, {
+export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
+  runtime,
+  params?,
+  options?,
+) => {
+  return generated.useGetRuntimeTransactions(runtime, params, {
     ...options,
     axios: {
       ...options?.axios,
@@ -45,29 +49,30 @@ export const useGetEmeraldTransactions: typeof generated.useGetEmeraldTransactio
       ],
     },
   })
-  return result
 }
 
-export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAccountsAddress = (
+export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccountsAddress = (
+  runtime,
   params,
   options?,
 ) => {
-  const result = generated.useGetConsensusAccountsAddress(params, {
+  return generated.useGetRuntimeAccountsAddress(runtime, params, {
     ...options,
     axios: {
       ...options?.axios,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.Account) => {
+        (data: generated.RuntimeAccount) => {
           return {
             ...data,
-            runtime_evm_balances: data.runtime_evm_balances?.map(token => {
+
+            evm_balances: data.evm_balances?.map(token => {
               return {
                 ...token,
                 balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
               }
             }),
-            runtime_sdk_balances: data.runtime_sdk_balances?.map(token => {
+            balances: data.balances?.map(token => {
               return {
                 ...token,
                 balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
@@ -79,5 +84,4 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
       ],
     },
   })
-  return result
 }

@@ -12,11 +12,7 @@ import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
 import { trimLongString } from '../../utils/trimLongString'
-import {
-  type Account as AccountDetailsProps,
-  type RuntimeSdkBalance,
-  RuntimeName,
-} from '../../../oasis-indexer/api'
+import { type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -36,21 +32,16 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 type AccountProps = {
-  account?: AccountDetailsProps
+  account?: RuntimeAccount
   isLoading: boolean
   roseFiatValue?: number
-}
-
-const getChainBalance = (runtime: string, balance?: RuntimeSdkBalance[]) => {
-  const chainBalance = balance?.find(chain => chain.runtime === runtime)
-  return chainBalance?.balance || '0'
 }
 
 export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const balance = account && getChainBalance(RuntimeName.emerald, account.runtime_sdk_balances)
+  const balance = account?.balances[0]?.balance ?? '0'
 
   return (
     <>
@@ -100,7 +91,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue })
 
           <dt>{t('account.evmTokens')}</dt>
           <dd>
-            <TokenPills tokens={account.runtime_evm_balances} />
+            <TokenPills tokens={account.evm_balances} />
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>

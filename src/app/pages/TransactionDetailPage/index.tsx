@@ -1,7 +1,12 @@
 import { FC } from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { RuntimeTransaction, useGetEmeraldTransactionsTxHash } from '../../../oasis-indexer/api'
+import {
+  Runtime,
+  RuntimeTransaction,
+  RuntimeTransactionList,
+  useGetRuntimeTransactionsTxHash,
+} from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -33,7 +38,11 @@ type TransactionSelectionResult = {
  *
  * Normally we want the successful one. If there is none, then the latest.
  */
-function useWantedTransaction(transactions: RuntimeTransaction[]): TransactionSelectionResult {
+function useWantedTransaction(
+  transactionsList: RuntimeTransactionList | undefined,
+): TransactionSelectionResult {
+  const transactions = transactionsList?.transactions ?? []
+
   if (!transactions.length) {
     // Loading or error
     return {}
@@ -61,11 +70,11 @@ export const TransactionDetailPage: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const { isLoading, data } = useGetEmeraldTransactionsTxHash(hash)
+  const { isLoading, data } = useGetRuntimeTransactionsTxHash(Runtime.emerald, hash)
 
-  const transactions = data?.data ? [data.data] : [] // TODO: simplify this when the API is updated to return a list
-  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } =
-    useWantedTransaction(transactions)
+  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(
+    data?.data,
+  )
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
