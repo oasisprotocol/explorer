@@ -66,7 +66,7 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
           <LineChart
             dataKey="value"
             data={lineChartData}
-            margin={{ left: 0, right: isMobile ? 80 : 40 }}
+            margin={{ left: 0, right: isMobile ? 80 : 40, top: 10 }}
             formatters={{
               data: (value: number) =>
                 t('common.fiatValueInUSD', {
