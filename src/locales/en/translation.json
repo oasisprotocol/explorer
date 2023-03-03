@@ -49,6 +49,7 @@
     "name": "Name",
     "rose": "ROSE",
     "size": "Size",
+    "sapphire": "Sapphire",
     "smartContract": "Smart Contract",
     "success": "Success",
     "status": "Status",
@@ -106,7 +107,8 @@
   "pageTitle": "Oasis Explorer",
   "pageHeader": {
     "status": "ParaTime Online",
-    "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment."
+    "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment.",
+    "sapphire": "As our official confidential EVM Compatible ParaTime, Sapphire, provides a smart contract development environment with EVM compatibility."
   },
   "pagination": {
     "first": "First",
