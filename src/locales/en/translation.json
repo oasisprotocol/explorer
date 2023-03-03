@@ -68,9 +68,7 @@
   },
   "nodes": {
     "title": "Active nodes",
-    "value": "{{value, number}}",
-    "inactive_one": "1 inactive node",
-    "inactive_other": "{{ count }} inactive nodes"
+    "value": "{{value, number}}"
   },
   "errors": {
     "unknown": "Unknown error",
