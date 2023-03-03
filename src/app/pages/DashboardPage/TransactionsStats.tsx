@@ -1,25 +1,38 @@
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { BarChart } from '../../components/charts/BarChart'
 import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
+import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
+import { DurationPills } from './DurationPills'
+import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
+import { ChartDuration } from '../../utils/chart-utils'
 
-export function TransactionsStats() {
+export const TransactionsStats: FC = () => {
   const { t } = useTranslation()
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(Layer.emerald, {
-    // TODO: Do we want some parameters for the stats? Like these:
-    // limit: 2,
-    // offset: 2,
-    // bucket_size_seconds: 60,
+  const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
+  const statsParams = durationToQueryParams[chartDuration]
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+    query: {
+      keepPreviousData: true,
+      staleTime: chartUseQueryStaleTimeMs,
+    },
   })
 
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title={t('transactionStats.header')} />
+      <CardHeaderWithResponsiveActions
+        action={<DurationPills handleChange={setChartDuration} value={chartDuration} />}
+        disableTypography
+        component="h3"
+        title={t('transactionStats.header')}
+      />
       <CardContent sx={{ height: 450 }}>
         {dailyVolumeQuery.data?.data.buckets && (
           <BarChart
+            barSize={chartDuration === ChartDuration.WEEK ? 125 : undefined}
+            barRadius={chartDuration === ChartDuration.WEEK ? 20 : undefined}
             cartesianGrid
             data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
             dataKey="tx_volume"
