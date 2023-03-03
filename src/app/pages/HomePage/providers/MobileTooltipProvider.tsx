@@ -1,22 +1,17 @@
 import { createContext, FC, PropsWithChildren, useContext, useState } from 'react'
-import { GraphEndpoint, GraphEndpoints } from '../ParaTimeSelector/Graph/types'
+import { GraphEndpoint } from '../ParaTimeSelector/Graph/types'
 
 interface MobileTooltipProviderState {
-  showMobileTooltip: { [key in GraphEndpoint]: boolean }
+  activeMobileGraphTooltip: GraphEndpoint | null
 }
 
 interface MobileTooltipProviderContext {
   readonly state: MobileTooltipProviderState
-  setShowMobileTooltip: (graphEndpoint: GraphEndpoint, show: boolean) => void
+  setActiveMobileGraphTooltip: (activeMobileGraphTooltip: GraphEndpoint | null) => void
 }
 
 const mobileTooltipProviderInitialState: MobileTooltipProviderState = {
-  showMobileTooltip: {
-    [GraphEndpoints.Consensus]: false,
-    [GraphEndpoints.Emerald]: false,
-    [GraphEndpoints.Sapphire]: false,
-    [GraphEndpoints.Cipher]: false,
-  },
+  activeMobileGraphTooltip: null,
 }
 
 export const MobileTooltipContext = createContext<MobileTooltipProviderContext>(
@@ -28,19 +23,13 @@ export const MobileTooltipProvider: FC<PropsWithChildren> = ({ children }) => {
     ...mobileTooltipProviderInitialState,
   })
 
-  const setShowMobileTooltip = (graphEndpoint: GraphEndpoint, show: boolean) => {
-    setState(prevState => ({
-      ...prevState,
-      showMobileTooltip: {
-        ...prevState.showMobileTooltip,
-        [graphEndpoint]: show,
-      },
-    }))
+  const setActiveMobileGraphTooltip = (activeMobileGraphTooltip: GraphEndpoint | null) => {
+    setState({ activeMobileGraphTooltip })
   }
 
   const providerState: MobileTooltipProviderContext = {
     state,
-    setShowMobileTooltip,
+    setActiveMobileGraphTooltip,
   }
 
   return <MobileTooltipContext.Provider value={providerState}>{children}</MobileTooltipContext.Provider>

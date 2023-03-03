@@ -1,8 +1,20 @@
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../styles/theme/colors'
+import { GraphEndpoint, GraphEndpoints } from '../ParaTimeSelector/Graph/types'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import Typography from '@mui/material/Typography'
+import AdjustIcon from '@mui/icons-material/Adjust'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
+import * as React from 'react'
+import { RouteUtils } from '../../../utils/route-utils'
+import { ParaTime } from '../../../../config'
+import { useNavigate } from 'react-router-dom'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -75,11 +87,6 @@ export const GraphTooltipDescriptionText = styled(Box)(() => ({
   alignItems: 'center',
 }))
 
-export interface GraphTooltipExtendedProps extends Omit<TooltipProps, 'title'> {
-  offsetWidth?: number
-  offsetHeight?: number
-}
-
 interface GraphTooltipWrapperProps extends TooltipProps {
   offsetWidth?: number
   offsetHeight?: number
@@ -109,14 +116,156 @@ const GraphTooltipWrapper = styled(
   },
 }))
 
-interface GraphTooltipProps extends TooltipProps {
-  offsetWidth?: number
-  offsetHeight?: number
+export const graphTooltipMap: {
+  [key in GraphEndpoint]: {
+    disabled: boolean
+    enableNavigation?: boolean
+    header: GraphTooltipHeaderProps
+    body: GraphTooltipBodyProps
+  }
+} = {
+  [GraphEndpoints.Sapphire]: {
+    disabled: true,
+    header: {},
+    body: {
+      title: (t: TFunction) => t('common.sapphire'),
+      caption: (t: TFunction) => t('home.tooltip.coming'),
+      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeAvailableSoon'),
+    },
+  },
+  [GraphEndpoints.Emerald]: {
+    disabled: false,
+    enableNavigation: true,
+    header: {
+      discoverMore: true,
+    },
+    body: {
+      title: (t: TFunction) => t('common.emerald'),
+      caption: (t: TFunction) => t('home.tooltip.paraTimeOnline'),
+      body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
+    },
+  },
+  [GraphEndpoints.Cipher]: {
+    disabled: true,
+    header: {},
+    body: {
+      title: (t: TFunction) => t('common.cipher'),
+      caption: (t: TFunction) => t('home.tooltip.coming'),
+      body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
+    },
+  },
+  [GraphEndpoints.Consensus]: {
+    disabled: false,
+    header: {},
+    body: {
+      title: (t: TFunction) => t('common.consensus'),
+      caption: (t: TFunction) => t('home.tooltip.online'),
+      body: (t: TFunction) => t('home.tooltip.consensusParaTimeDesc'),
+    },
+  },
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({ children, ...restProps }) => {
+interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
+  offsetWidth?: number
+  offsetHeight?: number
+  graphEndpoint: GraphEndpoint
+}
+
+interface GraphTooltipHeaderProps {
+  comingSoon?: boolean
+  discoverMore?: boolean
+}
+
+export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ comingSoon, discoverMore }) => {
+  const theme = useTheme()
+  const { t } = useTranslation()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
-    <GraphTooltipWrapper {...restProps} placement="right-start">
+    <GraphTooltipIcon isMobile={isMobile}>
+      {comingSoon && (
+        <AccessTimeIcon
+          fontSize="xlarge"
+          sx={{ color: COLORS.aqua }}
+          aria-label={t('home.tooltip.comingSoonAria')}
+        />
+      )}
+      {!comingSoon && <AdjustIcon fontSize="xxlarge" sx={{ color: COLORS.aqua }} />}
+      {discoverMore && (
+        <Typography
+          component="span"
+          color={COLORS.white}
+          sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
+        >
+          {t('home.tooltip.discoverMore')}
+        </Typography>
+      )}
+    </GraphTooltipIcon>
+  )
+}
+
+interface GraphTooltipBodyProps {
+  title: (t: TFunction) => string
+  caption: (t: TFunction) => string
+  body: (t: TFunction) => string
+  disabled?: boolean
+}
+
+export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled }) => {
+  const theme = useTheme()
+  const { t } = useTranslation()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  return (
+    <GraphTooltipText isMobile={isMobile} disabled={disabled}>
+      <GraphTooltipHeaderText>
+        <Typography variant="body2" color={COLORS.white}>
+          {title(t)}
+        </Typography>
+
+        <Typography
+          component="span"
+          sx={{ display: 'flex', fontSize: '12px', opacity: disabled ? 0.5 : 1 }}
+          color={COLORS.white}
+        >
+          {caption(t)}
+          {!disabled && <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />}
+        </Typography>
+      </GraphTooltipHeaderText>
+      <GraphTooltipDescriptionText>
+        <Typography variant="caption" color={COLORS.white}>
+          {body(t)}
+        </Typography>
+      </GraphTooltipDescriptionText>
+    </GraphTooltipText>
+  )
+}
+
+export const GraphTooltip: FC<GraphTooltipProps> = ({ children, graphEndpoint, ...restProps }) => {
+  const navigate = useNavigate()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { header, body, disabled, enableNavigation } = graphTooltipMap[graphEndpoint]
+
+  const navigateTo = () => {
+    if (!enableNavigation) {
+      return
+    }
+
+    navigate(RouteUtils.getDashboardRoute(graphEndpoint as ParaTime))
+  }
+
+  return (
+    <GraphTooltipWrapper
+      {...restProps}
+      placement="right-start"
+      title={
+        <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
+          <GraphTooltipHeader {...header} comingSoon={!disabled} />
+          <GraphTooltipBody {...body} disabled={disabled} />
+        </GraphTooltipStyled>
+      }
+    >
       {children}
     </GraphTooltipWrapper>
   )

@@ -15,11 +15,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
 import { MobileTooltipProvider, useMobileTooltip } from './providers/MobileTooltipProvider'
-import { SapphireGraphMobileTooltip } from './GraphTooltip/SapphireGraphTooltip'
-import { GraphEndpoints } from './ParaTimeSelector/Graph/types'
-import { EmeraldGraphMobileTooltip } from './GraphTooltip/EmeraldGraphTooltip'
-import { ConsensusGraphMobileTooltip } from './GraphTooltip/ConsensusGraphTooltip'
-import { CipherGraphMobileTooltip } from './GraphTooltip/CipherGraphTooltip'
+import { GraphTooltipMobile } from './GraphTooltip/GraphTooltipMobile'
 
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -101,8 +97,8 @@ const HomePageCmp: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const apiStatusQuery = useGetStatus()
   const {
-    state: { showMobileTooltip },
-    setShowMobileTooltip,
+    state: { activeMobileGraphTooltip },
+    setActiveMobileGraphTooltip,
   } = useMobileTooltip()
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
@@ -151,17 +147,13 @@ const HomePageCmp: FC = () => {
           {!isMobile && <Footer />}
         </FooterStyled>
       </HomepageLayout>
-      {showMobileTooltip.consensus && (
-        <ConsensusGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Consensus, false)} />
-      )}
-      {showMobileTooltip.emerald && (
-        <EmeraldGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Emerald, false)} />
-      )}
-      {showMobileTooltip.sapphire && (
-        <SapphireGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Sapphire, false)} />
-      )}
-      {showMobileTooltip.cipher && (
-        <CipherGraphMobileTooltip onClose={() => setShowMobileTooltip(GraphEndpoints.Cipher, false)} />
+      {activeMobileGraphTooltip && (
+        <GraphTooltipMobile
+          graphEndpoint={activeMobileGraphTooltip}
+          onClose={() => {
+            setActiveMobileGraphTooltip(null)
+          }}
+        ></GraphTooltipMobile>
       )}
     </>
   )
