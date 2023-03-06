@@ -1,5 +1,4 @@
-// TODO: use /** @type {import('orval').Config} */ in next version
-/** @type {Parameters<import('orval').defineConfig>[0]} */
+/** @type {import('@orval/core').Config} */
 module.exports = {
   indexer: {
     input: {
