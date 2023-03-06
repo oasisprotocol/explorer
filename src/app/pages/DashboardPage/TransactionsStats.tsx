@@ -4,7 +4,11 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { BarChart } from '../../components/charts/BarChart'
 import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
-import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
+import {
+  chartUseQueryStaleTimeMs,
+  durationToQueryParams,
+  getMonthlyBucketsDailyAverage,
+} from '../../utils/chart-utils'
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
@@ -19,6 +23,10 @@ export const TransactionsStats: FC = () => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
+  const buckets =
+    dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
+      ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.buckets)
+      : dailyVolumeQuery.data?.data.buckets
 
   return (
     <Card>
@@ -29,12 +37,12 @@ export const TransactionsStats: FC = () => {
         title={t('transactionStats.header')}
       />
       <CardContent sx={{ height: 450 }}>
-        {dailyVolumeQuery.data?.data.buckets && (
+        {buckets && (
           <BarChart
             barSize={chartDuration === ChartDuration.WEEK ? 125 : undefined}
             barRadius={chartDuration === ChartDuration.WEEK ? 20 : undefined}
             cartesianGrid
-            data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
+            data={buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
               data: (value: number) => t('transactionStats.tooltip', { value }),

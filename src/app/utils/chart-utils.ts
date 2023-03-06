@@ -1,4 +1,5 @@
-import { GetLayerStatsTxVolumeParams } from '../../oasis-indexer/api'
+import isSameMonth from 'date-fns/isSameMonth'
+import { GetLayerStatsTxVolumeParams, type TxVolume } from '../../oasis-indexer/api'
 
 export enum ChartDuration {
   TODAY = 'TODAY',
@@ -34,3 +35,31 @@ export const chartDurationToDaysMap = {
 }
 
 export const chartUseQueryStaleTimeMs = durationToQueryParams[ChartDuration.TODAY].bucket_size_seconds * 1000
+
+type Buckets = TxVolume[] | undefined
+type MonthlyTxVolume = TxVolume & { numberOfItemsInGroup: number }
+
+const groupBucketsByMonth = (buckets: Buckets) => {
+  return buckets?.reduce((acc: MonthlyTxVolume[], cur, index, arr) => {
+    if (index > 0 && isSameMonth(new Date(cur.bucket_start), new Date(arr[index - 1].bucket_start))) {
+      acc[acc.length - 1].tx_volume += cur.tx_volume
+      acc[acc.length - 1].numberOfItemsInGroup += 1
+      return acc
+    }
+    acc.push({
+      bucket_start: cur.bucket_start,
+      tx_volume: cur.tx_volume,
+      numberOfItemsInGroup: 1,
+    })
+    return acc
+  }, [])
+}
+
+export const getMonthlyBucketsDailyAverage = (buckets: Buckets): Buckets => {
+  const monthlyBuckets = groupBucketsByMonth(buckets)
+
+  return monthlyBuckets?.map(item => ({
+    ...item,
+    tx_volume: Math.round((item.tx_volume / item.numberOfItemsInGroup) * 100) / 100,
+  }))
+}
