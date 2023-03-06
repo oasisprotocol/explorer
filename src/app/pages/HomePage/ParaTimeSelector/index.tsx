@@ -16,6 +16,7 @@ import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
 import { Layer } from '../../../../config'
+import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -114,6 +115,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
   const [selectedLayer, setSelectedLayer] = useState<Layer>()
   const [scale, setScale] = useState<number>(1)
@@ -167,6 +169,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
                   selectedLayer={selectedLayer}
                   setSelectedLayer={setSelectedLayer}
                   scale={scale}
+                  setActiveMobileGraphTooltip={setActiveMobileGraphTooltip}
                 />
               </QuickPinchZoomInner>
             </QuickPinchZoom>
@@ -199,6 +202,14 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           )}
         </ParaTimeSelectorGlobe>
       </ParaTimeSelectorGlow>
+      {activeMobileGraphTooltip && (
+        <GraphTooltipMobile
+          layer={activeMobileGraphTooltip}
+          onClose={() => {
+            setActiveMobileGraphTooltip(null)
+          }}
+        ></GraphTooltipMobile>
+      )}
     </>
   )
 }

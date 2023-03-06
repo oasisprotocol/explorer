@@ -6,7 +6,6 @@ import { useConstant } from '../../../../hooks/useConstant'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useMobileTooltip } from '../../providers/MobileTooltipProvider'
 import { Layer } from '../../../../../config'
 import { GraphTooltip } from '../../GraphTooltip'
 
@@ -20,6 +19,7 @@ interface GraphProps extends GraphBaseProps {
   // TODO: Consider moving this to a state management solution
   selectedLayer?: Layer
   setSelectedLayer: (value: Layer) => void
+  setActiveMobileGraphTooltip: (layer: Layer | null) => void
 }
 
 interface GraphSvgProps extends GraphBaseProps {
@@ -64,7 +64,14 @@ const GraphStyled = styled('svg', {
 }))
 
 const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
-  { disabled = false, transparent = false, selectedLayer, setSelectedLayer, scale },
+  {
+    disabled = false,
+    transparent = false,
+    selectedLayer,
+    setSelectedLayer,
+    scale,
+    setActiveMobileGraphTooltip,
+  },
   ref,
 ) => {
   const { t } = useTranslation()
@@ -77,7 +84,6 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const emeraldRef = useRef<SVGGElement>(null)
   const sapphireRef = useRef<SVGGElement>(null)
   const cipherRef = useRef<SVGGElement>(null)
-  const { setActiveMobileGraphTooltip } = useMobileTooltip()
 
   const [showEmeraldTooltip, setShowEmeraldTooltip] = useState(false)
 

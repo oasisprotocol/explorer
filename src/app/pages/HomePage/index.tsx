@@ -14,8 +14,6 @@ import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
-import { MobileTooltipProvider, useMobileTooltip } from './providers/MobileTooltipProvider'
-import { GraphTooltipMobile } from './GraphTooltip/GraphTooltipMobile'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -97,16 +95,12 @@ const FooterStyled = styled(Box)(({ theme }) => ({
   },
 }))
 
-const HomePageCmp: FC = () => {
+export const HomePage: FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const apiStatusQuery = useGetStatus()
-  const {
-    state: { activeMobileGraphTooltip },
-    setActiveMobileGraphTooltip,
-  } = useMobileTooltip()
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
@@ -154,20 +148,6 @@ const HomePageCmp: FC = () => {
           {!isMobile && <Footer />}
         </FooterStyled>
       </HomepageLayout>
-      {activeMobileGraphTooltip && (
-        <GraphTooltipMobile
-          layer={activeMobileGraphTooltip}
-          onClose={() => {
-            setActiveMobileGraphTooltip(null)
-          }}
-        ></GraphTooltipMobile>
-      )}
     </>
   )
 }
-
-export const HomePage: FC = () => (
-  <MobileTooltipProvider>
-    <HomePageCmp />
-  </MobileTooltipProvider>
-)
