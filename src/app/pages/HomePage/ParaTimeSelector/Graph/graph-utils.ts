@@ -1,11 +1,8 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
-import { GraphEndpoint, GraphEndpoints } from './types'
+import { Layer } from '../../../../../config'
 
 export abstract class GraphUtils {
-  static getScaleTo(
-    graphEndpoint: GraphEndpoint,
-    { width, height }: { width?: number; height?: number },
-  ): ScaleToOptions {
+  static getScaleTo(layer: Layer, { width, height }: { width?: number; height?: number }): ScaleToOptions {
     const initialValue = {
       scale: 1,
       x: 0,
@@ -16,26 +13,26 @@ export abstract class GraphUtils {
       return initialValue
     }
 
-    switch (graphEndpoint) {
-      case GraphEndpoints.Emerald:
+    switch (layer) {
+      case Layer.Emerald:
         return {
           scale: 2,
           x: 0.5 * width,
           y: 0,
         }
-      case GraphEndpoints.Cipher:
+      case Layer.Cipher:
         return {
           scale: 2,
           x: width,
           y: 0.4 * height,
         }
-      case GraphEndpoints.Sapphire:
+      case Layer.Sapphire:
         return {
           scale: 2,
           x: 0.1 * width,
           y: height,
         }
-      case GraphEndpoints.Consensus:
+      case Layer.Consensus:
       default:
         return initialValue
     }

@@ -34,6 +34,8 @@
     "bytes": "{{value, number}}",
     "chain": "Chain",
     "emerald": "Emerald",
+    "cipher": "Cipher",
+    "consensus": "Consensus",
     "failed": "Failed",
     "fiatValue": "Fiat value",
     "fiatValueInUSD": "{{value, currency}}",
@@ -64,7 +66,8 @@
     "type": "Type",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "paraTimeOnline": "ParaTime Online"
   },
   "nodes": {
     "title": "Active nodes",
@@ -104,7 +107,6 @@
   },
   "pageTitle": "Oasis Explorer",
   "pageHeader": {
-    "status": "ParaTime Online",
     "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment.",
     "sapphire": "As our official confidential EVM Compatible ParaTime, Sapphire, provides a smart contract development environment with EVM compatibility."
   },
@@ -177,6 +179,17 @@
       "tap": "Tap to view info",
       "getStarted": "Get Started",
       "infoIconAria": "Toggle info screen"
+    },
+    "tooltip": {
+      "comingSoonAria": "Coming soon...",
+      "coming": "Coming",
+      "online": "Online",
+      "sapphireParaTimeAvailableSoon": "Searching through the Sapphire ParaTime is will be available soon.",
+      "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
+      "cipherParaTimeAvailableSoon": "Searching through the Cipher ParaTime is will be available soon.",
+      "discoverMore": "Discover more",
+      "consensusParaTimeDesc": "The layer is an interface that provides important services to other parts of Oasis Core.",
+      "close": "Close"
     }
   },
   "search": {

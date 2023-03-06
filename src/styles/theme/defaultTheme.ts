@@ -106,6 +106,12 @@ export const defaultTheme = createTheme({
       lineHeight: '24px',
       color: COLORS.brandExtraDark,
     },
+    caption: {
+      fontSize: '12px',
+      fontWeight: 400,
+      lineHeight: '18px',
+      color: COLORS.brandExtraDark,
+    },
   },
   components: {
     MuiAlert: {

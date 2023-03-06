@@ -15,12 +15,20 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
 
+export const zIndexHomePage = {
+  paraTimeSelector: 1,
+  searchInput: 2,
+  logo: 3,
+  mobileTooltip: 4,
+}
+
 const HomepageLayout = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   width: '100vw',
   height: 'fill-available',
+  minHeight: '100vh',
   backgroundColor: COLORS.brandDark,
   overflowX: 'hidden',
   [theme.breakpoints.up('sm')]: {
@@ -42,14 +50,17 @@ const Content = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-start',
   alignItems: 'center',
   flex: '1 1 0',
   padding: `0 ${theme.spacing(4)}`,
+  [theme.breakpoints.up('sm')]: {
+    justifyContent: 'flex-end',
+  },
 }))
 
 const LogotypeBox = styled(Box)(({ theme }) => ({
-  zIndex: 3,
+  zIndex: zIndexHomePage.logo,
   marginBottom: 40,
   textAlign: 'center',
   marginTop: 60,
@@ -60,7 +71,7 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
 }))
 
 const SearchInputContainer = styled(Box)(({ theme }) => ({
-  zIndex: 2,
+  zIndex: zIndexHomePage.searchInput,
   width: '100%',
   [theme.breakpoints.up('md')]: {
     width: 'auto',
@@ -126,7 +137,7 @@ export const HomePage: FC = () => {
             </Box>
           )}
         </SearchInputContainer>
-        <Box sx={{ zIndex: 1 }}>
+        <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
           <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
         </Box>
       </Content>

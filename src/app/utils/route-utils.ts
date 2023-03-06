@@ -5,7 +5,7 @@ import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './he
 import { AppError, AppErrors } from '../../types/errors'
 
 export abstract class RouteUtils {
-  private static ENABLED_PARA_TIMES: Layer[] = [Layer.Emerald, Layer.Sapphire, Layer.Cipher]
+  private static ENABLED_PARA_TIMES: Layer[] = [Layer.Emerald]
 
   static getDashboardRoute = (paraTime: Layer) => {
     return `/${paraTime}`

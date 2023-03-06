@@ -79,7 +79,7 @@ export const NetworkHeader: FC = () => {
           >
             {!isMobile && (
               <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
-                {t('pageHeader.status')}
+                {t('common.paraTimeOnline')}
               </Typography>
             )}
             <Circle color={COLORS.eucalyptus} size={4}>

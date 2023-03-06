@@ -8,7 +8,6 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './types'
 import { ParaTimeSelectorUtils } from './para-time-selector-utils'
-import { GraphEndpoint, GraphEndpoints } from './Graph/types'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
@@ -16,6 +15,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from './Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from './HelpScreen'
+import { Layer } from '../../../../config'
+import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -114,18 +115,20 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
-  const [selectedGraphEndpoint, setSelectedGraphEndpoint] = useState<GraphEndpoint>()
+  const [selectedLayer, setSelectedLayer] = useState<Layer>()
+  const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
     ref: graphRef,
   })
 
   useEffect(() => {
-    if (selectedGraphEndpoint) {
-      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedGraphEndpoint, { width, height }))
+    if (selectedLayer) {
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedLayer, { width, height }))
     }
-  }, [selectedGraphEndpoint, width, height])
+  }, [selectedLayer, width, height])
 
   useEffect(() => {
     // Switch from mobile -> desktop view while on help screen
@@ -143,58 +146,71 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onZoomOutClick = () => {
-    setSelectedGraphEndpoint(GraphEndpoints.Consensus)
+    setSelectedLayer(Layer.Consensus)
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
     const transformValue = make3dTransformValue({ x, y, scale })
+    setScale(scale)
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
   return (
-    <ParaTimeSelectorGlow disabled={disabled}>
-      <ParaTimeSelectorGlobe>
-        <QuickPinchZoomOuter>
-          <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2} minZoom={0.5}>
-            <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
-              <Graph
-                ref={graphRef}
+    <>
+      <ParaTimeSelectorGlow disabled={disabled}>
+        <ParaTimeSelectorGlobe>
+          <QuickPinchZoomOuter>
+            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
+              <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
+                <Graph
+                  ref={graphRef}
+                  disabled={disabled}
+                  transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
+                  selectedLayer={selectedLayer}
+                  setSelectedLayer={setSelectedLayer}
+                  scale={scale}
+                  setActiveMobileGraphTooltip={setActiveMobileGraphTooltip}
+                />
+              </QuickPinchZoomInner>
+            </QuickPinchZoom>
+          </QuickPinchZoomOuter>
+          {!isMobile && (
+            <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
+              <ZoomOutBtn
+                variant="text"
+                color="secondary"
+                startIcon={<ChevronLeftIcon />}
+                onClick={onZoomOutClick}
                 disabled={disabled}
-                transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-                selectedGraphEndpoint={selectedGraphEndpoint}
-                setSelectedGraphEndpoint={setSelectedGraphEndpoint}
-              />
-            </QuickPinchZoomInner>
-          </QuickPinchZoom>
-        </QuickPinchZoomOuter>
-        {!isMobile && (
-          <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedGraphEndpoint)}>
-            <ZoomOutBtn
-              variant="text"
+              >
+                {t('home.zoomOutBtnText')}
+              </ZoomOutBtn>
+            </ZoomOutBtnFade>
+          )}
+          {ParaTimeSelectorUtils.showExploreBtn(step) && (
+            <ExploreBtn
               color="secondary"
-              startIcon={<ChevronLeftIcon />}
-              onClick={onZoomOutClick}
-              disabled={disabled}
+              variant="contained"
+              onClick={onExploreClick}
+              aria-label={exploreBtnTextTranslated}
             >
-              {t('home.zoomOutBtnText')}
-            </ZoomOutBtn>
-          </ZoomOutBtnFade>
-        )}
-        {ParaTimeSelectorUtils.showExploreBtn(step) && (
-          <ExploreBtn
-            color="secondary"
-            variant="contained"
-            onClick={onExploreClick}
-            aria-label={exploreBtnTextTranslated}
-          >
-            {t('home.exploreBtnText')}
-          </ExploreBtn>
-        )}
-        {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
-          <HelpScreen setParaTimeStep={setStep} />
-        )}
-      </ParaTimeSelectorGlobe>
-    </ParaTimeSelectorGlow>
+              {t('home.exploreBtnText')}
+            </ExploreBtn>
+          )}
+          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+            <HelpScreen setParaTimeStep={setStep} />
+          )}
+        </ParaTimeSelectorGlobe>
+      </ParaTimeSelectorGlow>
+      {activeMobileGraphTooltip && (
+        <GraphTooltipMobile
+          layer={activeMobileGraphTooltip}
+          onClose={() => {
+            setActiveMobileGraphTooltip(null)
+          }}
+        ></GraphTooltipMobile>
+      )}
+    </>
   )
 }
 
