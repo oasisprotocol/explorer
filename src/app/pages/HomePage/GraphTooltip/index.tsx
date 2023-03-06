@@ -184,12 +184,11 @@ export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ comingSoon, di
     <GraphTooltipIcon isMobile={isMobile}>
       {comingSoon && (
         <AccessTimeIcon
-          fontSize="xlarge"
-          sx={{ color: COLORS.aqua }}
+          sx={{ color: COLORS.aqua, fontSize: 33 }}
           aria-label={t('home.tooltip.comingSoonAria')}
         />
       )}
-      {!comingSoon && <AdjustIcon fontSize="xxlarge" sx={{ color: COLORS.aqua }} />}
+      {!comingSoon && <AdjustIcon sx={{ color: COLORS.aqua, fontSize: 51 }} />}
       {discoverMore && (
         <Typography
           component="span"

@@ -46,13 +46,6 @@ declare module '@mui/material/Chip' {
   }
 }
 
-declare module '@mui/material/SvgIcon' {
-  export interface SvgIconPropsSizeOverrides {
-    xlarge: true
-    xxlarge: true
-  }
-}
-
 export const defaultTheme = createTheme({
   palette: {
     background: {
@@ -646,22 +639,6 @@ export const defaultTheme = createTheme({
           background: COLORS.white,
         },
       },
-    },
-    MuiSvgIcon: {
-      variants: [
-        {
-          props: { fontSize: 'xlarge' },
-          style: {
-            fontSize: '33px',
-          },
-        },
-        {
-          props: { fontSize: 'xxlarge' },
-          style: {
-            fontSize: '51px',
-          },
-        },
-      ],
     },
   },
 })
