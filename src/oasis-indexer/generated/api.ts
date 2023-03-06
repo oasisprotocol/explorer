@@ -20,15 +20,26 @@ import type {
   UseQueryResult,
   QueryKey
 } from '@tanstack/react-query'
+export type GetLayerStatsActiveAccountsWindowStepSeconds = typeof GetLayerStatsActiveAccountsWindowStepSeconds[keyof typeof GetLayerStatsActiveAccountsWindowStepSeconds];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetLayerStatsActiveAccountsWindowStepSeconds = {
+  '300': 300,
+  '86400': 86400,
+} as const;
+
+export type GetLayerStatsActiveAccountsParams = { limit?: number; offset?: number; window_step_seconds?: GetLayerStatsActiveAccountsWindowStepSeconds };
+
 export type GetLayerStatsTxVolumeParams = { limit?: number; offset?: number; bucket_size_seconds?: number };
 
-export type GetEmeraldEvmTokensParams = { limit?: number; offset?: number };
+export type GetRuntimeEvmTokensParams = { limit?: number; offset?: number };
 
-export type GetEmeraldEventsParams = { limit?: number; offset?: number; block?: number; tx_index?: number; tx_hash?: string; rel?: string; type?: RuntimeEventType; evm_log_signature?: string };
+export type GetRuntimeEventsParams = { limit?: number; offset?: number; block?: number; tx_index?: number; tx_hash?: string; type?: RuntimeEventType; rel?: string; evm_log_signature?: string };
 
-export type GetEmeraldTransactionsParams = { limit?: number; offset?: number; block?: number; rel?: string };
+export type GetRuntimeTransactionsParams = { limit?: number; offset?: number; block?: number; rel?: string };
 
-export type GetEmeraldBlocksParams = { limit?: number; offset?: number; from?: number; to?: number; after?: string; before?: string };
+export type GetRuntimeBlocksParams = { limit?: number; offset?: number; from?: number; to?: number; after?: string; before?: string };
 
 export type GetConsensusProposalsProposalIdVotesParams = { limit?: number; offset?: number };
 
@@ -64,6 +75,23 @@ export type HumanReadableErrorResponse = {
   msg: string;
 };
 
+export interface ActiveAccounts {
+  /** The date for the end of the daily active accounts measurement window. */
+  window_end: string;
+  /** The number of active accounts for the 24hour window starting at bucket_start. */
+  active_accounts: number;
+}
+
+/**
+ * A list of daily unique active account windows.
+
+ */
+export interface ActiveAccountsList {
+  window_size_seconds: number;
+  /** The list of daily unique active account windows. */
+  windows: ActiveAccounts[];
+}
+
 export interface TxVolume {
   /** The date for this daily transaction volume measurement. */
   bucket_start: string;
@@ -81,13 +109,24 @@ export interface TxVolumeList {
   buckets: TxVolume[];
 }
 
+export interface AccountStats {
+  /** The total number of tokens sent, in base units. */
+  total_sent: string;
+  /** The total number of tokens received, in base units. */
+  total_received: string;
+  /** The total number of transactions this account was involved with. */
+  num_txns: number;
+}
+
 /**
  * A list of tokens in a runtime.
  */
-export interface EvmTokenList {
+export type EvmTokenListAllOf = {
   /** A list of L2 EVM tokens (ERC-20, ERC-271, ...). */
   evm_tokens: EvmToken[];
-}
+};
+
+export type EvmTokenList = List & EvmTokenListAllOf;
 
 /**
  * The type of a EVM token.
@@ -132,6 +171,23 @@ as calculated from Transfer events.
   num_holders: number;
 }
 
+export interface RuntimeAccount {
+  /** The staking address for this account. */
+  address: string;
+  address_preimage?: AddressPreimage;
+  /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
+produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
+managed by smart contracts deployed in this runtime. For example, in EVM-compatible runtimes,
+this does not include ERC-20 tokens
+ */
+  balances: RuntimeSdkBalance[];
+  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
+NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
+ */
+  evm_balances: RuntimeEvmBalance[];
+  stats: AccountStats;
+}
+
 /**
  * The method call body.
  */
@@ -160,6 +216,9 @@ However, the great majority of transactions only have a single signer in practic
 Retrieving the other signers is currently not supported by this API.
  */
   sender_0: string;
+  /** The Ethereum address of this transaction's 0th signer.
+ */
+  sender_0_eth?: string;
   /** The nonce used with this transaction's 0th signer, to prevent replay. */
   nonce_0: number;
   /** The fee that this transaction's sender committed to pay to execute
@@ -170,6 +229,10 @@ it (total, native denomination, ParaTime base units, as a string).
 execute it.
  */
   gas_limit: number;
+  /** The total gas used by the transaction. */
+  gas_used: number;
+  /** The total byte size of the transaction. */
+  size: number;
   /** The method that was called. */
   method: string;
   /** The method call body. */
@@ -183,8 +246,11 @@ if applicable. The meaning varies based on the transaction method. Some notable 
   - For `method = "evm.Call"`, this is the address of the called smart contract
  */
   to?: string;
+  /** A reasonable "to" Ethereum address associated with this transaction,
+ */
+  to_eth?: string;
   /** A reasonable "amount" associated with this transaction, if
-applicable. The meaning varies based on the transaction mehtod.
+applicable. The meaning varies based on the transaction method.
 Usually in native denomination, ParaTime units. As a string.
  */
   amount?: string;
@@ -196,8 +262,22 @@ Usually in native denomination, ParaTime units. As a string.
  * A list of runtime transactions.
 
  */
-export interface RuntimeTransactionList {
+export type RuntimeTransactionListAllOf = {
   transactions: RuntimeTransaction[];
+};
+
+export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
+
+/**
+ * A decoded parameter of an event emitted from an evm runtime.
+ */
+export interface EvmEventParam {
+  /** The parameter name. */
+  name: string;
+  /** The solidity type of the event parameter. */
+  evm_type: string;
+  /** The parameter value. */
+  value: unknown;
 }
 
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
@@ -215,14 +295,6 @@ export const RuntimeEventType = {
 } as const;
 
 /**
- * The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer` 
-and `Approve`.
-Absent if the event type is not `evm.log`.
-
- */
-export type RuntimeEventEvmLogParams = { [key: string]: any };
-
-/**
  * The decoded event contents. This spec does not encode the many possible types;
 instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
 This object will conform to one of the `*Event` types two levels down
@@ -238,7 +310,11 @@ export type RuntimeEventBody = { [key: string]: any };
 export interface RuntimeEvent {
   /** The block height at which this event was generated. */
   round: number;
-  /** Hash of this event's originating transaction
+  /** 0-based index of this event's originating transaction within its block.
+Absent if the event did not originate from a transaction.
+ */
+  tx_index?: number;
+  /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
   tx_hash?: string | null;
@@ -256,20 +332,22 @@ OR `evm > Event`.
 Absent if the event type is not `evm.log`.
  */
   evm_log_name?: string | null;
-  /** The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer` 
+  /** The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer`
 and `Approve`.
 Absent if the event type is not `evm.log`.
  */
-  evm_log_params?: RuntimeEventEvmLogParams;
+  evm_log_params?: EvmEventParam[];
 }
 
 /**
  * A list of runtime events.
 
  */
-export interface RuntimeEventList {
+export type RuntimeEventListAllOf = {
   events: RuntimeEvent[];
-}
+};
+
+export type RuntimeEventList = List & RuntimeEventListAllOf;
 
 /**
  * A ParaTime block.
@@ -294,9 +372,11 @@ export interface RuntimeBlock {
  * A list of consensus blocks.
 
  */
-export interface RuntimeBlockList {
+export type RuntimeBlockListAllOf = {
   blocks: RuntimeBlock[];
-}
+};
+
+export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 export interface ProposalVote {
   /** The staking address casting this vote. */
@@ -309,12 +389,12 @@ export interface ProposalVote {
  * A list of votes for a governance proposal.
 
  */
-export interface ProposalVotes {
+export type ProposalVotesAllOf = {
   /** The unique identifier of the proposal. */
   proposal_id: number;
   /** The list of votes for the proposal. */
   votes: ProposalVote[];
-}
+};
 
 /**
  * The target propotocol versions for this upgrade proposal.
@@ -360,9 +440,11 @@ cancelling an existing proposal.
  * A list of governance proposals.
 
  */
-export interface ProposalList {
+export type ProposalListAllOf = {
   proposals: Proposal[];
-}
+};
+
+export type ProposalList = List & ProposalListAllOf;
 
 /**
  * A consensus epoch.
@@ -381,9 +463,11 @@ export interface Epoch {
  * A list of consensus epochs.
 
  */
-export interface EpochList {
+export type EpochListAllOf = {
   epochs: Epoch[];
-}
+};
+
+export type EpochList = List & EpochListAllOf;
 
 export interface Allowance {
   /** The allowed account. */
@@ -393,17 +477,31 @@ export interface Allowance {
 }
 
 /**
- * The name of a runtime. This is a human-readable identifier, and should
-stay stable across runtime upgrades/versions.
+ * A consensus layer account.
 
  */
-export type RuntimeName = typeof RuntimeName[keyof typeof RuntimeName];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const RuntimeName = {
-  emerald: 'emerald',
-} as const;
+export interface Account {
+  /** The staking address for this account. */
+  address: string;
+  /** A nonce used to prevent replay. */
+  nonce: number;
+  /** The available balance, in base units. */
+  available: string;
+  /** The active escrow balance, in base units. */
+  escrow: string;
+  /** The debonding escrow balance, in base units. */
+  debonding: string;
+  /** The delegations balance, in base units.
+For efficiency, this field is omitted when listing multiple-accounts.
+ */
+  delegations_balance?: string;
+  /** The debonding delegations balance, in base units.
+For efficiency, this field is omitted when listing multiple-accounts.
+ */
+  debonding_delegations_balance?: string;
+  /** The allowances made by this account. */
+  allowances: Allowance[];
+}
 
 /**
  * Balance of an account for a specific runtime and EVM token.
@@ -411,7 +509,6 @@ export const RuntimeName = {
 export interface RuntimeEvmBalance {
   /** Number of tokens held, in base units. */
   balance: string;
-  runtime: RuntimeName;
   /** The EVM address of this token's contract. Encoded as a lowercase hex string. */
   token_contract_addr: string;
   /** The token ticker symbol. Not guaranteed to be unique across distinct EVM tokens. */
@@ -429,49 +526,10 @@ export interface RuntimeEvmBalance {
 export interface RuntimeSdkBalance {
   /** Number of tokens held, in base units. */
   balance: string;
-  runtime: RuntimeName;
   /** The token ticker symbol. Unique across all oasis-sdk tokens in the same runtime. */
   token_symbol: string;
   /** The number of decimals of precision for this token. */
   token_decimals: number;
-}
-
-/**
- * A consensus layer account.
-
- */
-export interface Account {
-  /** The staking address for this account. */
-  address: string;
-  address_preimage?: AddressPreimage;
-  /** A nonce used to prevent replay. */
-  nonce: number;
-  /** The balances of this account in each runtime, as managed by oasis-sdk.
-NOTE 1: This field is omitted for efficiency when listing multiple accounts.
-NOTE 2: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
- */
-  runtime_sdk_balances?: RuntimeSdkBalance[];
-  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
-NOTE 1: This field is omitted for efficiency when listing multiple accounts.
-NOTE 2: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
- */
-  runtime_evm_balances?: RuntimeEvmBalance[];
-  /** The available balance, in base units. */
-  available: string;
-  /** The active escrow balance, in base units. */
-  escrow: string;
-  /** The debonding escrow balance, in base units. */
-  debonding: string;
-  /** The delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  delegations_balance?: string;
-  /** The debonding delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  debonding_delegations_balance?: string;
-  /** The allowances made by this account. */
-  allowances: Allowance[];
 }
 
 export type AddressDerivationContext = typeof AddressDerivationContext[keyof typeof AddressDerivationContext];
@@ -522,9 +580,11 @@ is the Ethereum address (in base64, not hex!).
  * A list of consensus layer accounts.
 
  */
-export interface AccountList {
+export type AccountListAllOf = {
   accounts: Account[];
-}
+};
+
+export type AccountList = List & AccountListAllOf;
 
 /**
  * A node registered at the consensus layer.
@@ -556,10 +616,12 @@ upon rotation.
  * A list of nodes registered at the consensus layer.
 
  */
-export interface NodeList {
+export type NodeListAllOf = {
   entity_id: string;
   nodes: Node[];
-}
+};
+
+export type NodeList = List & NodeListAllOf;
 
 export interface ValidatorMedia {
   /** An URL associated with the entity. */
@@ -610,9 +672,11 @@ export interface Validator {
  * A list of validators registered at the consensus layer.
 
  */
-export interface ValidatorList {
+export type ValidatorListAllOf = {
   validators: Validator[];
-}
+};
+
+export type ValidatorList = List & ValidatorListAllOf;
 
 /**
  * An entity registered at the consensus layer.
@@ -631,9 +695,11 @@ export interface Entity {
  * A list of entities registered at the consensus layer.
 
  */
-export interface EntityList {
+export type EntityListAllOf = {
   entities: Entity[];
-}
+};
+
+export type EntityList = List & EntityListAllOf;
 
 /**
  * The event contents. This spec does not encode the many possible types;
@@ -673,9 +739,11 @@ the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
  * A list of consensus events.
 
  */
-export interface ConsensusEventList {
+export type ConsensusEventListAllOf = {
   events: ConsensusEvent[];
-}
+};
+
+export type ConsensusEventList = List & ConsensusEventListAllOf;
 
 export type ConsensusEventType = typeof ConsensusEventType[keyof typeof ConsensusEventType];
 
@@ -706,9 +774,11 @@ export const ConsensusEventType = {
  * A list of consensus transactions.
 
  */
-export interface TransactionList {
+export type TransactionListAllOf = {
   transactions: Transaction[];
-}
+};
+
+export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -783,9 +853,11 @@ export interface DebondingDelegation {
  * A list of debonding delegations.
 
  */
-export interface DebondingDelegationList {
+export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
-}
+};
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A delegation.
@@ -804,9 +876,11 @@ export interface Delegation {
  * A list of delegations.
 
  */
-export interface DelegationList {
+export type DelegationListAllOf = {
   delegations: Delegation[];
-}
+};
+
+export type DelegationList = List & DelegationListAllOf;
 
 /**
  * A consensus block.
@@ -823,13 +897,9 @@ export interface Block {
   num_transactions: number;
 }
 
-/**
- * A list of consensus blocks.
-
- */
-export interface BlockList {
+export type BlockListAllOf = {
   blocks: Block[];
-}
+};
 
 export interface Status {
   /** The most recently indexed chain ID. */
@@ -840,13 +910,42 @@ export interface Status {
   latest_update: string;
 }
 
+export interface List {
+  /** The total number of records that match the query, i.e. the number of records
+the query would return with limit=infinity.
+ */
+  total_count: number;
+  /** Whether total_count is clipped for performance reasons. */
+  is_total_count_clipped: boolean;
+}
+
+export type ProposalVotes = List & ProposalVotesAllOf;
+
+/**
+ * A list of consensus blocks.
+
+ */
+export type BlockList = List & BlockListAllOf;
+
+export type Runtime = typeof Runtime[keyof typeof Runtime];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const Runtime = {
+  emerald: 'emerald',
+  sapphire: 'sapphire',
+  cipher: 'cipher',
+} as const;
+
 export type Layer = typeof Layer[keyof typeof Layer];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Layer = {
-  consensus: 'consensus',
   emerald: 'emerald',
+  sapphire: 'sapphire',
+  cipher: 'cipher',
+  consensus: 'consensus',
 } as const;
 
 
@@ -1717,37 +1816,40 @@ export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnTy
 /**
  * @summary Returns a list of Emerald blocks.
  */
-export const getEmeraldBlocks = (
-    params?: GetEmeraldBlocksParams, options?: AxiosRequestConfig
+export const getRuntimeBlocks = (
+    runtime: Runtime,
+    params?: GetRuntimeBlocksParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeBlockList>> => {
     return axios.get(
-      `/emerald/blocks`,{
+      `/${runtime}/blocks`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetEmeraldBlocksQueryKey = (params?: GetEmeraldBlocksParams,) => [`/emerald/blocks`, ...(params ? [params]: [])];
+export const getGetRuntimeBlocksQueryKey = (runtime: Runtime,
+    params?: GetRuntimeBlocksParams,) => [`/${runtime}/blocks`, ...(params ? [params]: [])];
 
     
-export type GetEmeraldBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldBlocks>>>
-export type GetEmeraldBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeBlocks>>>
+export type GetRuntimeBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldBlocks = <TData = Awaited<ReturnType<typeof getEmeraldBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetEmeraldBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof getRuntimeBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldBlocksQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeBlocksQueryKey(runtime,params);
 
   
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldBlocks>>> = ({ signal }) => getEmeraldBlocks(params, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeBlocks>>> = ({ signal }) => getRuntimeBlocks(runtime,params, { signal, ...axiosOptions });
 
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldBlocks>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1758,37 +1860,82 @@ export const useGetEmeraldBlocks = <TData = Awaited<ReturnType<typeof getEmerald
 /**
  * @summary Returns a list of Emerald transactions.
  */
-export const getEmeraldTransactions = (
-    params?: GetEmeraldTransactionsParams, options?: AxiosRequestConfig
+export const getRuntimeTransactions = (
+    runtime: Runtime,
+    params?: GetRuntimeTransactionsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeTransactionList>> => {
     return axios.get(
-      `/emerald/transactions`,{
+      `/${runtime}/transactions`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetEmeraldTransactionsQueryKey = (params?: GetEmeraldTransactionsParams,) => [`/emerald/transactions`, ...(params ? [params]: [])];
+export const getGetRuntimeTransactionsQueryKey = (runtime: Runtime,
+    params?: GetRuntimeTransactionsParams,) => [`/${runtime}/transactions`, ...(params ? [params]: [])];
 
     
-export type GetEmeraldTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldTransactions>>>
-export type GetEmeraldTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeTransactions>>>
+export type GetRuntimeTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getEmeraldTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetEmeraldTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof getRuntimeTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldTransactionsQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeTransactionsQueryKey(runtime,params);
 
   
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldTransactions>>> = ({ signal }) => getEmeraldTransactions(params, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactions>>> = ({ signal }) => getRuntimeTransactions(runtime,params, { signal, ...axiosOptions });
 
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldTransactions>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns runtime transactions with the given transaction hash.
+ */
+export const getRuntimeTransactionsTxHash = (
+    runtime: Runtime,
+    txHash: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RuntimeTransactionList>> => {
+    return axios.get(
+      `/${runtime}/transactions/${txHash}`,options
+    );
+  }
+
+
+export const getGetRuntimeTransactionsTxHashQueryKey = (runtime: Runtime,
+    txHash: string,) => [`/${runtime}/transactions/${txHash}`];
+
+    
+export type GetRuntimeTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>>
+export type GetRuntimeTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeTransactionsTxHashQueryKey(runtime,txHash);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>> = ({ signal }) => getRuntimeTransactionsTxHash(runtime,txHash, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime && txHash), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1799,76 +1946,40 @@ export const useGetEmeraldTransactions = <TData = Awaited<ReturnType<typeof getE
 /**
  * @summary Returns a list of Emerald events.
  */
-export const getEmeraldEvents = (
-    params?: GetEmeraldEventsParams, options?: AxiosRequestConfig
+export const getRuntimeEvents = (
+    runtime: Runtime,
+    params?: GetRuntimeEventsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeEventList>> => {
     return axios.get(
-      `/emerald/events`,{
+      `/${runtime}/events`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetEmeraldEventsQueryKey = (params?: GetEmeraldEventsParams,) => [`/emerald/events`, ...(params ? [params]: [])];
+export const getGetRuntimeEventsQueryKey = (runtime: Runtime,
+    params?: GetRuntimeEventsParams,) => [`/${runtime}/events`, ...(params ? [params]: [])];
 
     
-export type GetEmeraldEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldEvents>>>
-export type GetEmeraldEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvents>>>
+export type GetRuntimeEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldEvents = <TData = Awaited<ReturnType<typeof getEmeraldEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetEmeraldEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldEventsQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeEventsQueryKey(runtime,params);
 
   
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldEvents>>> = ({ signal }) => getEmeraldEvents(params, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvents>>> = ({ signal }) => getRuntimeEvents(runtime,params, { signal, ...axiosOptions });
 
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldEvents>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryKey;
-
-  return query;
-}
-
-
-/**
- * @summary Returns an Emerald transaction with the given transaction hash.
- */
-export const getEmeraldTransactionsTxHash = (
-    txHash: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeTransaction>> => {
-    return axios.get(
-      `/emerald/transactions/${txHash}`,options
-    );
-  }
-
-
-export const getGetEmeraldTransactionsTxHashQueryKey = (txHash: string,) => [`/emerald/transactions/${txHash}`];
-
-    
-export type GetEmeraldTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>>
-export type GetEmeraldTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
-
-export const useGetEmeraldTransactionsTxHash = <TData = Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-
-  const {query: queryOptions, axios: axiosOptions} = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldTransactionsTxHashQueryKey(txHash);
-
-  
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>> = ({ signal }) => getEmeraldTransactionsTxHash(txHash, { signal, ...axiosOptions });
-
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldTransactionsTxHash>>, TError, TData>(queryKey, queryFn, {enabled: !!(txHash), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1879,37 +1990,82 @@ export const useGetEmeraldTransactionsTxHash = <TData = Awaited<ReturnType<typeo
 /**
  * @summary Returns a list of EVM (ERC-20, ...) tokens on Emerald.
  */
-export const getEmeraldEvmTokens = (
-    params?: GetEmeraldEvmTokensParams, options?: AxiosRequestConfig
+export const getRuntimeEvmTokens = (
+    runtime: Runtime,
+    params?: GetRuntimeEvmTokensParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<EvmTokenList>> => {
     return axios.get(
-      `/emerald/evm_tokens`,{
+      `/${runtime}/evm_tokens`,{
     ...options,
         params: {...params, ...options?.params},}
     );
   }
 
 
-export const getGetEmeraldEvmTokensQueryKey = (params?: GetEmeraldEvmTokensParams,) => [`/emerald/evm_tokens`, ...(params ? [params]: [])];
+export const getGetRuntimeEvmTokensQueryKey = (runtime: Runtime,
+    params?: GetRuntimeEvmTokensParams,) => [`/${runtime}/evm_tokens`, ...(params ? [params]: [])];
 
     
-export type GetEmeraldEvmTokensQueryResult = NonNullable<Awaited<ReturnType<typeof getEmeraldEvmTokens>>>
-export type GetEmeraldEvmTokensQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeEvmTokensQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvmTokens>>>
+export type GetRuntimeEvmTokensQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
-export const useGetEmeraldEvmTokens = <TData = Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetEmeraldEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEmeraldEvmTokensQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeEvmTokensQueryKey(runtime,params);
 
   
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getEmeraldEvmTokens>>> = ({ signal }) => getEmeraldEvmTokens(params, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvmTokens>>> = ({ signal }) => getRuntimeEvmTokens(runtime,params, { signal, ...axiosOptions });
 
-  const query = useQuery<Awaited<ReturnType<typeof getEmeraldEvmTokens>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a runtime account.
+ */
+export const getRuntimeAccountsAddress = (
+    runtime: Runtime,
+    address: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RuntimeAccount>> => {
+    return axios.get(
+      `/${runtime}/accounts/${address}`,options
+    );
+  }
+
+
+export const getGetRuntimeAccountsAddressQueryKey = (runtime: Runtime,
+    address: string,) => [`/${runtime}/accounts/${address}`];
+
+    
+export type GetRuntimeAccountsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>>
+export type GetRuntimeAccountsAddressQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime,
+    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetRuntimeAccountsAddressQueryKey(runtime,address);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>> = ({ signal }) => getRuntimeAccountsAddress(runtime,address, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>(queryKey, queryFn, {enabled: !!(runtime && address), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
@@ -1956,6 +2112,52 @@ export const useGetLayerStatsTxVolume = <TData = Awaited<ReturnType<typeof getLa
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsTxVolume>>> = ({ signal }) => getLayerStatsTxVolume(layer,params, { signal, ...axiosOptions });
 
   const query = useQuery<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>(queryKey, queryFn, {enabled: !!(layer), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a (sliding) timeline of the recorded daily unique active accounts for
+either consensus or one of the paratimes.
+
+ */
+export const getLayerStatsActiveAccounts = (
+    layer: Layer,
+    params?: GetLayerStatsActiveAccountsParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ActiveAccountsList>> => {
+    return axios.get(
+      `/${layer}/stats/active_accounts`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+
+export const getGetLayerStatsActiveAccountsQueryKey = (layer: Layer,
+    params?: GetLayerStatsActiveAccountsParams,) => [`/${layer}/stats/active_accounts`, ...(params ? [params]: [])];
+
+    
+export type GetLayerStatsActiveAccountsQueryResult = NonNullable<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>>
+export type GetLayerStatsActiveAccountsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetLayerStatsActiveAccounts = <TData = Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ layer: Layer,
+    params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetLayerStatsActiveAccountsQueryKey(layer,params);
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>> = ({ signal }) => getLayerStatsActiveAccounts(layer,params, { signal, ...axiosOptions });
+
+  const query = useQuery<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>(queryKey, queryFn, {enabled: !!(layer), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
