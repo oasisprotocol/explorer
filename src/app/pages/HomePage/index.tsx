@@ -28,6 +28,7 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   width: '100vw',
   height: 'fill-available',
+  minHeight: '100vh',
   backgroundColor: COLORS.brandDark,
   overflowX: 'hidden',
   [theme.breakpoints.up('sm')]: {
@@ -49,10 +50,13 @@ const Content = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-start',
   alignItems: 'center',
   flex: '1 1 0',
   padding: `0 ${theme.spacing(4)}`,
+  [theme.breakpoints.up('sm')]: {
+    justifyContent: 'flex-end',
+  },
 }))
 
 const LogotypeBox = styled(Box)(({ theme }) => ({
@@ -118,36 +122,34 @@ export const HomePage: FC = () => {
   const showInfoScreenBtn = isMobile && step !== ParaTimeSelectorStep.ShowHelpScreen
 
   return (
-    <>
-      <HomepageLayout>
-        <Content>
-          <LogotypeBox>
-            <Logotype showText />
-          </LogotypeBox>
-          <SearchInputContainer>
-            <SearchInputBox>
-              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
-            </SearchInputBox>
-            {isApiOffline && (
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <OfflineIndicator />
-              </Box>
-            )}
-          </SearchInputContainer>
-          <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
-            <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
-          </Box>
-        </Content>
-
-        <FooterStyled>
-          {showInfoScreenBtn && (
-            <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-              <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-            </IconButton>
+    <HomepageLayout>
+      <Content>
+        <LogotypeBox>
+          <Logotype showText />
+        </LogotypeBox>
+        <SearchInputContainer>
+          <SearchInputBox>
+            <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+          </SearchInputBox>
+          {isApiOffline && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <OfflineIndicator />
+            </Box>
           )}
-          {!isMobile && <Footer />}
-        </FooterStyled>
-      </HomepageLayout>
-    </>
+        </SearchInputContainer>
+        <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
+          <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
+        </Box>
+      </Content>
+
+      <FooterStyled>
+        {showInfoScreenBtn && (
+          <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+            <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+          </IconButton>
+        )}
+        {!isMobile && <Footer />}
+      </FooterStyled>
+    </HomepageLayout>
   )
 }
