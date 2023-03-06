@@ -1,8 +1,7 @@
 import { FC } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -15,9 +14,25 @@ import { Layer } from '../../../config'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
 
-const getLabel = (t: TFunction, pathname: string) => {
-  if (pathname.startsWith(`/${Layer.Emerald}`)) {
-    return t('common.emerald')
+const getHeader = (t: TFunction, layer: Layer) => {
+  switch (layer) {
+    case Layer.Emerald:
+      return t('common.emerald')
+    case Layer.Sapphire:
+      return t('common.sapphire')
+    default:
+      return ''
+  }
+}
+
+const getDescription = (t: TFunction, layer: Layer) => {
+  switch (layer) {
+    case Layer.Emerald:
+      return t('pageHeader.emerald')
+    case Layer.Sapphire:
+      return t('pageHeader.sapphire')
+    default:
+      return ''
   }
 }
 
@@ -25,14 +40,14 @@ export const NetworkHeader: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { pathname } = useLocation()
-  const label = getLabel(t, pathname)
+  const layer = useParams().layer as Layer
+  const header = getHeader(t, layer)
 
   return (
     <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start', pr: isMobile ? 0 : 4 }}>
       {!isMobile && (
         <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
-          <img src={blockchainImage} alt={label} />
+          <img src={blockchainImage} alt={header} />
         </Circle>
       )}
       <Box>
@@ -52,7 +67,7 @@ export const NetworkHeader: FC = () => {
               color={COLORS.white}
               sx={{ pr: isMobile ? 3 : 4, fontSize: isMobile ? '16px' : '24px', fontWeight: 700 }}
             >
-              {label}
+              {header}
             </Typography>
           </Link>
 
@@ -74,7 +89,7 @@ export const NetworkHeader: FC = () => {
         </Box>
         {!isMobile && (
           <Typography sx={{ fontSize: 12, lineHeight: '18px', color: COLORS.white }}>
-            {t('pageHeader.emerald')}
+            {getDescription(t, layer)}
           </Typography>
         )}
       </Box>

@@ -56,7 +56,6 @@ const LineChartCmp = <T extends object>({
         mirror={!withLabels}
         tick={withLabels ? { fill: COLORS.brandDark, strokeWidth: 0 } : false}
         type="number"
-        padding={{ bottom: 20 }}
         tickMargin={tickMargin}
       />
       <Tooltip

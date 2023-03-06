@@ -11,6 +11,8 @@ import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 
 interface BarChartProps<T extends object> extends Formatters {
+  barSize?: number
+  barRadius?: number
   cartesianGrid?: boolean
   data: T[]
   dataKey: Extract<keyof T, string>
@@ -19,9 +21,9 @@ interface BarChartProps<T extends object> extends Formatters {
   withLabels?: boolean
 }
 
-const barSize = 12
-
 const BarChartCmp = <T extends object>({
+  barSize = 12,
+  barRadius = 12,
   cartesianGrid,
   data,
   dataKey,
@@ -54,14 +56,14 @@ const BarChartCmp = <T extends object>({
           withBarBackground
             ? {
                 fill: COLORS.grayLight,
-                radius: barSize,
+                radius: 20,
               }
             : undefined
         }
         dataKey={dataKey}
         barSize={barSize}
         fill={COLORS.denimBlue}
-        radius={rounded ? barSize : [barSize, barSize, 0, 0]}
+        radius={rounded ? barRadius : [barRadius, barRadius, 0, 0]}
       />
     </RechartsBarChart>
   </ResponsiveContainer>
