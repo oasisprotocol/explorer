@@ -74,7 +74,9 @@
     "value": "{{value, number}}"
   },
   "errors": {
+    "error": "Error",
     "unknown": "Unknown error",
+    "unsupportedLayer": "Unsupported layer",
     "invalidAddress": "Invalid address",
     "invalidBlockHeight": "Invalid block height",
     "invalidPageNumber": "Invalid page number",
@@ -95,14 +97,18 @@
       "header": "What is the Emerald network?",
       "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
     },
+    "sapphire": {
+      "header": "What is the Sapphire network?",
+      "description": "The Sapphire ParaTime is our official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
+    },
     "header": "Learning materials",
     "token": {
-      "header": "What is the ROSE token?",
-      "description": "Rose is the currency powering the Emerald network."
+      "header": "Token Metrics and Distribution",
+      "description": "Rose is the currency powering the Oasis network."
     },
     "transfer": {
       "header": "How to Transfer ROSE into a ParaTime?",
-      "description": "Rose is the currency powering the Emerald network."
+      "description": "Rose is the currency powering the {{layer}} network."
     }
   },
   "pageTitle": "Oasis Explorer",

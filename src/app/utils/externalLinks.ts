@@ -12,6 +12,7 @@ const docsUrl = 'https://docs.oasis.io/'
 export const docs = {
   home: docsUrl,
   emerald: `${docsUrl}dapp/emerald/`,
+  sapphire: `${docsUrl}dapp/sapphire/`,
   token: `${docsUrl}general/oasis-network/token-metrics-and-distribution`,
   paraTimeTransfer: `${docsUrl}general/manage-tokens/how-to-transfer-rose-into-paratime`,
 }
