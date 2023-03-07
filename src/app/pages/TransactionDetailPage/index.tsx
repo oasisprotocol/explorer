@@ -159,7 +159,7 @@ export const TransactionDetailPage: FC = () => {
             <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
 
             <dt>{t('common.gasLimit')}</dt>
-            <dd>{t('common.valueInRose', { value: transaction.gas_limit })}</dd>
+            <dd>{transaction.gas_limit.toLocaleString()}</dd>
           </StyledDescriptionList>
         </SubPageCard>
       )}
