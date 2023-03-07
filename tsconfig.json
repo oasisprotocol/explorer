@@ -18,6 +18,7 @@
 
     // Strictness
     "strict": true,
+    "checkJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
