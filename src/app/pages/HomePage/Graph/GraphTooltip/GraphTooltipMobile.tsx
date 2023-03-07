@@ -1,7 +1,7 @@
 import { FC, MouseEvent } from 'react'
 import Fade from '@mui/material/Fade'
 import CloseIcon from '@mui/icons-material/Close'
-import { COLORS } from '../../../../styles/theme/colors'
+import { COLORS } from '../../../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -9,10 +9,10 @@ import IconButton from '@mui/material/IconButton'
 import { GraphTooltipBody, GraphTooltipHeader, layerTooltipMap, GraphTooltipStyled } from './index'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router-dom'
-import { RouteUtils } from '../../../utils/route-utils'
+import { RouteUtils } from '../../../../utils/route-utils'
 import * as React from 'react'
-import { zIndexHomePage } from '../index'
-import { Layer } from '../../../../config'
+import { zIndexHomePage } from '../../index'
+import { Layer } from '../../../../../config'
 
 export const MobileBackdrop = styled(Box)(() => ({
   position: 'fixed',

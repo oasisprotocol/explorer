@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Search, SearchVariant } from '../../components/Search'
-import { ParaTimeSelector } from './ParaTimeSelector'
+import { ParaTimeSelector } from './Graph/ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { OfflineIndicator } from './OfflineIndicator'
@@ -13,7 +13,7 @@ import { useGetStatus } from '../../../oasis-indexer/api'
 import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
-import { ParaTimeSelectorStep } from './ParaTimeSelector/types'
+import { ParaTimeSelectorStep } from './Graph/types'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,

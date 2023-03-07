@@ -7,7 +7,7 @@ import { RouteUtils } from '../../../../utils/route-utils'
 import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Layer } from '../../../../../config'
-import { GraphTooltip } from '../../GraphTooltip'
+import { GraphTooltip } from '../GraphTooltip'
 
 interface GraphBaseProps {
   disabled?: boolean
