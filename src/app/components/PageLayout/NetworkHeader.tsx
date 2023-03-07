@@ -13,26 +13,23 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../config'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
+import { AppError, AppErrors } from '../../../types/errors'
 
-const getHeader = (t: TFunction, layer: Layer) => {
+const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
     case Layer.Emerald:
-      return t('common.emerald')
-    case Layer.Sapphire:
-      return t('common.sapphire')
-    default:
-      return ''
-  }
-}
+      return {
+        header: t('common.emerald'),
+        description: t('pageHeader.emerald'),
+      }
 
-const getDescription = (t: TFunction, layer: Layer) => {
-  switch (layer) {
-    case Layer.Emerald:
-      return t('pageHeader.emerald')
     case Layer.Sapphire:
-      return t('pageHeader.sapphire')
+      return {
+        header: t('common.sapphire'),
+        description: t('pageHeader.sapphire'),
+      }
     default:
-      return ''
+      throw new AppError(AppErrors.UnsupportedLayer)
   }
 }
 
@@ -40,14 +37,15 @@ export const NetworkHeader: FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  // TODO: switch to useLayer when it's available
   const layer = useParams().layer as Layer
-  const header = getHeader(t, layer)
+  const content = getContent(t, layer)
 
   return (
     <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start', pr: isMobile ? 0 : 4 }}>
       {!isMobile && (
         <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
-          <img src={blockchainImage} alt={header} />
+          <img src={blockchainImage} alt={content.header} />
         </Circle>
       )}
       <Box>
@@ -67,7 +65,7 @@ export const NetworkHeader: FC = () => {
               color={COLORS.white}
               sx={{ pr: isMobile ? 3 : 4, fontSize: isMobile ? '16px' : '24px', fontWeight: 700 }}
             >
-              {header}
+              {content.header}
             </Typography>
           </Link>
 
@@ -89,7 +87,7 @@ export const NetworkHeader: FC = () => {
         </Box>
         {!isMobile && (
           <Typography sx={{ fontSize: 12, lineHeight: '18px', color: COLORS.white }}>
-            {getDescription(t, layer)}
+            {content.description}
           </Typography>
         )}
       </Box>

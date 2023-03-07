@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { useParams } from 'react-router-dom'
+import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -11,6 +13,8 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
+import { Layer } from '../../../config'
+import { AppError, AppErrors } from '../../../types/errors'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -27,6 +31,28 @@ const StyledLink = styled(Link)(() => ({
     backgroundColor: COLORS.cosmicCobalt,
   },
 }))
+
+const getContent = (t: TFunction, layer: Layer) => {
+  switch (layer) {
+    case Layer.Emerald:
+      return {
+        description: t('learningMaterials.emerald.description'),
+        header: t('learningMaterials.emerald.header'),
+        link: docs.emerald,
+        title: t('common.emerald'),
+      }
+
+    case Layer.Sapphire:
+      return {
+        description: t('learningMaterials.sapphire.description'),
+        header: t('learningMaterials.sapphire.header'),
+        link: docs.sapphire,
+        title: t('common.sapphire'),
+      }
+    default:
+      throw new AppError(AppErrors.UnsupportedLayer)
+  }
+}
 
 type LearningSectionProps = PaperProps & {
   description: string
@@ -52,6 +78,9 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
 
 export const LearningMaterials = () => {
   const { t } = useTranslation()
+  // TODO: switch to useLayer when it's available
+  const layer = useParams().layer as Layer
+  const content = getContent(t, layer)
 
   return (
     <Card>
@@ -74,9 +103,9 @@ export const LearningMaterials = () => {
         <Grid container spacing={3}>
           <Grid xs={12} md={6}>
             <LearningSection
-              description={t('learningMaterials.emerald.description')}
-              title={t('learningMaterials.emerald.header')}
-              url={docs.emerald}
+              description={content.description}
+              title={content.header}
+              url={content.link}
               sx={{ height: '100%' }}
             />
           </Grid>
@@ -84,13 +113,13 @@ export const LearningMaterials = () => {
             <Grid>
               <LearningSection
                 description={t('learningMaterials.token.description')}
-                title={t('learningMaterials.emerald.header')}
+                title={t('learningMaterials.token.header')}
                 url={docs.token}
               />
             </Grid>
             <Grid>
               <LearningSection
-                description={t('learningMaterials.transfer.description')}
+                description={t('learningMaterials.transfer.description', { layer: content.title })}
                 title={t('learningMaterials.transfer.header')}
                 url={docs.paraTimeTransfer}
               />

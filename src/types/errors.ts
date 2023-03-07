@@ -6,6 +6,7 @@ export class AppError extends Error {
 
 export enum AppErrors {
   Unknown = 'unknown',
+  UnsupportedLayer = 'unsupported_layer',
   InvalidAddress = 'invalid_address',
   InvalidBlockHeight = 'invalid_block_height',
   InvalidTxHash = 'invalid_tx_hash',
