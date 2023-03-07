@@ -20,6 +20,7 @@ import { blockGasLimit } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 
 export const BlockDetailPage: FC = () => {
+  const { t } = useTranslation()
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetRuntimeBlockByHeight(Runtime.emerald, blockHeight)
   if (!data && !isLoading) {
@@ -29,7 +30,9 @@ export const BlockDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <BlockDetailView isLoading={isLoading} block={block}></BlockDetailView>
+      <SubPageCard featured title={t('common.block')}>
+        <BlockDetailView isLoading={isLoading} block={block} />
+      </SubPageCard>
       <TransactionsCard blockHeight={blockHeight} />
     </PageLayout>
   )
@@ -46,7 +49,7 @@ export const BlockDetailView: FC<{
   const transactionsAnchor = `${useHref('')}#${transactionsContainerId}`
 
   return (
-    <SubPageCard featured title={t('common.block')}>
+    <>
       {isLoading && <TextSkeleton numberOfRows={7} />}
       {block && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
@@ -116,6 +119,6 @@ export const BlockDetailView: FC<{
           <dd>{blockGasLimit.toLocaleString()}</dd>
         </StyledDescriptionList>
       )}
-    </SubPageCard>
+    </>
   )
 }
