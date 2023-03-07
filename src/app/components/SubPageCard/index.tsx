@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactNode } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -8,11 +8,13 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { styled, css } from '@mui/material/styles'
+import Skeleton from '@mui/material/Skeleton'
 
 type StyledComponentProps = {
   featured?: boolean
 }
-type SubPageCardProps = PropsWithChildren & StyledComponentProps & { title: ReactNode }
+type SubPageCardProps = PropsWithChildren &
+  StyledComponentProps & { isLoadingTitle?: boolean; title?: string; subheader?: string }
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'featured',
@@ -40,25 +42,52 @@ const StyledCard = styled(Card, {
   `,
 )
 
-export const SubPageCard: FC<SubPageCardProps> = ({ children, featured, title }) => {
+const TitleSkeleton: FC = () => (
+  <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }}></Skeleton>
+)
+
+export const SubPageCard: FC<SubPageCardProps> = ({
+  children,
+  featured,
+  isLoadingTitle,
+  title,
+  subheader,
+}) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <>
+    <div>
       {isMobile && (
-        <Typography variant="h3" component="h3" sx={{ mb: 4, ml: 4 }} color={COLORS.white}>
-          {title}
-        </Typography>
+        <Box sx={{ mb: 4, mx: 4 }}>
+          <Typography variant="h3" component="h3" sx={{ display: 'inline' }} color={COLORS.white}>
+            {isLoadingTitle ? <TitleSkeleton /> : title}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ ml: '1ex', display: 'inline' }} color={COLORS.white}>
+            {subheader}
+          </Typography>
+        </Box>
       )}
       <StyledCard featured={featured}>
         {!isMobile && (
           <StyledBox featured={featured}>
-            <CardHeader disableTypography component="h3" title={title} />
+            <CardHeader
+              title={isLoadingTitle ? <TitleSkeleton /> : title}
+              titleTypographyProps={{
+                display: 'inline',
+                component: 'h3',
+                variant: 'h3',
+              }}
+              subheader={subheader}
+              subheaderTypographyProps={{
+                display: 'inline',
+                marginLeft: '1ex',
+              }}
+            />
           </StyledBox>
         )}
         <CardContent>{children}</CardContent>
       </StyledCard>
-    </>
+    </div>
   )
 }
