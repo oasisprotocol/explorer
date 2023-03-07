@@ -23,10 +23,18 @@ export const TransactionsStats: FC = () => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
-  const buckets =
-    dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
-      ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.buckets)
-      : dailyVolumeQuery.data?.data.buckets
+  const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
+  const buckets = allTime
+    ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.buckets)
+    : dailyVolumeQuery.data?.data.buckets
+  const formatParams = allTime
+    ? {
+        timestamp: {
+          year: 'numeric',
+          month: 'long',
+        } satisfies Intl.DateTimeFormatOptions,
+      }
+    : undefined
 
   return (
     <Card>
@@ -45,10 +53,11 @@ export const TransactionsStats: FC = () => {
             data={buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
-              data: (value: number) => t('transactionStats.tooltip', { value }),
+              data: (value: number) => t('transactionStats.tooltip', { value: value.toLocaleString() }),
               label: (value: string) =>
                 t('common.formattedDateTime', {
                   timestamp: new Date(value),
+                  formatParams,
                 }),
             }}
             withLabels
