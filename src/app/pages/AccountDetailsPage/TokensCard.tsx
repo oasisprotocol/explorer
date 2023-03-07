@@ -11,8 +11,7 @@ import { TokensEmptyState } from './TokensEmptyState'
 import { Table, TableCellAlign } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { Layer } from '../../../config'
-import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
+import { Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 
 type TokensCardProps = {
   type: 'ERC20' | 'ERC721'
@@ -30,10 +29,8 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
     { align: TableCellAlign.Right, content: t('common.balance') },
     { align: TableCellAlign.Right, content: t('common.ticker') },
   ]
-  const accountQuery = useGetConsensusAccountsAddress(address!)
-  const runtimeEvmBalance = accountQuery.data?.data.runtime_evm_balances?.filter(
-    item => item.token_type === type && item.runtime === Layer.Emerald,
-  )
+  const accountQuery = useGetRuntimeAccountsAddress(Runtime.emerald, address!)
+  const runtimeEvmBalance = accountQuery.data?.data.evm_balances?.filter(item => item.token_type === type)
   const tableRows = runtimeEvmBalance?.map(item => ({
     key: item.token_contract_addr,
     data: [

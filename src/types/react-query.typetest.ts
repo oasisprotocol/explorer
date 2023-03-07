@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios'
 import {
+  Runtime,
   RuntimeBlock,
   RuntimeTransaction,
-  useGetEmeraldBlocks,
-  useGetEmeraldTransactions,
+  useGetRuntimeBlocks,
+  useGetRuntimeTransactions,
 } from '../oasis-indexer/api'
 
 type BlocksWithExtra = AxiosResponse<{
@@ -15,7 +16,7 @@ type TransactionsWithExtra = AxiosResponse<{
 }>
 
 export function ExpectStructuralSharingToHaveCorrectType() {
-  const blocks = useGetEmeraldBlocks<BlocksWithExtra>(undefined, {
+  const blocks = useGetRuntimeBlocks<BlocksWithExtra>(Runtime.emerald, undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {
@@ -40,7 +41,7 @@ export function ExpectStructuralSharingToHaveCorrectType() {
   // @ts-expect-error Shouldn't allow everything
   expect(blocks.data?.data.blocks[0].typo).toBeUndefined()
 
-  const txs = useGetEmeraldTransactions<TransactionsWithExtra>(undefined, {
+  const txs = useGetRuntimeTransactions<TransactionsWithExtra>(Runtime.emerald, undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {

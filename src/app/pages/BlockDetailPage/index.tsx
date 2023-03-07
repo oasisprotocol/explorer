@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Link from '@mui/material/Link'
-import { RuntimeBlock, useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+import { Runtime, RuntimeBlock, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -21,7 +21,7 @@ import { transactionsContainerId } from './TransactionsCard'
 
 // TODO: replace with an appropriate API
 function useGetEmeraldBlockByHeight(blockHeight: number) {
-  const blockQuery = useGetEmeraldBlocks({ to: blockHeight, limit: 1 })
+  const blockQuery = useGetRuntimeBlocks(Runtime.emerald, { to: blockHeight, limit: 1 })
   const block = blockQuery.data?.data.blocks[0]
   if (block && block.round !== blockHeight) {
     throw AppErrors.NotFoundBlockHeight

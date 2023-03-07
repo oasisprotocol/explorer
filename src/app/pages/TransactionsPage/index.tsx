@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
-import { useGetEmeraldTransactions } from '../../../oasis-indexer/api'
+import { Runtime, useGetRuntimeTransactions } from '../../../oasis-indexer/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AxiosResponse } from 'axios'
@@ -20,7 +20,8 @@ export const TransactionsPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
 
-  const transactionsQuery = useGetEmeraldTransactions<AxiosResponse<TableRuntimeTransactionList>>(
+  const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
+    Runtime.emerald,
     { limit, offset },
     {
       query: {

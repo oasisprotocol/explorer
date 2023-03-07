@@ -5,7 +5,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
-import { useGetEmeraldBlocks } from '../../../oasis-indexer/api'
+import { Runtime, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
 import { Blocks } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
@@ -14,7 +14,7 @@ const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestBlocks: FC = () => {
   const { t } = useTranslation()
-  const blocksQuery = useGetEmeraldBlocks({ limit })
+  const blocksQuery = useGetRuntimeBlocks(Runtime.emerald, { limit })
 
   return (
     <Card>

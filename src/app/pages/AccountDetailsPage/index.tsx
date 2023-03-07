@@ -5,14 +5,13 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
-import { useGetConsensusAccountsAddress } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
+import { Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
   const address = useLoaderData() as string
-  // TODO: switch to Emerald when API is ready
-  const accountQuery = useGetConsensusAccountsAddress(address!)
+  const accountQuery = useGetRuntimeAccountsAddress(Runtime.emerald, address)
   const account = accountQuery.data?.data
   const rosePriceQuery = useGetRosePrice()
 
