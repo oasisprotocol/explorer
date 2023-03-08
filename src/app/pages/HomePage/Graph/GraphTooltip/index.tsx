@@ -124,12 +124,15 @@ export const layerTooltipMap: {
   }
 } = {
   [Layer.Sapphire]: {
-    disabled: true,
-    header: {},
+    disabled: false,
+    enableNavigation: true,
+    header: {
+      discoverMore: true,
+    },
     body: {
       title: (t: TFunction) => t('common.sapphire'),
-      caption: (t: TFunction) => t('home.tooltip.coming'),
-      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeAvailableSoon'),
+      caption: (t: TFunction) => t('common.paraTimeOnline'),
+      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
     },
   },
   [Layer.Emerald]: {
