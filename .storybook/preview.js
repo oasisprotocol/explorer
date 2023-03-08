@@ -1,3 +1,4 @@
+import React from 'react'
 import { defaultTheme } from '../src/styles/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
