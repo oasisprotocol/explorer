@@ -2,7 +2,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import { FC } from 'react'
 import Box from '@mui/material/Box'
-import { COLORS } from '../../../../styles/theme/colors'
+import { COLORS } from '../../../../../styles/theme/colors'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/material/Typography'
 import AdjustIcon from '@mui/icons-material/Adjust'
@@ -11,9 +11,9 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import * as React from 'react'
-import { RouteUtils } from '../../../utils/route-utils'
+import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
-import { Layer } from '../../../../config'
+import { Layer } from '../../../../../config'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -124,12 +124,15 @@ export const layerTooltipMap: {
   }
 } = {
   [Layer.Sapphire]: {
-    disabled: true,
-    header: {},
+    disabled: false,
+    enableNavigation: true,
+    header: {
+      discoverMore: true,
+    },
     body: {
       title: (t: TFunction) => t('common.sapphire'),
-      caption: (t: TFunction) => t('home.tooltip.coming'),
-      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeAvailableSoon'),
+      caption: (t: TFunction) => t('common.paraTimeOnline'),
+      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
     },
   },
   [Layer.Emerald]: {
