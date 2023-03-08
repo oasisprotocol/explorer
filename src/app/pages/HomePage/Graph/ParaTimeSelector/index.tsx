@@ -61,12 +61,8 @@ const ParaTimeSelectorGlobe = styled(Box)(() => ({
   borderRadius: '50%',
 }))
 
-const ExploreBtn = styled(Button)(({ theme }) => ({
+export const ExploreBtn = styled(Button)(({ theme }) => ({
   fontWeight: 700,
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
   width: 'max-content',
@@ -75,16 +71,20 @@ const ExploreBtn = styled(Button)(({ theme }) => ({
     paddingRight: theme.spacing(6),
   },
 }))
+ExploreBtn.defaultProps = {
+  color: 'secondary',
+  variant: 'contained',
+}
 
-const ZoomOutBtn = styled(Button)(({ theme }) => ({
-  position: 'absolute',
-  top: theme.spacing(4),
-  left: '50%',
-  transform: 'translateX(-50%)',
+export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   fontSize: '12px',
   lineHeight: '18px',
 }))
-
+ZoomOutBtn.defaultProps = {
+  variant: 'text',
+  color: 'secondary',
+  startIcon: <ChevronLeftIcon />,
+}
 const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
@@ -177,11 +177,14 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           {!isMobile && (
             <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
               <ZoomOutBtn
-                variant="text"
-                color="secondary"
-                startIcon={<ChevronLeftIcon />}
                 onClick={onZoomOutClick}
                 disabled={disabled}
+                sx={{
+                  position: 'absolute',
+                  top: theme.spacing(4),
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                }}
               >
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
@@ -189,10 +192,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           )}
           {ParaTimeSelectorUtils.showExploreBtn(step) && (
             <ExploreBtn
-              color="secondary"
-              variant="contained"
               onClick={onExploreClick}
               aria-label={exploreBtnTextTranslated}
+              sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
             >
               {t('home.exploreBtnText')}
             </ExploreBtn>
