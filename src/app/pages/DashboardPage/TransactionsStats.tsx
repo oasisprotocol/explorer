@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { BarChart } from '../../components/charts/BarChart'
-import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
+import { useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
 import {
   chartUseQueryStaleTimeMs,
   durationToQueryParams,
@@ -12,12 +12,14 @@ import {
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 export const TransactionsStats: FC = () => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+  const layer = useLayerParam()
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(layer, statsParams, {
     query: {
       keepPreviousData: true,
       staleTime: chartUseQueryStaleTimeMs,
