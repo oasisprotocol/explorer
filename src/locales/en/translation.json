@@ -14,7 +14,8 @@
     "totalSent": "Total Sent"
   },
   "activeAccounts": {
-    "title": "Active Accounts"
+    "title": "Active Accounts",
+    "tooltip": "{{value, number}} accounts"
   },
   "blocks": {
     "latest": "Latest Blocks"

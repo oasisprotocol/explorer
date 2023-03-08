@@ -60,7 +60,7 @@ export const ParaTimeSnapshot: FC = () => {
           <TransactionsChartCard chartDuration={chartDuration} />
         </StyledGrid>
         <StyledGrid item xs={12} md={3}>
-          <ActiveAccounts />
+          <ActiveAccounts chartDuration={chartDuration} />
         </StyledGrid>
         <StyledGrid item xs={12} md={3}>
           <Nodes />
