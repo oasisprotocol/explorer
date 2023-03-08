@@ -4,6 +4,7 @@ import { SuggestionButton } from '../app/components/Search/SearchSuggestionsButt
 import { Select } from '../app/components/Select'
 import { ExploreBtn, ZoomOutBtn } from '../app/pages/HomePage/Graph/ParaTimeSelector'
 import { GetStartedBtn } from '../app/pages/HomePage/Graph/HelpScreen'
+import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroup'
 
 export default {
   title: 'Example/ButtonsShowroom',
@@ -13,6 +14,7 @@ const Template: Story = () => {
   return (
     <div>
       <SearchButton searchVariant="button">SearchButton</SearchButton>
+      <ViewResultButton>ViewResultButton</ViewResultButton>
       <SuggestionButton>SuggestionButton</SuggestionButton>
       <br />
       <br />
