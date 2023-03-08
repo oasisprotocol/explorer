@@ -36,7 +36,36 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
         (data: generated.RuntimeTransactionList) => {
           return {
             ...data,
-            transactions: (data.transactions || []).map(tx => {
+            transactions: data.transactions.map(tx => {
+              return {
+                ...tx,
+                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTransactionsTxHash = (
+  runtime,
+  txHash,
+  options?,
+) => {
+  return generated.useGetRuntimeTransactionsTxHash(runtime, txHash, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeTransactionList) => {
+          return {
+            ...data,
+            transactions: data.transactions.map(tx => {
               return {
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,

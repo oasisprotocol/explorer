@@ -16,7 +16,7 @@ import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { trimLongString } from '../../utils/trimLongString'
 import { COLORS } from '../../../styles/theme/colors'
-import { gasLimit } from '../../../config'
+import { blockGasLimit } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 
 // TODO: replace with an appropriate API
@@ -112,7 +112,7 @@ export const BlockDetailView: FC<{
           <dd>
             {t('block.gasUsed', {
               value: block.gas_used,
-              percentage: block.gas_used / gasLimit,
+              percentage: block.gas_used / blockGasLimit,
               formatParams: {
                 percentage: {
                   style: 'percent',
@@ -123,7 +123,7 @@ export const BlockDetailView: FC<{
           </dd>
 
           <dt>{t('common.gasLimit')}</dt>
-          <dd>{gasLimit.toLocaleString()}</dd>
+          <dd>{blockGasLimit.toLocaleString()}</dd>
         </StyledDescriptionList>
       )}
     </SubPageCard>
