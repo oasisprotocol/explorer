@@ -29,6 +29,8 @@ const TransactionList: FC<{ blockHeight: number }> = ({ blockHeight }) => {
       pagination={{
         selectedPage: txsPagination.selectedPage,
         linkToPage: txsPagination.linkToPage,
+        offsetCount: transactionsQuery.data?.data.total_count,
+        rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
       verbose={false}
     />

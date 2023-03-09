@@ -31,6 +31,7 @@ export const TransactionsPage: FC = () => {
           return {
             ...nextState,
             data: {
+              ...nextState.data,
               transactions: nextState.data.transactions.map(tx => {
                 return {
                   ...tx,
@@ -55,6 +56,8 @@ export const TransactionsPage: FC = () => {
           pagination={{
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
+            offsetCount: transactionsQuery.data?.data.total_count,
+            rowsPerPage: limit,
           }}
         />
       </SubPageCard>

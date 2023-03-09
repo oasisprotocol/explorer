@@ -34,6 +34,7 @@ export const BlocksPage: FC = () => {
           return {
             ...nextState,
             data: {
+              ...nextState.data,
               blocks: nextState.data.blocks.map(block => {
                 return {
                   ...block,
@@ -59,6 +60,8 @@ export const BlocksPage: FC = () => {
           pagination={{
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
+            offsetCount: blocksQuery.data?.data.total_count,
+            rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
           }}
         />
       </SubPageCard>
