@@ -5,11 +5,15 @@ import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 import { Search } from '../Search'
+import { useParams } from 'react-router-dom'
+import { Layer } from '../../../config'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  // TODO: switch to useLayer when it's available
+  const layer = useParams().layer as Layer
 
   return (
     <header>
@@ -17,9 +21,11 @@ export const Header: FC = () => {
         <Grid md={12} xs={6} sx={{ pb: isMobile ? 0 : '50px' }}>
           <Logotype />
         </Grid>
-        <Grid xs={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-          <NetworkHeader />
-        </Grid>
+        {layer && (
+          <Grid xs={6} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <NetworkHeader layer={layer} />
+          </Grid>
+        )}
         {!isMobile && (
           <Grid sm={12} md={8}>
             <Search variant="icon" />

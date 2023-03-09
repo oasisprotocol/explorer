@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link as RouterLink, useParams } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
@@ -33,12 +33,10 @@ const getContent = (t: TFunction, layer: Layer) => {
   }
 }
 
-export const NetworkHeader: FC = () => {
+export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  // TODO: switch to useLayer when it's available
-  const layer = useParams().layer as Layer
   const content = getContent(t, layer)
 
   return (
