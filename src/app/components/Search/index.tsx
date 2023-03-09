@@ -1,5 +1,5 @@
-import { FC, FormEvent, memo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC, FormEvent, memo, useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import { styled, useTheme } from '@mui/material/styles'
@@ -7,11 +7,11 @@ import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchUtils } from './search-utils'
+import { RouteUtils } from '../../utils/route-utils'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
-import { SearchSuggestions } from './SearchSuggestions'
+import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -92,6 +92,11 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
+  const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
+
+  useEffect(() => {
+    setValue(valueInSearchParams)
+  }, [valueInSearchParams])
 
   const onFocusChange = (value: boolean) => {
     setIsFocused(value)
@@ -100,10 +105,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    const navigateTo = SearchUtils.getNavigationPath(value)
-    if (navigateTo) {
-      navigate(navigateTo)
-    }
+    navigate(RouteUtils.getSearchRoute(value))
   }
 
   const onClearValue = () => {
@@ -171,8 +173,9 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
           },
         }}
         helperText={
-          value && (
-            <SearchSuggestions
+          value &&
+          value !== valueInSearchParams && (
+            <SearchSuggestionsButtons
               onClickSuggestion={suggestion => {
                 setValue(suggestion)
               }}

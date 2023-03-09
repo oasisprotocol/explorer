@@ -11,6 +11,8 @@ const evmAccount = '0xCB2412a993f406eFf10a74011410a4F35e3549E3'
 describe('search-utils validateAndNormalize', () => {
   it('block height', () => {
     expect(validateAndNormalize.blockHeight(blockHeight)).toBe(blockHeight)
+    expect(validateAndNormalize.blockHeight(parseInt(blockHeight).toLocaleString())).toBe(blockHeight)
+    expect(validateAndNormalize.blockHeight(parseInt(blockHeight).toLocaleString('hu'))).toBe(blockHeight)
   })
   it('invalid block height', () => {
     expect(validateAndNormalize.blockHeight(blockHeight.replace('1', 'a'))).toBeUndefined()

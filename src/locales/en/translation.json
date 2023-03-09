@@ -202,8 +202,11 @@
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
     "mobilePlaceholder": "Search Address, Block, Txn, etc",
+    "noResults": {
+      "header": "No results found",
+      "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
+    },
     "searchBtnText": "Search",
-    "searchSuggestionsLine1": "Not sure what to look for? Try out a search:",
-    "searchSuggestionsLine2": "<BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>"
+    "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink></OptionalBreak>"
   }
 }
