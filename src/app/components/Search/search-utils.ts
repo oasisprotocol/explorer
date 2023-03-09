@@ -16,12 +16,9 @@ export const searchSuggestionTerms = {
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
-    const thousandSeparator = new Intl.NumberFormat().formatToParts(1234).find(p => p.type === 'group')?.value
-    if (thousandSeparator && isValidBlockHeight(searchTerm.replaceAll(thousandSeparator, ''))) {
-      return searchTerm.replaceAll(thousandSeparator, '')
-    }
-    if (isValidBlockHeight(searchTerm)) {
-      return searchTerm
+    // Remove localized digit group separators
+    if (isValidBlockHeight(searchTerm.replaceAll(/[^0-9a-zA-Z]/g, ''))) {
+      return searchTerm.replaceAll(/[^0-9a-zA-Z]/g, '')
     }
   },
   blockHash: (searchTerm: string) => {
