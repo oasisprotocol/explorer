@@ -1,15 +1,13 @@
 import React from 'react'
 import { COLORS } from '../styles/theme/colors'
 import Box from '@mui/material/Box'
-import { Story } from '@storybook/react'
+import { ComponentMeta, Story } from '@storybook/react'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-const story = {
+export default {
   title: 'Example/Colors',
-}
-
-export default story
+} satisfies ComponentMeta<any>
 
 const ColorContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

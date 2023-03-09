@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
 import React from 'react'
 import { intlDateFormat } from '../../app/utils/dateFormatter'
 import { BarChart } from '../../app/components/charts/BarChart'
@@ -47,9 +47,9 @@ const timeData: TimeDataItem[] = [
 
 const Template: ComponentStory<typeof BarChart<TimeDataItem>> = args => {
   return (
-    <Box sx={{ width: '500px' }}>
+    <Card sx={{ width: '500px', height: '300px' }}>
       <BarChart {...args} />
-    </Box>
+    </Card>
   )
 }
 
