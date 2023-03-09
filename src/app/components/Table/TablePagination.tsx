@@ -9,6 +9,7 @@ export type TablePaginationProps = {
   rowsPerPage: number
   selectedPage: number
   offsetCount: number | undefined
+  isOffsetCountClipped?: boolean
 }
 
 // API counts maximum 1000 items
@@ -19,13 +20,18 @@ export const TablePagination: FC<TablePaginationProps> = ({
   linkToPage,
   rowsPerPage,
   offsetCount,
+  isOffsetCountClipped,
 }) => {
   const { t } = useTranslation()
 
   if (!offsetCount) {
     return null
   }
-  const totalCount = Math.min(offsetCount + (selectedPage - 1) * rowsPerPage, maximumOffsetCount)
+
+  const currentPageOffsetCount = offsetCount + (selectedPage - 1) * rowsPerPage
+  const totalCount = isOffsetCountClipped
+    ? currentPageOffsetCount
+    : Math.min(currentPageOffsetCount, maximumOffsetCount)
   const numberOfPages = Math.ceil(totalCount / rowsPerPage)
 
   return (

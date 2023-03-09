@@ -155,12 +155,7 @@ export const Table: FC<TableProps> = ({
       </TableContainer>
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TablePagination
-            offsetCount={pagination.offsetCount}
-            rowsPerPage={pagination.rowsPerPage}
-            selectedPage={pagination.selectedPage}
-            linkToPage={pagination.linkToPage}
-          />
+          <TablePagination {...pagination} />
         </Box>
       )}
     </>

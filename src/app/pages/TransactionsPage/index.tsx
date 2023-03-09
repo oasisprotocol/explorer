@@ -57,6 +57,7 @@ export const TransactionsPage: FC = () => {
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             offsetCount: transactionsQuery.data?.data.total_count,
+            isOffsetCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
             rowsPerPage: limit,
           }}
         />

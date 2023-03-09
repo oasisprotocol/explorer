@@ -39,6 +39,7 @@ type TableRuntimeTransaction = RuntimeTransaction & {
 export type TableRuntimeTransactionList = {
   transactions: TableRuntimeTransaction[]
   total_count: number
+  is_total_count_clipped?: boolean
 }
 
 type TransactionProps = {

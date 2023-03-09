@@ -18,6 +18,7 @@ export type TableRuntimeBlock = RuntimeBlock & {
 export type TableRuntimeBlockList = {
   blocks: TableRuntimeBlock[]
   total_count: number
+  is_total_count_clipped?: boolean
 }
 
 type BlocksProps = {
