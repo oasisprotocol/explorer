@@ -1,9 +1,10 @@
 /** @file Wrappers around generated API */
 
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
+import { UseQueryOptions } from '@tanstack/react-query'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -113,4 +114,38 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
       ],
     },
   })
+}
+
+// TODO: replace with an appropriate API
+export function useGetRuntimeBlockByHeight(
+  runtime: generated.Runtime,
+  blockHeight: number,
+  options?: { query?: UseQueryOptions<any, any> },
+) {
+  const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(
+    runtime,
+    { to: blockHeight, limit: 1 },
+    {
+      ...options,
+      axios: {
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          function (data: generated.RuntimeBlockList) {
+            const block = data.blocks[0]
+            if (!block || block.round !== blockHeight) {
+              throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
+                status: 404,
+                statusText: 'not found',
+                config: this,
+                data: 'not found',
+                headers: {},
+              })
+            }
+            return block
+          },
+        ],
+      },
+    },
+  )
+  return result
 }
