@@ -5,13 +5,28 @@ import { useTranslation } from 'react-i18next'
 import { Link, To } from 'react-router-dom'
 
 export type TablePaginationProps = {
-  numberOfPages?: number
-  selectedPage: number
   linkToPage: (page: number) => To
+  rowsPerPage: number
+  selectedPage: number
+  offsetCount: number | undefined
 }
 
-export const TablePagination: FC<TablePaginationProps> = ({ numberOfPages, selectedPage, linkToPage }) => {
+// API counts maximum 1000 items
+const maximumOffsetCount = 1000
+
+export const TablePagination: FC<TablePaginationProps> = ({
+  selectedPage,
+  linkToPage,
+  rowsPerPage,
+  offsetCount,
+}) => {
   const { t } = useTranslation()
+
+  if (!offsetCount) {
+    return null
+  }
+  const totalCount = Math.min(offsetCount + (selectedPage - 1) * rowsPerPage, maximumOffsetCount)
+  const numberOfPages = Math.ceil(totalCount / rowsPerPage)
 
   return (
     <Pagination
