@@ -64,14 +64,15 @@ export const getMonthlyBucketsDailyAverage = (buckets: Buckets): Buckets => {
   }))
 }
 
-export const getTotalTxValues = (buckets: Buckets): Buckets => {
-  return buckets?.reduce((acc: TxVolume[], cur, index) => {
-    acc.push({
-      bucket_start: cur.bucket_start,
-      tx_volume: index > 0 ? cur.tx_volume + acc[index - 1].tx_volume : cur.tx_volume,
-    })
-    return acc
-  }, [])
+export function cumulativeSum<T>(
+  items: T[],
+  accumulateField: { [F in keyof T]: T[F] extends number ? F : never }[keyof T],
+): T[] {
+  let acc = 0
+  return items.map(item => {
+    acc += item[accumulateField] as number
+    return { ...item, [accumulateField]: acc }
+  })
 }
 
 export const filterHourlyActiveAccounts = (

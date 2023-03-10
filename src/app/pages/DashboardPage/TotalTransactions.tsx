@@ -7,7 +7,7 @@ import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
-import { ChartDuration, getTotalTxValues } from '../../utils/chart-utils'
+import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
@@ -19,7 +19,9 @@ export const TotalTransactions: FC = () => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
-  const buckets = getTotalTxValues(dailyVolumeQuery.data?.data.buckets.slice().reverse())
+  const buckets = dailyVolumeQuery.data?.data.buckets
+    ? cumulativeSum(dailyVolumeQuery.data?.data.buckets.slice().reverse(), 'tx_volume')
+    : undefined
 
   return (
     <Card>
