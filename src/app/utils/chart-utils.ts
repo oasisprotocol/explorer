@@ -1,4 +1,7 @@
+import startOfHour from 'date-fns/startOfHour'
+import startOfDay from 'date-fns/startOfDay'
 import isSameMonth from 'date-fns/isSameMonth'
+import startOfMonth from 'date-fns/startOfMonth'
 import { GetLayerStatsTxVolumeParams, type TxVolume, type ActiveAccounts } from '../../oasis-indexer/api'
 
 export enum ChartDuration {
@@ -79,4 +82,41 @@ export const filterHourlyActiveAccounts = (
   windows: ActiveAccounts[] | undefined,
 ): ActiveAccounts[] | undefined => {
   return windows?.filter((value, index) => index % 12 === 0)
+}
+
+type NumberOnly<T> = {
+  [key in keyof T as T[key] extends number | undefined ? key : never]: T[key]
+}
+
+type StringOnly<T> = {
+  [key in keyof T as T[key] extends string | undefined ? key : never]: T[key]
+}
+
+export const sumBucketsByStartDuration = <
+  T extends NumberOnly<any> & StringOnly<any>,
+  N extends keyof NumberOnly<T>,
+  S extends keyof StringOnly<T>,
+>(
+  buckets: T[] | undefined,
+  sumKey: N,
+  dateKey: S,
+  startDurationFn: typeof startOfHour | typeof startOfDay | typeof startOfMonth,
+) => {
+  if (!buckets) {
+    return []
+  }
+
+  const durationMap = buckets.reduce((accMap, item) => {
+    const key = startDurationFn(new Date(item[dateKey])).toISOString()
+
+    return {
+      ...accMap,
+      [key]: (accMap[key] || 0) + item[sumKey],
+    }
+  }, {} as { [key: string]: number })
+
+  return Object.keys(durationMap).map(key => ({
+    [dateKey]: key,
+    [sumKey]: durationMap[key],
+  })) as T[]
 }
