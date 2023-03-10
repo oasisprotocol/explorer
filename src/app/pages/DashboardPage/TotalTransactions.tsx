@@ -7,7 +7,7 @@ import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
-import { ChartDuration } from '../../utils/chart-utils'
+import { ChartDuration, getTotalTxValues } from '../../utils/chart-utils'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
@@ -19,6 +19,7 @@ export const TotalTransactions: FC = () => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
+  const buckets = getTotalTxValues(dailyVolumeQuery.data?.data.buckets.slice().reverse())
 
   return (
     <Card>
@@ -29,13 +30,13 @@ export const TotalTransactions: FC = () => {
         title={t('totalTransactions.header')}
       />
       <CardContent sx={{ height: 450 }}>
-        {dailyVolumeQuery.data?.data.buckets && (
+        {buckets && (
           <LineChart
             tooltipActiveDotRadius={9}
             cartesianGrid
             strokeWidth={3}
             dataKey="tx_volume"
-            data={dailyVolumeQuery.data?.data.buckets.slice().reverse()}
+            data={buckets}
             margin={{ left: 16, right: 0 }}
             tickMargin={16}
             withLabels
