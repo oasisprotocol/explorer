@@ -12,6 +12,7 @@ export type TablePaginationProps = {
 }
 
 // API counts maximum 1000 items
+// https://github.com/oasisprotocol/oasis-indexer/blob/e220d3f2872abff45e5a78fe6b1a1de961e18765/storage/client/client.go#L30
 const maximumTotalCount = 1000
 
 export const TablePagination: FC<TablePaginationProps> = ({
