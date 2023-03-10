@@ -67,102 +67,102 @@ const StyledAlert = styled(Alert)(() => ({
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
   const hash = useParams().hash!
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(Runtime.emerald, hash)
 
   const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(
     data?.data,
   )
-  const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
   }
-
   return (
     <PageLayout>
       {warningMultipleTransactionsSameHash && (
         <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
       )}
-      {isLoading && (
-        <SubPageCard title={t('transaction.header')}>
-          <TextSkeleton numberOfRows={10} />
-        </SubPageCard>
-      )}
-      {transaction && (
-        <SubPageCard
-          featured
-          title={t('transaction.header')}
-          key={`${transaction.round}_${transaction.index}`}
-        >
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-            <dt>{t('common.hash')}</dt>
-            <dd>
-              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                {isMobile ? trimLongString(transaction.hash) : transaction.hash}
-              </Typography>
-              <CopyToClipboard value={transaction.hash} label={' '} />
-            </dd>
-
-            <dt>{t('common.status')}</dt>
-            <dd>
-              <TransactionStatusIcon success={transaction.success} withText={true} />
-            </dd>
-
-            <dt>{t('common.block')}</dt>
-            <dd>
-              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}>
-                  {transaction.round.toLocaleString()}
-                </Link>
-              </Typography>
-            </dd>
-
-            <dt>{t('common.type')}</dt>
-            <dd>
-              <RuntimeTransactionLabel method={transaction.method} />
-            </dd>
-
-            <dt>{t('common.timestamp')}</dt>
-            <dd>{formattedTimestamp}</dd>
-
-            <dt>{t('common.from')}</dt>
-            <dd>
-              <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                <AccountLink address={transaction.sender_0} paratime={Layer.Emerald} />
-              </Typography>
-              <CopyToClipboard value={transaction.sender_0} label={' '} />
-            </dd>
-
-            {transaction.to && (
-              <>
-                <dt>{t('common.to')}</dt>
-                <dd>
-                  <Typography
-                    variant="mono"
-                    component="span"
-                    sx={{ color: COLORS.brandDark, fontWeight: 700 }}
-                  >
-                    <AccountLink address={transaction.to} paratime={Layer.Emerald} />
-                  </Typography>
-                  <CopyToClipboard value={transaction.to} label={' '} />
-                </dd>
-              </>
-            )}
-
-            <dt>{t('common.value')}</dt>
-            <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>
-
-            <dt>{t('common.txnFee')}</dt>
-            <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
-
-            <dt>{t('common.gasLimit')}</dt>
-            <dd>{transaction.gas_limit.toLocaleString()}</dd>
-          </StyledDescriptionList>
-        </SubPageCard>
-      )}
+      <SubPageCard featured title={t('transaction.header')}>
+        <TransactionDetailView isLoading={isLoading} transaction={transaction} />
+      </SubPageCard>
     </PageLayout>
+  )
+}
+
+export const TransactionDetailView: FC<{
+  isLoading: boolean
+  transaction: RuntimeTransaction | undefined
+}> = ({ isLoading, transaction }) => {
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
+
+  return (
+    <>
+      {isLoading && <TextSkeleton numberOfRows={10} />}
+      {transaction && (
+        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <dt>{t('common.hash')}</dt>
+          <dd>
+            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+              {isMobile ? trimLongString(transaction.hash) : transaction.hash}
+            </Typography>
+            <CopyToClipboard value={transaction.hash} label={' '} />
+          </dd>
+
+          <dt>{t('common.status')}</dt>
+          <dd>
+            <TransactionStatusIcon success={transaction.success} withText={true} />
+          </dd>
+
+          <dt>{t('common.block')}</dt>
+          <dd>
+            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+              <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}>
+                {transaction.round.toLocaleString()}
+              </Link>
+            </Typography>
+          </dd>
+
+          <dt>{t('common.type')}</dt>
+          <dd>
+            <RuntimeTransactionLabel method={transaction.method} />
+          </dd>
+
+          <dt>{t('common.timestamp')}</dt>
+          <dd>{formattedTimestamp}</dd>
+
+          <dt>{t('common.from')}</dt>
+          <dd>
+            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+              <AccountLink address={transaction.sender_0} paratime={Layer.Emerald} />
+            </Typography>
+            <CopyToClipboard value={transaction.sender_0} label={' '} />
+          </dd>
+
+          {transaction.to && (
+            <>
+              <dt>{t('common.to')}</dt>
+              <dd>
+                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+                  <AccountLink address={transaction.to} paratime={Layer.Emerald} />
+                </Typography>
+                <CopyToClipboard value={transaction.to} label={' '} />
+              </dd>
+            </>
+          )}
+
+          <dt>{t('common.value')}</dt>
+          <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>
+
+          <dt>{t('common.txnFee')}</dt>
+          <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
+
+          <dt>{t('common.gasLimit')}</dt>
+          <dd>{transaction.gas_limit.toLocaleString()}</dd>
+        </StyledDescriptionList>
+      )}
+    </>
   )
 }
