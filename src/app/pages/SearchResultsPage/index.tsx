@@ -24,7 +24,11 @@ import { RouteUtils } from '../../utils/route-utils'
 import { Layer } from '../../../config'
 import { ResultsGroup } from './ResultsGroup'
 
-type ConditionalResults<T> = { isLoading: boolean; results: T[] | undefined }
+function isDefined<T>(item: T): item is NonNullable<T> {
+  return item != null
+}
+
+type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 export type SearchQueries = {
   emeraldBlockHeight: ConditionalResults<RuntimeBlock>
   emeraldTxHash: ConditionalResults<RuntimeTransaction>
@@ -32,26 +36,37 @@ export type SearchQueries = {
   evmBech32Account: ConditionalResults<RuntimeAccount>
 }
 function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
-  const query = useGetRuntimeBlockByHeight(Runtime.emerald, parseInt(blockHeight!), {
-    query: { enabled: !!blockHeight },
-  })
+  const queries = [
+    useGetRuntimeBlockByHeight(Runtime.emerald, parseInt(blockHeight!), {
+      query: { enabled: !!blockHeight },
+    }),
+    useGetRuntimeBlockByHeight(Runtime.sapphire, parseInt(blockHeight!), {
+      query: { enabled: !!blockHeight },
+    }),
+  ]
   return {
-    isLoading: query.isInitialLoading,
-    results: query.data?.data ? [query.data?.data] : undefined,
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
   }
 }
 function useTransactionsConditionally(txHash: string | undefined): ConditionalResults<RuntimeTransaction> {
-  const query = useGetRuntimeTransactionsTxHash(Runtime.emerald, txHash!, { query: { enabled: !!txHash } })
+  const queries = [
+    useGetRuntimeTransactionsTxHash(Runtime.emerald, txHash!, { query: { enabled: !!txHash } }),
+    useGetRuntimeTransactionsTxHash(Runtime.sapphire, txHash!, { query: { enabled: !!txHash } }),
+  ]
   return {
-    isLoading: query.isInitialLoading,
-    results: query.data?.data.transactions,
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.flatMap(query => query.data?.data.transactions).filter(isDefined),
   }
 }
 function useRuntimeAccountConditionally(address: string | undefined): ConditionalResults<RuntimeAccount> {
-  const query = useGetRuntimeAccountsAddress(Runtime.emerald, address!, { query: { enabled: !!address } })
+  const queries = [
+    useGetRuntimeAccountsAddress(Runtime.emerald, address!, { query: { enabled: !!address } }),
+    useGetRuntimeAccountsAddress(Runtime.sapphire, address!, { query: { enabled: !!address } }),
+  ]
   return {
-    isLoading: query.isInitialLoading,
-    results: query.data?.data ? [query.data?.data] : undefined,
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
   }
 }
 
@@ -80,7 +95,7 @@ export const SearchResultsView: FC<{
 }> = ({ searchQueries, roseFiatValue }) => {
   const { t } = useTranslation()
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
-  const hasNoResults = !isAnyLoading && Object.values(searchQueries).every(query => !query.results)
+  const hasNoResults = !isAnyLoading && Object.values(searchQueries).every(query => query.results.length <= 0)
 
   return (
     <PageLayout>
