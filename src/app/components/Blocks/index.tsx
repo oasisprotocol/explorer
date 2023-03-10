@@ -17,6 +17,7 @@ export type TableRuntimeBlock = RuntimeBlock & {
 
 export type TableRuntimeBlockList = {
   blocks: TableRuntimeBlock[]
+  total_count: number
 }
 
 type BlocksProps = {

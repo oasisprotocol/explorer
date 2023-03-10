@@ -95,7 +95,9 @@ SampleTable.args = {
   isLoading: false,
   name: 'Sample table',
   pagination: {
-    selectedPage: 5,
+    selectedPage: 1,
     linkToPage: page => ({ search: `?page=${page}` }),
+    rowsPerPage: 10,
+    totalCount: data.length,
   },
 }

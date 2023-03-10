@@ -18,6 +18,7 @@ export const TransactionsList: FC<{ address: string }> = ({ address }) => {
     offset: txsOffset,
     rel: address,
   })
+
   return (
     <Transactions
       transactions={transactionsQuery.data?.data.transactions}
@@ -26,6 +27,8 @@ export const TransactionsList: FC<{ address: string }> = ({ address }) => {
       pagination={{
         selectedPage: txsPagination.selectedPage,
         linkToPage: txsPagination.linkToPage,
+        totalCount: transactionsQuery.data?.data.total_count,
+        rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
     />
   )

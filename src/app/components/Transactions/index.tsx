@@ -38,6 +38,7 @@ type TableRuntimeTransaction = RuntimeTransaction & {
 
 export type TableRuntimeTransactionList = {
   transactions: TableRuntimeTransaction[]
+  total_count: number
 }
 
 type TransactionProps = {
