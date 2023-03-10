@@ -155,11 +155,7 @@ export const Table: FC<TableProps> = ({
       </TableContainer>
       {pagination && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TablePagination
-            numberOfPages={pagination.numberOfPages ?? 100} // TODO: fix hardcoded total number of pages
-            selectedPage={pagination.selectedPage}
-            linkToPage={pagination.linkToPage}
-          />
+          <TablePagination {...pagination} />
         </Box>
       )}
     </>
