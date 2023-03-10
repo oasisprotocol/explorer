@@ -2,8 +2,17 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SnapshotCard } from './SnapshotCard'
 import { BarChart } from '../../components/charts/BarChart'
-import { Runtime, useGetLayerStatsActiveAccounts } from '../../../oasis-indexer/api'
-import { ChartDuration, chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
+import {
+  Runtime,
+  useGetLayerStatsActiveAccounts,
+  GetLayerStatsActiveAccountsWindowStepSeconds,
+} from '../../../oasis-indexer/api'
+import {
+  ChartDuration,
+  chartUseQueryStaleTimeMs,
+  durationToQueryParams,
+  filterHourlyActiveAccounts,
+} from '../../utils/chart-utils'
 
 type ActiveAccountsProps = {
   chartDuration: ChartDuration
@@ -11,12 +20,12 @@ type ActiveAccountsProps = {
 
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
-  // TODO: sync with BE when filters are working
-  const { limit } = durationToQueryParams[chartDuration]
+  const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
     Runtime.emerald,
     {
       limit,
+      window_step_seconds: bucket_size_seconds as GetLayerStatsActiveAccountsWindowStepSeconds,
     },
     {
       query: {
@@ -25,14 +34,33 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
       },
     },
   )
-  const buckets = activeAccountsQuery.data?.data?.windows
-  const totalNumberLabel = buckets?.reduce((acc, curr) => acc + curr.active_accounts, 0).toLocaleString()
+  const weeklyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.WEEK
+  const dailyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.TODAY
+  const windows = dailyChart
+    ? filterHourlyActiveAccounts(activeAccountsQuery.data?.data?.windows)
+    : activeAccountsQuery.data?.data?.windows
+  const totalNumberLabel =
+    dailyChart && windows?.length
+      ? windows[0].active_accounts.toLocaleString()
+      : windows?.reduce((acc, curr) => acc + curr.active_accounts, 0).toLocaleString()
+  const formatParams = dailyChart
+    ? {
+        timestamp: {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        } satisfies Intl.DateTimeFormatOptions,
+      }
+    : undefined
 
   return (
     <SnapshotCard title={t('activeAccounts.title')} label={totalNumberLabel}>
-      {buckets && (
+      {windows && (
         <BarChart
-          data={buckets.slice().reverse()}
+          barSize={!weeklyChart ? 8 : undefined}
+          data={windows.slice().reverse()}
           dataKey="active_accounts"
           formatters={{
             data: (value: number) =>
@@ -42,6 +70,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
             label: (value: string) =>
               t('common.formattedDateTime', {
                 timestamp: new Date(value),
+                formatParams,
               }),
           }}
           withBarBackground

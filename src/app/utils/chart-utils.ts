@@ -1,5 +1,5 @@
 import isSameMonth from 'date-fns/isSameMonth'
-import { GetLayerStatsTxVolumeParams, type TxVolume } from '../../oasis-indexer/api'
+import { GetLayerStatsTxVolumeParams, type TxVolume, type ActiveAccounts } from '../../oasis-indexer/api'
 
 export enum ChartDuration {
   TODAY = 'TODAY',
@@ -10,8 +10,8 @@ export enum ChartDuration {
 
 export const durationToQueryParams = {
   [ChartDuration.TODAY]: {
-    bucket_size_seconds: 60 * 60,
-    limit: 24,
+    bucket_size_seconds: 60 * 5,
+    limit: (60 / 5) * 24, // full day for 5 minutes buckets
   },
   [ChartDuration.WEEK]: {
     bucket_size_seconds: 24 * 60 * 60,
@@ -62,4 +62,10 @@ export const getMonthlyBucketsDailyAverage = (buckets: Buckets): Buckets => {
     ...item,
     tx_volume: Math.round((item.tx_volume / item.numberOfItemsInGroup) * 100) / 100,
   }))
+}
+
+export const filterHourlyActiveAccounts = (
+  windows: ActiveAccounts[] | undefined,
+): ActiveAccounts[] | undefined => {
+  return windows?.filter((value, index) => index % 12 === 0)
 }
