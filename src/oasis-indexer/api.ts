@@ -34,7 +34,8 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
       ...options?.axios,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeTransactionList) => {
+        (data: generated.RuntimeTransactionList, headers, status) => {
+          if (status !== 200) return data
           return {
             ...data,
             transactions: data.transactions.map(tx => {
@@ -63,7 +64,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
       ...options?.axios,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeTransactionList) => {
+        (data: generated.RuntimeTransactionList, headers, status) => {
+          if (status !== 200) return data
           return {
             ...data,
             transactions: data.transactions.map(tx => {
@@ -92,7 +94,8 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
       ...options?.axios,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeAccount) => {
+        (data: generated.RuntimeAccount, headers, status) => {
+          if (status !== 200) return data
           return {
             ...data,
 
@@ -130,7 +133,8 @@ export function useGetRuntimeBlockByHeight(
       axios: {
         transformResponse: [
           ...arrayify(axios.defaults.transformResponse),
-          function (data: generated.RuntimeBlockList) {
+          function (data: generated.RuntimeBlockList, headers, status) {
+            if (status !== 200) return data
             const block = data.blocks[0]
             if (!block || block.round !== blockHeight) {
               throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
