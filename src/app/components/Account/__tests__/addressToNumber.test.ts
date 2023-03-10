@@ -1,4 +1,4 @@
-import { addressToNumber } from '.'
+import { addressToNumber } from '..'
 
 test('addressToNumber for JazzIcon should return the same value as wallets', () => {
   expect(addressToNumber('oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe')).toBe(-323287268)
