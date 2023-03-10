@@ -135,7 +135,7 @@
   },
   "totalTransactions": {
     "header": "Total Transactions",
-    "tooltip": "{{value, number}} transactions"
+    "tooltip": "{{value, number}} total transactions"
   },
   "transactions": {
     "latest": "Latest Transactions",
