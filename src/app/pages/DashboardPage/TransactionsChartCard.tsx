@@ -35,11 +35,12 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
       return null
     }
 
-    const [earliestBucket] = lineChartData
-    const latestBucket = lineChartData[lineChartData.length - 1]
+    const [latestBucket] = lineChartData
+    const earliestBucket = lineChartData[lineChartData.length - 1]
 
     return (
-      ((earliestBucket.volume_per_second - latestBucket.volume_per_second) / latestBucket.volume_per_second) *
+      ((latestBucket.volume_per_second - earliestBucket.volume_per_second) /
+        earliestBucket.volume_per_second) *
       100
     )
   }
