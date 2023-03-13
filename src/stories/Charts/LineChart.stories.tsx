@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
 import React from 'react'
 import { LineChart } from '../../app/components/charts/LineChart'
 import { intlDateFormat } from '../../app/utils/dateFormatter'
@@ -47,9 +47,9 @@ const timeData: TimeDataItem[] = [
 
 const Template: ComponentStory<typeof LineChart<TimeDataItem>> = args => {
   return (
-    <Box sx={{ width: '500px' }}>
+    <Card sx={{ width: '500px', height: '300px' }}>
       <LineChart {...args} />
-    </Box>
+    </Card>
   )
 }
 

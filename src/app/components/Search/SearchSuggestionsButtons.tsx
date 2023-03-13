@@ -23,7 +23,7 @@ PlainTextButton.defaultProps = {
   color: 'inherit',
 }
 
-const SuggestionButton = styled(PlainTextButton)({
+export const SuggestionButton = styled(PlainTextButton)({
   gap: '0.2ch', // Space after icon
 })
 

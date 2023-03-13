@@ -7,7 +7,6 @@ import { EmptyState } from '../../components/EmptyState'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import Skeleton from '@mui/material/Skeleton'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
 import { COLORS } from '../../../styles/theme/colors'
 import {
@@ -82,7 +81,7 @@ export const SearchResultsView: FC<{
     <PageLayout>
       <Divider variant="layout" />
       {isAnyLoading && (
-        <SubPageCard featured title={<Skeleton variant="text"></Skeleton>}>
+        <SubPageCard featured isLoadingTitle={true}>
           <TextSkeleton numberOfRows={7} />
         </SubPageCard>
       )}

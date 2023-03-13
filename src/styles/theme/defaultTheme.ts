@@ -280,7 +280,6 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
-          fontWeight: 700,
           fontSize: '24px',
           margin: 0,
           paddingBottom: theme.spacing(4),
@@ -296,6 +295,13 @@ export const defaultTheme = createTheme({
           fontWeight: 400,
           fontSize: '16px',
           color: COLORS.brandExtraDark,
+        },
+        title: {
+          fontWeight: 700,
+        },
+        subheader: {
+          fontStyle: 'italic',
+          color: COLORS.grayMedium,
         },
       },
     },

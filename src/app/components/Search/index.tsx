@@ -57,7 +57,7 @@ const SearchForm = styled('form', {
 
 interface SearchButtonProps extends StyledBaseProps {}
 
-const SearchButton = styled(Button, {
+export const SearchButton = styled(Button, {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['searchVariant'] as (keyof SearchButtonProps)[]).includes(prop as keyof SearchButtonProps),
 })<SearchButtonProps>(({ theme, searchVariant }) => ({
@@ -77,6 +77,10 @@ const SearchButton = styled(Button, {
       }
     : {}),
 }))
+SearchButton.defaultProps = {
+  variant: 'contained',
+  color: 'primary',
+}
 
 export interface SearchProps {
   variant: SearchVariant
@@ -149,13 +153,7 @@ const SearchCmp: FC<SearchProps> = ({ variant, disabled, onFocusChange: onFocusC
                     <HighlightOffIcon />
                   </IconButton>
                 )}
-                <SearchButton
-                  disabled={disabled}
-                  searchVariant={variant}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
+                <SearchButton disabled={disabled} searchVariant={variant} type="submit">
                   {searchButtonContent}
                 </SearchButton>
               </>
