@@ -17,7 +17,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
   }
 
   const number = new BigNumber(value)
-  const roundedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_HALF_CEIL)
+  const roundedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_FLOOR)
 
   return (
     <>
