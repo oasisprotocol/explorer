@@ -8,5 +8,5 @@ test('PercentageGain', () => {
 
   rerender(<PercentageGain earliestValue={3} latestValue={2} />)
   expect(screen.getByTestId('SouthIcon')).toBeInTheDocument()
-  expect(screen.getByText('-33.33%')).toBeInTheDocument()
+  expect(screen.getByText('33.33%')).toBeInTheDocument()
 })

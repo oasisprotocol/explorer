@@ -22,7 +22,7 @@ export const PercentageGain: FC<PercentageGainProps> = ({ earliestValue, latestV
       label={new Intl.NumberFormat(undefined, {
         style: 'percent',
         maximumFractionDigits: 2,
-        signDisplay: 'auto',
+        signDisplay: 'never',
       }).format(ratio)}
     />
   )
