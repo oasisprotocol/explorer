@@ -141,7 +141,8 @@
     "latest": "Latest Transactions",
     "method": {
       "consensus": {
-        "transaction": "Transaction"
+        "deposit": "Consensus Deposit",
+        "withdraw": "Consensus Withdraw"
       },
       "evm": {
         "call": "Contract Call",
