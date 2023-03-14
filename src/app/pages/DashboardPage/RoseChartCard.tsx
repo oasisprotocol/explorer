@@ -40,10 +40,6 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
     timestamp: item[0],
     value: item[1],
   }))
-  const percentage =
-    lineChartData &&
-    rosePriceQuery.data &&
-    ((rosePriceQuery.data - lineChartData[0].value) / lineChartData[0].value) * 100
 
   return (
     <SnapshotCard
@@ -55,7 +51,12 @@ export const RoseChartCard: FC<RoseChartCardProps> = ({ chartDuration }) => {
             })
           : ''
       }
-      badge={percentage && <PercentageGain percentage={percentage} />}
+      badge={
+        lineChartData &&
+        rosePriceQuery.data && (
+          <PercentageGain earliestValue={lineChartData[0].value} latestValue={rosePriceQuery.data} />
+        )
+      }
       title={t('roseChart.header')}
     >
       <>
