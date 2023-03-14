@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -12,9 +12,12 @@ import Skeleton from '@mui/material/Skeleton'
 
 type StyledComponentProps = {
   featured?: boolean
+  isLoadingTitle?: boolean
+  title?: string
+  subheader?: string
+  action?: ReactNode
 }
-type SubPageCardProps = PropsWithChildren &
-  StyledComponentProps & { isLoadingTitle?: boolean; title?: string; subheader?: string }
+type SubPageCardProps = PropsWithChildren<StyledComponentProps>
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'featured',
@@ -33,6 +36,9 @@ const StyledCard = styled(Card, {
   shouldForwardProp: prop => prop !== 'featured',
 })<StyledComponentProps>(
   ({ featured, theme }) => css`
+    && {
+      padding: 0;
+    }
     ${featured && {
       [theme.breakpoints.up('sm')]: {
         paddingRight: theme.spacing(6),
@@ -42,6 +48,12 @@ const StyledCard = styled(Card, {
   `,
 )
 
+const StyledCardContent = styled(CardContent)(() => ({
+  '&&': {
+    padding: 0,
+  },
+}))
+
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
 export const SubPageCard: FC<SubPageCardProps> = ({
@@ -50,20 +62,22 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   isLoadingTitle,
   title,
   subheader,
+  action,
 }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <div>
-      {isMobile && (
-        <Box sx={{ mb: 4, mx: 4 }}>
+      {isMobile && (title || subheader || action) && (
+        <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
           <Typography variant="h3" component="h3" sx={{ display: 'inline' }} color={COLORS.white}>
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>
           <Typography variant="subtitle1" sx={{ ml: '1ex', display: 'inline' }} color={COLORS.white}>
             {subheader}
           </Typography>
+          {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
         </Box>
       )}
       <StyledCard featured={featured}>
@@ -84,7 +98,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
             />
           </StyledBox>
         )}
-        <CardContent>{children}</CardContent>
+        <StyledCardContent>{children}</StyledCardContent>
       </StyledCard>
     </div>
   )

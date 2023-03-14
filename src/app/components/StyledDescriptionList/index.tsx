@@ -52,4 +52,5 @@ export const StyledDescriptionList = styled(InlineDescriptionList)(({ theme }) =
   dd: {
     color: COLORS.brandExtraDark,
   },
+  padding: theme.spacing(4),
 }))

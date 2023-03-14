@@ -48,7 +48,7 @@ export const BlockDetailPage: FC = () => {
 }
 
 export const BlockDetailView: FC<{
-  isLoading: boolean
+  isLoading?: boolean
   block: RuntimeBlock | undefined
   showLayer?: boolean
 }> = ({ isLoading, block, showLayer }) => {
