@@ -38,10 +38,10 @@ export type SearchQueries = {
 function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
   const queries = [
     useGetRuntimeBlockByHeight(Runtime.emerald, parseInt(blockHeight!), {
-      query: { enabled: !!blockHeight },
+      query: { enabled: !!blockHeight && RouteUtils.getEnabledParaTimes().includes(Runtime.emerald) },
     }),
     useGetRuntimeBlockByHeight(Runtime.sapphire, parseInt(blockHeight!), {
-      query: { enabled: !!blockHeight },
+      query: { enabled: !!blockHeight && RouteUtils.getEnabledParaTimes().includes(Runtime.sapphire) },
     }),
   ]
   return {
@@ -51,8 +51,12 @@ function useBlocksConditionally(blockHeight: string | undefined): ConditionalRes
 }
 function useTransactionsConditionally(txHash: string | undefined): ConditionalResults<RuntimeTransaction> {
   const queries = [
-    useGetRuntimeTransactionsTxHash(Runtime.emerald, txHash!, { query: { enabled: !!txHash } }),
-    useGetRuntimeTransactionsTxHash(Runtime.sapphire, txHash!, { query: { enabled: !!txHash } }),
+    useGetRuntimeTransactionsTxHash(Runtime.emerald, txHash!, {
+      query: { enabled: !!txHash && RouteUtils.getEnabledParaTimes().includes(Runtime.emerald) },
+    }),
+    useGetRuntimeTransactionsTxHash(Runtime.sapphire, txHash!, {
+      query: { enabled: !!txHash && RouteUtils.getEnabledParaTimes().includes(Runtime.sapphire) },
+    }),
   ]
   return {
     isLoading: queries.some(query => query.isInitialLoading),
@@ -61,8 +65,12 @@ function useTransactionsConditionally(txHash: string | undefined): ConditionalRe
 }
 function useRuntimeAccountConditionally(address: string | undefined): ConditionalResults<RuntimeAccount> {
   const queries = [
-    useGetRuntimeAccountsAddress(Runtime.emerald, address!, { query: { enabled: !!address } }),
-    useGetRuntimeAccountsAddress(Runtime.sapphire, address!, { query: { enabled: !!address } }),
+    useGetRuntimeAccountsAddress(Runtime.emerald, address!, {
+      query: { enabled: !!address && RouteUtils.getEnabledParaTimes().includes(Runtime.emerald) },
+    }),
+    useGetRuntimeAccountsAddress(Runtime.sapphire, address!, {
+      query: { enabled: !!address && RouteUtils.getEnabledParaTimes().includes(Runtime.sapphire) },
+    }),
   ]
   return {
     isLoading: queries.some(query => query.isInitialLoading),
