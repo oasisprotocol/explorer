@@ -1,0 +1,38 @@
+name: 🐛 Bug report
+description: Tell us what doesn’t work as it should.
+title: "[Bug]: "
+labels: ["bug"]
+
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for this bug.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: input
+    id: summary
+    attributes:
+      label: SUMMARY
+      description: Explain the problem briefly below
+      placeholder: Write here
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: STEPS TO REPRODUCE
+      description: Describe exactly how to reproduce the problem
+      placeholder: |
+        1. Open https://... in Chrome
+        2. Click...
+        3. See error...
+        Tip: You can attach images by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: EXPECTED BEHAVIOR
+      description: Describe what you expected to happen
+      placeholder: |
+        Write here

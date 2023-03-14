@@ -1,0 +1,30 @@
+name: ✨ Feature request
+description: Suggest an idea for this project.
+title: "[Feature]: "
+labels: ["feature"]
+
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for your request.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: input
+    id: summary
+    attributes:
+      label: SUMMARY
+      description: Describe the new feature/improvement briefly below
+      placeholder: Write here
+  - type: textarea
+    id: description
+    attributes:
+      label: DESCRIPTION
+      description: Describe how the feature would be used, why it is needed and what it would solve
+      placeholder: |
+        Describe here
+
+        Tip: You can attach images by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: true
