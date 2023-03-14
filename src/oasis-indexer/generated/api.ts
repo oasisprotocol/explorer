@@ -568,6 +568,15 @@ as calculated from Transfer events.
   num_holders: number;
 }
 
+export interface RuntimeStatus {
+  /** The number of compute nodes that are registered and can run the runtime. */
+  active_nodes: number;
+  /** The height of the most recent indexed block (also sometimes referred to as "round") for this runtime. Query a synced Oasis node for the latest block produced. */
+  latest_block: number;
+  /** The RFC 3339 formatted time when the Indexer processed the latest block for this runtime. Compare with current time for approximate indexing progress with the Oasis Network. */
+  latest_update: string;
+}
+
 export interface RuntimeAccount {
   /** The staking address for this account. */
   address: string;
@@ -792,6 +801,8 @@ export type ProposalVotesAllOf = {
   /** The list of votes for the proposal. */
   votes: ProposalVote[];
 };
+
+export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * The target propotocol versions for this upgrade proposal.
@@ -1315,8 +1326,6 @@ the query would return with limit=infinity.
   /** Whether total_count is clipped for performance reasons. */
   is_total_count_clipped: boolean;
 }
-
-export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * A list of consensus blocks.
@@ -2571,6 +2580,49 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof g
   
 
   const query = useQuery<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>({ queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns the runtime status.
+ */
+export const getRuntimeStatus = (
+    runtime: Runtime, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RuntimeStatus>> => {
+    return axios.get(
+      `/${runtime}/status`,options
+    );
+  }
+
+
+export const getGetRuntimeStatusQueryKey = (runtime: Runtime,) => [`/${runtime}/status`];
+
+    
+export type GetRuntimeStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeStatus>>>
+export type GetRuntimeStatusQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof getRuntimeStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeStatusQueryKey(runtime);
+
+  
+
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeStatus>>> = ({ signal }) => getRuntimeStatus(runtime, { signal, ...axiosOptions });
+
+
+  
+
+  const query = useQuery<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>({ queryKey, queryFn, enabled: !!(runtime), ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
   query.queryKey = queryKey;
 
