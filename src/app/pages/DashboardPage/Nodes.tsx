@@ -5,19 +5,24 @@ import Typography from '@mui/material/Typography'
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 import { SnapshotCard } from './SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
+import { Runtime, useGetRuntimeStatus } from '../../../oasis-indexer/api'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
-  /* TODO: Replace with real values when endpoint is ready */
-  const activeNodes = 70
+  const runtimeStatusQuery = useGetRuntimeStatus(Runtime.emerald)
+  const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
 
   return (
     <SnapshotCard title={t('nodes.title')}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
-        <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
-          {t('nodes.value', { value: activeNodes })}
-        </Typography>
+        {activeNodes && (
+          <>
+            <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
+            <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
+              {t('nodes.value', { value: activeNodes })}
+            </Typography>
+          </>
+        )}
       </Box>
     </SnapshotCard>
   )
