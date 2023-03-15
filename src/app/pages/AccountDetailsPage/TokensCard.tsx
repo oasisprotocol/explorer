@@ -11,7 +11,9 @@ import { TokensEmptyState } from './TokensEmptyState'
 import { Table, TableCellAlign } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { Layer, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { useLayerParam } from '../../hooks/useLayerParam'
+import { AppErrors } from '../../../types/errors'
 
 type TokensCardProps = {
   type: 'ERC20' | 'ERC721'
@@ -29,7 +31,12 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
     { align: TableCellAlign.Right, content: t('common.balance') },
     { align: TableCellAlign.Right, content: t('common.ticker') },
   ]
-  const accountQuery = useGetRuntimeAccountsAddress(Runtime.emerald, address!)
+  const layer = useLayerParam()
+  if (layer === Layer.consensus) {
+    // There can be no ERC-20 or ERC-721 tokens on consensus
+    throw AppErrors.UnsupportedLayer
+  }
+  const accountQuery = useGetRuntimeAccountsAddress(layer, address!)
   const runtimeEvmBalance = accountQuery.data?.data.evm_balances?.filter(item => item.token_type === type)
   const tableRows = runtimeEvmBalance?.map(item => ({
     key: item.token_contract_addr,
