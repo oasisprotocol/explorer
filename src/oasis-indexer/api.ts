@@ -23,12 +23,17 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
+// TODO: remove when API is ready
+function mockSapphire<T extends generated.Layer>(layer: T) {
+  return layer === 'sapphire' ? 'emerald' : layer
+}
+
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
   runtime,
   params?,
   options?,
 ) => {
-  return generated.useGetRuntimeTransactions(runtime, params, {
+  return generated.useGetRuntimeTransactions(mockSapphire(runtime), params, {
     ...options,
     axios: {
       ...options?.axios,
@@ -58,7 +63,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   txHash,
   options?,
 ) => {
-  return generated.useGetRuntimeTransactionsTxHash(runtime, txHash, {
+  return generated.useGetRuntimeTransactionsTxHash(mockSapphire(runtime), txHash, {
     ...options,
     axios: {
       ...options?.axios,
@@ -88,7 +93,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   params,
   options?,
 ) => {
-  return generated.useGetRuntimeAccountsAddress(runtime, params, {
+  return generated.useGetRuntimeAccountsAddress(mockSapphire(runtime), params, {
     ...options,
     axios: {
       ...options?.axios,
@@ -126,7 +131,7 @@ export function useGetRuntimeBlockByHeight(
   options?: { query?: UseQueryOptions<any, any> },
 ) {
   const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(
-    runtime,
+    mockSapphire(runtime),
     { to: blockHeight, limit: 1 },
     {
       ...options,
@@ -152,4 +157,28 @@ export function useGetRuntimeBlockByHeight(
     },
   )
   return result
+}
+
+export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtime, params, options) => {
+  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, options)
+}
+
+export const useGetRuntimeStatus: typeof generated.useGetRuntimeStatus = (runtime, options) => {
+  return generated.useGetRuntimeStatus(mockSapphire(runtime), options)
+}
+
+export const useGetLayerStatsTxVolume: typeof generated.useGetLayerStatsTxVolume = (
+  layer,
+  params,
+  options,
+) => {
+  return generated.useGetLayerStatsTxVolume(mockSapphire(layer), params, options)
+}
+
+export const useGetLayerStatsActiveAccounts: typeof generated.useGetLayerStatsActiveAccounts = (
+  layer,
+  params,
+  options,
+) => {
+  return generated.useGetLayerStatsActiveAccounts(mockSapphire(layer), params, options)
 }
