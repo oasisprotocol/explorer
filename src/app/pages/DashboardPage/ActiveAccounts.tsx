@@ -28,6 +28,30 @@ export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windo
   }
 }
 
+export const getChartLabelFormatParams = (duration: ChartDuration) => {
+  switch (duration) {
+    case ChartDuration.TODAY:
+      return {
+        timestamp: {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        } satisfies Intl.DateTimeFormatOptions,
+      }
+    case ChartDuration.ALL_TIME:
+      return {
+        timestamp: {
+          year: 'numeric',
+          month: 'long',
+        } satisfies Intl.DateTimeFormatOptions,
+      }
+    default:
+      return undefined
+  }
+}
+
 type ActiveAccountsProps = {
   chartDuration: ChartDuration
 }
@@ -57,17 +81,6 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
     dailyChart && windows?.length
       ? windows[0].active_accounts.toLocaleString()
       : windows?.reduce((acc, curr) => acc + curr.active_accounts, 0).toLocaleString()
-  const formatParams = dailyChart
-    ? {
-        timestamp: {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-        } satisfies Intl.DateTimeFormatOptions,
-      }
-    : undefined
 
   return (
     <SnapshotCard title={t('activeAccounts.title')} label={totalNumberLabel}>
@@ -84,7 +97,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
             label: (value: string) =>
               t('common.formattedDateTime', {
                 timestamp: new Date(value),
-                formatParams,
+                formatParams: getChartLabelFormatParams(chartDuration),
               }),
           }}
           withBarBackground
