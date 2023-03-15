@@ -1,12 +1,18 @@
 import { useTranslation } from 'react-i18next'
 import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
-import { ChartDuration, chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
+import {
+  ChartDuration,
+  chartUseQueryStaleTimeMs,
+  durationToQueryParams,
+  sumBucketsByStartDuration,
+} from '../../utils/chart-utils'
 import { LineChart } from '../../components/charts/LineChart'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
+import startOfHour from 'date-fns/startOfHour'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -17,18 +23,35 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
-  const { data } = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+  const { data, isFetched } = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
     query: { staleTime: chartUseQueryStaleTimeMs },
   })
 
-  const lineChartData = data?.data.buckets.map(bucket => {
+  const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
+
+  const buckets = data?.data.buckets.map(bucket => {
     return {
       bucket_start: bucket.bucket_start,
       volume_per_second: bucket.tx_volume / statsParams.bucket_size_seconds,
     }
   })
-
   const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
+
+  const lineChartData = isDailyChart
+    ? sumBucketsByStartDuration(buckets, 'volume_per_second', 'bucket_start', startOfHour)
+    : buckets
+
+  const formatParams = isDailyChart
+    ? {
+        timestamp: {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        } satisfies Intl.DateTimeFormatOptions,
+      }
+    : undefined
 
   return (
     <SnapshotCard
@@ -62,6 +85,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
             label: (value: string) =>
               t('common.formattedDateTime', {
                 timestamp: new Date(value),
+                formatParams,
               }),
           }}
         />
