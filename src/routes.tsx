@@ -34,6 +34,7 @@ export const routes: RouteObject[] = [
       {
         path: `/:layer`,
         loader: layerLoader,
+        errorElement: <RoutingErrorPage />,
         children: [
           {
             path: '',
