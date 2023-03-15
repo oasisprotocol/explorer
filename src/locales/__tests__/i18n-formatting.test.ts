@@ -19,10 +19,10 @@ test('formatting dates with i18n', () => {
           timeZoneName: 'short',
         } satisfies Intl.DateTimeFormatOptions,
       },
-    })
+    }) as string
   })
 
-  expect(result.current).toBe(`April 23, 2022 at 12:20${NNBSP}PM UTC`)
+  expect(result.current.replaceAll(NNBSP, ' ')).toBe('April 23, 2022 at 12:20 PM UTC')
 })
 
 test('formatting fiat currency with i18n', () => {
@@ -35,7 +35,7 @@ test('formatting fiat currency with i18n', () => {
           currency: 'USD',
         } satisfies Intl.NumberFormatOptions,
       },
-    })
+    }) as string
   })
 
   expect(result.current).toBe('$123.46')
@@ -53,7 +53,7 @@ test('formatting block sizes with i18n', () => {
           unitDisplay: 'long',
         } satisfies Intl.NumberFormatOptions,
       },
-    })
+    }) as string
   })
 
   expect(result.current).toBe('12,345 bytes')
