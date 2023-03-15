@@ -9,6 +9,18 @@ import { UseQueryOptions } from '@tanstack/react-query'
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
+declare module './generated/api' {
+  export interface RuntimeTransaction {
+    layer: Layer
+  }
+  export interface RuntimeBlock {
+    layer: Layer
+  }
+  export interface RuntimeAccount {
+    layer: Layer
+  }
+}
+
 function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
   const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
   if (value.isNaN()) {
@@ -48,6 +60,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                layer: runtime,
               }
             }),
           }
@@ -78,6 +91,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                layer: runtime,
               }
             }),
           }
@@ -116,6 +130,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
                 balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
               }
             }),
+            layer: runtime,
           }
         },
         ...arrayify(options?.axios?.transformResponse),
@@ -150,7 +165,10 @@ export function useGetRuntimeBlockByHeight(
                 headers: {},
               })
             }
-            return block
+            return {
+              ...block,
+              layer: runtime,
+            }
           },
         ],
       },
@@ -160,7 +178,28 @@ export function useGetRuntimeBlockByHeight(
 }
 
 export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtime, params, options) => {
-  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, options)
+  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeBlockList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            blocks: data.blocks.map(block => {
+              return {
+                ...block,
+                layer: runtime,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
 }
 
 export const useGetRuntimeStatus: typeof generated.useGetRuntimeStatus = (runtime, options) => {

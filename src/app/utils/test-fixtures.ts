@@ -7,4 +7,5 @@ export const suggestedParsedBlock: RuntimeBlock = {
   size: 4214,
   num_transactions: 10,
   gas_used: 1482530,
+  layer: 'emerald',
 }
