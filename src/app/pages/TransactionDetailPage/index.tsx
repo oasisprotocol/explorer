@@ -3,7 +3,6 @@ import { Link as RouterLink, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Layer,
-  Runtime,
   RuntimeTransaction,
   RuntimeTransactionList,
   useGetRuntimeTransactionsTxHash,
@@ -66,9 +65,21 @@ const StyledAlert = styled(Alert)(() => ({
 
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
+
+  const layer = useParams().layer as Layer
+  // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // Displaying consensus transactions is not yet implemented.
+    // we should call useGetConsensusTransactionsTxHash()
+  }
+
   const hash = useParams().hash!
 
-  const { isLoading, data } = useGetRuntimeTransactionsTxHash(Runtime.emerald, hash)
+  const { isLoading, data } = useGetRuntimeTransactionsTxHash(
+    layer, // This is OK since consensus has been handled separately
+    hash,
+  )
 
   const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(
     data?.data,
@@ -119,7 +130,10 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.block')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.emerald)}>
+              <Link
+                component={RouterLink}
+                to={RouteUtils.getBlockRoute(transaction.round, transaction.layer)}
+              >
                 {transaction.round.toLocaleString()}
               </Link>
             </Typography>
@@ -136,7 +150,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.from')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <AccountLink address={transaction.sender_0} paratime={Layer.emerald} />
+              <AccountLink address={transaction.sender_0} paratime={transaction.layer} />
             </Typography>
             <CopyToClipboard value={transaction.sender_0} label={' '} />
           </dd>
@@ -146,7 +160,7 @@ export const TransactionDetailView: FC<{
               <dt>{t('common.to')}</dt>
               <dd>
                 <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  <AccountLink address={transaction.to} paratime={Layer.emerald} />
+                  <AccountLink address={transaction.to} paratime={transaction.layer} />
                 </Typography>
                 <CopyToClipboard value={transaction.to} label={' '} />
               </dd>

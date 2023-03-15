@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Link from '@mui/material/Link'
-import { Runtime, RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-indexer/api'
+import { Layer, RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -21,8 +21,18 @@ import { transactionsContainerId } from './TransactionsCard'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
+  // TODO: switch to useLayer when it's available
+  const layer = useParams().layer as Layer
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // Loading the details of consensus blocks is not yet supported.
+    // We should use useGetConsensusBlocksHeight()
+  }
   const blockHeight = parseInt(useParams().blockHeight!, 10)
-  const { isLoading, data } = useGetRuntimeBlockByHeight(Runtime.emerald, blockHeight)
+  const { isLoading, data } = useGetRuntimeBlockByHeight(
+    layer, // This is OK, since consensus is already handled separately
+    blockHeight,
+  )
   if (!data && !isLoading) {
     throw AppErrors.NotFoundBlockHeight
   }
@@ -33,7 +43,7 @@ export const BlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')}>
         <BlockDetailView isLoading={isLoading} block={block} />
       </SubPageCard>
-      <TransactionsCard blockHeight={blockHeight} />
+      <TransactionsCard layer={layer} blockHeight={blockHeight} />
     </PageLayout>
   )
 }

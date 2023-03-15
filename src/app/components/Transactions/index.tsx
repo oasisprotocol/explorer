@@ -12,7 +12,7 @@ import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RoundedRoseBalance } from '../../components/RoundedBalance'
-import { Layer, RuntimeTransaction } from '../../../oasis-indexer/api'
+import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -79,7 +79,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.hash}
-              to={RouteUtils.getTransactionRoute(transaction.hash, Layer.emerald)}
+              to={RouteUtils.getTransactionRoute(transaction.hash, transaction.layer)}
             />
           </Typography>
         ),
@@ -92,7 +92,7 @@ export const Transactions: FC<TransactionProps> = ({
                 <Typography variant="mono">
                   <Link
                     component={RouterLink}
-                    to={RouteUtils.getBlockRoute(transaction.round, Layer.emerald)}
+                    to={RouteUtils.getBlockRoute(transaction.round, transaction.layer)}
                   >
                     {transaction.round.toLocaleString()}
                   </Link>
@@ -127,7 +127,7 @@ export const Transactions: FC<TransactionProps> = ({
             <Typography variant="mono">
               <TrimLinkLabel
                 label={transaction.sender_0}
-                to={RouteUtils.getAccountRoute(transaction.sender_0, Layer.emerald)}
+                to={RouteUtils.getAccountRoute(transaction.sender_0, transaction.layer)}
               />
             </Typography>
             {transaction.to && (
@@ -145,7 +145,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.to!}
-              to={RouteUtils.getAccountRoute(transaction.to!, Layer.emerald)}
+              to={RouteUtils.getAccountRoute(transaction.to!, transaction.layer)}
             />
           </Typography>
         ),

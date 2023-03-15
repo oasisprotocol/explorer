@@ -62,7 +62,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(Layer.emerald)}
+            to={RouteUtils.getDashboardRoute(layer)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography
