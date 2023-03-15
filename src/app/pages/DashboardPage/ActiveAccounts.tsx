@@ -1,18 +1,32 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import startOfMonth from 'date-fns/startOfMonth'
 import { SnapshotCard } from './SnapshotCard'
 import { BarChart } from '../../components/charts/BarChart'
 import {
   Runtime,
   useGetLayerStatsActiveAccounts,
   GetLayerStatsActiveAccountsWindowStepSeconds,
+  type ActiveAccounts as Windows,
 } from '../../../oasis-indexer/api'
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
   durationToQueryParams,
   filterHourlyActiveAccounts,
+  sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
+
+export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
+  switch (duration) {
+    case ChartDuration.TODAY:
+      return filterHourlyActiveAccounts(windows)
+    case ChartDuration.ALL_TIME:
+      return sumBucketsByStartDuration(windows, 'active_accounts', 'window_end', startOfMonth)
+    default:
+      return windows
+  }
+}
 
 type ActiveAccountsProps = {
   chartDuration: ChartDuration
@@ -36,9 +50,9 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   )
   const weeklyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.WEEK
   const dailyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.TODAY
-  const windows = dailyChart
-    ? filterHourlyActiveAccounts(activeAccountsQuery.data?.data?.windows)
-    : activeAccountsQuery.data?.data?.windows
+  const windows =
+    activeAccountsQuery.data?.data?.windows &&
+    getActiveAccountsWindows(chartDuration, activeAccountsQuery.data?.data?.windows)
   const totalNumberLabel =
     dailyChart && windows?.length
       ? windows[0].active_accounts.toLocaleString()
