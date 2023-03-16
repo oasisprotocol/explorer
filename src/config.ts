@@ -1,5 +1,4 @@
 import { Layer } from './oasis-indexer/api'
-export { Layer } from './oasis-indexer/api'
 
 export const consensusDecimals = 9
 

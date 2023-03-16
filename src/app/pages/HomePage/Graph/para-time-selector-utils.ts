@@ -1,5 +1,5 @@
 import { ParaTimeSelectorStep } from './types'
-import { Layer } from '../../../../config'
+import { Layer } from '../../../../oasis-indexer/api'
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {

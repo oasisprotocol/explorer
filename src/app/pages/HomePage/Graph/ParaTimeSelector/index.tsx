@@ -15,8 +15,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
-import { Layer } from '../../../../../config'
 import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
+import { Layer } from '../../../../../oasis-indexer/api'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean

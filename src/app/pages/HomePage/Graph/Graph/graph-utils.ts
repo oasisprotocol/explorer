@@ -1,5 +1,5 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
-import { Layer } from '../../../../../config'
+import { Layer } from '../../../../../oasis-indexer/api'
 
 export abstract class GraphUtils {
   static getScaleTo(layer: Layer, { width, height }: { width?: number; height?: number }): ScaleToOptions {

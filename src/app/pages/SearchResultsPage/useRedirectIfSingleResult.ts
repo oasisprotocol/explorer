@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchQueries } from '.'
-import { Layer } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
+import { Layer } from '../../../oasis-indexer/api'
 
 /** If search only finds one result then redirect to it */
 export function useRedirectIfSingleResult(queries: SearchQueries) {

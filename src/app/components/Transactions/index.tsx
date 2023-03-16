@@ -12,10 +12,9 @@ import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RoundedRoseBalance } from '../../components/RoundedBalance'
-import { RuntimeTransaction } from '../../../oasis-indexer/api'
+import { Layer, RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
-import { Layer } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 const StyledCircle = styled(Box)(({ theme }) => ({

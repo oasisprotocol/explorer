@@ -10,10 +10,10 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import blockchainImage from './images/blockchain.svg'
 import { COLORS } from '../../../styles/theme/colors'
-import { Layer } from '../../../config'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
+import { Layer } from '../../../oasis-indexer/api'
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {

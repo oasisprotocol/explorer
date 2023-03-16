@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
-import { Layer } from '../../../config'
 import { AppError, AppErrors } from '../../../types/errors'
+import { Layer } from '../../../oasis-indexer/api'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',

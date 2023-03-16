@@ -6,7 +6,7 @@ import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 import { Search } from '../Search'
 import { useParams } from 'react-router-dom'
-import { Layer } from '../../../config'
+import { Layer } from '../../../oasis-indexer/api'
 
 export const Header: FC = () => {
   const theme = useTheme()

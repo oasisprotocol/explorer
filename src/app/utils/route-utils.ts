@@ -1,8 +1,8 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { Layer } from '../../config'
 import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
+import { Layer } from '../../oasis-indexer/api'
 
 export abstract class RouteUtils {
   private static ENABLED_PARA_TIMES: Layer[] = [Layer.emerald, Layer.sapphire]
