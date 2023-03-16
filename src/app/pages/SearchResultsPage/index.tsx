@@ -128,7 +128,9 @@ export const SearchResultsView: FC<{
           <ResultsGroup
             title={t('search.results.transactions.title')}
             results={searchQueries.emeraldTxHash.results}
-            resultComponent={item => <TransactionDetailView isLoading={false} transaction={item} />}
+            resultComponent={item => (
+              <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
+            )}
             link={item => RouteUtils.getTransactionRoute(item.hash, item.layer)}
             linkLabel={t('search.results.transactions.viewLink')}
           ></ResultsGroup>
