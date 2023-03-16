@@ -41,4 +41,5 @@ export const suggestedParsedAccount: RuntimeAccount = {
     total_received: '0',
     total_sent: '0',
   },
+  layer: 'emerald',
 }

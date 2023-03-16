@@ -21,7 +21,6 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
-import { Layer } from '../../../config'
 import { ResultsGroup } from './ResultsGroup'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
@@ -122,7 +121,7 @@ export const SearchResultsView: FC<{
             title={t('search.results.blocks.title')}
             results={searchQueries.emeraldBlockHeight.results}
             resultComponent={item => <BlockDetailView isLoading={false} block={item} />}
-            link={item => RouteUtils.getBlockRoute(item.round, Layer.Emerald)}
+            link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
           ></ResultsGroup>
 
@@ -130,7 +129,7 @@ export const SearchResultsView: FC<{
             title={t('search.results.transactions.title')}
             results={searchQueries.emeraldTxHash.results}
             resultComponent={item => <TransactionDetailView isLoading={false} transaction={item} />}
-            link={item => RouteUtils.getTransactionRoute(item.hash, Layer.Emerald)}
+            link={item => RouteUtils.getTransactionRoute(item.hash, item.layer)}
             linkLabel={t('search.results.transactions.viewLink')}
           ></ResultsGroup>
 
@@ -143,7 +142,7 @@ export const SearchResultsView: FC<{
             resultComponent={item => (
               <AccountDetailsView isLoading={false} account={item} roseFiatValue={roseFiatValue} />
             )}
-            link={item => RouteUtils.getAccountRoute(item.address, Layer.Emerald)}
+            link={item => RouteUtils.getAccountRoute(item.address, item.layer)}
             linkLabel={t('search.results.accounts.viewLink')}
           ></ResultsGroup>
         </>
