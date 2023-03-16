@@ -5,9 +5,31 @@ import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
+import { Layer } from './generated/api'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
+
+declare module './generated/api' {
+  export interface Transaction {
+    layer: Layer
+  }
+  export interface RuntimeTransaction {
+    layer: Layer
+  }
+  export interface Block {
+    layer: Layer
+  }
+  export interface RuntimeBlock {
+    layer: Layer
+  }
+  export interface Account {
+    layer: Layer
+  }
+  export interface RuntimeAccount {
+    layer: Layer
+  }
+}
 
 function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
   const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
@@ -26,6 +48,34 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
 // TODO: remove when API is ready
 function mockSapphire<T extends generated.Layer>(layer: T) {
   return layer === 'sapphire' ? 'emerald' : layer
+}
+
+export const useGetConsensusTransactions: typeof generated.useGetConsensusTransactions = (
+  params?,
+  options?,
+) => {
+  return generated.useGetConsensusTransactions(params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.TransactionList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            transactions: data.transactions.map(tx => {
+              return {
+                ...tx,
+                layer: Layer.consensus,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
 }
 
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
@@ -48,6 +98,35 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                layer: runtime,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensusTransactionsTxHash = (
+  txHash,
+  options?,
+) => {
+  return generated.useGetConsensusTransactionsTxHash(txHash, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.TransactionList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            transactions: data.transactions.map(tx => {
+              return {
+                ...tx,
+                layer: Layer.consensus,
               }
             }),
           }
@@ -78,6 +157,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 ...tx,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                layer: runtime,
               }
             }),
           }
@@ -88,12 +168,35 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   })
 }
 
-export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccountsAddress = (
-  runtime,
-  params,
+export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAccountsAddress = (
+  address,
   options?,
 ) => {
-  return generated.useGetRuntimeAccountsAddress(mockSapphire(runtime), params, {
+  return generated.useGetConsensusAccountsAddress(address, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.Account, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            layer: Layer.consensus,
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccountsAddress = (
+  runtime,
+  address,
+  options?,
+) => {
+  return generated.useGetRuntimeAccountsAddress(mockSapphire(runtime), address, {
     ...options,
     axios: {
       ...options?.axios,
@@ -116,12 +219,35 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
                 balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
               }
             }),
+            layer: runtime,
           }
         },
         ...arrayify(options?.axios?.transformResponse),
       ],
     },
   })
+}
+
+export function useGetConsensusBlockByHeight(
+  blockHeight: number,
+  options?: { query?: UseQueryOptions<any, any> },
+) {
+  const result = generated.useGetConsensusBlocksHeight<AxiosResponse<generated.Block, any>>(blockHeight, {
+    ...options,
+    axios: {
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (block: generated.Block, headers, status) => {
+          if (status !== 200) return block
+          return {
+            ...block,
+            layer: Layer.consensus,
+          }
+        },
+      ],
+    },
+  })
+  return result
 }
 
 // TODO: replace with an appropriate API
@@ -150,7 +276,10 @@ export function useGetRuntimeBlockByHeight(
                 headers: {},
               })
             }
-            return block
+            return {
+              ...block,
+              layer: runtime,
+            }
           },
         ],
       },
@@ -159,8 +288,54 @@ export function useGetRuntimeBlockByHeight(
   return result
 }
 
+export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (params, options) => {
+  return generated.useGetConsensusBlocks(params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.BlockList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            blocks: data.blocks.map(block => {
+              return {
+                ...block,
+                layer: Layer.consensus,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
+}
+
 export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtime, params, options) => {
-  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, options)
+  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, {
+    ...options,
+    axios: {
+      ...options?.axios,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeBlockList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            blocks: data.blocks.map(block => {
+              return {
+                ...block,
+                layer: runtime,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
+    },
+  })
 }
 
 export const useGetRuntimeStatus: typeof generated.useGetRuntimeStatus = (runtime, options) => {
