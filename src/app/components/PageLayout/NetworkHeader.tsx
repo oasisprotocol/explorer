@@ -28,6 +28,13 @@ const getContent = (t: TFunction, layer: Layer) => {
         header: t('common.sapphire'),
         description: t('pageHeader.sapphire'),
       }
+
+    case Layer.consensus:
+      return {
+        header: t('common.consensus'),
+        description: t('pageHeader.consensus'),
+      }
+
     default:
       throw new AppError(AppErrors.UnsupportedLayer)
   }
@@ -55,7 +62,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(Layer.emerald)}
+            to={RouteUtils.getDashboardRoute(layer)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography

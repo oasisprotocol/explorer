@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
-import { Layer, RuntimeBlock } from '../../../oasis-indexer/api'
+import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
@@ -55,7 +55,7 @@ export const Blocks = (props: BlocksProps) => {
         align: TableCellAlign.Right,
         content: (
           <Typography variant="mono">
-            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}>
+            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, block.layer)}>
               {block.round.toLocaleString()}
             </Link>
           </Typography>
@@ -79,10 +79,7 @@ export const Blocks = (props: BlocksProps) => {
             {
               content: (
                 <Typography variant="mono">
-                  <TrimLinkLabel
-                    label={block.hash}
-                    to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}
-                  />
+                  <TrimLinkLabel label={block.hash} to={RouteUtils.getBlockRoute(block.round, block.layer)} />
                 </Typography>
               ),
               key: 'hash',
