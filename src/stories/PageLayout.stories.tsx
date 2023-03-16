@@ -39,3 +39,27 @@ EmeraldMobile.parameters = {
   viewport: { defaultViewport: 'iphone6' },
   reactRouter: emeraldRoute,
 }
+
+const searchRoute = {
+  routePath: '/search',
+}
+
+export const Search = Template.bind({})
+Search.parameters = {
+  layout: 'fullscreen',
+  reactRouter: searchRoute,
+}
+
+export const SearchIpad = Template.bind({})
+SearchIpad.parameters = {
+  layout: 'fullscreen',
+  viewport: { defaultViewport: 'ipad' },
+  reactRouter: searchRoute,
+}
+
+export const SearchMobile = Template.bind({})
+SearchMobile.parameters = {
+  layout: 'fullscreen',
+  viewport: { defaultViewport: 'iphone6' },
+  reactRouter: searchRoute,
+}

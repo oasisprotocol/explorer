@@ -208,6 +208,22 @@
       "header": "No results found",
       "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
     },
+    "results": {
+      "accounts": {
+        "title": "Accounts",
+        "viewLink": "View Account"
+      },
+      "blocks": {
+        "title": "Blocks",
+        "viewLink": "View Block"
+      },
+      "transactions": {
+        "title": "Transactions",
+        "viewLink": "View Transaction"
+      },
+      "count_one": "1 result",
+      "count_other": "{{ count }} results"
+    },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink></OptionalBreak>"
   }

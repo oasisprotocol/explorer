@@ -45,10 +45,14 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
-// TODO: remove when API is ready
-function mockSapphire<T extends generated.Layer>(layer: T) {
-  return layer === 'sapphire' ? 'emerald' : layer
-}
+// TODO: remove when sapphire API is ready
+axios.interceptors.request.use(config => {
+  // Mock sapphire
+  if (config.url?.startsWith('/sapphire')) {
+    config.url = config.url.replace('/sapphire', '/emerald')
+  }
+  return config
+})
 
 export const useGetConsensusTransactions: typeof generated.useGetConsensusTransactions = (
   params?,
@@ -84,7 +88,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   options?,
 ) => {
   const paraTimesConfig = getParaTimesConfig()
-  return generated.useGetRuntimeTransactions(mockSapphire(runtime), params, {
+  return generated.useGetRuntimeTransactions(runtime, params, {
     ...options,
     axios: {
       ...options?.axios,
@@ -144,7 +148,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   options?,
 ) => {
   const paraTimesConfig = getParaTimesConfig()
-  return generated.useGetRuntimeTransactionsTxHash(mockSapphire(runtime), txHash, {
+  return generated.useGetRuntimeTransactionsTxHash(runtime, txHash, {
     ...options,
     axios: {
       ...options?.axios,
@@ -198,7 +202,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options?,
 ) => {
-  return generated.useGetRuntimeAccountsAddress(mockSapphire(runtime), address, {
+  return generated.useGetRuntimeAccountsAddress(runtime, address, {
     ...options,
     axios: {
       ...options?.axios,
@@ -259,7 +263,7 @@ export function useGetRuntimeBlockByHeight(
   options?: { query?: UseQueryOptions<any, any> },
 ) {
   const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(
-    mockSapphire(runtime),
+    runtime,
     { to: blockHeight, limit: 1 },
     {
       ...options,
@@ -316,7 +320,7 @@ export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (pa
 }
 
 export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtime, params, options) => {
-  return generated.useGetRuntimeBlocks(mockSapphire(runtime), params, {
+  return generated.useGetRuntimeBlocks(runtime, params, {
     ...options,
     axios: {
       ...options?.axios,
@@ -338,24 +342,4 @@ export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtim
       ],
     },
   })
-}
-
-export const useGetRuntimeStatus: typeof generated.useGetRuntimeStatus = (runtime, options) => {
-  return generated.useGetRuntimeStatus(mockSapphire(runtime), options)
-}
-
-export const useGetLayerStatsTxVolume: typeof generated.useGetLayerStatsTxVolume = (
-  layer,
-  params,
-  options,
-) => {
-  return generated.useGetLayerStatsTxVolume(mockSapphire(layer), params, options)
-}
-
-export const useGetLayerStatsActiveAccounts: typeof generated.useGetLayerStatsActiveAccounts = (
-  layer,
-  params,
-  options,
-) => {
-  return generated.useGetLayerStatsActiveAccounts(mockSapphire(layer), params, options)
 }
