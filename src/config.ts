@@ -85,10 +85,10 @@ const sapphireConfig: LayerConfig = {
 }
 
 export enum Layer {
-  Cipher = 'cipher',
-  Emerald = 'emerald',
-  Sapphire = 'sapphire',
-  Consensus = 'consensus',
+  cipher = 'cipher',
+  emerald = 'emerald',
+  sapphire = 'sapphire',
+  consensus = 'consensus',
 }
 
 type LayersConfig = {
@@ -96,11 +96,11 @@ type LayersConfig = {
 }
 
 export const paraTimesConfig: LayersConfig = {
-  [Layer.Cipher]: cipherConfig,
-  [Layer.Emerald]: emeraldConfig,
-  [Layer.Sapphire]: sapphireConfig,
-  [Layer.Consensus]: null,
+  [Layer.cipher]: cipherConfig,
+  [Layer.emerald]: emeraldConfig,
+  [Layer.sapphire]: sapphireConfig,
+  [Layer.consensus]: null,
 }
 
 // TODO: refactor this when we have network specific builds and/or another paraTime is added
-export const blockGasLimit = paraTimesConfig[Layer.Emerald]?.mainnet.blockGasLimit!
+export const blockGasLimit = paraTimesConfig[Layer.emerald]?.mainnet.blockGasLimit!

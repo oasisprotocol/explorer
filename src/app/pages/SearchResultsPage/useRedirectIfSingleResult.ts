@@ -15,13 +15,13 @@ export function useRedirectIfSingleResult(queries: SearchQueries) {
   let redirectTo: string | undefined
   if (hasSingleResult) {
     if (queries.emeraldBlockHeight.results?.[0]) {
-      redirectTo = RouteUtils.getBlockRoute(queries.emeraldBlockHeight.results[0].round, Layer.Emerald)
+      redirectTo = RouteUtils.getBlockRoute(queries.emeraldBlockHeight.results[0].round, Layer.emerald)
     } else if (queries.emeraldTxHash.results?.[0]) {
-      redirectTo = RouteUtils.getTransactionRoute(queries.emeraldTxHash.results[0].hash, Layer.Emerald)
+      redirectTo = RouteUtils.getTransactionRoute(queries.emeraldTxHash.results[0].hash, Layer.emerald)
     } else if (queries.evmBech32Account.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(queries.evmBech32Account.results[0].address, Layer.Emerald)
+      redirectTo = RouteUtils.getAccountRoute(queries.evmBech32Account.results[0].address, Layer.emerald)
     } else if (queries.consensusAccount.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(queries.consensusAccount.results[0].address, Layer.Emerald)
+      redirectTo = RouteUtils.getAccountRoute(queries.consensusAccount.results[0].address, Layer.emerald)
     } else {
       // TODO: typescript should ensure all queries are handled
     }

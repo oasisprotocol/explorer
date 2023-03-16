@@ -54,7 +54,7 @@ export const Blocks = (props: BlocksProps) => {
         align: TableCellAlign.Right,
         content: (
           <Typography variant="mono">
-            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}>
+            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}>
               {block.round.toLocaleString()}
             </Link>
           </Typography>
@@ -80,7 +80,7 @@ export const Blocks = (props: BlocksProps) => {
                 <Typography variant="mono">
                   <TrimLinkLabel
                     label={block.hash}
-                    to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}
+                    to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}
                   />
                 </Typography>
               ),

@@ -80,7 +80,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.hash}
-              to={RouteUtils.getTransactionRoute(transaction.hash, Layer.Emerald)}
+              to={RouteUtils.getTransactionRoute(transaction.hash, Layer.emerald)}
             />
           </Typography>
         ),
@@ -93,7 +93,7 @@ export const Transactions: FC<TransactionProps> = ({
                 <Typography variant="mono">
                   <Link
                     component={RouterLink}
-                    to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}
+                    to={RouteUtils.getBlockRoute(transaction.round, Layer.emerald)}
                   >
                     {transaction.round.toLocaleString()}
                   </Link>
@@ -128,7 +128,7 @@ export const Transactions: FC<TransactionProps> = ({
             <Typography variant="mono">
               <TrimLinkLabel
                 label={transaction.sender_0}
-                to={RouteUtils.getAccountRoute(transaction.sender_0, Layer.Emerald)}
+                to={RouteUtils.getAccountRoute(transaction.sender_0, Layer.emerald)}
               />
             </Typography>
             {transaction.to && (
@@ -146,7 +146,7 @@ export const Transactions: FC<TransactionProps> = ({
           <Typography variant="mono">
             <TrimLinkLabel
               label={transaction.to!}
-              to={RouteUtils.getAccountRoute(transaction.to!, Layer.Emerald)}
+              to={RouteUtils.getAccountRoute(transaction.to!, Layer.emerald)}
             />
           </Typography>
         ),
