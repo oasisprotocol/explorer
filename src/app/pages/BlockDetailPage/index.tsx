@@ -51,7 +51,8 @@ export const BlockDetailPage: FC = () => {
 export const BlockDetailView: FC<{
   isLoading: boolean
   block: RuntimeBlock | undefined
-}> = ({ isLoading, block }) => {
+  showLayer?: boolean
+}> = ({ isLoading, block, showLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -64,6 +65,12 @@ export const BlockDetailView: FC<{
       {isLoading && <TextSkeleton numberOfRows={7} />}
       {block && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          {showLayer && (
+            <>
+              <dt>{t('account.chain')}</dt>
+              <dd>{t(`common.${block.layer}`)}</dd>
+            </>
+          )}
           <dt>{t('common.height')}</dt>
           <dd>
             <CopyToClipboard

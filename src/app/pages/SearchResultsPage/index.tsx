@@ -120,7 +120,7 @@ export const SearchResultsView: FC<{
           <ResultsGroup
             title={t('search.results.blocks.title')}
             results={searchQueries.emeraldBlockHeight.results}
-            resultComponent={item => <BlockDetailView isLoading={false} block={item} />}
+            resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
             link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
           ></ResultsGroup>
