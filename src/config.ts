@@ -1,3 +1,6 @@
+import { Layer } from './oasis-indexer/api'
+export { Layer } from './oasis-indexer/api'
+
 export const consensusDecimals = 9
 
 type LayerNetwork = {
@@ -82,13 +85,6 @@ const sapphireConfig: LayerConfig = {
 
   decimals: 18,
   type: RuntimeTypes.Evm,
-}
-
-export enum Layer {
-  cipher = 'cipher',
-  emerald = 'emerald',
-  sapphire = 'sapphire',
-  consensus = 'consensus',
 }
 
 type LayersConfig = {
