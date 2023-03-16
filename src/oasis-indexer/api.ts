@@ -1,7 +1,7 @@
 /** @file Wrappers around generated API */
 
 import axios, { AxiosResponse } from 'axios'
-import { paraTimesConfig } from '../config'
+import { getParaTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
@@ -83,6 +83,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   params?,
   options?,
 ) => {
+  const paraTimesConfig = getParaTimesConfig()
   return generated.useGetRuntimeTransactions(mockSapphire(runtime), params, {
     ...options,
     axios: {
@@ -142,6 +143,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   txHash,
   options?,
 ) => {
+  const paraTimesConfig = getParaTimesConfig()
   return generated.useGetRuntimeTransactionsTxHash(mockSapphire(runtime), txHash, {
     ...options,
     axios: {

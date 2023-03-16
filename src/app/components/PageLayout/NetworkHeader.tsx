@@ -17,13 +17,13 @@ import { AppError, AppErrors } from '../../../types/errors'
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
-    case Layer.Emerald:
+    case Layer.emerald:
       return {
         header: t('common.emerald'),
         description: t('pageHeader.emerald'),
       }
 
-    case Layer.Sapphire:
+    case Layer.sapphire:
       return {
         header: t('common.sapphire'),
         description: t('pageHeader.sapphire'),
@@ -55,7 +55,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(Layer.Emerald)}
+            to={RouteUtils.getDashboardRoute(Layer.emerald)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography

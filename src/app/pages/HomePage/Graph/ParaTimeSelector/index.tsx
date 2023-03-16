@@ -146,7 +146,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onZoomOutClick = () => {
-    setSelectedLayer(Layer.Consensus)
+    setSelectedLayer(Layer.consensus)
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {

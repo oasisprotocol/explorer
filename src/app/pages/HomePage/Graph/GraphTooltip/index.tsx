@@ -123,7 +123,7 @@ export const layerTooltipMap: {
     body: GraphTooltipBodyProps
   }
 } = {
-  [Layer.Sapphire]: {
+  [Layer.sapphire]: {
     disabled: false,
     enableNavigation: true,
     header: {
@@ -135,7 +135,7 @@ export const layerTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
     },
   },
-  [Layer.Emerald]: {
+  [Layer.emerald]: {
     disabled: false,
     enableNavigation: true,
     header: {
@@ -147,7 +147,7 @@ export const layerTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
     },
   },
-  [Layer.Cipher]: {
+  [Layer.cipher]: {
     disabled: true,
     header: {},
     body: {
@@ -156,7 +156,7 @@ export const layerTooltipMap: {
       body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
     },
   },
-  [Layer.Consensus]: {
+  [Layer.consensus]: {
     disabled: false,
     header: {},
     body: {

@@ -119,7 +119,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.block')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.Emerald)}>
+              <Link component={RouterLink} to={RouteUtils.getBlockRoute(transaction.round, Layer.emerald)}>
                 {transaction.round.toLocaleString()}
               </Link>
             </Typography>
@@ -136,7 +136,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.from')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <AccountLink address={transaction.sender_0} paratime={Layer.Emerald} />
+              <AccountLink address={transaction.sender_0} paratime={Layer.emerald} />
             </Typography>
             <CopyToClipboard value={transaction.sender_0} label={' '} />
           </dd>
@@ -146,7 +146,7 @@ export const TransactionDetailView: FC<{
               <dt>{t('common.to')}</dt>
               <dd>
                 <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  <AccountLink address={transaction.to} paratime={Layer.Emerald} />
+                  <AccountLink address={transaction.to} paratime={Layer.emerald} />
                 </Typography>
                 <CopyToClipboard value={transaction.to} label={' '} />
               </dd>

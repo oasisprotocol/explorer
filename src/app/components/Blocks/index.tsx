@@ -8,7 +8,7 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
-import { Layer, blockGasLimit } from '../../../config'
+import { Layer, getBlockGasLimit } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 export type TableRuntimeBlock = RuntimeBlock & {
@@ -43,6 +43,7 @@ export const Blocks = (props: BlocksProps) => {
     ...(verbose ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }] : []),
   ]
 
+  const blockGasLimit = getBlockGasLimit()
   const tableRows = blocks?.map(block => ({
     key: block.hash,
     data: [
@@ -54,7 +55,7 @@ export const Blocks = (props: BlocksProps) => {
         align: TableCellAlign.Right,
         content: (
           <Typography variant="mono">
-            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}>
+            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}>
               {block.round.toLocaleString()}
             </Link>
           </Typography>
@@ -80,7 +81,7 @@ export const Blocks = (props: BlocksProps) => {
                 <Typography variant="mono">
                   <TrimLinkLabel
                     label={block.hash}
-                    to={RouteUtils.getBlockRoute(block.round, Layer.Emerald)}
+                    to={RouteUtils.getBlockRoute(block.round, Layer.emerald)}
                   />
                 </Typography>
               ),

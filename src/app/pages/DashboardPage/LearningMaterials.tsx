@@ -34,7 +34,7 @@ const StyledLink = styled(Link)(() => ({
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
-    case Layer.Emerald:
+    case Layer.emerald:
       return {
         description: t('learningMaterials.emerald.description'),
         header: t('learningMaterials.emerald.header'),
@@ -42,7 +42,7 @@ const getContent = (t: TFunction, layer: Layer) => {
         title: t('common.emerald'),
       }
 
-    case Layer.Sapphire:
+    case Layer.sapphire:
       return {
         description: t('learningMaterials.sapphire.description'),
         header: t('learningMaterials.sapphire.header'),

@@ -14,25 +14,25 @@ export abstract class GraphUtils {
     }
 
     switch (layer) {
-      case Layer.Emerald:
+      case Layer.emerald:
         return {
           scale: 2,
           x: 0.57 * width,
           y: 0,
         }
-      case Layer.Cipher:
+      case Layer.cipher:
         return {
           scale: 2,
           x: width,
           y: 0.4 * height,
         }
-      case Layer.Sapphire:
+      case Layer.sapphire:
         return {
           scale: 2,
           x: 0.15 * width,
           y: height,
         }
-      case Layer.Consensus:
+      case Layer.consensus:
       default:
         return initialValue
     }

@@ -24,9 +24,9 @@ export abstract class ParaTimeSelectorUtils {
     }
 
     switch (layer) {
-      case Layer.Sapphire:
-      case Layer.Emerald:
-      case Layer.Cipher:
+      case Layer.sapphire:
+      case Layer.emerald:
+      case Layer.cipher:
         return true
       default:
         return false
