@@ -4,8 +4,8 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Link from '@mui/material/Link'
 import { TrimLinkLabel } from '../TrimLinkLabel'
-import { Layer } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
+import { Layer } from '../../../oasis-indexer/api'
 
 export const AccountLink: FC<{ address: string; paratime: Layer }> = ({ address, paratime }) => {
   const theme = useTheme()

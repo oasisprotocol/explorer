@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
+  Layer,
   Runtime,
   RuntimeTransaction,
   RuntimeTransactionList,
@@ -12,7 +13,6 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { Layer } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
 import Link from '@mui/material/Link'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'

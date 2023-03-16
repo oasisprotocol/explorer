@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import * as React from 'react'
 import { zIndexHomePage } from '../../index'
-import { Layer } from '../../../../../config'
+import { Layer } from '../../../../../oasis-indexer/api'
 
 export const MobileBackdrop = styled(Box)(() => ({
   position: 'fixed',

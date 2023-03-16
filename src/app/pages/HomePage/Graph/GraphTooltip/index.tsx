@@ -13,7 +13,7 @@ import { TFunction } from 'i18next'
 import * as React from 'react'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
-import { Layer } from '../../../../../config'
+import { Layer } from '../../../../../oasis-indexer/api'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean

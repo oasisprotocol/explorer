@@ -6,8 +6,8 @@ import { useConstant } from '../../../../hooks/useConstant'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { Layer } from '../../../../../config'
 import { GraphTooltip } from '../GraphTooltip'
+import { Layer } from '../../../../../oasis-indexer/api'
 
 interface GraphBaseProps {
   disabled?: boolean
