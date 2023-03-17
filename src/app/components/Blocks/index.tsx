@@ -8,7 +8,7 @@ import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
-import { getBlockGasLimit } from '../../../config'
+import { blockGasLimit } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 
 export type TableRuntimeBlock = RuntimeBlock & {
@@ -43,7 +43,6 @@ export const Blocks = (props: BlocksProps) => {
     ...(verbose ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }] : []),
   ]
 
-  const blockGasLimit = getBlockGasLimit()
   const tableRows = blocks?.map(block => ({
     key: block.hash,
     data: [

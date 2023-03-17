@@ -91,21 +91,12 @@ type LayersConfig = {
   [key in Layer]: LayerConfig | null
 }
 
-let _paraTimesConfig: LayersConfig | undefined
-
-export const getParaTimesConfig = (): LayersConfig => {
-  if (!_paraTimesConfig) {
-    _paraTimesConfig = {
-      [Layer.cipher]: cipherConfig,
-      [Layer.emerald]: emeraldConfig,
-      [Layer.sapphire]: sapphireConfig,
-      [Layer.consensus]: null,
-    }
-  }
-  return _paraTimesConfig
+export const paraTimesConfig: LayersConfig = {
+  [Layer.cipher]: cipherConfig,
+  [Layer.emerald]: emeraldConfig,
+  [Layer.sapphire]: sapphireConfig,
+  [Layer.consensus]: null,
 }
 
 // TODO: refactor this when we have network specific builds and/or another paraTime is added
-export const getBlockGasLimit = () => {
-  return getParaTimesConfig()[Layer.emerald]?.mainnet.blockGasLimit!
-}
+export const blockGasLimit = paraTimesConfig[Layer.emerald]?.mainnet.blockGasLimit!
