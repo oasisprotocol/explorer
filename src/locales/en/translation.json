@@ -74,6 +74,7 @@
     "value": "{{value, number}}"
   },
   "errors": {
+    "code": "error code",
     "error": "Error",
     "unknown": "Unknown error",
     "unsupportedLayer": "Unsupported layer",
