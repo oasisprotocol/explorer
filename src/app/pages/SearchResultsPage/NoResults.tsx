@@ -23,7 +23,7 @@ export const NoResults: FC = () => {
                 OptionalBreak: <OptionalBreak />,
                 HomeLink: <Link component={RouterLink} to={'/'} />,
               }}
-            ></Trans>
+            />
           </p>
           <p>
             <SearchSuggestionsLinks />

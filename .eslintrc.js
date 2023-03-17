@@ -39,6 +39,7 @@ const config = {
     'react/jsx-no-target-blank': 'off', // Not needed with modern browsers
     'react/react-in-jsx-scope': 'off', // Not needed after React v17
     'react/display-name': 'off', // TODO: Maybe enable
+    'react/self-closing-comp': ['error', { component: true, html: true }],
 
     '@typescript-eslint/no-empty-function': 'off', // Allow empty reducers for saga
     '@typescript-eslint/no-non-null-assertion': 'off',

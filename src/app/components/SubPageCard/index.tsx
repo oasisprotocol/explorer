@@ -42,9 +42,7 @@ const StyledCard = styled(Card, {
   `,
 )
 
-const TitleSkeleton: FC = () => (
-  <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }}></Skeleton>
-)
+const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
 export const SubPageCard: FC<SubPageCardProps> = ({
   children,

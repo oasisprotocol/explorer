@@ -50,7 +50,7 @@ export const SearchSuggestionsButtons: FC<Props> = ({ onClickSuggestion }) => {
             AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
             AccountLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedAccount)} />,
           }}
-        ></Trans>
+        />
       </Typography>
     </span>
   )

@@ -210,7 +210,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           onClose={() => {
             setActiveMobileGraphTooltip(null)
           }}
-        ></GraphTooltipMobile>
+        />
       )}
     </>
   )
