@@ -662,6 +662,8 @@ Usually in native denomination, ParaTime units. As a string.
   amount?: string;
   /** Whether this transaction successfully executed. */
   success: boolean;
+  /** Error details of a failed transaction. */
+  error?: TxError;
 }
 
 /**
@@ -801,8 +803,6 @@ export type ProposalVotesAllOf = {
   /** The list of votes for the proposal. */
   votes: ProposalVote[];
 };
-
-export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * The target propotocol versions for this upgrade proposal.
@@ -1178,6 +1178,15 @@ export const ConsensusEventType = {
   stakingtransfer: 'staking.transfer',
 } as const;
 
+export interface TxError {
+  /** The status code of a failed transaction. */
+  code: number;
+  /** The module of a failed transaction. */
+  module?: string;
+  /** The message of a failed transaction. */
+  message?: string;
+}
+
 /**
  * A list of consensus transactions.
 
@@ -1240,6 +1249,8 @@ to pay to execute it.
   body: string;
   /** Whether this transaction successfully executed. */
   success: boolean;
+  /** Error details of a failed transaction. */
+  error?: TxError;
 }
 
 /**
@@ -1326,6 +1337,8 @@ the query would return with limit=infinity.
   /** Whether total_count is clipped for performance reasons. */
   is_total_count_clipped: boolean;
 }
+
+export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * A list of consensus blocks.
