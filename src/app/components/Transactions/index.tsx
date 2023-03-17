@@ -3,19 +3,17 @@ import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RoundedRoseBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
-import { RouteUtils } from '../../utils/route-utils'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
+import { TransactionLink } from './TransactionLink'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -75,14 +73,7 @@ export const Transactions: FC<TransactionProps> = ({
         key: 'success',
       },
       {
-        content: (
-          <Typography variant="mono">
-            <TrimLinkLabel
-              label={transaction.hash}
-              to={RouteUtils.getTransactionRoute(transaction.hash, transaction.layer)}
-            />
-          </Typography>
-        ),
+        content: <TransactionLink layer={transaction.layer} hash={transaction.hash} />,
         key: 'hash',
       },
       ...(verbose
