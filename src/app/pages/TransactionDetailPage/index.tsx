@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link as RouterLink, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Layer,
@@ -12,8 +12,6 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { RouteUtils } from '../../utils/route-utils'
-import Link from '@mui/material/Link'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -28,6 +26,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { BlockLink } from '../../components/Blocks/BlockLink'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -156,14 +155,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.block')}</dt>
           <dd>
-            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <Link
-                component={RouterLink}
-                to={RouteUtils.getBlockRoute(transaction.round, transaction.layer)}
-              >
-                {transaction.round.toLocaleString()}
-              </Link>
-            </Typography>
+            <BlockLink layer={transaction.layer} height={transaction.round} />
           </dd>
 
           <dt>{t('common.type')}</dt>

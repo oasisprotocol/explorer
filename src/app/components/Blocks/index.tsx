@@ -1,7 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
@@ -10,6 +7,7 @@ import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import { blockGasLimit } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
+import { BlockHashLink, BlockLink } from './BlockLink'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -52,13 +50,7 @@ export const Blocks = (props: BlocksProps) => {
       },
       {
         align: TableCellAlign.Right,
-        content: (
-          <Typography variant="mono">
-            <Link component={RouterLink} to={RouteUtils.getBlockRoute(block.round, block.layer)}>
-              {block.round.toLocaleString()}
-            </Link>
-          </Typography>
-        ),
+        content: <BlockLink layer={block.layer} height={block.round} />,
         key: 'block',
       },
       {
@@ -76,11 +68,7 @@ export const Blocks = (props: BlocksProps) => {
       ...(verbose
         ? [
             {
-              content: (
-                <Typography variant="mono">
-                  <TrimLinkLabel label={block.hash} to={RouteUtils.getBlockRoute(block.round, block.layer)} />
-                </Typography>
-              ),
+              content: <BlockHashLink layer={block.layer} hash={block.hash} height={block.round} />,
               key: 'hash',
             },
           ]

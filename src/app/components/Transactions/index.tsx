@@ -1,10 +1,8 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
@@ -16,6 +14,7 @@ import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { TablePaginationProps } from '../Table/TablePagination'
+import { BlockLink } from '../Blocks/BlockLink'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -88,16 +87,7 @@ export const Transactions: FC<TransactionProps> = ({
       ...(verbose
         ? [
             {
-              content: (
-                <Typography variant="mono">
-                  <Link
-                    component={RouterLink}
-                    to={RouteUtils.getBlockRoute(transaction.round, transaction.layer)}
-                  >
-                    {transaction.round.toLocaleString()}
-                  </Link>
-                </Typography>
-              ),
+              content: <BlockLink layer={transaction.layer} height={transaction.round} />,
               key: 'round',
             },
           ]
