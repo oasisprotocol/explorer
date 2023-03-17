@@ -35,9 +35,10 @@ type AccountProps = {
   account?: RuntimeAccount
   isLoading: boolean
   roseFiatValue?: number
+  showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue }) => {
+export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, showLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -48,6 +49,12 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue })
       {isLoading && <TextSkeleton numberOfRows={8} />}
       {account && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          {showLayer && (
+            <>
+              <dt>{t('common.paratime')}</dt>
+              <dd>{t(`common.${account.layer}`)}</dd>
+            </>
+          )}
           <dt>
             <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
           </dt>
@@ -61,9 +68,6 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue })
               value={account.address}
             />
           </dd>
-
-          <dt>{t('account.chain')}</dt>
-          <dd>{t('common.emerald')}</dd>
 
           <dt>{t('common.balance')}</dt>
           <dd>{t('common.valueInRose', { value: balance })}</dd>

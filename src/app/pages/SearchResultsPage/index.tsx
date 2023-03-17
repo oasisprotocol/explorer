@@ -120,7 +120,7 @@ export const SearchResultsView: FC<{
           <ResultsGroup
             title={t('search.results.blocks.title')}
             results={searchQueries.emeraldBlockHeight.results}
-            resultComponent={item => <BlockDetailView isLoading={false} block={item} />}
+            resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
             link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
           ></ResultsGroup>
@@ -128,7 +128,9 @@ export const SearchResultsView: FC<{
           <ResultsGroup
             title={t('search.results.transactions.title')}
             results={searchQueries.emeraldTxHash.results}
-            resultComponent={item => <TransactionDetailView isLoading={false} transaction={item} />}
+            resultComponent={item => (
+              <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
+            )}
             link={item => RouteUtils.getTransactionRoute(item.hash, item.layer)}
             linkLabel={t('search.results.transactions.viewLink')}
           ></ResultsGroup>
@@ -140,7 +142,12 @@ export const SearchResultsView: FC<{
               ...(searchQueries.evmBech32Account.results ?? []),
             ]}
             resultComponent={item => (
-              <AccountDetailsView isLoading={false} account={item} roseFiatValue={roseFiatValue} />
+              <AccountDetailsView
+                isLoading={false}
+                account={item}
+                roseFiatValue={roseFiatValue}
+                showLayer={true}
+              />
             )}
             link={item => RouteUtils.getAccountRoute(item.address, item.layer)}
             linkLabel={t('search.results.accounts.viewLink')}

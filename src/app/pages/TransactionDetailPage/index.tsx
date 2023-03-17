@@ -104,7 +104,8 @@ export const TransactionDetailPage: FC = () => {
 export const TransactionDetailView: FC<{
   isLoading: boolean
   transaction: RuntimeTransaction | undefined
-}> = ({ isLoading, transaction }) => {
+  showLayer?: boolean
+}> = ({ isLoading, transaction, showLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -115,6 +116,12 @@ export const TransactionDetailView: FC<{
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {transaction && (
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          {showLayer && (
+            <>
+              <dt>{t('common.paratime')}</dt>
+              <dd>{t(`common.${transaction.layer}`)}</dd>
+            </>
+          )}
           <dt>{t('common.hash')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
