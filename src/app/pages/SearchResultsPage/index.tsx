@@ -91,9 +91,7 @@ export const SearchResultsPage: FC = () => {
 
   useRedirectIfSingleResult(searchQueries)
 
-  return (
-    <SearchResultsView searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data}></SearchResultsView>
-  )
+  return <SearchResultsView searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data} />
 }
 
 export const SearchResultsView: FC<{
@@ -123,7 +121,7 @@ export const SearchResultsView: FC<{
             resultComponent={item => <BlockDetailView isLoading={false} block={item} />}
             link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
-          ></ResultsGroup>
+          />
 
           <ResultsGroup
             title={t('search.results.transactions.title')}
@@ -131,7 +129,7 @@ export const SearchResultsView: FC<{
             resultComponent={item => <TransactionDetailView isLoading={false} transaction={item} />}
             link={item => RouteUtils.getTransactionRoute(item.hash, item.layer)}
             linkLabel={t('search.results.transactions.viewLink')}
-          ></ResultsGroup>
+          />
 
           <ResultsGroup
             title={t('search.results.accounts.title')}
@@ -144,7 +142,7 @@ export const SearchResultsView: FC<{
             )}
             link={item => RouteUtils.getAccountRoute(item.address, item.layer)}
             linkLabel={t('search.results.accounts.viewLink')}
-          ></ResultsGroup>
+          />
         </>
       )}
     </PageLayout>

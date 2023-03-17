@@ -11,7 +11,7 @@ export default {
 
 const Template: ComponentStory<typeof PageLayout> = args => (
   <PageLayout {...args}>
-    <EmptyState title="EmptyState" description="EmptyState"></EmptyState>
+    <EmptyState title="EmptyState" description="EmptyState" />
   </PageLayout>
 )
 

@@ -25,6 +25,6 @@ export const SearchSuggestionsLinks: FC<Props> = () => {
         AccountIcon: <></>,
         AccountLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(suggestedAccount)} />,
       }}
-    ></Trans>
+    />
   )
 }
