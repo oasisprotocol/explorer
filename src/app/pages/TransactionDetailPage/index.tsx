@@ -118,7 +118,7 @@ export const TransactionDetailView: FC<{
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
           {showLayer && (
             <>
-              <dt>{t('account.chain')}</dt>
+              <dt>{t('common.paratime')}</dt>
               <dd>{t(`common.${transaction.layer}`)}</dd>
             </>
           )}

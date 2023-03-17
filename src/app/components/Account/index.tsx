@@ -62,8 +62,8 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue })
             />
           </dd>
 
-          <dt>{t('account.chain')}</dt>
-          <dd>{t('common.emerald')}</dd>
+          <dt>{t('common.paratime')}</dt>
+          <dd>{t(`common.${account.layer}`)}</dd>
 
           <dt>{t('common.balance')}</dt>
           <dd>{t('common.valueInRose', { value: balance })}</dd>

@@ -67,7 +67,7 @@ export const BlockDetailView: FC<{
         <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
           {showLayer && (
             <>
-              <dt>{t('account.chain')}</dt>
+              <dt>{t('common.paratime')}</dt>
               <dd>{t(`common.${block.layer}`)}</dd>
             </>
           )}

@@ -1,6 +1,5 @@
 {
   "account": {
-    "chain": "Chain",
     "emptyTokenList": "This account holds no {{token}} tokens.",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
@@ -33,7 +32,6 @@
     "balance": "Balance",
     "block": "Block",
     "bytes": "{{value, number}}",
-    "chain": "Chain",
     "emerald": "Emerald",
     "cipher": "Cipher",
     "consensus": "Consensus",
@@ -50,6 +48,7 @@
     "height": "Height",
     "lessThanAmount": "< {{value}} {{ticker}}",
     "name": "Name",
+    "paratime": "Paratime",
     "rose": "ROSE",
     "size": "Size",
     "sapphire": "Sapphire",
