@@ -5,11 +5,17 @@ import Typography from '@mui/material/Typography'
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 import { SnapshotCard } from './SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { Runtime, useGetRuntimeStatus } from '../../../oasis-indexer/api'
+import { Layer, useGetRuntimeStatus } from '../../../oasis-indexer/api'
+import { useLayerParam } from '../../hooks/useLayerParam'
+import { AppErrors } from '../../../types/errors'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
-  const runtimeStatusQuery = useGetRuntimeStatus(Runtime.emerald)
+  const layer = useLayerParam()
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+  }
+  const runtimeStatusQuery = useGetRuntimeStatus(layer)
   const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
 
   return (
