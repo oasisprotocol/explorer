@@ -16,7 +16,7 @@ import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { trimLongString } from '../../utils/trimLongString'
 import { COLORS } from '../../../styles/theme/colors'
-import { getBlockGasLimit } from '../../../config'
+import { blockGasLimit } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
 
@@ -58,7 +58,6 @@ export const BlockDetailView: FC<{
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTime = useFormattedTimestampString(block?.timestamp)
   const transactionsAnchor = `${useHref('')}#${transactionsContainerId}`
-  const blockGasLimit = getBlockGasLimit()
 
   return (
     <>
