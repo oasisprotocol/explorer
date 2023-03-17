@@ -142,7 +142,12 @@ export const SearchResultsView: FC<{
               ...(searchQueries.evmBech32Account.results ?? []),
             ]}
             resultComponent={item => (
-              <AccountDetailsView isLoading={false} account={item} roseFiatValue={roseFiatValue} />
+              <AccountDetailsView
+                isLoading={false}
+                account={item}
+                roseFiatValue={roseFiatValue}
+                showLayer={true}
+              />
             )}
             link={item => RouteUtils.getAccountRoute(item.address, item.layer)}
             linkLabel={t('search.results.accounts.viewLink')}

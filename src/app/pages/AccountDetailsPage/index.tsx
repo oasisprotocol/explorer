@@ -39,6 +39,9 @@ export const AccountDetailsView: FC<{
   isLoading: boolean
   account: RuntimeAccount | undefined
   roseFiatValue: number | undefined
-}> = ({ isLoading, account, roseFiatValue }) => {
-  return <Account account={account} isLoading={isLoading} roseFiatValue={roseFiatValue} />
+  showLayer?: boolean
+}> = ({ isLoading, account, roseFiatValue, showLayer }) => {
+  return (
+    <Account account={account} isLoading={isLoading} roseFiatValue={roseFiatValue} showLayer={showLayer} />
+  )
 }
