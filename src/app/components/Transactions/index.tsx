@@ -15,6 +15,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
+import { AccountLink } from '../Account/AccountLink'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -114,12 +115,7 @@ export const Transactions: FC<TransactionProps> = ({
               pr: 4,
             }}
           >
-            <Typography variant="mono">
-              <TrimLinkLabel
-                label={transaction.sender_0}
-                to={RouteUtils.getAccountRoute(transaction.sender_0, transaction.layer)}
-              />
-            </Typography>
+            <AccountLink address={transaction.sender_0} layer={transaction.layer} alwaysTrim={true} />
             {transaction.to && (
               <StyledCircle>
                 <ArrowForwardIcon fontSize="inherit" />
@@ -127,18 +123,10 @@ export const Transactions: FC<TransactionProps> = ({
             )}
           </Box>
         ),
-
         key: 'from',
       },
       {
-        content: (
-          <Typography variant="mono">
-            <TrimLinkLabel
-              label={transaction.to!}
-              to={RouteUtils.getAccountRoute(transaction.to!, transaction.layer)}
-            />
-          </Typography>
-        ),
+        content: <AccountLink address={transaction.to!} layer={transaction.layer} alwaysTrim={true} />,
         key: 'to',
       },
       {
