@@ -4,7 +4,6 @@ import startOfMonth from 'date-fns/startOfMonth'
 import { SnapshotCard } from './SnapshotCard'
 import { BarChart } from '../../components/charts/BarChart'
 import {
-  Runtime,
   useGetLayerStatsActiveAccounts,
   GetLayerStatsActiveAccountsWindowStepSeconds,
   type ActiveAccounts as Windows,
@@ -16,6 +15,7 @@ import {
   filterHourlyActiveAccounts,
   sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
   switch (duration) {
@@ -59,8 +59,9 @@ type ActiveAccountsProps = {
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
   const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
+  const layer = useLayerParam()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
-    Runtime.emerald,
+    layer,
     {
       limit,
       window_step_seconds: bucket_size_seconds as GetLayerStatsActiveAccountsWindowStepSeconds,

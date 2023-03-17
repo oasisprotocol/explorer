@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Layer, useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
+import { useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
@@ -13,6 +13,7 @@ import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -23,7 +24,8 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
-  const { data, isFetched } = useGetLayerStatsTxVolume(Layer.emerald, statsParams, {
+  const layer = useLayerParam()
+  const { data, isFetched } = useGetLayerStatsTxVolume(layer, statsParams, {
     query: { staleTime: chartUseQueryStaleTimeMs },
   })
 
