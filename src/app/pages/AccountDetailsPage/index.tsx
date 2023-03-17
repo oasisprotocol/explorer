@@ -6,12 +6,21 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useGetRosePrice } from '../../../coin-gecko/api'
-import { RuntimeAccount, Runtime, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { Layer, RuntimeAccount, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { AppErrors } from '../../../types/errors'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
+
+  const layer = useLayerParam()
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // Loading consensus
+    // We should use useGetConsensusAccountsAddress()
+  }
   const address = useLoaderData() as string
-  const accountQuery = useGetRuntimeAccountsAddress(Runtime.emerald, address)
+  const accountQuery = useGetRuntimeAccountsAddress(layer, address)
   const account = accountQuery.data?.data
   const rosePriceQuery = useGetRosePrice()
 
