@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
@@ -15,6 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -78,8 +78,7 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
 
 export const LearningMaterials = () => {
   const { t } = useTranslation()
-  // TODO: switch to useLayer when it's available
-  const layer = useParams().layer as Layer
+  const layer = useLayerParam()
   const content = getContent(t, layer)
 
   return (

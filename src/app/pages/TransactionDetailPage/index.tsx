@@ -26,6 +26,7 @@ import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -66,7 +67,7 @@ const StyledAlert = styled(Alert)(() => ({
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
-  const layer = useParams().layer as Layer
+  const layer = useLayerParam()
   // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -150,7 +151,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.from')}</dt>
           <dd>
             <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <AccountLink address={transaction.sender_0} paratime={transaction.layer} />
+              <AccountLink address={transaction.sender_0} layer={transaction.layer} />
             </Typography>
             <CopyToClipboard value={transaction.sender_0} label={' '} />
           </dd>
@@ -160,7 +161,7 @@ export const TransactionDetailView: FC<{
               <dt>{t('common.to')}</dt>
               <dd>
                 <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  <AccountLink address={transaction.to} paratime={transaction.layer} />
+                  <AccountLink address={transaction.to} layer={transaction.layer} />
                 </Typography>
                 <CopyToClipboard value={transaction.to} label={' '} />
               </dd>

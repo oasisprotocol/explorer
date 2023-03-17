@@ -10,8 +10,8 @@ import { Layer, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
 import { Blocks, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { useParams } from 'react-router-dom'
 import { AppErrors } from '../../../types/errors'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -21,8 +21,7 @@ export const BlocksPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
-  // TODO: switch to useLayer when it's available
-  const layer = useParams().layer as Layer
+  const layer = useLayerParam()
   // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer

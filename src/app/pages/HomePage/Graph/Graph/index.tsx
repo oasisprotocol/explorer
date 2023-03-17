@@ -82,7 +82,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const enabledLayers = useConstant(() => RouteUtils.getEnabledParaTimes())
+  const enabledLayers = useConstant(() => RouteUtils.getEnabledLayers())
   const consensusRef = useRef<SVGCircleElement>(null)
   const consensusRefInnerCircle = useRef<SVGCircleElement>(null)
   const emeraldRef = useRef<SVGGElement>(null)
@@ -140,7 +140,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
       return
     }
 
-    if (selectedLayer === Layer && RouteUtils.getEnabledParaTimes().includes(selectedLayer)) {
+    if (selectedLayer === Layer && RouteUtils.getEnabledLayers().includes(selectedLayer)) {
       navigate(RouteUtils.getDashboardRoute(selectedLayer))
 
       return

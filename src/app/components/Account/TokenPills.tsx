@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
@@ -9,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
 import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
+import { useHref } from 'react-router-dom'
 
 type TokenPillsProps = {
   tokens: RuntimeEvmBalance[] | undefined

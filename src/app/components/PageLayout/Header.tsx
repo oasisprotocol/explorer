@@ -5,15 +5,13 @@ import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 import { Search } from '../Search'
-import { useParams } from 'react-router-dom'
-import { Layer } from '../../../oasis-indexer/api'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
-  // TODO: switch to useLayer when it's available
-  const layer = useParams().layer as Layer
+  const layer = useLayerParam()
 
   if (!layer) {
     // On search page there's no NetworkHeader
