@@ -8,7 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
 import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
-import { useLayerHref } from '../../hooks/useLayerHref'
+import { useHref } from 'react-router-dom'
 
 type TokenPillsProps = {
   tokens: RuntimeEvmBalance[] | undefined
@@ -40,7 +40,7 @@ type PillProps = {
 }
 
 export const Pill: FC<PillProps> = ({ pill }) => {
-  const href = `${useLayerHref(pill.token_type === 'ERC20' ? 'tokens/erc-20' : 'tokens/erc-721')}#${
+  const href = `${useHref(pill.token_type === 'ERC20' ? 'tokens/erc-20' : 'tokens/erc-721')}#${
     pill.token_contract_addr
   }`
 

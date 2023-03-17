@@ -18,11 +18,11 @@ import { trimLongString } from '../../utils/trimLongString'
 import { COLORS } from '../../../styles/theme/colors'
 import { getBlockGasLimit } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
+import { useLayerParam } from '../../hooks/useLayerParam'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
-  // TODO: switch to useLayer when it's available
-  const layer = useParams().layer as Layer
+  const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading the details of consensus blocks is not yet supported.
