@@ -168,9 +168,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.from')}</dt>
           <dd>
-            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              <AccountLink address={transaction.sender_0} layer={transaction.layer} />
-            </Typography>
+            <AccountLink address={transaction.sender_0} layer={transaction.layer} />
             <CopyToClipboard value={transaction.sender_0} label={' '} />
           </dd>
 
@@ -178,9 +176,7 @@ export const TransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  <AccountLink address={transaction.to} layer={transaction.layer} />
-                </Typography>
+                <AccountLink address={transaction.to} layer={transaction.layer} />
                 <CopyToClipboard value={transaction.to} label={' '} />
               </dd>
             </>
