@@ -45,15 +45,6 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
-// TODO: remove when sapphire API is ready
-axios.interceptors.request.use(config => {
-  // Mock sapphire
-  if (config.url?.startsWith('/sapphire')) {
-    config.url = config.url.replace('/sapphire', '/emerald')
-  }
-  return config
-})
-
 export const useGetConsensusTransactions: typeof generated.useGetConsensusTransactions = (
   params?,
   options?,
