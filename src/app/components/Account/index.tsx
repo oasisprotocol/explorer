@@ -91,7 +91,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           )}
 
           <dt>{t('common.transactions')}</dt>
-          <dd>{/* TODO: waiting for API update */}</dd>
+          <dd>{account.stats.num_txns}</dd>
 
           <dt>{t('account.evmTokens')}</dt>
           <dd>
@@ -99,10 +99,10 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>
-          <dd>{/* TODO: waiting for API update */}</dd>
+          <dd>{t('common.valueInRose', { value: account.stats.total_received })}</dd>
 
           <dt>{t('account.totalSent')}</dt>
-          <dd>{/* TODO: waiting for API update */}</dd>
+          <dd>{t('common.valueInRose', { value: account.stats.total_sent })}</dd>
         </StyledDescriptionList>
       )}
     </>

@@ -215,6 +215,15 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
               }
             }),
             layer: runtime,
+            stats: {
+              ...data.stats,
+              total_received: data.stats?.total_received
+                ? fromBaseUnits(data.stats?.total_received, paraTimesConfig.emerald!.decimals)
+                : undefined,
+              total_sent: data.stats?.total_sent
+                ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig.emerald!.decimals)
+                : undefined,
+            },
           }
         },
         ...arrayify(options?.axios?.transformResponse),
