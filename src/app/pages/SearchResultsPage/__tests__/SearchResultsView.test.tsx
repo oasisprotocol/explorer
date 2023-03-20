@@ -18,12 +18,12 @@ describe('SearchResultsView', () => {
     renderWithProviders(
       <SearchResultsView
         searchQueries={{
-          emeraldBlockHeight: {
+          blockHeight: {
             isLoading: false,
             results: [suggestedParsedBlock],
           },
-          emeraldTxHash: { isLoading: false, results: [] },
-          consensusAccount: { isLoading: false, results: [] },
+          txHash: { isLoading: false, results: [] },
+          oasisAccount: { isLoading: false, results: [] },
           evmBech32Account: { isLoading: false, results: [] },
         }}
         roseFiatValue={1}
@@ -41,9 +41,9 @@ describe('SearchResultsView', () => {
     renderWithProviders(
       <SearchResultsView
         searchQueries={{
-          emeraldBlockHeight: { isLoading: false, results: [] },
-          emeraldTxHash: { isLoading: false, results: [] },
-          consensusAccount: { isLoading: false, results: [] },
+          blockHeight: { isLoading: false, results: [] },
+          txHash: { isLoading: false, results: [] },
+          oasisAccount: { isLoading: false, results: [] },
           evmBech32Account: { isLoading: false, results: [suggestedParsedAccount] },
         }}
         roseFiatValue={1}
