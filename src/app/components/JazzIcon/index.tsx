@@ -18,5 +18,5 @@ export const JazzIcon = memo(({ diameter, seed }: JazzIconProps) => {
     }
   }, [diameter, ref, seed])
 
-  return <Box ref={ref} />
+  return <Box ref={ref} sx={{ height: diameter }} />
 })

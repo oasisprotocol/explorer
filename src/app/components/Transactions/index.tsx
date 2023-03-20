@@ -73,7 +73,7 @@ export const Transactions: FC<TransactionProps> = ({
         key: 'success',
       },
       {
-        content: <TransactionLink layer={transaction.layer} hash={transaction.hash} />,
+        content: <TransactionLink alwaysTrim={true} layer={transaction.layer} hash={transaction.hash} />,
         key: 'hash',
       },
       ...(verbose

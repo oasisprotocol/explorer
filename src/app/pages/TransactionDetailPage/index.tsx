@@ -18,15 +18,14 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
-import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink } from '../../components/Blocks/BlockLink'
+import { TransactionLink } from '../../components/Transactions/TransactionLink'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -137,10 +136,8 @@ export const TransactionDetailView: FC<{
           )}
           <dt>{t('common.hash')}</dt>
           <dd>
-            <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-              {isMobile ? trimLongString(transaction.hash) : transaction.hash}
-            </Typography>
-            <CopyToClipboard value={transaction.hash} label={' '} />
+            <TransactionLink hash={transaction.hash} layer={transaction.layer} />
+            <CopyToClipboard value={transaction.hash} />
           </dd>
 
           <dt>{t('common.status')}</dt>
@@ -169,7 +166,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.from')}</dt>
           <dd>
             <AccountLink address={transaction.sender_0} layer={transaction.layer} />
-            <CopyToClipboard value={transaction.sender_0} label={' '} />
+            <CopyToClipboard value={transaction.sender_0} />
           </dd>
 
           {transaction.to && (
@@ -177,7 +174,7 @@ export const TransactionDetailView: FC<{
               <dt>{t('common.to')}</dt>
               <dd>
                 <AccountLink address={transaction.to} layer={transaction.layer} />
-                <CopyToClipboard value={transaction.to} label={' '} />
+                <CopyToClipboard value={transaction.to} />
               </dd>
             </>
           )}

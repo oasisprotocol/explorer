@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState, ReactNode } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
@@ -9,19 +9,22 @@ import { styled } from '@mui/material/styles'
 const clipboardTooltipDuration = 2000
 
 type CopyToClipboardProps = {
-  label?: ReactNode
   value: string
 }
 
-const StyledButton = styled(ButtonUnstyled)(() => ({
+const StyledButton = styled(ButtonUnstyled)(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
   border: 0,
   background: 'none',
   cursor: 'pointer',
   fontSize: 'inherit',
   fontFamily: 'inherit',
+  padding: 0,
+  marginLeft: theme.spacing(4),
 }))
 
-export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
+export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value }) => {
   const { t } = useTranslation()
   const timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
@@ -48,14 +51,8 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, value }) => {
 
   return (
     <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
-      <StyledButton
-        color="inherit"
-        onClick={handleCopyToClipboard}
-        aria-label={ariaLabel}
-        sx={{ display: 'inline-flex', alignItems: 'center' }}
-      >
-        {label || value}
-        <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark, ml: 4 }} />
+      <StyledButton color="inherit" onClick={handleCopyToClipboard} aria-label={ariaLabel}>
+        <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark }} />
       </StyledButton>
     </Tooltip>
   )
