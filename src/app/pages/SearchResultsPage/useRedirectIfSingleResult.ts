@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchQueries } from '.'
 import { RouteUtils } from '../../utils/route-utils'
-import { Layer } from '../../../oasis-indexer/api'
 
 /** If search only finds one result then redirect to it */
 export function useRedirectIfSingleResult(queries: SearchQueries) {
@@ -15,13 +14,25 @@ export function useRedirectIfSingleResult(queries: SearchQueries) {
   let redirectTo: string | undefined
   if (hasSingleResult) {
     if (queries.emeraldBlockHeight.results?.[0]) {
-      redirectTo = RouteUtils.getBlockRoute(queries.emeraldBlockHeight.results[0].round, Layer.emerald)
+      redirectTo = RouteUtils.getBlockRoute(
+        queries.emeraldBlockHeight.results[0].round,
+        queries.emeraldBlockHeight.results[0].layer,
+      )
     } else if (queries.emeraldTxHash.results?.[0]) {
-      redirectTo = RouteUtils.getTransactionRoute(queries.emeraldTxHash.results[0].hash, Layer.emerald)
+      redirectTo = RouteUtils.getTransactionRoute(
+        queries.emeraldTxHash.results[0].hash,
+        queries.emeraldBlockHeight.results[0].layer,
+      )
     } else if (queries.evmBech32Account.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(queries.evmBech32Account.results[0].address, Layer.emerald)
+      redirectTo = RouteUtils.getAccountRoute(
+        queries.evmBech32Account.results[0].address,
+        queries.emeraldBlockHeight.results[0].layer,
+      )
     } else if (queries.consensusAccount.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(queries.consensusAccount.results[0].address, Layer.emerald)
+      redirectTo = RouteUtils.getAccountRoute(
+        queries.consensusAccount.results[0].address,
+        queries.emeraldBlockHeight.results[0].layer,
+      )
     } else {
       // TODO: typescript should ensure all queries are handled
     }
