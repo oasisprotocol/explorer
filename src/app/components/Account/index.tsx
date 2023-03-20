@@ -16,6 +16,17 @@ import { type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { COLORS } from '../../../styles/theme/colors'
 
+export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
+  '&&': {
+    [theme.breakpoints.down('sm')]: {
+      padding: `${theme.spacing(2)} 0`,
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: `${theme.spacing(3)} 0`,
+    },
+  },
+}))
+
 export const addressToNumber = (address: string) => {
   // https://github.com/oasisprotocol/oasis-wallet-ext/blob/da7ad67/src/popup/component/AccountIcon/index.js#L26
   const addressU8 = staking.addressFromBech32(address)
@@ -55,9 +66,9 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
               <dd>{t(`common.${account.layer}`)}</dd>
             </>
           )}
-          <dt>
+          <StyledAvatarContainer>
             <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
-          </dt>
+          </StyledAvatarContainer>
           <dd>
             <CopyToClipboard
               label={
