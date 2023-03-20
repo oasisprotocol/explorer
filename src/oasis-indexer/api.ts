@@ -91,8 +91,8 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
-                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
-                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
               }
             }),
@@ -150,8 +150,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
-                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig.emerald!.decimals) : undefined,
-                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.emerald!.decimals) : undefined,
+                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
               }
             }),
@@ -218,10 +218,10 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
             stats: {
               ...data.stats,
               total_received: data.stats?.total_received
-                ? fromBaseUnits(data.stats?.total_received, paraTimesConfig.emerald!.decimals)
+                ? fromBaseUnits(data.stats?.total_received, paraTimesConfig[runtime].decimals)
                 : undefined,
               total_sent: data.stats?.total_sent
-                ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig.emerald!.decimals)
+                ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig[runtime].decimals)
                 : undefined,
             },
           }

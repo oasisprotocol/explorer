@@ -91,9 +91,9 @@ type LayersConfig = {
   [key in Layer]: LayerConfig | null
 }
 
-export const paraTimesConfig: LayersConfig = {
+export const paraTimesConfig = {
   [Layer.cipher]: cipherConfig,
   [Layer.emerald]: emeraldConfig,
   [Layer.sapphire]: sapphireConfig,
   [Layer.consensus]: null,
-}
+} satisfies LayersConfig
