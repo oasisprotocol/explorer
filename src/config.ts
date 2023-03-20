@@ -91,12 +91,9 @@ type LayersConfig = {
   [key in Layer]: LayerConfig | null
 }
 
-export const paraTimesConfig: LayersConfig = {
+export const paraTimesConfig = {
   [Layer.cipher]: cipherConfig,
   [Layer.emerald]: emeraldConfig,
   [Layer.sapphire]: sapphireConfig,
   [Layer.consensus]: null,
-}
-
-// TODO: refactor this when we have network specific builds and/or another paraTime is added
-export const blockGasLimit = paraTimesConfig[Layer.emerald]?.mainnet.blockGasLimit!
+} satisfies LayersConfig

@@ -29,9 +29,9 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 
 type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 export type SearchQueries = {
-  emeraldBlockHeight: ConditionalResults<RuntimeBlock>
-  emeraldTxHash: ConditionalResults<RuntimeTransaction>
-  consensusAccount: ConditionalResults<RuntimeAccount>
+  blockHeight: ConditionalResults<RuntimeBlock>
+  txHash: ConditionalResults<RuntimeTransaction>
+  oasisAccount: ConditionalResults<RuntimeAccount>
   evmBech32Account: ConditionalResults<RuntimeAccount>
 }
 function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
@@ -81,10 +81,10 @@ export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
   const rosePriceQuery = useGetRosePrice()
   const searchQueries: SearchQueries = {
-    emeraldBlockHeight: useBlocksConditionally(q.blockHeight),
+    blockHeight: useBlocksConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
-    emeraldTxHash: useTransactionsConditionally(q.txHash),
-    consensusAccount: useRuntimeAccountConditionally(q.consensusAccount),
+    txHash: useTransactionsConditionally(q.txHash),
+    oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
   }
@@ -117,7 +117,7 @@ export const SearchResultsView: FC<{
         <>
           <ResultsGroup
             title={t('search.results.blocks.title')}
-            results={searchQueries.emeraldBlockHeight.results}
+            results={searchQueries.blockHeight.results}
             resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
             link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
@@ -125,7 +125,7 @@ export const SearchResultsView: FC<{
 
           <ResultsGroup
             title={t('search.results.transactions.title')}
-            results={searchQueries.emeraldTxHash.results}
+            results={searchQueries.txHash.results}
             resultComponent={item => (
               <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
             )}
@@ -136,7 +136,7 @@ export const SearchResultsView: FC<{
           <ResultsGroup
             title={t('search.results.accounts.title')}
             results={[
-              ...(searchQueries.consensusAccount.results ?? []),
+              ...(searchQueries.oasisAccount.results ?? []),
               ...(searchQueries.evmBech32Account.results ?? []),
             ]}
             resultComponent={item => (
