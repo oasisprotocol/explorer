@@ -21,7 +21,7 @@ export const Nodes: FC = () => {
   return (
     <SnapshotCard title={t('nodes.title')}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {activeNodes && (
+        {runtimeStatusQuery.isFetched && (
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
             <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
