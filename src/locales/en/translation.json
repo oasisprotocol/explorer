@@ -32,6 +32,7 @@
     "balance": "Balance",
     "block": "Block",
     "bytes": "{{value, number}}",
+    "data": "Data",
     "emerald": "Emerald",
     "cipher": "Cipher",
     "consensus": "Consensus",
@@ -47,6 +48,7 @@
     "hash": "Hash",
     "height": "Height",
     "lessThanAmount": "< {{value}} {{ticker}}",
+    "logs": "Logs",
     "name": "Name",
     "paratime": "Paratime",
     "rose": "ROSE",
@@ -154,6 +156,16 @@
   "transaction": {
     "header": "Transaction",
     "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
+  },
+  "transactionEvent": {
+    "accountsburn": "Tokens burnt",
+    "accountsmint": "Tokens minted",
+    "accountstransfer": "Transferred",
+    "consensusDeposit": "Deposit from consensus",
+    "consensusWithdrawal": "Withdrawal to consensus",
+    "decoded": "Decoded",
+    "evmLog": "EVM log message",
+    "gasUsed": "Gas used"
   },
   "transactionStats": {
     "header": "Transactions Per Day",

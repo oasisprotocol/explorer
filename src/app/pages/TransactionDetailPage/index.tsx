@@ -26,6 +26,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
+import { TransactionLogs } from '../../components/Transactions/Logs'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -109,6 +110,11 @@ export const TransactionDetailPage: FC = () => {
       <SubPageCard featured title={t('transaction.header')}>
         <TransactionDetailView isLoading={isLoading} transaction={transaction} />
       </SubPageCard>
+      {transaction && (
+        <SubPageCard title={t('common.logs')}>
+          <TransactionLogs transaction={transaction} />
+        </SubPageCard>
+      )}
     </PageLayout>
   )
 }
