@@ -78,7 +78,15 @@ export const BlocksPage: FC = () => {
   )
 
   return (
-    <PageLayout>
+    <PageLayout
+      mobileFooterAction={
+        <Link component={RouterLink} to={pagination.linkToPage(pagination.selectedPage + 1)}>
+          <LoadMoreButton color="primary" variant="contained">
+            {t('common.loadMore')}
+          </LoadMoreButton>
+        </Link>
+      }
+    >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('blocks.latest')}
@@ -113,11 +121,6 @@ export const BlocksPage: FC = () => {
           </BlockDetails>
         )}
       </SubPageCard>
-      <Link component={RouterLink} to={pagination.linkToPage(pagination.selectedPage + 1)}>
-        <LoadMoreButton color="primary" variant="contained">
-          Load more
-        </LoadMoreButton>
-      </Link>
     </PageLayout>
   )
 }

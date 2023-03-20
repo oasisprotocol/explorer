@@ -50,6 +50,7 @@
     "gasLimit": "Gas limit",
     "hash": "Hash",
     "height": "Height",
+    "loadMore": "Load more",
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
     "name": "Name",
