@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
@@ -11,10 +10,9 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
-import { trimLongString } from '../../utils/trimLongString'
 import { type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
-import { COLORS } from '../../../styles/theme/colors'
+import { AccountLink } from './AccountLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -70,14 +68,8 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
             <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
           </StyledAvatarContainer>
           <dd>
-            <CopyToClipboard
-              label={
-                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  {isMobile ? trimLongString(account.address) : account.address}
-                </Typography>
-              }
-              value={account.address}
-            />
+            <AccountLink address={account.address} layer={account.layer} />
+            <CopyToClipboard value={account.address} />
           </dd>
 
           <dt>{t('common.balance')}</dt>

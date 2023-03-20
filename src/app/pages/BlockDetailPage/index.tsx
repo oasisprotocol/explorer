@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useParams } from 'react-router-dom'
-import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Link from '@mui/material/Link'
@@ -14,11 +13,10 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
-import { trimLongString } from '../../utils/trimLongString'
-import { COLORS } from '../../../styles/theme/colors'
 import { blockGasLimit } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -72,26 +70,14 @@ export const BlockDetailView: FC<{
           )}
           <dt>{t('common.height')}</dt>
           <dd>
-            <CopyToClipboard
-              label={
-                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  {block.round.toLocaleString()}
-                </Typography>
-              }
-              value={block.round.toString()}
-            />
+            <BlockLink height={block.round} layer={block.layer} />
+            <CopyToClipboard value={block.round.toString()} />
           </dd>
 
           <dt>{t('common.hash')}</dt>
           <dd>
-            <CopyToClipboard
-              label={
-                <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-                  {isMobile ? trimLongString(block.hash) : block.hash}
-                </Typography>
-              }
-              value={block.hash}
-            />
+            <BlockHashLink hash={block.hash} height={block.round} layer={block.layer} />
+            <CopyToClipboard value={block.round.toString()} />
           </dd>
 
           <dt>{t('common.timestamp')}</dt>
