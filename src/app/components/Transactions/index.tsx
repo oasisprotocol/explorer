@@ -1,21 +1,19 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { TrimLinkLabel } from '../../components/TrimLinkLabel'
 import { RoundedRoseBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
-import { RouteUtils } from '../../utils/route-utils'
 import { TablePaginationProps } from '../Table/TablePagination'
+import { BlockLink } from '../Blocks/BlockLink'
+import { AccountLink } from '../Account/AccountLink'
+import { TransactionLink } from './TransactionLink'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -75,29 +73,13 @@ export const Transactions: FC<TransactionProps> = ({
         key: 'success',
       },
       {
-        content: (
-          <Typography variant="mono">
-            <TrimLinkLabel
-              label={transaction.hash}
-              to={RouteUtils.getTransactionRoute(transaction.hash, transaction.layer)}
-            />
-          </Typography>
-        ),
+        content: <TransactionLink layer={transaction.layer} hash={transaction.hash} />,
         key: 'hash',
       },
       ...(verbose
         ? [
             {
-              content: (
-                <Typography variant="mono">
-                  <Link
-                    component={RouterLink}
-                    to={RouteUtils.getBlockRoute(transaction.round, transaction.layer)}
-                  >
-                    {transaction.round.toLocaleString()}
-                  </Link>
-                </Typography>
-              ),
+              content: <BlockLink layer={transaction.layer} height={transaction.round} />,
               key: 'round',
             },
           ]
@@ -124,12 +106,7 @@ export const Transactions: FC<TransactionProps> = ({
               pr: 4,
             }}
           >
-            <Typography variant="mono">
-              <TrimLinkLabel
-                label={transaction.sender_0}
-                to={RouteUtils.getAccountRoute(transaction.sender_0, transaction.layer)}
-              />
-            </Typography>
+            <AccountLink address={transaction.sender_0} layer={transaction.layer} alwaysTrim={true} />
             {transaction.to && (
               <StyledCircle>
                 <ArrowForwardIcon fontSize="inherit" />
@@ -137,18 +114,10 @@ export const Transactions: FC<TransactionProps> = ({
             )}
           </Box>
         ),
-
         key: 'from',
       },
       {
-        content: (
-          <Typography variant="mono">
-            <TrimLinkLabel
-              label={transaction.to!}
-              to={RouteUtils.getAccountRoute(transaction.to!, transaction.layer)}
-            />
-          </Typography>
-        ),
+        content: <AccountLink address={transaction.to!} layer={transaction.layer} alwaysTrim={true} />,
         key: 'to',
       },
       {
