@@ -97,6 +97,3 @@ export const paraTimesConfig: LayersConfig = {
   [Layer.sapphire]: sapphireConfig,
   [Layer.consensus]: null,
 }
-
-// TODO: refactor this when we have network specific builds and/or another paraTime is added
-export const blockGasLimit = paraTimesConfig[Layer.emerald]?.mainnet.blockGasLimit!

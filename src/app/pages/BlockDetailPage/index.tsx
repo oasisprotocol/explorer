@@ -13,7 +13,7 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
-import { blockGasLimit } from '../../../config'
+import { paraTimesConfig } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
@@ -57,71 +57,71 @@ export const BlockDetailView: FC<{
   const formattedTime = useFormattedTimestampString(block?.timestamp)
   const transactionsAnchor = `${useHref('')}#${transactionsContainerId}`
 
+  if (isLoading) return <TextSkeleton numberOfRows={7} />
+  if (!block) return <></>
+
+  const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
+  if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
-    <>
-      {isLoading && <TextSkeleton numberOfRows={7} />}
-      {block && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-          {showLayer && (
-            <>
-              <dt>{t('common.paratime')}</dt>
-              <dd>{t(`common.${block.layer}`)}</dd>
-            </>
-          )}
-          <dt>{t('common.height')}</dt>
-          <dd>
-            <BlockLink height={block.round} layer={block.layer} />
-            <CopyToClipboard value={block.round.toString()} />
-          </dd>
-
-          <dt>{t('common.hash')}</dt>
-          <dd>
-            <BlockHashLink hash={block.hash} height={block.round} layer={block.layer} />
-            <CopyToClipboard value={block.round.toString()} />
-          </dd>
-
-          <dt>{t('common.timestamp')}</dt>
-          <dd>{formattedTime}</dd>
-
-          <dt>{t('common.size')}</dt>
-          <dd>
-            {t('common.bytes', {
-              value: block.size,
-              formatParams: {
-                value: {
-                  style: 'unit',
-                  unit: 'byte',
-                  unitDisplay: 'long',
-                } satisfies Intl.NumberFormatOptions,
-              },
-            })}
-          </dd>
-
-          <dt>{t('common.transactions')}</dt>
-          <dd>
-            <Link href={transactionsAnchor}>
-              {t('common.transactionsNumber', { count: block.num_transactions })}
-            </Link>
-          </dd>
-
-          <dt>{t('common.gasUsed')}</dt>
-          <dd>
-            {t('block.gasUsed', {
-              value: block.gas_used,
-              percentage: block.gas_used / blockGasLimit,
-              formatParams: {
-                percentage: {
-                  style: 'percent',
-                  maximumFractionDigits: 2,
-                } satisfies Intl.NumberFormatOptions,
-              },
-            })}
-          </dd>
-
-          <dt>{t('common.gasLimit')}</dt>
-          <dd>{blockGasLimit.toLocaleString()}</dd>
-        </StyledDescriptionList>
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+      {showLayer && (
+        <>
+          <dt>{t('common.paratime')}</dt>
+          <dd>{t(`common.${block.layer}`)}</dd>
+        </>
       )}
-    </>
+      <dt>{t('common.height')}</dt>
+      <dd>
+        <BlockLink height={block.round} layer={block.layer} />
+        <CopyToClipboard value={block.round.toString()} />
+      </dd>
+
+      <dt>{t('common.hash')}</dt>
+      <dd>
+        <BlockHashLink hash={block.hash} height={block.round} layer={block.layer} />
+        <CopyToClipboard value={block.round.toString()} />
+      </dd>
+
+      <dt>{t('common.timestamp')}</dt>
+      <dd>{formattedTime}</dd>
+
+      <dt>{t('common.size')}</dt>
+      <dd>
+        {t('common.bytes', {
+          value: block.size,
+          formatParams: {
+            value: {
+              style: 'unit',
+              unit: 'byte',
+              unitDisplay: 'long',
+            } satisfies Intl.NumberFormatOptions,
+          },
+        })}
+      </dd>
+
+      <dt>{t('common.transactions')}</dt>
+      <dd>
+        <Link href={transactionsAnchor}>
+          {t('common.transactionsNumber', { count: block.num_transactions })}
+        </Link>
+      </dd>
+
+      <dt>{t('common.gasUsed')}</dt>
+      <dd>
+        {t('block.gasUsed', {
+          value: block.gas_used,
+          percentage: block.gas_used / blockGasLimit,
+          formatParams: {
+            percentage: {
+              style: 'percent',
+              maximumFractionDigits: 2,
+            } satisfies Intl.NumberFormatOptions,
+          },
+        })}
+      </dd>
+
+      <dt>{t('common.gasLimit')}</dt>
+      <dd>{blockGasLimit.toLocaleString()}</dd>
+    </StyledDescriptionList>
   )
 }
