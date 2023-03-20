@@ -7,19 +7,20 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
-import { type RuntimeEvmBalance } from '../../../oasis-indexer/api'
-import { useHref } from 'react-router-dom'
+import { RuntimeAccount, type RuntimeEvmBalance } from '../../../oasis-indexer/api'
+import { RouteUtils } from '../../utils/route-utils'
 
 type TokenPillsProps = {
-  tokens: RuntimeEvmBalance[] | undefined
+  account: RuntimeAccount
+  tokens: RuntimeEvmBalance[]
 }
 
-export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
+export const TokenPills: FC<TokenPillsProps> = ({ account, tokens }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  if (!tokens?.length) {
+  if (!tokens.length) {
     return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
   }
   const pills = tokens.slice(0, isMobile ? 1 : 3)
@@ -27,22 +28,23 @@ export const TokenPills: FC<TokenPillsProps> = ({ tokens }) => {
   return (
     <>
       {pills.map(item => (
-        <Pill key={item.token_contract_addr} pill={item} />
+        <Pill key={item.token_contract_addr} account={account} pill={item} />
       ))}
 
-      <ShowMoreTokensLink tokens={tokens} pills={pills} />
+      <ShowMoreTokensLink account={account} tokens={tokens} pills={pills} />
     </>
   )
 }
 
 type PillProps = {
+  account: RuntimeAccount
   pill: RuntimeEvmBalance
 }
 
-export const Pill: FC<PillProps> = ({ pill }) => {
-  const href = `${useHref(pill.token_type === 'ERC20' ? 'tokens/erc-20' : 'tokens/erc-721')}#${
-    pill.token_contract_addr
-  }`
+export const Pill: FC<PillProps> = ({ account, pill }) => {
+  const erc20link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-20`
+  const erc721Link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-721`
+  const href = `${pill.token_type === 'ERC20' ? erc20link : erc721Link}#${pill.token_contract_addr}`
 
   return (
     <Chip

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Link from '@mui/material/Link'
@@ -17,6 +17,7 @@ import { paraTimesConfig } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
+import { RouteUtils } from '../../utils/route-utils'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -55,11 +56,14 @@ export const BlockDetailView: FC<{
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTime = useFormattedTimestampString(block?.timestamp)
-  const transactionsAnchor = `${useHref('')}#${transactionsContainerId}`
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (!block) return <></>
 
+  const transactionsAnchor = `${RouteUtils.getBlockRoute(
+    block.round,
+    block.layer,
+  )}#${transactionsContainerId}`
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (

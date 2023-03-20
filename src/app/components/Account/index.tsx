@@ -98,7 +98,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
 
           <dt>{t('account.evmTokens')}</dt>
           <dd>
-            <TokenPills tokens={account.evm_balances} />
+            <TokenPills account={account} tokens={account.evm_balances} />
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>

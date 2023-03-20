@@ -1,7 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { SearchResultsView } from '../'
-import { suggestedParsedAccount, suggestedParsedBlock } from '../../../utils/test-fixtures'
+import {
+  sapphireParsedBlock,
+  suggestedParsedAccount,
+  suggestedParsedBlock,
+} from '../../../utils/test-fixtures'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -13,14 +17,13 @@ describe('SearchResultsView', () => {
     jest.useRealTimers()
   })
 
-  it.todo('unskip tests') // TODO: fix deep links
-  it.skip('block should correctly link to transactions', () => {
+  it('block should correctly link to transactions', () => {
     renderWithProviders(
       <SearchResultsView
         searchQueries={{
           blockHeight: {
             isLoading: false,
-            results: [suggestedParsedBlock],
+            results: [suggestedParsedBlock, sapphireParsedBlock],
           },
           txHash: { isLoading: false, results: [] },
           oasisAccount: { isLoading: false, results: [] },
@@ -35,9 +38,16 @@ describe('SearchResultsView', () => {
       'href',
       '/emerald/blocks/1396255#transactions',
     )
+
+    expect(screen.getByText('143,553')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '1 transaction' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '1 transaction' })).toHaveAttribute(
+      'href',
+      '/sapphire/blocks/143553#transactions',
+    )
   })
 
-  it.skip('account should correctly link to erc-20 tokens', () => {
+  it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
       <SearchResultsView
         searchQueries={{
@@ -50,10 +60,12 @@ describe('SearchResultsView', () => {
       />,
     )
     expect(screen.getByText('EVM tokens')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '337325.43837 FTP' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '337325.43837 FTP' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '337325.43836 FTP' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '337325.43836 FTP' })).toHaveAttribute(
       'href',
-      '/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
+      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
+      // TODO: use evm account address
+      // '/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
     )
   })
 })
