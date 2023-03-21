@@ -1,7 +1,12 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
-import { Token } from '../../../../oasis-indexer/api'
+import { RuntimeAccount, Token } from '../../../../oasis-indexer/api'
+
+const mockedAccount = {
+  address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
+  layer: 'emerald',
+} as RuntimeAccount
 
 const mockedToken1: Token = {
   balance: '1123.5',
@@ -41,34 +46,44 @@ const mockedToken4: Token = {
 
 describe('ShowMoreTokensLink', () => {
   it('should not render show more link', () => {
-    const { rerender } = renderWithProviders(<ShowMoreTokensLink tokens={[]} pills={[]} />)
+    const { rerender } = renderWithProviders(
+      <ShowMoreTokensLink account={mockedAccount} tokens={[]} pills={[]} />,
+    )
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
 
-    rerender(<ShowMoreTokensLink tokens={[mockedToken1]} pills={[mockedToken1]} />)
+    rerender(<ShowMoreTokensLink account={mockedAccount} tokens={[mockedToken1]} pills={[mockedToken1]} />)
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
   })
 
   it('should render ERC20 link if there is any ERC20 token not included in pills', () => {
     renderWithProviders(
       <ShowMoreTokensLink
+        account={mockedAccount}
         tokens={[mockedToken1, mockedToken2, mockedToken3, mockedToken4]}
         pills={[mockedToken1]}
       />,
     )
 
     expect(screen.getByText('+ 3 more')).toBeInTheDocument()
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/tokens/erc-20')
+    expect(screen.getByRole('link')).toHaveAttribute(
+      'href',
+      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-20',
+    )
   })
 
   it('should render ERC721 link if there is no ERC20 token', () => {
     renderWithProviders(
       <ShowMoreTokensLink
+        account={mockedAccount}
         tokens={[mockedToken1, mockedToken2, mockedToken3]}
         pills={[mockedToken1, mockedToken2]}
       />,
     )
 
     expect(screen.getByText('+ 1 more')).toBeInTheDocument()
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/tokens/erc-721')
+    expect(screen.getByRole('link')).toHaveAttribute(
+      'href',
+      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-721',
+    )
   })
 })

@@ -1,9 +1,10 @@
 import { FC } from 'react'
-import { Link as RouterLink, useHref } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { type Token } from '../../../oasis-indexer/api'
+import { RuntimeAccount, type Token } from '../../../oasis-indexer/api'
+import { RouteUtils } from '../../utils/route-utils'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -14,14 +15,15 @@ export const StyledLink = styled(RouterLink)(({ theme }) => ({
 }))
 
 type ShowMoreTokensLinkProps = {
+  account: RuntimeAccount
   tokens: Token[]
   pills: Token[]
 }
 
-export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ tokens, pills }) => {
+export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, tokens, pills }) => {
   const { t } = useTranslation()
-  const erc20link = useHref('tokens/erc-20')
-  const erc721Link = useHref('tokens/erc-721')
+  const erc20link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-20`
+  const erc721Link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-721`
   const additionalTokensCounter = tokens.length - pills.length
 
   if (!additionalTokensCounter) {
