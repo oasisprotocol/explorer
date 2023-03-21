@@ -363,17 +363,16 @@ export const defaultTheme = createTheme({
         {
           props: { variant: 'layout' },
           style: ({ theme }) => ({
-            borderWidth: 1,
-            borderColor: COLORS.white,
-            borderStyle: 'dashed',
+            // More customizable than borderStyle: 'dashed',
+            borderImage: `repeating-linear-gradient(90deg, ${COLORS.white}, ${COLORS.white} 5px, transparent 5px, transparent 12px) 1`,
             marginBottom: theme.spacing(5),
           }),
         },
         {
           props: { variant: 'card' },
           style: ({ theme }) => ({
-            borderColor: COLORS.brandDark,
-            borderStyle: 'dashed',
+            // More customizable than borderStyle: 'dashed',
+            borderImage: `repeating-linear-gradient(90deg, ${COLORS.brandDark}, ${COLORS.brandDark} 5px, transparent 5px, transparent 12px) 1`,
             margin: '40px -12px',
             [theme.breakpoints.down('sm')]: {
               margin: '20px -12px',
