@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { Layer } from '../../oasis-indexer/api'
+import { EvmTokenType, Layer } from '../../oasis-indexer/api'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
@@ -29,6 +29,23 @@ export abstract class RouteUtils {
 
   static getAccountRoute = (sender: string, layer: Layer) => {
     return `/${encodeURIComponent(layer)}/account/${encodeURIComponent(sender)}`
+  }
+
+  static getAccountTokensRoute = (
+    sender: string,
+    layer: Layer,
+    tokenType: EvmTokenType,
+    tokenAddress: string | undefined,
+  ) => {
+    const map: Record<EvmTokenType, string | undefined> = {
+      ERC20: `${this.getAccountRoute(sender, layer)}/tokens/erc-20`,
+      ERC721: `${this.getAccountRoute(sender, layer)}/tokens/erc-721`,
+      ERC1155: undefined,
+      OasisSdk: undefined,
+    }
+    const tokenRoutes = map[tokenType]
+    if (!tokenRoutes) throw new Error('Unexpected token type')
+    return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
   static getSearchRoute = (searchTerm: string) => {

@@ -42,16 +42,19 @@ type PillProps = {
 }
 
 export const Pill: FC<PillProps> = ({ account, pill }) => {
-  const erc20link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-20`
-  const erc721Link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-721`
-  const href = `${pill.token_type === 'ERC20' ? erc20link : erc721Link}#${pill.token_contract_addr}`
+  const tokenRoute = RouteUtils.getAccountTokensRoute(
+    account.address,
+    account.layer,
+    pill.token_type!,
+    pill.token_contract_addr,
+  )
 
   return (
     <Chip
       clickable
       color="tertiary"
       component={Link}
-      href={href}
+      href={tokenRoute}
       key={pill.token_contract_addr}
       label={
         <>
