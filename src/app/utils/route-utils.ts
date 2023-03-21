@@ -8,27 +8,27 @@ export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
 
   static getDashboardRoute = (layer: Layer) => {
-    return `/${layer}`
+    return `/${encodeURIComponent(layer)}`
   }
 
   static getLatestTransactionsRoute = (layer: Layer) => {
-    return `/${layer}/transactions`
+    return `/${encodeURIComponent(layer)}/transactions`
   }
 
   static getLatestBlocksRoute = (layer: Layer) => {
-    return `/${layer}/blocks`
+    return `/${encodeURIComponent(layer)}/blocks`
   }
 
-  static getBlockRoute = (blockHeight: number, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/blocks/${encodeURIComponent(blockHeight)}`
+  static getBlockRoute = (blockHeight: number, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(blockHeight)}`
   }
 
-  static getTransactionRoute = (txHash: string, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/transactions/${encodeURIComponent(txHash)}`
+  static getTransactionRoute = (txHash: string, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/transactions/${encodeURIComponent(txHash)}`
   }
 
-  static getAccountRoute = (sender: string, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/account/${encodeURIComponent(sender)}`
+  static getAccountRoute = (sender: string, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/account/${encodeURIComponent(sender)}`
   }
 
   static getSearchRoute = (searchTerm: string) => {
