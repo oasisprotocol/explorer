@@ -90,6 +90,7 @@ export const BlocksPage: FC = () => {
       <SubPageCard
         title={t('blocks.latest')}
         action={isMobile && <TableViewSpeedDial tableView={tableView} setTableView={setTableView} />}
+        noPadding={tableView === TableView.Vertical}
       >
         {tableView === TableView.Horizontal && (
           <Blocks
@@ -109,8 +110,8 @@ export const BlocksPage: FC = () => {
         {tableView === TableView.Vertical && (
           <BlockDetails>
             {blocksQuery.data?.data.blocks.map(block => (
-              <SubPageCard featured key={block.hash}>
-                <BlockDetailView isLoading={blocksQuery.isLoading} block={block} />
+              <SubPageCard featured key={block.hash} noPadding>
+                <BlockDetailView isLoading={blocksQuery.isLoading} block={block} withPadding />
               </SubPageCard>
             ))}
           </BlockDetails>

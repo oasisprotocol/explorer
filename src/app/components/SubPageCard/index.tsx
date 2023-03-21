@@ -16,6 +16,7 @@ type StyledComponentProps = {
   title?: string
   subheader?: string
   action?: ReactNode
+  noPadding?: boolean
 }
 type SubPageCardProps = PropsWithChildren<StyledComponentProps>
 
@@ -33,12 +34,14 @@ const StyledBox = styled(Box, {
 )
 
 const StyledCard = styled(Card, {
-  shouldForwardProp: prop => prop !== 'featured',
+  shouldForwardProp: prop => prop !== 'featured' && prop !== 'noPadding',
 })<StyledComponentProps>(
-  ({ featured, theme }) => css`
-    && {
-      padding: 0;
-    }
+  ({ featured, noPadding, theme }) => css`
+    ${noPadding && {
+      '&&': {
+        padding: 0,
+      },
+    }}
     ${featured && {
       [theme.breakpoints.up('sm')]: {
         paddingRight: theme.spacing(6),
@@ -48,10 +51,14 @@ const StyledCard = styled(Card, {
   `,
 )
 
-const StyledCardContent = styled(CardContent)(() => ({
-  '&&': {
-    padding: 0,
-  },
+const StyledCardContent = styled(CardContent, {
+  shouldForwardProp: prop => prop !== 'noPadding',
+})<Pick<StyledComponentProps, 'noPadding'>>(({ noPadding }) => ({
+  '&&': noPadding
+    ? {
+        padding: 0,
+      }
+    : {},
 }))
 
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
@@ -63,6 +70,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   title,
   subheader,
   action,
+  noPadding = false,
 }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -80,7 +88,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
           {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
         </Box>
       )}
-      <StyledCard featured={featured}>
+      <StyledCard featured={featured} noPadding={noPadding}>
         {!isMobile && (
           <StyledBox featured={featured}>
             <CardHeader
@@ -98,7 +106,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
             />
           </StyledBox>
         )}
-        <StyledCardContent>{children}</StyledCardContent>
+        <StyledCardContent noPadding={noPadding}>{children}</StyledCardContent>
       </StyledCard>
     </div>
   )

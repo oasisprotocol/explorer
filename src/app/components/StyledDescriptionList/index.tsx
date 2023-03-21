@@ -31,7 +31,13 @@ const InlineDescriptionList = styled('dl', {
   }
 `
 
-export const StyledDescriptionList = styled(InlineDescriptionList)(({ theme }) => ({
+interface StyledDescriptionListProps {
+  withPadding?: boolean
+}
+
+export const StyledDescriptionList = styled(InlineDescriptionList, {
+  shouldForwardProp: prop => prop !== 'withPadding',
+})<StyledDescriptionListProps>(({ theme, withPadding }) => ({
   'dt, dd': {
     display: 'flex',
     alignItems: 'center',
@@ -52,5 +58,5 @@ export const StyledDescriptionList = styled(InlineDescriptionList)(({ theme }) =
   dd: {
     color: COLORS.brandExtraDark,
   },
-  padding: theme.spacing(4),
+  ...(withPadding && { padding: theme.spacing(4) }),
 }))

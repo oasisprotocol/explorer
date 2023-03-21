@@ -123,7 +123,8 @@ export const TransactionDetailView: FC<{
   isLoading: boolean
   transaction: RuntimeTransaction | undefined
   showLayer?: boolean
-}> = ({ isLoading, transaction, showLayer }) => {
+  withPadding?: boolean
+}> = ({ isLoading, transaction, showLayer, withPadding = false }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -133,7 +134,7 @@ export const TransactionDetailView: FC<{
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {transaction && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} withPadding={withPadding}>
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>
