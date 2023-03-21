@@ -2,33 +2,50 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { Layer } from '../../oasis-indexer/api'
+import { EvmTokenType, Layer } from '../../oasis-indexer/api'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
 
   static getDashboardRoute = (layer: Layer) => {
-    return `/${layer}`
+    return `/${encodeURIComponent(layer)}`
   }
 
   static getLatestTransactionsRoute = (layer: Layer) => {
-    return `/${layer}/transactions`
+    return `/${encodeURIComponent(layer)}/transactions`
   }
 
   static getLatestBlocksRoute = (layer: Layer) => {
-    return `/${layer}/blocks`
+    return `/${encodeURIComponent(layer)}/blocks`
   }
 
-  static getBlockRoute = (blockHeight: number, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/blocks/${encodeURIComponent(blockHeight)}`
+  static getBlockRoute = (blockHeight: number, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(blockHeight)}`
   }
 
-  static getTransactionRoute = (txHash: string, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/transactions/${encodeURIComponent(txHash)}`
+  static getTransactionRoute = (txHash: string, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/transactions/${encodeURIComponent(txHash)}`
   }
 
-  static getAccountRoute = (sender: string, layer: Layer | null = null) => {
-    return `${layer ? `/${layer}` : ''}/account/${encodeURIComponent(sender)}`
+  static getAccountRoute = (sender: string, layer: Layer) => {
+    return `/${encodeURIComponent(layer)}/account/${encodeURIComponent(sender)}`
+  }
+
+  static getAccountTokensRoute = (
+    sender: string,
+    layer: Layer,
+    tokenType: EvmTokenType,
+    tokenAddress: string | undefined,
+  ) => {
+    const map: Record<EvmTokenType, string | undefined> = {
+      ERC20: `${this.getAccountRoute(sender, layer)}/tokens/erc-20`,
+      ERC721: `${this.getAccountRoute(sender, layer)}/tokens/erc-721`,
+      ERC1155: undefined,
+      OasisSdk: undefined,
+    }
+    const tokenRoutes = map[tokenType]
+    if (!tokenRoutes) throw new Error('Unexpected token type')
+    return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
   static getSearchRoute = (searchTerm: string) => {

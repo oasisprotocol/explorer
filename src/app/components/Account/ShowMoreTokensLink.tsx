@@ -22,8 +22,8 @@ type ShowMoreTokensLinkProps = {
 
 export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, tokens, pills }) => {
   const { t } = useTranslation()
-  const erc20link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-20`
-  const erc721Link = `${RouteUtils.getAccountRoute(account.address, account.layer)}/tokens/erc-721`
+  const erc20link = RouteUtils.getAccountTokensRoute(account.address, account.layer, 'ERC20', undefined)
+  const erc721Link = RouteUtils.getAccountTokensRoute(account.address, account.layer, 'ERC721', undefined)
   const additionalTokensCounter = tokens.length - pills.length
 
   if (!additionalTokensCounter) {
