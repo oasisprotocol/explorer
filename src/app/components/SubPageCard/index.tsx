@@ -70,7 +70,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   return (
     <div>
       {isMobile && (title || subheader || action) && (
-        <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
+        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
           <Typography variant="h3" component="h3" sx={{ display: 'inline' }} color={COLORS.white}>
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>

@@ -144,6 +144,12 @@
     "header": "Total Transactions",
     "tooltip": "{{value, number}} total transactions"
   },
+  "tableViewSpeedDial": {
+    "tableView": "Table view",
+    "changeView": "Change view",
+    "table": "Table",
+    "list": "List"
+  },
   "transactions": {
     "latest": "Latest Transactions",
     "method": {

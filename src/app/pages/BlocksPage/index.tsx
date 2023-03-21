@@ -13,13 +13,12 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { BlockDetailView } from '../BlockDetailPage'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
-import IconButton from '@mui/material/IconButton'
-import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined'
 import Button from '@mui/material/Button'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { TableView, TableViewSpeedDial } from '../../components/TableViewSpeedDial'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -35,7 +34,7 @@ const LoadMoreButton = styled(Button)(() => ({
 }))
 
 export const BlocksPage: FC = () => {
-  const [verticalView, setVerticalView] = useState(true)
+  const [tableView, setTableView] = useState<TableView>(TableView.Horizontal)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -51,7 +50,7 @@ export const BlocksPage: FC = () => {
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: verticalView ? offset || PAGE_SIZE : PAGE_SIZE,
+      limit: tableView === TableView.Vertical ? offset || PAGE_SIZE : PAGE_SIZE,
       offset,
     },
     {
@@ -72,7 +71,7 @@ export const BlocksPage: FC = () => {
             },
           }
         },
-        keepPreviousData: verticalView,
+        keepPreviousData: tableView === TableView.Vertical,
       },
     },
   )
@@ -81,7 +80,7 @@ export const BlocksPage: FC = () => {
     <PageLayout
       mobileFooterAction={
         <Link component={RouterLink} to={pagination.linkToPage(pagination.selectedPage + 1)}>
-          <LoadMoreButton color="primary" variant="contained">
+          <LoadMoreButton color="primary" variant="contained" disabled={blocksQuery.isLoading}>
             {t('common.loadMore')}
           </LoadMoreButton>
         </Link>
@@ -90,13 +89,9 @@ export const BlocksPage: FC = () => {
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('blocks.latest')}
-        action={
-          <IconButton color="inherit">
-            <BackupTableOutlinedIcon fontSize="medium" sx={{ color: COLORS.white }} />
-          </IconButton>
-        }
+        action={isMobile && <TableViewSpeedDial tableView={tableView} setTableView={setTableView} />}
       >
-        {!isMobile && (
+        {tableView === TableView.Horizontal && (
           <Blocks
             isLoading={blocksQuery.isLoading}
             blocks={blocksQuery.data?.data.blocks}
@@ -111,7 +106,7 @@ export const BlocksPage: FC = () => {
             }}
           />
         )}
-        {isMobile && (
+        {tableView === TableView.Vertical && (
           <BlockDetails>
             {blocksQuery.data?.data.blocks.map(block => (
               <SubPageCard featured key={block.hash}>
