@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
@@ -12,10 +12,23 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { LoadMoreButton } from '../../components/LoadMoreButton'
+import { TableView, TableViewSpeedDial } from '../../components/TableViewSpeedDial'
+import Box from '@mui/material/Box'
+import { COLORS } from '../../../styles/theme/colors'
+import { TransactionDetailView } from '../TransactionDetailPage'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
+const TransactionDetails = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: `0 ${theme.spacing(2)}`,
+  backgroundColor: COLORS.persianBlue,
+}))
+
 export const TransactionsPage: FC = () => {
+  const [tableView, setTableView] = useState<TableView>(TableView.Horizontal)
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -54,21 +67,39 @@ export const TransactionsPage: FC = () => {
   )
 
   return (
-    <PageLayout>
+    <PageLayout
+      mobileFooterAction={<LoadMoreButton pagination={pagination} isLoading={transactionsQuery.isLoading} />}
+    >
       {!isMobile && <Divider variant="layout" />}
-      <SubPageCard title={t('transactions.latest')}>
-        <Transactions
-          transactions={transactionsQuery.data?.data.transactions}
-          isLoading={transactionsQuery.isLoading}
-          limit={limit}
-          pagination={{
-            selectedPage: pagination.selectedPage,
-            linkToPage: pagination.linkToPage,
-            totalCount: transactionsQuery.data?.data.total_count,
-            isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
-            rowsPerPage: limit,
-          }}
-        />
+      <SubPageCard
+        title={t('transactions.latest')}
+        action={isMobile && <TableViewSpeedDial tableView={tableView} setTableView={setTableView} />}
+        noPadding={tableView === TableView.Vertical}
+      >
+        {tableView === TableView.Horizontal && (
+          <Transactions
+            transactions={transactionsQuery.data?.data.transactions}
+            isLoading={transactionsQuery.isLoading}
+            limit={limit}
+            pagination={{
+              selectedPage: pagination.selectedPage,
+              linkToPage: pagination.linkToPage,
+              totalCount: transactionsQuery.data?.data.total_count,
+              isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
+              rowsPerPage: limit,
+            }}
+          />
+        )}
+
+        {tableView === TableView.Vertical && (
+          <TransactionDetails>
+            {transactionsQuery.data?.data.transactions.map(tx => (
+              <SubPageCard featured key={tx.hash} noPadding>
+                <TransactionDetailView isLoading={false} transaction={tx} withPadding />
+              </SubPageCard>
+            ))}
+          </TransactionDetails>
+        )}
       </SubPageCard>
     </PageLayout>
   )

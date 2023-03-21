@@ -13,12 +13,10 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { BlockDetailView } from '../BlockDetailPage'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
-import Button from '@mui/material/Button'
-import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { TableView, TableViewSpeedDial } from '../../components/TableViewSpeedDial'
+import { LoadMoreButton } from '../../components/LoadMoreButton'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -27,10 +25,6 @@ const BlockDetails = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: `0 ${theme.spacing(2)}`,
   backgroundColor: COLORS.persianBlue,
-}))
-
-const LoadMoreButton = styled(Button)(() => ({
-  backgroundColor: COLORS.brandDark,
 }))
 
 export const BlocksPage: FC = () => {
@@ -78,13 +72,7 @@ export const BlocksPage: FC = () => {
 
   return (
     <PageLayout
-      mobileFooterAction={
-        <Link component={RouterLink} to={pagination.linkToPage(pagination.selectedPage + 1)}>
-          <LoadMoreButton color="primary" variant="contained" disabled={blocksQuery.isLoading}>
-            {t('common.loadMore')}
-          </LoadMoreButton>
-        </Link>
-      }
+      mobileFooterAction={<LoadMoreButton pagination={pagination} isLoading={blocksQuery.isLoading} />}
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
@@ -111,7 +99,7 @@ export const BlocksPage: FC = () => {
           <BlockDetails>
             {blocksQuery.data?.data.blocks.map(block => (
               <SubPageCard featured key={block.hash} noPadding>
-                <BlockDetailView isLoading={blocksQuery.isLoading} block={block} withPadding />
+                <BlockDetailView isLoading={false} block={block} withPadding />
               </SubPageCard>
             ))}
           </BlockDetails>
