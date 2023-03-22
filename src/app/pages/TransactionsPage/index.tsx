@@ -93,11 +93,19 @@ export const TransactionsPage: FC = () => {
 
         {tableView === TableView.Vertical && (
           <TransactionDetails>
-            {transactionsQuery.data?.data.transactions.map(tx => (
-              <SubPageCard featured key={tx.hash} noPadding>
-                <TransactionDetailView transaction={tx} withPadding />
-              </SubPageCard>
-            ))}
+            {!transactionsQuery.data?.data.transactions.length &&
+              [...Array(limit).keys()].map(key => (
+                <SubPageCard featured key={key} noPadding>
+                  <TransactionDetailView isLoading={true} transaction={undefined} withPadding />
+                </SubPageCard>
+              ))}
+
+            {!!transactionsQuery.data?.data.transactions.length &&
+              transactionsQuery.data?.data.transactions.map(tx => (
+                <SubPageCard featured key={tx.hash} noPadding>
+                  <TransactionDetailView transaction={tx} withPadding />
+                </SubPageCard>
+              ))}
           </TransactionDetails>
         )}
       </SubPageCard>

@@ -97,11 +97,18 @@ export const BlocksPage: FC = () => {
         )}
         {tableView === TableView.Vertical && (
           <BlockDetails>
-            {blocksQuery.data?.data.blocks.map(block => (
-              <SubPageCard featured key={block.hash} noPadding>
-                <BlockDetailView block={block} withPadding />
-              </SubPageCard>
-            ))}
+            {!blocksQuery.data?.data.blocks.length &&
+              [...Array(PAGE_SIZE).keys()].map(key => (
+                <SubPageCard featured key={key} noPadding>
+                  <BlockDetailView isLoading={true} block={undefined} withPadding />
+                </SubPageCard>
+              ))}
+            {!!blocksQuery.data?.data.blocks.length &&
+              blocksQuery.data?.data.blocks.map(block => (
+                <SubPageCard featured key={block.hash} noPadding>
+                  <BlockDetailView block={block} withPadding />
+                </SubPageCard>
+              ))}
           </BlockDetails>
         )}
       </SubPageCard>
