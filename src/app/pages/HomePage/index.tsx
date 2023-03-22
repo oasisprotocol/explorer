@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
+import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -122,34 +123,37 @@ export const HomePage: FC = () => {
   const showInfoScreenBtn = isMobile && step !== ParaTimeSelectorStep.ShowHelpScreen
 
   return (
-    <HomepageLayout>
-      <Content>
-        <LogotypeBox>
-          <Logotype showText />
-        </LogotypeBox>
-        <SearchInputContainer>
-          <SearchInputBox>
-            <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
-          </SearchInputBox>
-          {isApiOffline && (
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <OfflineIndicator />
-            </Box>
-          )}
-        </SearchInputContainer>
-        <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
-          <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
-        </Box>
-      </Content>
+    <>
+      <BuildPreviewBanner />
+      <HomepageLayout>
+        <Content>
+          <LogotypeBox>
+            <Logotype showText />
+          </LogotypeBox>
+          <SearchInputContainer>
+            <SearchInputBox>
+              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+            </SearchInputBox>
+            {isApiOffline && (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <OfflineIndicator />
+              </Box>
+            )}
+          </SearchInputContainer>
+          <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
+            <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
+          </Box>
+        </Content>
 
-      <FooterStyled>
-        {showInfoScreenBtn && (
-          <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-            <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-          </IconButton>
-        )}
-        {!isMobile && <Footer />}
-      </FooterStyled>
-    </HomepageLayout>
+        <FooterStyled>
+          {showInfoScreenBtn && (
+            <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+              <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+            </IconButton>
+          )}
+          {!isMobile && <Footer />}
+        </FooterStyled>
+      </HomepageLayout>
+    </>
   )
 }

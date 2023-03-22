@@ -41,4 +41,6 @@ export const COLORS = {
   aqua: '#00feff',
   shadowBlue: '#8484ab',
   black: '#000000',
+  warningColor: '#ed6c02',
+  warningBackground: '#faf5e8',
 } satisfies { [colorName: string]: string }

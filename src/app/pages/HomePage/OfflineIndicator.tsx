@@ -6,6 +6,7 @@ import Alert from '@mui/material/Alert'
 const StyledAlert = styled(Alert)(() => ({
   position: 'absolute',
   marginTop: '10px',
+  fontSize: '14px',
 }))
 
 export const OfflineIndicator: FC = () => {
