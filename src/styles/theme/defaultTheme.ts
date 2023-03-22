@@ -123,9 +123,17 @@ export const defaultTheme = createTheme({
             color: COLORS.errorIndicatorBackground,
           }),
         },
+        {
+          props: { severity: 'warning' },
+          style: () => ({
+            color: COLORS.warningColor,
+            backgroundColor: COLORS.warningBackground,
+          }),
+        },
       ],
       styleOverrides: {
         root: ({ theme }) => ({
+          alignItems: 'center',
           padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
           borderRadius: 10,
         }),
@@ -134,7 +142,6 @@ export const defaultTheme = createTheme({
         },
         message: {
           padding: 0,
-          fontSize: '14px',
         },
       },
     },
