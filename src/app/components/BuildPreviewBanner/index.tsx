@@ -18,5 +18,9 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 export const BuildPreviewBanner: FC = () => {
   const { t } = useTranslation()
 
+  if (!process.env.REACT_APP_BUILD_PREVIEW) {
+    return null
+  }
+
   return <StyledAlert severity="warning">{t('buildPreview')}</StyledAlert>
 }
