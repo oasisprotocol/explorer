@@ -119,9 +119,13 @@ export const TransactionDetailPage: FC = () => {
   )
 }
 
+export type TransactionDetailRuntimeBlock = RuntimeTransaction & {
+  markAsNew?: boolean
+}
+
 export const TransactionDetailView: FC<{
-  isLoading: boolean
-  transaction: RuntimeTransaction | undefined
+  isLoading?: boolean
+  transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
   withPadding?: boolean
 }> = ({ isLoading, transaction, showLayer, withPadding = false }) => {
@@ -134,7 +138,11 @@ export const TransactionDetailView: FC<{
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {transaction && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} withPadding={withPadding}>
+        <StyledDescriptionList
+          titleWidth={isMobile ? '100px' : '200px'}
+          withPadding={withPadding}
+          highlight={transaction.markAsNew}
+        >
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>

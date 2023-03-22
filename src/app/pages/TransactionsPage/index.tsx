@@ -95,7 +95,7 @@ export const TransactionsPage: FC = () => {
           <TransactionDetails>
             {transactionsQuery.data?.data.transactions.map(tx => (
               <SubPageCard featured key={tx.hash} noPadding>
-                <TransactionDetailView isLoading={false} transaction={tx} withPadding />
+                <TransactionDetailView transaction={tx} withPadding />
               </SubPageCard>
             ))}
           </TransactionDetails>

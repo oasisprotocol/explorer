@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { styled, css, keyframes } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import TableContainer from '@mui/material/TableContainer'
@@ -12,7 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePagination, TablePaginationProps } from './TablePagination'
-import { REFETCH_INTERVAL } from '../../config'
+import { backgroundColorAnimation } from '../../../styles/theme/animations'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -32,31 +32,13 @@ const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumb
   </>
 )
 
-const backgroundColorAnimation = keyframes`
-  0% { background-color: ${COLORS.white} }
-  20% { background-color: ${COLORS.lightGreen} }
-  80% { background-color: ${COLORS.lightGreen} }
-  100% { background-color: ${COLORS.white} }
-  `
-const backgroundColorAnimationDuration = `${Math.max(500, REFETCH_INTERVAL - 2000)}ms`
-
 type StyledTableRowProps = MuiTableRowProps & {
   highlight?: boolean
 }
 
 const StyledTableRow = styled(TableRow, {
   shouldForwardProp: prop => prop !== 'highlight',
-})<StyledTableRowProps>(
-  ({ highlight }) => css`
-    ${highlight &&
-    css`
-      animation-name: ${backgroundColorAnimation};
-      animation-duration: ${backgroundColorAnimationDuration};
-      animation-iteration-count: 1;
-      animation-timing-function: ease-in-out;
-    `}
-  `,
-)
+})<StyledTableRowProps>(({ highlight }) => highlight && backgroundColorAnimation)
 
 export enum TableCellAlign {
   Left = 'left',

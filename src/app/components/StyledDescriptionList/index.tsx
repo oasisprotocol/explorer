@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { backgroundColorAnimation } from '../../../styles/theme/animations'
 
 interface Props {
   /**
@@ -33,11 +34,12 @@ const InlineDescriptionList = styled('dl', {
 
 interface StyledDescriptionListProps {
   withPadding?: boolean
+  highlight?: boolean
 }
 
 export const StyledDescriptionList = styled(InlineDescriptionList, {
-  shouldForwardProp: prop => prop !== 'withPadding',
-})<StyledDescriptionListProps>(({ theme, withPadding }) => ({
+  shouldForwardProp: prop => prop !== 'withPadding' && prop !== 'highlight',
+})<StyledDescriptionListProps>(({ theme, withPadding, highlight }) => ({
   'dt, dd': {
     display: 'flex',
     alignItems: 'center',
@@ -58,5 +60,6 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   dd: {
     color: COLORS.brandExtraDark,
   },
-  ...(withPadding && { padding: theme.spacing(4) }),
+  ...(withPadding && { '&&': { padding: theme.spacing(4) } }),
+  ...(highlight && backgroundColorAnimation),
 }))

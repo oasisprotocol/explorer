@@ -47,9 +47,13 @@ export const BlockDetailPage: FC = () => {
   )
 }
 
+export type BlockDetailRuntimeBlock = RuntimeBlock & {
+  markAsNew?: boolean
+}
+
 export const BlockDetailView: FC<{
   isLoading?: boolean
-  block: RuntimeBlock | undefined
+  block: BlockDetailRuntimeBlock | undefined
   showLayer?: boolean
   withPadding?: boolean
 }> = ({ isLoading, block, showLayer, withPadding = false }) => {
@@ -68,7 +72,11 @@ export const BlockDetailView: FC<{
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} withPadding={withPadding}>
+    <StyledDescriptionList
+      titleWidth={isMobile ? '100px' : '200px'}
+      withPadding={withPadding}
+      highlight={block.markAsNew}
+    >
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

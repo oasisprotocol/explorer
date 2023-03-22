@@ -99,7 +99,7 @@ export const BlocksPage: FC = () => {
           <BlockDetails>
             {blocksQuery.data?.data.blocks.map(block => (
               <SubPageCard featured key={block.hash} noPadding>
-                <BlockDetailView isLoading={false} block={block} withPadding />
+                <BlockDetailView block={block} withPadding />
               </SubPageCard>
             ))}
           </BlockDetails>
