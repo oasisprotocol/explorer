@@ -25,6 +25,7 @@ interface FooterProps {
 export const Footer: FC<FooterProps> = ({ mobileSearchAction }) => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const currentYear = useConstant(() => new Date().getFullYear())
 
@@ -32,7 +33,7 @@ export const Footer: FC<FooterProps> = ({ mobileSearchAction }) => {
     <footer>
       <FooterBox>
         {isTablet ? (
-          <AppendMobileSearch action={mobileSearchAction}>
+          <AppendMobileSearch action={isMobile && mobileSearchAction}>
             <Typography variant="footer">
               {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>

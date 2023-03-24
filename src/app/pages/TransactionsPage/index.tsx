@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -41,6 +41,13 @@ export const TransactionsPage: FC = () => {
     // Listing the latest consensus transactions is not yet implemented.
     // we should call useGetConsensusTransactions()
   }
+
+  useEffect(() => {
+    if (!isMobile) {
+      setTableView(TableView.Horizontal)
+    }
+  }, [isMobile, setTableView])
+
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     layer, // This is OK, since consensus is already handled separately
     { limit, offset },

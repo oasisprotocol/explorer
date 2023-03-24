@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 import Divider from '@mui/material/Divider'
@@ -41,6 +41,13 @@ export const BlocksPage: FC = () => {
     // Listing the latest consensus blocks is not yet implemented.
     // we should call useGetConsensusBlocks()
   }
+
+  useEffect(() => {
+    if (!isMobile) {
+      setTableView(TableView.Horizontal)
+    }
+  }, [isMobile, setTableView])
+
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
     layer, // This is OK, since consensus is already handled separately
     {
