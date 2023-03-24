@@ -161,7 +161,7 @@
   "transactionEvent": {
     "accountsburn": "Tokens burnt",
     "accountsmint": "Tokens minted",
-    "accountstransfer": "Transferred",
+    "accountstransfer": "Transfer",
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
     "decoded": "Decoded",
