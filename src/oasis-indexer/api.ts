@@ -91,6 +91,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
@@ -137,7 +138,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   txHash,
   options?,
 ) => {
-  return generated.useGetRuntimeTransactionsTxHash(runtime, txHash, {
+  const actualHash = txHash.startsWith('0x') ? txHash.substring(2) : txHash
+  return generated.useGetRuntimeTransactionsTxHash(runtime, actualHash, {
     ...options,
     axios: {
       ...options?.axios,
@@ -150,6 +152,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,

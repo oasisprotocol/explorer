@@ -117,6 +117,8 @@ export const TransactionLogEvent: FC<{ layer: Layer; event: RuntimeEvent; isFirs
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const decoded = true // TODO: how do I know if this has been successfully decoded?
 
+  // TODO: also consider tx_eth_hash when https://github.com/oasisprotocol/oasis-indexer/issues/363 is resolved
+
   return (
     <>
       {!isFirst && <Divider variant={'card'} />}

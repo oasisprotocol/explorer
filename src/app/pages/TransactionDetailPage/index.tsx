@@ -142,8 +142,8 @@ export const TransactionDetailView: FC<{
           )}
           <dt>{t('common.hash')}</dt>
           <dd>
-            <TransactionLink hash={transaction.hash} layer={transaction.layer} />
-            <CopyToClipboard value={transaction.hash} />
+            <TransactionLink hash={transaction.eth_hash || transaction.hash} layer={transaction.layer} />
+            <CopyToClipboard value={transaction.eth_hash || transaction.hash} />
           </dd>
 
           <dt>{t('common.status')}</dt>
