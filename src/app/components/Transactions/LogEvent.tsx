@@ -42,7 +42,7 @@ const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, eve
   const eventName = eventTypeNames[event.type]
   switch (event.type) {
     case RuntimeEventType.coregas_used:
-      return <span>Gas used: {event.body.amount}</span>
+      return <span>Gas used: {event.body.amount.toLocaleString()}</span>
     case RuntimeEventType.evmlog:
       return (
         <>
