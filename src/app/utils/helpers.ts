@@ -38,4 +38,8 @@ export const getOasisAddress = async (address: string): Promise<string> => {
   }
 }
 
-export const isValidTxHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
+export const isValidTxOasisHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
+
+export const isValidTxEthHash = (hash: string): boolean => /^0x[0-9a-fA-F]{64}$/.test(hash)
+
+export const isValidTxHash = (hash: string) => isValidTxOasisHash(hash) || isValidTxEthHash(hash)

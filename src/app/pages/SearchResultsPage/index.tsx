@@ -129,7 +129,7 @@ export const SearchResultsView: FC<{
             resultComponent={item => (
               <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
             )}
-            link={item => RouteUtils.getTransactionRoute(item.hash, item.layer)}
+            link={item => RouteUtils.getTransactionRoute(item.eth_hash || item.hash, item.layer)}
             linkLabel={t('search.results.transactions.viewLink')}
           />
 

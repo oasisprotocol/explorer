@@ -12,27 +12,19 @@ export function useRedirectIfSingleResult(queries: SearchQueries) {
     !isAnyLoading && Object.values(queries).flatMap<unknown>(query => query.results ?? []).length === 1
 
   let redirectTo: string | undefined
+  const block = queries.blockHeight.results?.[0]
+  const tx = queries.txHash.results?.[0]
+  const evmAccount = queries.evmBech32Account.results?.[0]
+  const oasisAccount = queries.oasisAccount.results?.[0]
   if (hasSingleResult) {
-    if (queries.blockHeight.results?.[0]) {
-      redirectTo = RouteUtils.getBlockRoute(
-        queries.blockHeight.results[0].round,
-        queries.blockHeight.results[0].layer,
-      )
-    } else if (queries.txHash.results?.[0]) {
-      redirectTo = RouteUtils.getTransactionRoute(
-        queries.txHash.results[0].hash,
-        queries.blockHeight.results[0].layer,
-      )
-    } else if (queries.evmBech32Account.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(
-        queries.evmBech32Account.results[0].address,
-        queries.blockHeight.results[0].layer,
-      )
-    } else if (queries.oasisAccount.results?.[0]) {
-      redirectTo = RouteUtils.getAccountRoute(
-        queries.oasisAccount.results[0].address,
-        queries.blockHeight.results[0].layer,
-      )
+    if (block) {
+      redirectTo = RouteUtils.getBlockRoute(block.round, block.layer)
+    } else if (tx) {
+      redirectTo = RouteUtils.getTransactionRoute(tx.eth_hash || tx.hash, tx.layer)
+    } else if (evmAccount) {
+      redirectTo = RouteUtils.getAccountRoute(evmAccount.address, evmAccount.layer)
+    } else if (oasisAccount) {
+      redirectTo = RouteUtils.getAccountRoute(oasisAccount.address, oasisAccount.layer)
     } else {
       // TODO: typescript should ensure all queries are handled
     }

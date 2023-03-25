@@ -37,6 +37,7 @@
     "emerald": "Emerald",
     "cipher": "Cipher",
     "consensus": "Consensus",
+    "ethHash": "ETH hash",
     "failed": "Failed",
     "fiatValue": "Fiat value",
     "fiatValueInUSD": "{{value, currency}}",
