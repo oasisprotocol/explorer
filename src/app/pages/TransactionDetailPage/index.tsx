@@ -171,16 +171,19 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.from')}</dt>
           <dd>
-            <AccountLink address={transaction.sender_0} layer={transaction.layer} />
-            <CopyToClipboard value={transaction.sender_0} />
+            <AccountLink
+              address={transaction.sender_0_eth || transaction.sender_0}
+              layer={transaction.layer}
+            />
+            <CopyToClipboard value={transaction.sender_0_eth || transaction.sender_0} />
           </dd>
 
           {transaction.to && (
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <AccountLink address={transaction.to} layer={transaction.layer} />
-                <CopyToClipboard value={transaction.to} />
+                <AccountLink address={transaction.to_eth || transaction.to} layer={transaction.layer} />
+                <CopyToClipboard value={transaction.to_eth || transaction.to} />
               </dd>
             </>
           )}

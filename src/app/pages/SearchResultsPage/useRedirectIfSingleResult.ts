@@ -22,9 +22,12 @@ export function useRedirectIfSingleResult(queries: SearchQueries) {
     } else if (tx) {
       redirectTo = RouteUtils.getTransactionRoute(tx.eth_hash || tx.hash, tx.layer)
     } else if (evmAccount) {
-      redirectTo = RouteUtils.getAccountRoute(evmAccount.address, evmAccount.layer)
+      redirectTo = RouteUtils.getAccountRoute(evmAccount.address_eth ?? evmAccount.address, evmAccount.layer)
     } else if (oasisAccount) {
-      redirectTo = RouteUtils.getAccountRoute(oasisAccount.address, oasisAccount.layer)
+      redirectTo = RouteUtils.getAccountRoute(
+        oasisAccount.address_eth ?? oasisAccount.address,
+        oasisAccount.layer,
+      )
     } else {
       // TODO: typescript should ensure all queries are handled
     }

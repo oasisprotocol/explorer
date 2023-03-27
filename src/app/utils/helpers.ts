@@ -1,5 +1,9 @@
+import { toChecksumAddress } from '@ethereumjs/util'
+import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
+// eslint-disable-next-line no-restricted-imports
+import { AddressPreimage } from '../../oasis-indexer/generated/api'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
 export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
@@ -43,3 +47,13 @@ export const isValidTxOasisHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/
 export const isValidTxEthHash = (hash: string): boolean => /^0x[0-9a-fA-F]{64}$/.test(hash)
 
 export const isValidTxHash = (hash: string) => isValidTxOasisHash(hash) || isValidTxEthHash(hash)
+
+export function getEthAccountAddress(preimage: AddressPreimage | undefined): string | undefined {
+  if (preimage?.context !== 'oasis-runtime-sdk/address: secp256k1eth' || !preimage.address_data) {
+    // We can only determine the ETH address if there was a preimage,
+    // and the generation context was secp256k1eth
+    return undefined
+  }
+  // We need to convert from base64 to hex, add the prefix, and convert to checksum address
+  return toChecksumAddress(`0x${Buffer.from(preimage.address_data, 'base64').toString('hex')}`)
+}

@@ -112,7 +112,11 @@ export const Transactions: FC<TransactionProps> = ({
               pr: 4,
             }}
           >
-            <AccountLink address={transaction.sender_0} layer={transaction.layer} alwaysTrim={true} />
+            <AccountLink
+              address={transaction.sender_0_eth || transaction.sender_0}
+              layer={transaction.layer}
+              alwaysTrim={true}
+            />
             {transaction.to && (
               <StyledCircle>
                 <ArrowForwardIcon fontSize="inherit" />
@@ -123,7 +127,13 @@ export const Transactions: FC<TransactionProps> = ({
         key: 'from',
       },
       {
-        content: <AccountLink address={transaction.to!} layer={transaction.layer} alwaysTrim={true} />,
+        content: (
+          <AccountLink
+            address={transaction.to_eth || transaction.to!}
+            layer={transaction.layer}
+            alwaysTrim={true}
+          />
+        ),
         key: 'to',
       },
       {
