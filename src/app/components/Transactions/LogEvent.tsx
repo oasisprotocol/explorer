@@ -15,6 +15,14 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
 
 const EvmEventParamData: FC<{ layer: Layer; param: EvmEventParam }> = ({ layer, param }) => {
+  /**
+   * According to the API docs:
+   *
+   * Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+   * Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+   * Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+   * Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
+   */
   switch (param.evm_type) {
     case 'address':
       return <AccountLink address={param.value as string} layer={layer} />
