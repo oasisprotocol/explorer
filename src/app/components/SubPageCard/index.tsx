@@ -103,6 +103,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
                 display: 'inline',
                 marginLeft: '1ex',
               }}
+              action={action}
             />
           </StyledBox>
         )}
