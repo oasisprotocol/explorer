@@ -27,7 +27,7 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 type SnapshotCardProps = PropsWithChildren & {
   badge?: ReactNode
   label?: string
-  title: string
+  title: ReactNode
 }
 
 export const SnapshotCard: FC<SnapshotCardProps> = ({ badge, children, title, label }) => {
