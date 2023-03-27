@@ -38,7 +38,9 @@ type StyledTableRowProps = MuiTableRowProps & {
 
 const StyledTableRow = styled(TableRow, {
   shouldForwardProp: prop => prop !== 'highlight',
-})<StyledTableRowProps>(({ highlight }) => highlight && backgroundColorAnimation)
+})<StyledTableRowProps>(({ highlight }) => ({
+  ...(highlight && backgroundColorAnimation),
+}))
 
 export enum TableCellAlign {
   Left = 'left',
