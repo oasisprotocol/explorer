@@ -677,7 +677,12 @@ export type RuntimeTransactionListAllOf = {
 export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
 
 /**
- * A decoded parameter of an event emitted from an evm runtime.
+ * A decoded parameter of an event emitted from an EVM runtime.
+Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON conterpart.
+
  */
 export interface EvmEventParam {
   /** The parameter name. */
