@@ -45,7 +45,7 @@ export const RosePriceCard: FC = () => {
         <StyledBox>
           <CoinGeckoReferral />
         </StyledBox>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <Typography
             component="span"
             sx={{
