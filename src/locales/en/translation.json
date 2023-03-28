@@ -126,9 +126,6 @@
     "first": "First",
     "last": "Last"
   },
-  "roseChart": {
-    "header": "Current ROSE Price"
-  },
   "rosePrice": {
     "header": "ROSE Price"
   },
