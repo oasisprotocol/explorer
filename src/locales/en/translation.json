@@ -126,8 +126,8 @@
     "first": "First",
     "last": "Last"
   },
-  "roseChart": {
-    "header": "Current ROSE Price"
+  "rosePrice": {
+    "header": "ROSE Price"
   },
   "social": {
     "description": "Be part of the community and stay in the loop on everything Oasis",

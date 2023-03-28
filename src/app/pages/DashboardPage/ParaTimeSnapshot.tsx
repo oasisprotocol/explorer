@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
-import { RoseChartCard } from './RoseChartCard'
+import { RosePriceCard } from './RosePriceCard'
 import { Nodes } from './Nodes'
 import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
@@ -66,7 +66,7 @@ export const ParaTimeSnapshot: FC = () => {
           <Nodes />
         </StyledGrid>
         <StyledGrid item xs={12} md={3}>
-          <RoseChartCard chartDuration={chartDuration} />
+          <RosePriceCard />
         </StyledGrid>
       </Grid>
     </>
