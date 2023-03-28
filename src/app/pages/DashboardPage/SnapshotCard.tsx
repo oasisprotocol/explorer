@@ -35,23 +35,25 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({ badge, children, title, la
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <StyledCardContent>{children}</StyledCardContent>
-      <CardActions sx={{ minHeight: 60 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-            px: 3,
-            pb: 3,
-          }}
-        >
-          <Box>{badge}</Box>
-          <Typography variant="h2" sx={{ fontWeight: 'fontWeightRegular' }}>
-            {label}
-          </Typography>
-        </Box>
-      </CardActions>
+      {(badge || label) && (
+        <CardActions sx={{ minHeight: 60 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              px: 3,
+              pb: 3,
+            }}
+          >
+            <Box>{badge}</Box>
+            <Typography variant="h2" sx={{ fontWeight: 'fontWeightRegular' }}>
+              {label}
+            </Typography>
+          </Box>
+        </CardActions>
+      )}
     </StyledCard>
   )
 }
