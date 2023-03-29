@@ -669,61 +669,21 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiSpeedDial: {
-      styleOverrides: {
-        fab: ({ theme }) => ({
-          background: COLORS.white,
-          color: COLORS.brandExtraDark,
-          width: 48,
-          height: 48,
-          '&:hover': {
-            backgroundColor: COLORS.white,
-          },
-          margin: `0 2px ${theme.spacing(5)}`,
-        }),
-        actions: ({ theme }) => ({
-          backgroundColor: COLORS.white,
-          backgroundClip: 'content-box',
-          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-          border: `2px solid ${COLORS.white}`,
-          borderRadius: 50,
-          '&&': {
-            marginTop: theme.spacing(-1),
-            paddingTop: 'unset',
-          },
-        }),
-        actionsClosed: {
-          display: 'none',
+    MuiIconButton: {
+      variants: [
+        {
+          props: { color: 'primary' },
+          style: () => ({
+            background: COLORS.white,
+            svg: {
+              color: COLORS.brandExtraDark,
+            },
+            '&:hover': {
+              background: COLORS.white,
+            },
+          }),
         },
-      },
-    },
-    MuiSpeedDialIcon: {
-      styleOverrides: {
-        icon: {
-          transform: 'none',
-        },
-      },
-    },
-    MuiSpeedDialAction: {
-      styleOverrides: {
-        fab: ({ theme }) => ({
-          width: 48,
-          height: 48,
-          boxShadow: 'none',
-          '&.interactive': {
-            border: `1px solid ${COLORS.brandExtraDark}`,
-          },
-          '&:active': {
-            boxShadow: 'none',
-          },
-          '&:last-child': {
-            margin: `0`,
-          },
-          '&:not(:last-child)': {
-            margin: `0 0 ${theme.spacing(3)}`,
-          },
-        }),
-      },
+      ],
     },
   },
 })

@@ -15,7 +15,7 @@ import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
-import { TableView, TableViewSpeedDial } from '../../components/TableViewSpeedDial'
+import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -28,7 +28,7 @@ const BlockDetails = styled(Box)(({ theme }) => ({
 }))
 
 export const BlocksPage: FC = () => {
-  const [tableView, setTableView] = useState<TableView>(TableView.Horizontal)
+  const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -44,14 +44,14 @@ export const BlocksPage: FC = () => {
 
   useEffect(() => {
     if (!isMobile) {
-      setTableView(TableView.Horizontal)
+      setTableView(TableLayout.Horizontal)
     }
   }, [isMobile, setTableView])
 
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: tableView === TableView.Vertical ? offset || PAGE_SIZE : PAGE_SIZE,
+      limit: tableView === TableLayout.Vertical ? offset || PAGE_SIZE : PAGE_SIZE,
       offset,
     },
     {
@@ -72,7 +72,7 @@ export const BlocksPage: FC = () => {
             },
           }
         },
-        keepPreviousData: tableView === TableView.Vertical,
+        keepPreviousData: tableView === TableLayout.Vertical,
       },
     },
   )
@@ -84,10 +84,10 @@ export const BlocksPage: FC = () => {
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('blocks.latest')}
-        action={isMobile && <TableViewSpeedDial tableView={tableView} setTableView={setTableView} />}
-        noPadding={tableView === TableView.Vertical}
+        action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        noPadding={tableView === TableLayout.Vertical}
       >
-        {tableView === TableView.Horizontal && (
+        {tableView === TableLayout.Horizontal && (
           <Blocks
             isLoading={blocksQuery.isLoading}
             blocks={blocksQuery.data?.data.blocks}
@@ -102,7 +102,7 @@ export const BlocksPage: FC = () => {
             }}
           />
         )}
-        {tableView === TableView.Vertical && (
+        {tableView === TableLayout.Vertical && (
           <BlockDetails>
             {!blocksQuery.data?.data.blocks.length &&
               [...Array(PAGE_SIZE).keys()].map(key => (

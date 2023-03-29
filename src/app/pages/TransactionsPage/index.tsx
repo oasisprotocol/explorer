@@ -13,7 +13,7 @@ import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { TableView, TableViewSpeedDial } from '../../components/TableViewSpeedDial'
+import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TransactionDetailView } from '../TransactionDetailPage'
@@ -28,7 +28,7 @@ const TransactionDetails = styled(Box)(({ theme }) => ({
 }))
 
 export const TransactionsPage: FC = () => {
-  const [tableView, setTableView] = useState<TableView>(TableView.Horizontal)
+  const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -44,7 +44,7 @@ export const TransactionsPage: FC = () => {
 
   useEffect(() => {
     if (!isMobile) {
-      setTableView(TableView.Horizontal)
+      setTableView(TableLayout.Horizontal)
     }
   }, [isMobile, setTableView])
 
@@ -80,10 +80,10 @@ export const TransactionsPage: FC = () => {
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('transactions.latest')}
-        action={isMobile && <TableViewSpeedDial tableView={tableView} setTableView={setTableView} />}
-        noPadding={tableView === TableView.Vertical}
+        action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        noPadding={tableView === TableLayout.Vertical}
       >
-        {tableView === TableView.Horizontal && (
+        {tableView === TableLayout.Horizontal && (
           <Transactions
             transactions={transactionsQuery.data?.data.transactions}
             isLoading={transactionsQuery.isLoading}
@@ -98,7 +98,7 @@ export const TransactionsPage: FC = () => {
           />
         )}
 
-        {tableView === TableView.Vertical && (
+        {tableView === TableLayout.Vertical && (
           <TransactionDetails>
             {!transactionsQuery.data?.data.transactions.length &&
               [...Array(limit).keys()].map(key => (
