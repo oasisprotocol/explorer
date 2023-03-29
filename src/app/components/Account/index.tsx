@@ -52,6 +52,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const balance = account?.balances[0]?.balance ?? '0'
+  const address = account ? account.address_eth ?? account.address : undefined
 
   return (
     <>
@@ -68,8 +69,8 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
             <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
           </StyledAvatarContainer>
           <dd>
-            <AccountLink address={account.address} layer={account.layer} />
-            <CopyToClipboard value={account.address} />
+            <AccountLink address={address!} layer={account.layer} />
+            <CopyToClipboard value={address!} />
           </dd>
 
           <dt>{t('common.balance')}</dt>

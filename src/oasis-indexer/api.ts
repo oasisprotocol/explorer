@@ -6,6 +6,7 @@ import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { Layer } from './generated/api'
+import { getEthAccountAddress } from '../app/utils/helpers'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -28,6 +29,7 @@ declare module './generated/api' {
   }
   export interface RuntimeAccount {
     layer: Layer
+    address_eth?: string
   }
 }
 
@@ -138,7 +140,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   txHash,
   options?,
 ) => {
-  const actualHash = txHash.startsWith('0x') ? txHash.substring(2) : txHash
+  // Sometimes we will call this with an undefined txHash, so we must be careful here.
+  const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
   return generated.useGetRuntimeTransactionsTxHash(runtime, actualHash, {
     ...options,
     axios: {
@@ -204,7 +207,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return {
             ...data,
-
+            address_eth: getEthAccountAddress(data.address_preimage),
             evm_balances: data.evm_balances?.map(token => {
               return {
                 ...token,

@@ -27,6 +27,7 @@ export const suggestedParsedAccount: RuntimeAccount = {
     context: 'oasis-runtime-sdk/address: secp256k1eth',
     context_version: 0,
   },
+  address_eth: '0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3',
   balances: [],
   evm_balances: [
     {

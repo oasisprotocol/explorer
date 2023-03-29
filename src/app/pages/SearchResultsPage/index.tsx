@@ -147,7 +147,7 @@ export const SearchResultsView: FC<{
                 showLayer={true}
               />
             )}
-            link={item => RouteUtils.getAccountRoute(item.address, item.layer)}
+            link={item => RouteUtils.getAccountRoute(item.address_eth ?? item.address, item.layer)}
             linkLabel={t('search.results.accounts.viewLink')}
           />
         </>
