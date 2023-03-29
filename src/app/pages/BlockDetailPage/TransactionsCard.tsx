@@ -36,6 +36,7 @@ const TransactionList: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blo
         selectedPage: txsPagination.selectedPage,
         linkToPage: txsPagination.linkToPage,
         totalCount: transactionsQuery.data?.data.total_count,
+        isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
         rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
       verbose={false}

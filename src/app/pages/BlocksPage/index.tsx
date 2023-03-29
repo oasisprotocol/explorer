@@ -69,6 +69,7 @@ export const BlocksPage: FC = () => {
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: blocksQuery.data?.data.total_count,
+            isTotalCountClipped: blocksQuery.data?.data.is_total_count_clipped,
             rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
           }}
         />

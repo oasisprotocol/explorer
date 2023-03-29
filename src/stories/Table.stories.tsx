@@ -99,5 +99,6 @@ SampleTable.args = {
     linkToPage: page => ({ search: `?page=${page}` }),
     rowsPerPage: 10,
     totalCount: data.length,
+    isTotalCountClipped: true,
   },
 }
