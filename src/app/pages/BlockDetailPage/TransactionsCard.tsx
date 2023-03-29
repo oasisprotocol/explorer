@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
+import { ScrollingCard } from '../../components/PageLayout/ScrollingCard'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -47,13 +47,13 @@ const TransactionList: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blo
 export const TransactionsCard: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blockHeight }) => {
   const { t } = useTranslation()
   return (
-    <Card id={transactionsContainerId}>
+    <ScrollingCard id={transactionsContainerId}>
       <CardHeader disableTypography component="h3" title={t('common.transactions')} />
       <CardContent>
         <ErrorBoundary light={true}>
           <TransactionList layer={layer} blockHeight={blockHeight} />
         </ErrorBoundary>
       </CardContent>
-    </Card>
+    </ScrollingCard>
   )
 }
