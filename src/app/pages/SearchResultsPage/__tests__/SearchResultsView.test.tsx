@@ -64,8 +64,6 @@ describe('SearchResultsView', () => {
     expect(screen.getByRole('link', { name: '337325.43836 FTP' })).toHaveAttribute(
       'href',
       '/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
-      // TODO: use evm account address
-      // '/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
     )
   })
 })
