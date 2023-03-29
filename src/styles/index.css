@@ -1,6 +1,10 @@
 @import '../../node_modules/@fontsource/figtree/variable.css';
 @import '../../node_modules/@fontsource/roboto-mono/variable.css';
 
+html {
+  scroll-behavior: smooth;
+}
+
 /** Use Figtree for "…" instead of Roboto Mono. */
 @font-face {
   font-family: 'Roboto MonoVariable';
