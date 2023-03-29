@@ -65,6 +65,7 @@ export const TransactionsPage: FC = () => {
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: transactionsQuery.data?.data.total_count,
+            isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
             rowsPerPage: limit,
           }}
         />

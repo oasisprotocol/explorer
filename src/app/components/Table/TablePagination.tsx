@@ -9,24 +9,22 @@ export type TablePaginationProps = {
   rowsPerPage: number
   selectedPage: number
   totalCount: number | undefined
+  isTotalCountClipped: boolean | undefined
 }
-
-// API counts maximum 1000 items
-// https://github.com/oasisprotocol/oasis-indexer/blob/e220d3f2872abff45e5a78fe6b1a1de961e18765/storage/client/client.go#L30
-const maximumTotalCount = 1000
 
 export const TablePagination: FC<TablePaginationProps> = ({
   selectedPage,
   linkToPage,
   rowsPerPage,
   totalCount,
+  isTotalCountClipped,
 }) => {
   const { t } = useTranslation()
 
   if (!totalCount) {
     return null
   }
-  const totalCountBoundary = Math.min(totalCount + (selectedPage - 1) * rowsPerPage, maximumTotalCount)
+  const totalCountBoundary = totalCount + (selectedPage - 1) * rowsPerPage
   const numberOfPages = Math.ceil(totalCountBoundary / rowsPerPage)
 
   return (
@@ -37,11 +35,12 @@ export const TablePagination: FC<TablePaginationProps> = ({
         <PaginationItem
           slots={{
             first: () => <>{t('pagination.first')}</>,
-            last: () => <>{t('pagination.last')}</>,
+            last: () => <>{isTotalCountClipped ? '…' : t('pagination.last')}</>,
           }}
           component={Link}
           to={item.page == null ? '' : linkToPage(item.page)}
           {...item}
+          sx={isTotalCountClipped && item.type === 'last' ? { pointerEvents: 'none', cursor: 'default' } : {}}
         />
       )}
       showFirstButton
