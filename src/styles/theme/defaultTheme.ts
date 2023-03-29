@@ -671,7 +671,7 @@ export const defaultTheme = createTheme({
     },
     MuiSpeedDial: {
       styleOverrides: {
-        fab: {
+        fab: ({ theme }) => ({
           background: COLORS.white,
           color: COLORS.brandExtraDark,
           width: 48,
@@ -679,8 +679,8 @@ export const defaultTheme = createTheme({
           '&:hover': {
             backgroundColor: COLORS.white,
           },
-          margin: '0 2px 0',
-        },
+          margin: `0 2px ${theme.spacing(5)}`,
+        }),
         actions: ({ theme }) => ({
           backgroundColor: COLORS.white,
           backgroundClip: 'content-box',
@@ -688,7 +688,7 @@ export const defaultTheme = createTheme({
           border: `2px solid ${COLORS.white}`,
           borderRadius: 50,
           '&&': {
-            marginTop: theme.spacing(4),
+            marginTop: theme.spacing(-1),
             paddingTop: 'unset',
           },
         }),
