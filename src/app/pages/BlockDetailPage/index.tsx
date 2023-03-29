@@ -55,8 +55,8 @@ export const BlockDetailView: FC<{
   isLoading?: boolean
   block: BlockDetailRuntimeBlock | undefined
   showLayer?: boolean
-  withPadding?: boolean
-}> = ({ isLoading, block, showLayer, withPadding = false }) => {
+  standalone?: boolean
+}> = ({ isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -74,7 +74,7 @@ export const BlockDetailView: FC<{
   return (
     <StyledDescriptionList
       titleWidth={isMobile ? '100px' : '200px'}
-      withPadding={withPadding}
+      standalone={standalone}
       highlight={block.markAsNew}
     >
       {showLayer && (

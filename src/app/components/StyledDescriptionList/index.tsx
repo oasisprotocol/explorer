@@ -33,13 +33,13 @@ const InlineDescriptionList = styled('dl', {
 `
 
 interface StyledDescriptionListProps {
-  withPadding?: boolean
+  standalone?: boolean
   highlight?: boolean
 }
 
 export const StyledDescriptionList = styled(InlineDescriptionList, {
-  shouldForwardProp: prop => prop !== 'withPadding' && prop !== 'highlight',
-})<StyledDescriptionListProps>(({ theme, withPadding, highlight }) => ({
+  shouldForwardProp: prop => prop !== 'standalone' && prop !== 'highlight',
+})<StyledDescriptionListProps>(({ theme, standalone, highlight }) => ({
   'dt, dd': {
     display: 'flex',
     alignItems: 'center',
@@ -60,6 +60,13 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   dd: {
     color: COLORS.brandExtraDark,
   },
-  ...(withPadding && { '&&': { padding: theme.spacing(4) } }),
+  ...(standalone && {
+    '&&': {
+      padding: theme.spacing(2),
+      backgroundColor: COLORS.white,
+      marginBottom: theme.spacing(4),
+      borderRadius: '12px',
+    },
+  }),
   ...(highlight && backgroundColorAnimation),
 }))

@@ -79,7 +79,11 @@ export const BlocksPage: FC = () => {
 
   return (
     <PageLayout
-      mobileFooterAction={<LoadMoreButton pagination={pagination} isLoading={blocksQuery.isLoading} />}
+      mobileFooterAction={
+        tableView === TableLayout.Vertical && (
+          <LoadMoreButton pagination={pagination} isLoading={blocksQuery.isLoading} />
+        )
+      }
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
@@ -104,17 +108,13 @@ export const BlocksPage: FC = () => {
         )}
         {tableView === TableLayout.Vertical && (
           <BlockDetails>
-            {!blocksQuery.data?.data.blocks.length &&
+            {blocksQuery.isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <SubPageCard featured key={key} noPadding>
-                  <BlockDetailView isLoading={true} block={undefined} withPadding />
-                </SubPageCard>
+                <BlockDetailView key={key} isLoading={true} block={undefined} standalone />
               ))}
-            {!!blocksQuery.data?.data.blocks.length &&
+            {!blocksQuery.isLoading &&
               blocksQuery.data?.data.blocks.map(block => (
-                <SubPageCard featured key={block.hash} noPadding>
-                  <BlockDetailView block={block} withPadding />
-                </SubPageCard>
+                <BlockDetailView key={block.hash} block={block} standalone />
               ))}
           </BlockDetails>
         )}

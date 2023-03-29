@@ -50,7 +50,10 @@ export const TransactionsPage: FC = () => {
 
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     layer, // This is OK, since consensus is already handled separately
-    { limit, offset },
+    {
+      limit: tableView === TableLayout.Vertical ? offset || limit : limit,
+      offset,
+    },
     {
       query: {
         refetchInterval: REFETCH_INTERVAL,
@@ -75,13 +78,16 @@ export const TransactionsPage: FC = () => {
 
   return (
     <PageLayout
-      mobileFooterAction={<LoadMoreButton pagination={pagination} isLoading={transactionsQuery.isLoading} />}
+      mobileFooterAction={
+        tableView === TableLayout.Vertical && (
+          <LoadMoreButton pagination={pagination} isLoading={transactionsQuery.isLoading} />
+        )
+      }
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('transactions.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
-        noPadding={tableView === TableLayout.Vertical}
       >
         {tableView === TableLayout.Horizontal && (
           <Transactions
@@ -97,25 +103,21 @@ export const TransactionsPage: FC = () => {
             }}
           />
         )}
-
-        {tableView === TableLayout.Vertical && (
-          <TransactionDetails>
-            {!transactionsQuery.data?.data.transactions.length &&
-              [...Array(limit).keys()].map(key => (
-                <SubPageCard featured key={key} noPadding>
-                  <TransactionDetailView isLoading={true} transaction={undefined} withPadding />
-                </SubPageCard>
-              ))}
-
-            {!!transactionsQuery.data?.data.transactions.length &&
-              transactionsQuery.data?.data.transactions.map(tx => (
-                <SubPageCard featured key={tx.hash} noPadding>
-                  <TransactionDetailView transaction={tx} withPadding />
-                </SubPageCard>
-              ))}
-          </TransactionDetails>
-        )}
       </SubPageCard>
+
+      {tableView === TableLayout.Vertical && (
+        <TransactionDetails>
+          {transactionsQuery.isLoading &&
+            [...Array(limit).keys()].map(key => (
+              <TransactionDetailView key={key} isLoading={true} transaction={undefined} standalone />
+            ))}
+
+          {!transactionsQuery.isLoading &&
+            transactionsQuery.data?.data.transactions.map(tx => (
+              <TransactionDetailView key={tx.hash} transaction={tx} standalone />
+            ))}
+        </TransactionDetails>
+      )}
     </PageLayout>
   )
 }

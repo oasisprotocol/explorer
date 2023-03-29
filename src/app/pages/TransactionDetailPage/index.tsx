@@ -127,8 +127,8 @@ export const TransactionDetailView: FC<{
   isLoading?: boolean
   transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
-  withPadding?: boolean
-}> = ({ isLoading, transaction, showLayer, withPadding = false }) => {
+  standalone?: boolean
+}> = ({ isLoading, transaction, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -140,7 +140,7 @@ export const TransactionDetailView: FC<{
       {transaction && (
         <StyledDescriptionList
           titleWidth={isMobile ? '100px' : '200px'}
-          withPadding={withPadding}
+          standalone={standalone}
           highlight={transaction.markAsNew}
         >
           {showLayer && (
