@@ -14,6 +14,8 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
 import { TransactionLink } from './TransactionLink'
+import { trimLongString } from '../../utils/trimLongString'
+import Typography from '@mui/material/Typography'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -41,6 +43,7 @@ export type TableRuntimeTransactionList = {
 
 type TransactionProps = {
   transactions?: TableRuntimeTransaction[]
+  ownAddress?: string
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
@@ -52,6 +55,7 @@ export const Transactions: FC<TransactionProps> = ({
   limit,
   pagination,
   transactions,
+  ownAddress,
   verbose = true,
 }) => {
   const { t } = useTranslation()
@@ -113,11 +117,24 @@ export const Transactions: FC<TransactionProps> = ({
               pr: 4,
             }}
           >
-            <AccountLink
-              address={transaction.sender_0_eth || transaction.sender_0}
-              layer={transaction.layer}
-              alwaysTrim={true}
-            />
+            {!!ownAddress &&
+            (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
+              <Typography
+                variant="mono"
+                component="span"
+                sx={{
+                  fontWeight: 700,
+                }}
+              >
+                {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
+              </Typography>
+            ) : (
+              <AccountLink
+                address={transaction.sender_0_eth || transaction.sender_0}
+                layer={transaction.layer}
+                alwaysTrim={true}
+              />
+            )}
             {transaction.to && (
               <StyledCircle>
                 <ArrowForwardIcon fontSize="inherit" />
@@ -128,13 +145,24 @@ export const Transactions: FC<TransactionProps> = ({
         key: 'from',
       },
       {
-        content: (
-          <AccountLink
-            address={transaction.to_eth || transaction.to!}
-            layer={transaction.layer}
-            alwaysTrim={true}
-          />
-        ),
+        content:
+          !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
+            <Typography
+              variant="mono"
+              component="span"
+              sx={{
+                fontWeight: 700,
+              }}
+            >
+              {trimLongString(transaction.to_eth || transaction.to!)}
+            </Typography>
+          ) : (
+            <AccountLink
+              address={transaction.to_eth || transaction.to!}
+              layer={transaction.layer}
+              alwaysTrim={true}
+            />
+          ),
         key: 'to',
       },
       {

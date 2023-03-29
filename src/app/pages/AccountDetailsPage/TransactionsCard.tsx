@@ -32,6 +32,7 @@ export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer,
   return (
     <Transactions
       transactions={transactionsQuery.data?.data.transactions}
+      ownAddress={address}
       isLoading={transactionsQuery.isLoading}
       limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
       pagination={{
