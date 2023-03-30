@@ -1,0 +1,47 @@
+name: CloudFlare
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn build-preview && yarn build-storybook
+      - name: Deploy App to Cloudflare Workers
+        id: wrangler
+        uses: buberdds/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFRONT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFRONT_ACCOUNT_ID }}
+          command: pages publish "./build" --project-name=explorer
+
+      - name: Deploy Storybook to Cloudflare Workers
+        id: wrangler-storybook
+        uses: buberdds/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFRONT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFRONT_ACCOUNT_ID }}
+          command: pages publish "./storybook-static" --project-name=explorer
+
+      - name: Add Comment to PR
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            App has been deployed to: ${{ steps.wrangler.outputs.url }}
+            Storybook has been deployed to: ${{ steps.wrangler-storybook.outputs.url }}
