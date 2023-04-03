@@ -4,6 +4,9 @@ import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
+  position: 'sticky',
+  top: 0,
+  zIndex: 1000,
   justifyContent: 'center',
   borderRadius: 0,
   fontSize: '12px',
