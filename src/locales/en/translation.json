@@ -22,6 +22,7 @@
   "block": {
     "gasUsed": "{{value, number}} | {{percentage, number}}"
   },
+  "buildInternal": "Please note this is an internal launch meant to gather your feedback. Please share your feedback with screenshots through this from: ",
   "buildPreview": "Please note this is an experimental build of Oasis Explorer and that data that is shown might be incorrect.",
   "clipboard": {
     "label": "Copy to clipboard",
