@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "node ./internals/scripts/build.js",
-    "build-preview": "node ./internals/scripts/build.js --preview",
+    "build-preview": "REACT_APP_BUILD_PREVIEW=preview  yarn run build",
     "clean": "rm -rf build/ .parcel-cache",
     "start": "parcel --dist-dir build-dev --no-cache",
     "checkTs": "tsc --noEmit",
