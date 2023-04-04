@@ -37,5 +37,14 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
   },
+  webpackFinal: async config => {
+    return {
+      ...config,
+      module: {
+        ...config.module,
+        unknownContextCritical: false,
+      },
+    }
+  },
 }
 export default config
