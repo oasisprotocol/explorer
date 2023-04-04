@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { COLORS } from '../styles/theme/colors'
 import { AppendMobileSearch } from '../app/components/AppendMobileSearch'
@@ -10,9 +10,9 @@ export default {
   title: 'Example/AppendMobileSearch',
   component: AppendMobileSearch,
   decorators: [withRouter],
-} satisfies ComponentMeta<typeof AppendMobileSearch>
+} satisfies Meta<typeof AppendMobileSearch>
 
-const Template: ComponentStory<typeof AppendMobileSearch> = args => (
+const Template: StoryFn<typeof AppendMobileSearch> = args => (
   <Box sx={{ px: 0 }}>
     <Grid container sx={{ background: COLORS.brandDark, py: 4 }}>
       <Grid item xs={12} sx={{ px: 4 }}>
@@ -22,13 +22,15 @@ const Template: ComponentStory<typeof AppendMobileSearch> = args => (
   </Box>
 )
 
-export const Default = Template.bind({})
-Default.args = {
-  children: <Typography sx={{ color: COLORS.white }}>Header</Typography>,
-}
-Default.parameters = {
-  layout: 'fullscreen',
-  viewport: {
-    defaultViewport: 'iphone6',
+export const Default = {
+  render: Template,
+  args: {
+    children: <Typography sx={{ color: COLORS.white }}>Header</Typography>,
+  },
+  parameters: {
+    layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'iphone6',
+    },
   },
 }

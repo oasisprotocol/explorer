@@ -1,13 +1,12 @@
-import React from 'react'
 import { COLORS } from '../styles/theme/colors'
 import Box from '@mui/material/Box'
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 export default {
   title: 'Example/Colors',
-} satisfies ComponentMeta<any>
+} satisfies Meta<any>
 
 const ColorContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -18,7 +17,7 @@ const ColorContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
 }))
 
-const Template: Story = () => {
+const Template: StoryFn = () => {
   return (
     <ColorContainer>
       {Object.entries(COLORS).map(([colorName, colorValue]) => (
@@ -47,5 +46,7 @@ const Template: Story = () => {
   )
 }
 
-export const Showroom = Template.bind({})
-Showroom.args = {}
+export const Showroom = {
+  render: Template,
+  args: {},
+}

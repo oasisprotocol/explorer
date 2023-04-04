@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { SearchButton } from '../app/components/Search'
 import { SuggestionButton } from '../app/components/Search/SearchSuggestionsButtons'
 import { Select } from '../app/components/Select'
@@ -8,9 +8,9 @@ import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroup'
 
 export default {
   title: 'Example/ButtonsShowroom',
-} satisfies ComponentMeta<any>
+} satisfies Meta<any>
 
-const Template: Story = () => {
+const Template: StoryFn = () => {
   return (
     <div>
       <SearchButton searchVariant="button">SearchButton</SearchButton>
@@ -30,5 +30,7 @@ const Template: Story = () => {
   )
 }
 
-export const Showroom = Template.bind({})
-Showroom.args = {}
+export const Showroom = {
+  render: Template,
+  args: {},
+}
