@@ -18,7 +18,7 @@
     "lint:fix": "yarn run lint --fix",
     "prettify": "prettier src internals --write",
     "test": "jest",
-    "storybook": "storybook dev -p 6006",
+    "start-storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "targets": {
