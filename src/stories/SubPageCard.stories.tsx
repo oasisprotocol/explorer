@@ -1,8 +1,8 @@
+import { ComponentProps } from 'react'
 import Box from '@mui/material/Box'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { SubPageCard } from '../app/components/SubPageCard'
 import { TextSkeleton } from '../app/components/Skeleton'
-import { ComponentProps } from 'react'
 
 export default {
   title: 'Example/SubPageCard',
@@ -24,21 +24,23 @@ const Template: StoryFn<Partial<ComponentProps<typeof SubPageCard>>> = args => {
   )
 }
 
-export const Featured = {
+type Story = StoryObj<typeof SubPageCard>
+
+export const Featured: Story = {
   render: Template,
   args: {
     featured: true,
   },
 }
 
-export const NonFeatured = {
+export const NonFeatured: Story = {
   render: Template,
   args: {
     featured: false,
   },
 }
 
-export const Mobile = {
+export const Mobile: Story = {
   render: Template,
   args: {
     featured: true,

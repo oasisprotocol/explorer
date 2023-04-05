@@ -1,8 +1,8 @@
-import { COLORS } from '../styles/theme/colors'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Box from '@mui/material/Box'
-import { Meta, StoryFn } from '@storybook/react'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { COLORS } from '../styles/theme/colors'
 
 export default {
   title: 'Example/Colors',
@@ -46,7 +46,7 @@ const Template: StoryFn = () => {
   )
 }
 
-export const Showroom = {
+export const Showroom: StoryObj = {
   render: Template,
   args: {},
 }

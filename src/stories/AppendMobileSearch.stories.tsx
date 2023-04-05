@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { COLORS } from '../styles/theme/colors'
 import { AppendMobileSearch } from '../app/components/AppendMobileSearch'
@@ -22,7 +22,9 @@ const Template: StoryFn<typeof AppendMobileSearch> = args => (
   </Box>
 )
 
-export const Default = {
+type Story = StoryObj<typeof AppendMobileSearch>
+
+export const Default: Story = {
   render: Template,
   args: {
     children: <Typography sx={{ color: COLORS.white }}>Header</Typography>,

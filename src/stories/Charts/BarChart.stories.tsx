@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Card from '@mui/material/Card'
 import { intlDateFormat } from '../../app/utils/dateFormatter'
 import { BarChart } from '../../app/components/charts/BarChart'
@@ -52,7 +52,9 @@ const Template: StoryFn<typeof BarChart<TimeDataItem>> = args => {
   )
 }
 
-export const SampleBarChart = {
+type Story = StoryObj<typeof BarChart<TimeDataItem>>
+
+export const SampleBarChart: Story = {
   render: Template,
   args: {
     data: timeData,

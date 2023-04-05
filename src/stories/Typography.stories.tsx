@@ -1,31 +1,28 @@
-import { ComponentProps } from 'react'
-import { Meta } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Typography from '@mui/material/Typography'
-import { COLORS } from '../styles/theme/colors'
 import Box from '@mui/material/Box'
-import { StoryFn } from '@storybook/react'
-
-type TypographyStory = ComponentProps<typeof Typography> & {
-  darkMode: boolean
-}
+import { COLORS } from '../styles/theme/colors'
 
 export default {
   title: 'Example/Typography',
   component: Typography,
 } satisfies Meta<typeof Typography>
 
-const Template: StoryFn<TypographyStory> = args => {
-  const { darkMode, ...props } = args
-  const backgroundColor = darkMode ? COLORS.brandExtraDark : COLORS.white
+const Template: StoryFn<typeof Typography> = args => (
+  <Box sx={{ backgroundColor: COLORS.white, display: 'inline-flex', p: 2, borderRadius: 1 }}>
+    <Typography {...args} />
+  </Box>
+)
 
-  return (
-    <Box sx={{ backgroundColor, display: 'inline-flex', p: 2, borderRadius: 1 }}>
-      <Typography {...props} />
-    </Box>
-  )
-}
+const DarkTemplate: StoryFn<typeof Typography> = args => (
+  <Box sx={{ backgroundColor: COLORS.brandExtraDark, display: 'inline-flex', p: 2, borderRadius: 1 }}>
+    <Typography {...args} />
+  </Box>
+)
 
-export const Heading1 = {
+type Story = StoryObj<typeof Typography>
+
+export const Heading1: Story = {
   render: Template,
   args: {
     children: 'Heading 1',
@@ -33,7 +30,7 @@ export const Heading1 = {
   },
 }
 
-export const Heading2 = {
+export const Heading2: Story = {
   render: Template,
   args: {
     children: 'Heading 2',
@@ -41,7 +38,7 @@ export const Heading2 = {
   },
 }
 
-export const Heading3 = {
+export const Heading3: Story = {
   render: Template,
   args: {
     children: 'Heading 3',
@@ -49,7 +46,7 @@ export const Heading3 = {
   },
 }
 
-export const Heading4 = {
+export const Heading4: Story = {
   render: Template,
   args: {
     children: 'Heading 4',
@@ -57,7 +54,7 @@ export const Heading4 = {
   },
 }
 
-export const Heading5 = {
+export const Heading5: Story = {
   render: Template,
   args: {
     children: 'Heading 5',
@@ -65,7 +62,7 @@ export const Heading5 = {
   },
 }
 
-export const Heading6 = {
+export const Heading6: Story = {
   render: Template,
   args: {
     children: 'Heading 6',
@@ -73,20 +70,18 @@ export const Heading6 = {
   },
 }
 
-export const Footer = {
-  render: Template,
+export const Footer: Story = {
+  render: DarkTemplate,
   args: {
     children: 'Footer text',
     variant: 'footer',
-    darkMode: true,
   },
 }
 
-export const Select = {
-  render: Template,
+export const Select: Story = {
+  render: DarkTemplate,
   args: {
     children: 'Select text',
     variant: 'select',
-    darkMode: true,
   },
 }

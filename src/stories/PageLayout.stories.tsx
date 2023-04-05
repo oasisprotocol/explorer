@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { EmptyState } from '../app/components/EmptyState'
 import { PageLayout } from '../app/components/PageLayout'
@@ -20,7 +20,9 @@ const emeraldRoute = {
   routeParams: { layer: 'emerald' },
 }
 
-export const Emerald = {
+type Story = StoryObj<typeof PageLayout>
+
+export const Emerald: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
@@ -28,7 +30,7 @@ export const Emerald = {
   },
 }
 
-export const EmeraldIpad = {
+export const EmeraldIpad: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
@@ -37,7 +39,7 @@ export const EmeraldIpad = {
   },
 }
 
-export const EmeraldMobile = {
+export const EmeraldMobile: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
@@ -50,7 +52,7 @@ const searchRoute = {
   routePath: '/search',
 }
 
-export const Search = {
+export const Search: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
@@ -58,7 +60,7 @@ export const Search = {
   },
 }
 
-export const SearchIpad = {
+export const SearchIpad: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
@@ -67,7 +69,7 @@ export const SearchIpad = {
   },
 }
 
-export const SearchMobile = {
+export const SearchMobile: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',

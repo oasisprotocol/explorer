@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps, TableRowProps } from '../app/components/Table'
 import { withRouter } from 'storybook-addon-react-router-v6'
@@ -87,7 +87,9 @@ const Template: StoryFn<typeof Table> = args => {
   )
 }
 
-export const SampleTable = {
+type Story = StoryObj<typeof Table>
+
+export const SampleTable: Story = {
   render: Template,
   args: {
     columns,

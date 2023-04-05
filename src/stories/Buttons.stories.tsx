@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import Button from '@mui/material/Button'
 import { ButtonTypeMap } from '@mui/material/Button/Button'
 
@@ -17,7 +17,9 @@ export default {
   },
 } satisfies Meta<typeof Button>
 
-export const Primary = {
+type Story = StoryObj<typeof Button>
+
+export const Primary: Story = {
   args: {
     children: 'Primary',
     color: 'primary',
@@ -25,7 +27,7 @@ export const Primary = {
   },
 }
 
-export const Secondary = {
+export const Secondary: Story = {
   args: {
     children: 'Secondary',
     color: 'secondary',
@@ -33,7 +35,7 @@ export const Secondary = {
   },
 }
 
-export const Tertiary = {
+export const Tertiary: Story = {
   args: {
     children: 'Tertiary',
     color: 'tertiary',

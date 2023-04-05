@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { SearchButton } from '../app/components/Search'
 import { SuggestionButton } from '../app/components/Search/SearchSuggestionsButtons'
 import { Select } from '../app/components/Select'
@@ -30,7 +30,7 @@ const Template: StoryFn = () => {
   )
 }
 
-export const Showroom = {
+export const Showroom: StoryObj = {
   render: Template,
   args: {},
 }

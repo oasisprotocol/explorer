@@ -1,7 +1,7 @@
-import { Search } from '../app/components/Search'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import Box from '@mui/material/Box'
+import { Search } from '../app/components/Search'
 import { COLORS } from '../styles/theme/colors'
 
 export default {
@@ -16,7 +16,9 @@ const Template: StoryFn<typeof Search> = args => (
   </Box>
 )
 
-export const ButtonVariant = {
+type Story = StoryObj<typeof Search>
+
+export const ButtonVariant: Story = {
   render: Template,
 
   args: {
@@ -24,7 +26,7 @@ export const ButtonVariant = {
   },
 }
 
-export const IconVariant = {
+export const IconVariant: Story = {
   render: Template,
 
   args: {
