@@ -51,8 +51,8 @@ export const TransactionsPage: FC = () => {
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: tableView === TableLayout.Vertical ? offset + limit : limit,
-      offset,
+      limit: tableView === TableLayout.Vertical ? pagination.selectedPage * limit : limit,
+      offset: tableView === TableLayout.Vertical ? 0 : offset,
     },
     {
       query: {
@@ -72,6 +72,8 @@ export const TransactionsPage: FC = () => {
             },
           }
         },
+        // Keep previous pages upon clicking "Load More"
+        keepPreviousData: tableView === TableLayout.Vertical,
       },
     },
   )
@@ -88,6 +90,7 @@ export const TransactionsPage: FC = () => {
       <SubPageCard
         title={t('transactions.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        noPadding={tableView === TableLayout.Vertical}
       >
         {tableView === TableLayout.Horizontal && (
           <Transactions

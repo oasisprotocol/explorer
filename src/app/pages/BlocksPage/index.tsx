@@ -51,8 +51,8 @@ export const BlocksPage: FC = () => {
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
-      offset,
+      limit: tableView === TableLayout.Vertical ? pagination.selectedPage * PAGE_SIZE : PAGE_SIZE,
+      offset: tableView === TableLayout.Vertical ? 0 : offset,
     },
     {
       query: {
@@ -72,6 +72,7 @@ export const BlocksPage: FC = () => {
             },
           }
         },
+        // Keep previous pages upon clicking "Load More"
         keepPreviousData: tableView === TableLayout.Vertical,
       },
     },
