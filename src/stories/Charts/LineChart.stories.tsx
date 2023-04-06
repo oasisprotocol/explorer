@@ -1,13 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Card from '@mui/material/Card'
-import React from 'react'
 import { LineChart } from '../../app/components/charts/LineChart'
 import { intlDateFormat } from '../../app/utils/dateFormatter'
 
 export default {
   title: 'Example/Charts/LineChart',
   component: LineChart,
-} satisfies ComponentMeta<typeof LineChart>
+} satisfies Meta<typeof LineChart>
 
 interface TimeDataItem {
   x: Date
@@ -45,7 +44,7 @@ const timeData: TimeDataItem[] = [
   },
 ]
 
-const Template: ComponentStory<typeof LineChart<TimeDataItem>> = args => {
+const Template: StoryFn<typeof LineChart<TimeDataItem>> = args => {
   return (
     <Card sx={{ width: '500px', height: '300px' }}>
       <LineChart {...args} />
@@ -53,12 +52,16 @@ const Template: ComponentStory<typeof LineChart<TimeDataItem>> = args => {
   )
 }
 
-export const SampleLineChart = Template.bind({})
-SampleLineChart.args = {
-  data: timeData,
-  dataKey: 'y',
-  formatters: {
-    data: (value: number) => `${value} TPS`,
-    label: (value: string) => intlDateFormat(new Date(value)),
+type Story = StoryObj<typeof LineChart<TimeDataItem>>
+
+export const SampleLineChart: Story = {
+  render: Template,
+  args: {
+    data: timeData,
+    dataKey: 'y',
+    formatters: {
+      data: (value: number) => `${value} TPS`,
+      label: (value: string) => intlDateFormat(new Date(value)),
+    },
   },
 }

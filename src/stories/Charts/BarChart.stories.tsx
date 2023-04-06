@@ -1,13 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Card from '@mui/material/Card'
-import React from 'react'
 import { intlDateFormat } from '../../app/utils/dateFormatter'
 import { BarChart } from '../../app/components/charts/BarChart'
 
 export default {
   title: 'Example/Charts/BarChart',
   component: BarChart,
-} satisfies ComponentMeta<typeof BarChart>
+} satisfies Meta<typeof BarChart>
 
 interface TimeDataItem {
   x: Date
@@ -45,7 +44,7 @@ const timeData: TimeDataItem[] = [
   },
 ]
 
-const Template: ComponentStory<typeof BarChart<TimeDataItem>> = args => {
+const Template: StoryFn<typeof BarChart<TimeDataItem>> = args => {
   return (
     <Card sx={{ width: '500px', height: '300px' }}>
       <BarChart {...args} />
@@ -53,12 +52,16 @@ const Template: ComponentStory<typeof BarChart<TimeDataItem>> = args => {
   )
 }
 
-export const SampleBarChart = Template.bind({})
-SampleBarChart.args = {
-  data: timeData,
-  dataKey: 'y',
-  formatters: {
-    data: (value: number) => `${value} TPS`,
-    label: (value: string) => intlDateFormat(new Date(value)),
+type Story = StoryObj<typeof BarChart<TimeDataItem>>
+
+export const SampleBarChart: Story = {
+  render: Template,
+  args: {
+    data: timeData,
+    dataKey: 'y',
+    formatters: {
+      data: (value: number) => `${value} TPS`,
+      label: (value: string) => intlDateFormat(new Date(value)),
+    },
   },
 }

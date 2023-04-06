@@ -1,6 +1,5 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Box from '@mui/material/Box'
-import React from 'react'
 import { Table, TableCellAlign, TableColProps, TableRowProps } from '../app/components/Table'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { intlDateFormat } from '../app/utils/dateFormatter'
@@ -9,7 +8,7 @@ export default {
   title: 'Example/Table',
   component: Table,
   decorators: [withRouter],
-} satisfies ComponentMeta<typeof Table>
+} satisfies Meta<typeof Table>
 
 const columns: TableColProps[] = [{ content: 'Status' }, { content: 'Date', align: TableCellAlign.Right }]
 const data = [
@@ -80,7 +79,7 @@ const rows: TableRowProps[] = data.map(rowData => ({
   ],
 }))
 
-const Template: ComponentStory<typeof Table> = args => {
+const Template: StoryFn<typeof Table> = args => {
   return (
     <Box sx={{ width: '500px' }}>
       <Table {...args} />
@@ -88,17 +87,21 @@ const Template: ComponentStory<typeof Table> = args => {
   )
 }
 
-export const SampleTable = Template.bind({})
-SampleTable.args = {
-  columns,
-  rows,
-  isLoading: false,
-  name: 'Sample table',
-  pagination: {
-    selectedPage: 1,
-    linkToPage: page => ({ search: `?page=${page}` }),
-    rowsPerPage: 10,
-    totalCount: data.length,
-    isTotalCountClipped: true,
+type Story = StoryObj<typeof Table>
+
+export const SampleTable: Story = {
+  render: Template,
+  args: {
+    columns,
+    rows,
+    isLoading: false,
+    name: 'Sample table',
+    pagination: {
+      selectedPage: 1,
+      linkToPage: (page: number) => ({ search: `?page=${page}` }),
+      rowsPerPage: 10,
+      totalCount: data.length,
+      isTotalCountClipped: true,
+    },
   },
 }

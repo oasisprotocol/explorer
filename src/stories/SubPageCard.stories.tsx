@@ -1,14 +1,14 @@
+import { ComponentProps } from 'react'
 import Box from '@mui/material/Box'
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { SubPageCard } from '../app/components/SubPageCard'
 import { TextSkeleton } from '../app/components/Skeleton'
-import { ComponentProps } from 'react'
 
 export default {
   title: 'Example/SubPageCard',
-} satisfies ComponentMeta<any>
+} satisfies Meta<any>
 
-const Template: Story<Partial<ComponentProps<typeof SubPageCard>>> = args => {
+const Template: StoryFn<Partial<ComponentProps<typeof SubPageCard>>> = args => {
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 400px)', gap: 2 }}>
       <SubPageCard title="Title" {...args}>
@@ -24,21 +24,29 @@ const Template: Story<Partial<ComponentProps<typeof SubPageCard>>> = args => {
   )
 }
 
-export const Featured = Template.bind({})
-Featured.args = {
-  featured: true,
+type Story = StoryObj<typeof SubPageCard>
+
+export const Featured: Story = {
+  render: Template,
+  args: {
+    featured: true,
+  },
 }
 
-export const NonFeatured = Template.bind({})
-NonFeatured.args = {
-  featured: false,
+export const NonFeatured: Story = {
+  render: Template,
+  args: {
+    featured: false,
+  },
 }
 
-export const Mobile = Template.bind({})
-Mobile.args = {
-  featured: true,
-}
-Mobile.parameters = {
-  layout: 'fullscreen',
-  viewport: { defaultViewport: 'iphone6' },
+export const Mobile: Story = {
+  render: Template,
+  args: {
+    featured: true,
+  },
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'iphone6' },
+  },
 }
