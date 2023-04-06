@@ -51,7 +51,7 @@ export const TransactionsPage: FC = () => {
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: tableView === TableLayout.Vertical ? pagination.selectedPage * limit : limit,
+      limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
     },
     {
@@ -72,7 +72,7 @@ export const TransactionsPage: FC = () => {
             },
           }
         },
-        // Keep previous pages upon clicking "Load More"
+        // Keep showing data while loading more
         keepPreviousData: tableView === TableLayout.Vertical,
       },
     },
@@ -106,21 +106,21 @@ export const TransactionsPage: FC = () => {
             }}
           />
         )}
+
+        {tableView === TableLayout.Vertical && (
+          <TransactionDetails>
+            {transactionsQuery.isLoading &&
+              [...Array(limit).keys()].map(key => (
+                <TransactionDetailView key={key} isLoading={true} transaction={undefined} standalone />
+              ))}
+
+            {!transactionsQuery.isLoading &&
+              transactionsQuery.data?.data.transactions.map(tx => (
+                <TransactionDetailView key={tx.hash} transaction={tx} standalone />
+              ))}
+          </TransactionDetails>
+        )}
       </SubPageCard>
-
-      {tableView === TableLayout.Vertical && (
-        <TransactionDetails>
-          {transactionsQuery.isLoading &&
-            [...Array(limit).keys()].map(key => (
-              <TransactionDetailView key={key} isLoading={true} transaction={undefined} standalone />
-            ))}
-
-          {!transactionsQuery.isLoading &&
-            transactionsQuery.data?.data.transactions.map(tx => (
-              <TransactionDetailView key={tx.hash} transaction={tx} standalone />
-            ))}
-        </TransactionDetails>
-      )}
     </PageLayout>
   )
 }
