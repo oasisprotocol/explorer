@@ -47,11 +47,16 @@ export const BlockDetailPage: FC = () => {
   )
 }
 
+export type BlockDetailRuntimeBlock = RuntimeBlock & {
+  markAsNew?: boolean
+}
+
 export const BlockDetailView: FC<{
-  isLoading: boolean
-  block: RuntimeBlock | undefined
+  isLoading?: boolean
+  block: BlockDetailRuntimeBlock | undefined
   showLayer?: boolean
-}> = ({ isLoading, block, showLayer }) => {
+  standalone?: boolean
+}> = ({ isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -67,7 +72,11 @@ export const BlockDetailView: FC<{
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList
+      titleWidth={isMobile ? '100px' : '200px'}
+      standalone={standalone}
+      highlight={block.markAsNew}
+    >
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

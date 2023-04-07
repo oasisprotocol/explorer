@@ -669,5 +669,21 @@ export const defaultTheme = createTheme({
         },
       },
     },
+    MuiIconButton: {
+      variants: [
+        {
+          props: { color: 'primary' },
+          style: () => ({
+            background: COLORS.white,
+            svg: {
+              color: COLORS.brandExtraDark,
+            },
+            '&:hover': {
+              background: COLORS.white,
+            },
+          }),
+        },
+      ],
+    },
   },
 })

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -18,9 +18,14 @@ const FooterBox = styled(Box)(({ theme }) => ({
   },
 }))
 
-export const Footer: FC = () => {
+interface FooterProps {
+  mobileSearchAction?: ReactNode
+}
+
+export const Footer: FC<FooterProps> = ({ mobileSearchAction }) => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const currentYear = useConstant(() => new Date().getFullYear())
 
@@ -28,7 +33,7 @@ export const Footer: FC = () => {
     <footer>
       <FooterBox>
         {isTablet ? (
-          <AppendMobileSearch>
+          <AppendMobileSearch action={isMobile && mobileSearchAction}>
             <Typography variant="footer">
               {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>

@@ -50,6 +50,7 @@
     "gasLimit": "Gas limit",
     "hash": "Hash",
     "height": "Height",
+    "loadMore": "Load more",
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
     "name": "Name",
@@ -138,6 +139,9 @@
     "telegram": "Telegram",
     "twitter": "Twitter",
     "youtube": "Youtube"
+  },
+  "tableLayoutButton": {
+    "changeView": "Change view"
   },
   "totalTransactions": {
     "header": "Total Transactions",

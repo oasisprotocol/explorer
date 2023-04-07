@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -12,9 +12,13 @@ import Skeleton from '@mui/material/Skeleton'
 
 type StyledComponentProps = {
   featured?: boolean
+  isLoadingTitle?: boolean
+  title?: string
+  subheader?: string
+  action?: ReactNode
+  noPadding?: boolean
 }
-type SubPageCardProps = PropsWithChildren &
-  StyledComponentProps & { isLoadingTitle?: boolean; title?: string; subheader?: string }
+type SubPageCardProps = PropsWithChildren<StyledComponentProps>
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'featured',
@@ -30,9 +34,14 @@ const StyledBox = styled(Box, {
 )
 
 const StyledCard = styled(Card, {
-  shouldForwardProp: prop => prop !== 'featured',
+  shouldForwardProp: prop => prop !== 'featured' && prop !== 'noPadding',
 })<StyledComponentProps>(
-  ({ featured, theme }) => css`
+  ({ featured, noPadding, theme }) => css`
+    ${noPadding && {
+      '&&': {
+        padding: 0,
+      },
+    }}
     ${featured && {
       [theme.breakpoints.up('sm')]: {
         paddingRight: theme.spacing(6),
@@ -42,6 +51,16 @@ const StyledCard = styled(Card, {
   `,
 )
 
+const StyledCardContent = styled(CardContent, {
+  shouldForwardProp: prop => prop !== 'noPadding',
+})<Pick<StyledComponentProps, 'noPadding'>>(({ noPadding }) => ({
+  '&&': noPadding
+    ? {
+        padding: 0,
+      }
+    : {},
+}))
+
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
 export const SubPageCard: FC<SubPageCardProps> = ({
@@ -50,23 +69,26 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   isLoadingTitle,
   title,
   subheader,
+  action,
+  noPadding = false,
 }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <div>
-      {isMobile && (
-        <Box sx={{ mb: 4, mx: 4 }}>
+      {isMobile && (title || subheader || action) && (
+        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
           <Typography variant="h3" component="h3" sx={{ display: 'inline' }} color={COLORS.white}>
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>
           <Typography variant="subtitle1" sx={{ ml: '1ex', display: 'inline' }} color={COLORS.white}>
             {subheader}
           </Typography>
+          {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
         </Box>
       )}
-      <StyledCard featured={featured}>
+      <StyledCard featured={featured} noPadding={noPadding}>
         {!isMobile && (
           <StyledBox featured={featured}>
             <CardHeader
@@ -81,10 +103,11 @@ export const SubPageCard: FC<SubPageCardProps> = ({
                 display: 'inline',
                 marginLeft: '1ex',
               }}
+              action={action}
             />
           </StyledBox>
         )}
-        <CardContent>{children}</CardContent>
+        <StyledCardContent noPadding={noPadding}>{children}</StyledCardContent>
       </StyledCard>
     </div>
   )

@@ -119,11 +119,16 @@ export const TransactionDetailPage: FC = () => {
   )
 }
 
+export type TransactionDetailRuntimeBlock = RuntimeTransaction & {
+  markAsNew?: boolean
+}
+
 export const TransactionDetailView: FC<{
-  isLoading: boolean
-  transaction: RuntimeTransaction | undefined
+  isLoading?: boolean
+  transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
-}> = ({ isLoading, transaction, showLayer }) => {
+  standalone?: boolean
+}> = ({ isLoading, transaction, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -133,7 +138,11 @@ export const TransactionDetailView: FC<{
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {transaction && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+        <StyledDescriptionList
+          titleWidth={isMobile ? '100px' : '200px'}
+          standalone={standalone}
+          highlight={transaction.markAsNew}
+        >
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>
