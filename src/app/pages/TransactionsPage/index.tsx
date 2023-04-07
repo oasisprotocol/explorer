@@ -51,7 +51,7 @@ export const TransactionsPage: FC = () => {
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
     layer, // This is OK, since consensus is already handled separately
     {
-      limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : limit,
+      limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
     },
     {
