@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -13,11 +13,10 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Alert from '@mui/material/Alert'
-import { styled } from '@mui/material/styles'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -83,6 +82,7 @@ const ErrorBox = styled(Box)(() => ({
 
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
+  const [addressSwitch, setAddressSwitch] = useState<AddressSwitchOption>(AddressSwitchOption.Oasis)
 
   const scope = useRequiredScopeParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
@@ -114,7 +114,12 @@ export const TransactionDetailPage: FC = () => {
       {warningMultipleTransactionsSameHash && (
         <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
       )}
-      <SubPageCard featured title={t('transaction.header')}>
+      <SubPageCard featured title={t('transaction.header')} action={
+        <AddressSwitch
+          selected={addressSwitch}
+          onSelectionChange={addressSwitch => setAddressSwitch(addressSwitch)}
+        />
+      }>
         <TransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
