@@ -30,3 +30,10 @@ jobs:
           accountId: ${{ secrets.CLOUDFRONT_ACCOUNT_ID }}
           projectName: explorer
           directory: build
+
+      - name: Add Comment to PR
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🚀 Preview URL: ${{ steps.cloudflare-publish.outputs.url }}
