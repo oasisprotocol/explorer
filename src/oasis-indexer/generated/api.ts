@@ -595,7 +595,7 @@ NOTE: This field is limited to 1000 entries. If you need more, please let us kno
 }
 
 /**
- * The method call body.
+ * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
 
@@ -639,10 +639,18 @@ execute it.
   gas_used: number;
   /** The total byte size of the transaction. */
   size: number;
-  /** The method that was called. */
-  method: string;
-  /** The method call body. */
-  body: RuntimeTransactionBody;
+  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
+In practice, the indexer currently expects only the following methods:
+  - "accounts.Transfer"
+  - "consensus.Deposit"
+  - "consensus.Withdraw"
+  - "evm.Create"
+  - "evm.Call"
+May be null if the transaction was malformed.
+ */
+  method?: string;
+  /** The method call body. May be null if the transaction was malformed. */
+  body?: RuntimeTransactionBody;
   /** A reasonable "to" Oasis address associated with this transaction,
 if applicable. The meaning varies based on the transaction method. Some notable examples:
   - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
@@ -660,8 +668,10 @@ applicable. The meaning varies based on the transaction method.
 Usually in native denomination, ParaTime units. As a string.
  */
   amount?: string;
-  /** Whether this transaction successfully executed. */
-  success: boolean;
+  /** Whether this transaction successfully executed.
+Can be absent (meaning "unknown") for confidential runtimes.
+ */
+  success?: boolean;
   /** Error details of a failed transaction. */
   error?: TxError;
 }
@@ -681,7 +691,7 @@ export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
 Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
 Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
 Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
-Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON conterpart.
+Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
 
  */
 export interface EvmEventParam {
@@ -1184,10 +1194,10 @@ export const ConsensusEventType = {
 } as const;
 
 export interface TxError {
-  /** The status code of a failed transaction. */
-  code: number;
   /** The module of a failed transaction. */
   module?: string;
+  /** The status code of a failed transaction. */
+  code: number;
   /** The message of a failed transaction. */
   message?: string;
 }
