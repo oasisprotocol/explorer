@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { RouteUtils } from '../../utils/route-utils'
@@ -32,9 +32,7 @@ const CloseModalIconButton = styled(IconButton)(({ theme }) => ({
 const EnabledLayersGrid = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'fit-content(70%) 1fr',
-  '&:not(:last-child)': {
-    marginBottom: theme.spacing(5),
-  },
+  rowGap: theme.spacing(5),
 }))
 
 const SelectButton = styled(Button)(() => ({
@@ -101,81 +99,87 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
         <Typography id="paratime-details-modal-description" variant="body2" sx={{ mb: 5 }}>
           {t('layerPickerModal.description')}
         </Typography>
-        {enabledLayers.map(layer => (
-          <EnabledLayersGrid key={layer}>
-            <Box sx={{ display: 'flex' }}>
-              <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
-                <BlockchainIcon selected={activeLayer === layer} />
-              </Circle>
-              <Box
-                key={layer}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
+        <EnabledLayersGrid>
+          {enabledLayers.map(layer => (
+            <Fragment key={layer}>
+              <Box sx={{ display: 'flex' }}>
+                <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
+                  <BlockchainIcon selected={activeLayer === layer} />
+                </Circle>
                 <Box
+                  key={layer}
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
+                    flexDirection: 'column',
                   }}
                 >
-                  <Typography
-                    variant="h2"
-                    color={COLORS.brandExtraDark}
-                    sx={{
-                      pr: isMobile ? 3 : 4,
-                      fontSize: '24px',
-                      fontWeight: 700,
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {labels[layer].title}
-                  </Typography>
                   <Box
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
                     }}
                   >
-                    {!isMobile && (
-                      <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
-                        {t('common.paraTimeOnline')}
-                      </Typography>
-                    )}
-                    <Circle color={COLORS.eucalyptus} size={4}>
-                      <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
-                    </Circle>
+                    <Typography
+                      variant="h2"
+                      color={COLORS.brandExtraDark}
+                      sx={{
+                        pr: isMobile ? 3 : 4,
+                        fontSize: '24px',
+                        fontWeight: 700,
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {labels[layer].title}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {!isMobile && (
+                        <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
+                          {t('common.paraTimeOnline')}
+                        </Typography>
+                      )}
+                      <Circle color={COLORS.eucalyptus} size={4}>
+                        <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
+                      </Circle>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Typography component="span" variant="caption">
+                      {labels[layer].description}
+                    </Typography>
                   </Box>
                 </Box>
-                <Box
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Link
+                  component={RouterLink}
+                  to={RouteUtils.getDashboardRoute(layer)}
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
+                    textDecoration: 'none',
+                    ...(layer === activeLayer && { pointerEvents: 'none' }),
                   }}
                 >
-                  <Typography component="span" variant="caption">
-                    {labels[layer].description}
-                  </Typography>
-                </Box>
+                  <SelectButton
+                    variant="text"
+                    disabled={activeLayer === layer}
+                    onClick={() => setOpen(false)}
+                  >
+                    {activeLayer === layer ? t('common.active') : t('common.select')}
+                  </SelectButton>
+                </Link>
               </Box>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <Link
-                component={RouterLink}
-                to={RouteUtils.getDashboardRoute(layer)}
-                sx={{
-                  textDecoration: 'none',
-                  ...(layer === activeLayer && { pointerEvents: 'none' }),
-                }}
-              >
-                <SelectButton variant="text" disabled={activeLayer === layer} onClick={() => setOpen(false)}>
-                  {activeLayer === layer ? t('common.active') : t('common.select')}
-                </SelectButton>
-              </Link>
-            </Box>
-          </EnabledLayersGrid>
-        ))}
+            </Fragment>
+          ))}
+        </EnabledLayersGrid>
       </>
     </Modal>
   )
