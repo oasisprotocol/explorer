@@ -82,7 +82,9 @@ const ErrorBox = styled(Box)(() => ({
 
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
-  const [addressSwitch, setAddressSwitch] = useState<AddressSwitchOption>(AddressSwitchOption.Oasis)
+  const [addressSwitchOption, setAddressSwitchOption] = useState<
+    AddressSwitchOption.Oasis | AddressSwitchOption.Eth
+  >(AddressSwitchOption.Eth)
 
   const scope = useRequiredScopeParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
@@ -206,9 +208,22 @@ export const TransactionDetailView: FC<{
             <CopyToClipboard value={transaction.sender_0_eth || transaction.sender_0} />
           </dd>
 
-          {transaction.to && (
+          {transaction.to_eth && (
             <>
               <dt>{t('common.to')}</dt>
+              <dd>
+                <AccountLink
+                  network={transaction.network}
+                  address={transaction.to_eth}
+                  layer={transaction.layer}
+                />
+                <CopyToClipboard value={transaction.to_eth} />
+              </dd>
+            </>
+          )}
+          {transaction.to && (
+            <>
+              {!transaction.to_eth ? <dt>{t('common.to')}</dt> : <dt />}
               <dd>
                 <AccountLink scope={transaction} address={transaction.to_eth || transaction.to} />
                 <CopyToClipboard value={transaction.to_eth || transaction.to} />

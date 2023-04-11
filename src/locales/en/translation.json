@@ -17,6 +17,9 @@
     "title": "Active Accounts",
     "tooltip": "{{value, number}} accounts"
   },
+  "addressSwitch": {
+    "helpLabel": "Show ETH address if applicable"
+  },
   "blocks": {
     "latest": "Latest Blocks"
   },
@@ -42,6 +45,7 @@
     "emerald": "Emerald",
     "cipher": "Cipher",
     "consensus": "Consensus",
+    "eth": "ETH",
     "ethHash": "ETH hash",
     "failed": "Failed",
     "fiatValue": "Fiat value",
@@ -58,6 +62,7 @@
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
     "name": "Name",
+    "oasis": "Oasis",
     "paratime": "Paratime",
     "select": "Select",
     "size": "Size",

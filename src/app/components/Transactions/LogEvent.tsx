@@ -1,5 +1,10 @@
-import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-indexer/api'
-import React, { FC } from 'react'
+import {
+  EvmEventParam,
+  Layer,
+  RuntimeEvent,
+  RuntimeEventType,
+} from '../../../oasis-indexer/api'
+import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useTheme } from '@mui/material/styles'
@@ -14,8 +19,34 @@ import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
 import { SearchScope } from '../../../types/searchScope'
+import { AddressSwitchOption } from '../AddressSwitch'
+import { getOasisAddress } from '../../utils/helpers'
+import { Network } from '../../../types/network'
 
-const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ scope, param }) => {
+const EvmEventParamData: FC<{
+  scope: SearchScope
+  param: EvmEventParam
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, param, addressSwitchOption }) => {
+  const [address, setAddress] = useState<string>()
+
+  useEffect(() => {
+    if (param.evm_type !== 'address') {
+      return
+    }
+
+    const resolveAddresses = async () => {
+      if (addressSwitchOption === AddressSwitchOption.Oasis) {
+        const oasisAddress = await getOasisAddress(param.value as string)
+        setAddress(oasisAddress)
+      } else {
+        setAddress(param.value as string)
+      }
+    }
+
+    resolveAddresses()
+  }, [param, addressSwitchOption])
+
   /**
    * According to the API docs:
    *
@@ -27,7 +58,7 @@ const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ s
   switch (param.evm_type) {
     // TODO: handle more EVM types
     case 'address':
-      return <AccountLink scope={scope} address={param.value as string} />
+      return address ? <AccountLink address={address} scope={scope} /> : null
     case 'uint256':
       // TODO: format with BigNumber
       return <span>{param.value as string}</span>
@@ -36,7 +67,7 @@ const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ s
   }
 }
 
-const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scope, event }) => {
+const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent, addressSwitchOption: AddressSwitchOption }> = ({ scope, event, addressSwitchOption }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -84,7 +115,7 @@ const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scop
                           <TableCell>{param.name}</TableCell>
                           <TableCell>{param.evm_type}</TableCell>
                           <TableCell>
-                            <EvmEventParamData param={param} scope={scope} />{' '}
+                            <EvmEventParamData param={param} scope={scope} addressSwitchOption={addressSwitchOption} />{' '}
                           </TableCell>
                           <TableCell>
                             <CopyToClipboard
@@ -123,12 +154,18 @@ const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scop
 
 export const TransactionLogEvent: FC<{
   scope: SearchScope
+  transaction: RuntimeTransaction
   event: RuntimeEvent
   isFirst: boolean
-}> = ({ scope, event, isFirst }) => {
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, transaction, event, isFirst, addressSwitchOption }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { layer } = transaction
+  const transactionLinkValue =
+    addressSwitchOption === AddressSwitchOption.Eth ? transaction.eth_hash : transaction.hash
+
   const decoded = true // TODO: how do I know if this has been successfully decoded?
 
   // TODO: also consider tx_eth_hash when https://github.com/oasisprotocol/oasis-indexer/issues/363 is resolved
@@ -141,7 +178,7 @@ export const TransactionLogEvent: FC<{
           <>
             <dt>{t('transaction.header')}</dt>
             <dd>
-              <TransactionLink scope={scope} hash={event.tx_hash} />
+              <TransactionLink scope={scope} hash={transactionLinkValue || transaction.hash} />
             </dd>
           </>
         )}
@@ -150,7 +187,7 @@ export const TransactionLogEvent: FC<{
           <>
             <dt>{t('transactionEvent.decoded')}</dt>
             <dd>
-              <DecodedLogEvent scope={scope} event={event} />
+              <DecodedLogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
             </dd>
           </>
         )}
