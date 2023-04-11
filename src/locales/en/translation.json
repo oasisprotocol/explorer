@@ -153,6 +153,11 @@
   "transactions": {
     "latest": "Latest Transactions",
     "method": {
+      "unavailable": "Malformed transaction, method unavailable",
+      "unknown": "Unknown: {{method}}",
+      "accounts": {
+        "transfer": "Transfer"
+      },
       "consensus": {
         "deposit": "Consensus Deposit",
         "withdraw": "Consensus Withdraw"
