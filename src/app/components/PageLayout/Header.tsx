@@ -38,7 +38,8 @@ export const Header: FC = () => {
         </Grid>
         <Grid
           xs={6}
-          md={4}
+          md={6}
+          lg={4}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -50,7 +51,13 @@ export const Header: FC = () => {
           <NetworkHeader layer={layer} />
         </Grid>
         {!isMobile && (
-          <Grid sm={12} md={8} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <Grid
+            xs={12}
+            sm={12}
+            md={6}
+            lg={8}
+            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+          >
             <Search variant="icon" />
           </Grid>
         )}
