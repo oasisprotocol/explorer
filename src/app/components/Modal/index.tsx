@@ -9,6 +9,8 @@ const ModalContent = styled(Box)(({ theme }) => ({
   position: 'absolute',
   width: '100%',
   maxWidth: '700px',
+  maxHeight: '100vh',
+  overflowY: 'auto',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%,-50%)',
