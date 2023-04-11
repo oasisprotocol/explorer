@@ -9,8 +9,11 @@ enum RuntimeTransactionMethod {
   Withdraw = 'consensus.Withdraw',
 }
 
-const getRuntimeTransactionLabel = (t: TFunction, method: string) => {
+const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
+    case undefined:
+      // Method may be undefined if the transaction was malformed.
+      return t('transactions.method.unavailable')
     case RuntimeTransactionMethod.Call:
       return t('transactions.method.evm.call')
     case RuntimeTransactionMethod.Create:
@@ -25,7 +28,8 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string) => {
 }
 
 type RuntimeTransactionLabelProps = {
-  method: string // RuntimeTransaction method type is not yet defined in API
+  /** The method call body. May be undefined if the transaction was malformed. */
+  method?: string // RuntimeTransaction method type is not yet defined in API
 }
 
 export const RuntimeTransactionLabel: FC<RuntimeTransactionLabelProps> = ({ method }) => {

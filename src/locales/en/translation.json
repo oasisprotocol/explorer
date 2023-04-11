@@ -151,6 +151,7 @@
   "transactions": {
     "latest": "Latest Transactions",
     "method": {
+      "unavailable": "Malformed transaction, method unavailable",
       "consensus": {
         "deposit": "Consensus Deposit",
         "withdraw": "Consensus Withdraw"
