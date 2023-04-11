@@ -71,6 +71,7 @@
     "transactionsNumber_other": "{{ count }} transactions",
     "txnFee": "Txn Fee",
     "type": "Type",
+    "unknown": "Unknown",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
     "viewAll": "View all",
