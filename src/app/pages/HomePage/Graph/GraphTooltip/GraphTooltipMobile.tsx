@@ -10,7 +10,6 @@ import { GraphTooltipBody, GraphTooltipHeader, layerTooltipMap, GraphTooltipStyl
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
-import * as React from 'react'
 import { zIndexHomePage } from '../../index'
 import { Layer } from '../../../../../oasis-indexer/api'
 

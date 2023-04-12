@@ -1,4 +1,3 @@
-import * as React from 'react'
 import SelectUnstyled, {
   SelectUnstyledProps,
   selectUnstyledClasses,
@@ -8,7 +7,18 @@ import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import { ForwardedRef, forwardRef, memo, ReactElement, useCallback, useId } from 'react'
+import {
+  ForwardedRef,
+  forwardRef,
+  memo,
+  ReactElement,
+  useCallback,
+  useId,
+  RefAttributes,
+  MouseEvent,
+  KeyboardEvent,
+  FocusEvent,
+} from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
@@ -87,9 +97,9 @@ const TertiaryButton = forwardRef(
   },
 )
 
-const CustomSelect = React.forwardRef(function CustomSelect<TValue extends string | number>(
+const CustomSelect = forwardRef(function CustomSelect<TValue extends string | number>(
   props: SelectUnstyledProps<TValue>,
-  ref: React.ForwardedRef<HTMLButtonElement>,
+  ref: ForwardedRef<HTMLButtonElement>,
 ) {
   const slots: SelectUnstyledProps<TValue>['slots'] = {
     root: TertiaryButton,
@@ -100,7 +110,7 @@ const CustomSelect = React.forwardRef(function CustomSelect<TValue extends strin
 
   return <SelectUnstyled {...props} ref={ref} slots={slots} />
 }) as <TValue extends string | number>(
-  props: SelectUnstyledProps<TValue> & React.RefAttributes<HTMLButtonElement>,
+  props: SelectUnstyledProps<TValue> & RefAttributes<HTMLButtonElement>,
 ) => JSX.Element
 
 export interface SelectOptionBase {
@@ -124,10 +134,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   const selectId = useId()
 
   const onChange = useCallback(
-    (
-      _: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-      selectedValue: T['value'] | null,
-    ) => {
+    (_: MouseEvent | KeyboardEvent | FocusEvent | null, selectedValue: T['value'] | null) => {
       handleChange?.(selectedValue)
     },
     [handleChange],

@@ -9,9 +9,11 @@ type TrimLinkLabelProps = {
   to: string
 }
 
+const tooltipDelay = 500
+
 export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   return (
-    <Tooltip arrow placement="top" title={label}>
+    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
       <Link component={RouterLink} to={to}>
         {trimLongString(label)}
       </Link>

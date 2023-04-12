@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component } from 'react'
 import { ErrorDisplay } from '../ErrorDisplay'
 
 type HasChildren = {
@@ -9,10 +9,7 @@ type ErrorBoundaryProps = HasChildren & {
   light?: boolean
 }
 
-export class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  { hasError: boolean; error?: unknown }
-> {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, { hasError: boolean; error?: unknown }> {
   constructor(props: HasChildren) {
     super(props)
     this.state = { hasError: false }
