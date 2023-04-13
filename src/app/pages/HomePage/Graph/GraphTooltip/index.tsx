@@ -12,7 +12,7 @@ import { TFunction } from 'i18next'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
-import blockchainWhiteImage from '../images/blockchain-white.svg'
+import { LayerIcon } from '../../../../components/CustomIcons/LayerIcon'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -127,7 +127,7 @@ export const layerTooltipMap: {
     enableNavigation: true,
     header: {
       label: (t: TFunction) => t('home.tooltip.openParatime'),
-      icon: (t: TFunction) => <img src={blockchainWhiteImage} alt={t('common.sapphire')} />,
+      icon: (t: TFunction) => <LayerIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
     },
     body: {
       title: (t: TFunction) => t('common.sapphire'),
@@ -140,7 +140,7 @@ export const layerTooltipMap: {
     enableNavigation: true,
     header: {
       label: (t: TFunction) => t('home.tooltip.openParatime'),
-      icon: (t: TFunction) => <img src={blockchainWhiteImage} alt={t('common.emerald')} />,
+      icon: (t: TFunction) => <LayerIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
     },
     body: {
       title: (t: TFunction) => t('common.emerald'),

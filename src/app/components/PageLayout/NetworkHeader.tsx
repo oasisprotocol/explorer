@@ -8,12 +8,12 @@ import Typography from '@mui/material/Typography'
 import CheckIcon from '@mui/icons-material/Check'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
-import blockchainImage from './images/blockchain.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Circle } from '../Circle'
 import { RouteUtils } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
+import { LayerIcon } from '../../components/CustomIcons/LayerIcon'
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
@@ -50,7 +50,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
     <Box sx={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'flex-start', pr: isMobile ? 0 : 4 }}>
       {!isMobile && (
         <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
-          <img src={blockchainImage} alt={content.header} />
+          <LayerIcon sx={{ color: COLORS.brandExtraDark, fontSize: 33 }} />
         </Circle>
       )}
       <Box>
