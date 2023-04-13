@@ -64,7 +64,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ layer, onClose
             <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
           </IconButton>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-            <GraphTooltipHeader {...header} comingSoon={!disabled} />
+            <GraphTooltipHeader {...header} />
             <GraphTooltipBody {...body} disabled={disabled} />
           </GraphTooltipStyled>
         </MobileGraphTooltip>

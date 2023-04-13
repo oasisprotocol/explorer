@@ -1,11 +1,10 @@
 import { styled, useTheme } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../../styles/theme/colors'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/material/Typography'
-import AdjustIcon from '@mui/icons-material/Adjust'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,7 @@ import { TFunction } from 'i18next'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
+import blockchainWhiteImage from '../images/blockchain-white.svg'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -126,7 +126,8 @@ export const layerTooltipMap: {
     disabled: false,
     enableNavigation: true,
     header: {
-      discoverMore: true,
+      label: (t: TFunction) => t('home.tooltip.openParatime'),
+      icon: (t: TFunction) => <img src={blockchainWhiteImage} alt={t('common.sapphire')} />,
     },
     body: {
       title: (t: TFunction) => t('common.sapphire'),
@@ -138,7 +139,8 @@ export const layerTooltipMap: {
     disabled: false,
     enableNavigation: true,
     header: {
-      discoverMore: true,
+      label: (t: TFunction) => t('home.tooltip.openParatime'),
+      icon: (t: TFunction) => <img src={blockchainWhiteImage} alt={t('common.emerald')} />,
     },
     body: {
       title: (t: TFunction) => t('common.emerald'),
@@ -148,7 +150,10 @@ export const layerTooltipMap: {
   },
   [Layer.cipher]: {
     disabled: true,
-    header: {},
+    header: {
+      label: () => '',
+      icon: () => <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
+    },
     body: {
       title: (t: TFunction) => t('common.cipher'),
       caption: (t: TFunction) => t('home.tooltip.coming'),
@@ -156,11 +161,14 @@ export const layerTooltipMap: {
     },
   },
   [Layer.consensus]: {
-    disabled: false,
-    header: {},
+    disabled: true,
+    header: {
+      label: () => '',
+      icon: () => <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
+    },
     body: {
       title: (t: TFunction) => t('common.consensus'),
-      caption: (t: TFunction) => t('home.tooltip.online'),
+      caption: (t: TFunction) => t('home.tooltip.coming'),
       body: (t: TFunction) => t('home.tooltip.consensusParaTimeDesc'),
     },
   },
@@ -173,31 +181,26 @@ interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
 }
 
 interface GraphTooltipHeaderProps {
-  comingSoon?: boolean
-  discoverMore?: boolean
+  label: (t: TFunction) => string
+  icon: (t: TFunction) => ReactNode
 }
 
-export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ comingSoon, discoverMore }) => {
+export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ icon, label }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const iconLabel = label(t)
 
   return (
     <GraphTooltipIcon isMobile={isMobile}>
-      {comingSoon && (
-        <AccessTimeIcon
-          sx={{ color: COLORS.aqua, fontSize: 33 }}
-          aria-label={t('home.tooltip.comingSoonAria')}
-        />
-      )}
-      {!comingSoon && <AdjustIcon sx={{ color: COLORS.aqua, fontSize: 51 }} />}
-      {discoverMore && (
+      {icon(t)}
+      {iconLabel && (
         <Typography
           component="span"
           color={COLORS.white}
           sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
         >
-          {t('home.tooltip.discoverMore')}
+          {iconLabel}
         </Typography>
       )}
     </GraphTooltipIcon>
@@ -261,7 +264,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restPr
       placement="right-start"
       title={
         <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-          <GraphTooltipHeader {...header} comingSoon={!disabled} />
+          <GraphTooltipHeader {...header} />
           <GraphTooltipBody {...body} disabled={disabled} />
         </GraphTooltipStyled>
       }
