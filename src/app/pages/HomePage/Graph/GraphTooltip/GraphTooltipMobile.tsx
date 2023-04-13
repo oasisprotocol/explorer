@@ -45,7 +45,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ layer, onClose
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { header, body, disabled, enableNavigation } = layerTooltipMap[layer]
+  const { body, disabled, enableNavigation } = layerTooltipMap[layer]
 
   const navigateTo = () => {
     if (!enableNavigation) {
@@ -64,7 +64,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ layer, onClose
             <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
           </IconButton>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-            <GraphTooltipHeader {...header} />
+            <GraphTooltipHeader disabled={disabled} />
             <GraphTooltipBody {...body} disabled={disabled} />
           </GraphTooltipStyled>
         </MobileGraphTooltip>

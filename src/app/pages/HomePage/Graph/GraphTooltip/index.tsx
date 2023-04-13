@@ -1,6 +1,6 @@
 import { styled, useTheme } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../../styles/theme/colors'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -118,17 +118,12 @@ export const layerTooltipMap: {
   [key in Layer]: {
     disabled: boolean
     enableNavigation?: boolean
-    header: GraphTooltipHeaderProps
     body: GraphTooltipBodyProps
   }
 } = {
   [Layer.sapphire]: {
     disabled: false,
     enableNavigation: true,
-    header: {
-      label: (t: TFunction) => t('home.tooltip.openParatime'),
-      icon: (t: TFunction) => <LayerIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
-    },
     body: {
       title: (t: TFunction) => t('common.sapphire'),
       caption: (t: TFunction) => t('common.paraTimeOnline'),
@@ -138,10 +133,6 @@ export const layerTooltipMap: {
   [Layer.emerald]: {
     disabled: false,
     enableNavigation: true,
-    header: {
-      label: (t: TFunction) => t('home.tooltip.openParatime'),
-      icon: (t: TFunction) => <LayerIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
-    },
     body: {
       title: (t: TFunction) => t('common.emerald'),
       caption: (t: TFunction) => t('common.paraTimeOnline'),
@@ -150,10 +141,6 @@ export const layerTooltipMap: {
   },
   [Layer.cipher]: {
     disabled: true,
-    header: {
-      label: () => '',
-      icon: () => <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
-    },
     body: {
       title: (t: TFunction) => t('common.cipher'),
       caption: (t: TFunction) => t('home.tooltip.coming'),
@@ -162,10 +149,6 @@ export const layerTooltipMap: {
   },
   [Layer.consensus]: {
     disabled: true,
-    header: {
-      label: () => '',
-      icon: () => <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />,
-    },
     body: {
       title: (t: TFunction) => t('common.consensus'),
       caption: (t: TFunction) => t('home.tooltip.coming'),
@@ -181,27 +164,29 @@ interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
 }
 
 interface GraphTooltipHeaderProps {
-  label: (t: TFunction) => string
-  icon: (t: TFunction) => ReactNode
+  disabled: boolean
 }
 
-export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ icon, label }) => {
+export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const iconLabel = label(t)
 
   return (
     <GraphTooltipIcon isMobile={isMobile}>
-      {icon(t)}
-      {iconLabel && (
-        <Typography
-          component="span"
-          color={COLORS.white}
-          sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
-        >
-          {iconLabel}
-        </Typography>
+      {disabled ? (
+        <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />
+      ) : (
+        <>
+          <LayerIcon sx={{ color: COLORS.white, fontSize: 33 }} />
+          <Typography
+            component="span"
+            color={COLORS.white}
+            sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
+          >
+            {t('home.tooltip.openParatime')}
+          </Typography>
+        </>
       )}
     </GraphTooltipIcon>
   )
@@ -248,7 +233,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restPr
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { header, body, disabled, enableNavigation } = layerTooltipMap[layer]
+  const { body, disabled, enableNavigation } = layerTooltipMap[layer]
 
   const navigateTo = () => {
     if (!enableNavigation) {
@@ -264,7 +249,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restPr
       placement="right-start"
       title={
         <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-          <GraphTooltipHeader {...header} />
+          <GraphTooltipHeader disabled={disabled} />
           <GraphTooltipBody {...body} disabled={disabled} />
         </GraphTooltipStyled>
       }
