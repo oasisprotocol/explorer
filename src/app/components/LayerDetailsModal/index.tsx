@@ -20,19 +20,23 @@ import { TFunction } from 'i18next'
 import { Modal } from '../Modal'
 
 const CloseModalIconButton = styled(IconButton)(({ theme }) => ({
-  position: 'absolute',
+  position: 'fixed',
   top: theme.spacing(0),
   right: theme.spacing(0),
   [theme.breakpoints.up('sm')]: {
-    top: theme.spacing(5),
-    right: theme.spacing(5),
+    position: 'absolute',
+    top: theme.spacing(4),
+    right: theme.spacing(4),
   },
 }))
 
 const EnabledLayersGrid = styled(Box)(({ theme }) => ({
   display: 'grid',
-  gridTemplateColumns: 'fit-content(70%) 1fr',
-  rowGap: theme.spacing(5),
+  gridTemplateColumns: '1fr',
+  [theme.breakpoints.up('sm')]: {
+    gridTemplateColumns: 'fit-content(70%) 1fr',
+    rowGap: theme.spacing(5),
+  },
 }))
 
 const SelectButton = styled(Button)(() => ({
@@ -117,6 +121,7 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
+                      justifyContent: isMobile ? 'space-between' : 'flex-start',
                     }}
                   >
                     <Typography
@@ -137,11 +142,9 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
                         alignItems: 'center',
                       }}
                     >
-                      {!isMobile && (
-                        <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
-                          {t('common.paraTimeOnline')}
-                        </Typography>
-                      )}
+                      <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
+                        {t('common.paraTimeOnline')}
+                      </Typography>
                       <Circle color={COLORS.eucalyptus} size={4}>
                         <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
                       </Circle>
@@ -159,7 +162,14 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  mb: isMobile ? 5 : 0,
+                }}
+              >
                 <Link
                   component={RouterLink}
                   to={RouteUtils.getDashboardRoute(layer)}
