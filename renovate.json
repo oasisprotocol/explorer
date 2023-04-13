@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "groupName": "lint dependencies",
+      "matchPackagePatterns": ["eslint", "prettier"]
+    },
+    {
+      "groupName": "test dependencies",
+      "matchPackagePatterns": ["jest", "testing-library"]
+    },
+    {
+      "groupName": "react dependencies",
+      "matchPackagePatterns": ["react"]
+    },
+    {
+      "groupName": "i18n dependencies",
+      "matchPackagePatterns": ["i18n"]
+    },
+    {
+      "groupName": "storybook dependencies",
+      "matchPackagePatterns": ["storybook"]
+    },
+    {
+      "groupName": "CI github-actions",
+      "matchManagers": ["github-actions"]
+    }
+  ]
+}
