@@ -35,7 +35,7 @@ export const TransactionsPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
   const layer = useLayerParam()
-  // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
+  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus transactions is not yet implemented.

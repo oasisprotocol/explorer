@@ -35,7 +35,7 @@ export const BlocksPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const layer = useLayerParam()
-  // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
+  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus blocks is not yet implemented.

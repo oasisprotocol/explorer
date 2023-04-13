@@ -81,7 +81,7 @@ export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
   const layer = useLayerParam()
-  // Consensus is not yet enabled in ENABLED_PARA_TIMES, just some preparation
+  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Displaying consensus transactions is not yet implemented.
