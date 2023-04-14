@@ -118,12 +118,17 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
               <Box
                 sx={theme => ({
                   display: 'flex',
+                  flexDirection: 'row-reverse',
+                  justifyContent: 'flex-end',
                   alignItems: 'flex-end',
                   flexWrap: 'wrap',
                   height: theme.spacing(4),
                   overflow: 'hidden',
                 })}
               >
+                <Circle color={COLORS.eucalyptus} size={4}>
+                  <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
+                </Circle>
                 {!isTablet && (
                   <Typography
                     sx={theme => ({ height: theme.spacing(4), fontSize: 10, color: COLORS.ceil, mr: 3 })}
@@ -132,9 +137,6 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
                     {t('common.paraTimeOnline')}
                   </Typography>
                 )}
-                <Circle color={COLORS.eucalyptus} size={4}>
-                  <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
-                </Circle>
               </Box>
             </Box>
             {!isTablet && (
