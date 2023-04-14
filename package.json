@@ -110,6 +110,6 @@
     "storybook-addon-react-router-v6": "^0.3.5",
     "stream-browserify": "^3.0.0",
     "ts-jest": "^29.0.5",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.0"
   }
 }
