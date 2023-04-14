@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CheckIcon from '@mui/icons-material/Check'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { Circle } from '../Circle'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -13,6 +13,32 @@ import { Layer } from '../../../oasis-indexer/api'
 import Button from '@mui/material/Button'
 import { LayerDetailsModal } from '../LayerDetailsModal'
 import { LayerIcon } from '../../components/CustomIcons/LayerIcon'
+
+const StyledNetworkHeader = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  padding: 0,
+  border: 'none',
+  borderRadius: 'none',
+  [theme.breakpoints.up('md')]: {
+    padding: `${theme.spacing(4)} ${theme.spacing(6)} ${theme.spacing(4)} ${theme.spacing(4)}`,
+    border: `3px solid transparent`,
+    borderRadius: theme.spacing(3),
+    transition: 'border 0.5s linear',
+    '.change-btn': {
+      visibility: 'collapsed',
+      opacity: 0,
+      transition: 'opacity 0.5s linear',
+    },
+    '&:hover': {
+      border: `3px solid ${COLORS.white025A}`,
+      '.change-btn': {
+        display: 'block',
+        opacity: 1,
+      },
+    },
+  },
+}))
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
@@ -52,17 +78,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
 
   return (
     <>
-      <Box
-        sx={{
-          position: 'relative',
-          display: 'flex',
-          py: isTablet ? 0 : 4,
-          pl: isTablet ? 0 : 4,
-          pr: isTablet ? 0 : 6,
-          border: isTablet ? 'none' : `3px solid ${COLORS.white025A}`,
-          borderRadius: isTablet ? 'none' : 3,
-        }}
-      >
+      <StyledNetworkHeader>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {!isTablet && (
             <Circle color={COLORS.white} size={6} sx={{ mr: 4 }}>
@@ -130,6 +146,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
 
           {!isTablet && (
             <Button
+              className="change-btn"
               variant="text"
               color="inherit"
               sx={theme => ({
@@ -149,7 +166,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
             </Button>
           )}
         </Box>
-      </Box>
+      </StyledNetworkHeader>
       <LayerDetailsModal open={open} setOpen={setOpen} />
     </>
   )
