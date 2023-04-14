@@ -20,9 +20,6 @@ import { TFunction } from 'i18next'
 import { Modal } from '../Modal'
 
 const CloseModalIconButton = styled(IconButton)(({ theme }) => ({
-  position: 'fixed',
-  top: theme.spacing(0),
-  right: theme.spacing(0),
   [theme.breakpoints.up('sm')]: {
     position: 'absolute',
     top: theme.spacing(4),
@@ -93,13 +90,16 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
       hideBackdrop={false}
     >
       <>
-        <CloseModalIconButton aria-label={'close'} onClick={onModalClose}>
-          <HighlightOffIcon fontSize="large" sx={{ color: COLORS.brandExtraDark }} />
-        </CloseModalIconButton>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Typography id="paratime-details-modal-title" component="h3" variant="h3">
+            {t('layerPickerModal.title')}
+          </Typography>
 
-        <Typography id="paratime-details-modal-title" component="h3" variant="h3" sx={{ mb: 4 }}>
-          {t('layerPickerModal.title')}
-        </Typography>
+          <CloseModalIconButton aria-label={'close'} onClick={onModalClose}>
+            <HighlightOffIcon fontSize="large" sx={{ color: COLORS.brandExtraDark }} />
+          </CloseModalIconButton>
+        </Box>
+
         <Typography id="paratime-details-modal-description" variant="body2" sx={{ mb: 5 }}>
           {t('layerPickerModal.description')}
         </Typography>
