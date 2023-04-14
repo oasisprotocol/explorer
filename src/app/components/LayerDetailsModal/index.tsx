@@ -175,14 +175,9 @@ export const LayerDetailsModal: FC<LayerDetailsModalProps> = ({ open, setOpen })
                   to={RouteUtils.getDashboardRoute(layer)}
                   sx={{
                     textDecoration: 'none',
-                    ...(layer === activeLayer && { pointerEvents: 'none' }),
                   }}
                 >
-                  <SelectButton
-                    variant="text"
-                    disabled={activeLayer === layer}
-                    onClick={() => setOpen(false)}
-                  >
+                  <SelectButton variant="text" onClick={() => setOpen(false)}>
                     {activeLayer === layer ? t('common.active') : t('common.select')}
                   </SelectButton>
                 </Link>
