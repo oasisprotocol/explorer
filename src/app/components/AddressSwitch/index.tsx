@@ -1,4 +1,4 @@
-import Switch from '@mui/material/Switch'
+import Switch, { switchClasses } from '@mui/material/Switch'
 import { styled, useTheme } from '@mui/material/styles'
 import oasisLogo from './images/oasis.svg'
 import ethLogo from './images/eth.svg'
@@ -19,25 +19,25 @@ const StyledSwitch = styled(Switch)(() => ({
   width: 75,
   height: 44,
   padding: 7,
-  '& .MuiSwitch-switchBase': {
+  [`& .${switchClasses.switchBase}`]: {
     margin: 2,
     padding: 0,
     transform: 'translateX(1px)',
-    '&.Mui-checked': {
+    [`&.${switchClasses.checked}`]: {
       transform: 'translateX(31px)',
-      '& .MuiSwitch-thumb': {
+      [`& .${switchClasses.thumb}`]: {
         backgroundColor: COLORS.lightSilver,
         '&:before': {
           backgroundImage: `url("${ethLogo}")`,
         },
       },
-      '& + .MuiSwitch-track': {
+      [`& + .${switchClasses.track}`]: {
         opacity: 1,
         backgroundColor: COLORS.grayMedium2,
       },
     },
   },
-  '& .MuiSwitch-thumb': {
+  [`& .${switchClasses.thumb}`]: {
     backgroundColor: COLORS.brandMedium,
     width: 40,
     height: 40,
@@ -53,7 +53,7 @@ const StyledSwitch = styled(Switch)(() => ({
       backgroundImage: `url("${oasisLogo}")`,
     },
   },
-  '& .MuiSwitch-track': {
+  [`& .${switchClasses.track}`]: {
     opacity: 1,
     backgroundColor: COLORS.grayMedium2,
     borderRadius: '50px',
