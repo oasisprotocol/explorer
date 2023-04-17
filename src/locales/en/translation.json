@@ -180,7 +180,12 @@
   },
   "transaction": {
     "header": "Transaction",
-    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
+    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
+    "tooltips": {
+      "txTooltip": "Ethereum hash for the transaction",
+      "senderTooltip": "Ethereum address for the sender",
+      "recipientTooltip": "Ethereum address for the recipient"
+    }
   },
   "transactionEvent": {
     "accountsburn": "Tokens burnt",

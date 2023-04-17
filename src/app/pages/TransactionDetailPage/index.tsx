@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -30,6 +30,9 @@ import { DashboardLink } from '../DashboardPage/DashboardLink'
 import { getNameForTicker, getTickerForNetwork, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
+import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
+import InfoIcon from '@mui/icons-material/Info'
+import Tooltip from '@mui/material/Tooltip'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -139,6 +142,23 @@ export const TransactionDetailPage: FC = () => {
 
 export type TransactionDetailRuntimeBlock = RuntimeTransaction & {
   markAsNew?: boolean
+}
+
+const TransactionInfoTooltip: FC<PropsWithChildren<{ label: string }>> = ({ label, children }) => {
+  return (
+    <Tooltip
+      arrow
+      placement="top"
+      title={
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <InfoIcon />
+          {label}
+        </Box>
+      }
+    >
+      <Box>{children}</Box>
+    </Tooltip>
+  )
 }
 
 export const TransactionDetailView: FC<{
