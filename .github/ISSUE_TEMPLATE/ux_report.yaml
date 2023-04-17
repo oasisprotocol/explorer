@@ -1,20 +1,29 @@
 name: 🔥 UX/UI Design Change Report
 description: Use this template for tracking UX/UI Design changes.
-title: "[UX]: "
-labels: ["ux/design"]
-assignees: ["donouwens"]
+title: '[UX]: '
+labels: ['ux/design']
+assignees: ['donouwens']
 
 body:
   - type: checkboxes
-    id: urgency
+    id: impact
     attributes:
-      label: URGENCY
-      description: Is this issue blocking your progress?
+      label: IMPACT
+      description: Define or estimate how many users will be faced with this issue.
       options:
         - label: High
         - label: Medium
         - label: Low
-        - label: I don't know
+  - type: checkboxes
+    id: urgency
+    attributes:
+      label: URGENCY
+      description: What is the expected speed this needs to be resolved?
+      options:
+        - label: Critical
+        - label: Major
+        - label: Medium
+        - label: Minor
   - type: input
     id: product-where
     attributes:
