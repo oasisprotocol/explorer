@@ -73,6 +73,7 @@
     "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
     "@emotion/jest": "^11.10.5",
     "@parcel/packager-raw-url": "^2.8.3",
     "@parcel/transformer-webmanifest": "^2.8.3",
