@@ -1,8 +1,8 @@
 import {
   EvmEventParam,
-  Layer,
   RuntimeEvent,
   RuntimeEventType,
+  RuntimeTransaction
 } from '../../../oasis-indexer/api'
 import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,13 +21,38 @@ import { TransactionLink } from './TransactionLink'
 import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
-import { Network } from '../../../types/network'
 
 const EvmEventParamData: FC<{
   scope: SearchScope
   param: EvmEventParam
+  address?: string
   addressSwitchOption: AddressSwitchOption
-}> = ({ scope, param, addressSwitchOption }) => {
+}> = ({ scope, param, address }) => {
+  /**
+   * According to the API docs:
+   *
+   * Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+   * Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+   * Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+   * Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
+   */
+  switch (param.evm_type) {
+    // TODO: handle more EVM types
+    case 'address':
+      return address ? <AccountLink address={address} scope={scope} /> : null
+    case 'uint256':
+      // TODO: format with BigNumber
+      return <span>{param.value as string}</span>
+    default:
+      return <span>{JSON.stringify(param.value, null, '  ')}</span>
+  }
+}
+
+const EvmLogRow: FC<{ scope: SearchScope; param: EvmEventParam; addressSwitchOption: AddressSwitchOption }> = ({
+  scope,
+  param,
+  addressSwitchOption,
+}) => {
   const [address, setAddress] = useState<string>()
 
   useEffect(() => {
@@ -47,24 +72,26 @@ const EvmEventParamData: FC<{
     resolveAddresses()
   }, [param, addressSwitchOption])
 
-  /**
-   * According to the API docs:
-   *
-   * Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
-   * Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
-   * Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
-   * Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
-   */
-  switch (param.evm_type) {
-    // TODO: handle more EVM types
-    case 'address':
-      return address ? <AccountLink address={address} scope={scope} /> : null
-    case 'uint256':
-      // TODO: format with BigNumber
-      return <span>{param.value as string}</span>
-    default:
-      return <span>{JSON.stringify(param.value, null, '  ')}</span>
+  const getCopyToClipboardValue = () => {
+    if (address) {
+      return address
+    }
+
+    return typeof param.value === 'string' ? (param.value as string) : JSON.stringify(param.value, null, '  ')
   }
+
+  return (
+    <TableRow>
+      <TableCell>{param.name}</TableCell>
+      <TableCell>{param.evm_type}</TableCell>
+      <TableCell>
+        <EvmEventParamData scope={scope} param={param} address={address} addressSwitchOption={addressSwitchOption} />{' '}
+      </TableCell>
+      <TableCell>
+        <CopyToClipboard value={getCopyToClipboardValue()} />
+      </TableCell>
+    </TableRow>
+  )
 }
 
 const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent, addressSwitchOption: AddressSwitchOption }> = ({ scope, event, addressSwitchOption }) => {
@@ -111,22 +138,12 @@ const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent, addressSwit
                     </TableHead>
                     <TableBody>
                       {event.evm_log_params.map((param, index) => (
-                        <TableRow key={`param-${index}`}>
-                          <TableCell>{param.name}</TableCell>
-                          <TableCell>{param.evm_type}</TableCell>
-                          <TableCell>
-                            <EvmEventParamData param={param} scope={scope} addressSwitchOption={addressSwitchOption} />{' '}
-                          </TableCell>
-                          <TableCell>
-                            <CopyToClipboard
-                              value={
-                                typeof param.value === 'string'
-                                  ? (param.value as string)
-                                  : JSON.stringify(param.value, null, '  ')
-                              }
-                            />
-                          </TableCell>
-                        </TableRow>
+                        <EvmLogRow
+                          scope={scope}
+                          key={`param-${index}`}
+                          param={param}
+                          addressSwitchOption={addressSwitchOption}
+                        />
                       ))}
                     </TableBody>
                   </Table>
@@ -162,7 +179,6 @@ export const TransactionLogEvent: FC<{
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { layer } = transaction
   const transactionLinkValue =
     addressSwitchOption === AddressSwitchOption.Eth ? transaction.eth_hash : transaction.hash
 
