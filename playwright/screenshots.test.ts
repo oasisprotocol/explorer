@@ -4,6 +4,7 @@ import type { GetRosePriceResponse } from '../src/coin-gecko/api'
 test.use({
   locale: 'en-US',
   timezoneId: 'UTC',
+  // TODO: jest.setSystemTime(new Date(2023, 1, 1))
 })
 
 test.beforeEach(async ({ page }) => {
