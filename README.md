@@ -1,5 +1,10 @@
 # Oasis Explorer
 
+[![CI build status][github-ci-build-badge]][github-ci-build-link]
+[![CI test status][github-ci-test-badge]][github-ci-test-link]
+[![CI lint status][github-ci-lint-badge]][github-ci-lint-link]
+[![Renovate enabled][github-renovate-badge]][github-renovate-link]
+
 Official explorer for the Oasis Network.
 
 :warning: **Oasis Explorer is currently in development and is not available yet.**
@@ -16,6 +21,7 @@ Bleeding-edge API version
 OpenAPI spec for the bleeding-edge version is at https://github.com/oasisprotocol/oasis-indexer/blob/main/api/spec/v1.yaml.
 
 To quickly run latest emerald indexer locally without running a node, replace https://github.com/oasisprotocol/oasis-indexer/blob/d48de37/tests/e2e/config/e2e-dev.yml#L1-L8 with:
+
 ```yaml
 analysis:
   analyzers:
@@ -83,3 +89,11 @@ A detailed post on Git commit messages: [How To Write a Git Commit Message].
 [prettier]: https://prettier.io/
 [eslint]: https://github.com/eslint/eslint
 [How To Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
+[github-ci-build-badge]: https://github.com/oasisprotocol/explorer/actions/workflows/ci-build.yml/badge.svg
+[github-ci-build-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:ci-build+branch:master
+[github-ci-test-badge]: https://github.com/oasisprotocol/explorer/actions/workflows/ci-test.yml/badge.svg
+[github-ci-test-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:ci-test+branch:master
+[github-ci-lint-badge]: https://github.com/oasisprotocol/explorer/actions/workflows/ci-lint.yml/badge.svg
+[github-ci-lint-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:ci-lint+branch:master
+[github-renovate-badge]: https://img.shields.io/badge/renovate-enabled-brightgreen.svg
+[github-renovate-link]: https://www.mend.io/renovate/
