@@ -12,7 +12,7 @@ type GetRosePriceParams = {
   precision?: string
 }
 
-type GetRosePriceResponse = {
+export type GetRosePriceResponse = {
   'oasis-network': {
     usd: number
   }
