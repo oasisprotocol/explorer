@@ -92,7 +92,6 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
                 display: 'flex',
                 alignItems: 'baseline',
                 justifyContent: 'flex-start',
-                flexWrap: 'no-wrap',
               }}
             >
               <Button
@@ -103,7 +102,6 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
                   '&&': { background: 'transparent' },
                   p: 0,
                   height: 'auto',
-                  minWidth: 'unset',
                 }}
               >
                 <Typography
@@ -116,24 +114,18 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
               </Button>
 
               <Box
-                sx={theme => ({
+                sx={{
                   display: 'flex',
                   flexDirection: 'row-reverse',
                   justifyContent: 'flex-end',
                   alignItems: 'flex-end',
-                  flexWrap: 'wrap',
-                  height: theme.spacing(4),
-                  overflow: 'hidden',
-                })}
+                }}
               >
                 <Circle color={COLORS.eucalyptus} size={4}>
                   <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
                 </Circle>
                 {!isTablet && (
-                  <Typography
-                    sx={theme => ({ height: theme.spacing(4), fontSize: 10, color: COLORS.ceil, mr: 3 })}
-                    component="span"
-                  >
+                  <Typography sx={{ fontSize: 10, color: COLORS.ceil, mr: 3 }} component="span">
                     {t('common.paraTimeOnline')}
                   </Typography>
                 )}
