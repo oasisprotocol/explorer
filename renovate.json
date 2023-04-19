@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
       "groupName": "lint dependencies",
@@ -26,5 +26,6 @@
       "groupName": "CI github-actions",
       "matchManagers": ["github-actions"]
     }
-  ]
+  ],
+  "rangeStrategy": "bump"
 }
