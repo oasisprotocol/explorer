@@ -26,5 +26,6 @@
       "groupName": "CI github-actions",
       "matchManagers": ["github-actions"]
     }
-  ]
+  ],
+  "rangeStrategy": "bump"
 }
