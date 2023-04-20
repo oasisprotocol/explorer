@@ -93,3 +93,10 @@ jobs:
                 <td><strong>Status:</strong></td><td>🚫 Deploy failed!</td>
               </tr>
             </table>
+          message-cancelled: |
+            ## Deployed to <a href="https://pages.dev">Cloudflare Pages</a>
+            <table>
+              <tr>
+                <td><strong>Status:</strong></td><td>✖️ Deploy cancelled!</td>
+              </tr>
+            </table>
