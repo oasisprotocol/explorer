@@ -107,24 +107,24 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@orval/angular@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/angular/-/angular-6.14.3.tgz#f6ba0a8225ce7e359220ba3159dfa0a35aba7b60"
-  integrity sha512-az9tYr+nOE4Khtv1lIwulABRvbgGimykcHEKT67KSXgOBRaZ1X9mdCQwIgrdHTxcHW3lMN+Sss3bUR/a2S2IWw==
+"@orval/angular@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/angular/-/angular-6.14.4.tgz#630dfecf9219c48651cfa2e7688d81ecf6f20e78"
+  integrity sha512-NYc7Rh69AE+BaVS9EWZZpSQ/HmySghh8QdwKohQuQgLYWkdKa9ZY1lSKIOm03N44AepF/w1y5r4iezC7efztzg==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
 
-"@orval/axios@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/axios/-/axios-6.14.3.tgz#d142781adf3e1f1cb92160a9f2c826b51e517511"
-  integrity sha512-3bV+CQ2OFD/1/jz6Jeg0UY7X8ZyaQRX95hLmssIbW84CHOwzG6wrYtLvgPgOk5OlNyYeJhfpq5nFOmh8eaJ+3A==
+"@orval/axios@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/axios/-/axios-6.14.4.tgz#ec94a13a36699acbac4783d7d64fa6d6e9dc53c1"
+  integrity sha512-B1tvN8+rD4YNG2ScqBxdDyO8IKtocVXQBIEB4FwevmPM3rzxF6B9ejzywiqy/TnwrrtzVIosp8PFvIPRZ7TSMg==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
 
-"@orval/core@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/core/-/core-6.14.3.tgz#f28677303e35c86fc5bebf2845da2ec0b463159a"
-  integrity sha512-L9pdkCyTiX7v/WwDPVc6ig7ntbSDQf6y/lNdgchFWFplprvMO3cleDC13AFGtSCrcZJklRWKTWoOf5roxDj7ow==
+"@orval/core@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/core/-/core-6.14.4.tgz#94413d45f76b90c7df63d51935a7e57829f1539f"
+  integrity sha512-ix1k5qx5tpTRQ06waQLyYNm2pljuZJ2TG8ViydSvug35lzdJKCjDSGUs4SN1LqhWX5k+6T5CiJgiWkWfctea7A==
   dependencies:
     "@apidevtools/swagger-parser" "^10.1.0"
     acorn "^8.8.0"
@@ -148,38 +148,38 @@
     swagger2openapi "^7.0.8"
     validator "^13.7.0"
 
-"@orval/msw@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/msw/-/msw-6.14.3.tgz#ceb3364a443bf008d279ca088a1af4179405671c"
-  integrity sha512-AKZTap3vy5TPlI+liiJckwEQKjDmKMwOsIU68YmFqRERqadwHmOBKprsF34mfEb97hXDPALQbPk8BJNIo++OvA==
+"@orval/msw@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/msw/-/msw-6.14.4.tgz#86c46855bac0808d7c744065f3d9f8888debe61b"
+  integrity sha512-I6iX5V+SrkfTESUP9kdZrsci7jPE45TjQXds+cH+Mg6VDEvVCrF/+ESR5Q4eNgBWvcmBeUrNn6TACJGllf0IgQ==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
     cuid "^2.1.8"
     lodash.get "^4.4.2"
     lodash.omit "^4.5.0"
     openapi3-ts "^3.0.0"
 
-"@orval/query@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/query/-/query-6.14.3.tgz#6aa09baae0defc6461b74560c819d2ba84b1470c"
-  integrity sha512-riO9WfFFE6xS5QIcuNYhEJbYAg6c+H9ostDdyMr3kHvhDh6Uai0uXeuF0XQDGtO2QHmlA0nqeHf5qUMS4yuBDA==
+"@orval/query@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/query/-/query-6.14.4.tgz#4374b807ceca6b2c885ab8a980c0d75d0a04bb58"
+  integrity sha512-EvmEMaA7X062NnIgLSR4CfBFcjFopvsFSLD7Zz3rMRx+gaYJLQtp5VTETGMrYhp6gmY/d5dC1JRF4PWg4Lvv2A==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
     lodash.omitby "^4.6.0"
 
-"@orval/swr@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/swr/-/swr-6.14.3.tgz#40081cb4d9ffec0b6d94a0c2f3e956f9fe2ef1fc"
-  integrity sha512-aG0B6X3JACkBx4ue7dZPS1odJqq8ZtQ3bA+JyL6i3Ebzcr593JcDQgeSRYQMCcj4Xik+ck7H7EeXeG808hMbBw==
+"@orval/swr@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/swr/-/swr-6.14.4.tgz#cc62854361eee7c388296bc054ae6c19c3fa9af4"
+  integrity sha512-ixGG86PvPQ7f2kiU3Fu7ocJb4kyg1bobfNzWMakUg6uiTnxVVbu2Nkg87lXQRYu+vDZPKh3JGyS+dU4oU+EYGg==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
 
-"@orval/zod@6.14.3":
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/@orval/zod/-/zod-6.14.3.tgz#1b6f243712279dd5d3f7dfdb0bdb3cf71445948f"
-  integrity sha512-ZJWQTCIMbQfUgoxDvzO0MNpmwx5jTl0ldFStrYzeoIgoZ10BIR/Mm0HWc52OjevqbRu0h2xfwMF88rSzzy+N1Q==
+"@orval/zod@6.14.4":
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/@orval/zod/-/zod-6.14.4.tgz#5561c059fb5ce0aa4964c1d31286557a9e27cc70"
+  integrity sha512-9WRmwCXYBAKx6zEh8vvcDiVQe3JwrdKm8f+2qw3sARI8CLCwiIreyVY3HGmm3nMNxBtjCXEeLVqup0xZGNIX9g==
   dependencies:
-    "@orval/core" "6.14.3"
+    "@orval/core" "6.14.4"
     lodash.uniq "^4.5.0"
 
 "@rollup/plugin-commonjs@~22.0.2":
@@ -2019,19 +2019,19 @@ optionator@^0.8.1:
     type-check "~0.3.2"
     word-wrap "~1.2.3"
 
-orval@^6.14.3:
-  version "6.14.3"
-  resolved "https://registry.yarnpkg.com/orval/-/orval-6.14.3.tgz#885931ae78a3c8c10cce66db7bdb329b70a4f495"
-  integrity sha512-9jPBfK7/G5X5OIhRYPCCJ6gOFx2Q+tpnTF/6qwE1VY56/h1r6gleRFEkQBPSzsksXo3S9gxb9guTari7dB/+lg==
+orval@^6.14.4:
+  version "6.14.4"
+  resolved "https://registry.yarnpkg.com/orval/-/orval-6.14.4.tgz#638f68bf650f732bbaf7fcb22953ab7b4ec5bdd6"
+  integrity sha512-kMFZsSjetAPang7bcitcxtdiQe8ImNCKl4U3tIRex9DrZsTWI0DHJvKjN1hRtDx/4Ya26jV9Wn7JZQWsreKbtg==
   dependencies:
     "@apidevtools/swagger-parser" "^10.1.0"
-    "@orval/angular" "6.14.3"
-    "@orval/axios" "6.14.3"
-    "@orval/core" "6.14.3"
-    "@orval/msw" "6.14.3"
-    "@orval/query" "6.14.3"
-    "@orval/swr" "6.14.3"
-    "@orval/zod" "6.14.3"
+    "@orval/angular" "6.14.4"
+    "@orval/axios" "6.14.4"
+    "@orval/core" "6.14.4"
+    "@orval/msw" "6.14.4"
+    "@orval/query" "6.14.4"
+    "@orval/swr" "6.14.4"
+    "@orval/zod" "6.14.4"
     ajv "^8.11.0"
     cac "^6.7.12"
     chalk "^4.1.2"
