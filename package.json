@@ -16,6 +16,7 @@
     "checkTs": "tsc --noEmit",
     "lint": "eslint --ext js,ts,tsx ./",
     "lint:fix": "yarn run lint --fix",
+    "gitlint": "node ./internals/scripts/gitlint.js",
     "prettify": "prettier src internals --write",
     "test": "jest",
     "start-storybook": "storybook dev -p 6006",
