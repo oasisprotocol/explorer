@@ -26,6 +26,7 @@ onlyRunOnCI('externalLinks', () => {
   describe('should be reachable', () => {
     for (const [linksGroupName, linksGroup] of Object.entries(externalLinksModule)) {
       for (const [linkName, url] of Object.entries(linksGroup)) {
+        if (url.startsWith(externalLinksModule.socialMedia.discord)) continue // discord link returns 200 always
         if (url.startsWith(externalLinksModule.socialMedia.reddit)) continue // Reddit often returns 504
         if (url.startsWith(externalLinksModule.referrals.coinGecko)) continue // CoinGecko has CloudFlare DDOS protection
 
@@ -35,5 +36,13 @@ onlyRunOnCI('externalLinks', () => {
         })
       }
     }
+  })
+})
+
+describe('Discord links', () => {
+  it('should validate if Discord links are in sync', () => {
+    const discordLinkAccountId = externalLinksModule.socialMedia.discord.split('/').at(-1)
+
+    expect(externalLinksModule.socialMedia.isDiscordStillValid.endsWith(discordLinkAccountId!)).toEqual(true)
   })
 })
