@@ -6,6 +6,8 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
+import { FC } from 'react'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -25,9 +27,10 @@ type BlocksProps = {
   pagination: false | TablePaginationProps
 }
 
-export const Blocks = (props: BlocksProps) => {
+export const Blocks: FC<BlocksProps> = (props: BlocksProps) => {
   const { isLoading, blocks, verbose, pagination, limit } = props
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
 
   const tableColumns: TableColProps[] = [
     { content: t('common.fill') },
@@ -66,7 +69,7 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: block.num_transactions,
+          content: formatNumber(block.num_transactions),
           key: 'txs',
         },
         ...(verbose
@@ -79,15 +82,8 @@ export const Blocks = (props: BlocksProps) => {
           : []),
         {
           align: TableCellAlign.Right,
-          content: t('common.bytes', {
-            value: block.size,
-            formatParams: {
-              value: {
-                style: 'unit',
-                unit: 'byte',
-                unitDisplay: 'long',
-              } satisfies Intl.NumberFormatOptions,
-            },
+          content: formatNumber(block.size, {
+            unit: 'byte',
           }),
           key: 'size',
         },
@@ -95,7 +91,7 @@ export const Blocks = (props: BlocksProps) => {
           ? [
               {
                 align: TableCellAlign.Right,
-                content: block.gas_used.toLocaleString(),
+                content: formatNumber(block.gas_used),
                 key: 'gasUsed',
               },
             ]
@@ -104,7 +100,7 @@ export const Blocks = (props: BlocksProps) => {
           ? [
               {
                 align: TableCellAlign.Right,
-                content: blockGasLimit.toLocaleString(),
+                content: formatNumber(blockGasLimit),
                 key: 'gasLimit',
               },
             ]

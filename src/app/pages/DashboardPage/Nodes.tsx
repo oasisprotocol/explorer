@@ -8,9 +8,11 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Layer, useGetRuntimeStatus } from '../../../oasis-indexer/api'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { AppErrors } from '../../../types/errors'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -25,7 +27,7 @@ export const Nodes: FC = () => {
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
             <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
-              {t('nodes.value', { value: activeNodes })}
+              {formatNumber(activeNodes)}
             </Typography>
           </>
         )}

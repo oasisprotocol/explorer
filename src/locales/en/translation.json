@@ -15,13 +15,13 @@
   },
   "activeAccounts": {
     "title": "Active Accounts",
-    "tooltip": "{{value, number}} accounts"
+    "tooltip": "{{value}} accounts"
   },
   "blocks": {
     "latest": "Latest Blocks"
   },
   "block": {
-    "gasUsed": "{{value, number}} | {{percentage, number}}"
+    "gasUsed": "{{value}} | {{percentage, number}}"
   },
   "buildInternal": "Please note this is an internal launch meant to gather your feedback. Please share your feedback with screenshots through this from: ",
   "buildPreview": "Please note this is an experimental build of Oasis Explorer and that data that is shown might be incorrect.",
@@ -35,7 +35,6 @@
     "active": "Active",
     "balance": "Balance",
     "block": "Block",
-    "bytes": "{{value, number}}",
     "change": "Change",
     "data": "Data",
     "emerald": "Emerald",
@@ -57,6 +56,7 @@
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
     "name": "Name",
+    "number": "{{value}}",
     "paratime": "Paratime",
     "rose": "ROSE",
     "size": "Size",
@@ -80,8 +80,7 @@
     "paraTimeOnline": "ParaTime Online"
   },
   "nodes": {
-    "title": "Active nodes",
-    "value": "{{value, number}}"
+    "title": "Active nodes"
   },
   "errors": {
     "code": "error code",
@@ -153,7 +152,7 @@
   },
   "totalTransactions": {
     "header": "Total Transactions",
-    "tooltip": "{{value, number}} total transactions"
+    "tooltip": "{{value}} total transactions"
   },
   "transactions": {
     "latest": "Latest Transactions",
@@ -187,7 +186,7 @@
     "tooltip": "{{value}} tx/day"
   },
   "transactionsTpsChart": {
-    "tooltip": "{{value, number}} TPS"
+    "tooltip": "{{value}} TPS"
   },
   "select": {
     "placeholder": "Select"
