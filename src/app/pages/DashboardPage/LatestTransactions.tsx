@@ -32,7 +32,7 @@ export const LatestTransactions: FC = () => {
         title={t('transactions.latest')}
         action={
           <Link component={RouterLink} to="transactions" sx={{ color: COLORS.brandExtraDark }}>
-            View all
+            {t('common.viewAll')}
           </Link>
         }
       />
