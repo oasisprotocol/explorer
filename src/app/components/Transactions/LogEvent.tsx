@@ -33,7 +33,7 @@ const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, eve
   const eventTypeNames: Record<RuntimeEventType, string> = {
     [RuntimeEventType.accountstransfer]: t('transactionEvent.accountstransfer'),
     [RuntimeEventType.evmlog]: t('transactionEvent.evmLog'),
-    [RuntimeEventType.coregas_used]: t('transactionEvent.gasUsed'),
+    [RuntimeEventType.coregas_used]: t('common.gasUsed'),
     [RuntimeEventType.consensus_accountswithdraw]: t('transactionEvent.consensusWithdrawal'),
     [RuntimeEventType.consensus_accountsdeposit]: t('transactionEvent.consensusDeposit'),
     [RuntimeEventType.accountsmint]: t('transactionEvent.accountsmint'),

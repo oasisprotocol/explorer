@@ -9,8 +9,7 @@
     "evmTokens": "EVM tokens",
     "tokensListTitle": "{{token}} Tokens",
     "transactionsListTitle": "Account Transactions",
-    "totalReceived": "Total Received",
-    "totalSent": "Total Sent"
+    "totalReceived": "Total Received"
   },
   "activeAccounts": {
     "title": "Active Accounts",
@@ -34,6 +33,7 @@
     "active": "Active",
     "balance": "Balance",
     "block": "Block",
+    "blocks": "Blocks",
     "bytes": "{{value, number}}",
     "change": "Change",
     "data": "Data",
@@ -178,8 +178,7 @@
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
     "decoded": "Decoded",
-    "evmLog": "EVM log message",
-    "gasUsed": "Gas used"
+    "evmLog": "EVM log message"
   },
   "transactionStats": {
     "header": "Transactions Per Day",
@@ -187,9 +186,6 @@
   },
   "transactionsTpsChart": {
     "tooltip": "{{value, number}} TPS"
-  },
-  "select": {
-    "placeholder": "Select"
   },
   "chartDuration": {
     "today": "Today",
@@ -204,7 +200,6 @@
   },
   "home": {
     "apiOffline": "Our API is offline. We’re trying to reconnect",
-    "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
     "txn": "Txn",
     "zoomOutBtnText": "Zoom out",
@@ -241,11 +236,9 @@
         "viewLink": "View Account"
       },
       "blocks": {
-        "title": "Blocks",
         "viewLink": "View Block"
       },
       "transactions": {
-        "title": "Transactions",
         "viewLink": "View Transaction"
       },
       "count_one": "1 result",

@@ -116,7 +116,7 @@ export const SearchResultsView: FC<{
       {!isAnyLoading && (
         <>
           <ResultsGroup
-            title={t('search.results.blocks.title')}
+            title={t('common.blocks')}
             results={searchQueries.blockHeight.results}
             resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
             link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
@@ -124,7 +124,7 @@ export const SearchResultsView: FC<{
           />
 
           <ResultsGroup
-            title={t('search.results.transactions.title')}
+            title={t('common.transactions')}
             results={searchQueries.txHash.results}
             resultComponent={item => (
               <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />

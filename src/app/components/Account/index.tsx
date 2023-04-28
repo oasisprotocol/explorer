@@ -105,7 +105,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           <dt>{t('account.totalReceived')}</dt>
           <dd>{t('common.valueInRose', { value: account.stats.total_received })}</dd>
 
-          <dt>{t('account.totalSent')}</dt>
+          <dt>{t('common.totalSent')}</dt>
           <dd>{t('common.valueInRose', { value: account.stats.total_sent })}</dd>
         </StyledDescriptionList>
       )}

@@ -281,7 +281,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             fill="#191932"
           />
           <text x="150.5" y="39" fill="#fff" fontSize="4px">
-            {t('home.blocks')}
+            {t('common.blocks')}
           </text>
         </Link>
       </g>
@@ -322,7 +322,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             fill="#191932"
           />
           <text x="74.25" y="289" fill="#fff" fontSize="4px">
-            {t('home.blocks')}
+            {t('common.blocks')}
           </text>
         </Link>
       </g>
