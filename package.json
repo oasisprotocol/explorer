@@ -59,7 +59,7 @@
     "@oasisprotocol/client-rt": "0.2.1-alpha.2",
     "@tanstack/react-query": "4.29.5",
     "@tanstack/react-query-devtools": "4.29.5",
-    "axios": "1.3.6",
+    "axios": "1.4.0",
     "bignumber.js": "9.1.1",
     "date-fns": "2.29.3",
     "i18next": "22.4.15",
