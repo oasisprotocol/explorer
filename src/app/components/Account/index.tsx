@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link as RouterLink } from 'react-router-dom'
 import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -13,6 +14,9 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { AccountLink } from './AccountLink'
+import { RouteUtils } from '../../utils/route-utils'
+import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/TransactionsCard'
+import Link from '@mui/material/Link'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -53,6 +57,13 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
+
+  const transactionsAnchor = account
+    ? `${RouteUtils.getAccountRoute(
+        account.address_eth ?? account.address,
+        account.layer,
+      )}#${accountTransactionsContainerId}`
+    : undefined
 
   return (
     <>
@@ -95,7 +106,11 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           )}
 
           <dt>{t('common.transactions')}</dt>
-          <dd>{account.stats.num_txns}</dd>
+          <dd>
+            <Link component={RouterLink} to={transactionsAnchor!}>
+              {t('common.transactionsNumber', { count: account.stats.num_txns })}
+            </Link>
+          </dd>
 
           <dt>{t('account.evmTokens')}</dt>
           <dd>

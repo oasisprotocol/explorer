@@ -11,6 +11,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 
 export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer, address }) => {
   const txsPagination = useSearchParamsPagination('page')
@@ -46,13 +47,17 @@ export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer,
   )
 }
 
+export const accountTransactionsContainerId = 'transactions'
+
 export const TransactionsCard: FC = () => {
   const { t } = useTranslation()
   const layer = useLayerParam()
   const address = useLoaderData() as string
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
+      <ScrollingDiv id={accountTransactionsContainerId}>
+        <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
+      </ScrollingDiv>
       <CardContent>
         <ErrorBoundary light={true}>
           <TransactionsList layer={layer} address={address} />
