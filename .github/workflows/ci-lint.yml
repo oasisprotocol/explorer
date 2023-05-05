@@ -45,7 +45,7 @@ jobs:
         if: always()
       - name: Lint git commits
         run: |
-          yarn gitlint
+          yarn lint-git
         # Always run this step so that all linting errors can be seen at once.
         if: always()
       - name: ESLint

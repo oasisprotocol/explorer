@@ -16,7 +16,7 @@
     "checkTs": "tsc --noEmit",
     "lint": "eslint --ext js,ts,tsx ./",
     "lint:fix": "yarn run lint --fix",
-    "gitlint": "node ./internals/scripts/gitlint.js",
+    "lint-git": "node ./internals/scripts/gitlint.js",
     "lint-docs": "markdownlint --ignore '**/node_modules/**' '**/*.md'",
     "prettify": "prettier src internals --write",
     "test": "jest",
