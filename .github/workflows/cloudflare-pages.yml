@@ -24,6 +24,8 @@ jobs:
     steps:
       # In progress comment will be updated with a deploy status.
       - name: Add in progress comment to PR
+        # We want to add in progress comment on a pull request event only.
+        if: github.event_name == 'pull_request'
         uses: mshick/add-pr-comment@v2
         with:
           message: |
@@ -65,7 +67,8 @@ jobs:
       # On a subsequent run the original comment will be updated.
       - name: Update PR comment
         uses: mshick/add-pr-comment@v2
-        if: always()
+        # We want to update a comment on a pull request event only.
+        if: github.event_name == 'pull_request' && always()
         with:
           message: |
             ## Deployed to <a href="https://pages.dev">Cloudflare Pages</a>
