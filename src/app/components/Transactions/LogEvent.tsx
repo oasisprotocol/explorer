@@ -55,7 +55,7 @@ const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, eve
             <dd>
               <b>{event.evm_log_name}</b>
             </dd>
-            {event.evm_log_params?.length && (
+            {event.evm_log_params && event.evm_log_params.length > 0 && (
               <>
                 {/*<dt>Params</dt>*/}
                 <dd>
