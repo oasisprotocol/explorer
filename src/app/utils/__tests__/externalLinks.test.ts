@@ -28,6 +28,7 @@ onlyRunOnCI('externalLinks', () => {
       for (const [linkName, url] of Object.entries(linksGroup)) {
         if (url.startsWith(externalLinksModule.socialMedia.discord)) continue // discord link returns 200 always
         if (url.startsWith(externalLinksModule.socialMedia.reddit)) continue // Reddit often returns 504
+        if (url.startsWith(externalLinksModule.socialMedia.twitter)) continue // redirect loop
         if (url.startsWith(externalLinksModule.referrals.coinGecko)) continue // CoinGecko has CloudFlare DDOS protection
 
         it.concurrent(`${linksGroupName} ${linkName} ${url}`, async () => {
