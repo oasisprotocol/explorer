@@ -110,7 +110,7 @@
     "process": "0.11.10",
     "react-app-polyfill": "3.0.0",
     "storybook": "7.0.10",
-    "storybook-addon-react-router-v6": "0.3.6",
+    "storybook-addon-react-router-v6": "1.0.0",
     "stream-browserify": "3.0.0",
     "ts-jest": "29.1.0",
     "typescript": "5.0.4"
