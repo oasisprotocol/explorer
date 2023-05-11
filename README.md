@@ -3,6 +3,7 @@
 [![CI build status][github-ci-build-badge]][github-ci-build-link]
 [![CI test status][github-ci-test-badge]][github-ci-test-link]
 [![CI lint status][github-ci-lint-badge]][github-ci-lint-link]
+[![Release status][github-release-badge]][github-release-link]
 [![Renovate enabled][github-renovate-badge]][github-renovate-link]
 
 Official explorer for the Oasis Network.
@@ -78,6 +79,7 @@ To quickly run latest emerald indexer locally without running a node,
 [replace following lines][replace-lines-to-run-latest-emerald] with:
 
 <!-- markdownlint-disable line-length -->
+
 ```yaml
 analysis:
   analyzers:
@@ -90,6 +92,7 @@ analysis:
       to: <latest round>
       from: <latest round - 500>
 ```
+
 <!-- markdownlint-enable line-length -->
 
 and run
@@ -114,6 +117,8 @@ REACT_APP_API=http://localhost:8008/v1/ yarn start
 [github-ci-test-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:ci-test+branch:master
 [github-ci-lint-badge]: https://github.com/oasisprotocol/explorer/actions/workflows/ci-lint.yml/badge.svg
 [github-ci-lint-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:ci-lint+branch:master
+[github-release-badge]: https://github.com/oasisprotocol/explorer/actions/workflows/release.yml/badge.svg
+[github-release-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:release
 [github-renovate-badge]: https://img.shields.io/badge/renovate-enabled-brightgreen.svg
 [github-renovate-link]: https://www.mend.io/renovate/
 [indexer-html-spec]: https://index.oasislabs.com/v1/spec/v1.html
