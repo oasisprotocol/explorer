@@ -3,13 +3,12 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Tooltip from '@mui/material/Tooltip'
 import { trimLongString } from '../../utils/trimLongString'
+import { tooltipDelay } from '../../../styles/theme'
 
 type TrimLinkLabelProps = {
   label: string
   to: string
 }
-
-const tooltipDelay = 500
 
 export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   return (

@@ -59,9 +59,10 @@ describe('SearchResultsView', () => {
         roseFiatValue={1}
       />,
     )
+
     expect(screen.getByText('EVM tokens')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '337325.43836 FTP' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '337325.43836 FTP' })).toHaveAttribute(
+    expect(screen.getByText('337325.43836… FTP')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /337325.43836/ })).toHaveAttribute(
       'href',
       '/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
     )
