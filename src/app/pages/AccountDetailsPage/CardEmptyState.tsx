@@ -1,9 +1,8 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred'
+import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import { COLORS } from '../../../styles/theme/colors'
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -22,17 +21,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }))
 
-type TokensEmptyStateProps = {
+type CardEmptyStateProps = {
   label: string
 }
 
-export const TokensEmptyState: FC<TokensEmptyStateProps> = ({ label }) => {
-  const { t } = useTranslation()
-
-  return (
-    <StyledBox>
-      <ReportGmailerrorredIcon sx={{ color: COLORS.brandDark, fontSize: '55px' }} />
-      <Typography sx={{ color: COLORS.grayDark }}>{t('account.emptyTokenList', { token: label })}</Typography>
-    </StyledBox>
-  )
-}
+export const CardEmptyState: FC<CardEmptyStateProps> = ({ label }) => (
+  <StyledBox>
+    <ReportProblemIcon sx={{ color: COLORS.warningColor, fontSize: '60px' }} />
+    <Typography sx={{ color: COLORS.grayDark }}>{label}</Typography>
+  </StyledBox>
+)

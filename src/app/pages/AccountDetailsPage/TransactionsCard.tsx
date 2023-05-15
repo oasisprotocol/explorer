@@ -12,8 +12,10 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
+import { CardEmptyState } from './CardEmptyState'
 
 export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer, address }) => {
+  const { t } = useTranslation()
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   if (layer === Layer.consensus) {
@@ -31,19 +33,24 @@ export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer,
   )
 
   return (
-    <Transactions
-      transactions={transactionsQuery.data?.data.transactions}
-      ownAddress={address}
-      isLoading={transactionsQuery.isLoading}
-      limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-      pagination={{
-        selectedPage: txsPagination.selectedPage,
-        linkToPage: txsPagination.linkToPage,
-        totalCount: transactionsQuery.data?.data.total_count,
-        isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
-        rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-      }}
-    />
+    <>
+      {transactionsQuery.isFetched && !transactionsQuery.data?.data.transactions.length && (
+        <CardEmptyState label={t('account.emptyTransactionList')} />
+      )}
+      <Transactions
+        transactions={transactionsQuery.data?.data.transactions}
+        ownAddress={address}
+        isLoading={transactionsQuery.isLoading}
+        limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+        pagination={{
+          selectedPage: txsPagination.selectedPage,
+          linkToPage: txsPagination.linkToPage,
+          totalCount: transactionsQuery.data?.data.total_count,
+          isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
+          rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+        }}
+      />
+    </>
   )
 }
 

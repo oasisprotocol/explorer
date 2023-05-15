@@ -7,7 +7,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { TokensEmptyState } from './TokensEmptyState'
+import { CardEmptyState } from './CardEmptyState'
 import { Table, TableCellAlign } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
@@ -74,7 +74,10 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
     <Card>
       <CardHeader disableTypography component="h3" title={tokenListLabel} />
       <CardContent>
-        {!accountQuery.isLoading && !runtimeEvmBalance?.length && <TokensEmptyState label={tokenLabel} />}
+        {accountQuery.isFetched && !runtimeEvmBalance?.length && (
+          <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
+        )}
+
         <Table
           columns={tableColumns}
           rows={tableRows}
