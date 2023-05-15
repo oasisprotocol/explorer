@@ -19,12 +19,16 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
   const number = new BigNumber(value)
   const truncatedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_DOWN)
 
+  if (number.isEqualTo(truncatedNumber)) {
+    return <span>{`${number.toFixed()} ${ticker}`}</span>
+  }
+
   return (
-    <>
+    <span>
       {!number.isZero() && truncatedNumber.isZero()
         ? t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker })
-        : `${truncatedNumber.toFixed()} ${ticker}`}
-    </>
+        : `${truncatedNumber.toFixed()}… ${ticker}`}
+    </span>
   )
 }
 
