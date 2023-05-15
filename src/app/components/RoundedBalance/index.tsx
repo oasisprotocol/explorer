@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
+import Tooltip from '@mui/material/Tooltip'
+import { tooltipDelay } from '../../../styles/theme'
 
 type RoundedBalanceProps = {
   ticker?: string
@@ -25,9 +27,21 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
 
   return (
     <span>
-      {!number.isZero() && truncatedNumber.isZero()
-        ? t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker })
-        : `${truncatedNumber.toFixed()}… ${ticker}`}
+      {!number.isZero() && truncatedNumber.isZero() ? (
+        t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker })
+      ) : (
+        <Tooltip
+          arrow
+          placement="top"
+          title={`${number.toFixed()} ${ticker}`}
+          enterDelay={tooltipDelay}
+          enterNextDelay={tooltipDelay}
+        >
+          <span>
+            {truncatedNumber.toFixed()}… {ticker}
+          </span>
+        </Tooltip>
+      )}
     </span>
   )
 }
