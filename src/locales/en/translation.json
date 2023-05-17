@@ -17,9 +17,6 @@
     "title": "Active Accounts",
     "tooltip": "{{value, number}} accounts"
   },
-  "addressSwitch": {
-    "helpLabel": "Show ETH address if applicable"
-  },
   "blocks": {
     "latest": "Latest Blocks"
   },
@@ -182,9 +179,12 @@
     "header": "Transaction",
     "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
     "tooltips": {
-      "txTooltip": "Ethereum hash for the transaction",
-      "senderTooltip": "Ethereum address for the sender",
-      "recipientTooltip": "Ethereum address for the recipient"
+      "txTooltipEth": "Ethereum hash for the transaction",
+      "senderTooltipEth": "Ethereum address for the sender",
+      "recipientTooltipEth": "Ethereum address for the recipient",
+      "txTooltip": "Oasis hash for the transaction",
+      "senderTooltip": "Oasis address for the sender",
+      "recipientTooltip": "Oasis address for the recipient"
     }
   },
   "transactionEvent": {

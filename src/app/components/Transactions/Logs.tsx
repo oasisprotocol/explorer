@@ -30,7 +30,7 @@ export const TransactionLogs: FC<{
 }
 
 export const TransactionLogsView: FC<{
-  scope: SearchScope
+  scope: SearchScope & RuntimeTransaction
   events: RuntimeEvent[] | undefined
   isLoading: boolean
   addressSwitchOption: AddressSwitchOption
@@ -45,6 +45,7 @@ export const TransactionLogsView: FC<{
             scope={scope}
             isFirst={!index}
             event={event}
+            transaction={scope}
             addressSwitchOption={addressSwitchOption}
           />
         ))}

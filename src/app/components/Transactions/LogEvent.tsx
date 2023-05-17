@@ -1,9 +1,4 @@
-import {
-  EvmEventParam,
-  RuntimeEvent,
-  RuntimeEventType,
-  RuntimeTransaction
-} from '../../../oasis-indexer/api'
+import { EvmEventParam, RuntimeEvent, RuntimeEventType, RuntimeTransaction } from '../../../oasis-indexer/api'
 import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
@@ -48,11 +43,11 @@ const EvmEventParamData: FC<{
   }
 }
 
-const EvmLogRow: FC<{ scope: SearchScope; param: EvmEventParam; addressSwitchOption: AddressSwitchOption }> = ({
-  scope,
-  param,
-  addressSwitchOption,
-}) => {
+const EvmLogRow: FC<{
+  scope: SearchScope
+  param: EvmEventParam
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, param, addressSwitchOption }) => {
   const [address, setAddress] = useState<string>()
 
   useEffect(() => {
@@ -85,7 +80,12 @@ const EvmLogRow: FC<{ scope: SearchScope; param: EvmEventParam; addressSwitchOpt
       <TableCell>{param.name}</TableCell>
       <TableCell>{param.evm_type}</TableCell>
       <TableCell>
-        <EvmEventParamData scope={scope} param={param} address={address} addressSwitchOption={addressSwitchOption} />{' '}
+        <EvmEventParamData
+          scope={scope}
+          param={param}
+          address={address}
+          addressSwitchOption={addressSwitchOption}
+        />{' '}
       </TableCell>
       <TableCell>
         <CopyToClipboard value={getCopyToClipboardValue()} />
@@ -94,7 +94,11 @@ const EvmLogRow: FC<{ scope: SearchScope; param: EvmEventParam; addressSwitchOpt
   )
 }
 
-const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent, addressSwitchOption: AddressSwitchOption }> = ({ scope, event, addressSwitchOption }) => {
+const DecodedLogEvent: FC<{
+  scope: SearchScope
+  event: RuntimeEvent
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, event, addressSwitchOption }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -180,7 +184,7 @@ export const TransactionLogEvent: FC<{
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const transactionLinkValue =
-    addressSwitchOption === AddressSwitchOption.Eth ? transaction.eth_hash : transaction.hash
+    addressSwitchOption === AddressSwitchOption.ETH ? transaction.eth_hash : transaction.hash
 
   const decoded = true // TODO: how do I know if this has been successfully decoded?
 

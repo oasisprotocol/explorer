@@ -61,44 +61,31 @@ const StyledSwitch = styled(Switch)(() => ({
 }))
 
 export enum AddressSwitchOption {
-  Default = 'default',
   Oasis = 'oasis',
-  Eth = 'eth',
+  ETH = 'eth',
 }
 
 interface AddressSwitchProps {
-  selected?: AddressSwitchOption.Oasis | AddressSwitchOption.Eth
-  onSelectionChange: (selection: AddressSwitchOption.Oasis | AddressSwitchOption.Eth) => void
+  selected?: AddressSwitchOption.Oasis | AddressSwitchOption.ETH
+  onSelectionChange: (selection: AddressSwitchOption.Oasis | AddressSwitchOption.ETH) => void
 }
 
 export const AddressSwitch: FC<AddressSwitchProps> = ({
-  selected = AddressSwitchOption.Oasis,
+  selected = AddressSwitchOption.ETH,
   onSelectionChange,
 }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const checked = selected === AddressSwitchOption.Eth
+  const checked = selected === AddressSwitchOption.ETH
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    onSelectionChange(checked ? AddressSwitchOption.Eth : AddressSwitchOption.Oasis)
+    onSelectionChange(checked ? AddressSwitchOption.ETH : AddressSwitchOption.Oasis)
   }
 
   return (
     <StyledAddressSwitch>
-      {!isMobile && (
-        <Typography
-          sx={{
-            color: COLORS.grayMedium,
-            fontSize: '10px',
-            fontStyle: 'italic',
-            mr: 3,
-          }}
-        >
-          {t('addressSwitch.helpLabel')}
-        </Typography>
-      )}
       <Typography
         sx={{
           color:
@@ -116,7 +103,7 @@ export const AddressSwitch: FC<AddressSwitchProps> = ({
       <Typography
         sx={{
           color:
-            selected === AddressSwitchOption.Eth
+            selected === AddressSwitchOption.ETH
               ? isMobile
                 ? COLORS.white
                 : COLORS.brandExtraDark

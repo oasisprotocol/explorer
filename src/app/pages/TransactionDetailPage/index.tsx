@@ -33,6 +33,7 @@ import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
+import { isValidTxOasisHash } from '../../utils/helpers'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -85,9 +86,6 @@ const ErrorBox = styled(Box)(() => ({
 
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
-  const [addressSwitchOption, setAddressSwitchOption] = useState<
-    AddressSwitchOption.Oasis | AddressSwitchOption.Eth
-  >(AddressSwitchOption.Eth)
 
   const scope = useRequiredScopeParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
@@ -98,6 +96,16 @@ export const TransactionDetailPage: FC = () => {
   }
 
   const hash = useParams().hash!
+
+  const [addressSwitchOption, setAddressSwitchOption] = useState<
+    AddressSwitchOption.Oasis | AddressSwitchOption.ETH
+  >(() => {
+    if (isValidTxOasisHash(hash)) {
+      return AddressSwitchOption.Oasis
+    }
+
+    return AddressSwitchOption.ETH
+  })
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
     scope.network,
@@ -119,21 +127,26 @@ export const TransactionDetailPage: FC = () => {
       {warningMultipleTransactionsSameHash && (
         <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
       )}
-      <SubPageCard featured title={t('transaction.header')} action={
-        <AddressSwitch
-          selected={addressSwitch}
-          onSelectionChange={addressSwitch => setAddressSwitch(addressSwitch)}
-        />
-      }>
+      <SubPageCard
+        featured
+        title={t('transaction.header')}
+        action={
+          <AddressSwitch
+            selected={addressSwitchOption}
+            onSelectionChange={addressSwitch => setAddressSwitchOption(addressSwitch)}
+          />
+        }
+      >
         <TransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
           tokenPriceInfo={tokenPriceInfo}
+          addressSwitchOption={addressSwitchOption}
         />
       </SubPageCard>
       {transaction && (
         <SubPageCard title={t('common.logs')}>
-          <TransactionLogs transaction={transaction} />
+          <TransactionLogs transaction={transaction} addressSwitchOption={addressSwitchOption} />
         </SubPageCard>
       )}
     </PageLayout>
@@ -167,11 +180,24 @@ export const TransactionDetailView: FC<{
   showLayer?: boolean
   standalone?: boolean
   tokenPriceInfo: TokenPriceInfo
-}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPriceInfo }) => {
+  addressSwitchOption?: AddressSwitchOption
+}> = ({
+  isLoading,
+  transaction,
+  showLayer,
+  standalone = false,
+  tokenPriceInfo,
+  addressSwitchOption = AddressSwitchOption.ETH,
+}) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
+
+  const isOasisAddressFormat = addressSwitchOption === AddressSwitchOption.Oasis
+  const hash = isOasisAddressFormat ? transaction?.hash : transaction?.eth_hash
+  const from = isOasisAddressFormat ? transaction?.sender_0 : transaction?.sender_0_eth
+  const to = isOasisAddressFormat ? transaction?.to : transaction?.to_eth
 
   const ticker = transaction?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, ticker)
@@ -193,11 +219,24 @@ export const TransactionDetailView: FC<{
               </dd>
             </>
           )}
-          <dt>{t('common.hash')}</dt>
-          <dd>
-            <TransactionLink scope={transaction} hash={transaction.eth_hash || transaction.hash} />
-            <CopyToClipboard value={transaction.eth_hash || transaction.hash} />
-          </dd>
+
+          {hash && (
+            <>
+              <dt>{t('common.hash')}</dt>
+              <dd>
+                <TransactionInfoTooltip
+                  label={
+                    isOasisAddressFormat
+                      ? t('transaction.tooltips.txTooltip')
+                      : t('transaction.tooltips.txTooltipEth')
+                  }
+                >
+                  <TransactionLink scope={transaction} hash={hash} />
+                </TransactionInfoTooltip>
+                <CopyToClipboard value={hash} />
+              </dd>
+            </>
+          )}
 
           <dt>{t('common.status')}</dt>
           <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
@@ -222,31 +261,38 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.timestamp')}</dt>
           <dd>{formattedTimestamp}</dd>
 
-          <dt>{t('common.from')}</dt>
-          <dd>
-            <AccountLink scope={transaction} address={transaction.sender_0_eth || transaction.sender_0} />
-            <CopyToClipboard value={transaction.sender_0_eth || transaction.sender_0} />
-          </dd>
-
-          {transaction.to_eth && (
+          {from && (
             <>
-              <dt>{t('common.to')}</dt>
+              <dt>{t('common.from')}</dt>
               <dd>
-                <AccountLink
-                  network={transaction.network}
-                  address={transaction.to_eth}
-                  layer={transaction.layer}
-                />
-                <CopyToClipboard value={transaction.to_eth} />
+                <TransactionInfoTooltip
+                  label={
+                    isOasisAddressFormat
+                      ? t('transaction.tooltips.senderTooltip')
+                      : t('transaction.tooltips.senderTooltipEth')
+                  }
+                >
+                  <AccountLink scope={transaction} address={from} />
+                </TransactionInfoTooltip>
+                <CopyToClipboard value={from} />
               </dd>
             </>
           )}
-          {transaction.to && (
+
+          {to && (
             <>
-              {!transaction.to_eth ? <dt>{t('common.to')}</dt> : <dt />}
+              <dt>{t('common.to')}</dt>
               <dd>
-                <AccountLink scope={transaction} address={transaction.to_eth || transaction.to} />
-                <CopyToClipboard value={transaction.to_eth || transaction.to} />
+                <TransactionInfoTooltip
+                  label={
+                    isOasisAddressFormat
+                      ? t('transaction.tooltips.recipientTooltip')
+                      : t('transaction.tooltips.recipientTooltipEth')
+                  }
+                >
+                  <AccountLink scope={transaction} address={to} />
+                </TransactionInfoTooltip>
+                <CopyToClipboard value={to} />
               </dd>
             </>
           )}
