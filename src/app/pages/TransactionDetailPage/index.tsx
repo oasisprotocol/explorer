@@ -27,6 +27,7 @@ import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -130,6 +131,7 @@ export const TransactionDetailView: FC<{
   standalone?: boolean
 }> = ({ isLoading, transaction, showLayer, standalone = false }) => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
@@ -204,7 +206,7 @@ export const TransactionDetailView: FC<{
           <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
 
           <dt>{t('common.gasLimit')}</dt>
-          <dd>{transaction.gas_limit.toLocaleString()}</dd>
+          <dd>{formatNumber(transaction.gas_limit)}</dd>
         </StyledDescriptionList>
       )}
     </>

@@ -9,9 +9,11 @@ import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
   const layer = useLayerParam()
@@ -47,12 +49,9 @@ export const TotalTransactions: FC = () => {
             formatters={{
               data: (value: number) =>
                 t('totalTransactions.tooltip', {
-                  value,
-                  formatParams: {
-                    value: {
-                      maximumFractionDigits: 2,
-                    } satisfies Intl.NumberFormatOptions,
-                  },
+                  value: formatNumber(value, {
+                    maximumFractionDigits: 2,
+                  })!,
                 }),
               label: (value: string) =>
                 t('common.formattedDateTime', {

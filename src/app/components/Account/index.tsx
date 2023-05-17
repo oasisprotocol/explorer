@@ -17,6 +17,7 @@ import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/TransactionsCard'
 import Link from '@mui/material/Link'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -53,6 +54,7 @@ type AccountProps = {
 
 export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, showLayer }) => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const balance = account?.balances[0]?.balance ?? '0'
@@ -108,7 +110,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           <dt>{t('common.transactions')}</dt>
           <dd>
             <Link component={RouterLink} to={transactionsAnchor!}>
-              {t('common.transactionsNumber', { count: account.stats.num_txns })}
+              {formatNumber(account.stats.num_txns, { countKey: 'common.transactionsNumber' })}
             </Link>
           </dd>
 

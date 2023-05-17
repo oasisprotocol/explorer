@@ -16,6 +16,7 @@ import {
   sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
   switch (duration) {
@@ -60,6 +61,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
   const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
   const layer = useLayerParam()
+  const formatNumber = useFormatNumber()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
     layer,
     {
@@ -80,8 +82,10 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
     getActiveAccountsWindows(chartDuration, activeAccountsQuery.data?.data?.windows)
   const totalNumberLabel =
     dailyChart && windows?.length
-      ? windows[0].active_accounts.toLocaleString()
-      : windows?.reduce((acc, curr) => acc + curr.active_accounts, 0).toLocaleString()
+      ? formatNumber(windows[0].active_accounts)
+      : windows
+      ? formatNumber(windows.reduce((acc, curr) => acc + curr.active_accounts, 0))
+      : undefined
 
   return (
     <SnapshotCard title={t('activeAccounts.title')} label={totalNumberLabel}>
@@ -93,7 +97,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
           formatters={{
             data: (value: number) =>
               t('activeAccounts.tooltip', {
-                value,
+                value: formatNumber(value),
               }),
             label: (value: string) =>
               t('common.formattedDateTime', {

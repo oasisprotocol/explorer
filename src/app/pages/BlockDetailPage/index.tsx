@@ -18,6 +18,7 @@ import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -58,6 +59,7 @@ export const BlockDetailView: FC<{
   standalone?: boolean
 }> = ({ isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTime = useFormattedTimestampString(block?.timestamp)
@@ -100,29 +102,22 @@ export const BlockDetailView: FC<{
 
       <dt>{t('common.size')}</dt>
       <dd>
-        {t('common.bytes', {
-          value: block.size,
-          formatParams: {
-            value: {
-              style: 'unit',
-              unit: 'byte',
-              unitDisplay: 'long',
-            } satisfies Intl.NumberFormatOptions,
-          },
+        {formatNumber(block.size, {
+          unit: 'byte',
         })}
       </dd>
 
       <dt>{t('common.transactions')}</dt>
       <dd>
         <Link href={transactionsAnchor}>
-          {t('common.transactionsNumber', { count: block.num_transactions })}
+          {formatNumber(block.num_transactions, { countKey: 'common.transactionsNumber' })}
         </Link>
       </dd>
 
       <dt>{t('common.gasUsed')}</dt>
       <dd>
         {t('block.gasUsed', {
-          value: block.gas_used,
+          value: formatNumber(block.gas_used),
           percentage: block.gas_used / blockGasLimit,
           formatParams: {
             percentage: {
@@ -134,7 +129,7 @@ export const BlockDetailView: FC<{
       </dd>
 
       <dt>{t('common.gasLimit')}</dt>
-      <dd>{blockGasLimit.toLocaleString()}</dd>
+      <dd>{formatNumber(blockGasLimit)}</dd>
     </StyledDescriptionList>
   )
 }

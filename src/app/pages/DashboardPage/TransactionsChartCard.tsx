@@ -14,6 +14,7 @@ import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -21,6 +22,7 @@ interface TransactionsChartCardProps {
 
 const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
@@ -67,7 +69,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           />
         )
       }
-      label={totalTransactions.toLocaleString()}
+      label={formatNumber(totalTransactions)}
     >
       {lineChartData && (
         <LineChart
@@ -77,12 +79,9 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           formatters={{
             data: (value: number) =>
               t('transactionsTpsChart.tooltip', {
-                value,
-                formatParams: {
-                  value: {
-                    maximumFractionDigits: 2,
-                  } satisfies Intl.NumberFormatOptions,
-                },
+                value: formatNumber(value, {
+                  maximumFractionDigits: 2,
+                }),
               }),
             label: (value: string) =>
               t('common.formattedDateTime', {

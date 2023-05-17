@@ -13,9 +13,11 @@ import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useFormatNumber } from '../../hooks/useNumberFormatter'
 
 export const TransactionsStats: FC = () => {
   const { t } = useTranslation()
+  const formatNumber = useFormatNumber()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
   const layer = useLayerParam()
@@ -55,7 +57,7 @@ export const TransactionsStats: FC = () => {
             data={buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
-              data: (value: number) => t('transactionStats.tooltip', { value: value.toLocaleString() }),
+              data: (value: number) => t('transactionStats.tooltip', { value: formatNumber(value) }),
               label: (value: string) =>
                 t('common.formattedDateTime', {
                   timestamp: new Date(value),
