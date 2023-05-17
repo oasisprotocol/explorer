@@ -16,7 +16,9 @@ import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
 import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
+import { NetworkSelector } from '../NetworkSelector'
 import { Layer } from '../../../../../oasis-indexer/api'
+import { Network } from '../../../../../types/network'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -115,6 +117,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
+  const [network, setNetwork] = useState<Network>('mainnet')
   const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
   const [selectedLayer, setSelectedLayer] = useState<Layer>()
@@ -164,6 +167,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
                   ref={graphRef}
+                  network={network}
                   disabled={disabled}
                   transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
                   selectedLayer={selectedLayer}
@@ -203,6 +207,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
             <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>
+        <NetworkSelector network={network} setNetwork={setNetwork} />
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip && (
         <GraphTooltipMobile

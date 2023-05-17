@@ -8,6 +8,7 @@ import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClient
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { GraphTooltip } from '../GraphTooltip'
 import { Layer } from '../../../../../oasis-indexer/api'
+import { Network } from '../../../../../types/network'
 
 interface GraphBaseProps {
   disabled?: boolean
@@ -15,6 +16,7 @@ interface GraphBaseProps {
 }
 
 interface GraphProps extends GraphBaseProps {
+  network: Network
   scale: number
   // TODO: Consider moving this to a state management solution
   selectedLayer?: Layer
