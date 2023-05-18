@@ -43,4 +43,6 @@ export const COLORS = {
   black: '#000000',
   warningColor: '#ed6c02',
   warningBackground: '#faf5e8',
+  testnet: '#ffa800',
+  testnetLight: '#fff0e4',
 } satisfies { [colorName: string]: string }
