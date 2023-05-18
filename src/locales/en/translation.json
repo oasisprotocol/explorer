@@ -74,7 +74,9 @@
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
     "viewAll": "View all",
-    "paraTimeOnline": "ParaTime Online"
+    "paraTimeOnline": "ParaTime Online",
+    "mainnet": "Mainnet",
+    "testnet": "Testnet"
   },
   "nodes": {
     "title": "Active nodes",
@@ -220,7 +222,9 @@
       "discoverMore": "Discover more",
       "consensusParaTimeDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
       "close": "Close"
-    }
+    },
+    "selectNetwork": "Selected net",
+    "selectNetworkAria": "Toggle network selector"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, etc",
