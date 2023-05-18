@@ -7,6 +7,7 @@ import { GetStartedBtn } from '../app/pages/HomePage/Graph/HelpScreen'
 import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroup'
 import { LoadMoreButton } from '../app/components/LoadMoreButton'
 import { withRouter } from 'storybook-addon-react-router-v6'
+import WidgetsIcon from '@mui/icons-material/Widgets'
 
 export default {
   title: 'Example/ButtonsShowroom',
@@ -18,7 +19,9 @@ const Template: StoryFn = () => {
     <div>
       <SearchButton searchVariant="button">SearchButton</SearchButton>
       <ViewResultButton>ViewResultButton</ViewResultButton>
-      <SuggestionButton>SuggestionButton</SuggestionButton>
+      <SuggestionButton>
+        <WidgetsIcon sx={{ fontSize: '18px' }} /> SuggestionButton
+      </SuggestionButton>
       <br />
       <br />
 
