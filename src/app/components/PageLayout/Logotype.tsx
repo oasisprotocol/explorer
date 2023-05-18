@@ -3,7 +3,7 @@ import Link from '@mui/material/Link'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
-import logotype from './images/logo.svg'
+import { OasisIcon } from '../CustomIcons/OasisIcon'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
@@ -28,9 +28,10 @@ export const Logotype: FC<LogotypeProps> = ({ showText }) => {
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
+        color: COLORS.white,
       }}
     >
-      <img src={logotype} alt="logo" height={logoSize} width={logoSize} />
+      <OasisIcon sx={{ fontSize: logoSize }} />
       {showTypography && (
         <Typography variant="h1" color={COLORS.white}>
           {t('pageTitle')}
