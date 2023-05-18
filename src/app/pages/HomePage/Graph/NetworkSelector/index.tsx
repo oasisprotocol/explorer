@@ -48,6 +48,11 @@ export const SelectNetworkButton = styled(Button, {
     borderColor: COLORS.white,
   },
 }))
+SelectNetworkButton.defaultProps = {
+  size: 'small',
+  variant: 'outlined',
+  sx: { ml: 4 },
+}
 
 type NetworkSelectorProps = {
   network: Network
@@ -78,13 +83,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork 
         <Box sx={{ height: 30, display: 'flex' }}>
           {options.map(option => (
             <Collapse orientation="horizontal" in={open || network === option} key={option}>
-              <SelectNetworkButton
-                onClick={() => setNetwork(option)}
-                size="small"
-                variant="outlined"
-                sx={{ ml: 4 }}
-                isSelectedNetwork={option === network}
-              >
+              <SelectNetworkButton onClick={() => setNetwork(option)} isSelectedNetwork={option === network}>
                 {labels[option]}
               </SelectNetworkButton>
             </Collapse>
