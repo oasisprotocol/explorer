@@ -32,11 +32,9 @@
   "coinGeckoReferral": "Data from <CoinGeckoLink>CoinGecko</CoinGeckoLink>",
   "common": {
     "age": "Age",
-    "active": "Active",
     "balance": "Balance",
     "block": "Block",
     "bytes": "{{value, number}}",
-    "change": "Change",
     "data": "Data",
     "emerald": "Emerald",
     "cipher": "Cipher",
@@ -61,7 +59,6 @@
     "rose": "ROSE",
     "size": "Size",
     "sapphire": "Sapphire",
-    "select": "Select",
     "smartContract": "Smart Contract",
     "success": "Success",
     "status": "Status",
@@ -102,10 +99,6 @@
     "mobileTitle": "OPF",
     "title": "Oasis Protocol Foundation",
     "version": "Version: {{buildSha}}"
-  },
-  "layerPickerModal": {
-    "title": "Paratime Details",
-    "description": "Below is the overview of available ParaTimes. Access the dashboard by selecting the ParaTime of your choice"
   },
   "learningMaterials": {
     "emerald": {
