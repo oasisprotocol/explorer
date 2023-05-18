@@ -5,10 +5,20 @@ import Fade from '@mui/material/Fade'
 declare module '@mui/material/styles' {
   interface Palette {
     tertiary: Palette['primary']
+    layout: Palette['primary']
   }
 
   interface PaletteOptions {
     tertiary?: PaletteOptions['primary']
+    layout?: PaletteOptions['primary']
+  }
+
+  interface PaletteColor {
+    border?: string
+  }
+
+  interface SimplePaletteColorOptions {
+    border?: string
   }
 }
 
@@ -52,6 +62,10 @@ export const defaultTheme = createTheme({
   palette: {
     background: {
       default: COLORS.persianBlue,
+    },
+    layout: {
+      main: COLORS.white,
+      border: COLORS.persianBlue,
     },
     primary: {
       main: COLORS.brandMedium,
@@ -371,7 +385,7 @@ export const defaultTheme = createTheme({
           props: { variant: 'layout' },
           style: ({ theme }) => ({
             // More customizable than borderStyle: 'dashed',
-            borderImage: `repeating-linear-gradient(90deg, ${COLORS.white}, ${COLORS.white} 5px, transparent 5px, transparent 12px) 1`,
+            borderImage: `repeating-linear-gradient(90deg, ${theme.palette.layout.main}, ${theme.palette.layout.main} 5px, transparent 5px, transparent 12px) 1`,
             marginBottom: theme.spacing(5),
           }),
         },
@@ -490,8 +504,8 @@ export const defaultTheme = createTheme({
         },
         {
           props: { variant: 'footer' },
-          style: () => ({
-            color: COLORS.white,
+          style: ({ theme }) => ({
+            color: theme.palette.layout.main,
             fontWeight: 400,
             fontSize: '12px',
             lineHeight: '18px',
@@ -534,6 +548,9 @@ export const defaultTheme = createTheme({
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderWidth: '3px',
           },
+        },
+        notchedOutline: {
+          borderColor: 'transparent',
         },
       },
     },

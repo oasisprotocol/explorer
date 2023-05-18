@@ -70,7 +70,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
           >
             <Typography
               variant="h2"
-              color={COLORS.white}
+              color={theme.palette.layout.main}
               sx={{ pr: isTablet ? 3 : 4, fontSize: isTablet ? '16px' : '24px', fontWeight: 700 }}
             >
               {content.header}
@@ -102,7 +102,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
           </Box>
         </Box>
         {!isTablet && (
-          <Typography sx={{ fontSize: 12, lineHeight: '18px', color: COLORS.white }}>
+          <Typography sx={{ fontSize: 12, lineHeight: '18px', color: theme.palette.layout.main }}>
             {content.description}
           </Typography>
         )}

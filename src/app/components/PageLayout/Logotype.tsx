@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import { OasisIcon } from '../CustomIcons/OasisIcon'
 import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
 
 interface LogotypeProps {
@@ -28,12 +27,12 @@ export const Logotype: FC<LogotypeProps> = ({ showText }) => {
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
-        color: COLORS.white,
+        color: theme.palette.layout.main,
       }}
     >
       <OasisIcon sx={{ fontSize: logoSize }} />
       {showTypography && (
-        <Typography variant="h1" color={COLORS.white}>
+        <Typography variant="h1" color={theme.palette.layout.main}>
           {t('pageTitle')}
         </Typography>
       )}
