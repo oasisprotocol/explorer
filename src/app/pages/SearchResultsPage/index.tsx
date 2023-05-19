@@ -119,7 +119,7 @@ export const SearchResultsView: FC<{
             title={t('search.results.blocks.title')}
             results={searchQueries.blockHeight.results}
             resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
-            link={item => RouteUtils.getBlockRoute(item.round, item.layer)}
+            link={item => RouteUtils.getBlockRoute(item.network, item.round, item.layer)}
             linkLabel={t('search.results.blocks.viewLink')}
           />
 
@@ -129,7 +129,9 @@ export const SearchResultsView: FC<{
             resultComponent={item => (
               <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
             )}
-            link={item => RouteUtils.getTransactionRoute(item.eth_hash || item.hash, item.layer)}
+            link={item =>
+              RouteUtils.getTransactionRoute(item.network, item.eth_hash || item.hash, item.layer)
+            }
             linkLabel={t('search.results.transactions.viewLink')}
           />
 
@@ -147,7 +149,9 @@ export const SearchResultsView: FC<{
                 showLayer={true}
               />
             )}
-            link={item => RouteUtils.getAccountRoute(item.address_eth ?? item.address, item.layer)}
+            link={item =>
+              RouteUtils.getAccountRoute(item.network, item.address_eth ?? item.address, item.layer)
+            }
             linkLabel={t('search.results.accounts.viewLink')}
           />
         </>

@@ -3,43 +3,53 @@ import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-indexer/api'
+import { Network } from '../../types/network'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
 
-  static getDashboardRoute = (layer: Layer) => {
-    return `/${encodeURIComponent(layer)}`
+  private static ENABLED_NETWORKS: Network[] = [Network.mainnet, Network.testnet]
+
+  static getDashboardRoute = (network: Network, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
   }
 
-  static getLatestTransactionsRoute = (layer: Layer) => {
-    return `/${encodeURIComponent(layer)}/transactions`
+  static getLatestTransactionsRoute = (network: Network, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/transactions`
   }
 
-  static getLatestBlocksRoute = (layer: Layer) => {
-    return `/${encodeURIComponent(layer)}/blocks`
+  static getLatestBlocksRoute = (network: Network, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks`
   }
 
-  static getBlockRoute = (blockHeight: number, layer: Layer) => {
-    return `/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(blockHeight)}`
+  static getBlockRoute = (network: Network, blockHeight: number, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(
+      blockHeight,
+    )}`
   }
 
-  static getTransactionRoute = (txHash: string, layer: Layer) => {
-    return `/${encodeURIComponent(layer)}/transactions/${encodeURIComponent(txHash)}`
+  static getTransactionRoute = (network: Network, txHash: string, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/transactions/${encodeURIComponent(
+      txHash,
+    )}`
   }
 
-  static getAccountRoute = (sender: string, layer: Layer) => {
-    return `/${encodeURIComponent(layer)}/account/${encodeURIComponent(sender)}`
+  static getAccountRoute = (network: Network, account: string, layer: Layer) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/account/${encodeURIComponent(
+      account,
+    )}`
   }
 
   static getAccountTokensRoute = (
-    sender: string,
+    network: Network,
+    account: string,
     layer: Layer,
     tokenType: EvmTokenType,
     tokenAddress: string | undefined,
   ) => {
     const map: Record<EvmTokenType, string | undefined> = {
-      ERC20: `${this.getAccountRoute(sender, layer)}/tokens/erc-20`,
-      ERC721: `${this.getAccountRoute(sender, layer)}/tokens/erc-721`,
+      ERC20: `${this.getAccountRoute(network, account, layer)}/tokens/erc-20`,
+      ERC721: `${this.getAccountRoute(network, account, layer)}/tokens/erc-721`,
       ERC1155: undefined,
       OasisSdk: undefined,
     }
@@ -54,6 +64,10 @@ export abstract class RouteUtils {
 
   static getEnabledLayers(): Layer[] {
     return RouteUtils.ENABLED_LAYERS
+  }
+
+  static getEnabledNetworks(): Network[] {
+    return RouteUtils.ENABLED_NETWORKS
   }
 }
 
@@ -100,10 +114,14 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
 
 export const layerLoader = async (args: LoaderFunctionArgs) => {
   const {
-    params: { layer },
+    params: { layer, network },
   } = args
 
   if (!layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
+  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

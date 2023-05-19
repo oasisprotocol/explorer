@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { zIndexHomePage } from '../../index'
 import { Layer } from '../../../../../oasis-indexer/api'
+import { Network } from '../../../../../types/network'
 
 export const MobileBackdrop = styled(Box)(() => ({
   position: 'fixed',
@@ -36,11 +37,12 @@ export const MobileGraphTooltip = styled(Box)(({ theme }) => ({
 }))
 
 export interface GraphTooltipMobileProps {
+  network: Network
   layer: Layer
   onClose: (e?: MouseEvent) => void
 }
 
-export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ layer, onClose }) => {
+export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer, onClose }) => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const theme = useTheme()
@@ -52,7 +54,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ layer, onClose
       return
     }
 
-    navigate(RouteUtils.getDashboardRoute(layer))
+    navigate(RouteUtils.getDashboardRoute(network, layer))
   }
 
   return (

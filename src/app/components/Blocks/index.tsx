@@ -54,7 +54,7 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: <BlockLink layer={block.layer} height={block.round} />,
+          content: <BlockLink network={block.network} layer={block.layer} height={block.round} />,
           key: 'block',
         },
         {
@@ -72,7 +72,14 @@ export const Blocks = (props: BlocksProps) => {
         ...(verbose
           ? [
               {
-                content: <BlockHashLink layer={block.layer} hash={block.hash} height={block.round} />,
+                content: (
+                  <BlockHashLink
+                    network={block.network}
+                    layer={block.layer}
+                    hash={block.hash}
+                    height={block.round}
+                  />
+                ),
                 key: 'hash',
               },
             ]

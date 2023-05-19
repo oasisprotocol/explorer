@@ -211,6 +211,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip && (
         <GraphTooltipMobile
+          network={network}
           layer={activeMobileGraphTooltip}
           onClose={() => {
             setActiveMobileGraphTooltip(null)

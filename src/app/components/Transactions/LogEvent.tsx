@@ -13,11 +13,16 @@ import TableBody from '@mui/material/TableBody'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
+import { Network } from '../../../types/network'
 
-const EvmEventParamData: FC<{ layer: Layer; param: EvmEventParam }> = ({ layer, param }) => {
+const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventParam }> = ({
+  network,
+  layer,
+  param,
+}) => {
   switch (param.evm_type) {
     case 'address':
-      return <AccountLink address={param.value as string} layer={layer} />
+      return <AccountLink network={network} address={param.value as string} layer={layer} />
     case 'uint256':
       // TODO: how to properly display an uint255 value?
       return <span>{(param.value as number).toLocaleString()}</span>
@@ -26,7 +31,11 @@ const EvmEventParamData: FC<{ layer: Layer; param: EvmEventParam }> = ({ layer, 
   }
 }
 
-const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, event }) => {
+const DecodedLogEvent: FC<{ network: Network; layer: Layer; event: RuntimeEvent }> = ({
+  network,
+  layer,
+  event,
+}) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -74,7 +83,7 @@ const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, eve
                           <TableCell>{param.name}</TableCell>
                           <TableCell>{param.evm_type}</TableCell>
                           <TableCell>
-                            <EvmEventParamData param={param} layer={layer} />{' '}
+                            <EvmEventParamData param={param} network={network} layer={layer} />{' '}
                           </TableCell>
                           <TableCell>
                             <CopyToClipboard
@@ -111,11 +120,12 @@ const DecodedLogEvent: FC<{ layer: Layer; event: RuntimeEvent }> = ({ layer, eve
   }
 }
 
-export const TransactionLogEvent: FC<{ layer: Layer; event: RuntimeEvent; isFirst: boolean }> = ({
-  layer,
-  event,
-  isFirst,
-}) => {
+export const TransactionLogEvent: FC<{
+  network: Network
+  layer: Layer
+  event: RuntimeEvent
+  isFirst: boolean
+}> = ({ network, layer, event, isFirst }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -131,7 +141,7 @@ export const TransactionLogEvent: FC<{ layer: Layer; event: RuntimeEvent; isFirs
           <>
             <dt>{t('transaction.header')}</dt>
             <dd>
-              <TransactionLink layer={layer} hash={event.tx_hash} />
+              <TransactionLink network={network} layer={layer} hash={event.tx_hash} />
             </dd>
           </>
         )}
@@ -140,7 +150,7 @@ export const TransactionLogEvent: FC<{ layer: Layer; event: RuntimeEvent; isFirs
           <>
             <dt>{t('transactionEvent.decoded')}</dt>
             <dd>
-              <DecodedLogEvent layer={layer} event={event} />
+              <DecodedLogEvent network={network} layer={layer} event={event} />
             </dd>
           </>
         )}

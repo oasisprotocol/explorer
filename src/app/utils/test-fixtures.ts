@@ -8,6 +8,7 @@ export const suggestedParsedBlock: RuntimeBlock = {
   num_transactions: 10,
   gas_used: 1482530,
   layer: 'emerald',
+  network: 'mainnet',
 }
 
 export const sapphireParsedBlock: RuntimeBlock = {
@@ -18,6 +19,7 @@ export const sapphireParsedBlock: RuntimeBlock = {
   num_transactions: 1,
   gas_used: 11292,
   layer: 'sapphire',
+  network: 'mainnet',
 }
 
 export const suggestedParsedAccount: RuntimeAccount = {
@@ -53,4 +55,5 @@ export const suggestedParsedAccount: RuntimeAccount = {
     total_sent: '0',
   },
   layer: 'emerald',
+  network: 'mainnet',
 }
