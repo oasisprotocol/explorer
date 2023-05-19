@@ -67,7 +67,7 @@ describe('ShowMoreTokensLink', () => {
     expect(screen.getByText('+ 3 more')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
-      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-20',
+      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-20#tokens',
     )
   })
 
@@ -83,7 +83,7 @@ describe('ShowMoreTokensLink', () => {
     expect(screen.getByText('+ 1 more')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
-      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-721',
+      '/emerald/account/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-721#tokens',
     )
   })
 })

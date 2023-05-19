@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { RuntimeAccount, type Token } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
+import { accountTokenContainerId } from '../../pages/AccountDetailsPage/TokensCard'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -26,13 +27,13 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
     account.address_eth ?? account.address,
     account.layer,
     'ERC20',
-    undefined,
+    accountTokenContainerId,
   )
   const erc721Link = RouteUtils.getAccountTokensRoute(
     account.address_eth ?? account.address,
     account.layer,
     'ERC721',
-    undefined,
+    accountTokenContainerId,
   )
   const additionalTokensCounter = tokens.length - pills.length
 
