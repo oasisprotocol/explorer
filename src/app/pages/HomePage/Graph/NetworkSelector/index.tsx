@@ -31,7 +31,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }))
 
-const StyledButton = styled(Button, {
+export const SelectNetworkButton = styled(Button, {
   shouldForwardProp: prop => prop !== 'isSelectedNetwork',
 })<{ isSelectedNetwork: boolean }>(({ isSelectedNetwork, theme }) => ({
   height: '30px',
@@ -48,6 +48,11 @@ const StyledButton = styled(Button, {
     borderColor: COLORS.white,
   },
 }))
+SelectNetworkButton.defaultProps = {
+  size: 'small',
+  variant: 'outlined',
+  sx: { ml: 4 },
+}
 
 type NetworkSelectorProps = {
   network: Network
@@ -78,15 +83,9 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork 
         <Box sx={{ height: 30, display: 'flex' }}>
           {options.map(option => (
             <Collapse orientation="horizontal" in={open || network === option} key={option}>
-              <StyledButton
-                onClick={() => setNetwork(option)}
-                size="small"
-                variant="outlined"
-                sx={{ ml: 4 }}
-                isSelectedNetwork={option === network}
-              >
+              <SelectNetworkButton onClick={() => setNetwork(option)} isSelectedNetwork={option === network}>
                 {labels[option]}
-              </StyledButton>
+              </SelectNetworkButton>
             </Collapse>
           ))}
         </Box>
