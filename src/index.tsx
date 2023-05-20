@@ -8,7 +8,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { register as registerSwiperElements } from 'swiper/element/swiper-element'
 import { routes } from './routes'
-import { defaultTheme } from './styles/theme'
+import { defaultTheme, testnetTheme } from './styles/theme'
 import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
@@ -29,10 +29,12 @@ const router = createBrowserRouter(routes)
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
+const wantedTheme = router.state.location.pathname.startsWith('/testnet') ? testnetTheme : defaultTheme
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={wantedTheme}>
         <CssBaseline />
         <RouterProvider router={router} />
       </ThemeProvider>
