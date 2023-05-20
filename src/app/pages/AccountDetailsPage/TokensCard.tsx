@@ -14,10 +14,13 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { Layer, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { AppErrors } from '../../../types/errors'
+import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 
 type TokensCardProps = {
   type: 'ERC20' | 'ERC721'
 }
+
+export const accountTokenContainerId = 'tokens'
 
 export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
@@ -72,21 +75,23 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
 
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title={tokenListLabel} />
-      <CardContent>
-        {accountQuery.isFetched && !runtimeEvmBalance?.length && (
-          <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
-        )}
+      <ScrollingDiv id={accountTokenContainerId}>
+        <CardHeader disableTypography component="h3" title={tokenListLabel} />
+        <CardContent>
+          {accountQuery.isFetched && !runtimeEvmBalance?.length && (
+            <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
+          )}
 
-        <Table
-          columns={tableColumns}
-          rows={tableRows}
-          rowsNumber={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-          name={tokenListLabel}
-          isLoading={accountQuery.isLoading}
-          pagination={false}
-        />
-      </CardContent>
+          <Table
+            columns={tableColumns}
+            rows={tableRows}
+            rowsNumber={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+            name={tokenListLabel}
+            isLoading={accountQuery.isLoading}
+            pagination={false}
+          />
+        </CardContent>
+      </ScrollingDiv>
     </Card>
   )
 }
