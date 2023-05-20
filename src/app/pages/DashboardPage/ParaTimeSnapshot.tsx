@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
 import { DurationSelect } from './DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RosePriceCard } from './RosePriceCard'
@@ -42,7 +41,7 @@ export const ParaTimeSnapshot: FC = () => {
             <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
               <Typography
                 variant="h3"
-                sx={{ color: COLORS.white, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
+                sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
               >
                 {t('paraTimeSnapshot.header')}
               </Typography>

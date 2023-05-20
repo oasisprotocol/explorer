@@ -52,6 +52,7 @@ export const Social: FC = () => {
         px: isMobile ? 5 : 6,
         pt: 5,
         pb: isMobile ? 4 : 5,
+        backgroundColor: COLORS.persianBlue,
         borderStyle: 'solid',
         borderWidth: '1px',
         borderColor: COLORS.white,
