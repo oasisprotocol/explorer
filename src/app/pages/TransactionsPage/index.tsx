@@ -17,6 +17,7 @@ import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButt
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TransactionDetailView } from '../TransactionDetailPage'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -34,6 +35,7 @@ export const TransactionsPage: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
@@ -49,6 +51,7 @@ export const TransactionsPage: FC = () => {
   }, [isMobile, setTableView])
 
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
+    network,
     layer, // This is OK, since consensus is already handled separately
     {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,

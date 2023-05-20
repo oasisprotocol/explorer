@@ -5,10 +5,13 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import { OptionalBreak } from '../OptionalBreak'
+import { NetworkOrGlobal } from '../../../types/network'
 
-interface Props {}
+interface Props {
+  network: NetworkOrGlobal
+}
 
-export const SearchSuggestionsLinks: FC<Props> = () => {
+export const SearchSuggestionsLinks: FC<Props> = ({ network }) => {
   const { t } = useTranslation()
   const { suggestedBlock, suggestedTransaction, suggestedAccount } = searchSuggestionTerms
 
@@ -19,11 +22,15 @@ export const SearchSuggestionsLinks: FC<Props> = () => {
       components={{
         OptionalBreak: <OptionalBreak />,
         BlockIcon: <></>,
-        BlockLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(suggestedBlock)} />,
+        BlockLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(network, suggestedBlock)} />,
         TransactionIcon: <></>,
-        TransactionLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(suggestedTransaction)} />,
+        TransactionLink: (
+          <Link component={RouterLink} to={RouteUtils.getSearchRoute(network, suggestedTransaction)} />
+        ),
         AccountIcon: <></>,
-        AccountLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(suggestedAccount)} />,
+        AccountLink: (
+          <Link component={RouterLink} to={RouteUtils.getSearchRoute(network, suggestedAccount)} />
+        ),
       }}
     />
   )

@@ -3,6 +3,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { Search } from '../Search'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { NetworkOrGlobal } from '../../../types/network'
 
 interface AppendMobileSearchProps {
   action?: ReactNode
@@ -32,7 +33,9 @@ const SearchWrapper = styled(Box)(() => ({
   marginLeft: 'auto',
 }))
 
-export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps>> = ({ children, action }) => {
+export const AppendMobileSearch: FC<
+  PropsWithChildren<AppendMobileSearchProps> & { network: NetworkOrGlobal }
+> = ({ network, children, action }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -44,7 +47,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps>> 
 
       {isMobile && (
         <SearchWrapper>
-          <Search variant="expandable" />
+          <Search network={network} variant="expandable" />
         </SearchWrapper>
       )}
     </Layout>

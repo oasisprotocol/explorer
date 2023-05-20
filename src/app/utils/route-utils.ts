@@ -3,7 +3,7 @@ import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-indexer/api'
-import { Network } from '../../types/network'
+import { Network, NetworkOrGlobal } from '../../types/network'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
@@ -58,8 +58,8 @@ export abstract class RouteUtils {
     return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
-  static getSearchRoute = (searchTerm: string) => {
-    return `/search?q=${encodeURIComponent(searchTerm)}`
+  static getSearchRoute = (network: NetworkOrGlobal, searchTerm: string) => {
+    return `/${network}/search?q=${encodeURIComponent(searchTerm)}`
   }
 
   static getEnabledLayers(): Layer[] {

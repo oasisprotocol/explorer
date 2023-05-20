@@ -7,8 +7,9 @@ import Link from '@mui/material/Link'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
+import { NetworkOrGlobal } from '../../../types/network'
 
-export const NoResults: FC = () => {
+export const NoResults: FC<{ network: NetworkOrGlobal }> = ({ network }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   return (
@@ -29,7 +30,7 @@ export const NoResults: FC = () => {
             />
           </p>
           <p>
-            <SearchSuggestionsLinks />
+            <SearchSuggestionsLinks network={network} />
           </p>
         </Box>
       }

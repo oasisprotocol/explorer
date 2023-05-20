@@ -15,6 +15,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
+import { GlobalNetwork } from '../../../types/network'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -132,7 +133,12 @@ export const HomePage: FC = () => {
           </LogotypeBox>
           <SearchInputContainer>
             <SearchInputBox>
-              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+              <Search
+                network={GlobalNetwork}
+                disabled={isApiOffline}
+                variant={searchVariant}
+                onFocusChange={onFocusChange}
+              />
             </SearchInputBox>
             {isApiOffline && (
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -151,7 +157,7 @@ export const HomePage: FC = () => {
               <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
             </IconButton>
           )}
-          {!isMobile && <Footer />}
+          {!isMobile && <Footer network={GlobalNetwork} />}
         </FooterStyled>
       </HomepageLayout>
     </>

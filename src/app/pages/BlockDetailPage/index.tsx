@@ -18,9 +18,11 @@ import { transactionsContainerId } from './TransactionsCard'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -29,6 +31,7 @@ export const BlockDetailPage: FC = () => {
   }
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetRuntimeBlockByHeight(
+    network,
     layer, // This is OK, since consensus is already handled separately
     blockHeight,
   )
@@ -42,7 +45,7 @@ export const BlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')}>
         <BlockDetailView isLoading={isLoading} block={block} />
       </SubPageCard>
-      <TransactionsCard layer={layer} blockHeight={blockHeight} />
+      <TransactionsCard network={network} layer={layer} blockHeight={blockHeight} />
     </PageLayout>
   )
 }

@@ -13,8 +13,14 @@ import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 import { CardEmptyState } from './CardEmptyState'
+import { Network } from '../../../types/network'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
-export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer, address }) => {
+export const TransactionsList: FC<{ network: Network; layer: Layer; address: string }> = ({
+  network,
+  layer,
+  address,
+}) => {
   const { t } = useTranslation()
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -24,6 +30,7 @@ export const TransactionsList: FC<{ layer: Layer; address: string }> = ({ layer,
     // We should use useGetConsensusTransactions()
   }
   const transactionsQuery = useGetRuntimeTransactions(
+    network,
     layer, // This is OK since consensus has been handled separately
     {
       limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
@@ -58,6 +65,7 @@ export const accountTransactionsContainerId = 'transactions'
 
 export const TransactionsCard: FC = () => {
   const { t } = useTranslation()
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   const address = useLoaderData() as string
   return (
@@ -67,7 +75,7 @@ export const TransactionsCard: FC = () => {
       </ScrollingDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          <TransactionsList layer={layer} address={address} />
+          <TransactionsList network={network} layer={layer} address={address} />
         </ErrorBoundary>
       </CardContent>
     </Card>

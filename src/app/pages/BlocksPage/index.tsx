@@ -17,6 +17,7 @@ import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -34,6 +35,7 @@ export const BlocksPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
@@ -49,6 +51,7 @@ export const BlocksPage: FC = () => {
   }, [isMobile, setTableView])
 
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
+    network,
     layer, // This is OK, since consensus is already handled separately
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,

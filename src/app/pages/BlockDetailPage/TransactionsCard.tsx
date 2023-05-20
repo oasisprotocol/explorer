@@ -10,10 +10,15 @@ import { Layer, useGetRuntimeTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
+import { Network } from '../../../types/network'
 
 export const transactionsContainerId = 'transactions'
 
-const TransactionList: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blockHeight }) => {
+const TransactionList: FC<{ network: Network; layer: Layer; blockHeight: number }> = ({
+  network,
+  layer,
+  blockHeight,
+}) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   if (layer === Layer.consensus) {
@@ -21,7 +26,7 @@ const TransactionList: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blo
     // Should use useGetConsensusTransactions()
     throw AppErrors.UnsupportedLayer
   }
-  const transactionsQuery = useGetRuntimeTransactions(layer, {
+  const transactionsQuery = useGetRuntimeTransactions(network, layer, {
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     offset: txsOffset,
@@ -44,14 +49,18 @@ const TransactionList: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blo
   )
 }
 
-export const TransactionsCard: FC<{ layer: Layer; blockHeight: number }> = ({ layer, blockHeight }) => {
+export const TransactionsCard: FC<{ network: Network; layer: Layer; blockHeight: number }> = ({
+  network,
+  layer,
+  blockHeight,
+}) => {
   const { t } = useTranslation()
   return (
     <ScrollingCard id={transactionsContainerId}>
       <CardHeader disableTypography component="h3" title={t('common.transactions')} />
       <CardContent>
         <ErrorBoundary light={true}>
-          <TransactionList layer={layer} blockHeight={blockHeight} />
+          <TransactionList network={network} layer={layer} blockHeight={blockHeight} />
         </ErrorBoundary>
       </CardContent>
     </ScrollingCard>

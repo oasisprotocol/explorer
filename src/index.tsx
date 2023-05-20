@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Axios from 'axios'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from '@mui/material/styles'
@@ -13,7 +12,6 @@ import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
 
-Axios.defaults.baseURL = process.env.REACT_APP_API
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
