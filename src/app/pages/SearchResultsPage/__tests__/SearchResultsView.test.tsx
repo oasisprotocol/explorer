@@ -21,7 +21,7 @@ describe('SearchResultsView', () => {
   it('block should correctly link to transactions', () => {
     renderWithProviders(
       <SearchResultsView
-        network={Network.mainnet}
+        wantedNetwork={Network.mainnet}
         searchQueries={{
           blockHeight: {
             isLoading: false,
@@ -52,7 +52,7 @@ describe('SearchResultsView', () => {
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
       <SearchResultsView
-        network={Network.mainnet}
+        wantedNetwork={Network.mainnet}
         searchQueries={{
           blockHeight: { isLoading: false, results: [] },
           txHash: { isLoading: false, results: [] },

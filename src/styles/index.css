@@ -23,3 +23,7 @@ svg.recharts-surface {
 .recharts-cartesian-grid-horizontal line:last-child {
   stroke-opacity: 0;
 }
+
+.foreignNote strong {
+  font-weight: 700;
+}

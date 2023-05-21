@@ -7,14 +7,19 @@ import Link from '@mui/material/Link'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
-import { NetworkOrGlobal } from '../../../types/network'
+import { getNetworkNames, GlobalNetwork, NetworkOrGlobal } from '../../../types/network'
 
 export const NoResults: FC<{ network: NetworkOrGlobal }> = ({ network }) => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const title =
+    network === GlobalNetwork
+      ? t('search.noResults.header')
+      : t('search.noResults.networkHeader', { network: getNetworkNames(t)[network] })
+
   return (
     <EmptyState
-      title={t('search.noResults.header')}
+      title={title}
       description={
         <Box
           sx={{ textAlign: 'center', a: { color: theme.palette.layout.main, textDecoration: 'underline' } }}

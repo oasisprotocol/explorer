@@ -1,10 +1,11 @@
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { SubPageCard } from '../../components/SubPageCard'
+import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import { styled } from '@mui/material/styles'
+import { SubPageCard } from '../../components/SubPageCard'
 
 interface Props<T> {
   title: string

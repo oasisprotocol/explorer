@@ -1,15 +1,22 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SearchQueries } from '.'
+import { SearchQueries } from './hooks'
 import { RouteUtils } from '../../utils/route-utils'
+import { GlobalNetwork, NetworkOrGlobal } from '../../../types/network'
+import { HasNetwork } from '../../../oasis-indexer/api'
 
 /** If search only finds one result then redirect to it */
-export function useRedirectIfSingleResult(queries: SearchQueries) {
+export function useRedirectIfSingleResult(network: NetworkOrGlobal, queries: SearchQueries) {
   const navigate = useNavigate()
 
   const isAnyLoading = Object.values(queries).some(query => query.isLoading)
+
+  const allResults = Object.values(queries).flatMap<HasNetwork>(query => query.results ?? [])
+
   const hasSingleResult =
-    !isAnyLoading && Object.values(queries).flatMap<unknown>(query => query.results ?? []).length === 1
+    !isAnyLoading &&
+    allResults.length === 1 &&
+    (network === GlobalNetwork || allResults[0].network === network)
 
   let redirectTo: string | undefined
   const block = queries.blockHeight.results?.[0]
