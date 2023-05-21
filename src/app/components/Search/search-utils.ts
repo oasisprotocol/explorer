@@ -7,7 +7,7 @@ import {
   isValidEthAddress,
   getEvmBech32Address,
 } from '../../utils/helpers'
-import { GlobalNetwork, Network } from '../../../types/network'
+import { Network } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 
@@ -65,10 +65,7 @@ export function isSearchValid(searchTerm: string) {
 
 export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const { network } = params
-  if (
-    !network ||
-    (network !== GlobalNetwork && !RouteUtils.getEnabledNetworks().includes(network as Network))
-  ) {
+  if (!!network && !RouteUtils.getEnabledNetworks().includes(network as Network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

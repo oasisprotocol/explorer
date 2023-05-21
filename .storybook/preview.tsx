@@ -1,20 +1,11 @@
 import React from 'react'
 import { Preview } from '@storybook/react'
-import { defaultTheme } from '../src/styles/theme'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import '../src/locales/i18n'
+import { withDefaultTheme } from '../src/app/components/ThemeByNetwork'
 
 const preview: Preview = {
-  decorators: [
-    Story => (
-      <ThemeProvider theme={defaultTheme}>
-        <CssBaseline />
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
+  decorators: [Story => withDefaultTheme(<Story />)],
   parameters: {
     controls: {
       matchers: {

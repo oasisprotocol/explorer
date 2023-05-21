@@ -12,7 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
-import { NetworkOrGlobal } from '../../../types/network'
+import { Network } from '../../../types/network'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -84,7 +84,7 @@ SearchButton.defaultProps = {
 }
 
 export interface SearchProps {
-  network: NetworkOrGlobal
+  network?: Network
   variant: SearchVariant
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void

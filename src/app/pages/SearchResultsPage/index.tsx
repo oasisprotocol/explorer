@@ -1,143 +1,73 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
 import { useParamSearch } from '../../components/Search/search-utils'
-import { useTranslation } from 'react-i18next'
-import {
-  RuntimeAccount,
-  RuntimeBlock,
-  RuntimeTransaction,
-  useGetRuntimeAccountsAddress,
-  useGetRuntimeBlockByHeight,
-  useGetRuntimeTransactionsTxHash,
-  Runtime,
-} from '../../../oasis-indexer/api'
+import { HasNetwork } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
-import { AccountDetailsView } from '../AccountDetailsPage'
-import { BlockDetailView } from '../BlockDetailPage'
-import { TransactionDetailView } from '../TransactionDetailPage'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
-import { ResultsGroup } from './ResultsGroup'
-import { GlobalNetwork, Network, NetworkOrGlobal } from '../../../types/network'
+import { Network } from '../../../types/network'
 import { useNetworkParam } from '../../hooks/useNetworkParam'
-
-function isDefined<T>(item: T): item is NonNullable<T> {
-  return item != null
-}
-
-type ConditionalResults<T> = { isLoading: boolean; results: T[] }
-export type SearchQueries = {
-  blockHeight: ConditionalResults<RuntimeBlock>
-  txHash: ConditionalResults<RuntimeTransaction>
-  oasisAccount: ConditionalResults<RuntimeAccount>
-  evmBech32Account: ConditionalResults<RuntimeAccount>
-}
-function useBlocksConditionally(
-  network: NetworkOrGlobal,
-  blockHeight: string | undefined,
-): ConditionalResults<RuntimeBlock> {
-  const queries = [
-    useGetRuntimeBlockByHeight(network as Network, Runtime.emerald, parseInt(blockHeight!), {
-      query: {
-        enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-    useGetRuntimeBlockByHeight(network as Network, Runtime.sapphire, parseInt(blockHeight!), {
-      query: {
-        enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-  ]
-  return {
-    isLoading: queries.some(query => query.isInitialLoading),
-    results: queries.map(query => query.data?.data).filter(isDefined),
-  }
-}
-function useTransactionsConditionally(
-  network: NetworkOrGlobal,
-  txHash: string | undefined,
-): ConditionalResults<RuntimeTransaction> {
-  const queries = [
-    useGetRuntimeTransactionsTxHash(network as Network, Runtime.emerald, txHash!, {
-      query: {
-        enabled:
-          !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.emerald) && network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-    useGetRuntimeTransactionsTxHash(network as Network, Runtime.sapphire, txHash!, {
-      query: {
-        enabled:
-          !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) && network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-  ]
-  return {
-    isLoading: queries.some(query => query.isInitialLoading),
-    results: queries.flatMap(query => query.data?.data.transactions).filter(isDefined),
-  }
-}
-function useRuntimeAccountConditionally(
-  network: NetworkOrGlobal,
-  address: string | undefined,
-): ConditionalResults<RuntimeAccount> {
-  const queries = [
-    useGetRuntimeAccountsAddress(network as Network, Runtime.emerald, address!, {
-      query: {
-        enabled:
-          !!address && RouteUtils.getEnabledLayers().includes(Runtime.emerald) && network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-    useGetRuntimeAccountsAddress(network as Network, Runtime.sapphire, address!, {
-      query: {
-        enabled:
-          !!address && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) && network !== GlobalNetwork, // TODO: enable global search
-      },
-    }),
-  ]
-  return {
-    isLoading: queries.some(query => query.isInitialLoading),
-    results: queries.map(query => query.data?.data).filter(isDefined),
-  }
-}
+import { ResultsOnNetwork } from './ResultsOnNetwork'
+import {
+  SearchQueries,
+  useBlocksConditionally,
+  useRuntimeAccountConditionally,
+  useTransactionsConditionally,
+} from './hooks'
+import { ResultsOnForeignNetworkThemed } from './ResultsOnForeignNetworkThemed'
+import { ResultsOnNetworkThemed } from './ResultsOnNetworkThemed'
 
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
   const rosePriceQuery = useGetRosePrice()
   const network = useNetworkParam()
   const searchQueries: SearchQueries = {
-    blockHeight: useBlocksConditionally(network, q.blockHeight),
+    blockHeight: useBlocksConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
-    txHash: useTransactionsConditionally(network, q.txHash),
-    oasisAccount: useRuntimeAccountConditionally(network, q.consensusAccount),
+    txHash: useTransactionsConditionally(q.txHash),
+    oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
-    evmBech32Account: useRuntimeAccountConditionally(network, q.evmBech32Account),
+    evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
   }
 
-  useRedirectIfSingleResult(searchQueries)
+  useRedirectIfSingleResult(network, searchQueries)
 
   return (
-    <SearchResultsView network={network} searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data} />
+    <SearchResultsView
+      wantedNetwork={network}
+      searchQueries={searchQueries}
+      roseFiatValue={rosePriceQuery.data}
+    />
   )
 }
 
 export const SearchResultsView: FC<{
-  network: NetworkOrGlobal
+  wantedNetwork?: Network
   searchQueries: SearchQueries
   roseFiatValue: number | undefined
-}> = ({ network, searchQueries, roseFiatValue }) => {
-  const { t } = useTranslation()
+}> = ({ wantedNetwork, searchQueries, roseFiatValue }) => {
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
-  const hasNoResults = !isAnyLoading && Object.values(searchQueries).every(query => query.results.length <= 0)
+  const allResults = Object.values(searchQueries).flatMap<HasNetwork>(query => query.results ?? [])
+
+  const allNetworks = RouteUtils.getEnabledNetworks()
+
+  const resultsInNetworks: Record<Network, number> = {} as any
+
+  if (!isAnyLoading) {
+    allNetworks.forEach(net => (resultsInNetworks[net] = 0))
+    allResults.forEach(result => resultsInNetworks[result.network]++)
+  }
+
+  const matchingNetworkList = allNetworks.filter(net => !!resultsInNetworks[net])
+
+  const isGlobal = !wantedNetwork
+
+  const hasNoResultsWhatsoever = allResults.length === 0
+  const hasNoResultsOnWantedNetwork = !isGlobal && resultsInNetworks[wantedNetwork] === 0
 
   return (
     <PageLayout>
@@ -148,51 +78,46 @@ export const SearchResultsView: FC<{
         </SubPageCard>
       )}
 
-      {hasNoResults && <NoResults network={network} />}
+      {!isGlobal && !isAnyLoading && hasNoResultsOnWantedNetwork && <NoResults network={wantedNetwork} />}
+      {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults network={wantedNetwork} />}
 
-      {!isAnyLoading && (
+      {!isGlobal && !isAnyLoading && !hasNoResultsOnWantedNetwork && (
         <>
-          <ResultsGroup
-            title={t('search.results.blocks.title')}
-            results={searchQueries.blockHeight.results}
-            resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
-            link={item => RouteUtils.getBlockRoute(item.network, item.round, item.layer)}
-            linkLabel={t('search.results.blocks.viewLink')}
-          />
-
-          <ResultsGroup
-            title={t('search.results.transactions.title')}
-            results={searchQueries.txHash.results}
-            resultComponent={item => (
-              <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
-            )}
-            link={item =>
-              RouteUtils.getTransactionRoute(item.network, item.eth_hash || item.hash, item.layer)
-            }
-            linkLabel={t('search.results.transactions.viewLink')}
-          />
-
-          <ResultsGroup
-            title={t('search.results.accounts.title')}
-            results={[
-              ...(searchQueries.oasisAccount.results ?? []),
-              ...(searchQueries.evmBech32Account.results ?? []),
-            ]}
-            resultComponent={item => (
-              <AccountDetailsView
-                isLoading={false}
-                account={item}
-                roseFiatValue={roseFiatValue}
-                showLayer={true}
-              />
-            )}
-            link={item =>
-              RouteUtils.getAccountRoute(item.network, item.address_eth ?? item.address, item.layer)
-            }
-            linkLabel={t('search.results.accounts.viewLink')}
+          <ResultsOnNetwork
+            network={wantedNetwork}
+            searchQueries={searchQueries}
+            roseFiatValue={roseFiatValue}
           />
         </>
       )}
+      {!isGlobal &&
+        !isAnyLoading &&
+        matchingNetworkList
+          .filter(net => net !== wantedNetwork)
+          .map(net => (
+            <ResultsOnForeignNetworkThemed
+              key={net}
+              network={net}
+              searchQueries={searchQueries}
+              numberOfResults={resultsInNetworks[net]}
+              roseFiatValue={roseFiatValue}
+              openByDefault={net === Network.mainnet && !hasNoResultsOnWantedNetwork}
+              alsoHasLocalResults={!hasNoResultsOnWantedNetwork}
+            />
+          ))}
+
+      {isGlobal &&
+        !isAnyLoading &&
+        allNetworks
+          .filter(net => resultsInNetworks[net])
+          .map(net => (
+            <ResultsOnNetworkThemed
+              key={net}
+              network={net}
+              searchQueries={searchQueries}
+              roseFiatValue={roseFiatValue}
+            />
+          ))}
     </PageLayout>
   )
 }
