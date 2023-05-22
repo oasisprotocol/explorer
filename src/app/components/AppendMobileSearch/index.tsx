@@ -13,7 +13,7 @@ const Layout = styled(Box, {
     !(['action'] as (keyof AppendMobileSearchProps)[]).includes(prop as keyof AppendMobileSearchProps),
 })<AppendMobileSearchProps>(({ action }) => ({
   position: 'relative',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   width: '100%',
   ...(action
     ? {
