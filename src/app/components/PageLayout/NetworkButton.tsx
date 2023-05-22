@@ -32,7 +32,8 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   width: '280px',
   padding: 0,
   borderRadius: '12px',
-  borderColor: theme.palette.layout.secondary,
+  borderColor: theme.palette.layout.darkBorder,
+  borderWidth: theme.spacing(1),
   backgroundColor: COLORS.white,
   color: COLORS.brandDark,
   textTransform: 'capitalize',
@@ -60,6 +61,7 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   },
 
   '&:hover': {
+    borderWidth: theme.spacing(1),
     color: COLORS.white,
     borderColor: theme.palette.layout.hoverBorder,
 

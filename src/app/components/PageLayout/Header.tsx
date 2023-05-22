@@ -3,23 +3,28 @@ import Grid from '@mui/material/Unstable_Grid2'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
-import { NetworkHeader } from './NetworkHeader'
 import { Search } from '../Search'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { useNetworkParam } from '../../hooks/useNetworkParam'
+import { NetworkSelector } from './NetworkSelector'
+import Box from '@mui/material/Box'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const layer = useLayerParam()
+  const network = useNetworkParam()
 
   if (!layer) {
     // On search page there's no NetworkHeader
     return (
       <header>
-        <Grid container sx={{ px: isDesktop ? 6 : 4, pb: isMobile ? 4 : 5 }} justifyContent={'space-between'}>
+        <Grid
+          container
+          sx={{ px: isDesktop ? 6 : 4, pb: isMobile ? 4 : 5, pt: 4 }}
+          justifyContent={'space-between'}
+        >
           <Grid xs="auto">
             <Logotype />
           </Grid>
@@ -33,34 +38,29 @@ export const Header: FC = () => {
 
   return (
     <header>
-      <Grid container sx={{ px: isDesktop ? 6 : 4, pb: isMobile ? 4 : 5 }}>
-        <Grid md={12} xs={6} sx={{ pb: isTablet ? 0 : '50px' }}>
+      <Grid
+        container
+        sx={{
+          pt: isMobile ? 4 : 0,
+          mb: isMobile ? 3 : 6,
+          pb: 4,
+          px: isMobile ? 4 : '4%',
+          backgroundColor: theme.palette.layout.secondary,
+        }}
+      >
+        <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
           <Logotype />
         </Grid>
-        <Grid
-          xs={6}
-          md={6}
-          lg={4}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            pr: isMobile ? 0 : 3,
-            pb: isTablet && !isMobile ? 3 : 0,
-          }}
-        />
-        {!isMobile && (
-          <Grid
-            xs={12}
-            sm={12}
-            md={6}
-            lg={8}
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
-          >
-            <Search variant="icon" />
-          </Grid>
-        )}
+        <Grid md={6} xs={8}>
+          <NetworkSelector layer={layer} network={network} />
+        </Grid>
+        <Grid md={3} xs={0} />
       </Grid>
+      {!isMobile && (
+        <Box sx={{ mb: 6, px: isMobile ? 0 : '4%' }}>
+          <Search variant="icon" />
+        </Box>
+      )}
     </header>
   )
 }

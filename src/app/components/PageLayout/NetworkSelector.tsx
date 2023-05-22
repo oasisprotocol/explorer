@@ -11,6 +11,8 @@ import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
+  marginLeft: `-${theme.spacing(1)}`,
+  zIndex: 1,
   display: 'flex',
   borderColor: COLORS.brandExtraDark,
   borderStyle: 'solid',
@@ -42,7 +44,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
       }}
     >
       {!isMobile && <NetworkButton layer={layer} network={network} />}
-      {isDesktop && (
+      {isDesktop && network !== Network.mainnet && (
         <StyledBox>
           <Typography
             component="span"
