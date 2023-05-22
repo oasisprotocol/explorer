@@ -14,7 +14,6 @@ export const Header: FC = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const layer = useLayerParam()
-  const network = useNetworkParam()
 
   if (!layer) {
     // On search page there's no NetworkHeader
@@ -49,9 +48,7 @@ export const Header: FC = () => {
             pr: isMobile ? 0 : 3,
             pb: isTablet && !isMobile ? 3 : 0,
           }}
-        >
-          <NetworkHeader network={network} layer={layer} />
-        </Grid>
+        />
         {!isMobile && (
           <Grid
             xs={12}

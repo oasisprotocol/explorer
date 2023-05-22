@@ -122,11 +122,7 @@
     }
   },
   "pageTitle": "Oasis Explorer",
-  "pageHeader": {
-    "emerald": "The official confidential EVM Compatible ParaTime providing a smart contract development environment.",
-    "sapphire": "As our official confidential EVM Compatible ParaTime, Sapphire, provides a smart contract development environment with EVM compatibility.",
-    "consensus": "Our common blockchain technology layer, providing basic services for all ParaTimes."
-  },
+  "pageHeader": {},
   "pagination": {
     "first": "First",
     "last": "Last"
