@@ -10275,10 +10275,12 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-quick-pinch-zoom@4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-4.8.0.tgz#8bd630cc80d4cc1e836426f545d52e4346834a12"
-  integrity sha512-YfbSmDQ9RzLKueDqzi9hZKgjkqZxdCxnPg7dZAU42GXYHfyITy+YKa4Om2B9G8p9X0ZzmlYaYfVSuxDKj+aOCA==
+react-quick-pinch-zoom@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-4.9.0.tgz#13d91adb7ea2e75c5a2ff43d71d2a0e04a56cf62"
+  integrity sha512-gCPnZu5+rkYDNvewi/d7A2wgLs7izQNMuC6kjt+KLC1qqHnRU27Ed8AgcEcnWAZKdMr3ZKoKhSvjlZSVZI0fuw==
+  dependencies:
+    tslib ">=2.0.0"
 
 react-redux@8.0.5:
   version "8.0.5"
@@ -11443,6 +11445,11 @@ tsconfig-paths@^3.14.1:
     json5 "^1.0.2"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
+
+tslib@>=2.0.0:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
+  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
 
 tslib@^1.8.1:
   version "1.14.1"
