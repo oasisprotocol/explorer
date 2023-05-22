@@ -66,6 +66,7 @@ export const BlockDetailView: FC<{
   if (!block) return <></>
 
   const transactionsAnchor = `${RouteUtils.getBlockRoute(
+    block.network,
     block.round,
     block.layer,
   )}#${transactionsContainerId}`
@@ -85,13 +86,13 @@ export const BlockDetailView: FC<{
       )}
       <dt>{t('common.height')}</dt>
       <dd>
-        <BlockLink height={block.round} layer={block.layer} />
+        <BlockLink network={block.network} height={block.round} layer={block.layer} />
         <CopyToClipboard value={block.round.toString()} />
       </dd>
 
       <dt>{t('common.hash')}</dt>
       <dd>
-        <BlockHashLink hash={block.hash} height={block.round} layer={block.layer} />
+        <BlockHashLink network={block.network} hash={block.hash} height={block.round} layer={block.layer} />
         <CopyToClipboard value={block.round.toString()} />
       </dd>
 

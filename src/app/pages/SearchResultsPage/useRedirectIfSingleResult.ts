@@ -18,13 +18,18 @@ export function useRedirectIfSingleResult(queries: SearchQueries) {
   const oasisAccount = queries.oasisAccount.results?.[0]
   if (hasSingleResult) {
     if (block) {
-      redirectTo = RouteUtils.getBlockRoute(block.round, block.layer)
+      redirectTo = RouteUtils.getBlockRoute(block.network, block.round, block.layer)
     } else if (tx) {
-      redirectTo = RouteUtils.getTransactionRoute(tx.eth_hash || tx.hash, tx.layer)
+      redirectTo = RouteUtils.getTransactionRoute(tx.network, tx.eth_hash || tx.hash, tx.layer)
     } else if (evmAccount) {
-      redirectTo = RouteUtils.getAccountRoute(evmAccount.address_eth ?? evmAccount.address, evmAccount.layer)
+      redirectTo = RouteUtils.getAccountRoute(
+        evmAccount.network,
+        evmAccount.address_eth ?? evmAccount.address,
+        evmAccount.layer,
+      )
     } else if (oasisAccount) {
       redirectTo = RouteUtils.getAccountRoute(
+        oasisAccount.network,
         oasisAccount.address_eth ?? oasisAccount.address,
         oasisAccount.layer,
       )

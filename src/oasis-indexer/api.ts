@@ -7,27 +7,34 @@ import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { Layer } from './generated/api'
 import { getEthAccountAddress } from '../app/utils/helpers'
+import { Network } from '../types/network'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
 declare module './generated/api' {
   export interface Transaction {
+    network: Network
     layer: Layer
   }
   export interface RuntimeTransaction {
+    network: Network
     layer: Layer
   }
   export interface Block {
+    network: Network
     layer: Layer
   }
   export interface RuntimeBlock {
+    network: Network
     layer: Layer
   }
   export interface Account {
+    network: Network
     layer: Layer
   }
   export interface RuntimeAccount {
+    network: Network
     layer: Layer
     address_eth?: string
   }
@@ -64,6 +71,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                network: Network.mainnet, // TODO: replace with actual value
                 layer: Layer.consensus,
               }
             }),
@@ -97,6 +105,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
+                network: Network.mainnet, // TODO: replace with actual value
               }
             }),
           }
@@ -125,6 +134,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
               return {
                 ...tx,
                 layer: Layer.consensus,
+                network: Network.mainnet, // TODO: replace with actual value
               }
             }),
           }
@@ -159,6 +169,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
+                network: Network.mainnet, // TODO: replace with actual value
               }
             }),
           }
@@ -184,6 +195,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
           return {
             ...data,
             layer: Layer.consensus,
+            network: Network.mainnet, // TODO: replace with actual value
           }
         },
         ...arrayify(options?.axios?.transformResponse),
@@ -221,6 +233,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
               }
             }),
             layer: runtime,
+            network: Network.mainnet, // TODO: replace with actual value
             stats: {
               ...data.stats,
               total_received: data.stats?.total_received
@@ -252,6 +265,7 @@ export function useGetConsensusBlockByHeight(
           return {
             ...block,
             layer: Layer.consensus,
+            network: Network.mainnet, // TODO: replace with actual value
           }
         },
       ],
@@ -289,6 +303,7 @@ export function useGetRuntimeBlockByHeight(
             return {
               ...block,
               layer: runtime,
+              network: Network.mainnet, // TODO: replace with actual value
             }
           },
         ],
@@ -313,6 +328,7 @@ export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (pa
               return {
                 ...block,
                 layer: Layer.consensus,
+                network: Network.mainnet, // TODO: replace with actual value
               }
             }),
           }
@@ -338,6 +354,7 @@ export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtim
               return {
                 ...block,
                 layer: runtime,
+                network: Network.mainnet, // TODO: replace with actual value
               }
             }),
           }

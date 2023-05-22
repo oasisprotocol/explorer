@@ -32,7 +32,7 @@ export const routes: RouteObject[] = [
         loader: searchParamLoader,
       },
       {
-        path: `/:layer`,
+        path: `/:network/:layer`,
         loader: layerLoader,
         errorElement: <RoutingErrorPage />,
         children: [

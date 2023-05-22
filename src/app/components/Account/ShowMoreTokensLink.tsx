@@ -24,12 +24,14 @@ type ShowMoreTokensLinkProps = {
 export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, tokens, pills }) => {
   const { t } = useTranslation()
   const erc20link = RouteUtils.getAccountTokensRoute(
+    account.network,
     account.address_eth ?? account.address,
     account.layer,
     'ERC20',
     accountTokenContainerId,
   )
   const erc721Link = RouteUtils.getAccountTokensRoute(
+    account.network,
     account.address_eth ?? account.address,
     account.layer,
     'ERC721',

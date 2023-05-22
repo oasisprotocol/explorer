@@ -13,6 +13,7 @@ import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { LayerIcon } from '../../../../components/CustomIcons/LayerIcon'
+import { Network } from '../../../../../types/network'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -160,6 +161,7 @@ export const layerTooltipMap: {
 interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
   offsetWidth?: number
   offsetHeight?: number
+  network: Network
   layer: Layer
 }
 
@@ -229,7 +231,7 @@ export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, bo
   )
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restProps }) => {
+export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, ...restProps }) => {
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -240,7 +242,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, layer, ...restPr
       return
     }
 
-    navigate(RouteUtils.getDashboardRoute(layer))
+    navigate(RouteUtils.getDashboardRoute(network, layer))
   }
 
   return (

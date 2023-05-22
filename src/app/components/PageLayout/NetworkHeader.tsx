@@ -14,6 +14,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
 import { LayerIcon } from '../../components/CustomIcons/LayerIcon'
+import { Network } from '../../../types/network'
 
 const getContent = (t: TFunction, layer: Layer) => {
   switch (layer) {
@@ -40,7 +41,7 @@ const getContent = (t: TFunction, layer: Layer) => {
   }
 }
 
-export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
+export const NetworkHeader: FC<{ network: Network; layer: Layer }> = ({ network, layer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
@@ -65,7 +66,7 @@ export const NetworkHeader: FC<{ layer: Layer }> = ({ layer }) => {
         >
           <Link
             component={RouterLink}
-            to={RouteUtils.getDashboardRoute(layer)}
+            to={RouteUtils.getDashboardRoute(network, layer)}
             sx={{ textDecoration: 'none' }}
           >
             <Typography

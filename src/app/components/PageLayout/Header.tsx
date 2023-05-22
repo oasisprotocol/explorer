@@ -6,6 +6,7 @@ import { Logotype } from './Logotype'
 import { NetworkHeader } from './NetworkHeader'
 import { Search } from '../Search'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useNetworkParam } from '../../hooks/useNetworkParam'
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -13,6 +14,7 @@ export const Header: FC = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const layer = useLayerParam()
+  const network = useNetworkParam()
 
   if (!layer) {
     // On search page there's no NetworkHeader
@@ -48,7 +50,7 @@ export const Header: FC = () => {
             pb: isTablet && !isMobile ? 3 : 0,
           }}
         >
-          <NetworkHeader layer={layer} />
+          <NetworkHeader network={network} layer={layer} />
         </Grid>
         {!isMobile && (
           <Grid

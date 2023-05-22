@@ -151,7 +151,11 @@ export const TransactionDetailView: FC<{
           )}
           <dt>{t('common.hash')}</dt>
           <dd>
-            <TransactionLink hash={transaction.eth_hash || transaction.hash} layer={transaction.layer} />
+            <TransactionLink
+              network={transaction.network}
+              hash={transaction.eth_hash || transaction.hash}
+              layer={transaction.layer}
+            />
             <CopyToClipboard value={transaction.eth_hash || transaction.hash} />
           </dd>
 
@@ -167,7 +171,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.block')}</dt>
           <dd>
-            <BlockLink layer={transaction.layer} height={transaction.round} />
+            <BlockLink network={transaction.network} layer={transaction.layer} height={transaction.round} />
           </dd>
 
           <dt>{t('common.type')}</dt>
@@ -181,6 +185,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.from')}</dt>
           <dd>
             <AccountLink
+              network={transaction.network}
               address={transaction.sender_0_eth || transaction.sender_0}
               layer={transaction.layer}
             />
@@ -191,7 +196,11 @@ export const TransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <AccountLink address={transaction.to_eth || transaction.to} layer={transaction.layer} />
+                <AccountLink
+                  network={transaction.network}
+                  address={transaction.to_eth || transaction.to}
+                  layer={transaction.layer}
+                />
                 <CopyToClipboard value={transaction.to_eth || transaction.to} />
               </dd>
             </>
