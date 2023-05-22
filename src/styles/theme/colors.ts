@@ -43,4 +43,5 @@ export const COLORS = {
   black: '#000000',
   warningColor: '#ed6c02',
   warningBackground: '#faf5e8',
+  iconBackground: '#d4d3f2',
 } satisfies { [colorName: string]: string }

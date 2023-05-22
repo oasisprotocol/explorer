@@ -15,10 +15,16 @@ declare module '@mui/material/styles' {
 
   interface PaletteColor {
     border?: string
+    hoverBorder?: string
+    secondary?: string
+    secondaryBackground?: string
   }
 
   interface SimplePaletteColorOptions {
     border?: string
+    hoverBorder?: string
+    secondary?: string
+    secondaryBackground?: string
   }
 }
 
@@ -74,6 +80,9 @@ export const defaultTheme = createTheme({
     layout: {
       main: COLORS.white,
       border: COLORS.persianBlue,
+      hoverBorder: COLORS.white,
+      secondary: COLORS.brandDark,
+      secondaryBackground: COLORS.iconBackground,
     },
     primary: {
       main: COLORS.brandMedium,
