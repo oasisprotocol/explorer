@@ -27,33 +27,25 @@ export function useBlocksConditionally(blockHeight: string | undefined): Conditi
     useGetRuntimeBlockByHeight(Network.mainnet, Runtime.emerald, parseInt(blockHeight!), {
       query: {
         enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+          !!blockHeight && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeBlockByHeight(Network.mainnet, Runtime.sapphire, parseInt(blockHeight!), {
       query: {
         enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+          !!blockHeight && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.sapphire),
       },
     }),
     useGetRuntimeBlockByHeight(Network.testnet, Runtime.emerald, parseInt(blockHeight!), {
       query: {
         enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+          !!blockHeight && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeBlockByHeight(Network.testnet, Runtime.sapphire, parseInt(blockHeight!), {
       query: {
         enabled:
-          !!blockHeight &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+          !!blockHeight && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.sapphire),
       },
     }),
   ]
@@ -68,34 +60,24 @@ export function useTransactionsConditionally(
   const queries = [
     useGetRuntimeTransactionsTxHash(Network.mainnet, Runtime.emerald, txHash!, {
       query: {
-        enabled:
-          !!txHash &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+        enabled: !!txHash && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeTransactionsTxHash(Network.mainnet, Runtime.sapphire, txHash!, {
       query: {
         enabled:
-          !!txHash &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+          !!txHash && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.sapphire),
       },
     }),
     useGetRuntimeTransactionsTxHash(Network.testnet, Runtime.emerald, txHash!, {
       query: {
-        enabled:
-          !!txHash &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+        enabled: !!txHash && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeTransactionsTxHash(Network.testnet, Runtime.sapphire, txHash!, {
       query: {
         enabled:
-          !!txHash &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+          !!txHash && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.sapphire),
       },
     }),
   ]
@@ -111,33 +93,25 @@ export function useRuntimeAccountConditionally(
     useGetRuntimeAccountsAddress(Network.mainnet, Runtime.emerald, address!, {
       query: {
         enabled:
-          !!address &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+          !!address && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeAccountsAddress(Network.mainnet, Runtime.sapphire, address!, {
       query: {
         enabled:
-          !!address &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.mainnet),
+          !!address && RouteUtils.getEnabledLayersForNetwork(Network.mainnet).includes(Runtime.sapphire),
       },
     }),
     useGetRuntimeAccountsAddress(Network.testnet, Runtime.emerald, address!, {
       query: {
         enabled:
-          !!address &&
-          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+          !!address && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.emerald),
       },
     }),
     useGetRuntimeAccountsAddress(Network.testnet, Runtime.sapphire, address!, {
       query: {
         enabled:
-          !!address &&
-          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
-          RouteUtils.getEnabledNetworks().includes(Network.testnet),
+          !!address && RouteUtils.getEnabledLayersForNetwork(Network.testnet).includes(Runtime.sapphire),
       },
     }),
   ]

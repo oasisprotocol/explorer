@@ -6,9 +6,13 @@ import { EvmTokenType, Layer } from '../../oasis-indexer/api'
 import { Network } from '../../types/network'
 
 export abstract class RouteUtils {
-  private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
-
-  private static ENABLED_NETWORKS: Network[] = [Network.mainnet, Network.testnet]
+  private static ENABLED_LAYERS_FOR_NETWORK: Partial<Record<Network, Layer[]>> = {
+    [Network.mainnet]: [Layer.emerald, Layer.sapphire],
+    [Network.testnet]: [
+      // Layer.emerald,
+      Layer.sapphire,
+    ],
+  }
 
   static getDashboardRoute = (network: Network, layer: Layer) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
@@ -64,12 +68,12 @@ export abstract class RouteUtils {
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
-  static getEnabledLayers(): Layer[] {
-    return RouteUtils.ENABLED_LAYERS
+  static getEnabledLayersForNetwork(network: Network): Layer[] {
+    return RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network] || []
   }
 
-  static getEnabledNetworks(): Network[] {
-    return RouteUtils.ENABLED_NETWORKS
+  static getEnabledNetworks() {
+    return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK) as Network[]
   }
 }
 
@@ -120,7 +124,6 @@ export const networkLoader = async (args: LoaderFunctionArgs) => {
   } = args
 
   if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
-    console.log('Error: invalid network', network)
     throw new AppError(AppErrors.InvalidUrl)
   }
 
@@ -132,8 +135,11 @@ export const layerLoader = async (args: LoaderFunctionArgs) => {
     params: { layer, network },
   } = args
 
-  if (!network || !layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
-    console.log('Error: invalid layer', layer)
+  if (
+    !network || // missing network
+    !layer || // missing param
+    !RouteUtils.getEnabledLayersForNetwork(network as Network).includes(layer as Layer) // unsupported on network
+  ) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 
