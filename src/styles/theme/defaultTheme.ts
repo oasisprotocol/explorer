@@ -291,6 +291,14 @@ export const defaultTheme = createTheme({
       defaultProps: {
         disableRipple: true,
       },
+      styleOverrides: {
+        root: {
+          // Fixes accessibility: MUI relied on ripples to show focus.
+          '&:focus-visible': {
+            outline: 'revert',
+          },
+        },
+      },
     },
     MuiCard: {
       styleOverrides: {
