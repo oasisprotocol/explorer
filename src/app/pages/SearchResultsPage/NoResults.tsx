@@ -5,16 +5,19 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
-import { COLORS } from '../../../styles/theme/colors'
 import { OptionalBreak } from '../../components/OptionalBreak'
+import { useTheme } from '@mui/material/styles'
 
 export const NoResults: FC = () => {
   const { t } = useTranslation()
+  const theme = useTheme()
   return (
     <EmptyState
       title={t('search.noResults.header')}
       description={
-        <Box sx={{ textAlign: 'center', a: { color: COLORS.white, textDecoration: 'underline' } }}>
+        <Box
+          sx={{ textAlign: 'center', a: { color: theme.palette.layout.main, textDecoration: 'underline' } }}
+        >
           <p>
             <Trans
               t={t}

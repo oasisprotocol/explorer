@@ -8,6 +8,7 @@ export const testnetTheme = createTheme(
     palette: {
       background: {
         default: COLORS.testnetLight,
+        empty: COLORS.white,
       },
       layout: {
         main: COLORS.brandExtraDark,
