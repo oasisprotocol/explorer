@@ -9,6 +9,7 @@ import { useGetRosePrice } from '../../../coin-gecko/api'
 import { Layer, RuntimeAccount, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { accountTokenContainerId } from './TokensCard'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -36,8 +37,8 @@ export const AccountDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: useHref('') },
-          { label: t('account.ERC20'), to: useHref('tokens/erc-20') },
-          { label: t('account.ERC721'), to: useHref('tokens/erc-721') },
+          { label: t('account.ERC20'), to: useHref(`tokens/erc-20#${accountTokenContainerId}`) },
+          { label: t('account.ERC721'), to: useHref(`tokens/erc-721#${accountTokenContainerId}`) },
         ]}
       />
     </PageLayout>

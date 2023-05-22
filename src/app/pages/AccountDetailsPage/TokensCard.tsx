@@ -50,12 +50,14 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
       },
       {
         content: (
-          <Box id={item.token_contract_addr} sx={{ display: 'flex', alignContent: 'center' }}>
-            <Typography variant="mono" fontWeight={400}>
-              {item.token_contract_addr}
-            </Typography>
-            <CopyToClipboard value={item.token_contract_addr} />
-          </Box>
+          <ScrollingDiv id={item.token_contract_addr}>
+            <Box sx={{ display: 'flex', alignContent: 'center' }}>
+              <Typography variant="mono" fontWeight={400}>
+                {item.token_contract_addr}
+              </Typography>
+              <CopyToClipboard value={item.token_contract_addr} />
+            </Box>
+          </ScrollingDiv>
         ),
         key: 'hash',
       },
