@@ -13,6 +13,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { Network } from '../../../../../types/network'
 import Collapse from '@mui/material/Collapse'
+import { RouteUtils } from '../../../../utils/route-utils'
 
 const StyledNetworkSelector = styled(Box)(() => ({
   position: 'absolute',
@@ -69,7 +70,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork 
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [open, setOpen] = useState(false)
-  const options: Network[] = ['mainnet', 'testnet']
+  const options: Network[] = RouteUtils.getEnabledNetworks()
   const labels = getLabels(t)
 
   return (
