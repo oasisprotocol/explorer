@@ -1,5 +1,5 @@
-import { RouteObject } from 'react-router-dom'
-import { HomePage } from './app/pages/HomePage'
+import { Outlet, RouteObject } from 'react-router-dom'
+import { ThemedHomePage } from './app/pages/HomePage'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
@@ -14,9 +14,20 @@ import {
   blockHeightParamLoader,
   transactionParamLoader,
   layerLoader,
+  networkLoader,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
+import { NetworkThemeBubble } from './app/components/NetworkThemeBubble'
+import { useNetworkParam } from './app/hooks/useNetworkParam'
+import CssBaseline from '@mui/material/CssBaseline'
+
+const NetworkSpecificPart = () => (
+  <NetworkThemeBubble network={useNetworkParam()}>
+    <CssBaseline />
+    <Outlet />
+  </NetworkThemeBubble>
+)
 
 export const routes: RouteObject[] = [
   {
@@ -24,61 +35,68 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: <ThemedHomePage />,
       },
       {
-        path: '/:network/search', // ?q=
-        element: <SearchResultsPage />,
-        loader: searchParamLoader,
-      },
-      {
-        path: `/:network/:layer`,
-        loader: layerLoader,
-        errorElement: <RoutingErrorPage />,
+        path: '/:network', // ?q=
+        element: <NetworkSpecificPart />,
+        loader: networkLoader,
         children: [
           {
-            path: '',
-            element: <DashboardPage />,
+            path: 'search', // ?q=
+            element: <SearchResultsPage />,
+            loader: searchParamLoader,
           },
           {
-            path: `blocks`,
-            element: <BlocksPage />,
-          },
-          {
-            path: `blocks/:blockHeight`,
-            element: <BlockDetailPage />,
-            loader: blockHeightParamLoader,
-          },
-          {
-            path: `account/:address`,
-            element: <AccountDetailsPage />,
-            loader: addressParamLoader,
+            path: `:layer`,
+            loader: layerLoader,
+            errorElement: <RoutingErrorPage />,
             children: [
               {
                 path: '',
-                element: <TransactionsCard />,
-                loader: addressParamLoader,
+                element: <DashboardPage />,
               },
               {
-                path: 'tokens/erc-20',
-                element: <TokensCard type="ERC20" />,
-                loader: addressParamLoader,
+                path: `blocks`,
+                element: <BlocksPage />,
               },
               {
-                path: 'tokens/erc-721',
-                element: <TokensCard type="ERC721" />,
+                path: `blocks/:blockHeight`,
+                element: <BlockDetailPage />,
+                loader: blockHeightParamLoader,
+              },
+              {
+                path: `account/:address`,
+                element: <AccountDetailsPage />,
                 loader: addressParamLoader,
+                children: [
+                  {
+                    path: '',
+                    element: <TransactionsCard />,
+                    loader: addressParamLoader,
+                  },
+                  {
+                    path: 'tokens/erc-20',
+                    element: <TokensCard type="ERC20" />,
+                    loader: addressParamLoader,
+                  },
+                  {
+                    path: 'tokens/erc-721',
+                    element: <TokensCard type="ERC721" />,
+                    loader: addressParamLoader,
+                  },
+                ],
+              },
+              {
+                path: `transactions`,
+                element: <TransactionsPage />,
+              },
+              {
+                path: `transactions/:hash`,
+                element: <TransactionDetailPage />,
+                loader: transactionParamLoader,
               },
             ],
-          },
-          {
-            path: `transactions`,
-            element: <TransactionsPage />,
-          },
-          {
-            path: `transactions/:hash`,
-            element: <TransactionDetailPage />,
-            loader: transactionParamLoader,
           },
         ],
       },

@@ -3,7 +3,7 @@ import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-indexer/api'
-import { Network, NetworkOrGlobal } from '../../types/network'
+import { GlobalNetwork, Network, NetworkOrGlobal } from '../../types/network'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
@@ -112,16 +112,27 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
+export const networkLoader = async (args: LoaderFunctionArgs) => {
+  const {
+    params: { network },
+  } = args
+
+  if (
+    !network ||
+    !(network === GlobalNetwork || RouteUtils.getEnabledNetworks().includes(network as Network))
+  ) {
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
+  return true
+}
+
 export const layerLoader = async (args: LoaderFunctionArgs) => {
   const {
     params: { layer, network },
   } = args
 
-  if (!layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
-    throw new AppError(AppErrors.InvalidUrl)
-  }
-
-  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
+  if (network === GlobalNetwork || !layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

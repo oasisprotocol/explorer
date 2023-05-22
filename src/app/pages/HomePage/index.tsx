@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled, ThemeProvider, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
@@ -16,6 +16,8 @@ import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
 import { GlobalNetwork } from '../../../types/network'
+import { defaultTheme } from '../../../styles/theme'
+import CssBaseline from '@mui/material/CssBaseline'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -163,3 +165,10 @@ export const HomePage: FC = () => {
     </>
   )
 }
+
+export const ThemedHomePage: FC = () => (
+  <ThemeProvider theme={defaultTheme}>
+    <CssBaseline />
+    <HomePage />
+  </ThemeProvider>
+)
