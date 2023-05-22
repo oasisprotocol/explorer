@@ -2,18 +2,17 @@ import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
 import backgroundEmptyState from './images/background-empty-state.svg'
 import CancelIcon from '@mui/icons-material/Cancel'
 
-const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
   minHeight: '250px',
-  color: COLORS.white,
-  backgroundColor: COLORS.brandExtraDark,
+  color: theme.palette.layout.main,
+  backgroundColor: theme.palette.background.empty,
   backgroundImage: `url("${backgroundEmptyState}")`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',

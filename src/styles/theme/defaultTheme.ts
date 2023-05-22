@@ -58,10 +58,18 @@ declare module '@mui/material/Chip' {
   }
 }
 
+declare module '@mui/material/styles' {
+  // allow configuration using `createTheme`
+  interface TypeBackground {
+    empty?: string
+  }
+}
+
 export const defaultTheme = createTheme({
   palette: {
     background: {
       default: COLORS.persianBlue,
+      empty: COLORS.brandExtraDark,
     },
     layout: {
       main: COLORS.white,
