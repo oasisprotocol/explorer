@@ -17,6 +17,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
+  borderRadius: 12,
 }))
 
 const StyledBoxLight = styled(Box)(() => ({
