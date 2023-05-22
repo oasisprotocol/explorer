@@ -3,12 +3,16 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { BuildPreviewBanner } from '../BuildPreviewBanner'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
 }
+
+export const StyledMain = styled('main')({
+  minHeight: '75vh',
+})
 
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
   const theme = useTheme()
@@ -22,10 +26,11 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
           pt: 4,
           px: isMobile ? 0 : '4%',
           border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,
+          minHeight: '100vh',
         }}
       >
         <Header />
-        <main>{children}</main>
+        <StyledMain>{children}</StyledMain>
         <Footer mobileSearchAction={mobileFooterAction} />
       </Box>
     </>
