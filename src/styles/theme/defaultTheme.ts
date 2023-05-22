@@ -211,7 +211,7 @@ export const defaultTheme = createTheme({
         {
           props: { color: 'primary' },
           style: () => ({
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               backgroundColor: COLORS.brandDark,
             },
             '&:active': {
@@ -225,7 +225,7 @@ export const defaultTheme = createTheme({
             borderWidth: '1px',
             borderStyle: 'solid',
             borderColor: COLORS.brandExtraDark,
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               backgroundColor: COLORS.platinum,
             },
             '&:active': {
@@ -244,7 +244,7 @@ export const defaultTheme = createTheme({
             borderColor: COLORS.grayLight,
             backgroundColor: COLORS.brandExtraDark,
             color: COLORS.white,
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               borderColor: COLORS.brandExtraDark,
               backgroundColor: COLORS.white,
               color: COLORS.brandExtraDark,
@@ -257,7 +257,7 @@ export const defaultTheme = createTheme({
             color: COLORS.white,
             borderWidth: '0',
             backgroundColor: 'transparent',
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               backgroundColor: 'transparent',
             },
             '&:disabled': {
@@ -272,7 +272,7 @@ export const defaultTheme = createTheme({
             borderStyle: 'solid',
             borderColor: COLORS.brandLight,
             backgroundColor: COLORS.brandLight,
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               backgroundColor: COLORS.brandExtraDark,
               borderColor: COLORS.brandExtraDark,
             },
@@ -379,7 +379,7 @@ export const defaultTheme = createTheme({
           style: () => ({
             border: `solid 1px ${COLORS.grayMediumLight}`,
             backgroundColor: COLORS.grayMediumLight,
-            ':hover': {
+            ':hover, :focus-visible': {
               backgroundColor: COLORS.grayMediumLight,
             },
           }),
@@ -673,6 +673,10 @@ export const defaultTheme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: ({ theme }) => ({
+          '&:hover, &:focus-visible': {
+            color: COLORS.brandExtraDark,
+            backgroundColor: COLORS.grayLight,
+          },
           '&.Mui-selected': {
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.white,
@@ -723,7 +727,7 @@ export const defaultTheme = createTheme({
             svg: {
               color: COLORS.brandExtraDark,
             },
-            '&:hover': {
+            '&:hover, &:focus-visible': {
               background: COLORS.white,
             },
           }),

@@ -44,7 +44,7 @@ export const SelectNetworkButton = styled(Button, {
   borderColor: isSelectedNetwork ? COLORS.white : COLORS.brandDark,
   borderWidth: theme.spacing(1),
   color: COLORS.white,
-  '&:hover': {
+  '&:hover, &:focus-visible': {
     borderWidth: theme.spacing(1),
     borderColor: COLORS.white,
   },

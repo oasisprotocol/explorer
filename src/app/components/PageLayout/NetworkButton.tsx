@@ -60,7 +60,7 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
     padding: `0 ${theme.spacing(4)}`,
   },
 
-  '&:hover': {
+  '&:hover, &:focus-visible': {
     borderWidth: theme.spacing(1),
     color: COLORS.white,
     borderColor: theme.palette.layout.hoverBorder,
@@ -121,7 +121,7 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   height: '30px',
   padding: `0 ${theme.spacing(4)}`,
 
-  '&:hover': {
+  '&:hover, &:focus-visible': {
     backgroundColor: COLORS.white,
   },
 }))
