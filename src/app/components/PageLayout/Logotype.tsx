@@ -32,7 +32,7 @@ export const Logotype: FC<LogotypeProps> = ({ showText }) => {
     >
       <OasisIcon sx={{ fontSize: logoSize }} />
       {showTypography && (
-        <Typography variant="h1" color={theme.palette.layout.main}>
+        <Typography variant="h1" color={theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
           {t('pageTitle')}
         </Typography>
       )}

@@ -8,6 +8,7 @@ import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroup'
 import { LoadMoreButton } from '../app/components/LoadMoreButton'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { SelectNetworkButton } from '../app/pages/HomePage/Graph/NetworkSelector'
+import { NetworkButton } from '../app/components/PageLayout/NetworkButton'
 import WidgetsIcon from '@mui/icons-material/Widgets'
 
 export default {
@@ -33,7 +34,11 @@ const Template: StoryFn = () => {
       <GetStartedBtn>GetStartedBtn</GetStartedBtn>
       <ExploreBtn>ExploreBtn</ExploreBtn>
       <ZoomOutBtn>ZoomOutBtn</ZoomOutBtn>
+      <br />
+      <br />
+
       <SelectNetworkButton isSelectedNetwork={false}>SelectNetworkButton</SelectNetworkButton>
+      <NetworkButton layer="emerald" network="mainnet" />
 
       <br />
       <br />

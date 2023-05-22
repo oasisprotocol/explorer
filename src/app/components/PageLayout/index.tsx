@@ -23,15 +23,19 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       <BuildPreviewBanner />
       <Box
         sx={{
-          pt: 4,
-          px: isMobile ? 0 : '4%',
           border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,
           minHeight: '100vh',
         }}
       >
         <Header />
-        <StyledMain>{children}</StyledMain>
-        <Footer mobileSearchAction={mobileFooterAction} />
+        <Box
+          sx={{
+            px: isMobile ? 0 : '4%',
+          }}
+        >
+          <StyledMain>{children}</StyledMain>
+          <Footer mobileSearchAction={mobileFooterAction} />
+        </Box>
       </Box>
     </>
   )
