@@ -122,7 +122,9 @@
     }
   },
   "pageTitle": "Oasis Explorer",
-  "pageHeader": {},
+  "pageHeader": {
+    "ribbon": "You are viewing {{network}} data"
+  },
   "pagination": {
     "first": "First",
     "last": "Last"
