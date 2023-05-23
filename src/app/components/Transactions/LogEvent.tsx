@@ -15,7 +15,11 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
 import { Network } from '../../../types/network'
 
-const EvmEventParamData: FC<{ network: Network, layer: Layer; param: EvmEventParam }> = ({ network, layer, param }) => {
+const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventParam }> = ({
+  network,
+  layer,
+  param,
+}) => {
   /**
    * According to the API docs:
    *
@@ -25,11 +29,12 @@ const EvmEventParamData: FC<{ network: Network, layer: Layer; param: EvmEventPar
    * Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
    */
   switch (param.evm_type) {
+    // TODO: handle more EVM types
     case 'address':
       return <AccountLink network={network} address={param.value as string} layer={layer} />
     case 'uint256':
-      // TODO: how to properly display an uint255 value?
-      return <span>{(param.value as number).toLocaleString()}</span>
+      // TODO: format with BigNumber
+      return <span>{param.value as string}</span>
     default:
       return <span>{JSON.stringify(param.value, null, '  ')}</span>
   }
