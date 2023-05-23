@@ -5,6 +5,7 @@ import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
+import { menuItemClasses } from '@mui/material/MenuItem'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -736,6 +737,31 @@ export const defaultTheme = createTheme({
           }),
         },
       ],
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: COLORS.grayExtraDark,
+          [`&.${menuItemClasses.selected}`]: {
+            color: COLORS.brandDark,
+            backgroundColor: 'transparent',
+          },
+          [`&.${menuItemClasses.disabled}`]: {
+            color: COLORS.grayMedium,
+            opacity: 1,
+          },
+          '&:hover': {
+            color: COLORS.brandDark,
+          },
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+        },
+      },
     },
   },
 })
