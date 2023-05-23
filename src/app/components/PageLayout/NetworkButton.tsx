@@ -84,9 +84,10 @@ export const StyledBox = styled(Box)(({ theme }) => ({
 type NetworkButtonProps = {
   layer: Layer
   network: Network
+  onClick: () => void
 }
 
-export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network }) => {
+export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network, onClick }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
   const icons = getIcons()
@@ -98,6 +99,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network }) => {
       variant="outlined"
       startIcon={icons[network]}
       endIcon={<EditIcon />}
+      onClick={onClick}
     >
       <StyledBox>
         {labels[layer]}
@@ -126,12 +128,12 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-export const MobileNetworkButton: FC<NetworkButtonProps> = ({ layer }) => {
+export const MobileNetworkButton: FC<Omit<NetworkButtonProps, 'network'>> = ({ layer, onClick }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
 
   return (
-    <StyledMobileNetworkButton>
+    <StyledMobileNetworkButton onClick={onClick}>
       {labels[layer]}
       <Circle color={COLORS.eucalyptus} size={4}>
         <CheckIcon sx={{ fontSize: 15, color: COLORS.white }} />
