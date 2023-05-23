@@ -20,12 +20,21 @@ const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventPar
   layer,
   param,
 }) => {
+  /**
+   * According to the API docs:
+   *
+   * Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+   * Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+   * Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+   * Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
+   */
   switch (param.evm_type) {
+    // TODO: handle more EVM types
     case 'address':
       return <AccountLink network={network} address={param.value as string} layer={layer} />
     case 'uint256':
-      // TODO: how to properly display an uint255 value?
-      return <span>{(param.value as number).toLocaleString()}</span>
+      // TODO: format with BigNumber
+      return <span>{param.value as string}</span>
     default:
       return <span>{JSON.stringify(param.value, null, '  ')}</span>
   }

@@ -71,6 +71,7 @@
     "transactionsNumber_other": "{{ count }} transactions",
     "txnFee": "Txn Fee",
     "type": "Type",
+    "unknown": "Unknown",
     "value": "Value",
     "valueInRose": "{{value}} ROSE",
     "viewAll": "View all",
@@ -152,6 +153,11 @@
   "transactions": {
     "latest": "Latest Transactions",
     "method": {
+      "unavailable": "Malformed transaction, method unavailable",
+      "unknown": "Unknown: {{method}}",
+      "accounts": {
+        "transfer": "Transfer"
+      },
       "consensus": {
         "deposit": "Consensus Deposit",
         "withdraw": "Consensus Withdraw"

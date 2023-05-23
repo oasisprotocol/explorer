@@ -2,30 +2,41 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 
-enum RuntimeTransactionMethod {
-  Call = 'evm.Call',
-  Create = 'evm.Create',
-  Deposit = 'consensus.Deposit',
-  Withdraw = 'consensus.Withdraw',
-}
-
-const getRuntimeTransactionLabel = (t: TFunction, method: string) => {
+const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
-    case RuntimeTransactionMethod.Call:
+    case undefined:
+      // Method may be undefined if the transaction was malformed.
+      return t('transactions.method.unavailable')
+    case 'evm.Call':
       return t('transactions.method.evm.call')
-    case RuntimeTransactionMethod.Create:
+    case 'evm.Create':
       return t('transactions.method.evm.create')
-    case RuntimeTransactionMethod.Deposit:
+    case 'consensus.Deposit':
       return t('transactions.method.consensus.deposit')
-    case RuntimeTransactionMethod.Withdraw:
+    case 'consensus.Withdraw':
       return t('transactions.method.consensus.withdraw')
+    case 'accounts.Transfer':
+      return t('transactions.method.accounts.transfer')
     default:
-      return ''
+      return t('transactions.method.unknown', { method })
   }
 }
 
 type RuntimeTransactionLabelProps = {
-  method: string // RuntimeTransaction method type is not yet defined in API
+  /**
+   * The method call body. Defined by the runtime.
+   *
+   * May be undefined if the transaction was malformed.
+   *
+   * In theory, this could be any string as the runtimes evolve.
+   * In practice, the indexer currently expects only the following methods:
+   *   - "accounts.Transfer"
+   *   - "consensus.Deposit"
+   *   - "consensus.Withdraw"
+   *   - "evm.Create"
+   *   - "evm.Call"
+   */
+  method?: string
 }
 
 export const RuntimeTransactionLabel: FC<RuntimeTransactionLabelProps> = ({ method }) => {
