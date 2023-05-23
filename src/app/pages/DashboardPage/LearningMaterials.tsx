@@ -27,7 +27,7 @@ const StyledLink = styled(Link)(() => ({
   backgroundColor: COLORS.brandDark,
   color: COLORS.white,
   boxShadow: '0px 10px 8px rgba(117, 60, 239, 0.1)',
-  '&:hover': {
+  '&:hover, &:focus-visible': {
     backgroundColor: COLORS.cosmicCobalt,
   },
 }))

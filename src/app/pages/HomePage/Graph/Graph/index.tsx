@@ -57,13 +57,13 @@ const GraphStyled = styled('svg', {
   },
   [`ellipse[id=${Layer.consensus}-outer-circle]`]: {
     opacity: '0.25',
-    '&:hover': {
+    '&:hover, &:focus-visible': {
       opacity: '0.25',
     },
   },
   '[id]:not([aria-disabled="true"])': {
     cursor: 'pointer',
-    '&:hover': {
+    '&:hover, &:focus-visible': {
       opacity: '1',
     },
   },
