@@ -2,28 +2,20 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 
-enum RuntimeTransactionMethod {
-  Call = 'evm.Call',
-  Create = 'evm.Create',
-  Deposit = 'consensus.Deposit',
-  Withdraw = 'consensus.Withdraw',
-  Transfer = 'accounts.Transfer',
-}
-
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
     case undefined:
       // Method may be undefined if the transaction was malformed.
       return t('transactions.method.unavailable')
-    case RuntimeTransactionMethod.Call:
+    case 'evm.Call':
       return t('transactions.method.evm.call')
-    case RuntimeTransactionMethod.Create:
+    case 'evm.Create':
       return t('transactions.method.evm.create')
-    case RuntimeTransactionMethod.Deposit:
+    case 'consensus.Deposit':
       return t('transactions.method.consensus.deposit')
-    case RuntimeTransactionMethod.Withdraw:
+    case 'consensus.Withdraw':
       return t('transactions.method.consensus.withdraw')
-    case RuntimeTransactionMethod.Transfer:
+    case 'accounts.Transfer':
       return t('transactions.method.accounts.transfer')
     default:
       return t('transactions.method.unknown', { method })
