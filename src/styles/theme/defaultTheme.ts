@@ -210,6 +210,21 @@ export const defaultTheme = createTheme({
         containedSecondary: {
           textTransform: 'capitalize',
         },
+        textPrimary: {
+          color: COLORS.brandDark,
+          textTransform: 'capitalize',
+          '&&:hover, &&:focus-visible, &&:active': {
+            color: COLORS.brandExtraDark,
+            backgroundColor: 'transparent',
+            textDecoration: 'underline',
+          },
+        },
+        textSizeMedium: {
+          fontSize: '16px',
+        },
+        textSizeSmall: {
+          fontSize: '14px',
+        },
       },
       variants: [
         {

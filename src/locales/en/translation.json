@@ -206,6 +206,9 @@
     "header": "ParaTime Snapshot"
   },
   "paraTimePicker": {
+    "less": "Show Less",
+    "more": "Show More",
+    "selected": "(currently active)",
     "toggleNetworkMenu": "Toggle networks menu"
   },
   "home": {
