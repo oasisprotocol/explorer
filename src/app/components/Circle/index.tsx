@@ -12,4 +12,5 @@ export const Circle = styled(Box)<CircleProps>(({ color, size, theme }) => ({
   height: theme.spacing(size),
   backgroundColor: color,
   borderRadius: theme.spacing(size),
+  color: 'inherit',
 }))
