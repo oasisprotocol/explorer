@@ -2019,7 +2019,7 @@ optionator@^0.8.1:
     type-check "~0.3.2"
     word-wrap "~1.2.3"
 
-orval@6.16.0:
+orval@^6.16.0:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/orval/-/orval-6.16.0.tgz#8ab8782004c936f5ed9b39053756a7821701e1ea"
   integrity sha512-T04wzQr/pQaxpJoLvAnDeWlZCAnGuPteds/5bgGfN3qkx96k4QmmYHonO4N9xyUfxRVBdjWWc+LDxmO/jj/Apw==
