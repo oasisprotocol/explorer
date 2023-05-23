@@ -27,7 +27,7 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: '/search', // ?q=
+        path: '/:network/search', // ?q=
         element: <SearchResultsPage />,
         loader: searchParamLoader,
       },
@@ -81,10 +81,6 @@ export const routes: RouteObject[] = [
             loader: transactionParamLoader,
           },
         ],
-      },
-      {
-        path: `/blocks/:blockHeight`,
-        element: <BlockDetailPage />,
       },
     ],
   },

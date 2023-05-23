@@ -22,6 +22,8 @@ import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
 import { ResultsGroup } from './ResultsGroup'
+import { GlobalNetwork, Network, NetworkOrGlobal } from '../../../types/network'
+import { useNetworkParam } from '../../hooks/useNetworkParam'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -34,13 +36,26 @@ export type SearchQueries = {
   oasisAccount: ConditionalResults<RuntimeAccount>
   evmBech32Account: ConditionalResults<RuntimeAccount>
 }
-function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
+function useBlocksConditionally(
+  network: NetworkOrGlobal,
+  blockHeight: string | undefined,
+): ConditionalResults<RuntimeBlock> {
   const queries = [
-    useGetRuntimeBlockByHeight(Runtime.emerald, parseInt(blockHeight!), {
-      query: { enabled: !!blockHeight && RouteUtils.getEnabledLayers().includes(Runtime.emerald) },
+    useGetRuntimeBlockByHeight(network as Network, Runtime.emerald, parseInt(blockHeight!), {
+      query: {
+        enabled:
+          !!blockHeight &&
+          RouteUtils.getEnabledLayers().includes(Runtime.emerald) &&
+          network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
-    useGetRuntimeBlockByHeight(Runtime.sapphire, parseInt(blockHeight!), {
-      query: { enabled: !!blockHeight && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) },
+    useGetRuntimeBlockByHeight(network as Network, Runtime.sapphire, parseInt(blockHeight!), {
+      query: {
+        enabled:
+          !!blockHeight &&
+          RouteUtils.getEnabledLayers().includes(Runtime.sapphire) &&
+          network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
   ]
   return {
@@ -48,13 +63,22 @@ function useBlocksConditionally(blockHeight: string | undefined): ConditionalRes
     results: queries.map(query => query.data?.data).filter(isDefined),
   }
 }
-function useTransactionsConditionally(txHash: string | undefined): ConditionalResults<RuntimeTransaction> {
+function useTransactionsConditionally(
+  network: NetworkOrGlobal,
+  txHash: string | undefined,
+): ConditionalResults<RuntimeTransaction> {
   const queries = [
-    useGetRuntimeTransactionsTxHash(Runtime.emerald, txHash!, {
-      query: { enabled: !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.emerald) },
+    useGetRuntimeTransactionsTxHash(network as Network, Runtime.emerald, txHash!, {
+      query: {
+        enabled:
+          !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.emerald) && network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
-    useGetRuntimeTransactionsTxHash(Runtime.sapphire, txHash!, {
-      query: { enabled: !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) },
+    useGetRuntimeTransactionsTxHash(network as Network, Runtime.sapphire, txHash!, {
+      query: {
+        enabled:
+          !!txHash && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) && network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
   ]
   return {
@@ -62,13 +86,22 @@ function useTransactionsConditionally(txHash: string | undefined): ConditionalRe
     results: queries.flatMap(query => query.data?.data.transactions).filter(isDefined),
   }
 }
-function useRuntimeAccountConditionally(address: string | undefined): ConditionalResults<RuntimeAccount> {
+function useRuntimeAccountConditionally(
+  network: NetworkOrGlobal,
+  address: string | undefined,
+): ConditionalResults<RuntimeAccount> {
   const queries = [
-    useGetRuntimeAccountsAddress(Runtime.emerald, address!, {
-      query: { enabled: !!address && RouteUtils.getEnabledLayers().includes(Runtime.emerald) },
+    useGetRuntimeAccountsAddress(network as Network, Runtime.emerald, address!, {
+      query: {
+        enabled:
+          !!address && RouteUtils.getEnabledLayers().includes(Runtime.emerald) && network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
-    useGetRuntimeAccountsAddress(Runtime.sapphire, address!, {
-      query: { enabled: !!address && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) },
+    useGetRuntimeAccountsAddress(network as Network, Runtime.sapphire, address!, {
+      query: {
+        enabled:
+          !!address && RouteUtils.getEnabledLayers().includes(Runtime.sapphire) && network !== GlobalNetwork, // TODO: enable global search
+      },
     }),
   ]
   return {
@@ -80,24 +113,28 @@ function useRuntimeAccountConditionally(address: string | undefined): Conditiona
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
   const rosePriceQuery = useGetRosePrice()
+  const network = useNetworkParam()
   const searchQueries: SearchQueries = {
-    blockHeight: useBlocksConditionally(q.blockHeight),
+    blockHeight: useBlocksConditionally(network, q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
-    txHash: useTransactionsConditionally(q.txHash),
-    oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
+    txHash: useTransactionsConditionally(network, q.txHash),
+    oasisAccount: useRuntimeAccountConditionally(network, q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
-    evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
+    evmBech32Account: useRuntimeAccountConditionally(network, q.evmBech32Account),
   }
 
   useRedirectIfSingleResult(searchQueries)
 
-  return <SearchResultsView searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data} />
+  return (
+    <SearchResultsView network={network} searchQueries={searchQueries} roseFiatValue={rosePriceQuery.data} />
+  )
 }
 
 export const SearchResultsView: FC<{
+  network: NetworkOrGlobal
   searchQueries: SearchQueries
   roseFiatValue: number | undefined
-}> = ({ searchQueries, roseFiatValue }) => {
+}> = ({ network, searchQueries, roseFiatValue }) => {
   const { t } = useTranslation()
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
   const hasNoResults = !isAnyLoading && Object.values(searchQueries).every(query => query.results.length <= 0)
@@ -111,7 +148,7 @@ export const SearchResultsView: FC<{
         </SubPageCard>
       )}
 
-      {hasNoResults && <NoResults />}
+      {hasNoResults && <NoResults network={network} />}
 
       {!isAnyLoading && (
         <>

@@ -11,18 +11,20 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestTransactions: FC = () => {
   const { t } = useTranslation()
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus transactions is not yet supported.
     // We should use useGetConsensusTransactions()
   }
-  const transactionsQuery = useGetRuntimeTransactions(layer, { limit })
+  const transactionsQuery = useGetRuntimeTransactions(network, layer, { limit })
 
   return (
     <Card>

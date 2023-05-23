@@ -10,10 +10,12 @@ import { Layer, RuntimeAccount, useGetRuntimeAccountsAddress } from '../../../oa
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { accountTokenContainerId } from './TokensCard'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -21,7 +23,7 @@ export const AccountDetailsPage: FC = () => {
     // We should use useGetConsensusAccountsAddress()
   }
   const address = useLoaderData() as string
-  const accountQuery = useGetRuntimeAccountsAddress(layer, address)
+  const accountQuery = useGetRuntimeAccountsAddress(network, layer, address)
   const account = accountQuery.data?.data
   const rosePriceQuery = useGetRosePrice()
 

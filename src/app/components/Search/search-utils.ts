@@ -7,6 +7,9 @@ import {
   isValidEthAddress,
   getEvmBech32Address,
 } from '../../utils/helpers'
+import { GlobalNetwork, Network } from '../../../types/network'
+import { RouteUtils } from '../../utils/route-utils'
+import { AppError, AppErrors } from '../../../types/errors'
 
 export const searchSuggestionTerms = {
   suggestedTransaction: 'b1e68ca814d913064bd6b9460efcb64b4c6d07f3b98fa659beed46164398a830',
@@ -60,7 +63,15 @@ export function isSearchValid(searchTerm: string) {
   return Object.values(validateAndNormalize).some(fn => !!fn(searchTerm))
 }
 
-export const searchParamLoader = async ({ request }: LoaderFunctionArgs) => {
+export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs) => {
+  const { network } = params
+  if (
+    !network ||
+    (network !== GlobalNetwork && !RouteUtils.getEnabledNetworks().includes(network as Network))
+  ) {
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
   const searchTerm = new URL(request.url).searchParams.get('q')?.trim() ?? ''
   const normalized = Object.fromEntries(
     Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(searchTerm)]),

@@ -87,6 +87,7 @@
     "error": "Error",
     "unknown": "Unknown error",
     "unsupportedLayer": "Unsupported layer",
+    "unsupportedNetwork": "Unsupported network",
     "invalidAddress": "Invalid address",
     "invalidBlockHeight": "Invalid block height",
     "invalidPageNumber": "Invalid page number",

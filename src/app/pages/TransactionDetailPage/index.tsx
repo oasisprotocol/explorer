@@ -27,6 +27,7 @@ import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -80,6 +81,7 @@ const ErrorBox = styled(Box)(() => ({
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (layer === Layer.consensus) {
@@ -91,6 +93,7 @@ export const TransactionDetailPage: FC = () => {
   const hash = useParams().hash!
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
+    network,
     layer, // This is OK since consensus has been handled separately
     hash,
   )

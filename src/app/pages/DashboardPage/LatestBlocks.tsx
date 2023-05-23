@@ -11,18 +11,20 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestBlocks: FC = () => {
   const { t } = useTranslation()
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus blocks is not yet implemented.
     // We should use useGetConsensusBlocks()
   }
-  const blocksQuery = useGetRuntimeBlocks(layer, { limit })
+  const blocksQuery = useGetRuntimeBlocks(network, layer, { limit })
 
   return (
     <Card>

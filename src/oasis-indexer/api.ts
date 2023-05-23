@@ -1,6 +1,6 @@
 /** @file Wrappers around generated API */
 
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
@@ -11,6 +11,10 @@ import { Network } from '../types/network'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
+
+export interface HasNetwork {
+  network: Network
+}
 
 declare module './generated/api' {
   export interface Transaction {
@@ -40,6 +44,36 @@ declare module './generated/api' {
   }
 }
 
+function wrapWithNetwork<P extends Array<any>, Q>(f: (...args: P) => Q): (net: Network, ...args: P) => Q {
+  return (net, ...args) => {
+    console.log('Should use', net)
+    return f(...args)
+  }
+}
+
+const baseUrlOverrides: Record<Network, string> = {
+  mainnet: process.env.REACT_APP_API!, // This is just here for the sake of completeness, since the default URL is already specified for Axios elsewhere.
+  testnet: process.env.REACT_APP_TESTNET_API!,
+}
+
+Object.keys(baseUrlOverrides).forEach(net => {
+  const url = baseUrlOverrides[net as Network]
+  if (!url) {
+    console.warn(
+      `URL for ${net} is not specified in config! Data from this network won't ba available. (See env.REACT_APP_*)`,
+    )
+  }
+})
+
+const getBaseUrlParamFor = (network: Network): Partial<AxiosRequestConfig<any>> => {
+  const override = baseUrlOverrides[network]
+  return override
+    ? { baseURL: override }
+    : {
+        // No override means that the default one (already specified for Axios) will suffice.
+      }
+}
+
 function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
   const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
   if (value.isNaN()) {
@@ -54,14 +88,18 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
-export const useGetConsensusTransactions: typeof generated.useGetConsensusTransactions = (
-  params?,
-  options?,
-) => {
+const _f1 = wrapWithNetwork(generated.useGetConsensusTransactions)
+
+export const useGetConsensusTransactions: typeof _f1 = (network, params?, options?) => {
   return generated.useGetConsensusTransactions(params, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/consensus/transactions`, ...(params ? [params] : [])],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.TransactionList, headers, status) => {
@@ -71,7 +109,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
                 layer: Layer.consensus,
               }
             }),
@@ -83,15 +121,18 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
   })
 }
 
-export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
-  runtime,
-  params?,
-  options?,
-) => {
+const _f2 = wrapWithNetwork(generated.useGetRuntimeTransactions)
+
+export const useGetRuntimeTransactions: typeof _f2 = (network, runtime, params?, options?) => {
   return generated.useGetRuntimeTransactions(runtime, params, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/${runtime}/transactions`, ...(params ? [params] : [])],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeTransactionList, headers, status) => {
@@ -105,7 +146,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
               }
             }),
           }
@@ -116,14 +157,18 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   })
 }
 
-export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensusTransactionsTxHash = (
-  txHash,
-  options?,
-) => {
+const _f3 = wrapWithNetwork(generated.useGetConsensusTransactionsTxHash)
+
+export const useGetConsensusTransactionsTxHash: typeof _f3 = (network, txHash, options?) => {
   return generated.useGetConsensusTransactionsTxHash(txHash, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/consensus/transactions/${txHash}`],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.TransactionList, headers, status) => {
@@ -134,7 +179,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
               return {
                 ...tx,
                 layer: Layer.consensus,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
               }
             }),
           }
@@ -145,17 +190,20 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
   })
 }
 
-export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTransactionsTxHash = (
-  runtime,
-  txHash,
-  options?,
-) => {
+const _f5 = wrapWithNetwork(generated.useGetRuntimeTransactionsTxHash)
+
+export const useGetRuntimeTransactionsTxHash: typeof _f5 = (network, runtime, txHash, options?) => {
   // Sometimes we will call this with an undefined txHash, so we must be careful here.
   const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
   return generated.useGetRuntimeTransactionsTxHash(runtime, actualHash, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/${runtime}/transactions/${actualHash}`],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeTransactionList, headers, status) => {
@@ -169,7 +217,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
               }
             }),
           }
@@ -180,14 +228,18 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
   })
 }
 
-export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAccountsAddress = (
-  address,
-  options?,
-) => {
+const _f6 = wrapWithNetwork(generated.useGetConsensusAccountsAddress)
+
+export const useGetConsensusAccountsAddress: typeof _f6 = (network, address, options?) => {
   return generated.useGetConsensusAccountsAddress(address, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`${network}/consensus/accounts/${address}`],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.Account, headers, status) => {
@@ -195,7 +247,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
           return {
             ...data,
             layer: Layer.consensus,
-            network: Network.mainnet, // TODO: replace with actual value
+            network,
           }
         },
         ...arrayify(options?.axios?.transformResponse),
@@ -204,15 +256,18 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
   })
 }
 
-export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccountsAddress = (
-  runtime,
-  address,
-  options?,
-) => {
+const _f7 = wrapWithNetwork(generated.useGetRuntimeAccountsAddress)
+
+export const useGetRuntimeAccountsAddress: typeof _f7 = (network, runtime, address, options?) => {
   return generated.useGetRuntimeAccountsAddress(runtime, address, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/${runtime}/accounts/${address}`],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeAccount, headers, status) => {
@@ -233,7 +288,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
               }
             }),
             layer: runtime,
-            network: Network.mainnet, // TODO: replace with actual value
+            network,
             stats: {
               ...data.stats,
               total_received: data.stats?.total_received
@@ -252,12 +307,18 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 }
 
 export function useGetConsensusBlockByHeight(
+  network: Network,
   blockHeight: number,
   options?: { query?: UseQueryOptions<any, any> },
 ) {
   const result = generated.useGetConsensusBlocksHeight<AxiosResponse<generated.Block, any>>(blockHeight, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/consensus/blocks/${blockHeight}`],
+    },
     axios: {
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (block: generated.Block, headers, status) => {
@@ -265,7 +326,7 @@ export function useGetConsensusBlockByHeight(
           return {
             ...block,
             layer: Layer.consensus,
-            network: Network.mainnet, // TODO: replace with actual value
+            network,
           }
         },
       ],
@@ -276,48 +337,58 @@ export function useGetConsensusBlockByHeight(
 
 // TODO: replace with an appropriate API
 export function useGetRuntimeBlockByHeight(
+  network: Network,
   runtime: generated.Runtime,
   blockHeight: number,
   options?: { query?: UseQueryOptions<any, any> },
 ) {
-  const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(
-    runtime,
-    { to: blockHeight, limit: 1 },
-    {
-      ...options,
-      axios: {
-        transformResponse: [
-          ...arrayify(axios.defaults.transformResponse),
-          function (data: generated.RuntimeBlockList, headers, status) {
-            if (status !== 200) return data
-            const block = data.blocks[0]
-            if (!block || block.round !== blockHeight) {
-              throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
-                status: 404,
-                statusText: 'not found',
-                config: this,
-                data: 'not found',
-                headers: {},
-              })
-            }
-            return {
-              ...block,
-              layer: runtime,
-              network: Network.mainnet, // TODO: replace with actual value
-            }
-          },
-        ],
-      },
+  const params: generated.GetRuntimeBlocksParams = { to: blockHeight, limit: 1 }
+  const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(runtime, params, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/${runtime}/blocks`, params],
     },
-  )
+    axios: {
+      ...getBaseUrlParamFor(network),
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        function (data: generated.RuntimeBlockList, headers, status) {
+          if (status !== 200) return data
+          const block = data.blocks[0]
+          if (!block || block.round !== blockHeight) {
+            throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
+              status: 404,
+              statusText: 'not found',
+              config: this,
+              data: 'not found',
+              headers: {},
+            })
+          }
+          return {
+            ...block,
+            layer: runtime,
+            network,
+          }
+        },
+      ],
+    },
+  })
   return result
 }
 
-export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (params, options) => {
+const _f8 = wrapWithNetwork(generated.useGetConsensusBlocks)
+
+export const useGetConsensusBlocks: typeof _f8 = (network, params, options) => {
   return generated.useGetConsensusBlocks(params, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/consensus/blocks`, ...(params ? [params] : [])],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.BlockList, headers, status) => {
@@ -328,7 +399,7 @@ export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (pa
               return {
                 ...block,
                 layer: Layer.consensus,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
               }
             }),
           }
@@ -339,11 +410,18 @@ export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (pa
   })
 }
 
-export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtime, params, options) => {
+const _f9 = wrapWithNetwork(generated.useGetRuntimeBlocks)
+
+export const useGetRuntimeBlocks: typeof _f9 = (network, runtime, params, options) => {
   return generated.useGetRuntimeBlocks(runtime, params, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [`/${network}/${runtime}/blocks`, ...(params ? [params] : [])],
+    },
     axios: {
       ...options?.axios,
+      ...getBaseUrlParamFor(network),
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeBlockList, headers, status) => {
@@ -354,7 +432,7 @@ export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (runtim
               return {
                 ...block,
                 layer: runtime,
-                network: Network.mainnet, // TODO: replace with actual value
+                network,
               }
             }),
           }

@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
+import { NetworkOrGlobal } from '../../../types/network'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -19,10 +20,11 @@ const FooterBox = styled(Box)(({ theme }) => ({
 }))
 
 interface FooterProps {
+  network: NetworkOrGlobal
   mobileSearchAction?: ReactNode
 }
 
-export const Footer: FC<FooterProps> = ({ mobileSearchAction }) => {
+export const Footer: FC<FooterProps> = ({ network, mobileSearchAction }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -33,7 +35,7 @@ export const Footer: FC<FooterProps> = ({ mobileSearchAction }) => {
     <footer>
       <FooterBox>
         {isTablet ? (
-          <AppendMobileSearch action={isMobile && mobileSearchAction}>
+          <AppendMobileSearch network={network} action={isMobile && mobileSearchAction}>
             <Typography variant="footer">
               {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>
