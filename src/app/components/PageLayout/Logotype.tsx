@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
 interface LogotypeProps {
+  color?: string
   showText?: true
 }
 
-export const Logotype: FC<LogotypeProps> = ({ showText }) => {
+export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -27,12 +28,12 @@ export const Logotype: FC<LogotypeProps> = ({ showText }) => {
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
-        color: theme.palette.layout.main,
+        color: color || theme.palette.layout.main,
       }}
     >
       <OasisIcon sx={{ fontSize: logoSize }} />
       {showTypography && (
-        <Typography variant="h1" color={theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
+        <Typography variant="h1" color={color || theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
           {t('pageTitle')}
         </Typography>
       )}
