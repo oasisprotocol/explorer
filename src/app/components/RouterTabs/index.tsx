@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useLocation, matchPath, Link as RouterLink, Outlet } from 'react-router-dom'
+import { useLocation, Link as RouterLink, Outlet } from 'react-router-dom'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
@@ -10,9 +10,13 @@ type RouterTabsProps = {
   }[]
 }
 
+function getPathname(tab: { to: string }) {
+  return new URL(tab.to, 'https://a.b').pathname
+}
+
 export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
   const { pathname } = useLocation()
-  const currentTab = tabs.find(tab => matchPath(tab.to, pathname))
+  const currentTab = tabs.find(tab => getPathname(tab) === pathname)
 
   return (
     <>
