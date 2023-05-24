@@ -3,30 +3,24 @@ import { Link as RouterLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 
-import { Layer } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { TrimLinkLabel } from '../TrimLinkLabel'
-import { Network } from '../../../types/network'
+import { SearchScope } from '../../../types/searchScope'
 
-export const BlockLink: FC<{ network: Network; layer: Layer; height: number }> = ({
-  network,
-  layer,
-  height,
-}) => (
+export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
   <Typography variant="mono">
-    <Link component={RouterLink} to={RouteUtils.getBlockRoute(network, height, layer)}>
+    <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>
       {height.toLocaleString()}
     </Link>
   </Typography>
 )
 
-export const BlockHashLink: FC<{ network: Network; layer: Layer; hash: string; height: number }> = ({
-  network,
-  layer,
+export const BlockHashLink: FC<{ scope: SearchScope; hash: string; height: number }> = ({
+  scope,
   hash,
   height,
 }) => (
   <Typography variant="mono">
-    <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(network, height, layer)} />
+    <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(scope, height)} />
   </Typography>
 )

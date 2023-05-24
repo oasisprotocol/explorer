@@ -54,7 +54,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
       return
     }
 
-    navigate(RouteUtils.getDashboardRoute(network, layer))
+    navigate(RouteUtils.getDashboardRoute({ network, layer }))
   }
 
   return (

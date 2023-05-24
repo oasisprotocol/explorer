@@ -60,9 +60,8 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
 
   const transactionsAnchor = account
     ? `${RouteUtils.getAccountRoute(
-        account.network,
+        account,
         account.address_eth ?? account.address,
-        account.layer,
       )}#${accountTransactionsContainerId}`
     : undefined
 
@@ -81,7 +80,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
             <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
           </StyledAvatarContainer>
           <dd>
-            <AccountLink network={account.network} address={address!} layer={account.layer} />
+            <AccountLink scope={account} address={address!} />
             <CopyToClipboard value={address!} />
           </dd>
 

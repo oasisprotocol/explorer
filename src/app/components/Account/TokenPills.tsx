@@ -43,9 +43,8 @@ type PillProps = {
 
 export const Pill: FC<PillProps> = ({ account, pill }) => {
   const tokenRoute = RouteUtils.getAccountTokensRoute(
-    account.network,
+    account,
     account.address_eth ?? account.address,
-    account.layer,
     pill.token_type!,
     pill.token_contract_addr,
   )

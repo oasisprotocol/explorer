@@ -14,7 +14,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
-import { useNetworkParam } from '../../hooks/useNetworkParam'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -24,7 +24,7 @@ export const ParaTimeSnapshot: FC = () => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
-  const network = useNetworkParam()
+  const scope = useScopeParam()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
@@ -39,7 +39,7 @@ export const ParaTimeSnapshot: FC = () => {
     <>
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
-          <AppendMobileSearch network={network}>
+          <AppendMobileSearch scope={scope}>
             <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
               <Typography
                 variant="h3"

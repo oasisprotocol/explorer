@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import { styled } from '@mui/material/styles'
-import { SubPageCard } from '../../components/SubPageCard'
+import Typography from '@mui/material/Typography'
 
 interface Props<T> {
   title: string
@@ -38,13 +38,10 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
   }
 
   return (
-    <SubPageCard
-      featured
-      title={title}
-      subheader={t('search.results.count', {
-        count: results.length,
-      })}
-    >
+    <>
+      <Typography variant="h3" component="h3" sx={{ display: 'inline' }}>
+        {title}
+      </Typography>
       {results.map((item, i) => (
         <div key={i}>
           {resultComponent(item)}
@@ -56,6 +53,6 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
           {i < results.length - 1 && <Divider variant="card" />}
         </div>
       ))}
-    </SubPageCard>
+    </>
   )
 }

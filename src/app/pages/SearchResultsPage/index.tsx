@@ -2,29 +2,32 @@ import React, { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
 import { useParamSearch } from '../../components/Search/search-utils'
-import { HasNetwork } from '../../../oasis-indexer/api'
+import { HasScope } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
-import { Network } from '../../../types/network'
-import { useNetworkParam } from '../../hooks/useNetworkParam'
-import { ResultsOnNetwork } from './ResultsOnNetwork'
+import { ResultsInScope } from './ResultsInScope'
 import {
   SearchQueries,
   useBlocksConditionally,
   useRuntimeAccountConditionally,
   useTransactionsConditionally,
 } from './hooks'
-import { ResultsOnForeignNetworkThemed } from './ResultsOnForeignNetworkThemed'
-import { ResultsOnNetworkThemed } from './ResultsOnNetworkThemed'
+import { ResultsElsewhere } from './ResultsElsewhere'
+import { ResultsInScopeThemed } from './ResultsInScopeThemed'
+import { getKeyForScope, getNameForScope, getScopeForKey, SearchScope } from '../../../types/searchScope'
+import { useScopeParam } from '../../hooks/useScopeParam'
+import { useTranslation } from 'react-i18next'
+import { ResultListFrame } from './ResultsInNetworkThemed'
+import { getThemesForNetworks } from '../../../styles/theme'
 
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
   const rosePriceQuery = useGetRosePrice()
-  const network = useNetworkParam()
+  const scope = useScopeParam()
   const searchQueries: SearchQueries = {
     blockHeight: useBlocksConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
@@ -34,11 +37,11 @@ export const SearchResultsPage: FC = () => {
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
   }
 
-  useRedirectIfSingleResult(network, searchQueries)
+  useRedirectIfSingleResult(scope, searchQueries)
 
   return (
     <SearchResultsView
-      wantedNetwork={network}
+      wantedScope={scope}
       searchQueries={searchQueries}
       roseFiatValue={rosePriceQuery.data}
     />
@@ -46,28 +49,27 @@ export const SearchResultsPage: FC = () => {
 }
 
 export const SearchResultsView: FC<{
-  wantedNetwork?: Network
+  wantedScope?: SearchScope
   searchQueries: SearchQueries
   roseFiatValue: number | undefined
-}> = ({ wantedNetwork, searchQueries, roseFiatValue }) => {
+}> = ({ wantedScope, searchQueries, roseFiatValue }) => {
+  const { t } = useTranslation()
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
-  const allResults = Object.values(searchQueries).flatMap<HasNetwork>(query => query.results ?? [])
+  const allResults = Object.values(searchQueries).flatMap<HasScope>(query => query.results ?? [])
 
-  const allNetworks = RouteUtils.getEnabledNetworks()
+  const allScopes = RouteUtils.getEnabledSearchScopes().map(getKeyForScope)
 
-  const resultsInNetworks: Record<Network, number> = {} as any
+  const resultsInScopes: Record<string, number> = {} as any
 
   if (!isAnyLoading) {
-    allNetworks.forEach(net => (resultsInNetworks[net] = 0))
-    allResults.forEach(result => resultsInNetworks[result.network]++)
+    allScopes.forEach(key => (resultsInScopes[key] = 0))
+    allResults.forEach(result => resultsInScopes[getKeyForScope(result)]++)
   }
 
-  const matchingNetworkList = allNetworks.filter(net => !!resultsInNetworks[net])
-
-  const isGlobal = !wantedNetwork
+  const isGlobal = !wantedScope
 
   const hasNoResultsWhatsoever = allResults.length === 0
-  const hasNoResultsOnWantedNetwork = !isGlobal && resultsInNetworks[wantedNetwork] === 0
+  const hasNoResultsInWantedScope = !isGlobal && resultsInScopes[getKeyForScope(wantedScope)] === 0
 
   return (
     <PageLayout>
@@ -78,42 +80,39 @@ export const SearchResultsView: FC<{
         </SubPageCard>
       )}
 
-      {!isGlobal && !isAnyLoading && hasNoResultsOnWantedNetwork && <NoResults network={wantedNetwork} />}
-      {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults network={wantedNetwork} />}
+      {!isGlobal && !isAnyLoading && hasNoResultsInWantedScope && <NoResults scope={wantedScope} />}
+      {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults scope={wantedScope} />}
 
-      {!isGlobal && !isAnyLoading && !hasNoResultsOnWantedNetwork && (
-        <>
-          <ResultsOnNetwork
-            network={wantedNetwork}
-            searchQueries={searchQueries}
-            roseFiatValue={roseFiatValue}
-          />
-        </>
+      {!isGlobal && !isAnyLoading && !hasNoResultsInWantedScope && (
+        <ResultListFrame theme={getThemesForNetworks()[wantedScope.network]}>
+          <SubPageCard
+            title={getNameForScope(t, wantedScope)}
+            subheader={t('search.results.count', {
+              count: resultsInScopes[getKeyForScope(wantedScope)],
+            })}
+          >
+            <ResultsInScope scope={wantedScope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
+          </SubPageCard>
+        </ResultListFrame>
       )}
-      {!isGlobal &&
-        !isAnyLoading &&
-        matchingNetworkList
-          .filter(net => net !== wantedNetwork)
-          .map(net => (
-            <ResultsOnForeignNetworkThemed
-              key={net}
-              network={net}
-              searchQueries={searchQueries}
-              numberOfResults={resultsInNetworks[net]}
-              roseFiatValue={roseFiatValue}
-              openByDefault={net === Network.mainnet && !hasNoResultsOnWantedNetwork}
-              alsoHasLocalResults={!hasNoResultsOnWantedNetwork}
-            />
-          ))}
+      {!isGlobal && !isAnyLoading && (
+        <ResultsElsewhere
+          wantedScope={wantedScope}
+          resultsInScopes={resultsInScopes}
+          searchQueries={searchQueries}
+          roseFiatValue={roseFiatValue}
+        />
+      )}
 
       {isGlobal &&
         !isAnyLoading &&
-        allNetworks
-          .filter(net => resultsInNetworks[net])
-          .map(net => (
-            <ResultsOnNetworkThemed
-              key={net}
-              network={net}
+        allScopes
+          .filter(scopeKey => resultsInScopes[scopeKey])
+          .map(getScopeForKey)
+          .map(scope => (
+            <ResultsInScopeThemed
+              key={scope.key}
+              scope={scope}
               searchQueries={searchQueries}
               roseFiatValue={roseFiatValue}
             />

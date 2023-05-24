@@ -13,16 +13,15 @@ import {
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
-  layerLoader,
-  networkLoader,
+  scopeLoader,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
-import { useSafeNetworkParam } from './app/hooks/useNetworkParam'
+import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 
 const NetworkSpecificPart = () => (
-  <ThemeByNetwork network={useSafeNetworkParam()}>
+  <ThemeByNetwork network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByNetwork>
 )
@@ -41,65 +40,60 @@ export const routes: RouteObject[] = [
         loader: searchParamLoader,
       },
       {
-        path: '/:network',
+        path: '/:network/:layer',
         element: <NetworkSpecificPart />,
-        loader: networkLoader,
+        errorElement: <RoutingErrorPage />,
+        loader: scopeLoader,
         children: [
           {
-            path: 'search', // Search on this network
+            path: '',
+            element: <DashboardPage />,
+          },
+          {
+            path: 'search', // Search within this scope
             element: <SearchResultsPage />,
             loader: searchParamLoader,
           },
+
           {
-            path: `:layer`,
-            loader: layerLoader,
-            errorElement: <RoutingErrorPage />,
+            path: `blocks`,
+            element: <BlocksPage />,
+          },
+          {
+            path: `blocks/:blockHeight`,
+            element: <BlockDetailPage />,
+            loader: blockHeightParamLoader,
+          },
+          {
+            path: `account/:address`,
+            element: <AccountDetailsPage />,
+            loader: addressParamLoader,
             children: [
               {
                 path: '',
-                element: <DashboardPage />,
-              },
-              {
-                path: `blocks`,
-                element: <BlocksPage />,
-              },
-              {
-                path: `blocks/:blockHeight`,
-                element: <BlockDetailPage />,
-                loader: blockHeightParamLoader,
-              },
-              {
-                path: `account/:address`,
-                element: <AccountDetailsPage />,
+                element: <TransactionsCard />,
                 loader: addressParamLoader,
-                children: [
-                  {
-                    path: '',
-                    element: <TransactionsCard />,
-                    loader: addressParamLoader,
-                  },
-                  {
-                    path: 'tokens/erc-20',
-                    element: <TokensCard type="ERC20" />,
-                    loader: addressParamLoader,
-                  },
-                  {
-                    path: 'tokens/erc-721',
-                    element: <TokensCard type="ERC721" />,
-                    loader: addressParamLoader,
-                  },
-                ],
               },
               {
-                path: `transactions`,
-                element: <TransactionsPage />,
+                path: 'tokens/erc-20',
+                element: <TokensCard type="ERC20" />,
+                loader: addressParamLoader,
               },
               {
-                path: `transactions/:hash`,
-                element: <TransactionDetailPage />,
-                loader: transactionParamLoader,
+                path: 'tokens/erc-721',
+                element: <TokensCard type="ERC721" />,
+                loader: addressParamLoader,
               },
             ],
+          },
+          {
+            path: `transactions`,
+            element: <TransactionsPage />,
+          },
+          {
+            path: `transactions/:hash`,
+            element: <TransactionDetailPage />,
+            loader: transactionParamLoader,
           },
         ],
       },

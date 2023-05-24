@@ -15,24 +15,21 @@ import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
 import { transactionsContainerId } from './TransactionsCard'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
-  if (layer === Layer.consensus) {
+  const scope = useRequiredScopeParam()
+  if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
-    // Loading the details of consensus blocks is not yet supported.
     // We should use useGetConsensusBlocksHeight()
   }
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetRuntimeBlockByHeight(
-    network,
-    layer, // This is OK, since consensus is already handled separately
+    scope.network,
+    scope.layer, // This is OK, since consensus is already handled separately
     blockHeight,
   )
   if (!data && !isLoading) {
@@ -45,7 +42,7 @@ export const BlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')}>
         <BlockDetailView isLoading={isLoading} block={block} />
       </SubPageCard>
-      <TransactionsCard network={network} layer={layer} blockHeight={blockHeight} />
+      <TransactionsCard scope={scope} blockHeight={blockHeight} />
     </PageLayout>
   )
 }
@@ -68,11 +65,7 @@ export const BlockDetailView: FC<{
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (!block) return <></>
 
-  const transactionsAnchor = `${RouteUtils.getBlockRoute(
-    block.network,
-    block.round,
-    block.layer,
-  )}#${transactionsContainerId}`
+  const transactionsAnchor = `${RouteUtils.getBlockRoute(block, block.round)}#${transactionsContainerId}`
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
@@ -89,13 +82,13 @@ export const BlockDetailView: FC<{
       )}
       <dt>{t('common.height')}</dt>
       <dd>
-        <BlockLink network={block.network} height={block.round} layer={block.layer} />
+        <BlockLink scope={block} height={block.round} />
         <CopyToClipboard value={block.round.toString()} />
       </dd>
 
       <dt>{t('common.hash')}</dt>
       <dd>
-        <BlockHashLink network={block.network} hash={block.hash} height={block.round} layer={block.layer} />
+        <BlockHashLink scope={block} hash={block.hash} height={block.round} />
         <CopyToClipboard value={block.hash.toString()} />
       </dd>
 

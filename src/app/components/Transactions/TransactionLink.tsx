@@ -1,23 +1,21 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Layer } from '../../../oasis-indexer/api'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
-import { Network } from '../../../types/network'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TransactionLink: FC<{ alwaysTrim?: boolean; network: Network; layer: Layer; hash: string }> = ({
+export const TransactionLink: FC<{ alwaysTrim?: boolean; scope: SearchScope; hash: string }> = ({
   alwaysTrim,
   hash,
-  network,
-  layer,
+  scope,
 }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const to = RouteUtils.getTransactionRoute(network, hash, layer)
+  const to = RouteUtils.getTransactionRoute(scope, hash)
 
   return (
     <Typography variant="mono">

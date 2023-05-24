@@ -14,7 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
-import { useLayerParam } from '../../hooks/useLayerParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -78,7 +78,7 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
 
 export const LearningMaterials = () => {
   const { t } = useTranslation()
-  const layer = useLayerParam()
+  const { layer } = useRequiredScopeParam()
   const content = getContent(t, layer)
 
   return (

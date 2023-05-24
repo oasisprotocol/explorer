@@ -242,7 +242,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, 
       return
     }
 
-    navigate(RouteUtils.getDashboardRoute(network, layer))
+    navigate(RouteUtils.getDashboardRoute({ network, layer }))
   }
 
   return (

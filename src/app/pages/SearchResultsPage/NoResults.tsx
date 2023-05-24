@@ -7,14 +7,14 @@ import Link from '@mui/material/Link'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
-import { getNetworkNames, Network } from '../../../types/network'
+import { getNameForScope, SearchScope } from '../../../types/searchScope'
 
-export const NoResults: FC<{ network?: Network }> = ({ network }) => {
+export const NoResults: FC<{ scope?: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const title = !network
+  const title = !scope
     ? t('search.noResults.header')
-    : t('search.noResults.networkHeader', { network: getNetworkNames(t)[network] })
+    : t('search.noResults.scopeHeader', { scope: getNameForScope(t, scope) })
 
   return (
     <EmptyState
@@ -34,7 +34,7 @@ export const NoResults: FC<{ network?: Network }> = ({ network }) => {
             />
           </p>
           <p>
-            <SearchSuggestionsLinks network={network} />
+            <SearchSuggestionsLinks scope={scope} />
           </p>
         </Box>
       }

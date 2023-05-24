@@ -8,15 +8,12 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { useGetRosePrice } from '../../../coin-gecko/api'
 import { Layer, RuntimeAccount, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 import { AppErrors } from '../../../types/errors'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { accountTokenContainerId } from './TokensCard'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
-
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const { network, layer } = useRequiredScopeParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading consensus
