@@ -96,7 +96,7 @@ export const BlockDetailView: FC<{
       <dt>{t('common.hash')}</dt>
       <dd>
         <BlockHashLink network={block.network} hash={block.hash} height={block.round} layer={block.layer} />
-        <CopyToClipboard value={block.round.toString()} />
+        <CopyToClipboard value={block.hash.toString()} />
       </dd>
 
       <dt>{t('common.timestamp')}</dt>
