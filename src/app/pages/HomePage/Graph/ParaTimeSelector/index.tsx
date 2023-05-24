@@ -3,6 +3,8 @@ import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import paratimeSelectorGlow from '../images/paratime-selector-glow.svg'
 import paratimeSelectorGlobe from '../images/paratime-selector-globe.svg'
+import paratimeSelectorGlowTestnet from '../images/paratime-selector-glow-testnet.svg'
+import paratimeSelectorGlobeTestnet from '../images/paratime-selector-globe-testnet.svg'
 import { Graph } from '../Graph'
 import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
@@ -24,15 +26,18 @@ interface ParaTimeSelectorBaseProps {
   disabled: boolean
 }
 
+type ParaTimeSelectorGlowProps = ParaTimeSelectorBaseProps & { network: Network }
+
 const ParaTimeSelectorGlow = styled(Box, {
-  shouldForwardProp: (prop: string) =>
-    !(['disabled'] as (keyof ParaTimeSelectorBaseProps)[]).includes(prop as keyof ParaTimeSelectorBaseProps),
-})<ParaTimeSelectorBaseProps>(({ disabled, theme }) => ({
+  shouldForwardProp: prop => prop !== 'disabled' && prop !== 'network',
+})<ParaTimeSelectorGlowProps>(({ disabled, network, theme }) => ({
   position: 'relative',
   width: '130vw',
   height: '130vw',
   marginTop: '-10vh',
-  backgroundImage: `url("${paratimeSelectorGlow}")`,
+  backgroundImage: `url("${
+    network === Network.testnet ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
+  }")`,
   backgroundSize: 'contain',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -48,14 +53,22 @@ const ParaTimeSelectorGlow = styled(Box, {
   },
 }))
 
-const ParaTimeSelectorGlobe = styled(Box)(() => ({
+type ParaTimeSelectorGlobeProps = {
+  network: Network
+}
+
+const ParaTimeSelectorGlobe = styled(Box, {
+  shouldForwardProp: prop => prop !== 'network',
+})<ParaTimeSelectorGlobeProps>(({ network }) => ({
   position: 'absolute',
   width: '65%',
   paddingBottom: '65%',
   left: '50%',
   bottom: '6%',
   transform: 'translateX(-50%)',
-  backgroundImage: `url("${paratimeSelectorGlobe}")`,
+  backgroundImage: `url("${
+    network === Network.testnet ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
+  }")`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -160,8 +173,8 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
 
   return (
     <>
-      <ParaTimeSelectorGlow disabled={disabled}>
-        <ParaTimeSelectorGlobe>
+      <ParaTimeSelectorGlow disabled={disabled} network={network}>
+        <ParaTimeSelectorGlobe network={network}>
           <QuickPinchZoomOuter>
             <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
