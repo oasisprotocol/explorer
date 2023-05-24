@@ -13,21 +13,18 @@ declare module '@mui/material/styles' {
     layout?: PaletteOptions['primary']
   }
 
-  interface PaletteColor {
+  interface CustomLayoutPalette {
     border?: string
     darkBorder?: string
     hoverBorder?: string
+    lightBorder?: string
     secondary?: string
+    primaryBackground?: string
     secondaryBackground?: string
   }
 
-  interface SimplePaletteColorOptions {
-    border?: string
-    darkBorder?: string
-    hoverBorder?: string
-    secondary?: string
-    secondaryBackground?: string
-  }
+  interface PaletteColor extends CustomLayoutPalette {}
+  interface SimplePaletteColorOptions extends CustomLayoutPalette {}
 }
 
 declare module '@mui/material/Button' {
@@ -84,7 +81,9 @@ export const defaultTheme = createTheme({
       border: COLORS.persianBlue,
       darkBorder: COLORS.brandExtraDark,
       hoverBorder: COLORS.white,
+      lightBorder: COLORS.aqua,
       secondary: COLORS.brandDark,
+      primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
     },
     primary: {
