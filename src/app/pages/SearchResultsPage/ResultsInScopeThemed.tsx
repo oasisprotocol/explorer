@@ -1,41 +1,40 @@
 import { FC } from 'react'
-import { getNetworkNames, Network } from '../../../types/network'
+import { Network } from '../../../types/network'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@mui/material/styles'
 import { getThemesForNetworks } from '../../../styles/theme'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Box from '@mui/material/Box'
-import { ResultsOnNetwork } from './ResultsOnNetwork'
+import { ResultsInScope } from './ResultsInScope'
 import { SearchQueries } from './hooks'
 import Typography from '@mui/material/Typography'
+import { getNameForScope, SearchScope } from '../../../types/searchScope'
 
 /**
- * Component for selectively displaying a subset of search results that belongs to a specific network, with appropriate theming.
+ * Component for selectively displaying a subset of search results that belongs to a specific scope, with appropriate theming.
  *
  * It doesn't actually run a search query, but uses existing results.
- * Except the theming, it relies on ResultsOnNetwork.
+ * Except the theming, it relies on ResultsInScope.
  */
-export const ResultsOnNetworkThemed: FC<{
-  network: Network
+export const ResultsInScopeThemed: FC<{
+  scope: SearchScope
   searchQueries: SearchQueries
   roseFiatValue: number | undefined
-}> = ({ network, searchQueries, roseFiatValue }) => {
+}> = ({ scope, searchQueries, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const networkName = getNetworkNames(t)[network]
-  const otherTheme = getThemesForNetworks()[network]
+  const scopeName = getNameForScope(t, scope)
+  const otherTheme = getThemesForNetworks()[scope.network]
 
-  const content = (
-    <ResultsOnNetwork network={network} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
-  )
+  const content = <ResultsInScope scope={scope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
 
   return (
     <>
       <Typography variant="h1" color={theme.palette.layout.main}>
-        {t('search.sectionHeader', { network: networkName })}
+        {t('search.sectionHeader', { scope: scopeName })}
       </Typography>
-      {network === Network.mainnet ? (
+      {scope.network === Network.mainnet ? (
         content
       ) : (
         <Box

@@ -11,13 +11,12 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TransactionDetailView } from '../TransactionDetailPage'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -35,10 +34,10 @@ export const TransactionsPage: FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const scope = useRequiredScopeParam()
+
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (layer === Layer.consensus) {
+  if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus transactions is not yet implemented.
     // we should call useGetConsensusTransactions()
@@ -51,8 +50,8 @@ export const TransactionsPage: FC = () => {
   }, [isMobile, setTableView])
 
   const transactionsQuery = useGetRuntimeTransactions<AxiosResponse<TableRuntimeTransactionList>>(
-    network,
-    layer, // This is OK, since consensus is already handled separately
+    scope.network,
+    scope.layer, // This is OK, since consensus is already handled separately
     {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,

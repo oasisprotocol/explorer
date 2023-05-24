@@ -8,13 +8,12 @@ import { UseQueryOptions } from '@tanstack/react-query'
 import { Layer } from './generated/api'
 import { getEthAccountAddress } from '../app/utils/helpers'
 import { Network } from '../types/network'
+import { SearchScope } from '../types/searchScope'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
-export interface HasNetwork {
-  network: Network
-}
+export type HasScope = SearchScope
 
 declare module './generated/api' {
   export interface Transaction {

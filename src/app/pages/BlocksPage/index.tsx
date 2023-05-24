@@ -14,10 +14,9 @@ import { BlockDetailView } from '../BlockDetailPage'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -35,10 +34,9 @@ export const BlocksPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const scope = useRequiredScopeParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (layer === Layer.consensus) {
+  if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus blocks is not yet implemented.
     // we should call useGetConsensusBlocks()
@@ -51,8 +49,8 @@ export const BlocksPage: FC = () => {
   }, [isMobile, setTableView])
 
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
-    network,
-    layer, // This is OK, since consensus is already handled separately
+    scope.network,
+    scope.layer, // This is OK, since consensus is already handled separately
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,

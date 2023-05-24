@@ -12,19 +12,26 @@ import {
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
-import { useLayerParam } from '../../hooks/useLayerParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const TransactionsStats: FC = () => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
-  const layer = useLayerParam()
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(layer, statsParams, {
-    query: {
-      keepPreviousData: true,
-      staleTime: chartUseQueryStaleTimeMs,
+
+  const scope = useRequiredScopeParam()
+
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(
+    // scope.network, // TODO: add API wrapper to honor network setting
+    scope.layer,
+    statsParams,
+    {
+      query: {
+        keepPreviousData: true,
+        staleTime: chartUseQueryStaleTimeMs,
+      },
     },
-  })
+  )
   const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
   const buckets = allTime
     ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.buckets)

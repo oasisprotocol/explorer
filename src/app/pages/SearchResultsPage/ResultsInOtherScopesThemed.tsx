@@ -1,15 +1,15 @@
 import { FC, useState } from 'react'
-import { getNetworkNames, Network } from '../../../types/network'
 import { Trans, useTranslation } from 'react-i18next'
 import { styled, useTheme } from '@mui/material/styles'
 import { getThemesForNetworks } from '../../../styles/theme'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Box from '@mui/material/Box'
-import { ResultsOnNetwork } from './ResultsOnNetwork'
+import { ResultsInScope } from './ResultsInScope'
 import { SearchQueries } from './hooks'
 import { COLORS } from '../../../styles/theme/colors'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import Warning from '@mui/icons-material/Warning'
+import { getNameForScope, SearchScope } from '../../../types/searchScope'
 
 const NotificationBox = styled(Box)(({ theme }) => ({
   // TODO: this is probably not fully correct.
@@ -28,7 +28,8 @@ const NotificationBox = styled(Box)(({ theme }) => ({
   height: 50,
 
   background: theme.palette.background.default,
-  border: `2px solid ${theme.palette.layout.border}`,
+  border: `2px solid ${theme.palette.layout.darkBorder}`,
+  // border: `2px solid black`,
   color: theme.palette.layout.main,
 
   borderRadius: 50,
@@ -41,15 +42,15 @@ const NotificationBox = styled(Box)(({ theme }) => ({
  * It doesn't actually run a search query, but uses existing results.
  * Except the theming and the collapse functionality, it relies on ResultsOnNetwork.
  */
-export const ResultsOnForeignNetworkThemed: FC<{
-  network: Network
+export const ResultsInOtherScopesThemed: FC<{
+  scope: SearchScope
   alsoHasLocalResults: boolean
   openByDefault?: boolean
   searchQueries: SearchQueries
   numberOfResults: number
   roseFiatValue: number | undefined
 }> = ({
-  network,
+  scope,
   searchQueries,
   numberOfResults,
   roseFiatValue,
@@ -60,11 +61,12 @@ export const ResultsOnForeignNetworkThemed: FC<{
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const networkName = getNetworkNames(t)[network]
+  const scopeName = getNameForScope(t, scope)
+
   if (!numberOfResults) {
     return null
   }
-  const otherTheme = getThemesForNetworks()[network]
+  const otherTheme = getThemesForNetworks()[scope.network]
 
   if (!open) {
     return (
@@ -82,7 +84,7 @@ export const ResultsOnForeignNetworkThemed: FC<{
               countLabel: t(alsoHasLocalResults ? 'search.results.moreCount' : 'search.results.count', {
                 count: numberOfResults,
               }),
-              networkName,
+              scope: scopeName,
             }}
           />
         </span>
@@ -108,9 +110,9 @@ export const ResultsOnForeignNetworkThemed: FC<{
         onClick={() => setOpen(false)}
       >
         <Warning />
-        {t('search.otherResults.clickToHide', { networkName })}
+        {t('search.otherResults.clickToHide', { scope: scopeName })}
       </NotificationBox>
-      <ResultsOnNetwork network={network} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
+      <ResultsInScope scope={scope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
     </Box>
   )
 }

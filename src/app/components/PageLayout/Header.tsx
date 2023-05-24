@@ -4,24 +4,18 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { Search } from '../Search'
-import { useLayerParam } from '../../hooks/useLayerParam'
-import { RouteUtils } from '../../utils/route-utils'
-import { useNetworkParam } from '../../hooks/useNetworkParam'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
-import { Network } from '../../../types/network'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
-  const layer = useLayerParam()
-  const network = useNetworkParam()
+  const scope = useScopeParam()
 
-  const isValidNetwork = RouteUtils.getEnabledNetworks().includes(network as any)
-
-  if (!layer) {
-    // On search page there's no NetworkHeader
+  if (!scope) {
+    // On home-page and global search page there's no NetworkHeader
     return (
       <header>
         <Grid
@@ -33,7 +27,7 @@ export const Header: FC = () => {
             <Logotype />
           </Grid>
           <Grid xs={8} sm={6} md={7} lg={8}>
-            <Search network={network} variant={isDesktop ? 'button' : 'icon'} />
+            <Search variant={isDesktop ? 'button' : 'icon'} />
           </Grid>
         </Grid>
       </header>
@@ -56,13 +50,13 @@ export const Header: FC = () => {
           <Logotype />
         </Grid>
         <Grid md={6} xs={8}>
-          {isValidNetwork && <NetworkSelector layer={layer} network={network as Network} />}
+          <NetworkSelector layer={scope.layer} network={scope.network} />
         </Grid>
         <Grid md={3} xs={0} />
       </Grid>
       {!isMobile && (
         <Box sx={{ mb: 6, px: isMobile ? 0 : '4%' }}>
-          <Search network={network} variant="icon" />
+          <Search scope={scope} variant="icon" />
         </Box>
       )}
     </header>

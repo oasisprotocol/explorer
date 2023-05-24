@@ -13,7 +13,7 @@ import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
-import { useLayerParam } from '../../hooks/useLayerParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -24,10 +24,15 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
-  const layer = useLayerParam()
-  const { data, isFetched } = useGetLayerStatsTxVolume(layer, statsParams, {
-    query: { staleTime: chartUseQueryStaleTimeMs },
-  })
+  const scope = useRequiredScopeParam()
+  const { data, isFetched } = useGetLayerStatsTxVolume(
+    // scope.network, // TODO: add api wrapper to honor network setting
+    scope.layer,
+    statsParams,
+    {
+      query: { staleTime: chartUseQueryStaleTimeMs },
+    },
+  )
 
   const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
 

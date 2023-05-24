@@ -80,9 +80,8 @@ export const Transactions: FC<TransactionProps> = ({
       {
         content: (
           <TransactionLink
-            network={transaction.network}
+            scope={transaction}
             alwaysTrim={true}
-            layer={transaction.layer}
             hash={transaction.eth_hash || transaction.hash}
           />
         ),
@@ -91,13 +90,7 @@ export const Transactions: FC<TransactionProps> = ({
       ...(verbose
         ? [
             {
-              content: (
-                <BlockLink
-                  network={transaction.network}
-                  layer={transaction.layer}
-                  height={transaction.round}
-                />
-              ),
+              content: <BlockLink scope={transaction} height={transaction.round} />,
               key: 'round',
             },
           ]
@@ -137,9 +130,8 @@ export const Transactions: FC<TransactionProps> = ({
               </Typography>
             ) : (
               <AccountLink
-                network={transaction.network}
+                scope={transaction}
                 address={transaction.sender_0_eth || transaction.sender_0}
-                layer={transaction.layer}
                 alwaysTrim={true}
               />
             )}
@@ -166,9 +158,8 @@ export const Transactions: FC<TransactionProps> = ({
             </Typography>
           ) : (
             <AccountLink
-              network={transaction.network}
+              scope={transaction}
               address={transaction.to_eth || transaction.to!}
-              layer={transaction.layer}
               alwaysTrim={true}
             />
           ),
