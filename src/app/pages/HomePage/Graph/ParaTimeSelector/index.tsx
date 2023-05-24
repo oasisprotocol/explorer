@@ -38,6 +38,9 @@ const ParaTimeSelectorGlow = styled(Box, {
   backgroundImage: `url("${
     network === Network.testnet ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
   }")`,
+  transitionProperty: 'background-image',
+  transitionDuration: `${theme.transitions.duration.complex}ms`,
+  transitionTimingFunction: theme.transitions.easing.easeInOut,
   backgroundSize: 'contain',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -59,7 +62,7 @@ type ParaTimeSelectorGlobeProps = {
 
 const ParaTimeSelectorGlobe = styled(Box, {
   shouldForwardProp: prop => prop !== 'network',
-})<ParaTimeSelectorGlobeProps>(({ network }) => ({
+})<ParaTimeSelectorGlobeProps>(({ network, theme }) => ({
   position: 'absolute',
   width: '65%',
   paddingBottom: '65%',
@@ -69,6 +72,9 @@ const ParaTimeSelectorGlobe = styled(Box, {
   backgroundImage: `url("${
     network === Network.testnet ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
   }")`,
+  transitionProperty: 'background-image',
+  transitionDuration: `${theme.transitions.duration.complex}ms`,
+  transitionTimingFunction: theme.transitions.easing.easeInOut,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
