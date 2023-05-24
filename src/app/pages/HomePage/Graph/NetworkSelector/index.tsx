@@ -23,8 +23,8 @@ const StyledNetworkSelector = styled(Box)(() => ({
 }))
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.brandExtraDark,
-  border: `solid 3px ${COLORS.aqua}`,
+  backgroundColor: theme.palette.layout.primaryBackground,
+  border: `solid 3px ${theme.palette.layout.lightBorder}`,
   borderRadius: '45px',
   padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
   display: 'inline-flex',
@@ -39,11 +39,14 @@ export const SelectNetworkButton = styled(Button, {
   textTransform: 'capitalize',
   fontSize: '16px',
   borderRadius: '9px',
-  backgroundColor: isSelectedNetwork ? COLORS.brandExtraDark : COLORS.brandDark,
-  borderColor: isSelectedNetwork ? COLORS.white : COLORS.brandDark,
+  backgroundColor: isSelectedNetwork
+    ? theme.palette.layout.primaryBackground
+    : theme.palette.layout.secondary,
+  borderColor: isSelectedNetwork ? theme.palette.layout.hoverBorder : theme.palette.layout.secondary,
   borderWidth: theme.spacing(1),
-  color: COLORS.white,
+  color: theme.palette.layout.main,
   '&:hover, &:focus-visible': {
+    backgroundColor: theme.palette.layout.secondary,
     borderWidth: theme.spacing(1),
     borderColor: COLORS.white,
   },
@@ -71,7 +74,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork 
     <StyledNetworkSelector>
       <StyledBox>
         {!isMobile && (
-          <Typography component="span" sx={{ fontSize: '12px', color: COLORS.white }}>
+          <Typography component="span" sx={{ fontSize: '12px', color: theme.palette.layout.main }}>
             {t('home.selectNetwork')}
           </Typography>
         )}
@@ -86,9 +89,9 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork 
         </Box>
         <IconButton aria-label={t('home.selectNetworkAria')} onClick={() => setOpen(!open)}>
           {open ? (
-            <RemoveIcon fontSize="medium" sx={{ color: 'white', fontSize: '18px' }} />
+            <RemoveIcon fontSize="medium" sx={{ color: theme.palette.layout.main, fontSize: '18px' }} />
           ) : (
-            <AddIcon fontSize="medium" sx={{ color: 'white', fontSize: '18px' }} />
+            <AddIcon fontSize="medium" sx={{ color: theme.palette.layout.main, fontSize: '18px' }} />
           )}
         </IconButton>
       </StyledBox>
