@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom'
-import { Network, NetworkOrGlobal } from '../../types/network'
+import { Network } from '../../types/network'
 import { RouteUtils } from '../utils/route-utils'
 import { AppError, AppErrors } from '../../types/errors'
 
-export const useNetworkParam = (): NetworkOrGlobal => {
+export const useNetworkParam = (): Network | undefined => {
   const { network } = useParams()
-
-  return network as NetworkOrGlobal
+  return network as Network | undefined
 }
 
 /**
@@ -14,7 +13,7 @@ export const useNetworkParam = (): NetworkOrGlobal => {
  */
 export const useSafeNetworkParam = (): Network => {
   const network = useNetworkParam()
-  if (!RouteUtils.getEnabledNetworks().includes(network as any)) {
+  if (!network || !RouteUtils.getEnabledNetworks().includes(network as any)) {
     throw new AppError(AppErrors.UnsupportedNetwork)
   }
   return network as Network

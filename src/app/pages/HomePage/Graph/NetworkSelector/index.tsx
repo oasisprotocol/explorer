@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TFunction } from 'i18next'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import AddIcon from '@mui/icons-material/Add'
@@ -11,7 +10,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../../../styles/theme/colors'
-import { Network } from '../../../../../types/network'
+import { getNetworkNames, Network } from '../../../../../types/network'
 import Collapse from '@mui/material/Collapse'
 import { RouteUtils } from '../../../../utils/route-utils'
 
@@ -60,18 +59,13 @@ type NetworkSelectorProps = {
   setNetwork: (network: Network) => void
 }
 
-const getLabels = (t: TFunction): { [key in Network]: string } => ({
-  mainnet: t('common.mainnet'),
-  testnet: t('common.testnet'),
-})
-
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [open, setOpen] = useState(false)
   const options: Network[] = RouteUtils.getEnabledNetworks()
-  const labels = getLabels(t)
+  const labels = getNetworkNames(t)
 
   return (
     <StyledNetworkSelector>

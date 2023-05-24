@@ -107,7 +107,7 @@ export const defaultTheme = createTheme({
     fontFamily: `"FigtreeVariable", "Helvetica", "Arial", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
-    fontWeightBold: 500,
+    fontWeightBold: 700,
     body2: {
       fontSize: '16px',
     },

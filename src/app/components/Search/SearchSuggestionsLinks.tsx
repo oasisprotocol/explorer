@@ -5,10 +5,10 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import { OptionalBreak } from '../OptionalBreak'
-import { NetworkOrGlobal } from '../../../types/network'
+import { Network } from '../../../types/network'
 
 interface Props {
-  network: NetworkOrGlobal
+  network?: Network
 }
 
 export const SearchSuggestionsLinks: FC<Props> = ({ network }) => {

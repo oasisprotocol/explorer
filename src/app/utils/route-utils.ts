@@ -3,7 +3,7 @@ import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-indexer/api'
-import { Network, NetworkOrGlobal } from '../../types/network'
+import { Network } from '../../types/network'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS: Layer[] = [Layer.emerald, Layer.sapphire]
@@ -58,8 +58,10 @@ export abstract class RouteUtils {
     return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
-  static getSearchRoute = (network: NetworkOrGlobal, searchTerm: string) => {
-    return `/${network}/search?q=${encodeURIComponent(searchTerm)}`
+  static getSearchRoute = (network: Network | undefined, searchTerm: string) => {
+    return network
+      ? `/${network}/search?q=${encodeURIComponent(searchTerm)}`
+      : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
   static getEnabledLayers(): Layer[] {
@@ -112,16 +114,26 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
+export const networkLoader = async (args: LoaderFunctionArgs) => {
+  const {
+    params: { network },
+  } = args
+
+  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
+    console.log('Error: invalid network', network)
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
+  return true
+}
+
 export const layerLoader = async (args: LoaderFunctionArgs) => {
   const {
     params: { layer, network },
   } = args
 
-  if (!layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
-    throw new AppError(AppErrors.InvalidUrl)
-  }
-
-  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
+  if (!network || !layer || !RouteUtils.getEnabledLayers().includes(layer as Layer)) {
+    console.log('Error: invalid layer', layer)
     throw new AppError(AppErrors.InvalidUrl)
   }
 

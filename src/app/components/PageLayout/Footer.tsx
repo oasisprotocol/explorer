@@ -6,7 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
-import { NetworkOrGlobal } from '../../../types/network'
+import { Network } from '../../../types/network'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -20,7 +20,7 @@ const FooterBox = styled(Box)(({ theme }) => ({
 }))
 
 interface FooterProps {
-  network: NetworkOrGlobal
+  network?: Network
   mobileSearchAction?: ReactNode
 }
 

@@ -8,10 +8,6 @@ export const Network = {
   testnet: 'testnet',
 } as const
 
-export const GlobalNetwork = 'global'
-
-export type NetworkOrGlobal = Network | typeof GlobalNetwork
-
 export const getNetworkNames = (t: TFunction): Record<Network, string> => ({
   [Network.mainnet]: t('common.mainnet'),
   [Network.testnet]: t('common.testnet'),

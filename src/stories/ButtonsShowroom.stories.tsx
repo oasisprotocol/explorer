@@ -4,7 +4,7 @@ import { SuggestionButton } from '../app/components/Search/SearchSuggestionsButt
 import { Select } from '../app/components/Select'
 import { ExploreBtn, ZoomOutBtn } from '../app/pages/HomePage/Graph/ParaTimeSelector'
 import { GetStartedBtn } from '../app/pages/HomePage/Graph/HelpScreen'
-import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroup'
+import { ViewResultButton } from '../app/pages/SearchResultsPage/ResultsGroupByType'
 import { LoadMoreButton } from '../app/components/LoadMoreButton'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { SelectNetworkButton } from '../app/pages/HomePage/Graph/NetworkSelector'
