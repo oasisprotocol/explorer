@@ -44,4 +44,6 @@ export const COLORS = {
   warningColor: '#ed6c02',
   warningBackground: '#faf5e8',
   iconBackground: '#d4d3f2',
+  graphLabel: '#191932',
+  graphLine: '#01F1E3',
 } satisfies { [colorName: string]: string }
