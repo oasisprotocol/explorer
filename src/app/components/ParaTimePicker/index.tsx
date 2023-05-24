@@ -14,6 +14,7 @@ import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
+import { LayerMenu } from './LayerMenu'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -67,7 +68,15 @@ export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm }) 
               />
             </Grid>
           )}
-          <Grid xs={3} />
+          <Grid xs={3}>
+            <LayerMenu
+              activeLayer={layer}
+              hoveredLayer={hoveredLayer}
+              selectedLayer={selectedLayer}
+              setHoveredLayer={setHoveredLayer}
+              setSelectedLayer={setSelectedLayer}
+            />
+          </Grid>
           <Grid xs={6} />
         </Grid>
 
