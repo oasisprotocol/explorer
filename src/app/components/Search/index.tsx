@@ -1,7 +1,7 @@
 import { FC, FormEvent, memo, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
+import TextField, { textFieldClasses } from '@mui/material/TextField'
+import InputAdornment, { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { styled, useTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
@@ -13,6 +13,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { Network } from '../../../types/network'
+import { formHelperTextClasses } from '@mui/material/FormHelperText'
+import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -35,11 +37,11 @@ const SearchForm = styled('form', {
         zIndex: 1,
         // Collapsed
         ':not(:hover, :focus-within)': {
-          '.MuiTextField-root': {
-            'input, .MuiFormHelperText-root, .MuiOutlinedInput-notchedOutline': {
+          [`.${textFieldClasses.root}`]: {
+            [`input, .${formHelperTextClasses.root}, .${outlinedInputClasses.notchedOutline}`]: {
               display: 'none',
             },
-            '.MuiInputAdornment-positionEnd': {
+            [`.${inputAdornmentClasses.positionEnd}`]: {
               marginLeft: 0,
             },
           },

@@ -1,6 +1,10 @@
 import { createTheme } from '@mui/material/styles'
 import { COLORS } from './colors'
 import Fade from '@mui/material/Fade'
+import { outlinedInputClasses } from '@mui/material/OutlinedInput'
+import { inputBaseClasses } from '@mui/material/InputBase'
+import { inputAdornmentClasses } from '@mui/material/InputAdornment'
+import { tabClasses } from '@mui/material/Tab'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -572,7 +576,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: {
           padding: 0,
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]: {
             borderWidth: '3px',
           },
         },
@@ -586,15 +590,15 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           borderRadius: '24px',
           backgroundColor: COLORS.grayMediumLight,
-          '.MuiInputBase-root': {
+          [`.${inputBaseClasses.root}`]: {
             borderRadius: '24px',
             backgroundColor: COLORS.white,
 
             // Prevent first child's edges overflowing due to border-radius
-            '&.MuiInputBase-adornedStart .MuiInputAdornment-positionStart': {
+            [`&.${inputBaseClasses.adornedStart} .${inputAdornmentClasses.positionStart}`]: {
               marginLeft: theme.spacing(4),
             },
-            '&:not(.MuiInputBase-adornedStart) .MuiInputBase-input': {
+            [`&:not(.${inputBaseClasses.adornedStart}) .${inputBaseClasses.input}`]: {
               marginLeft: theme.spacing(4),
             },
           },
@@ -676,7 +680,7 @@ export const defaultTheme = createTheme({
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.grayLight,
           },
-          '&.Mui-selected': {
+          [`&.${tabClasses.selected}`]: {
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.white,
           },

@@ -1,11 +1,11 @@
-import CardHeader from '@mui/material/CardHeader'
+import CardHeader, { cardHeaderClasses } from '@mui/material/CardHeader'
 import { styled } from '@mui/material/styles'
 
 export const CardHeaderWithResponsiveActions = styled(CardHeader)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     alignItems: 'flex-start',
     flexDirection: 'column',
-    '.MuiCardHeader-action': {
+    [`.${cardHeaderClasses.action}`]: {
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(4),
     },
