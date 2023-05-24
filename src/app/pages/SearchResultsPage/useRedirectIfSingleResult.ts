@@ -13,15 +13,18 @@ export function useRedirectIfSingleResult(network: Network | undefined, queries:
 
   const allResults = Object.values(queries).flatMap<HasNetwork>(query => query.results ?? [])
 
-  const hasSingleResult =
-    !isAnyLoading && allResults.length === 1 && (!network || allResults[0].network === network)
+  const hasSingleResult = !isAnyLoading && allResults.length === 1
+  const shouldRedirect =
+    hasSingleResult && network
+      ? allResults[0].network === network // When searching within a network, we redirect if the match is at the right network
+      : allResults[0].network === Network.mainnet // when searching globally, we only redirect to mainnet results
 
   let redirectTo: string | undefined
   const block = queries.blockHeight.results?.[0]
   const tx = queries.txHash.results?.[0]
   const evmAccount = queries.evmBech32Account.results?.[0]
   const oasisAccount = queries.oasisAccount.results?.[0]
-  if (hasSingleResult) {
+  if (shouldRedirect) {
     if (block) {
       redirectTo = RouteUtils.getBlockRoute(block.network, block.round, block.layer)
     } else if (tx) {
