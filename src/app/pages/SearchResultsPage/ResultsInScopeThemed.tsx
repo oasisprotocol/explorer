@@ -9,6 +9,8 @@ import { ResultsInScope } from './ResultsInScope'
 import { SearchQueries } from './hooks'
 import Typography from '@mui/material/Typography'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
+import { SubPageCard } from '../../components/SubPageCard'
+import { ResultListFrame } from './ResultsInNetworkThemed'
 
 /**
  * Component for selectively displaying a subset of search results that belongs to a specific scope, with appropriate theming.
@@ -30,25 +32,10 @@ export const ResultsInScopeThemed: FC<{
   const content = <ResultsInScope scope={scope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
 
   return (
-    <>
-      <Typography variant="h1" color={theme.palette.layout.main}>
-        {t('search.sectionHeader', { scope: scopeName })}
-      </Typography>
-      {scope.network === Network.mainnet ? (
-        content
-      ) : (
-        <Box
-          sx={{
-            marginTop: 50,
-            pt: 4,
-            px: isMobile ? 0 : '4%',
-            border: isMobile ? 'none' : `solid 15px ${otherTheme.palette.layout.border}`,
-            background: otherTheme.palette.background.default,
-          }}
-        >
-          {content}
-        </Box>
-      )}
-    </>
+    <ResultListFrame theme={otherTheme}>
+      <SubPageCard title={t('search.sectionHeader', { scope: scopeName })}>
+        <ResultsInScope scope={scope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
+      </SubPageCard>
+    </ResultListFrame>
   )
 }
