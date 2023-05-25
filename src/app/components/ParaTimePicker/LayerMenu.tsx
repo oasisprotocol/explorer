@@ -33,22 +33,16 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
   )
 }
 
-type BaseLayerMenuProps = {
-  activeLayer: Layer
-  hoveredLayer?: Layer
-  selectedLayer?: Layer
-  setHoveredLayer: (layer?: Layer) => void
-  setSelectedLayer: (layer?: Layer) => void
-}
-
-type LayerMenuItemProps = BaseLayerMenuProps & BaseLayerMenuItemProps
+type LayerMenuItemProps = LayerMenuProps & BaseLayerMenuItemProps
 
 export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   activeLayer,
   divider,
   hoveredLayer,
   layer,
+  network,
   selectedLayer,
+  selectedNetwork,
   setHoveredLayer,
   setSelectedLayer,
 }) => {
@@ -72,15 +66,21 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
           component="span"
           sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
         >
-          {activeLayer === layer && t('paraTimePicker.selected')}
+          {selectedNetwork === network && activeLayer === layer && t('paraTimePicker.selected')}
         </Typography>
       </ListItemText>
       {hoveredLayer === layer && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }
-type LayerMenuProps = BaseLayerMenuProps & {
-  selectedNetwork: Network
+type LayerMenuProps = {
+  activeLayer: Layer
+  hoveredLayer?: Layer
+  network: Network
+  selectedLayer?: Layer
+  selectedNetwork?: Network
+  setHoveredLayer: (layer?: Layer) => void
+  setSelectedLayer: (layer?: Layer) => void
 }
 
 const menuSortOrder: Record<Layer, number> = {
@@ -93,6 +93,7 @@ const menuSortOrder: Record<Layer, number> = {
 export const LayerMenu: FC<LayerMenuProps> = ({
   activeLayer,
   hoveredLayer,
+  network,
   selectedLayer,
   selectedNetwork,
   setHoveredLayer,
@@ -101,7 +102,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
   const options = Object.values(Layer)
     .map(layer => ({
       layer,
-      enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork).includes(layer),
+      enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork || network).includes(layer),
     }))
     .sort((a, b) => menuSortOrder[a.layer] - menuSortOrder[b.layer])
 
@@ -124,7 +125,9 @@ export const LayerMenu: FC<LayerMenuProps> = ({
               hoveredLayer={hoveredLayer}
               key={option.layer}
               layer={option.layer}
+              network={network}
               selectedLayer={selectedLayer}
+              selectedNetwork={selectedNetwork}
               setHoveredLayer={setHoveredLayer}
               setSelectedLayer={setSelectedLayer}
             />

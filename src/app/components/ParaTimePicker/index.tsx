@@ -83,8 +83,9 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             <LayerMenu
               activeLayer={layer}
               hoveredLayer={hoveredLayer}
+              network={network}
               selectedLayer={selectedLayer}
-              selectedNetwork={selectedNetwork || network}
+              selectedNetwork={selectedNetwork}
               setHoveredLayer={setHoveredLayer}
               setSelectedLayer={setSelectedLayer}
             />
