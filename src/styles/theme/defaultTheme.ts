@@ -204,7 +204,35 @@ export const defaultTheme = createTheme({
           borderColor: COLORS.grayMediumLight,
           textTransform: 'capitalize',
           ':disabled': {
-            backgroundColor: COLORS.disabledPrimaryButton,
+            backgroundColor: COLORS.disabledPrimaryBackground,
+            color: COLORS.disabledPrimaryText,
+            borderColor: COLORS.grayMediumLight,
+          },
+          '&:hover, &:focus-visible': {
+            backgroundColor: COLORS.brandLight,
+            borderColor: COLORS.brandLight,
+          },
+          '&:active': {
+            backgroundColor: COLORS.brandExtraDark,
+            borderColor: COLORS.brandExtraDark,
+          },
+        },
+        outlinedSecondary: {
+          borderColor: COLORS.brandExtraDark,
+          color: COLORS.brandExtraDark,
+          backgroundColor: COLORS.white,
+          ':disabled': {
+            backgroundColor: COLORS.disabledPrimaryBackground,
+            color: COLORS.disabledPrimaryText,
+            borderColor: COLORS.grayMediumLight,
+          },
+          '&:hover, &:focus-visible': {
+            backgroundColor: COLORS.grayMediumLight,
+            borderColor: COLORS.brandExtraDark,
+          },
+          '&:active': {
+            backgroundColor: COLORS.grayMedium,
+            borderColor: COLORS.brandExtraDark,
           },
         },
         containedSecondary: {
