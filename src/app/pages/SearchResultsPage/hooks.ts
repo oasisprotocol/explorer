@@ -9,6 +9,8 @@ import {
   Layer,
 } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
+import { useScopeParam } from '../../hooks/useScopeParam'
+import { offerSearchResultsFromDifferentParatimes } from '../../../config'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -23,13 +25,16 @@ export type SearchQueries = {
   evmBech32Account: ConditionalResults<RuntimeAccount>
 }
 export function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
+  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetRuntimeBlockByHeight(scope.network, scope.layer as Runtime, parseInt(blockHeight!), {
         query: {
-          enabled: !!blockHeight,
+          enabled:
+            !!blockHeight &&
+            (!wantedScope || wantedScope.layer === scope.layer || offerSearchResultsFromDifferentParatimes),
         },
       }),
     )
@@ -41,13 +46,16 @@ export function useBlocksConditionally(blockHeight: string | undefined): Conditi
 export function useTransactionsConditionally(
   txHash: string | undefined,
 ): ConditionalResults<RuntimeTransaction> {
+  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetRuntimeTransactionsTxHash(scope.network, scope.layer as Runtime, txHash!, {
         query: {
-          enabled: !!txHash,
+          enabled:
+            !!txHash &&
+            (!wantedScope || wantedScope.layer === scope.layer || offerSearchResultsFromDifferentParatimes),
         },
       }),
     )
@@ -59,13 +67,16 @@ export function useTransactionsConditionally(
 export function useRuntimeAccountConditionally(
   address: string | undefined,
 ): ConditionalResults<RuntimeAccount> {
+  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetRuntimeAccountsAddress(scope.network, scope.layer as Runtime, address!, {
         query: {
-          enabled: !!address,
+          enabled:
+            !!address &&
+            (!wantedScope || wantedScope.layer === scope.layer || offerSearchResultsFromDifferentParatimes),
         },
       }),
     )
