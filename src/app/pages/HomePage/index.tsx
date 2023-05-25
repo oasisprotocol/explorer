@@ -15,6 +15,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
+import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
+import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -140,9 +142,11 @@ export const HomePage: FC = () => {
               </Box>
             )}
           </SearchInputContainer>
-          <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
-            <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
-          </Box>
+          <ThemeByNetwork network={useSearchQueryNetworkParam().network}>
+            <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
+              <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
+            </Box>
+          </ThemeByNetwork>
         </Content>
 
         <FooterStyled>
