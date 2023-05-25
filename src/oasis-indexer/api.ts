@@ -352,3 +352,43 @@ export const useGetRuntimeBlocks: typeof _f9 = (network, runtime, params, option
       ],
     }),
   )
+
+const _f10 = wrapWithNetwork(generated.useGetLayerStatsActiveAccounts)
+
+export const useGetLayerStatsActiveAccounts: typeof _f10 = (network, runtime, params, options) =>
+  generated.useGetLayerStatsActiveAccounts(
+    runtime,
+    params,
+    getOptionsFor(options, network, generated.getGetLayerStatsActiveAccountsQueryKey(runtime)),
+  )
+
+const _f11 = wrapWithNetwork(generated.useGetLayerStatsTxVolume)
+
+export const useGetLayerStatsTxVolume: typeof _f11 = (network, runtime, params, options) =>
+  generated.useGetLayerStatsTxVolume(
+    runtime,
+    params,
+    getOptionsFor(options, network, generated.getGetLayerStatsTxVolumeQueryKey(runtime)),
+  )
+
+const _f12 = wrapWithNetwork(generated.useGetRuntimeStatus)
+
+export const useGetRuntimeStatus: typeof _f12 = (network, runtime, options) =>
+  generated.useGetRuntimeStatus(
+    runtime,
+    getOptionsFor(options, network, generated.getGetRuntimeStatusQueryKey(runtime)),
+  )
+
+const _f13 = wrapWithNetwork(generated.useGetStatus)
+
+export const useGetStatus: typeof _f13 = (network, options) =>
+  generated.useGetStatus(getOptionsFor(options, network, generated.getGetStatusQueryKey()))
+
+const _f14 = wrapWithNetwork(generated.useGetRuntimeEvents)
+
+export const useGetRuntimeEvents: typeof _f14 = (network, runtime, params, options) =>
+  generated.useGetRuntimeEvents(
+    runtime,
+    params,
+    getOptionsFor(options, network, generated.getGetRuntimeEventsQueryKey(runtime, params)),
+  )

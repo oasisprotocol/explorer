@@ -14,6 +14,7 @@ import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
@@ -24,8 +25,9 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const statsParams = durationToQueryParams[chartDuration]
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
-  const { data, isFetched } = useGetLayerStatsTxVolume(layer, statsParams, {
+  const { data, isFetched } = useGetLayerStatsTxVolume(network, layer, statsParams, {
     query: { staleTime: chartUseQueryStaleTimeMs },
   })
 

@@ -15,6 +15,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
+import { Network } from '../../../types/network'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -105,7 +106,7 @@ export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const apiStatusQuery = useGetStatus()
+  const apiStatusQuery = useGetStatus(Network.mainnet) // TODO: what is testnet is off-line? We need a combined status
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)

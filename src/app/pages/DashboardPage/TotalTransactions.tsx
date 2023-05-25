@@ -9,13 +9,15 @@ import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { useLayerParam } from '../../hooks/useLayerParam'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 export const TotalTransactions: FC = () => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(layer, statsParams, {
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(network, layer, statsParams, {
     query: {
       keepPreviousData: true,
       staleTime: chartUseQueryStaleTimeMs,

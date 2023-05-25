@@ -9,11 +9,11 @@ import { Network } from '../../../types/network'
 export const TransactionLogs: FC<{
   transaction: RuntimeTransaction
 }> = ({ transaction }) => {
-  const { layer } = transaction
+  const { network, layer } = transaction
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
-  const eventsQuery = useGetRuntimeEvents(layer, {
+  const eventsQuery = useGetRuntimeEvents(network, layer, {
     tx_hash: transaction.hash,
     limit: 100, // We want to avoid pagination here, if possible
   })
