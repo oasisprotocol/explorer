@@ -8,14 +8,16 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Layer, useGetRuntimeStatus } from '../../../oasis-indexer/api'
 import { useLayerParam } from '../../hooks/useLayerParam'
 import { AppErrors } from '../../../types/errors'
+import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
+  const network = useSafeNetworkParam()
   const layer = useLayerParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
-  const runtimeStatusQuery = useGetRuntimeStatus(layer)
+  const runtimeStatusQuery = useGetRuntimeStatus(network, layer)
   const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
 
   return (
