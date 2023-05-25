@@ -10,7 +10,8 @@ import { getEthAccountAddress } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { getOptionsFor, wrapWithNetwork } from './wrapper-helpers'
 
-export * from './generated/api'
+export type * from './generated/api'
+export { Layer, Runtime, RuntimeEventType } from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
 export interface HasNetwork {
