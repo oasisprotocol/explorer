@@ -21,6 +21,7 @@ import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
 import { NetworkSelector } from '../NetworkSelector'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
+import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -136,7 +137,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
-  const [network, setNetwork] = useState<Network>('mainnet')
+  const { network, setNetwork } = useSearchQueryNetworkParam()
   const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
   const [selectedLayer, setSelectedLayer] = useState<Layer>()
