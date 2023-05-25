@@ -21,8 +21,9 @@ import { ResultListFrame } from './ResultsInNetworkThemed'
 export const ResultsInScopeThemed: FC<{
   scope: SearchScope
   searchQueries: SearchQueries
+  numberOfResults: number
   roseFiatValue: number | undefined
-}> = ({ scope, searchQueries, roseFiatValue }) => {
+}> = ({ scope, searchQueries, numberOfResults, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -33,7 +34,13 @@ export const ResultsInScopeThemed: FC<{
 
   return (
     <ResultListFrame theme={otherTheme}>
-      <SubPageCard title={t('search.sectionHeader', { scope: scopeName })}>
+      <SubPageCard
+        featured
+        title={t('search.sectionHeader', { scope: scopeName })}
+        subheader={t('search.results.count', {
+          count: numberOfResults,
+        })}
+      >
         <ResultsInScope scope={scope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
       </SubPageCard>
     </ResultListFrame>

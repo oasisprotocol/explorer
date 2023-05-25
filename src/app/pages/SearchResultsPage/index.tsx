@@ -114,6 +114,7 @@ export const SearchResultsView: FC<{
               key={scope.key}
               scope={scope}
               searchQueries={searchQueries}
+              numberOfResults={resultsInScopes[scope.key]}
               roseFiatValue={roseFiatValue}
             />
           ))}
