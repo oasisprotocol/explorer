@@ -69,7 +69,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             </Grid>
           )}
           {showNetworkMenu && (
-            <Grid xs={3}>
+            <Grid xs={4} md={3}>
               <NetworkMenu
                 activeNetwork={network}
                 hoveredNetwork={hoveredNetwork}
@@ -79,7 +79,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
               />
             </Grid>
           )}
-          <Grid xs={3}>
+          <Grid xs={4} md={3}>
             <LayerMenu
               activeLayer={layer}
               hoveredLayer={hoveredLayer}
@@ -90,7 +90,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
               setSelectedLayer={setSelectedLayer}
             />
           </Grid>
-          <Grid xs={6}>
+          <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
             <LayerDetails
               activeLayer={layer}
               hoveredLayer={hoveredLayer}

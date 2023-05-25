@@ -481,7 +481,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         paperAnchorTop: ({ theme }) => ({
           borderRadius: '0 0 12px 12px',
-          padding: `${theme.spacing(4)} ${theme.spacing(6)}`,
+          padding: `${theme.spacing(4)} 5%`,
         }),
       },
     },
