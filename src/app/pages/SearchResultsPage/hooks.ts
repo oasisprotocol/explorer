@@ -9,7 +9,6 @@ import {
   Layer,
 } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
-import { useScopeParam } from '../../hooks/useScopeParam'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -24,7 +23,6 @@ export type SearchQueries = {
   evmBech32Account: ConditionalResults<RuntimeAccount>
 }
 export function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
-  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
@@ -50,7 +48,6 @@ export function useBlocksConditionally(blockHeight: string | undefined): Conditi
 export function useTransactionsConditionally(
   txHash: string | undefined,
 ): ConditionalResults<RuntimeTransaction> {
-  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
@@ -70,7 +67,6 @@ export function useTransactionsConditionally(
 export function useRuntimeAccountConditionally(
   address: string | undefined,
 ): ConditionalResults<RuntimeAccount> {
-  const wantedScope = useScopeParam()
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>

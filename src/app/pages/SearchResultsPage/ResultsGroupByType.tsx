@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -31,8 +30,6 @@ export const ViewResultButton = (() => {
  * It doesn't actually run a search query, but uses existing results.
  */
 export function ResultsGroupByType<T>({ title, results, resultComponent, link, linkLabel }: Props<T>) {
-  const { t } = useTranslation()
-
   if (!results || results.length <= 0) {
     return <></>
   }

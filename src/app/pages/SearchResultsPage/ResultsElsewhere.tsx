@@ -9,7 +9,7 @@ import ZoomOut from '@mui/icons-material/ZoomOut'
 import { getKeyForScope, getScopeForKey, SearchScope } from '../../../types/searchScope'
 import { getNetworkNames, Network } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
-import { ResultsInNetworkThemed } from './ResultsInNetworkThemed'
+import { ResultsFilteredThemed } from './ResultsFilteredThemed'
 
 const NotificationBox = styled(Box)(({ theme }) => ({
   // TODO: this is probably not fully correct.
@@ -117,11 +117,12 @@ export const ResultsElsewhere: FC<{
         {t('search.otherResults.clickToHide', { location })}
       </NotificationBox>
       {hasResultsOnDifferentParatimes && (
-        <ResultsInNetworkThemed
-          network={wantedScope.network}
+        <ResultsFilteredThemed
           title={t('search.otherResults.otherParatimesOnNetwork', {
             network: networkNames[wantedScope.network],
           })}
+          filter={item => item.network === wantedScope.network && item.layer !== wantedScope.layer}
+          networkForTheme={wantedScope.network}
           searchQueries={searchQueries}
           numberOfResults={resultsInNetworks[wantedScope.network]}
           roseFiatValue={roseFiatValue}
@@ -130,10 +131,11 @@ export const ResultsElsewhere: FC<{
       {allNetworks
         .filter(net => net !== wantedScope.network && !!resultsInNetworks[net])
         .map(net => (
-          <ResultsInNetworkThemed
+          <ResultsFilteredThemed
             key={net}
-            network={net}
+            networkForTheme={net}
             title={networkNames[net]}
+            filter={item => item.network === net}
             searchQueries={searchQueries}
             numberOfResults={resultsInNetworks[net]}
             roseFiatValue={roseFiatValue}

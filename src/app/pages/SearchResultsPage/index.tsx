@@ -9,7 +9,6 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
-import { ResultsInScope } from './ResultsInScope'
 import {
   SearchQueries,
   useBlocksConditionally,
@@ -17,12 +16,10 @@ import {
   useTransactionsConditionally,
 } from './hooks'
 import { ResultsElsewhere } from './ResultsElsewhere'
-import { ResultsInScopeThemed } from './ResultsInScopeThemed'
 import { getKeyForScope, getNameForScope, getScopeForKey, SearchScope } from '../../../types/searchScope'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useTranslation } from 'react-i18next'
-import { ResultListFrame } from './ResultsInNetworkThemed'
-import { getThemesForNetworks } from '../../../styles/theme'
+import { ResultsFilteredThemed } from './ResultsFilteredThemed'
 
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
@@ -84,16 +81,14 @@ export const SearchResultsView: FC<{
       {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults scope={wantedScope} />}
 
       {!isGlobal && !isAnyLoading && !hasNoResultsInWantedScope && (
-        <ResultListFrame theme={getThemesForNetworks()[wantedScope.network]}>
-          <SubPageCard
-            title={getNameForScope(t, wantedScope)}
-            subheader={t('search.results.count', {
-              count: resultsInScopes[getKeyForScope(wantedScope)],
-            })}
-          >
-            <ResultsInScope scope={wantedScope} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
-          </SubPageCard>
-        </ResultListFrame>
+        <ResultsFilteredThemed
+          title={getNameForScope(t, wantedScope)}
+          searchQueries={searchQueries}
+          networkForTheme={wantedScope.network}
+          numberOfResults={resultsInScopes[getKeyForScope(wantedScope)]}
+          roseFiatValue={roseFiatValue}
+          filter={Item => Item.network === wantedScope.network && Item.layer === wantedScope.layer}
+        />
       )}
       {!isGlobal && !isAnyLoading && (
         <ResultsElsewhere
@@ -110,11 +105,13 @@ export const SearchResultsView: FC<{
           .filter(scopeKey => resultsInScopes[scopeKey])
           .map(getScopeForKey)
           .map(scope => (
-            <ResultsInScopeThemed
+            <ResultsFilteredThemed
               key={scope.key}
-              scope={scope}
+              title={getNameForScope(t, scope)}
+              filter={Item => Item.network === scope.network && Item.layer === scope.layer}
               searchQueries={searchQueries}
               numberOfResults={resultsInScopes[scope.key]}
+              networkForTheme={scope.network}
               roseFiatValue={roseFiatValue}
             />
           ))}
