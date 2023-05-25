@@ -120,7 +120,7 @@ export const defaultTheme = createTheme({
   },
   spacing: [0, 2, 4, 8, 16, 32, 64, 128],
   typography: {
-    fontFamily: `"FigtreeVariable", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"Figtree Variable", "Helvetica", "Arial", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
     fontWeightBold: 700,
@@ -593,7 +593,7 @@ export const defaultTheme = createTheme({
         {
           props: { variant: 'mono' },
           style: () => ({
-            fontFamily: 'Roboto MonoVariable, monospace',
+            fontFamily: 'Roboto Mono Variable, monospace',
             fontWeight: 700,
           }),
         },
