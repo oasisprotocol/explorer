@@ -443,3 +443,81 @@ export const useGetRuntimeBlocks: typeof _f9 = (network, runtime, params, option
     },
   })
 }
+
+const _f10 = wrapWithNetwork(generated.useGetLayerStatsActiveAccounts)
+
+export const useGetLayerStatsActiveAccounts: typeof _f10 = (network, runtime, params, options) =>
+  generated.useGetLayerStatsActiveAccounts(runtime, params, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, `/${runtime}/stats/active_accounts`, ...(params ? [params] : [])],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+    },
+  })
+
+const _f11 = wrapWithNetwork(generated.useGetLayerStatsTxVolume)
+
+export const useGetLayerStatsTxVolume: typeof _f11 = (network, runtime, params, options) =>
+  generated.useGetLayerStatsTxVolume(runtime, params, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, `/${runtime}/stats/tx_volume`, ...(params ? [params] : [])],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+    },
+  })
+
+const _f12 = wrapWithNetwork(generated.useGetRuntimeStatus)
+
+export const useGetRuntimeStatus: typeof _f12 = (network, runtime, options) => {
+  return generated.useGetRuntimeStatus(runtime, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, `/${runtime}/status`],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+    },
+  })
+}
+
+const _f13 = wrapWithNetwork(generated.useGetStatus)
+
+export const useGetStatus: typeof _f13 = (network, options) => {
+  return generated.useGetStatus({
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, `/`],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+    },
+  })
+}
+
+const _f14 = wrapWithNetwork(generated.useGetRuntimeEvents)
+
+export const useGetRuntimeEvents: typeof _f14 = (network, runtime, params, options) => {
+  return generated.useGetRuntimeEvents(runtime, params, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, ...generated.getGetRuntimeEventsQueryKey(runtime, params)],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+    },
+  })
+}

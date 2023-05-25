@@ -107,7 +107,8 @@ export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const apiStatusQuery = useGetStatus()
+  const { network } = useSearchQueryNetworkParam()
+  const apiStatusQuery = useGetStatus(network)
   const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
@@ -142,7 +143,7 @@ export const HomePage: FC = () => {
               </Box>
             )}
           </SearchInputContainer>
-          <ThemeByNetwork network={useSearchQueryNetworkParam().network}>
+          <ThemeByNetwork network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
               <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
             </Box>
