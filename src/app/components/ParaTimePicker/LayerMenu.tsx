@@ -9,6 +9,8 @@ import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-indexer/api'
 import { getLayerLabels } from '../../utils/content'
+import { RouteUtils } from '../../utils/route-utils'
+import { Network } from '../../../types/network'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
@@ -31,7 +33,15 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
   )
 }
 
-type LayerMenuItemProps = LayerMenuProps & BaseLayerMenuItemProps
+type BaseLayerMenuProps = {
+  activeLayer: Layer
+  hoveredLayer?: Layer
+  selectedLayer?: Layer
+  setHoveredLayer: (layer?: Layer) => void
+  setSelectedLayer: (layer?: Layer) => void
+}
+
+type LayerMenuItemProps = BaseLayerMenuProps & BaseLayerMenuItemProps
 
 export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   activeLayer,
@@ -46,53 +56,54 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   const labels = getLayerLabels(t)
 
   return (
-    <>
-      <MenuItem
-        divider={divider}
-        onMouseEnter={() => {
-          if (layer !== selectedLayer) {
-            setSelectedLayer(undefined)
-          }
-          setHoveredLayer(layer)
-        }}
-        onClick={() => setSelectedLayer(layer)}
-      >
-        <ListItemText>
-          {labels[layer]}
-          <Typography
-            component="span"
-            sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
-          >
-            {activeLayer === layer && t('paraTimePicker.selected')}
-          </Typography>
-        </ListItemText>
-        {hoveredLayer === layer && <KeyboardArrowRightIcon />}
-      </MenuItem>
-    </>
+    <MenuItem
+      divider={divider}
+      onMouseEnter={() => {
+        if (layer !== selectedLayer) {
+          setSelectedLayer(undefined)
+        }
+        setHoveredLayer(layer)
+      }}
+      onClick={() => setSelectedLayer(layer)}
+    >
+      <ListItemText>
+        {labels[layer]}
+        <Typography
+          component="span"
+          sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
+        >
+          {activeLayer === layer && t('paraTimePicker.selected')}
+        </Typography>
+      </ListItemText>
+      {hoveredLayer === layer && <KeyboardArrowRightIcon />}
+    </MenuItem>
   )
 }
+type LayerMenuProps = BaseLayerMenuProps & {
+  selectedNetwork: Network
+}
 
-type LayerMenuProps = {
-  activeLayer: Layer
-  hoveredLayer?: Layer
-  selectedLayer?: Layer
-  setHoveredLayer: (layer?: Layer) => void
-  setSelectedLayer: (layer?: Layer) => void
+const menuSortOrder: Record<Layer, number> = {
+  [Layer.consensus]: 1,
+  [Layer.emerald]: 2,
+  [Layer.sapphire]: 3,
+  [Layer.cipher]: 4,
 }
 
 export const LayerMenu: FC<LayerMenuProps> = ({
   activeLayer,
   hoveredLayer,
   selectedLayer,
+  selectedNetwork,
   setHoveredLayer,
   setSelectedLayer,
 }) => {
-  const options = [
-    { layer: Layer.consensus, enabled: false },
-    { layer: Layer.emerald, enabled: true },
-    { layer: Layer.sapphire, enabled: true },
-    { layer: Layer.cipher, enabled: false },
-  ]
+  const options = Object.values(Layer)
+    .map(layer => ({
+      layer,
+      enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork).includes(layer),
+    }))
+    .sort((a, b) => menuSortOrder[a.layer] - menuSortOrder[b.layer])
 
   return (
     <MenuList>

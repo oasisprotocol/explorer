@@ -37,7 +37,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(false)
   const [selectedLayer, setSelectedLayer] = useState<undefined | Layer>()
-  const [selectedNetwork, setSelectedNetwork] = useState<undefined | Network>(Network.mainnet)
+  const [selectedNetwork, setSelectedNetwork] = useState<undefined | Network>(network)
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
 
@@ -84,6 +84,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
               activeLayer={layer}
               hoveredLayer={hoveredLayer}
               selectedLayer={selectedLayer}
+              selectedNetwork={selectedNetwork || network}
               setHoveredLayer={setHoveredLayer}
               setSelectedLayer={setSelectedLayer}
             />
