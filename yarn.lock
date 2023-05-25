@@ -1651,10 +1651,10 @@
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
   integrity sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==
 
-"@fontsource/figtree@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-4.5.3.tgz#6c914512488cb998d3ef1c3071e2974051b02df8"
-  integrity sha512-e/8bpoOhWfYq6hk5RNUHwBAjTXTCA13+caQOhImzD8TN6RG0VdpqMavKQiH350WBBBjwOJdBrCZZdpHHRONobQ==
+"@fontsource/figtree@5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-5.0.1.tgz#ca005e63e665f2110a0dcc465dba575373fb254b"
+  integrity sha512-F5EptjpQnbue0nV+lbNLeEwTXkW9/YSauc+W3QNGTyOnohLgLf9jUpAwlGCDdOd78ID6jE5tBMIy0AY7hd4BJg==
 
 "@fontsource/roboto-mono@4.5.10":
   version "4.5.10"
