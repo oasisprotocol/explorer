@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
 import { useParamSearch } from '../../components/Search/search-utils'
-import { HasNetwork } from '../../../oasis-indexer/api'
+import { HasScope } from '../../../oasis-indexer/api'
 import { useGetRosePrice } from '../../../coin-gecko/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -10,7 +10,6 @@ import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { NoResults } from './NoResults'
 import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
-import { useNetworkParam } from '../../hooks/useNetworkParam'
 import { ResultsOnNetwork } from './ResultsOnNetwork'
 import {
   SearchQueries,
@@ -20,11 +19,13 @@ import {
 } from './hooks'
 import { ResultsOnForeignNetworkThemed } from './ResultsOnForeignNetworkThemed'
 import { ResultsOnNetworkThemed } from './ResultsOnNetworkThemed'
+import { SearchScope } from '../../../types/searchScope'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 export const SearchResultsPage: FC = () => {
   const q = useParamSearch()
   const rosePriceQuery = useGetRosePrice()
-  const network = useNetworkParam()
+  const scope = useScopeParam()
   const searchQueries: SearchQueries = {
     blockHeight: useBlocksConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
@@ -34,11 +35,11 @@ export const SearchResultsPage: FC = () => {
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
   }
 
-  useRedirectIfSingleResult(network, searchQueries)
+  useRedirectIfSingleResult(scope, searchQueries)
 
   return (
     <SearchResultsView
-      wantedNetwork={network}
+      wantedScope={scope}
       searchQueries={searchQueries}
       roseFiatValue={rosePriceQuery.data}
     />
@@ -46,12 +47,12 @@ export const SearchResultsPage: FC = () => {
 }
 
 export const SearchResultsView: FC<{
-  wantedNetwork?: Network
+  wantedScope?: SearchScope
   searchQueries: SearchQueries
   roseFiatValue: number | undefined
-}> = ({ wantedNetwork, searchQueries, roseFiatValue }) => {
+}> = ({ wantedScope, searchQueries, roseFiatValue }) => {
   const isAnyLoading = Object.values(searchQueries).some(query => query.isLoading)
-  const allResults = Object.values(searchQueries).flatMap<HasNetwork>(query => query.results ?? [])
+  const allResults = Object.values(searchQueries).flatMap<HasScope>(query => query.results ?? [])
 
   const allNetworks = RouteUtils.getEnabledNetworks()
 
@@ -64,10 +65,10 @@ export const SearchResultsView: FC<{
 
   const matchingNetworkList = allNetworks.filter(net => !!resultsInNetworks[net])
 
-  const isGlobal = !wantedNetwork
+  const isGlobal = !wantedScope?.network
 
   const hasNoResultsWhatsoever = allResults.length === 0
-  const hasNoResultsOnWantedNetwork = !isGlobal && resultsInNetworks[wantedNetwork] === 0
+  const hasNoResultsOnWantedNetwork = !isGlobal && resultsInNetworks[wantedScope.network] === 0
 
   return (
     <PageLayout>
@@ -78,13 +79,13 @@ export const SearchResultsView: FC<{
         </SubPageCard>
       )}
 
-      {!isGlobal && !isAnyLoading && hasNoResultsOnWantedNetwork && <NoResults network={wantedNetwork} />}
-      {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults network={wantedNetwork} />}
+      {!isGlobal && !isAnyLoading && hasNoResultsOnWantedNetwork && <NoResults scope={wantedScope} />}
+      {isGlobal && !isAnyLoading && hasNoResultsWhatsoever && <NoResults scope={wantedScope} />}
 
       {!isGlobal && !isAnyLoading && !hasNoResultsOnWantedNetwork && (
         <>
           <ResultsOnNetwork
-            network={wantedNetwork}
+            network={wantedScope.network}
             searchQueries={searchQueries}
             roseFiatValue={roseFiatValue}
           />
@@ -93,7 +94,7 @@ export const SearchResultsView: FC<{
       {!isGlobal &&
         !isAnyLoading &&
         matchingNetworkList
-          .filter(net => net !== wantedNetwork)
+          .filter(net => net !== wantedScope.network)
           .map(net => (
             <ResultsOnForeignNetworkThemed
               key={net}

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import { BuildPreviewBanner } from '../BuildPreviewBanner'
-import { useNetworkParam } from '../../hooks/useNetworkParam'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -18,7 +18,7 @@ export const StyledMain = styled('main')({
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const network = useNetworkParam()
+  const scope = useScopeParam()
 
   return (
     <>
@@ -36,7 +36,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
           }}
         >
           <StyledMain>{children}</StyledMain>
-          <Footer network={network} mobileSearchAction={mobileFooterAction} />
+          <Footer scope={scope} mobileSearchAction={mobileFooterAction} />
         </Box>
       </Box>
     </>

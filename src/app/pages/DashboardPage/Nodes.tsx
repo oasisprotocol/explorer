@@ -6,18 +6,16 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 import { SnapshotCard } from './SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer, useGetRuntimeStatus } from '../../../oasis-indexer/api'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { AppErrors } from '../../../types/errors'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
-  if (layer === Layer.consensus) {
+  const scope = useRequiredScopeParam()
+  if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
-  const runtimeStatusQuery = useGetRuntimeStatus(network, layer)
+  const runtimeStatusQuery = useGetRuntimeStatus(scope.network, scope.layer)
   const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
 
   return (

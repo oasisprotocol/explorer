@@ -10,20 +10,16 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 import { CardEmptyState } from './CardEmptyState'
-import { Network } from '../../../types/network'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { SearchScope } from '../../../types/searchScope'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
-export const TransactionsList: FC<{ network: Network; layer: Layer; address: string }> = ({
-  network,
-  layer,
-  address,
-}) => {
+export const TransactionsList: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading transactions on the consensus layer is not supported yet.
@@ -65,8 +61,7 @@ export const accountTransactionsContainerId = 'transactions'
 
 export const TransactionsCard: FC = () => {
   const { t } = useTranslation()
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
   return (
     <Card>
@@ -75,7 +70,7 @@ export const TransactionsCard: FC = () => {
       </ScrollingDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          <TransactionsList network={network} layer={layer} address={address} />
+          <TransactionsList scope={scope} address={address} />
         </ErrorBoundary>
       </CardContent>
     </Card>

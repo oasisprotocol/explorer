@@ -141,7 +141,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     }
 
     if (selectedLayer === Layer && RouteUtils.getEnabledLayersForNetwork(network).includes(selectedLayer)) {
-      navigate(RouteUtils.getDashboardRoute(network, selectedLayer))
+      navigate(RouteUtils.getDashboardRoute({ network, layer: selectedLayer }))
 
       return
     }
@@ -279,7 +279,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         fill={graphTheme.text}
       />
       <g style={{ pointerEvents: selectedLayer === Layer.emerald && !disabledMap.emerald ? 'auto' : 'none' }}>
-        <Link to={RouteUtils.getLatestTransactionsRoute(network, Layer.emerald)}>
+        <Link to={RouteUtils.getLatestTransactionsRoute({ network, layer: Layer.emerald })}>
           <circle
             cx="234.552"
             cy="36.6031"
@@ -298,7 +298,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             {t('home.txn')}
           </text>
         </Link>
-        <Link to={RouteUtils.getLatestBlocksRoute(network, Layer.emerald)}>
+        <Link to={RouteUtils.getLatestBlocksRoute({ network, layer: Layer.emerald })}>
           <circle
             cx="155.943"
             cy="37.8709"
@@ -322,7 +322,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
       <g
         style={{ pointerEvents: selectedLayer === Layer.sapphire && !disabledMap.sapphire ? 'auto' : 'none' }}
       >
-        <Link to={RouteUtils.getLatestTransactionsRoute(network, Layer.sapphire)}>
+        <Link to={RouteUtils.getLatestTransactionsRoute({ network, layer: Layer.sapphire })}>
           <circle
             cx="155.833"
             cy="295.833"
@@ -341,7 +341,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             {t('home.txn')}
           </text>
         </Link>
-        <Link to={RouteUtils.getLatestBlocksRoute(network, Layer.sapphire)}>
+        <Link to={RouteUtils.getLatestBlocksRoute({ network, layer: Layer.sapphire })}>
           <circle
             cx="79.8332"
             cy="287.833"

@@ -15,8 +15,7 @@ import {
   filterHourlyActiveAccounts,
   sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
-import { useLayerParam } from '../../hooks/useLayerParam'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
   switch (duration) {
@@ -60,11 +59,10 @@ type ActiveAccountsProps = {
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
   const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const scope = useRequiredScopeParam()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
-    network,
-    layer,
+    scope.network,
+    scope.layer,
     {
       limit,
       window_step_seconds: bucket_size_seconds as GetLayerStatsActiveAccountsWindowStepSeconds,

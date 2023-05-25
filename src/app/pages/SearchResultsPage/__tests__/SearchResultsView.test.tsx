@@ -7,6 +7,7 @@ import {
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
+import { Layer } from '../../../../oasis-indexer/api'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -21,7 +22,7 @@ describe('SearchResultsView', () => {
   it('block should correctly link to transactions', () => {
     renderWithProviders(
       <SearchResultsView
-        wantedNetwork={Network.mainnet}
+        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
         searchQueries={{
           blockHeight: {
             isLoading: false,
@@ -52,7 +53,7 @@ describe('SearchResultsView', () => {
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
       <SearchResultsView
-        wantedNetwork={Network.mainnet}
+        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
         searchQueries={{
           blockHeight: { isLoading: false, results: [] },
           txHash: { isLoading: false, results: [] },

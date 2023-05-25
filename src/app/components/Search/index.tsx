@@ -12,9 +12,9 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
-import { Network } from '../../../types/network'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
+import { SearchScope } from '../../../types/searchScope'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -86,13 +86,13 @@ SearchButton.defaultProps = {
 }
 
 export interface SearchProps {
-  network?: Network
+  scope?: SearchScope
   variant: SearchVariant
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void
 }
 
-const SearchCmp: FC<SearchProps> = ({ network, variant, disabled, onFocusChange: onFocusChangeProp }) => {
+const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: onFocusChangeProp }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const theme = useTheme()
@@ -113,7 +113,7 @@ const SearchCmp: FC<SearchProps> = ({ network, variant, disabled, onFocusChange:
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    navigate(RouteUtils.getSearchRoute(network, value))
+    navigate(RouteUtils.getSearchRoute(scope, value))
   }
 
   const onClearValue = () => {

@@ -10,23 +10,19 @@ import { Layer, useGetRuntimeTransactions } from '../../../oasis-indexer/api'
 import { Transactions } from '../../components/Transactions'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
-import { Network } from '../../../types/network'
+import { SearchScope } from '../../../types/searchScope'
 
 export const transactionsContainerId = 'transactions'
 
-const TransactionList: FC<{ network: Network; layer: Layer; blockHeight: number }> = ({
-  network,
-  layer,
-  blockHeight,
-}) => {
+const TransactionList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-  if (layer === Layer.consensus) {
+  if (scope.layer === Layer.consensus) {
     // Loading transactions for consensus blocks is not yet supported.
     // Should use useGetConsensusTransactions()
     throw AppErrors.UnsupportedLayer
   }
-  const transactionsQuery = useGetRuntimeTransactions(network, layer, {
+  const transactionsQuery = useGetRuntimeTransactions(scope.network, scope.layer, {
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     offset: txsOffset,
@@ -49,18 +45,14 @@ const TransactionList: FC<{ network: Network; layer: Layer; blockHeight: number 
   )
 }
 
-export const TransactionsCard: FC<{ network: Network; layer: Layer; blockHeight: number }> = ({
-  network,
-  layer,
-  blockHeight,
-}) => {
+export const TransactionsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
   return (
     <ScrollingCard id={transactionsContainerId}>
       <CardHeader disableTypography component="h3" title={t('common.transactions')} />
       <CardContent>
         <ErrorBoundary light={true}>
-          <TransactionList network={network} layer={layer} blockHeight={blockHeight} />
+          <TransactionList scope={scope} blockHeight={blockHeight} />
         </ErrorBoundary>
       </CardContent>
     </ScrollingCard>

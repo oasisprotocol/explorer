@@ -12,16 +12,16 @@ import {
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
-import { useLayerParam } from '../../hooks/useLayerParam'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const TransactionsStats: FC = () => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
-  const layer = useLayerParam()
-  const network = useSafeNetworkParam()
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(network, layer, statsParams, {
+
+  const scope = useRequiredScopeParam()
+
+  const dailyVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
     query: {
       keepPreviousData: true,
       staleTime: chartUseQueryStaleTimeMs,
