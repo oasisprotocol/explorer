@@ -73,6 +73,9 @@ type LayerDetailsProps = {
   selectedLayer?: Layer
 }
 
+// Prevent modal height from changing height when switching between layers
+const contentMinHeight = '270px'
+
 export const LayerDetails: FC<LayerDetailsProps> = ({
   activeLayer,
   hoveredLayer,
@@ -92,7 +95,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({
   }
 
   return (
-    <Box sx={{ px: 5, py: 4, display: 'flex' }}>
+    <Box sx={{ px: 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
       <Box sx={{ pt: 1, pr: 4, color: COLORS.brandDark }}>
         <Circle
           color={COLORS.white}
