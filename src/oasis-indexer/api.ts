@@ -9,7 +9,8 @@ import { Layer } from './generated/api'
 import { getEthAccountAddress } from '../app/utils/helpers'
 import { Network } from '../types/network'
 
-export * from './generated/api'
+export type * from './generated/api'
+export { Layer, Runtime, RuntimeEventType } from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
 export interface HasNetwork {
