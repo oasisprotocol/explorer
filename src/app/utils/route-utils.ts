@@ -72,6 +72,12 @@ export abstract class RouteUtils {
     return RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network] || []
   }
 
+  static getEnabledScopes(): { network: Network; layer: Layer }[] {
+    return RouteUtils.getEnabledNetworks().flatMap(network =>
+      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+    )
+  }
+
   static getEnabledNetworks() {
     return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK) as Network[]
   }
