@@ -48,6 +48,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
 }) => {
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
+  const activeLayerSelection = layer === activeLayer && network === selectedNetwork
 
   return (
     <MenuItem
@@ -59,6 +60,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
         setHoveredLayer(layer)
       }}
       onClick={() => setSelectedLayer(layer)}
+      selected={activeLayerSelection}
     >
       <ListItemText>
         {labels[layer]}
@@ -69,7 +71,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
           {selectedNetwork === network && activeLayer === layer && t('paraTimePicker.selected')}
         </Typography>
       </ListItemText>
-      {hoveredLayer === layer && <KeyboardArrowRightIcon />}
+      {activeLayerSelection && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }

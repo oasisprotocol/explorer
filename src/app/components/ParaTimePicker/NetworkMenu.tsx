@@ -30,6 +30,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
   const { t } = useTranslation()
   const labels = getNetworkNames(t)
   const icons = getNetworkIcons()
+  const activeNetworkSelection = network === activeNetwork
 
   return (
     <MenuItem
@@ -38,6 +39,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
         setHoveredNetwork(network)
         setSelectedNetwork(network)
       }}
+      selected={activeNetworkSelection}
     >
       <ListItemIcon>{icons[network]}</ListItemIcon>
       <ListItemText>
@@ -51,7 +53,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
           </Typography>
         )}
       </ListItemText>
-      {(hoveredNetwork === network || selectedNetwork === network) && <KeyboardArrowRightIcon />}
+      {activeNetworkSelection && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }

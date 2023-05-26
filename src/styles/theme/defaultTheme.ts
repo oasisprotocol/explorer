@@ -796,13 +796,18 @@ export const defaultTheme = createTheme({
           [`&.${menuItemClasses.selected}`]: {
             color: COLORS.brandDark,
             backgroundColor: 'transparent',
+            '&:hover': {
+              color: COLORS.brandDark,
+              backgroundColor: COLORS.grayMediumLight,
+            },
           },
           [`&.${menuItemClasses.disabled}`]: {
             color: COLORS.grayMedium,
             opacity: 1,
           },
           '&:hover': {
-            color: COLORS.brandDark,
+            color: COLORS.grayExtraDark,
+            backgroundColor: COLORS.grayMediumLight,
           },
         },
       },
