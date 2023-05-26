@@ -795,7 +795,7 @@ export const defaultTheme = createTheme({
           color: COLORS.grayExtraDark,
           [`&.${menuItemClasses.selected}`]: {
             color: COLORS.brandDark,
-            backgroundColor: 'transparent',
+            backgroundColor: COLORS.grayLight,
             '&:hover': {
               color: COLORS.brandDark,
               backgroundColor: COLORS.grayMediumLight,
