@@ -7,6 +7,7 @@ import {
   useGetRuntimeTransactionsTxHash,
   Runtime,
   Layer,
+  isAccountNonEmpty,
 } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -99,7 +100,10 @@ export const useSearch = (q: SearchParams) => {
   const isLoading = Object.values(queries).some(query => query.isLoading)
   const blocks = queries.blockHeight.results || []
   const transactions = queries.txHash.results || []
-  const accounts = [...(queries.oasisAccount.results || []), ...(queries.evmBech32Account.results || [])]
+  const accounts = [
+    ...(queries.oasisAccount.results || []),
+    ...(queries.evmBech32Account.results || []),
+  ].filter(isAccountNonEmpty)
   const allResults = [...blocks, ...transactions, ...accounts]
   const results: SearchResults = {
     blocks,
