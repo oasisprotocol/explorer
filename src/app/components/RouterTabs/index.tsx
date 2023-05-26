@@ -7,6 +7,7 @@ type RouterTabsProps = {
   tabs: {
     label: string
     to: string
+    visible?: boolean
   }[]
 }
 
@@ -21,9 +22,11 @@ export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
   return (
     <>
       <Tabs value={currentTab?.to}>
-        {tabs.map(tab => (
-          <Tab key={tab.to} component={RouterLink} value={tab.to} label={tab.label} to={tab.to} />
-        ))}
+        {tabs
+          .filter(tab => tab === currentTab || tab.visible !== false)
+          .map(tab => (
+            <Tab key={tab.to} component={RouterLink} value={tab.to} label={tab.label} to={tab.to} />
+          ))}
       </Tabs>
       <Outlet />
     </>
