@@ -36,7 +36,8 @@ export const COLORS = {
   disabledPagination: '#7575a7',
   purpleBackground: '#e0e0f4',
   inactiveTab: '#e5e5f6',
-  disabledPrimaryButton: '#c6e3fa',
+  disabledPrimaryBackground: '#acadb0',
+  disabledPrimaryText: '#d5d6d7',
   errorIndicatorBackground: '#d44c4c',
   aqua: '#00feff',
   shadowBlue: '#8484ab',
@@ -46,4 +47,5 @@ export const COLORS = {
   iconBackground: '#d4d3f2',
   graphLabel: '#191932',
   graphLine: '#01F1E3',
+  paraTimeStatus: '#8081ac',
 } satisfies { [colorName: string]: string }

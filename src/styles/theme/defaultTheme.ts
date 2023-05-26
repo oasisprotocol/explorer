@@ -5,6 +5,7 @@ import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
+import { menuItemClasses } from '@mui/material/MenuItem'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -203,11 +204,54 @@ export const defaultTheme = createTheme({
           borderColor: COLORS.grayMediumLight,
           textTransform: 'capitalize',
           ':disabled': {
-            backgroundColor: COLORS.disabledPrimaryButton,
+            backgroundColor: COLORS.disabledPrimaryBackground,
+            color: COLORS.disabledPrimaryText,
+            borderColor: COLORS.grayMediumLight,
+          },
+          '&:hover, &:focus-visible': {
+            backgroundColor: COLORS.brandLight,
+            borderColor: COLORS.brandLight,
+          },
+          '&:active': {
+            backgroundColor: COLORS.brandExtraDark,
+            borderColor: COLORS.brandExtraDark,
+          },
+        },
+        outlinedSecondary: {
+          borderColor: COLORS.brandExtraDark,
+          color: COLORS.brandExtraDark,
+          backgroundColor: COLORS.white,
+          ':disabled': {
+            backgroundColor: COLORS.disabledPrimaryBackground,
+            color: COLORS.disabledPrimaryText,
+            borderColor: COLORS.grayMediumLight,
+          },
+          '&:hover, &:focus-visible': {
+            backgroundColor: COLORS.grayMediumLight,
+            borderColor: COLORS.brandExtraDark,
+          },
+          '&:active': {
+            backgroundColor: COLORS.grayMedium,
+            borderColor: COLORS.brandExtraDark,
           },
         },
         containedSecondary: {
           textTransform: 'capitalize',
+        },
+        textPrimary: {
+          color: COLORS.brandDark,
+          textTransform: 'capitalize',
+          '&&:hover, &&:focus-visible, &&:active': {
+            color: COLORS.brandExtraDark,
+            backgroundColor: 'transparent',
+            textDecoration: 'underline',
+          },
+        },
+        textSizeMedium: {
+          fontSize: '16px',
+        },
+        textSizeSmall: {
+          fontSize: '14px',
         },
       },
       variants: [
@@ -432,6 +476,14 @@ export const defaultTheme = createTheme({
           }),
         },
       ],
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paperAnchorTop: ({ theme }) => ({
+          borderRadius: '0 0 12px 12px',
+          padding: `${theme.spacing(4)} 5%`,
+        }),
+      },
     },
     MuiLink: {
       styleOverrides: {
@@ -736,6 +788,36 @@ export const defaultTheme = createTheme({
           }),
         },
       ],
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: COLORS.grayExtraDark,
+          [`&.${menuItemClasses.selected}`]: {
+            color: COLORS.brandDark,
+            backgroundColor: COLORS.grayLight,
+            '&:hover': {
+              color: COLORS.brandDark,
+              backgroundColor: COLORS.grayMediumLight,
+            },
+          },
+          [`&.${menuItemClasses.disabled}`]: {
+            color: COLORS.grayMedium,
+            opacity: 1,
+          },
+          '&:hover': {
+            color: COLORS.grayExtraDark,
+            backgroundColor: COLORS.grayMediumLight,
+          },
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+        },
+      },
     },
   },
 })

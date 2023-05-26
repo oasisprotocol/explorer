@@ -38,7 +38,7 @@ const Template: StoryFn = () => {
       <br />
 
       <SelectNetworkButton isSelectedNetwork={false}>SelectNetworkButton</SelectNetworkButton>
-      <NetworkButton layer="emerald" network="mainnet" />
+      <NetworkButton layer="emerald" network="mainnet" onClick={() => {}} />
 
       <br />
       <br />

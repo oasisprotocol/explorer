@@ -1,6 +1,5 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
 import Button, { buttonClasses } from '@mui/material/Button'
 import CheckIcon from '@mui/icons-material/Check'
@@ -8,22 +7,9 @@ import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { Circle } from '../Circle'
-import { MainnetIcon } from '../../components/CustomIcons/Mainnet'
-import { TestnetIcon } from '../../components/CustomIcons/Testnet'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
-
-const getLabels = (t: TFunction): { [key in Layer]: string } => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.consensus]: t('common.consensus'),
-})
-
-const getIcons = (): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon />,
-  [Network.testnet]: <TestnetIcon />,
-})
+import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 
 export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   alignItems: 'center',
@@ -84,12 +70,13 @@ export const StyledBox = styled(Box)(({ theme }) => ({
 type NetworkButtonProps = {
   layer: Layer
   network: Network
+  onClick: () => void
 }
 
-export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network }) => {
+export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLabels(t)
-  const icons = getIcons()
+  const labels = getLayerLabels(t)
+  const icons = getNetworkIcons()
 
   return (
     <StyledNetworkButton
@@ -98,6 +85,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network }) => {
       variant="outlined"
       startIcon={icons[network]}
       endIcon={<EditIcon />}
+      onClick={onClick}
     >
       <StyledBox>
         {labels[layer]}
@@ -126,12 +114,12 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-export const MobileNetworkButton: FC<NetworkButtonProps> = ({ layer }) => {
+export const MobileNetworkButton: FC<Omit<NetworkButtonProps, 'network'>> = ({ layer, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLabels(t)
+  const labels = getLayerLabels(t)
 
   return (
-    <StyledMobileNetworkButton>
+    <StyledMobileNetworkButton onClick={onClick}>
       {labels[layer]}
       <Circle color={COLORS.eucalyptus} size={4}>
         <CheckIcon sx={{ fontSize: 15, color: COLORS.white }} />
