@@ -1,4 +1,9 @@
-import { EvmTokenType, RuntimeAccount, RuntimeBlock } from '../../oasis-indexer/api'
+import {
+  EvmTokenType,
+  groupAccountTokenBalances,
+  RuntimeAccount,
+  RuntimeBlock,
+} from '../../oasis-indexer/api'
 
 export const suggestedParsedBlock: RuntimeBlock = {
   round: 1396255,
@@ -22,7 +27,7 @@ export const sapphireParsedBlock: RuntimeBlock = {
   network: 'mainnet',
 }
 
-export const suggestedParsedAccount: RuntimeAccount = {
+export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances({
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
   address_preimage: {
     address_data: 'ulBIGP3Y09ui74/ZtPTVxxrR0dM=',
@@ -56,4 +61,4 @@ export const suggestedParsedAccount: RuntimeAccount = {
   },
   layer: 'emerald',
   network: 'mainnet',
-}
+})

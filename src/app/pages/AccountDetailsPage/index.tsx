@@ -6,32 +6,24 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useGetRosePrice } from '../../../coin-gecko/api'
-import { Layer, RuntimeAccount, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
-import { AppErrors } from '../../../types/errors'
+import { RuntimeAccount } from '../../../oasis-indexer/api'
 import { accountTokenContainerId } from './TokensCard'
+import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const { network, layer } = useRequiredScopeParam()
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Loading consensus
-    // We should use useGetConsensusAccountsAddress()
-  }
+
+  const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
-  const accountQuery = useGetRuntimeAccountsAddress(network, layer, address)
-  const account = accountQuery.data?.data
+  const { account, isLoading } = useAccount(scope, address)
+
   const rosePriceQuery = useGetRosePrice()
 
   return (
     <PageLayout>
       <SubPageCard featured title={t('account.title')}>
-        <AccountDetailsView
-          isLoading={accountQuery.isLoading}
-          account={account}
-          roseFiatValue={rosePriceQuery.data}
-        />
+        <AccountDetailsView isLoading={isLoading} account={account} roseFiatValue={rosePriceQuery.data} />
       </SubPageCard>
       <RouterTabs
         tabs={[

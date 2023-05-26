@@ -41,6 +41,7 @@ declare module './generated/api' {
     network: Network
     layer: Layer
     address_eth?: string
+    tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
   }
 }
 
@@ -58,6 +59,23 @@ function wrapWithNetwork<P extends Array<any>, Q>(f: (...args: P) => Q): (net: N
   return (net, ...args) => {
     console.log('Should use', net)
     return f(...args)
+  }
+}
+
+export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBalances'>): RuntimeAccount => {
+  const tokenBalances: Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]> = {
+    ERC1155: [],
+    ERC20: [],
+    ERC721: [],
+    OasisSdk: [],
+  }
+  account.evm_balances.forEach(balance => {
+    if (balance.token_type) tokenBalances[balance.token_type].push(balance)
+  })
+
+  return {
+    ...account,
+    tokenBalances,
   }
 }
 
@@ -282,33 +300,37 @@ export const useGetRuntimeAccountsAddress: typeof _f7 = (network, runtime, addre
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeAccount, headers, status) => {
           if (status !== 200) return data
-          return {
+          return groupAccountTokenBalances({
             ...data,
             address_eth: getEthAccountAddress(data.address_preimage),
-            evm_balances: data.evm_balances?.map(token => {
-              return {
-                ...token,
-                balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
-              }
-            }),
-            balances: data.balances?.map(token => {
-              return {
-                ...token,
-                balance: token.balance ? fromBaseUnits(token.balance, token.token_decimals) : undefined,
-              }
-            }),
+            evm_balances: (data.evm_balances || [])
+              .filter(token => token.balance) // TODO: why do we filter for this? According to the API it must be there
+              .map(token => {
+                return {
+                  ...token,
+                  balance: fromBaseUnits(token.balance, token.token_decimals),
+                }
+              }),
+            balances: (data.balances || [])
+              .filter(token => token.balance) // TODO: why do we filter for this? According to the API it must be there
+              .map(token => {
+                return {
+                  ...token,
+                  balance: fromBaseUnits(token.balance, token.token_decimals),
+                }
+              }),
             layer: runtime,
             network,
             stats: {
               ...data.stats,
               total_received: data.stats?.total_received
                 ? fromBaseUnits(data.stats?.total_received, paraTimesConfig[runtime].decimals)
-                : undefined,
+                : '0',
               total_sent: data.stats?.total_sent
                 ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig[runtime].decimals)
-                : undefined,
+                : '0',
             },
-          }
+          })
         },
         ...arrayify(options?.axios?.transformResponse),
       ],
