@@ -5,7 +5,7 @@ import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
-import { Layer } from './generated/api'
+import { Layer, RuntimeAccount } from './generated/api'
 import { getEthAccountAddress } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
@@ -43,6 +43,16 @@ declare module './generated/api' {
     address_eth?: string
   }
 }
+
+export const isAccountEmpty = (account: RuntimeAccount) => {
+  const { balances, evm_balances, stats } = account
+  const { total_received, total_sent, num_txns } = stats
+  const result =
+    !balances?.length && !evm_balances?.length && total_received === '0' && total_sent === '0' && !num_txns
+  return result
+}
+
+export const isAccountNonEmpty = (account: RuntimeAccount) => !isAccountEmpty(account)
 
 function wrapWithNetwork<P extends Array<any>, Q>(f: (...args: P) => Q): (net: Network, ...args: P) => Q {
   return (net, ...args) => {
