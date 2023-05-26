@@ -11,13 +11,13 @@ import { CardEmptyState } from './CardEmptyState'
 import { Table, TableCellAlign } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { Layer, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
+import { EvmTokenType, Layer, useGetRuntimeAccountsAddress } from '../../../oasis-indexer/api'
 import { AppErrors } from '../../../types/errors'
 import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 type TokensCardProps = {
-  type: 'ERC20' | 'ERC721'
+  type: EvmTokenType
 }
 
 export const accountTokenContainerId = 'tokens'
@@ -26,7 +26,7 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
   const address = useLoaderData() as string
   const locationHash = useLocation().hash.replace('#', '')
-  const tokenLabel = t(`account.${type}`)
+  const tokenLabel = t(`account.${type}` as any)
   const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
   const tableColumns = [
     { content: t('common.name') },

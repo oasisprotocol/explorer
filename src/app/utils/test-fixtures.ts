@@ -1,4 +1,4 @@
-import { RuntimeAccount, RuntimeBlock } from '../../oasis-indexer/api'
+import { EvmTokenType, RuntimeAccount, RuntimeBlock } from '../../oasis-indexer/api'
 
 export const suggestedParsedBlock: RuntimeBlock = {
   round: 1396255,
@@ -38,7 +38,7 @@ export const suggestedParsedAccount: RuntimeAccount = {
       token_decimals: 18,
       token_name: 'FTP',
       token_symbol: 'FTP',
-      token_type: 'ERC20',
+      token_type: EvmTokenType.ERC20,
     },
     {
       balance: '-3372955.09999999999999995',
@@ -46,7 +46,7 @@ export const suggestedParsedAccount: RuntimeAccount = {
       token_decimals: 18,
       token_name: 'YUZU',
       token_symbol: 'YUZU',
-      token_type: 'ERC20',
+      token_type: EvmTokenType.ERC20,
     },
   ],
   stats: {

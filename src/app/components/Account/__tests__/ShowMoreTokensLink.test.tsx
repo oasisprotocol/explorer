@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
-import { RuntimeAccount, Token } from '../../../../oasis-indexer/api'
+import { EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-indexer/api'
 
 const mockedAccount = {
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
@@ -14,7 +14,7 @@ const mockedToken1: Token = {
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly1',
   token_name: 'ROSE',
   token_symbol: 'ROSE',
-  token_type: 'ERC20',
+  token_type: EvmTokenType.ERC20,
   token_decimals: 18,
 }
 
@@ -23,7 +23,7 @@ const mockedToken2: Token = {
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly2',
   token_name: 'USDT',
   token_symbol: 'USDT',
-  token_type: 'ERC20',
+  token_type: EvmTokenType.ERC20,
   token_decimals: 18,
 }
 
@@ -32,7 +32,7 @@ const mockedToken3: Token = {
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly3',
   token_name: 'ERC721',
   token_symbol: 'ERC721',
-  token_type: 'ERC721',
+  token_type: EvmTokenType.ERC721,
   token_decimals: 18,
 }
 
@@ -41,7 +41,7 @@ const mockedToken4: Token = {
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly4',
   token_name: 'ROSE',
   token_symbol: 'ROSE',
-  token_type: 'ERC20',
+  token_type: EvmTokenType.ERC20,
   token_decimals: 18,
 }
 

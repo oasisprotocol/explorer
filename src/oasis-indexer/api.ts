@@ -11,7 +11,7 @@ import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 
 export type * from './generated/api'
-export { Layer, Runtime, RuntimeEventType } from './generated/api'
+export { Layer, Runtime, RuntimeEventType, EvmTokenType } from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
 export type HasScope = SearchScope

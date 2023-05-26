@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { RuntimeAccount, type Token } from '../../../oasis-indexer/api'
+import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTokenContainerId } from '../../pages/AccountDetailsPage/TokensCard'
 
@@ -26,13 +26,13 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
   const erc20link = RouteUtils.getAccountTokensRoute(
     account,
     account.address_eth ?? account.address,
-    'ERC20',
+    EvmTokenType.ERC20,
     accountTokenContainerId,
   )
   const erc721Link = RouteUtils.getAccountTokensRoute(
     account,
     account.address_eth ?? account.address,
-    'ERC721',
+    EvmTokenType.ERC721,
     accountTokenContainerId,
   )
   const additionalTokensCounter = tokens.length - pills.length
@@ -44,7 +44,7 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
   // link to ERC20 tab otherwise if there are only ERC721 tokens not included in pills link to the ERC721
   const pillsSymbols = new Set(pills.map(({ token_contract_addr }) => token_contract_addr))
   const showMoreItems = tokens.filter(({ token_contract_addr }) => !pillsSymbols.has(token_contract_addr))
-  const hasERC20 = showMoreItems.some(item => item.token_type === 'ERC20')
+  const hasERC20 = showMoreItems.some(item => item.token_type === EvmTokenType.ERC20)
   const targetShowMoreLink = hasERC20 ? erc20link : erc721Link
 
   return (
