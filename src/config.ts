@@ -97,3 +97,5 @@ export const paraTimesConfig = {
   [Layer.sapphire]: sapphireConfig,
   [Layer.consensus]: null,
 } satisfies LayersConfig
+
+export const showEmptyAccountDetails = true
