@@ -29,6 +29,7 @@ declare module '@mui/material/styles' {
     notificationText?: string
     networkBubbleBorder?: string
     networkBubbleBackground?: string
+    descriptionListSeparator?: string
   }
 
   interface PaletteColor extends CustomLayoutPalette {}
@@ -97,6 +98,7 @@ export const defaultTheme = createTheme({
       notificationText: COLORS.brandDark,
       networkBubbleBorder: COLORS.white,
       networkBubbleBackground: COLORS.white,
+      descriptionListSeparator: COLORS.grayLight,
     },
     primary: {
       main: COLORS.brandMedium,

@@ -42,6 +42,9 @@ const ResultListFrame = styled(Box)(({ theme }) => {
       paddingTop: 32,
     },
     '&& > div > div > div.MuiCardContent-root': {},
+    '&& dt, && dd': {
+      boxShadow: `0px 1px 0px ${theme.palette.layout.descriptionListSeparator}`,
+    },
   }
 })
 

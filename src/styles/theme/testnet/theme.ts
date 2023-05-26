@@ -23,6 +23,7 @@ export const testnetTheme = createTheme(
         notificationText: COLORS.brandDark,
         networkBubbleBorder: COLORS.testnet,
         networkBubbleBackground: COLORS.testnetLight,
+        descriptionListSeparator: COLORS.grayMedium2,
       },
     },
   }),

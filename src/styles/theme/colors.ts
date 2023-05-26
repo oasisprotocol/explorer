@@ -20,6 +20,7 @@ export const COLORS = {
   grayExtraDark: '#06152b',
   grayLight: '#f4f5f7',
   grayMedium: '#565b61',
+  grayMedium2: '#d5d6d7',
   grayMediumLight: '#e3e8ed',
   honeydew: '#e8faf3',
   lavenderGray: '#c5c7ca',

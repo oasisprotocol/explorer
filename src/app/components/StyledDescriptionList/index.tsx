@@ -43,6 +43,8 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   'dt, dd': {
     display: 'flex',
     alignItems: 'center',
+    // TODO do we want to use this here? Discuss with Don
+    // boxShadow: `0px 1px 0px ${theme.palette.layout.descriptionListSeparator}`,
     boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
     ':last-of-type': {
       boxShadow: 'none',
