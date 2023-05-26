@@ -1,5 +1,6 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
@@ -9,6 +10,8 @@ import { NetworkButton, MobileNetworkButton } from './NetworkButton'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
+import { ParaTimePicker } from './../ParaTimePicker'
+import { RouteUtils } from '../../utils/route-utils'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   marginLeft: `-${theme.spacing(1)}`,
@@ -30,10 +33,14 @@ type NetworkSelectorProps = {
 
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const labels = getNetworkNames(t)
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const handleDrawerClose = () => setOpenDrawer(false)
+  const handleDrawerOpen = () => setOpenDrawer(true)
 
   return (
     <Box
@@ -43,7 +50,15 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
         justifyContent: isDesktop ? 'center' : 'flex-end',
       }}
     >
-      {!isMobile && <NetworkButton layer={layer} network={network} />}
+      <ParaTimePicker
+        open={openDrawer}
+        onClose={handleDrawerClose}
+        onConfirm={(network: Network, layer: Layer) => {
+          handleDrawerClose()
+          navigate(RouteUtils.getDashboardRoute({ network, layer }))
+        }}
+      />
+      {!isMobile && <NetworkButton layer={layer} network={network} onClick={handleDrawerOpen} />}
       {isDesktop && network !== Network.mainnet && (
         <StyledBox>
           <Typography
@@ -56,7 +71,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
           </Typography>
         </StyledBox>
       )}
-      {isMobile && <MobileNetworkButton layer={layer} network={network} />}
+      {isMobile && <MobileNetworkButton layer={layer} onClick={handleDrawerOpen} />}
     </Box>
   )
 }

@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Drawer from '@mui/material/Drawer'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import Divider from '@mui/material/Divider'
@@ -20,9 +21,18 @@ import { LayerDetails } from './LayerDetails'
 type ParaTimePickerProps = {
   onClose: () => void
   onConfirm: (network: Network, layer: Layer) => void
+  open: boolean
 }
 
-export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm }) => {
+export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
+  <Drawer anchor="top" open={open} onClose={onClose}>
+    <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
+  </Drawer>
+)
+
+type ParaTimePickerContentProps = Omit<ParaTimePickerProps, 'open'>
+
+const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(false)

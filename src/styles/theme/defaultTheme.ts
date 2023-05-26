@@ -449,6 +449,14 @@ export const defaultTheme = createTheme({
         },
       ],
     },
+    MuiDrawer: {
+      styleOverrides: {
+        paperAnchorTop: ({ theme }) => ({
+          borderRadius: '0 0 12px 12px',
+          padding: `${theme.spacing(4)} ${theme.spacing(6)}`,
+        }),
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
