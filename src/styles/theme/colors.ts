@@ -46,4 +46,5 @@ export const COLORS = {
   iconBackground: '#d4d3f2',
   graphLabel: '#191932',
   graphLine: '#01F1E3',
+  paraTimeStatus: '#8081ac',
 } satisfies { [colorName: string]: string }

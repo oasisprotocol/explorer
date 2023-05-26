@@ -15,6 +15,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
+import { LayerDetails } from './LayerDetails'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -77,7 +78,14 @@ export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm }) 
               setSelectedLayer={setSelectedLayer}
             />
           </Grid>
-          <Grid xs={6} />
+          <Grid xs={6}>
+            <LayerDetails
+              activeLayer={layer}
+              hoveredLayer={hoveredLayer}
+              selectedLayer={selectedLayer}
+              network={selectedNetwork || network}
+            />
+          </Grid>
         </Grid>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>

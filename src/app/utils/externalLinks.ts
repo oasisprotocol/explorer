@@ -11,6 +11,8 @@ export const socialMedia = {
 const docsUrl = 'https://docs.oasis.io/'
 export const docs = {
   home: docsUrl,
+  consensus: `${docsUrl}core/consensus/`,
+  cipher: `${docsUrl}dapp/cipher/`,
   emerald: `${docsUrl}dapp/emerald/`,
   sapphire: `${docsUrl}dapp/sapphire/`,
   token: `${docsUrl}general/oasis-network/token-metrics-and-distribution`,

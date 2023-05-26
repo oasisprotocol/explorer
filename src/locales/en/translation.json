@@ -206,10 +206,24 @@
     "header": "ParaTime Snapshot"
   },
   "paraTimePicker": {
+    "chainId": "Chain ID:",
+    "decimal": "Decimal: {{ id }}",
+    "hex": "Hex: {{ id }}",
     "less": "Show Less",
     "more": "Show More",
+    "readMore": "Read more about {{ layer }} on {{ network }} in Oasis Docs",
+    "rpcHttp": "RPC HTTP endpoint: {{ endpoint }}",
+    "rpcWebSockets": "RPC WebSockets endpoint: {{ endpoint }}",
     "selected": "(currently active)",
-    "toggleNetworkMenu": "Toggle networks menu"
+    "toggleNetworkMenu": "Toggle networks menu",
+    "mainnet": {
+      "emerald": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility.",
+      "sapphire": "The Sapphire ParaTime is our official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
+    },
+    "testnet": {
+      "emerald": "The Testnet of the EVM Compatible ParaTime providing a smart contract development environment.",
+      "sapphire": "The Testnet of the official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
+    }
   },
   "home": {
     "apiOffline": "Our API is offline. We’re trying to reconnect",
