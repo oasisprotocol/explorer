@@ -27,6 +27,7 @@ import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { DashboardLink } from '../DashboardPage/DashboardLink'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -147,7 +148,9 @@ export const TransactionDetailView: FC<{
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>
-              <dd>{t(`common.${transaction.layer}`)}</dd>
+              <dd>
+                <DashboardLink scope={transaction} />
+              </dd>
             </>
           )}
           <dt>{t('common.hash')}</dt>

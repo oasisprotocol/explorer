@@ -17,6 +17,7 @@ import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/TransactionsCard'
 import Link from '@mui/material/Link'
+import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -73,7 +74,9 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>
-              <dd>{t(`common.${account.layer}`)}</dd>
+              <dd>
+                <DashboardLink scope={account} />
+              </dd>
             </>
           )}
           <StyledAvatarContainer>
