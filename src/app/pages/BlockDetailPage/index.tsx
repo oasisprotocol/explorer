@@ -18,6 +18,7 @@ import { transactionsContainerId } from './TransactionsCard'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { DashboardLink } from '../DashboardPage/DashboardLink'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -78,7 +79,9 @@ export const BlockDetailView: FC<{
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>
-          <dd>{t(`common.${block.layer}`)}</dd>
+          <dd>
+            <DashboardLink scope={block} />
+          </dd>
         </>
       )}
       <dt>{t('common.height')}</dt>
