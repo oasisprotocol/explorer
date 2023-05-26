@@ -10,15 +10,13 @@ import { Blocks } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
-import { useLayerParam } from '../../hooks/useLayerParam'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestBlocks: FC = () => {
   const { t } = useTranslation()
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const { network, layer } = useRequiredScopeParam()
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus blocks is not yet implemented.

@@ -1,4 +1,4 @@
-import { EvmEventParam, Layer, RuntimeEvent, RuntimeEventType } from '../../../oasis-indexer/api'
+import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-indexer/api'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
@@ -13,13 +13,9 @@ import TableBody from '@mui/material/TableBody'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
-import { Network } from '../../../types/network'
+import { SearchScope } from '../../../types/searchScope'
 
-const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventParam }> = ({
-  network,
-  layer,
-  param,
-}) => {
+const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ scope, param }) => {
   /**
    * According to the API docs:
    *
@@ -31,7 +27,7 @@ const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventPar
   switch (param.evm_type) {
     // TODO: handle more EVM types
     case 'address':
-      return <AccountLink network={network} address={param.value as string} layer={layer} />
+      return <AccountLink scope={scope} address={param.value as string} />
     case 'uint256':
       // TODO: format with BigNumber
       return <span>{param.value as string}</span>
@@ -40,11 +36,7 @@ const EvmEventParamData: FC<{ network: Network; layer: Layer; param: EvmEventPar
   }
 }
 
-const DecodedLogEvent: FC<{ network: Network; layer: Layer; event: RuntimeEvent }> = ({
-  network,
-  layer,
-  event,
-}) => {
+const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scope, event }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -92,7 +84,7 @@ const DecodedLogEvent: FC<{ network: Network; layer: Layer; event: RuntimeEvent 
                           <TableCell>{param.name}</TableCell>
                           <TableCell>{param.evm_type}</TableCell>
                           <TableCell>
-                            <EvmEventParamData param={param} network={network} layer={layer} />{' '}
+                            <EvmEventParamData param={param} scope={scope} />{' '}
                           </TableCell>
                           <TableCell>
                             <CopyToClipboard
@@ -130,11 +122,10 @@ const DecodedLogEvent: FC<{ network: Network; layer: Layer; event: RuntimeEvent 
 }
 
 export const TransactionLogEvent: FC<{
-  network: Network
-  layer: Layer
+  scope: SearchScope
   event: RuntimeEvent
   isFirst: boolean
-}> = ({ network, layer, event, isFirst }) => {
+}> = ({ scope, event, isFirst }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -150,7 +141,7 @@ export const TransactionLogEvent: FC<{
           <>
             <dt>{t('transaction.header')}</dt>
             <dd>
-              <TransactionLink network={network} layer={layer} hash={event.tx_hash} />
+              <TransactionLink scope={scope} hash={event.tx_hash} />
             </dd>
           </>
         )}
@@ -159,7 +150,7 @@ export const TransactionLogEvent: FC<{
           <>
             <dt>{t('transactionEvent.decoded')}</dt>
             <dd>
-              <DecodedLogEvent network={network} layer={layer} event={event} />
+              <DecodedLogEvent scope={scope} event={event} />
             </dd>
           </>
         )}

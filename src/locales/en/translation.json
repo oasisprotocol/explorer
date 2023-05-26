@@ -236,7 +236,7 @@
     "mobilePlaceholder": "Search Address, Block, Txn, etc",
     "noResults": {
       "header": "No results found",
-      "networkHeader": "No results found on {{network}}",
+      "scopeHeader": "No results found on {{scope}}",
       "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
     },
     "otherResults": {
@@ -264,6 +264,6 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink></OptionalBreak>",
-    "sectionHeader": "Results on {{ network }}"
+    "sectionHeader": "Results on {{ scope }}"
   }
 }

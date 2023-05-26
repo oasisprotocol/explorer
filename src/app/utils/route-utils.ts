@@ -4,6 +4,7 @@ import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './he
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-indexer/api'
 import { Network } from '../../types/network'
+import { SearchScope } from '../../types/searchScope'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK: Partial<Record<Network, Layer[]>> = {
@@ -14,46 +15,45 @@ export abstract class RouteUtils {
     ],
   }
 
-  static getDashboardRoute = (network: Network, layer: Layer) => {
+  static getDashboardRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
   }
 
-  static getLatestTransactionsRoute = (network: Network, layer: Layer) => {
+  static getLatestTransactionsRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/transactions`
   }
 
-  static getLatestBlocksRoute = (network: Network, layer: Layer) => {
+  static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks`
   }
 
-  static getBlockRoute = (network: Network, blockHeight: number, layer: Layer) => {
+  static getBlockRoute = ({ network, layer }: SearchScope, blockHeight: number) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(
       blockHeight,
     )}`
   }
 
-  static getTransactionRoute = (network: Network, txHash: string, layer: Layer) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/transactions/${encodeURIComponent(
-      txHash,
-    )}`
+  static getTransactionRoute = (scope: SearchScope, txHash: string) => {
+    return `/${encodeURIComponent(scope.network)}/${encodeURIComponent(
+      scope.layer,
+    )}/transactions/${encodeURIComponent(txHash)}`
   }
 
-  static getAccountRoute = (network: Network, account: string, layer: Layer) => {
+  static getAccountRoute = ({ network, layer }: SearchScope, account: string) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/account/${encodeURIComponent(
       account,
     )}`
   }
 
   static getAccountTokensRoute = (
-    network: Network,
+    scope: SearchScope,
     account: string,
-    layer: Layer,
     tokenType: EvmTokenType,
     tokenAddress: string | undefined,
   ) => {
     const map: Record<EvmTokenType, string | undefined> = {
-      ERC20: `${this.getAccountRoute(network, account, layer)}/tokens/erc-20`,
-      ERC721: `${this.getAccountRoute(network, account, layer)}/tokens/erc-721`,
+      ERC20: `${this.getAccountRoute(scope, account)}/tokens/erc-20`,
+      ERC721: `${this.getAccountRoute(scope, account)}/tokens/erc-721`,
       ERC1155: undefined,
       OasisSdk: undefined,
     }
@@ -62,9 +62,9 @@ export abstract class RouteUtils {
     return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
-  static getSearchRoute = (network: Network | undefined, searchTerm: string) => {
-    return network
-      ? `/${network}/search?q=${encodeURIComponent(searchTerm)}`
+  static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
+    return scope
+      ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
@@ -72,7 +72,7 @@ export abstract class RouteUtils {
     return RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network] || []
   }
 
-  static getEnabledScopes(): { network: Network; layer: Layer }[] {
+  static getEnabledScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
       RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
     )
@@ -80,6 +80,12 @@ export abstract class RouteUtils {
 
   static getEnabledNetworks() {
     return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK) as Network[]
+  }
+
+  static getEnabledSearchScopes(): SearchScope[] {
+    return RouteUtils.getEnabledNetworks().flatMap(network =>
+      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+    )
   }
 }
 
@@ -124,25 +130,16 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
-export const networkLoader = async (args: LoaderFunctionArgs) => {
+export const scopeLoader = async (args: LoaderFunctionArgs) => {
   const {
-    params: { network },
+    params: { network, layer },
   } = args
 
   if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 
-  return true
-}
-
-export const layerLoader = async (args: LoaderFunctionArgs) => {
-  const {
-    params: { layer, network },
-  } = args
-
   if (
-    !network || // missing network
     !layer || // missing param
     !RouteUtils.getEnabledLayersForNetwork(network as Network).includes(layer as Layer) // unsupported on network
   ) {

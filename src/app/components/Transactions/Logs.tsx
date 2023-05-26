@@ -4,7 +4,7 @@ import { Layer, RuntimeEvent, RuntimeTransaction, useGetRuntimeEvents } from '..
 import { AppErrors } from '../../../types/errors'
 import { TransactionLogEvent } from './LogEvent'
 import { TextSkeleton } from '../../components/Skeleton'
-import { Network } from '../../../types/network'
+import { SearchScope } from '../../../types/searchScope'
 
 export const TransactionLogs: FC<{
   transaction: RuntimeTransaction
@@ -18,34 +18,20 @@ export const TransactionLogs: FC<{
     limit: 100, // We want to avoid pagination here, if possible
   })
   const { isLoading, data } = eventsQuery
-  return (
-    <TransactionLogsView
-      network={transaction.network}
-      layer={transaction.layer}
-      events={data?.data?.events}
-      isLoading={isLoading}
-    />
-  )
+  return <TransactionLogsView scope={transaction} events={data?.data?.events} isLoading={isLoading} />
 }
 
 export const TransactionLogsView: FC<{
-  network: Network
-  layer: Layer
+  scope: SearchScope
   events: RuntimeEvent[] | undefined
   isLoading: boolean
-}> = ({ network, layer, events, isLoading }) => {
+}> = ({ scope, events, isLoading }) => {
   return (
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (
-          <TransactionLogEvent
-            key={`event-${index}`}
-            network={network}
-            layer={layer}
-            isFirst={!index}
-            event={event}
-          />
+          <TransactionLogEvent key={`event-${index}`} scope={scope} isFirst={!index} event={event} />
         ))}
     </>
   )

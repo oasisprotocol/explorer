@@ -23,11 +23,10 @@ import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
-import { useLayerParam } from '../../hooks/useLayerParam'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
-import { useSafeNetworkParam } from '../../hooks/useNetworkParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -81,10 +80,9 @@ const ErrorBox = styled(Box)(() => ({
 export const TransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
-  const network = useSafeNetworkParam()
-  const layer = useLayerParam()
+  const scope = useRequiredScopeParam()
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (layer === Layer.consensus) {
+  if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Displaying consensus transactions is not yet implemented.
     // we should call useGetConsensusTransactionsTxHash()
@@ -93,8 +91,8 @@ export const TransactionDetailPage: FC = () => {
   const hash = useParams().hash!
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
-    network,
-    layer, // This is OK since consensus has been handled separately
+    scope.network,
+    scope.layer, // This is OK since consensus has been handled separately
     hash,
   )
 
@@ -154,11 +152,7 @@ export const TransactionDetailView: FC<{
           )}
           <dt>{t('common.hash')}</dt>
           <dd>
-            <TransactionLink
-              network={transaction.network}
-              hash={transaction.eth_hash || transaction.hash}
-              layer={transaction.layer}
-            />
+            <TransactionLink scope={transaction} hash={transaction.eth_hash || transaction.hash} />
             <CopyToClipboard value={transaction.eth_hash || transaction.hash} />
           </dd>
 
@@ -174,7 +168,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.block')}</dt>
           <dd>
-            <BlockLink network={transaction.network} layer={transaction.layer} height={transaction.round} />
+            <BlockLink scope={transaction} height={transaction.round} />
           </dd>
 
           <dt>{t('common.type')}</dt>
@@ -187,11 +181,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.from')}</dt>
           <dd>
-            <AccountLink
-              network={transaction.network}
-              address={transaction.sender_0_eth || transaction.sender_0}
-              layer={transaction.layer}
-            />
+            <AccountLink scope={transaction} address={transaction.sender_0_eth || transaction.sender_0} />
             <CopyToClipboard value={transaction.sender_0_eth || transaction.sender_0} />
           </dd>
 
@@ -199,11 +189,7 @@ export const TransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <AccountLink
-                  network={transaction.network}
-                  address={transaction.to_eth || transaction.to}
-                  layer={transaction.layer}
-                />
+                <AccountLink scope={transaction} address={transaction.to_eth || transaction.to} />
                 <CopyToClipboard value={transaction.to_eth || transaction.to} />
               </dd>
             </>

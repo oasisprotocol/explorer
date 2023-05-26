@@ -33,7 +33,7 @@ export const ResultsOnNetworkThemed: FC<{
   return (
     <>
       <Typography variant="h1" color={theme.palette.layout.main}>
-        {t('search.sectionHeader', { network: networkName })}
+        {t('search.sectionHeader', { scope: networkName })}
       </Typography>
       {network === Network.mainnet ? (
         content
