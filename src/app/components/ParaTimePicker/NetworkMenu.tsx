@@ -59,6 +59,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
 type NetworkMenuProps = {
   activeNetwork: Network
   hoveredNetwork?: Network
+  network: Network
   selectedNetwork?: Network
   setHoveredNetwork: (network?: Network) => void
   setSelectedNetwork: (network?: Network) => void
@@ -67,12 +68,13 @@ type NetworkMenuProps = {
 export const NetworkMenu: FC<NetworkMenuProps> = ({
   activeNetwork,
   hoveredNetwork,
+  network,
   selectedNetwork,
   setHoveredNetwork,
   setSelectedNetwork,
 }) => {
   const { t } = useTranslation()
-  const [expandNetworkMenu, setExpandNetworkMenu] = useState(false)
+  const [expandNetworkMenu, setExpandNetworkMenu] = useState(network !== Network.mainnet)
   const options: Network[] = RouteUtils.getEnabledNetworks()
   const filteredOptions = options.filter(option => option !== Network.mainnet)
 

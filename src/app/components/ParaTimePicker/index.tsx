@@ -35,7 +35,7 @@ type ParaTimePickerContentProps = Omit<ParaTimePickerProps, 'open'>
 const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
-  const [showNetworkMenu, setShowNetworkMenu] = useState(false)
+  const [showNetworkMenu, setShowNetworkMenu] = useState(network !== Network.mainnet)
   const [selectedLayer, setSelectedLayer] = useState<undefined | Layer>()
   const [selectedNetwork, setSelectedNetwork] = useState<undefined | Network>(network)
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
@@ -73,6 +73,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
               <NetworkMenu
                 activeNetwork={network}
                 hoveredNetwork={hoveredNetwork}
+                network={network}
                 selectedNetwork={selectedNetwork}
                 setHoveredNetwork={setHoveredNetwork}
                 setSelectedNetwork={setSelectedNetwork}
