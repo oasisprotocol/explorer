@@ -240,9 +240,9 @@
       "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
     },
     "otherResults": {
-      "otherNetworks": "other Networks",
-      "otherParatimes": "other Paratimes",
-      "otherNetworksAndParatimes": "other Networks and Paratimes",
+      "otherNetworks": "other <strong>Networks</strong>",
+      "otherParatimes": "other <strong>Paratimes</strong>",
+      "otherNetworksAndParatimes": "other <strong>Networks and Paratimes</strong>",
       "otherParatimesOnNetwork": "Other Paratimes on {{ network }}",
       "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on {{ location }}. Click to open these results.",
       "clickToShowMore": "We also found <strong>{{ countLabel }}</strong> on {{ location }}. Click to open these results.",

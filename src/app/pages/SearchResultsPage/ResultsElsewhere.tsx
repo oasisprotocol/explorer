@@ -114,7 +114,9 @@ export const ResultsElsewhere: FC<{
     <>
       <NotificationBox theme={notificationTheme} onClick={() => setOpen(false)}>
         <ZoomOut />
-        {t('search.otherResults.clickToHide', { location })}
+        <span>
+          <Trans i18nKey={'search.otherResults.clickToHide'} values={{ location }} />
+        </span>
       </NotificationBox>
       {hasResultsOnDifferentParatimes && (
         <ResultsFilteredThemed
