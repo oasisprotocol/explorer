@@ -36,9 +36,17 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
 
   return (
     <>
-      <Typography variant="h3" component="h3" sx={{ display: 'inline' }}>
-        {title}
-      </Typography>
+      <Box sx={{ mb: 5 }}>
+        <Typography
+          variant="h4"
+          component="h4"
+          sx={{
+            display: 'inline',
+          }}
+        >
+          {title}
+        </Typography>
+      </Box>
       {results.map((item, i) => (
         <div key={i}>
           {resultComponent(item)}
