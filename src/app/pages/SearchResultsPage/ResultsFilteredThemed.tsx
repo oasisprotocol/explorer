@@ -21,6 +21,7 @@ const ResultListFrame = styled(Box)(({ theme }) => {
     border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.networkBubbleBorder}`,
     background: theme.palette.layout.networkBubbleBackground,
     borderRadius: 12,
+    boxShadow: '-20px 4px 40px rgba(34, 47, 63, 0.24)',
     '&& > div > div': {
       // border: '2px solid green',
       borderTopLeftRadius: 0,
