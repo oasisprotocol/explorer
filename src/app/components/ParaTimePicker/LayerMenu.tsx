@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TFunction } from 'i18next'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import MenuList from '@mui/material/MenuList'
@@ -9,13 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-indexer/api'
-
-const getLabels = (t: TFunction): { [key in Layer]: string } => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.consensus]: t('common.consensus'),
-})
+import { getLayerLabels } from '../../utils/content'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
@@ -24,7 +17,7 @@ type BaseLayerMenuItemProps = {
 
 export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, layer }) => {
   const { t } = useTranslation()
-  const labels = getLabels(t)
+  const labels = getLayerLabels(t)
 
   return (
     <Tooltip arrow placement="top" title={'Coming soon'}>
@@ -50,7 +43,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   setSelectedLayer,
 }) => {
   const { t } = useTranslation()
-  const labels = getLabels(t)
+  const labels = getLayerLabels(t)
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
@@ -7,8 +7,6 @@ import { useTheme } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import CheckIcon from '@mui/icons-material/Check'
 import Link from '@mui/material/Link'
-import { MainnetIcon } from '../CustomIcons/Mainnet'
-import { TestnetIcon } from '../CustomIcons/Testnet'
 import { Circle } from '../Circle'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
@@ -16,6 +14,7 @@ import { Layer } from '../../../oasis-indexer/api'
 import { Link as RouterLink } from 'react-router-dom'
 import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
+import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 
 type LayerDetailsContent = {
   description: string
@@ -67,18 +66,6 @@ const getDetails = (t: TFunction): Details => ({
   },
 })
 
-const getLayerLabels = (t: TFunction): { [key in Layer]: string } => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.consensus]: t('common.consensus'),
-})
-
-const getIcons = (): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon />,
-  [Network.testnet]: <TestnetIcon />,
-})
-
 type LayerDetailsProps = {
   activeLayer: Layer
   hoveredLayer?: Layer
@@ -96,7 +83,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({
   const theme = useTheme()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
-  const icons = getIcons()
+  const icons = getNetworkIcons()
   const layer = hoveredLayer || selectedLayer || activeLayer
   const details = getDetails(t)[network][layer]
 

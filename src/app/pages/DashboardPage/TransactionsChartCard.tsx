@@ -31,13 +31,13 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
 
   const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
 
-  const buckets = data?.data.buckets.map(bucket => {
+  const buckets = data?.data?.buckets?.map(bucket => {
     return {
       bucket_start: bucket.bucket_start,
       volume_per_second: bucket.tx_volume / statsParams.bucket_size_seconds,
     }
   })
-  const totalTransactions = data?.data.buckets.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
+  const totalTransactions = data?.data?.buckets?.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
 
   const lineChartData = isDailyChart
     ? sumBucketsByStartDuration(buckets, 'volume_per_second', 'bucket_start', startOfHour)

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -10,14 +10,8 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Collapse from '@mui/material/Collapse'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
-import { MainnetIcon } from '../CustomIcons/Mainnet'
-import { TestnetIcon } from '../CustomIcons/Testnet'
 import { RouteUtils } from '../../utils/route-utils'
-
-const getIcons = (): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon />,
-  [Network.testnet]: <TestnetIcon />,
-})
+import { getNetworkIcons } from '../../utils/content'
 
 type NetworkMenuItemProps = Omit<NetworkMenuProps, 'options'> & {
   divider: boolean
@@ -35,7 +29,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
 }) => {
   const { t } = useTranslation()
   const labels = getNetworkNames(t)
-  const icons = getIcons()
+  const icons = getNetworkIcons()
 
   return (
     <MenuItem

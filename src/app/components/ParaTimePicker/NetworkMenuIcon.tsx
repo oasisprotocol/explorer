@@ -1,23 +1,17 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { Network } from '../../../types/network'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { COLORS } from '../../../styles/theme/colors'
-import { MainnetIcon } from '../CustomIcons/Mainnet'
-import { TestnetIcon } from '../CustomIcons/Testnet'
-
-const getIcons = (): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon />,
-  [Network.testnet]: <TestnetIcon />,
-})
+import { getNetworkIcons } from '../../utils/content'
 
 type NetworkMenuIconProps = {
   network: Network
 }
 
 export const NetworkMenuIcon: FC<NetworkMenuIconProps> = ({ network }) => {
-  const icons = getIcons()
+  const icons = getNetworkIcons()
 
   return (
     <MenuList>
