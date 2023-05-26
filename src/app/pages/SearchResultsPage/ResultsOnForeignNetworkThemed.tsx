@@ -6,10 +6,10 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Box from '@mui/material/Box'
 import { ResultsOnNetwork } from './ResultsOnNetwork'
-import { SearchQueries } from './hooks'
 import { COLORS } from '../../../styles/theme/colors'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import Warning from '@mui/icons-material/Warning'
+import { SearchResults } from './hooks'
 
 const NotificationBox = styled(Box)(({ theme }) => ({
   // TODO: this is probably not fully correct.
@@ -45,12 +45,12 @@ export const ResultsOnForeignNetworkThemed: FC<{
   network: Network
   alsoHasLocalResults: boolean
   openByDefault?: boolean
-  searchQueries: SearchQueries
+  searchResults: SearchResults
   numberOfResults: number
   roseFiatValue: number | undefined
 }> = ({
   network,
-  searchQueries,
+  searchResults,
   numberOfResults,
   roseFiatValue,
   openByDefault = false,
@@ -110,7 +110,7 @@ export const ResultsOnForeignNetworkThemed: FC<{
         <Warning />
         {t('search.otherResults.clickToHide', { networkName })}
       </NotificationBox>
-      <ResultsOnNetwork network={network} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
+      <ResultsOnNetwork network={network} searchResults={searchResults} roseFiatValue={roseFiatValue} />
     </Box>
   )
 }

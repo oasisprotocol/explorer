@@ -9,6 +9,7 @@ import {
   Layer,
 } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
+import { SearchParams } from '../../components/Search/search-utils'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -16,12 +17,13 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
-export type SearchQueries = {
-  blockHeight: ConditionalResults<RuntimeBlock>
-  txHash: ConditionalResults<RuntimeTransaction>
-  oasisAccount: ConditionalResults<RuntimeAccount>
-  evmBech32Account: ConditionalResults<RuntimeAccount>
+export type SearchResults = {
+  blocks: RuntimeBlock[]
+  transactions: RuntimeTransaction[]
+  accounts: RuntimeAccount[]
+  allResults: (RuntimeBlock | RuntimeTransaction | RuntimeAccount)[]
 }
+
 export function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
@@ -82,5 +84,31 @@ export function useRuntimeAccountConditionally(
   return {
     isLoading: queries.some(query => query.isInitialLoading),
     results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
+export const useSearch = (q: SearchParams) => {
+  const queries = {
+    blockHeight: useBlocksConditionally(q.blockHeight),
+    // TODO: searchQuery.blockHash when API is ready
+    txHash: useTransactionsConditionally(q.txHash),
+    oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
+    // TODO: remove evmBech32Account and use evmAccount when API is ready
+    evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
+  }
+  const isLoading = Object.values(queries).some(query => query.isLoading)
+  const blocks = queries.blockHeight.results || []
+  const transactions = queries.txHash.results || []
+  const accounts = [...(queries.oasisAccount.results || []), ...(queries.evmBech32Account.results || [])]
+  const allResults = [...blocks, ...transactions, ...accounts]
+  const results: SearchResults = {
+    blocks,
+    transactions,
+    accounts,
+    allResults,
+  }
+  return {
+    isLoading,
+    results,
   }
 }
