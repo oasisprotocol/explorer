@@ -84,3 +84,5 @@ export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs)
 export const useParamSearch = () => {
   return useLoaderData() as Awaited<ReturnType<typeof searchParamLoader>>
 }
+
+export type SearchParams = ReturnType<typeof useParamSearch>

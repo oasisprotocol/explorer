@@ -6,7 +6,7 @@ import { BlockDetailView } from '../BlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
-import { SearchQueries } from './hooks'
+import { SearchResults } from './hooks'
 
 /**
  * Component for selectively displaying a subset of search results that belongs to a specific network
@@ -15,15 +15,15 @@ import { SearchQueries } from './hooks'
  */
 export const ResultsOnNetwork: FC<{
   network: Network
-  searchQueries: SearchQueries
+  searchResults: SearchResults
   roseFiatValue: number | undefined
-}> = ({ network, searchQueries, roseFiatValue }) => {
+}> = ({ network, searchResults, roseFiatValue }) => {
   const { t } = useTranslation()
   return (
     <>
       <ResultsGroupByType
         title={t('search.results.blocks.title')}
-        results={searchQueries.blockHeight.results.filter(result => result.network === network)}
+        results={searchResults.blocks.filter(result => result.network === network)}
         resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
         link={item => RouteUtils.getBlockRoute(item, item.round)}
         linkLabel={t('search.results.blocks.viewLink')}
@@ -31,7 +31,7 @@ export const ResultsOnNetwork: FC<{
 
       <ResultsGroupByType
         title={t('search.results.transactions.title')}
-        results={searchQueries.txHash.results.filter(result => result.network === network)}
+        results={searchResults.transactions.filter(result => result.network === network)}
         resultComponent={item => (
           <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
         )}
@@ -41,10 +41,7 @@ export const ResultsOnNetwork: FC<{
 
       <ResultsGroupByType
         title={t('search.results.accounts.title')}
-        results={[
-          ...(searchQueries.oasisAccount.results ?? []).filter(result => result.network === network),
-          ...(searchQueries.evmBech32Account.results ?? []).filter(result => result.network === network),
-        ]}
+        results={searchResults.accounts.filter(result => result.network === network)}
         resultComponent={item => (
           <AccountDetailsView
             isLoading={false}

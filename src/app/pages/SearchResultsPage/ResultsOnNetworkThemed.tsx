@@ -6,8 +6,8 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Box from '@mui/material/Box'
 import { ResultsOnNetwork } from './ResultsOnNetwork'
-import { SearchQueries } from './hooks'
 import Typography from '@mui/material/Typography'
+import { SearchResults } from './hooks'
 
 /**
  * Component for selectively displaying a subset of search results that belongs to a specific network, with appropriate theming.
@@ -17,9 +17,9 @@ import Typography from '@mui/material/Typography'
  */
 export const ResultsOnNetworkThemed: FC<{
   network: Network
-  searchQueries: SearchQueries
+  searchResults: SearchResults
   roseFiatValue: number | undefined
-}> = ({ network, searchQueries, roseFiatValue }) => {
+}> = ({ network, searchResults, roseFiatValue }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -27,7 +27,7 @@ export const ResultsOnNetworkThemed: FC<{
   const otherTheme = getThemesForNetworks()[network]
 
   const content = (
-    <ResultsOnNetwork network={network} searchQueries={searchQueries} roseFiatValue={roseFiatValue} />
+    <ResultsOnNetwork network={network} searchResults={searchResults} roseFiatValue={roseFiatValue} />
   )
 
   return (

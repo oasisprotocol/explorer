@@ -23,15 +23,13 @@ describe('SearchResultsView', () => {
     renderWithProviders(
       <SearchResultsView
         wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
-        searchQueries={{
-          blockHeight: {
-            isLoading: false,
-            results: [suggestedParsedBlock, sapphireParsedBlock],
-          },
-          txHash: { isLoading: false, results: [] },
-          oasisAccount: { isLoading: false, results: [] },
-          evmBech32Account: { isLoading: false, results: [] },
+        searchResults={{
+          blocks: [suggestedParsedBlock, sapphireParsedBlock],
+          transactions: [],
+          accounts: [],
+          allResults: [suggestedParsedBlock, sapphireParsedBlock],
         }}
+        isLoading={false}
         roseFiatValue={1}
       />,
     )
@@ -54,12 +52,13 @@ describe('SearchResultsView', () => {
     renderWithProviders(
       <SearchResultsView
         wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
-        searchQueries={{
-          blockHeight: { isLoading: false, results: [] },
-          txHash: { isLoading: false, results: [] },
-          oasisAccount: { isLoading: false, results: [] },
-          evmBech32Account: { isLoading: false, results: [suggestedParsedAccount] },
+        searchResults={{
+          blocks: [],
+          transactions: [],
+          accounts: [suggestedParsedAccount],
+          allResults: [suggestedParsedAccount],
         }}
+        isLoading={false}
         roseFiatValue={1}
       />,
     )
