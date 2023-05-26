@@ -42,7 +42,7 @@ export const BlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')}>
         <BlockDetailView isLoading={isLoading} block={block} />
       </SubPageCard>
-      <TransactionsCard scope={scope} blockHeight={blockHeight} />
+      {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
     </PageLayout>
   )
 }
@@ -66,6 +66,7 @@ export const BlockDetailView: FC<{
   if (!block) return <></>
 
   const transactionsAnchor = `${RouteUtils.getBlockRoute(block, block.round)}#${transactionsContainerId}`
+  const transactionLabel = t('common.transactionsNumber', { count: block.num_transactions })
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
@@ -111,9 +112,13 @@ export const BlockDetailView: FC<{
 
       <dt>{t('common.transactions')}</dt>
       <dd>
-        <Link href={transactionsAnchor}>
-          {t('common.transactionsNumber', { count: block.num_transactions })}
-        </Link>
+        {block.num_transactions ? (
+          <Link href={transactionsAnchor}>
+            {t('common.transactionsNumber', { count: block.num_transactions })}
+          </Link>
+        ) : (
+          transactionLabel
+        )}
       </dd>
 
       <dt>{t('common.gasUsed')}</dt>
