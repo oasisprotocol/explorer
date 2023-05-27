@@ -21,6 +21,10 @@ const config = {
             name: '@mui/material',
             message: "Use '@mui/material/*' instead.",
           },
+          {
+            name: '@mui/icons-material',
+            message: "Use '@mui/icons-material/*' instead.",
+          },
         ],
         patterns: [
           {
