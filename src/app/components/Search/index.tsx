@@ -113,7 +113,9 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    navigate(RouteUtils.getSearchRoute(scope, value))
+    if (value) {
+      navigate(RouteUtils.getSearchRoute(scope, value))
+    }
   }
 
   const onClearValue = () => {
