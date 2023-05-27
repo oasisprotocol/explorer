@@ -7,12 +7,15 @@ import { Search } from '../Search'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
+import { Network } from '../../../types/network'
+import { useIsApiOffline } from '../OfflineBanner/hook'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const scope = useScopeParam()
+  const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
 
   if (!scope) {
     // On home-page and global search page there's no NetworkHeader
@@ -27,7 +30,7 @@ export const Header: FC = () => {
             <Logotype />
           </Grid>
           <Grid xs={8} sm={6} md={7} lg={8}>
-            <Search variant={isDesktop ? 'button' : 'icon'} />
+            <Search variant={isDesktop ? 'button' : 'icon'} disabled={isApiOffline} />
           </Grid>
         </Grid>
       </header>
@@ -56,7 +59,7 @@ export const Header: FC = () => {
       </Grid>
       {!isMobile && (
         <Box sx={{ mb: 6, px: isMobile ? 0 : '4%' }}>
-          <Search scope={scope} variant="icon" />
+          <Search scope={scope} variant="icon" disabled={isApiOffline} />
         </Box>
       )}
     </header>
