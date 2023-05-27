@@ -15,6 +15,13 @@ type LayerConfig = {
   local: LayerNetwork
   decimals: number
   type: RuntimeTypes
+
+  /**
+   * The maximum processing delay above which we consider the data on this paratime to be out of date.
+   *
+   * Specified in milliseconds.
+   */
+  outOfDateThreshold: number
 }
 
 export enum RuntimeTypes {
@@ -43,6 +50,7 @@ const emeraldConfig: LayerConfig = {
   },
   decimals: 18,
   type: RuntimeTypes.Evm,
+  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 const cipherConfig: LayerConfig = {
@@ -63,6 +71,7 @@ const cipherConfig: LayerConfig = {
   },
   decimals: 9,
   type: RuntimeTypes.Oasis,
+  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 const sapphireConfig: LayerConfig = {
@@ -85,6 +94,7 @@ const sapphireConfig: LayerConfig = {
 
   decimals: 18,
   type: RuntimeTypes.Evm,
+  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 type LayersConfig = {

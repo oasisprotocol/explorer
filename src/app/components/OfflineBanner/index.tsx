@@ -2,9 +2,10 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
-import { useScopeParam } from '../../hooks/useScopeParam'
+import { useRequiredScopeParam, useScopeParam } from '../../hooks/useScopeParam'
 import { getNetworkNames, Network } from '../../../types/network'
-import { useIsApiOffline } from './hook'
+import { useIsApiOffline, useRuntimeFreshness } from './hook'
+import { getNameForScope } from '../../../types/searchScope'
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   position: 'sticky',
@@ -31,4 +32,20 @@ export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNe
   return isNetworkOffline ? (
     <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
   ) : null
+}
+
+export const RuntimeOfflineBanner: FC = () => {
+  const scope = useRequiredScopeParam()
+  const { t } = useTranslation()
+
+  const { outOfDate, lastUpdate } = useRuntimeFreshness(scope)
+  if (!outOfDate) return null
+  const target = getNameForScope(t, scope)
+  return (
+    <StyledAlert severity="warning">
+      {lastUpdate
+        ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
+        : t('home.runtimeOutOfDate', { target })}
+    </StyledAlert>
+  )
 }

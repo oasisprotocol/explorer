@@ -7,5 +7,10 @@ export interface SearchScope {
   layer: Layer
 }
 
+export const MainnetEmerald: SearchScope = {
+  network: Network.mainnet,
+  layer: Layer.emerald,
+}
+
 export const getNameForScope = (t: TFunction, scope: SearchScope) =>
   `${getLayerNames(t)[scope.layer]} ${getNetworkNames(t)[scope.network]}`
