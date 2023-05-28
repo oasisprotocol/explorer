@@ -1,5 +1,9 @@
 import { TFunction } from 'i18next'
-import { Layer } from '../oasis-indexer/api'
+
+// Here we need to import from the generated code, in order to break
+// a cycle of imports which confuse jest
+// eslint-disable-next-line no-restricted-imports
+import { Layer } from '../oasis-indexer/generated/api'
 
 export type Network = (typeof Network)[keyof typeof Network]
 

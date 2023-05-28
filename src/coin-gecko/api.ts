@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
+import { NativeTicker, Ticker } from '../types/ticker'
 
 type GetRosePriceParams = {
   ids: string
@@ -39,4 +40,37 @@ export function useGetRosePrice() {
       staleTime,
     },
   )
+}
+
+export type TokenPriceInfo = {
+  price?: number
+  isLoading: boolean
+  isFree: boolean
+  hasUsedCoinGecko: boolean
+}
+
+export const useTokenPrice = (ticker: NativeTicker): TokenPriceInfo => {
+  const { isLoading: roseIsLoading, data: rosePrice } = useGetRosePrice()
+  switch (ticker) {
+    case Ticker.ROSE:
+      return {
+        price: rosePrice,
+        isLoading: roseIsLoading,
+        isFree: false,
+        hasUsedCoinGecko: true,
+      }
+    case Ticker.TEST:
+      return {
+        hasUsedCoinGecko: false,
+        isLoading: false,
+        isFree: true,
+      }
+    default:
+      console.warn('Checking price of unknown token', ticker)
+      return {
+        isLoading: false,
+        hasUsedCoinGecko: false,
+        isFree: false,
+      }
+  }
 }

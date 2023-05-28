@@ -4,6 +4,7 @@ import {
   RuntimeAccount,
   RuntimeBlock,
 } from '../../oasis-indexer/api'
+import { Ticker } from '../../types/ticker'
 
 export const suggestedParsedBlock: RuntimeBlock = {
   round: 1396255,
@@ -61,4 +62,5 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
   },
   layer: 'emerald',
   network: 'mainnet',
+  ticker: Ticker.ROSE,
 })

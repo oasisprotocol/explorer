@@ -28,6 +28,7 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../DashboardPage/DashboardLink'
+import { getNameForTicker, Ticker } from '../../../types/ticker'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -136,6 +137,8 @@ export const TransactionDetailView: FC<{
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
+  const tickerName = getNameForTicker(t, transaction?.ticker || Ticker.ROSE)
+
   return (
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
@@ -199,10 +202,10 @@ export const TransactionDetailView: FC<{
           )}
 
           <dt>{t('common.value')}</dt>
-          <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>
+          <dd>{t('common.valueInToken', { value: transaction.amount, ticker: tickerName })}</dd>
 
           <dt>{t('common.txnFee')}</dt>
-          <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
+          <dd>{t('common.valueInToken', { value: transaction.fee, ticker: tickerName })}</dd>
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>

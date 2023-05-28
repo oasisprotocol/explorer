@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { RoundedRoseBalance } from '../../components/RoundedBalance'
+import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -41,7 +41,7 @@ export type TableRuntimeTransactionList = {
   is_total_count_clipped: boolean
 }
 
-type TransactionProps = {
+type TransactionsProps = {
   transactions?: TableRuntimeTransaction[]
   ownAddress?: string
   isLoading: boolean
@@ -50,7 +50,7 @@ type TransactionProps = {
   verbose?: boolean
 }
 
-export const Transactions: FC<TransactionProps> = ({
+export const Transactions: FC<TransactionsProps> = ({
   isLoading,
   limit,
   pagination,
@@ -167,12 +167,12 @@ export const Transactions: FC<TransactionProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedRoseBalance value={transaction.fee} />,
+        content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
         key: 'fee_amount',
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedRoseBalance value={transaction.amount} />,
+        content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
         key: 'value',
       },
     ],
