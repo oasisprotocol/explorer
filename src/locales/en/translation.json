@@ -202,6 +202,10 @@
     "week": "Week",
     "month": "Month"
   },
+  "currentFiatValue": {
+    "title": "Current fiat value",
+    "explanation": "Calculated using current rate. Value at the time of transaction might have been completely different."
+  },
   "paraTimeSnapshot": {
     "header": "ParaTime Snapshot"
   },

@@ -34,7 +34,12 @@ export const ResultsOnNetwork: FC<{
         title={t('search.results.transactions.title')}
         results={searchResults.transactions.filter(result => result.network === network)}
         resultComponent={item => (
-          <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
+          <TransactionDetailView
+            isLoading={false}
+            transaction={item}
+            showLayer={true}
+            tokenPriceInfo={tokenPriceInfo}
+          />
         )}
         link={item => RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)}
         linkLabel={t('search.results.transactions.viewLink')}
