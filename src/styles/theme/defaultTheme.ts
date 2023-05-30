@@ -20,6 +20,8 @@ declare module '@mui/material/styles' {
 
   interface CustomLayoutPalette {
     border?: string
+    contrastMain?: string
+    contrastSecondary?: string
     darkBorder?: string
     hoverBorder?: string
     lightBorder?: string
@@ -88,6 +90,8 @@ export const defaultTheme = createTheme({
     layout: {
       main: COLORS.white,
       border: COLORS.brandDark,
+      contrastMain: COLORS.brandExtraDark,
+      contrastSecondary: COLORS.white,
       darkBorder: COLORS.brandExtraDark,
       hoverBorder: COLORS.white,
       lightBorder: COLORS.aqua,
