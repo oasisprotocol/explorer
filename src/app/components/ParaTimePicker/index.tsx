@@ -17,6 +17,8 @@ import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
+import HighlightOff from '@mui/icons-material/HighlightOff'
+import { RouteUtils } from '../../utils/route-utils'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -36,15 +38,26 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(network !== Network.mainnet)
-  const [selectedLayer, setSelectedLayer] = useState<undefined | Layer>()
-  const [selectedNetwork, setSelectedNetwork] = useState<undefined | Network>(network)
-  const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
-  const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
+  const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
+  const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
+  const selectNetwork = (newNetwork: Network) => {
+    setSelectedNetwork(newNetwork)
+    setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
+  }
 
   return (
     <Box>
-      <Box sx={{ mb: 5, color: 'red' }}>
+      <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
         <Logotype color={COLORS.brandExtraDark} />
+        <HighlightOff
+          htmlColor={COLORS.brandExtraDark}
+          onClick={onClose}
+          fontSize={'large'}
+          sx={{
+            position: 'absolute',
+            right: 0,
+          }}
+        />
       </Box>
       <IconButton
         aria-label={t('paraTimePicker.toggleNetworkMenu')}
@@ -57,47 +70,33 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
         {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
       </IconButton>
       <Divider />
-      <Box
-        onMouseLeave={() => {
-          setHoveredNetwork(undefined)
-        }}
-      >
+      <Box>
         <Grid container>
           {!showNetworkMenu && (
             <Grid xs={1} sx={{ maxWidth: '40px' }}>
-              <NetworkMenuIcon network={selectedNetwork || network} />
+              <NetworkMenuIcon network={selectedNetwork} />
             </Grid>
           )}
           {showNetworkMenu && (
             <Grid xs={4} md={3}>
               <NetworkMenu
                 activeNetwork={network}
-                hoveredNetwork={hoveredNetwork}
-                network={network}
                 selectedNetwork={selectedNetwork}
-                setHoveredNetwork={setHoveredNetwork}
-                setSelectedNetwork={setSelectedNetwork}
+                setSelectedNetwork={selectNetwork}
               />
             </Grid>
           )}
           <Grid xs={4} md={3}>
             <LayerMenu
               activeLayer={layer}
-              hoveredLayer={hoveredLayer}
               network={network}
               selectedLayer={selectedLayer}
               selectedNetwork={selectedNetwork}
-              setHoveredLayer={setHoveredLayer}
               setSelectedLayer={setSelectedLayer}
             />
           </Grid>
           <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
-            <LayerDetails
-              activeLayer={layer}
-              hoveredLayer={hoveredLayer}
-              selectedLayer={selectedLayer}
-              network={selectedNetwork || network}
-            />
+            <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
           </Grid>
         </Grid>
 
@@ -105,9 +104,10 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
           <Button onClick={onClose} color="secondary" variant="outlined" sx={{ textTransform: 'capitalize' }}>
             {t('common.cancel')}
           </Button>
+
           <Button
             onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-            disabled={!selectedLayer || !selectedNetwork}
+            disabled={selectedNetwork === network && selectedLayer === layer}
             color="primary"
             variant="contained"
           >

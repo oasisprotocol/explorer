@@ -15,6 +15,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
+import { getNameForScope } from '../../../types/searchScope'
 
 type LayerDetailsContent = {
   description: string
@@ -68,26 +69,21 @@ const getDetails = (t: TFunction): Details => ({
 
 type LayerDetailsProps = {
   activeLayer: Layer
-  hoveredLayer?: Layer
   network: Network
-  selectedLayer?: Layer
+  selectedLayer: Layer
 }
 
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({
-  activeLayer,
-  hoveredLayer,
-  network,
-  selectedLayer,
-}) => {
+export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = hoveredLayer || selectedLayer || activeLayer
+  const layer = selectedLayer
+
   const details = getDetails(t)[network][layer]
 
   if (!details) {
@@ -118,7 +114,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({
           }}
         >
           <Typography sx={{ fontSize: 24, color: COLORS.brandDark, fontWeight: 700, mr: 3 }} component="span">
-            {layerLabels[layer]} {labels[network]}
+            {getNameForScope(t, { network, layer })}
           </Typography>
           <Typography sx={{ fontSize: 10, color: COLORS.paraTimeStatus, mr: 3 }} component="span">
             {t('common.paraTimeOnline')}
