@@ -38,7 +38,6 @@ type LayerMenuItemProps = LayerMenuProps & BaseLayerMenuItemProps
 export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   activeLayer,
   divider,
-  hoveredLayer,
   layer,
   network,
   selectedLayer,
@@ -54,12 +53,18 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
     <MenuItem
       divider={divider}
       onMouseEnter={() => {
-        if (layer !== selectedLayer) {
-          setSelectedLayer(undefined)
-        }
         setHoveredLayer(layer)
       }}
-      onClick={() => setSelectedLayer(layer)}
+      onMouseLeave={() => {
+        setHoveredLayer()
+      }}
+      onClick={() => {
+        if (selectedLayer === layer) {
+          setSelectedLayer()
+        } else {
+          setSelectedLayer(layer)
+        }
+      }}
       selected={activeLayerSelection}
     >
       <ListItemText>
@@ -71,7 +76,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
           {selectedNetwork === network && activeLayer === layer && t('paraTimePicker.selected')}
         </Typography>
       </ListItemText>
-      {activeLayerSelection && <KeyboardArrowRightIcon />}
+      {layer === selectedLayer && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }
@@ -80,15 +85,15 @@ type LayerMenuProps = {
   hoveredLayer?: Layer
   network: Network
   selectedLayer?: Layer
-  selectedNetwork?: Network
+  selectedNetwork: Network
   setHoveredLayer: (layer?: Layer) => void
   setSelectedLayer: (layer?: Layer) => void
 }
 
 const menuSortOrder: Record<Layer, number> = {
   [Layer.consensus]: 1,
-  [Layer.emerald]: 2,
-  [Layer.sapphire]: 3,
+  [Layer.sapphire]: 2,
+  [Layer.emerald]: 3,
   [Layer.cipher]: 4,
 }
 

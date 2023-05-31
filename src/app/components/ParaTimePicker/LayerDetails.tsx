@@ -15,6 +15,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
+import { getNameForScope } from '../../../types/searchScope'
 
 type LayerDetailsContent = {
   description: string
@@ -76,18 +77,32 @@ type LayerDetailsProps = {
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({
-  activeLayer,
-  hoveredLayer,
-  network,
-  selectedLayer,
-}) => {
+export const LayerDetails: FC<LayerDetailsProps> = ({ hoveredLayer, network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = hoveredLayer || selectedLayer || activeLayer
+  const layer = selectedLayer || hoveredLayer
+
+  if (!layer) {
+    // TODO: properly design this placeholder
+    return (
+      <Box
+        sx={{
+          padding: '1em',
+          width: '100%',
+          minHeight: '18em',
+          justifyItems: 'center',
+          justifyContent: 'center',
+          textJustify: 'center',
+          // border: '1px solid red',
+        }}
+      >
+        <span>Please select a Paratime on the left!</span>
+      </Box>
+    )
+  }
   const details = getDetails(t)[network][layer]
 
   if (!details) {
@@ -118,7 +133,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({
           }}
         >
           <Typography sx={{ fontSize: 24, color: COLORS.brandDark, fontWeight: 700, mr: 3 }} component="span">
-            {layerLabels[layer]} {labels[network]}
+            {getNameForScope(t, { network, layer })}
           </Typography>
           <Typography sx={{ fontSize: 10, color: COLORS.paraTimeStatus, mr: 3 }} component="span">
             {t('common.paraTimeOnline')}

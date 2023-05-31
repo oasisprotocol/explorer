@@ -21,7 +21,6 @@ type NetworkMenuItemProps = Omit<NetworkMenuProps, 'options'> & {
 export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
   activeNetwork,
   divider,
-  hoveredNetwork,
   network,
   selectedNetwork,
   setHoveredNetwork,
@@ -37,9 +36,15 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       divider={divider}
       onMouseEnter={() => {
         setHoveredNetwork(network)
-        setSelectedNetwork(network)
       }}
       selected={activeNetworkSelection}
+      onClick={() => {
+        if (selectedNetwork === network) {
+          // setSelectedNetwork(undefined)
+        } else {
+          setSelectedNetwork(network)
+        }
+      }}
     >
       <ListItemIcon>{icons[network]}</ListItemIcon>
       <ListItemText>
@@ -53,7 +58,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
           </Typography>
         )}
       </ListItemText>
-      {activeNetworkSelection && <KeyboardArrowRightIcon />}
+      {network === selectedNetwork && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }
@@ -61,37 +66,44 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
 type NetworkMenuProps = {
   activeNetwork: Network
   hoveredNetwork?: Network
-  network: Network
   selectedNetwork?: Network
   setHoveredNetwork: (network?: Network) => void
-  setSelectedNetwork: (network?: Network) => void
+  setSelectedNetwork: (network: Network) => void
 }
 
 export const NetworkMenu: FC<NetworkMenuProps> = ({
   activeNetwork,
   hoveredNetwork,
-  network,
   selectedNetwork,
   setHoveredNetwork,
   setSelectedNetwork,
 }) => {
   const { t } = useTranslation()
-  const [expandNetworkMenu, setExpandNetworkMenu] = useState(network !== Network.mainnet)
+  const [expandNetworkMenu, setExpandNetworkMenu] = useState(activeNetwork !== Network.mainnet)
   const options: Network[] = RouteUtils.getEnabledNetworks()
-  const filteredOptions = options.filter(option => option !== Network.mainnet)
+
+  const shouldAlwaysShow = (net: Network) =>
+    net === Network.mainnet || net === activeNetwork || net === selectedNetwork
+  const shouldSometimesHide = (net: Network) => !shouldAlwaysShow(net)
+
+  const stableOptions = options.filter(shouldAlwaysShow)
+  const filteredOptions = options.filter(shouldSometimesHide)
 
   return (
     <>
       <MenuList>
-        <NetworkMenuItem
-          activeNetwork={activeNetwork}
-          divider
-          hoveredNetwork={hoveredNetwork}
-          selectedNetwork={selectedNetwork}
-          setHoveredNetwork={setHoveredNetwork}
-          setSelectedNetwork={setSelectedNetwork}
-          network={Network.mainnet}
-        />
+        {stableOptions.map((network, index) => (
+          <NetworkMenuItem
+            activeNetwork={activeNetwork}
+            divider={index !== stableOptions.length - 1}
+            key={network}
+            hoveredNetwork={hoveredNetwork}
+            selectedNetwork={selectedNetwork}
+            setHoveredNetwork={setHoveredNetwork}
+            setSelectedNetwork={setSelectedNetwork}
+            network={network}
+          />
+        ))}
         <Collapse orientation="vertical" in={expandNetworkMenu}>
           {filteredOptions.map((network, index) => (
             <NetworkMenuItem
@@ -107,14 +119,16 @@ export const NetworkMenu: FC<NetworkMenuProps> = ({
           ))}
         </Collapse>
       </MenuList>
-      <Button
-        onClick={() => setExpandNetworkMenu(!expandNetworkMenu)}
-        size="small"
-        variant="text"
-        sx={{ ml: '48px' }}
-      >
-        {expandNetworkMenu ? t('paraTimePicker.less') : t('paraTimePicker.more')}
-      </Button>
+      {!!filteredOptions.length && (
+        <Button
+          onClick={() => setExpandNetworkMenu(!expandNetworkMenu)}
+          size="small"
+          variant="text"
+          sx={{ ml: '48px' }}
+        >
+          {expandNetworkMenu ? t('paraTimePicker.less') : t('paraTimePicker.more')}
+        </Button>
+      )}
     </>
   )
 }

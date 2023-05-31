@@ -17,6 +17,7 @@ import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
+import HighlightOff from '@mui/icons-material/HighlightOff'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -37,14 +38,27 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(network !== Network.mainnet)
   const [selectedLayer, setSelectedLayer] = useState<undefined | Layer>()
-  const [selectedNetwork, setSelectedNetwork] = useState<undefined | Network>(network)
+  const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
+  const selectNetwork = (newNetwork: Network) => {
+    setSelectedNetwork(newNetwork)
+    setSelectedLayer(undefined)
+  }
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
 
   return (
     <Box>
-      <Box sx={{ mb: 5, color: 'red' }}>
+      <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
         <Logotype color={COLORS.brandExtraDark} />
+        <HighlightOff
+          htmlColor={COLORS.brandExtraDark}
+          onClick={onClose}
+          fontSize={'large'}
+          sx={{
+            position: 'absolute',
+            right: 0,
+          }}
+        />
       </Box>
       <IconButton
         aria-label={t('paraTimePicker.toggleNetworkMenu')}
@@ -65,7 +79,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
         <Grid container>
           {!showNetworkMenu && (
             <Grid xs={1} sx={{ maxWidth: '40px' }}>
-              <NetworkMenuIcon network={selectedNetwork || network} />
+              <NetworkMenuIcon network={selectedNetwork} />
             </Grid>
           )}
           {showNetworkMenu && (
@@ -73,46 +87,71 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
               <NetworkMenu
                 activeNetwork={network}
                 hoveredNetwork={hoveredNetwork}
-                network={network}
                 selectedNetwork={selectedNetwork}
                 setHoveredNetwork={setHoveredNetwork}
-                setSelectedNetwork={setSelectedNetwork}
+                setSelectedNetwork={selectNetwork}
               />
             </Grid>
           )}
-          <Grid xs={4} md={3}>
-            <LayerMenu
-              activeLayer={layer}
-              hoveredLayer={hoveredLayer}
-              network={network}
-              selectedLayer={selectedLayer}
-              selectedNetwork={selectedNetwork}
-              setHoveredLayer={setHoveredLayer}
-              setSelectedLayer={setSelectedLayer}
-            />
-          </Grid>
-          <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
-            <LayerDetails
-              activeLayer={layer}
-              hoveredLayer={hoveredLayer}
-              selectedLayer={selectedLayer}
-              network={selectedNetwork || network}
-            />
-          </Grid>
+          {!selectedNetwork && (
+            <Grid xs={4} md={3}>
+              <Box
+                sx={{
+                  padding: '1em',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              >
+                <span>Please select a network on the left!</span>
+              </Box>
+            </Grid>
+          )}
+          {selectedNetwork && (
+            <>
+              <Grid xs={4} md={3}>
+                <LayerMenu
+                  activeLayer={layer}
+                  hoveredLayer={hoveredLayer}
+                  network={network}
+                  selectedLayer={selectedLayer}
+                  selectedNetwork={selectedNetwork}
+                  setHoveredLayer={setHoveredLayer}
+                  setSelectedLayer={setSelectedLayer}
+                />
+              </Grid>
+              <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
+                <LayerDetails
+                  activeLayer={layer}
+                  hoveredLayer={hoveredLayer}
+                  selectedLayer={selectedLayer}
+                  network={selectedNetwork || network}
+                />
+              </Grid>
+            </>
+          )}
         </Grid>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-          <Button onClick={onClose} color="secondary" variant="outlined" sx={{ textTransform: 'capitalize' }}>
-            {t('common.cancel')}
-          </Button>
-          <Button
-            onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-            disabled={!selectedLayer || !selectedNetwork}
-            color="primary"
-            variant="contained"
-          >
-            {t('common.select')}
-          </Button>
+          {selectedLayer && (
+            <Button
+              onClick={() => setSelectedLayer(undefined)}
+              color="secondary"
+              variant="outlined"
+              sx={{ textTransform: 'capitalize' }}
+            >
+              {t('common.cancel')}
+            </Button>
+          )}
+          {selectedLayer && (
+            <Button
+              onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
+              disabled={!selectedLayer || !selectedNetwork}
+              color="primary"
+              variant="contained"
+            >
+              {t('common.select')}
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>
