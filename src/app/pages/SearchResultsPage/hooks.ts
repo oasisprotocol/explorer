@@ -33,8 +33,8 @@ export function useBlocksConditionally(blockHeight: string | undefined): Conditi
        * Normally, calling React hooks from callbacks and other conditional code
        * is not a good idea, but in this case, we can be sure that the number of
        * enabled combinations will never change during runtime
-       * (since it's hard-coded in route-utils.ts), su we can just ignore
-       * the TS warning about abusing the rules of hooks.
+       * (since it's hard-coded in route-utils.ts), so we can just ignore
+       * the lint warning about abusing the rules of hooks.
        */
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetRuntimeBlockByHeight(scope.network, scope.layer as Runtime, parseInt(blockHeight!), {
