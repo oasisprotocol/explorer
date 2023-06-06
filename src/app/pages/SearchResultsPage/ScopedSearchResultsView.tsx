@@ -63,8 +63,8 @@ export const ScopedSearchResultsView: FC<{
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
   const isOnWantedNetworkInOtherParatime = (item: HasScope) =>
     item.network === wantedScope.network && item.layer !== wantedScope.layer
-  const hasWantedResults = searchResults.allResults.some(isInWantedScope)
-  const otherResults = searchResults.allResults.filter(isNotInWantedScope)
+  const hasWantedResults = searchResults.some(isInWantedScope)
+  const otherResults = searchResults.filter(isNotInWantedScope)
   const hasMainnetResults = otherResults.some(isOnMainnet)
   const notificationTheme = themes[hasMainnetResults ? Network.mainnet : Network.testnet]
 

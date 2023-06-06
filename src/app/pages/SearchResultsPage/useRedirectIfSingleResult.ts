@@ -13,27 +13,32 @@ export function useRedirectIfSingleResult(
 ) {
   const navigate = useNavigate()
 
-  let shouldRedirect = !isLoading && results.allResults.length === 1
+  let shouldRedirect = !isLoading && results.length === 1
 
   if (shouldRedirect) {
-    const result = results.allResults[0]
+    const result = results[0]
     shouldRedirect = scope ? isItemInScope(result, scope) : result.network === Network.mainnet
   }
 
   let redirectTo: string | undefined
-
-  const block = results.blocks[0]
-  const tx = results.transactions[0]
-  const account = results.accounts[0]
   if (shouldRedirect) {
-    if (block) {
-      redirectTo = RouteUtils.getBlockRoute(block, block.round)
-    } else if (tx) {
-      redirectTo = RouteUtils.getTransactionRoute(tx, tx.eth_hash || tx.hash)
-    } else if (account) {
-      redirectTo = RouteUtils.getAccountRoute(account, account.address_eth ?? account.address)
-    } else {
-      // TODO: typescript should ensure all queries are handled
+    const item = results[0]
+    switch (item.resultType) {
+      case 'block':
+        redirectTo = RouteUtils.getBlockRoute(item, item.round)
+        break
+      case 'transaction':
+        redirectTo = RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)
+        break
+      case 'account':
+        redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
+        break
+      default:
+        // The conversion of any is necessary here, since we have covered all possible subtype,
+        // and TS is concluding that the only possible remaining type is "never".
+        // However, if we all more result types in the future and forget to add the appropriate case here,
+        // we might hit this, hence the warning.
+        console.log(`Don't know how to redirect to unknown search result type ${(item as any).resultType}`)
     }
   }
 

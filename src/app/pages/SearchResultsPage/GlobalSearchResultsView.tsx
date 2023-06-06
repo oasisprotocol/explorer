@@ -13,7 +13,7 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
   tokenPrices,
 }) => {
   const { t } = useTranslation()
-  return searchResults.allResults.length === 0 ? (
+  return searchResults.length === 0 ? (
     <NoResults />
   ) : (
     <>

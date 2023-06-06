@@ -5,7 +5,7 @@ import { BlockDetailView } from '../BlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
-import { SearchResults } from './hooks'
+import { AccountResult, BlockResult, SearchResults, TransactionResult } from './hooks'
 import { HasScope } from '../../../oasis-indexer/api'
 import { getThemesForNetworks } from '../../../styles/theme'
 import { Network } from '../../../types/network'
@@ -30,7 +30,7 @@ export const SearchResultsFiltered: FC<{
 }> = ({ filter, title, networkForTheme, searchResults, tokenPrices }) => {
   const { t } = useTranslation()
 
-  const numberOfResults = searchResults.allResults.filter(filter).length
+  const numberOfResults = searchResults.filter(filter).length
 
   if (!numberOfResults) {
     return null
@@ -48,7 +48,9 @@ export const SearchResultsFiltered: FC<{
       >
         <ResultsGroupByType
           title={t('search.results.blocks.title')}
-          results={searchResults.blocks.filter(filter)}
+          results={searchResults
+            .filter(filter)
+            .filter((item): item is BlockResult => item.resultType === 'block')}
           resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
           link={block => RouteUtils.getBlockRoute(block, block.round)}
           linkLabel={t('search.results.blocks.viewLink')}
@@ -56,7 +58,9 @@ export const SearchResultsFiltered: FC<{
 
         <ResultsGroupByType
           title={t('search.results.transactions.title')}
-          results={searchResults.transactions.filter(filter)}
+          results={searchResults
+            .filter(filter)
+            .filter((item): item is TransactionResult => item.resultType === 'transaction')}
           resultComponent={item => (
             <TransactionDetailView
               isLoading={false}
@@ -71,7 +75,9 @@ export const SearchResultsFiltered: FC<{
 
         <ResultsGroupByType
           title={t('search.results.accounts.title')}
-          results={searchResults.accounts.filter(filter)}
+          results={searchResults
+            .filter(filter)
+            .filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item => (
             <AccountDetailsView
               isLoading={false}

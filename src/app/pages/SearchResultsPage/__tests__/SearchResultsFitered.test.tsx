@@ -3,7 +3,7 @@ import { renderWithProviders } from '../../../utils/renderWithProviders'
 
 import {
   sapphireParsedBlock,
-  suggestedParsedAccount,
+  suggestedParsedAccountResult,
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
@@ -22,12 +22,7 @@ describe('SearchResultsView', () => {
   it('block should correctly link to transactions', () => {
     renderWithProviders(
       <SearchResultsFiltered
-        searchResults={{
-          blocks: [suggestedParsedBlock, sapphireParsedBlock],
-          transactions: [],
-          accounts: [],
-          allResults: [suggestedParsedBlock, sapphireParsedBlock],
-        }}
+        searchResults={[suggestedParsedBlock, sapphireParsedBlock]}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,
@@ -64,12 +59,7 @@ describe('SearchResultsView', () => {
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
       <SearchResultsFiltered
-        searchResults={{
-          blocks: [],
-          transactions: [],
-          accounts: [suggestedParsedAccount],
-          allResults: [suggestedParsedAccount],
-        }}
+        searchResults={[suggestedParsedAccountResult]}
         title={'test search'}
         filter={() => true}
         networkForTheme={Network.mainnet}

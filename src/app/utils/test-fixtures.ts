@@ -1,14 +1,9 @@
-import {
-  EvmTokenType,
-  groupAccountTokenBalances,
-  Layer,
-  RuntimeAccount,
-  RuntimeBlock,
-} from '../../oasis-indexer/api'
+import { EvmTokenType, groupAccountTokenBalances, Layer, RuntimeAccount } from '../../oasis-indexer/api'
 import { Ticker } from '../../types/ticker'
 import { Network } from '../../types/network'
+import { AccountResult, BlockResult } from '../pages/SearchResultsPage/hooks'
 
-export const suggestedParsedBlock: RuntimeBlock = {
+export const suggestedParsedBlock: BlockResult = {
   round: 1396255,
   hash: '42efb4c989d219842aa0c5f7fa11fd24f913612a7235d4564b95caf8aa20fb8b',
   timestamp: '2022-05-13T06:39:03Z',
@@ -17,9 +12,10 @@ export const suggestedParsedBlock: RuntimeBlock = {
   gas_used: 1482530,
   layer: Layer.emerald,
   network: Network.mainnet,
+  resultType: 'block',
 }
 
-export const sapphireParsedBlock: RuntimeBlock = {
+export const sapphireParsedBlock: BlockResult = {
   round: 143553,
   hash: '91cc80baead4779221cadfe756a959273697850f9ef994b0e2b2ac0a178b86ca',
   timestamp: '2023-02-17T10:57:09Z',
@@ -28,6 +24,7 @@ export const sapphireParsedBlock: RuntimeBlock = {
   gas_used: 11292,
   layer: Layer.sapphire,
   network: Network.mainnet,
+  resultType: 'block',
 }
 
 export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances({
@@ -66,3 +63,8 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
   network: Network.mainnet,
   ticker: Ticker.ROSE,
 })
+
+export const suggestedParsedAccountResult: AccountResult = {
+  ...suggestedParsedAccount,
+  resultType: 'account',
+}
