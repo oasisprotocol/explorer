@@ -17,6 +17,8 @@ import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useTokenPrice } from '../../../coin-gecko/api'
+import { getTickerForNetwork } from '../../../types/ticker'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -42,6 +44,8 @@ export const TransactionsPage: FC = () => {
     // Listing the latest consensus transactions is not yet implemented.
     // we should call useGetConsensusTransactions()
   }
+
+  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
 
   useEffect(() => {
     if (!isMobile) {
@@ -113,12 +117,23 @@ export const TransactionsPage: FC = () => {
           <TransactionDetails>
             {transactionsQuery.isLoading &&
               [...Array(limit).keys()].map(key => (
-                <TransactionDetailView key={key} isLoading={true} transaction={undefined} standalone />
+                <TransactionDetailView
+                  key={key}
+                  isLoading={true}
+                  transaction={undefined}
+                  tokenPriceInfo={tokenPriceInfo}
+                  standalone
+                />
               ))}
 
             {!transactionsQuery.isLoading &&
               transactionsQuery.data?.data.transactions.map(tx => (
-                <TransactionDetailView key={tx.hash} transaction={tx} standalone />
+                <TransactionDetailView
+                  key={tx.hash}
+                  transaction={tx}
+                  tokenPriceInfo={tokenPriceInfo}
+                  standalone
+                />
               ))}
           </TransactionDetails>
         )}

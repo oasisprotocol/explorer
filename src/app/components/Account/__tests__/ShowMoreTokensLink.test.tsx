@@ -1,12 +1,13 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
-import { EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-indexer/api'
+import { Layer, EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-indexer/api'
+import { Network } from '../../../../types/network'
 
 const mockedAccount = {
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
-  layer: 'emerald',
-  network: 'mainnet',
+  layer: Layer.emerald,
+  network: Network.mainnet,
 } as RuntimeAccount
 
 const mockedToken1: Token = {

@@ -10,6 +10,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import Warning from '@mui/icons-material/Warning'
 import { SearchResults } from './hooks'
+import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 const NotificationBox = styled(Box)(({ theme }) => ({
   // TODO: this is probably not fully correct.
@@ -47,12 +48,12 @@ export const ResultsOnForeignNetworkThemed: FC<{
   openByDefault?: boolean
   searchResults: SearchResults
   numberOfResults: number
-  roseFiatValue: number | undefined
+  tokenPriceInfo: TokenPriceInfo
 }> = ({
   network,
   searchResults,
   numberOfResults,
-  roseFiatValue,
+  tokenPriceInfo,
   openByDefault = false,
   alsoHasLocalResults,
 }) => {
@@ -110,7 +111,7 @@ export const ResultsOnForeignNetworkThemed: FC<{
         <Warning />
         {t('search.otherResults.clickToHide', { networkName })}
       </NotificationBox>
-      <ResultsOnNetwork network={network} searchResults={searchResults} roseFiatValue={roseFiatValue} />
+      <ResultsOnNetwork network={network} searchResults={searchResults} tokenPriceInfo={tokenPriceInfo} />
     </Box>
   )
 }

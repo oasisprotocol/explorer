@@ -5,7 +5,9 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
-import { useGetRosePrice } from '../../../coin-gecko/api'
+import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
+import { Ticker } from '../../../types/ticker'
+
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
 import { accountTokenContainerId } from './TokensCard'
 import { useAccount } from './hook'
@@ -19,7 +21,7 @@ export const AccountDetailsPage: FC = () => {
   const address = useLoaderData() as string
   const { account, isLoading } = useAccount(scope, address)
 
-  const rosePriceQuery = useGetRosePrice()
+  const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
 
   const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20].length
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
@@ -33,7 +35,7 @@ export const AccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('account.title')}>
-        <AccountDetailsView isLoading={isLoading} account={account} roseFiatValue={rosePriceQuery.data} />
+        <AccountDetailsView isLoading={isLoading} account={account} tokenPriceInfo={tokenPriceInfo} />
       </SubPageCard>
       {showDetails && (
         <RouterTabs
@@ -51,10 +53,10 @@ export const AccountDetailsPage: FC = () => {
 export const AccountDetailsView: FC<{
   isLoading: boolean
   account: RuntimeAccount | undefined
-  roseFiatValue: number | undefined
+  tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
-}> = ({ isLoading, account, roseFiatValue, showLayer }) => {
+}> = ({ isLoading, account, tokenPriceInfo, showLayer }) => {
   return (
-    <Account account={account} isLoading={isLoading} roseFiatValue={roseFiatValue} showLayer={showLayer} />
+    <Account account={account} isLoading={isLoading} tokenPriceInfo={tokenPriceInfo} showLayer={showLayer} />
   )
 }

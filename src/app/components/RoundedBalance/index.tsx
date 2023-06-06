@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
+import { getNameForTicker } from '../../../types/ticker'
 
 type RoundedBalanceProps = {
   ticker?: string
@@ -21,33 +22,29 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
   const number = new BigNumber(value)
   const truncatedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_DOWN)
 
+  const tickerName = ticker ? getNameForTicker(t, ticker) : ''
+
   if (number.isEqualTo(truncatedNumber)) {
-    return <span>{`${number.toFixed()} ${ticker}`}</span>
+    return <span>{t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}</span>
   }
 
   return (
     <span>
       {!number.isZero() && truncatedNumber.isZero() ? (
-        t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker })
+        t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker: tickerName })
       ) : (
         <Tooltip
           arrow
           placement="top"
-          title={`${number.toFixed()} ${ticker}`}
+          title={t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}
           enterDelay={tooltipDelay}
           enterNextDelay={tooltipDelay}
         >
           <span>
-            {truncatedNumber.toFixed()}… {ticker}
+            {t('common.roundedValueInToken', { value: truncatedNumber.toFixed(), ticker: tickerName })}
           </span>
         </Tooltip>
       )}
     </span>
   )
-}
-
-export const RoundedRoseBalance: FC<RoundedBalanceProps> = ({ value }) => {
-  const { t } = useTranslation()
-
-  return <RoundedBalance ticker={t('common.rose')} value={value} />
 }

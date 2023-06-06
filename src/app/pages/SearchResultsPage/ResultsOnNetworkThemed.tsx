@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import { ResultsOnNetwork } from './ResultsOnNetwork'
 import Typography from '@mui/material/Typography'
 import { SearchResults } from './hooks'
+import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 /**
  * Component for selectively displaying a subset of search results that belongs to a specific network, with appropriate theming.
@@ -18,8 +19,8 @@ import { SearchResults } from './hooks'
 export const ResultsOnNetworkThemed: FC<{
   network: Network
   searchResults: SearchResults
-  roseFiatValue: number | undefined
-}> = ({ network, searchResults, roseFiatValue }) => {
+  tokenPriceInfo: TokenPriceInfo
+}> = ({ network, searchResults, tokenPriceInfo }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -27,7 +28,7 @@ export const ResultsOnNetworkThemed: FC<{
   const otherTheme = getThemesForNetworks()[network]
 
   const content = (
-    <ResultsOnNetwork network={network} searchResults={searchResults} roseFiatValue={roseFiatValue} />
+    <ResultsOnNetwork network={network} searchResults={searchResults} tokenPriceInfo={tokenPriceInfo} />
   )
 
   return (

@@ -18,6 +18,8 @@ import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/TransactionsCard'
 import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
+import { getNameForTicker, Ticker } from '../../../types/ticker'
+import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -38,7 +40,7 @@ export const addressToNumber = (address: string) => {
   return seed
 }
 
-const StyledBox = styled(Box)(() => ({
+export const FiatMoneyAmountBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -48,11 +50,11 @@ const StyledBox = styled(Box)(() => ({
 type AccountProps = {
   account?: RuntimeAccount
   isLoading: boolean
-  roseFiatValue?: number
+  tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, showLayer }) => {
+export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -66,6 +68,15 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
         account.address_eth ?? account.address,
       )}#${accountTransactionsContainerId}`
     : undefined
+
+  const token = account?.ticker || Ticker.ROSE
+  const tickerName = getNameForTicker(t, token)
+  const {
+    isLoading: isPriceLoading,
+    price: tokenFiatValue,
+    isFree: isTokenFree,
+    hasUsedCoinGecko,
+  } = tokenPriceInfo
 
   return (
     <>
@@ -89,22 +100,22 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           </dd>
 
           <dt>{t('common.balance')}</dt>
-          <dd>{t('common.valueInRose', { value: balance })}</dd>
-          {roseFiatValue && balance && (
+          <dd>{t('common.valueInToken', { value: balance, ticker: tickerName })}</dd>
+          {!isPriceLoading && !isTokenFree && tokenFiatValue !== undefined && balance && (
             <>
               <dt>{t('common.fiatValue')}</dt>
               <dd>
-                <StyledBox>
+                <FiatMoneyAmountBox>
                   {t('common.fiatValueInUSD', {
-                    value: parseFloat(balance) * roseFiatValue,
+                    value: parseFloat(balance) * tokenFiatValue,
                     formatParams: {
                       value: {
                         currency: 'USD',
                       } satisfies Intl.NumberFormatOptions,
                     },
                   })}
-                  <CoinGeckoReferral />
-                </StyledBox>
+                  {hasUsedCoinGecko && <CoinGeckoReferral />}
+                </FiatMoneyAmountBox>
               </dd>
             </>
           )}
@@ -126,10 +137,10 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>
-          <dd>{t('common.valueInRose', { value: account.stats.total_received })}</dd>
+          <dd>{t('common.valueInToken', { value: account.stats.total_received, ticker: tickerName })}</dd>
 
           <dt>{t('account.totalSent')}</dt>
-          <dd>{t('common.valueInRose', { value: account.stats.total_sent })}</dd>
+          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: tickerName })}</dd>
         </StyledDescriptionList>
       )}
     </>

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { RoundedBalance, RoundedRoseBalance } from './../'
+import { RoundedBalance } from './../'
 
 describe('RoundedBalance', () => {
   it('should keep original value', () => {
@@ -41,7 +41,7 @@ describe('RoundedBalance', () => {
 
 describe('RoundedRoseBalance', () => {
   it('should render value with ROSE ticker symbol', () => {
-    render(<RoundedRoseBalance value="0.002231" />)
+    render(<RoundedBalance value="0.002231" ticker={'ROSE'} />)
 
     expect(screen.getByText('0.00223… ROSE')).toBeInTheDocument()
   })

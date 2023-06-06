@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
-import { useGetRosePrice } from '../../../coin-gecko/api'
+import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
@@ -17,7 +17,11 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { useParamSearch } from '../../components/Search/search-utils'
 
 export const SearchResultsPage: FC = () => {
-  const rosePriceQuery = useGetRosePrice()
+  const tokenPrices: Record<Network, TokenPriceInfo> = {} as any
+  // The list of networks will never change on the run, so we can do this
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  RouteUtils.getEnabledNetworks().forEach(net => (tokenPrices[net] = useTokenPrice(net)))
+
   const scope = useScopeParam()
   const searchParams = useParamSearch()
   const { results, isLoading } = useSearch(searchParams)
@@ -29,7 +33,7 @@ export const SearchResultsPage: FC = () => {
       wantedScope={scope}
       searchResults={results}
       isLoading={isLoading}
-      roseFiatValue={rosePriceQuery.data}
+      tokenPrices={tokenPrices}
     />
   )
 }
@@ -38,8 +42,8 @@ export const SearchResultsView: FC<{
   wantedScope?: SearchScope
   searchResults: SearchResults
   isLoading: boolean
-  roseFiatValue: number | undefined
-}> = ({ wantedScope, searchResults, isLoading, roseFiatValue }) => {
+  tokenPrices: Record<Network, TokenPriceInfo>
+}> = ({ wantedScope, searchResults, isLoading, tokenPrices }) => {
   // const allResults = getAllSearchResults(searchQueries)
 
   const allNetworks = RouteUtils.getEnabledNetworks()
@@ -75,7 +79,7 @@ export const SearchResultsView: FC<{
           <ResultsOnNetwork
             network={wantedScope.network}
             searchResults={searchResults}
-            roseFiatValue={roseFiatValue}
+            tokenPriceInfo={tokenPrices[wantedScope.network]}
           />
         </>
       )}
@@ -89,7 +93,7 @@ export const SearchResultsView: FC<{
               network={net}
               searchResults={searchResults}
               numberOfResults={resultsInNetworks[net]}
-              roseFiatValue={roseFiatValue}
+              tokenPriceInfo={tokenPrices[net]}
               openByDefault={net === Network.mainnet && !hasNoResultsOnWantedNetwork}
               alsoHasLocalResults={!hasNoResultsOnWantedNetwork}
             />
@@ -104,7 +108,7 @@ export const SearchResultsView: FC<{
               key={net}
               network={net}
               searchResults={searchResults}
-              roseFiatValue={roseFiatValue}
+              tokenPriceInfo={tokenPrices[net]}
             />
           ))}
     </PageLayout>

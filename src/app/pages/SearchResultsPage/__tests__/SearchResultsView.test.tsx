@@ -30,7 +30,19 @@ describe('SearchResultsView', () => {
           allResults: [suggestedParsedBlock, sapphireParsedBlock],
         }}
         isLoading={false}
-        roseFiatValue={1}
+        tokenPrices={{
+          [Network.mainnet]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            hasUsedCoinGecko: true,
+          },
+          [Network.testnet]: {
+            isLoading: false,
+            isFree: true,
+            hasUsedCoinGecko: false,
+          },
+        }}
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
@@ -59,7 +71,19 @@ describe('SearchResultsView', () => {
           allResults: [suggestedParsedAccount],
         }}
         isLoading={false}
-        roseFiatValue={1}
+        tokenPrices={{
+          [Network.mainnet]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            hasUsedCoinGecko: true,
+          },
+          [Network.testnet]: {
+            isLoading: false,
+            isFree: true,
+            hasUsedCoinGecko: false,
+          },
+        }}
       />,
     )
 

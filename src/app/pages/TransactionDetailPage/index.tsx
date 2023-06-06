@@ -28,6 +28,9 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../DashboardPage/DashboardLink'
+import { getNameForTicker, getTickerForNetwork, Ticker } from '../../../types/ticker'
+import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
+import { CurrentFiatValue } from './CurrentFiatValue'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -101,6 +104,8 @@ export const TransactionDetailPage: FC = () => {
     data?.data,
   )
 
+  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
+
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
   }
@@ -110,7 +115,11 @@ export const TransactionDetailPage: FC = () => {
         <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
       )}
       <SubPageCard featured title={t('transaction.header')}>
-        <TransactionDetailView isLoading={isLoading} transaction={transaction} />
+        <TransactionDetailView
+          isLoading={isLoading}
+          transaction={transaction}
+          tokenPriceInfo={tokenPriceInfo}
+        />
       </SubPageCard>
       {transaction && (
         <SubPageCard title={t('common.logs')}>
@@ -130,11 +139,15 @@ export const TransactionDetailView: FC<{
   transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
   standalone?: boolean
-}> = ({ isLoading, transaction, showLayer, standalone = false }) => {
+  tokenPriceInfo: TokenPriceInfo
+}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPriceInfo }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
+
+  const ticker = transaction?.ticker || Ticker.ROSE
+  const tickerName = getNameForTicker(t, ticker)
 
   return (
     <>
@@ -199,10 +212,23 @@ export const TransactionDetailView: FC<{
           )}
 
           <dt>{t('common.value')}</dt>
-          <dd>{t('common.valueInRose', { value: transaction.amount })}</dd>
+          <dd>{t('common.valueInToken', { value: transaction.amount, ticker: tickerName })}</dd>
+
+          {transaction.amount !== undefined &&
+            !!tokenPriceInfo &&
+            !tokenPriceInfo.isLoading &&
+            !tokenPriceInfo.isFree &&
+            tokenPriceInfo.price !== undefined && (
+              <>
+                <dt>{t('currentFiatValue.title')}</dt>
+                <dd>
+                  <CurrentFiatValue amount={parseFloat(transaction.amount)} {...tokenPriceInfo} />
+                </dd>
+              </>
+            )}
 
           <dt>{t('common.txnFee')}</dt>
-          <dd>{t('common.valueInRose', { value: transaction.fee })}</dd>
+          <dd>{t('common.valueInToken', { value: transaction.fee, ticker: tickerName })}</dd>
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>

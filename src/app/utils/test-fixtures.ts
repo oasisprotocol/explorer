@@ -1,9 +1,12 @@
 import {
   EvmTokenType,
   groupAccountTokenBalances,
+  Layer,
   RuntimeAccount,
   RuntimeBlock,
 } from '../../oasis-indexer/api'
+import { Ticker } from '../../types/ticker'
+import { Network } from '../../types/network'
 
 export const suggestedParsedBlock: RuntimeBlock = {
   round: 1396255,
@@ -12,8 +15,8 @@ export const suggestedParsedBlock: RuntimeBlock = {
   size: 4214,
   num_transactions: 10,
   gas_used: 1482530,
-  layer: 'emerald',
-  network: 'mainnet',
+  layer: Layer.emerald,
+  network: Network.mainnet,
 }
 
 export const sapphireParsedBlock: RuntimeBlock = {
@@ -23,8 +26,8 @@ export const sapphireParsedBlock: RuntimeBlock = {
   size: 292,
   num_transactions: 1,
   gas_used: 11292,
-  layer: 'sapphire',
-  network: 'mainnet',
+  layer: Layer.sapphire,
+  network: Network.mainnet,
 }
 
 export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances({
@@ -59,6 +62,7 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
     total_received: '0',
     total_sent: '0',
   },
-  layer: 'emerald',
-  network: 'mainnet',
+  layer: Layer.emerald,
+  network: Network.mainnet,
+  ticker: Ticker.ROSE,
 })

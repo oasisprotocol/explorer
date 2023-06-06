@@ -7,6 +7,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
 import { SearchResults } from './hooks'
+import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 /**
  * Component for selectively displaying a subset of search results that belongs to a specific network
@@ -16,8 +17,8 @@ import { SearchResults } from './hooks'
 export const ResultsOnNetwork: FC<{
   network: Network
   searchResults: SearchResults
-  roseFiatValue: number | undefined
-}> = ({ network, searchResults, roseFiatValue }) => {
+  tokenPriceInfo: TokenPriceInfo
+}> = ({ network, searchResults, tokenPriceInfo }) => {
   const { t } = useTranslation()
   return (
     <>
@@ -33,7 +34,12 @@ export const ResultsOnNetwork: FC<{
         title={t('search.results.transactions.title')}
         results={searchResults.transactions.filter(result => result.network === network)}
         resultComponent={item => (
-          <TransactionDetailView isLoading={false} transaction={item} showLayer={true} />
+          <TransactionDetailView
+            isLoading={false}
+            transaction={item}
+            showLayer={true}
+            tokenPriceInfo={tokenPriceInfo}
+          />
         )}
         link={item => RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)}
         linkLabel={t('search.results.transactions.viewLink')}
@@ -46,7 +52,7 @@ export const ResultsOnNetwork: FC<{
           <AccountDetailsView
             isLoading={false}
             account={item}
-            roseFiatValue={roseFiatValue}
+            tokenPriceInfo={tokenPriceInfo}
             showLayer={true}
           />
         )}

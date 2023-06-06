@@ -9,6 +9,7 @@ import { Layer, RuntimeAccount } from './generated/api'
 import { getEthAccountAddress } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
+import { getTickerForNetwork, NativeTicker } from '../types/ticker'
 
 export type * from './generated/api'
 export { Layer, Runtime, RuntimeEventType, EvmTokenType } from './generated/api'
@@ -20,10 +21,12 @@ declare module './generated/api' {
   export interface Transaction {
     network: Network
     layer: Layer
+    ticker: NativeTicker
   }
   export interface RuntimeTransaction {
     network: Network
     layer: Layer
+    ticker: NativeTicker
   }
   export interface Block {
     network: Network
@@ -36,11 +39,13 @@ declare module './generated/api' {
   export interface Account {
     network: Network
     layer: Layer
+    ticker: NativeTicker
   }
   export interface RuntimeAccount {
     network: Network
     layer: Layer
     address_eth?: string
+    ticker: NativeTicker
     tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
   }
 }
@@ -119,6 +124,7 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
 const _f1 = wrapWithNetwork(generated.useGetConsensusTransactions)
 
 export const useGetConsensusTransactions: typeof _f1 = (network, params?, options?) => {
+  const ticker = getTickerForNetwork(network)
   return generated.useGetConsensusTransactions(params, {
     ...options,
     query: {
@@ -139,6 +145,7 @@ export const useGetConsensusTransactions: typeof _f1 = (network, params?, option
                 ...tx,
                 network,
                 layer: Layer.consensus,
+                ticker,
               }
             }),
           }
@@ -152,6 +159,7 @@ export const useGetConsensusTransactions: typeof _f1 = (network, params?, option
 const _f2 = wrapWithNetwork(generated.useGetRuntimeTransactions)
 
 export const useGetRuntimeTransactions: typeof _f2 = (network, runtime, params?, options?) => {
+  const ticker = getTickerForNetwork(network)
   return generated.useGetRuntimeTransactions(runtime, params, {
     ...options,
     query: {
@@ -175,6 +183,7 @@ export const useGetRuntimeTransactions: typeof _f2 = (network, runtime, params?,
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
+                ticker,
               }
             }),
           }
@@ -188,6 +197,7 @@ export const useGetRuntimeTransactions: typeof _f2 = (network, runtime, params?,
 const _f3 = wrapWithNetwork(generated.useGetConsensusTransactionsTxHash)
 
 export const useGetConsensusTransactionsTxHash: typeof _f3 = (network, txHash, options?) => {
+  const ticker = getTickerForNetwork(network)
   return generated.useGetConsensusTransactionsTxHash(txHash, {
     ...options,
     query: {
@@ -208,6 +218,7 @@ export const useGetConsensusTransactionsTxHash: typeof _f3 = (network, txHash, o
                 ...tx,
                 layer: Layer.consensus,
                 network,
+                ticker,
               }
             }),
           }
@@ -223,6 +234,7 @@ const _f5 = wrapWithNetwork(generated.useGetRuntimeTransactionsTxHash)
 export const useGetRuntimeTransactionsTxHash: typeof _f5 = (network, runtime, txHash, options?) => {
   // Sometimes we will call this with an undefined txHash, so we must be careful here.
   const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
+  const ticker = getTickerForNetwork(network)
   return generated.useGetRuntimeTransactionsTxHash(runtime, actualHash, {
     ...options,
     query: {
@@ -246,6 +258,7 @@ export const useGetRuntimeTransactionsTxHash: typeof _f5 = (network, runtime, tx
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
+                ticker,
               }
             }),
           }
@@ -259,6 +272,7 @@ export const useGetRuntimeTransactionsTxHash: typeof _f5 = (network, runtime, tx
 const _f6 = wrapWithNetwork(generated.useGetConsensusAccountsAddress)
 
 export const useGetConsensusAccountsAddress: typeof _f6 = (network, address, options?) => {
+  const ticker = getTickerForNetwork(network)
   return generated.useGetConsensusAccountsAddress(address, {
     ...options,
     query: {
@@ -276,6 +290,7 @@ export const useGetConsensusAccountsAddress: typeof _f6 = (network, address, opt
             ...data,
             layer: Layer.consensus,
             network,
+            ticker,
           }
         },
         ...arrayify(options?.axios?.transformResponse),
@@ -287,6 +302,7 @@ export const useGetConsensusAccountsAddress: typeof _f6 = (network, address, opt
 const _f7 = wrapWithNetwork(generated.useGetRuntimeAccountsAddress)
 
 export const useGetRuntimeAccountsAddress: typeof _f7 = (network, runtime, address, options?) => {
+  const ticker = getTickerForNetwork(network)
   return generated.useGetRuntimeAccountsAddress(runtime, address, {
     ...options,
     query: {
@@ -330,6 +346,7 @@ export const useGetRuntimeAccountsAddress: typeof _f7 = (network, runtime, addre
                 ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig[runtime].decimals)
                 : '0',
             },
+            ticker,
           })
         },
         ...arrayify(options?.axios?.transformResponse),

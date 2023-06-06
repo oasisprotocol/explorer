@@ -57,7 +57,6 @@
     "logs": "Logs",
     "name": "Name",
     "paratime": "Paratime",
-    "rose": "ROSE",
     "select": "Select",
     "size": "Size",
     "sapphire": "Sapphire",
@@ -75,7 +74,8 @@
     "type": "Type",
     "unknown": "Unknown",
     "value": "Value",
-    "valueInRose": "{{value}} ROSE",
+    "valueInToken": "{{value}} {{ticker}}",
+    "roundedValueInToken": "{{value}}… {{ticker}}",
     "viewAll": "View all",
     "paraTimeOnline": "ParaTime Online",
     "mainnet": "Mainnet",
@@ -201,6 +201,10 @@
     "allTime": "All time",
     "week": "Week",
     "month": "Month"
+  },
+  "currentFiatValue": {
+    "title": "Current fiat value",
+    "explanation": "Calculated using current rate. Value at the time of transaction might have been completely different."
   },
   "paraTimeSnapshot": {
     "header": "ParaTime Snapshot"
