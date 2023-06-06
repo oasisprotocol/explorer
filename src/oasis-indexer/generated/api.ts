@@ -42,7 +42,7 @@ limit?: number;
 offset?: number;
 /**
  * The size of the step between returned statistic windows, in seconds.
-The backend supports a limited number of window sizes: 300 (5 minutes) and
+The backend supports a limited number of step sizes: 300 (5 minutes) and
 86400 (1 day). Requests with other values may be rejected.
 
  */
@@ -110,6 +110,8 @@ tx_index?: number;
  * A filter on the hash of the transaction that originated the events.
 Specifying `tx_index` and `round` is an alternative to specifying `tx_hash`;
 either works to fetch events from a specific transaction.
+This can be an Ethereum transaction hash; the query will compare against
+both a transaction's regular tx_hash and eth_tx_hash (if it exists).
 
  */
 tx_hash?: string;
@@ -150,6 +152,14 @@ offset?: number;
  */
 block?: number;
 /**
+ * A filter on minimum transaction time, inclusive.
+ */
+after?: string;
+/**
+ * A filter on maximum transaction time, exclusive.
+ */
+before?: string;
+/**
  * A filter on related accounts. Every returned transaction will refer to
 this account in a way. For example, for an `accounts.Transfer` tx, this will be
 the sender or the recipient of tokens.
@@ -186,7 +196,7 @@ to?: number;
  */
 after?: string;
 /**
- * A filter on maximum block time, inclusive.
+ * A filter on maximum block time, exclusive.
  */
 before?: string;
 };
@@ -238,7 +248,33 @@ limit?: number;
 offset?: number;
 };
 
+export type GetConsensusAccountsAddressDebondingDelegationsToParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
 export type GetConsensusAccountsAddressDebondingDelegationsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetConsensusAccountsAddressDelegationsToParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -431,6 +467,14 @@ maxFee?: string;
  * A filter on transaction status code.
  */
 code?: number;
+/**
+ * A filter on minimum transaction time, inclusive.
+ */
+after?: string;
+/**
+ * A filter on maximum transaction time, exclusive.
+ */
+before?: string;
 };
 
 export type GetConsensusBlocksParams = {
@@ -457,7 +501,7 @@ to?: number;
  */
 after?: string;
 /**
- * A filter on maximum block time, inclusive.
+ * A filter on maximum block time, exclusive.
  */
 before?: string;
 };
@@ -594,6 +638,21 @@ NOTE: This field is limited to 1000 entries. If you need more, please let us kno
   stats: AccountStats;
 }
 
+export interface RuntimeTransactionEncryptionEnvelope {
+  /** The format of the encrypted evm transaction envelope. */
+  format: string;
+  /** The base64-encoded public key used to encrypt the transaction. */
+  public_key?: string;
+  /** The base64-encoded nonce used to encrypt the transaction data. */
+  data_nonce?: string;
+  /** The base64-encoded encrypted transaction data. */
+  data?: string;
+  /** The base64-encoded nonce used to encrypt the transaction results. */
+  result_nonce?: string;
+  /** The base64-encoded encrypted result data. */
+  result?: string;
+}
+
 /**
  * The method call body. May be null if the transaction was malformed.
  */
@@ -637,6 +696,11 @@ execute it.
   gas_limit: number;
   /** The total gas used by the transaction. */
   gas_used: number;
+  /** The fee that was charged for the transaction execution (total, native denomination,
+ParaTime base units, as a string).
+Calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`.
+ */
+  charged_fee?: string;
   /** The total byte size of the transaction. */
   size: number;
   /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
@@ -646,7 +710,7 @@ In practice, the indexer currently expects only the following methods:
   - "consensus.Withdraw"
   - "evm.Create"
   - "evm.Call"
-May be null if the transaction was malformed.
+May be null if the transaction was malformed or encrypted.
  */
   method?: string;
   /** The method call body. May be null if the transaction was malformed. */
@@ -668,6 +732,12 @@ applicable. The meaning varies based on the transaction method.
 Usually in native denomination, ParaTime units. As a string.
  */
   amount?: string;
+  /** The data relevant to the encrypted transaction. Only present for encrypted
+transactions in confidential EVM runtimes like Sapphire.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** Whether this transaction successfully executed.
 Can be absent (meaning "unknown") for confidential runtimes.
  */
@@ -741,6 +811,10 @@ Absent if the event did not originate from a transaction.
 Absent if the event did not originate from a transaction.
  */
   tx_hash?: string | null;
+  /** Ethereum trasnsaction hash of this event's originating transaction.
+Absent if the event did not originate from an EVM transaction.
+ */
+  eth_tx_hash?: string;
   /** The type of the event. */
   type: RuntimeEventType;
   /** The decoded event contents. This spec does not encode the many possible types;
@@ -818,6 +892,8 @@ export type ProposalVotesAllOf = {
   /** The list of votes for the proposal. */
   votes: ProposalVote[];
 };
+
+export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * The target propotocol versions for this upgrade proposal.
@@ -1277,8 +1353,10 @@ export interface DebondingDelegation {
   amount: string;
   /** The shares of tokens delegated. */
   shares: string;
-  /** The delegatee address. */
-  validator_address: string;
+  /** The delegatee (validator) address. */
+  validator: string;
+  /** The delegator address. */
+  delegator: string;
   /** The epoch at which the debonding ends. */
   debond_end: number;
 }
@@ -1302,8 +1380,10 @@ export interface Delegation {
   amount: string;
   /** The shares of tokens delegated. */
   shares: string;
-  /** The delegatee address. */
-  validator_address: string;
+  /** The delegatee (validator) address. */
+  validator: string;
+  /** The delegator address. */
+  delegator: string;
 }
 
 /**
@@ -1336,8 +1416,6 @@ export type BlockListAllOf = {
 };
 
 export interface Status {
-  /** The most recently indexed chain ID. */
-  latest_chain_id: string;
   /** The height of the most recent indexed block. Query a synced Oasis node for the latest block produced. */
   latest_block: number;
   /** The RFC 3339 formatted time when the Indexer processed the latest block. Compare with current time for approximate indexing progress with the Oasis Network. */
@@ -1352,8 +1430,6 @@ the query would return with limit=infinity.
   /** Whether total_count is clipped for performance reasons. */
   is_total_count_clipped: boolean;
 }
-
-export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * A list of consensus blocks.
@@ -2183,6 +2259,63 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
 
 
 /**
+ * @summary Returns a list of delegations to an account.
+ */
+export const getConsensusAccountsAddressDelegationsTo = (
+    address: string,
+    params?: GetConsensusAccountsAddressDelegationsToParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<DelegationList>> => {
+    return axios.get(
+      `/consensus/accounts/${address}/delegations_to`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+
+export const getGetConsensusAccountsAddressDelegationsToQueryKey = (address: string,
+    params?: GetConsensusAccountsAddressDelegationsToParams,) => [`/consensus/accounts/${address}/delegations_to`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
+    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDelegationsToQueryKey(address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDelegationsTo(address,params, { signal, ...axiosOptions });
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
+
+export type GetConsensusAccountsAddressDelegationsToQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>>
+export type GetConsensusAccountsAddressDelegationsToQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+/**
+ * @summary Returns a list of delegations to an account.
+ */
+export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ address: string,
+    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusAccountsAddressDelegationsToQueryOptions(address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
  * @summary Returns an account's debonding delegations.
  */
 export const getConsensusAccountsAddressDebondingDelegations = (
@@ -2230,6 +2363,63 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetConsensusAccountsAddressDebondingDelegationsQueryOptions(address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of debonding delegations to an account.
+ */
+export const getConsensusAccountsAddressDebondingDelegationsTo = (
+    address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<DebondingDelegationList>> => {
+    return axios.get(
+      `/consensus/accounts/${address}/debonding_delegations_to`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+
+export const getGetConsensusAccountsAddressDebondingDelegationsToQueryKey = (address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams,) => [`/consensus/accounts/${address}/debonding_delegations_to`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDebondingDelegationsToQueryKey(address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegationsTo(address,params, { signal, ...axiosOptions });
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
+
+export type GetConsensusAccountsAddressDebondingDelegationsToQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>>
+export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+
+/**
+ * @summary Returns a list of debonding delegations to an account.
+ */
+export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+ address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions(address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2674,7 +2864,7 @@ export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeo
 
 
 /**
- * @summary Returns a list of Emerald events.
+ * @summary Returns a list of runtime events.
  */
 export const getRuntimeEvents = (
     runtime: Runtime,
@@ -2712,7 +2902,7 @@ export type GetRuntimeEventsQueryResult = NonNullable<Awaited<ReturnType<typeof 
 export type GetRuntimeEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
 
 /**
- * @summary Returns a list of Emerald events.
+ * @summary Returns a list of runtime events.
  */
 export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
  runtime: Runtime,
