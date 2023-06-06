@@ -8,9 +8,6 @@ import { routes } from './routes'
 import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
-import Axios from 'axios'
-
-Axios.defaults.baseURL = process.env.REACT_APP_API
 
 const queryClient = new QueryClient({
   defaultOptions: {
