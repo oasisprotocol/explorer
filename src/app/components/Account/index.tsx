@@ -59,6 +59,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
 
+  const transactionsLabel = account ? t('common.transactionsNumber', { count: account.stats.num_txns }) : ''
   const transactionsAnchor = account
     ? `${RouteUtils.getAccountRoute(
         account,
@@ -110,9 +111,13 @@ export const Account: FC<AccountProps> = ({ account, isLoading, roseFiatValue, s
 
           <dt>{t('common.transactions')}</dt>
           <dd>
-            <Link component={RouterLink} to={transactionsAnchor!}>
-              {t('common.transactionsNumber', { count: account.stats.num_txns })}
-            </Link>
+            {account.stats.num_txns ? (
+              <Link component={RouterLink} to={transactionsAnchor!}>
+                {transactionsLabel}
+              </Link>
+            ) : (
+              transactionsLabel
+            )}
           </dd>
 
           <dt>{t('account.evmTokens')}</dt>
