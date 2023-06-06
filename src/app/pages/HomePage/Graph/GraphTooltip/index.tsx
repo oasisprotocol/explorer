@@ -6,6 +6,7 @@ import { COLORS } from '../../../../../styles/theme/colors'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/material/Typography'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import ErrorIcon from '@mui/icons-material/Error'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { LayerIcon } from '../../../../components/CustomIcons/LayerIcon'
 import { Network } from '../../../../../types/network'
+import { useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -115,47 +117,56 @@ const GraphTooltipWrapper = styled(
   },
 }))
 
-export const layerTooltipMap: {
-  [key in Layer]: {
-    disabled: boolean
-    enableNavigation?: boolean
-    body: GraphTooltipBodyProps
+type TooltipInfo = {
+  disabled: boolean
+  failing?: boolean
+  enableNavigation?: boolean
+  body: GraphTooltipBodyProps
+}
+
+export const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
+  const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
+  const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
+  return {
+    [Layer.sapphire]: {
+      disabled: false,
+      failing: isSapphireOutOfDate,
+      enableNavigation: true,
+      body: {
+        title: (t: TFunction) => t('common.sapphire'),
+        caption: (t: TFunction) =>
+          isSapphireOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline'),
+        body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
+      },
+    },
+    [Layer.emerald]: {
+      disabled: false,
+      failing: isEmeraldOutOfDate,
+      enableNavigation: true,
+      body: {
+        title: (t: TFunction) => t('common.emerald'),
+        caption: (t: TFunction) =>
+          isEmeraldOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline'),
+        body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
+      },
+    },
+    [Layer.cipher]: {
+      disabled: true,
+      body: {
+        title: (t: TFunction) => t('common.cipher'),
+        caption: (t: TFunction) => t('home.tooltip.coming'),
+        body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
+      },
+    },
+    [Layer.consensus]: {
+      disabled: true,
+      body: {
+        title: (t: TFunction) => t('common.consensus'),
+        caption: (t: TFunction) => t('home.tooltip.coming'),
+        body: (t: TFunction) => t('home.tooltip.consensusParaTimeDesc'),
+      },
+    },
   }
-} = {
-  [Layer.sapphire]: {
-    disabled: false,
-    enableNavigation: true,
-    body: {
-      title: (t: TFunction) => t('common.sapphire'),
-      caption: (t: TFunction) => t('common.paraTimeOnline'),
-      body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
-    },
-  },
-  [Layer.emerald]: {
-    disabled: false,
-    enableNavigation: true,
-    body: {
-      title: (t: TFunction) => t('common.emerald'),
-      caption: (t: TFunction) => t('common.paraTimeOnline'),
-      body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
-    },
-  },
-  [Layer.cipher]: {
-    disabled: true,
-    body: {
-      title: (t: TFunction) => t('common.cipher'),
-      caption: (t: TFunction) => t('home.tooltip.coming'),
-      body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
-    },
-  },
-  [Layer.consensus]: {
-    disabled: true,
-    body: {
-      title: (t: TFunction) => t('common.consensus'),
-      caption: (t: TFunction) => t('home.tooltip.coming'),
-      body: (t: TFunction) => t('home.tooltip.consensusParaTimeDesc'),
-    },
-  },
 }
 
 interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
@@ -199,9 +210,10 @@ interface GraphTooltipBodyProps {
   caption: (t: TFunction) => string
   body: (t: TFunction) => string
   disabled?: boolean
+  failing?: boolean
 }
 
-export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled }) => {
+export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled, failing }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -219,7 +231,10 @@ export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, bo
           color={COLORS.white}
         >
           {caption(t)}
-          {!disabled && <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />}
+          {!(disabled || failing) && (
+            <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />
+          )}
+          {failing && <ErrorIcon sx={{ marginLeft: 2 }} color="error" fontSize="small" />}
         </Typography>
       </GraphTooltipHeaderText>
       <GraphTooltipDescriptionText>
@@ -235,7 +250,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, 
   const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { body, disabled, enableNavigation } = layerTooltipMap[layer]
+  const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
 
   const navigateTo = () => {
     if (!enableNavigation) {
@@ -252,7 +267,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, 
       title={
         <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
           <GraphTooltipHeader disabled={disabled} />
-          <GraphTooltipBody {...body} disabled={disabled} />
+          <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
         </GraphTooltipStyled>
       }
     >

@@ -8,8 +8,6 @@ import { Search, SearchVariant } from '../../components/Search'
 import { ParaTimeSelector } from './Graph/ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { OfflineIndicator } from './OfflineIndicator'
-import { useGetStatus } from '../../../oasis-indexer/api'
 import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +15,8 @@ import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
+import { NetworkOfflineBanner } from '../../components/OfflineBanner'
+import { useIsApiOffline } from '../../components/OfflineBanner/hook'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -108,8 +108,7 @@ export const HomePage: FC = () => {
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { network } = useSearchQueryNetworkParam()
-  const apiStatusQuery = useGetStatus(network)
-  const isApiOffline = apiStatusQuery.isFetched && !apiStatusQuery.isSuccess
+  const isApiOffline = useIsApiOffline(network)
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
@@ -128,6 +127,7 @@ export const HomePage: FC = () => {
   return (
     <>
       <BuildPreviewBanner />
+      <NetworkOfflineBanner wantedNetwork={network} />
       <HomepageLayout>
         <Content>
           <LogotypeBox>
@@ -137,11 +137,6 @@ export const HomePage: FC = () => {
             <SearchInputBox>
               <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
-            {isApiOffline && (
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <OfflineIndicator />
-              </Box>
-            )}
           </SearchInputContainer>
           <ThemeByNetwork network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>

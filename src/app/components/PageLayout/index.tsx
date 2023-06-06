@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import { BuildPreviewBanner } from '../BuildPreviewBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
+import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -23,6 +24,8 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   return (
     <>
       <BuildPreviewBanner />
+      <NetworkOfflineBanner />
+      {scope && <RuntimeOfflineBanner />}
       <Box
         sx={{
           border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,

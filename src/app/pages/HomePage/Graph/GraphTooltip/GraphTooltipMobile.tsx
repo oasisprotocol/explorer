@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import { GraphTooltipBody, GraphTooltipHeader, layerTooltipMap, GraphTooltipStyled } from './index'
+import { GraphTooltipBody, GraphTooltipHeader, useLayerTooltipMap, GraphTooltipStyled } from './index'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
@@ -47,7 +47,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { body, disabled, enableNavigation } = layerTooltipMap[layer]
+  const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
 
   const navigateTo = () => {
     if (!enableNavigation) {
@@ -67,7 +67,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
           </IconButton>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
             <GraphTooltipHeader disabled={disabled} />
-            <GraphTooltipBody {...body} disabled={disabled} />
+            <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
           </GraphTooltipStyled>
         </MobileGraphTooltip>
       </Fade>
