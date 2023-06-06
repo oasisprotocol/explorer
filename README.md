@@ -97,6 +97,7 @@ and run
 ```sh
 make docker
 make start-docker-e2e
+# TODO: this needs to be updated with REACT_APP_TESTNET_API too
 REACT_APP_API=http://localhost:8008/v1/ yarn start
 ```
 
