@@ -1,5 +1,5 @@
 /** @type {import('@orval/core').Config} */
-module.exports = {
+const config = {
   indexer: {
     input: {
       // target: './v1.yaml',
@@ -14,3 +14,5 @@ module.exports = {
     },
   },
 }
+
+module.exports = config
