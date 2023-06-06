@@ -14,7 +14,8 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
-import { useScopeParam } from '../../hooks/useScopeParam'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { Network } from '../../../types/network'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -24,7 +25,7 @@ export const ParaTimeSnapshot: FC = () => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
-  const scope = useScopeParam()
+  const scope = useRequiredScopeParam()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
@@ -66,9 +67,11 @@ export const ParaTimeSnapshot: FC = () => {
         <StyledGrid item xs={12} md={3}>
           <Nodes />
         </StyledGrid>
-        <StyledGrid item xs={12} md={3}>
-          <RosePriceCard />
-        </StyledGrid>
+        {scope.network === Network.mainnet && (
+          <StyledGrid item xs={12} md={3}>
+            <RosePriceCard />
+          </StyledGrid>
+        )}
       </Grid>
     </>
   )
