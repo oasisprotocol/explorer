@@ -11,8 +11,7 @@ import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
 
-export type * from './generated/api'
-export { Layer, Runtime, RuntimeEventType, EvmTokenType } from './generated/api'
+export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
 
 export type HasScope = SearchScope
