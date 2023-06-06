@@ -30,7 +30,7 @@ export const TransactionsCard: FC = () => {
       </ScrollingDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          {isFetched && !transactions.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
+          {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
           <Transactions
             transactions={transactions}
             ownAddress={address}

@@ -36,7 +36,7 @@ export const useTransactions = (scope: SearchScope, address: string) => {
   )
   const { isFetched, isLoading, data } = query
 
-  const transactions = data?.data.transactions || []
+  const transactions = data?.data.transactions
   const totalCount = data?.data.total_count
   const isTotalCountClipped = data?.data.is_total_count_clipped
 
