@@ -42,7 +42,9 @@ const NotificationBox = styled(Box)(({ theme }) => ({
 
   height: 50,
 
+  background: theme.palette.layout.notificationBackground,
   border: `2px solid ${theme.palette.layout.darkBorder}`,
+  color: theme.palette.layout.notificationText,
 
   borderRadius: 50,
 }))
@@ -77,6 +79,7 @@ export const ScopedSearchResultsView: FC<{
         <SearchResultsFiltered
           title={getNameForScope(t, wantedScope)}
           searchResults={searchResults}
+          networkForTheme={wantedScope.network}
           filter={isInWantedScope}
           tokenPrices={tokenPrices}
         />
@@ -99,6 +102,7 @@ export const ScopedSearchResultsView: FC<{
               network: networkNames[wantedScope.network],
             })}
             filter={isOnWantedNetworkInOtherParatime}
+            networkForTheme={wantedScope.network}
             searchResults={searchResults}
             tokenPrices={tokenPrices}
           />
@@ -107,6 +111,7 @@ export const ScopedSearchResultsView: FC<{
             .map(net => (
               <SearchResultsFiltered
                 key={net}
+                networkForTheme={net}
                 title={networkNames[net]}
                 filter={getFilterForNetwork(net)}
                 searchResults={searchResults}

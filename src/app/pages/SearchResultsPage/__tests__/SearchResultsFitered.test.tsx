@@ -43,6 +43,7 @@ describe('SearchResultsView', () => {
         }}
         title={'test search'}
         filter={() => true}
+        networkForTheme={Network.mainnet}
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
@@ -71,6 +72,7 @@ describe('SearchResultsView', () => {
         }}
         title={'test search'}
         filter={() => true}
+        networkForTheme={Network.mainnet}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,
