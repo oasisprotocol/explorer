@@ -8,6 +8,7 @@ import {
   Runtime,
   Layer,
   isAccountNonEmpty,
+  HasScope,
 } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -18,12 +19,19 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
-export type SearchResults = {
-  blocks: RuntimeBlock[]
-  transactions: RuntimeTransaction[]
-  accounts: RuntimeAccount[]
-  allResults: (RuntimeBlock | RuntimeTransaction | RuntimeAccount)[]
+type SearchResultItemCore = HasScope & {
+  resultType: 'block' | 'transaction' | 'account'
 }
+
+export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
+
+export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { resultType: 'transaction' }
+
+export type AccountResult = SearchResultItemCore & RuntimeAccount & { resultType: 'account' }
+
+export type SearchResultItem = BlockResult | TransactionResult | AccountResult
+
+export type SearchResults = SearchResultItem[]
 
 export function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
   const queries = RouteUtils.getEnabledScopes()
@@ -104,13 +112,11 @@ export const useSearch = (q: SearchParams) => {
     ...(queries.oasisAccount.results || []),
     ...(queries.evmBech32Account.results || []),
   ].filter(isAccountNonEmpty)
-  const allResults = [...blocks, ...transactions, ...accounts]
-  const results: SearchResults = {
-    blocks,
-    transactions,
-    accounts,
-    allResults,
-  }
+  const results: SearchResultItem[] = [
+    ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
+    ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
+    ...accounts.map((account): AccountResult => ({ ...account, resultType: 'account' })),
+  ]
   return {
     isLoading,
     results,

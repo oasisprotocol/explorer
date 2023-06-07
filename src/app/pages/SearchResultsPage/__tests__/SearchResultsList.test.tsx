@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
-import { SearchResultsView } from '../'
+
 import {
   sapphireParsedBlock,
-  suggestedParsedAccount,
+  suggestedParsedAccountResult,
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
-import { Layer } from '../../../../oasis-indexer/api'
+import { SearchResultsList } from '../SearchResultsList'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -21,15 +21,8 @@ describe('SearchResultsView', () => {
 
   it('block should correctly link to transactions', () => {
     renderWithProviders(
-      <SearchResultsView
-        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
-        searchResults={{
-          blocks: [suggestedParsedBlock, sapphireParsedBlock],
-          transactions: [],
-          accounts: [],
-          allResults: [suggestedParsedBlock, sapphireParsedBlock],
-        }}
-        isLoading={false}
+      <SearchResultsList
+        searchResults={[suggestedParsedBlock, sapphireParsedBlock]}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,
@@ -43,6 +36,8 @@ describe('SearchResultsView', () => {
             hasUsedCoinGecko: false,
           },
         }}
+        title={'test search'}
+        networkForTheme={Network.mainnet}
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
@@ -62,15 +57,10 @@ describe('SearchResultsView', () => {
 
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
-      <SearchResultsView
-        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
-        searchResults={{
-          blocks: [],
-          transactions: [],
-          accounts: [suggestedParsedAccount],
-          allResults: [suggestedParsedAccount],
-        }}
-        isLoading={false}
+      <SearchResultsList
+        searchResults={[suggestedParsedAccountResult]}
+        title={'test search'}
+        networkForTheme={Network.mainnet}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,
