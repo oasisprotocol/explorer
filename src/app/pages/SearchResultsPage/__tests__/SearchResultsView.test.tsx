@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
-import { SearchResultsView } from '../'
+import { SearchResultsView } from '../SearchResultsView'
 import {
   sapphireParsedBlock,
   suggestedParsedAccount,
