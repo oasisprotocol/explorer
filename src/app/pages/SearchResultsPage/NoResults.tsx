@@ -7,15 +7,14 @@ import Link from '@mui/material/Link'
 import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
-import { getNetworkNames } from '../../../types/network'
-import { SearchScope } from '../../../types/searchScope'
+import { getNameForScope, SearchScope } from '../../../types/searchScope'
 
 export const NoResults: FC<{ scope?: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const title = !scope
     ? t('search.noResults.header')
-    : t('search.noResults.scopeHeader', { scope: getNetworkNames(t)[scope.network] })
+    : t('search.noResults.scopeHeader', { scope: getNameForScope(t, scope) })
 
   return (
     <EmptyState
