@@ -13,12 +13,12 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 
 /**
- * Component for selectively displaying a subset of search results that matched a passed filter,
+ * Component for displaying a list of search results
  * with appropriate theming.
  *
  * It doesn't actually run a search query, but uses existing results.
  */
-export const SearchResultsFiltered: FC<{
+export const SearchResultsList: FC<{
   title: string
   networkForTheme: Network
   searchResults: SearchResults

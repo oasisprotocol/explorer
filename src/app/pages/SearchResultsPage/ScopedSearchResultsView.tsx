@@ -20,7 +20,7 @@ import {
 import { getThemesForNetworks } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
-import { SearchResultsFiltered } from './SearchResultsFiltered'
+import { SearchResultsList } from './SearchResultsList'
 import { NoResults } from './NoResults'
 import { HasScope } from '../../../oasis-indexer/api'
 import { AllTokenPrices } from '../../../coin-gecko/api'
@@ -76,7 +76,7 @@ export const ScopedSearchResultsView: FC<{
   return (
     <>
       {hasWantedResults ? (
-        <SearchResultsFiltered
+        <SearchResultsList
           title={getNameForScope(t, wantedScope)}
           searchResults={searchResults.filter(isInWantedScope)}
           networkForTheme={wantedScope.network}
@@ -96,7 +96,7 @@ export const ScopedSearchResultsView: FC<{
               />
             </span>
           </NotificationBox>
-          <SearchResultsFiltered
+          <SearchResultsList
             title={t('search.otherResults.otherParatimesOnNetwork', {
               network: networkNames[wantedScope.network],
             })}
@@ -107,7 +107,7 @@ export const ScopedSearchResultsView: FC<{
           {RouteUtils.getEnabledNetworks()
             .filter(net => net !== wantedScope.network)
             .map(net => (
-              <SearchResultsFiltered
+              <SearchResultsList
                 key={net}
                 networkForTheme={net}
                 title={networkNames[net]}

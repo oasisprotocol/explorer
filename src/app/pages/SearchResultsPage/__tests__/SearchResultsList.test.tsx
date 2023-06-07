@@ -7,7 +7,7 @@ import {
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
-import { SearchResultsFiltered } from '../SearchResultsFiltered'
+import { SearchResultsList } from '../SearchResultsList'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('SearchResultsView', () => {
 
   it('block should correctly link to transactions', () => {
     renderWithProviders(
-      <SearchResultsFiltered
+      <SearchResultsList
         searchResults={[suggestedParsedBlock, sapphireParsedBlock]}
         tokenPrices={{
           [Network.mainnet]: {
@@ -57,7 +57,7 @@ describe('SearchResultsView', () => {
 
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
-      <SearchResultsFiltered
+      <SearchResultsList
         searchResults={[suggestedParsedAccountResult]}
         title={'test search'}
         networkForTheme={Network.mainnet}

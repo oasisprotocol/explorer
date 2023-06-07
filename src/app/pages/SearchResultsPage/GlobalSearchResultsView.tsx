@@ -5,7 +5,7 @@ import { getFilterForScope, getKeyForScope, getNameForScope } from '../../../typ
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { NoResults } from './NoResults'
-import { SearchResultsFiltered } from './SearchResultsFiltered'
+import { SearchResultsList } from './SearchResultsList'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 
 export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPrices: AllTokenPrices }> = ({
@@ -18,7 +18,7 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
   ) : (
     <>
       {RouteUtils.getEnabledSearchScopes().map(scope => (
-        <SearchResultsFiltered
+        <SearchResultsList
           key={getKeyForScope(scope)}
           title={getNameForScope(t, scope)}
           searchResults={searchResults.filter(getFilterForScope(scope))}
