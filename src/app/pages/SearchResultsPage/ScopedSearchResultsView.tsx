@@ -5,8 +5,8 @@ import Box from '@mui/material/Box'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 import ZoomOut from '@mui/icons-material/ZoomOut'
 import {
+  getFilterForLayer,
   getFilterForNetwork,
-  getInverseFilterForNetwork,
   getNetworkNames,
   isOnMainnet,
   Network,
@@ -22,7 +22,6 @@ import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
 import { NoResults } from './NoResults'
-import { HasScope } from '../../../oasis-indexer/api'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 
 const NotificationBox = styled(Box)(({ theme }) => ({
@@ -59,19 +58,12 @@ export const ScopedSearchResultsView: FC<{
   const networkNames = getNetworkNames(t)
   const themes = getThemesForNetworks()
   const isInWantedScope = getFilterForScope(wantedScope)
-  const isNotOnWantedNetwork = getInverseFilterForNetwork(wantedScope.network)
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
-  const isOnWantedNetworkInOtherParatime = (item: HasScope) =>
-    item.network === wantedScope.network && item.layer !== wantedScope.layer
+  const isOnTheRightParatime = getFilterForLayer(wantedScope.layer)
   const hasWantedResults = searchResults.some(isInWantedScope)
-  const otherResults = searchResults.filter(isNotInWantedScope)
+  const otherResults = searchResults.filter(isNotInWantedScope).filter(isOnTheRightParatime)
   const hasMainnetResults = otherResults.some(isOnMainnet)
   const notificationTheme = themes[hasMainnetResults ? Network.mainnet : Network.testnet]
-
-  const foundOtherResultsIn = [
-    otherResults.some(isNotOnWantedNetwork) ? t('search.otherResults.Networks') : '',
-    otherResults.some(isOnWantedNetworkInOtherParatime) ? t('search.otherResults.Paratimes') : '',
-  ].filter(word => word)
 
   return (
     <>
@@ -90,20 +82,9 @@ export const ScopedSearchResultsView: FC<{
           <NotificationBox theme={notificationTheme} onClick={() => setOthersOpen(false)}>
             <ZoomOut />
             <span>
-              <Trans
-                i18nKey={'search.otherResults.clickToHide'}
-                values={{ locations: foundOtherResultsIn }}
-              />
+              <Trans i18nKey={'search.otherResults.clickToHide'} />
             </span>
           </NotificationBox>
-          <SearchResultsList
-            title={t('search.otherResults.otherParatimesOnNetwork', {
-              network: networkNames[wantedScope.network],
-            })}
-            networkForTheme={wantedScope.network}
-            searchResults={searchResults.filter(isOnWantedNetworkInOtherParatime)}
-            tokenPrices={tokenPrices}
-          />
           {RouteUtils.getEnabledNetworks()
             .filter(net => net !== wantedScope.network)
             .map(net => (
@@ -132,7 +113,6 @@ export const ScopedSearchResultsView: FC<{
                   countLabel: t(hasWantedResults ? 'search.results.moreCount' : 'search.results.count', {
                     count: otherResults.length,
                   }),
-                  locations: foundOtherResultsIn,
                 }}
               />
             </span>

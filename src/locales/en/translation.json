@@ -269,12 +269,9 @@
       "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
     },
     "otherResults": {
-      "Networks": "<strong>Networks</strong>",
-      "Paratimes": "<strong>Paratimes</strong>",
-      "otherParatimesOnNetwork": "Other Paratimes on {{ network }}",
-      "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on other {{ locations, list }}. Click to open these results.",
-      "clickToShowMore": "We also found <strong>{{ countLabel }}</strong> on other {{ locations, list }}. Click to open these results.",
-      "clickToHide": "The results from other {{ locations, list }} are shown below. Click to hide those results."
+      "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
+      "clickToShowMore": "We also found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
+      "clickToHide": "The results from other <strong>Networks</strong> are shown below. Click to hide those results."
     },
     "results": {
       "accounts": {
