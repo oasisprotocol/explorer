@@ -21,8 +21,7 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
         <SearchResultsFiltered
           key={getKeyForScope(scope)}
           title={getNameForScope(t, scope)}
-          filter={getFilterForScope(scope)}
-          searchResults={searchResults}
+          searchResults={searchResults.filter(getFilterForScope(scope))}
           networkForTheme={scope.network}
           tokenPrices={tokenPrices}
         />

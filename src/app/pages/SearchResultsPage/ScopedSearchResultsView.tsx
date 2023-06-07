@@ -78,9 +78,8 @@ export const ScopedSearchResultsView: FC<{
       {hasWantedResults ? (
         <SearchResultsFiltered
           title={getNameForScope(t, wantedScope)}
-          searchResults={searchResults}
+          searchResults={searchResults.filter(isInWantedScope)}
           networkForTheme={wantedScope.network}
-          filter={isInWantedScope}
           tokenPrices={tokenPrices}
         />
       ) : (
@@ -101,9 +100,8 @@ export const ScopedSearchResultsView: FC<{
             title={t('search.otherResults.otherParatimesOnNetwork', {
               network: networkNames[wantedScope.network],
             })}
-            filter={isOnWantedNetworkInOtherParatime}
             networkForTheme={wantedScope.network}
-            searchResults={searchResults}
+            searchResults={searchResults.filter(isOnWantedNetworkInOtherParatime)}
             tokenPrices={tokenPrices}
           />
           {RouteUtils.getEnabledNetworks()
@@ -113,8 +111,7 @@ export const ScopedSearchResultsView: FC<{
                 key={net}
                 networkForTheme={net}
                 title={networkNames[net]}
-                filter={getFilterForNetwork(net)}
-                searchResults={searchResults}
+                searchResults={searchResults.filter(getFilterForNetwork(net))}
                 tokenPrices={tokenPrices}
               />
             ))}

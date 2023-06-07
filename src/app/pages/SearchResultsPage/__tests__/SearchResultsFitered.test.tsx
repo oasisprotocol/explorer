@@ -37,7 +37,6 @@ describe('SearchResultsView', () => {
           },
         }}
         title={'test search'}
-        filter={() => true}
         networkForTheme={Network.mainnet}
       />,
     )
@@ -61,7 +60,6 @@ describe('SearchResultsView', () => {
       <SearchResultsFiltered
         searchResults={[suggestedParsedAccountResult]}
         title={'test search'}
-        filter={() => true}
         networkForTheme={Network.mainnet}
         tokenPrices={{
           [Network.mainnet]: {

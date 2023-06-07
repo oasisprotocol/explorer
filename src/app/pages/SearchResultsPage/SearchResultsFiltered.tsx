@@ -6,14 +6,11 @@ import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
 import { AccountResult, BlockResult, SearchResults, TransactionResult } from './hooks'
-import { HasScope } from '../../../oasis-indexer/api'
 import { getThemesForNetworks } from '../../../styles/theme'
 import { Network } from '../../../types/network'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
-
-export type SearchResultFilter = (item: HasScope) => boolean
 
 /**
  * Component for selectively displaying a subset of search results that matched a passed filter,
@@ -23,14 +20,13 @@ export type SearchResultFilter = (item: HasScope) => boolean
  */
 export const SearchResultsFiltered: FC<{
   title: string
-  filter: SearchResultFilter
   networkForTheme: Network
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
-}> = ({ filter, title, networkForTheme, searchResults, tokenPrices }) => {
+}> = ({ title, networkForTheme, searchResults, tokenPrices }) => {
   const { t } = useTranslation()
 
-  const numberOfResults = searchResults.filter(filter).length
+  const numberOfResults = searchResults.length
 
   if (!numberOfResults) {
     return null
@@ -48,9 +44,7 @@ export const SearchResultsFiltered: FC<{
       >
         <ResultsGroupByType
           title={t('search.results.blocks.title')}
-          results={searchResults
-            .filter(filter)
-            .filter((item): item is BlockResult => item.resultType === 'block')}
+          results={searchResults.filter((item): item is BlockResult => item.resultType === 'block')}
           resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
           link={block => RouteUtils.getBlockRoute(block, block.round)}
           linkLabel={t('search.results.blocks.viewLink')}
@@ -58,9 +52,9 @@ export const SearchResultsFiltered: FC<{
 
         <ResultsGroupByType
           title={t('search.results.transactions.title')}
-          results={searchResults
-            .filter(filter)
-            .filter((item): item is TransactionResult => item.resultType === 'transaction')}
+          results={searchResults.filter(
+            (item): item is TransactionResult => item.resultType === 'transaction',
+          )}
           resultComponent={item => (
             <TransactionDetailView
               isLoading={false}
@@ -75,9 +69,7 @@ export const SearchResultsFiltered: FC<{
 
         <ResultsGroupByType
           title={t('search.results.accounts.title')}
-          results={searchResults
-            .filter(filter)
-            .filter((item): item is AccountResult => item.resultType === 'account')}
+          results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item => (
             <AccountDetailsView
               isLoading={false}
