@@ -1,7 +1,9 @@
 import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { NativeTicker, Ticker } from '../types/ticker'
+import { getTickerForNetwork, NativeTicker, Ticker } from '../types/ticker'
+import { Network } from '../types/network'
+import { RouteUtils } from '../app/utils/route-utils'
 
 type GetRosePriceParams = {
   ids: string
@@ -73,4 +75,14 @@ export const useTokenPrice = (ticker: NativeTicker): TokenPriceInfo => {
         isFree: false,
       }
   }
+}
+
+export type AllTokenPrices = Record<Network, TokenPriceInfo>
+
+export const useAllTokenPrices = (): AllTokenPrices => {
+  const results = {} as any
+  // The list of networks will never change on the run, so we can do this
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  RouteUtils.getEnabledNetworks().forEach(net => (results[net] = useTokenPrice(getTickerForNetwork(net))))
+  return results
 }

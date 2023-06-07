@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
-import { SearchResultsView } from '../SearchResultsView'
+
 import {
   sapphireParsedBlock,
   suggestedParsedAccount,
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
-import { Layer } from '../../../../oasis-indexer/api'
+import { SearchResultsFiltered } from '../SearchResultsFiltered'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -21,15 +21,13 @@ describe('SearchResultsView', () => {
 
   it('block should correctly link to transactions', () => {
     renderWithProviders(
-      <SearchResultsView
-        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
+      <SearchResultsFiltered
         searchResults={{
           blocks: [suggestedParsedBlock, sapphireParsedBlock],
           transactions: [],
           accounts: [],
           allResults: [suggestedParsedBlock, sapphireParsedBlock],
         }}
-        isLoading={false}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,
@@ -43,6 +41,8 @@ describe('SearchResultsView', () => {
             hasUsedCoinGecko: false,
           },
         }}
+        title={'test search'}
+        filter={() => true}
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
@@ -62,15 +62,15 @@ describe('SearchResultsView', () => {
 
   it('account should correctly link to erc-20 tokens', () => {
     renderWithProviders(
-      <SearchResultsView
-        wantedScope={{ network: Network.mainnet, layer: Layer.emerald }}
+      <SearchResultsFiltered
         searchResults={{
           blocks: [],
           transactions: [],
           accounts: [suggestedParsedAccount],
           allResults: [suggestedParsedAccount],
         }}
-        isLoading={false}
+        title={'test search'}
+        filter={() => true}
         tokenPrices={{
           [Network.mainnet]: {
             isLoading: false,

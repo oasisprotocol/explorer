@@ -24,3 +24,13 @@ export const getLayerNames = (t: TFunction): Record<Layer, string> => ({
   [Layer.cipher]: t('common.cipher'),
   [Layer.consensus]: t('common.consensus'),
 })
+
+interface HasNetwork {
+  network: Network
+}
+
+export const getFilterForNetwork = (network: Network) => (item: HasNetwork) => item.network === network
+export const getInverseFilterForNetwork = (network: Network) => (item: HasNetwork) => item.network !== network
+
+export const isOnMainnet = getFilterForNetwork(Network.mainnet)
+export const isOnTestnet = getFilterForNetwork(Network.testnet)
