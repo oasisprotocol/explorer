@@ -8,13 +8,20 @@ import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestion
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
+import { getNetworkNames, Network } from '../../../types/network'
+import { Layer } from '../../../oasis-indexer/api'
 
-export const NoResults: FC<{ scope?: SearchScope }> = ({ scope }) => {
+export const NoResults: FC<{
+  network?: Network
+  layer?: Layer
+}> = ({ network, layer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const title = !scope
-    ? t('search.noResults.header')
-    : t('search.noResults.scopeHeader', { scope: getNameForScope(t, scope) })
+  const title = network
+    ? t('search.noResults.scopeHeader', {
+        scope: layer ? getNameForScope(t, { network, layer }) : getNetworkNames(t)[network],
+      })
+    : t('search.noResults.header')
 
   return (
     <EmptyState
@@ -34,10 +41,19 @@ export const NoResults: FC<{ scope?: SearchScope }> = ({ scope }) => {
             />
           </p>
           <p>
-            <SearchSuggestionsLinks scope={scope} />
+            <SearchSuggestionsLinks scope={layer && network ? { network, layer } : undefined} />
           </p>
         </Box>
       }
     />
   )
 }
+
+export const NoResultsWhatsoever: FC = () => <NoResults />
+export const NoResultsOnNetwork: FC<{ network: Network }> = ({ network }) => <NoResults network={network} />
+
+export const NoResultsOnMainnet: FC = () => <NoResultsOnNetwork network={Network.mainnet} />
+
+export const NoResultsInScope: FC<{ scope: SearchScope }> = ({ scope }) => (
+  <NoResults network={scope.network} layer={scope.layer} />
+)

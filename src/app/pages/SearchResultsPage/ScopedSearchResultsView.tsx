@@ -17,7 +17,7 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
-import { NoResults } from './NoResults'
+import { NoResultsInScope } from './NoResults'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { HideMoreResults, ShowMoreResults } from './notifications'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
@@ -52,7 +52,7 @@ export const ScopedSearchResultsView: FC<{
           tokenPrices={tokenPrices}
         />
       ) : (
-        <NoResults scope={wantedScope} />
+        <NoResultsInScope scope={wantedScope} />
       )}
       {othersOpen ? (
         <>
