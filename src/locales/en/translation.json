@@ -182,9 +182,9 @@
       "txTooltipEth": "Ethereum hash for the transaction",
       "senderTooltipEth": "Ethereum address for the sender",
       "recipientTooltipEth": "Ethereum address for the recipient",
-      "txTooltip": "Oasis hash for the transaction",
-      "senderTooltip": "Oasis address for the sender",
-      "recipientTooltip": "Oasis address for the recipient"
+      "txTooltipOasis": "Oasis hash for the transaction",
+      "senderTooltipOasis": "Oasis address for the sender",
+      "recipientTooltipOasis": "Oasis address for the recipient"
     }
   },
   "transactionEvent": {

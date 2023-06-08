@@ -227,7 +227,7 @@ export const TransactionDetailView: FC<{
                 <TransactionInfoTooltip
                   label={
                     isOasisAddressFormat
-                      ? t('transaction.tooltips.txTooltip')
+                      ? t('transaction.tooltips.txTooltipOasis')
                       : t('transaction.tooltips.txTooltipEth')
                   }
                 >
@@ -268,7 +268,7 @@ export const TransactionDetailView: FC<{
                 <TransactionInfoTooltip
                   label={
                     isOasisAddressFormat
-                      ? t('transaction.tooltips.senderTooltip')
+                      ? t('transaction.tooltips.senderTooltipOasis')
                       : t('transaction.tooltips.senderTooltipEth')
                   }
                 >
@@ -286,7 +286,7 @@ export const TransactionDetailView: FC<{
                 <TransactionInfoTooltip
                   label={
                     isOasisAddressFormat
-                      ? t('transaction.tooltips.recipientTooltip')
+                      ? t('transaction.tooltips.recipientTooltipOasis')
                       : t('transaction.tooltips.recipientTooltipEth')
                   }
                 >
