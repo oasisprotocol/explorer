@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import * as externalLinks from '../../utils/externalLinks'
+import { deploys } from '../../../config'
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   position: 'sticky',
@@ -24,16 +25,13 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 export const BuildBanner: FC = () => {
   const { t } = useTranslation()
 
-  if (!process.env.REACT_APP_BUILD_PREVIEW) {
+  if (window.location.origin === deploys.production) {
     return null
   }
-  if (process.env.REACT_APP_BUILD_PREVIEW === 'preview') {
-    return <StyledAlert severity="warning">{t('banner.buildPreview')}</StyledAlert>
-  }
-  if (process.env.REACT_APP_BUILD_PREVIEW === 'internal') {
+  if (window.location.origin === deploys.staging) {
     return (
       <StyledAlert severity="warning">
-        {t('banner.buildInternal')}
+        {t('banner.buildStaging')}
         <Link
           component={RouterLink}
           to={externalLinks.feedback.internalForm}
@@ -45,5 +43,5 @@ export const BuildBanner: FC = () => {
       </StyledAlert>
     )
   }
-  throw new Error('Unsupported build preview type')
+  return <StyledAlert severity="warning">{t('banner.buildPreview')}</StyledAlert>
 }
