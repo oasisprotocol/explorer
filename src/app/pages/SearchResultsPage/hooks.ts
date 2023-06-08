@@ -112,11 +112,13 @@ export const useSearch = (q: SearchParams) => {
     ...(queries.oasisAccount.results || []),
     ...(queries.evmBech32Account.results || []),
   ].filter(isAccountNonEmpty)
-  const results: SearchResultItem[] = [
-    ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
-    ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
-    ...accounts.map((account): AccountResult => ({ ...account, resultType: 'account' })),
-  ]
+  const results: SearchResultItem[] = isLoading
+    ? []
+    : [
+        ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
+        ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
+        ...accounts.map((account): AccountResult => ({ ...account, resultType: 'account' })),
+      ]
   return {
     isLoading,
     results,
