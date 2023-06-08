@@ -1,5 +1,7 @@
 import { FC } from 'react'
+import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Unstable_Grid2'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
@@ -11,9 +13,27 @@ export const Header: FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const scope = useScopeParam()
+  const scrollTrigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  })
 
   return (
-    <header>
+    <AppBar
+      position="sticky"
+      sx={{
+        transitionProperty: 'background-color',
+        transitionDuration: `${theme.transitions.duration.standard}ms`,
+        transitionTimingFunction: theme.transitions.easing.easeInOut,
+        backgroundColor: scrollTrigger
+          ? theme.palette.layout.contrastSecondary
+          : theme.palette.layout.secondary,
+        borderRadius: 0,
+        boxShadow: scrollTrigger
+          ? '0px 4px 4px rgba(0, 0, 0, 0.25), 0px 34px 24px -9px rgba(50, 77, 171, 0.12)'
+          : 'none',
+      }}
+    >
       <Box sx={{ px: '15px' }}>
         <Grid
           container
@@ -21,11 +41,13 @@ export const Header: FC = () => {
             px: isMobile ? 0 : '4%',
             pt: isMobile ? 4 : '15px',
             pb: 4,
-            backgroundColor: theme.palette.layout.secondary,
           }}
         >
           <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Logotype showText={!isMobile} />
+            <Logotype
+              color={scrollTrigger ? theme.palette.layout.contrastMain : undefined}
+              showText={!scrollTrigger && !isMobile}
+            />
           </Grid>
           {scope && (
             <>
@@ -37,6 +59,6 @@ export const Header: FC = () => {
           )}
         </Grid>
       </Box>
-    </header>
+    </AppBar>
   )
 }
