@@ -8,6 +8,7 @@ import { SearchResults } from './hooks'
 import { GlobalSearchResultsView } from './GlobalSearchResultsView'
 import { ScopedSearchResultsView } from './ScopedSearchResultsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
+import { getFilterForLayer } from '../../../types/layers'
 
 export const SearchResultsView: FC<{
   wantedScope?: SearchScope
@@ -25,7 +26,7 @@ export const SearchResultsView: FC<{
       ) : wantedScope ? (
         <ScopedSearchResultsView
           wantedScope={wantedScope}
-          searchResults={searchResults}
+          searchResults={searchResults.filter(getFilterForLayer(wantedScope.layer))}
           tokenPrices={tokenPrices}
         />
       ) : (

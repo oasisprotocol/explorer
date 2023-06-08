@@ -1,12 +1,22 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getFilterForScope, getKeyForScope, getNameForScope } from '../../../types/searchScope'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
-import { NoResults } from './NoResults'
+import { NoResultsOnMainnet, NoResultsWhatsoever } from './NoResults'
 import { SearchResultsList } from './SearchResultsList'
 import { AllTokenPrices } from '../../../coin-gecko/api'
+import {
+  getFilterForNetwork,
+  getNetworkNames,
+  isNotMainnet,
+  isNotOnMainnet,
+  isOnMainnet,
+  Network,
+} from '../../../types/network'
+import { HideMoreResults, ShowMoreResults } from './notifications'
+import { getThemesForNetworks } from '../../../styles/theme'
+import { orderByLayer } from '../../../types/layers'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPrices: AllTokenPrices }> = ({
@@ -14,21 +24,50 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
   tokenPrices,
 }) => {
   const { t } = useTranslation()
+  const [othersOpen, setOthersOpen] = useState(false)
   useRedirectIfSingleResult(undefined, searchResults)
 
-  return searchResults.length === 0 ? (
-    <NoResults />
-  ) : (
+  const themes = getThemesForNetworks()
+  const networkNames = getNetworkNames(t)
+  const otherNetworks = RouteUtils.getEnabledNetworks().filter(isNotMainnet)
+  const notificationTheme = themes[Network.testnet]
+  const mainnetResults = searchResults.filter(isOnMainnet).sort(orderByLayer)
+  const otherResults = searchResults.filter(isNotOnMainnet).sort(orderByLayer)
+
+  return (
     <>
-      {RouteUtils.getEnabledSearchScopes().map(scope => (
+      {!mainnetResults.length && (otherResults.length ? <NoResultsOnMainnet /> : <NoResultsWhatsoever />)}
+      {
         <SearchResultsList
-          key={getKeyForScope(scope)}
-          title={getNameForScope(t, scope)}
-          searchResults={searchResults.filter(getFilterForScope(scope))}
-          networkForTheme={scope.network}
+          key={Network.mainnet}
+          title={networkNames[Network.mainnet]}
+          searchResults={mainnetResults}
+          networkForTheme={Network.mainnet}
           tokenPrices={tokenPrices}
         />
-      ))}
+      }
+      {otherResults.length !== 0 &&
+        (othersOpen ? (
+          <>
+            <HideMoreResults theme={notificationTheme} onHide={() => setOthersOpen(false)} />
+            {otherNetworks.map(net => (
+              <SearchResultsList
+                key={net}
+                title={networkNames[net]}
+                searchResults={otherResults.filter(getFilterForNetwork(net))}
+                networkForTheme={net}
+                tokenPrices={tokenPrices}
+              />
+            ))}
+          </>
+        ) : (
+          <ShowMoreResults
+            theme={notificationTheme}
+            hasWantedResults={!!mainnetResults.length}
+            otherResultsCount={otherResults.length}
+            onShow={() => setOthersOpen(true)}
+          />
+        ))}
     </>
   )
 }

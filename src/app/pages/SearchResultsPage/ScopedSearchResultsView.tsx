@@ -1,12 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  getFilterForLayer,
-  getFilterForNetwork,
-  getNetworkNames,
-  isOnMainnet,
-  Network,
-} from '../../../types/network'
+import { getFilterForNetwork, getNetworkNames, isOnMainnet, Network } from '../../../types/network'
 import {
   getFilterForScope,
   getNameForScope,
@@ -17,7 +11,7 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
-import { NoResults } from './NoResults'
+import { NoResultsInScope } from './NoResults'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { HideMoreResults, ShowMoreResults } from './notifications'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
@@ -33,18 +27,15 @@ export const ScopedSearchResultsView: FC<{
   const themes = getThemesForNetworks()
   const isInWantedScope = getFilterForScope(wantedScope)
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
-  const isOnTheRightParatime = getFilterForLayer(wantedScope.layer)
   const wantedResults = searchResults.filter(isInWantedScope)
-  const hasWantedResults = !!wantedResults.length
-  const otherResults = searchResults.filter(isNotInWantedScope).filter(isOnTheRightParatime)
-  const hasMainnetResults = otherResults.some(isOnMainnet)
-  const notificationTheme = themes[hasMainnetResults ? Network.mainnet : Network.testnet]
+  const otherResults = searchResults.filter(isNotInWantedScope)
+  const notificationTheme = themes[otherResults.some(isOnMainnet) ? Network.mainnet : Network.testnet]
 
-  useRedirectIfSingleResult(wantedScope, wantedResults)
+  useRedirectIfSingleResult(wantedScope, [...wantedResults, ...otherResults])
 
   return (
     <>
-      {hasWantedResults ? (
+      {wantedResults.length ? (
         <SearchResultsList
           title={getNameForScope(t, wantedScope)}
           searchResults={wantedResults}
@@ -52,7 +43,7 @@ export const ScopedSearchResultsView: FC<{
           tokenPrices={tokenPrices}
         />
       ) : (
-        <NoResults scope={wantedScope} />
+        <NoResultsInScope scope={wantedScope} />
       )}
       {othersOpen ? (
         <>
@@ -74,7 +65,7 @@ export const ScopedSearchResultsView: FC<{
           <ShowMoreResults
             theme={notificationTheme}
             onShow={() => setOthersOpen(true)}
-            hasWantedResults={hasWantedResults}
+            hasWantedResults={!!wantedResults.length}
             otherResultsCount={otherResults.length}
           />
         )
