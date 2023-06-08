@@ -28,12 +28,12 @@ export const BuildPreviewBanner: FC = () => {
     return null
   }
   if (process.env.REACT_APP_BUILD_PREVIEW === 'preview') {
-    return <StyledAlert severity="warning">{t('buildPreview')}</StyledAlert>
+    return <StyledAlert severity="warning">{t('banner.buildPreview')}</StyledAlert>
   }
   if (process.env.REACT_APP_BUILD_PREVIEW === 'internal') {
     return (
       <StyledAlert severity="warning">
-        {t('buildInternal')}
+        {t('banner.buildInternal')}
         <Link
           component={RouterLink}
           to={externalLinks.feedback.internalForm}
