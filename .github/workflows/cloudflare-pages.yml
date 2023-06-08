@@ -51,8 +51,8 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Build app preview
-        run: yarn build-preview
+      - name: Build app
+        run: yarn build
       - name: Publish to Cloudflare Pages
         # Id is needed to access output in a next step.
         id: cloudflare
@@ -62,7 +62,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Project name created via Cloudflare dashboard.
           projectName: oasis-explorer
-          # Use output directory of build-preview command.
+          # Use output directory of build command.
           directory: build
       # On a subsequent run the original comment will be updated.
       - name: Update PR comment
