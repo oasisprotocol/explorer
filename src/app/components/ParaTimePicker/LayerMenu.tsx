@@ -11,6 +11,7 @@ import { Layer } from '../../../oasis-indexer/api'
 import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
+import { orderByLayer } from '../../../types/layers'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
@@ -88,13 +89,6 @@ type LayerMenuProps = {
   setSelectedLayer: (layer: Layer) => void
 }
 
-const menuSortOrder: Record<Layer, number> = {
-  [Layer.consensus]: 1,
-  [Layer.sapphire]: 2,
-  [Layer.emerald]: 3,
-  [Layer.cipher]: 4,
-}
-
 export const LayerMenu: FC<LayerMenuProps> = ({
   activeLayer,
   network,
@@ -108,7 +102,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
       layer,
       enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork || network).includes(layer),
     }))
-    .sort((a, b) => menuSortOrder[a.layer] - menuSortOrder[b.layer])
+    .sort(orderByLayer)
 
   return (
     <MenuList>

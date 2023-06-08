@@ -1,12 +1,7 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  getFilterForLayer,
-  getFilterForNetwork,
-  getNetworkNames,
-  isOnMainnet,
-  Network,
-} from '../../../types/network'
+import { getFilterForNetwork, getNetworkNames, isOnMainnet, Network } from '../../../types/network'
+import { getFilterForLayer } from '../../../types/layers'
 import {
   getFilterForScope,
   getNameForScope,

@@ -1,4 +1,5 @@
-import { getLayerNames, getNetworkNames, Network } from './network'
+import { getNetworkNames, Network } from './network'
+import { getLayerNames } from './layers'
 import { HasScope, Layer } from '../oasis-indexer/api'
 import { TFunction } from 'i18next'
 
