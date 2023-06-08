@@ -12,14 +12,14 @@ export const ResultListFrame = styled(Box)(({ theme }) => {
     background: theme.palette.layout.networkBubbleBackground,
     borderRadius: 12,
     boxShadow: '-20px 4px 40px rgba(34, 47, 63, 0.24)',
-    [`&& .{cardClasses.root}`]: {
+    [`&& .${cardClasses.root}`]: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
       paddingLeft: 64,
       paddingRight: 64,
       background: theme.palette.layout.networkBubbleBackground,
     },
-    [`&& .${cardClasses.root}. > .${boxClasses.root}`]: {
+    [`&& .${cardClasses.root} > .${boxClasses.root}`]: {
       background: theme.palette.layout.networkBubbleBorder,
       borderRadius: 0,
       marginLeft: -64,
@@ -29,9 +29,6 @@ export const ResultListFrame = styled(Box)(({ theme }) => {
       paddingRight: 64,
       paddingBottom: 32,
       paddingTop: 32,
-    },
-    '&& dt, && dd': {
-      boxShadow: `0px 1px 0px ${theme.palette.layout.descriptionListSeparator}`,
     },
   }
 })
