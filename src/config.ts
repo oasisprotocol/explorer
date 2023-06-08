@@ -113,4 +113,5 @@ export const showEmptyAccountDetails = true
 export const deploys = {
   production: 'https://explorer.oasis.io',
   staging: 'https://explorer.stg.oasis.io',
+  localhost: 'http://localhost:1234',
 }

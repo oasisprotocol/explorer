@@ -25,6 +25,9 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 export const BuildBanner: FC = () => {
   const { t } = useTranslation()
 
+  if (window.location.origin === deploys.localhost) {
+    return null
+  }
   if (window.location.origin === deploys.production) {
     return null
   }
