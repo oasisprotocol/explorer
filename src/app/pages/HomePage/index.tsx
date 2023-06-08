@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
-import { BuildPreviewBanner } from '../../components/BuildPreviewBanner'
+import { BuildBanner } from '../../components/BuildPreviewBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
@@ -126,7 +126,7 @@ export const HomePage: FC = () => {
 
   return (
     <>
-      <BuildPreviewBanner />
+      <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
       <HomepageLayout>
         <Content>

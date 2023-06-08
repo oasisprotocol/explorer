@@ -4,7 +4,7 @@ import { Footer } from './Footer'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
-import { BuildPreviewBanner } from '../BuildPreviewBanner'
+import { BuildBanner } from '../BuildPreviewBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 
@@ -23,7 +23,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
 
   return (
     <>
-      <BuildPreviewBanner />
+      <BuildBanner />
       <NetworkOfflineBanner />
       {scope && <RuntimeOfflineBanner />}
       <Box
