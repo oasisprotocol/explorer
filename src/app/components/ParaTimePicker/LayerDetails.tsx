@@ -71,19 +71,18 @@ type LayerDetailsProps = {
   activeLayer: Layer
   hoveredLayer?: Layer
   network: Network
-  selectedLayer?: Layer
 }
 
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({ hoveredLayer, network, selectedLayer }) => {
+export const LayerDetails: FC<LayerDetailsProps> = ({ activeLayer, hoveredLayer, network }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = selectedLayer || hoveredLayer
+  const layer = hoveredLayer || activeLayer
 
   if (!layer) {
     // TODO: properly design this placeholder

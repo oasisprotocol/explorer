@@ -36,15 +36,9 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       divider={divider}
       onMouseEnter={() => {
         setHoveredNetwork(network)
+        setSelectedNetwork(network)
       }}
       selected={activeNetworkSelection}
-      onClick={() => {
-        if (selectedNetwork === network) {
-          // setSelectedNetwork(undefined)
-        } else {
-          setSelectedNetwork(network)
-        }
-      }}
     >
       <ListItemIcon>{icons[network]}</ListItemIcon>
       <ListItemText>

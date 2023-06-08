@@ -40,7 +40,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
   divider,
   layer,
   network,
-  selectedLayer,
+  hoveredLayer,
   selectedNetwork,
   setHoveredLayer,
   setSelectedLayer,
@@ -59,11 +59,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
         setHoveredLayer()
       }}
       onClick={() => {
-        if (selectedLayer === layer) {
-          setSelectedLayer()
-        } else {
-          setSelectedLayer(layer)
-        }
+        setSelectedLayer(layer)
       }}
       selected={activeLayerSelection}
     >
@@ -76,7 +72,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
           {selectedNetwork === network && activeLayer === layer && t('paraTimePicker.selected')}
         </Typography>
       </ListItemText>
-      {layer === selectedLayer && <KeyboardArrowRightIcon />}
+      {layer === hoveredLayer && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
 }
@@ -84,10 +80,9 @@ type LayerMenuProps = {
   activeLayer: Layer
   hoveredLayer?: Layer
   network: Network
-  selectedLayer?: Layer
   selectedNetwork: Network
   setHoveredLayer: (layer?: Layer) => void
-  setSelectedLayer: (layer?: Layer) => void
+  setSelectedLayer: (layer: Layer) => void
 }
 
 const menuSortOrder: Record<Layer, number> = {
@@ -101,7 +96,6 @@ export const LayerMenu: FC<LayerMenuProps> = ({
   activeLayer,
   hoveredLayer,
   network,
-  selectedLayer,
   selectedNetwork,
   setHoveredLayer,
   setSelectedLayer,
@@ -133,7 +127,6 @@ export const LayerMenu: FC<LayerMenuProps> = ({
               key={option.layer}
               layer={option.layer}
               network={network}
-              selectedLayer={selectedLayer}
               selectedNetwork={selectedNetwork}
               setHoveredLayer={setHoveredLayer}
               setSelectedLayer={setSelectedLayer}

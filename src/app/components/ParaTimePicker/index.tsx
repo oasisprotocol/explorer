@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
@@ -37,12 +36,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(network !== Network.mainnet)
-  const [selectedLayer, setSelectedLayer] = useState<undefined | Layer>()
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
-  const selectNetwork = (newNetwork: Network) => {
-    setSelectedNetwork(newNetwork)
-    setSelectedLayer(undefined)
-  }
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
 
@@ -89,7 +83,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                 hoveredNetwork={hoveredNetwork}
                 selectedNetwork={selectedNetwork}
                 setHoveredNetwork={setHoveredNetwork}
-                setSelectedNetwork={selectNetwork}
+                setSelectedNetwork={setSelectedNetwork}
               />
             </Grid>
           )}
@@ -113,46 +107,21 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                   activeLayer={layer}
                   hoveredLayer={hoveredLayer}
                   network={network}
-                  selectedLayer={selectedLayer}
                   selectedNetwork={selectedNetwork}
                   setHoveredLayer={setHoveredLayer}
-                  setSelectedLayer={setSelectedLayer}
+                  setSelectedLayer={layer => onConfirm(selectedNetwork, layer)}
                 />
               </Grid>
               <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
                 <LayerDetails
                   activeLayer={layer}
                   hoveredLayer={hoveredLayer}
-                  selectedLayer={selectedLayer}
                   network={selectedNetwork || network}
                 />
               </Grid>
             </>
           )}
         </Grid>
-
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-          {selectedLayer && (
-            <Button
-              onClick={() => setSelectedLayer(undefined)}
-              color="secondary"
-              variant="outlined"
-              sx={{ textTransform: 'capitalize' }}
-            >
-              {t('common.cancel')}
-            </Button>
-          )}
-          {selectedLayer && (
-            <Button
-              onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-              disabled={!selectedLayer || !selectedNetwork}
-              color="primary"
-              variant="contained"
-            >
-              {t('common.select')}
-            </Button>
-          )}
-        </Box>
       </Box>
     </Box>
   )
