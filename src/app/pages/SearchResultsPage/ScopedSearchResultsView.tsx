@@ -31,7 +31,7 @@ export const ScopedSearchResultsView: FC<{
   const otherResults = searchResults.filter(isNotInWantedScope)
   const notificationTheme = themes[otherResults.some(isOnMainnet) ? Network.mainnet : Network.testnet]
 
-  useRedirectIfSingleResult(wantedScope, [...wantedResults, ...otherResults])
+  useRedirectIfSingleResult(wantedScope, searchResults)
 
   return (
     <>
