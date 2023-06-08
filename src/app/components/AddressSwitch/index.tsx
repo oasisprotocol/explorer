@@ -16,47 +16,25 @@ const StyledAddressSwitch = styled(Box)(({ theme }) => ({
 }))
 
 const StyledSwitch = styled(Switch)(() => ({
-  width: 75,
-  height: 44,
-  padding: 7,
-  [`& .${switchClasses.switchBase}`]: {
-    margin: 2,
-    padding: 0,
-    transform: 'translateX(1px)',
-    [`&.${switchClasses.checked}`]: {
-      transform: 'translateX(31px)',
-      [`& .${switchClasses.thumb}`]: {
-        backgroundColor: COLORS.lightSilver,
-        '&:before': {
-          backgroundImage: `url("${ethLogo}")`,
-        },
-      },
-      [`& + .${switchClasses.track}`]: {
-        opacity: 1,
-        backgroundColor: COLORS.grayMedium2,
-      },
-    },
-  },
-  [`& .${switchClasses.thumb}`]: {
+  zoom: 2,
+  margin: '-8px', // Reduce padding
+  [`.${switchClasses.switchBase} .${switchClasses.thumb}`]: {
     backgroundColor: COLORS.brandMedium,
-    width: 40,
-    height: 40,
-    '&:before': {
-      content: "' '",
-      position: 'absolute',
-      width: '80%',
-      height: '80%',
-      left: '10%',
-      top: '10%',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundImage: `url("${oasisLogo}")`,
-    },
+    backgroundImage: `url("${oasisLogo}")`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: '15px',
   },
-  [`& .${switchClasses.track}`]: {
+  [`.${switchClasses.switchBase}.${switchClasses.checked} .${switchClasses.thumb}`]: {
+    backgroundColor: COLORS.lightSilver,
+    backgroundImage: `url("${ethLogo}")`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: '10px',
+  },
+  [`&&&& .${switchClasses.track}`]: {
     opacity: 1,
     backgroundColor: COLORS.grayMedium2,
-    borderRadius: '50px',
   },
 }))
 
