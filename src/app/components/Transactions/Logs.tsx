@@ -3,7 +3,6 @@ import { Layer, RuntimeEvent, RuntimeTransaction, useGetRuntimeEvents } from '..
 import { AppErrors } from '../../../types/errors'
 import { TransactionLogEvent } from './LogEvent'
 import { TextSkeleton } from '../../components/Skeleton'
-import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 
 export const TransactionLogs: FC<{
@@ -30,7 +29,7 @@ export const TransactionLogs: FC<{
 }
 
 export const TransactionLogsView: FC<{
-  scope: SearchScope & RuntimeTransaction
+  scope: RuntimeTransaction
   events: RuntimeEvent[] | undefined
   isLoading: boolean
   addressSwitchOption: AddressSwitchOption

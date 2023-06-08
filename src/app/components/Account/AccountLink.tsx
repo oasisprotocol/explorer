@@ -9,18 +9,29 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
 
-export const AccountLink: FC<{ scope: SearchScope; address: string; alwaysTrim?: boolean }> = ({
-  scope,
-  address,
-  alwaysTrim,
-}) => {
+export const AccountLink: FC<{
+  scope: SearchScope
+  address: string
+  alwaysTrim?: boolean
+  plain?: boolean
+}> = ({ scope, address, alwaysTrim, plain }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
-    <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+    <Typography
+      variant="mono"
+      component="span"
+      sx={
+        plain
+          ? { color: COLORS.grayExtraDark, fontWeight: 400 }
+          : { color: COLORS.brandDark, fontWeight: 700 }
+      }
+    >
       {alwaysTrim || isMobile ? (
         <TrimLinkLabel label={address} to={to} />
+      ) : plain ? (
+        address
       ) : (
         <Link component={RouterLink} to={to}>
           {address}

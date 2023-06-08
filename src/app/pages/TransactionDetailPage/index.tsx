@@ -192,6 +192,7 @@ export const TransactionDetailView: FC<{
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 
   const isOasisAddressFormat = addressSwitchOption === AddressSwitchOption.Oasis
@@ -220,20 +221,28 @@ export const TransactionDetailView: FC<{
             </>
           )}
 
-          {hash && (
+          {(transaction?.hash || transaction?.eth_hash) && (
             <>
               <dt>{t('common.hash')}</dt>
               <dd>
                 <TransactionInfoTooltip
                   label={
-                    isOasisAddressFormat
-                      ? t('transaction.tooltips.txTooltipOasis')
-                      : t('transaction.tooltips.txTooltipEth')
+                    hash
+                      ? isOasisAddressFormat
+                        ? t('transaction.tooltips.txTooltipOasis')
+                        : t('transaction.tooltips.txTooltipEth')
+                      : t('transaction.tooltips.txTooltipHashUnavailable')
                   }
                 >
-                  <TransactionLink scope={transaction} hash={hash} />
+                  <TransactionLink
+                    scope={transaction}
+                    hash={
+                      hash || ((isOasisAddressFormat ? transaction?.eth_hash : transaction?.hash) as string)
+                    }
+                    plain={!hash}
+                  />
                 </TransactionInfoTooltip>
-                <CopyToClipboard value={hash} />
+                {hash && <CopyToClipboard value={hash} />}
               </dd>
             </>
           )}
@@ -261,38 +270,53 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.timestamp')}</dt>
           <dd>{formattedTimestamp}</dd>
 
-          {from && (
+          {(transaction?.sender_0 || transaction?.sender_0_eth) && (
             <>
               <dt>{t('common.from')}</dt>
               <dd>
                 <TransactionInfoTooltip
                   label={
-                    isOasisAddressFormat
-                      ? t('transaction.tooltips.senderTooltipOasis')
-                      : t('transaction.tooltips.senderTooltipEth')
+                    from
+                      ? isOasisAddressFormat
+                        ? t('transaction.tooltips.senderTooltipOasis')
+                        : t('transaction.tooltips.senderTooltipEth')
+                      : t('transaction.tooltips.senderTooltipUnavailable')
                   }
                 >
-                  <AccountLink scope={transaction} address={from} />
+                  <AccountLink
+                    scope={transaction}
+                    address={
+                      from ||
+                      ((isOasisAddressFormat ? transaction?.sender_0_eth : transaction?.sender_0) as string)
+                    }
+                    plain={!from}
+                  />
                 </TransactionInfoTooltip>
-                <CopyToClipboard value={from} />
+                {from && <CopyToClipboard value={from} />}
               </dd>
             </>
           )}
 
-          {to && (
+          {(transaction?.to || transaction?.to_eth) && (
             <>
               <dt>{t('common.to')}</dt>
               <dd>
                 <TransactionInfoTooltip
                   label={
-                    isOasisAddressFormat
-                      ? t('transaction.tooltips.recipientTooltipOasis')
-                      : t('transaction.tooltips.recipientTooltipEth')
+                    to
+                      ? isOasisAddressFormat
+                        ? t('transaction.tooltips.recipientTooltipOasis')
+                        : t('transaction.tooltips.recipientTooltipEth')
+                      : t('transaction.tooltips.recipientTooltipUnavailable')
                   }
                 >
-                  <AccountLink scope={transaction} address={to} />
+                  <AccountLink
+                    scope={transaction}
+                    address={to || ((isOasisAddressFormat ? transaction?.to_eth : transaction?.to) as string)}
+                    plain={!to}
+                  />
                 </TransactionInfoTooltip>
-                <CopyToClipboard value={to} />
+                {to && <CopyToClipboard value={to} />}
               </dd>
             </>
           )}
