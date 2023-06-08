@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { forwardRef, ForwardRefRenderFunction } from 'react'
 import { useTranslation } from 'react-i18next'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
@@ -22,7 +22,7 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
   },
 }))
 
-export const BuildBanner: FC = () => {
+const BuildBannerCmp: ForwardRefRenderFunction<Alert | null> = (_, ref) => {
   const { t } = useTranslation()
 
   if (window.location.origin === deploys.localhost) {
@@ -33,7 +33,7 @@ export const BuildBanner: FC = () => {
   }
   if (window.location.origin === deploys.staging) {
     return (
-      <StyledAlert severity="warning">
+      <StyledAlert ref={ref} severity="warning">
         {t('banner.buildStaging')}
         <Link
           component={RouterLink}
@@ -46,5 +46,11 @@ export const BuildBanner: FC = () => {
       </StyledAlert>
     )
   }
-  return <StyledAlert severity="warning">{t('banner.buildPreview')}</StyledAlert>
+  return (
+    <StyledAlert ref={ref} severity="warning">
+      {t('banner.buildPreview')}
+    </StyledAlert>
+  )
 }
+
+export const BuildBanner = forwardRef(BuildBannerCmp)

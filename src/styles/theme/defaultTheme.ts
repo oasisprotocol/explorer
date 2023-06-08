@@ -6,6 +6,8 @@ import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
 import { menuItemClasses } from '@mui/material/MenuItem'
+import { drawerClasses } from '@mui/material/Drawer'
+import { modalClasses, paperClasses } from '@mui/material'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -36,6 +38,7 @@ declare module '@mui/material/styles' {
   }
 
   interface PaletteColor extends CustomLayoutPalette {}
+
   interface SimplePaletteColorOptions extends CustomLayoutPalette {}
 }
 
@@ -70,6 +73,7 @@ declare module '@mui/material/Chip' {
   export interface ChipPropsColorOverrides {
     tertiary: true
   }
+
   export interface ChipPropsVariantOverrides {
     ['outlined-selected']: true
   }
@@ -502,6 +506,23 @@ export const defaultTheme = createTheme({
         paperAnchorTop: ({ theme }) => ({
           borderRadius: '0 0 12px 12px',
           padding: `${theme.spacing(4)} 5%`,
+        }),
+        modal: ({ theme }) => ({
+          [theme.breakpoints.down('sm')]: {
+            [`& .${modalClasses.backdrop}`]: {
+              display: 'none',
+            },
+          },
+        }),
+        paper: ({ theme }) => ({
+          [theme.breakpoints.down('sm')]: {
+            height: `calc(100vh - var(--app-build-banner-height) - var(--app-network-offline-banner-height) - var(--app-runtime-offline-banner-height) - ${theme.spacing(
+              6,
+            )})`,
+            top: `calc(var(--app-build-banner-height) + var(--app-network-offline-banner-height) + var(--app-runtime-offline-banner-height) + ${theme.spacing(
+              6,
+            )})`,
+          },
         }),
       },
     },

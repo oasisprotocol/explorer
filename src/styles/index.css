@@ -1,6 +1,12 @@
 @import '../../node_modules/@fontsource-variable/figtree/index.css';
 @import '../../node_modules/@fontsource-variable/roboto-mono/index.css';
 
+:root {
+  --app-build-banner-height: 0px;
+  --app-network-offline-banner-height: 0px;
+  --app-runtime-offline-banner-height: 0px;
+}
+
 html {
   scroll-behavior: smooth;
 }

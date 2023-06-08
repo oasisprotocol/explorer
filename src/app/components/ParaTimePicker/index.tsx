@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Drawer from '@mui/material/Drawer'
+import Drawer, { drawerClasses } from '@mui/material/Drawer'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import Divider from '@mui/material/Divider'
@@ -18,6 +18,7 @@ import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
 import { RouteUtils } from '../../utils/route-utils'
+import { styled } from '@mui/material/styles'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -25,10 +26,16 @@ type ParaTimePickerProps = {
   open: boolean
 }
 
+const ParaTimePickerDrawer = styled(Drawer)(() => ({
+  [`.${drawerClasses.root}`]: {
+    height: '100vh',
+  },
+}))
+
 export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
-  <Drawer anchor="top" open={open} onClose={onClose}>
+  <ParaTimePickerDrawer anchor="top" open={open} onClose={onClose}>
     <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
-  </Drawer>
+  </ParaTimePickerDrawer>
 )
 
 type ParaTimePickerContentProps = Omit<ParaTimePickerProps, 'open'>
