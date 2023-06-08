@@ -7,12 +7,15 @@ import { SearchResults } from './hooks'
 import { NoResults } from './NoResults'
 import { SearchResultsList } from './SearchResultsList'
 import { AllTokenPrices } from '../../../coin-gecko/api'
+import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPrices: AllTokenPrices }> = ({
   searchResults,
   tokenPrices,
 }) => {
   const { t } = useTranslation()
+  useRedirectIfSingleResult(undefined, searchResults)
+
   return searchResults.length === 0 ? (
     <NoResults />
   ) : (

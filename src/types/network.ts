@@ -25,6 +25,12 @@ export const getLayerNames = (t: TFunction): Record<Layer, string> => ({
   [Layer.consensus]: t('common.consensus'),
 })
 
+interface HasLayer {
+  layer: Layer
+}
+
+export const getFilterForLayer = (layer: Layer) => (item: HasLayer) => item.layer === layer
+
 interface HasNetwork {
   network: Network
 }
