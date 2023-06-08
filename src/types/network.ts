@@ -21,4 +21,7 @@ export const getFilterForNetwork = (network: Network) => (item: HasNetwork) => i
 export const getInverseFilterForNetwork = (network: Network) => (item: HasNetwork) => item.network !== network
 
 export const isOnMainnet = getFilterForNetwork(Network.mainnet)
+export const isNotOnMainnet = getInverseFilterForNetwork(Network.mainnet)
 export const isOnTestnet = getFilterForNetwork(Network.testnet)
+
+export const isNotMainnet = (network: Network) => network !== Network.mainnet
