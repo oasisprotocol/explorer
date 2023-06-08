@@ -6,14 +6,10 @@ import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 
 /** If search only finds one result then redirect to it */
-export function useRedirectIfSingleResult(
-  scope: SearchScope | undefined,
-  isLoading: boolean,
-  results: SearchResults,
-) {
+export function useRedirectIfSingleResult(scope: SearchScope | undefined, results: SearchResults) {
   const navigate = useNavigate()
 
-  let shouldRedirect = !isLoading && results.length === 1
+  let shouldRedirect = results.length === 1
 
   if (shouldRedirect) {
     const result = results[0]

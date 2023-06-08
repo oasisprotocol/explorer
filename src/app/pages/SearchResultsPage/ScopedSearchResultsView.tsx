@@ -20,6 +20,7 @@ import { SearchResultsList } from './SearchResultsList'
 import { NoResults } from './NoResults'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { HideMoreResults, ShowMoreResults } from './notifications'
+import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 export const ScopedSearchResultsView: FC<{
   wantedScope: SearchScope
@@ -33,17 +34,20 @@ export const ScopedSearchResultsView: FC<{
   const isInWantedScope = getFilterForScope(wantedScope)
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
   const isOnTheRightParatime = getFilterForLayer(wantedScope.layer)
-  const hasWantedResults = searchResults.some(isInWantedScope)
+  const wantedResults = searchResults.filter(isInWantedScope)
+  const hasWantedResults = !!wantedResults.length
   const otherResults = searchResults.filter(isNotInWantedScope).filter(isOnTheRightParatime)
   const hasMainnetResults = otherResults.some(isOnMainnet)
   const notificationTheme = themes[hasMainnetResults ? Network.mainnet : Network.testnet]
+
+  useRedirectIfSingleResult(wantedScope, wantedResults)
 
   return (
     <>
       {hasWantedResults ? (
         <SearchResultsList
           title={getNameForScope(t, wantedScope)}
-          searchResults={searchResults.filter(isInWantedScope)}
+          searchResults={wantedResults}
           networkForTheme={wantedScope.network}
           tokenPrices={tokenPrices}
         />
@@ -60,7 +64,7 @@ export const ScopedSearchResultsView: FC<{
                 key={net}
                 networkForTheme={net}
                 title={networkNames[net]}
-                searchResults={searchResults.filter(getFilterForNetwork(net))}
+                searchResults={otherResults.filter(getFilterForNetwork(net))}
                 tokenPrices={tokenPrices}
               />
             ))}
