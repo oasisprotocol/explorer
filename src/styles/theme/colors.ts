@@ -27,7 +27,7 @@ export const COLORS = {
   lightGreen: '#e0f5ee',
   lightSilver: '#d9d9d9',
   linen: '#fae8e8',
-  persianBlue: '#3038c3',
+  // persianBlue: '#3038c3', use brandDark instead
   platinum: '#e2e2e2',
   vistaBlue: '#8988dd',
   white: '#ffffff',

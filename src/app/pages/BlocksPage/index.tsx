@@ -24,7 +24,7 @@ const BlockDetails = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: `0 ${theme.spacing(2)}`,
-  backgroundColor: COLORS.persianBlue,
+  backgroundColor: COLORS.brandDark,
 }))
 
 export const BlocksPage: FC = () => {
