@@ -7,6 +7,9 @@ import { styled, useTheme } from '@mui/material/styles'
 import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
+import { Search } from '../Search'
+import { useIsApiOffline } from '../OfflineBanner/hook'
+import { Network } from '../../../types/network'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -20,6 +23,8 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const scope = useScopeParam()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
 
   return (
     <>
@@ -28,16 +33,27 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       {scope && <RuntimeOfflineBanner />}
       <Box
         sx={{
-          border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,
           minHeight: '100vh',
         }}
       >
         <Header />
         <Box
           sx={{
+            border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,
+            borderTop: 0,
             px: isMobile ? 0 : '4%',
+            pt: isMobile ? 4 : 6,
           }}
         >
+          {!isMobile && (
+            <Box
+              sx={{
+                mb: 6,
+              }}
+            >
+              <Search scope={scope} variant={isDesktop ? 'button' : 'icon'} disabled={isApiOffline} />
+            </Box>
+          )}
           <StyledMain>{children}</StyledMain>
           <Footer scope={scope} mobileSearchAction={mobileFooterAction} />
         </Box>
