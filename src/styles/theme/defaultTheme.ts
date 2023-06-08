@@ -82,12 +82,12 @@ declare module '@mui/material/styles' {
 export const defaultTheme = createTheme({
   palette: {
     background: {
-      default: COLORS.persianBlue,
+      default: COLORS.brandDark,
       empty: COLORS.brandExtraDark,
     },
     layout: {
       main: COLORS.white,
-      border: COLORS.persianBlue,
+      border: COLORS.brandDark,
       darkBorder: COLORS.brandExtraDark,
       hoverBorder: COLORS.white,
       lightBorder: COLORS.aqua,
