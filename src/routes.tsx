@@ -42,7 +42,7 @@ export const routes: RouteObject[] = [
       {
         path: '/:network/:layer',
         element: <NetworkSpecificPart />,
-        errorElement: <RoutingErrorPage />,
+        errorElement: withDefaultTheme(<RoutingErrorPage />),
         loader: scopeLoader,
         children: [
           {
