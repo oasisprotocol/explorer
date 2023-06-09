@@ -175,30 +175,27 @@ const DecodedLogEvent: FC<{
 
 export const TransactionLogEvent: FC<{
   scope: SearchScope
-  transaction: RuntimeTransaction
   event: RuntimeEvent
   isFirst: boolean
   addressSwitchOption: AddressSwitchOption
-}> = ({ scope, transaction, event, isFirst, addressSwitchOption }) => {
+}> = ({ scope, event, isFirst, addressSwitchOption }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const transactionLinkValue =
-    addressSwitchOption === AddressSwitchOption.ETH ? transaction.eth_hash : transaction.hash
+    addressSwitchOption === AddressSwitchOption.ETH ? event.eth_tx_hash : event.tx_hash
 
   const decoded = true // TODO: how do I know if this has been successfully decoded?
-
-  // TODO: also consider tx_eth_hash when https://github.com/oasisprotocol/oasis-indexer/issues/363 is resolved
 
   return (
     <>
       {!isFirst && <Divider variant={'card'} />}
       <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-        {event.tx_hash && (
+        {transactionLinkValue && (
           <>
             <dt>{t('transaction.header')}</dt>
             <dd>
-              <TransactionLink scope={scope} hash={transactionLinkValue || transaction.hash} />
+              <TransactionLink scope={scope} hash={transactionLinkValue} />
             </dd>
           </>
         )}

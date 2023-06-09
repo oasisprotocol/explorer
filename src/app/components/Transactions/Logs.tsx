@@ -44,7 +44,6 @@ export const TransactionLogsView: FC<{
             scope={scope}
             isFirst={!index}
             event={event}
-            transaction={scope}
             addressSwitchOption={addressSwitchOption}
           />
         ))}
