@@ -1,5 +1,5 @@
 import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-indexer/api'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useTheme } from '@mui/material/styles'
@@ -14,8 +14,14 @@ import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { TransactionLink } from './TransactionLink'
 import { SearchScope } from '../../../types/searchScope'
+import { AddressSwitchOption } from '../AddressSwitch'
+import { getOasisAddress } from '../../utils/helpers'
 
-const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ scope, param }) => {
+const EvmEventParamData: FC<{
+  scope: SearchScope
+  param: EvmEventParam
+  address?: string
+}> = ({ scope, param, address }) => {
   /**
    * According to the API docs:
    *
@@ -27,7 +33,7 @@ const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ s
   switch (param.evm_type) {
     // TODO: handle more EVM types
     case 'address':
-      return <AccountLink scope={scope} address={param.value as string} />
+      return address ? <AccountLink address={address} scope={scope} /> : null
     case 'uint256':
       // TODO: format with BigNumber
       return <span>{param.value as string}</span>
@@ -36,7 +42,57 @@ const EvmEventParamData: FC<{ scope: SearchScope; param: EvmEventParam }> = ({ s
   }
 }
 
-const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scope, event }) => {
+const EvmLogRow: FC<{
+  scope: SearchScope
+  param: EvmEventParam
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, param, addressSwitchOption }) => {
+  const [address, setAddress] = useState<string>()
+
+  useEffect(() => {
+    if (param.evm_type !== 'address') {
+      return
+    }
+
+    const resolveAddresses = async () => {
+      if (addressSwitchOption === AddressSwitchOption.Oasis) {
+        const oasisAddress = await getOasisAddress(param.value as string)
+        setAddress(oasisAddress)
+      } else {
+        setAddress(param.value as string)
+      }
+    }
+
+    resolveAddresses()
+  }, [param, addressSwitchOption])
+
+  const getCopyToClipboardValue = () => {
+    if (address) {
+      return address
+    }
+
+    return typeof param.value === 'string' ? (param.value as string) : JSON.stringify(param.value, null, '  ')
+  }
+
+  return (
+    <TableRow>
+      <TableCell>{param.name}</TableCell>
+      <TableCell>{param.evm_type}</TableCell>
+      <TableCell>
+        <EvmEventParamData scope={scope} param={param} address={address} />{' '}
+      </TableCell>
+      <TableCell>
+        <CopyToClipboard value={getCopyToClipboardValue()} />
+      </TableCell>
+    </TableRow>
+  )
+}
+
+const DecodedLogEvent: FC<{
+  scope: SearchScope
+  event: RuntimeEvent
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, event, addressSwitchOption }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { t } = useTranslation()
@@ -80,22 +136,12 @@ const DecodedLogEvent: FC<{ scope: SearchScope; event: RuntimeEvent }> = ({ scop
                     </TableHead>
                     <TableBody>
                       {event.evm_log_params.map((param, index) => (
-                        <TableRow key={`param-${index}`}>
-                          <TableCell>{param.name}</TableCell>
-                          <TableCell>{param.evm_type}</TableCell>
-                          <TableCell>
-                            <EvmEventParamData param={param} scope={scope} />{' '}
-                          </TableCell>
-                          <TableCell>
-                            <CopyToClipboard
-                              value={
-                                typeof param.value === 'string'
-                                  ? (param.value as string)
-                                  : JSON.stringify(param.value, null, '  ')
-                              }
-                            />
-                          </TableCell>
-                        </TableRow>
+                        <EvmLogRow
+                          scope={scope}
+                          key={`param-${index}`}
+                          param={param}
+                          addressSwitchOption={addressSwitchOption}
+                        />
                       ))}
                     </TableBody>
                   </Table>
@@ -125,23 +171,25 @@ export const TransactionLogEvent: FC<{
   scope: SearchScope
   event: RuntimeEvent
   isFirst: boolean
-}> = ({ scope, event, isFirst }) => {
+  addressSwitchOption: AddressSwitchOption
+}> = ({ scope, event, isFirst, addressSwitchOption }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const decoded = true // TODO: how do I know if this has been successfully decoded?
+  const transactionLinkValue =
+    addressSwitchOption === AddressSwitchOption.ETH ? event.eth_tx_hash : event.tx_hash
 
-  // TODO: also consider tx_eth_hash when https://github.com/oasisprotocol/oasis-indexer/issues/363 is resolved
+  const decoded = true // TODO: how do I know if this has been successfully decoded?
 
   return (
     <>
       {!isFirst && <Divider variant={'card'} />}
       <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-        {event.tx_hash && (
+        {transactionLinkValue && (
           <>
             <dt>{t('transaction.header')}</dt>
             <dd>
-              <TransactionLink scope={scope} hash={event.tx_hash} />
+              <TransactionLink scope={scope} hash={transactionLinkValue} />
             </dd>
           </>
         )}
@@ -150,7 +198,7 @@ export const TransactionLogEvent: FC<{
           <>
             <dt>{t('transactionEvent.decoded')}</dt>
             <dd>
-              <DecodedLogEvent scope={scope} event={event} />
+              <DecodedLogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
             </dd>
           </>
         )}

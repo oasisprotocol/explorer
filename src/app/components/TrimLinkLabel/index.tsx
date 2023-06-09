@@ -8,14 +8,21 @@ import { tooltipDelay } from '../../../styles/theme'
 type TrimLinkLabelProps = {
   label: string
   to: string
+  plain?: boolean
 }
 
-export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
+export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to, plain }) => {
+  const trimmedLabel = trimLongString(label)
+
   return (
     <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <Link component={RouterLink} to={to}>
-        {trimLongString(label)}
-      </Link>
+      {plain ? (
+        <>{trimmedLabel}</>
+      ) : (
+        <Link component={RouterLink} to={to}>
+          {trimmedLabel}
+        </Link>
+      )}
     </Tooltip>
   )
 }

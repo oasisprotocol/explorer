@@ -7,20 +7,24 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
+import { COLORS } from '../../../styles/theme/colors'
 
-export const TransactionLink: FC<{ alwaysTrim?: boolean; scope: SearchScope; hash: string }> = ({
-  alwaysTrim,
-  hash,
-  scope,
-}) => {
+export const TransactionLink: FC<{
+  alwaysTrim?: boolean
+  scope: SearchScope
+  hash: string
+  plain?: boolean
+}> = ({ alwaysTrim, hash, scope, plain }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const to = RouteUtils.getTransactionRoute(scope, hash)
 
   return (
-    <Typography variant="mono">
+    <Typography variant="mono" sx={{ ...(plain ? { color: COLORS.grayExtraDark, fontWeight: 400 } : {}) }}>
       {alwaysTrim || isMobile ? (
-        <TrimLinkLabel label={hash} to={to} />
+        <TrimLinkLabel label={hash} to={to} plain={plain} />
+      ) : plain ? (
+        hash
       ) : (
         <Link component={RouterLink} to={to}>
           {hash}

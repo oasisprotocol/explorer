@@ -42,6 +42,7 @@
     "emerald": "Emerald",
     "cipher": "Cipher",
     "consensus": "Consensus",
+    "eth": "ETH",
     "ethHash": "ETH hash",
     "failed": "Failed",
     "fiatValue": "Fiat value",
@@ -58,6 +59,7 @@
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
     "name": "Name",
+    "oasis": "Oasis",
     "paratime": "Paratime",
     "select": "Select",
     "size": "Size",
@@ -175,7 +177,18 @@
   },
   "transaction": {
     "header": "Transaction",
-    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one."
+    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
+    "tooltips": {
+      "txTooltipEth": "Ethereum hash for the transaction",
+      "senderTooltipEth": "Ethereum address for the sender",
+      "recipientTooltipEth": "Ethereum address for the recipient",
+      "txTooltipOasis": "Oasis hash for the transaction",
+      "senderTooltipOasis": "Oasis address for the sender",
+      "recipientTooltipOasis": "Oasis address for the recipient",
+      "txTooltipHashUnavailable": "Hash not available in selected address format",
+      "senderTooltipUnavailable": "Sender not available in selected address format",
+      "recipientTooltipUnavailable": "Recipient not available in selected address format"
+    }
   },
   "transactionEvent": {
     "accountsburn": "Tokens burnt",
