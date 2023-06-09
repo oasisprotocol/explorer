@@ -508,13 +508,17 @@ export const defaultTheme = createTheme({
           padding: `${theme.spacing(4)} 5%`,
         }),
         modal: ({ theme }) => ({
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             [`& .${modalClasses.backdrop}`]: {
-              display: 'none',
+              background: 'transparent',
             },
           },
         }),
         paper: ({ theme }) => ({
+          [theme.breakpoints.down('md')]: {
+            height: `calc(100vh - var(--app-build-banner-height) - var(--app-network-offline-banner-height) - var(--app-runtime-offline-banner-height) - 82px)`,
+            top: `calc(var(--app-build-banner-height) + var(--app-network-offline-banner-height) + var(--app-runtime-offline-banner-height) + 82px)`,
+          },
           [theme.breakpoints.down('sm')]: {
             height: `calc(100vh - var(--app-build-banner-height) - var(--app-network-offline-banner-height) - var(--app-runtime-offline-banner-height) - ${theme.spacing(
               6,

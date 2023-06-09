@@ -8,7 +8,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Logotype } from './../PageLayout/Logotype'
+import { Logotype } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
@@ -18,7 +18,9 @@ import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
 import { RouteUtils } from '../../utils/route-utils'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -33,85 +35,176 @@ const ParaTimePickerDrawer = styled(Drawer)(() => ({
 }))
 
 export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
-  <ParaTimePickerDrawer anchor="top" open={open} onClose={onClose}>
+  <ParaTimePickerDrawer anchor='top' open={open} onClose={onClose}>
     <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
   </ParaTimePickerDrawer>
 )
 
+const StyledParaTimePickerContent = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    flex: 1,
+  },
+}))
+
+const StyledContent = styled(Box)(({ theme }) => ({
+  flex: 1,
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+}))
+
+const TabletBackButton = styled(Button)({
+  color: COLORS.brandDark,
+  width: 'fit-content',
+  textTransform: 'capitalize',
+  textDecoration: 'none',
+})
+
+const TabletActionBar = styled(Box)(({ theme }) => ({
+  minHeight: '50px',
+}))
+
+const ActionBar = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-around',
+  [theme.breakpoints.up('md')]: {
+    justifyContent: 'flex-end',
+    gap: theme.spacing(4),
+  },
+}))
+
 type ParaTimePickerContentProps = Omit<ParaTimePickerProps, 'open'>
 
+enum ParaTimePickerTabletStep {
+  Network,
+  ParaTime,
+  ParaTimeDetails,
+}
+
 const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
+  const theme = useTheme()
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
-  const [showNetworkMenu, setShowNetworkMenu] = useState(network !== Network.mainnet)
+  const [showNetworkMenu, setShowNetworkMenu] = useState(isTablet || network !== Network.mainnet)
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
+  const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(ParaTimePickerTabletStep.Network)
   const selectNetwork = (newNetwork: Network) => {
     setSelectedNetwork(newNetwork)
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
   }
 
   return (
-    <Box>
-      <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-        <Logotype color={COLORS.brandExtraDark} showText={true} />
-      </Box>
-      <IconButton
-        aria-label={t('paraTimePicker.toggleNetworkMenu')}
-        onClick={() => setShowNetworkMenu(!showNetworkMenu)}
-        sx={{
-          color: COLORS.brandDark,
-          ml: 3,
-        }}
-      >
-        {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
-      </IconButton>
+    <StyledParaTimePickerContent>
+      {!isTablet && (<>
+        <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
+          <Logotype color={COLORS.brandExtraDark} showText={true} />
+        </Box>
+        <IconButton
+          aria-label={t('paraTimePicker.toggleNetworkMenu')}
+          onClick={() => setShowNetworkMenu(!showNetworkMenu)}
+          sx={{
+            color: COLORS.brandDark,
+            ml: 3,
+          }}
+        >
+          {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
+        </IconButton>
+      </>)}
+      <TabletActionBar>
+        {isTablet && tabletStep === ParaTimePickerTabletStep.ParaTime && (
+          <TabletBackButton
+            variant="text"
+            startIcon={<KeyboardArrowLeft />}
+            onClick={() => {
+              setTabletStep(ParaTimePickerTabletStep.Network)
+            }}
+          >
+            {t('paraTimePicker.selectNetwork')}
+          </TabletBackButton>
+        )}
+        {isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails && (
+          <TabletBackButton
+            variant="text"
+            startIcon={<KeyboardArrowLeft />}
+            onClick={() => {
+              setTabletStep(ParaTimePickerTabletStep.ParaTime)
+            }}
+          >
+            {t('paraTimePicker.selectParatime')}
+          </TabletBackButton>
+        )}
+      </TabletActionBar>
       <Divider />
-      <Box>
+      <StyledContent>
         <Grid container>
-          {!showNetworkMenu && (
+          {!showNetworkMenu && !isTablet && (
             <Grid xs={1} sx={{ maxWidth: '40px' }}>
               <NetworkMenuIcon network={selectedNetwork} />
             </Grid>
           )}
-          {showNetworkMenu && (
-            <Grid xs={4} md={3}>
+          {((!isTablet && showNetworkMenu) ||
+            (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
+            <Grid xs={12} md={3}>
               <NetworkMenu
                 activeNetwork={network}
                 selectedNetwork={selectedNetwork}
-                setSelectedNetwork={selectNetwork}
+                setSelectedNetwork={network => {
+                  selectNetwork(network)
+                  setTabletStep(ParaTimePickerTabletStep.ParaTime)
+                }}
               />
             </Grid>
           )}
-          <Grid xs={4} md={3}>
-            <LayerMenu
-              activeLayer={layer}
-              network={network}
-              selectedLayer={selectedLayer}
-              selectedNetwork={selectedNetwork}
-              setSelectedLayer={setSelectedLayer}
-            />
-          </Grid>
-          <Grid xs={showNetworkMenu ? 4 : 7} md={6}>
-            <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
-          </Grid>
+          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTime)) && (
+            <Grid xs={12} md={3}>
+              <LayerMenu
+                activeLayer={layer}
+                network={network}
+                selectedLayer={selectedLayer}
+                selectedNetwork={selectedNetwork}
+                setSelectedLayer={layer => {
+                  setSelectedLayer(layer)
+                  setTabletStep(ParaTimePickerTabletStep.ParaTimeDetails)
+                }}
+              />
+            </Grid>
+          )}
+          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails)) && (
+            <Grid xs={12} md={showNetworkMenu ? 4 : 7} lg={6}>
+              <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
+            </Grid>
+          )}
         </Grid>
 
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-          <Button onClick={onClose} color="secondary" variant="outlined" sx={{ textTransform: 'capitalize' }}>
+        <ActionBar>
+          <Button
+            onClick={onClose}
+            color='secondary'
+            variant='outlined'
+            sx={{ textTransform: 'capitalize' }}
+            size='large'
+          >
             {t('common.cancel')}
           </Button>
 
           <Button
             onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
             disabled={selectedNetwork === network && selectedLayer === layer}
-            color="primary"
-            variant="contained"
+            color='primary'
+            variant='contained'
+            size='large'
           >
             {t('common.select')}
           </Button>
-        </Box>
-      </Box>
-    </Box>
+        </ActionBar>
+      </StyledContent>
+    </StyledParaTimePickerContent>
   )
 }
