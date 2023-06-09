@@ -1,4 +1,4 @@
-import { EvmEventParam, RuntimeEvent, RuntimeEventType, RuntimeTransaction } from '../../../oasis-indexer/api'
+import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-indexer/api'
 import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
@@ -21,7 +21,6 @@ const EvmEventParamData: FC<{
   scope: SearchScope
   param: EvmEventParam
   address?: string
-  addressSwitchOption: AddressSwitchOption
 }> = ({ scope, param, address }) => {
   /**
    * According to the API docs:
@@ -80,12 +79,7 @@ const EvmLogRow: FC<{
       <TableCell>{param.name}</TableCell>
       <TableCell>{param.evm_type}</TableCell>
       <TableCell>
-        <EvmEventParamData
-          scope={scope}
-          param={param}
-          address={address}
-          addressSwitchOption={addressSwitchOption}
-        />{' '}
+        <EvmEventParamData scope={scope} param={param} address={address} />{' '}
       </TableCell>
       <TableCell>
         <CopyToClipboard value={getCopyToClipboardValue()} />
