@@ -48,7 +48,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   return (
     <Box>
       <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-        <Logotype color={COLORS.brandExtraDark} />
+        <Logotype color={COLORS.brandExtraDark} showText={true} />
         <HighlightOff
           htmlColor={COLORS.brandExtraDark}
           onClick={onClose}
