@@ -4,9 +4,7 @@ import { Footer } from './Footer'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
-import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
-import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiOffline } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
@@ -28,9 +26,6 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
 
   return (
     <>
-      <BuildBanner />
-      <NetworkOfflineBanner />
-      {scope && <RuntimeOfflineBanner />}
       <Box
         sx={{
           minHeight: '100vh',
