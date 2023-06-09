@@ -1,4 +1,4 @@
-import { FC, forwardRef, ForwardRefRenderFunction } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
@@ -22,10 +22,7 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
   },
 }))
 
-const NetworkOfflineBannerCmp: ForwardRefRenderFunction<Alert | null, { wantedNetwork?: Network }> = (
-  { wantedNetwork },
-  ref,
-) => {
+export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNetwork }) => {
   const scope = useScopeParam()
   const { t } = useTranslation()
   const targetNetwork = wantedNetwork || scope?.network || Network.mainnet
@@ -33,15 +30,11 @@ const NetworkOfflineBannerCmp: ForwardRefRenderFunction<Alert | null, { wantedNe
   const networkNames = getNetworkNames(t)
   const target = networkNames[targetNetwork]
   return isNetworkOffline ? (
-    <StyledAlert ref={ref} severity="warning">
-      {t('home.apiOffline', { target })}
-    </StyledAlert>
+    <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
   ) : null
 }
 
-export const NetworkOfflineBanner = forwardRef(NetworkOfflineBannerCmp)
-
-const RuntimeOfflineBannerCmp: ForwardRefRenderFunction<Alert | null> = (_, ref) => {
+export const RuntimeOfflineBanner: FC = () => {
   const scope = useRequiredScopeParam()
   const { t } = useTranslation()
 
@@ -49,12 +42,10 @@ const RuntimeOfflineBannerCmp: ForwardRefRenderFunction<Alert | null> = (_, ref)
   if (!outOfDate) return null
   const target = getNameForScope(t, scope)
   return (
-    <StyledAlert ref={ref} severity="warning">
+    <StyledAlert severity="warning">
       {lastUpdate
         ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
         : t('home.runtimeOutOfDate', { target })}
     </StyledAlert>
   )
 }
-
-export const RuntimeOfflineBanner = forwardRef(RuntimeOfflineBannerCmp)

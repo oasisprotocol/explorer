@@ -6,8 +6,7 @@ import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
 import { menuItemClasses } from '@mui/material/MenuItem'
-import { drawerClasses } from '@mui/material/Drawer'
-import { modalClasses, paperClasses } from '@mui/material'
+import { modalClasses } from '@mui/material/Modal'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -516,16 +515,8 @@ export const defaultTheme = createTheme({
         }),
         paper: ({ theme }) => ({
           [theme.breakpoints.down('md')]: {
-            height: `calc(100vh - var(--app-build-banner-height) - var(--app-network-offline-banner-height) - var(--app-runtime-offline-banner-height) - 82px)`,
-            top: `calc(var(--app-build-banner-height) + var(--app-network-offline-banner-height) + var(--app-runtime-offline-banner-height) + 82px)`,
-          },
-          [theme.breakpoints.down('sm')]: {
-            height: `calc(100vh - var(--app-build-banner-height) - var(--app-network-offline-banner-height) - var(--app-runtime-offline-banner-height) - ${theme.spacing(
-              6,
-            )})`,
-            top: `calc(var(--app-build-banner-height) + var(--app-network-offline-banner-height) + var(--app-runtime-offline-banner-height) + ${theme.spacing(
-              6,
-            )})`,
+            height: `calc(100vh - var(--app-header-height))`,
+            top: `var(--app-header-height)`,
           },
         }),
       },

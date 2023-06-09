@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
@@ -9,52 +9,36 @@ import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { BuildBanner } from '../BuildBanner'
 import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
-import Alert from '@mui/material/Alert'
 import { useScreenSize } from '../../hooks/useScreensize'
+import useResizeObserver from 'use-resize-observer'
 
 export const Header: FC = () => {
   const theme = useTheme()
-  const { isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
   const scrollTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
   })
-  const buildBannerRef = useRef<(typeof Alert & HTMLElement) | null>(null)
-  const networkOfflineBannerRef = useRef<(typeof Alert & HTMLElement) | null>(null)
-  const runtimeOfflineBannerRef = useRef<(typeof Alert & HTMLElement) | null>(null)
+  const headerRef = useRef<HTMLDivElement | null>(null)
 
-  useLayoutEffect(() => {
-    if (!isMobile) {
+  const { height: headerHeight } = useResizeObserver<Element>({
+    ref: headerRef,
+  })
+
+  useEffect(() => {
+    if (!isTablet) {
       return
     }
 
-    const bodyStyles = document.body.style
-
-    if (buildBannerRef.current !== null) {
-      const buildBannerHeight = buildBannerRef.current?.clientHeight
-      bodyStyles.setProperty('--app-build-banner-height', `${buildBannerHeight?.toFixed(2) || 0}px`)
+    if (headerRef.current !== null) {
+      document.body.style.setProperty('--app-header-height', `${headerHeight?.toFixed(2) || 0}px`)
     }
-
-    if (networkOfflineBannerRef.current !== null) {
-      const networkOfflineBannerHeight = networkOfflineBannerRef.current?.clientHeight
-      bodyStyles.setProperty(
-        '--app-network-offline-banner-height',
-        `${networkOfflineBannerHeight?.toFixed(2) || 0}px`,
-      )
-    }
-
-    if (runtimeOfflineBannerRef.current !== null) {
-      const runtimeOfflineBannerHeight = runtimeOfflineBannerRef.current?.clientHeight
-      bodyStyles.setProperty(
-        '--app-runtime-offline-banner-height',
-        `${runtimeOfflineBannerHeight?.toFixed(2) || 0}px`,
-      )
-    }
-  })
+  }, [isTablet, headerHeight])
 
   return (
     <AppBar
+      ref={headerRef}
       position="sticky"
       sx={{
         transitionProperty: 'background-color',
@@ -69,9 +53,9 @@ export const Header: FC = () => {
           : 'none',
       }}
     >
-      <BuildBanner ref={buildBannerRef} />
-      <NetworkOfflineBanner ref={networkOfflineBannerRef} />
-      {scope && <RuntimeOfflineBanner ref={runtimeOfflineBannerRef} />}
+      <BuildBanner />
+      <NetworkOfflineBanner />
+      {scope && <RuntimeOfflineBanner />}
       <Box sx={{ px: '15px' }}>
         <Grid
           container
