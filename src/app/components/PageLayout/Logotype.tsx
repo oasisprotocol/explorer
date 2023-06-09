@@ -9,14 +9,13 @@ import { useTranslation } from 'react-i18next'
 
 interface LogotypeProps {
   color?: string
-  showText?: true
+  showText: boolean
 }
 
 export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const showTypography = showText ?? !isMobile
   const logoSize = isMobile ? 32 : 40
 
   return (
@@ -32,7 +31,7 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
       }}
     >
       <OasisIcon sx={{ fontSize: logoSize }} />
-      {showTypography && (
+      {showText && (
         <Typography variant="h1" color={color || theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
           {t('pageTitle')}
         </Typography>

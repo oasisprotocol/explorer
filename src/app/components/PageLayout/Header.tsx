@@ -25,7 +25,7 @@ export const Header: FC = () => {
           }}
         >
           <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Logotype />
+            <Logotype showText={!isMobile} />
           </Grid>
           {scope && (
             <>
