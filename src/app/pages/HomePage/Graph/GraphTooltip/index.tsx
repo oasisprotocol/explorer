@@ -51,7 +51,7 @@ export const GraphTooltipIcon = styled(Box, {
   flex: '0 0 120px',
   height: '100%',
   borderRight: `2px solid ${COLORS.aqua}`,
-  backgroundColor: COLORS.brandExtraDark + (isMobile ? '80' : ''),
+  backgroundColor: COLORS.brandExtraDark + (isMobile ? 'c7' : ''),
   borderRadius: isMobile ? '12px 0 0 12px' : '0 0 0 0',
 }))
 
@@ -71,7 +71,7 @@ export const GraphTooltipText = styled(Box, {
   justifyContent: 'space-between',
   flex: '0 1 100%',
   padding: theme.spacing(4),
-  backgroundColor: (disabled ? COLORS.shadowBlue : COLORS.brandExtraDark) + (isMobile ? '80' : ''),
+  backgroundColor: (disabled ? COLORS.shadowBlue : COLORS.brandExtraDark) + (isMobile ? 'c7' : ''),
   borderRadius: isMobile ? '0 12px 0 0' : '0 12px 12px 0',
 }))
 
