@@ -66,7 +66,7 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: block.num_transactions,
+          content: block.num_transactions.toLocaleString(),
           key: 'txs',
         },
         ...(verbose

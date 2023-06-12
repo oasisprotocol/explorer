@@ -61,7 +61,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
 
-  const transactionsLabel = account ? t('common.transactionsNumber', { count: account.stats.num_txns }) : ''
+  const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
   const transactionsAnchor = account
     ? `${RouteUtils.getAccountRoute(
         account,
