@@ -17,7 +17,6 @@ import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
-import HighlightOff from '@mui/icons-material/HighlightOff'
 import { RouteUtils } from '../../utils/route-utils'
 
 type ParaTimePickerProps = {
@@ -49,15 +48,6 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
     <Box>
       <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
         <Logotype color={COLORS.brandExtraDark} showText={true} />
-        <HighlightOff
-          htmlColor={COLORS.brandExtraDark}
-          onClick={onClose}
-          fontSize={'large'}
-          sx={{
-            position: 'absolute',
-            right: 0,
-          }}
-        />
       </Box>
       <IconButton
         aria-label={t('paraTimePicker.toggleNetworkMenu')}
