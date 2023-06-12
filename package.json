@@ -50,7 +50,7 @@
     "@emotion/styled": "11.11.0",
     "@ethereumjs/util": "8.0.5",
     "@fontsource-variable/figtree": "^5.0.2",
-    "@fontsource-variable/roboto-mono": "^5.0.2",
+    "@fontsource-variable/roboto-mono": "^5.0.4",
     "@metamask/jazzicon": "2.0.0",
     "@mui/base": "5.0.0-alpha.119",
     "@mui/icons-material": "5.11.11",
