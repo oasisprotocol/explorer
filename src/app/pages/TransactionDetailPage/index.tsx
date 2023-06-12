@@ -257,7 +257,7 @@ export const TransactionDetailView: FC<{
             )}
           </dd>
 
-          <dt>{t('common.block')}</dt>
+          <dt>{t('common.height')}</dt>
           <dd>
             <BlockLink scope={transaction} height={transaction.round} />
           </dd>
