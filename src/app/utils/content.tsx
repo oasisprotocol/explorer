@@ -12,7 +12,7 @@ export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
   [Layer.consensus]: t('common.consensus'),
 })
 
-export const getNetworkIcons = (): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon />,
-  [Network.testnet]: <TestnetIcon />,
+export const getNetworkIcons = ({ size }: { size?: number } = {}): Record<Network, ReactNode> => ({
+  [Network.mainnet]: <MainnetIcon sx={{ fontSize: size }} />,
+  [Network.testnet]: <TestnetIcon sx={{ fontSize: size }} />,
 })

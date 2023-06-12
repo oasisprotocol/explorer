@@ -13,9 +13,9 @@ import { TFunction } from 'i18next'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
-import { LayerIcon } from '../../../../components/CustomIcons/LayerIcon'
 import { Network } from '../../../../../types/network'
 import { useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
+import { getNetworkIcons } from '../../../../utils/content'
 
 export interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -53,6 +53,7 @@ export const GraphTooltipIcon = styled(Box, {
   borderRight: `2px solid ${COLORS.aqua}`,
   backgroundColor: COLORS.brandExtraDark + (isMobile ? 'c7' : ''),
   borderRadius: isMobile ? '12px 0 0 12px' : '0 0 0 0',
+  color: COLORS.white,
 }))
 
 interface GraphTooltipTextProps {
@@ -178,12 +179,14 @@ interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
 
 interface GraphTooltipHeaderProps {
   disabled: boolean
+  network: Network
 }
 
-export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled }) => {
+export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const icons = getNetworkIcons({ size: 38 })
 
   return (
     <GraphTooltipIcon isMobile={isMobile}>
@@ -191,7 +194,7 @@ export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled }) =>
         <AccessTimeIcon sx={{ color: COLORS.aqua, fontSize: 33 }} />
       ) : (
         <>
-          <LayerIcon sx={{ color: COLORS.white, fontSize: 33 }} />
+          {icons[network]}
           <Typography
             component="span"
             color={COLORS.white}
@@ -266,7 +269,7 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, 
       placement="right-start"
       title={
         <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-          <GraphTooltipHeader disabled={disabled} />
+          <GraphTooltipHeader disabled={disabled} network={network} />
           <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
         </GraphTooltipStyled>
       }
