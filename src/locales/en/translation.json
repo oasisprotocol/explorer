@@ -263,14 +263,14 @@
     },
     "tooltip": {
       "comingSoonAria": "Coming soon...",
-      "coming": "Coming",
+      "coming": "Coming soon",
       "online": "Online",
       "openParatime": "Open ParaTime",
       "sapphireParaTimeDesc": "Confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility",
       "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
-      "cipherParaTimeAvailableSoon": "Searching through the Cipher ParaTime will be available soon.",
+      "cipherParaTimeDesc": "The Cipher ParaTime is a Confidential ParaTime for executing Wasm smart contracts.",
       "discoverMore": "Discover more",
-      "consensusParaTimeDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
+      "consensusDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
       "close": "Close"
     },
     "selectNetwork": "Selected net",
