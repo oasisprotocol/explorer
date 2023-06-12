@@ -1656,10 +1656,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource-variable/figtree/-/figtree-5.0.2.tgz#9fb58b6314a39348ef00969023b7aa09f0c9d48f"
   integrity sha512-x/UE+TH7I+ct0tbsTIaXECx+2uIZkWBzdGXjIsB5uiLZhfZXYU2WxapcNHS3ZZTYbco38yPppA3E7/B8zl64OA==
 
-"@fontsource-variable/roboto-mono@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-mono/-/roboto-mono-5.0.2.tgz#d361d5a79075e823ba163d1a87d4ff319a2e7b14"
-  integrity sha512-/VZRjWblnVnhDYhDqt24rkP2JwqaF6v6z8FLwO5NkOUF2GAXcz7aKx8q6YmXMHEzQhCM0WqKqbCLltSHkyQbBA==
+"@fontsource-variable/roboto-mono@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-mono/-/roboto-mono-5.0.4.tgz#d570b415d1a3fbbafabe5d457ffb2f558955c1c9"
+  integrity sha512-v62JBsvC79OMG4/V4dEbluLJ6Bi6dmsmq/qfGBa7hNTIBS6wrKqZUaP5QJhYHwgTSYtauBGMAjUY1R37GR+NNQ==
 
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
