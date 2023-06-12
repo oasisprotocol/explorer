@@ -2,6 +2,8 @@ import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { EmptyState } from '../app/components/EmptyState'
 import { PageLayout } from '../app/components/PageLayout'
+import { Network } from '../types/network'
+import { Layer } from '../oasis-indexer/api'
 
 export default {
   title: 'Example/PageLayout',
@@ -16,8 +18,8 @@ const Template: StoryFn<typeof PageLayout> = args => (
 )
 
 const emeraldRoute = {
-  routePath: '/:layer',
-  routeParams: { layer: 'emerald' },
+  routePath: '/:network/:layer',
+  routeParams: { network: Network.mainnet, layer: Layer.emerald },
 }
 
 type Story = StoryObj<typeof PageLayout>
