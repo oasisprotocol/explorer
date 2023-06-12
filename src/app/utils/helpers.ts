@@ -57,3 +57,7 @@ export function getEthAccountAddress(preimage: AddressPreimage | undefined): str
   // We need to convert from base64 to hex, add the prefix, and convert to checksum address
   return toChecksumAddress(`0x${Buffer.from(preimage.address_data, 'base64').toString('hex')}`)
 }
+
+export function uniq<T>(input: T[] | undefined): T[] {
+  return input === undefined ? [] : [...new Set(input)]
+}

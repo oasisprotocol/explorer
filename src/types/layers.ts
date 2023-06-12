@@ -1,3 +1,5 @@
+import { uniq } from '../app/utils/helpers'
+
 // Here we need to import from the generated code, in order to break
 // a cycle of imports which confuse jest
 // eslint-disable-next-line no-restricted-imports
@@ -26,3 +28,11 @@ const layerOrder: Record<Layer, number> = {
 
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
+
+const layersWithEncryptedTransactions: Layer[] = [Layer.sapphire]
+
+export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
+  layersWithEncryptedTransactions.includes(layer)
+
+export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[] | undefined): boolean =>
+  uniq(layers).some(doesLayerSupportEncryptedTransactions)

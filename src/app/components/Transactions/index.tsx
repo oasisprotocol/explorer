@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
@@ -16,6 +17,8 @@ import { AccountLink } from '../Account/AccountLink'
 import { TransactionLink } from './TransactionLink'
 import { trimLongString } from '../../utils/trimLongString'
 import Typography from '@mui/material/Typography'
+import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
+import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -59,8 +62,16 @@ export const Transactions: FC<TransactionsProps> = ({
   verbose = true,
 }) => {
   const { t } = useTranslation()
+  // We only want to show encryption status of we are listing transactions
+  // from paratimes that actually support encrypting transactions
+  const canHaveEncryption = doesAnyOfTheseLayersSupportEncryptedTransactions(
+    transactions?.map(tx => tx.layer),
+  )
   const tableColumns = [
     { content: t('common.status') },
+    ...(canHaveEncryption
+      ? [{ content: (<LockIcon htmlColor={COLORS.grayMedium} />) as unknown as string }]
+      : []), // The table does support widgets in the column headers, but the TS definition is unaware of that.
     { content: t('common.hash') },
     ...(verbose ? [{ content: t('common.block') }] : []),
     { content: t('common.age'), align: TableCellAlign.Right },
@@ -77,6 +88,14 @@ export const Transactions: FC<TransactionsProps> = ({
         content: <TransactionStatusIcon success={transaction.success} />,
         key: 'success',
       },
+      ...(canHaveEncryption
+        ? [
+            {
+              content: <TransactionEncryptionStatus envelope={transaction.encryption_envelope} />,
+              key: 'encrypted',
+            },
+          ]
+        : []),
       {
         content: (
           <TransactionLink
