@@ -72,8 +72,6 @@
     "to": "To",
     "totalSent": "Total Sent",
     "transactions": "Transactions",
-    "transactionsNumber_one": "1 transaction",
-    "transactionsNumber_other": "{{ count }} transactions",
     "txnFee": "Txn Fee",
     "type": "Type",
     "unknown": "Unknown",

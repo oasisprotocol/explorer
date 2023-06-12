@@ -67,7 +67,7 @@ export const BlockDetailView: FC<{
   if (!block) return <></>
 
   const transactionsAnchor = `${RouteUtils.getBlockRoute(block, block.round)}#${transactionsContainerId}`
-  const transactionLabel = t('common.transactionsNumber', { count: block.num_transactions })
+  const transactionLabel = block.num_transactions.toLocaleString()
   const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (

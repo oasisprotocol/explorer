@@ -41,15 +41,15 @@ describe('SearchResultsView', () => {
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '10 transactions' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '10 transactions' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '10' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '10' })).toHaveAttribute(
       'href',
       '/mainnet/emerald/blocks/1396255#transactions',
     )
 
     expect(screen.getByText('143,553')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '1 transaction' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '1 transaction' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '1' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '1' })).toHaveAttribute(
       'href',
       '/mainnet/sapphire/blocks/143553#transactions',
     )
