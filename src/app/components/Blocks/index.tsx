@@ -31,7 +31,7 @@ export const Blocks = (props: BlocksProps) => {
 
   const tableColumns: TableColProps[] = [
     { content: t('common.fill') },
-    { content: t('common.block'), align: TableCellAlign.Right },
+    { content: t('common.height'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
     { content: t('common.transactions'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.hash') }] : []),
