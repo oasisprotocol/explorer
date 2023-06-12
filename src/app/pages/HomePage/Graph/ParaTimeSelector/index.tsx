@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from '../types'
 import { ParaTimeSelectorUtils } from '../para-time-selector-utils'
 import Fade from '@mui/material/Fade'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../../../hooks/useScreensize'
 import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from '../Graph/graph-utils'
@@ -134,7 +134,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
   const { network, setNetwork } = useSearchQueryNetworkParam()

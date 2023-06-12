@@ -2,8 +2,8 @@ import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { styled } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
@@ -26,9 +26,7 @@ interface FooterProps {
 
 export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
 
   return (

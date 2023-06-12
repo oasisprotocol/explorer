@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { cardClasses } from '@mui/material/Card'
 import { boxClasses } from '../../utils/mui-helpers'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export const ResultListFrame = styled(Box)(({ theme }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))

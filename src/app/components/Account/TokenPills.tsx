@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Link from '@mui/material/Link'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
 import { RuntimeAccount, type RuntimeEvmBalance } from '../../../oasis-indexer/api'
@@ -17,8 +16,7 @@ type TokenPillsProps = {
 
 export const TokenPills: FC<TokenPillsProps> = ({ account, tokens }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   if (!tokens.length) {
     return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>

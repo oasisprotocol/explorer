@@ -1,5 +1,5 @@
 import Switch, { switchClasses } from '@mui/material/Switch'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import oasisLogo from './images/oasis.svg'
 import ethLogo from './images/eth.svg'
 import { COLORS } from '../../../styles/theme/colors'
@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { ChangeEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 const StyledAddressSwitch = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -53,8 +53,7 @@ export const AddressSwitch: FC<AddressSwitchProps> = ({
   onSelectionChange,
 }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   const checked = selected === AddressSwitchOption.ETH
 

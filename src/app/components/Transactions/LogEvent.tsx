@@ -2,9 +2,8 @@ import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-in
 import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
-import { useTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
@@ -93,8 +92,7 @@ const DecodedLogEvent: FC<{
   event: RuntimeEvent
   addressSwitchOption: AddressSwitchOption
 }> = ({ scope, event, addressSwitchOption }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const eventTypeNames: Record<RuntimeEventType, string> = {
     [RuntimeEventType.accountstransfer]: t('transactionEvent.accountstransfer'),
@@ -174,8 +172,7 @@ export const TransactionLogEvent: FC<{
   addressSwitchOption: AddressSwitchOption
 }> = ({ scope, event, isFirst, addressSwitchOption }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const transactionLinkValue =
     addressSwitchOption === AddressSwitchOption.ETH ? event.eth_tx_hash : event.tx_hash
 

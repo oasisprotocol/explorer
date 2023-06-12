@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
@@ -15,8 +14,7 @@ export const AccountLink: FC<{
   alwaysTrim?: boolean
   plain?: boolean
 }> = ({ scope, address, alwaysTrim, plain }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <Typography

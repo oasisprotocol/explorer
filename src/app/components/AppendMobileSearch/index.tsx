@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { Search } from '../Search'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
 
 interface AppendMobileSearchProps {
@@ -38,8 +38,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
   children,
   action,
 }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   return (
     <Layout action={action}>

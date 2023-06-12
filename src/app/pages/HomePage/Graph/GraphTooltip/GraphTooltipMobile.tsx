@@ -3,11 +3,11 @@ import Fade from '@mui/material/Fade'
 import CloseIcon from '@mui/icons-material/Close'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import { GraphTooltipBody, GraphTooltipHeader, useLayerTooltipMap, GraphTooltipStyled } from './index'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../../../hooks/useScreensize'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { zIndexHomePage } from '../../index'
@@ -45,8 +45,7 @@ export interface GraphTooltipMobileProps {
 export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer, onClose }) => {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
 
   const navigateTo = () => {

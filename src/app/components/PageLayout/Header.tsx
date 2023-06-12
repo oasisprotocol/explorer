@@ -2,16 +2,16 @@ import { FC } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { Logotype } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const Header: FC = () => {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const scope = useScopeParam()
   const scrollTrigger = useScrollTrigger({
     disableHysteresis: true,

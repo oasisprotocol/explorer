@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import { forwardRef, ForwardRefRenderFunction, memo, useEffect, useRef, useState } from 'react'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../../../hooks/useScreensize'
 import { GraphTooltip } from '../GraphTooltip'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
@@ -83,8 +83,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 ) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const consensusRef = useRef<SVGCircleElement>(null)
   const consensusRefInnerCircle = useRef<SVGCircleElement>(null)
   const emeraldRef = useRef<SVGGElement>(null)

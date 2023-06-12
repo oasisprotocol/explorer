@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { Social } from './Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestBlocks } from './LatestBlocks'
@@ -13,8 +12,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 
 export const DashboardPage: FC = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   return (
     <PageLayout>
