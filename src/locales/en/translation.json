@@ -221,7 +221,7 @@
   },
   "currentFiatValue": {
     "title": "Current fiat value",
-    "explanation": "Calculated using current rate. Value at the time of transaction might have been completely different."
+    "explanation": "This figure is calculated using the current rate. The value at the time of transaction might have been different."
   },
   "paraTimeSnapshot": {
     "header": "{{ paratime }} Snapshot"
