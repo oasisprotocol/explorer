@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import CheckIcon from '@mui/icons-material/Check'
 import Link from '@mui/material/Link'
 import { Circle } from '../Circle'
 import { COLORS } from '../../../styles/theme/colors'
@@ -16,6 +15,8 @@ import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { getNameForScope } from '../../../types/searchScope'
+import { useRuntimeFreshness } from '../OfflineBanner/hook'
+import { LayerStatus } from '../LayerStatus'
 
 type LayerDetailsContent = {
   description: string
@@ -83,7 +84,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
   const layer = selectedLayer
-
+  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
   const details = getDetails(t)[network][layer]
 
   if (!details) {
@@ -116,12 +117,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
           <Typography sx={{ fontSize: 24, color: COLORS.brandDark, fontWeight: 700, mr: 3 }} component="span">
             {getNameForScope(t, { network, layer })}
           </Typography>
-          <Typography sx={{ fontSize: 10, color: COLORS.paraTimeStatus, mr: 3 }} component="span">
-            {t('common.paraTimeOnline')}
-          </Typography>
-          <Circle color={COLORS.eucalyptus} size={4}>
-            <CheckIcon sx={{ fontSize: 12, color: COLORS.white }} />
-          </Circle>
+          <LayerStatus isOutOfDate={isOutOfDate} withLabel />
         </Box>
         <Typography sx={{ fontSize: '12px', color: COLORS.brandExtraDark, pb: 2 }}>
           {details.description}

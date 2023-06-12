@@ -6,24 +6,28 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 
 type LayerStatusProps = {
-  valid: boolean
+  isOutOfDate?: boolean
   withLabel?: boolean
 }
 
-export const LayerStatus: FC<LayerStatusProps> = ({ valid, withLabel = false }) => {
+export const LayerStatus: FC<LayerStatusProps> = ({ isOutOfDate, withLabel = false }) => {
   const { t } = useTranslation()
+
+  if (typeof isOutOfDate === 'undefined') {
+    return null
+  }
 
   return (
     <>
       {withLabel && (
         <Typography sx={{ fontSize: 10, color: COLORS.paraTimeStatus, mr: 3 }} component="span">
-          {valid ? t('common.paraTimeOnline') : t('common.paraTimeOutOfDate')}
+          {isOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline')}
         </Typography>
       )}
-      {valid ? (
-        <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />
-      ) : (
+      {isOutOfDate ? (
         <ErrorIcon sx={{ marginLeft: 2 }} color="error" fontSize="small" />
+      ) : (
+        <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />
       )}
     </>
   )

@@ -2,14 +2,13 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button, { buttonClasses } from '@mui/material/Button'
-import CheckIcon from '@mui/icons-material/Check'
 import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { Circle } from '../Circle'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
+import { LayerStatus } from '../LayerStatus'
 
 export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   alignItems: 'center',
@@ -68,12 +67,13 @@ export const StyledBox = styled(Box)(({ theme }) => ({
 }))
 
 type NetworkButtonProps = {
+  isOutOfDate?: boolean
   layer: Layer
   network: Network
   onClick: () => void
 }
 
-export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network, onClick }) => {
+export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
   const icons = getNetworkIcons()
@@ -89,9 +89,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ layer, network, onClick 
     >
       <StyledBox>
         {labels[layer]}
-        <Circle color={COLORS.eucalyptus} size={4}>
-          <CheckIcon sx={{ fontSize: 16, color: COLORS.white }} />
-        </Circle>
+        <LayerStatus isOutOfDate={isOutOfDate} />
       </StyledBox>
     </StyledNetworkButton>
   )
@@ -114,16 +112,14 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-export const MobileNetworkButton: FC<Omit<NetworkButtonProps, 'network'>> = ({ layer, onClick }) => {
+export const MobileNetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
 
   return (
     <StyledMobileNetworkButton onClick={onClick}>
       {labels[layer]}
-      <Circle color={COLORS.eucalyptus} size={4}>
-        <CheckIcon sx={{ fontSize: 15, color: COLORS.white }} />
-      </Circle>
+      <LayerStatus isOutOfDate={isOutOfDate} />
     </StyledMobileNetworkButton>
   )
 }

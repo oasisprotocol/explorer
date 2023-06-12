@@ -11,6 +11,7 @@ import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
 import { ParaTimePicker } from './../ParaTimePicker'
 import { RouteUtils } from '../../utils/route-utils'
+import { useRuntimeFreshness } from '../OfflineBanner/hook'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   marginLeft: `-${theme.spacing(1)}`,
@@ -38,6 +39,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
   const [openDrawer, setOpenDrawer] = useState(false)
   const handleDrawerClose = () => setOpenDrawer(false)
   const handleDrawerOpen = () => setOpenDrawer(true)
+  const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return (
     <Box
@@ -55,7 +57,9 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
           navigate(RouteUtils.getDashboardRoute({ network, layer }))
         }}
       />
-      {!isMobile && <NetworkButton layer={layer} network={network} onClick={handleDrawerOpen} />}
+      {!isMobile && (
+        <NetworkButton isOutOfDate={outOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
+      )}
       {isDesktop && network !== Network.mainnet && (
         <StyledBox>
           <Typography
@@ -68,7 +72,14 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
           </Typography>
         </StyledBox>
       )}
-      {isMobile && <MobileNetworkButton layer={layer} onClick={handleDrawerOpen} />}
+      {isMobile && (
+        <MobileNetworkButton
+          isOutOfDate={outOfDate}
+          network={network}
+          layer={layer}
+          onClick={handleDrawerOpen}
+        />
+      )}
     </Box>
   )
 }
