@@ -227,7 +227,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
             <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>
-        <NetworkSelector network={network} setNetwork={setNetwork} />
+        {step === ParaTimeSelectorStep.Explore && (
+          <NetworkSelector network={network} setNetwork={setNetwork} />
+        )}
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip && (
         <GraphTooltipMobile
