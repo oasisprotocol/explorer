@@ -224,7 +224,7 @@
     "explanation": "Calculated using current rate. Value at the time of transaction might have been completely different."
   },
   "paraTimeSnapshot": {
-    "header": "ParaTime Snapshot"
+    "header": "{{ paratime }} Snapshot"
   },
   "paraTimePicker": {
     "chainId": "Chain ID:",

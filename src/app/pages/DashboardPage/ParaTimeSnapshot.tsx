@@ -16,6 +16,7 @@ import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Network } from '../../../types/network'
+import { getLayerNames } from '../../../types/layers'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -26,6 +27,7 @@ export const ParaTimeSnapshot: FC = () => {
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
   const scope = useRequiredScopeParam()
+  const paratime = getLayerNames(t)[scope.layer]
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
@@ -46,7 +48,7 @@ export const ParaTimeSnapshot: FC = () => {
                 variant="h3"
                 sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
               >
-                {t('paraTimeSnapshot.header')}
+                {t('paraTimeSnapshot.header', { paratime })}
               </Typography>
               <DurationSelect
                 defaultValue={defaultChartDurationValue}
