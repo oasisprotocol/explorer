@@ -34,6 +34,10 @@ import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwit
 import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
 import { isValidTxOasisHash } from '../../utils/helpers'
+import { TransactionEncrypted } from '../../components/TransactionEncryptionStatus'
+import Collapse from '@mui/material/Collapse'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -171,6 +175,49 @@ const TransactionInfoTooltip: FC<PropsWithChildren<{ label: string }>> = ({ labe
     >
       <Box>{children}</Box>
     </Tooltip>
+  )
+}
+
+export const ShowHideData: FC<{ data: string; threshold: number; fontWeight?: number }> = ({
+  data,
+  threshold,
+  fontWeight = 700,
+}) => {
+  const { t } = useTranslation()
+  const [showData, setShowData] = useState(false)
+  const needsHiding = data.length > threshold
+  if (!needsHiding) {
+    return (
+      <Typography
+        variant="mono"
+        sx={{
+          fontWeight,
+          overflowWrap: 'anywhere',
+        }}
+      >
+        {data}
+      </Typography>
+    )
+  }
+  return (
+    <div>
+      <Collapse orientation={'vertical'} in={showData} collapsedSize={'3em'}>
+        <Typography
+          variant="mono"
+          sx={{
+            fontWeight,
+            overflowWrap: 'anywhere',
+          }}
+        >
+          {data}
+        </Typography>
+      </Collapse>
+      {data.length > threshold && (
+        <Link sx={{ cursor: 'pointer' }} onClick={() => setShowData(!showData)}>
+          {showData ? t('common.hide') : t('common.show')}
+        </Link>
+      )}
+    </div>
   )
 }
 
@@ -341,6 +388,76 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>
+
+          {transaction.encryption_envelope && (
+            <>
+              <dt>{t('transactions.encryption.format')}</dt>
+              <dd>
+                {transaction.encryption_envelope.format} &nbsp; <TransactionEncrypted />
+              </dd>
+
+              {transaction.encryption_envelope.public_key !== undefined && (
+                <>
+                  <dt>{t('transactions.encryption.publicKey')}</dt>
+                  <dd>
+                    <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
+                      {transaction.encryption_envelope.public_key}
+                    </Typography>
+                  </dd>
+                </>
+              )}
+
+              {transaction.encryption_envelope.data_nonce !== undefined && (
+                <>
+                  <dt>{t('transactions.encryption.dataNonce')}</dt>
+                  <dd>
+                    <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
+                      {transaction.encryption_envelope.data_nonce}
+                    </Typography>
+                  </dd>
+                </>
+              )}
+
+              {transaction.encryption_envelope.data !== undefined && (
+                <>
+                  <dt>{t('transactions.encryption.encryptedData')}</dt>
+                  <dd>
+                    <ShowHideData data={transaction.encryption_envelope.data} threshold={300} />
+                  </dd>
+                </>
+              )}
+
+              {transaction.encryption_envelope.result_nonce !== undefined && (
+                <>
+                  <dt>{t('transactions.encryption.resultNonce')}</dt>
+                  <dd>
+                    <Typography
+                      variant="mono"
+                      sx={{
+                        fontWeight: 400,
+                        overflowWrap: 'anywhere',
+                      }}
+                    >
+                      {transaction.encryption_envelope.result_nonce}
+                    </Typography>
+                  </dd>
+                </>
+              )}
+
+              {transaction.encryption_envelope.result !== undefined && (
+                <>
+                  <dt>{t('transactions.encryption.encryptedResult')}</dt>
+                  <dd>
+                    <ShowHideData
+                      data={transaction.encryption_envelope.result}
+                      fontWeight={400}
+                      threshold={300}
+                    />
+                  </dd>
+                </>
+              )}
+            </>
+          )}
         </StyledDescriptionList>
       )}
     </>
