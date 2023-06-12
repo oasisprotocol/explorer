@@ -155,7 +155,7 @@ export const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo>
       body: {
         title: (t: TFunction) => t('common.cipher'),
         caption: (t: TFunction) => t('home.tooltip.coming'),
-        body: (t: TFunction) => t('home.tooltip.cipherParaTimeAvailableSoon'),
+        body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },
     [Layer.consensus]: {
@@ -163,7 +163,7 @@ export const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo>
       body: {
         title: (t: TFunction) => t('common.consensus'),
         caption: (t: TFunction) => t('home.tooltip.coming'),
-        body: (t: TFunction) => t('home.tooltip.consensusParaTimeDesc'),
+        body: (t: TFunction) => t('home.tooltip.consensusDesc'),
       },
     },
   }
