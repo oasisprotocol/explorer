@@ -22,7 +22,7 @@ export const DashboardPage: FC = () => {
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <LatestTransactions />
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 2 : 1 }}>
           <LearningMaterials />
         </Grid>
         <Grid item xs={12} md={6}>
