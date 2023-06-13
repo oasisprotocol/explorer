@@ -35,7 +35,7 @@ export const Nodes: FC = () => {
       <Tooltip
         arrow
         placement="top"
-        title={t('nodes.tooltip')}
+        title={activeNodes ? t('nodes.tooltip') : t('nodes.unknown')}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -51,7 +51,7 @@ export const Nodes: FC = () => {
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
             <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
-              {t('nodes.value', { value: activeNodes })}
+              {activeNodes ? t('nodes.value', { value: activeNodes }) : '-'}
             </Typography>
           </>
         )}

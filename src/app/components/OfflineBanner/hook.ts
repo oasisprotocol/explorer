@@ -41,8 +41,8 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
       outOfDate: true,
     }
   }
-  const { active_nodes, latest_block } = data
-  if (active_nodes === 0 || latest_block === -1) {
+  const { latest_block } = data
+  if (latest_block === -1) {
     return {
       outOfDate: true,
     }
