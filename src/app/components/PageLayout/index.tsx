@@ -10,6 +10,7 @@ import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiOffline } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
+import { useScrollToTop } from '../../hooks/useScrollToTop'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -20,6 +21,10 @@ export const StyledMain = styled('main')({
 })
 
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
+  useScrollToTop({
+    ignorePaths: [/#/],
+  })
+
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
