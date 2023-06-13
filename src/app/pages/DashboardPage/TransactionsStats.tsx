@@ -13,8 +13,10 @@ import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const TransactionsStats: FC = () => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
@@ -65,6 +67,8 @@ export const TransactionsStats: FC = () => {
                 }),
             }}
             withLabels
+            tickMark={isMobile}
+            margin={{ left: isMobile ? -16 : 8, right: 8 }}
           />
         )}
       </CardContent>

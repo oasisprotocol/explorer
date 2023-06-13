@@ -9,6 +9,8 @@ import {
 } from 'recharts'
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
+import { Margin } from 'recharts/types/util/types'
+import { useTranslation } from 'react-i18next'
 
 interface BarChartProps<T extends object> extends Formatters {
   barSize?: number
@@ -19,6 +21,8 @@ interface BarChartProps<T extends object> extends Formatters {
   rounded?: boolean
   withBarBackground?: boolean
   withLabels?: boolean
+  tickMark?: boolean
+  margin?: Margin
 }
 
 const BarChartCmp = <T extends object>({
@@ -31,42 +35,60 @@ const BarChartCmp = <T extends object>({
   rounded,
   withLabels,
   withBarBackground,
-}: BarChartProps<T>) => (
-  <ResponsiveContainer width="100%">
-    <RechartsBarChart data={data} margin={{ right: 8, bottom: 0, left: 8 }}>
-      {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
-      {withLabels && (
-        <YAxis
-          tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
-          axisLine={false}
-          tickLine={false}
-          type="number"
-          padding={{ bottom: 20 }}
-          tickMargin={0}
+  tickMark,
+  margin,
+}: BarChartProps<T>) => {
+  const { t } = useTranslation()
+
+  return (
+    <ResponsiveContainer width="100%">
+      <RechartsBarChart data={data} margin={margin ?? { right: 8, bottom: 0, left: 8 }}>
+        {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
+        {withLabels && (
+          <YAxis
+            tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
+            axisLine={false}
+            tickLine={false}
+            type="number"
+            padding={{ bottom: 20 }}
+            tickMargin={0}
+            tickFormatter={tick => {
+              return tickMark
+                ? t('common.valuePair', {
+                    value: tick,
+                    formatParams: {
+                      value: {
+                        notation: 'compact',
+                      } satisfies Intl.NumberFormatOptions,
+                    },
+                  })
+                : tick
+            }}
+          />
+        )}
+        <Tooltip
+          cursor={false}
+          wrapperStyle={{ outline: 'none' }}
+          content={<TooltipContent formatters={formatters} />}
+          offset={15}
         />
-      )}
-      <Tooltip
-        cursor={false}
-        wrapperStyle={{ outline: 'none' }}
-        content={<TooltipContent formatters={formatters} />}
-        offset={15}
-      />
-      <Bar
-        background={
-          withBarBackground
-            ? {
-                fill: COLORS.grayLight,
-                radius: 20,
-              }
-            : undefined
-        }
-        dataKey={dataKey}
-        barSize={barSize}
-        fill={COLORS.denimBlue}
-        radius={rounded ? barRadius : [barRadius, barRadius, 0, 0]}
-      />
-    </RechartsBarChart>
-  </ResponsiveContainer>
-)
+        <Bar
+          background={
+            withBarBackground
+              ? {
+                  fill: COLORS.grayLight,
+                  radius: 20,
+                }
+              : undefined
+          }
+          dataKey={dataKey}
+          barSize={barSize}
+          fill={COLORS.denimBlue}
+          radius={rounded ? barRadius : [barRadius, barRadius, 0, 0]}
+        />
+      </RechartsBarChart>
+    </ResponsiveContainer>
+  )
+}
 
 export const BarChart = memo(BarChartCmp) as typeof BarChartCmp

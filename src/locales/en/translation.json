@@ -84,7 +84,8 @@
     "paraTimeOnline": "ParaTime Online",
     "paraTimeOutOfDate": "ParaTime Out of date",
     "mainnet": "Mainnet",
-    "testnet": "Testnet"
+    "testnet": "Testnet",
+    "valuePair": "{{value, number}}"
   },
   "nodes": {
     "title": "Active nodes",
