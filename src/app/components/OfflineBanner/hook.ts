@@ -11,7 +11,7 @@ export const useIsApiOffline = (network: Network): boolean => {
 }
 
 export type FreshnessInfo = {
-  outOfDate: boolean
+  outOfDate?: boolean
   lastUpdate?: string
 }
 
@@ -22,7 +22,13 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   }
   const query = useGetRuntimeStatus(scope.network, scope.layer)
   const timeDistance = useFormattedTimestampString(query?.data?.data.latest_update)
-  if (isApiOffline || query.isLoading) {
+  if (query.isLoading) {
+    return {
+      outOfDate: undefined,
+    }
+  }
+
+  if (isApiOffline) {
     // The error state will be handled by NetworkOfflineBanner,
     // no need to display another banner whining about obsolete data.
     return {
