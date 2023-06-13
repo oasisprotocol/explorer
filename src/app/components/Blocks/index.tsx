@@ -5,7 +5,7 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
-import { formatDistanceStrict } from '../../utils/dateFormatter'
+import { formatDistanceToNow } from '../../utils/dateFormatter'
 import { useScreenSize } from '../../hooks/useScreensize'
 
 export type TableRuntimeBlock = RuntimeBlock & {
@@ -34,10 +34,14 @@ export const Blocks = (props: BlocksProps) => {
     { content: t('common.fill') },
     { content: t('common.height'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
-    ...(verbose ? [{
-      content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
-      align: TableCellAlign.Right,
-    }] : []),
+    ...(verbose
+      ? [
+          {
+            content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
+            align: TableCellAlign.Right,
+          },
+        ]
+      : []),
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
@@ -63,7 +67,7 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceStrict(new Date(block.timestamp), new Date()),
+          content: formatDistanceToNow(new Date(block.timestamp)),
           key: 'timestamp',
         },
         ...(verbose

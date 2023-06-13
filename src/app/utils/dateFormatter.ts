@@ -1,4 +1,4 @@
-import formatDistanceStrictDateFns from 'date-fns/formatDistanceStrict'
+import { formatDistanceToNow as dateFnsFormatDistanceToNow } from 'date-fns'
 import locale from 'date-fns/locale/en-US'
 
 const dateFormat = new Intl.DateTimeFormat()
@@ -24,13 +24,42 @@ const formatDistanceLocale = {
   almostXYears: '{{count}}y',
 }
 
-export const formatDistance = (token: keyof typeof formatDistanceLocale, count: string) =>
-  formatDistanceLocale[token].replace('{{count}}', count)
+const formatDistance = (
+  token: keyof typeof formatDistanceLocale,
+  count: string,
+  options: {
+    includeSeconds?: boolean
+    addSuffix?: boolean
+    comparison?: number
+  } = {},
+) => {
+  const { addSuffix, comparison = 0 } = options
 
-export const formatDistanceStrict = (date: Date, baseDate: Date) =>
-  formatDistanceStrictDateFns(date, baseDate, {
-    locale: {
-      ...locale,
-      formatDistance,
-    },
+  const result = formatDistanceLocale[token].replace('{{count}}', count)
+
+  if (addSuffix) {
+    if (comparison > 0) {
+      return `in ${result}`
+    } else {
+      return `${result} ago`
+    }
+  }
+
+  return result
+}
+
+export const formatDistanceToNow = (date: Date, shortFormat = true) => {
+  if (shortFormat) {
+    return dateFnsFormatDistanceToNow(date, {
+      addSuffix: true,
+      locale: {
+        ...locale,
+        formatDistance,
+      },
+    })
+  }
+
+  return dateFnsFormatDistanceToNow(date, {
+    addSuffix: true,
   })
+}

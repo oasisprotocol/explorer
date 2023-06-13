@@ -18,7 +18,7 @@ import { trimLongString } from '../../utils/trimLongString'
 import Typography from '@mui/material/Typography'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
-import { formatDistanceStrict } from '../../utils/dateFormatter'
+import { formatDistanceToNow } from '../../utils/dateFormatter'
 
 const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -92,7 +92,7 @@ export const Transactions: FC<TransactionsProps> = ({
         content: <TransactionStatusIcon success={transaction.success} />,
         key: 'success',
       },
-      ...(canHaveEncryption
+      ...(verbose && canHaveEncryption
         ? [
             {
               content: <TransactionEncryptionStatus envelope={transaction.encryption_envelope} />,
@@ -116,7 +116,7 @@ export const Transactions: FC<TransactionsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: formatDistanceStrict(new Date(transaction.timestamp), new Date()),
+        content: formatDistanceToNow(new Date(transaction.timestamp)),
         key: 'timestamp',
       },
       ...(verbose
