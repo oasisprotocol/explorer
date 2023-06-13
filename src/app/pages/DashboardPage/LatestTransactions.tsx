@@ -12,10 +12,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { RouteUtils } from '../../utils/route-utils'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestTransactions: FC = () => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const { network, layer } = scope
@@ -48,6 +50,7 @@ export const LatestTransactions: FC = () => {
           isLoading={transactionsQuery.isLoading}
           limit={limit}
           pagination={false}
+          verbose={!isMobile}
         />
       </CardContent>
     </Card>

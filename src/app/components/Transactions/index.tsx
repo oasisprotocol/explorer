@@ -69,17 +69,21 @@ export const Transactions: FC<TransactionsProps> = ({
   )
   const tableColumns = [
     { content: t('common.status') },
-    ...(canHaveEncryption
+    ...(verbose && canHaveEncryption
       ? [{ content: (<LockIcon htmlColor={COLORS.grayMedium} />) as unknown as string }]
       : []), // The table does support widgets in the column headers, but the TS definition is unaware of that.
     { content: t('common.hash') },
-    ...(verbose ? [{ content: t('common.block') }] : []),
+    { content: t('common.block') },
     { content: t('common.age'), align: TableCellAlign.Right },
-    { content: t('common.type'), align: TableCellAlign.Center },
-    { content: t('common.from'), width: '150px' },
-    { content: t('common.to'), width: '150px' },
-    { content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
-    { align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
+    ...(verbose
+      ? [
+          { content: t('common.type'), align: TableCellAlign.Center },
+          { content: t('common.from'), width: '150px' },
+          { content: t('common.to'), width: '150px' },
+          { content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
+          { align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
+        ]
+      : []),
   ]
   const tableRows = transactions?.map(transaction => ({
     key: transaction.hash,
@@ -106,93 +110,93 @@ export const Transactions: FC<TransactionsProps> = ({
         ),
         key: 'hash',
       },
-      ...(verbose
-        ? [
-            {
-              content: <BlockLink scope={transaction} height={transaction.round} />,
-              key: 'round',
-            },
-          ]
-        : []),
+      {
+        content: <BlockLink scope={transaction} height={transaction.round} />,
+        key: 'round',
+      },
       {
         align: TableCellAlign.Right,
         content: formatDistanceStrict(new Date(transaction.timestamp), new Date()),
         key: 'timestamp',
       },
-      {
-        align: TableCellAlign.Center,
-        content: <RuntimeTransactionIcon method={transaction.method} />,
-        key: 'type',
-      },
-      {
-        align: TableCellAlign.Right,
-        content: (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              pr: 3,
-            }}
-          >
-            {!!ownAddress &&
-            (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
-              <Typography
-                variant="mono"
-                component="span"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
-              </Typography>
-            ) : (
-              <AccountLink
-                scope={transaction}
-                address={transaction.sender_0_eth || transaction.sender_0}
-                alwaysTrim={true}
-              />
-            )}
-            {transaction.to && (
-              <StyledCircle>
-                <ArrowForwardIcon fontSize="inherit" />
-              </StyledCircle>
-            )}
-          </Box>
-        ),
-        key: 'from',
-      },
-      {
-        content:
-          !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
-            <Typography
-              variant="mono"
-              component="span"
-              sx={{
-                fontWeight: 700,
-              }}
-            >
-              {trimLongString(transaction.to_eth || transaction.to!)}
-            </Typography>
-          ) : (
-            <AccountLink
-              scope={transaction}
-              address={transaction.to_eth || transaction.to!}
-              alwaysTrim={true}
-            />
-          ),
-        key: 'to',
-      },
-      {
-        align: TableCellAlign.Right,
-        content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
-        key: 'fee_amount',
-      },
-      {
-        align: TableCellAlign.Right,
-        content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
-        key: 'value',
-      },
+      ...(verbose
+        ? [
+            {
+              align: TableCellAlign.Center,
+              content: <RuntimeTransactionIcon method={transaction.method} />,
+              key: 'type',
+            },
+            {
+              align: TableCellAlign.Right,
+              content: (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    position: 'relative',
+                    pr: 3,
+                  }}
+                >
+                  {!!ownAddress &&
+                  (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
+                    <Typography
+                      variant="mono"
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                      }}
+                    >
+                      {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
+                    </Typography>
+                  ) : (
+                    <AccountLink
+                      scope={transaction}
+                      address={transaction.sender_0_eth || transaction.sender_0}
+                      alwaysTrim={true}
+                    />
+                  )}
+                  {transaction.to && (
+                    <StyledCircle>
+                      <ArrowForwardIcon fontSize="inherit" />
+                    </StyledCircle>
+                  )}
+                </Box>
+              ),
+              key: 'from',
+            },
+            {
+              content:
+                !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
+                  <Typography
+                    variant="mono"
+                    component="span"
+                    sx={{
+                      fontWeight: 700,
+                    }}
+                  >
+                    {trimLongString(transaction.to_eth || transaction.to!)}
+                  </Typography>
+                ) : (
+                  <AccountLink
+                    scope={transaction}
+                    address={transaction.to_eth || transaction.to!}
+                    alwaysTrim={true}
+                  />
+                ),
+              key: 'to',
+            },
+            {
+              align: TableCellAlign.Right,
+              content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
+              key: 'fee_amount',
+            },
+            {
+              align: TableCellAlign.Right,
+              content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
+              key: 'value',
+            },
+          ]
+        : []),
     ],
     highlight: transaction.markAsNew,
   }))
@@ -205,6 +209,7 @@ export const Transactions: FC<TransactionsProps> = ({
       name={t('transactions.latest')}
       isLoading={isLoading}
       pagination={pagination}
+      verbose={verbose}
     />
   )
 }

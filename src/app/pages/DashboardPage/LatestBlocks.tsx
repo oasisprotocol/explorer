@@ -12,10 +12,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { RouteUtils } from '../../utils/route-utils'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestBlocks: FC = () => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const { network, layer } = scope
@@ -48,6 +50,7 @@ export const LatestBlocks: FC = () => {
           blocks={blocksQuery.data?.data.blocks}
           limit={limit}
           pagination={false}
+          verbose={!isMobile}
         />
       </CardContent>
     </Card>

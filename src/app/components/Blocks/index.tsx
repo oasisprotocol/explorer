@@ -34,10 +34,10 @@ export const Blocks = (props: BlocksProps) => {
     { content: t('common.fill') },
     { content: t('common.height'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
-    {
+    ...(verbose ? [{
       content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
       align: TableCellAlign.Right,
-    },
+    }] : []),
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
@@ -66,11 +66,15 @@ export const Blocks = (props: BlocksProps) => {
           content: formatDistanceStrict(new Date(block.timestamp), new Date()),
           key: 'timestamp',
         },
-        {
-          align: TableCellAlign.Right,
-          content: block.num_transactions.toLocaleString(),
-          key: 'txs',
-        },
+        ...(verbose
+          ? [
+              {
+                align: TableCellAlign.Right,
+                content: block.num_transactions.toLocaleString(),
+                key: 'txs',
+              },
+            ]
+          : []),
         ...(verbose
           ? [
               {
@@ -124,6 +128,7 @@ export const Blocks = (props: BlocksProps) => {
       name={t('blocks.latest')}
       isLoading={isLoading}
       pagination={pagination}
+      verbose={verbose}
     />
   )
 }
