@@ -88,6 +88,7 @@
   },
   "nodes": {
     "title": "Active nodes",
+    "unknown": "Consensus layer indexer is not caught up with the latest blocks. The number of active nodes is unknown.",
     "tooltip": "Blockchain nodes are authorized devices that track the distributed ledger and serve as communication hubs in the network.",
     "value": "{{value, number}}"
   },
