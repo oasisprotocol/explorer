@@ -55,6 +55,7 @@
     "gasLimit": "Gas limit",
     "hash": "Hash",
     "height": "Height",
+    "hide": "Hide",
     "loadMore": "Load more",
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
@@ -64,6 +65,7 @@
     "select": "Select",
     "size": "Size",
     "sapphire": "Sapphire",
+    "show": "Show",
     "smartContract": "Smart Contract",
     "success": "Success",
     "status": "Status",
@@ -157,6 +159,14 @@
     "tooltip": "{{value, number}} total transactions"
   },
   "transactions": {
+    "encryption": {
+      "dataNonce": "Data Nonce",
+      "encryptedData": "Data (encrypted)",
+      "encryptedResult": "Result (encrypted)",
+      "format": "Format",
+      "publicKey": "Public Key",
+      "resultNonce": "Result Nonce"
+    },
     "latest": "Latest Transactions",
     "method": {
       "unavailable": "Malformed transaction, method unavailable",
