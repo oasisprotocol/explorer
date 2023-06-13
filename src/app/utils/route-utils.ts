@@ -8,7 +8,10 @@ import { SearchScope } from '../../types/searchScope'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK: Partial<Record<Network, Layer[]>> = {
-    [Network.mainnet]: [Layer.emerald, Layer.sapphire],
+    [Network.mainnet]: [
+      // Layer.emerald,
+      Layer.sapphire,
+    ],
     [Network.testnet]: [
       // Layer.emerald,
       Layer.sapphire,
