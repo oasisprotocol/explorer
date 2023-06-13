@@ -1,5 +1,6 @@
 {
   "account": {
+    "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "emptyTokenList": "This account holds no {{token}} tokens.",
     "emptyTransactionList": "There are no transactions on record for this account.",
     "ERC20": "ERC-20",
