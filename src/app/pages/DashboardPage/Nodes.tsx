@@ -50,7 +50,14 @@ export const Nodes: FC = () => {
         {runtimeStatusQuery.isFetched && (
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
-            <Typography component="span" sx={{ fontSize: '48px', fontWeight: 700, color: COLORS.brandDark }}>
+            <Typography
+              component="span"
+              sx={{
+                fontSize: '48px',
+                fontWeight: 700,
+                color: activeNodes ? COLORS.brandDark : COLORS.grayMedium,
+              }}
+            >
               {activeNodes ? t('nodes.value', { value: activeNodes }) : '-'}
             </Typography>
           </>
