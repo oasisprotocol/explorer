@@ -31,7 +31,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
   const { t } = useTranslation()
   const labels = getNetworkNames(t)
   const icons = getNetworkIcons()
-  const activeNetworkSelection = network === activeNetwork
+  const activeNetworkSelection = network === selectedNetwork
 
   return (
     <MenuItem
