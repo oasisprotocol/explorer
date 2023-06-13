@@ -52,7 +52,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
 }) => {
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
-  const activeLayerSelection = layer === activeLayer && network === selectedNetwork
+  const activeLayerSelection = layer === selectedLayer
 
   return (
     <MenuItem
