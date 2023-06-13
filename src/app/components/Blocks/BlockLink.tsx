@@ -6,6 +6,7 @@ import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { SearchScope } from '../../../types/searchScope'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
   <Typography variant="mono">
@@ -19,8 +20,17 @@ export const BlockHashLink: FC<{ scope: SearchScope; hash: string; height: numbe
   scope,
   hash,
   height,
-}) => (
-  <Typography variant="mono">
-    <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(scope, height)} />
-  </Typography>
-)
+}) => {
+  const { isMobile } = useScreenSize()
+  return (
+    <Typography variant="mono">
+      {isMobile ? (
+        <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(scope, height)} />
+      ) : (
+        <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>
+          {hash}
+        </Link>
+      )}
+    </Typography>
+  )
+}
