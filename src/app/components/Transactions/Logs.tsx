@@ -4,6 +4,8 @@ import { AppErrors } from '../../../types/errors'
 import { TransactionLogEvent } from './LogEvent'
 import { TextSkeleton } from '../../components/Skeleton'
 import { AddressSwitchOption } from '../AddressSwitch'
+import { CardEmptyState } from '../../pages/AccountDetailsPage/CardEmptyState'
+import { useTranslation } from 'react-i18next'
 
 export const TransactionLogs: FC<{
   transaction: RuntimeTransaction
@@ -17,12 +19,13 @@ export const TransactionLogs: FC<{
     tx_hash: transaction.hash,
     limit: 100, // We want to avoid pagination here, if possible
   })
-  const { isLoading, data } = eventsQuery
+  const { isLoading, data, isError } = eventsQuery
   return (
     <TransactionLogsView
       scope={transaction}
       events={data?.data?.events}
       isLoading={isLoading}
+      isError={isError}
       addressSwitchOption={addressSwitchOption}
     />
   )
@@ -32,10 +35,13 @@ export const TransactionLogsView: FC<{
   scope: RuntimeTransaction
   events: RuntimeEvent[] | undefined
   isLoading: boolean
+  isError: boolean
   addressSwitchOption: AddressSwitchOption
-}> = ({ scope, events, isLoading, addressSwitchOption }) => {
+}> = ({ scope, events, isLoading, isError, addressSwitchOption }) => {
+  const { t } = useTranslation()
   return (
     <>
+      {isError && <CardEmptyState label={t('transactionEvent.cantLoadEvents')} />}
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (
