@@ -17,6 +17,7 @@
     "lint-git": "node ./internals/scripts/gitlint.js",
     "lint-docs": "markdownlint --ignore '**/node_modules/**' '**/*.md'",
     "changelog": "node ./internals/scripts/changelog.js",
+    "release-tag": "node ./internals/scripts/release-tag.js",
     "prettify": "prettier src internals --write",
     "test": "jest",
     "start-storybook": "storybook dev -p 6006",
