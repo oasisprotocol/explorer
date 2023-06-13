@@ -94,7 +94,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
   }
 
   return (
-    <Box sx={{ px: isTablet ? 2 : 5, py: isTablet ? 0 : 4, display: 'flex', minHeight: contentMinHeight }}>
+    <Box sx={{ px: isTablet ? 2 : 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
       <Box sx={{ pt: 1, pr: 4, color: COLORS.brandDark }}>
         <Circle
           color={COLORS.white}

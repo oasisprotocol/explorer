@@ -94,7 +94,9 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const [showNetworkMenu, setShowNetworkMenu] = useState(isTablet || network !== Network.mainnet)
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
-  const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(ParaTimePickerTabletStep.Network)
+  const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(
+    ParaTimePickerTabletStep.ParaTimeDetails,
+  )
   const selectNetwork = (newNetwork: Network) => {
     setSelectedNetwork(newNetwork)
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
@@ -130,7 +132,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                   setTabletStep(ParaTimePickerTabletStep.Network)
                 }}
               >
-                {t('paraTimePicker.selectNetwork')}
+                {t('paraTimePicker.viewNetworks')}
               </TabletBackButton>
             )}
             {tabletStep === ParaTimePickerTabletStep.ParaTimeDetails && (
@@ -141,7 +143,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                   setTabletStep(ParaTimePickerTabletStep.ParaTime)
                 }}
               >
-                {t('paraTimePicker.selectParatime')}
+                {t('paraTimePicker.viewParaTimes')}
               </TabletBackButton>
             )}
           </TabletActionBar>
