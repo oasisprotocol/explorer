@@ -35,7 +35,7 @@ const ParaTimePickerDrawer = styled(Drawer)(() => ({
 }))
 
 export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
-  <ParaTimePickerDrawer anchor='top' open={open} onClose={onClose}>
+  <ParaTimePickerDrawer anchor="top" open={open} onClose={onClose}>
     <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
   </ParaTimePickerDrawer>
 )
@@ -102,45 +102,51 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
 
   return (
     <StyledParaTimePickerContent>
-      {!isTablet && (<>
-        <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-          <Logotype color={COLORS.brandExtraDark} showText={true} />
-        </Box>
-        <IconButton
-          aria-label={t('paraTimePicker.toggleNetworkMenu')}
-          onClick={() => setShowNetworkMenu(!showNetworkMenu)}
-          sx={{
-            color: COLORS.brandDark,
-            ml: 3,
-          }}
-        >
-          {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
-        </IconButton>
-      </>)}
-      <TabletActionBar>
-        {isTablet && tabletStep === ParaTimePickerTabletStep.ParaTime && (
-          <TabletBackButton
-            variant="text"
-            startIcon={<KeyboardArrowLeft />}
-            onClick={() => {
-              setTabletStep(ParaTimePickerTabletStep.Network)
+      {!isTablet && (
+        <>
+          <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
+            <Logotype color={COLORS.brandExtraDark} showText={true} />
+          </Box>
+          <IconButton
+            aria-label={t('paraTimePicker.toggleNetworkMenu')}
+            onClick={() => setShowNetworkMenu(!showNetworkMenu)}
+            sx={{
+              color: COLORS.brandDark,
+              ml: 3,
             }}
           >
-            {t('paraTimePicker.selectNetwork')}
-          </TabletBackButton>
-        )}
-        {isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails && (
-          <TabletBackButton
-            variant="text"
-            startIcon={<KeyboardArrowLeft />}
-            onClick={() => {
-              setTabletStep(ParaTimePickerTabletStep.ParaTime)
-            }}
-          >
-            {t('paraTimePicker.selectParatime')}
-          </TabletBackButton>
-        )}
-      </TabletActionBar>
+            {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
+          </IconButton>
+        </>
+      )}
+      {isTablet && (
+        <>
+          <TabletActionBar>
+            {tabletStep === ParaTimePickerTabletStep.ParaTime && (
+              <TabletBackButton
+                variant="text"
+                startIcon={<KeyboardArrowLeft />}
+                onClick={() => {
+                  setTabletStep(ParaTimePickerTabletStep.Network)
+                }}
+              >
+                {t('paraTimePicker.selectNetwork')}
+              </TabletBackButton>
+            )}
+            {tabletStep === ParaTimePickerTabletStep.ParaTimeDetails && (
+              <TabletBackButton
+                variant="text"
+                startIcon={<KeyboardArrowLeft />}
+                onClick={() => {
+                  setTabletStep(ParaTimePickerTabletStep.ParaTime)
+                }}
+              >
+                {t('paraTimePicker.selectParatime')}
+              </TabletBackButton>
+            )}
+          </TabletActionBar>
+        </>
+      )}
       <Divider />
       <StyledContent>
         <Grid container>
@@ -186,10 +192,10 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
         <ActionBar>
           <Button
             onClick={onClose}
-            color='secondary'
-            variant='outlined'
+            color="secondary"
+            variant="outlined"
             sx={{ textTransform: 'capitalize' }}
-            size='large'
+            size="large"
           >
             {t('common.cancel')}
           </Button>
@@ -197,9 +203,9 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
           <Button
             onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
             disabled={selectedNetwork === network && selectedLayer === layer}
-            color='primary'
-            variant='contained'
-            size='large'
+            color="primary"
+            variant="contained"
+            size="large"
           >
             {t('common.select')}
           </Button>

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactNode } from 'react'
+import { FC, PropsWithChildren, ReactNode, useEffect, useRef } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import Box from '@mui/material/Box'
@@ -10,6 +10,7 @@ import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiOffline } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
+import useResizeObserver from 'use-resize-observer'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -24,12 +25,29 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
   const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
+  const bannersRef = useRef<HTMLDivElement | null>(null)
+
+  const { height: bannersHeight } = useResizeObserver<Element>({
+    ref: bannersRef,
+  })
+
+  useEffect(() => {
+    if (!isTablet) {
+      return
+    }
+
+    if (bannersRef.current !== null) {
+      document.body.style.setProperty('--app-banners-height', `${bannersHeight?.toFixed(2) || 0}px`)
+    }
+  }, [isTablet, bannersHeight])
 
   return (
     <>
-      <BuildBanner />
-      <NetworkOfflineBanner />
-      {scope && <RuntimeOfflineBanner />}
+      <Box ref={bannersRef}>
+        <BuildBanner />
+        <NetworkOfflineBanner />
+        {scope && <RuntimeOfflineBanner />}
+      </Box>
       <Box
         sx={{
           minHeight: '100vh',

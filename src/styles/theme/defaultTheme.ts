@@ -515,8 +515,8 @@ export const defaultTheme = createTheme({
         }),
         paper: ({ theme }) => ({
           [theme.breakpoints.down('md')]: {
-            height: `calc(100vh - var(--app-header-height))`,
-            top: `var(--app-header-height)`,
+            height: `calc(100vh - var(--app-header-height) - var(--app-banners-height))`,
+            top: `calc(var(--app-header-height) + var(--app-banners-height))`,
           },
         }),
       },

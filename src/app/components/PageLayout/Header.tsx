@@ -7,8 +7,6 @@ import { Logotype } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
-import { BuildBanner } from '../BuildBanner'
-import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { useScreenSize } from '../../hooks/useScreensize'
 import useResizeObserver from 'use-resize-observer'
 
@@ -53,9 +51,6 @@ export const Header: FC = () => {
           : 'none',
       }}
     >
-      <BuildBanner />
-      <NetworkOfflineBanner />
-      {scope && <RuntimeOfflineBanner />}
       <Box sx={{ px: '15px' }}>
         <Grid
           container
