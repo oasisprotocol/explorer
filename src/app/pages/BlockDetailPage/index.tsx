@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
 import { Layer, RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-indexer/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -59,8 +58,7 @@ export const BlockDetailView: FC<{
   standalone?: boolean
 }> = ({ isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const formattedTime = useFormattedTimestampString(block?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />

@@ -4,8 +4,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import backgroundSocial from './images/background-social.png'
 import telegram from './images/telegram.svg'
 import twitter from './images/twitter.svg'
@@ -42,8 +41,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
 
 export const Social: FC = () => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   return (
     <Grid

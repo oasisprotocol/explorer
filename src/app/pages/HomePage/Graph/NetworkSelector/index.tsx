@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../../../hooks/useScreensize'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -65,7 +65,7 @@ type NetworkSelectorProps = {
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const [open, setOpen] = useState(false)
   const options: Network[] = RouteUtils.getEnabledNetworks()
   const labels = getNetworkNames(t)

@@ -1,4 +1,4 @@
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import { FC } from 'react'
 import Box from '@mui/material/Box'
@@ -7,7 +7,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/material/Typography'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import { RouteUtils } from '../../../../utils/route-utils'
@@ -183,9 +183,8 @@ interface GraphTooltipHeaderProps {
 }
 
 export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) => {
-  const theme = useTheme()
   const { t } = useTranslation()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const icons = getNetworkIcons({ size: 38 })
 
   return (
@@ -217,10 +216,8 @@ interface GraphTooltipBodyProps {
 }
 
 export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled, failing }) => {
-  const theme = useTheme()
   const { t } = useTranslation()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
+  const { isMobile } = useScreenSize()
   return (
     <GraphTooltipText isMobile={isMobile} disabled={disabled}>
       <GraphTooltipHeaderText>
@@ -251,8 +248,7 @@ export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, bo
 
 export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, ...restProps }) => {
   const navigate = useNavigate()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
 
   const navigateTo = () => {

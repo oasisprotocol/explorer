@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
@@ -32,8 +32,7 @@ const TransactionDetails = styled(Box)(({ theme }) => ({
 export const TransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()

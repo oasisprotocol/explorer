@@ -4,8 +4,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { COLORS } from '../../../styles/theme/colors'
 import { styled, css } from '@mui/material/styles'
 import Skeleton from '@mui/material/Skeleton'
@@ -72,8 +71,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   action,
   noPadding = false,
 }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   return (
     <div>

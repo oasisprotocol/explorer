@@ -8,8 +8,7 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow, { TableRowProps as MuiTableRowProps } from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePagination, TablePaginationProps } from './TablePagination'
 import { backgroundColorAnimation } from '../../../styles/theme/animations'
@@ -90,8 +89,7 @@ export const Table: FC<TableProps> = ({
   rowsNumber = 5,
   stickyColumn = false,
 }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   if (!isLoading && !rows?.length) {
     return null

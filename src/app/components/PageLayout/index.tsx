@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, ReactNode } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import Box from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { styled, useTheme } from '@mui/material/styles'
 import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
@@ -21,9 +21,8 @@ export const StyledMain = styled('main')({
 
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile, isDesktop } = useScreenSize()
   const scope = useScopeParam()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
 
   return (

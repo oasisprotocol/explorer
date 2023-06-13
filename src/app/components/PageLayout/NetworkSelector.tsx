@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
 import { NetworkButton, MobileNetworkButton } from './NetworkButton'
 import { COLORS } from '../../../styles/theme/colors'
@@ -34,9 +33,7 @@ type NetworkSelectorProps = {
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isDesktop, isMobile } = useScreenSize()
   const labels = getNetworkNames(t)
   const [openDrawer, setOpenDrawer] = useState(false)
   const handleDrawerClose = () => setOpenDrawer(false)

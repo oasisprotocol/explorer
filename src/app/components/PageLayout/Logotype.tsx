@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Link from '@mui/material/Link'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import { OasisIcon } from '../CustomIcons/OasisIcon'
@@ -15,7 +15,7 @@ interface LogotypeProps {
 export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const logoSize = isMobile ? 32 : 40
 
   return (

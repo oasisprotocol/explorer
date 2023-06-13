@@ -13,8 +13,8 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
-import { styled, useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { styled } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Alert from '@mui/material/Alert'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -190,8 +190,7 @@ export const TransactionDetailView: FC<{
   addressSwitchOption = AddressSwitchOption.ETH,
 }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
 
   const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
 

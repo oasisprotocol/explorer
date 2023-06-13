@@ -7,8 +7,7 @@ import {
   sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
 import { LineChart } from '../../components/charts/LineChart'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { FC, memo } from 'react'
 import { SnapshotCard } from './SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
@@ -21,8 +20,7 @@ interface TransactionsChartCardProps {
 
 const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const statsParams = durationToQueryParams[chartDuration]
   const scope = useRequiredScopeParam()
   const { data, isFetched } = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {

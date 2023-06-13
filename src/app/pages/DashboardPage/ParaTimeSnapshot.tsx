@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 import { DurationSelect } from './DurationSelect'
@@ -29,7 +29,7 @@ export const ParaTimeSnapshot: FC = () => {
   const scope = useRequiredScopeParam()
   const paratime = getLayerNames(t)[scope.layer]
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
     if (!duration) {
       return

@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -56,8 +55,7 @@ type AccountProps = {
 
 export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isMobile } = useScreenSize()
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
 
