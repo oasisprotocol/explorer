@@ -11,12 +11,14 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { RouteUtils } from '../../utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestTransactions: FC = () => {
   const { t } = useTranslation()
-  const { network, layer } = useRequiredScopeParam()
+  const scope = useRequiredScopeParam()
+  const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus transactions is not yet supported.
@@ -31,7 +33,11 @@ export const LatestTransactions: FC = () => {
         component="h3"
         title={t('transactions.latest')}
         action={
-          <Link component={RouterLink} to="transactions" sx={{ color: COLORS.brandExtraDark }}>
+          <Link
+            component={RouterLink}
+            to={RouteUtils.getLatestTransactionsRoute(scope)}
+            sx={{ color: COLORS.brandExtraDark }}
+          >
             {t('common.viewAll')}
           </Link>
         }

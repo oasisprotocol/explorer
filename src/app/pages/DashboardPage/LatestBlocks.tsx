@@ -11,12 +11,14 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { RouteUtils } from '../../utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 export const LatestBlocks: FC = () => {
   const { t } = useTranslation()
-  const { network, layer } = useRequiredScopeParam()
+  const scope = useRequiredScopeParam()
+  const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Listing the latest consensus blocks is not yet implemented.
@@ -31,7 +33,11 @@ export const LatestBlocks: FC = () => {
         component="h3"
         title={t('blocks.latest')}
         action={
-          <Link component={RouterLink} to="blocks" sx={{ color: COLORS.brandExtraDark }}>
+          <Link
+            component={RouterLink}
+            to={RouteUtils.getLatestBlocksRoute(scope)}
+            sx={{ color: COLORS.brandExtraDark }}
+          >
             {t('common.viewAll')}
           </Link>
         }
