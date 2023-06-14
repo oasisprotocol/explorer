@@ -95,6 +95,10 @@ const SearchInputBox = styled(Box)(({ theme }) => ({
 const FooterStyled = styled(Box)(({ theme }) => ({
   width: '100%',
   flex: '0 0 0',
+  [theme.breakpoints.up('md')]: {
+    // needed to make footer elements clickable
+    zIndex: zIndexHomePage.paraTimeSelector,
+  },
   [theme.breakpoints.down('md')]: {
     display: 'flex',
     justifyContent: 'flex-end',
