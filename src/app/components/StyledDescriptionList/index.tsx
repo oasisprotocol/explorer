@@ -62,7 +62,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   },
   ...(standalone && {
     '&&': {
-      padding: theme.spacing(2),
+      padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
       backgroundColor: COLORS.white,
       marginBottom: theme.spacing(4),
       borderRadius: '12px',
