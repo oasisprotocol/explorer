@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
-import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
+import { RuntimeTransactionIcon } from '../../components/RuntimeTransactionLabel'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
@@ -75,7 +75,7 @@ export const Transactions: FC<TransactionsProps> = ({
     { content: t('common.hash') },
     ...(verbose ? [{ content: t('common.block') }] : []),
     { content: t('common.age'), align: TableCellAlign.Right },
-    { content: t('common.type') },
+    { content: t('common.type'), align: TableCellAlign.Center },
     { content: t('common.from'), width: '150px' },
     { content: t('common.to'), width: '150px' },
     { content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
@@ -120,7 +120,8 @@ export const Transactions: FC<TransactionsProps> = ({
         key: 'timestamp',
       },
       {
-        content: <RuntimeTransactionLabel method={transaction.method} />,
+        align: TableCellAlign.Center,
+        content: <RuntimeTransactionIcon method={transaction.method} />,
         key: 'type',
       },
       {
