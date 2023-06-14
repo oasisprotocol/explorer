@@ -20,18 +20,18 @@ import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
 import { formatDistanceStrict } from '../../utils/dateFormatter'
 
+const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  right: `-${theme.spacing(5)}`,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: theme.spacing(5),
-  height: theme.spacing(5),
+  width: iconSize,
+  height: iconSize,
   color: COLORS.eucalyptus,
   backgroundColor: COLORS.lightGreen,
-  borderRadius: theme.spacing(5),
-  margin: theme.spacing(3),
+  borderRadius: iconSize,
+  marginLeft: theme.spacing(3),
+  marginRight: `-${theme.spacing(4)}`,
 }))
 
 type TableRuntimeTransaction = RuntimeTransaction & {
@@ -131,7 +131,7 @@ export const Transactions: FC<TransactionsProps> = ({
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
-              pr: 4,
+              pr: 3,
             }}
           >
             {!!ownAddress &&

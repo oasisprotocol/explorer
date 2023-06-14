@@ -551,16 +551,17 @@ export const defaultTheme = createTheme({
     },
     MuiTableCell: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           borderColor: COLORS.antiFlashWhite2,
           color: COLORS.grayExtraDark,
           whiteSpace: 'nowrap',
+          padding: `${theme.spacing(4)} ${theme.spacing(3)}`,
           a: {
             color: COLORS.brandDark,
             fontWeight: 700,
             textDecoration: 'none',
           },
-        },
+        }),
         head: {
           border: 0,
           color: COLORS.grayDark,
