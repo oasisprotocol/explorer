@@ -29,7 +29,7 @@ const layerOrder: Record<Layer, number> = {
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
 
-const layersWithEncryptedTransactions: Layer[] = [Layer.sapphire]
+const layersWithEncryptedTransactions: Layer[] = [Layer.sapphire, Layer.cipher]
 
 export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
   layersWithEncryptedTransactions.includes(layer)
