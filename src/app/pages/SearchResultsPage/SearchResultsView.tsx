@@ -9,6 +9,7 @@ import { GlobalSearchResultsView } from './GlobalSearchResultsView'
 import { ScopedSearchResultsView } from './ScopedSearchResultsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { getFilterForLayer } from '../../../types/layers'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const SearchResultsView: FC<{
   wantedScope?: SearchScope
@@ -16,9 +17,10 @@ export const SearchResultsView: FC<{
   isLoading: boolean
   tokenPrices: AllTokenPrices
 }> = ({ wantedScope, searchResults, isLoading, tokenPrices }) => {
+  const { isMobile } = useScreenSize()
   return (
     <PageLayout>
-      <Divider variant="layout" />
+      {!isMobile && <Divider variant="layout" />}
       {isLoading ? (
         <SubPageCard featured isLoadingTitle={true}>
           <TextSkeleton numberOfRows={7} />

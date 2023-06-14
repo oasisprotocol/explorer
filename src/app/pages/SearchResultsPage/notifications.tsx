@@ -21,7 +21,7 @@ const NotificationBox = styled(Box)(({ theme }) => ({
   padding: '5px 10px',
   gap: 10,
 
-  height: 50,
+  minHeight: 50,
 
   background: theme.palette.layout.notificationBackground,
   border: `2px solid ${theme.palette.layout.darkBorder}`,
