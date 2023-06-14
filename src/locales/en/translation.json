@@ -196,7 +196,8 @@
       "senderTooltipOasis": "Oasis address for the sender",
       "recipientTooltipOasis": "Oasis address for the recipient",
       "txTooltipHashUnavailable": "Hash not available in selected address format",
-      "txEncrypted": "This transaction is encrypted",
+      "txEncrypted": "This transaction is encrypted.",
+      "txNotEncrypted": "This transaction is <strong>not</strong> encrypted.",
       "senderTooltipUnavailable": "Sender not available in selected address format",
       "recipientTooltipUnavailable": "Recipient not available in selected address format"
     }

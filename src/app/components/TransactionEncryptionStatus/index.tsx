@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import LockIcon from '@mui/icons-material/Lock'
 import { COLORS } from '../../../styles/theme/colors'
 import { RuntimeTransactionEncryptionEnvelope } from '../../../oasis-indexer/api'
@@ -25,5 +25,20 @@ export const TransactionEncrypted = () => {
   )
 }
 
+export const TransactionNotEncrypted = () => {
+  const { t } = useTranslation()
+  return (
+    <Tooltip
+      arrow
+      placement="top"
+      title={<Trans t={t} i18nKey="transaction.tooltips.txNotEncrypted" />}
+      enterDelay={tooltipDelay}
+      enterNextDelay={tooltipDelay}
+    >
+      <LockIcon htmlColor={COLORS.grayMedium2} />
+    </Tooltip>
+  )
+}
+
 export const TransactionEncryptionStatus: FC<TransactionEncryptionStatusProps> = ({ envelope }) =>
-  envelope ? <TransactionEncrypted /> : null
+  envelope ? <TransactionEncrypted /> : <TransactionNotEncrypted />
