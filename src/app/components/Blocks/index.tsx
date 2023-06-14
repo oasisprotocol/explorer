@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import { RuntimeBlock } from '../../../oasis-indexer/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
+import { formatDistanceStrict } from '../../utils/dateFormatter'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -59,9 +59,7 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceStrict(new Date(block.timestamp), new Date(), {
-            addSuffix: true,
-          }),
+          content: formatDistanceStrict(new Date(block.timestamp), new Date()),
           key: 'timestamp',
         },
         {

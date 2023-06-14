@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
-import formatDistanceStrict from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
@@ -19,6 +18,7 @@ import { trimLongString } from '../../utils/trimLongString'
 import Typography from '@mui/material/Typography'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
+import { formatDistanceStrict } from '../../utils/dateFormatter'
 
 const StyledCircle = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -116,9 +116,7 @@ export const Transactions: FC<TransactionsProps> = ({
         : []),
       {
         align: TableCellAlign.Right,
-        content: formatDistanceStrict(new Date(transaction.timestamp), new Date(), {
-          addSuffix: true,
-        }),
+        content: formatDistanceStrict(new Date(transaction.timestamp), new Date()),
         key: 'timestamp',
       },
       {
