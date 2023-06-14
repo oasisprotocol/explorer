@@ -23,27 +23,27 @@ export abstract class RouteUtils {
   }
 
   static getLatestTransactionsRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/transactions`
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/tx`
   }
 
   static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks`
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block`
   }
 
   static getBlockRoute = ({ network, layer }: SearchScope, blockHeight: number) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/blocks/${encodeURIComponent(
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block/${encodeURIComponent(
       blockHeight,
     )}`
   }
 
   static getTransactionRoute = (scope: SearchScope, txHash: string) => {
-    return `/${encodeURIComponent(scope.network)}/${encodeURIComponent(
-      scope.layer,
-    )}/transactions/${encodeURIComponent(txHash)}`
+    return `/${encodeURIComponent(scope.network)}/${encodeURIComponent(scope.layer)}/tx/${encodeURIComponent(
+      txHash,
+    )}`
   }
 
   static getAccountRoute = ({ network, layer }: SearchScope, account: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/account/${encodeURIComponent(
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/address/${encodeURIComponent(
       account,
     )}`
   }
