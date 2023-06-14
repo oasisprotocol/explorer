@@ -56,16 +56,16 @@ export const routes: RouteObject[] = [
           },
 
           {
-            path: `blocks`,
+            path: `block`,
             element: <BlocksPage />,
           },
           {
-            path: `blocks/:blockHeight`,
+            path: `block/:blockHeight`,
             element: <BlockDetailPage />,
             loader: blockHeightParamLoader,
           },
           {
-            path: `account/:address`,
+            path: `address/:address`,
             element: <AccountDetailsPage />,
             loader: addressParamLoader,
             children: [
@@ -87,13 +87,35 @@ export const routes: RouteObject[] = [
             ],
           },
           {
-            path: `transactions`,
+            path: `tx`,
             element: <TransactionsPage />,
           },
           {
-            path: `transactions/:hash`,
+            path: `tx/:hash`,
             element: <TransactionDetailPage />,
             loader: transactionParamLoader,
+          },
+          {
+            path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
+            element: <AccountDetailsPage />,
+            loader: addressParamLoader,
+            children: [
+              {
+                path: '',
+                element: <TransactionsCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-20',
+                element: <TokensCard type="ERC20" />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'tokens/erc-721',
+                element: <TokensCard type="ERC721" />,
+                loader: addressParamLoader,
+              },
+            ],
           },
         ],
       },

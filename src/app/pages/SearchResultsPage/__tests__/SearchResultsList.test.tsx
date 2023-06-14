@@ -44,14 +44,14 @@ describe('SearchResultsView', () => {
     expect(screen.getByRole('link', { name: '10' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '10' })).toHaveAttribute(
       'href',
-      '/mainnet/emerald/blocks/1396255#transactions',
+      '/mainnet/emerald/block/1396255#transactions',
     )
 
     expect(screen.getByText('143,553')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '1' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '1' })).toHaveAttribute(
       'href',
-      '/mainnet/sapphire/blocks/143553#transactions',
+      '/mainnet/sapphire/block/143553#transactions',
     )
   })
 
@@ -81,7 +81,7 @@ describe('SearchResultsView', () => {
     expect(screen.getByText('337325.43836… FTP')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /337325.43836/ })).toHaveAttribute(
       'href',
-      '/mainnet/emerald/account/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
+      '/mainnet/emerald/address/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
     )
   })
 })
