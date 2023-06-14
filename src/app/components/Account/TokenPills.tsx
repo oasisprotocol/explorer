@@ -40,6 +40,7 @@ type PillProps = {
 }
 
 export const Pill: FC<PillProps> = ({ account, pill }) => {
+  const { t } = useTranslation()
   const tokenRoute = RouteUtils.getAccountTokensRoute(
     account,
     account.address_eth ?? account.address,
@@ -56,7 +57,7 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
       key={pill.token_contract_addr}
       label={
         <>
-          <RoundedBalance value={pill.balance} ticker={pill.token_symbol} />
+          <RoundedBalance value={pill.balance} ticker={pill.token_symbol || t('common.missing')} />
         </>
       }
       sx={{ mr: 2 }}

@@ -59,6 +59,7 @@
     "loadMore": "Load more",
     "lessThanAmount": "< {{value}} {{ticker}}",
     "logs": "Logs",
+    "missing": "n/a",
     "name": "Name",
     "oasis": "Oasis",
     "paratime": "Paratime",

@@ -45,7 +45,7 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
     key: item.token_contract_addr,
     data: [
       {
-        content: item.token_name,
+        content: item.token_name || t('common.missing'),
         key: 'name',
       },
       {
@@ -68,7 +68,7 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
       },
       {
         align: TableCellAlign.Right,
-        content: item.token_symbol,
+        content: item.token_symbol || t('common.missing'),
         key: 'ticker',
       },
     ],
