@@ -83,6 +83,12 @@ declare module '@mui/material/styles' {
 }
 
 export const defaultTheme = createTheme({
+  breakpoints: {
+    values: {
+      ...createTheme().breakpoints.values,
+      lg: 1024,
+    },
+  },
   palette: {
     background: {
       default: COLORS.brandDark,
