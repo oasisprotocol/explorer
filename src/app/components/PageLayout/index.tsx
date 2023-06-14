@@ -37,12 +37,24 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       >
         <Header />
         <Box
-          sx={{
-            border: isMobile ? 'none' : `solid 15px ${theme.palette.layout.border}`,
-            borderTop: 0,
-            px: isMobile ? 0 : '4%',
-            pt: isMobile ? 4 : 6,
-          }}
+          sx={
+            isMobile
+              ? {
+                  border:
+                    theme.palette.background.default !== theme.palette.layout.border
+                      ? `solid 10px ${theme.palette.layout.border}`
+                      : 'none',
+                  borderTop: 0,
+                  px: 0,
+                  pt: 4,
+                }
+              : {
+                  border: `solid 15px ${theme.palette.layout.border}`,
+                  borderTop: 0,
+                  px: '4%',
+                  pt: 6,
+                }
+          }
         >
           {!isMobile && (
             <Box

@@ -5,8 +5,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { COLORS } from '../../../styles/theme/colors'
-import { styled, css } from '@mui/material/styles'
+import { styled, css, useTheme } from '@mui/material/styles'
 import Skeleton from '@mui/material/Skeleton'
 
 type StyledComponentProps = {
@@ -71,16 +70,26 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   action,
   noPadding = false,
 }) => {
+  const theme = useTheme()
   const { isMobile } = useScreenSize()
 
   return (
     <div>
       {isMobile && (title || subheader || action) && (
         <Box sx={{ position: 'relative', display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
-          <Typography variant="h3" component="h3" sx={{ display: 'inline' }} color={COLORS.white}>
+          <Typography
+            variant="h3"
+            component="h3"
+            sx={{ display: 'inline' }}
+            color={theme.palette.layout.titleOnBackground}
+          >
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>
-          <Typography variant="subtitle1" sx={{ ml: '1ex', display: 'inline' }} color={COLORS.white}>
+          <Typography
+            variant="subtitle1"
+            sx={{ ml: '1ex', display: 'inline', fontStyle: 'italic' }}
+            color={theme.palette.layout.titleOnBackground}
+          >
             {subheader}
           </Typography>
           {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
