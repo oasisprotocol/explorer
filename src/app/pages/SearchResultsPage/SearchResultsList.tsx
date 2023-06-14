@@ -73,6 +73,7 @@ export const SearchResultsList: FC<{
           resultComponent={item => (
             <AccountDetailsView
               isLoading={false}
+              isError={false}
               account={item}
               tokenPriceInfo={tokenPrices[item.network]}
               showLayer={true}

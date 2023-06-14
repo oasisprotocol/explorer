@@ -13,13 +13,14 @@ import { accountTokenContainerId } from './TokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { showEmptyAccountDetails } from '../../../config'
+import { CardEmptyState } from './CardEmptyState'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
-  const { account, isLoading } = useAccount(scope, address)
+  const { account, isLoading, isError } = useAccount(scope, address)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
 
@@ -35,7 +36,12 @@ export const AccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('account.title')}>
-        <AccountDetailsView isLoading={isLoading} account={account} tokenPriceInfo={tokenPriceInfo} />
+        <AccountDetailsView
+          isLoading={isLoading}
+          isError={isError}
+          account={account}
+          tokenPriceInfo={tokenPriceInfo}
+        />
       </SubPageCard>
       {showDetails && (
         <RouterTabs
@@ -52,11 +58,15 @@ export const AccountDetailsPage: FC = () => {
 
 export const AccountDetailsView: FC<{
   isLoading: boolean
+  isError: boolean
   account: RuntimeAccount | undefined
   tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
-}> = ({ isLoading, account, tokenPriceInfo, showLayer }) => {
-  return (
+}> = ({ isLoading, isError, account, tokenPriceInfo, showLayer }) => {
+  const { t } = useTranslation()
+  return isError ? (
+    <CardEmptyState label={t('account.cantLoadDetails')} />
+  ) : (
     <Account account={account} isLoading={isLoading} tokenPriceInfo={tokenPriceInfo} showLayer={showLayer} />
   )
 }
