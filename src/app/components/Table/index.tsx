@@ -42,6 +42,7 @@ const StyledTableRow = styled(TableRow, {
 }))
 
 export enum TableCellAlign {
+  Center = 'center',
   Left = 'left',
   Right = 'right',
 }
