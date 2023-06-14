@@ -21,10 +21,10 @@ export const BlockHashLink: FC<{ scope: SearchScope; hash: string; height: numbe
   hash,
   height,
 }) => {
-  const { isMobile } = useScreenSize()
+  const { isTablet } = useScreenSize()
   return (
     <Typography variant="mono">
-      {isMobile ? (
+      {isTablet ? (
         <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(scope, height)} />
       ) : (
         <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>
