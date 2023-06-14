@@ -9,8 +9,10 @@ import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const TotalTransactions: FC = () => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
@@ -42,7 +44,7 @@ export const TotalTransactions: FC = () => {
             strokeWidth={3}
             dataKey="tx_volume"
             data={buckets}
-            margin={{ left: 16, right: 0 }}
+            margin={{ left: isMobile ? 0 : 16, right: 0 }}
             tickMargin={16}
             withLabels
             formatters={{
@@ -60,6 +62,7 @@ export const TotalTransactions: FC = () => {
                   timestamp: new Date(value),
                 }),
             }}
+            tickMark={isMobile}
           />
         )}
       </CardContent>
