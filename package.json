@@ -71,7 +71,7 @@
     "react-quick-pinch-zoom": "4.9.0",
     "react-redux": "8.1.0",
     "react-router-dom": "6.12.1",
-    "recharts": "2.6.2",
+    "recharts": "2.7.0",
     "swiper": "9.4.0",
     "use-resize-observer": "9.1.0"
   },
