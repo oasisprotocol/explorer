@@ -127,10 +127,8 @@ the sender or the recipient of tokens.
  */
 rel?: string;
 /**
- * A filter on the first of `topics` in the EVM log structure, which typically contains the
-event _signature_, i.e. the keccak256 hash of the event name and parameter types.
-Note: The filter will match on `topics[0]` even in the rare case of anonymous events
-when that field does not actually contain the signature.
+ * A filter on the evm log signatures.
+Note: The filter will only match on parsed (verified) EVM events.
 
  */
 evm_log_signature?: string;
@@ -579,9 +577,6 @@ export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EvmTokenType = {
   ERC20: 'ERC20',
-  ERC721: 'ERC721',
-  ERC1155: 'ERC1155',
-  OasisSdk: 'OasisSdk',
 } as const;
 
 export interface EvmToken {
@@ -631,6 +626,10 @@ managed by smart contracts deployed in this runtime. For example, in EVM-compati
 this does not include ERC-20 tokens
  */
   balances: RuntimeSdkBalance[];
+  /** Data on the EVM smart contract associated with this account address. Only present for accounts
+that represent a smart contract on EVM.
+ */
+  evm_contract?: RuntimeEvmContract;
   /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
 NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
  */
@@ -755,6 +754,26 @@ export type RuntimeTransactionListAllOf = {
 };
 
 export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
+
+export interface RuntimeEvmContractVerification { [key: string]: any }
+
+export interface RuntimeEvmContract {
+  /** The Oasis cryptographic hash of the transaction that created the smart contract.
+ Can be omitted for contracts that were created by another contract, as opposed 
+ to a direct `Create` call.
+ */
+  creation_tx?: string;
+  /** The creation bytecode of the smart contract. This includes the constructor logic
+and the constructor parameters. When run, this code generates the runtime bytecode.
+Can be omitted for contracts that were created by another contract, as opposed 
+to a direct `Create` call.
+ */
+  creation_bytecode?: string;
+  /** Additional information obtained from contract verification. Only available for smart 
+contracts that have been verified successfully by Sourcify.
+ */
+  verification?: RuntimeEvmContractVerification;
+}
 
 /**
  * A decoded parameter of an event emitted from an EVM runtime.
@@ -1014,7 +1033,7 @@ export interface RuntimeEvmBalance {
   token_symbol?: string;
   /** The name of the token. Not guaranteed to be unique across distinct EVM tokens. */
   token_name?: string;
-  token_type?: EvmTokenType;
+  token_type: EvmTokenType;
   /** The number of decimals of precision for this token. */
   token_decimals: number;
 }
