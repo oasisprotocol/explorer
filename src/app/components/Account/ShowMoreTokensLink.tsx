@@ -29,26 +29,15 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
     EvmTokenType.ERC20,
     accountTokenContainerId,
   )
-  const erc721Link = RouteUtils.getAccountTokensRoute(
-    account,
-    account.address_eth ?? account.address,
-    EvmTokenType.ERC721,
-    accountTokenContainerId,
-  )
+
   const additionalTokensCounter = tokens.length - pills.length
 
   if (!additionalTokensCounter) {
     return null
   }
 
-  // link to ERC20 tab otherwise if there are only ERC721 tokens not included in pills link to the ERC721
-  const pillsSymbols = new Set(pills.map(({ token_contract_addr }) => token_contract_addr))
-  const showMoreItems = tokens.filter(({ token_contract_addr }) => !pillsSymbols.has(token_contract_addr))
-  const hasERC20 = showMoreItems.some(item => item.token_type === EvmTokenType.ERC20)
-  const targetShowMoreLink = hasERC20 ? erc20link : erc721Link
-
   return (
-    <StyledLink to={targetShowMoreLink} color="inherit">
+    <StyledLink to={erc20link} color="inherit">
       {t('account.showMore', { counter: additionalTokensCounter })}
     </StyledLink>
   )
