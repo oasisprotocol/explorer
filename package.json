@@ -72,7 +72,7 @@
     "react-redux": "8.1.0",
     "react-router-dom": "6.12.1",
     "recharts": "2.7.0",
-    "swiper": "9.4.0",
+    "swiper": "9.4.1",
     "use-resize-observer": "9.1.0"
   },
   "devDependencies": {
