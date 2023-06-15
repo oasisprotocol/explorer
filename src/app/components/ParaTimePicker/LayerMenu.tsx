@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
@@ -12,13 +12,24 @@ import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { orderByLayer } from '../../../types/layers'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
   layer: Layer
 }
 
+const LayerMenuItemCaption: FC<PropsWithChildren> = ({ children }) => (
+  <Typography
+    component="span"
+    sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
+  >
+    {children}
+  </Typography>
+)
+
 export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, layer }) => {
+  const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
 
@@ -27,7 +38,10 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>
-          <ListItemText>{labels[layer]}</ListItemText>
+          <ListItemText>
+            {labels[layer]}
+            {isTablet && <LayerMenuItemCaption>{t('paraTimePicker.comingSoon')}</LayerMenuItemCaption>}
+          </ListItemText>
         </MenuItem>
       </div>
     </Tooltip>
@@ -70,12 +84,9 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
     >
       <ListItemText>
         {labels[layer]}
-        <Typography
-          component="span"
-          sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
-        >
-          {selectedNetwork === network && activeLayer === layer && t('paraTimePicker.selected')}
-        </Typography>
+        {selectedNetwork === network && activeLayer === layer && (
+          <LayerMenuItemCaption>{t('paraTimePicker.selected')}</LayerMenuItemCaption>
+        )}
       </ListItemText>
       {layer === selectedLayer && <KeyboardArrowRightIcon />}
     </MenuItem>
