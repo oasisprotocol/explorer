@@ -51,10 +51,10 @@ export const Header: FC = () => {
           </Grid>
           {scope && (
             <>
-              <Grid md={6} xs={8}>
+              <Grid lg={6} xs={8}>
                 <NetworkSelector layer={scope.layer} network={scope.network} />
               </Grid>
-              <Grid md={3} xs={0} />
+              <Grid lg={3} xs={0} />
             </>
           )}
         </Grid>

@@ -34,7 +34,7 @@ type NetworkSelectorProps = {
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { isDesktop, isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const [openDrawer, setOpenDrawer] = useState(false)
   const handleDrawerClose = () => setOpenDrawer(false)
@@ -46,7 +46,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: isDesktop ? 'center' : 'flex-end',
+        justifyContent: isTablet ? 'flex-end' : 'center',
       }}
     >
       <ParaTimePicker
@@ -60,7 +60,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
       {!isMobile && (
         <NetworkButton isOutOfDate={outOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
-      {isDesktop && network !== Network.mainnet && (
+      {!isTablet && network !== Network.mainnet && (
         <StyledBox>
           <Typography
             component="span"
