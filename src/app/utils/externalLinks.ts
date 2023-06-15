@@ -24,3 +24,9 @@ export const referrals = { coinGecko: 'https://www.coingecko.com' }
 export const feedback = {
   internalForm: 'https://forms.gle/456sjk9VXhhKkVz19',
 }
+
+const githubLink = 'https://github.com/oasisprotocol/explorer/'
+export const github = {
+  commit: `${githubLink}commit/`,
+  releaseTag: `${githubLink}releases/tag/`,
+}

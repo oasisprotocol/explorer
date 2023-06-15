@@ -114,7 +114,7 @@
   "footer": {
     "mobileTitle": "OPF",
     "title": "Oasis Protocol Foundation",
-    "version": "Version: {{buildSha}}"
+    "version": "Version: <ReleaseLink>{{version}}</ReleaseLink> (commit: <CommitLink>{{sha}}</CommitLink>) built at {{buildTime}}"
   },
   "learningMaterials": {
     "emerald": {
