@@ -19,6 +19,7 @@ import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
+import { TransactionLink } from '../Transactions/TransactionLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -58,6 +59,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
   const { isMobile } = useScreenSize()
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
+  const creationTxHash = account?.evm_contract?.creation_tx // TODO: use evm_hash if available
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
   const transactionsAnchor = account
@@ -96,6 +98,15 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
             <AccountLink scope={account} address={address!} />
             <CopyToClipboard value={address!} />
           </dd>
+
+          {creationTxHash && (
+            <>
+              <dt>{t('common.createdAt')}</dt>
+              <dd>
+                <TransactionLink scope={account} hash={creationTxHash} />
+              </dd>
+            </>
+          )}
 
           <dt>{t('common.balance')}</dt>
           <dd>{t('common.valueInToken', { value: balance, ticker: tickerName })}</dd>
