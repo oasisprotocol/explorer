@@ -6,6 +6,7 @@ import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
 import { formatDistanceStrict } from '../../utils/dateFormatter'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -28,12 +29,15 @@ type BlocksProps = {
 export const Blocks = (props: BlocksProps) => {
   const { isLoading, blocks, verbose, pagination, limit } = props
   const { t } = useTranslation()
-
+  const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { content: t('common.fill') },
     { content: t('common.height'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
-    { content: t('common.transactions'), align: TableCellAlign.Right },
+    {
+      content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
+      align: TableCellAlign.Right,
+    },
     ...(verbose ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
     ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),

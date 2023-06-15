@@ -76,6 +76,7 @@
     "to": "To",
     "totalSent": "Total Sent",
     "transactions": "Transactions",
+    "transactionAbbreviation": "Txs",
     "txnFee": "Txn Fee",
     "type": "Type",
     "unknown": "Unknown",
