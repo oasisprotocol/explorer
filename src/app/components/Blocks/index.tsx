@@ -7,6 +7,7 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
 import { formatDistanceToNow } from '../../utils/dateFormatter'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { FC } from 'react'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -18,23 +19,35 @@ export type TableRuntimeBlockList = {
   is_total_count_clipped: boolean
 }
 
+export enum BlocksTableType {
+  Mobile,
+  DesktopLite,
+  Desktop,
+}
+
 type BlocksProps = {
   blocks?: TableRuntimeBlock[]
   isLoading: boolean
   limit: number
-  verbose?: boolean
+  type?: BlocksTableType
   pagination: false | TablePaginationProps
 }
 
-export const Blocks = (props: BlocksProps) => {
-  const { isLoading, blocks, verbose, pagination, limit } = props
+export const Blocks: FC<BlocksProps> = ({
+  isLoading,
+  blocks,
+  type = BlocksTableType.Desktop,
+  pagination,
+  limit,
+}) => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { content: t('common.fill') },
     { content: t('common.height'), align: TableCellAlign.Right },
     { content: t('common.age'), align: TableCellAlign.Right },
-    ...(verbose
+    ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
       ? [
           {
             content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
@@ -42,10 +55,14 @@ export const Blocks = (props: BlocksProps) => {
           },
         ]
       : []),
-    ...(verbose ? [{ content: t('common.hash') }] : []),
+    ...(type === BlocksTableType.Desktop ? [{ content: t('common.hash') }] : []),
     { content: t('common.size'), align: TableCellAlign.Right },
-    ...(verbose ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }] : []),
-    ...(verbose ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }] : []),
+    ...(type === BlocksTableType.Desktop
+      ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }]
+      : []),
+    ...(type === BlocksTableType.Desktop
+      ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }]
+      : []),
   ]
 
   const tableRows = blocks?.map(block => {
@@ -67,10 +84,13 @@ export const Blocks = (props: BlocksProps) => {
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceToNow(new Date(block.timestamp)),
+          content: formatDistanceToNow(
+            new Date(block.timestamp),
+            type === BlocksTableType.Mobile || type === BlocksTableType.DesktopLite,
+          ),
           key: 'timestamp',
         },
-        ...(verbose
+        ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
           ? [
               {
                 align: TableCellAlign.Right,
@@ -79,7 +99,7 @@ export const Blocks = (props: BlocksProps) => {
               },
             ]
           : []),
-        ...(verbose
+        ...(type === BlocksTableType.Desktop
           ? [
               {
                 content: <BlockHashLink scope={block} hash={block.hash} height={block.round} />,
@@ -101,7 +121,7 @@ export const Blocks = (props: BlocksProps) => {
           }),
           key: 'size',
         },
-        ...(verbose
+        ...(type === BlocksTableType.Desktop
           ? [
               {
                 align: TableCellAlign.Right,
@@ -110,7 +130,7 @@ export const Blocks = (props: BlocksProps) => {
               },
             ]
           : []),
-        ...(verbose
+        ...(type === BlocksTableType.Desktop
           ? [
               {
                 align: TableCellAlign.Right,
@@ -132,7 +152,7 @@ export const Blocks = (props: BlocksProps) => {
       name={t('blocks.latest')}
       isLoading={isLoading}
       pagination={pagination}
-      verbose={verbose}
+      verbose={type === BlocksTableType.Desktop}
     />
   )
 }

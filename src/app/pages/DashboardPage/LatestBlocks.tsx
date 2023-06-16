@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { Layer, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
-import { Blocks } from '../../components/Blocks'
+import { Blocks, BlocksTableType } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
@@ -50,7 +50,7 @@ export const LatestBlocks: FC = () => {
           blocks={blocksQuery.data?.data.blocks}
           limit={limit}
           pagination={false}
-          verbose={!isMobile}
+          type={isMobile ? BlocksTableType.Mobile : BlocksTableType.DesktopLite}
         />
       </CardContent>
     </Card>
