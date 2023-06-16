@@ -6,36 +6,38 @@ const dateFormat = new Intl.DateTimeFormat()
 export const intlDateFormat = (date: Date | number) => dateFormat.format(date)
 
 const formatDistanceLocale = {
-  lessThanXSeconds: '{{count}}s',
-  xSeconds: '{{count}}s',
-  halfAMinute: 's',
-  lessThanXMinutes: '{{count}}m',
-  xMinutes: '{{count}}m',
-  aboutXHours: '{{count}}h',
-  xHours: '{{count}}h',
-  xDays: '{{count}}d',
-  aboutXWeeks: '{{count}}w',
-  xWeeks: '{{count}}w',
-  aboutXMonths: '{{count}}m',
-  xMonths: '{{count}}m',
-  aboutXYears: '{{count}}y',
-  xYears: '{{count}}y',
-  overXYears: '{{count}}y',
-  almostXYears: '{{count}}y',
+  lessThanXSeconds: '{{count}}sec',
+  xSeconds: '{{count}}sec',
+  halfAMinute: 'secs',
+  lessThanXMinutes: '{{count}}min',
+  xMinutes: '{{count}}mins',
+  aboutXHours: '{{count}}hr',
+  xHours: '{{count}}hrs',
+  xDays: '{{count}}days',
+  aboutXWeeks: '{{count}}wk',
+  xWeeks: '{{count}}wks',
+  aboutXMonths: '{{count}}mos',
+  xMonths: '{{count}}mos',
+  aboutXYears: '{{count}}yr',
+  xYears: '{{count}}yrs',
+  overXYears: '{{count}}yrs',
+  almostXYears: '{{count}}yrs',
+}
+
+interface FormatDistanceOpts {
+  includeSeconds?: boolean
+  addSuffix?: boolean
+  comparison?: number
 }
 
 const formatDistance = (
   token: keyof typeof formatDistanceLocale,
   count: string,
-  options: {
-    includeSeconds?: boolean
-    addSuffix?: boolean
-    comparison?: number
-  } = {},
+  options: FormatDistanceOpts = {},
 ) => {
   const { addSuffix, comparison = 0 } = options
 
-  const result = formatDistanceLocale[token].replace('{{count}}', count)
+  const result = formatDistanceLocale[token].replace('{{count}}', `${count} `)
 
   if (addSuffix) {
     if (comparison > 0) {
@@ -48,7 +50,7 @@ const formatDistance = (
   return result
 }
 
-export const formatDistanceToNow = (date: Date, shortFormat = true) => {
+export const formatDistanceToNow = (date: Date, shortFormat = true, opts: FormatDistanceOpts = {}) => {
   if (shortFormat) {
     return dateFnsFormatDistanceToNow(date, {
       addSuffix: true,
@@ -56,10 +58,12 @@ export const formatDistanceToNow = (date: Date, shortFormat = true) => {
         ...locale,
         formatDistance,
       },
+      ...opts,
     })
   }
 
   return dateFnsFormatDistanceToNow(date, {
     addSuffix: true,
+    ...opts,
   })
 }
