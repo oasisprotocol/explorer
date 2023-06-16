@@ -4,7 +4,6 @@
     "emptyTokenList": "This account holds no {{token}} tokens.",
     "emptyTransactionList": "There are no transactions on record for this account.",
     "ERC20": "ERC-20",
-    "ERC721": "ERC-721",
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
     "title": "Account",

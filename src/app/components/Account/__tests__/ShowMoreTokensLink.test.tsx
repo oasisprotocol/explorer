@@ -28,15 +28,6 @@ const mockedToken2: Token = {
   token_decimals: 18,
 }
 
-const mockedToken3: Token = {
-  balance: '0.012345',
-  token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly3',
-  token_name: 'ERC721',
-  token_symbol: 'ERC721',
-  token_type: EvmTokenType.ERC721,
-  token_decimals: 18,
-}
-
 const mockedToken4: Token = {
   balance: '1123.5',
   token_contract_addr: 'oasis1qrg90d4qlelg5zg4q4sd4y0z8j2lpjpvuspzjly4',
@@ -61,31 +52,15 @@ describe('ShowMoreTokensLink', () => {
     renderWithProviders(
       <ShowMoreTokensLink
         account={mockedAccount}
-        tokens={[mockedToken1, mockedToken2, mockedToken3, mockedToken4]}
+        tokens={[mockedToken1, mockedToken2, mockedToken4]}
         pills={[mockedToken1]}
       />,
     )
 
-    expect(screen.getByText('+ 3 more')).toBeInTheDocument()
+    expect(screen.getByText('+ 2 more')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
       '/mainnet/emerald/address/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-20#tokens',
-    )
-  })
-
-  it('should render ERC721 link if there is no ERC20 token', () => {
-    renderWithProviders(
-      <ShowMoreTokensLink
-        account={mockedAccount}
-        tokens={[mockedToken1, mockedToken2, mockedToken3]}
-        pills={[mockedToken1, mockedToken2]}
-      />,
-    )
-
-    expect(screen.getByText('+ 1 more')).toBeInTheDocument()
-    expect(screen.getByRole('link')).toHaveAttribute(
-      'href',
-      '/mainnet/emerald/address/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t/tokens/erc-721#tokens',
     )
   })
 })

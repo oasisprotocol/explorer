@@ -69,10 +69,7 @@ function wrapWithNetwork<P extends Array<any>, Q>(f: (...args: P) => Q): (net: N
 
 export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBalances'>): RuntimeAccount => {
   const tokenBalances: Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]> = {
-    ERC1155: [],
     ERC20: [],
-    ERC721: [],
-    OasisSdk: [],
   }
   account.evm_balances.forEach(balance => {
     if (balance.token_type) tokenBalances[balance.token_type].push(balance)
