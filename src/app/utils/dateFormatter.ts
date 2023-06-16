@@ -6,22 +6,22 @@ const dateFormat = new Intl.DateTimeFormat()
 export const intlDateFormat = (date: Date | number) => dateFormat.format(date)
 
 const formatDistanceLocale = {
-  lessThanXSeconds: '{{count}}s',
-  xSeconds: '{{count}}s',
-  halfAMinute: 's',
-  lessThanXMinutes: '{{count}}m',
-  xMinutes: '{{count}}m',
-  aboutXHours: '{{count}}h',
-  xHours: '{{count}}h',
-  xDays: '{{count}}d',
-  aboutXWeeks: '{{count}}w',
-  xWeeks: '{{count}}w',
-  aboutXMonths: '{{count}}m',
-  xMonths: '{{count}}m',
-  aboutXYears: '{{count}}y',
-  xYears: '{{count}}y',
-  overXYears: '{{count}}y',
-  almostXYears: '{{count}}y',
+  lessThanXSeconds: '{{count}}sec',
+  xSeconds: '{{count}}sec',
+  halfAMinute: 'secs',
+  lessThanXMinutes: '{{count}}min',
+  xMinutes: '{{count}}mins',
+  aboutXHours: '{{count}}hr',
+  xHours: '{{count}}hrs',
+  xDays: '{{count}}days',
+  aboutXWeeks: '{{count}}wk',
+  xWeeks: '{{count}}wks',
+  aboutXMonths: '{{count}}mos',
+  xMonths: '{{count}}mos',
+  aboutXYears: '{{count}}yr',
+  xYears: '{{count}}yrs',
+  overXYears: '{{count}}yrs',
+  almostXYears: '{{count}}yrs',
 }
 
 export const formatDistance = (token: keyof typeof formatDistanceLocale, count: string) =>
