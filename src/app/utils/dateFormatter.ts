@@ -53,7 +53,6 @@ const formatDistance = (
 export const formatDistanceToNow = (date: Date, shortFormat = true, opts: FormatDistanceOpts = {}) => {
   if (shortFormat) {
     return dateFnsFormatDistanceToNow(date, {
-      addSuffix: true,
       locale: {
         ...locale,
         formatDistance,
@@ -63,7 +62,6 @@ export const formatDistanceToNow = (date: Date, shortFormat = true, opts: Format
   }
 
   return dateFnsFormatDistanceToNow(date, {
-    addSuffix: true,
     ...opts,
   })
 }
