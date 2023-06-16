@@ -10,6 +10,7 @@ import { TransactionsStats } from './TransactionsStats'
 import { TotalTransactions } from './TotalTransactions'
 import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
+import { TopTokens } from './TopTokens'
 
 export const DashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -27,6 +28,7 @@ export const DashboardPage: FC = () => {
           <LatestBlocks />
         </Grid>
       </Grid>
+      <TopTokens />
       <TransactionsStats />
       <TotalTransactions />
       <Social />

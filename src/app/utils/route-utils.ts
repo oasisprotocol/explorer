@@ -26,6 +26,10 @@ export abstract class RouteUtils {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/tx`
   }
 
+  static getTopTokensRoute = ({ network, layer }: SearchScope) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token`
+  }
+
   static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block`
   }
@@ -66,6 +70,12 @@ export abstract class RouteUtils {
     return scope
       ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
+  }
+
+  static getTokenRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+      tokenAddress,
+    )}`
   }
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
