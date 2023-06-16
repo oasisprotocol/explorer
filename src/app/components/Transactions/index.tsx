@@ -116,7 +116,7 @@ export const Transactions: FC<TransactionsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: formatDistanceToNow(new Date(transaction.timestamp)),
+        content: formatDistanceToNow(new Date(transaction.timestamp), true, { addSuffix: false }),
         key: 'timestamp',
       },
       ...(verbose

@@ -40,7 +40,6 @@ export const Blocks: FC<BlocksProps> = ({
   pagination,
   limit,
 }) => {
-  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
