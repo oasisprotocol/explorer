@@ -17,15 +17,16 @@ export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
-    { content: '' },
-    { content: t('common.name') },
-    { content: t('common.smartContract') },
+    { key: 'index', content: '' },
+    { key: 'name', content: t('common.name') },
+    { key: 'contract', content: t('common.smartContract') },
     {
+      key: 'holders',
       content: t('tokens.holdersCount'),
       align: TableCellAlign.Right,
     },
-    { content: t('tokens.supply'), align: TableCellAlign.Right },
-    { content: t('common.ticker'), align: TableCellAlign.Right },
+    { key: 'supply', content: t('tokens.supply'), align: TableCellAlign.Right },
+    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Right },
   ]
 
   const tableRows = tokens?.map((token, index) => {

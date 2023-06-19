@@ -7,7 +7,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardEmptyState } from './CardEmptyState'
-import { Table, TableCellAlign } from '../../components/Table'
+import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-indexer/api'
@@ -29,11 +29,11 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const locationHash = useLocation().hash.replace('#', '')
   const tokenLabel = t(`account.${type}` as any)
   const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
-  const tableColumns = [
-    { content: t('common.name') },
-    { content: t('common.smartContract') },
-    { align: TableCellAlign.Right, content: t('common.balance') },
-    { align: TableCellAlign.Right, content: t('common.ticker') },
+  const tableColumns: TableColProps[] = [
+    { key: 'name', content: t('common.name') },
+    { key: 'contract', content: t('common.smartContract') },
+    { key: 'balance', align: TableCellAlign.Right, content: t('common.balance') },
+    { key: 'ticker', align: TableCellAlign.Right, content: t('common.ticker') },
   ]
   const { layer } = useRequiredScopeParam()
   if (layer === Layer.consensus) {

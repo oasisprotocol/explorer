@@ -10,7 +10,10 @@ export default {
   decorators: [withRouter],
 } satisfies Meta<typeof Table>
 
-const columns: TableColProps[] = [{ content: 'Status' }, { content: 'Date', align: TableCellAlign.Right }]
+const columns: TableColProps[] = [
+  { key: 'status', content: 'Status' },
+  { key: 'date', content: 'Date', align: TableCellAlign.Right },
+]
 const data = [
   {
     id: '1',
