@@ -18,9 +18,9 @@ import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
 import { RouteUtils } from '../../utils/route-utils'
-import { styled, useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -65,7 +65,7 @@ const TabletBackButton = styled(Button)({
   textDecoration: 'none',
 })
 
-const TabletActionBar = styled(Box)(({ theme }) => ({
+const TabletActionBar = styled(Box)(() => ({
   minHeight: '50px',
 }))
 
@@ -87,8 +87,7 @@ enum ParaTimePickerTabletStep {
 }
 
 const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
-  const theme = useTheme()
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [showNetworkMenu, setShowNetworkMenu] = useState(isTablet || network !== Network.mainnet)

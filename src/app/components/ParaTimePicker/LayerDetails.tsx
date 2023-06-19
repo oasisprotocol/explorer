@@ -17,7 +17,7 @@ import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { getNameForScope } from '../../../types/searchScope'
 import { useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type LayerDetailsContent = {
   description: string
@@ -81,7 +81,7 @@ const contentMinHeight = '270px'
 export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const { isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
