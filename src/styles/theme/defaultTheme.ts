@@ -6,6 +6,7 @@ import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
 import { menuItemClasses } from '@mui/material/MenuItem'
+import { modalClasses } from '@mui/material/Modal'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -502,6 +503,19 @@ export const defaultTheme = createTheme({
         paperAnchorTop: ({ theme }) => ({
           borderRadius: '0 0 12px 12px',
           padding: `${theme.spacing(4)} 5%`,
+        }),
+        modal: ({ theme }) => ({
+          [theme.breakpoints.down('md')]: {
+            [`& .${modalClasses.backdrop}`]: {
+              background: 'transparent',
+            },
+          },
+        }),
+        paper: ({ theme }) => ({
+          [theme.breakpoints.down('md')]: {
+            height: `calc(100vh - var(--app-header-height) - var(--app-banners-height))`,
+            top: `calc(var(--app-header-height) + var(--app-banners-height))`,
+          },
         }),
       },
     },

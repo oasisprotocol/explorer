@@ -17,6 +17,7 @@ import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { getNameForScope } from '../../../types/searchScope'
 import { useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type LayerDetailsContent = {
   description: string
@@ -80,6 +81,7 @@ const contentMinHeight = '270px'
 export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const { isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
@@ -92,7 +94,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
   }
 
   return (
-    <Box sx={{ px: 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
+    <Box sx={{ px: isTablet ? 2 : 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
       <Box sx={{ pt: 1, pr: 4, color: COLORS.brandDark }}>
         <Circle
           color={COLORS.white}

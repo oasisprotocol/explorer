@@ -244,6 +244,7 @@
   "paraTimePicker": {
     "chainId": "Chain ID:",
     "decimal": "Decimal: {{ id }}",
+    "comingSoon": "(coming soon)",
     "hex": "Hex: {{ id }}",
     "less": "Show Less",
     "more": "Show More",
@@ -252,6 +253,8 @@
     "rpcWebSockets": "RPC WebSockets endpoint: {{ endpoint }}",
     "selected": "(currently active)",
     "toggleNetworkMenu": "Toggle networks menu",
+    "viewNetworks": "View Networks",
+    "viewParaTimes": "View ParaTimes",
     "mainnet": {
       "emerald": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility.",
       "sapphire": "The Sapphire ParaTime is our official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
