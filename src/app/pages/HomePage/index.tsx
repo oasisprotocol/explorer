@@ -30,6 +30,7 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100vw',
+  maxWidth: '100%',
   height: 'fill-available',
   minHeight: '100vh',
   backgroundColor: COLORS.brandDark,
