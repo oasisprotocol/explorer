@@ -66,7 +66,7 @@ export const Header: FC = () => {
               showText={!scrollTrigger && !isMobile}
             />
           </Grid>
-          {scope && (
+          {scope?.valid && (
             <>
               <Grid lg={6} xs={8}>
                 <NetworkSelector layer={scope.layer} network={scope.network} />

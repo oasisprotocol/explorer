@@ -143,7 +143,7 @@ export const scopeLoader = async (args: LoaderFunctionArgs) => {
     !layer || // missing param
     !RouteUtils.getEnabledLayersForNetwork(network as Network).includes(layer as Layer) // unsupported on network
   ) {
-    throw new AppError(AppErrors.InvalidUrl)
+    throw new AppError(AppErrors.UnsupportedLayer)
   }
 
   return true

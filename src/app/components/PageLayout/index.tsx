@@ -46,7 +46,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       <Box ref={bannersRef}>
         <BuildBanner />
         <NetworkOfflineBanner />
-        {scope && <RuntimeOfflineBanner />}
+        {scope?.valid && <RuntimeOfflineBanner />}
       </Box>
       <Box
         sx={{
