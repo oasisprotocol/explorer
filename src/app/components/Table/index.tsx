@@ -24,7 +24,7 @@ const StyledTableCell = styled(TableCell, {
 })<{ verbose?: boolean }>(({ theme, verbose }) => ({
   ...(!verbose
     ? {
-        padding: theme.spacing(3),
+        padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
       }
     : {}),
 }))
