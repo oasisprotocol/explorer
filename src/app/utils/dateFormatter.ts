@@ -1,4 +1,4 @@
-import formatDistanceStrictDateFns from 'date-fns/formatDistanceStrict'
+import { formatDistanceToNow as dateFnsFormatDistanceToNow } from 'date-fns'
 import locale from 'date-fns/locale/en-US'
 
 const dateFormat = new Intl.DateTimeFormat()
@@ -6,31 +6,62 @@ const dateFormat = new Intl.DateTimeFormat()
 export const intlDateFormat = (date: Date | number) => dateFormat.format(date)
 
 const formatDistanceLocale = {
-  lessThanXSeconds: '{{count}}s',
-  xSeconds: '{{count}}s',
-  halfAMinute: 's',
-  lessThanXMinutes: '{{count}}m',
-  xMinutes: '{{count}}m',
-  aboutXHours: '{{count}}h',
-  xHours: '{{count}}h',
-  xDays: '{{count}}d',
-  aboutXWeeks: '{{count}}w',
-  xWeeks: '{{count}}w',
-  aboutXMonths: '{{count}}m',
-  xMonths: '{{count}}m',
-  aboutXYears: '{{count}}y',
-  xYears: '{{count}}y',
-  overXYears: '{{count}}y',
-  almostXYears: '{{count}}y',
+  lessThanXSeconds: '{{count}}sec',
+  xSeconds: '{{count}}sec',
+  halfAMinute: 'secs',
+  lessThanXMinutes: '{{count}}min',
+  xMinutes: '{{count}}mins',
+  aboutXHours: '{{count}}hr',
+  xHours: '{{count}}hrs',
+  xDays: '{{count}}days',
+  aboutXWeeks: '{{count}}wk',
+  xWeeks: '{{count}}wks',
+  aboutXMonths: '{{count}}mos',
+  xMonths: '{{count}}mos',
+  aboutXYears: '{{count}}yr',
+  xYears: '{{count}}yrs',
+  overXYears: '{{count}}yrs',
+  almostXYears: '{{count}}yrs',
 }
 
-export const formatDistance = (token: keyof typeof formatDistanceLocale, count: string) =>
-  formatDistanceLocale[token].replace('{{count}}', count)
+interface FormatDistanceOpts {
+  includeSeconds?: boolean
+  addSuffix?: boolean
+  comparison?: number
+}
 
-export const formatDistanceStrict = (date: Date, baseDate: Date) =>
-  formatDistanceStrictDateFns(date, baseDate, {
-    locale: {
-      ...locale,
-      formatDistance,
-    },
+const formatDistance = (
+  token: keyof typeof formatDistanceLocale,
+  count: string,
+  options: FormatDistanceOpts = {},
+) => {
+  const { addSuffix, comparison = 0 } = options
+
+  const result = formatDistanceLocale[token].replace('{{count}}', `${count} `)
+
+  if (addSuffix) {
+    if (comparison > 0) {
+      return `in ${result}`
+    } else {
+      return `${result} ago`
+    }
+  }
+
+  return result
+}
+
+export const formatDistanceToNow = (date: Date, shortFormat = true, opts: FormatDistanceOpts = {}) => {
+  if (shortFormat) {
+    return dateFnsFormatDistanceToNow(date, {
+      locale: {
+        ...locale,
+        formatDistance,
+      },
+      ...opts,
+    })
+  }
+
+  return dateFnsFormatDistanceToNow(date, {
+    ...opts,
   })
+}

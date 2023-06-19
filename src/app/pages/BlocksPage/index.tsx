@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Layer, useGetRuntimeBlocks } from '../../../oasis-indexer/api'
-import { Blocks, TableRuntimeBlockList } from '../../components/Blocks'
+import { Blocks, BlocksTableType, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { BlockDetailView } from '../BlockDetailPage'
@@ -97,7 +97,7 @@ export const BlocksPage: FC = () => {
             isLoading={blocksQuery.isLoading}
             blocks={blocksQuery.data?.data.blocks}
             limit={PAGE_SIZE}
-            verbose={true}
+            type={BlocksTableType.Desktop}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
