@@ -48,6 +48,11 @@ declare module './generated/api' {
     ticker: NativeTicker
     tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
   }
+
+  export interface EvmToken {
+    network: Network
+    layer: Layer
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -563,6 +568,40 @@ export const useGetRuntimeEvents: typeof _f14 = (network, runtime, params, optio
     axios: {
       ...options?.axios,
       ...getBaseUrlParamFor(network),
+    },
+  })
+}
+
+const _f15 = wrapWithNetwork(generated.useGetRuntimeEvmTokens)
+
+export const useGetRuntimeEvmTokens: typeof _f15 = (network, runtime, params, options) => {
+  return generated.useGetRuntimeEvmTokens(runtime, params, {
+    ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, ...generated.getGetRuntimeEvmTokensQueryKey(runtime, params)],
+    },
+    axios: {
+      ...options?.axios,
+      ...getBaseUrlParamFor(network),
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.EvmTokenList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            evm_tokens: data.evm_tokens.map(token => {
+              return {
+                ...token,
+                evm_contract_addr: `0x${token.evm_contract_addr}`,
+                layer: runtime,
+                network,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.axios?.transformResponse),
+      ],
     },
   })
 }

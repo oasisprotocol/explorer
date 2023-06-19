@@ -8,10 +8,7 @@ import { SearchScope } from '../../types/searchScope'
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK: Partial<Record<Network, Layer[]>> = {
-    [Network.mainnet]: [
-      // Layer.emerald,
-      Layer.sapphire,
-    ],
+    [Network.mainnet]: [Layer.emerald, Layer.sapphire],
     [Network.testnet]: [
       // Layer.emerald,
       Layer.sapphire,
@@ -24,6 +21,10 @@ export abstract class RouteUtils {
 
   static getLatestTransactionsRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/tx`
+  }
+
+  static getTopTokensRoute = ({ network, layer }: SearchScope) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token`
   }
 
   static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
@@ -66,6 +67,12 @@ export abstract class RouteUtils {
     return scope
       ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
+  }
+
+  static getTokenRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+      tokenAddress,
+    )}`
   }
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {

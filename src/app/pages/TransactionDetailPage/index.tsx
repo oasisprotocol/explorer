@@ -35,9 +35,8 @@ import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
 import { isValidTxOasisHash } from '../../utils/helpers'
 import { TransactionEncrypted } from '../../components/TransactionEncryptionStatus'
-import Collapse from '@mui/material/Collapse'
 import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
+import { LongDataDisplay } from '../../components/LongDataDisplay'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -175,49 +174,6 @@ const TransactionInfoTooltip: FC<PropsWithChildren<{ label: string }>> = ({ labe
     >
       <Box>{children}</Box>
     </Tooltip>
-  )
-}
-
-export const ShowHideData: FC<{ data: string; threshold: number; fontWeight?: number }> = ({
-  data,
-  threshold,
-  fontWeight = 700,
-}) => {
-  const { t } = useTranslation()
-  const [showData, setShowData] = useState(false)
-  const needsHiding = data.length > threshold
-  if (!needsHiding) {
-    return (
-      <Typography
-        variant="mono"
-        sx={{
-          fontWeight,
-          overflowWrap: 'anywhere',
-        }}
-      >
-        {data}
-      </Typography>
-    )
-  }
-  return (
-    <div>
-      <Collapse orientation={'vertical'} in={showData} collapsedSize={'3em'}>
-        <Typography
-          variant="mono"
-          sx={{
-            fontWeight,
-            overflowWrap: 'anywhere',
-          }}
-        >
-          {data}
-        </Typography>
-      </Collapse>
-      {data.length > threshold && (
-        <Link sx={{ cursor: 'pointer' }} onClick={() => setShowData(!showData)}>
-          {showData ? t('common.hide') : t('common.show')}
-        </Link>
-      )}
-    </div>
   )
 }
 
@@ -422,7 +378,7 @@ export const TransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.encryptedData')}</dt>
                   <dd>
-                    <ShowHideData data={transaction.encryption_envelope.data} threshold={300} />
+                    <LongDataDisplay data={transaction.encryption_envelope.data} threshold={300} />
                   </dd>
                 </>
               )}
@@ -448,7 +404,7 @@ export const TransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.encryptedResult')}</dt>
                   <dd>
-                    <ShowHideData
+                    <LongDataDisplay
                       data={transaction.encryption_envelope.result}
                       fontWeight={400}
                       threshold={300}

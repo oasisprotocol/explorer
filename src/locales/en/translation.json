@@ -68,6 +68,7 @@
     "sapphire": "Sapphire",
     "show": "Show",
     "smartContract": "Smart Contract",
+    "smartContract_short": "Contract",
     "success": "Success",
     "status": "Status",
     "ticker": "Ticker",
@@ -157,6 +158,12 @@
   },
   "tableLayoutButton": {
     "changeView": "Change view"
+  },
+  "tokens": {
+    "holdersCount": "Holders count",
+    "holdersCount_short": "Holders",
+    "supply": "Supply",
+    "title": "Tokens"
   },
   "totalTransactions": {
     "header": "Total Transactions",

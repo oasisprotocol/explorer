@@ -19,6 +19,7 @@ import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
+import { TokensPage } from './app/pages/TokensPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -89,6 +90,10 @@ export const routes: RouteObject[] = [
             path: `tx/:hash`,
             element: <TransactionDetailPage />,
             loader: transactionParamLoader,
+          },
+          {
+            path: `token`,
+            element: <TokensPage />,
           },
           {
             path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
