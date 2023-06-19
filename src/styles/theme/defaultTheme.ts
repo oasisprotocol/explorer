@@ -37,7 +37,6 @@ declare module '@mui/material/styles' {
   }
 
   interface PaletteColor extends CustomLayoutPalette {}
-
   interface SimplePaletteColorOptions extends CustomLayoutPalette {}
 }
 
@@ -72,7 +71,6 @@ declare module '@mui/material/Chip' {
   export interface ChipPropsColorOverrides {
     tertiary: true
   }
-
   export interface ChipPropsVariantOverrides {
     ['outlined-selected']: true
   }
