@@ -20,6 +20,7 @@ export const Nodes: FC = () => {
   }
   const runtimeStatusQuery = useGetRuntimeStatus(scope.network, scope.layer)
   const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
+  const hasActiveNodes = activeNodes !== 0 // This includes undefined while loading
 
   const title = (
     <Box
@@ -35,7 +36,7 @@ export const Nodes: FC = () => {
       <Tooltip
         arrow
         placement="top"
-        title={activeNodes ? t('nodes.tooltip') : t('nodes.unknown')}
+        title={hasActiveNodes ? t('nodes.tooltip') : t('nodes.unknown')}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -55,10 +56,10 @@ export const Nodes: FC = () => {
               sx={{
                 fontSize: '48px',
                 fontWeight: 700,
-                color: activeNodes ? COLORS.brandDark : COLORS.grayMedium,
+                color: hasActiveNodes ? COLORS.brandDark : COLORS.grayMedium,
               }}
             >
-              {activeNodes ? t('nodes.value', { value: activeNodes }) : '-'}
+              {hasActiveNodes ? t('nodes.value', { value: activeNodes }) : '-'}
             </Typography>
           </>
         )}
