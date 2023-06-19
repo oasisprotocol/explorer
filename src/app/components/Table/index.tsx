@@ -16,28 +16,17 @@ import { backgroundColorAnimation } from '../../../styles/theme/animations'
 type SkeletonTableRowsProps = {
   rowsNumber: number
   columnsNumber: number
-  verbose: boolean
 }
-
-const StyledTableCell = styled(TableCell, {
-  shouldForwardProp: prop => prop !== 'verbose',
-})<{ verbose?: boolean }>(({ theme, verbose }) => ({
-  ...(!verbose
-    ? {
-        padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
-      }
-    : {}),
-}))
 
 // in designs table row has 61px height, but we need to take into account border and padding here
 const textSkeletonHeight = 28
-const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumber, verbose }) => (
+const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumber }) => (
   <>
     {[...Array(rowsNumber)].map((item, index) => (
       <TableRow key={index}>
-        <StyledTableCell colSpan={columnsNumber}>
+        <TableCell colSpan={columnsNumber}>
           <Skeleton variant="text" height={textSkeletonHeight} />
-        </StyledTableCell>
+        </TableCell>
       </TableRow>
     ))}
   </>
@@ -84,7 +73,6 @@ type TableProps = {
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
-  verbose?: boolean
 }
 
 const stickyColumnStyles = {
@@ -102,7 +90,6 @@ export const Table: FC<TableProps> = ({
   rows,
   rowsNumber = 5,
   stickyColumn = false,
-  verbose = true,
 }) => {
   const { isMobile } = useScreenSize()
 
@@ -117,35 +104,33 @@ export const Table: FC<TableProps> = ({
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (
-                <StyledTableCell
+                <TableCell
                   key={column.content}
                   align={column.align}
                   sx={{
                     width: column.width || 'auto',
                     ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
                   }}
-                  verbose={verbose}
                 >
                   {column.content}
-                </StyledTableCell>
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {!rows && isLoading && (
-              <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} verbose={verbose} />
+              <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
               <StyledTableRow key={row.key} highlight={row.highlight}>
                 {row.data.map((cell, index) => (
-                  <StyledTableCell
+                  <TableCell
                     key={cell.key}
                     align={cell.align}
                     sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
-                    verbose={verbose}
                   >
                     {cell.content}
-                  </StyledTableCell>
+                  </TableCell>
                 ))}
               </StyledTableRow>
             ))}

@@ -210,7 +210,6 @@ export const Transactions: FC<TransactionsProps> = ({
       name={t('transactions.latest')}
       isLoading={isLoading}
       pagination={pagination}
-      verbose={verbose}
     />
   )
 }

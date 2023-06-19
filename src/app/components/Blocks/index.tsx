@@ -151,7 +151,6 @@ export const Blocks: FC<BlocksProps> = ({
       name={t('blocks.latest')}
       isLoading={isLoading}
       pagination={pagination}
-      verbose={type === BlocksTableType.Desktop}
     />
   )
 }
