@@ -1,4 +1,4 @@
-import { Outlet, RouteObject } from 'react-router-dom'
+import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
@@ -30,6 +30,12 @@ const NetworkSpecificPart = () => (
 export const routes: RouteObject[] = [
   {
     errorElement: withDefaultTheme(<RoutingErrorPage />),
+    element: (
+      <>
+        <ScrollRestoration />
+        <Outlet />
+      </>
+    ),
     children: [
       {
         path: '/',

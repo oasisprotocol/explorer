@@ -20,7 +20,11 @@ export const LoadMoreButton: FC<LoadMoreButtonProps> = ({ isLoading, pagination 
   const { t } = useTranslation()
 
   return (
-    <Link component={RouterLink} to={pagination.linkToPage(pagination.selectedPage + 1)}>
+    <Link
+      component={RouterLink}
+      to={pagination.linkToPage(pagination.selectedPage + 1)}
+      preventScrollReset={true}
+    >
       <StyledLoadMoreButton color="primary" variant="contained" disabled={isLoading}>
         {t('common.loadMore')}
       </StyledLoadMoreButton>
