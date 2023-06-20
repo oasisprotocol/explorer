@@ -2,26 +2,26 @@
 
 exports[`formatDistanceToNow should format future dates 1`] = `
 [
-  "1 min",
-  "1 min",
-  "20 mins",
+  "0 sec",
+  "20 sec",
+  "20 min",
   "1 hr",
-  "1 days",
-  "1 mos",
+  "1 day",
+  "1 mo",
   "1 yr",
-  "8 mos",
+  "2 qtrs",
 ]
 `;
 
 exports[`formatDistanceToNow should format past dates 1`] = `
 [
-  "1 min",
-  "1 min",
-  "20 mins",
+  "0 sec",
+  "20 sec",
+  "20 min",
   "1 hr",
-  "1 days",
-  "1 mos",
-  "1 yr",
-  "8 mos",
+  "1 day",
+  "1 mo",
+  "4 qtrs",
+  "3 qtrs",
 ]
 `;
