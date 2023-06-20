@@ -43,24 +43,25 @@ export const Blocks: FC<BlocksProps> = ({
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
-    { content: t('common.fill') },
-    { content: t('common.height'), align: TableCellAlign.Right },
-    { content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'fill', content: t('common.fill') },
+    { key: 'height', content: t('common.height'), align: TableCellAlign.Right },
+    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
     ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
       ? [
           {
+            key: 'transaction',
             content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
             align: TableCellAlign.Right,
           },
         ]
       : []),
-    ...(type === BlocksTableType.Desktop ? [{ content: t('common.hash') }] : []),
-    { content: t('common.size'), align: TableCellAlign.Right },
+    ...(type === BlocksTableType.Desktop ? [{ key: 'hash', content: t('common.hash') }] : []),
+    { key: 'size', content: t('common.size'), align: TableCellAlign.Right },
     ...(type === BlocksTableType.Desktop
-      ? [{ content: t('common.gasUsed'), align: TableCellAlign.Right }]
+      ? [{ key: 'gasUsed', content: t('common.gasUsed'), align: TableCellAlign.Right }]
       : []),
     ...(type === BlocksTableType.Desktop
-      ? [{ content: t('common.gasLimit'), align: TableCellAlign.Right }]
+      ? [{ key: 'gasLimit', content: t('common.gasLimit'), align: TableCellAlign.Right }]
       : []),
   ]
 

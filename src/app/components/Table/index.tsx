@@ -61,7 +61,8 @@ export type TableRowProps = {
 }
 
 export type TableColProps = {
-  content: string
+  key: string
+  content: ReactNode
   align?: TableCellAlign
   width?: string
 }
@@ -105,7 +106,7 @@ export const Table: FC<TableProps> = ({
             <TableRow>
               {columns.map((column, index) => (
                 <TableCell
-                  key={column.content}
+                  key={column.key}
                   align={column.align}
                   sx={{
                     width: column.width || 'auto',

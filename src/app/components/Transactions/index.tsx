@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
-import { Table, TableCellAlign } from '../../components/Table'
+import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
 import { RuntimeTransactionIcon } from '../../components/RuntimeTransactionLabel'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -67,21 +67,21 @@ export const Transactions: FC<TransactionsProps> = ({
   const canHaveEncryption = doesAnyOfTheseLayersSupportEncryptedTransactions(
     transactions?.map(tx => tx.layer),
   )
-  const tableColumns = [
-    { content: t('common.status') },
+  const tableColumns: TableColProps[] = [
+    { key: 'status', content: t('common.status') },
     ...(verbose && canHaveEncryption
-      ? [{ content: (<LockIcon htmlColor={COLORS.grayMedium} />) as unknown as string }]
-      : []), // The table does support widgets in the column headers, but the TS definition is unaware of that.
-    { content: t('common.hash') },
-    { content: t('common.block') },
-    { content: t('common.age'), align: TableCellAlign.Right },
+      ? [{ key: 'encrypted', content: <LockIcon htmlColor={COLORS.grayMedium} /> }]
+      : []),
+    { key: 'hash', content: t('common.hash') },
+    { key: 'block', content: t('common.block') },
+    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
     ...(verbose
       ? [
-          { content: t('common.type'), align: TableCellAlign.Center },
-          { content: t('common.from'), width: '150px' },
-          { content: t('common.to'), width: '150px' },
-          { content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
-          { align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
+          { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
+          { key: 'from', content: t('common.from'), width: '150px' },
+          { key: 'to', content: t('common.to'), width: '150px' },
+          { key: 'txnFee', content: t('common.txnFee'), align: TableCellAlign.Right, width: '250px' },
+          { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
         ]
       : []),
   ]
