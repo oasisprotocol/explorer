@@ -23,6 +23,7 @@ export const AccountDetailsPage: FC = () => {
   const { account, isLoading, isError } = useAccount(scope, address)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
+  const isContract = !!account?.evm_contract
 
   const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20].length
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
@@ -33,7 +34,11 @@ export const AccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={t('account.title')}>
+      <SubPageCard
+        featured
+        isLoadingTitle={isLoading}
+        title={isContract ? t('contract.title') : t('account.title')}
+      >
         <AccountDetailsView
           isLoading={isLoading}
           isError={isError}

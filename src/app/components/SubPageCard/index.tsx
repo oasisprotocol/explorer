@@ -11,7 +11,7 @@ import Skeleton from '@mui/material/Skeleton'
 type StyledComponentProps = {
   featured?: boolean
   isLoadingTitle?: boolean
-  title?: string
+  title?: ReactNode
   subheader?: string
   action?: ReactNode
   noPadding?: boolean

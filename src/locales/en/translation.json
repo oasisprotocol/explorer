@@ -38,6 +38,7 @@
     "block": "Block",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
+    "createdAt": "Created at",
     "data": "Data",
     "emerald": "Emerald",
     "cipher": "Cipher",
@@ -89,6 +90,9 @@
     "mainnet": "Mainnet",
     "testnet": "Testnet",
     "valuePair": "{{value, number}}"
+  },
+  "contract": {
+    "title": "Contract"
   },
   "nodes": {
     "title": "Active nodes",
