@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { COLORS } from '../../../styles/theme/colors'
-import ButtonUnstyled from '@mui/base/ButtonUnstyled'
+import ButtonBase from '@mui/material/ButtonBase'
 import { styled } from '@mui/material/styles'
 
 const clipboardTooltipDuration = 2000
@@ -12,7 +12,7 @@ type CopyToClipboardProps = {
   value: string
 }
 
-const StyledButton = styled(ButtonUnstyled)(({ theme }) => ({
+const StyledButton = styled(ButtonBase)(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   border: 0,

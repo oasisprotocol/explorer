@@ -1,10 +1,6 @@
-import SelectUnstyled, {
-  SelectUnstyledProps,
-  selectUnstyledClasses,
-  SelectUnstyledRootSlotProps,
-} from '@mui/base/SelectUnstyled'
-import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
-import PopperUnstyled from '@mui/base/PopperUnstyled'
+import SelectUnstyled, { SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
+import Option, { optionClasses } from '@mui/base/Option'
+import Popper from '@mui/base/Popper'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import {
@@ -34,7 +30,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   color: COLORS.white,
   textTransform: 'none',
   justifyContent: 'space-between',
-  [`&.${selectUnstyledClasses.focusVisible}`]: {
+  [`&.${selectClasses.focusVisible}`]: {
     backgroundColor: COLORS.brandExtraDark,
   },
 }))
@@ -51,7 +47,7 @@ const StyledListbox = styled('ul')(({ theme }) => ({
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
 }))
 
-const StyledOption = styled(OptionUnstyled)(({ theme }) => ({
+const StyledOption = styled(Option)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   boxSizing: 'border-box',
@@ -60,30 +56,30 @@ const StyledOption = styled(OptionUnstyled)(({ theme }) => ({
   padding: `0 ${theme.spacing(4)}`,
   cursor: 'default',
   color: COLORS.white,
-  [`&:hover:not(.${optionUnstyledClasses.disabled})`]: {
+  [`&:hover:not(.${optionClasses.disabled})`]: {
     cursor: 'pointer',
   },
-  [`&:hover:not(.${optionUnstyledClasses.disabled}),
-  &.${optionUnstyledClasses.highlighted}`]: {
+  [`&:hover:not(.${optionClasses.disabled}),
+  &.${optionClasses.highlighted}`]: {
     backgroundColor: COLORS.brandExtraDark,
   },
-  [`&.${optionUnstyledClasses.disabled}`]: {
+  [`&.${optionClasses.disabled}`]: {
     backgroundColor: COLORS.lavenderGray,
   },
-  [`&&.${optionUnstyledClasses.selected}`]: {
+  [`&&.${optionClasses.selected}`]: {
     opacity: 0.5,
     backgroundColor: 'transparent',
   },
   transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 }))
 
-const StyledPopper = styled(PopperUnstyled)`
+const StyledPopper = styled(Popper)`
   z-index: 1;
 `
 
 const TertiaryButton = forwardRef(
   (
-    { children, ownerState, ...restProps }: SelectUnstyledRootSlotProps<object>,
+    { children, ownerState, ...restProps }: SelectRootSlotProps<object, false>,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
     const { t } = useTranslation()
@@ -98,10 +94,10 @@ const TertiaryButton = forwardRef(
 )
 
 const CustomSelect = forwardRef(function CustomSelect<TValue extends string | number>(
-  props: SelectUnstyledProps<TValue>,
+  props: SelectProps<TValue, false>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
-  const slots: SelectUnstyledProps<TValue>['slots'] = {
+  const slots: SelectProps<TValue, false>['slots'] = {
     root: TertiaryButton,
     listbox: StyledListbox,
     popper: StyledPopper,
@@ -110,7 +106,7 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
 
   return <SelectUnstyled {...props} ref={ref} slots={slots} />
 }) as <TValue extends string | number>(
-  props: SelectUnstyledProps<TValue> & RefAttributes<HTMLButtonElement>,
+  props: SelectProps<TValue, false> & RefAttributes<HTMLButtonElement>,
 ) => JSX.Element
 
 export interface SelectOptionBase {
@@ -118,7 +114,7 @@ export interface SelectOptionBase {
   value: string | number
 }
 
-interface SelectProps<T extends SelectOptionBase> {
+interface SelectCmpProps<T extends SelectOptionBase> {
   label?: string
   options: T[]
   defaultValue?: T['value']
@@ -130,7 +126,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   options,
   defaultValue,
   handleChange,
-}: SelectProps<T>): ReactElement => {
+}: SelectCmpProps<T>): ReactElement => {
   const selectId = useId()
 
   const onChange = useCallback(
