@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getTickerForNetwork, NativeTicker, Ticker } from '../types/ticker'
 import { Network } from '../types/network'
 import { RouteUtils } from '../app/utils/route-utils'
+import { exhaustedTypeWarning } from '../types/errors'
 
 type GetRosePriceParams = {
   ids: string
@@ -68,7 +69,7 @@ export const useTokenPrice = (ticker: NativeTicker): TokenPriceInfo => {
         isFree: true,
       }
     default:
-      console.warn('Checking price of unknown token', ticker)
+      exhaustedTypeWarning('Checking price of unknown token', ticker)
       return {
         isLoading: false,
         hasUsedCoinGecko: false,

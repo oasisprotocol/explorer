@@ -1,5 +1,6 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
 import { Layer } from '../../../../../oasis-indexer/api'
+import { exhaustedTypeWarning } from '../../../../../types/errors'
 
 export abstract class GraphUtils {
   static getScaleTo(layer: Layer, { width, height }: { width?: number; height?: number }): ScaleToOptions {
@@ -33,7 +34,9 @@ export abstract class GraphUtils {
           y: height,
         }
       case Layer.consensus:
+        return initialValue
       default:
+        exhaustedTypeWarning('Unexpected layer', layer)
         return initialValue
     }
   }

@@ -15,6 +15,7 @@ import { TransactionLink } from './TransactionLink'
 import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
+import { exhaustedTypeWarning } from '../../../types/errors'
 
 const EvmEventParamData: FC<{
   scope: SearchScope
@@ -155,7 +156,14 @@ const DecodedLogEvent: FC<{
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
     case RuntimeEventType.consensus_accountswithdraw:
+      return (
+        <div>
+          <div>{eventName}</div>
+          <pre>{JSON.stringify(event, null, ' ')}</pre>
+        </div>
+      )
     default:
+      exhaustedTypeWarning('Unexpected event type', event.type)
       return (
         <div>
           <div>{eventName}</div>
