@@ -458,6 +458,10 @@ export const useGetRuntimeEvmTokens: typeof generated.useGetRuntimeEvmTokens = (
               return {
                 ...token,
                 evm_contract_addr: `0x${token.evm_contract_addr}`,
+                total_supply:
+                  token.total_supply != null && token.decimals != null
+                    ? fromBaseUnits(token.total_supply, token.decimals)
+                    : token.total_supply,
                 layer: runtime,
                 network,
               }
