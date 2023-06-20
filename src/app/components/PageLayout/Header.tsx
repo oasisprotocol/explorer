@@ -32,7 +32,7 @@ export const Header: FC = () => {
     if (headerRef.current !== null) {
       document.body.style.setProperty('--app-header-height', `${headerHeight?.toFixed(2) || 0}px`)
     }
-  }, [isTablet, headerHeight])
+  }, [isTablet, headerHeight, scrollTrigger])
 
   return (
     <AppBar

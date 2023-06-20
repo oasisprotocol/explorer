@@ -11,6 +11,8 @@ import { Search } from '../Search'
 import { useIsApiOffline } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
 import useResizeObserver from 'use-resize-observer'
+import { useWindowScroll } from '../../hooks/useWindowScroll'
+import { getElementViewportOffset } from '../../utils/dom-utils'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -26,6 +28,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const scope = useScopeParam()
   const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
   const bannersRef = useRef<HTMLDivElement | null>(null)
+  const windowScrollY = useWindowScroll()
 
   const { height: bannersHeight } = useResizeObserver<Element>({
     ref: bannersRef,
@@ -36,10 +39,11 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       return
     }
 
-    if (bannersRef.current !== null) {
-      document.body.style.setProperty('--app-banners-height', `${bannersHeight?.toFixed(2) || 0}px`)
+    if (bannersRef.current !== null && bannersHeight) {
+      const height = getElementViewportOffset(bannersRef.current!, bannersHeight)
+      document.body.style.setProperty('--app-banners-height', `${height?.toFixed(2) || 0}px`)
     }
-  }, [isTablet, bannersHeight])
+  }, [isTablet, bannersRef, bannersHeight, windowScrollY])
 
   return (
     <>
