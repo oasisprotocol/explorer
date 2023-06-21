@@ -90,7 +90,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
-  const [showNetworkMenu, setShowNetworkMenu] = useState(isTablet || network !== Network.mainnet)
+  const [showNetworkMenu, setShowNetworkMenu] = useState(true)
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
   const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(
