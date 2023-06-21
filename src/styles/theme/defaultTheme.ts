@@ -847,6 +847,13 @@ export const defaultTheme = createTheme({
         },
       },
     },
+    MuiList: {
+      styleOverrides: {
+        padding: {
+          paddingTop: 0,
+        },
+      },
+    },
     MuiListItemIcon: {
       styleOverrides: {
         root: {

@@ -85,7 +85,7 @@ export const NetworkMenu: FC<NetworkMenuProps> = ({ activeNetwork, selectedNetwo
 
   return (
     <>
-      <MenuList sx={{ pt: 0 }}>
+      <MenuList>
         {stableOptions.map((network, index) => (
           <NetworkMenuItem
             activeNetwork={activeNetwork}

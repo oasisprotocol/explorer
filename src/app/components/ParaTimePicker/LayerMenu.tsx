@@ -116,7 +116,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
     .sort(orderByLayer)
 
   return (
-    <MenuList sx={{ pt: 0 }}>
+    <MenuList>
       {options.map((option, index) => {
         if (!option.enabled) {
           return (
