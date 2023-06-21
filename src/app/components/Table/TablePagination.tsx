@@ -39,6 +39,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
           }}
           component={Link}
           to={item.page == null ? '' : linkToPage(item.page)}
+          preventScrollReset={true}
           {...item}
           sx={isTotalCountClipped && item.type === 'last' ? { pointerEvents: 'none', cursor: 'default' } : {}}
         />
