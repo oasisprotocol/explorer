@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
 import { TxError } from '../../../oasis-indexer/api'
+import Tooltip from '@mui/material/Tooltip'
 
 type TxStatus = 'unknown' | 'success' | 'failure'
 
@@ -80,23 +81,30 @@ export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success,
     success: t('common.success'),
     failure: t('common.failed'),
   }
+  const errorMessage = error ? `${error.message} (${t('errors.code')} ${error.code})` : undefined
 
-  return (
-    <>
-      <StyledBox success={success} error={error} withText={withText}>
-        {withText && (
-          <span>
-            {statusLabel[status]}
-            &nbsp;
-          </span>
-        )}
-        {statusIcon[status]}
-      </StyledBox>
-      {withText && error && (
-        <ErrorBox>
-          {error.message} ({t('errors.code')} {error.code})
-        </ErrorBox>
-      )}
-    </>
-  )
+  if (withText) {
+    return (
+      <>
+        <StyledBox success={success} error={error} withText={withText}>
+          {statusLabel[status]}
+          &nbsp;
+          {statusIcon[status]}
+        </StyledBox>
+        {error && <ErrorBox>{errorMessage}</ErrorBox>}
+      </>
+    )
+  } else {
+    return (
+      <Tooltip
+        arrow
+        placement="top"
+        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
+      >
+        <StyledBox success={success} error={error} withText={withText}>
+          {statusIcon[status]}
+        </StyledBox>
+      </Tooltip>
+    )
+  }
 }
