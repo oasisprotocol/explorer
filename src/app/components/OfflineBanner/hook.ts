@@ -5,9 +5,11 @@ import { AppError, AppErrors } from '../../../types/errors'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { paraTimesConfig } from '../../../config'
 
-export const useIsApiOffline = (network: Network): boolean => {
+export const useIsApiOffline = (network: Network): false | 'userOffline' | 'apiOffline' => {
   const query = useGetStatus(network)
-  return query.isFetched && !query.isSuccess
+  if (query.isPaused) return 'userOffline'
+  if (query.isFetched && !query.isSuccess) return 'apiOffline'
+  return false
 }
 
 export type FreshnessInfo = {

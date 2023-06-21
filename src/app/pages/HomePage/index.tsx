@@ -139,7 +139,7 @@ export const HomePage: FC = () => {
           </LogotypeBox>
           <SearchInputContainer>
             <SearchInputBox>
-              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+              <Search disabled={!!isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
           </SearchInputContainer>
           <ThemeByNetwork network={network}>

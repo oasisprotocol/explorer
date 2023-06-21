@@ -29,9 +29,13 @@ export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNe
   const isNetworkOffline = useIsApiOffline(targetNetwork)
   const networkNames = getNetworkNames(t)
   const target = networkNames[targetNetwork]
-  return isNetworkOffline ? (
-    <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
-  ) : null
+  if (isNetworkOffline === 'userOffline') {
+    return <StyledAlert severity="warning">{t('home.userOffline', { target })}</StyledAlert>
+  }
+  if (isNetworkOffline === 'apiOffline') {
+    return <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
+  }
+  return null
 }
 
 export const RuntimeOfflineBanner: FC = () => {

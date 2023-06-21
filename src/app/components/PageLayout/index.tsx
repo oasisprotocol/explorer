@@ -80,7 +80,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
                 mb: 6,
               }}
             >
-              <Search scope={scope} variant={isTablet ? 'icon' : 'button'} disabled={isApiOffline} />
+              <Search scope={scope} variant={isTablet ? 'icon' : 'button'} disabled={!!isApiOffline} />
             </Box>
           )}
           <StyledMain>{children}</StyledMain>
