@@ -86,7 +86,7 @@
     "@storybook/addon-viewport": "7.0.22",
     "@storybook/react": "7.0.22",
     "@storybook/react-webpack5": "7.0.22",
-    "@storybook/testing-library": "0.1.0",
+    "@storybook/testing-library": "0.2.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
