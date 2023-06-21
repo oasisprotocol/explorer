@@ -2,7 +2,7 @@ import { AppError, AppErrors } from '../../types/errors'
 import { StorageKeys } from '../../types/storage'
 
 export const storage = (storage = localStorage) => {
-  const set = <T = any>(key: StorageKeys, value: T): void => {
+  const set = <T = unknown>(key: StorageKeys, value: T): void => {
     try {
       const serializedValue = JSON.stringify(value)
       storage.setItem(key, serializedValue)
@@ -11,7 +11,7 @@ export const storage = (storage = localStorage) => {
     }
   }
 
-  const get = <T = any>(key: StorageKeys): T | undefined => {
+  const get = <T = unknown>(key: StorageKeys): T | undefined => {
     try {
       const serializedValue = storage.getItem(key)
       if (!serializedValue) {

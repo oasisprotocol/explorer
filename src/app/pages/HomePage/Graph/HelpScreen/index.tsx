@@ -13,6 +13,8 @@ import { useConstant } from '../../../../hooks/useConstant'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
 import { SlideChangeEvent } from '../../../../../types/swiper'
+import { storage } from '../../../../utils/storage'
+import { StorageKeys } from '../../../../../types/storage'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -62,6 +64,8 @@ interface HelpScreenProps {
   setParaTimeStep: (value: ParaTimeSelectorStep) => void
 }
 
+const localStore = storage()
+
 const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const { t } = useTranslation()
   const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
@@ -87,6 +91,8 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
 
   const onGetStartedClick = () => {
     setParaTimeStep(ParaTimeSelectorStep.Explore)
+
+    localStore.set(StorageKeys.MobileHelpScreenShown, true)
   }
 
   return (

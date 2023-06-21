@@ -1,6 +1,10 @@
 import { ParaTimeSelectorStep } from './types'
 import { Layer } from '../../../../oasis-indexer/api'
+import { storage } from '../../../utils/storage'
+import { StorageKeys } from '../../../../types/storage'
 import { exhaustedTypeWarning } from '../../../../types/errors'
+
+const localStore = storage()
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
@@ -12,7 +16,9 @@ export abstract class ParaTimeSelectorUtils {
   }
 
   static showMobileHelpScreen(step: ParaTimeSelectorStep, isMobile: boolean) {
-    if (!isMobile) {
+    const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
+
+    if (!isMobile || mobileHelpScreenShown) {
       return false
     }
 

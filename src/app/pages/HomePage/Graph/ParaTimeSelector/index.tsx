@@ -22,6 +22,8 @@ import { NetworkSelector } from '../NetworkSelector'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
+import { storage } from '../../../../utils/storage'
+import { StorageKeys } from '../../../../../types/storage'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -129,6 +131,9 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   setStep: (value: ParaTimeSelectorStep) => void
 }
 
+const localStore = storage()
+const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
+
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
@@ -161,7 +166,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
-    if (isMobile) {
+    if (isMobile && !mobileHelpScreenShown) {
       setStep(ParaTimeSelectorStep.ShowHelpScreen)
     } else {
       setStep(ParaTimeSelectorStep.Explore)

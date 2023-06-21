@@ -114,7 +114,8 @@
     "notFoundTx": "Transaction not found",
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstTab": "Please check the URL or load the first tab.",
-    "invalidUrl": "Invalid URL"
+    "invalidUrl": "Invalid URL",
+    "storage": "Access to storage denied"
   },
   "footer": {
     "mobileTitle": "OPF",
