@@ -12,7 +12,7 @@ import { SearchResultsList } from '../SearchResultsList'
 describe('SearchResultsView', () => {
   beforeEach(() => {
     jest.useFakeTimers()
-    jest.setSystemTime(new Date(2023, 1, 1))
+    jest.setSystemTime(new Date('2023-01-01T01:01:01Z'))
   })
 
   afterEach(() => {
