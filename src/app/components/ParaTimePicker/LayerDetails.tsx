@@ -121,7 +121,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
           </Typography>
           <LayerStatus isOutOfDate={isOutOfDate} withLabel />
         </Box>
-        <Typography sx={{ fontSize: '12px', color: COLORS.brandExtraDark, pb: 2 }}>
+        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 2 }}>
           {details.description}
         </Typography>
 
@@ -161,7 +161,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
             display: 'flex',
             alignItems: 'center',
             gap: 2,
-            fontSize: '12px',
+            fontSize: '14px',
             fontWeight: 400,
           }}
         >

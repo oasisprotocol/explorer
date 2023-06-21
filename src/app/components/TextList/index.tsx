@@ -12,7 +12,7 @@ const StyledList = styled(List)(() => ({
   listStyleType: 'disc',
   listStylePosition: 'inside',
   color: COLORS.brandExtraDark,
-  fontSize: '12px',
+  fontSize: '14px',
   '& ul': {
     paddingTop: 0,
   },
