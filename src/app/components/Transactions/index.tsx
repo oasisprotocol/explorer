@@ -89,7 +89,7 @@ export const Transactions: FC<TransactionsProps> = ({
     key: transaction.hash,
     data: [
       {
-        content: <TransactionStatusIcon success={transaction.success} />,
+        content: <TransactionStatusIcon success={transaction.success} error={transaction.error} />,
         key: 'success',
       },
       ...(verbose && canHaveEncryption

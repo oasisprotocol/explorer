@@ -21,7 +21,6 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
 import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionLogs } from '../../components/Transactions/Logs'
@@ -72,19 +71,6 @@ function useWantedTransaction(
 
 const StyledAlert = styled(Alert)(() => ({
   marginBottom: '1em',
-}))
-
-const ErrorBox = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '28px',
-  fontSize: '12px',
-  backgroundColor: COLORS.grayLight,
-  color: COLORS.errorIndicatorBackground,
-  borderRadius: 10,
-  paddingLeft: 12,
-  paddingRight: 12,
 }))
 
 export const TransactionDetailPage: FC = () => {
@@ -251,12 +237,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.status')}</dt>
           <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
-            <TransactionStatusIcon success={transaction.success} withText={true} />
-            {transaction.error && (
-              <ErrorBox>
-                {transaction.error.message} ({t('errors.code')} {transaction.error.code})
-              </ErrorBox>
-            )}
+            <TransactionStatusIcon success={transaction.success} error={transaction.error} withText={true} />
           </dd>
 
           <dt>{t('common.block')}</dt>
