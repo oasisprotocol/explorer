@@ -387,13 +387,7 @@ export const TransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.resultNonce')}</dt>
                   <dd>
-                    <Typography
-                      variant="mono"
-                      sx={{
-                        fontWeight: 400,
-                        overflowWrap: 'anywhere',
-                      }}
-                    >
+                    <Typography variant="mono" sx={{ fontWeight: 400 }}>
                       {transaction.encryption_envelope.result_nonce}
                     </Typography>
                   </dd>
