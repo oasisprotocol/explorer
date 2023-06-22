@@ -116,6 +116,7 @@ export const HomePage: FC = () => {
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+  const [showInfoScreen, setShowInfoScreen] = useState<boolean>(false)
 
   const onFocusChange = (hasFocus: boolean) => {
     setSearchHasFocus(hasFocus)
@@ -123,6 +124,7 @@ export const HomePage: FC = () => {
 
   const onToggleInfoScreenClick = () => {
     setStep(ParaTimeSelectorStep.ShowHelpScreen)
+    setShowInfoScreen(prevState => !prevState)
   }
 
   const searchVariant: SearchVariant = isMobile ? 'icon' : 'button'
@@ -144,7 +146,12 @@ export const HomePage: FC = () => {
           </SearchInputContainer>
           <ThemeByNetwork network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
-              <ParaTimeSelector step={step} setStep={setStep} disabled={searchHasFocus} />
+              <ParaTimeSelector
+                step={step}
+                setStep={setStep}
+                disabled={searchHasFocus}
+                showInfoScreen={showInfoScreen}
+              />
             </Box>
           </ThemeByNetwork>
         </Content>

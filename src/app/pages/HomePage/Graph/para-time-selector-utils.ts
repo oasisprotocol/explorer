@@ -15,10 +15,10 @@ export abstract class ParaTimeSelectorUtils {
     return step === ParaTimeSelectorStep.EnableExplore
   }
 
-  static showMobileHelpScreen(step: ParaTimeSelectorStep, isMobile: boolean) {
+  static showMobileHelpScreen(step: ParaTimeSelectorStep, isMobile: boolean, showInfoScreen: boolean) {
     const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
 
-    if (!isMobile || mobileHelpScreenShown) {
+    if (!showInfoScreen && (!isMobile || mobileHelpScreenShown)) {
       return false
     }
 

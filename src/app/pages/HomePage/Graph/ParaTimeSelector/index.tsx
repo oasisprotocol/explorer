@@ -129,12 +129,12 @@ const QuickPinchZoomInner = styled('div')(() => ({
 interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   step: ParaTimeSelectorStep
   setStep: (value: ParaTimeSelectorStep) => void
+  showInfoScreen: boolean
 }
 
 const localStore = storage()
-const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep }) => {
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep, showInfoScreen }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -166,6 +166,8 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
+    const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
+
     if (isMobile && !mobileHelpScreenShown) {
       setStep(ParaTimeSelectorStep.ShowHelpScreen)
     } else {
@@ -228,7 +230,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
               {t('home.exploreBtnText')}
             </ExploreBtn>
           )}
-          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile, showInfoScreen) && (
             <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>
