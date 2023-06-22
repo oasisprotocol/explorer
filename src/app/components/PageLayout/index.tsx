@@ -8,7 +8,7 @@ import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
-import { useIsApiOffline } from '../OfflineBanner/hook'
+import { useIsApiReachable } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
 import useResizeObserver from 'use-resize-observer'
 
@@ -24,7 +24,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
-  const isApiOffline = useIsApiOffline(scope?.network || Network.mainnet)
+  const isApiReachable = useIsApiReachable(scope?.network || Network.mainnet).reachable
   const bannersRef = useRef<HTMLDivElement | null>(null)
 
   const { height: bannersHeight } = useResizeObserver<Element>({
@@ -80,7 +80,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
                 mb: 6,
               }}
             >
-              <Search scope={scope} variant={isTablet ? 'icon' : 'button'} disabled={isApiOffline} />
+              <Search scope={scope} variant={isTablet ? 'icon' : 'button'} disabled={!isApiReachable} />
             </Box>
           )}
           <StyledMain>{children}</StyledMain>

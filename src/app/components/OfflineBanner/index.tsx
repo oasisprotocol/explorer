@@ -4,8 +4,9 @@ import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import { useRequiredScopeParam, useScopeParam } from '../../hooks/useScopeParam'
 import { getNetworkNames, Network } from '../../../types/network'
-import { useIsApiOffline, useRuntimeFreshness } from './hook'
+import { useIsApiReachable, useRuntimeFreshness } from './hook'
 import { getNameForScope } from '../../../types/searchScope'
+import { exhaustedTypeWarning } from '../../../types/errors'
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   position: 'sticky',
@@ -26,12 +27,19 @@ export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNe
   const scope = useScopeParam()
   const { t } = useTranslation()
   const targetNetwork = wantedNetwork || scope?.network || Network.mainnet
-  const isNetworkOffline = useIsApiOffline(targetNetwork)
+  const isNetworkReachable = useIsApiReachable(targetNetwork)
   const networkNames = getNetworkNames(t)
   const target = networkNames[targetNetwork]
-  return isNetworkOffline ? (
-    <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
-  ) : null
+  if (!isNetworkReachable.reachable) {
+    if (isNetworkReachable.reason === 'userOffline') {
+      return <StyledAlert severity="warning">{t('home.userOffline', { target })}</StyledAlert>
+    }
+    if (isNetworkReachable.reason === 'apiOffline') {
+      return <StyledAlert severity="warning">{t('home.apiOffline', { target })}</StyledAlert>
+    }
+    exhaustedTypeWarning('Unexpected isNetworkReachable reason', isNetworkReachable.reason)
+  }
+  return null
 }
 
 export const RuntimeOfflineBanner: FC = () => {

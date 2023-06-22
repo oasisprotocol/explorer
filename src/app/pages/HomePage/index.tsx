@@ -16,7 +16,7 @@ import { BuildBanner } from '../../components/BuildBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
-import { useIsApiOffline } from '../../components/OfflineBanner/hook'
+import { useIsApiReachable } from '../../components/OfflineBanner/hook'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -112,7 +112,7 @@ export const HomePage: FC = () => {
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const { isMobile } = useScreenSize()
   const { network } = useSearchQueryNetworkParam()
-  const isApiOffline = useIsApiOffline(network)
+  const isApiReachable = useIsApiReachable(network)
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
@@ -139,7 +139,7 @@ export const HomePage: FC = () => {
           </LogotypeBox>
           <SearchInputContainer>
             <SearchInputBox>
-              <Search disabled={isApiOffline} variant={searchVariant} onFocusChange={onFocusChange} />
+              <Search disabled={!isApiReachable} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
           </SearchInputContainer>
           <ThemeByNetwork network={network}>

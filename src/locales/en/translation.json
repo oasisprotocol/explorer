@@ -277,6 +277,7 @@
   },
   "home": {
     "apiOffline": "Our {{ target }} API is offline. We’re trying to reconnect",
+    "userOffline": "You are offline. We’re trying to reconnect",
     "runtimeOutOfDate": "We don't have fully up-to-date data about our {{ target }}. The data displayed here might be out of date.",
     "runtimeOutOfDateSince": "The last update we have about our {{ target }} is from {{ lastUpdate }}. The data displayed here might be out of date.",
     "blocks": "Blocks",
