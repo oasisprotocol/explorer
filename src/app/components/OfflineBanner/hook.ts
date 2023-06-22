@@ -47,7 +47,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
       outOfDate: true,
     }
   }
-  const timeSinceLastUpdate = Date.now() - new Date(data.latest_update).getTime()
+  const timeSinceLastUpdate = query.dataUpdatedAt - new Date(data.latest_update).getTime()
   const { outOfDateThreshold } = paraTimesConfig[scope.layer]
   return {
     outOfDate: timeSinceLastUpdate > outOfDateThreshold,
