@@ -8,8 +8,8 @@ exports[`formatDistanceToNow should format future dates 1`] = `
   "1 hr",
   "1 day",
   "1 mo",
-  "1 yr",
-  "2 qtrs",
+  "12 mo",
+  "7 mo",
 ]
 `;
 
@@ -21,7 +21,7 @@ exports[`formatDistanceToNow should format past dates 1`] = `
   "1 hr",
   "1 day",
   "1 mo",
-  "4 qtrs",
-  "3 qtrs",
+  "12 mo",
+  "9 mo",
 ]
 `;
