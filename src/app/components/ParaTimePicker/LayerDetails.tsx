@@ -81,7 +81,7 @@ const contentMinHeight = '270px'
 export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const { isTablet } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
@@ -119,7 +119,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
           <Typography sx={{ fontSize: 24, color: COLORS.brandDark, fontWeight: 700, mr: 3 }} component="span">
             {getNameForScope(t, { network, layer })}
           </Typography>
-          <LayerStatus isOutOfDate={isOutOfDate} withLabel />
+          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile} />
         </Box>
         <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
           {details.description}
