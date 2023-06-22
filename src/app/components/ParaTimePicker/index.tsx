@@ -203,12 +203,13 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
 
           <Button
             onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-            disabled={selectedNetwork === network && selectedLayer === layer}
             color="primary"
             variant="contained"
             size="large"
           >
-            {t('common.select')}
+            {selectedNetwork === network && selectedLayer === layer
+              ? t('paraTimePicker.goToDashboard')
+              : t('common.select')}
           </Button>
         </ActionBar>
       </StyledContent>
