@@ -184,7 +184,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             </Grid>
           )}
           {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails)) && (
-            <Grid xs={12} md={showNetworkMenu ? 4 : 7} lg={6}>
+            <Grid xs={12} md={6}>
               <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
             </Grid>
           )}
