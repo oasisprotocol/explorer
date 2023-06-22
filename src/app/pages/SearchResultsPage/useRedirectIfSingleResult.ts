@@ -4,6 +4,7 @@ import { SearchResults } from './hooks'
 import { RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
+import { exhaustedTypeWarning } from '../../../types/errors'
 
 /** If search only finds one result then redirect to it */
 export function useRedirectIfSingleResult(scope: SearchScope | undefined, results: SearchResults) {
@@ -30,11 +31,7 @@ export function useRedirectIfSingleResult(scope: SearchScope | undefined, result
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
         break
       default:
-        // The conversion of any is necessary here, since we have covered all possible subtype,
-        // and TS is concluding that the only possible remaining type is "never".
-        // However, if we all more result types in the future and forget to add the appropriate case here,
-        // we might hit this, hence the warning.
-        console.log(`Don't know how to redirect to unknown search result type ${(item as any).resultType}`)
+        exhaustedTypeWarning('Unexpected result type', item)
     }
   }
 

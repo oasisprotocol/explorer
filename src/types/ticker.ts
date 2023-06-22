@@ -6,7 +6,7 @@ export type NativeTicker = (typeof Ticker)[keyof typeof Ticker]
 export const Ticker = {
   ROSE: 'ROSE',
   TEST: 'TEST',
-}
+} as const
 
 const networkTicker: Record<Network, NativeTicker> = {
   [Network.mainnet]: Ticker.ROSE,

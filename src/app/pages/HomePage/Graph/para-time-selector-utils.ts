@@ -1,5 +1,6 @@
 import { ParaTimeSelectorStep } from './types'
 import { Layer } from '../../../../oasis-indexer/api'
+import { exhaustedTypeWarning } from '../../../../types/errors'
 
 export abstract class ParaTimeSelectorUtils {
   static getIsGraphTransparent(step: ParaTimeSelectorStep) {
@@ -28,7 +29,11 @@ export abstract class ParaTimeSelectorUtils {
       case Layer.emerald:
       case Layer.cipher:
         return true
+      case Layer.consensus:
+      case undefined:
+        return false
       default:
+        exhaustedTypeWarning('Unexpected layer', layer)
         return false
     }
   }

@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
-import { AppError, AppErrors } from '../../../types/errors'
+import { AppError, AppErrors, exhaustedTypeWarning } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
@@ -49,7 +49,12 @@ const getContent = (t: TFunction, layer: Layer) => {
         link: docs.sapphire,
         title: t('common.sapphire'),
       }
+    case Layer.cipher:
+      throw new AppError(AppErrors.UnsupportedLayer)
+    case Layer.consensus:
+      throw new AppError(AppErrors.UnsupportedLayer)
     default:
+      exhaustedTypeWarning('Unexpected layer', layer)
       throw new AppError(AppErrors.UnsupportedLayer)
   }
 }
