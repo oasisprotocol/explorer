@@ -112,7 +112,7 @@ export const HomePage: FC = () => {
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
   const { isMobile } = useScreenSize()
   const { network } = useSearchQueryNetworkParam()
-  const isApiReachable = useIsApiReachable(network)
+  const isApiReachable = useIsApiReachable(network).reachable
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
