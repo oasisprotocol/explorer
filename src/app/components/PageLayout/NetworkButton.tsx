@@ -29,20 +29,24 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
     transitionProperty: 'background-color, color',
     transitionDuration: `${theme.transitions.duration.standard}ms`,
     transitionTimingFunction: theme.transitions.easing.easeInOut,
+    padding: `0 ${theme.spacing(4)}`,
+    margin: 0,
+  },
+
+  [`& .${buttonClasses.endIcon}`]: {
+    transitionProperty: 'background-color, color',
+    transitionDuration: `${theme.transitions.duration.standard}ms`,
+    transitionTimingFunction: theme.transitions.easing.easeInOut,
     height: '47px',
     display: 'flex',
     alignItems: 'center',
     padding: `0 ${theme.spacing(4)}`,
-    borderTopLeftRadius: '12px',
-    borderBottomLeftRadius: '12px',
-    borderRightWidth: theme.spacing(1),
-    borderRightStyle: 'solid',
-    borderRightColor: theme.palette.layout.secondary,
+    borderTopRightRadius: '12px',
+    borderBottomRightRadius: '12px',
+    borderLeftWidth: theme.spacing(1),
+    borderLeftStyle: 'solid',
+    borderLeftColor: theme.palette.layout.secondary,
     backgroundColor: COLORS.white,
-  },
-
-  [`& .${buttonClasses.endIcon}`]: {
-    padding: `0 ${theme.spacing(4)}`,
   },
 
   '&:hover, &:focus-visible': {
@@ -50,7 +54,7 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
     color: COLORS.white,
     borderColor: theme.palette.layout.hoverBorder,
 
-    [`& .${buttonClasses.startIcon}`]: {
+    [`& .${buttonClasses.endIcon}`]: {
       color: COLORS.brandDark,
       backgroundColor: theme.palette.layout.secondaryBackground,
       borderColor: theme.palette.layout.hoverBorder,
@@ -63,7 +67,6 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(3),
-  paddingLeft: theme.spacing(3),
 }))
 
 type NetworkButtonProps = {
