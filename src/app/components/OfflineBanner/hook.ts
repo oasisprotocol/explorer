@@ -5,11 +5,13 @@ import { AppError, AppErrors } from '../../../types/errors'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { paraTimesConfig } from '../../../config'
 
-export const useIsApiOffline = (network: Network): false | 'userOffline' | 'apiOffline' => {
+export const useIsApiReachable = (
+  network: Network,
+): { reachable: true } | { reachable: false; reason: 'userOffline' | 'apiOffline' } => {
   const query = useGetStatus(network)
-  if (query.isPaused) return 'userOffline'
-  if (query.isFetched && !query.isSuccess) return 'apiOffline'
-  return false
+  if (query.isPaused) return { reachable: false, reason: 'userOffline' }
+  if (query.isFetched && !query.isSuccess) return { reachable: false, reason: 'apiOffline' }
+  return { reachable: true }
 }
 
 export type FreshnessInfo = {
@@ -18,7 +20,7 @@ export type FreshnessInfo = {
 }
 
 export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
-  const isApiOffline = useIsApiOffline(scope.network)
+  const isApiReachable = useIsApiReachable(scope.network).reachable
   if (scope.layer === Layer.consensus) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
@@ -30,7 +32,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
     }
   }
 
-  if (isApiOffline) {
+  if (isApiReachable) {
     // The error state will be handled by NetworkOfflineBanner,
     // no need to display another banner whining about obsolete data.
     return {
