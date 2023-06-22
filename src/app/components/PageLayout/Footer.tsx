@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
 import Link from '@mui/material/Link'
+import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
-import { COLORS } from '../../../styles/theme/colors'
 import { github } from '../../utils/externalLinks'
 
 const FooterBox = styled(Box)(({ theme }) => ({
@@ -28,6 +28,7 @@ interface FooterProps {
 }
 
 export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
+  const theme = useTheme()
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
@@ -54,7 +55,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                         href={`${github.releaseTag}${process.env.REACT_APP_BUILD_VERSION}`}
                         rel="noopener noreferrer"
                         target="_blank"
-                        sx={{ color: COLORS.white }}
+                        sx={{ color: theme.palette.layout.main }}
                       />
                     ) : (
                       <>-</>
@@ -64,7 +65,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                         href={`${github.commit}${process.env.REACT_APP_BUILD_SHA}`}
                         rel="noopener noreferrer"
                         target="_blank"
-                        sx={{ color: COLORS.white }}
+                        sx={{ color: theme.palette.layout.main }}
                       />
                     ),
                   }}
