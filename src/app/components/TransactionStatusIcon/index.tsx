@@ -6,6 +6,8 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
+import { TxError } from '../../../oasis-indexer/api'
+import Tooltip from '@mui/material/Tooltip'
 
 type TxStatus = 'unknown' | 'success' | 'failure'
 
@@ -48,16 +50,30 @@ const StyledBox = styled(Box, {
   }
 })
 
+const ErrorBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: '28px',
+  fontSize: '12px',
+  backgroundColor: COLORS.grayLight,
+  color: COLORS.errorIndicatorBackground,
+  borderRadius: 10,
+  paddingLeft: 12,
+  paddingRight: 12,
+}))
+
 type TransactionStatusIconProps = {
   /**
    * Did the transaction succeed?
    * A missing value means unknown. (For encrypted transactions).
    */
-  success?: boolean
+  success: undefined | boolean
+  error: undefined | TxError
   withText?: boolean
 }
 
-export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success, withText }) => {
+export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success, error, withText }) => {
   const { t } = useTranslation()
   const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
   const statusLabel: Record<TxStatus, string> = {
@@ -65,16 +81,30 @@ export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success,
     success: t('common.success'),
     failure: t('common.failed'),
   }
+  const errorMessage = error ? `${error.message} (${t('errors.code')} ${error.code})` : undefined
 
-  return (
-    <StyledBox success={success} withText={withText}>
-      {withText && (
-        <span>
+  if (withText) {
+    return (
+      <>
+        <StyledBox success={success} error={error} withText={withText}>
           {statusLabel[status]}
           &nbsp;
-        </span>
-      )}
-      {statusIcon[status]}
-    </StyledBox>
-  )
+          {statusIcon[status]}
+        </StyledBox>
+        {error && <ErrorBox>{errorMessage}</ErrorBox>}
+      </>
+    )
+  } else {
+    return (
+      <Tooltip
+        arrow
+        placement="top"
+        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
+      >
+        <StyledBox success={success} error={error} withText={withText}>
+          {statusIcon[status]}
+        </StyledBox>
+      </Tooltip>
+    )
+  }
 }
