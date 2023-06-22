@@ -115,7 +115,7 @@
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstTab": "Please check the URL or load the first tab.",
     "invalidUrl": "Invalid URL",
-    "storage": "Access to storage denied"
+    "storage": "Access to browser storage denied"
   },
   "footer": {
     "mobileTitle": "OPF",
