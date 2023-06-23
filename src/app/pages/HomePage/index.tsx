@@ -124,7 +124,7 @@ export const HomePage: FC = () => {
 
   const onToggleInfoScreenClick = () => {
     setStep(ParaTimeSelectorStep.ShowHelpScreen)
-    setShowInfoScreen(prevState => !prevState)
+    setShowInfoScreen(true)
   }
 
   const searchVariant: SearchVariant = isMobile ? 'icon' : 'button'
