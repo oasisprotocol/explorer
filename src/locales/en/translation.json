@@ -263,7 +263,7 @@
     "readMore": "Read more about {{ layer }} on {{ network }} in Oasis Docs",
     "rpcHttp": "RPC HTTP endpoint: {{ endpoint }}",
     "rpcWebSockets": "RPC WebSockets endpoint: {{ endpoint }}",
-    "selected": "(currently active)",
+    "selected": "(active)",
     "toggleNetworkMenu": "Toggle networks menu",
     "viewNetworks": "View Networks",
     "viewParaTimes": "View ParaTimes",
