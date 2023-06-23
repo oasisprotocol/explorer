@@ -3,17 +3,13 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Drawer, { drawerClasses } from '@mui/material/Drawer'
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Logotype } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
@@ -90,7 +86,6 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
-  const [showNetworkMenu, setShowNetworkMenu] = useState(true)
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
   const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(
@@ -104,21 +99,9 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   return (
     <StyledParaTimePickerContent>
       {!isTablet && (
-        <>
-          <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-            <Logotype color={COLORS.brandExtraDark} showText={true} />
-          </Box>
-          <IconButton
-            aria-label={t('paraTimePicker.toggleNetworkMenu')}
-            onClick={() => setShowNetworkMenu(!showNetworkMenu)}
-            sx={{
-              color: COLORS.brandDark,
-              ml: 3,
-            }}
-          >
-            {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
-          </IconButton>
-        </>
+        <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
+          <Logotype color={COLORS.brandExtraDark} showText={true} />
+        </Box>
       )}
       {isTablet && (
         <>
@@ -151,13 +134,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
       <Divider />
       <StyledContent>
         <Grid container>
-          {!showNetworkMenu && !isTablet && (
-            <Grid xs={1} sx={{ maxWidth: '40px' }}>
-              <NetworkMenuIcon network={selectedNetwork} />
-            </Grid>
-          )}
-          {((!isTablet && showNetworkMenu) ||
-            (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
+          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
             <Grid xs={12} md={3}>
               <NetworkMenu
                 activeNetwork={network}

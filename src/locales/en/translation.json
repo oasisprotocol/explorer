@@ -264,7 +264,6 @@
     "rpcHttp": "RPC HTTP endpoint: {{ endpoint }}",
     "rpcWebSockets": "RPC WebSockets endpoint: {{ endpoint }}",
     "selected": "(active)",
-    "toggleNetworkMenu": "Toggle networks menu",
     "viewNetworks": "View Networks",
     "viewParaTimes": "View ParaTimes",
     "mainnet": {
