@@ -1,11 +1,6 @@
 @import '../../node_modules/@fontsource-variable/figtree/index.css';
 @import '../../node_modules/@fontsource-variable/roboto-mono/index.css';
 
-:root {
-  --app-header-height: 0px;
-  --app-banners-height: 0px;
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -16,7 +11,8 @@ html {
   font-style: normal;
   font-display: swap;
   font-weight: 100 700;
-  src: url('../../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2') format('woff2');
+  src: url('../../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2')
+    format('woff2');
   unicode-range: U+2026;
 }
 

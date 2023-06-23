@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Drawer, { drawerClasses } from '@mui/material/Drawer'
+import Drawer from '@mui/material/Drawer'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Logotype } from '../PageLayout/Logotype'
@@ -17,6 +17,8 @@ import { RouteUtils } from '../../utils/route-utils'
 import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { MobileNetworkButton } from '../PageLayout/NetworkButton'
+import { useRuntimeFreshness } from '../OfflineBanner/hook'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -24,16 +26,10 @@ type ParaTimePickerProps = {
   open: boolean
 }
 
-const ParaTimePickerDrawer = styled(Drawer)(() => ({
-  [`.${drawerClasses.root}`]: {
-    height: '100vh',
-  },
-}))
-
 export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
-  <ParaTimePickerDrawer anchor="top" open={open} onClose={onClose}>
+  <Drawer anchor="top" open={open} onClose={onClose}>
     <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
-  </ParaTimePickerDrawer>
+  </Drawer>
 )
 
 const StyledParaTimePickerContent = styled(Box)(({ theme }) => ({
@@ -61,8 +57,12 @@ const TabletBackButton = styled(Button)({
   textDecoration: 'none',
 })
 
-const TabletActionBar = styled(Box)(() => ({
-  minHeight: '50px',
+const TabletActionBar = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  minHeight: '55px',
+  paddingBottom: theme.spacing(3),
 }))
 
 const ActionBar = styled(Box)(({ theme }) => ({
@@ -83,7 +83,7 @@ enum ParaTimePickerTabletStep {
 }
 
 const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
-  const { isTablet } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
@@ -96,17 +96,16 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
   }
   const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
+  const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return (
     <StyledParaTimePickerContent>
-      {!isTablet && (
-        <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-          <Logotype color={COLORS.brandExtraDark} showText={true} />
-        </Box>
-      )}
+      <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
+        <Logotype color={COLORS.brandExtraDark} showText={!isMobile} />
+      </Box>
       {isTablet && (
-        <>
-          <TabletActionBar>
+        <TabletActionBar>
+          <div>
             {tabletStep === ParaTimePickerTabletStep.ParaTime && (
               <TabletBackButton
                 variant="text"
@@ -129,8 +128,14 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                 {t('paraTimePicker.viewParaTimes')}
               </TabletBackButton>
             )}
-          </TabletActionBar>
-        </>
+          </div>
+          <MobileNetworkButton
+            isOutOfDate={outOfDate}
+            network={network}
+            layer={layer}
+            onClick={handleConfirm}
+          />
+        </TabletActionBar>
       )}
       <Divider />
       <StyledContent>

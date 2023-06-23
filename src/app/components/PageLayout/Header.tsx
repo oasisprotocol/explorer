@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
@@ -8,35 +8,18 @@ import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
-import useResizeObserver from 'use-resize-observer'
 
 export const Header: FC = () => {
   const theme = useTheme()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isMobile } = useScreenSize()
   const scope = useScopeParam()
   const scrollTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
   })
-  const headerRef = useRef<HTMLDivElement | null>(null)
-
-  const { height: headerHeight } = useResizeObserver<Element>({
-    ref: headerRef,
-  })
-
-  useEffect(() => {
-    if (!isTablet) {
-      return
-    }
-
-    if (headerRef.current !== null) {
-      document.body.style.setProperty('--app-header-height', `${headerHeight?.toFixed(2) || 0}px`)
-    }
-  }, [isTablet, headerHeight])
 
   return (
     <AppBar
-      ref={headerRef}
       position="sticky"
       sx={{
         transitionProperty: 'background-color',
