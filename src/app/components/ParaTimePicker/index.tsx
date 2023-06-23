@@ -2,18 +2,14 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Drawer, { drawerClasses } from '@mui/material/Drawer'
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
+import Drawer from '@mui/material/Drawer'
 import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Logotype } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { NetworkMenuIcon } from './NetworkMenuIcon'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
@@ -21,6 +17,8 @@ import { RouteUtils } from '../../utils/route-utils'
 import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { MobileNetworkButton } from '../PageLayout/NetworkButton'
+import { useRuntimeFreshness } from '../OfflineBanner/hook'
 
 type ParaTimePickerProps = {
   onClose: () => void
@@ -28,16 +26,10 @@ type ParaTimePickerProps = {
   open: boolean
 }
 
-const ParaTimePickerDrawer = styled(Drawer)(() => ({
-  [`.${drawerClasses.root}`]: {
-    height: '100vh',
-  },
-}))
-
 export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
-  <ParaTimePickerDrawer anchor="top" open={open} onClose={onClose}>
+  <Drawer anchor="top" open={open} onClose={onClose}>
     <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
-  </ParaTimePickerDrawer>
+  </Drawer>
 )
 
 const StyledParaTimePickerContent = styled(Box)(({ theme }) => ({
@@ -65,8 +57,12 @@ const TabletBackButton = styled(Button)({
   textDecoration: 'none',
 })
 
-const TabletActionBar = styled(Box)(() => ({
-  minHeight: '50px',
+const TabletActionBar = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  minHeight: '55px',
+  paddingBottom: theme.spacing(3),
 }))
 
 const ActionBar = styled(Box)(({ theme }) => ({
@@ -87,10 +83,9 @@ enum ParaTimePickerTabletStep {
 }
 
 const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
-  const { isTablet } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
-  const [showNetworkMenu, setShowNetworkMenu] = useState(isTablet || network !== Network.mainnet)
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
   const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(
@@ -100,29 +95,17 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
     setSelectedNetwork(newNetwork)
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
   }
+  const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
+  const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return (
     <StyledParaTimePickerContent>
-      {!isTablet && (
-        <>
-          <Box sx={{ mb: 5, color: 'red', position: 'relative' }}>
-            <Logotype color={COLORS.brandExtraDark} showText={true} />
-          </Box>
-          <IconButton
-            aria-label={t('paraTimePicker.toggleNetworkMenu')}
-            onClick={() => setShowNetworkMenu(!showNetworkMenu)}
-            sx={{
-              color: COLORS.brandDark,
-              ml: 3,
-            }}
-          >
-            {showNetworkMenu ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
-          </IconButton>
-        </>
-      )}
+      <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
+        <Logotype color={COLORS.brandExtraDark} showText={!isMobile} />
+      </Box>
       {isTablet && (
-        <>
-          <TabletActionBar>
+        <TabletActionBar>
+          <div>
             {tabletStep === ParaTimePickerTabletStep.ParaTime && (
               <TabletBackButton
                 variant="text"
@@ -145,19 +128,19 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
                 {t('paraTimePicker.viewParaTimes')}
               </TabletBackButton>
             )}
-          </TabletActionBar>
-        </>
+          </div>
+          <MobileNetworkButton
+            isOutOfDate={outOfDate}
+            network={network}
+            layer={layer}
+            onClick={handleConfirm}
+          />
+        </TabletActionBar>
       )}
       <Divider />
       <StyledContent>
         <Grid container>
-          {!showNetworkMenu && !isTablet && (
-            <Grid xs={1} sx={{ maxWidth: '40px' }}>
-              <NetworkMenuIcon network={selectedNetwork} />
-            </Grid>
-          )}
-          {((!isTablet && showNetworkMenu) ||
-            (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
+          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
             <Grid xs={12} md={3}>
               <NetworkMenu
                 activeNetwork={network}
@@ -184,8 +167,12 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             </Grid>
           )}
           {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails)) && (
-            <Grid xs={12} md={showNetworkMenu ? 4 : 7} lg={6}>
-              <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
+            <Grid xs={12} md={6}>
+              <LayerDetails
+                handleConfirm={handleConfirm}
+                selectedLayer={selectedLayer}
+                network={selectedNetwork}
+              />
             </Grid>
           )}
         </Grid>
@@ -201,14 +188,10 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             {t('common.cancel')}
           </Button>
 
-          <Button
-            onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-            disabled={selectedNetwork === network && selectedLayer === layer}
-            color="primary"
-            variant="contained"
-            size="large"
-          >
-            {t('common.select')}
+          <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
+            {selectedNetwork === network && selectedLayer === layer
+              ? t('paraTimePicker.goToDashboard')
+              : t('common.select')}
           </Button>
         </ActionBar>
       </StyledContent>

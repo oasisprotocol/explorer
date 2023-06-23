@@ -8,13 +8,15 @@ type TextListProps = {
   children: ReactNode
 }
 
-const StyledList = styled(List)(() => ({
+const StyledList = styled(List)(({ theme }) => ({
   listStyleType: 'disc',
-  listStylePosition: 'inside',
+  listStylePosition: 'outside',
   color: COLORS.brandExtraDark,
-  fontSize: '12px',
+  fontSize: '14px',
+  paddingLeft: theme.spacing(4),
   '& ul': {
     paddingTop: 0,
+    paddingBottom: 0,
   },
 }))
 
@@ -22,7 +24,7 @@ export const TextList: FC<TextListProps> = ({ children }) => <StyledList>{childr
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   display: 'list-item',
-  paddingTop: 0,
+  padding: 0,
   paddingBottom: theme.spacing(1),
 }))
 
