@@ -95,6 +95,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
     setSelectedNetwork(newNetwork)
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
   }
+  const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
 
   return (
     <StyledParaTimePickerContent>
@@ -162,7 +163,11 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
           )}
           {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails)) && (
             <Grid xs={12} md={6}>
-              <LayerDetails activeLayer={layer} selectedLayer={selectedLayer} network={selectedNetwork} />
+              <LayerDetails
+                handleConfirm={handleConfirm}
+                selectedLayer={selectedLayer}
+                network={selectedNetwork}
+              />
             </Grid>
           )}
         </Grid>
@@ -178,12 +183,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             {t('common.cancel')}
           </Button>
 
-          <Button
-            onClick={() => onConfirm(selectedNetwork!, selectedLayer!)}
-            color="primary"
-            variant="contained"
-            size="large"
-          >
+          <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
             {selectedNetwork === network && selectedLayer === layer
               ? t('paraTimePicker.goToDashboard')
               : t('common.select')}

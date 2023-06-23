@@ -2,10 +2,12 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import Link from '@mui/material/Link'
+import { styled } from '@mui/material/styles'
 import { Circle } from '../Circle'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
@@ -69,8 +71,21 @@ const getDetails = (t: TFunction): Details => ({
   },
 })
 
+export const StyledButton = styled(Button)(({ theme }) => ({
+  height: 30,
+  paddingLeft: 0,
+  marginRight: theme.spacing(3),
+  fontSize: 24,
+  color: COLORS.brandDark,
+  fontWeight: 700,
+  '&&:hover, &&:active': {
+    color: COLORS.brandDark,
+    textDecoration: 'none',
+  },
+}))
+
 type LayerDetailsProps = {
-  activeLayer: Layer
+  handleConfirm: () => void
   network: Network
   selectedLayer: Layer
 }
@@ -78,7 +93,7 @@ type LayerDetailsProps = {
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) => {
+export const LayerDetails: FC<LayerDetailsProps> = ({ handleConfirm, network, selectedLayer }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
@@ -113,12 +128,12 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ network, selectedLayer }) 
           sx={{
             display: 'flex',
             alignItems: 'center',
-            pb: 2,
+            pb: 3,
           }}
         >
-          <Typography sx={{ fontSize: 24, color: COLORS.brandDark, fontWeight: 700, mr: 3 }} component="span">
+          <StyledButton variant="text" onClick={handleConfirm}>
             {getNameForScope(t, { network, layer })}
-          </Typography>
+          </StyledButton>
           <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile} />
         </Box>
         <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
