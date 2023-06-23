@@ -1,10 +1,12 @@
 import { AppError, AppErrors } from '../../types/errors'
 import { StorageKeys } from '../../types/storage'
 
-type StorageType = string
+interface StorageType {
+  [StorageKeys.MobileHelpScreenShown]: boolean
+}
 
 export const storage = (storage = localStorage) => {
-  const set = <T = StorageType>(key: StorageKeys, value: T): void => {
+  const set = <T extends keyof StorageType>(key: T, value: StorageType[T]): void => {
     try {
       const serializedValue = JSON.stringify(value)
       storage.setItem(key, serializedValue)
@@ -13,7 +15,7 @@ export const storage = (storage = localStorage) => {
     }
   }
 
-  const get = <T = StorageType>(key: StorageKeys): T | undefined => {
+  const get = <T extends keyof StorageType>(key: T): StorageType[T] | undefined => {
     try {
       const serializedValue = storage.getItem(key)
       if (!serializedValue) {
