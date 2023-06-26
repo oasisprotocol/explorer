@@ -21,7 +21,6 @@ interface LineChartProps<T extends object> extends Formatters {
   tickMargin?: number
   tooltipActiveDotRadius?: number
   withLabels?: boolean
-  tickMark?: boolean
 }
 
 const LineChartCmp = <T extends object>({
@@ -34,7 +33,6 @@ const LineChartCmp = <T extends object>({
   tickMargin = 0,
   tooltipActiveDotRadius = 5,
   withLabels,
-  tickMark,
 }: LineChartProps<T>): ReactElement => {
   const { t } = useTranslation()
 
@@ -58,23 +56,22 @@ const LineChartCmp = <T extends object>({
         <YAxis
           domain={withLabels ? [0, 'auto'] : ['dataMin', 'dataMax']}
           axisLine={false}
+          interval={0}
           tickLine={false}
           mirror={!withLabels}
           tick={withLabels ? { fill: COLORS.brandDark, strokeWidth: 0 } : false}
           type="number"
           tickMargin={tickMargin}
-          tickFormatter={tick => {
-            return tickMark
-              ? t('common.valuePair', {
-                  value: tick,
-                  formatParams: {
-                    value: {
-                      notation: 'compact',
-                    } satisfies Intl.NumberFormatOptions,
-                  },
-                })
-              : tick
-          }}
+          tickFormatter={tick =>
+            t('common.valuePair', {
+              value: tick,
+              formatParams: {
+                value: {
+                  notation: 'compact',
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })
+          }
         />
         <Tooltip
           cursor={false}
