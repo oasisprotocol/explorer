@@ -44,29 +44,28 @@ const BarChartCmp = <T extends object>({
     <ResponsiveContainer width="100%">
       <RechartsBarChart data={data} margin={margin ?? { right: 8, bottom: 0, left: 8 }}>
         {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
-        {withLabels && (
-          <YAxis
-            tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
-            axisLine={false}
-            tickLine={false}
-            type="number"
-            interval="preserveStartEnd"
-            tickMargin={0}
-            domain={([dataMin, dataMax]) => [0, Number((dataMax * 1.2).toPrecision(2))]}
-            tickFormatter={tick => {
-              return tickMark
-                ? t('common.valuePair', {
-                    value: tick,
-                    formatParams: {
-                      value: {
-                        notation: 'compact',
-                      } satisfies Intl.NumberFormatOptions,
-                    },
-                  })
-                : tick
-            }}
-          />
-        )}
+        <YAxis
+          hide={!withLabels}
+          tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
+          axisLine={false}
+          tickLine={false}
+          type="number"
+          interval="preserveStartEnd"
+          tickMargin={0}
+          domain={([dataMin, dataMax]) => [0, Number((dataMax * 1.2).toPrecision(2))]}
+          tickFormatter={tick => {
+            return tickMark
+              ? t('common.valuePair', {
+                  value: tick,
+                  formatParams: {
+                    value: {
+                      notation: 'compact',
+                    } satisfies Intl.NumberFormatOptions,
+                  },
+                })
+              : tick
+          }}
+        />
         <Tooltip
           cursor={false}
           wrapperStyle={{ outline: 'none' }}
