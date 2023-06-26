@@ -44,7 +44,7 @@ export const formatDistanceToNow = (
     numeric: 'always',
     locale,
   })
-    .replace(/ ago/, '')
-    .replace(/in /, '')
+    .replace(/ ago$/, '')
+    .replace(/^in /, '')
     .replace(/\./, '')
 }
