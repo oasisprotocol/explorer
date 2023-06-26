@@ -24,12 +24,15 @@ const HelpScreenContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyItems: 'flex-end',
   minHeight: '185px',
   width: '90%',
+  height: '100%',
 }))
 
 const SwiperBox = styled(Box)(() => ({
   width: '100%',
+  height: '40%',
 }))
 
 export const GetStartedBtn = styled(Button)({})
@@ -98,9 +101,12 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   return (
     <HelpScreenContainer>
       <SwiperBox>
-        <swiper-container ref={swiperElRef} slides-per-view="1">
+        <swiper-container style={{ height: '100%' }} ref={swiperElRef} slides-per-view="1">
           {allSteps.map((step, index) => (
-            <swiper-slide key={step.label}>
+            <swiper-slide
+              style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              key={step.label}
+            >
               {Math.abs(activeStep - index) < totalSteps ? (
                 <Box
                   component="img"
