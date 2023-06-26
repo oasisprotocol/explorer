@@ -52,6 +52,7 @@ const BarChartCmp = <T extends object>({
             type="number"
             interval="preserveStartEnd"
             tickMargin={0}
+            domain={([dataMin, dataMax]) => [0, Number((dataMax * 1.2).toPrecision(2))]}
             tickFormatter={tick => {
               return tickMark
                 ? t('common.valuePair', {
