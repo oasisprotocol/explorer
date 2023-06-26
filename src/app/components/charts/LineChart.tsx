@@ -62,6 +62,7 @@ const LineChartCmp = <T extends object>({
           mirror={!withLabels}
           tick={withLabels ? { fill: COLORS.brandDark, strokeWidth: 0 } : false}
           type="number"
+          interval="preserveStartEnd"
           tickMargin={tickMargin}
           tickFormatter={tick => {
             return tickMark

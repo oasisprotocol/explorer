@@ -50,7 +50,7 @@ const BarChartCmp = <T extends object>({
             axisLine={false}
             tickLine={false}
             type="number"
-            padding={{ bottom: 20 }}
+            interval="preserveStartEnd"
             tickMargin={0}
             tickFormatter={tick => {
               return tickMark
