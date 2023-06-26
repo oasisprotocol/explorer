@@ -67,8 +67,7 @@ export const TransactionsStats: FC = () => {
                 }),
             }}
             withLabels
-            tickMark={isMobile}
-            margin={{ left: isMobile ? -16 : 8, right: 8 }}
+            margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
           />
         )}
       </CardContent>
