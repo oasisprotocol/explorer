@@ -19,6 +19,7 @@ export enum AppErrors {
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
   InvalidUrl = 'invalid_url',
+  Storage = 'storage',
 }
 
 export interface ErrorPayload {

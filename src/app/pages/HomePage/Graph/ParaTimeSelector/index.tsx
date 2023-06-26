@@ -22,6 +22,8 @@ import { NetworkSelector } from '../NetworkSelector'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
+import { storage } from '../../../../utils/storage'
+import { StorageKeys } from '../../../../../types/storage'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -127,9 +129,12 @@ const QuickPinchZoomInner = styled('div')(() => ({
 interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   step: ParaTimeSelectorStep
   setStep: (value: ParaTimeSelectorStep) => void
+  showInfoScreen: boolean
 }
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep }) => {
+const localStore = storage()
+
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep, showInfoScreen }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -161,7 +166,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
-    if (isMobile) {
+    const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
+
+    if (isMobile && !mobileHelpScreenShown) {
       setStep(ParaTimeSelectorStep.ShowHelpScreen)
     } else {
       setStep(ParaTimeSelectorStep.Explore)
@@ -223,7 +230,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
               {t('home.exploreBtnText')}
             </ExploreBtn>
           )}
-          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile) && (
+          {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile, showInfoScreen) && (
             <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>

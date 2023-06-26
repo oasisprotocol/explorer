@@ -33,6 +33,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     title: t('errors.error'),
     message: t('errors.unsupportedNetwork'),
   }),
+  [AppErrors.Storage]: t => ({
+    title: t('errors.error'),
+    message: t('errors.storage'),
+  }),
 }
 
 export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
