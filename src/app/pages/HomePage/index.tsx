@@ -17,6 +17,8 @@ import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkPar
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
+import { storage } from '../../utils/storage'
+import { StorageKeys } from '../../../types/storage'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -107,6 +109,8 @@ const FooterStyled = styled(Box)(({ theme }) => ({
   },
 }))
 
+const localStore = storage()
+
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
@@ -115,7 +119,19 @@ export const HomePage: FC = () => {
   const isApiReachable = useIsApiReachable(network).reachable
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
-  const [step, setStep] = useState<ParaTimeSelectorStep>(ParaTimeSelectorStep.EnableExplore)
+  const [step, setStep] = useState<ParaTimeSelectorStep>(() => {
+    const exploreButtonShown = localStore.get(StorageKeys.ExploreButtonShown)
+    const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
+
+    if (exploreButtonShown) {
+      if (isMobile && !mobileHelpScreenShown) {
+        return ParaTimeSelectorStep.ShowHelpScreen
+      } else {
+        return ParaTimeSelectorStep.Explore
+      }
+    }
+    return ParaTimeSelectorStep.EnableExplore
+  })
   const [showInfoScreen, setShowInfoScreen] = useState<boolean>(false)
 
   const onFocusChange = (hasFocus: boolean) => {
