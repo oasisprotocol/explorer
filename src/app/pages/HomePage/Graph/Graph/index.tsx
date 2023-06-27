@@ -133,7 +133,8 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   }
 
   const onSelectLayer = (Layer: Layer) => {
-    if (isMobile && !disabledMap[Layer] && selectedLayer === Layer) {
+    if (isMobile && !disabledMap[Layer] && parseFloat(scale.toFixed(2)) > 1) {
+      setSelectedLayer(Layer)
       setActiveMobileGraphTooltip(Layer)
 
       return
