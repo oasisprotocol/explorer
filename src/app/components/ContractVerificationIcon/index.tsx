@@ -1,0 +1,110 @@
+import React, { FC, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CancelIcon from '@mui/icons-material/Cancel'
+import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
+import HelpIcon from '@mui/icons-material/Help'
+import { TxError } from '../../../oasis-indexer/api'
+import Tooltip from '@mui/material/Tooltip'
+
+type TxStatus = 'unknown' | 'success' | 'failure'
+
+const statusBgColor: Record<TxStatus, string> = {
+  unknown: COLORS.grayMediumLight,
+  success: COLORS.honeydew,
+  failure: COLORS.linen,
+}
+
+const statusFgColor: Record<TxStatus, string> = {
+  unknown: COLORS.grayMedium,
+  success: COLORS.eucalyptus,
+  failure: COLORS.errorIndicatorBackground,
+}
+
+const statusIcon: Record<TxStatus, ReactNode> = {
+  unknown: <HelpIcon color={'inherit'} fontSize="inherit" />,
+  success: <CheckCircleIcon color="success" fontSize="inherit" />,
+  failure: <CancelIcon color="error" fontSize="inherit" />,
+}
+
+const StyledBox = styled(Box, {
+  shouldForwardProp: prop => prop !== 'success' && prop !== 'withText',
+})(({ success, withText }: ContractVerificationIconProps) => {
+  const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
+
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: withText ? undefined : '28px',
+    height: '28px',
+    fontSize: '15px',
+    backgroundColor: statusBgColor[status],
+    color: statusFgColor[status],
+    borderRadius: 10,
+    padding: 4,
+    paddingLeft: 12,
+    paddingRight: 12,
+  }
+})
+
+const ErrorBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: '28px',
+  fontSize: '12px',
+  backgroundColor: COLORS.grayLight,
+  color: COLORS.errorIndicatorBackground,
+  borderRadius: 10,
+  paddingLeft: 12,
+  paddingRight: 12,
+}))
+
+type ContractVerificationIconProps = {
+  /**
+   * Did the transaction succeed?
+   * A missing value means unknown. (For encrypted transactions).
+   */
+  success: undefined | boolean
+  error: undefined | TxError
+  withText?: boolean
+}
+
+export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ success, error, withText }) => {
+  const { t } = useTranslation()
+  const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
+  const statusLabel: Record<TxStatus, string> = {
+    unknown: t('common.unknown'),
+    success: t('common.success'),
+    failure: t('common.failed'),
+  }
+  const errorMessage = error ? `${error.message} (${t('errors.code')} ${error.code})` : undefined
+
+  if (withText) {
+    return (
+      <>
+        <StyledBox success={success} error={error} withText={withText}>
+          {statusLabel[status]}
+          &nbsp;
+          {statusIcon[status]}
+        </StyledBox>
+        {error && <ErrorBox>{errorMessage}</ErrorBox>}
+      </>
+    )
+  } else {
+    return (
+      <Tooltip
+        arrow
+        placement="top"
+        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
+      >
+        <StyledBox success={success} error={error} withText={withText}>
+          {statusIcon[status]}
+        </StyledBox>
+      </Tooltip>
+    )
+  }
+}
