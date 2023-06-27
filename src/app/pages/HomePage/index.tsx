@@ -114,18 +114,12 @@ const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
   zIndex: zIndexHomePage.paraTimeSelector,
 }))
 
-const Banners = styled(Box)(() => ({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    position: 'absolute',
-  },
-}))
-
 const localStore = storage()
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
-  const { isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const { network } = useSearchQueryNetworkParam()
   const isApiReachable = useIsApiReachable(network).reachable
 
@@ -182,7 +176,11 @@ export const HomePage: FC = () => {
           </ThemeByNetwork>
         </Content>
 
-        <FooterStyled>{!isMobile && <Footer />}</FooterStyled>
+        {!isTablet && (
+          <FooterStyled>
+            <Footer />
+          </FooterStyled>
+        )}
       </HomepageLayout>
 
       {showInfoScreenBtn && (
