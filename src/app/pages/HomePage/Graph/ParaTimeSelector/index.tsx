@@ -101,6 +101,7 @@ ExploreBtn.defaultProps = {
 }
 
 export const ZoomOutBtn = styled(Button)(({ theme }) => ({
+  color: theme.palette.layout.graphZoomOutText,
   position: 'absolute',
   top: theme.spacing(4),
   left: '50%',
@@ -109,10 +110,12 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   lineHeight: '18px',
   textTransform: 'uppercase',
   '&&:hover, &&:active': {
+    color: theme.palette.layout.graphZoomOutText,
     textDecoration: 'none',
   },
 }))
 ZoomOutBtn.defaultProps = {
+  color: 'primary',
   variant: 'text',
   startIcon: <ChevronLeftIcon />,
 }
@@ -213,11 +216,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           </QuickPinchZoomOuter>
           {!isMobile && (
             <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
-              <ZoomOutBtn
-                onClick={onZoomOutClick}
-                disabled={disabled}
-                color={network === Network.mainnet ? 'secondary' : 'primary'}
-              >
+              <ZoomOutBtn onClick={onZoomOutClick} disabled={disabled}>
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
             </ZoomOutBtnFade>
