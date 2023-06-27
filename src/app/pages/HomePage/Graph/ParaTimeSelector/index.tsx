@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useRef, useState } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import paratimeSelectorGlow from '../images/paratime-selector-glow.svg'
 import paratimeSelectorGlobe from '../images/paratime-selector-globe.svg'
@@ -101,12 +101,22 @@ ExploreBtn.defaultProps = {
 }
 
 export const ZoomOutBtn = styled(Button)(({ theme }) => ({
+  color: theme.palette.layout.graphZoomOutText,
+  position: 'absolute',
+  top: theme.spacing(4),
+  left: '50%',
+  transform: 'translateX(-50%)',
   fontSize: '12px',
   lineHeight: '18px',
+  textTransform: 'uppercase',
+  '&&:hover, &&:active': {
+    color: theme.palette.layout.graphZoomOutText,
+    textDecoration: 'none',
+  },
 }))
 ZoomOutBtn.defaultProps = {
+  color: 'primary',
   variant: 'text',
-  color: 'secondary',
   startIcon: <ChevronLeftIcon />,
 }
 const ZoomOutBtnFade = styled(Fade)(() => ({
@@ -138,7 +148,6 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
-  const theme = useTheme()
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
@@ -207,16 +216,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           </QuickPinchZoomOuter>
           {!isMobile && (
             <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
-              <ZoomOutBtn
-                onClick={onZoomOutClick}
-                disabled={disabled}
-                sx={{
-                  position: 'absolute',
-                  top: theme.spacing(4),
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                }}
-              >
+              <ZoomOutBtn onClick={onZoomOutClick} disabled={disabled}>
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
             </ZoomOutBtnFade>

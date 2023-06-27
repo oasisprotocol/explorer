@@ -25,6 +25,7 @@ export const testnetTheme = createTheme(
         notificationText: COLORS.brandDark,
         networkBubbleBorder: COLORS.testnet,
         titleOnBackground: COLORS.grayExtraDark,
+        graphZoomOutText: COLORS.brandDark,
       },
     },
   }),
