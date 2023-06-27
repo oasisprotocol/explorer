@@ -27,6 +27,10 @@ export const TablePagination: FC<TablePaginationProps> = ({
   const totalCountBoundary = totalCount + (selectedPage - 1) * rowsPerPage
   const numberOfPages = Math.ceil(totalCountBoundary / rowsPerPage)
 
+  if (numberOfPages <= 1) {
+    return null
+  }
+
   return (
     <Pagination
       count={numberOfPages}
