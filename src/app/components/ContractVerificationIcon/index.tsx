@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import Typography from '@mui/material/Typography'
 
 type VerificationStatus = 'verified' | 'unverified'
 
@@ -14,13 +15,13 @@ const statusBgColor: Record<VerificationStatus, string> = {
 }
 
 const statusFgColor: Record<VerificationStatus, string> = {
-  verified: COLORS.eucalyptus,
-  unverified: COLORS.errorIndicatorBackground,
+  verified: COLORS.brandExtraDark,
+  unverified: COLORS.brandExtraDark,
 }
 
 const statusIcon: Record<VerificationStatus, ReactNode> = {
-  verified: <CheckCircleIcon color="success" fontSize="inherit" />,
-  unverified: <CancelIcon color="error" fontSize="inherit" />,
+  verified: <CheckCircleIcon color="success" fontSize="small" />,
+  unverified: <CancelIcon color="error" fontSize="small" />,
 }
 
 const StyledBox = styled(Box, {
@@ -32,13 +33,13 @@ const StyledBox = styled(Box, {
     justifyContent: 'center',
     alignItems: 'center',
     height: '28px',
-    fontSize: '15px',
+    fontSize: '12px',
     backgroundColor: statusBgColor[status],
     color: statusFgColor[status],
     borderRadius: 10,
     padding: 4,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 10,
+    paddingRight: 5,
   }
 })
 
@@ -59,10 +60,15 @@ export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ ve
     <>
       <StyledBox verified={verified} address_eth={address_eth}>
         {statusLabel[status]}
-        &nbsp;
+        &nbsp; &nbsp;
         {statusIcon[status]}
       </StyledBox>
-      {verified && t('contract.verification.openInSourcify')}
+      &nbsp; &nbsp;
+      {verified && (
+        <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
+          {t('contract.verification.openInSourcify')}
+        </Typography>
+      )}
     </>
   )
 }
