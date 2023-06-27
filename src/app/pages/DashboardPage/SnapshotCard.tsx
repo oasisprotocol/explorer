@@ -18,9 +18,11 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   height: 186,
 }))
 
-const StyledCardContent = styled(CardContent)(({ theme }) => ({
+const StyledCardContent = styled(CardContent, {
+  shouldForwardProp: prop => prop !== 'withContentPadding',
+})<{ withContentPadding: boolean }>(({ theme, withContentPadding }) => ({
   position: 'relative',
-  paddingTop: theme.spacing(4),
+  paddingTop: theme.spacing(withContentPadding ? 4 : 0),
   height: '100%',
 }))
 
@@ -28,13 +30,20 @@ type SnapshotCardProps = PropsWithChildren & {
   badge?: ReactNode
   label?: string
   title: ReactNode
+  withContentPadding?: boolean
 }
 
-export const SnapshotCard: FC<SnapshotCardProps> = ({ badge, children, title, label }) => {
+export const SnapshotCard: FC<SnapshotCardProps> = ({
+  badge,
+  children,
+  title,
+  label,
+  withContentPadding = true,
+}) => {
   return (
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
-      <StyledCardContent>{children}</StyledCardContent>
+      <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
       {(badge || label) && (
         <CardActions sx={{ minHeight: 60 }}>
           <Box

@@ -164,6 +164,11 @@
   "tableLayoutButton": {
     "changeView": "Change view"
   },
+  "testnetFaucet": {
+    "description": "Drops are limited to 10 TEST tokens",
+    "header": "Oasis Testnet Faucet",
+    "request": "Request test tokens"
+  },
   "tokens": {
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",

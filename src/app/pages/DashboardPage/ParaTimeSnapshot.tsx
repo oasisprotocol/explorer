@@ -17,6 +17,7 @@ import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Network } from '../../../types/network'
 import { getLayerNames } from '../../../types/layers'
+import { TestnetFaucet } from './TestnetFaucet'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -69,11 +70,10 @@ export const ParaTimeSnapshot: FC = () => {
         <StyledGrid item xs={12} md={3}>
           <Nodes />
         </StyledGrid>
-        {scope.network === Network.mainnet && (
-          <StyledGrid item xs={12} md={3}>
-            <RosePriceCard />
-          </StyledGrid>
-        )}
+        <StyledGrid item xs={12} md={3}>
+          {scope.network === Network.mainnet && <RosePriceCard />}
+          {scope.network === Network.testnet && <TestnetFaucet />}
+        </StyledGrid>
       </Grid>
     </>
   )
