@@ -20,6 +20,7 @@ import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
 import { TransactionLink } from '../Transactions/TransactionLink'
+import { ContractVerificationIcon } from '../ContractVerificationIcon'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -99,6 +100,17 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
             <CopyToClipboard value={address!} />
           </dd>
 
+          {account?.evm_contract && (
+            <>
+              <dt>{t('contract.verification.title')}</dt>
+              <dd>
+                <ContractVerificationIcon
+                  verified={!!account?.evm_contract?.verification}
+                  address_eth={account.address_eth!}
+                />
+              </dd>
+            </>
+          )}
           {creationTxHash && (
             <>
               <dt>{t('common.createdAt')}</dt>
