@@ -46,5 +46,5 @@ export const formatDistanceToNow = (
   })
     .replace(/ ago$/, '')
     .replace(/^in /, '')
-    .replace(/\./, '')
+    .replace(/\.$/, '')
 }
