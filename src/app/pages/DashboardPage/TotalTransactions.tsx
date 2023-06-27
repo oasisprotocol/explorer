@@ -44,7 +44,7 @@ export const TotalTransactions: FC = () => {
             strokeWidth={3}
             dataKey="tx_volume"
             data={buckets}
-            margin={{ left: isMobile ? 0 : 16, right: 0 }}
+            margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
             tickMargin={16}
             withLabels
             formatters={{
@@ -62,7 +62,6 @@ export const TotalTransactions: FC = () => {
                   timestamp: new Date(value),
                 }),
             }}
-            tickMark={isMobile}
           />
         )}
       </CardContent>

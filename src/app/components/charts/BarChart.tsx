@@ -21,7 +21,6 @@ interface BarChartProps<T extends object> extends Formatters {
   rounded?: boolean
   withBarBackground?: boolean
   withLabels?: boolean
-  tickMark?: boolean
   margin?: Margin
 }
 
@@ -35,7 +34,6 @@ const BarChartCmp = <T extends object>({
   rounded,
   withLabels,
   withBarBackground,
-  tickMark,
   margin,
 }: BarChartProps<T>) => {
   const { t } = useTranslation()
@@ -44,28 +42,26 @@ const BarChartCmp = <T extends object>({
     <ResponsiveContainer width="100%">
       <RechartsBarChart data={data} margin={margin ?? { right: 8, bottom: 0, left: 8 }}>
         {cartesianGrid && <CartesianGrid vertical={false} stroke={COLORS.antiFlashWhite3} />}
-        {withLabels && (
-          <YAxis
-            tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
-            axisLine={false}
-            tickLine={false}
-            type="number"
-            padding={{ bottom: 20 }}
-            tickMargin={0}
-            tickFormatter={tick => {
-              return tickMark
-                ? t('common.valuePair', {
-                    value: tick,
-                    formatParams: {
-                      value: {
-                        notation: 'compact',
-                      } satisfies Intl.NumberFormatOptions,
-                    },
-                  })
-                : tick
-            }}
-          />
-        )}
+        <YAxis
+          domain={[0, (dataMax: number) => Number((dataMax * 1.2).toPrecision(2))]}
+          hide={!withLabels}
+          interval={0}
+          tick={{ fill: COLORS.brandDark, strokeWidth: 0 }}
+          axisLine={false}
+          tickLine={false}
+          type="number"
+          tickMargin={16}
+          tickFormatter={tick =>
+            t('common.valuePair', {
+              value: tick,
+              formatParams: {
+                value: {
+                  notation: 'compact',
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })
+          }
+        />
         <Tooltip
           cursor={false}
           wrapperStyle={{ outline: 'none' }}
