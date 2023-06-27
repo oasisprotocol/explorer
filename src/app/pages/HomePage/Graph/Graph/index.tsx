@@ -91,6 +91,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     setSelectedLayer,
     scale,
     setActiveMobileGraphTooltip,
+    isZoomedIn,
   },
   ref,
 ) => {

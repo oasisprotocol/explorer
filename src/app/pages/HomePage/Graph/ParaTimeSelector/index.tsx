@@ -195,6 +195,10 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
+    if (step !== ParaTimeSelectorStep.Explore) {
+      return
+    }
+
     const transformValue = make3dTransformValue({ x, y, scale })
     setScale(scale)
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
