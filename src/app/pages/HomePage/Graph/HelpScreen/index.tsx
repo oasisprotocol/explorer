@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../../../styles/theme/colors'
 import { useConstant } from '../../../../hooks/useConstant'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
@@ -51,7 +50,6 @@ const iconSx = (theme: Theme) => ({
   overflow: 'hidden',
   margin: `0 auto ${theme.spacing(3)}`,
   fontSize: 50,
-  color: theme.palette.layout.main,
 })
 
 const steps = (t: TFunction): Step[] => [
@@ -120,11 +118,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography
-        variant="h4"
-        color={COLORS.white}
-        sx={theme => ({ marginBottom: 5, color: theme.palette.layout.main })}
-      >
+      <Typography variant="h4" color="inherit" sx={{ marginBottom: 5 }}>
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (
