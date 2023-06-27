@@ -275,6 +275,12 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           return groupAccountTokenBalances({
             ...data,
             address_eth: getEthAccountAddress(data.address_preimage),
+            evm_contract: data.evm_contract && {
+              ...data.evm_contract,
+              eth_creation_tx: data.evm_contract.eth_creation_tx
+                ? `0x${data.evm_contract.eth_creation_tx}`
+                : undefined,
+            },
             evm_balances: (data.evm_balances || [])
               .filter(token => token.balance) // TODO: why do we filter for this? According to the API it must be there
               .map(token => {
@@ -457,7 +463,6 @@ export const useGetRuntimeEvmTokens: typeof generated.useGetRuntimeEvmTokens = (
             evm_tokens: data.evm_tokens.map(token => {
               return {
                 ...token,
-                evm_contract_addr: `0x${token.evm_contract_addr}`,
                 total_supply:
                   token.total_supply != null && token.decimals != null
                     ? fromBaseUnits(token.total_supply, token.decimals)

@@ -59,7 +59,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
   const { isMobile } = useScreenSize()
   const balance = account?.balances[0]?.balance ?? '0'
   const address = account ? account.address_eth ?? account.address : undefined
-  const creationTxHash = account?.evm_contract?.creation_tx // TODO: use evm_hash if available
+  const creationTxHash = account?.evm_contract?.eth_creation_tx ?? account?.evm_contract?.creation_tx
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
   const transactionsAnchor = account

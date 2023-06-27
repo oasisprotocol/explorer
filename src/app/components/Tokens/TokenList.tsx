@@ -42,14 +42,20 @@ export const TokenList = (props: TokensProps) => {
           key: 'index',
         },
         {
-          content: <TokenLink scope={token} address={token.evm_contract_addr} name={token.name} />,
+          content: (
+            <TokenLink
+              scope={token}
+              address={token.eth_contract_addr ?? token.contract_addr}
+              name={token.name}
+            />
+          ),
           key: 'name',
         },
         {
           content: (
             <span>
-              <AccountLink scope={token} address={token.evm_contract_addr} />
-              <CopyToClipboard value={token.evm_contract_addr} />
+              <AccountLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} />
+              <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
             </span>
           ),
           key: 'contactAddress',

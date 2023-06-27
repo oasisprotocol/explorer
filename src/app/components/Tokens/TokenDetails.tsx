@@ -34,14 +34,14 @@ export const TokenDetails: FC<{
       )}
       <dt>{t('common.name')}</dt>
       <dd>
-        <TokenLink scope={token} address={token.evm_contract_addr} name={token.name} />
+        <TokenLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} name={token.name} />
       </dd>
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>
         <span>
-          <AccountLink scope={token} address={token.evm_contract_addr} />
-          <CopyToClipboard value={token.evm_contract_addr} />
+          <AccountLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} />
+          <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
         </span>
       </dd>
 
