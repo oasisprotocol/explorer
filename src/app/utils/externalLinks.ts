@@ -30,6 +30,7 @@ export const feedback = {
 
 const githubLink = 'https://github.com/oasisprotocol/explorer/'
 export const github = {
+  home: githubLink,
   commit: `${githubLink}commit/`,
   releaseTag: `${githubLink}releases/tag/`,
 }
