@@ -84,10 +84,7 @@ export const Blocks: FC<BlocksProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceToNow(
-            new Date(block.timestamp),
-            type === BlocksTableType.Mobile || type === BlocksTableType.DesktopLite,
-          ),
+          content: formatDistanceToNow(new Date(block.timestamp)),
           key: 'timestamp',
         },
         ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
