@@ -1,10 +1,11 @@
 import React, { FC, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 type VerificationStatus = 'verified' | 'unverified'
@@ -66,7 +67,20 @@ export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ ve
       &nbsp; &nbsp;
       {verified && (
         <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
-          {t('contract.verification.openInSourcify')}
+          <Trans
+            t={t}
+            i18nKey="contract.verification.openInSourcify"
+            components={{
+              SourcifyLink: (
+                <Link
+                  href={`https://sourcify.dev/#/lookup/${address_eth}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  sx={{ fontWeight: 400, color: 'inherit', textDecoration: 'underline' }}
+                />
+              ),
+            }}
+          />
         </Typography>
       )}
     </>
