@@ -120,16 +120,15 @@ export const HomePage: FC = () => {
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(() => {
-    const exploreButtonShown = localStore.get(StorageKeys.ExploreButtonShown)
+    const desktopExploreButtonShown = localStore.get(StorageKeys.DesktopExploreButtonShown)
     const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
 
-    if (exploreButtonShown) {
-      if (isMobile && !mobileHelpScreenShown) {
-        return ParaTimeSelectorStep.ShowHelpScreen
-      } else {
-        return ParaTimeSelectorStep.Explore
-      }
+    if (isMobile && !mobileHelpScreenShown) {
+      return ParaTimeSelectorStep.ShowHelpScreen
+    } else if (desktopExploreButtonShown) {
+      return ParaTimeSelectorStep.Explore
     }
+
     return ParaTimeSelectorStep.EnableExplore
   })
   const [showInfoScreen, setShowInfoScreen] = useState<boolean>(false)

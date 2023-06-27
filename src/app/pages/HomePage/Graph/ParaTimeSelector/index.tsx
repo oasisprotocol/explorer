@@ -175,7 +175,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
-    localStore.set(StorageKeys.ExploreButtonShown, true)
+    if (!isMobile) {
+      localStore.set(StorageKeys.DesktopExploreButtonShown, true)
+    }
 
     const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
 
