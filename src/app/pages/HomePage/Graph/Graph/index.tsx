@@ -30,6 +30,7 @@ interface GraphProps extends GraphBaseProps {
   selectedLayer?: Layer
   setSelectedLayer: (value: Layer) => void
   setActiveMobileGraphTooltip: (layer: Layer | null) => void
+  isZoomedIn: boolean
 }
 
 interface GraphSvgProps extends GraphBaseProps {
@@ -145,7 +146,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   }
 
   const onSelectLayer = (Layer: Layer) => {
-    if (isMobile && !disabledMap[Layer] && parseFloat(scale.toFixed(2)) > 1) {
+    if (isMobile && !disabledMap[Layer] && isZoomedIn) {
       setSelectedLayer(Layer)
       setActiveMobileGraphTooltip(Layer)
 
