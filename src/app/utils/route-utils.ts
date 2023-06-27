@@ -6,15 +6,18 @@ import { EvmTokenType, Layer } from '../../oasis-indexer/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 
+export type ENABLED_LAYERS_FOR_NETWORK_TYPE = (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']
 export abstract class RouteUtils {
-  private static ENABLED_LAYERS_FOR_NETWORK: Partial<Record<Network, Layer[]>> = {
-    [Network.mainnet]: [Layer.emerald, Layer.sapphire],
-    [Network.testnet]: [
-      // Layer.emerald,
-      Layer.sapphire,
-    ],
-  }
-
+  private static ENABLED_LAYERS_FOR_NETWORK = {
+    [Network.mainnet]: {
+      [Layer.emerald]: true,
+      [Layer.sapphire]: true,
+    },
+    [Network.testnet]: {
+      // [Layer.emerald]: true,
+      [Layer.sapphire]: true,
+    },
+  } satisfies Partial<Record<Network, Partial<Record<Layer, true>>>>
   static getDashboardRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
   }
@@ -76,7 +79,7 @@ export abstract class RouteUtils {
   }
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
-    return RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network] || []
+    return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network]) as Layer[]
   }
 
   static getEnabledScopes(): SearchScope[] {

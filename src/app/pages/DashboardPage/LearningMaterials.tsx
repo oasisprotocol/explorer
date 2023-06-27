@@ -16,6 +16,7 @@ import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
+import { ENABLED_LAYERS_FOR_NETWORK_TYPE } from '../../utils/route-utils'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -43,8 +44,14 @@ type LayerContent = {
   secondary: Content
   tertiary: Content
 }
-type NetworkContent = Partial<Record<Layer, LayerContent>>
-const getContent = (t: TFunction): Record<Network, NetworkContent> => {
+
+const getContent = (
+  t: TFunction,
+): {
+  [N in keyof ENABLED_LAYERS_FOR_NETWORK_TYPE]: {
+    [L in keyof ENABLED_LAYERS_FOR_NETWORK_TYPE[N]]: LayerContent
+  }
+} => {
   const labels = getLayerLabels(t)
 
   return {
