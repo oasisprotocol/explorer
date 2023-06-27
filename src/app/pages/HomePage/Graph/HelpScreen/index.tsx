@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
-import { useConstant } from '../../../../hooks/useConstant'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
 import { SlideChangeEvent } from '../../../../../types/swiper'
@@ -78,7 +77,7 @@ const localStore = storage()
 const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const { t } = useTranslation()
   const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
-  const allSteps = useConstant(() => steps(t))
+  const allSteps = steps(t)
   const totalSteps = allSteps.length
   const currentStep = allSteps[activeStep]
 
