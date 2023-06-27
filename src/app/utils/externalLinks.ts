@@ -30,3 +30,7 @@ export const github = {
   commit: `${githubLink}commit/`,
   releaseTag: `${githubLink}releases/tag/`,
 }
+
+export const testnet = {
+  faucet: 'https://faucet.testnet.oasis.dev',
+}
