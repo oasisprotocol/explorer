@@ -9,6 +9,7 @@ import RepeatIcon from '@mui/icons-material/Repeat'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
+import { SearchScope } from '../../../types/searchScope'
 
 const PlainTextButton = styled(Button)({
   fontSize: 'inherit',
@@ -28,12 +29,15 @@ export const SuggestionButton = styled(PlainTextButton)({
 })
 
 interface Props {
+  scope: SearchScope | undefined
   onClickSuggestion: (suggestion: string) => void
 }
 
-export const SearchSuggestionsButtons: FC<Props> = ({ onClickSuggestion }) => {
+export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }) => {
   const { t } = useTranslation()
-  const { suggestedBlock, suggestedTransaction, suggestedAccount } = searchSuggestionTerms
+  const { suggestedBlock, suggestedTransaction, suggestedAccount } =
+    (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
+    searchSuggestionTerms['mainnet']['sapphire']!
 
   return (
     <span>

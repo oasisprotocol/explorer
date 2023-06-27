@@ -179,6 +179,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           value &&
           value !== valueInSearchParams && (
             <SearchSuggestionsButtons
+              scope={scope}
               onClickSuggestion={suggestion => {
                 setValue(suggestion)
               }}
