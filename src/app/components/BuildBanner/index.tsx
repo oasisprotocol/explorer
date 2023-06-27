@@ -1,26 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Alert from '@mui/material/Alert'
-import { styled } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import * as externalLinks from '../../utils/externalLinks'
 import { deploys } from '../../../config'
-
-const StyledAlert = styled(Alert)(({ theme }) => ({
-  position: 'sticky',
-  top: 0,
-  zIndex: 1000,
-  justifyContent: 'center',
-  borderRadius: 0,
-  fontSize: '12px',
-  [theme.breakpoints.up('sm')]: {
-    padding: `${theme.spacing(4)}} 0`,
-  },
-  [theme.breakpoints.up('md')]: {
-    padding: `${theme.spacing(3)}} 0`,
-  },
-}))
+import { StickyAlert } from '../StickyAlert'
 
 export const BuildBanner: FC = () => {
   const { t } = useTranslation()
@@ -33,7 +17,7 @@ export const BuildBanner: FC = () => {
   }
   if (window.location.origin === deploys.staging) {
     return (
-      <StyledAlert severity="warning">
+      <StickyAlert severity="warning">
         {t('banner.buildStaging')}
         <Link
           component={RouterLink}
@@ -43,8 +27,8 @@ export const BuildBanner: FC = () => {
         >
           {externalLinks.feedback.internalForm}
         </Link>
-      </StyledAlert>
+      </StickyAlert>
     )
   }
-  return <StyledAlert severity="warning">{t('banner.buildPreview')}</StyledAlert>
+  return <StickyAlert severity="warning">{t('banner.buildPreview')}</StickyAlert>
 }
