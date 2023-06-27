@@ -17,6 +17,9 @@ export const docs = {
   sapphire: `${docsUrl}dapp/sapphire/`,
   token: `${docsUrl}general/oasis-network/token-metrics-and-distribution`,
   paraTimeTransfer: `${docsUrl}general/manage-tokens/how-to-transfer-rose-into-paratime`,
+  testnetNode: `${docsUrl}node/testnet/#sapphire`,
+  sapphireTestnet: `${docsUrl}dapp/sapphire/#testnet`,
+  sapphireTestnetHardhat: `${docsUrl}dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
 }
 
 export const referrals = { coinGecko: 'https://www.coingecko.com' }

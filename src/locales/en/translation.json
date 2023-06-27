@@ -129,12 +129,21 @@
     },
     "sapphire": {
       "header": "What is the Sapphire network?",
+      "testnetHeader": "Getting started with Sapphire Testnet",
       "description": "The Sapphire ParaTime is our official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
     },
     "header": "Learning materials",
+    "hardhat": {
+      "header": "Add the {{ layer }} Testnet to Hardhat",
+      "description": "Open up your hardhat.config.ts and drop in these lines."
+    },
     "token": {
       "header": "Token Metrics and Distribution",
       "description": "Rose is the currency powering the Oasis network."
+    },
+    "testnet": {
+      "header": "Testnet parameters",
+      "description": "The Testnet may be subject to frequent version upgrades."
     },
     "transfer": {
       "header": "How to Transfer ROSE into a ParaTime?",

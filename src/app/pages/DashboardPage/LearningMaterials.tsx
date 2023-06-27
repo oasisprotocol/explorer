@@ -12,9 +12,10 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
-import { AppError, AppErrors, exhaustedTypeWarning } from '../../../types/errors'
 import { Layer } from '../../../oasis-indexer/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { getLayerLabels } from '../../utils/content'
+import { Network } from '../../../types/network'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -32,30 +33,76 @@ const StyledLink = styled(Link)(() => ({
   },
 }))
 
-const getContent = (t: TFunction, layer: Layer) => {
-  switch (layer) {
-    case Layer.emerald:
-      return {
-        description: t('learningMaterials.emerald.description'),
-        header: t('learningMaterials.emerald.header'),
-        link: docs.emerald,
-        title: t('common.emerald'),
-      }
+type Content = {
+  description: string
+  header: string
+  url: string
+}
+type LayerContent = {
+  primary: Content
+  secondary: Content
+  tertiary: Content
+}
+type NetworkContent = Partial<Record<Layer, LayerContent>>
+const getContent = (t: TFunction): Record<Network, NetworkContent> => {
+  const labels = getLayerLabels(t)
 
-    case Layer.sapphire:
-      return {
-        description: t('learningMaterials.sapphire.description'),
-        header: t('learningMaterials.sapphire.header'),
-        link: docs.sapphire,
-        title: t('common.sapphire'),
-      }
-    case Layer.cipher:
-      throw new AppError(AppErrors.UnsupportedLayer)
-    case Layer.consensus:
-      throw new AppError(AppErrors.UnsupportedLayer)
-    default:
-      exhaustedTypeWarning('Unexpected layer', layer)
-      throw new AppError(AppErrors.UnsupportedLayer)
+  return {
+    [Network.mainnet]: {
+      [Layer.emerald]: {
+        primary: {
+          description: t('learningMaterials.emerald.description'),
+          header: t('learningMaterials.emerald.header'),
+          url: docs.emerald,
+        },
+        secondary: {
+          description: t('learningMaterials.token.description'),
+          header: t('learningMaterials.token.header'),
+          url: docs.token,
+        },
+        tertiary: {
+          description: t('learningMaterials.transfer.description', { layer: labels['emerald'] }),
+          header: t('learningMaterials.transfer.header'),
+          url: docs.paraTimeTransfer,
+        },
+      },
+      [Layer.sapphire]: {
+        primary: {
+          description: t('learningMaterials.sapphire.description'),
+          header: t('learningMaterials.sapphire.header'),
+          url: docs.sapphire,
+        },
+        secondary: {
+          description: t('learningMaterials.token.description'),
+          header: t('learningMaterials.token.header'),
+          url: docs.token,
+        },
+        tertiary: {
+          description: t('learningMaterials.transfer.description', { layer: labels['sapphire'] }),
+          header: t('learningMaterials.transfer.header'),
+          url: docs.paraTimeTransfer,
+        },
+      },
+    },
+    [Network.testnet]: {
+      [Layer.sapphire]: {
+        primary: {
+          description: t('learningMaterials.sapphire.description'),
+          header: t('learningMaterials.sapphire.header'),
+          url: docs.sapphireTestnet,
+        },
+        secondary: {
+          description: t('learningMaterials.testnet.description'),
+          header: t('learningMaterials.testnet.header'),
+          url: docs.testnetNode,
+        },
+        tertiary: {
+          description: t('learningMaterials.hardhat.description'),
+          header: t('learningMaterials.hardhat.header', { layer: labels['sapphire'] }),
+          url: docs.sapphireTestnetHardhat,
+        },
+      },
+    },
   }
 }
 
@@ -83,8 +130,12 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
 
 export const LearningMaterials = () => {
   const { t } = useTranslation()
-  const { layer } = useRequiredScopeParam()
-  const content = getContent(t, layer)
+  const { layer, network } = useRequiredScopeParam()
+  const content = getContent(t)[network][layer]
+
+  if (!content) {
+    return null
+  }
 
   return (
     <Card>
@@ -107,25 +158,25 @@ export const LearningMaterials = () => {
         <Grid container spacing={3}>
           <Grid xs={12} md={6}>
             <LearningSection
-              description={content.description}
-              title={content.header}
-              url={content.link}
+              description={content.primary.description}
+              title={content.primary.header}
+              url={content.primary.url}
               sx={{ height: '100%' }}
             />
           </Grid>
-          <Grid xs={12} md={6}>
-            <Grid>
+          <Grid xs={12} md={6} spacing={3}>
+            <Grid sx={{ pb: 3 }}>
               <LearningSection
-                description={t('learningMaterials.token.description')}
-                title={t('learningMaterials.token.header')}
-                url={docs.token}
+                description={content.secondary.description}
+                title={content.secondary.header}
+                url={content.secondary.url}
               />
             </Grid>
             <Grid>
               <LearningSection
-                description={t('learningMaterials.transfer.description', { layer: content.title })}
-                title={t('learningMaterials.transfer.header')}
-                url={docs.paraTimeTransfer}
+                description={content.tertiary.description}
+                title={content.tertiary.header}
+                url={content.tertiary.url}
               />
             </Grid>
           </Grid>
