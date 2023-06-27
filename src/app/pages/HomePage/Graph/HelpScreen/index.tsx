@@ -1,8 +1,5 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import helpScreenNavigate from '../images/help-screen-navigate.svg'
-import helpScreenPinch from '../images/help-screen-pinch.svg'
-import helpScreenTap from '../images/help-screen-tap.svg'
 import { TFunction } from 'i18next'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -15,6 +12,10 @@ import { ParaTimeSelectorStep } from '../types'
 import { SlideChangeEvent } from '../../../../../types/swiper'
 import { storage } from '../../../../utils/storage'
 import { StorageKeys } from '../../../../../types/storage'
+import { TapIcon } from '../../../../components/CustomIcons/Tap'
+import { PinchIcon } from '../../../../components/CustomIcons/Pinch'
+import { NavigateIcon } from '../../../../components/CustomIcons/Navigate'
+import { Theme } from '@mui/material/styles/createTheme'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -42,21 +43,28 @@ GetStartedBtn.defaultProps = {
 }
 
 interface Step {
-  icon: string
+  icon: ReactElement
   label: string
 }
 
+const iconSx = (theme: Theme) => ({
+  overflow: 'hidden',
+  margin: `0 auto ${theme.spacing(3)}`,
+  fontSize: 50,
+  color: theme.palette.layout.main,
+})
+
 const steps = (t: TFunction): Step[] => [
   {
-    icon: helpScreenNavigate,
+    icon: <NavigateIcon sx={iconSx} />,
     label: t('home.helpScreen.navigate'),
   },
   {
-    icon: helpScreenPinch,
+    icon: <PinchIcon sx={iconSx} />,
     label: t('home.helpScreen.pinch'),
   },
   {
-    icon: helpScreenTap,
+    icon: <TapIcon sx={iconSx} />,
     label: t('home.helpScreen.tap'),
   },
 ]
@@ -102,29 +110,21 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
     <HelpScreenContainer>
       <SwiperBox>
         <swiper-container style={{ height: '100%' }} ref={swiperElRef} slides-per-view="1">
-          {allSteps.map((step, index) => (
+          {allSteps.map(({ icon, label }, index) => (
             <swiper-slide
               style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              key={step.label}
+              key={label}
             >
-              {Math.abs(activeStep - index) < totalSteps ? (
-                <Box
-                  component="img"
-                  sx={theme => ({
-                    display: 'block',
-                    height: 50,
-                    overflow: 'hidden',
-                    margin: `0 auto ${theme.spacing(3)}`,
-                  })}
-                  src={step.icon}
-                  alt={step.label}
-                />
-              ) : null}
+              {Math.abs(activeStep - index) < totalSteps ? <>{icon}</> : null}
             </swiper-slide>
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography variant="h4" color={COLORS.white} sx={{ marginBottom: 5 }}>
+      <Typography
+        variant="h4"
+        color={COLORS.white}
+        sx={theme => ({ marginBottom: 5, color: theme.palette.layout.main })}
+      >
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (

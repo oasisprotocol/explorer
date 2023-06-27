@@ -789,16 +789,16 @@ export const defaultTheme = createTheme({
         dot: ({ theme }) => ({
           width: '30px',
           height: '4px',
-          background: COLORS.white025A,
+          background: theme.palette.layout.secondary,
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: COLORS.grayMedium,
+          borderColor: theme.palette.layout.lightBorder,
           borderRadius: theme.spacing(2),
           boxShadow: '0 4px 50px 15px rgba(0, 0, 98, 0.54)',
         }),
-        dotActive: {
+        dotActive: ({ theme }) => ({
           background: COLORS.white,
-        },
+        }),
       },
     },
     MuiIconButton: {
