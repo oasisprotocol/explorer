@@ -103,9 +103,20 @@ const FooterStyled = styled(Box)(({ theme }) => ({
     zIndex: zIndexHomePage.paraTimeSelector,
   },
   [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    paddingRight: theme.spacing(2),
+    display: 'none',
+  },
+}))
+
+const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
+  position: 'fixed',
+  right: theme.spacing(2),
+  bottom: theme.spacing(2),
+  zIndex: zIndexHomePage.paraTimeSelector,
+}))
+
+const Banners = styled(Box)(() => ({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    position: 'absolute',
   },
 }))
 
@@ -171,15 +182,14 @@ export const HomePage: FC = () => {
           </ThemeByNetwork>
         </Content>
 
-        <FooterStyled>
-          {showInfoScreenBtn && (
-            <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-              <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-            </IconButton>
-          )}
-          {!isMobile && <Footer />}
-        </FooterStyled>
+        <FooterStyled>{!isMobile && <Footer />}</FooterStyled>
       </HomepageLayout>
+
+      {showInfoScreenBtn && (
+        <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+          <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+        </InfoScreenBtn>
+      )}
     </>
   )
 }
