@@ -280,7 +280,11 @@
     "consensusWithdrawal": "Withdrawal to consensus",
     "decoded": "Decoded",
     "evmLog": "EVM log message",
-    "gasUsed": "Gas used"
+    "gasUsed": "Gas used",
+    "fields": {
+      "amount": "Amount",
+      "owner": "Owner"
+    }
   },
   "transactionStats": {
     "header": "Transactions Per Day",

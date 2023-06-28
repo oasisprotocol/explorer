@@ -169,13 +169,61 @@ const DecodedLogEvent: FC<{
 
     case RuntimeEventType.accountsburn:
     case RuntimeEventType.accountsmint:
+      return (
+        <div>
+          <div>{eventName}</div>
+          <br />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('transactionEvent.fields.owner')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.owner}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                value: event.body.amount.Amount,
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
     case RuntimeEventType.consensus_accountswithdraw:
       return (
         <div>
           <div>{eventName}</div>
-          <pre>{JSON.stringify(event, null, ' ')}</pre>
+          <br />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.from')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.from}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.to}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                value: event.body.amount.Amount,
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
         </div>
       )
     default:
