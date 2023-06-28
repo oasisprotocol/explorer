@@ -72,6 +72,7 @@ const ParaTimeSelectorGlobe = styled(Box, {
   left: '50%',
   bottom: '6%',
   transform: 'translateX(-50%)',
+  color: theme.palette.layout.main,
   backgroundImage: `url("${
     network === Network.testnet ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
   }")`,
