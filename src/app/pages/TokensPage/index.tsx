@@ -72,7 +72,7 @@ export const TokensPage: FC = () => {
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
-        title={t('tokens.title')}
+        title={t('common.tokens')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
       >

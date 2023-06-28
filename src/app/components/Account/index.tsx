@@ -123,7 +123,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
           <dt>{t('common.balance')}</dt>
           <dd>{t('common.valueInToken', { value: balance, ticker: tickerName })}</dd>
 
-          <dt>{t('account.evmTokens')}</dt>
+          <dt>{t('common.tokens')}</dt>
           <dd>
             <TokenPills account={account} tokens={account.evm_balances} />
           </dd>

@@ -77,7 +77,7 @@ describe('SearchResultsView', () => {
       />,
     )
 
-    expect(screen.getByText('EVM tokens')).toBeInTheDocument()
+    expect(screen.getByText('Tokens')).toBeInTheDocument()
     expect(screen.getByText('337325.43836… FTP')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /337325.43836/ })).toHaveAttribute(
       'href',
