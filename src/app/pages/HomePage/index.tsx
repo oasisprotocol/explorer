@@ -102,9 +102,6 @@ const FooterStyled = styled(Box)(({ theme }) => ({
     // needed to make footer elements clickable
     zIndex: zIndexHomePage.paraTimeSelector,
   },
-  [theme.breakpoints.down('md')]: {
-    display: 'none',
-  },
 }))
 
 const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
