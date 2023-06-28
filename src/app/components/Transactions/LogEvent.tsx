@@ -109,21 +109,28 @@ const DecodedLogEvent: FC<{
     case RuntimeEventType.coregas_used:
       return (
         <span>
-          {t('common.gasUsed')}: {event.body.amount.toLocaleString()}
+          {eventName}: {event.body.amount.toLocaleString()}
         </span>
       )
     case RuntimeEventType.evmlog:
       if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
         return (
+          <div>
+            <div>{eventName}</div>
+            <br />
             <LongDataDisplay
               data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
               threshold={300}
               fontWeight={400}
             />
+          </div>
         )
       }
       return (
-        <>
+        <div>
+          <div>{eventName}</div>
+          <br />
+
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.type')}</dt>
             <dd>
@@ -157,7 +164,7 @@ const DecodedLogEvent: FC<{
               </>
             )}
           </StyledDescriptionList>
-        </>
+        </div>
       )
 
     case RuntimeEventType.accountsburn:
@@ -176,6 +183,7 @@ const DecodedLogEvent: FC<{
       return (
         <div>
           <div>{eventName}</div>
+          <br />
           <pre>{JSON.stringify(event, null, ' ')}</pre>
         </div>
       )
