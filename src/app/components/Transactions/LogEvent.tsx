@@ -15,6 +15,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { LongDataDisplay } from '../LongDataDisplay'
 
 const EvmEventParamData: FC<{
   scope: SearchScope
@@ -112,6 +113,15 @@ const DecodedLogEvent: FC<{
         </span>
       )
     case RuntimeEventType.evmlog:
+      if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
+        return (
+            <LongDataDisplay
+              data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
+              threshold={300}
+              fontWeight={400}
+            />
+        )
+      }
       return (
         <>
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
