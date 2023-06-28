@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
-import { github } from '../../utils/externalLinks'
+import { docs, github } from '../../utils/externalLinks'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -18,8 +18,21 @@ const FooterBox = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(5)} ${theme.spacing(4)}`,
   [theme.breakpoints.up('sm')]: {
     flex: '0 1 100%',
-    padding: `${theme.spacing(5)} ${theme.spacing(6)}`,
+    padding: `${theme.spacing(5)} ${theme.spacing(0)}`,
   },
+}))
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+}))
+
+const StyledLinksGroup = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(3),
+  borderLeft: `1px solid ${theme.palette.layout.main}`,
+  paddingLeft: theme.spacing(3),
+  marginLeft: theme.spacing(3),
 }))
 
 interface FooterProps {
@@ -44,54 +57,77 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
           </AppendMobileSearch>
         ) : (
           <>
-            {process.env.REACT_APP_BUILD_SHA && (
-              <Typography variant="footer">
-                <Trans
-                  t={t}
-                  i18nKey="footer.version"
-                  components={{
-                    ReleaseLink: process.env.REACT_APP_BUILD_VERSION ? (
-                      <Link
-                        href={`${github.releaseTag}${process.env.REACT_APP_BUILD_VERSION}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        sx={{ color: theme.palette.layout.main }}
-                      />
-                    ) : (
-                      <>-</>
-                    ),
-                    CommitLink: (
-                      <Link
-                        href={`${github.commit}${process.env.REACT_APP_BUILD_SHA}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        sx={{ color: theme.palette.layout.main }}
-                      />
-                    ),
-                  }}
-                  values={{
-                    buildTime: t('common.formattedDateTime', {
-                      timestamp: new Date(Number(process.env.REACT_APP_BUILD_DATETIME)),
-                      formatParams: {
-                        timestamp: {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: 'numeric',
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          second: 'numeric',
-                        } satisfies Intl.DateTimeFormatOptions,
-                      },
-                    }),
-                    sha: process.env.REACT_APP_BUILD_SHA.substring(0, 7),
-                    version: process.env.REACT_APP_BUILD_VERSION
-                      ? process.env.REACT_APP_BUILD_VERSION.replace('v', '')
-                      : '-',
-                  }}
-                />
-              </Typography>
-            )}
-
+            <StyledBox>
+              {process.env.REACT_APP_BUILD_SHA && (
+                <Typography variant="footer">
+                  <Trans
+                    t={t}
+                    i18nKey="footer.version"
+                    components={{
+                      ReleaseLink: process.env.REACT_APP_BUILD_VERSION ? (
+                        <Link
+                          href={`${github.releaseTag}${process.env.REACT_APP_BUILD_VERSION}`}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          sx={{ color: theme.palette.layout.main }}
+                        />
+                      ) : (
+                        <>-</>
+                      ),
+                      CommitLink: (
+                        <Link
+                          href={`${github.commit}${process.env.REACT_APP_BUILD_SHA}`}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          sx={{ color: theme.palette.layout.main }}
+                        />
+                      ),
+                    }}
+                    values={{
+                      buildTime: t('common.formattedDateTime', {
+                        timestamp: new Date(Number(process.env.REACT_APP_BUILD_DATETIME)),
+                        formatParams: {
+                          timestamp: {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric',
+                          } satisfies Intl.DateTimeFormatOptions,
+                        },
+                      }),
+                      sha: process.env.REACT_APP_BUILD_SHA.substring(0, 7),
+                      version: process.env.REACT_APP_BUILD_VERSION
+                        ? process.env.REACT_APP_BUILD_VERSION.replace('v', '')
+                        : '-',
+                    }}
+                  />
+                </Typography>
+              )}
+              <StyledLinksGroup>
+                <Typography variant="footer">
+                  <Link
+                    href={docs.home}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    sx={{ color: theme.palette.layout.main }}
+                  >
+                    {t('footer.apiDocs')}
+                  </Link>
+                </Typography>
+                <Typography variant="footer">
+                  <Link
+                    href={github.home}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    sx={{ color: theme.palette.layout.main }}
+                  >
+                    {t('footer.github')}
+                  </Link>
+                </Typography>
+              </StyledLinksGroup>
+            </StyledBox>
             <Typography variant="footer">
               {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>

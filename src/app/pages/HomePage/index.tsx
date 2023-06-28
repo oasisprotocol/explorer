@@ -101,6 +101,7 @@ const FooterStyled = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     // needed to make footer elements clickable
     zIndex: zIndexHomePage.paraTimeSelector,
+    padding: `0 ${theme.spacing(6)}`,
   },
 }))
 
