@@ -8,7 +8,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 import { CardEmptyState } from './CardEmptyState'
-import { useTransactions } from './hook'
+import { useAccountTransactions } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useLoaderData } from 'react-router-dom'
 
@@ -19,10 +19,8 @@ export const AccountTransactionsCard: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } = useTransactions(
-    scope,
-    address,
-  )
+  const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
+    useAccountTransactions(scope, address)
   return (
     <Card>
       <ScrollingDiv id={accountTransactionsContainerId}>

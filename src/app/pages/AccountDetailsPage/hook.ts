@@ -17,7 +17,7 @@ export const useAccount = (scope: SearchScope, address: string) => {
   return { account, isLoading, isError }
 }
 
-export const useTransactions = (scope: SearchScope, address: string) => {
+export const useAccountTransactions = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
