@@ -18,7 +18,7 @@ const FooterBox = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(5)} ${theme.spacing(4)}`,
   [theme.breakpoints.up('sm')]: {
     flex: '0 1 100%',
-    padding: `${theme.spacing(5)} ${theme.spacing(6)}`,
+    padding: `${theme.spacing(5)} ${theme.spacing(0)}`,
   },
 }))
 
