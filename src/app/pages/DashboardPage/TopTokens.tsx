@@ -31,7 +31,7 @@ export const TopTokens: FC = () => {
       <CardHeader
         disableTypography
         component="h3"
-        title={t('tokens.title')}
+        title={t('common.tokens')}
         action={
           <Link
             component={RouterLink}

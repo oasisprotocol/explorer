@@ -7,7 +7,6 @@
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
     "title": "Account",
-    "evmTokens": "EVM tokens",
     "tokensListTitle": "{{token}} Tokens",
     "transactionsListTitle": "Account Transactions",
     "totalReceived": "Total Received",
@@ -45,6 +44,7 @@
     "consensus": "Consensus",
     "eth": "ETH",
     "ethHash": "ETH hash",
+    "events": "Events",
     "failed": "Failed",
     "fiatValue": "Fiat value",
     "fiatValueInUSD": "{{value, currency}}",
@@ -59,7 +59,6 @@
     "hide": "Hide",
     "loadMore": "Load more",
     "lessThanAmount": "< {{value}} {{ticker}}",
-    "logs": "Logs",
     "missing": "n/a",
     "name": "Name",
     "oasis": "Oasis",
@@ -75,6 +74,7 @@
     "ticker": "Ticker",
     "timestamp": "Timestamp",
     "to": "To",
+    "tokens": "Tokens",
     "totalSent": "Total Sent",
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
@@ -189,8 +189,7 @@
   "tokens": {
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",
-    "supply": "Supply",
-    "title": "Tokens"
+    "supply": "Supply"
   },
   "totalTransactions": {
     "header": "Total Transactions",

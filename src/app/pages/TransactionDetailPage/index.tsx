@@ -134,7 +134,7 @@ export const TransactionDetailPage: FC = () => {
         />
       </SubPageCard>
       {transaction && (
-        <SubPageCard title={t('common.logs')}>
+        <SubPageCard title={t('common.events')}>
           <TransactionLogs transaction={transaction} addressSwitchOption={addressSwitchOption} />
         </SubPageCard>
       )}

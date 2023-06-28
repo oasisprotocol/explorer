@@ -84,7 +84,7 @@ export const TokenList = (props: TokensProps) => {
       columns={tableColumns}
       rows={tableRows}
       rowsNumber={limit}
-      name={t('tokens.title')}
+      name={t('common.tokens')}
       isLoading={isLoading}
       pagination={pagination}
     />
