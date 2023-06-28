@@ -50,7 +50,7 @@ export const AccountDetailsPage: FC = () => {
         <RouterTabs
           tabs={[
             { label: t('common.transactions'), to: txLink, visible: showTxs },
-            { label: t('account.ERC20'), to: erc20Link, visible: showErc20 },
+            { label: t('tokens.title'), to: erc20Link, visible: showErc20 },
           ]}
         />
       )}
