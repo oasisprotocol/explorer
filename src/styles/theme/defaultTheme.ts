@@ -796,9 +796,9 @@ export const defaultTheme = createTheme({
           borderRadius: theme.spacing(2),
           boxShadow: '0 4px 50px 15px rgba(0, 0, 98, 0.54)',
         }),
-        dotActive: ({ theme }) => ({
+        dotActive: {
           background: COLORS.white,
-        }),
+        },
       },
     },
     MuiIconButton: {
