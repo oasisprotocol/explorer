@@ -1,19 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
-import {
-  forwardRef,
-  ForwardRefRenderFunction,
-  memo,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { forwardRef, ForwardRefRenderFunction, memo, MouseEventHandler, useEffect } from 'react'
 import { RouteUtils } from '../../../../utils/route-utils'
-import { useGetBoundingClientRect } from '../../../../hooks/useGetBoundingClientRect'
 import { useScreenSize } from '../../../../hooks/useScreensize'
-import { GraphTooltip } from '../GraphTooltip'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
 import { COLORS } from '../../../../../styles/theme/testnet/colors'
@@ -98,38 +88,8 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useScreenSize()
-  const consensusRef = useRef<SVGCircleElement>(null)
-  const consensusRefInnerCircle = useRef<SVGCircleElement>(null)
-  const emeraldRef = useRef<SVGGElement>(null)
-  const sapphireRef = useRef<SVGGElement>(null)
-  const cipherRef = useRef<SVGGElement>(null)
-
-  const [showZoomedInLayerTooltip, setShowZoomedInLayerTooltip] = useState<Layer | null>(null)
-
-  const [emeraldRect, emeraldRectRefresh] = useGetBoundingClientRect(emeraldRef)
-  const [sapphireRect, sapphireRectRefresh] = useGetBoundingClientRect(sapphireRef)
-  const [cipherRect, cipherRectRefresh] = useGetBoundingClientRect(cipherRef)
-  const [consensusRect, consensusRectRefresh] = useGetBoundingClientRect(consensusRef)
-  const [consensusInnerCircleRect, consensusInnerCircleRectRefresh] =
-    useGetBoundingClientRect(consensusRefInnerCircle)
 
   useEffect(() => {
-    emeraldRectRefresh()
-    sapphireRectRefresh()
-    cipherRectRefresh()
-    consensusRectRefresh()
-    consensusInnerCircleRectRefresh()
-  }, [
-    scale,
-    emeraldRectRefresh,
-    sapphireRectRefresh,
-    cipherRectRefresh,
-    consensusRectRefresh,
-    consensusInnerCircleRectRefresh,
-  ])
-
-  useEffect(() => {
-    setShowZoomedInLayerTooltip(null)
     setActiveMobileGraphTooltip(null)
     // should only close tooltips on isMobile change
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,7 +107,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   }
 
   const onSelectLayer = (Layer: Layer) => {
-    if (isMobile && !disabledMap[Layer] && isZoomedIn) {
+    if (isMobile && isZoomedIn) {
       setSelectedLayer(Layer)
       setActiveMobileGraphTooltip(Layer)
 
@@ -163,18 +123,6 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     if (!disabledMap[Layer]) {
       setSelectedLayer(Layer)
     }
-  }
-
-  const handleOpenZoomedInLayerTooltip = (layer: Layer) => {
-    if (selectedLayer !== layer) {
-      return
-    }
-
-    setShowZoomedInLayerTooltip(layer)
-  }
-
-  const handleCloseZoomedInLayerTooltip = () => {
-    setShowZoomedInLayerTooltip(null)
   }
 
   const graphThemes = {
@@ -250,45 +198,28 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         fill={graphTheme.line}
         {...preventDoubleClick}
       />
-      <GraphTooltip
-        network={network}
-        offsetWidth={consensusInnerCircleRect?.width}
-        offsetHeight={consensusInnerCircleRect?.height}
-        layer={Layer.consensus}
-      >
-        <circle
-          ref={consensusRefInnerCircle}
-          aria-disabled={disabledMap[Layer.consensus]}
-          id={`${Layer.consensus}-inner-circle`}
-          onClick={() => onSelectLayer(Layer.consensus)}
-          cx="188.875"
-          cy="171.546"
-          r="37.3907"
-          transform="rotate(-90 188.875 171.546)"
-          fill={graphTheme.line}
-          {...preventDoubleClick}
-        />
-      </GraphTooltip>
-
-      <GraphTooltip
-        network={network}
-        offsetWidth={consensusRect?.width}
-        offsetHeight={consensusRect?.height}
-        layer={Layer.consensus}
-      >
-        <circle
-          ref={consensusRef}
-          id={`${Layer.consensus}-circle`}
-          aria-disabled={disabledMap[Layer.consensus]}
-          onClick={() => onSelectLayer(Layer.consensus)}
-          cx="189.074"
-          cy="171.547"
-          r="25.5236"
-          transform="rotate(-90 189.074 171.547)"
-          fill={graphTheme.textBackground}
-          {...preventDoubleClick}
-        />
-      </GraphTooltip>
+      <circle
+        aria-disabled={disabledMap[Layer.consensus]}
+        id={`${Layer.consensus}-inner-circle`}
+        onClick={() => onSelectLayer(Layer.consensus)}
+        cx="188.875"
+        cy="171.546"
+        r="37.3907"
+        transform="rotate(-90 188.875 171.546)"
+        fill={graphTheme.line}
+        {...preventDoubleClick}
+      />
+      <circle
+        id={`${Layer.consensus}-circle`}
+        aria-disabled={disabledMap[Layer.consensus]}
+        onClick={() => onSelectLayer(Layer.consensus)}
+        cx="189.074"
+        cy="171.547"
+        r="25.5236"
+        transform="rotate(-90 189.074 171.547)"
+        fill={graphTheme.textBackground}
+        {...preventDoubleClick}
+      />
       <path
         id={`${Layer.consensus}-label`}
         onClick={() => onSelectLayer(Layer.consensus)}
@@ -384,30 +315,16 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         strokeWidth="6.16169"
         strokeDasharray="0.27 2.71"
       />
-      <GraphTooltip
-        open={showZoomedInLayerTooltip === Layer.emerald}
-        onOpen={() => handleOpenZoomedInLayerTooltip(Layer.emerald)}
-        onClose={handleCloseZoomedInLayerTooltip}
-        onClick={() => {
-          onSelectLayer(Layer.emerald)
-        }}
-        offsetWidth={emeraldRect?.width}
-        offsetHeight={emeraldRect?.height}
-        network={network}
-        layer={Layer.emerald}
+      <g
+        id={`${Layer.emerald}-circle`}
+        aria-disabled={disabledMap[Layer.emerald]}
+        onClick={() => onSelectLayer(Layer.emerald)}
+        filter={graphTheme.emeraldCircleFilter}
+        {...preventDoubleClick}
       >
-        <g
-          ref={emeraldRef}
-          id={`${Layer.emerald}-circle`}
-          aria-disabled={disabledMap[Layer.emerald]}
-          onClick={() => onSelectLayer(Layer.emerald)}
-          filter={graphTheme.emeraldCircleFilter}
-          {...preventDoubleClick}
-        >
-          <circle cx="195.67" cy="63.7931" r="21.1306" fill="#030092" />
-          <circle cx="195.67" cy="63.7931" r="21.1306" fill={graphTheme.emeraldCircle} />
-        </g>
-      </GraphTooltip>
+        <circle cx="195.67" cy="63.7931" r="21.1306" fill="#030092" />
+        <circle cx="195.67" cy="63.7931" r="21.1306" fill={graphTheme.emeraldCircle} />
+      </g>
       <path
         id={`${Layer.emerald}-label`}
         aria-disabled={disabledMap[Layer.emerald]}
@@ -416,25 +333,17 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         fill={graphTheme.text}
         {...preventDoubleClick}
       />
-      <GraphTooltip
-        offsetWidth={cipherRect?.width}
-        offsetHeight={cipherRect?.height}
-        network={network}
-        layer={Layer.cipher}
+      <g
+        aria-disabled={disabledMap[Layer.cipher]}
+        onClick={() => onSelectLayer(Layer.cipher)}
+        id={`${Layer.cipher}-circle`}
+        filter={graphTheme.cipherCircleFilter}
+        {...preventDoubleClick}
       >
-        <g
-          ref={cipherRef}
-          aria-disabled={disabledMap[Layer.cipher]}
-          onClick={() => onSelectLayer(Layer.cipher)}
-          id={`${Layer.cipher}-circle`}
-          filter={graphTheme.cipherCircleFilter}
-          {...preventDoubleClick}
-        >
-          <circle cx="305.127" cy="127.608" r="21.1306" fill="#030092" />
-          <circle cx="105.9837" cy="53.608" r="21.1306" fill="#FFA800" />
-          <circle cx="305.127" cy="127.608" r="21.1306" fill={graphTheme.cipherCircle} />
-        </g>
-      </GraphTooltip>
+        <circle cx="305.127" cy="127.608" r="21.1306" fill="#030092" />
+        <circle cx="105.9837" cy="53.608" r="21.1306" fill="#FFA800" />
+        <circle cx="305.127" cy="127.608" r="21.1306" fill={graphTheme.cipherCircle} />
+      </g>
       <path
         id={`${Layer.cipher}-label`}
         aria-disabled={disabledMap[Layer.sapphire]}
@@ -443,30 +352,16 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         fill={graphTheme.text}
         {...preventDoubleClick}
       />
-      <GraphTooltip
-        open={showZoomedInLayerTooltip === Layer.sapphire}
-        onOpen={() => handleOpenZoomedInLayerTooltip(Layer.sapphire)}
-        onClose={handleCloseZoomedInLayerTooltip}
-        onClick={() => {
-          onSelectLayer(Layer.sapphire)
-        }}
-        offsetWidth={sapphireRect?.width}
-        offsetHeight={sapphireRect?.height}
-        network={network}
-        layer={Layer.sapphire}
+      <g
+        id={`${Layer.sapphire}-circle`}
+        aria-disabled={disabledMap[Layer.sapphire]}
+        onClick={() => onSelectLayer(Layer.sapphire)}
+        filter={graphTheme.sapphireCircleFilter}
+        {...preventDoubleClick}
       >
-        <g
-          ref={sapphireRef}
-          id={`${Layer.sapphire}-circle`}
-          aria-disabled={disabledMap[Layer.sapphire]}
-          onClick={() => onSelectLayer(Layer.sapphire)}
-          filter={graphTheme.sapphireCircleFilter}
-          {...preventDoubleClick}
-        >
-          <circle cx="123.826" cy="257.35" r="21.1306" fill="#030092" />
-          <circle cx="123.826" cy="257.35" r="21.1306" fill={graphTheme.sapphireCircle} />
-        </g>
-      </GraphTooltip>
+        <circle cx="123.826" cy="257.35" r="21.1306" fill="#030092" />
+        <circle cx="123.826" cy="257.35" r="21.1306" fill={graphTheme.sapphireCircle} />
+      </g>
       <path
         id={`${Layer.sapphire}-label`}
         aria-disabled={disabledMap[Layer.sapphire]}

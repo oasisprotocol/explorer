@@ -17,13 +17,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
-import { GraphTooltipMobile } from '../GraphTooltip/GraphTooltipMobile'
 import { NetworkSelector } from '../NetworkSelector'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
 import { storage } from '../../../../utils/storage'
 import { StorageKeys } from '../../../../../types/storage'
+import { GraphTooltipMobile } from '../GraphTooltipMobile'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
