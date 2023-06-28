@@ -102,11 +102,13 @@ const FooterStyled = styled(Box)(({ theme }) => ({
     // needed to make footer elements clickable
     zIndex: zIndexHomePage.paraTimeSelector,
   },
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    paddingRight: theme.spacing(2),
-  },
+}))
+
+const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
+  position: 'fixed',
+  right: theme.spacing(2),
+  bottom: theme.spacing(2),
+  zIndex: zIndexHomePage.paraTimeSelector,
 }))
 
 const localStore = storage()
@@ -114,7 +116,7 @@ const localStore = storage()
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
-  const { isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const { network } = useSearchQueryNetworkParam()
   const isApiReachable = useIsApiReachable(network).reachable
 
@@ -171,15 +173,18 @@ export const HomePage: FC = () => {
           </ThemeByNetwork>
         </Content>
 
-        <FooterStyled>
-          {showInfoScreenBtn && (
-            <IconButton aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-              <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-            </IconButton>
-          )}
-          {!isMobile && <Footer />}
-        </FooterStyled>
+        {!isTablet && (
+          <FooterStyled>
+            <Footer />
+          </FooterStyled>
+        )}
       </HomepageLayout>
+
+      {showInfoScreenBtn && (
+        <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+          <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+        </InfoScreenBtn>
+      )}
     </>
   )
 }
