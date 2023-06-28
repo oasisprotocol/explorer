@@ -42,7 +42,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
 })<StyledDescriptionListProps>(({ theme, standalone, highlight }) => ({
   'dt, dd': {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'start',
     boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
     ':last-of-type': {
       boxShadow: 'none',
