@@ -28,7 +28,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenLabel = t(`account.${type}` as any)
-  const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
+  const tokenListLabel = t('tokens.title') // TODO: re-enable when we want multiple token types again t('account.tokensListTitle', { token: tokenLabel })
   const tableColumns: TableColProps[] = [
     { key: 'name', content: t('common.name') },
     { key: 'contract', content: t('common.smartContract') },
