@@ -46,6 +46,10 @@ declare module './generated/api' {
     ticker: NativeTicker
     tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
   }
+  export interface RuntimeEvent {
+    network: Network
+    layer: Layer
+  }
 
   export interface EvmToken {
     network: Network
@@ -488,6 +492,37 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
             total_supply: data.total_supply
               ? fromBaseUnits(data.total_supply, data.decimals || 0)
               : undefined,
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
+  network,
+  runtime,
+  params,
+  options,
+) => {
+  return generated.useGetRuntimeEvents(network, runtime, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeEventList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            events: data.events.map(event => {
+              return {
+                ...event,
+                layer: runtime,
+                network,
+              }
+            }),
           }
         },
         ...arrayify(options?.request?.transformResponse),
