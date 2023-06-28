@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
-import { docs, github } from '../../utils/externalLinks'
+import { api, github } from '../../utils/externalLinks'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -108,7 +108,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
               <StyledLinksGroup>
                 <Typography variant="footer">
                   <Link
-                    href={docs.home}
+                    href={api.spec}
                     rel="noopener noreferrer"
                     target="_blank"
                     sx={{ color: theme.palette.layout.main }}
