@@ -14,7 +14,7 @@ import { useLoaderData } from 'react-router-dom'
 
 export const accountTransactionsContainerId = 'transactions'
 
-export const TransactionsCard: FC = () => {
+export const AccountTransactionsCard: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string

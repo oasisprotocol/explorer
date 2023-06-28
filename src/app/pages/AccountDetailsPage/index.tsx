@@ -9,7 +9,7 @@ import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
-import { accountTokenContainerId } from './TokensCard'
+import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { showEmptyAccountDetails } from '../../../config'

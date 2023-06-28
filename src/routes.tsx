@@ -6,8 +6,8 @@ import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
 import { DashboardPage } from './app/pages/DashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
-import { TransactionsCard } from './app/pages/AccountDetailsPage/TransactionsCard'
-import { TokensCard } from './app/pages/AccountDetailsPage/TokensCard'
+import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
+import { AccountTokensCard } from './app/pages/AccountDetailsPage/AccountTokensCard'
 import { SearchResultsPage } from './app/pages/SearchResultsPage'
 import {
   addressParamLoader,
@@ -78,12 +78,12 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                element: <TransactionsCard />,
+                element: <AccountTransactionsCard />,
                 loader: addressParamLoader,
               },
               {
                 path: 'tokens/erc-20',
-                element: <TokensCard type="ERC20" />,
+                element: <AccountTokensCard type="ERC20" />,
                 loader: addressParamLoader,
               },
             ],
@@ -108,12 +108,12 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                element: <TransactionsCard />,
+                element: <AccountTransactionsCard />,
                 loader: addressParamLoader,
               },
               {
                 path: 'tokens/erc-20',
-                element: <TokensCard type="ERC20" />,
+                element: <AccountTokensCard type="ERC20" />,
                 loader: addressParamLoader,
               },
             ],

@@ -16,13 +16,13 @@ import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAccount } from './hook'
 
-type TokensCardProps = {
+type AccountTokensCardProps = {
   type: EvmTokenType
 }
 
 export const accountTokenContainerId = 'tokens'
 
-export const TokensCard: FC<TokensCardProps> = ({ type }) => {
+export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
   const { t } = useTranslation()
