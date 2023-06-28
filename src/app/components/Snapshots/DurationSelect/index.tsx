@@ -1,5 +1,5 @@
 import { FC, memo } from 'react'
-import { Select, SelectOptionBase } from '../../../components/Select'
+import { Select, SelectOptionBase } from '../../Select'
 import { ChartDuration } from '../../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 
