@@ -155,7 +155,8 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const { network, setNetwork } = useSearchQueryNetworkParam()
   const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
-  const [selectedLayer, setSelectedLayer] = useState<Layer>()
+  // Using object here to force side effect trigger when setting to the same layer
+  const [selectedLayer, setSelectedLayer] = useState<{ current: Layer }>()
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -164,7 +165,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
 
   useEffect(() => {
     if (selectedLayer) {
-      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedLayer, { width, height }))
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedLayer.current, { width, height }))
     }
   }, [selectedLayer, width, height])
 
@@ -190,14 +191,20 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const onZoomOutClick = () => {
-    setSelectedLayer(Layer.consensus)
+    setSelectedLayer({ current: Layer.consensus })
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
+    if (step !== ParaTimeSelectorStep.Explore) {
+      return
+    }
+
     const transformValue = make3dTransformValue({ x, y, scale })
     setScale(scale)
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
+
+  const isZoomedIn = scale > 1.005
 
   return (
     <>
@@ -211,16 +218,17 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
                   network={network}
                   disabled={disabled}
                   transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-                  selectedLayer={selectedLayer}
-                  setSelectedLayer={setSelectedLayer}
+                  selectedLayer={selectedLayer?.current}
+                  setSelectedLayer={(layer: Layer) => setSelectedLayer({ current: layer })}
                   scale={scale}
                   setActiveMobileGraphTooltip={setActiveMobileGraphTooltip}
+                  isZoomedIn={isZoomedIn}
                 />
               </QuickPinchZoomInner>
             </QuickPinchZoom>
           </QuickPinchZoomOuter>
           {!isMobile && (
-            <ZoomOutBtnFade in={ParaTimeSelectorUtils.showZoomOutBtn(isMobile, selectedLayer)}>
+            <ZoomOutBtnFade in={isZoomedIn}>
               <ZoomOutBtn onClick={onZoomOutClick} disabled={disabled}>
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
