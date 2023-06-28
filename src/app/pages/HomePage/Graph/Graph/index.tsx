@@ -107,7 +107,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   }
 
   const onSelectLayer = (Layer: Layer) => {
-    if (isMobile && !disabledMap[Layer] && isZoomedIn) {
+    if (isMobile && isZoomedIn) {
       setSelectedLayer(Layer)
       setActiveMobileGraphTooltip(Layer)
 
