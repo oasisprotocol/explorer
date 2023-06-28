@@ -22,6 +22,7 @@ import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
+import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -81,6 +82,11 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 element: <AccountTransactionsCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'token-transfers',
+                element: <AccountTokenTransfersCard />,
                 loader: addressParamLoader,
               },
               {
