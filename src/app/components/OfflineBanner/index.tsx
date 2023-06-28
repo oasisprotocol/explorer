@@ -30,12 +30,14 @@ export const RuntimeOfflineBanner: FC = () => {
   const scope = useRequiredScopeParam()
   const { t } = useTranslation()
 
-  const { outOfDate, lastUpdate } = useRuntimeFreshness(scope)
-  if (!outOfDate) return null
+  const { outOfDate, lastUpdate, unavailable } = useRuntimeFreshness(scope)
+  if (!outOfDate && !unavailable) return null
   const target = getNameForScope(t, scope)
   return (
     <StickyAlert severity="warning">
-      {lastUpdate
+      {unavailable
+        ? t('home.runtimeUnavailable', { target })
+        : lastUpdate
         ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
         : t('home.runtimeOutOfDate', { target })}
     </StickyAlert>
