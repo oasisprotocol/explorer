@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles'
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../../../styles/theme/colors'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -10,19 +9,23 @@ import ErrorIcon from '@mui/icons-material/Error'
 import { useScreenSize } from '../../../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import { RouteUtils } from '../../../../utils/route-utils'
-import { useNavigate } from 'react-router-dom'
 import { Layer } from '../../../../../oasis-indexer/api'
 import { Network } from '../../../../../types/network'
 import { useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { getNetworkIcons } from '../../../../utils/content'
+import { useNavigate } from 'react-router-dom'
+import { RouteUtils } from '../../../../utils/route-utils'
+import Fade from '@mui/material/Fade'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import { zIndexHomePage } from '../../index'
 
-export interface GraphTooltipStyledProps {
+interface GraphTooltipStyledProps {
   isMobile: boolean
   disabled?: boolean
 }
 
-export const GraphTooltipStyled = styled(Box, {
+const GraphTooltipStyled = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['isMobile', 'disabled'] as (keyof GraphTooltipStyledProps)[]).includes(
       prop as keyof GraphTooltipStyledProps,
@@ -35,11 +38,11 @@ export const GraphTooltipStyled = styled(Box, {
   cursor: disabled ? 'default' : 'pointer',
 }))
 
-export interface GraphTooltipIconProps {
+interface GraphTooltipIconProps {
   isMobile: boolean
 }
 
-export const GraphTooltipIcon = styled(Box, {
+const GraphTooltipIcon = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['isMobile'] as (keyof GraphTooltipIconProps)[]).includes(prop as keyof GraphTooltipIconProps),
 })<GraphTooltipIconProps>(({ isMobile }) => ({
@@ -61,7 +64,7 @@ interface GraphTooltipTextProps {
   isMobile: boolean
 }
 
-export const GraphTooltipText = styled(Box, {
+const GraphTooltipText = styled(Box, {
   shouldForwardProp: (prop: PropertyKey) =>
     !(['disabled', 'isMobile'] as (keyof GraphTooltipTextProps)[]).includes(
       prop as keyof GraphTooltipTextProps,
@@ -76,47 +79,46 @@ export const GraphTooltipText = styled(Box, {
   borderRadius: isMobile ? '0 12px 0 0' : '0 12px 12px 0',
 }))
 
-export const GraphTooltipHeaderText = styled(Box)(() => ({
+const GraphTooltipHeaderText = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   flex: '0 0',
 }))
 
-export const GraphTooltipDescriptionText = styled(Box)(() => ({
+const GraphTooltipDescriptionText = styled(Box)(() => ({
   flex: '0 1 100%',
   display: 'flex',
   alignItems: 'center',
 }))
 
-interface GraphTooltipWrapperProps extends TooltipProps {
-  offsetWidth?: number
-  offsetHeight?: number
-}
+const MobileBackdrop = styled(Box)(() => ({
+  position: 'fixed',
+  inset: 0,
+  backgroundColor: COLORS.black,
+  opacity: 0.3,
+  zIndex: zIndexHomePage.mobileTooltip,
+}))
 
-const GraphTooltipWrapper = styled(
-  ({ className, children, offsetWidth: _, offsetHeight: __, ...props }: GraphTooltipWrapperProps) => (
-    <Tooltip {...props} classes={{ popper: className }}>
-      {children}
-    </Tooltip>
-  ),
-)(({ offsetHeight, offsetWidth }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    position: 'absolute',
-    width: 375,
-    height: 120,
-    borderRadius: 0,
-    transform:
-      offsetWidth &&
-      offsetHeight &&
-      `translate(${((offsetWidth + (120 - offsetWidth) / 2) * -1) /* center icon adjustment */
-        .toFixed()}px, ${(((120 - offsetHeight) / 2) * -1).toFixed()}px) !important`,
-    padding: 0,
-    margin: '0 !important',
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
+const MobileGraphTooltip = styled(Box)(({ theme }) => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 120,
+  zIndex: zIndexHomePage.mobileTooltip,
+  '> button': {
+    position: 'fixed',
+    right: theme.spacing(2),
+    bottom: 125,
   },
 }))
+
+interface GraphTooltipMobileProps {
+  network: Network
+  layer: Layer
+  onClose: (e?: MouseEvent) => void
+}
 
 type TooltipInfo = {
   disabled: boolean
@@ -125,7 +127,7 @@ type TooltipInfo = {
   body: GraphTooltipBodyProps
 }
 
-export const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
+const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
   const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
   const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
   return {
@@ -170,19 +172,12 @@ export const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo>
   }
 }
 
-interface GraphTooltipProps extends Omit<TooltipProps, 'title'> {
-  offsetWidth?: number
-  offsetHeight?: number
-  network: Network
-  layer: Layer
-}
-
 interface GraphTooltipHeaderProps {
   disabled: boolean
   network: Network
 }
 
-export const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) => {
+const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const icons = getNetworkIcons({ size: 38 })
@@ -215,7 +210,7 @@ interface GraphTooltipBodyProps {
   failing?: boolean
 }
 
-export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled, failing }) => {
+const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, disabled, failing }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   return (
@@ -246,8 +241,9 @@ export const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, bo
   )
 }
 
-export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, ...restProps }) => {
+export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer, onClose }) => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
 
@@ -260,17 +256,19 @@ export const GraphTooltip: FC<GraphTooltipProps> = ({ children, network, layer, 
   }
 
   return (
-    <GraphTooltipWrapper
-      {...restProps}
-      placement="right-start"
-      title={
-        <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-          <GraphTooltipHeader disabled={disabled} network={network} />
-          <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
-        </GraphTooltipStyled>
-      }
-    >
-      {children}
-    </GraphTooltipWrapper>
+    <>
+      <MobileBackdrop onClick={onClose} />
+      <Fade in>
+        <MobileGraphTooltip>
+          <IconButton color="inherit" onClick={onClose}>
+            <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
+          </IconButton>
+          <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
+            <GraphTooltipHeader disabled={disabled} network={network} />
+            <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
+          </GraphTooltipStyled>
+        </MobileGraphTooltip>
+      </Fade>
+    </>
   )
 }
