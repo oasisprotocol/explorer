@@ -38,3 +38,7 @@ export const github = {
 export const testnet = {
   faucet: 'https://faucet.testnet.oasis.dev',
 }
+
+export const api = {
+  spec: `${process.env.REACT_APP_API}spec/v1.html`,
+}
