@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
-import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
+import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { LongDataDisplay } from '../LongDataDisplay'
 
 export const TokenDetails: FC<{

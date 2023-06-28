@@ -17,7 +17,7 @@ import { transactionsContainerId } from './TransactionsCard'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { DashboardLink } from '../DashboardPage/DashboardLink'
+import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()

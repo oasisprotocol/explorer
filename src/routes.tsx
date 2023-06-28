@@ -3,7 +3,7 @@ import { HomePage } from './app/pages/HomePage'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
-import { DashboardPage } from './app/pages/DashboardPage'
+import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
@@ -19,7 +19,7 @@ import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
-import { TokensPage } from './app/pages/TokensPage'
+import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
 
 const NetworkSpecificPart = () => (
@@ -55,7 +55,7 @@ export const routes: RouteObject[] = [
         children: [
           {
             path: '',
-            element: <DashboardPage />,
+            element: <ParatimeDashboardPage />,
           },
           {
             path: 'search', // Search within this scope
