@@ -11,7 +11,7 @@ export const ScrollingDataDisplay: FC<{ data: string; fontWeight?: number }> = (
     <Box
       sx={{
         display: 'flex',
-        padding: '10px 0px 0px 15px',
+        padding: '10px 0px 0px 0px',
         flexDirection: 'column',
         alignItems: 'flex-start',
         gap: '10px',

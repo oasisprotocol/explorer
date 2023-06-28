@@ -12,9 +12,9 @@ export const useAccount = (scope: SearchScope, address: string) => {
   }
   const query = useGetRuntimeAccountsAddress(network, layer, address!)
   const account = query.data?.data
-  const isLoading = query.isLoading
-  const isError = query.isError
-  return { account, isLoading, isError }
+  const { isLoading, isError, isFetched } = query
+
+  return { account, isLoading, isError, isFetched }
 }
 
 export const useAccountTransactions = (scope: SearchScope, address: string) => {

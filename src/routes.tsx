@@ -20,6 +20,7 @@ import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensPage'
+import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -84,6 +85,11 @@ export const routes: RouteObject[] = [
               {
                 path: 'tokens/erc-20',
                 element: <AccountTokensCard type="ERC20" />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'code',
+                element: <ContractCodeCard />,
                 loader: addressParamLoader,
               },
             ],
