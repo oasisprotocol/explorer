@@ -11,7 +11,6 @@ import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
-import { TransactionLink } from './TransactionLink'
 import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
@@ -181,24 +180,12 @@ export const TransactionLogEvent: FC<{
 }> = ({ scope, event, isFirst, addressSwitchOption }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const transactionLinkValue =
-    addressSwitchOption === AddressSwitchOption.ETH ? event.eth_tx_hash : event.tx_hash
-
   const decoded = true // TODO: how do I know if this has been successfully decoded?
 
   return (
     <>
       {!isFirst && <Divider variant={'card'} />}
       <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-        {transactionLinkValue && (
-          <>
-            <dt>{t('transaction.header')}</dt>
-            <dd>
-              <TransactionLink scope={scope} hash={transactionLinkValue} />
-            </dd>
-          </>
-        )}
-
         {decoded && (
           <>
             <dt>{t('transactionEvent.decoded')}</dt>
