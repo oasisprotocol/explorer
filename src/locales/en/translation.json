@@ -92,7 +92,13 @@
     "valuePair": "{{value, number}}"
   },
   "contract": {
-    "title": "Contract"
+    "title": "Contract",
+    "verification": {
+      "title": "Verification",
+      "isVerified": "Verified",
+      "isNotVerified": "Unverified",
+      "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>"
+    }
   },
   "nodes": {
     "title": "Active nodes",
