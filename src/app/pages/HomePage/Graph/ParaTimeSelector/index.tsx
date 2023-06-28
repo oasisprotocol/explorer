@@ -204,7 +204,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
-  const isZoomedIn = parseFloat(scale.toFixed(2)) > 1
+  const isZoomedIn = scale > 1.005
 
   return (
     <>
