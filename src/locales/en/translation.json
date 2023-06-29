@@ -75,6 +75,7 @@
     "ticker": "Ticker",
     "timestamp": "Timestamp",
     "to": "To",
+    "token": "Token",
     "tokens": "Tokens",
     "totalSent": "Total Sent",
     "transactions": "Transactions",
@@ -96,6 +97,7 @@
     "code": "Code",
     "copyButton": "Copy {{subject}}",
     "creationByteCode": "Creation ByteCode",
+    "creator": "Creator",
     "noCode": "There is no bytecode on record for this account. (Are you sure this is a contract?)",
     "title": "Contract",
     "runtimeByteCode": "Runtime ByteCode",
@@ -194,13 +196,22 @@
     "request": "Request test tokens"
   },
   "tokens": {
+    "holders": "Holders",
+    "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",
-    "supply": "Supply"
+    "supply": "Supply",
+    "totalSupply": "Total Supply",
+    "totalSupplyValue": "{{ value, number }}",
+    "type": "Token Type"
+  },
+  "tokenSnapshot": {
+    "header": "Token Snapshot"
   },
   "totalTransactions": {
     "header": "Total Transactions",
-    "tooltip": "{{value, number}} total transactions"
+    "tooltip": "{{value, number}} total transactions",
+    "value": "{{value, number}}"
   },
   "transactions": {
     "encryption": {
