@@ -125,12 +125,12 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   const graphThemes = {
     mainnet: {
-      cipherCircle: 'url(#paint6_radial_6093_287252)',
+      cipherCircle: 'url(#paint7_radial_6093_287252)',
       cipherCircleFilter: 'url(#filter2_dii_6093_287252)',
       cipherCircleFill: COLORS.darkBlue,
-      emeraldCircle: COLORS.brandExtraDark,
+      emeraldCircle: 'url(#paint5_radial_6093_287252)',
       emeraldCircleFilter: 'url(#filter0_dii_6093_287252)',
-      sapphireCircle: 'url(#paint5_radial_6093_287252)',
+      sapphireCircle: 'url(#paint6_radial_6093_287252)',
       sapphireCircleFilter: 'url(#filter1_dii_6093_287252)',
       consensusCircle: COLORS.brandExtraDark,
       line: COLORS.aqua,
@@ -251,6 +251,9 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         filter={graphTheme.emeraldCircleFilter}
         {...preventDoubleClick}
       >
+        {network === Network.mainnet && (
+          <ellipse cx="195.702" cy="78.6959" rx="31.6963" ry="31.6959" fill="#030092" />
+        )}
         <ellipse cx="195.702" cy="78.6959" rx="31.6963" ry="31.6959" fill={graphTheme.emeraldCircle} />
       </g>
       <path
@@ -648,13 +651,24 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(136.634 274.778) rotate(110.974) scale(65.1743 65.1749)"
+          gradientTransform="translate(208.634 66.7783) rotate(110.974) scale(65.1743 65.1749)"
         >
           <stop stopColor="#3244E8" />
           <stop offset="1" stopColor="#000210" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint6_radial_6093_287252"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(136.634 274.778) rotate(110.974) scale(65.1743 65.1749)"
+        >
+          <stop stopColor="#3244E8" />
+          <stop offset="1" stopColor="#000210" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient
+          id="paint7_radial_6093_287252"
           cx="0"
           cy="0"
           r="1"
