@@ -8,13 +8,14 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
-import { EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
+import { EvmToken, EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
 import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { showEmptyAccountDetails } from '../../../config'
 import { CardEmptyState } from './CardEmptyState'
 import { contractCodeContainerId } from './ContractCodeCard'
+import { useTokenInfo } from '../TokenDashboardPage/hook'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -22,6 +23,7 @@ export const AccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
   const { account, isLoading, isError } = useAccount(scope, address)
+  const { token } = useTokenInfo(scope, address)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
   const isContract = !!account?.evm_contract
@@ -46,6 +48,7 @@ export const AccountDetailsPage: FC = () => {
           isLoading={isLoading}
           isError={isError}
           account={account}
+          token={token}
           tokenPriceInfo={tokenPriceInfo}
         />
       </SubPageCard>
@@ -66,13 +69,20 @@ export const AccountDetailsView: FC<{
   isLoading: boolean
   isError: boolean
   account: RuntimeAccount | undefined
+  token?: EvmToken
   tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
-}> = ({ isLoading, isError, account, tokenPriceInfo, showLayer }) => {
+}> = ({ isLoading, isError, account, token, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
   return isError ? (
     <CardEmptyState label={t('account.cantLoadDetails')} />
   ) : (
-    <Account account={account} isLoading={isLoading} tokenPriceInfo={tokenPriceInfo} showLayer={showLayer} />
+    <Account
+      account={account}
+      token={token}
+      isLoading={isLoading}
+      tokenPriceInfo={tokenPriceInfo}
+      showLayer={showLayer}
+    />
   )
 }

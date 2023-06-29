@@ -10,7 +10,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
-import { type RuntimeAccount } from '../../../oasis-indexer/api'
+import { EvmToken, type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
@@ -21,6 +21,7 @@ import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
+import { TokenLink } from '../Tokens/TokenLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -50,12 +51,13 @@ export const FiatMoneyAmountBox = styled(Box)(() => ({
 
 type AccountProps = {
   account?: RuntimeAccount
+  token?: EvmToken
   isLoading: boolean
   tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, showLayer }) => {
+export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const balance = account?.balances[0]?.balance
@@ -99,6 +101,19 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
             <AccountLink scope={account} address={address!} />
             <CopyToClipboard value={address!} />
           </dd>
+
+          {token && (
+            <>
+              <dt>{t('common.token')}</dt>
+              <dd>
+                <TokenLink
+                  scope={account}
+                  address={token.eth_contract_addr || token.contract_addr}
+                  name={token.name}
+                />
+              </dd>
+            </>
+          )}
 
           {account?.evm_contract && (
             <>
