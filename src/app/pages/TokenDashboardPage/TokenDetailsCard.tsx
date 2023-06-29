@@ -13,6 +13,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { ContractVerificationIcon } from '../../components/ContractVerificationIcon'
 import { getTokenTypeName } from './TokenTypeCard'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
+import { ContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 
 export const TokenDetailsCard: FC = () => {
   const { t } = useTranslation()
@@ -56,7 +57,9 @@ export const TokenDetailsCard: FC = () => {
           <dd>{getTokenTypeName(t, token.type)} </dd>
 
           <dt>{t('contract.creator')}</dt>
-          <dd> {contract.creation_tx ? contract.creation_tx : t('common.missing')}</dd>
+          <dd>
+            <ContractCreatorInfo scope={account} address={contract.eth_creation_tx || contract.creation_tx} />
+          </dd>
 
           <dt>{t('common.balance')} </dt>
           <dd>
