@@ -48,7 +48,7 @@ export const TokenDetails: FC<{
       <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>
       <dd>{token.num_holders.toLocaleString()}</dd>
 
-      <dt>{t('tokens.supply')}</dt>
+      <dt>{t('tokens.totalSupply')}</dt>
       <dd>
         <LongDataDisplay data={token.total_supply || t('common.missing')} threshold={100} fontWeight={400} />
       </dd>

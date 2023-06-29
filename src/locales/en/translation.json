@@ -200,7 +200,6 @@
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",
-    "supply": "Supply",
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }}",
     "type": "Token Type"
