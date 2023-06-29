@@ -11,6 +11,7 @@ import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
+import { paraTimesConfig } from '../../../config'
 
 export const Nodes: FC = () => {
   const { t } = useTranslation()
@@ -20,8 +21,8 @@ export const Nodes: FC = () => {
   }
   const runtimeStatusQuery = useGetRuntimeStatus(scope.network, scope.layer)
   const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
-  const hasActiveNodes = activeNodes !== 0 // This includes undefined while loading
-
+  const hasActiveNodes = true // temporary workaround for BE bug
+  // const hasActiveNodes = activeNodes !== 0 // This includes undefined while loading
   const title = (
     <Box
       sx={{
@@ -59,7 +60,11 @@ export const Nodes: FC = () => {
                 color: hasActiveNodes ? COLORS.brandDark : COLORS.grayMedium,
               }}
             >
-              {hasActiveNodes ? t('nodes.value', { value: activeNodes }) : '-'}
+              {hasActiveNodes
+                ? t('nodes.value', {
+                    value: activeNodes || paraTimesConfig[scope.layer][scope.network].activeNodes,
+                  })
+                : '-'}
             </Typography>
           </>
         )}
