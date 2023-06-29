@@ -114,7 +114,7 @@ export const TransactionDetailPage: FC = () => {
   return (
     <PageLayout>
       {warningMultipleTransactionsSameHash && (
-        <StyledAlert severity={'error'}>{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
+        <StyledAlert severity="error">{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
       )}
       <SubPageCard
         featured

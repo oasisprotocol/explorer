@@ -184,7 +184,7 @@ export const TransactionLogEvent: FC<{
 
   return (
     <>
-      {!isFirst && <Divider variant={'card'} />}
+      {!isFirst && <Divider variant="card" />}
       <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
         {decoded && (
           <>

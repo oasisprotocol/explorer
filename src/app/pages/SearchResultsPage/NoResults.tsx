@@ -36,7 +36,7 @@ export const NoResults: FC<{
               i18nKey="search.noResults.description"
               components={{
                 OptionalBreak: <OptionalBreak />,
-                HomeLink: <Link component={RouterLink} to={'/'} />,
+                HomeLink: <Link component={RouterLink} to="/" />,
               }}
             />
           </p>

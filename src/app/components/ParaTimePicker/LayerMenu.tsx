@@ -34,7 +34,7 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
   const labels = getLayerLabels(t)
 
   return (
-    <Tooltip arrow placement="top" title={'Coming soon'}>
+    <Tooltip arrow placement="top" title="Coming soon">
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>

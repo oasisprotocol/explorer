@@ -33,7 +33,7 @@ export const HideMoreResults: FC<{ theme: Theme; onHide: () => void }> = ({ them
     <NotificationBox theme={theme} onClick={onHide}>
       <ZoomOut />
       <span>
-        <Trans i18nKey={'search.otherResults.clickToHide'} />
+        <Trans i18nKey="search.otherResults.clickToHide" />
       </span>
     </NotificationBox>
   )

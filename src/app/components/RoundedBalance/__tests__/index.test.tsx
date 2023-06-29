@@ -41,7 +41,7 @@ describe('RoundedBalance', () => {
 
 describe('RoundedRoseBalance', () => {
   it('should render value with ROSE ticker symbol', () => {
-    render(<RoundedBalance value="0.002231" ticker={'ROSE'} />)
+    render(<RoundedBalance value="0.002231" ticker="ROSE" />)
 
     expect(screen.getByText('0.00223… ROSE')).toBeInTheDocument()
   })
