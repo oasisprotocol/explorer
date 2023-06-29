@@ -9,9 +9,8 @@ import ZoomIn from '@mui/icons-material/ZoomIn'
 const NotificationBox = styled(Box)(({ theme }) => ({
   marginTop: 30,
   marginBottom: 30,
-  fontSize: 14,
-  marginLeft: '10%',
-  marginRight: '10%',
+  marginLeft: '5%',
+  marginRight: '5%',
 
   boxSizing: 'border-box',
   display: 'flex',
@@ -23,10 +22,9 @@ const NotificationBox = styled(Box)(({ theme }) => ({
 
   minHeight: 50,
 
-  background: theme.palette.layout.notificationBackground,
-  border: `2px solid ${theme.palette.layout.darkBorder}`,
-  color: theme.palette.layout.notificationText,
-
+  background: theme.palette.layout.secondary,
+  color: theme.palette.layout.titleOnBackground,
+  cursor: 'pointer',
   borderRadius: 50,
 }))
 
