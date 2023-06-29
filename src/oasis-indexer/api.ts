@@ -5,7 +5,7 @@ import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
-import { Layer, RuntimeAccount } from './generated/api'
+import { EvmToken, Layer, RuntimeAccount } from './generated/api'
 import { getEthAccountAddressFromPreimage } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
@@ -463,14 +463,40 @@ export const useGetRuntimeEvmTokens: typeof generated.useGetRuntimeEvmTokens = (
             evm_tokens: data.evm_tokens.map(token => {
               return {
                 ...token,
-                total_supply:
-                  token.total_supply != null && token.decimals != null
-                    ? fromBaseUnits(token.total_supply, token.decimals)
-                    : token.total_supply,
+                total_supply: token.total_supply
+                  ? fromBaseUnits(token.total_supply, token.decimals || 0)
+                  : undefined,
                 layer: runtime,
                 network,
               }
             }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTokensAddress = (
+  network,
+  runtime,
+  address,
+  options,
+) => {
+  return generated.useGetRuntimeEvmTokensAddress(network, runtime, address, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: EvmToken, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            total_supply: data.total_supply
+              ? fromBaseUnits(data.total_supply, data.decimals || 0)
+              : undefined,
           }
         },
         ...arrayify(options?.request?.transformResponse),
