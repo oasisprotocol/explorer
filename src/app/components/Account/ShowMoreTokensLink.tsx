@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-indexer/api'
 import { RouteUtils } from '../../utils/route-utils'
-import { accountTokenContainerId } from '../../pages/AccountDetailsPage/TokensCard'
+import { accountTokenContainerId } from '../../pages/AccountDetailsPage/AccountTokensCard'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,

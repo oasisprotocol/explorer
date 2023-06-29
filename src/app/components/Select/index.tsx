@@ -85,7 +85,7 @@ const TertiaryButton = forwardRef(
     const { t } = useTranslation()
 
     return (
-      <StyledButton {...restProps} ref={ref} color={'tertiary'}>
+      <StyledButton {...restProps} ref={ref} color="tertiary">
         <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
         {ownerState.open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </StyledButton>

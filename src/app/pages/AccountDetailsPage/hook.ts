@@ -12,12 +12,12 @@ export const useAccount = (scope: SearchScope, address: string) => {
   }
   const query = useGetRuntimeAccountsAddress(network, layer, address!)
   const account = query.data?.data
-  const isLoading = query.isLoading
-  const isError = query.isError
-  return { account, isLoading, isError }
+  const { isLoading, isError, isFetched } = query
+
+  return { account, isLoading, isError, isFetched }
 }
 
-export const useTransactions = (scope: SearchScope, address: string) => {
+export const useAccountTransactions = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE

@@ -36,7 +36,7 @@ describe('SearchResultsView', () => {
             hasUsedCoinGecko: false,
           },
         }}
-        title={'test search'}
+        title="test search"
         networkForTheme={Network.mainnet}
       />,
     )
@@ -59,7 +59,7 @@ describe('SearchResultsView', () => {
     renderWithProviders(
       <SearchResultsList
         searchResults={[suggestedParsedAccountResult]}
-        title={'test search'}
+        title="test search"
         networkForTheme={Network.mainnet}
         tokenPrices={{
           [Network.mainnet]: {

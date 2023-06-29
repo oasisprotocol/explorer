@@ -27,12 +27,7 @@ export const LongDataDisplay: FC<{ data: string; threshold: number; fontWeight?:
   }
   return (
     <div>
-      <Collapse
-        orientation={'vertical'}
-        in={showData}
-        onClick={() => setShowData(true)}
-        collapsedSize={'3em'}
-      >
+      <Collapse orientation="vertical" in={showData} onClick={() => setShowData(true)} collapsedSize="3em">
         <Typography
           variant="mono"
           sx={{

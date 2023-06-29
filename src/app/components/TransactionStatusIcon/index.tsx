@@ -24,7 +24,7 @@ const statusFgColor: Record<TxStatus, string> = {
 }
 
 const statusIcon: Record<TxStatus, ReactNode> = {
-  unknown: <HelpIcon color={'inherit'} fontSize="inherit" />,
+  unknown: <HelpIcon color="inherit" fontSize="inherit" />,
   success: <CheckCircleIcon color="success" fontSize="inherit" />,
   failure: <CancelIcon color="error" fontSize="inherit" />,
 }

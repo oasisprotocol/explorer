@@ -9,11 +9,12 @@ import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
-import { accountTokenContainerId } from './TokensCard'
+import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { showEmptyAccountDetails } from '../../../config'
 import { CardEmptyState } from './CardEmptyState'
+import { contractCodeContainerId } from './ContractCodeCard'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -29,6 +30,8 @@ export const AccountDetailsPage: FC = () => {
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
   const showTxs = showEmptyAccountDetails || showErc20 || !!account?.stats.num_txns
   const txLink = useHref('')
+  const showCode = isContract
+  const codeLink = useHref(`code#${contractCodeContainerId}`)
 
   const showDetails = showTxs || showErc20
 
@@ -50,7 +53,8 @@ export const AccountDetailsPage: FC = () => {
         <RouterTabs
           tabs={[
             { label: t('common.transactions'), to: txLink, visible: showTxs },
-            { label: t('account.ERC20'), to: erc20Link, visible: showErc20 },
+            { label: t('common.tokens'), to: erc20Link, visible: showErc20 },
+            { label: t('contract.code'), to: codeLink, visible: showCode },
           ]}
         />
       )}

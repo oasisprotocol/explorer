@@ -5,14 +5,16 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { COLORS } from '../../../styles/theme/colors'
 import ButtonBase from '@mui/material/ButtonBase'
 import { styled } from '@mui/material/styles'
+import Button from '@mui/material/Button'
 
 const clipboardTooltipDuration = 2000
 
 type CopyToClipboardProps = {
   value: string
+  label?: string
 }
 
-const StyledButton = styled(ButtonBase)(({ theme }) => ({
+const StyledIconButton = styled(ButtonBase)(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   border: 0,
@@ -24,7 +26,7 @@ const StyledButton = styled(ButtonBase)(({ theme }) => ({
   marginLeft: theme.spacing(4),
 }))
 
-export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value }) => {
+export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value, label }) => {
   const { t } = useTranslation()
   const timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
@@ -51,9 +53,21 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value }) => {
 
   return (
     <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
-      <StyledButton color="inherit" onClick={handleCopyToClipboard} aria-label={ariaLabel}>
-        <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark }} />
-      </StyledButton>
+      {label ? (
+        <Button
+          variant="outlined"
+          color="secondary"
+          sx={{ textTransform: 'capitalize' }}
+          onClick={handleCopyToClipboard}
+          aria-label={ariaLabel}
+        >
+          {label}
+        </Button>
+      ) : (
+        <StyledIconButton color="inherit" onClick={handleCopyToClipboard} aria-label={ariaLabel}>
+          <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark }} />
+        </StyledIconButton>
+      )}
     </Tooltip>
   )
 }

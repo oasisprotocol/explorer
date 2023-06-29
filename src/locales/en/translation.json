@@ -37,6 +37,7 @@
     "block": "Block",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
+    "copy": "Copy",
     "createdAt": "Created at",
     "data": "Data",
     "emerald": "Emerald",
@@ -92,6 +93,12 @@
     "valuePair": "{{value, number}}"
   },
   "contract": {
+    "code": "Code",
+    "copyButton": "Copy {{subject}}",
+    "creationByteCode": "Creation ByteCode",
+    "noCode": "There is no bytecode on record for this account. (Are you sure this is a contract?)",
+    "title": "Contract",
+    "runtimeByteCode": "Runtime ByteCode",
     "title": "Contract",
     "verification": {
       "title": "Verification",
