@@ -21,6 +21,7 @@ import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwor
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
+import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -109,20 +110,8 @@ export const routes: RouteObject[] = [
           },
           {
             path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
-            element: <AccountDetailsPage />,
+            element: <TokenDashboardPage />,
             loader: addressParamLoader,
-            children: [
-              {
-                path: '',
-                element: <AccountTransactionsCard />,
-                loader: addressParamLoader,
-              },
-              {
-                path: 'tokens/erc-20',
-                element: <AccountTokensCard type="ERC20" />,
-                loader: addressParamLoader,
-              },
-            ],
           },
         ],
       },
