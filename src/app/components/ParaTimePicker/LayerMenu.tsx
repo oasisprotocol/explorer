@@ -34,13 +34,13 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
   const labels = getLayerLabels(t)
 
   return (
-    <Tooltip arrow placement="top" title="Coming soon">
+    <Tooltip arrow placement="top" title={t('paraTimePicker.comingSoonTitle')}>
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>
           <ListItemText>
             {labels[layer]}
-            {isTablet && <LayerMenuItemCaption>{t('paraTimePicker.comingSoon')}</LayerMenuItemCaption>}
+            {isTablet && <LayerMenuItemCaption>{t('paraTimePicker.comingSoonLabel')}</LayerMenuItemCaption>}
           </ListItemText>
         </MenuItem>
       </div>
