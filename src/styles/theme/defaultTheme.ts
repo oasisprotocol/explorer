@@ -28,8 +28,6 @@ declare module '@mui/material/styles' {
     secondary?: string
     primaryBackground?: string
     secondaryBackground?: string
-    notificationBackground?: string
-    notificationText?: string
     networkBubbleBorder?: string
     networkBubbleBackground?: string
     titleOnBackground?: string
@@ -106,8 +104,6 @@ export const defaultTheme = createTheme({
       secondary: COLORS.brandDark,
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
-      notificationBackground: COLORS.white,
-      notificationText: COLORS.brandDark,
       networkBubbleBorder: COLORS.white,
       networkBubbleBackground: COLORS.white,
       titleOnBackground: COLORS.white,
