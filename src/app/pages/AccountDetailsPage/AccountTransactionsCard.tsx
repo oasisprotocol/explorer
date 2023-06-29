@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { Transactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
+import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
 import { useAccountTransactions } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -23,9 +23,9 @@ export const AccountTransactionsCard: FC = () => {
     useAccountTransactions(scope, address)
   return (
     <Card>
-      <ScrollingDiv id={accountTransactionsContainerId}>
+      <LinkableDiv id={accountTransactionsContainerId}>
         <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
-      </ScrollingDiv>
+      </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
           {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
