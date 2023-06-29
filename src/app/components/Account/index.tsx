@@ -70,8 +70,8 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
       )}#${accountTransactionsContainerId}`
     : undefined
 
-  const token = account?.ticker || Ticker.ROSE
-  const tickerName = getNameForTicker(t, token)
+  const nativeToken = account?.ticker || Ticker.ROSE
+  const nativeTickerName = getNameForTicker(t, nativeToken)
   const {
     isLoading: isPriceLoading,
     price: tokenFiatValue,
@@ -121,7 +121,7 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
           )}
 
           <dt>{t('common.balance')}</dt>
-          <dd>{t('common.valueInToken', { value: balance, ticker: tickerName })}</dd>
+          <dd>{t('common.valueInToken', { value: balance, ticker: nativeTickerName })}</dd>
 
           <dt>{t('common.tokens')}</dt>
           <dd>
@@ -159,10 +159,12 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>
-          <dd>{t('common.valueInToken', { value: account.stats.total_received, ticker: tickerName })}</dd>
+          <dd>
+            {t('common.valueInToken', { value: account.stats.total_received, ticker: nativeTickerName })}
+          </dd>
 
           <dt>{t('account.totalSent')}</dt>
-          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: tickerName })}</dd>
+          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: nativeTickerName })}</dd>
         </StyledDescriptionList>
       )}
     </>
