@@ -4,6 +4,7 @@ import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
 import { AddressPreimage } from '../../oasis-indexer/generated/api'
+import BigNumber from 'bignumber.js'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
 export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
@@ -69,4 +70,12 @@ export function getEthAccountAddressFromPreimage(preimage: AddressPreimage | und
 
 export function uniq<T>(input: T[] | undefined): T[] {
   return input === undefined ? [] : [...new Set(input)]
+}
+
+export function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
+  const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
+  if (value.isNaN()) {
+    throw new Error(`Not a number in fromBaseUnits(${valueInBaseUnits})`)
+  }
+  return value.toFixed()
 }

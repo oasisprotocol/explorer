@@ -3,10 +3,9 @@
 import axios, { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { EvmToken, Layer, RuntimeAccount } from './generated/api'
-import { getEthAccountAddressFromPreimage } from '../app/utils/helpers'
+import { fromBaseUnits, getEthAccountAddressFromPreimage } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
@@ -76,14 +75,6 @@ export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBa
     ...account,
     tokenBalances,
   }
-}
-
-function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
-  const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
-  if (value.isNaN()) {
-    throw new Error(`Not a number in fromBaseUnits(${valueInBaseUnits})`)
-  }
-  return value.toFixed()
 }
 
 function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
