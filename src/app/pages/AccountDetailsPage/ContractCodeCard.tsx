@@ -12,16 +12,18 @@ import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { base64ToHex } from '../../utils/helpers'
 
 export const contractCodeContainerId = 'code'
 
-const CodeDisplay: FC<{ code: string | undefined; label: string; extraTopPadding?: boolean }> = ({
-  code,
+const CodeDisplay: FC<{ rawData: string | undefined; label: string; extraTopPadding?: boolean }> = ({
+  rawData,
   label,
   extraTopPadding,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const code = rawData === undefined ? undefined : base64ToHex(rawData)
   return code === undefined ? null : (
     <>
       <Box
@@ -61,9 +63,9 @@ export const ContractCodeCard: FC = () => {
         {noCode && <CardEmptyState label={t('contract.noCode')} />}
         {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
           <CardContent>
-            <CodeDisplay code={contract.creation_bytecode} label={t('contract.creationByteCode')} />
+            <CodeDisplay rawData={contract.creation_bytecode} label={t('contract.creationByteCode')} />
             <CodeDisplay
-              code={contract.runtime_bytecode}
+              rawData={contract.runtime_bytecode}
               label={t('contract.runtimeByteCode')}
               extraTopPadding={!!contract.creation_bytecode}
             />
