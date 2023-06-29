@@ -48,7 +48,7 @@ export const isValidTxEthHash = (hash: string): boolean => /^0x[0-9a-fA-F]{64}$/
 
 export const isValidTxHash = (hash: string) => isValidTxOasisHash(hash) || isValidTxEthHash(hash)
 
-export function getEthAccountAddress(preimage: AddressPreimage | undefined): string | undefined {
+export function getEthAccountAddressFromPreimage(preimage: AddressPreimage | undefined): string | undefined {
   if (preimage?.context !== 'oasis-runtime-sdk/address: secp256k1eth' || !preimage.address_data) {
     // We can only determine the ETH address if there was a preimage,
     // and the generation context was secp256k1eth
