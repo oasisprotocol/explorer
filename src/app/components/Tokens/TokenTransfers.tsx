@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import { Table, TableCellAlign, TableColProps } from '../../components/Table'
-import { RuntimeEvent } from '../../../oasis-indexer/api'
+import { Table, TableCellAlign, TableColProps } from '../Table'
+import { Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-indexer/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
@@ -15,6 +15,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { fromBaseUnits, getEthAccountAddressFromBase64, getEvmBech32Address } from '../../utils/helpers'
+import { AppErrors } from '../../../types/errors'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -34,6 +36,44 @@ const StyledCircle = styled(Box)(({ theme }) => ({
 
 type TableRuntimeEvent = RuntimeEvent & {
   markAsNew?: boolean
+}
+
+/**
+ * This is a wrapper around RoundedBalance which is able to find out the ticker by looking at an event
+ * @constructor
+ */
+const DelayedEventBalance: FC<
+  Omit<Exclude<Parameters<typeof RoundedBalance>[0], undefined>, 'ticker'> & {
+    event: RuntimeEvent
+  }
+> = props => {
+  const { t } = useTranslation()
+  const [oasisAddress, setOasisAddress] = useState('')
+  const { event, value, ...rest } = props
+
+  if (event.layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+  }
+
+  const b64Address = event.body.address
+  const ethAddress = b64Address ? getEthAccountAddressFromBase64(b64Address) : undefined
+  useEffect(() => {
+    if (ethAddress) {
+      getEvmBech32Address(ethAddress).then(setOasisAddress)
+    }
+  }, [ethAddress])
+
+  const tokenQuery = useGetRuntimeEvmTokensAddress(event.network, event.layer, oasisAddress, {
+    query: {
+      enabled: !!oasisAddress,
+    },
+  })
+
+  const token = tokenQuery.data?.data
+  const realValue = value === undefined ? undefined : fromBaseUnits(value, token?.decimals || 0)
+  const ticker = token?.symbol || t('common.missing')
+
+  return <RoundedBalance {...rest} value={realValue} ticker={ticker} />
 }
 
 type TokenTransfersProps = {
@@ -67,7 +107,6 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
       | undefined
     const toAddress = transfer.evm_log_params?.find(param => param.name === 'to')?.value as string | undefined
     const value = transfer.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
-    const ticker = '???' // TODO: how do I get the ticker?
     const isMinting = fromAddress === NULL_ADDRESS
     const isBurning = toAddress === NULL_ADDRESS
 
@@ -155,7 +194,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: value === undefined ? '' : <RoundedBalance value={value} ticker={ticker} />,
+          content: value === undefined ? '' : <DelayedEventBalance value={value} event={transfer} />,
         },
       ],
       highlight: transfer.markAsNew,
