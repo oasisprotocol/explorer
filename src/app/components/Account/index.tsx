@@ -19,7 +19,7 @@ import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
-import { TransactionLink } from '../Transactions/TransactionLink'
+import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
 
@@ -62,7 +62,6 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
   const { isMobile } = useScreenSize()
   const balance = account?.balances[0]?.balance
   const address = account ? account.address_eth ?? account.address : undefined
-  const creationTxHash = account?.evm_contract?.eth_creation_tx ?? account?.evm_contract?.creation_tx
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
   const transactionsAnchor = account
@@ -80,6 +79,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
     isFree: isTokenFree,
     hasUsedCoinGecko,
   } = tokenPriceInfo
+  const contract = account?.evm_contract
 
   return (
     <>
@@ -115,7 +115,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             </>
           )}
 
-          {account?.evm_contract && (
+          {contract && (
             <>
               <dt>{t('contract.verification.title')}</dt>
               <dd>
@@ -126,11 +126,15 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
               </dd>
             </>
           )}
-          {creationTxHash && (
+
+          {contract && (
             <>
-              <dt>{t('common.createdAt')}</dt>
+              <dt>{t('contract.creator')}</dt>
               <dd>
-                <TransactionLink scope={account} hash={creationTxHash} />
+                <ContractCreatorInfo
+                  scope={account}
+                  address={contract.eth_creation_tx || contract.creation_tx}
+                />
               </dd>
             </>
           )}
