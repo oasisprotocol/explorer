@@ -15,6 +15,7 @@ export const COLORS = {
   ceil: '#8f8cdf',
   cosmicCobalt: '#222199',
   darkBlueGray: '#5c6098',
+  darkBlue: '#030092',
   eucalyptus: '#4cd4a9',
   grayDark: '#31435a',
   grayExtraDark: '#06152b',
