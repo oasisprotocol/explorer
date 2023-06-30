@@ -24,7 +24,7 @@ export const ScrollableDataDisplay: FC<{ data: string; fontWeight?: number }> = 
           border: `1px solid ${COLORS.grayMedium}`,
           height: '349px',
           overflowY: 'scroll',
-          p: 3,
+          p: 4,
         }}
       >
         <Typography
