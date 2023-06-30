@@ -58,7 +58,7 @@ type AccountProps = {
 export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const balance = account?.balances[0]?.balance ?? '0'
+  const balance = account?.balances[0]?.balance
   const address = account ? account.address_eth ?? account.address : undefined
   const creationTxHash = account?.evm_contract?.eth_creation_tx ?? account?.evm_contract?.creation_tx
 
@@ -121,7 +121,11 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
           )}
 
           <dt>{t('common.balance')}</dt>
-          <dd>{t('common.valueInToken', { value: balance, ticker: nativeTickerName })}</dd>
+          <dd>
+            {balance === undefined
+              ? t('common.missing')
+              : t('common.valueInToken', { value: balance, ticker: nativeTickerName })}
+          </dd>
 
           <dt>{t('common.tokens')}</dt>
           <dd>
