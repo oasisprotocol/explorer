@@ -8,7 +8,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
 
-export const TokenHoldersCard: FC = () => {
+export const TokenHoldersCountCard: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
 
