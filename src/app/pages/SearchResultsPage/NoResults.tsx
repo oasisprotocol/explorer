@@ -9,7 +9,7 @@ import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
 import { getNetworkNames, Network } from '../../../types/network'
-import { Layer } from '../../../oasis-indexer/api'
+import { Layer } from '../../../oasis-nexus/api'
 
 export const NoResults: FC<{
   network?: Network

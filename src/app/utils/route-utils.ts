@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { getOasisAddress, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { EvmTokenType, Layer } from '../../oasis-indexer/api'
+import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 

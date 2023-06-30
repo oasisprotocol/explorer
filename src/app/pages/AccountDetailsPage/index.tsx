@@ -8,7 +8,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
-import { EvmToken, EvmTokenType, RuntimeAccount } from '../../../oasis-indexer/api'
+import { EvmToken, EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount, useAccountTokenTransfers } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'

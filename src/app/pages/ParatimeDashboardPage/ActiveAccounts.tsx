@@ -7,7 +7,7 @@ import {
   useGetLayerStatsActiveAccounts,
   GetLayerStatsActiveAccountsWindowStepSeconds,
   type ActiveAccounts as Windows,
-} from '../../../oasis-indexer/api'
+} from '../../../oasis-nexus/api'
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,

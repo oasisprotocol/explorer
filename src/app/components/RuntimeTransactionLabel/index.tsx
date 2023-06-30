@@ -58,7 +58,7 @@ type RuntimeTransactionLabelProps = {
    * May be undefined if the transaction was malformed.
    *
    * In theory, this could be any string as the runtimes evolve.
-   * In practice, the indexer currently expects only the following methods:
+   * In practice, the nexus currently expects only the following methods:
    *   - "accounts.Transfer"
    *   - "consensus.Deposit"
    *   - "consensus.Withdraw"

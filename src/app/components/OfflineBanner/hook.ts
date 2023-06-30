@@ -1,4 +1,4 @@
-import { Layer, useGetRuntimeStatus, useGetStatus } from '../../../oasis-indexer/api'
+import { Layer, useGetRuntimeStatus, useGetStatus } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 import { SearchScope } from '../../../types/searchScope'
 import { AppError, AppErrors } from '../../../types/errors'

@@ -6,7 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
-import { TxError } from '../../../oasis-indexer/api'
+import { TxError } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 
 type TxStatus = 'unknown' | 'success' | 'failure'

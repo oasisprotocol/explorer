@@ -7,7 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
-import { EvmTokenType } from '../../../oasis-indexer/api'
+import { EvmTokenType } from '../../../oasis-nexus/api'
 import { TFunction } from 'i18next'
 import { exhaustedTypeWarning } from '../../../types/errors'
 

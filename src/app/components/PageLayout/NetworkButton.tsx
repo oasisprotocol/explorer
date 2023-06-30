@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
-import { Layer } from '../../../oasis-indexer/api'
+import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { LayerStatus } from '../LayerStatus'
 

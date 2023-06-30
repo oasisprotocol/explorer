@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { EvmToken } from '../../../oasis-indexer/api'
+import { EvmToken } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'

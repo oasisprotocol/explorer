@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import LockIcon from '@mui/icons-material/Lock'
 import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred'
 import { COLORS } from '../../../styles/theme/colors'
-import { RuntimeTransactionEncryptionEnvelope } from '../../../oasis-indexer/api'
+import { RuntimeTransactionEncryptionEnvelope } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 

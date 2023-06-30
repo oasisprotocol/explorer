@@ -3,7 +3,7 @@ import { Network } from '../../types/network'
 import { RouteUtils } from '../utils/route-utils'
 import { AppError, AppErrors } from '../../types/errors'
 import { SearchScope } from '../../types/searchScope'
-import { Layer } from '../../oasis-indexer/api'
+import { Layer } from '../../oasis-nexus/api'
 
 export const useNetworkParam = (): Network | undefined => {
   const { network } = useParams()

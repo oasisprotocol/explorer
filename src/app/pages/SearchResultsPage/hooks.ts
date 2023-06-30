@@ -9,7 +9,7 @@ import {
   Layer,
   isAccountNonEmpty,
   HasScope,
-} from '../../../oasis-indexer/api'
+} from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
 

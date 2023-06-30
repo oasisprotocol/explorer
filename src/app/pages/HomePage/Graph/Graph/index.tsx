@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import { forwardRef, ForwardRefRenderFunction, memo, MouseEventHandler, useEffect } from 'react'
 import { RouteUtils } from '../../../../utils/route-utils'
 import { useScreenSize } from '../../../../hooks/useScreensize'
-import { Layer } from '../../../../../oasis-indexer/api'
+import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { COLORS } from '../../../../../styles/theme/testnet/colors'
 

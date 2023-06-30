@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Layer, RuntimeEvent, RuntimeTransaction, useGetRuntimeEvents } from '../../../oasis-indexer/api'
+import { Layer, RuntimeEvent, RuntimeTransaction, useGetRuntimeEvents } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { TransactionLogEvent } from './LogEvent'
 import { TextSkeleton } from '../../components/Skeleton'

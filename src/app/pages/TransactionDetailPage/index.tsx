@@ -6,7 +6,7 @@ import {
   RuntimeTransaction,
   RuntimeTransactionList,
   useGetRuntimeTransactionsTxHash,
-} from '../../../oasis-indexer/api'
+} from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
