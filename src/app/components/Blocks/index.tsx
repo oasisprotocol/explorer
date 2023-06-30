@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { RuntimeBlock } from '../../../oasis-indexer/api'
+import { RuntimeBlock } from '../../../oasis-nexus/api'
 import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'

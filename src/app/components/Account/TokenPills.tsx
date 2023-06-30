@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
-import { RuntimeAccount, type RuntimeEvmBalance } from '../../../oasis-indexer/api'
+import { RuntimeAccount, type RuntimeEvmBalance } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 
 type TokenPillsProps = {

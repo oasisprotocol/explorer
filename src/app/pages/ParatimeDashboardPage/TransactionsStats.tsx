@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { BarChart } from '../../components/charts/BarChart'
-import { useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
+import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {
   chartUseQueryStaleTimeMs,
   durationToQueryParams,

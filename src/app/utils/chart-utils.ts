@@ -2,7 +2,7 @@ import startOfHour from 'date-fns/startOfHour'
 import startOfDay from 'date-fns/startOfDay'
 import isSameMonth from 'date-fns/isSameMonth'
 import startOfMonth from 'date-fns/startOfMonth'
-import { GetLayerStatsTxVolumeParams, type TxVolume, type ActiveAccounts } from '../../oasis-indexer/api'
+import { GetLayerStatsTxVolumeParams, type TxVolume, type ActiveAccounts } from '../../oasis-nexus/api'
 
 export enum ChartDuration {
   TODAY = 'TODAY',

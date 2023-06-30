@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
-import { Layer, EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-indexer/api'
+import { Layer, EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-nexus/api'
 import { Network } from '../../../../types/network'
 
 const mockedAccount = {

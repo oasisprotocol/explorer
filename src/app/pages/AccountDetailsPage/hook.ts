@@ -3,7 +3,7 @@ import {
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
   useGetRuntimeTransactions,
-} from '../../../oasis-indexer/api'
+} from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'

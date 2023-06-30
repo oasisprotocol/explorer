@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-restricted-imports
-import { Layer } from './oasis-indexer/generated/api' // We get this from the generated code to avoid circular imports
+import { Layer } from './oasis-nexus/generated/api' // We get this from the generated code to avoid circular imports
 
 export const consensusDecimals = 9
 

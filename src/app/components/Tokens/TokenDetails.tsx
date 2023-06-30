@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { EvmToken } from '../../../oasis-indexer/api'
+import { EvmToken } from '../../../oasis-nexus/api'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'

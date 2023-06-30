@@ -5,7 +5,7 @@ import {
   RuntimeTransaction,
   useGetRuntimeBlocks,
   useGetRuntimeTransactions,
-} from '../oasis-indexer/api'
+} from '../oasis-nexus/api'
 import { Network } from './network'
 
 type BlocksWithExtra = AxiosResponse<{

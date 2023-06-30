@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { TFunction } from 'i18next'
-import { Layer } from '../../oasis-indexer/api'
+import { Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { MainnetIcon } from '../components/CustomIcons/Mainnet'
 import { TestnetIcon } from '../components/CustomIcons/Testnet'

@@ -3,7 +3,7 @@ import { uniq } from '../app/utils/helpers'
 // Here we need to import from the generated code, in order to break
 // a cycle of imports which confuse jest
 // eslint-disable-next-line no-restricted-imports
-import { Layer } from '../oasis-indexer/generated/api'
+import { Layer } from '../oasis-nexus/generated/api'
 import { TFunction } from 'i18next'
 
 export const getLayerNames = (t: TFunction): Record<Layer, string> => ({

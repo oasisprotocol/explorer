@@ -1,4 +1,4 @@
-import { EvmTokenType, groupAccountTokenBalances, Layer, RuntimeAccount } from '../../oasis-indexer/api'
+import { EvmTokenType, groupAccountTokenBalances, Layer, RuntimeAccount } from '../../oasis-nexus/api'
 import { Ticker } from '../../types/ticker'
 import { Network } from '../../types/network'
 import { AccountResult, BlockResult } from '../pages/SearchResultsPage/hooks'

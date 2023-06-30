@@ -1,4 +1,4 @@
-import { Layer, useGetRuntimeEvmTokensAddress } from '../../../oasis-indexer/api'
+import { Layer, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 

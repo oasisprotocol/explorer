@@ -3,7 +3,7 @@ import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
-import { AddressPreimage } from '../../oasis-indexer/generated/api'
+import { AddressPreimage } from '../../oasis-nexus/generated/api'
 import BigNumber from 'bignumber.js'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)

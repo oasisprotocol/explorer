@@ -1,5 +1,5 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
-import { Layer } from '../../../../../oasis-indexer/api'
+import { Layer } from '../../../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../../../types/errors'
 
 export abstract class GraphUtils {

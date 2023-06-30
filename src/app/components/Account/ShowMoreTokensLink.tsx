@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-indexer/api'
+import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTokenContainerId } from '../../pages/AccountDetailsPage/AccountTokensCard'
 

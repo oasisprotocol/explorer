@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useGetLayerStatsTxVolume } from '../../../oasis-indexer/api'
+import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
