@@ -55,6 +55,10 @@ declare module './generated/api' {
     network: Network
     layer: Layer
   }
+  export interface BareTokenHolder {
+    network: Network
+    layer: Layer
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -521,6 +525,38 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
             events: data.events.map(event => {
               return {
                 ...event,
+                layer: runtime,
+                network,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeEvmTokensAddressHolders: typeof generated.useGetRuntimeEvmTokensAddressHolders = (
+  network,
+  runtime,
+  address,
+  params,
+  options,
+) => {
+  return generated.useGetRuntimeEvmTokensAddressHolders(network, runtime, address, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.TokenHolderList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            holders: data.holders.map(holder => {
+              return {
+                ...holder,
                 layer: runtime,
                 network,
               }
