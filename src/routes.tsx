@@ -23,6 +23,7 @@ import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
+import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -118,6 +119,18 @@ export const routes: RouteObject[] = [
             path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
             element: <TokenDashboardPage />,
             loader: addressParamLoader,
+            children: [
+              {
+                path: '',
+                element: <TokenTransfersCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'code',
+                element: <ContractCodeCard />,
+                loader: addressParamLoader,
+              },
+            ],
           },
         ],
       },
