@@ -53,6 +53,7 @@ export const TokenSnapshot: FC = () => {
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
           <TokenTypeCard />
+          {/*<TokenGasUsedCard /> TODO: use this when gas used becomes available */}
         </StyledGrid>
       </Grid>
     </>
