@@ -32,7 +32,6 @@ const StyledBox = styled(Box, {
   return {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     height: '28px',
     fontSize: '12px',
     backgroundColor: statusBgColor[status],
