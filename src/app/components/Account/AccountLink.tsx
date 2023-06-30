@@ -14,7 +14,7 @@ export const AccountLink: FC<{
   alwaysTrim?: boolean
   plain?: boolean
 }> = ({ scope, address, alwaysTrim, plain }) => {
-  const { isMobile } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <Typography
@@ -26,7 +26,7 @@ export const AccountLink: FC<{
           : { color: COLORS.brandDark, fontWeight: 700 }
       }
     >
-      {alwaysTrim || isMobile ? (
+      {alwaysTrim || isTablet ? (
         <TrimLinkLabel label={address} to={to} />
       ) : plain ? (
         address

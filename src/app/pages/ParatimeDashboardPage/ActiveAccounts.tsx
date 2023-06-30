@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import startOfMonth from 'date-fns/startOfMonth'
-import { SnapshotCard } from './SnapshotCard'
+import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { BarChart } from '../../components/charts/BarChart'
 import {
   useGetLayerStatsActiveAccounts,

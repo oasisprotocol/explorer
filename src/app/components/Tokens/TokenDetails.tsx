@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
-import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
+import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { LongDataDisplay } from '../LongDataDisplay'
 
 export const TokenDetails: FC<{
@@ -48,7 +48,7 @@ export const TokenDetails: FC<{
       <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>
       <dd>{token.num_holders.toLocaleString()}</dd>
 
-      <dt>{t('tokens.supply')}</dt>
+      <dt>{t('tokens.totalSupply')}</dt>
       <dd>
         <LongDataDisplay data={token.total_supply || t('common.missing')} threshold={100} fontWeight={400} />
       </dd>

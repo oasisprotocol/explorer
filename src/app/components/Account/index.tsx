@@ -10,17 +10,18 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
-import { type RuntimeAccount } from '../../../oasis-indexer/api'
+import { EvmToken, type RuntimeAccount } from '../../../oasis-indexer/api'
 import { TokenPills } from './TokenPills'
 import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/AccountTransactionsCard'
 import Link from '@mui/material/Link'
-import { DashboardLink } from '../../pages/DashboardPage/DashboardLink'
+import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
-import { TransactionLink } from '../Transactions/TransactionLink'
+import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
+import { TokenLink } from '../Tokens/TokenLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -50,17 +51,17 @@ export const FiatMoneyAmountBox = styled(Box)(() => ({
 
 type AccountProps = {
   account?: RuntimeAccount
+  token?: EvmToken
   isLoading: boolean
   tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, showLayer }) => {
+export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const balance = account?.balances[0]?.balance ?? '0'
+  const balance = account?.balances[0]?.balance
   const address = account ? account.address_eth ?? account.address : undefined
-  const creationTxHash = account?.evm_contract?.eth_creation_tx ?? account?.evm_contract?.creation_tx
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
   const transactionsAnchor = account
@@ -70,14 +71,15 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
       )}#${accountTransactionsContainerId}`
     : undefined
 
-  const token = account?.ticker || Ticker.ROSE
-  const tickerName = getNameForTicker(t, token)
+  const nativeToken = account?.ticker || Ticker.ROSE
+  const nativeTickerName = getNameForTicker(t, nativeToken)
   const {
     isLoading: isPriceLoading,
     price: tokenFiatValue,
     isFree: isTokenFree,
     hasUsedCoinGecko,
   } = tokenPriceInfo
+  const contract = account?.evm_contract
 
   return (
     <>
@@ -100,7 +102,20 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
             <CopyToClipboard value={address!} />
           </dd>
 
-          {account?.evm_contract && (
+          {token && (
+            <>
+              <dt>{t('common.token')}</dt>
+              <dd>
+                <TokenLink
+                  scope={account}
+                  address={token.eth_contract_addr || token.contract_addr}
+                  name={token.name}
+                />
+              </dd>
+            </>
+          )}
+
+          {contract && (
             <>
               <dt>{t('contract.verification.title')}</dt>
               <dd>
@@ -111,17 +126,25 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
               </dd>
             </>
           )}
-          {creationTxHash && (
+
+          {contract && (
             <>
-              <dt>{t('common.createdAt')}</dt>
+              <dt>{t('contract.creator')}</dt>
               <dd>
-                <TransactionLink scope={account} hash={creationTxHash} />
+                <ContractCreatorInfo
+                  scope={account}
+                  address={contract.eth_creation_tx || contract.creation_tx}
+                />
               </dd>
             </>
           )}
 
           <dt>{t('common.balance')}</dt>
-          <dd>{t('common.valueInToken', { value: balance, ticker: tickerName })}</dd>
+          <dd>
+            {balance === undefined
+              ? t('common.missing')
+              : t('common.valueInToken', { value: balance, ticker: nativeTickerName })}
+          </dd>
 
           <dt>{t('common.tokens')}</dt>
           <dd>
@@ -159,10 +182,12 @@ export const Account: FC<AccountProps> = ({ account, isLoading, tokenPriceInfo, 
           </dd>
 
           <dt>{t('account.totalReceived')}</dt>
-          <dd>{t('common.valueInToken', { value: account.stats.total_received, ticker: tickerName })}</dd>
+          <dd>
+            {t('common.valueInToken', { value: account.stats.total_received, ticker: nativeTickerName })}
+          </dd>
 
           <dt>{t('account.totalSent')}</dt>
-          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: tickerName })}</dd>
+          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: nativeTickerName })}</dd>
         </StyledDescriptionList>
       )}
     </>

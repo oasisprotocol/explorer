@@ -25,7 +25,7 @@ export const TokenList = (props: TokensProps) => {
       content: t('tokens.holdersCount'),
       align: TableCellAlign.Right,
     },
-    { key: 'supply', content: t('tokens.supply'), align: TableCellAlign.Right },
+    { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
     { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Right },
   ]
 

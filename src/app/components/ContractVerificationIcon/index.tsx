@@ -32,7 +32,6 @@ const StyledBox = styled(Box, {
   return {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     height: '28px',
     fontSize: '12px',
     backgroundColor: statusBgColor[status],
@@ -47,9 +46,14 @@ const StyledBox = styled(Box, {
 type ContractVerificationIconProps = {
   verified: boolean
   address_eth: string
+  noLink?: boolean
 }
 
-export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ verified, address_eth }) => {
+export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({
+  verified,
+  address_eth,
+  noLink = false,
+}) => {
   const { t } = useTranslation()
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   const statusLabel: Record<VerificationStatus, string> = {
@@ -65,7 +69,7 @@ export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ ve
         {statusIcon[status]}
       </StyledBox>
       &nbsp; &nbsp;
-      {verified && (
+      {verified && !noLink && (
         <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
           <Trans
             t={t}

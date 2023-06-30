@@ -9,7 +9,7 @@ import {
 import { LineChart } from '../../components/charts/LineChart'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC, memo } from 'react'
-import { SnapshotCard } from './SnapshotCard'
+import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'

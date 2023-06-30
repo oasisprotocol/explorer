@@ -31,6 +31,7 @@ type SnapshotCardProps = PropsWithChildren & {
   label?: string
   title: ReactNode
   withContentPadding?: boolean
+  withConstantHeight?: boolean
 }
 
 export const SnapshotCard: FC<SnapshotCardProps> = ({
@@ -39,12 +40,13 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
   title,
   label,
   withContentPadding = true,
+  withConstantHeight = false,
 }) => {
   return (
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
-      {(badge || label) && (
+      {(badge || label || withConstantHeight) && (
         <CardActions sx={{ minHeight: 60 }}>
           <Box
             sx={{

@@ -3,7 +3,7 @@ import { HomePage } from './app/pages/HomePage'
 import { BlocksPage } from './app/pages/BlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
-import { DashboardPage } from './app/pages/DashboardPage'
+import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
 import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
 import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
@@ -19,8 +19,9 @@ import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
-import { TokensPage } from './app/pages/TokensPage'
+import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
+import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -55,7 +56,7 @@ export const routes: RouteObject[] = [
         children: [
           {
             path: '',
-            element: <DashboardPage />,
+            element: <ParatimeDashboardPage />,
           },
           {
             path: 'search', // Search within this scope
@@ -109,20 +110,8 @@ export const routes: RouteObject[] = [
           },
           {
             path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
-            element: <AccountDetailsPage />,
+            element: <TokenDashboardPage />,
             loader: addressParamLoader,
-            children: [
-              {
-                path: '',
-                element: <AccountTransactionsCard />,
-                loader: addressParamLoader,
-              },
-              {
-                path: 'tokens/erc-20',
-                element: <AccountTokensCard type="ERC20" />,
-                loader: addressParamLoader,
-              },
-            ],
           },
         ],
       },

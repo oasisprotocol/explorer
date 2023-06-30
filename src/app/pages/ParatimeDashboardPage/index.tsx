@@ -12,7 +12,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 
-export const DashboardPage: FC = () => {
+export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
 
   return (
