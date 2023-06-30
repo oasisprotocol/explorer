@@ -58,6 +58,7 @@ declare module './generated/api' {
   export interface BareTokenHolder {
     network: Network
     layer: Layer
+    rank: number
   }
 }
 
@@ -554,9 +555,10 @@ export const useGetRuntimeEvmTokensAddressHolders: typeof generated.useGetRuntim
           if (status !== 200) return data
           return {
             ...data,
-            holders: data.holders.map(holder => {
+            holders: data.holders.map((holder, index) => {
               return {
                 ...holder,
+                rank: index + (params?.offset ?? 0) + 1,
                 layer: runtime,
                 network,
               }

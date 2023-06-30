@@ -8,10 +8,9 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useLoaderData } from 'react-router-dom'
-import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
-import { useAccount } from '../AccountDetailsPage/hook'
-import { useTokenTransfers } from './hook'
+import { useTokenHolders, useTokenInfo } from './hook'
+import { TokenHolders } from '../../components/Tokens/TokenHolders'
 
 export const tokenHoldersContainerId = 'holders'
 
@@ -20,12 +19,16 @@ export const TokenHoldersCard: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { isLoading, isFetched, transfers, pagination, totalCount, isTotalCountClipped } = useTokenTransfers(
+  const { token } = useTokenInfo(scope, address)
+
+  const { isLoading, isFetched, holders, pagination, totalCount, isTotalCountClipped } = useTokenHolders(
     scope,
     address,
   )
 
-  const { account } = useAccount(scope, address)
+  const tokenPrice = undefined
+  // TODO: add token price when available
+  // const tokenPrice = useTokenPrice('ROSE')
 
   return (
     <Card>
@@ -34,12 +37,14 @@ export const TokenHoldersCard: FC = () => {
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          {isFetched && !transfers?.length && <CardEmptyState label={t('account.emptyTokenTransferList')} />}
-          <TokenTransfers
-            transfers={transfers}
-            ownAddress={account?.address_eth}
+          {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyTokenHolderList')} />}
+          <TokenHolders
+            holders={holders}
+            decimals={token?.decimals}
+            totalSupply={token?.total_supply}
             isLoading={isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+            tokenPrice={tokenPrice}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,

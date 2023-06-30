@@ -1,4 +1,9 @@
-import { Layer, useGetRuntimeEvents, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
+import {
+  Layer,
+  useGetRuntimeEvents,
+  useGetRuntimeEvmTokensAddress,
+  useGetRuntimeEvmTokensAddressHolders,
+} from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -52,6 +57,36 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
     isLoading,
     isFetched,
     transfers,
+    pagination,
+    totalCount,
+    isTotalCountClipped,
+  }
+}
+
+export const useTokenHolders = (scope: SearchScope, address: string) => {
+  const { network, layer } = scope
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // There are no token holders on the consensus layer.
+  }
+  const query = useGetRuntimeEvmTokensAddressHolders(network, layer, address, {
+    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    offset: offset,
+  })
+
+  const { isFetched, isLoading, data } = query
+
+  const holders = data?.data.holders
+
+  const totalCount = data?.data.total_count
+  const isTotalCountClipped = data?.data.is_total_count_clipped
+
+  return {
+    isLoading,
+    isFetched,
+    holders,
     pagination,
     totalCount,
     isTotalCountClipped,
