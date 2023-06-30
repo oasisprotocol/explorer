@@ -14,6 +14,7 @@ import { ContractVerificationIcon } from '../../components/ContractVerificationI
 import { getTokenTypeName } from './TokenTypeCard'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { ContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
+import CardContent from '@mui/material/CardContent'
 
 export const TokenDetailsCard: FC = () => {
   const { t } = useTranslation()
@@ -33,45 +34,50 @@ export const TokenDetailsCard: FC = () => {
 
   return (
     <Card>
-      {isLoading && <TextSkeleton numberOfRows={7} />}
-      {account && token && contract && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-          <dt>{t('common.token')}</dt>
-          <dd>{token.name}</dd>
+      <CardContent>
+        {isLoading && <TextSkeleton numberOfRows={7} />}
+        {account && token && contract && (
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.token')}</dt>
+            <dd>{token.name}</dd>
 
-          <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
-          <dd>
-            <AccountLink scope={account} address={account.address_eth || account.address} />
-            <CopyToClipboard value={account.address_eth || account.address} />
-          </dd>
+            <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
+            <dd>
+              <AccountLink scope={account} address={account.address_eth || account.address} />
+              <CopyToClipboard value={account.address_eth || account.address} />
+            </dd>
 
-          <dt>{t('contract.verification.title')}</dt>
-          <dd>
-            <ContractVerificationIcon
-              verified={!!contract?.verification}
-              address_eth={account.address_eth!}
-            />
-          </dd>
+            <dt>{t('contract.verification.title')}</dt>
+            <dd>
+              <ContractVerificationIcon
+                verified={!!contract?.verification}
+                address_eth={account.address_eth!}
+              />
+            </dd>
 
-          <dt>{t('common.type')} </dt>
-          <dd>{getTokenTypeName(t, token.type)} </dd>
+            <dt>{t('common.type')} </dt>
+            <dd>{getTokenTypeName(t, token.type)} </dd>
 
-          <dt>{t('contract.creator')}</dt>
-          <dd>
-            <ContractCreatorInfo scope={account} address={contract.eth_creation_tx || contract.creation_tx} />
-          </dd>
+            <dt>{t('contract.creator')}</dt>
+            <dd>
+              <ContractCreatorInfo
+                scope={account}
+                address={contract.eth_creation_tx || contract.creation_tx}
+              />
+            </dd>
 
-          <dt>{t('common.balance')} </dt>
-          <dd>
-            {balance === undefined
-              ? t('common.missing')
-              : t('common.valueInToken', { value: balance, ticker: tickerName })}
-          </dd>
+            <dt>{t('common.balance')} </dt>
+            <dd>
+              {balance === undefined
+                ? t('common.missing')
+                : t('common.valueInToken', { value: balance, ticker: tickerName })}
+            </dd>
 
-          <dt>{t('common.transactions')}</dt>
-          <dd>{account.stats.num_txns.toLocaleString()}</dd>
-        </StyledDescriptionList>
-      )}
+            <dt>{t('common.transactions')}</dt>
+            <dd>{account.stats.num_txns.toLocaleString()}</dd>
+          </StyledDescriptionList>
+        )}
+      </CardContent>
     </Card>
   )
 }
