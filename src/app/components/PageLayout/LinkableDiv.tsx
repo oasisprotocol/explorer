@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-export const ScrollingDiv: FC<JSX.IntrinsicElements['div'] & { id: string }> = props => {
+export const LinkableDiv: FC<JSX.IntrinsicElements['div'] & { id: string }> = props => {
   const { id } = props
   const { hash } = useLocation()
   const divRef = useRef<HTMLDivElement>(null)

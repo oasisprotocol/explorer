@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 
-export const ScrollingDataDisplay: FC<{ data: string; fontWeight?: number }> = ({
+export const ScrollableDataDisplay: FC<{ data: string; fontWeight?: number }> = ({
   data,
   fontWeight = 700,
 }) => {

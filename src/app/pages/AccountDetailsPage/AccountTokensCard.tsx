@@ -12,7 +12,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-indexer/api'
 import { AppErrors } from '../../../types/errors'
-import { ScrollingDiv } from '../../components/PageLayout/ScrollingDiv'
+import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAccount } from './hook'
 
@@ -50,14 +50,14 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
       },
       {
         content: (
-          <ScrollingDiv id={item.token_contract_addr}>
+          <LinkableDiv id={item.token_contract_addr}>
             <Box sx={{ display: 'flex', alignContent: 'center' }}>
               <Typography variant="mono" fontWeight={400}>
                 {item.token_contract_addr}
               </Typography>
               <CopyToClipboard value={item.token_contract_addr} />
             </Box>
-          </ScrollingDiv>
+          </LinkableDiv>
         ),
         key: 'hash',
       },
@@ -77,7 +77,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
 
   return (
     <Card>
-      <ScrollingDiv id={accountTokenContainerId}>
+      <LinkableDiv id={accountTokenContainerId}>
         <CardHeader disableTypography component="h3" title={tokenListLabel} />
         <CardContent>
           {!isLoading && !account?.tokenBalances[type].length && (
@@ -93,7 +93,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
             pagination={false}
           />
         </CardContent>
-      </ScrollingDiv>
+      </LinkableDiv>
     </Card>
   )
 }

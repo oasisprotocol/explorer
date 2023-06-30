@@ -284,7 +284,8 @@
   "paraTimePicker": {
     "chainId": "Chain ID:",
     "decimal": "Decimal: {{ id }}",
-    "comingSoon": "(coming soon)",
+    "comingSoonTitle": "Coming soon",
+    "comingSoonLabel": "(coming soon)",
     "goToDashboard": "Go to dashboard",
     "hex": "Hex: {{ id }}",
     "less": "Show Less",
