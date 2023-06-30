@@ -12,6 +12,7 @@ import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
 import { contractCodeContainerId } from '../AccountDetailsPage/ContractCodeCard'
+import { tokenHoldersContainerId } from './TokenHoldersCard'
 
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
@@ -26,6 +27,7 @@ export const TokenDashboardPage: FC = () => {
   }
 
   const tokenTransfersLink = useHref(``)
+  const tokenHoldersLink = useHref(`holders#${tokenHoldersContainerId}`)
   const codeLink = useHref(`code#${contractCodeContainerId}`)
 
   return (
@@ -37,6 +39,7 @@ export const TokenDashboardPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('tokens.transfers'), to: tokenTransfersLink },
+          { label: t('tokens.holders'), to: tokenHoldersLink },
           { label: t('contract.code'), to: codeLink },
         ]}
       />

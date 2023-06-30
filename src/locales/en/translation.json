@@ -197,7 +197,7 @@
     "request": "Request test tokens"
   },
   "tokens": {
-    "holders": "Holders",
+    "holders": "Token Holders",
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",
