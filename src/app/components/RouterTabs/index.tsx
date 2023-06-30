@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import { useLocation, Link as RouterLink, Outlet } from 'react-router-dom'
+import { useLocation, Outlet } from 'react-router-dom'
+import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
@@ -25,7 +26,13 @@ export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
         {tabs
           .filter(tab => tab === currentTab || tab.visible !== false)
           .map(tab => (
-            <Tab key={tab.to} component={RouterLink} value={tab.to} label={tab.label} to={tab.to} />
+            <Tab
+              key={tab.to}
+              component={NonScrollingRouterLink}
+              value={tab.to}
+              label={tab.label}
+              to={tab.to}
+            />
           ))}
       </Tabs>
       <Outlet />
