@@ -34,7 +34,7 @@ export const ScrollableDataDisplay: FC<{ data: string; fontWeight?: number }> = 
             fontWeight,
             overflowWrap: 'anywhere',
           }}
-          color={COLORS.grayMedium}
+          color={COLORS.brandExtraDark}
         >
           {data}
         </Typography>
