@@ -738,12 +738,15 @@ export const defaultTheme = createTheme({
     },
     MuiTabs: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           // neglect the default border radius of sibling element (Card component in most cases)
           '&& + *': {
             borderTopLeftRadius: 0,
+            [theme.breakpoints.down('sm')]: {
+              borderTopRightRadius: 0,
+            },
           },
-        },
+        }),
         indicator: {
           display: 'none',
         },
