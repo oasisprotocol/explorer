@@ -74,6 +74,7 @@ type TableProps = {
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
+  extraHorizontalSpaceOnMobile?: boolean
 }
 
 const stickyColumnStyles = {
@@ -81,6 +82,10 @@ const stickyColumnStyles = {
   left: 0,
   backgroundColor: COLORS.antiFlashWhite,
   zIndex: 1,
+}
+
+const extraHorizontalPaddingStyles = {
+  px: 4,
 }
 
 export const Table: FC<TableProps> = ({
@@ -91,6 +96,7 @@ export const Table: FC<TableProps> = ({
   rows,
   rowsNumber = 5,
   stickyColumn = false,
+  extraHorizontalSpaceOnMobile = false,
 }) => {
   const { isMobile } = useScreenSize()
 
@@ -128,7 +134,10 @@ export const Table: FC<TableProps> = ({
                   <TableCell
                     key={cell.key}
                     align={cell.align}
-                    sx={stickyColumn && !index && isMobile ? stickyColumnStyles : undefined}
+                    sx={{
+                      ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
+                      ...(extraHorizontalSpaceOnMobile && isMobile ? extraHorizontalPaddingStyles : {}),
+                    }}
                   >
                     {cell.content}
                   </TableCell>

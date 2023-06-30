@@ -3,10 +3,9 @@
 import axios, { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { EvmToken, Layer, RuntimeAccount } from './generated/api'
-import { getEthAccountAddressFromPreimage } from '../app/utils/helpers'
+import { fromBaseUnits, getEthAccountAddressFromPreimage } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
@@ -47,6 +46,10 @@ declare module './generated/api' {
     ticker: NativeTicker
     tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
   }
+  export interface RuntimeEvent {
+    network: Network
+    layer: Layer
+  }
 
   export interface EvmToken {
     network: Network
@@ -76,14 +79,6 @@ export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBa
     ...account,
     tokenBalances,
   }
-}
-
-function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
-  const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
-  if (value.isNaN()) {
-    throw new Error(`Not a number in fromBaseUnits(${valueInBaseUnits})`)
-  }
-  return value.toFixed()
 }
 
 function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
@@ -497,6 +492,37 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
             total_supply: data.total_supply
               ? fromBaseUnits(data.total_supply, data.decimals || 0)
               : undefined,
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
+  network,
+  runtime,
+  params,
+  options,
+) => {
+  return generated.useGetRuntimeEvents(network, runtime, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeEventList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            events: data.events.map(event => {
+              return {
+                ...event,
+                layer: runtime,
+                network,
+              }
+            }),
           }
         },
         ...arrayify(options?.request?.transformResponse),
