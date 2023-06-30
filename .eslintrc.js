@@ -32,8 +32,8 @@ const config = {
             message: "Use '@mui/material/styles' instead.",
           },
           {
-            group: ['**/oasis-indexer/generated/api'],
-            message: "Import 'oasis-indexer/api' instead.",
+            group: ['**/oasis-nexus/generated/api'],
+            message: "Import 'oasis-nexus/api' instead.",
           },
         ],
       },

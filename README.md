@@ -63,19 +63,19 @@ A quick summary:
 
 A detailed post on Git commit messages: [How To Write a Git Commit Message].
 
-### Oasis Indexer API
+### Oasis Nexus API
 
 Deployed version is at <https://index.oasislabs.com/v1/> with OpenAPI
-[HTML][indexer-html-spec] and [YAML][indexer-yaml-spec] specs.
+[HTML][nexus-html-spec] and [YAML][nexus-yaml-spec] specs.
 
 <details>
 <summary>
 Bleeding-edge API version
 </summary>
 
-OpenAPI spec for the [bleeding-edge version][indexer-bleeding-edge-spec].
+OpenAPI spec for the [bleeding-edge version][nexus-bleeding-edge-spec].
 
-To quickly run latest emerald indexer locally without running a node,
+To quickly run latest emerald nexus locally without running a node,
 [replace following lines][replace-lines-to-run-latest-emerald] with:
 
 <!-- markdownlint-disable line-length -->
@@ -121,7 +121,7 @@ REACT_APP_API=http://localhost:8008/v1/ yarn start
 [github-release-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:release
 [github-renovate-badge]: https://img.shields.io/badge/renovate-enabled-brightgreen.svg
 [github-renovate-link]: https://www.mend.io/renovate/
-[indexer-html-spec]: https://index.oasislabs.com/v1/spec/v1.html
-[indexer-yaml-spec]: https://index.oasislabs.com/v1/spec/v1.yaml
-[indexer-bleeding-edge-spec]: https://github.com/oasisprotocol/oasis-indexer/blob/main/api/spec/v1.yaml
-[replace-lines-to-run-latest-emerald]: https://github.com/oasisprotocol/oasis-indexer/blob/d48de37/tests/e2e/config/e2e-dev.yml#L1-L8
+[nexus-html-spec]: https://index.oasislabs.com/v1/spec/v1.html
+[nexus-yaml-spec]: https://index.oasislabs.com/v1/spec/v1.yaml
+[nexus-bleeding-edge-spec]: https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
+[replace-lines-to-run-latest-emerald]: https://github.com/oasisprotocol/nexus/blob/d48de37/tests/e2e/config/e2e-dev.yml#L1-L8
