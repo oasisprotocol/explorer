@@ -48,14 +48,23 @@ export const isValidTxEthHash = (hash: string): boolean => /^0x[0-9a-fA-F]{64}$/
 
 export const isValidTxHash = (hash: string) => isValidTxOasisHash(hash) || isValidTxEthHash(hash)
 
-export function getEthAccountAddress(preimage: AddressPreimage | undefined): string | undefined {
+// Convert data from base64 to hex
+export const base64ToHex = (base64Data: string): string =>
+  `0x${Buffer.from(base64Data, 'base64').toString('hex')}`
+
+// Convert address from base64 to hex, add prefix, and convert to checksum address
+export function getEthAccountAddressFromBase64(base64Address: string): string {
+  return toChecksumAddress(base64ToHex(base64Address))
+}
+
+export function getEthAccountAddressFromPreimage(preimage: AddressPreimage | undefined): string | undefined {
   if (preimage?.context !== 'oasis-runtime-sdk/address: secp256k1eth' || !preimage.address_data) {
     // We can only determine the ETH address if there was a preimage,
     // and the generation context was secp256k1eth
     return undefined
   }
   // We need to convert from base64 to hex, add the prefix, and convert to checksum address
-  return toChecksumAddress(`0x${Buffer.from(preimage.address_data, 'base64').toString('hex')}`)
+  return getEthAccountAddressFromBase64(preimage.address_data)
 }
 
 export function uniq<T>(input: T[] | undefined): T[] {

@@ -6,7 +6,7 @@ import * as generated from './generated/api'
 import BigNumber from 'bignumber.js'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { Layer, RuntimeAccount } from './generated/api'
-import { getEthAccountAddress } from '../app/utils/helpers'
+import { getEthAccountAddressFromPreimage } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
@@ -274,7 +274,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return groupAccountTokenBalances({
             ...data,
-            address_eth: getEthAccountAddress(data.address_preimage),
+            address_eth: getEthAccountAddressFromPreimage(data.address_preimage),
             evm_contract: data.evm_contract && {
               ...data.evm_contract,
               eth_creation_tx: data.evm_contract.eth_creation_tx
