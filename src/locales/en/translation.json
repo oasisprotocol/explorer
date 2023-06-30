@@ -379,6 +379,10 @@
         "title": "Blocks",
         "viewLink": "View Block"
       },
+      "tokens": {
+        "title": "Tokens",
+        "viewLink": "View Token"
+      },
       "transactions": {
         "title": "Transactions",
         "viewLink": "View Transaction"

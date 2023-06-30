@@ -5,12 +5,13 @@ import { BlockDetailView } from '../BlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
-import { AccountResult, BlockResult, SearchResults, TransactionResult } from './hooks'
+import { AccountResult, BlockResult, SearchResults, TokenResult, TransactionResult } from './hooks'
 import { getThemesForNetworks } from '../../../styles/theme'
 import { Network } from '../../../types/network'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
+import { TokenDetails } from '../../components/Tokens/TokenDetails'
 
 /**
  * Component for displaying a list of search results
@@ -81,6 +82,14 @@ export const SearchResultsList: FC<{
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
           linkLabel={t('search.results.accounts.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.tokens.title')}
+          results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
+          resultComponent={item => <TokenDetails token={item} showLayer />}
+          link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
+          linkLabel={t('search.results.tokens.viewLink')}
         />
       </SubPageCard>
     </ResultListFrame>
