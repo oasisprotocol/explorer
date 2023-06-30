@@ -80,6 +80,11 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
+  evmTokenNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length > 2) {
+      return searchTerm.toLowerCase()
+    }
+  },
 } satisfies { [name: string]: (searchTerm: string) => string | undefined }
 
 export function isSearchValid(searchTerm: string) {

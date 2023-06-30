@@ -9,6 +9,9 @@ import {
   Layer,
   isAccountNonEmpty,
   HasScope,
+  useGetRuntimeEvmTokens,
+  EvmTokenList,
+  EvmToken,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -20,7 +23,7 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account'
+  resultType: 'block' | 'transaction' | 'account' | 'token'
 }
 
 export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
@@ -29,7 +32,9 @@ export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { re
 
 export type AccountResult = SearchResultItemCore & RuntimeAccount & { resultType: 'account' }
 
-export type SearchResultItem = BlockResult | TransactionResult | AccountResult
+export type TokenResult = SearchResultItemCore & EvmToken & { resultType: 'token' }
+
+export type SearchResultItem = BlockResult | TransactionResult | AccountResult | TokenResult
 
 export type SearchResults = SearchResultItem[]
 
@@ -96,6 +101,35 @@ export function useRuntimeAccountConditionally(
   }
 }
 
+export function useRuntimeTokenConditionally(
+  nameFragment: string | undefined,
+): ConditionalResults<EvmTokenList> {
+  const queries = RouteUtils.getEnabledScopes()
+    .filter(scope => scope.layer !== Layer.consensus)
+    .map(scope =>
+      // See explanation above
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetRuntimeEvmTokens(
+        scope.network,
+        scope.layer as Runtime,
+        {
+          name: nameFragment,
+          limit: 10,
+        },
+        {
+          query: {
+            enabled: !!nameFragment,
+          },
+        },
+      ),
+    )
+
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
 export const useSearch = (q: SearchParams) => {
   const queries = {
     blockHeight: useBlocksConditionally(q.blockHeight),
@@ -104,6 +138,7 @@ export const useSearch = (q: SearchParams) => {
     oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
+    tokens: useRuntimeTokenConditionally(q.evmTokenNameFragment),
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
   const blocks = queries.blockHeight.results || []
@@ -112,12 +147,18 @@ export const useSearch = (q: SearchParams) => {
     ...(queries.oasisAccount.results || []),
     ...(queries.evmBech32Account.results || []),
   ].filter(isAccountNonEmpty)
+  const tokens = queries.tokens.results
+    .map(l => l.evm_tokens)
+    .flat()
+    .sort((t1, t2) => t2.num_holders - t1.num_holders)
+
   const results: SearchResultItem[] = isLoading
     ? []
     : [
         ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
         ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
         ...accounts.map((account): AccountResult => ({ ...account, resultType: 'account' })),
+        ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
       ]
   return {
     isLoading,

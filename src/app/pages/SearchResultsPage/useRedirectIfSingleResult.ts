@@ -30,6 +30,9 @@ export function useRedirectIfSingleResult(scope: SearchScope | undefined, result
       case 'account':
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
         break
+      case 'token':
+        redirectTo = RouteUtils.getTokenRoute(item, item.eth_contract_addr || item.contract_addr)
+        break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
     }
