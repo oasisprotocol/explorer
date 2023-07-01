@@ -9,6 +9,7 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { LongDataDisplay } from '../LongDataDisplay'
+import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -43,6 +44,10 @@ export const TokenDetails: FC<{
           <AccountLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} />
           <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
         </span>
+      </dd>
+      <dt>{t('contract.verification.title')}</dt>
+      <dd>
+        <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
       </dd>
 
       <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>
