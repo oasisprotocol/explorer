@@ -133,7 +133,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
               <dd>
                 <ContractCreatorInfo
                   scope={account}
-                  address={contract.eth_creation_tx || contract.creation_tx}
+                  creationTxHash={contract.eth_creation_tx || contract.creation_tx}
                 />
               </dd>
             </>

@@ -13,7 +13,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { ContractVerificationIcon } from '../../components/ContractVerificationIcon'
 import { getTokenTypeName } from './TokenTypeCard'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
-import { ContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
+import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
 
 export const TokenDetailsCard: FC = () => {
@@ -66,9 +66,9 @@ export const TokenDetailsCard: FC = () => {
 
             <dt>{t('contract.creator')}</dt>
             <dd>
-              <ContractCreatorInfo
-                scope={account}
-                address={contract.eth_creation_tx || contract.creation_tx}
+              <DelayedContractCreatorInfo
+                scope={token}
+                contractAddress={token.eth_contract_addr || token.contract_addr}
               />
             </dd>
 
