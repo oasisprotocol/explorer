@@ -7,6 +7,10 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
+import Skeleton from '@mui/material/Skeleton'
+import { Runtime, RuntimeAccount } from '../../../oasis-nexus/api'
+import { SearchScope } from '../../../types/searchScope'
+import { useGetRuntimeAccountsAddress } from '../../../oasis-nexus/api'
 
 type VerificationStatus = 'verified' | 'unverified'
 
@@ -25,14 +29,16 @@ const statusIcon: Record<VerificationStatus, ReactNode> = {
   unverified: <CancelIcon color="error" fontSize="small" />,
 }
 
+export const verificationIconBoxHeight = 28
+
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'verified',
-})(({ verified }: ContractVerificationIconProps) => {
+})(({ verified }: { verified: boolean; address_eth: string }) => {
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   return {
     display: 'flex',
     justifyContent: 'center',
-    height: '28px',
+    height: verificationIconBoxHeight,
     fontSize: '12px',
     backgroundColor: statusBgColor[status],
     color: statusFgColor[status],
@@ -44,17 +50,27 @@ const StyledBox = styled(Box, {
 })
 
 type ContractVerificationIconProps = {
-  verified: boolean
-  address_eth: string
+  account: RuntimeAccount | undefined
   noLink?: boolean
 }
 
-export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({
-  verified,
-  address_eth,
-  noLink = false,
-}) => {
+const Waiting: FC = () => (
+  <Skeleton
+    variant="text"
+    sx={{ display: 'inline-block', width: '100%', height: verificationIconBoxHeight }}
+  />
+)
+
+export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ account, noLink = false }) => {
   const { t } = useTranslation()
+
+  if (!account) {
+    return <Waiting />
+  }
+
+  const verified = !!account.evm_contract?.verification
+  const address_eth = account.address_eth!
+
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   const statusLabel: Record<VerificationStatus, string> = {
     verified: t('contract.verification.isVerified'),
@@ -89,4 +105,18 @@ export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({
       )}
     </>
   )
+}
+
+export const DelayedContractVerificationIcon: FC<{
+  scope: SearchScope
+  contractOasisAddress: string
+  noLink?: boolean | undefined
+}> = ({ scope, contractOasisAddress, noLink }) => {
+  const accountQuery = useGetRuntimeAccountsAddress(
+    scope.network,
+    scope.layer as Runtime,
+    contractOasisAddress,
+  )
+
+  return <ContractVerificationIcon account={accountQuery.data?.data} noLink={noLink} />
 }

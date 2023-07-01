@@ -119,10 +119,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             <>
               <dt>{t('contract.verification.title')}</dt>
               <dd>
-                <ContractVerificationIcon
-                  verified={!!account?.evm_contract?.verification}
-                  address_eth={account.address_eth!}
-                />
+                <ContractVerificationIcon account={account} />
               </dd>
             </>
           )}
