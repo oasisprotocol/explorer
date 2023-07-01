@@ -7,6 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import WidgetsIcon from '@mui/icons-material/Widgets'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import TokenIcon from '@mui/icons-material/Token'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
@@ -35,7 +36,7 @@ interface Props {
 
 export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }) => {
   const { t } = useTranslation()
-  const { suggestedBlock, suggestedTransaction, suggestedAccount } =
+  const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
     (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
     searchSuggestionTerms['mainnet']['sapphire']!
 
@@ -53,6 +54,8 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
             TransactionLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTransaction)} />,
             AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
             AccountLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedAccount)} />,
+            TokenIcon: <TokenIcon sx={{ fontSize: '18px' }} />,
+            TokenLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTokenFragment)} />,
           }}
         />
       </Typography>

@@ -13,7 +13,7 @@ interface Props {
 
 export const SearchSuggestionsLinks: FC<Props> = ({ scope }) => {
   const { t } = useTranslation()
-  const { suggestedBlock, suggestedTransaction, suggestedAccount } =
+  const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
     (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
     searchSuggestionTerms['mainnet']['sapphire']!
 
@@ -31,6 +31,10 @@ export const SearchSuggestionsLinks: FC<Props> = ({ scope }) => {
         ),
         AccountIcon: <></>,
         AccountLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(scope, suggestedAccount)} />,
+        TokenIcon: <></>,
+        TokenLink: (
+          <Link component={RouterLink} to={RouteUtils.getSearchRoute(scope, suggestedTokenFragment)} />
+        ),
       }}
     />
   )

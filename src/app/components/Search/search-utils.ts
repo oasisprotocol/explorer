@@ -16,6 +16,7 @@ type LayerSuggestions = {
   suggestedBlock: string
   suggestedTransaction: string
   suggestedAccount: string
+  suggestedTokenFragment: string
 }
 
 export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {
@@ -24,11 +25,13 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedBlock: '4260',
       suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1',
       suggestedAccount: '0x0266562AB0aE2a80C14373029a70F73A9A3dB9d3',
+      suggestedTokenFragment: 'yuzu',
     },
     sapphire: {
       suggestedBlock: '4260',
       suggestedTransaction: '0x5900415a3fbb39325d5dfe145d1eccd1586a2afe12a204de34ecac0c808ac3f7',
       suggestedAccount: '0x90adE3B7065fa715c7a150313877dF1d33e777D5',
+      suggestedTokenFragment: 'mock',
     },
   },
   testnet: {
@@ -36,6 +39,7 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedBlock: '4260',
       suggestedTransaction: '0xd9b5c08be1cb74229abedd9b3e1afb8b43228085a6abf72993db415959ab6b35',
       suggestedAccount: '0xfA3AC9f65C9D75EE3978ab76c6a1105f03156204',
+      suggestedTokenFragment: 'USD',
     },
   },
 } satisfies SpecifiedPerEnabledLayer
