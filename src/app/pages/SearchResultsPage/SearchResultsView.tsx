@@ -13,10 +13,11 @@ import { useScreenSize } from '../../hooks/useScreensize'
 
 export const SearchResultsView: FC<{
   wantedScope?: SearchScope
+  searchTerm: string
   searchResults: SearchResults
   isLoading: boolean
   tokenPrices: AllTokenPrices
-}> = ({ wantedScope, searchResults, isLoading, tokenPrices }) => {
+}> = ({ wantedScope, searchTerm, searchResults, isLoading, tokenPrices }) => {
   const { isMobile } = useScreenSize()
   return (
     <PageLayout>
@@ -28,11 +29,16 @@ export const SearchResultsView: FC<{
       ) : wantedScope ? (
         <ScopedSearchResultsView
           wantedScope={wantedScope}
+          searchTerm={searchTerm}
           searchResults={searchResults.filter(getFilterForLayer(wantedScope.layer))}
           tokenPrices={tokenPrices}
         />
       ) : (
-        <GlobalSearchResultsView searchResults={searchResults} tokenPrices={tokenPrices} />
+        <GlobalSearchResultsView
+          searchTerm={searchTerm}
+          searchResults={searchResults}
+          tokenPrices={tokenPrices}
+        />
       )}
     </PageLayout>
   )
