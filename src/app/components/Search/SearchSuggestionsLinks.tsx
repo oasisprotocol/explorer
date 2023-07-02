@@ -8,12 +8,14 @@ import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
 
 interface Props {
-  scope?: SearchScope
+  scope: SearchScope | undefined
 }
 
 export const SearchSuggestionsLinks: FC<Props> = ({ scope }) => {
   const { t } = useTranslation()
-  const { suggestedBlock, suggestedTransaction, suggestedAccount } = searchSuggestionTerms
+  const { suggestedBlock, suggestedTransaction, suggestedAccount } =
+    (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
+    searchSuggestionTerms['mainnet']['sapphire']!
 
   return (
     <Trans
