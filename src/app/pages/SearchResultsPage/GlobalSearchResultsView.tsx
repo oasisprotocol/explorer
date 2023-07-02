@@ -19,10 +19,11 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import { orderByLayer } from '../../../types/layers'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
-export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPrices: AllTokenPrices }> = ({
-  searchResults,
-  tokenPrices,
-}) => {
+export const GlobalSearchResultsView: FC<{
+  searchTerm: string
+  searchResults: SearchResults
+  tokenPrices: AllTokenPrices
+}> = ({ searchTerm, searchResults, tokenPrices }) => {
   const { t } = useTranslation()
   const [othersOpen, setOthersOpen] = useState(false)
   useRedirectIfSingleResult(undefined, searchResults)
@@ -41,6 +42,7 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
         <SearchResultsList
           key={Network.mainnet}
           title={networkNames[Network.mainnet]}
+          searchTerm={searchTerm}
           searchResults={mainnetResults}
           networkForTheme={Network.mainnet}
           tokenPrices={tokenPrices}
@@ -54,6 +56,7 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
               <SearchResultsList
                 key={net}
                 title={networkNames[net]}
+                searchTerm={searchTerm}
                 searchResults={otherResults.filter(getFilterForNetwork(net))}
                 networkForTheme={net}
                 tokenPrices={tokenPrices}

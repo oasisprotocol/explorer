@@ -13,13 +13,15 @@ import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
 import { RoundedBalance } from '../RoundedBalance'
+import { HighlightedText } from '../HighlightedText'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
   token: EvmToken | undefined
   showLayer?: boolean
   standalone?: boolean
-}> = ({ isLoading, token, showLayer, standalone = false }) => {
+  highlightedPartOfName: string | undefined
+}> = ({ isLoading, token, showLayer, standalone = false, highlightedPartOfName }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -38,9 +40,14 @@ export const TokenDetails: FC<{
       )}
       <dt>{t('common.name')}</dt>
       <dd>
-        <TokenLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} name={token.name} />
+        <TokenLink
+          scope={token}
+          address={token.eth_contract_addr ?? token.contract_addr}
+          name={token.name}
+          highlightedPart={highlightedPartOfName}
+        />
         <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
-          ({token.symbol})
+          <HighlightedText text={token.symbol} pattern={highlightedPartOfName} />
         </Box>
       </dd>
 

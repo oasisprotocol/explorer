@@ -18,9 +18,10 @@ import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 export const ScopedSearchResultsView: FC<{
   wantedScope: SearchScope
+  searchTerm: string
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
-}> = ({ wantedScope, searchResults, tokenPrices }) => {
+}> = ({ wantedScope, searchTerm, searchResults, tokenPrices }) => {
   const { t } = useTranslation()
   const [othersOpen, setOthersOpen] = useState(false)
   const networkNames = getNetworkNames(t)
@@ -38,6 +39,7 @@ export const ScopedSearchResultsView: FC<{
       {wantedResults.length ? (
         <SearchResultsList
           title={getNameForScope(t, wantedScope)}
+          searchTerm={searchTerm}
           searchResults={wantedResults}
           networkForTheme={wantedScope.network}
           tokenPrices={tokenPrices}
@@ -55,6 +57,7 @@ export const ScopedSearchResultsView: FC<{
                 key={net}
                 networkForTheme={net}
                 title={networkNames[net]}
+                searchTerm={searchTerm}
                 searchResults={otherResults.filter(getFilterForNetwork(net))}
                 tokenPrices={tokenPrices}
               />

@@ -117,6 +117,7 @@ export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs)
     Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(searchTerm)]),
   ) as { [Key in keyof typeof validateAndNormalize]: string | undefined }
   return {
+    searchTerm,
     ...normalized,
     // TODO: remove conversion when API supports querying by EVM address
     // TODO: without async conversion, this won't need to even be a loader
