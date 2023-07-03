@@ -8,7 +8,9 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import { LongDataDisplay } from '../LongDataDisplay'
+import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
+import Box from '@mui/material/Box'
+import { COLORS } from '../../../styles/theme/colors'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -35,6 +37,7 @@ export const TokenDetails: FC<{
       <dt>{t('common.name')}</dt>
       <dd>
         <TokenLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} name={token.name} />
+        <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium }}>({token.symbol})</Box>
       </dd>
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
@@ -44,17 +47,20 @@ export const TokenDetails: FC<{
           <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
         </span>
       </dd>
+      <dt>{t('contract.verification.title')}</dt>
+      <dd>
+        <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
+      </dd>
 
       <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>
       <dd>{token.num_holders.toLocaleString()}</dd>
 
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>
-        <LongDataDisplay data={token.total_supply || t('common.missing')} threshold={100} fontWeight={400} />
+        {token.total_supply
+          ? t('tokens.totalSupplyValue', { value: token.total_supply })
+          : t('common.missing')}
       </dd>
-
-      <dt>{t('common.ticker')}</dt>
-      <dd>{token.symbol}</dd>
     </StyledDescriptionList>
   )
 }

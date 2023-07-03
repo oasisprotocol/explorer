@@ -492,6 +492,8 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
             total_supply: data.total_supply
               ? fromBaseUnits(data.total_supply, data.decimals || 0)
               : undefined,
+            network,
+            layer: runtime,
           }
         },
         ...arrayify(options?.request?.transformResponse),

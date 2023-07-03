@@ -5,6 +5,8 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
+import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
+import Box from '@mui/material/Box'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -20,6 +22,7 @@ export const TokenList = (props: TokensProps) => {
     { key: 'index', content: '' },
     { key: 'name', content: t('common.name') },
     { key: 'contract', content: t('common.smartContract') },
+    { key: 'verification', content: t('contract.verification.title') },
     {
       key: 'holders',
       content: t('tokens.holdersCount'),
@@ -59,6 +62,24 @@ export const TokenList = (props: TokensProps) => {
             </span>
           ),
           key: 'contactAddress',
+        },
+        {
+          key: 'verification',
+          content: (
+            <Box
+              sx={{
+                display: 'inline-flex',
+                verticalAlign: 'middle',
+                width: '100%',
+              }}
+            >
+              <DelayedContractVerificationIcon
+                scope={token}
+                contractOasisAddress={token.contract_addr}
+                noLink
+              />
+            </Box>
+          ),
         },
         {
           content: token.num_holders.toLocaleString(),

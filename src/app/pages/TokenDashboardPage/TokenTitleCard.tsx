@@ -7,8 +7,7 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
 import Skeleton from '@mui/material/Skeleton'
-import { ContractVerificationIcon } from '../../components/ContractVerificationIcon'
-import { useAccount } from '../AccountDetailsPage/hook'
+import { DelayedContractVerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -20,12 +19,9 @@ export const TokenTitleCard: FC = () => {
   const address = useLoaderData() as string
 
   const { isLoading, token } = useTokenInfo(scope, address)
-  const { account } = useAccount(scope, address)
 
   const title = isLoading ? <TitleSkeleton /> : token?.name
   const subTitle = isLoading ? null : ` (${token?.symbol})` || null
-
-  const addressEth = account?.address_eth
 
   return (
     <Card>
@@ -62,7 +58,8 @@ export const TokenTitleCard: FC = () => {
               {subTitle}
             </Typography>
           </Box>
-          {addressEth && (
+
+          {token && (
             <Box
               sx={{
                 display: 'flex',
@@ -70,13 +67,13 @@ export const TokenTitleCard: FC = () => {
                 alignItems: 'center',
               }}
             >
-              <ContractVerificationIcon
-                verified={!!account?.evm_contract?.verification}
-                address_eth={addressEth}
+              <DelayedContractVerificationIcon
+                scope={token}
+                contractOasisAddress={token.contract_addr}
                 noLink
               />
-              <AccountLink scope={account} address={addressEth} />
-              <CopyToClipboard value={account.address_eth || account.address} />
+              <AccountLink scope={token} address={token.eth_contract_addr || token.contract_addr} />
+              <CopyToClipboard value={token.eth_contract_addr || token.contract_addr} />
             </Box>
           )}
         </Box>

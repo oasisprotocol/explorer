@@ -10,10 +10,10 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { ContractVerificationIcon } from '../../components/ContractVerificationIcon'
+import { DelayedContractVerificationIcon } from '../../components/ContractVerificationIcon'
 import { getTokenTypeName } from './TokenTypeCard'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
-import { ContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
+import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
 
 export const TokenDetailsCard: FC = () => {
@@ -26,8 +26,6 @@ export const TokenDetailsCard: FC = () => {
   const { account, isLoading: accountIsLoading } = useAccount(scope, address)
   const isLoading = tokenIsLoading || accountIsLoading
 
-  const contract = account?.evm_contract
-
   const balance = account?.balances[0]?.balance
   const nativeToken = account?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, nativeToken)
@@ -36,7 +34,7 @@ export const TokenDetailsCard: FC = () => {
     <Card>
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
-        {account && token && contract && (
+        {account && token && (
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.token')}</dt>
             <dd>{token.name}</dd>
@@ -55,10 +53,7 @@ export const TokenDetailsCard: FC = () => {
 
             <dt>{t('contract.verification.title')}</dt>
             <dd>
-              <ContractVerificationIcon
-                verified={!!contract?.verification}
-                address_eth={account.address_eth!}
-              />
+              <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
             </dd>
 
             <dt>{t('common.type')} </dt>
@@ -66,9 +61,9 @@ export const TokenDetailsCard: FC = () => {
 
             <dt>{t('contract.creator')}</dt>
             <dd>
-              <ContractCreatorInfo
-                scope={account}
-                address={contract.eth_creation_tx || contract.creation_tx}
+              <DelayedContractCreatorInfo
+                scope={token}
+                contractAddress={token.eth_contract_addr || token.contract_addr}
               />
             </dd>
 
