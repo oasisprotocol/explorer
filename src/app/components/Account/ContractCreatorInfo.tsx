@@ -11,6 +11,7 @@ import {
 import { AppErrors } from '../../../types/errors'
 import { AccountLink } from './AccountLink'
 import Box from '@mui/material/Box'
+import Skeleton from '@mui/material/Skeleton'
 
 const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash }) => {
   const { t } = useTranslation()
@@ -20,7 +21,15 @@ const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash })
   const query = useGetRuntimeTransactionsTxHash(scope.network, scope.layer, txHash)
   const tx = query.data?.data.transactions[0]
   const senderAddress = tx?.sender_0_eth || tx?.sender_0
-  return senderAddress ? (
+
+  return query.isLoading ? (
+    <Skeleton
+      variant="text"
+      sx={{
+        width: '25%',
+      }}
+    />
+  ) : senderAddress ? (
     <AccountLink scope={scope} address={senderAddress} alwaysTrim />
   ) : (
     t('common.missing')
@@ -29,11 +38,14 @@ const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash })
 
 export const ContractCreatorInfo: FC<{
   scope: SearchScope
+  isLoading?: boolean
   creationTxHash: string | undefined
-}> = ({ scope, creationTxHash }) => {
+}> = ({ scope, isLoading, creationTxHash }) => {
   const { t } = useTranslation()
 
-  return creationTxHash === undefined ? (
+  return isLoading ? (
+    <Skeleton variant="text" sx={{ width: '50%' }} />
+  ) : creationTxHash === undefined ? (
     t('common.missing')
   ) : (
     <Box
@@ -41,6 +53,7 @@ export const ContractCreatorInfo: FC<{
         display: 'flex',
         alignItems: 'center',
         gap: 3,
+        minWidth: '25%',
       }}
     >
       <TxSender scope={scope} txHash={creationTxHash} />
@@ -67,5 +80,7 @@ export const DelayedContractCreatorInfo: FC<{
 
   const creationTxHash = contract?.eth_creation_tx || contract?.creation_tx
 
-  return <ContractCreatorInfo scope={scope} creationTxHash={creationTxHash} />
+  return (
+    <ContractCreatorInfo scope={scope} isLoading={accountQuery.isLoading} creationTxHash={creationTxHash} />
+  )
 }
