@@ -346,6 +346,8 @@
     "exploreBtnText": "Explore Oasis",
     "txns": "Txns",
     "zoomOutBtnText": "Zoom out",
+    "online": "Online",
+    "offline": "Offline",
     "helpScreen": {
       "navigate": "Navigate using your finger",
       "pinch": "Pinch to zoom in and out",
