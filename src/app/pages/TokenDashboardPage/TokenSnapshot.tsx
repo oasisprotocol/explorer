@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { TokenSupplyCard } from './TokenSupplyCard'
-import { TokenHoldersCard } from './TokenHoldersCard'
+import { TokenHoldersCountCard } from './TokenHoldersCountCard'
 import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 
@@ -49,7 +49,7 @@ export const TokenSnapshot: FC = () => {
           <TokenSupplyCard />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
-          <TokenHoldersCard />
+          <TokenHoldersCountCard />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
           <TokenTypeCard />

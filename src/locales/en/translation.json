@@ -33,6 +33,7 @@
   },
   "coinGeckoReferral": "Data from <CoinGeckoLink>CoinGecko</CoinGeckoLink>",
   "common": {
+    "address": "Address",
     "age": "Age",
     "balance": "Balance",
     "block": "Block",
@@ -64,6 +65,8 @@
     "name": "Name",
     "oasis": "Oasis",
     "paratime": "Paratime",
+    "percentage": "Percentage",
+    "rank": "Rank",
     "select": "Select",
     "size": "Size",
     "sapphire": "Sapphire",
@@ -82,6 +85,7 @@
     "transactionAbbreviation": "Txs",
     "txnFee": "Txn Fee",
     "type": "Type",
+    "quantity": "Quantity",
     "unknown": "Unknown",
     "value": "Value",
     "valueInToken": "{{value}} {{ticker}}",
@@ -197,7 +201,8 @@
     "request": "Request test tokens"
   },
   "tokens": {
-    "holders": "Holders",
+    "emptyTokenHolderList": "There are no token holders on record for this token.",
+    "holders": "Token Holders",
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders count",
     "holdersCount_short": "Holders",

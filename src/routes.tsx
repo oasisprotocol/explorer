@@ -24,6 +24,7 @@ import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCar
 import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
+import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -123,6 +124,11 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 element: <TokenTransfersCard />,
+                loader: addressParamLoader,
+              },
+              {
+                path: 'holders',
+                element: <TokenHoldersCard />,
                 loader: addressParamLoader,
               },
               {

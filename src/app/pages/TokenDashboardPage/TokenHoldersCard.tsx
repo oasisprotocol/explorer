@@ -1,40 +1,61 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
-import { COLORS } from '../../../styles/theme/colors'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
+import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
+import { useTokenHolders, useTokenInfo } from './hook'
+import { TokenHolders } from '../../components/Tokens/TokenHolders'
+
+export const tokenHoldersContainerId = 'holders'
 
 export const TokenHoldersCard: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
-
   const address = useLoaderData() as string
 
-  const { token, isFetched } = useTokenInfo(scope, address)
+  const { isLoading: isTokenLoading, token } = useTokenInfo(scope, address)
 
-  const title = t('tokens.holders')
+  const {
+    isLoading: areHoldersLoading,
+    isFetched,
+    holders,
+    pagination,
+    totalCount,
+    isTotalCountClipped,
+  } = useTokenHolders(scope, address)
+
+  const isLoading = isTokenLoading || areHoldersLoading
+
   return (
-    <SnapshotCard title={title} withConstantHeight>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && (
-          <>
-            <Typography
-              component="span"
-              sx={{
-                fontSize: '48px',
-                fontWeight: 700,
-                color: COLORS.brandDark,
-              }}
-            >
-              {t('tokens.holdersValue', { value: token?.num_holders })}
-            </Typography>
-          </>
-        )}
-      </Box>
-    </SnapshotCard>
+    <Card>
+      <LinkableDiv id={tokenHoldersContainerId}>
+        <CardHeader disableTypography component="h3" title={t('tokens.holders')} />
+      </LinkableDiv>
+      <CardContent>
+        <ErrorBoundary light={true}>
+          {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyTokenHolderList')} />}
+          <TokenHolders
+            holders={holders}
+            decimals={token?.decimals ?? 0}
+            totalSupply={token?.total_supply}
+            isLoading={isLoading}
+            limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+            pagination={{
+              selectedPage: pagination.selectedPage,
+              linkToPage: pagination.linkToPage,
+              totalCount,
+              isTotalCountClipped,
+              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+            }}
+          />
+        </ErrorBoundary>
+      </CardContent>
+    </Card>
   )
 }
