@@ -41,6 +41,12 @@ export const TokenDetailsCard: FC = () => {
             <dt>{t('common.token')}</dt>
             <dd>{token.name}</dd>
 
+            {isMobile && (
+              <>
+                <dt>{t('common.ticker')}</dt>
+                <dd>{token.symbol}</dd>
+              </>
+            )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
               <AccountLink scope={account} address={account.address_eth || account.address} />
