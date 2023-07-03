@@ -19,12 +19,18 @@ export const TokenHoldersCard: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { token } = useTokenInfo(scope, address)
+  const { isLoading: isTokenLoading, token } = useTokenInfo(scope, address)
 
-  const { isLoading, isFetched, holders, pagination, totalCount, isTotalCountClipped } = useTokenHolders(
-    scope,
-    address,
-  )
+  const {
+    isLoading: areHoldersLoading,
+    isFetched,
+    holders,
+    pagination,
+    totalCount,
+    isTotalCountClipped,
+  } = useTokenHolders(scope, address)
+
+  const isLoading = isTokenLoading || areHoldersLoading
 
   return (
     <Card>
@@ -36,7 +42,7 @@ export const TokenHoldersCard: FC = () => {
           {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyTokenHolderList')} />}
           <TokenHolders
             holders={holders}
-            decimals={token?.decimals}
+            decimals={token?.decimals ?? 0}
             totalSupply={token?.total_supply}
             isLoading={isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}

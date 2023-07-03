@@ -13,7 +13,7 @@ type TableTokenHolder = BareTokenHolder & {
 type TokenHoldersProps = {
   holders: TableTokenHolder[] | undefined
   isLoading: boolean
-  decimals: number | undefined
+  decimals: number
   totalSupply: string | undefined
   limit: number
   pagination: false | TablePaginationProps
@@ -24,7 +24,7 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
   limit,
   pagination,
   holders,
-  decimals = 18,
+  decimals,
   totalSupply,
 }) => {
   const { t } = useTranslation()
