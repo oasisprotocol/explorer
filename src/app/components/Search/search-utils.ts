@@ -8,7 +8,7 @@ import {
   getEvmBech32Address,
 } from '../../utils/helpers'
 import { Network } from '../../../types/network'
-import { RouteUtils } from '../../utils/route-utils'
+import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-nexus/api'
 
@@ -38,7 +38,7 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedAccount: '0xfA3AC9f65C9D75EE3978ab76c6a1105f03156204',
     },
   },
-}
+} satisfies SpecifiedPerEnabledLayer
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
