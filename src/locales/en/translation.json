@@ -40,7 +40,6 @@
     "block": "Block",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
-    "coming": "Coming",
     "copy": "Copy",
     "data": "Data",
     "emerald": "Emerald",
@@ -71,7 +70,6 @@
     "rank": "Rank",
     "select": "Select",
     "size": "Size",
-    "soon": "soon",
     "sapphire": "Sapphire",
     "show": "Show",
     "smartContract": "Smart Contract",
@@ -110,7 +108,6 @@
     "noCode": "There is no bytecode on record for this account. (Are you sure this is a contract?)",
     "title": "Contract",
     "runtimeByteCode": "Runtime ByteCode",
-    "title": "Contract",
     "verification": {
       "title": "Verification",
       "isVerified": "Verified",
@@ -347,7 +344,7 @@
     "runtimeOutOfDateSince": "The last update we have about our {{ target }} is from {{ lastUpdate }}. The data displayed here might be out of date.",
     "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
-    "txn": "Txn",
+    "txns": "Txns",
     "zoomOutBtnText": "Zoom out",
     "helpScreen": {
       "navigate": "Navigate using your finger",
@@ -369,7 +366,9 @@
       "close": "Close"
     },
     "selectNetwork": "Selected net",
-    "selectNetworkAria": "Toggle network selector"
+    "selectNetworkAria": "Toggle network selector",
+    "coming": "Coming",
+    "soon": "soon"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, Token name, etc",
