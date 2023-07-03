@@ -107,9 +107,8 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   top: theme.spacing(4),
   left: '50%',
   transform: 'translateX(-50%)',
-  fontSize: '12px',
   lineHeight: '18px',
-  textTransform: 'uppercase',
+  textTransform: 'none',
   '&&:hover, &&:active': {
     color: theme.palette.layout.graphZoomOutText,
     textDecoration: 'none',
