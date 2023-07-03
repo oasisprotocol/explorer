@@ -16,6 +16,7 @@ import { Layer } from '../../../oasis-nexus/api'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
+import { SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -103,7 +104,7 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
         },
       },
     },
-  }
+  } satisfies SpecifiedPerEnabledLayer
 }
 
 type LearningSectionProps = PaperProps & {
