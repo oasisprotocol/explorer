@@ -30,21 +30,22 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
 
   return (
     <span>
-      {!number.isZero() && truncatedNumber.isZero() ? (
-        t('common.lessThanAmount', { value: truncatedNumber.toFixed(numberOfDecimals), ticker: tickerName })
-      ) : (
-        <Tooltip
-          arrow
-          placement="top"
-          title={t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}
-          enterDelay={tooltipDelay}
-          enterNextDelay={tooltipDelay}
-        >
-          <span>
-            {t('common.roundedValueInToken', { value: truncatedNumber.toFixed(), ticker: tickerName })}
-          </span>
-        </Tooltip>
-      )}
+      <Tooltip
+        arrow
+        placement="top"
+        title={t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}
+        enterDelay={tooltipDelay}
+        enterNextDelay={tooltipDelay}
+      >
+        <span>
+          {!number.isZero() && truncatedNumber.isZero()
+            ? t('common.lessThanAmount', {
+                value: truncatedNumber.toFixed(numberOfDecimals),
+                ticker: tickerName,
+              })
+            : t('common.roundedValueInToken', { value: truncatedNumber.toFixed(), ticker: tickerName })}
+        </span>
+      </Tooltip>
     </span>
   )
 }
