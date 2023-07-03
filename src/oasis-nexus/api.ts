@@ -524,6 +524,34 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
           return {
             ...data,
             events: data.events.map(event => {
+              if (
+                event.type === 'accounts.transfer' ||
+                event.type === 'accounts.mint' ||
+                event.type === 'accounts.burn' ||
+                event.type === 'consensus_accounts.deposit' ||
+                event.type === 'consensus_accounts.withdraw'
+              ) {
+                return {
+                  ...event,
+                  body: {
+                    ...event.body,
+                    amount:
+                      // If there's no denomination then use runtime's native. Otherwise unknown (would have to get by token name?).
+                      event.body.amount.Denomination === ''
+                        ? {
+                            ...event.body.amount,
+                            Amount: fromBaseUnits(
+                              event.body.amount.Amount,
+                              paraTimesConfig[runtime].decimals,
+                            ),
+                            Denomination: getTickerForNetwork(network),
+                          }
+                        : event.body.amount,
+                  },
+                  layer: runtime,
+                  network,
+                }
+              }
               return {
                 ...event,
                 layer: runtime,
