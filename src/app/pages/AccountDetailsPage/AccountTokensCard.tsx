@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
 import { CardEmptyState } from './CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -15,6 +14,8 @@ import { AppErrors } from '../../../types/errors'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAccount } from './hook'
+import { TokenLink } from '../../components/Tokens/TokenLink'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 type AccountTokensCardProps = {
   type: EvmTokenType
@@ -45,16 +46,20 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
     key: item.token_contract_addr,
     data: [
       {
-        content: item.token_name || t('common.missing'),
+        content: (
+          <TokenLink
+            scope={scope}
+            address={item.token_contract_addr}
+            name={item.token_name || t('common.missing')}
+          />
+        ),
         key: 'name',
       },
       {
         content: (
           <LinkableDiv id={item.token_contract_addr}>
             <Box sx={{ display: 'flex', alignContent: 'center' }}>
-              <Typography variant="mono" fontWeight={400}>
-                {item.token_contract_addr}
-              </Typography>
+              <AccountLink scope={scope} address={item.token_contract_addr} />
               <CopyToClipboard value={item.token_contract_addr} />
             </Box>
           </LinkableDiv>
