@@ -5,6 +5,7 @@ import { BareTokenHolder } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { fromBaseUnits } from '../../utils/helpers'
+import { RoundedBalance } from '../RoundedBalance'
 
 type TableTokenHolder = BareTokenHolder & {
   markAsNew?: boolean
@@ -58,7 +59,7 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
         },
         {
           key: 'quantity',
-          content: t('tokens.totalSupplyValue', { value: fromBaseUnits(holder.balance, decimals) }),
+          content: <RoundedBalance value={fromBaseUnits(holder.balance, decimals)} />,
           align: TableCellAlign.Right,
         },
         {
