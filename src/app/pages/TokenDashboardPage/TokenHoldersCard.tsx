@@ -26,10 +26,6 @@ export const TokenHoldersCard: FC = () => {
     address,
   )
 
-  const tokenPrice = undefined
-  // TODO: add token price when available
-  // const tokenPrice = useTokenPrice('ROSE')
-
   return (
     <Card>
       <LinkableDiv id={tokenHoldersContainerId}>
@@ -44,7 +40,6 @@ export const TokenHoldersCard: FC = () => {
             totalSupply={token?.total_supply}
             isLoading={isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            tokenPrice={tokenPrice}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,

@@ -5,7 +5,6 @@ import { BareTokenHolder } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { fromBaseUnits } from '../../utils/helpers'
-import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 type TableTokenHolder = BareTokenHolder & {
   markAsNew?: boolean
@@ -17,7 +16,6 @@ type TokenHoldersProps = {
   decimals: number | undefined
   totalSupply: string | undefined
   limit: number
-  tokenPrice?: TokenPriceInfo
   pagination: false | TablePaginationProps
 }
 
@@ -28,7 +26,6 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
   holders,
   decimals = 18,
   totalSupply,
-  tokenPrice,
 }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
@@ -36,9 +33,6 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
     { key: 'address', content: t('common.address') },
     { key: 'quantity', content: t('common.quantity'), align: TableCellAlign.Right },
     { key: 'percentage', content: t('common.percentage'), align: TableCellAlign.Right },
-    ...(tokenPrice
-      ? [{ key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' }]
-      : []),
   ]
 
   const calculateRatio = (balance: string): string => {
@@ -72,23 +66,6 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
           content: calculateRatio(holder.balance),
           align: TableCellAlign.Right,
         },
-        ...(tokenPrice?.price
-          ? [
-              {
-                key: 'value',
-                content: t('common.fiatValueInUSD', {
-                  value: parseFloat(fromBaseUnits(holder.balance, decimals)) * tokenPrice.price,
-                  formatParams: {
-                    value: {
-                      currency: 'USD',
-                    } satisfies Intl.NumberFormatOptions,
-                  },
-                }),
-
-                align: TableCellAlign.Right,
-              },
-            ]
-          : []),
       ],
       highlight: holder.markAsNew,
     }
