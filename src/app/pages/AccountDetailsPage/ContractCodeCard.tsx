@@ -59,19 +59,19 @@ export const ContractCodeCard: FC = () => {
   const noCode = isFetched && !contract?.creation_bytecode && !contract?.runtime_bytecode
   return (
     <Card>
-      <LinkableDiv id={contractCodeContainerId}>
-        {noCode && <CardEmptyState label={t('contract.noCode')} />}
-        {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
-          <CardContent>
+      {noCode && <CardEmptyState label={t('contract.noCode')} />}
+      {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
+        <CardContent>
+          <LinkableDiv id={contractCodeContainerId}>
             <CodeDisplay rawData={contract.creation_bytecode} label={t('contract.creationByteCode')} />
             <CodeDisplay
               rawData={contract.runtime_bytecode}
               label={t('contract.runtimeByteCode')}
               extraTopPadding={!!contract.creation_bytecode}
             />
-          </CardContent>
-        )}
-      </LinkableDiv>
+          </LinkableDiv>
+        </CardContent>
+      )}
     </Card>
   )
 }
