@@ -140,10 +140,14 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
       return
     }
 
-    if (!isMobile && RouteUtils.getEnabledLayersForNetwork(network).includes(layer)) {
-      navigate(RouteUtils.getDashboardRoute({ network, layer }))
+    if (selectedLayer === layer && RouteUtils.getEnabledLayersForNetwork(network).includes(selectedLayer)) {
+      navigate(RouteUtils.getDashboardRoute({ network, layer: selectedLayer }))
 
       return
+    }
+
+    if (!disabledMap[layer]) {
+      setSelectedLayer(layer)
     }
   }
 
@@ -356,7 +360,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           </text>
         )}
         {hoveredLayer === Layer.sapphire && !disabledMap[Layer.sapphire] && (
-          <text x="109.5" y="305" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
+          <text x="109.5" y="307" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
             {t('common.view')}
           </text>
         )}

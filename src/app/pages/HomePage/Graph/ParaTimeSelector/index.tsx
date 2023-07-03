@@ -207,7 +207,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
           <QuickPinchZoomOuter>
-            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
+            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2.5} minZoom={0.5}>
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
                   ref={graphRef}
