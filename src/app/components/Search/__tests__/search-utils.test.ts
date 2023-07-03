@@ -94,6 +94,7 @@ describe('search-utils validateAndNormalize', () => {
   it('isSearchValid', () => {
     expect(isSearchValid(consensusTxHash)).toBe(true)
     expect(isSearchValid(blockHeight)).toBe(true)
-    expect(isSearchValid(blockHeight.replace('1', 'a'))).toBe(false)
+    expect(isSearchValid('yu')).toBe(false)
+    expect(isSearchValid('yuz')).toBe(true)
   })
 })
