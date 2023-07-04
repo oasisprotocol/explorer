@@ -113,6 +113,9 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
     color: theme.palette.layout.graphZoomOutText,
     textDecoration: 'none',
   },
+  '&&': {
+    backgroundColor: 'transparent',
+  },
 }))
 ZoomOutBtn.defaultProps = {
   color: 'primary',
@@ -140,11 +143,18 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   step: ParaTimeSelectorStep
   setStep: (value: ParaTimeSelectorStep) => void
   showInfoScreen: boolean
+  onGraphZoomedIn: (isGraphZoomedIn: boolean) => void
 }
 
 const localStore = storage()
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep, showInfoScreen }) => {
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
+  disabled,
+  step,
+  setStep,
+  showInfoScreen,
+  onGraphZoomedIn,
+}) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -203,6 +213,10 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }
 
   const isZoomedIn = scale > 1.005
+
+  useEffect(() => {
+    onGraphZoomedIn(isZoomedIn)
+  }, [isZoomedIn])
 
   return (
     <>

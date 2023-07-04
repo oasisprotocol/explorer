@@ -74,11 +74,20 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
   },
 }))
 
-const SearchInputContainer = styled(Box)(({ theme }) => ({
+const SearchInputContainer = styled(Box, {
+  shouldForwardProp: prop => prop !== 'transparent',
+})<{ transparent: boolean }>(({ theme, transparent }) => ({
   zIndex: zIndexHomePage.searchInput,
   width: '100%',
   [theme.breakpoints.up('md')]: {
     width: 'auto',
+    '&:not(:hover)': {
+      ...(transparent
+        ? {
+            opacity: 0.5,
+          }
+        : {}),
+    },
   },
 }))
 
@@ -118,6 +127,7 @@ export const HomePage: FC = () => {
   const isApiReachable = useIsApiReachable(network).reachable
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
+  const [isGraphZoomedIn, setIsGraphZoomedIn] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(() => {
     if (isMobile) {
       return ParaTimeSelectorStep.EnableExplore
@@ -148,7 +158,7 @@ export const HomePage: FC = () => {
           <LogotypeBox>
             <Logotype showText />
           </LogotypeBox>
-          <SearchInputContainer>
+          <SearchInputContainer transparent={isGraphZoomedIn && !searchHasFocus}>
             <SearchInputBox>
               <Search disabled={!isApiReachable} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
@@ -160,6 +170,7 @@ export const HomePage: FC = () => {
                 setStep={setStep}
                 disabled={searchHasFocus}
                 showInfoScreen={showInfoScreen}
+                onGraphZoomedIn={setIsGraphZoomedIn}
               />
             </Box>
           </ThemeByNetwork>
