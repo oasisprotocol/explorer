@@ -216,7 +216,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
 
   useEffect(() => {
     onGraphZoomedIn(isZoomedIn)
-  }, [isZoomedIn])
+  }, [isZoomedIn, onGraphZoomedIn])
 
   return (
     <>
