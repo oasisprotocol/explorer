@@ -75,17 +75,13 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
     },
   )
   const weeklyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.WEEK
-  const dailyChart = activeAccountsQuery.isFetched && chartDuration === ChartDuration.TODAY
   const windows =
     activeAccountsQuery.data?.data?.windows &&
     getActiveAccountsWindows(chartDuration, activeAccountsQuery.data?.data?.windows)
-  const totalNumberLabel =
-    dailyChart && windows?.length
-      ? windows[0].active_accounts.toLocaleString()
-      : windows?.reduce((acc, curr) => acc + curr.active_accounts, 0).toLocaleString()
+  const cardLabel = windows?.length ? windows[0].active_accounts.toLocaleString() : ''
 
   return (
-    <SnapshotCard title={t('activeAccounts.title')} label={totalNumberLabel}>
+    <SnapshotCard title={t('activeAccounts.title')} label={cardLabel}>
       {windows && (
         <BarChart
           barSize={!weeklyChart ? 8 : undefined}
