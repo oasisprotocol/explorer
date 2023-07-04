@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from '@mui/material/Link'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -8,6 +7,7 @@ import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
 import { RuntimeAccount, type RuntimeEvmBalance } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
+import { RouterLink } from '../../components/RouterLink'
 
 type TokenPillsProps = {
   account: RuntimeAccount
@@ -52,9 +52,9 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
     <Chip
       clickable
       color="tertiary"
-      component={Link}
-      href={tokenRoute}
-      key={pill.token_contract_addr}
+      component={RouterLink}
+      to={tokenRoute}
+      replace
       label={
         <>
           <RoundedBalance value={pill.balance} ticker={pill.token_symbol || t('common.missing')} />

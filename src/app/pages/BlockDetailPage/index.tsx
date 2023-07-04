@@ -18,6 +18,7 @@ import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { RouterLink } from '../../components/RouterLink'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -114,7 +115,9 @@ export const BlockDetailView: FC<{
       <dt>{t('common.transactions')}</dt>
       <dd>
         {block.num_transactions ? (
-          <Link href={transactionsAnchor}>{transactionLabel}</Link>
+          <Link component={RouterLink} to={transactionsAnchor}>
+            {transactionLabel}
+          </Link>
         ) : (
           transactionLabel
         )}

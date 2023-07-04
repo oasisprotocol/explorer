@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
 import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -22,6 +21,7 @@ import { TokenPriceInfo } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
+import { RouterLink } from '../RouterLink'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {

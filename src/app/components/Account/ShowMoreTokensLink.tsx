@@ -1,11 +1,11 @@
 import { FC } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { accountTokenContainerId } from '../../pages/AccountDetailsPage/AccountTokensCard'
+import { RouterLink } from '../../components/RouterLink'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -37,7 +37,7 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
   }
 
   return (
-    <StyledLink to={erc20link} color="inherit">
+    <StyledLink to={erc20link} color="inherit" replace>
       {t('account.showMore', { counter: additionalTokensCounter })}
     </StyledLink>
   )
