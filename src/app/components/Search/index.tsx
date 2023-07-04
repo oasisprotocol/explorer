@@ -19,6 +19,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { textSearchMininumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
+import { isValidMnemonic } from '../../utils/helpers'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -105,14 +106,21 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
 
-  const valueWithoutPrefix = value.trim()
+  const wordsOfPower = t('search.wordsOfPower')
+  const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
+  const valueWithoutPrefix = hasWordsOfPower
+    ? value.trim().substring(wordsOfPower.length).trim()
+    : value.trim()
 
   const isTooShort =
     !!value && valueWithoutPrefix.length < textSearchMininumLength && !isValidBlockHeight(valueWithoutPrefix)
 
+  const hasPrivacyProblem = !hasWordsOfPower && isValidMnemonic(valueWithoutPrefix)
+
   useEffect(() => {
-    setValue(valueInSearchParams)
-  }, [valueInSearchParams])
+    setValue(hasWordsOfPower ? `${wordsOfPower} ${valueInSearchParams}` : valueInSearchParams)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valueInSearchParams]) // We only want to update the value from code when the URL changes
 
   const onChange = (newValue: string) => {
     setValue(newValue)
@@ -146,7 +154,13 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const searchButtonContent =
     variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMediumLight }} /> : t('search.searchBtnText')
 
-  const hasError = isTooShort
+  const errorMessage = isTooShort
+    ? t('search.error.tooShort')
+    : hasPrivacyProblem
+    ? t('search.error.privacy', { appName: t('appName'), wordsOfPower })
+    : undefined
+
+  const hasError = !!errorMessage
 
   return (
     <SearchForm
@@ -195,7 +209,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           value &&
           value !== valueInSearchParams && (
             <div>
-              {isTooShort && (
+              {hasError && (
                 <>
                   <Typography
                     component="span"
@@ -211,7 +225,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                   >
                     <ErrorIcon />
                     &nbsp;
-                    {t('search.error.tooShort')}
+                    {errorMessage}
                   </Typography>
                   <br />
                 </>
