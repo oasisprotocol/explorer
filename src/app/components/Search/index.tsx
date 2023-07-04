@@ -15,6 +15,9 @@ import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { SearchScope } from '../../../types/searchScope'
+import { NotificationBox } from '../../pages/SearchResultsPage/notifications'
+import { testnetTheme } from '../../../styles/theme'
+import { isValidMnemonic } from '../../utils/helpers'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -99,11 +102,22 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const searchPlaceholderTranslated = isMobile ? t('search.mobilePlaceholder') : t('search.placeholder')
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
+  const [isTooShort, setIsTooShort] = useState(false)
+  const [hasPrivacyProblem, setHasPrivacyProblem] = useState(false)
+  const [isUnderSpell, putUnderSpell] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
 
+  const wordsOfPower = t('search.wordsOfPower')
+
   useEffect(() => {
-    setValue(valueInSearchParams)
-  }, [valueInSearchParams])
+    setValue(isUnderSpell ? `${wordsOfPower} ${valueInSearchParams}` : valueInSearchParams)
+  }, [wordsOfPower, valueInSearchParams, isUnderSpell])
+
+  const onChange = (newValue: string) => {
+    setValue(newValue)
+    setIsTooShort(false)
+    setHasPrivacyProblem(false)
+  }
 
   const onFocusChange = (value: boolean) => {
     setIsFocused(value)
@@ -113,7 +127,20 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     if (value) {
-      navigate(RouteUtils.getSearchRoute(scope, value))
+      let wantedValue = value.trim()
+      let underSpell = false
+      if (wantedValue.toLowerCase().startsWith(wordsOfPower.toLowerCase())) {
+        underSpell = true
+        wantedValue = wantedValue.substring(wordsOfPower.length).trim()
+      }
+      const tooShort = wantedValue.length < 3
+      const privacyProblem = !underSpell && isValidMnemonic(wantedValue)
+      setIsTooShort(tooShort)
+      setHasPrivacyProblem(privacyProblem)
+      putUnderSpell(underSpell)
+      if (!tooShort && !privacyProblem) {
+        navigate(RouteUtils.getSearchRoute(scope, wantedValue))
+      }
     }
   }
 
@@ -142,7 +169,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     >
       <TextField
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={e => onChange(e.target.value)}
+        error={isTooShort || hasPrivacyProblem}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -187,6 +215,19 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           )
         }
       />
+      {isTooShort && (
+        <NotificationBox theme={testnetTheme} sx={{ p: 5 }}>
+          {t('search.error.tooShort')}
+        </NotificationBox>
+      )}
+      {hasPrivacyProblem && (
+        <NotificationBox theme={testnetTheme} sx={{ p: 5 }}>
+          {t('search.error.privacy', {
+            appName: t('pageTitle'),
+            wordsOfPower: t('search.wordsOfPower'),
+          })}
+        </NotificationBox>
+      )}
     </SearchForm>
   )
 }

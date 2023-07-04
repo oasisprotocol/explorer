@@ -364,6 +364,10 @@
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, Token name, etc",
+    "error": {
+      "tooShort": "Please enter at least 3 characters for searching",
+      "privacy": "This thing that you are trying to search for looks an awful lot like a mnemonic for an Oasis wallet. Please note that this is super-secret data that should never ever be shared with anyone; not even with such excellent services as our {{ appName }}. That being said, we are not here to tell you what you can or can not do with your own data, so if you insist, we WILL search for it. So, if you really think that there is a token with a name that contains this, then in order to signify that you understand and accept the terrible risk of sending this data to our servers, please insert this to the beginning of your search: '{{ wordsOfPower }}'! (Without quotation marks, of course.) If you do so, we will comply with your command."
+    },
     "mobilePlaceholder": "Search Address, Block, Txn, Token, etc",
     "noResults": {
       "header": "No results found",
@@ -399,6 +403,7 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>",
-    "sectionHeader": "Results on {{ scope }}"
+    "sectionHeader": "Results on {{ scope }}",
+    "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   }
 }

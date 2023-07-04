@@ -6,7 +6,7 @@ import ZoomOut from '@mui/icons-material/ZoomOut'
 import { Trans, useTranslation } from 'react-i18next'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 
-const NotificationBox = styled(Box)(({ theme }) => ({
+export const NotificationBox = styled(Box)(({ theme }) => ({
   marginTop: 30,
   marginBottom: 30,
   marginLeft: '5%',
