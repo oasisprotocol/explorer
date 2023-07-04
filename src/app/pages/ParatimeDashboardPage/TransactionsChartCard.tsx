@@ -10,6 +10,7 @@ import { LineChart } from '../../components/charts/LineChart'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC, memo } from 'react'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
+import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -28,19 +29,10 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   })
 
   const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
-
-  const buckets = data?.data?.buckets?.map(bucket => {
-    return {
-      bucket_start: bucket.bucket_start,
-      volume_per_second: bucket.tx_volume / statsParams.bucket_size_seconds,
-    }
-  })
-  const totalTransactions = data?.data?.buckets?.reduce((acc, curr) => acc + curr.tx_volume, 0) ?? 0
-
+  const buckets = data?.data?.buckets
   const lineChartData = isDailyChart
-    ? sumBucketsByStartDuration(buckets, 'volume_per_second', 'bucket_start', startOfHour)
+    ? sumBucketsByStartDuration(buckets, 'tx_volume', 'bucket_start', startOfHour)
     : buckets
-
   const formatParams = isDailyChart
     ? {
         timestamp: {
@@ -60,28 +52,32 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
         lineChartData &&
         lineChartData.length >= 2 && (
           <PercentageGain
-            earliestValue={lineChartData[lineChartData.length - 1].volume_per_second}
-            latestValue={lineChartData[0].volume_per_second}
+            earliestValue={lineChartData[lineChartData.length - 1].tx_volume}
+            latestValue={lineChartData[0].tx_volume}
           />
         )
       }
-      label={totalTransactions.toLocaleString()}
+      label={
+        <SnapshotCardDurationLabel
+          duration={chartDuration}
+          value={lineChartData?.length && lineChartData[0].tx_volume}
+        />
+      }
     >
       {lineChartData && (
         <LineChart
-          dataKey="volume_per_second"
+          dataKey="tx_volume"
           data={lineChartData.slice().reverse()}
           margin={{ left: 0, right: isMobile ? 80 : 40 }}
           formatters={{
             data: (value: number) =>
-              t('transactionsTpsChart.tooltip', {
-                value,
-                formatParams: {
-                  value: {
-                    maximumFractionDigits: 2,
-                  } satisfies Intl.NumberFormatOptions,
-                },
-              }),
+              isDailyChart
+                ? t('transactionStats.perHour', {
+                    value: value.toLocaleString(),
+                  })
+                : t('transactionStats.perDay', {
+                    value: value.toLocaleString(),
+                  }),
             label: (value: string) =>
               t('common.formattedDateTime', {
                 timestamp: new Date(value),

@@ -284,21 +284,21 @@
   },
   "transactionStats": {
     "header": "Transactions Per Day",
-    "tooltip": "{{value}} tx/day"
-  },
-  "transactionsTpsChart": {
-    "tooltip": "{{value, number}} TPS"
+    "perDay": "{{value}} tx/day",
+    "perHour": "{{value}} tx/hour"
   },
   "select": {
     "placeholder": "Select"
   },
   "chartDuration": {
-    "today": "Today",
-    "thisWeek": "This week",
-    "thisMonth": "This month",
+    "pastDay": "Past day",
+    "pastWeek": "Past week",
+    "pastMonth": "Past month",
     "allTime": "All time",
     "week": "Week",
-    "month": "Month"
+    "month": "Month",
+    "lastHour": "Last hour",
+    "lastDay": "Last day"
   },
   "currentFiatValue": {
     "title": "Current fiat value",

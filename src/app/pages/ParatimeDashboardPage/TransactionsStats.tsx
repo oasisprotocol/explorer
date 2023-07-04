@@ -59,7 +59,7 @@ export const TransactionsStats: FC = () => {
             data={buckets.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
-              data: (value: number) => t('transactionStats.tooltip', { value: value.toLocaleString() }),
+              data: (value: number) => t('transactionStats.perDay', { value: value.toLocaleString() }),
               label: (value: string) =>
                 t('common.formattedDateTime', {
                   timestamp: new Date(value),
