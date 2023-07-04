@@ -44,6 +44,8 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
   },
 } satisfies SpecifiedPerEnabledLayer
 
+export const textSearchMininumLength = 3
+
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
     // Remove localized digit group separators
@@ -85,7 +87,7 @@ export const validateAndNormalize = {
     }
   },
   evmTokenNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length > 2) {
+    if (searchTerm?.length >= textSearchMininumLength) {
       return searchTerm.toLowerCase()
     }
   },

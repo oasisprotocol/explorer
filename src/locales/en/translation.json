@@ -374,6 +374,9 @@
   },
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, Token name, etc",
+    "error": {
+      "tooShort": "Please enter either at least 3 characters or a number in order to perform a search."
+    },
     "mobilePlaceholder": "Search Address, Block, Txn, Token, etc",
     "noResults": {
       "header": "No results found",

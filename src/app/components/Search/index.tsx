@@ -10,11 +10,15 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import ErrorIcon from '@mui/icons-material/Error'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { SearchScope } from '../../../types/searchScope'
+import { textSearchMininumLength } from './search-utils'
+import Typography from '@mui/material/Typography'
+import { isValidBlockHeight } from '../../utils/helpers'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -101,9 +105,18 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
 
+  const valueWithoutPrefix = value.trim()
+
+  const isTooShort =
+    !!value && valueWithoutPrefix.length < textSearchMininumLength && !isValidBlockHeight(valueWithoutPrefix)
+
   useEffect(() => {
     setValue(valueInSearchParams)
   }, [valueInSearchParams])
+
+  const onChange = (newValue: string) => {
+    setValue(newValue)
+  }
 
   const onFocusChange = (value: boolean) => {
     setIsFocused(value)
@@ -113,7 +126,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     if (value) {
-      navigate(RouteUtils.getSearchRoute(scope, value))
+      navigate(RouteUtils.getSearchRoute(scope, valueWithoutPrefix))
     }
   }
 
@@ -133,6 +146,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const searchButtonContent =
     variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMediumLight }} /> : t('search.searchBtnText')
 
+  const hasError = isTooShort
+
   return (
     <SearchForm
       searchVariant={variant}
@@ -142,7 +157,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     >
       <TextField
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={e => onChange(e.target.value)}
+        error={hasError}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -158,7 +174,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     <HighlightOffIcon />
                   </IconButton>
                 )}
-                <SearchButton disabled={disabled} searchVariant={variant} type="submit">
+                <SearchButton disabled={disabled || hasError} searchVariant={variant} type="submit">
                   {searchButtonContent}
                 </SearchButton>
               </>
@@ -178,12 +194,35 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         helperText={
           value &&
           value !== valueInSearchParams && (
-            <SearchSuggestionsButtons
-              scope={scope}
-              onClickSuggestion={suggestion => {
-                setValue(suggestion)
-              }}
-            />
+            <div>
+              {isTooShort && (
+                <>
+                  <Typography
+                    component="span"
+                    sx={{
+                      display: 'inline-flex',
+                      color: COLORS.errorIndicatorBackground,
+                      background: COLORS.linen,
+                      fontSize: 12,
+                      alignItems: 'center',
+                      verticalAlign: 'middle',
+                      mb: 3,
+                    }}
+                  >
+                    <ErrorIcon />
+                    &nbsp;
+                    {t('search.error.tooShort')}
+                  </Typography>
+                  <br />
+                </>
+              )}
+              <SearchSuggestionsButtons
+                scope={scope}
+                onClickSuggestion={suggestion => {
+                  setValue(suggestion)
+                }}
+              />
+            </div>
           )
         }
       />
