@@ -18,15 +18,15 @@ const DurationSelectCmp: FC<DurationSelectProps> = ({ defaultValue = ChartDurati
 
   const options = [
     {
-      label: t('chartDuration.today'),
+      label: t('chartDuration.pastDay'),
       value: ChartDuration.TODAY,
     },
     {
-      label: t('chartDuration.thisWeek'),
+      label: t('chartDuration.pastWeek'),
       value: ChartDuration.WEEK,
     },
     {
-      label: t('chartDuration.thisMonth'),
+      label: t('chartDuration.pastMonth'),
       value: ChartDuration.MONTH,
     },
     {

@@ -10,6 +10,7 @@ import { LineChart } from '../../components/charts/LineChart'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC, memo } from 'react'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
+import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -32,8 +33,6 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
   const lineChartData = isDailyChart
     ? sumBucketsByStartDuration(buckets, 'tx_volume', 'bucket_start', startOfHour)
     : buckets
-  const cardLabel = lineChartData?.length ? lineChartData[0].tx_volume?.toLocaleString() : ''
-
   const formatParams = isDailyChart
     ? {
         timestamp: {
@@ -58,7 +57,12 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
           />
         )
       }
-      label={cardLabel}
+      label={
+        <SnapshotCardDurationLabel
+          duration={chartDuration}
+          value={lineChartData?.length && lineChartData[0].tx_volume}
+        />
+      }
     >
       {lineChartData && (
         <LineChart

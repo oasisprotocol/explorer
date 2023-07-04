@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import startOfMonth from 'date-fns/startOfMonth'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
+import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { BarChart } from '../../components/charts/BarChart'
 import {
   useGetLayerStatsActiveAccounts,
@@ -78,10 +79,17 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const windows =
     activeAccountsQuery.data?.data?.windows &&
     getActiveAccountsWindows(chartDuration, activeAccountsQuery.data?.data?.windows)
-  const cardLabel = windows?.length ? windows[0].active_accounts.toLocaleString() : ''
 
   return (
-    <SnapshotCard title={t('activeAccounts.title')} label={cardLabel}>
+    <SnapshotCard
+      title={t('activeAccounts.title')}
+      label={
+        <SnapshotCardDurationLabel
+          duration={chartDuration}
+          value={windows?.length && windows[0].active_accounts}
+        />
+      }
+    >
       {windows && (
         <BarChart
           barSize={!weeklyChart ? 8 : undefined}

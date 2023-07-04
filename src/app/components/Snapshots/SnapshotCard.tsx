@@ -28,7 +28,7 @@ const StyledCardContent = styled(CardContent, {
 
 type SnapshotCardProps = PropsWithChildren & {
   badge?: ReactNode
-  label?: string
+  label?: ReactNode
   title: ReactNode
   withContentPadding?: boolean
   withConstantHeight?: boolean
