@@ -30,7 +30,7 @@ export interface ErrorPayload {
 // Adds strict type-check that a type was exhausted
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
 // https://stackoverflow.com/questions/41102060/typescript-extending-error-class
-export async function exhaustedTypeWarning(
+export function exhaustedTypeWarning(
   messagePrefix: string,
   exhaustedType: 'Expected type to be exhausted, but this type was not handled',
 ) {
