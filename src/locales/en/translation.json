@@ -284,10 +284,8 @@
   },
   "transactionStats": {
     "header": "Transactions Per Day",
-    "tooltip": "{{value}} tx/day"
-  },
-  "transactionsTpsChart": {
-    "tooltip": "{{value, number}} TPS"
+    "perDay": "{{value}} tx/day",
+    "perHour": "{{value}} tx/hour"
   },
   "select": {
     "placeholder": "Select"
