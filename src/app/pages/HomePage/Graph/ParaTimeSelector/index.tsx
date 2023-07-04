@@ -152,10 +152,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
   const { network, setNetwork } = useSearchQueryNetworkParam()
-  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
   // Using object here to force side effect trigger when setting to the same layer
   const [selectedLayer, setSelectedLayer] = useState<{ current: Layer }>()
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: Layer | null }>({
+    current: null,
+  })
+
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -246,12 +249,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           <NetworkSelector network={network} setNetwork={setNetwork} />
         )}
       </ParaTimeSelectorGlow>
-      {activeMobileGraphTooltip && (
+      {activeMobileGraphTooltip.current && (
         <GraphTooltipMobile
           network={network}
-          layer={activeMobileGraphTooltip}
+          layer={activeMobileGraphTooltip.current}
           onClose={() => {
-            setActiveMobileGraphTooltip(null)
+            setActiveMobileGraphTooltip({ current: null })
           }}
         />
       )}

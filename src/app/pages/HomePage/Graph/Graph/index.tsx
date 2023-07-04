@@ -30,14 +30,14 @@ interface GraphProps extends GraphBaseProps {
   // TODO: Consider moving this to a state management solution
   selectedLayer?: Layer
   setSelectedLayer: (value: Layer) => void
-  setActiveMobileGraphTooltip: (layer: Layer | null) => void
+  setActiveMobileGraphTooltip: (layer: { current: Layer | null }) => void
   isZoomedIn: boolean
 }
 
 const GraphStyled = styled('svg', {
   shouldForwardProp: prop =>
     !(['disabled', 'transparent'] as (keyof GraphBaseProps)[]).includes(prop as keyof GraphBaseProps),
-})<GraphBaseProps>(({ disabled, transparent }) => ({
+})<GraphBaseProps>(({ theme, disabled, transparent }) => ({
   position: 'absolute',
   left: '50%',
   top: '50%',
@@ -64,7 +64,23 @@ const GraphStyled = styled('svg', {
     'ellipse:last-child': {
       display: 'none',
     },
-    '&:hover, &:focus-visible': {
+  },
+  [theme.breakpoints.up('md')]: {
+    [`g[id$=circle]`]: {
+      '&:hover, &:focus-visible': {
+        'ellipse:not(:last-child)': {
+          display: 'none',
+        },
+        'ellipse:last-child': {
+          display: 'inline',
+        },
+        'circle:not(.no-hide)': {
+          display: 'none',
+        },
+      },
+    },
+    // TODO: :has not supported in Firefox
+    [`g[id$=circle]:has( + g[id$=label]:hover)`]: {
       'ellipse:not(:last-child)': {
         display: 'none',
       },
@@ -76,23 +92,11 @@ const GraphStyled = styled('svg', {
       },
     },
   },
-  // TODO: :has not supported in Firefox
-  [`g[id$=circle]:has( + g[id$=label]:hover)`]: {
-    'ellipse:not(:last-child)': {
-      display: 'none',
-    },
-    'ellipse:last-child': {
-      display: 'inline',
-    },
-    'circle:not(.no-hide)': {
-      display: 'none',
-    },
-  },
   text: {
     userSelect: 'none',
   },
   'g.highlight': {
-    '&:hover, &:focus-within': {
+    '&:hover, &:focus-visible': {
       'path:first-of-type': {
         strokeWidth: 4,
       },
@@ -100,7 +104,7 @@ const GraphStyled = styled('svg', {
   },
   '&.testnet': {
     'g.highlight': {
-      '&:hover, &:focus-within': {
+      '&:hover, &:focus-visible': {
         'path:first-of-type': {
           stroke: COLORS.brandExtraDark,
         },
@@ -217,7 +221,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const [outOfDate, setOutOfDate] = useState<boolean>()
 
   useEffect(() => {
-    setActiveMobileGraphTooltip(null)
+    setActiveMobileGraphTooltip({ current: null })
     // should only close tooltips on isMobile change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile])
@@ -235,9 +239,8 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   const onSelectLayer = (layer: Layer) => {
     if (isMobile && isZoomedIn) {
-      setOutOfDate(undefined)
       setSelectedLayer(layer)
-      setActiveMobileGraphTooltip(layer)
+      setActiveMobileGraphTooltip({ current: layer })
 
       return
     }
@@ -295,7 +298,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   return (
     <>
-      {network && selectedLayer && selectedLayer !== Layer.consensus && (
+      {!isMobile && network && selectedLayer && selectedLayer !== Layer.consensus && (
         <LayerStatus
           scope={{
             network,
@@ -427,7 +430,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover(Layer.emerald, setHoveredLayer)}
         >
-          {hoveredLayer !== Layer.emerald && (
+          {(isMobile || hoveredLayer !== Layer.emerald) && (
             <GraphParaTimeStatus
               iconX={201}
               iconY={102}
@@ -440,7 +443,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             </GraphParaTimeStatus>
           )}
 
-          {hoveredLayer === Layer.emerald && !disabledMap[Layer.emerald] && (
+          {!isMobile && hoveredLayer === Layer.emerald && !disabledMap[Layer.emerald] && (
             <text x="181.5" y="97" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               {t('common.view')}
             </text>
@@ -477,7 +480,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover(Layer.sapphire, setHoveredLayer)}
         >
-          {hoveredLayer !== Layer.sapphire && (
+          {(isMobile || hoveredLayer !== Layer.sapphire) && (
             <GraphParaTimeStatus
               iconX={130}
               iconY={310}
@@ -489,7 +492,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               {t('common.sapphire')}
             </GraphParaTimeStatus>
           )}
-          {hoveredLayer === Layer.sapphire && !disabledMap[Layer.sapphire] && (
+          {!isMobile && hoveredLayer === Layer.sapphire && !disabledMap[Layer.sapphire] && (
             <text x="109.5" y="307" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               {t('common.view')}
             </text>
@@ -553,12 +556,12 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover(Layer.consensus, setHoveredLayer)}
         >
-          {hoveredLayer !== Layer.consensus && (
+          {(isMobile || hoveredLayer !== Layer.consensus) && (
             <text x="161" y="212" fill={graphTheme.text} fontSize="12px">
               {t('common.consensus')}
             </text>
           )}
-          {hoveredLayer === Layer.consensus && !disabledMap[Layer.consensus] && (
+          {!isMobile && hoveredLayer === Layer.consensus && !disabledMap[Layer.consensus] && (
             <text x="173" y="214" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               {t('common.view')}
             </text>
@@ -595,12 +598,12 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover(Layer.cipher, setHoveredLayer)}
         >
-          {hoveredLayer !== Layer.cipher && (
+          {(isMobile || hoveredLayer !== Layer.cipher) && (
             <text x="290" y="205" fill={graphTheme.text} fontSize="12px">
               {t('common.cipher')}
             </text>
           )}
-          {hoveredLayer === Layer.cipher && !disabledMap[Layer.cipher] && (
+          {!isMobile && hoveredLayer === Layer.cipher && !disabledMap[Layer.cipher] && (
             <text x="294" y="205" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               {t('common.view')}
             </text>
