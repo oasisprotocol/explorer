@@ -40,6 +40,7 @@ const config = {
     ],
     'prefer-template': 'error',
 
+    'react/prop-types': 'off', // Not needed with TS
     'react/jsx-no-target-blank': 'off', // Not needed with modern browsers
     'react/react-in-jsx-scope': 'off', // Not needed after React v17
     'react/display-name': 'off', // TODO: Maybe enable
