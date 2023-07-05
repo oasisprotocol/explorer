@@ -1,6 +1,6 @@
 import SelectUnstyled, { SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
 import Option, { optionClasses } from '@mui/base/Option'
-import Popper from '@mui/base/Popper'
+import Popper, { PopperPlacementType } from '@mui/base/Popper'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import {
@@ -21,8 +21,11 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
+import { WithOptionalOwnerState } from '@mui/base/utils'
+import { SelectPopperSlotProps, SelectSlots } from '@mui/base/Select/Select.types'
+import * as React from 'react'
 
-const StyledButton = styled(Button)(({ theme }) => ({
+export const StyledSelectButton = styled(Button)(({ theme }) => ({
   height: '36px',
   minWidth: '135px',
   padding: `0 ${theme.spacing(4)}`,
@@ -35,7 +38,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-const StyledListbox = styled('ul')(({ theme }) => ({
+export const StyledSelectListbox = styled('ul')(({ theme }) => ({
   boxSizing: 'border-box',
   padding: theme.spacing(0),
   margin: theme.spacing(3, 0),
@@ -47,7 +50,7 @@ const StyledListbox = styled('ul')(({ theme }) => ({
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
 }))
 
-const StyledOption = styled(Option)(({ theme }) => ({
+export const StyledSelectOption = styled(Option)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   boxSizing: 'border-box',
@@ -85,28 +88,48 @@ const TertiaryButton = forwardRef(
     const { t } = useTranslation()
 
     return (
-      <StyledButton {...restProps} ref={ref} color="tertiary">
+      <StyledSelectButton {...restProps} ref={ref} color="tertiary">
         <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
         {ownerState.open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-      </StyledButton>
+      </StyledSelectButton>
     )
   },
 )
 
 const CustomSelect = forwardRef(function CustomSelect<TValue extends string | number>(
-  props: SelectProps<TValue, false>,
+  {
+    root,
+    listbox,
+    popper,
+    placement,
+    ...restProps
+  }: SelectProps<TValue, false> & SelectSlots<TValue, false> & Partial<SelectPopperSlotProps<TValue, false>>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
   const slots: SelectProps<TValue, false>['slots'] = {
-    root: TertiaryButton,
-    listbox: StyledListbox,
-    popper: StyledPopper,
-    ...props.slots,
+    root,
+    listbox,
+    popper,
+    ...restProps.slots,
   }
 
-  return <SelectUnstyled {...props} ref={ref} slots={slots} />
+  return (
+    <SelectUnstyled
+      {...restProps}
+      ref={ref}
+      slots={slots}
+      slotProps={{
+        popper: {
+          placement,
+        },
+      }}
+    />
+  )
 }) as <TValue extends string | number>(
-  props: SelectProps<TValue, false> & RefAttributes<HTMLButtonElement>,
+  props: SelectProps<TValue, false> &
+    SelectSlots<TValue, false> &
+    Partial<SelectPopperSlotProps<TValue, false>> &
+    RefAttributes<HTMLButtonElement>,
 ) => JSX.Element
 
 export interface SelectOptionBase {
@@ -114,11 +137,23 @@ export interface SelectOptionBase {
   value: string | number
 }
 
+const SelectOption = <T extends SelectOptionBase>({ value, label }: T): ReactElement => (
+  <StyledSelectOption key={value} value={value}>
+    <Typography variant="select">{label}</Typography>
+  </StyledSelectOption>
+)
+
 interface SelectCmpProps<T extends SelectOptionBase> {
   label?: string
   options: T[]
   defaultValue?: T['value']
   handleChange?: (selectedOption: T['value'] | null) => void
+  placement?: PopperPlacementType
+  className?: string
+  root?: React.ElementType
+  Option?: typeof SelectOption<T> | undefined
+  listbox?: React.ElementType
+  popper?: React.ComponentType<WithOptionalOwnerState<SelectPopperSlotProps<T['value'], false>>>
 }
 
 const SelectCmp = <T extends SelectOptionBase>({
@@ -126,6 +161,12 @@ const SelectCmp = <T extends SelectOptionBase>({
   options,
   defaultValue,
   handleChange,
+  placement = 'bottom-start',
+  className,
+  root = TertiaryButton,
+  listbox = StyledSelectListbox,
+  popper = StyledPopper,
+  Option = SelectOption,
 }: SelectCmpProps<T>): ReactElement => {
   const selectId = useId()
 
@@ -137,17 +178,23 @@ const SelectCmp = <T extends SelectOptionBase>({
   )
 
   return (
-    <Box>
+    <Box className={className}>
       {label && (
         <label htmlFor={selectId}>
           <Typography variant="body2">{label}</Typography>
         </label>
       )}
-      <CustomSelect<T['value']> id={selectId} defaultValue={defaultValue} onChange={onChange}>
-        {options.map(({ label, value }) => (
-          <StyledOption key={value} value={value}>
-            <Typography variant="select">{label}</Typography>
-          </StyledOption>
+      <CustomSelect<T['value']>
+        id={selectId}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        root={root}
+        listbox={listbox}
+        popper={popper}
+        placement={placement}
+      >
+        {options.map((props: T) => (
+          <Option key={props.value.toString()} {...props} />
         ))}
       </CustomSelect>
     </Box>

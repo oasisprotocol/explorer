@@ -1,100 +1,136 @@
-import { FC, useState } from 'react'
+import { FC, ForwardedRef, forwardRef, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useTheme } from '@mui/material/styles'
-import { useScreenSize } from '../../../../hooks/useScreensize'
-import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import RemoveIcon from '@mui/icons-material/Remove'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { getNetworkNames, Network } from '../../../../../types/network'
-import Collapse from '@mui/material/Collapse'
 import { RouteUtils } from '../../../../utils/route-utils'
+import {
+  Select,
+  SelectOptionBase,
+  StyledSelectButton,
+  StyledSelectListbox,
+  StyledSelectOption,
+} from '../../../../components/Select'
+import { selectClasses, SelectRootSlotProps } from '@mui/base/Select'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { getNetworkIcons } from '../../../../utils/content'
+import { optionClasses } from '@mui/base/Option'
 
-const StyledNetworkSelector = styled(Box)(() => ({
+interface NetworkOption extends SelectOptionBase {
+  label: Network
+  value: Network
+}
+
+const StyledNetworkSelector = styled(Select<NetworkOption>)(({ theme }) => ({
   position: 'absolute',
-  bottom: 0,
+  bottom: theme.spacing(5),
   display: 'flex',
   width: '100%',
   justifyContent: 'center',
 }))
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledButton = styled(StyledSelectButton)(({ theme }) => ({
+  height: '44px',
+  minWidth: '200px',
   backgroundColor: theme.palette.layout.primaryBackground,
-  border: `solid 3px ${theme.palette.layout.lightBorder}`,
-  borderRadius: '45px',
-  padding: theme.spacing(3, 4),
-  display: 'inline-flex',
-  alignItems: 'center',
-}))
-
-export const SelectNetworkButton = styled(Button, {
-  shouldForwardProp: prop => prop !== 'isSelectedNetwork',
-})<{ isSelectedNetwork: boolean }>(({ isSelectedNetwork, theme }) => ({
-  height: '30px',
-  padding: theme.spacing(2, 3),
-  textTransform: 'capitalize',
-  fontSize: '16px',
-  borderRadius: '9px',
-  backgroundColor: isSelectedNetwork
-    ? theme.palette.layout.primaryBackground
-    : theme.palette.layout.secondary,
-  borderColor: isSelectedNetwork ? theme.palette.layout.hoverBorder : theme.palette.layout.secondary,
-  borderWidth: theme.spacing(1),
+  border: `2px solid ${theme.palette.layout.lightBorder}`,
   color: theme.palette.layout.main,
-  '&:hover, &:focus-visible': {
-    backgroundColor: theme.palette.layout.secondary,
-    borderWidth: theme.spacing(1),
-    borderColor: COLORS.white,
+  '&:hover': {
+    backgroundColor: theme.palette.layout.primaryBackground,
+  },
+  [`&.${selectClasses.focusVisible}`]: {
+    backgroundColor: theme.palette.layout.primaryBackground,
+    outline: 'none',
+    border: `2px solid ${theme.palette.layout.main}`,
   },
 }))
-SelectNetworkButton.defaultProps = {
-  size: 'small',
-  variant: 'outlined',
-  sx: { ml: 4 },
-}
 
-type NetworkSelectorProps = {
-  network: Network
-  setNetwork: (network: Network) => void
-}
+const StyledListbox = styled(StyledSelectListbox)(() => ({
+  minWidth: '200px',
+  background: COLORS.white,
+  color: COLORS.grayDark,
+}))
 
-export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, setNetwork }) => {
+const StyledOption = styled(StyledSelectOption)(() => ({
+  height: '44px',
+  color: COLORS.grayDark,
+  svg: {
+    color: COLORS.grayExtraDark,
+  },
+  [`&:hover:not(.${optionClasses.disabled}),
+  &.${optionClasses.highlighted}`]: {
+    backgroundColor: COLORS.grayLight,
+  },
+}))
+
+const SelectOption = ({ value }: NetworkOption): ReactElement => {
   const { t } = useTranslation()
-  const theme = useTheme()
-  const { isMobile } = useScreenSize()
-  const [open, setOpen] = useState(false)
-  const options: Network[] = RouteUtils.getEnabledNetworks()
+
   const labels = getNetworkNames(t)
+  const icons = getNetworkIcons()
 
   return (
-    <StyledNetworkSelector>
-      <StyledBox>
-        {!isMobile && (
-          <Typography component="span" sx={{ fontSize: '12px', color: theme.palette.layout.main }}>
-            {t('home.selectNetwork')}
-          </Typography>
-        )}
-        <Box sx={{ height: 30, display: 'flex' }}>
-          {options.map(option => (
-            <Collapse orientation="horizontal" in={open || network === option} key={option}>
-              <SelectNetworkButton onClick={() => setNetwork(option)} isSelectedNetwork={option === network}>
-                {labels[option]}
-              </SelectNetworkButton>
-            </Collapse>
-          ))}
+    <StyledOption key={value} value={value}>
+      <Box
+        sx={theme => ({ display: 'flex', gap: theme.spacing(3), pl: theme.spacing(3), alignItems: 'center' })}
+      >
+        {icons[value]}
+        <Typography variant="inherit">{labels[value]}</Typography>
+      </Box>
+    </StyledOption>
+  )
+}
+
+const NetworkSelectorButton = forwardRef(
+  (props: SelectRootSlotProps<Network, false>, ref: ForwardedRef<HTMLButtonElement>) => {
+    const { ownerState, ...restProps } = props
+    const { open, value } = ownerState
+    const { t } = useTranslation()
+    const label = getNetworkNames(t)
+    const icons = getNetworkIcons()
+
+    return (
+      <StyledButton {...restProps} ref={ref} color="inherit">
+        <Box
+          sx={theme => ({
+            display: 'flex',
+            gap: theme.spacing(3),
+            pl: theme.spacing(3),
+            alignItems: 'center',
+          })}
+        >
+          {icons[value!]}
+          <Typography variant="inherit">{label[value!]}</Typography>
         </Box>
-        <IconButton aria-label={t('home.selectNetworkAria')} onClick={() => setOpen(!open)}>
-          {open ? (
-            <RemoveIcon fontSize="medium" sx={{ color: theme.palette.layout.main, fontSize: '18px' }} />
-          ) : (
-            <AddIcon fontSize="medium" sx={{ color: theme.palette.layout.main, fontSize: '18px' }} />
-          )}
-        </IconButton>
-      </StyledBox>
-    </StyledNetworkSelector>
+        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </StyledButton>
+    )
+  },
+)
+
+interface NetworkSelectProps {
+  network: Network
+  setNetwork: (network: Network | null) => void
+}
+
+export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork }) => {
+  const options = RouteUtils.getEnabledNetworks().map(network => ({
+    label: network,
+    value: network,
+  }))
+
+  return (
+    <StyledNetworkSelector
+      defaultValue={network}
+      handleChange={setNetwork}
+      options={options}
+      placement="top-start"
+      root={NetworkSelectorButton}
+      Option={SelectOption}
+      listbox={StyledListbox}
+    />
   )
 }
