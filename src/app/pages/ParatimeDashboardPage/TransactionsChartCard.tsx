@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {
   ChartDuration,
@@ -15,12 +16,20 @@ import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
+const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
+  [ChartDuration.TODAY]: t('chartDuration.lastHour'),
+  [ChartDuration.WEEK]: t('chartDuration.lastDay'),
+  [ChartDuration.MONTH]: t('chartDuration.lastDay'),
+  [ChartDuration.ALL_TIME]: t('chartDuration.lastDay'),
+})
+
 interface TransactionsChartCardProps {
   chartDuration: ChartDuration
 }
 
 const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
+  const labels = getLabels(t)
   const { isMobile } = useScreenSize()
   const statsParams = durationToQueryParams[chartDuration]
   const scope = useRequiredScopeParam()
@@ -59,7 +68,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuratio
       }
       label={
         <SnapshotCardDurationLabel
-          duration={chartDuration}
+          label={labels[chartDuration]}
           value={lineChartData?.length && lineChartData[0].tx_volume}
         />
       }

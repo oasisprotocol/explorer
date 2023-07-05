@@ -298,7 +298,8 @@
     "week": "Week",
     "month": "Month",
     "lastHour": "Last hour",
-    "lastDay": "Last day"
+    "lastDay": "Last day",
+    "lastMonth": "Last month"
   },
   "currentFiatValue": {
     "title": "Current fiat value",
