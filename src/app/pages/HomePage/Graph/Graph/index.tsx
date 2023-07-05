@@ -68,10 +68,10 @@ const GraphStyled = styled('svg', {
   [theme.breakpoints.up('md')]: {
     [`g[id$=circle]`]: {
       '&:hover, &:focus-visible': {
-        'ellipse:not(:last-child)': {
+        'ellipse:not(.hover-bg)': {
           display: 'none',
         },
-        'ellipse:last-child': {
+        'ellipse.hover-bg': {
           display: 'inline',
         },
         'circle:not(.no-hide)': {
@@ -81,10 +81,10 @@ const GraphStyled = styled('svg', {
     },
     // TODO: :has not supported in Firefox
     [`g[id$=circle]:has( + g[id$=label]:hover)`]: {
-      'ellipse:not(:last-child)': {
+      'ellipse:not(.hover-bg)': {
         display: 'none',
       },
-      'ellipse:last-child': {
+      'ellipse.hover-bg': {
         display: 'inline',
       },
       'circle:not(.no-hide)': {
@@ -97,7 +97,7 @@ const GraphStyled = styled('svg', {
   },
   'g.highlight': {
     '&:hover, &:focus-visible': {
-      'path:first-of-type': {
+      path: {
         strokeWidth: 4,
       },
     },
@@ -105,7 +105,7 @@ const GraphStyled = styled('svg', {
   '&.testnet': {
     'g.highlight': {
       '&:hover, &:focus-visible': {
-        'path:first-of-type': {
+        path: {
           stroke: COLORS.brandExtraDark,
         },
       },
@@ -139,7 +139,7 @@ const GraphParaTimeStatus: FC<
     iconY: number
     textX: number
     textY: number
-    outOfDate?: boolean
+    outOfDate: boolean | undefined
   }>
 > = ({ children, fillText, iconX, iconY, textX, textY, outOfDate }) => {
   const { t } = useTranslation()
@@ -421,7 +421,14 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             <ellipse cx="195.702" cy="94.6959" rx="31.6963" ry="31.6959" fill="#030092" />
           )}
           <ellipse cx="195.702" cy="94.6959" rx="31.6963" ry="31.6959" fill={graphTheme.emeraldCircle} />
-          <ellipse cx="195.702" cy="94.6959" rx="31.6963" ry="31.6959" fill={graphTheme.hoverBackground} />
+          <ellipse
+            className="hover-bg"
+            cx="195.702"
+            cy="94.6959"
+            rx="31.6963"
+            ry="31.6959"
+            fill={graphTheme.hoverBackground}
+          />
         </g>
         <g
           id={`${Layer.emerald}-label`}
@@ -471,7 +478,14 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             <ellipse cx="123.702" cy="302.696" rx="31.6963" ry="31.6959" fill="#030092" />
           )}
           <ellipse cx="123.702" cy="302.696" rx="31.6963" ry="31.6959" fill={graphTheme.sapphireCircle} />
-          <ellipse cx="123.702" cy="302.696" rx="31.6963" ry="31.6959" fill={graphTheme.hoverBackground} />
+          <ellipse
+            className="hover-bg"
+            cx="123.702"
+            cy="302.696"
+            rx="31.6963"
+            ry="31.6959"
+            fill={graphTheme.hoverBackground}
+          />
         </g>
         <g
           id={`${Layer.sapphire}-label`}
@@ -541,6 +555,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
             {...preventDoubleClick}
           />
           <ellipse
+            className="hover-bg"
             cx="188.502"
             cy="209.5"
             rx="42.5"
@@ -589,7 +604,14 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {network === Network.mainnet && (
             <ellipse cx="306.702" cy="201.696" rx="31.6963" ry="31.6959" fill={graphTheme.cipherCircle} />
           )}
-          <ellipse cx="306.702" cy="201.696" rx="31.6963" ry="31.6959" fill={graphTheme.hoverBackground} />
+          <ellipse
+            className="hover-bg"
+            cx="306.702"
+            cy="201.696"
+            rx="31.6963"
+            ry="31.6959"
+            fill={graphTheme.hoverBackground}
+          />
         </g>
         <g
           id={`${Layer.cipher}-label`}
