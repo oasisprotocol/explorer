@@ -4,8 +4,8 @@ const glob = require('glob')
 const packageJson = require('../../package.json')
 
 const folderPath = '.changelog/'
-const majorPattern = `${folderPath}'*breaking*.md'`
-const minorPattern = `${folderPath}'*feature*.md'`
+const majorPattern = `${folderPath}*breaking*.md`
+const minorPattern = `${folderPath}*feature*.md`
 const patchPattern = `${folderPath}*{process,cfg,bugfix,doc,internal,trivial}*.md`
 
 console.log('Assembling Change Log and updating package version')
