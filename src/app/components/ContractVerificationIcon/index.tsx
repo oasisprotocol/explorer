@@ -85,11 +85,13 @@ export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ ac
         {statusIcon[status]}
       </StyledBox>
       &nbsp; &nbsp;
-      {verified && !noLink && (
+      {!noLink && (
         <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
           <Trans
             t={t}
-            i18nKey="contract.verification.openInSourcify"
+            i18nKey={
+              verified ? 'contract.verification.openInSourcify' : 'contract.verification.verifyInSourcify'
+            }
             components={{
               SourcifyLink: (
                 <Link
