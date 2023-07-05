@@ -88,7 +88,7 @@ const EvmLogRow: FC<{
   )
 }
 
-const DecodedLogEvent: FC<{
+const LogEvent: FC<{
   scope: SearchScope
   event: RuntimeEvent
   addressSwitchOption: AddressSwitchOption
@@ -243,7 +243,7 @@ export const TransactionLogEvent: FC<{
   return (
     <>
       {!isFirst && <Divider variant="card" />}
-      <DecodedLogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
+      <LogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
     </>
   )
 }
