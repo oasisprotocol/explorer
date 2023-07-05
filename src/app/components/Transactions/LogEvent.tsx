@@ -15,6 +15,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { LongDataDisplay } from '../LongDataDisplay'
 
 const EvmEventParamData: FC<{
   scope: SearchScope
@@ -108,12 +109,28 @@ const DecodedLogEvent: FC<{
     case RuntimeEventType.coregas_used:
       return (
         <span>
-          {t('common.gasUsed')}: {event.body.amount.toLocaleString()}
+          {eventName}: {event.body.amount.toLocaleString()}
         </span>
       )
     case RuntimeEventType.evmlog:
+      if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
+        return (
+          <div>
+            <div>{eventName}</div>
+            <br />
+            <LongDataDisplay
+              data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
+              threshold={300}
+              fontWeight={400}
+            />
+          </div>
+        )
+      }
       return (
-        <>
+        <div>
+          <div>{eventName}</div>
+          <br />
+
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.type')}</dt>
             <dd>
@@ -147,18 +164,66 @@ const DecodedLogEvent: FC<{
               </>
             )}
           </StyledDescriptionList>
-        </>
+        </div>
       )
 
     case RuntimeEventType.accountsburn:
     case RuntimeEventType.accountsmint:
+      return (
+        <div>
+          <div>{eventName}</div>
+          <br />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('transactionEvent.fields.owner')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.owner}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                value: event.body.amount.Amount,
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
     case RuntimeEventType.consensus_accountswithdraw:
       return (
         <div>
           <div>{eventName}</div>
-          <pre>{JSON.stringify(event, null, ' ')}</pre>
+          <br />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.from')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.from}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.to}
+                scope={scope}
+                plain={addressSwitchOption === AddressSwitchOption.ETH}
+              />
+            </dd>
+            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                value: event.body.amount.Amount,
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
         </div>
       )
     default:
@@ -166,6 +231,7 @@ const DecodedLogEvent: FC<{
       return (
         <div>
           <div>{eventName}</div>
+          <br />
           <pre>{JSON.stringify(event, null, ' ')}</pre>
         </div>
       )

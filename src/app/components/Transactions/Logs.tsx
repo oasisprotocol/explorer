@@ -6,6 +6,7 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { CardEmptyState } from '../../pages/AccountDetailsPage/CardEmptyState'
 import { useTranslation } from 'react-i18next'
+import { SearchScope } from '../../../types/searchScope'
 
 export const TransactionLogs: FC<{
   transaction: RuntimeTransaction
@@ -32,7 +33,7 @@ export const TransactionLogs: FC<{
 }
 
 export const TransactionLogsView: FC<{
-  scope: RuntimeTransaction
+  scope: SearchScope
   events: RuntimeEvent[] | undefined
   isLoading: boolean
   isError: boolean
