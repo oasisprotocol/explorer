@@ -175,8 +175,11 @@ const LogEvent: FC<{
               <AccountLink
                 address={event.body.owner}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.owner} />
+              )}
             </dd>
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
@@ -201,16 +204,20 @@ const LogEvent: FC<{
               <AccountLink
                 address={event.body.from}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.from} />
+              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink
                 address={event.body.to}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
