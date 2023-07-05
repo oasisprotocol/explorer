@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import startOfMonth from 'date-fns/startOfMonth'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
@@ -57,8 +58,16 @@ type ActiveAccountsProps = {
   chartDuration: ChartDuration
 }
 
+const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
+  [ChartDuration.TODAY]: t('chartDuration.lastHour'),
+  [ChartDuration.WEEK]: t('chartDuration.lastDay'),
+  [ChartDuration.MONTH]: t('chartDuration.lastDay'),
+  [ChartDuration.ALL_TIME]: t('chartDuration.lastMonth'),
+})
+
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
+  const labels = getLabels(t)
   const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
   const scope = useRequiredScopeParam()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
@@ -85,7 +94,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
       title={t('activeAccounts.title')}
       label={
         <SnapshotCardDurationLabel
-          duration={chartDuration}
+          label={labels[chartDuration]}
           value={windows?.length && windows[0].active_accounts}
         />
       }
