@@ -23,7 +23,7 @@ export const AccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
-  const { account, isLoading: isAcccountLoading, isError } = useAccount(scope, address)
+  const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address)
   const { totalCount: numberOfTokenTransfers } = useAccountTokenTransfers(scope, address)
 
@@ -42,7 +42,7 @@ export const AccountDetailsPage: FC = () => {
   const codeLink = useHref(`code#${contractCodeContainerId}`)
 
   const showDetails = showTxs || showErc20
-  const isLoading = isAcccountLoading || isTokenLoading
+  const isLoading = isAccountLoading || isTokenLoading
 
   return (
     <PageLayout>
