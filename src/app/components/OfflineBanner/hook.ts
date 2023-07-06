@@ -32,7 +32,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
     }
   }
 
-  if (isApiReachable) {
+  if (!isApiReachable) {
     // The error state will be handled by NetworkOfflineBanner,
     // no need to display another banner whining about obsolete data.
     return {
