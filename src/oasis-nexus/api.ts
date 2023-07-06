@@ -44,7 +44,7 @@ declare module './generated/api' {
     layer: Layer
     address_eth?: string
     ticker: NativeTicker
-    tokenBalances: Record<EvmTokenType, generated.RuntimeEvmBalance[]>
+    tokenBalances: Partial<Record<EvmTokenType, generated.RuntimeEvmBalance[]>>
   }
   export interface RuntimeEvent {
     network: Network
@@ -73,12 +73,12 @@ export const isAccountEmpty = (account: RuntimeAccount) => {
 export const isAccountNonEmpty = (account: RuntimeAccount) => !isAccountEmpty(account)
 
 export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBalances'>): RuntimeAccount => {
-  const tokenBalances: Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]> = {
-    ERC20: [],
-    ERC721: [],
-  }
+  const tokenBalances: Partial<Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]>> = {}
   account.evm_balances.forEach(balance => {
-    if (balance.token_type) tokenBalances[balance.token_type].push(balance)
+    if (balance.token_type) {
+      tokenBalances[balance.token_type] ??= []
+      tokenBalances[balance.token_type]!.push(balance)
+    }
   })
 
   return {

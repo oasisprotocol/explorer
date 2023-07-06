@@ -29,7 +29,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenLabel = t(`account.${type}` as any)
-  const tokenListLabel = t('common.tokens') // TODO: re-enable when we want multiple token types again t('account.tokensListTitle', { token: tokenLabel })
+  const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
   const tableColumns: TableColProps[] = [
     { key: 'name', content: t('common.name') },
     { key: 'contract', content: t('common.smartContract') },
@@ -85,7 +85,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
       <LinkableDiv id={accountTokenContainerId}>
         <CardHeader disableTypography component="h3" title={tokenListLabel} />
         <CardContent>
-          {!isLoading && !account?.tokenBalances[type].length && (
+          {!isLoading && !account?.tokenBalances[type]?.length && (
             <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
           )}
 

@@ -23,7 +23,7 @@ export const AccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
-  const { account, isLoading: isAcccountLoading, isError } = useAccount(scope, address)
+  const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address)
   const { totalCount: numberOfTokenTransfers } = useAccountTokenTransfers(scope, address)
 
@@ -32,15 +32,17 @@ export const AccountDetailsPage: FC = () => {
 
   const showTokenTransfers = showEmptyAccountDetails || !!numberOfTokenTransfers
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
-  const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20].length
+  const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20]?.length
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
+  const showErc721 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC721]?.length
+  const erc721Link = useHref(`tokens/erc-721#${accountTokenContainerId}`)
   const showTxs = showEmptyAccountDetails || showErc20 || !!account?.stats.num_txns
   const txLink = useHref('')
   const showCode = isContract
   const codeLink = useHref(`code#${contractCodeContainerId}`)
 
   const showDetails = showTxs || showErc20
-  const isLoading = isAcccountLoading || isTokenLoading
+  const isLoading = isAccountLoading || isTokenLoading
 
   return (
     <PageLayout>
@@ -62,7 +64,16 @@ export const AccountDetailsPage: FC = () => {
           tabs={[
             { label: t('common.transactions'), to: txLink, visible: showTxs },
             { label: t('tokens.transfers'), to: tokenTransfersLink, visible: showTokenTransfers },
-            { label: t('common.tokens'), to: erc20Link, visible: showErc20 },
+            {
+              label: t('account.tokensListTitle', { token: t(`account.ERC20`) }),
+              to: erc20Link,
+              visible: showErc20,
+            },
+            {
+              label: t('account.tokensListTitle', { token: t(`account.ERC721`) }),
+              to: erc721Link,
+              visible: showErc721,
+            },
             { label: t('contract.code'), to: codeLink, visible: showCode },
           ]}
         />
