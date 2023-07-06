@@ -75,6 +75,7 @@ export const isAccountNonEmpty = (account: RuntimeAccount) => !isAccountEmpty(ac
 export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBalances'>): RuntimeAccount => {
   const tokenBalances: Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]> = {
     ERC20: [],
+    ERC721: [],
   }
   account.evm_balances.forEach(balance => {
     if (balance.token_type) tokenBalances[balance.token_type].push(balance)

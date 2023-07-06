@@ -66,6 +66,7 @@ export abstract class RouteUtils {
   ) => {
     const map: Record<EvmTokenType, string | undefined> = {
       ERC20: `${this.getAccountRoute(scope, account)}/tokens/erc-20`,
+      ERC721: `${this.getAccountRoute(scope, account)}/tokens/erc-721`,
     }
     const tokenRoutes = map[tokenType]
     if (!tokenRoutes) throw new Error('Unexpected token type')
