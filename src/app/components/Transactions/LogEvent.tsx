@@ -88,7 +88,7 @@ const EvmLogRow: FC<{
   )
 }
 
-const DecodedLogEvent: FC<{
+const LogEvent: FC<{
   scope: SearchScope
   event: RuntimeEvent
   addressSwitchOption: AddressSwitchOption
@@ -136,34 +136,30 @@ const DecodedLogEvent: FC<{
             <dd>
               <b>{event.evm_log_name}</b>
             </dd>
-            {event.evm_log_params && event.evm_log_params.length > 0 && (
-              <>
-                {/*<dt>Params</dt>*/}
-                <dd>
-                  <Table sx={{ border: '1px solid lightgray' }}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>{t('common.name')}</TableCell>
-                        <TableCell>{t('common.type')}</TableCell>
-                        <TableCell>{t('common.data')}</TableCell>
-                        <TableCell />
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {event.evm_log_params.map((param, index) => (
-                        <EvmLogRow
-                          scope={scope}
-                          key={`param-${index}`}
-                          param={param}
-                          addressSwitchOption={addressSwitchOption}
-                        />
-                      ))}
-                    </TableBody>
-                  </Table>
-                </dd>
-              </>
-            )}
           </StyledDescriptionList>
+
+          {event.evm_log_params && event.evm_log_params.length > 0 && (
+            <Table sx={{ border: '1px solid lightgray' }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell>{t('common.type')}</TableCell>
+                  <TableCell>{t('common.data')}</TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {event.evm_log_params.map((param, index) => (
+                  <EvmLogRow
+                    scope={scope}
+                    key={`param-${index}`}
+                    param={param}
+                    addressSwitchOption={addressSwitchOption}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
       )
 
@@ -179,8 +175,11 @@ const DecodedLogEvent: FC<{
               <AccountLink
                 address={event.body.owner}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.owner} />
+              )}
             </dd>
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
@@ -205,16 +204,20 @@ const DecodedLogEvent: FC<{
               <AccountLink
                 address={event.body.from}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.from} />
+              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink
                 address={event.body.to}
                 scope={scope}
-                plain={addressSwitchOption === AddressSwitchOption.ETH}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
               />
+              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
@@ -244,23 +247,10 @@ export const TransactionLogEvent: FC<{
   isFirst: boolean
   addressSwitchOption: AddressSwitchOption
 }> = ({ scope, event, isFirst, addressSwitchOption }) => {
-  const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
-  const decoded = true // TODO: how do I know if this has been successfully decoded?
-
   return (
     <>
       {!isFirst && <Divider variant="card" />}
-      <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-        {decoded && (
-          <>
-            <dt>{t('transactionEvent.decoded')}</dt>
-            <dd>
-              <DecodedLogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
-            </dd>
-          </>
-        )}
-      </StyledDescriptionList>
+      <LogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
     </>
   )
 }
