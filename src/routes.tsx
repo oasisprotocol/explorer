@@ -97,6 +97,11 @@ export const routes: RouteObject[] = [
                 loader: addressParamLoader,
               },
               {
+                path: 'tokens/erc-721',
+                element: <AccountTokensCard type="ERC721" />,
+                loader: addressParamLoader,
+              },
+              {
                 path: 'code',
                 element: <ContractCodeCard />,
                 loader: addressParamLoader,

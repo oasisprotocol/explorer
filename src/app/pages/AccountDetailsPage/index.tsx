@@ -34,6 +34,8 @@ export const AccountDetailsPage: FC = () => {
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
   const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20].length
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
+  const showErc721 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC721].length
+  const erc721Link = useHref(`tokens/erc-721#${accountTokenContainerId}`)
   const showTxs = showEmptyAccountDetails || showErc20 || !!account?.stats.num_txns
   const txLink = useHref('')
   const showCode = isContract
@@ -62,7 +64,16 @@ export const AccountDetailsPage: FC = () => {
           tabs={[
             { label: t('common.transactions'), to: txLink, visible: showTxs },
             { label: t('tokens.transfers'), to: tokenTransfersLink, visible: showTokenTransfers },
-            { label: t('common.tokens'), to: erc20Link, visible: showErc20 },
+            {
+              label: t('account.tokensListTitle', { token: t(`account.ERC20`) }),
+              to: erc20Link,
+              visible: showErc20,
+            },
+            {
+              label: t('account.tokensListTitle', { token: t(`account.ERC721`) }),
+              to: erc721Link,
+              visible: showErc721,
+            },
             { label: t('contract.code'), to: codeLink, visible: showCode },
           ]}
         />
