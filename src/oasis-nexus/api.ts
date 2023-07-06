@@ -528,6 +528,255 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RuntimeEventList, headers, status) => {
+          // Parts of
+          // https://index.oasislabs.com/v1/emerald/events?tx_hash=3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52&limit=100
+          // https://index-staging.oasislabs.com/v1/emerald/events?tx_hash=8fd925514dd66f7cb70211b09f887883849bdadb54be079370d391dfc4b045b6&limit=100
+          // https://index.oasislabs.com/v1/emerald/events?limit=1&offset=0&type=accounts.transfer
+          // https://index.oasislabs.com/v1/emerald/events?limit=1&offset=0&type=accounts.mint
+          // https://index.oasislabs.com/v1/emerald/events?limit=1&offset=0&type=accounts.burn
+          // https://index.oasislabs.com/v1/emerald/events?limit=1&offset=0&type=consensus_accounts.deposit
+          // https://index.oasislabs.com/v1/emerald/events?limit=1&offset=0&type=consensus_accounts.withdraw
+          // custom mint and burn
+          // https://index.oasislabs.com/v1/emerald/events?tx_hash=22932a60a8d05259f75c0e093bb6772ffe20c6036de5477d1006f58e26ef77c0&limit=100
+          data = {
+            events: [
+              {
+                body: {
+                  amount: 195364,
+                },
+                eth_tx_hash: '16931dc7ee192ce76ba4cf8c92bc08cfd384b3b96b0db8fa77c573a9a31db9fc',
+                evm_log_name: '',
+                round: 4172585,
+                tx_hash: '3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52',
+                tx_index: 0,
+                type: 'core.gas_used',
+              },
+              {
+                body: {
+                  address: 'KMnT5om102Ka/C1p72onmVeFdOA=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFOkgr0Y8IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACo88fwEuFdOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+                  topics: [
+                    '14rZX6RsmUtlUdDahfwnX+YTzjdlf7jV49EwhAFZ2CI=',
+                    'AAAAAAAAAAAAAAAAfZOVwJqysax0FxWNV7RHIuLm8Sw=',
+                    'AAAAAAAAAAAAAAAAfZOVwJqysax0FxWNV7RHIuLm8Sw=',
+                  ],
+                },
+                eth_tx_hash: '16931dc7ee192ce76ba4cf8c92bc08cfd384b3b96b0db8fa77c573a9a31db9fc',
+                evm_log_name: '',
+                round: 4172585,
+                tx_hash: '3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52',
+                tx_index: 0,
+                type: 'evm.log',
+              },
+              {
+                body: {
+                  address: 'YTG1+uGepPnZZOrAQI5ECLZjN7U=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8XsiU291cmNlIjoiIiwiQW1vdW50SW5VU0QiOiIyMy4yMjgyNDE5NDM2MDg4MzYiLCJBbW91bnRPdXRVU0QiOiIxNzAuNzYzNDk2ODE4MDI0MjQiLCJSZWZlcnJhbCI6IiIsIkZsYWdzIjowLCJJbnRlZ3JpdHlJbmZvIjp7IktleUlEIjoiMSIsIlNpZ25hdHVyZSI6IlpDZ2RWQVNkNW8yOVZNRUEvbEZZZzJ6WTBuK0c3V0Rsck1HRnRlRlZDQyt2K3RhTm9YT3F3Nm9aZkVFQ2RZanNQcG5CeFBHVjF5cjEyNGloSHRnVENHMGQwcXk1KytoU2toT0hOTVpJOWwwL3Y0TXRQcGw0R3poTU95SGE4dXdhZkttTEtYcFRGZ1JOeU5ycFlTVVU2Y0N2MVBpaktxV3I5bFJjTmZES1BiOUNyZDZqSk0wOE5nMzFJRFppWnpmOGVBWlZkRklNQm9SUFY5OERqNURlNEJ1NTg1M055dEdNSVlqV1dxRktmTVVvUHdLUzFlVkZHd1Y0TDRERHFsQm5BR3V6c2FmVGJZNVNRdVVnZ1BrNXZrSFZvL3pqUk1SRm82KzVsanRrbExTcklZWUl5T1I0dFI1elZUczR6cFU4MlRTOXZGdEllbGF5bzE5eGhBdTY2Zz09In19AAAAAAAAAAAAAAAAAAAA',
+                  topics: ['CV5m+k3Wpve0P7hESnvQ7bhwUIx6v2ObwhbvsLz/l3k='],
+                },
+                eth_tx_hash: '1041d398e89e1ef9b6f89973aed56436b675d25b6804f1dc8d971ee0cd600944',
+                evm_log_name: '',
+                round: 4172573,
+                tx_hash: '8fd925514dd66f7cb70211b09f887883849bdadb54be079370d391dfc4b045b6',
+                tx_index: 1,
+                type: 'evm.log',
+              },
+              {
+                body: {
+                  address: 'MiPxeVe6UCy+cUAdVaDbJuX3xo8=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTpIK9GPCA=',
+                  topics: [
+                    '3fJSrRviyJtpwrBo/DeNqpUrp/FjxKEWKPVaTfUjs+8=',
+                    'AAAAAAAAAAAAAAAAfZOVwJqysax0FxWNV7RHIuLm8Sw=',
+                    'AAAAAAAAAAAAAAAAKMnT5om102Ka/C1p72onmVeFdOA=',
+                  ],
+                },
+                eth_tx_hash: '16931dc7ee192ce76ba4cf8c92bc08cfd384b3b96b0db8fa77c573a9a31db9fc',
+                evm_log_name: 'Transfer',
+                evm_log_params: [
+                  {
+                    evm_type: 'address',
+                    name: 'from',
+                    value: '0x7d9395c09ab2b1ac7417158d57b44722e2e6f12c',
+                  },
+                  {
+                    evm_type: 'address',
+                    name: 'to',
+                    value: '0x28c9d3e689b5d3629afc2d69ef6a2799578574e0',
+                  },
+                  {
+                    evm_type: 'uint256',
+                    name: 'value',
+                    value: '5885826123054112',
+                  },
+                ],
+                round: 4172585,
+                tx_hash: '3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52',
+                tx_index: 0,
+                type: 'evm.log',
+              },
+              {
+                body: {
+                  amount: { Amount: '100000000000000000', Denomination: '' },
+                  from: 'oasis1qqn5lhdlq7t730qyrsxj4ph4a8xnhwjtcs87fmrd',
+                  to: 'oasis1qr677rv0dcnh7ys4yanlynysvnjtk9gnsyhvm6ln',
+                },
+                evm_log_name: '',
+                round: 4172571,
+                tx_hash: '800651c7af2f5f14539c57d745fe9775ba889154eb1f9c775bff0c47c9ff9c3d',
+                tx_index: 0,
+                type: 'accounts.transfer',
+              },
+              {
+                body: {
+                  amount: { Amount: '100000000000000000', Denomination: '' },
+                  owner: 'oasis1qqn5lhdlq7t730qyrsxj4ph4a8xnhwjtcs87fmrd',
+                },
+                evm_log_name: '',
+                round: 4172585,
+                tx_hash: null,
+                type: 'accounts.mint',
+              },
+              {
+                body: {
+                  amount: { Amount: '100000000000000000', Denomination: '' },
+                  owner: 'oasis1qr677rv0dcnh7ys4yanlynysvnjtk9gnsyhvm6ln',
+                },
+                evm_log_name: '',
+                round: 4172572,
+                tx_hash: null,
+                type: 'accounts.burn',
+              },
+              {
+                body: {
+                  amount: { Amount: '100000000000000000', Denomination: '' },
+                  from: 'oasis1qzypxmt5xg8039329zvre7hxe7kn0vxfugsknqtw',
+                  nonce: 14178,
+                  to: 'oasis1qqn5lhdlq7t730qyrsxj4ph4a8xnhwjtcs87fmrd',
+                },
+                evm_log_name: '',
+                round: 4172585,
+                tx_hash: null,
+                type: 'consensus_accounts.deposit',
+              },
+              {
+                body: {
+                  amount: { Amount: '100000000000000000', Denomination: '' },
+                  from: 'oasis1qqn5lhdlq7t730qyrsxj4ph4a8xnhwjtcs87fmrd',
+                  nonce: 12796,
+                  to: 'oasis1qzypxmt5xg8039329zvre7hxe7kn0vxfugsknqtw',
+                },
+                evm_log_name: '',
+                round: 4172572,
+                tx_hash: null,
+                type: 'consensus_accounts.withdraw',
+              },
+              {
+                body: {
+                  address: 'MiPxeVe6UCy+cUAdVaDbJuX3xo8=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTpIK9GPCA=',
+                  topics: [
+                    '3fJSrRviyJtpwrBo/DeNqpUrp/FjxKEWKPVaTfUjs+8=',
+                    'AAAAAAAAAAAAAAAAfZOVwJqysax0FxWNV7RHIuLm8Sw=',
+                    'AAAAAAAAAAAAAAAAKMnT5om102Ka/C1p72onmVeFdOA=',
+                  ],
+                },
+                eth_tx_hash: '16931dc7ee192ce76ba4cf8c92bc08cfd384b3b96b0db8fa77c573a9a31db9fc',
+                evm_log_name: 'Transfer',
+                evm_log_params: [
+                  {
+                    evm_type: 'address',
+                    name: 'from',
+                    value: '0x0000000000000000000000000000000000000000',
+                  },
+                  {
+                    evm_type: 'address',
+                    name: 'to',
+                    value: '0x28c9d3e689b5d3629afc2d69ef6a2799578574e0',
+                  },
+                  {
+                    evm_type: 'uint256',
+                    name: 'value',
+                    value: '5885826123054112',
+                  },
+                ],
+                round: 4172585,
+                tx_hash: '3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52',
+                tx_index: 0,
+                type: 'evm.log',
+              },
+              {
+                body: {
+                  address: 'MiPxeVe6UCy+cUAdVaDbJuX3xo8=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTpIK9GPCA=',
+                  topics: [
+                    '3fJSrRviyJtpwrBo/DeNqpUrp/FjxKEWKPVaTfUjs+8=',
+                    'AAAAAAAAAAAAAAAAfZOVwJqysax0FxWNV7RHIuLm8Sw=',
+                    'AAAAAAAAAAAAAAAAKMnT5om102Ka/C1p72onmVeFdOA=',
+                  ],
+                },
+                eth_tx_hash: '16931dc7ee192ce76ba4cf8c92bc08cfd384b3b96b0db8fa77c573a9a31db9fc',
+                evm_log_name: 'Transfer',
+                evm_log_params: [
+                  {
+                    evm_type: 'address',
+                    name: 'from',
+                    value: '0x7d9395c09ab2b1ac7417158d57b44722e2e6f12c',
+                  },
+                  {
+                    evm_type: 'address',
+                    name: 'to',
+                    value: '0x0000000000000000000000000000000000000000',
+                  },
+                  {
+                    evm_type: 'uint256',
+                    name: 'value',
+                    value: '5885826123054112',
+                  },
+                ],
+                round: 4172585,
+                tx_hash: '3d16c34f45ea746a28f677dfeb5763cf930f003e513d2b6f91f87e6355a63c52',
+                tx_index: 0,
+                type: 'evm.log',
+              },
+              {
+                body: {
+                  address: 'JzZkPH//4YaYT2Ci00uRsbc5i/E=',
+                  data: 'AAAAAAAAAAAAAAAAAAAAAAAABO4tbUFbgo91OmtEoAA=',
+                  topics: [
+                    'jFvh5evsfVvRT3FCfR6E890DFMD3sikeWyAKyMfDuSU=',
+                    'AAAAAAAAAAAAAAAAZ3BGa22gtECrA3g0uTmbx4FdXUI=',
+                    'AAAAAAAAAAAAAAAAzvL5XxhdSbzRwQ3n8jvqy6rm7Q8=',
+                  ],
+                },
+                eth_tx_hash: 'a71bd98b4739849dfed360f3fc9eb101f12fee08ed640fe54602e339a542dc75',
+                evm_log_name: 'Approval',
+                evm_log_params: [
+                  {
+                    evm_type: 'address',
+                    name: 'owner',
+                    value: '0x6770466b6da0b440ab037834b9399bc7815d5d42',
+                  },
+                  {
+                    evm_type: 'address',
+                    name: 'spender',
+                    value: '0xcef2f95f185d49bcd1c10de7f23beacbaae6ed0f',
+                  },
+                  {
+                    evm_type: 'uint256',
+                    name: 'value',
+                    value: '99999999999999775530000000000000',
+                  },
+                ],
+                round: 454364,
+                tx_hash: '22932a60a8d05259f75c0e093bb6772ffe20c6036de5477d1006f58e26ef77c0',
+                tx_index: 0,
+                type: 'evm.log',
+              },
+            ],
+            is_total_count_clipped: false,
+            total_count: 7,
+          } as any
           if (status !== 200) return data
           return {
             ...data,
