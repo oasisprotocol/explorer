@@ -15,6 +15,8 @@ export const getTokenTypeName = (t: TFunction, type: EvmTokenType): string => {
   switch (type) {
     case 'ERC20':
       return t('account.ERC20')
+    case 'ERC721':
+      return t('account.ERC721')
     default:
       exhaustedTypeWarning('Unknown token type', type)
       return type
