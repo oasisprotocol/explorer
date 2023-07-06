@@ -6,9 +6,9 @@ const config = {
   nexus: {
     input: {
       // target: './v1.yaml',
-      // target: 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/api/spec/v1.yaml',
+      target: 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/api/spec/v1.yaml',
       // target: 'https://index-staging.oasislabs.com/v1/spec/v1.yaml',
-      target: 'https://index.oasislabs.com/v1/spec/v1.yaml',
+      // target: 'https://index.oasislabs.com/v1/spec/v1.yaml',
       override: {
         // We want:
         // - network as a parameter for controlling API baseURL
