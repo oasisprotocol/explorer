@@ -29,7 +29,6 @@ declare module '@mui/material/styles' {
     primaryBackground?: string
     secondaryBackground?: string
     networkBubbleBorder?: string
-    networkBubbleBackground?: string
     titleOnBackground?: string
     graphZoomOutText?: string
   }
@@ -105,7 +104,6 @@ export const defaultTheme = createTheme({
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
       networkBubbleBorder: COLORS.white,
-      networkBubbleBackground: COLORS.white,
       titleOnBackground: COLORS.white,
       graphZoomOutText: COLORS.white,
     },
@@ -368,6 +366,7 @@ export const defaultTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: ({ theme }) => ({
+          overflow: 'initial',
           borderRadius: 12,
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
