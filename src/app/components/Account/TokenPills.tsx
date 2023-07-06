@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from '@mui/material/Link'
+import { Link as RouterLink } from 'react-router-dom'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -52,8 +52,8 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
     <Chip
       clickable
       color="tertiary"
-      component={Link}
-      href={tokenRoute}
+      component={RouterLink}
+      to={tokenRoute}
       key={pill.token_contract_addr}
       label={
         <>
