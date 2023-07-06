@@ -122,7 +122,7 @@ limit?: number;
  */
 offset?: number;
 /**
- * A filter on the name, the name must contain this value as a substring.
+ * A filter on the name, the name or symbol must contain this value as a substring.
  */
 name?: string;
 };
@@ -649,6 +649,7 @@ export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EvmTokenType = {
   ERC20: 'ERC20',
+  ERC721: 'ERC721',
 } as const;
 
 export interface RuntimeStatus {
@@ -760,6 +761,14 @@ May be null if the transaction was malformed or encrypted.
   method?: string;
   /** The method call body. May be null if the transaction was malformed. */
   body?: RuntimeTransactionBody;
+  /** Whether this transaction likely represents a native token transfer.
+This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
+The current heuristic sets this to `true` for:
+ - Transactions with method "accounts.Transfer". Those are always native token transfers.
+ - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
+Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
+ */
+  is_likely_native_token_transfer?: boolean;
   /** A reasonable "to" Oasis address associated with this transaction,
 if applicable. The meaning varies based on the transaction method. Some notable examples:
   - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
@@ -837,7 +846,7 @@ to a direct `Create` call.
  */
   creation_bytecode?: string;
   /** The runtime bytecode of the smart contract. This is the code stored on-chain that
-descibes a smart contract. Every contract has this info, but Nexus fetches
+describes a smart contract. Every contract has this info, but Nexus fetches
 it separately, so the field may be missing for very fresh contracts (or if the fetching
 process is stalled).
  */
