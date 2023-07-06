@@ -14,10 +14,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(4),
   textAlign: 'center',
   [theme.breakpoints.down('sm')]: {
-    padding: `${theme.spacing(5)} ${theme.spacing(2)} ${theme.spacing(6)}`,
+    padding: theme.spacing(5, 2, 6),
   },
   [theme.breakpoints.up('sm')]: {
-    padding: `${theme.spacing(6)} ${theme.spacing(4)} ${theme.spacing(7)}`,
+    padding: theme.spacing(6, 4, 7),
   },
 }))
 

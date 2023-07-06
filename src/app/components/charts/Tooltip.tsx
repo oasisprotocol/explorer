@@ -7,7 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   display: 'inline-flex',
   flexDirection: 'column',
-  padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
+  padding: theme.spacing(3, 5),
   background: COLORS.spaceCadet,
   boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)',
   borderRadius: '8px',

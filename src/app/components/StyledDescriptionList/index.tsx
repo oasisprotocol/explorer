@@ -47,10 +47,10 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
       boxShadow: 'none',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: `${theme.spacing(3)} 0`,
+      padding: theme.spacing(3, 0),
     },
     [theme.breakpoints.up('sm')]: {
-      padding: `${theme.spacing(4)} 0`,
+      padding: theme.spacing(4, 0),
     },
   },
   dt: {
@@ -64,7 +64,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   },
   ...(standalone && {
     '&&': {
-      padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
+      padding: theme.spacing(3, 4),
       backgroundColor: COLORS.white,
       marginBottom: theme.spacing(4),
       borderRadius: '12px',

@@ -38,7 +38,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const StyledListbox = styled('ul')(({ theme }) => ({
   boxSizing: 'border-box',
   padding: theme.spacing(0),
-  margin: `${theme.spacing(3)} ${theme.spacing(0)}`,
+  margin: theme.spacing(3, 0),
   minWidth: '135px',
   borderRadius: '12px',
   overflow: 'auto',
