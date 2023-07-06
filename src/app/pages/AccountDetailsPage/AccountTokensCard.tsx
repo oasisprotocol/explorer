@@ -85,7 +85,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
       <LinkableDiv id={accountTokenContainerId}>
         <CardHeader disableTypography component="h3" title={tokenListLabel} />
         <CardContent>
-          {!isLoading && !account?.tokenBalances[type].length && (
+          {!isLoading && !account?.tokenBalances[type]?.length && (
             <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
           )}
 

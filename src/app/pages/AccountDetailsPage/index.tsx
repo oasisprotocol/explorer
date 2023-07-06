@@ -32,9 +32,9 @@ export const AccountDetailsPage: FC = () => {
 
   const showTokenTransfers = showEmptyAccountDetails || !!numberOfTokenTransfers
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
-  const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20].length
+  const showErc20 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC20]?.length
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
-  const showErc721 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC721].length
+  const showErc721 = showEmptyAccountDetails || !!account?.tokenBalances[EvmTokenType.ERC721]?.length
   const erc721Link = useHref(`tokens/erc-721#${accountTokenContainerId}`)
   const showTxs = showEmptyAccountDetails || showErc20 || !!account?.stats.num_txns
   const txLink = useHref('')
