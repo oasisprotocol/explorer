@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import LockIcon from '@mui/icons-material/Lock'
 import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred'

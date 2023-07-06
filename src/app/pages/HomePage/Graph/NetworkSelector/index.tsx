@@ -26,7 +26,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.layout.primaryBackground,
   border: `solid 3px ${theme.palette.layout.lightBorder}`,
   borderRadius: '45px',
-  padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
+  padding: theme.spacing(3, 4),
   display: 'inline-flex',
   alignItems: 'center',
 }))
@@ -35,7 +35,7 @@ export const SelectNetworkButton = styled(Button, {
   shouldForwardProp: prop => prop !== 'isSelectedNetwork',
 })<{ isSelectedNetwork: boolean }>(({ isSelectedNetwork, theme }) => ({
   height: '30px',
-  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  padding: theme.spacing(2, 3),
   textTransform: 'capitalize',
   fontSize: '16px',
   borderRadius: '9px',

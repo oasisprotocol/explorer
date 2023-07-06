@@ -190,7 +190,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           alignItems: 'center',
-          padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+          padding: theme.spacing(2, 3),
           borderRadius: 10,
         }),
         icon: {
@@ -372,14 +372,14 @@ export const defaultTheme = createTheme({
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
-            padding: `${theme.spacing(4)} ${theme.spacing(4)} 0`,
+            padding: theme.spacing(4, 4, 0),
             ':has(table)': {
               paddingRight: 0,
             },
           },
           [theme.breakpoints.up('sm')]: {
             marginBottom: theme.spacing(5),
-            padding: `${theme.spacing(5)} ${theme.spacing(5)} 0`,
+            padding: theme.spacing(5, 5, 0),
           },
         }),
       },
@@ -499,7 +499,7 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         paperAnchorTop: ({ theme }) => ({
           borderRadius: '0 0 12px 12px',
-          padding: `${theme.spacing(4)} 5%`,
+          padding: theme.spacing(4, '5%'),
         }),
         paper: ({ theme }) => ({
           [theme.breakpoints.down('md')]: {
@@ -566,7 +566,7 @@ export const defaultTheme = createTheme({
           borderColor: COLORS.antiFlashWhite2,
           color: COLORS.grayExtraDark,
           whiteSpace: 'nowrap',
-          padding: `${theme.spacing(4)} ${theme.spacing(3)}`,
+          padding: theme.spacing(4, 3),
           a: {
             color: COLORS.brandDark,
             fontWeight: 700,
@@ -772,10 +772,10 @@ export const defaultTheme = createTheme({
           borderTopRightRadius: 12,
           textTransform: 'capitalize',
           [theme.breakpoints.down('sm')]: {
-            padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
+            padding: theme.spacing(3, 4),
           },
           [theme.breakpoints.up('sm')]: {
-            padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+            padding: theme.spacing(4, 5),
           },
         }),
       },

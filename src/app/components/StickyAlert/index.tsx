@@ -10,9 +10,9 @@ export const StickyAlert = styled(Alert)(({ theme }) => ({
   fontSize: '14px',
   lineHeight: '18px',
   [theme.breakpoints.up('sm')]: {
-    padding: `${theme.spacing(4)}} 0`,
+    padding: theme.spacing(4, 0),
   },
   [theme.breakpoints.up('md')]: {
-    padding: `${theme.spacing(3)}} 0`,
+    padding: theme.spacing(3, 0),
   },
 }))

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useParamSearch } from '../../components/Search/search-utils'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useSearch } from './hooks'

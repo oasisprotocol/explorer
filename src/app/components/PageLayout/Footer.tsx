@@ -15,10 +15,10 @@ const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
-  padding: `${theme.spacing(5)} ${theme.spacing(4)}`,
+  padding: theme.spacing(5, 4),
   [theme.breakpoints.up('sm')]: {
     flex: '0 1 100%',
-    padding: `${theme.spacing(5)} ${theme.spacing(0)}`,
+    padding: theme.spacing(5, 0),
   },
 }))
 

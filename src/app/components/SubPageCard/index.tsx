@@ -24,7 +24,7 @@ const StyledBox = styled(Box, {
   ({ featured, theme }) => css`
     ${featured && {
       margin: `-${theme.spacing(5)} -${theme.spacing(6)} ${theme.spacing(5)}`,
-      padding: `${theme.spacing(5)} ${theme.spacing(6)} ${theme.spacing(4)}`,
+      padding: theme.spacing(5, 6, 4),
       borderRadius: '12px',
       boxShadow: '-20px 4px 40px rgba(34, 47, 63, 0.24)',
     }};

@@ -1,5 +1,5 @@
 import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import Divider from '@mui/material/Divider'

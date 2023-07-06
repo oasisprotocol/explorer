@@ -20,7 +20,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   borderColor: COLORS.brandExtraDark,
   borderStyle: 'solid',
   borderWidth: '1px 1px 1px 0',
-  padding: `${theme.spacing(2)} ${theme.spacing(3)} ${theme.spacing(2)} ${theme.spacing(2)}`,
+  padding: theme.spacing(2, 3, 2, 2),
   borderTopRightRadius: '9px',
   borderBottomRightRadius: '9px',
   boxShadow: `inset 0px 4px 4px rgba(34, 47, 63, 0.24)`,
