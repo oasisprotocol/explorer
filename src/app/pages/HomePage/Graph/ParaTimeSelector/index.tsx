@@ -177,13 +177,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   }, [isMobile, step, setStep])
 
   const onExploreClick = () => {
-    if (!isMobile) {
-      localStore.set(StorageKeys.DesktopExploreButtonShown, true)
-    }
-
     const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
 
-    if (isMobile && !mobileHelpScreenShown) {
+    if (!mobileHelpScreenShown) {
       setStep(ParaTimeSelectorStep.ShowHelpScreen)
     } else {
       setStep(ParaTimeSelectorStep.Explore)
@@ -234,7 +230,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
               </ZoomOutBtn>
             </ZoomOutBtnFade>
           )}
-          {ParaTimeSelectorUtils.showExploreBtn(step) && (
+          {isMobile && ParaTimeSelectorUtils.showExploreBtn(step) && (
             <ExploreBtn
               onClick={onExploreClick}
               aria-label={exploreBtnTextTranslated}

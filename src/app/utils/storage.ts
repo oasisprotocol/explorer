@@ -3,7 +3,6 @@ import { StorageKeys } from '../../types/storage'
 
 interface StorageType {
   [StorageKeys.MobileHelpScreenShown]: boolean
-  [StorageKeys.DesktopExploreButtonShown]: boolean
 }
 
 export const storage = (storage = localStorage) => {

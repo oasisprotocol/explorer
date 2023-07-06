@@ -17,8 +17,6 @@ import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkPar
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
-import { storage } from '../../utils/storage'
-import { StorageKeys } from '../../../types/storage'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -112,8 +110,6 @@ const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
   zIndex: zIndexHomePage.paraTimeSelector,
 }))
 
-const localStore = storage()
-
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
@@ -123,16 +119,11 @@ export const HomePage: FC = () => {
 
   const [searchHasFocus, setSearchHasFocus] = useState(false)
   const [step, setStep] = useState<ParaTimeSelectorStep>(() => {
-    const desktopExploreButtonShown = localStore.get(StorageKeys.DesktopExploreButtonShown)
-    const mobileHelpScreenShown = localStore.get(StorageKeys.MobileHelpScreenShown)
-
-    if (isMobile && !mobileHelpScreenShown) {
-      return ParaTimeSelectorStep.ShowHelpScreen
-    } else if (desktopExploreButtonShown) {
-      return ParaTimeSelectorStep.Explore
+    if (isMobile) {
+      return ParaTimeSelectorStep.EnableExplore
     }
 
-    return ParaTimeSelectorStep.EnableExplore
+    return ParaTimeSelectorStep.Explore
   })
   const [showInfoScreen, setShowInfoScreen] = useState<boolean>(false)
 
