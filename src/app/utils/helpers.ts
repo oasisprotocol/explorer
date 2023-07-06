@@ -5,6 +5,7 @@ import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
 import { AddressPreimage } from '../../oasis-nexus/generated/api'
 import BigNumber from 'bignumber.js'
+import { validateMnemonic } from 'bip39'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
 export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
@@ -79,3 +80,5 @@ export function fromBaseUnits(valueInBaseUnits: string, decimals: number): strin
   }
   return value.toFixed()
 }
+
+export const isValidMnemonic = (candidate: string): boolean => validateMnemonic(candidate)

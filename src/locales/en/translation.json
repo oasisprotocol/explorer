@@ -1,4 +1,5 @@
 {
+  "appName": "Oasis Explorer",
   "account": {
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "emptyTokenList": "This account holds no {{token}} tokens.",
@@ -375,7 +376,8 @@
   "search": {
     "placeholder": "Address, Block, Contract, Txn Hash, Transaction ID, Token name, etc",
     "error": {
-      "tooShort": "Please enter either at least 3 characters or a number in order to perform a search."
+      "tooShort": "Please enter either at least 3 characters or a number in order to perform a search.",
+      "privacy": "It seems like you might accidentally entered a keyphrase for a wallet. Please note that your mnemonic is a secret key that should never be shared, even not with our {{ pagetitle }}.\nExecuting this search is highly unlikely to return any results. If you want to proceed nonetheless, please add “{{ wordsOfPower }}” in front of your search query to perform the search at your own risk."
     },
     "mobilePlaceholder": "Search Address, Block, Txn, Token, etc",
     "noResults": {
@@ -412,6 +414,7 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>",
-    "sectionHeader": "Results on {{ scope }}"
+    "sectionHeader": "Results on {{ scope }}",
+    "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   }
 }
