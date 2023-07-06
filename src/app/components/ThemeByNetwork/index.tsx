@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import { Network } from '../../../types/network'
 import { ThemeProvider } from '@mui/material/styles'
 import { getThemesForNetworks } from '../../../styles/theme'
