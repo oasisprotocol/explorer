@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
-import { Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
+import { EvmTokenType, Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
@@ -17,6 +17,7 @@ import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { fromBaseUnits, getEthAccountAddressFromBase64, getEvmBech32Address } from '../../utils/helpers'
 import { AppErrors } from '../../../types/errors'
+import Skeleton from '@mui/material/Skeleton'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -42,14 +43,12 @@ type TableRuntimeEvent = RuntimeEvent & {
  * This is a wrapper around RoundedBalance which is able to find out the ticker by looking at an event
  * @constructor
  */
-const DelayedEventBalance: FC<
-  Omit<Exclude<Parameters<typeof RoundedBalance>[0], undefined>, 'ticker'> & {
-    event: RuntimeEvent
-  }
-> = props => {
+const DelayedEventBalance: FC<{
+  event: RuntimeEvent
+}> = props => {
   const { t } = useTranslation()
   const [oasisAddress, setOasisAddress] = useState('')
-  const { event, value, ...rest } = props
+  const { event, ...rest } = props
 
   if (event.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -63,17 +62,43 @@ const DelayedEventBalance: FC<
     }
   }, [ethAddress])
 
-  const tokenQuery = useGetRuntimeEvmTokensAddress(event.network, event.layer, oasisAddress, {
-    query: {
-      enabled: !!oasisAddress,
+  const { isLoading, isError, data } = useGetRuntimeEvmTokensAddress(
+    event.network,
+    event.layer,
+    oasisAddress,
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
     },
-  })
+  )
+  const token = data?.data
 
-  const token = tokenQuery.data?.data
-  const realValue = value === undefined ? undefined : fromBaseUnits(value, token?.decimals || 0)
-  const ticker = token?.symbol || t('common.missing')
+  if (isLoading) {
+    return <Skeleton variant="text" />
+  }
+  if (isError || !token) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Event:', JSON.stringify(event, null, '  '))
+      throw new Error("Can't identify token for this event! (See console.)")
+    }
+    return t('common.missing')
+  }
 
-  return <RoundedBalance {...rest} value={realValue} ticker={ticker} />
+  const ticker = token.symbol || t('common.missing')
+
+  if (token.type === EvmTokenType.ERC20) {
+    const token = data?.data
+    const value = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
+    const realValue = value === undefined ? undefined : fromBaseUnits(value, token?.decimals || 0)
+
+    return <RoundedBalance {...rest} value={realValue} ticker={ticker} />
+  } else if (token.type === EvmTokenType.ERC721) {
+    const tokenID = event.evm_log_params?.find(param => param.name === 'tokenID')?.value as string | undefined
+    return tokenID ? `TokenID [${tokenID}] ${ticker}` : t('common.missing')
+  } else {
+    return token.type
+  }
 }
 
 type TokenTransfersProps = {
@@ -106,7 +131,6 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
       | string
       | undefined
     const toAddress = transfer.evm_log_params?.find(param => param.name === 'to')?.value as string | undefined
-    const value = transfer.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
     const isMinting = fromAddress === NULL_ADDRESS
     const isBurning = toAddress === NULL_ADDRESS
 
@@ -194,7 +218,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: value === undefined ? '' : <DelayedEventBalance value={value} event={transfer} />,
+          content: <DelayedEventBalance event={transfer} />,
         },
       ],
       highlight: transfer.markAsNew,
