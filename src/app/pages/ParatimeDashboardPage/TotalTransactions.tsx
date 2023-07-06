@@ -15,7 +15,11 @@ export const TotalTransactions: FC = () => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
-  const statsParams = durationToQueryParams[chartDuration]
+  const statsParams = {
+    ...durationToQueryParams[chartDuration],
+    // We want to start from the beginning of offset as cumulative sum generates a line chart that always goes up
+    offset: 0,
+  }
   const scope = useRequiredScopeParam()
   const dailyVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
     query: {

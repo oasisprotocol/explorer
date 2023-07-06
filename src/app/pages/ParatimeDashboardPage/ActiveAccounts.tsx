@@ -13,6 +13,7 @@ import {
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
+  dailyLimitWithoutBuffer,
   durationToQueryParams,
   filterHourlyActiveAccounts,
   sumBucketsByStartDuration,
@@ -68,7 +69,15 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
-  const { limit, bucket_size_seconds } = durationToQueryParams[chartDuration]
+  const { limit, bucket_size_seconds } = {
+    ...durationToQueryParams[chartDuration],
+    // By default we fetch data with additional buckets buffer, but it does not apply to active accounts.
+    // Active accounts daily buckets are overlapping, so we cannot sum buckets like in other daily charts.
+    limit:
+      chartDuration === ChartDuration.TODAY
+        ? dailyLimitWithoutBuffer
+        : durationToQueryParams[chartDuration].limit,
+  }
   const scope = useRequiredScopeParam()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
     scope.network,

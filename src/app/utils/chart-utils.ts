@@ -11,22 +11,30 @@ export enum ChartDuration {
   ALL_TIME = 'ALL_TIME',
 }
 
+export const dailyLimitWithoutBuffer = (60 / 5) * 24 // full day for 5 minutes buckets,
+
 export const durationToQueryParams = {
   [ChartDuration.TODAY]: {
     bucket_size_seconds: 60 * 5,
-    limit: (60 / 5) * 24, // full day for 5 minutes buckets
+    limit:
+      dailyLimitWithoutBuffer +
+      // daily data needs additional 2 buckets to make sure we have at least full 24 buckets
+      (60 / 5) * 2,
   },
   [ChartDuration.WEEK]: {
     bucket_size_seconds: 24 * 60 * 60,
     limit: 7,
+    offset: 1, // offset to skip the first day
   },
   [ChartDuration.MONTH]: {
     bucket_size_seconds: 24 * 60 * 60,
     limit: 30, // Defined as 30 days, should be more dynamic depending on the month
+    offset: 1, // offset to skip the first day
   },
   [ChartDuration.ALL_TIME]: {
     bucket_size_seconds: 24 * 60 * 60,
     limit: 365, // Defined as a full year
+    offset: 1, // offset to skip the first day
   },
 } satisfies { [duration in ChartDuration]: GetLayerStatsTxVolumeParams }
 
@@ -115,8 +123,15 @@ export const sumBucketsByStartDuration = <
     }
   }, {} as { [key: string]: number })
 
-  return Object.keys(durationMap).map(key => ({
+  // For daily charts we want to skip the first and last buckets.
+  // They are not full and we want to avoid chart drop.
+  const filteredDurationMap =
+    startDurationFn === startOfHour
+      ? Object.fromEntries(Object.entries(durationMap).slice(1, -1))
+      : durationMap
+
+  return Object.keys(filteredDurationMap).map(key => ({
     [dateKey]: key,
-    [sumKey]: durationMap[key],
+    [sumKey]: filteredDurationMap[key],
   })) as T[]
 }
