@@ -17,21 +17,21 @@ export abstract class GraphUtils {
     switch (layer) {
       case Layer.emerald:
         return {
-          scale: 2,
-          x: 0.57 * width,
-          y: 0,
+          scale: 2.5,
+          x: 0.6 * width,
+          y: 0.1 * height,
         }
       case Layer.cipher:
         return {
-          scale: 2,
-          x: width,
-          y: 0.4 * height,
+          scale: 2.5,
+          x: 1.075 * width,
+          y: 0.65 * height,
         }
       case Layer.sapphire:
         return {
-          scale: 2,
-          x: 0.15 * width,
-          y: height,
+          scale: 2.5,
+          x: 0.3 * width,
+          y: 1.1 * height,
         }
       case Layer.consensus:
         return initialValue

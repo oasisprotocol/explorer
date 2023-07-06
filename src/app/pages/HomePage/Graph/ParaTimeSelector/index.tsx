@@ -107,12 +107,14 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   top: theme.spacing(4),
   left: '50%',
   transform: 'translateX(-50%)',
-  fontSize: '12px',
   lineHeight: '18px',
-  textTransform: 'uppercase',
+  textTransform: 'none',
   '&&:hover, &&:active': {
     color: theme.palette.layout.graphZoomOutText,
     textDecoration: 'none',
+  },
+  '&&': {
+    backgroundColor: 'transparent',
   },
 }))
 ZoomOutBtn.defaultProps = {
@@ -141,11 +143,18 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   step: ParaTimeSelectorStep
   setStep: (value: ParaTimeSelectorStep) => void
   showInfoScreen: boolean
+  onGraphZoomedIn: (isGraphZoomedIn: boolean) => void
 }
 
 const localStore = storage()
 
-const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setStep, showInfoScreen }) => {
+const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
+  disabled,
+  step,
+  setStep,
+  showInfoScreen,
+  onGraphZoomedIn,
+}) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
   const quickPinchZoomRef = useRef<QuickPinchZoom>(null)
   const quickPinchZoomInnerRef = useRef<HTMLDivElement>(null)
@@ -153,10 +162,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
   const { t } = useTranslation()
   const exploreBtnTextTranslated = t('home.exploreBtnText')
   const { network, setNetwork } = useSearchQueryNetworkParam()
-  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<Layer | null>(null)
 
   // Using object here to force side effect trigger when setting to the same layer
   const [selectedLayer, setSelectedLayer] = useState<{ current: Layer }>()
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: Layer | null }>({
+    current: null,
+  })
+
   const [scale, setScale] = useState<number>(1)
 
   const { width, height } = useResizeObserver<SVGSVGElement>({
@@ -202,12 +214,16 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
 
   const isZoomedIn = scale > 1.005
 
+  useEffect(() => {
+    onGraphZoomedIn(isZoomedIn)
+  }, [isZoomedIn, onGraphZoomedIn])
+
   return (
     <>
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
           <QuickPinchZoomOuter>
-            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={1.5} minZoom={0.5}>
+            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2.5} minZoom={0.5}>
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
                   ref={graphRef}
@@ -247,12 +263,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({ disabled, step, setSte
           <NetworkSelector network={network} setNetwork={setNetwork} />
         )}
       </ParaTimeSelectorGlow>
-      {activeMobileGraphTooltip && (
+      {activeMobileGraphTooltip.current && (
         <GraphTooltipMobile
           network={network}
-          layer={activeMobileGraphTooltip}
+          layer={activeMobileGraphTooltip.current}
           onClose={() => {
-            setActiveMobileGraphTooltip(null)
+            setActiveMobileGraphTooltip({ current: null })
           }}
         />
       )}
