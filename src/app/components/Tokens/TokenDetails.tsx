@@ -11,6 +11,7 @@ import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
+import { getTokenTypeName } from '../../pages/TokenDashboardPage/TokenTypeCard'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -39,6 +40,9 @@ export const TokenDetails: FC<{
         <TokenLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} name={token.name} />
         <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium }}>({token.symbol})</Box>
       </dd>
+
+      <dt>{t('common.type')}</dt>
+      <dd>{getTokenTypeName(t, token.type)}</dd>
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>

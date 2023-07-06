@@ -7,6 +7,7 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
+import { getTokenTypeName } from '../../pages/TokenDashboardPage/TokenTypeCard'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -21,6 +22,7 @@ export const TokenList = (props: TokensProps) => {
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '' },
     { key: 'name', content: t('common.name') },
+    { key: 'type', content: t('common.type') },
     { key: 'contract', content: t('common.smartContract') },
     { key: 'verification', content: t('contract.verification.title') },
     {
@@ -53,6 +55,10 @@ export const TokenList = (props: TokensProps) => {
             />
           ),
           key: 'name',
+        },
+        {
+          key: 'type',
+          content: getTokenTypeName(t, token.type),
         },
         {
           content: (
