@@ -377,7 +377,7 @@
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
       "tooShort": "Please enter either at least 3 characters or a number in order to perform a search.",
-      "privacy": "It seems like you might accidentally entered a keyphrase for a wallet. Please note that your mnemonic is a secret key that should never be shared, even not with our {{ pagetitle }}.\nExecuting this search is highly unlikely to return any results. If you want to proceed nonetheless, please add “{{ wordsOfPower }}” in front of your search query to perform the search at your own risk."
+      "privacy": "It seems like you might accidentally entered a keyphrase for a wallet. Please note that your mnemonic is a secret key that should never be shared, even not with our {{ appName }}.\nExecuting this search is highly unlikely to return any results. If you want to proceed nonetheless, please add “{{ wordsOfPower }}” in front of your search query to perform the search at your own risk."
     },
     "mobilePlaceholder": "Search Address, Block, Txn, Token, etc",
     "noResults": {
