@@ -11,6 +11,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import ErrorIcon from '@mui/icons-material/Error'
+import WarningIcon from '@mui/icons-material/Warning'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
@@ -19,6 +20,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { textSearchMininumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
+import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
@@ -105,6 +107,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
+  const [isTyping, setIsTyping] = useState(false)
 
   const wordsOfPower = t('search.wordsOfPower')
   const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
@@ -124,6 +127,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onChange = (newValue: string) => {
     setValue(newValue)
+    setIsTyping(true)
   }
 
   const onFocusChange = (value: boolean) => {
@@ -154,13 +158,22 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const searchButtonContent =
     variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMediumLight }} /> : t('search.searchBtnText')
 
-  const errorMessage = isTooShort
-    ? t('search.error.tooShort')
-    : hasPrivacyProblem
+  const errorMessage = isTooShort ? t('search.error.tooShort') : undefined
+  const hasError = !!errorMessage
+
+  const warningMessage = hasPrivacyProblem
     ? t('search.error.privacy', { appName: t('appName'), wordsOfPower })
     : undefined
+  const hasWarning = !!warningMessage
 
-  const hasError = !!errorMessage
+  const hasProblem = hasError || hasWarning
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTyping(false)
+    }, typingDelay)
+    return () => clearTimeout(timeout)
+  }, [value])
 
   return (
     <SearchForm
@@ -170,9 +183,18 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
       aria-label={searchPlaceholderTranslated}
     >
       <TextField
+        sx={{
+          ...(!isTyping && hasWarning && !hasError
+            ? {
+                [`& .${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
+                  borderColor: COLORS.warningColor,
+                },
+              }
+            : {}),
+        }}
         value={value}
         onChange={e => onChange(e.target.value)}
-        error={hasError}
+        error={!isTyping && hasProblem}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -183,12 +205,12 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           endAdornment: (
             <InputAdornment position="end">
               <>
-                {variant === 'icon' && value && (
+                {value && (
                   <IconButton color="inherit" onClick={onClearValue}>
                     <HighlightOffIcon />
                   </IconButton>
                 )}
-                <SearchButton disabled={disabled || hasError} searchVariant={variant} type="submit">
+                <SearchButton disabled={disabled || hasProblem} searchVariant={variant} type="submit">
                   {searchButtonContent}
                 </SearchButton>
               </>
@@ -208,24 +230,45 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         helperText={
           value &&
           value !== valueInSearchParams && (
-            <div>
-              {hasError && (
+            <>
+              {!isTyping && hasError && (
                 <>
                   <Typography
                     component="span"
                     sx={{
                       display: 'inline-flex',
                       color: COLORS.errorIndicatorBackground,
-                      background: COLORS.linen,
                       fontSize: 12,
+                      lineHeight: 2,
                       alignItems: 'center',
                       verticalAlign: 'middle',
-                      mb: 3,
+                      mt: 3,
+                      mb: 4,
                     }}
                   >
-                    <ErrorIcon />
-                    &nbsp;
+                    <ErrorIcon sx={{ mr: 3 }} />
                     {errorMessage}
+                  </Typography>
+                  <br />
+                </>
+              )}
+              {!isTyping && hasWarning && (
+                <>
+                  <Typography
+                    component="span"
+                    sx={{
+                      display: 'inline-flex',
+                      color: COLORS.warningColor,
+                      fontSize: 12,
+                      lineHeight: 2,
+                      alignItems: 'center',
+                      verticalAlign: 'middle',
+                      mt: 3,
+                      mb: 4,
+                    }}
+                  >
+                    <WarningIcon sx={{ mr: 3 }} />
+                    {warningMessage}
                   </Typography>
                   <br />
                 </>
@@ -236,7 +279,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                   setValue(suggestion)
                 }}
               />
-            </div>
+            </>
           )
         }
       />
