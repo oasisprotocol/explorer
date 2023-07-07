@@ -413,7 +413,7 @@
       "moreCount_other": "{{ count }} more results"
     },
     "searchBtnText": "Search",
-    "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>",
+    "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
     "sectionHeader": "Results on {{ scope }}",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   }
