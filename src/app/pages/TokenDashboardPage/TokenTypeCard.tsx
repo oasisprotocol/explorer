@@ -18,7 +18,7 @@ export const TokenTypeCard: FC = () => {
   const { token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotCard title={t('tokens.type')} withConstantHeight>
+    <SnapshotCard title={t('common.type')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isFetched && (
           <>
