@@ -20,6 +20,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { textSearchMininumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
+import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
@@ -106,6 +107,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
+  const [isTyping, setIsTyping] = useState(false)
 
   const wordsOfPower = t('search.wordsOfPower')
   const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
@@ -125,6 +127,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onChange = (newValue: string) => {
     setValue(newValue)
+    setIsTyping(true)
   }
 
   const onFocusChange = (value: boolean) => {
@@ -163,6 +166,15 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     : undefined
   const hasWarning = !!warningMessage
 
+  const hasProblem = hasError || hasWarning
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTyping(false)
+    }, typingDelay)
+    return () => clearTimeout(timeout)
+  }, [value])
+
   return (
     <SearchForm
       searchVariant={variant}
@@ -172,7 +184,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     >
       <TextField
         sx={{
-          ...(hasWarning && !hasError
+          ...(!isTyping && hasWarning && !hasError
             ? {
                 [`& .${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
                   borderColor: COLORS.warningColor,
@@ -182,7 +194,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         }}
         value={value}
         onChange={e => onChange(e.target.value)}
-        error={hasError || hasWarning}
+        error={!isTyping && hasProblem}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -198,11 +210,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     <HighlightOffIcon />
                   </IconButton>
                 )}
-                <SearchButton
-                  disabled={disabled || hasError || hasWarning}
-                  searchVariant={variant}
-                  type="submit"
-                >
+                <SearchButton disabled={disabled || hasProblem} searchVariant={variant} type="submit">
                   {searchButtonContent}
                 </SearchButton>
               </>
@@ -223,7 +231,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           value &&
           value !== valueInSearchParams && (
             <>
-              {hasError && (
+              {!isTyping && hasError && (
                 <>
                   <Typography
                     component="span"
@@ -244,7 +252,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                   <br />
                 </>
               )}
-              {hasWarning && (
+              {!isTyping && hasWarning && (
                 <>
                   <Typography
                     component="span"
