@@ -10,6 +10,7 @@ export const COLORS = {
   brandExtraLight: '#e5e5ef',
   brandLight: '#6665d8',
   brandMedium: '#0092f6',
+  brandMedium15: '#d9effe',
   brightGray2: '#ececec',
   brightGray: '#e6edf3',
   ceil: '#8f8cdf',
@@ -51,4 +52,6 @@ export const COLORS = {
   graphLabel: '#191932',
   graphLine: '#01F1E3',
   paraTimeStatus: '#8081ac',
+  pink: '#ed32fa',
+  pink15: '#fce0fe',
 } satisfies { [colorName: string]: string }
