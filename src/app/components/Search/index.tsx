@@ -183,7 +183,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           endAdornment: (
             <InputAdornment position="end">
               <>
-                {variant === 'icon' && value && (
+                {value && (
                   <IconButton color="inherit" onClick={onClearValue}>
                     <HighlightOffIcon />
                   </IconButton>
