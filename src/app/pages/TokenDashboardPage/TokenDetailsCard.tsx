@@ -14,7 +14,7 @@ import { DelayedContractVerificationIcon } from '../../components/ContractVerifi
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
-import { getTokenTypeName } from '../../../types/tokens'
+import { TokenTypeTag } from '../../components/Tokens/TokenList'
 
 export const TokenDetailsCard: FC = () => {
   const { t } = useTranslation()
@@ -57,7 +57,9 @@ export const TokenDetailsCard: FC = () => {
             </dd>
 
             <dt>{t('common.type')} </dt>
-            <dd>{getTokenTypeName(t, token.type)} </dd>
+            <dd>
+              <TokenTypeTag tokenType={token.type} />
+            </dd>
 
             <dt>{t('contract.creator')}</dt>
             <dd>

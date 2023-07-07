@@ -1,19 +1,55 @@
 import { useTranslation } from 'react-i18next'
-import { EvmToken } from '../../../oasis-nexus/api'
+import { EvmToken, EvmTokenType } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
-import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
+import { DelayedContractVerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
-import { getTokenTypeName } from '../../../types/tokens'
+import {
+  getTokenTypeDescription,
+  getTokenTypeStrictName,
+  tokenBackgroundColor,
+  tokenBorderColor,
+} from '../../../types/tokens'
+import { FC } from 'react'
+import Typography from '@mui/material/Typography'
+import { COLORS } from '../../../styles/theme/colors'
+import { SxProps } from '@mui/material/styles'
 
 type TokensProps = {
   tokens?: EvmToken[]
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+}
+
+export const TokenTypeTag: FC<{ tokenType: EvmTokenType; sx?: SxProps }> = ({ tokenType, sx = {} }) => {
+  const { t } = useTranslation()
+  return (
+    <Box
+      sx={{
+        background: tokenBackgroundColor[tokenType],
+        border: `1px solid ${tokenBorderColor[tokenType]}`,
+        display: 'inline-block',
+        borderRadius: 2,
+        py: 1,
+        px: 3,
+        fontSize: 12,
+        height: verificationIconBoxHeight,
+        verticalAlign: 'middle',
+        textAlign: 'center',
+        ...sx,
+      }}
+    >
+      <Typography component="span">{getTokenTypeDescription(t, tokenType)}</Typography>
+      &nbsp;
+      <Typography component="span" color={COLORS.grayMedium}>
+        {t('common.parentheses', { subject: getTokenTypeStrictName(t, tokenType) })}
+      </Typography>
+    </Box>
+  )
 }
 
 export const TokenList = (props: TokensProps) => {
@@ -58,7 +94,7 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           key: 'type',
-          content: getTokenTypeName(t, token.type),
+          content: <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />,
         },
         {
           content: (
