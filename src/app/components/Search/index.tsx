@@ -11,6 +11,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import ErrorIcon from '@mui/icons-material/Error'
+import WarningIcon from '@mui/icons-material/Warning'
 import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
@@ -154,13 +155,13 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const searchButtonContent =
     variant !== 'button' ? <SearchIcon sx={{ color: COLORS.grayMediumLight }} /> : t('search.searchBtnText')
 
-  const errorMessage = isTooShort
-    ? t('search.error.tooShort')
-    : hasPrivacyProblem
+  const errorMessage = isTooShort ? t('search.error.tooShort') : undefined
+  const hasError = !!errorMessage
+
+  const warningMessage = hasPrivacyProblem
     ? t('search.error.privacy', { appName: t('appName'), wordsOfPower })
     : undefined
-
-  const hasError = !!errorMessage
+  const hasWarning = !!warningMessage
 
   return (
     <SearchForm
@@ -170,9 +171,18 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
       aria-label={searchPlaceholderTranslated}
     >
       <TextField
+        sx={{
+          ...(hasWarning && !hasError
+            ? {
+                [`& .${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
+                  borderColor: COLORS.warningColor,
+                },
+              }
+            : {}),
+        }}
         value={value}
         onChange={e => onChange(e.target.value)}
-        error={hasError}
+        error={hasError || hasWarning}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -188,7 +198,11 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     <HighlightOffIcon />
                   </IconButton>
                 )}
-                <SearchButton disabled={disabled || hasError} searchVariant={variant} type="submit">
+                <SearchButton
+                  disabled={disabled || hasError || hasWarning}
+                  searchVariant={variant}
+                  type="submit"
+                >
                   {searchButtonContent}
                 </SearchButton>
               </>
@@ -208,7 +222,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         helperText={
           value &&
           value !== valueInSearchParams && (
-            <div>
+            <>
               {hasError && (
                 <>
                   <Typography
@@ -216,16 +230,37 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     sx={{
                       display: 'inline-flex',
                       color: COLORS.errorIndicatorBackground,
-                      background: COLORS.linen,
                       fontSize: 12,
+                      lineHeight: 2,
                       alignItems: 'center',
                       verticalAlign: 'middle',
-                      mb: 3,
+                      mt: 3,
+                      mb: 4,
                     }}
                   >
-                    <ErrorIcon />
-                    &nbsp;
+                    <ErrorIcon sx={{ mr: 3 }} />
                     {errorMessage}
+                  </Typography>
+                  <br />
+                </>
+              )}
+              {hasWarning && (
+                <>
+                  <Typography
+                    component="span"
+                    sx={{
+                      display: 'inline-flex',
+                      color: COLORS.warningColor,
+                      fontSize: 12,
+                      lineHeight: 2,
+                      alignItems: 'center',
+                      verticalAlign: 'middle',
+                      mt: 3,
+                      mb: 4,
+                    }}
+                  >
+                    <WarningIcon sx={{ mr: 3 }} />
+                    {warningMessage}
                   </Typography>
                   <br />
                 </>
@@ -236,7 +271,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                   setValue(suggestion)
                 }}
               />
-            </div>
+            </>
           )
         }
       />
