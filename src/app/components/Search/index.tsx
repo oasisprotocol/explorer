@@ -22,6 +22,7 @@ import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
 import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
+import Collapse from '@mui/material/Collapse'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -175,6 +176,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     return () => clearTimeout(timeout)
   }, [value])
 
+  const needsHelp = !!value && value !== valueInSearchParams
+
   return (
     <SearchForm
       searchVariant={variant}
@@ -228,11 +231,10 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
           },
         }}
         helperText={
-          value &&
-          value !== valueInSearchParams && (
-            <>
-              {!isTyping && hasError && (
-                <>
+          needsHelp && (
+            <Collapse in={needsHelp}>
+              <>
+                <Collapse in={!isTyping && hasError}>
                   <Typography
                     component="span"
                     sx={{
@@ -249,11 +251,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     <ErrorIcon sx={{ mr: 3 }} />
                     {errorMessage}
                   </Typography>
-                  <br />
-                </>
-              )}
-              {!isTyping && hasWarning && (
-                <>
+                </Collapse>
+                <Collapse in={!isTyping && hasWarning}>
                   <Typography
                     component="span"
                     sx={{
@@ -270,16 +269,15 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                     <WarningIcon sx={{ mr: 3 }} />
                     {warningMessage}
                   </Typography>
-                  <br />
-                </>
-              )}
-              <SearchSuggestionsButtons
-                scope={scope}
-                onClickSuggestion={suggestion => {
-                  setValue(suggestion)
-                }}
-              />
-            </>
+                </Collapse>
+                <SearchSuggestionsButtons
+                  scope={scope}
+                  onClickSuggestion={suggestion => {
+                    setValue(suggestion)
+                  }}
+                />
+              </>
+            </Collapse>
           )
         }
       />
