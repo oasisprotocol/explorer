@@ -37,7 +37,7 @@ const ParaTimeSelectorGlow = styled(Box, {
   position: 'relative',
   width: '130vw',
   height: '130vw',
-  marginTop: '-10vh',
+  marginTop: '-5vh',
   backgroundImage: `url("${
     network === Network.testnet ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
   }")`,
