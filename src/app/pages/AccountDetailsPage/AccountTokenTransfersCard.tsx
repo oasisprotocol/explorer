@@ -44,6 +44,7 @@ export const AccountTokenTransfersCard: FC = () => {
               isTotalCountClipped,
               rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
             }}
+            tickersAsLink
           />
         </ErrorBoundary>
       </CardContent>

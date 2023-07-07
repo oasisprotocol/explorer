@@ -60,7 +60,7 @@ export const ContractCreatorInfo: FC<{
       &nbsp;
       <Trans
         t={t}
-        i18nKey={'contract.createdAt'}
+        i18nKey="contract.createdAt"
         components={{
           TransactionLink: <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />,
         }}

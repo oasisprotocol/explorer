@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { EvmTokenType, Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
@@ -18,6 +18,8 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { fromBaseUnits, getEthAccountAddressFromBase64, getEvmBech32Address } from '../../utils/helpers'
 import { AppErrors } from '../../../types/errors'
 import Skeleton from '@mui/material/Skeleton'
+import { TokenLink } from './TokenLink'
+import { PlaceholderLabel } from '../../utils/placeholderLabel'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -45,10 +47,11 @@ type TableRuntimeEvent = RuntimeEvent & {
  */
 const DelayedEventBalance: FC<{
   event: RuntimeEvent
+  tickerAsLink?: boolean | undefined
 }> = props => {
   const { t } = useTranslation()
   const [oasisAddress, setOasisAddress] = useState('')
-  const { event, ...rest } = props
+  const { event, tickerAsLink } = props
 
   if (event.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -89,13 +92,38 @@ const DelayedEventBalance: FC<{
 
   if (token.type === EvmTokenType.ERC20) {
     const token = data?.data
-    const value = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
-    const realValue = value === undefined ? undefined : fromBaseUnits(value, token?.decimals || 0)
 
-    return <RoundedBalance {...rest} value={realValue} ticker={ticker} />
+    // We are calling it 'raw' since it's not yet normalized according to decimals.
+    const rawValue = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
+    const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, token?.decimals || 0)
+
+    return (
+      <RoundedBalance
+        value={value}
+        ticker={ticker}
+        scope={event}
+        tokenAddress={ethAddress}
+        tickerAsLink={tickerAsLink}
+      />
+    )
   } else if (token.type === EvmTokenType.ERC721) {
     const tokenID = event.evm_log_params?.find(param => param.name === 'tokenID')?.value as string | undefined
-    return tokenID ? `TokenID [${tokenID}] ${ticker}` : t('common.missing')
+    return tokenID ? (
+      <Trans
+        t={t}
+        i18nKey="common.tokenInstance"
+        components={{
+          InstanceLink: <PlaceholderLabel label={tokenID} />,
+          TickerLink: tickerAsLink ? (
+            <TokenLink scope={event} address={ethAddress!} name={ticker} />
+          ) : (
+            <PlaceholderLabel label={ticker} />
+          ),
+        }}
+      />
+    ) : (
+      t('common.missing')
+    )
   } else {
     return token.type
   }
@@ -107,6 +135,7 @@ type TokenTransfersProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  tickersAsLink?: boolean | undefined
 }
 
 export const TokenTransfers: FC<TokenTransfersProps> = ({
@@ -115,6 +144,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   pagination,
   transfers,
   ownAddress,
+  tickersAsLink,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -218,7 +248,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: <DelayedEventBalance event={transfer} />,
+          content: <DelayedEventBalance event={transfer} tickerAsLink={tickersAsLink} />,
         },
       ],
       highlight: transfer.markAsNew,
