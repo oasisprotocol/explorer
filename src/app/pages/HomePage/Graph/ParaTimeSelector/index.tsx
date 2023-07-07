@@ -260,7 +260,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
           )}
         </ParaTimeSelectorGlobe>
         {step === ParaTimeSelectorStep.Explore && (
-          <NetworkSelector network={network} setNetwork={setNetwork} />
+          <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? Network.mainnet)} />
         )}
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip.current && (
