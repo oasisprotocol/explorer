@@ -17,8 +17,6 @@ export const TokenSupplyCard: FC = () => {
 
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
-  const supplyString = token?.total_supply
-
   return (
     <SnapshotCard
       title={t('tokens.totalSupply')}
@@ -40,7 +38,9 @@ export const TokenSupplyCard: FC = () => {
                 width: '100%',
               }}
             >
-              {!supplyString ? t('common.missing') : t('tokens.totalSupplyValue', { value: supplyString })}
+              {token.total_supply
+                ? t('tokens.totalSupplyValue', { value: token.total_supply })
+                : t('common.undefined')}
             </Typography>
           )
         )}
