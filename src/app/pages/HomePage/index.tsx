@@ -77,6 +77,7 @@ const LogotypeBox = styled(Box)(({ theme }) => ({
 const SearchInputContainer = styled(Box, {
   shouldForwardProp: prop => prop !== 'transparent',
 })<{ transparent: boolean }>(({ theme, transparent }) => ({
+  position: 'relative',
   zIndex: zIndexHomePage.searchInput,
   width: '100%',
   [theme.breakpoints.up('md')]: {
@@ -113,9 +114,8 @@ const FooterStyled = styled(Box)(({ theme }) => ({
 }))
 
 const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
-  position: 'fixed',
-  right: theme.spacing(2),
-  bottom: theme.spacing(2),
+  position: 'absolute',
+  top: theme.spacing(6),
   zIndex: zIndexHomePage.paraTimeSelector,
 }))
 
@@ -162,6 +162,11 @@ export const HomePage: FC = () => {
             <SearchInputBox>
               <Search disabled={!isApiReachable} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
+            {showInfoScreenBtn && (
+              <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+                <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+              </InfoScreenBtn>
+            )}
           </SearchInputContainer>
           <ThemeByNetwork network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
@@ -182,12 +187,6 @@ export const HomePage: FC = () => {
           </FooterStyled>
         )}
       </HomepageLayout>
-
-      {showInfoScreenBtn && (
-        <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-          <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
-        </InfoScreenBtn>
-      )}
     </>
   )
 }
