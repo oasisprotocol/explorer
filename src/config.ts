@@ -83,14 +83,14 @@ const cipherConfig: LayerConfig = {
 
 const sapphireConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 21,
+    activeNodes: 32,
     address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/5cbcdf764390bba3ae27411c551a4f4444117f3f/runtime/src/lib.rs#L146
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000f80306c9858e7279',
   },
   testnet: {
-    activeNodes: 19,
+    activeNodes: 21,
     address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd',
     blockGasLimit: 30_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
