@@ -7,7 +7,7 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
-import { getTokenTypeName } from '../../pages/TokenDashboardPage/TokenTypeCard'
+import { getTokenTypeName } from '../../../types/tokens'
 
 type TokensProps = {
   tokens?: EvmToken[]

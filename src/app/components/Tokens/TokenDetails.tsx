@@ -11,7 +11,7 @@ import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { DelayedContractVerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
-import { getTokenTypeName } from '../../pages/TokenDashboardPage/TokenTypeCard'
+import { getTokenTypeName } from '../../../types/tokens'
 
 export const TokenDetails: FC<{
   isLoading?: boolean

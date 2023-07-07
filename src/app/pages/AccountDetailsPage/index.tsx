@@ -17,6 +17,7 @@ import { CardEmptyState } from './CardEmptyState'
 import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
+import { getTokenTypePluralName } from '../../../types/tokens'
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -65,12 +66,12 @@ export const AccountDetailsPage: FC = () => {
             { label: t('common.transactions'), to: txLink, visible: showTxs },
             { label: t('tokens.transfers'), to: tokenTransfersLink, visible: showTokenTransfers },
             {
-              label: t('account.tokensListTitle', { token: t(`account.ERC20`) }),
+              label: getTokenTypePluralName(t, EvmTokenType.ERC20),
               to: erc20Link,
               visible: showErc20,
             },
             {
-              label: t('account.tokensListTitle', { token: t(`account.ERC721`) }),
+              label: getTokenTypePluralName(t, EvmTokenType.ERC721),
               to: erc721Link,
               visible: showErc721,
             },

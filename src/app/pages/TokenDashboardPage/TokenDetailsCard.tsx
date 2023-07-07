@@ -11,10 +11,10 @@ import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { DelayedContractVerificationIcon } from '../../components/ContractVerificationIcon'
-import { getTokenTypeName } from './TokenTypeCard'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
+import { getTokenTypeName } from '../../../types/tokens'
 
 export const TokenDetailsCard: FC = () => {
   const { t } = useTranslation()

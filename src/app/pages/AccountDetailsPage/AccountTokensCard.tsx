@@ -16,6 +16,11 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAccount } from './hook'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { AccountLink } from '../../components/Account/AccountLink'
+import {
+  getTokenTypePluralDescription,
+  getTokenTypePluralName,
+  getTokenTypeStrictName,
+} from '../../../types/tokens'
 
 type AccountTokensCardProps = {
   type: EvmTokenType
@@ -28,8 +33,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
   const address = useLoaderData() as string
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
-  const tokenLabel = t(`account.${type}` as any)
-  const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
+  const tokenListLabel = getTokenTypePluralName(t, type)
   const tableColumns: TableColProps[] = [
     { key: 'name', content: t('common.name') },
     { key: 'contract', content: t('common.smartContract') },
@@ -86,7 +90,12 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
         <CardHeader disableTypography component="h3" title={tokenListLabel} />
         <CardContent>
           {!isLoading && !account?.tokenBalances[type]?.length && (
-            <CardEmptyState label={t('account.emptyTokenList', { token: tokenLabel })} />
+            <CardEmptyState
+              label={t('account.emptyTokenList', {
+                spec: getTokenTypeStrictName(t, type),
+                description: getTokenTypePluralDescription(t, type),
+              })}
+            />
           )}
 
           <Table
