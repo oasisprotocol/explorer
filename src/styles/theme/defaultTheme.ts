@@ -654,9 +654,6 @@ export const defaultTheme = createTheme({
           [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]: {
             borderWidth: '3px',
           },
-          [`&.${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
-            borderWidth: '1px !important',
-          },
         },
         notchedOutline: {
           borderColor: 'transparent',
