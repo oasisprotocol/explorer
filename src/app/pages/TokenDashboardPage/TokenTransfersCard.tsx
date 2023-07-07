@@ -10,7 +10,7 @@ import { useLoaderData } from 'react-router-dom'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useAccount } from '../AccountDetailsPage/hook'
-import { useTokenTransfers } from './hook'
+import { useTokenInfo, useTokenTransfers } from './hook'
 
 export const tokenTransfersContainerId = 'transfers'
 
@@ -19,12 +19,20 @@ export const TokenTransfersCard: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { isLoading, isFetched, transfers, pagination, totalCount, isTotalCountClipped } = useTokenTransfers(
-    scope,
-    address,
-  )
+  const {
+    isLoading: areTransfersLoading,
+    isFetched,
+    transfers,
+    pagination,
+    totalCount,
+    isTotalCountClipped,
+  } = useTokenTransfers(scope, address)
 
-  const { account } = useAccount(scope, address)
+  const { isLoading: isTokenLoading } = useTokenInfo(scope, address)
+
+  const { isLoading: isAccountLoading, account } = useAccount(scope, address)
+
+  const isLoading = isTokenLoading || isAccountLoading || areTransfersLoading
 
   return (
     <Card>

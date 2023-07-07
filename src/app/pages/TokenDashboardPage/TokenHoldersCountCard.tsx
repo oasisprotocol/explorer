@@ -7,6 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
+import Skeleton from '@mui/material/Skeleton'
 
 export const TokenHoldersCountCard: FC = () => {
   const { t } = useTranslation()
@@ -14,14 +15,16 @@ export const TokenHoldersCountCard: FC = () => {
 
   const address = useLoaderData() as string
 
-  const { token, isFetched } = useTokenInfo(scope, address)
+  const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   const title = t('tokens.holders')
   return (
     <SnapshotCard title={title} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && (
-          <>
+        {isLoading ? (
+          <Skeleton variant="text" sx={{ width: '50%' }} />
+        ) : (
+          isFetched && (
             <Typography
               component="span"
               sx={{
@@ -32,7 +35,7 @@ export const TokenHoldersCountCard: FC = () => {
             >
               {t('tokens.holdersValue', { value: token?.num_holders })}
             </Typography>
-          </>
+          )
         )}
       </Box>
     </SnapshotCard>
