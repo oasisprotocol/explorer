@@ -15,6 +15,7 @@ export const useIsApiReachable = (
 }
 
 export type FreshnessInfo = {
+  unavailable?: boolean
   outOfDate?: boolean
   lastUpdate?: string
 }
@@ -26,6 +27,14 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   }
   const query = useGetRuntimeStatus(scope.network, scope.layer)
   const timeDistance = useFormattedTimestampString(query?.data?.data.latest_block_time)
+
+  if (query.isError) {
+    return {
+      unavailable: true,
+      outOfDate: true,
+    }
+  }
+
   if (query.isLoading) {
     return {
       outOfDate: undefined,
