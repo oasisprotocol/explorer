@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
-import { EvmTokenType, Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
+import { EvmTokenType, RuntimeEvent } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
@@ -15,11 +15,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { fromBaseUnits, getEthAccountAddressFromBase64, getEvmBech32Address } from '../../utils/helpers'
-import { AppErrors } from '../../../types/errors'
+import { fromBaseUnits } from '../../utils/helpers'
 import Skeleton from '@mui/material/Skeleton'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/placeholderLabel'
+import { useTokenWithBase64Address } from './hooks'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -48,34 +48,9 @@ type TableRuntimeEvent = RuntimeEvent & {
 const DelayedEventBalance: FC<{
   event: RuntimeEvent
   tickerAsLink?: boolean | undefined
-}> = props => {
+}> = ({ event, tickerAsLink }) => {
   const { t } = useTranslation()
-  const [oasisAddress, setOasisAddress] = useState('')
-  const { event, tickerAsLink } = props
-
-  if (event.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
-
-  const b64Address = event.body.address
-  const ethAddress = b64Address ? getEthAccountAddressFromBase64(b64Address) : undefined
-  useEffect(() => {
-    if (ethAddress) {
-      getEvmBech32Address(ethAddress).then(setOasisAddress)
-    }
-  }, [ethAddress])
-
-  const { isLoading, isError, data } = useGetRuntimeEvmTokensAddress(
-    event.network,
-    event.layer,
-    oasisAddress,
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
-    },
-  )
-  const token = data?.data
+  const { isLoading, isError, ethAddress, token } = useTokenWithBase64Address(event, event.body.address)
 
   if (isLoading) {
     return <Skeleton variant="text" />
@@ -91,8 +66,6 @@ const DelayedEventBalance: FC<{
   const ticker = token.symbol || t('common.missing')
 
   if (token.type === EvmTokenType.ERC20) {
-    const token = data?.data
-
     // We are calling it 'raw' since it's not yet normalized according to decimals.
     const rawValue = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
     const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, token?.decimals || 0)
