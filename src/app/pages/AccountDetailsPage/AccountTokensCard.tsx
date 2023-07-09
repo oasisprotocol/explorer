@@ -21,12 +21,33 @@ import {
   getTokenTypePluralName,
   getTokenTypeStrictName,
 } from '../../../types/tokens'
+import { SearchScope } from '../../../types/searchScope'
+import Skeleton from '@mui/material/Skeleton'
 
 type AccountTokensCardProps = {
   type: EvmTokenType
 }
 
 export const accountTokenContainerId = 'tokens'
+
+export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string }> = ({
+  scope,
+  oasisAddress,
+}) => {
+  const { isLoading, account: contract } = useAccount(scope, oasisAddress)
+
+  if (isLoading) {
+    return <Skeleton variant={'text'} />
+  }
+
+  const address = contract?.address_eth ?? oasisAddress
+  return (
+    <Box sx={{ display: 'flex', alignContent: 'center' }}>
+      <AccountLink scope={scope} address={address} />
+      <CopyToClipboard value={address} />
+    </Box>
+  )
+}
 
 export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
   const scope = useRequiredScopeParam()
@@ -62,10 +83,8 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
       {
         content: (
           <LinkableDiv id={item.token_contract_addr}>
-            <Box sx={{ display: 'flex', alignContent: 'center' }}>
-              <AccountLink scope={scope} address={item.token_contract_addr} />
-              <CopyToClipboard value={item.token_contract_addr} />
-            </Box>
+            {/* TODO remove temporal workaround when token_contract_addr_eth becomes available as part of RuntimeEvmBalance */}
+            <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
           </LinkableDiv>
         ),
         key: 'hash',
