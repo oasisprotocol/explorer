@@ -131,11 +131,17 @@ const DelayedEventBalance: FC<{
 
 type TokenTransfersProps = {
   transfers?: TableRuntimeEvent[]
+  /**
+   * Are we trying to display transfers for (potentially) multiple different tokens?
+   *
+   * If yes, we will show more information about each token (token type, link to token dashboard, etc.),
+   * which would be redundant if we are listing transfers of a single token.
+   */
+  differentTokens?: boolean | undefined
   ownAddress?: string
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
-  tickersAsLink?: boolean | undefined
 }
 
 export const TokenTransfers: FC<TokenTransfersProps> = ({
@@ -143,8 +149,8 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   limit,
   pagination,
   transfers,
+  differentTokens,
   ownAddress,
-  tickersAsLink,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -248,7 +254,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: <DelayedEventBalance event={transfer} tickerAsLink={tickersAsLink} />,
+          content: <DelayedEventBalance event={transfer} tickerAsLink={differentTokens} />,
         },
       ],
       highlight: transfer.markAsNew,
