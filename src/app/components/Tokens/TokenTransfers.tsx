@@ -20,6 +20,7 @@ import Skeleton from '@mui/material/Skeleton'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/placeholderLabel'
 import { useTokenWithBase64Address } from './hooks'
+import { TokenTypeTag } from './TokenList'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -102,6 +103,19 @@ const DelayedEventBalance: FC<{
   }
 }
 
+const DelayedTokenTransferTokenType: FC<{ event: RuntimeEvent }> = ({ event }) => {
+  const { t } = useTranslation()
+  const { isLoading, isError, token } = useTokenWithBase64Address(event, event.body.address)
+
+  if (isLoading) {
+    return <Skeleton variant="text" />
+  }
+  if (isError || !token) {
+    return t('common.missing')
+  }
+  return <TokenTypeTag tokenType={token.type} />
+}
+
 type TokenTransfersProps = {
   transfers?: TableRuntimeEvent[]
   /**
@@ -133,6 +147,9 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
     { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
     { key: 'from', content: t('common.from'), width: '150px' },
     { key: 'to', content: t('common.to'), width: '150px' },
+    ...(differentTokens
+      ? [{ key: 'tokenType', content: t('tokens.type'), align: TableCellAlign.Center }]
+      : []),
     { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
   ]
   const tableRows = transfers?.map((transfer, index) => {
@@ -223,7 +240,16 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
             <AccountLink scope={transfer} address={toAddress} alwaysTrim={true} />
           ),
         },
-
+        ...(differentTokens
+          ? [
+              {
+                key: 'tokenType',
+                // TODO: temporary workaround until token type becomes available as part of RuntimeEvent
+                content: <DelayedTokenTransferTokenType event={transfer} />,
+                align: TableCellAlign.Center,
+              },
+            ]
+          : []),
         {
           key: 'value',
           align: TableCellAlign.Right,
