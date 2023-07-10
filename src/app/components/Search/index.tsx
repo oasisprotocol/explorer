@@ -109,7 +109,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
-  const [isTyping, setIsTyping] = useState(false)
+  const [isProblemFresh, setIsProblemFresh] = useState(false)
 
   const wordsOfPower = t('search.wordsOfPower')
   const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
@@ -129,7 +129,6 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onChange = (newValue: string) => {
     setValue(newValue)
-    setIsTyping(true)
   }
 
   const onFocusChange = (value: boolean) => {
@@ -171,11 +170,15 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const hasProblem = hasError || hasWarning
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsTyping(false)
-    }, typingDelay)
-    return () => clearTimeout(timeout)
-  }, [value])
+    if (hasProblem) {
+      const timeout = setTimeout(() => {
+        setIsProblemFresh(false)
+      }, typingDelay)
+      return () => clearTimeout(timeout)
+    } else {
+      setIsProblemFresh(true)
+    }
+  }, [hasProblem])
 
   return (
     <SearchForm
@@ -186,7 +189,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     >
       <TextField
         sx={{
-          ...(!isTyping && hasWarning && !hasError
+          ...(!isProblemFresh && hasWarning && !hasError
             ? {
                 [`& .${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
                   borderColor: COLORS.warningColor,
@@ -196,7 +199,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         }}
         value={value}
         onChange={e => onChange(e.target.value)}
-        error={!isTyping && hasProblem}
+        error={!isProblemFresh && hasProblem}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -237,7 +240,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         helperText={
           <Collapse in={!!value && value !== valueInSearchParams}>
             <Box sx={{ py: '10px' }}>
-              <Collapse in={!isTyping && hasError}>
+              <Collapse in={!isProblemFresh && hasError}>
                 <Typography
                   component="span"
                   sx={{
@@ -255,7 +258,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                   {errorMessage}
                 </Typography>
               </Collapse>
-              <Collapse in={!isTyping && hasWarning}>
+              <Collapse in={!isProblemFresh && hasWarning}>
                 <Typography
                   component="span"
                   sx={{
