@@ -25,11 +25,11 @@ export const AccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
-  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address)
+  const isContract = !!account?.evm_contract
+  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
   const { totalCount: numberOfTokenTransfers } = useAccountTokenTransfers(scope, address)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
-  const isContract = !!account?.evm_contract
 
   const showTokenTransfers = showEmptyAccountDetails || !!numberOfTokenTransfers
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
