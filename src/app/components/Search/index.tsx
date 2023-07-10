@@ -4,6 +4,7 @@ import TextField, { textFieldClasses } from '@mui/material/TextField'
 import InputAdornment, { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
@@ -22,6 +23,7 @@ import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
 import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
+import Collapse from '@mui/material/Collapse'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -107,7 +109,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
-  const [isTyping, setIsTyping] = useState(false)
+  const [isProblemFresh, setIsProblemFresh] = useState(false)
 
   const wordsOfPower = t('search.wordsOfPower')
   const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
@@ -127,7 +129,6 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onChange = (newValue: string) => {
     setValue(newValue)
-    setIsTyping(true)
   }
 
   const onFocusChange = (value: boolean) => {
@@ -169,11 +170,15 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const hasProblem = hasError || hasWarning
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsTyping(false)
-    }, typingDelay)
-    return () => clearTimeout(timeout)
-  }, [value])
+    if (hasProblem) {
+      const timeout = setTimeout(() => {
+        setIsProblemFresh(false)
+      }, typingDelay)
+      return () => clearTimeout(timeout)
+    } else {
+      setIsProblemFresh(true)
+    }
+  }, [hasProblem])
 
   return (
     <SearchForm
@@ -184,7 +189,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     >
       <TextField
         sx={{
-          ...(!isTyping && hasWarning && !hasError
+          ...(!isProblemFresh && hasWarning && !hasError
             ? {
                 [`& .${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
                   borderColor: COLORS.warningColor,
@@ -194,7 +199,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         }}
         value={value}
         onChange={e => onChange(e.target.value)}
-        error={!isTyping && hasProblem}
+        error={!isProblemFresh && hasProblem}
         onFocus={() => onFocusChange(true)}
         onBlur={() => onFocusChange(false)}
         InputProps={{
@@ -220,67 +225,65 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         placeholder={searchPlaceholderTranslated}
         fullWidth
         FormHelperTextProps={{
+          // turn off TS temporary for next line
+          // issue https://github.com/mui/material-ui/issues/33339
+          // fix https://github.com/mui/material-ui/pull/35924
+          // @ts-expect-error The component property iw missing from the TypeScript definition
+          component: 'div', // replace p with div tag
           sx: {
-            marginTop: '10px',
-            marginBottom: '10px',
+            marginTop: 0,
+            marginBottom: 0,
             marginLeft: variant === 'button' ? '48px' : '17px',
             marginRight: variant === 'button' ? '48px' : '17px',
           },
         }}
         helperText={
-          value &&
-          value !== valueInSearchParams && (
-            <>
-              {!isTyping && hasError && (
-                <>
-                  <Typography
-                    component="span"
-                    sx={{
-                      display: 'inline-flex',
-                      color: COLORS.errorIndicatorBackground,
-                      fontSize: 12,
-                      lineHeight: 2,
-                      alignItems: 'center',
-                      verticalAlign: 'middle',
-                      mt: 3,
-                      mb: 4,
-                    }}
-                  >
-                    <ErrorIcon sx={{ mr: 3 }} />
-                    {errorMessage}
-                  </Typography>
-                  <br />
-                </>
-              )}
-              {!isTyping && hasWarning && (
-                <>
-                  <Typography
-                    component="span"
-                    sx={{
-                      display: 'inline-flex',
-                      color: COLORS.warningColor,
-                      fontSize: 12,
-                      lineHeight: 2,
-                      alignItems: 'center',
-                      verticalAlign: 'middle',
-                      mt: 3,
-                      mb: 4,
-                    }}
-                  >
-                    <WarningIcon sx={{ mr: 3 }} />
-                    {warningMessage}
-                  </Typography>
-                  <br />
-                </>
-              )}
+          <Collapse in={!!value && value !== valueInSearchParams}>
+            <Box sx={{ py: '10px' }}>
+              <Collapse in={!isProblemFresh && hasError}>
+                <Typography
+                  component="span"
+                  sx={{
+                    display: 'inline-flex',
+                    color: COLORS.errorIndicatorBackground,
+                    fontSize: 12,
+                    lineHeight: 2,
+                    alignItems: 'center',
+                    verticalAlign: 'middle',
+                    mt: 3,
+                    mb: 4,
+                  }}
+                >
+                  <ErrorIcon sx={{ mr: 3 }} />
+                  {errorMessage}
+                </Typography>
+              </Collapse>
+              <Collapse in={!isProblemFresh && hasWarning}>
+                <Typography
+                  component="span"
+                  sx={{
+                    display: 'inline-flex',
+                    color: COLORS.warningColor,
+                    fontSize: 12,
+                    lineHeight: 2,
+                    alignItems: 'center',
+                    verticalAlign: 'middle',
+                    mt: 3,
+                    mb: 4,
+                  }}
+                >
+                  <WarningIcon sx={{ mr: 3 }} />
+                  {warningMessage}
+                </Typography>
+              </Collapse>
               <SearchSuggestionsButtons
                 scope={scope}
                 onClickSuggestion={suggestion => {
                   setValue(suggestion)
                 }}
               />
-            </>
-          )
+            </Box>
+          </Collapse>
         }
       />
     </SearchForm>
