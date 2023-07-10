@@ -633,7 +633,7 @@ detected or is not supported, this field will be null/absent.
  * A list of tokens in a runtime.
  */
 export type EvmTokenListAllOf = {
-  /** A list of L2 EVM tokens (ERC-20, ERC-271, ...). */
+  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
   evm_tokens: EvmToken[];
 };
 
