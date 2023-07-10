@@ -6,7 +6,7 @@ import { tooltipDelay } from '../../../styles/theme'
 import { getNameForTicker } from '../../../types/ticker'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../Tokens/TokenLink'
-import { PlaceholderLabel } from '../../utils/placeholderLabel'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 
 type RoundedBalanceProps = {
   ticker?: string

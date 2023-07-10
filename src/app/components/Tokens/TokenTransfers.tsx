@@ -18,7 +18,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { fromBaseUnits } from '../../utils/helpers'
 import Skeleton from '@mui/material/Skeleton'
 import { TokenLink } from './TokenLink'
-import { PlaceholderLabel } from '../../utils/placeholderLabel'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { useTokenWithBase64Address } from './hooks'
 import { TokenTypeTag } from './TokenList'
 
