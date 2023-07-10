@@ -17,6 +17,7 @@ import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
+import { RoundedBalance } from '../RoundedBalance'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -129,7 +130,7 @@ export const TokenList = (props: TokensProps) => {
           align: TableCellAlign.Right,
         },
         {
-          content: token.total_supply,
+          content: <RoundedBalance value={token.total_supply} ticker={token.symbol} />,
           key: 'supply',
           align: TableCellAlign.Right,
         },
