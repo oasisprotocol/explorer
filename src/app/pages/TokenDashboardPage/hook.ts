@@ -9,16 +9,23 @@ import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 
-export const useTokenInfo = (scope: SearchScope, address: string) => {
+export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const query = useGetRuntimeEvmTokensAddress(network, layer, address!)
+  const query = useGetRuntimeEvmTokensAddress(network, layer, address!, {
+    query: { enabled },
+  })
   const token = query.data?.data
   const { isLoading, isError, isFetched } = query
-  return { token, isLoading, isError, isFetched }
+  return {
+    token,
+    isLoading: isLoading && enabled, // By default, we get true for isLoading on disabled queries. We don't want that.
+    isError,
+    isFetched,
+  }
 }
 
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
