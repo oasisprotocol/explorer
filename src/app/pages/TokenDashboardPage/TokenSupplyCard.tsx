@@ -32,7 +32,16 @@ export const TokenSupplyCard: FC = () => {
                 color: COLORS.brandDark,
               }}
             >
-              {!supplyString ? t('common.missing') : t('tokens.totalSupplyValue', { value: supplyString })}
+              {!supplyString
+                ? t('common.missing')
+                : t('common.valuePair', {
+                    value: supplyString,
+                    formatParams: {
+                      value: {
+                        notation: 'compact',
+                      } satisfies Intl.NumberFormatOptions,
+                    },
+                  })}
             </Typography>
           </>
         )}
