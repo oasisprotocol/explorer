@@ -8,6 +8,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
 import { getTokenTypeName } from '../../../types/tokens'
+import Skeleton from '@mui/material/Skeleton'
 
 export const TokenTypeCard: FC = () => {
   const { t } = useTranslation()
@@ -15,13 +16,15 @@ export const TokenTypeCard: FC = () => {
 
   const address = useLoaderData() as string
 
-  const { token, isFetched } = useTokenInfo(scope, address)
+  const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   return (
     <SnapshotCard title={t('common.type')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && (
-          <>
+        {isLoading ? (
+          <Skeleton variant="text" sx={{ width: '50%' }} />
+        ) : (
+          isFetched && (
             <Typography
               component="span"
               sx={{
@@ -32,7 +35,7 @@ export const TokenTypeCard: FC = () => {
             >
               {token?.type ? getTokenTypeName(t, token.type) : '-'}
             </Typography>
-          </>
+          )
         )}
       </Box>
     </SnapshotCard>

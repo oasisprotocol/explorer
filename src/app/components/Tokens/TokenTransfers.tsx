@@ -210,6 +210,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
       isLoading={isLoading}
       pagination={pagination}
       extraHorizontalSpaceOnMobile
+      alwaysWaitWhileLoading
     />
   )
 }

@@ -34,7 +34,7 @@ export const TokenDetailsCard: FC = () => {
     <Card>
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
-        {account && token && (
+        {!isLoading && account && token && (
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.token')}</dt>
             <dd>{token.name}</dd>

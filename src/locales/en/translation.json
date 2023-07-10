@@ -90,6 +90,7 @@
     "txnFee": "Txn Fee",
     "type": "Type",
     "quantity": "Quantity",
+    "undefined": "Undefined",
     "unknown": "Unknown",
     "value": "Value",
     "valueInToken": "{{value}} {{ticker}}",

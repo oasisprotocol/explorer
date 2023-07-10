@@ -7,6 +7,8 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useLoaderData } from 'react-router-dom'
 import { useAccount } from '../AccountDetailsPage/hook'
+import Skeleton from '@mui/material/Skeleton'
+import { useTokenInfo } from './hook'
 
 export const TokenTotalTransactionsCard: FC = () => {
   const { t } = useTranslation()
@@ -14,14 +16,19 @@ export const TokenTotalTransactionsCard: FC = () => {
 
   const address = useLoaderData() as string
 
-  const { isFetched, account } = useAccount(scope, address)
+  const { isLoading: isAccountLoading, isFetched, account } = useAccount(scope, address)
+  const { isLoading: isTokenLoading } = useTokenInfo(scope, address)
   const value = account?.stats.num_txns
+
+  const isLoading = isAccountLoading || isTokenLoading
 
   return (
     <SnapshotCard title={t('totalTransactions.header')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && (
-          <>
+        {isLoading ? (
+          <Skeleton variant="text" sx={{ width: '50%' }} />
+        ) : (
+          isFetched && (
             <Typography
               component="span"
               sx={{
@@ -32,7 +39,7 @@ export const TokenTotalTransactionsCard: FC = () => {
             >
               {t('totalTransactions.value', { value })}
             </Typography>
-          </>
+          )
         )}
       </Box>
     </SnapshotCard>
