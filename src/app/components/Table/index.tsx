@@ -74,7 +74,8 @@ type TableProps = {
   rows?: TableRowProps[]
   rowsNumber?: number
   stickyColumn?: boolean
-  extraHorizontalSpaceOnMobile?: boolean
+  extraHorizontalSpaceOnMobile?: boolean | undefined
+  alwaysWaitWhileLoading?: boolean | undefined
 }
 
 const stickyColumnStyles = {
@@ -97,6 +98,7 @@ export const Table: FC<TableProps> = ({
   rowsNumber = 5,
   stickyColumn = false,
   extraHorizontalSpaceOnMobile = false,
+  alwaysWaitWhileLoading = false,
 }) => {
   const { isMobile } = useScreenSize()
 
@@ -125,7 +127,7 @@ export const Table: FC<TableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {!rows && isLoading && (
+            {(alwaysWaitWhileLoading || !rows) && isLoading && (
               <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
