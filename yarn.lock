@@ -11299,10 +11299,10 @@ svgo@^2.4.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
-swiper@10.0.3:
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-10.0.3.tgz#27d61b74cc3a3b360ac4c6d8e2f30f9a38d33dfa"
-  integrity sha512-jpsUDo+EmNq7N59vRCo5aDZXLF8EfWJWlTdm1jkqEH+ph8DuMTJuLjcNunN8Q88bqVxo6vceYBGIrpRIwrEGcA==
+swiper@10.0.4:
+  version "10.0.4"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-10.0.4.tgz#eb79eb518d740795d3b4247f404674f89c4e404e"
+  integrity sha512-DlNR3KiaVkPep6RraZ2tNr7lvyuzELuR+4NZr4wO42t0UworIO3DxDlz8b5Q3uUioh7cJad99EdRJLkPF+r8Ag==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
