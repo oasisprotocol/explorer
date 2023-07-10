@@ -27,8 +27,13 @@ export const ParatimeDashboardPage: FC = () => {
         <Grid item xs={12} md={6}>
           <LatestBlocks />
         </Grid>
+        {isMobile && (
+          <Grid item xs={12}>
+            <TopTokens />
+          </Grid>
+        )}
       </Grid>
-      <TopTokens />
+      {!isMobile && <TopTokens />}
       <TransactionsStats />
       <TotalTransactions />
       <Social />
