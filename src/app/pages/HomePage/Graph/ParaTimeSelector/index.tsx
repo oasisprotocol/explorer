@@ -104,7 +104,7 @@ ExploreBtn.defaultProps = {
 export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   color: theme.palette.layout.graphZoomOutText,
   position: 'absolute',
-  top: theme.spacing(4),
+  top: theme.spacing(5),
   left: '50%',
   transform: 'translateX(-50%)',
   lineHeight: '18px',
@@ -130,6 +130,8 @@ const QuickPinchZoomOuter = styled('div')(() => ({
   '> div': {
     position: 'absolute',
     inset: 0,
+    border: '22px solid transparent',
+    borderRadius: '50%',
   },
 }))
 
@@ -218,7 +220,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     }
   }
 
-  const isZoomedIn = scale > 1.005
+  const isZoomedIn = scale > 1.07
 
   useEffect(() => {
     onGraphZoomedIn(isZoomedIn)
@@ -228,7 +230,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     <>
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
-          <QuickPinchZoomOuter>
+          <QuickPinchZoomOuter network={network}>
             <QuickPinchZoom
               ref={quickPinchZoomRef}
               onUpdate={onPinchZoom}
