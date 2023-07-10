@@ -1,9 +1,9 @@
 export const socialMedia = {
   telegram: 'https://t.me/oasisprotocolcommunity',
   twitter: 'https://twitter.com/oasisprotocol',
-  discord: 'https://discord.com/invite/BQCxwhT5wS',
-  // This API link is for testing if invite is still valid (normal discord link is always 200 OK).
-  isDiscordStillValid: 'https://discord.com/api/v9/invites/BQCxwhT5wS',
+  discord: 'https://oasis.io/discord',
+  // This API link is for testing if invite is still valid.
+  isDiscordStillValid: 'https://oasis.io/discord/invite-api-check',
   youtube: 'https://www.youtube.com/channel/UC35UFPcZ2F1wjPxhPrSsESQ',
   reddit: 'https://www.reddit.com/r/oasisnetwork/',
 }
