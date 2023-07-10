@@ -212,6 +212,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
+  const clearSelectedLayer = () => {
+    if (selectedLayer?.current) {
+      setSelectedLayer(undefined)
+    }
+  }
+
   const isZoomedIn = scale > 1.005
 
   useEffect(() => {
@@ -223,7 +229,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
           <QuickPinchZoomOuter>
-            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2.5} minZoom={0.5}>
+            <QuickPinchZoom
+              ref={quickPinchZoomRef}
+              onUpdate={onPinchZoom}
+              maxZoom={2.5}
+              minZoom={0.5}
+              onDragEnd={clearSelectedLayer}
+            >
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
                   ref={graphRef}

@@ -36,10 +36,16 @@ interface GraphProps extends GraphBaseProps {
   isZoomedIn: boolean
 }
 
+interface GraphStyledProps extends GraphBaseProps {
+  selectedLayer?: Layer
+}
+
 const GraphStyled = styled('svg', {
   shouldForwardProp: prop =>
-    !(['disabled', 'transparent'] as (keyof GraphBaseProps)[]).includes(prop as keyof GraphBaseProps),
-})<GraphBaseProps>(({ theme, disabled, transparent }) => ({
+    !(['disabled', 'transparent', 'selectedLayer'] as (keyof GraphStyledProps)[]).includes(
+      prop as keyof GraphStyledProps,
+    ),
+})<GraphStyledProps>(({ theme, disabled, transparent, selectedLayer }) => ({
   position: 'absolute',
   left: '50%',
   top: '50%',
@@ -59,16 +65,35 @@ const GraphStyled = styled('svg', {
   '[id]:not([aria-disabled="true"])': {
     cursor: 'pointer',
   },
-  [`g[id$=circle]`]: {
+  path: {
+    ...(selectedLayer && selectedLayer !== Layer.consensus
+      ? {
+          [`&:not(.${selectedLayer})`]: {
+            opacity: 0.5,
+          },
+          '&.status-icon': {
+            opacity: 1,
+          },
+        }
+      : {}),
+  },
+  'g[id$=circle]': {
     'ellipse:not(:last-child)': {
       display: 'inline',
     },
     'ellipse:last-child': {
       display: 'none',
     },
+    ...(selectedLayer && selectedLayer !== Layer.consensus
+      ? {
+          [`&:not([id=${selectedLayer}-circle])`]: {
+            opacity: 0.5,
+          },
+        }
+      : {}),
   },
   [theme.breakpoints.up('md')]: {
-    [`g[id$=circle]`]: {
+    'g[id$=circle]': {
       '&:hover, &:focus-visible': {
         'ellipse:not(.hover-bg)': {
           display: 'none',
@@ -82,7 +107,7 @@ const GraphStyled = styled('svg', {
       },
     },
     // TODO: :has not supported in Firefox
-    [`g[id$=circle]:has( + g[id$=label]:hover)`]: {
+    'g[id$=circle]:has( + g[id$=label]:hover)': {
       'ellipse:not(.hover-bg)': {
         display: 'none',
       },
@@ -172,12 +197,14 @@ const GraphParaTimeStatus: FC<
       <g transform={`translate(${iconX}, ${iconY}) scale(0.4)`}>
         {!outOfDate && (
           <path
+            className="status-icon"
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
             fill={COLORS.eucalyptus}
           />
         )}
         {outOfDate && (
           <path
+            className="status-icon"
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
             fill={COLORS.error}
           />
@@ -351,6 +378,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         preserveAspectRatio="xMidYMid slice"
         ref={ref}
         className={network}
+        selectedLayer={selectedLayer}
       >
         <path
           d="M257.947 218.31C259.1 209.19 258.447 199.932 256.023 191.064C253.598 182.197 249.452 173.894 243.819 166.629C238.186 159.364 231.177 153.28 223.193 148.724C215.208 144.168 206.405 141.229 197.285 140.075C188.164 138.921 178.906 139.575 170.039 141.999C161.172 144.423 152.868 148.57 145.604 154.203C138.339 159.836 132.255 166.844 127.698 174.829C123.142 182.813 120.203 191.617 119.05 200.737C117.896 209.857 118.549 219.115 120.974 227.982C123.398 236.85 127.545 245.153 133.178 252.418C138.811 259.683 145.819 265.767 153.804 270.323C161.788 274.879 170.591 277.818 179.712 278.972C188.832 280.126 198.09 279.472 206.957 277.048C215.825 274.624 224.128 270.477 231.393 264.844C238.657 259.211 244.742 252.202 249.298 244.218C253.854 236.233 256.793 227.43 257.947 218.31L257.947 218.31Z"
@@ -358,19 +386,65 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           strokeWidth="6.16169"
           strokeDasharray="0.27 2.71"
         />
-        <path d="M195.673 102.451L155.947 76.6719" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M195.674 102.451L235.399 73.925" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M183.768 210.158L308.693 202.227" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M187.221 212.965L195.884 103.508" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M167.502 240L132.572 287.516" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M121.083 308.697L87.666 342.253" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M127.501 299.77L163.137 333.266" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M112.336 295.148L69.5934 271.379" stroke={graphTheme.line} strokeWidth="2" />
-        <path d="M197.319 77.6547L196.607 28.753" stroke={graphTheme.line} strokeWidth="2" />
+        <path
+          className={Layer.emerald}
+          d="M195.673 102.451L155.947 76.6719"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.emerald}
+          d="M195.674 102.451L235.399 73.925"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.consensus}
+          d="M183.768 210.158L308.693 202.227"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.consensus}
+          d="M187.221 212.965L195.884 103.508"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.consensus}
+          d="M167.502 240L132.572 287.516"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.sapphire}
+          d="M121.083 308.697L87.666 342.253"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.sapphire}
+          d="M127.501 299.77L163.137 333.266"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.sapphire}
+          d="M112.336 295.148L69.5934 271.379"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        <path
+          className={Layer.emerald}
+          d="M197.319 77.6547L196.607 28.753"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
 
         <g style={{ pointerEvents: !disabledMap.emerald ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getLatestTransactionsRoute({ network, layer: Layer.emerald })}>
             <path
+              className={Layer.emerald}
               d="M250.839 37.333C262.715 37.333 272.341 46.9589 272.341 58.833C272.341 70.7071 262.715 80.333 250.839 80.333C238.964 80.333 229.338 70.7071 229.338 58.833C229.338 46.9589 238.964 37.333 250.839 37.333Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
@@ -383,6 +457,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g style={{ pointerEvents: !disabledMap.emerald ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getLatestBlocksRoute({ network, layer: Layer.emerald })}>
             <path
+              className={Layer.emerald}
               d="M139.839 39.333C151.715 39.333 161.341 48.9589 161.341 60.833C161.341 72.7071 151.715 82.333 139.839 82.333C127.964 82.333 118.338 72.7071 118.338 60.833C118.338 48.9589 127.964 39.333 139.839 39.333Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
@@ -395,6 +470,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g style={{ pointerEvents: !disabledMap.emerald ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getTopTokensRoute({ network, layer: Layer.emerald })}>
             <path
+              className={Layer.emerald}
               d="M196.839 3.27392C208.715 3.27392 218.341 12.8998 218.341 24.7739C218.341 36.648 208.715 46.2739 196.839 46.2739C184.964 46.2739 175.338 36.648 175.338 24.7739C175.338 12.8998 184.964 3.27393 196.839 3.27392Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
@@ -408,6 +484,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g style={{ pointerEvents: !disabledMap.sapphire ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getLatestBlocksRoute({ network, layer: Layer.sapphire })}>
             <path
+              className={Layer.sapphire}
               d="M78.8395 331.333C90.7145 331.333 100.341 340.959 100.341 352.833C100.341 364.707 90.7145 374.333 78.8395 374.333C66.9644 374.333 57.3379 364.707 57.3379 352.833C57.3379 340.959 66.9644 331.333 78.8395 331.333Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
@@ -420,6 +497,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g style={{ pointerEvents: !disabledMap.sapphire ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getLatestTransactionsRoute({ network, layer: Layer.sapphire })}>
             <path
+              className={Layer.sapphire}
               d="M176.839 323.333C188.715 323.333 198.341 332.959 198.341 344.833C198.341 356.707 188.715 366.333 176.839 366.333C164.964 366.333 155.338 356.707 155.338 344.833C155.338 332.959 164.964 323.333 176.839 323.333Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
@@ -432,6 +510,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g style={{ pointerEvents: !disabledMap.sapphire ? 'auto' : 'none' }} className="highlight">
           <Link to={RouteUtils.getTopTokensRoute({ network, layer: Layer.sapphire })}>
             <path
+              className={Layer.sapphire}
               d="M65.8395 245.333C77.7145 245.333 87.3411 254.959 87.3411 266.833C87.3411 278.707 77.7145 288.333 65.8395 288.333C53.9644 288.333 44.3379 278.707 44.3379 266.833C44.3379 254.959 53.9644 245.333 65.8395 245.333Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
