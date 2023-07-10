@@ -245,8 +245,11 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
       return
     }
 
-    if (selectedLayer === layer && RouteUtils.getEnabledLayersForNetwork(network).includes(selectedLayer)) {
-      navigate(RouteUtils.getDashboardRoute({ network, layer: selectedLayer }))
+    if (
+      (!isMobile || layer === selectedLayer) &&
+      RouteUtils.getEnabledLayersForNetwork(network).includes(layer)
+    ) {
+      navigate(RouteUtils.getDashboardRoute({ network, layer }))
 
       return
     }
