@@ -7,7 +7,9 @@ import {
   memo,
   MouseEventHandler,
   PropsWithChildren,
+  useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { RouteUtils } from '../../../../utils/route-utils'
@@ -218,7 +220,11 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const navigate = useNavigate()
   const { isMobile } = useScreenSize()
   const [hoveredLayer, setHoveredLayer] = useState<Layer | null>(null)
-  const [outOfDate, setOutOfDate] = useState<boolean>()
+  const [outOfDateMap, setOutOfDateMap] = useState<
+    Partial<{
+      [key in Layer]: boolean | undefined
+    }>
+  >({})
 
   useEffect(() => {
     setActiveMobileGraphTooltip({ current: null })
@@ -226,16 +232,34 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile])
 
-  const isLayerDisabled = (Layer: Layer) => {
-    return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
-  }
+  useEffect(() => {
+    setOutOfDateMap({})
+  }, [network])
 
-  const disabledMap: Record<Layer, boolean> = {
-    [Layer.emerald]: isLayerDisabled(Layer.emerald),
-    [Layer.consensus]: isLayerDisabled(Layer.consensus),
-    [Layer.cipher]: isLayerDisabled(Layer.cipher),
-    [Layer.sapphire]: isLayerDisabled(Layer.sapphire),
-  }
+  const isLayerDisabled = useCallback(
+    (Layer: Layer) => {
+      return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
+    },
+    [network],
+  )
+
+  const disabledMap: Record<Layer, boolean> = useMemo(
+    () => ({
+      [Layer.emerald]: isLayerDisabled(Layer.emerald),
+      [Layer.consensus]: isLayerDisabled(Layer.consensus),
+      [Layer.cipher]: isLayerDisabled(Layer.cipher),
+      [Layer.sapphire]: isLayerDisabled(Layer.sapphire),
+    }),
+    [isLayerDisabled],
+  )
+
+  const enabledLayers: Layer[] = useMemo(
+    () =>
+      Object.keys(disabledMap)
+        .filter(layer => !disabledMap[layer as Layer])
+        .map(layer => layer as Layer),
+    [disabledMap],
+  )
 
   const onSelectLayer = (layer: Layer) => {
     if (isMobile && isZoomedIn) {
@@ -246,7 +270,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     }
 
     if (
-      (!isMobile || layer === selectedLayer) &&
+      ((!isMobile && !isZoomedIn) || layer === selectedLayer) &&
       RouteUtils.getEnabledLayersForNetwork(network).includes(layer)
     ) {
       navigate(RouteUtils.getDashboardRoute({ network, layer }))
@@ -255,7 +279,6 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     }
 
     if (!disabledMap[layer]) {
-      setOutOfDate(undefined)
       setSelectedLayer(layer)
     }
   }
@@ -299,17 +322,24 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   const graphTheme = graphThemes[network]
 
-  return (
-    <>
-      {!isMobile && network && selectedLayer && selectedLayer !== Layer.consensus && (
+  const layers = useMemo(
+    () =>
+      enabledLayers.map(layer => (
         <LayerStatus
+          key={layer}
           scope={{
             network,
-            layer: selectedLayer,
+            layer,
           }}
-          statusChange={outOfDate => setOutOfDate(outOfDate)}
+          statusChange={outOfDate => setOutOfDateMap(prevValue => ({ ...prevValue, [layer]: outOfDate }))}
         />
-      )}
+      )),
+    [network, enabledLayers],
+  )
+
+  return (
+    <>
+      {isZoomedIn && network && layers}
       <GraphStyled
         width="396"
         height="387"
@@ -447,7 +477,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               textX={174}
               textY={97}
               fillText={graphTheme.text}
-              outOfDate={outOfDate}
+              outOfDate={outOfDateMap.emerald}
             >
               {t('common.emerald')}
             </GraphParaTimeStatus>
@@ -504,7 +534,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               textX={100}
               textY={305}
               fillText={graphTheme.text}
-              outOfDate={outOfDate}
+              outOfDate={outOfDateMap.sapphire}
             >
               {t('common.sapphire')}
             </GraphParaTimeStatus>
