@@ -7,7 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
-import { getTokenTypeName } from '../../../types/tokens'
+import { getTokenTypeStrictName } from '../../../types/tokens'
 
 export const TokenTypeCard: FC = () => {
   const { t } = useTranslation()
@@ -18,7 +18,7 @@ export const TokenTypeCard: FC = () => {
   const { token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotCard title={t('common.type')} withConstantHeight>
+    <SnapshotCard title={t('tokens.type')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isFetched && (
           <>
@@ -30,7 +30,7 @@ export const TokenTypeCard: FC = () => {
                 color: COLORS.brandDark,
               }}
             >
-              {token?.type ? getTokenTypeName(t, token.type) : '-'}
+              {token?.type ? getTokenTypeStrictName(t, token.type) : '-'}
             </Typography>
           </>
         )}
