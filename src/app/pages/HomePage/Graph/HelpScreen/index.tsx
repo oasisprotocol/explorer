@@ -14,6 +14,8 @@ import { TapIcon } from '../../../../components/CustomIcons/Tap'
 import { PinchIcon } from '../../../../components/CustomIcons/Pinch'
 import { NavigateIcon } from '../../../../components/CustomIcons/Navigate'
 import { Theme } from '@mui/material/styles/createTheme'
+import { COLORS } from '../../../../../styles/theme/colors'
+import { Network } from '../../../../../types/network'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -51,17 +53,17 @@ const iconSx = (theme: Theme) => ({
   fontSize: 50,
 })
 
-const steps = (t: TFunction): Step[] => [
+const steps = (t: TFunction, secondary: string): Step[] => [
   {
-    icon: <NavigateIcon sx={iconSx} />,
+    icon: <NavigateIcon sx={iconSx} secondary={secondary} />,
     label: t('home.helpScreen.navigate'),
   },
   {
-    icon: <PinchIcon sx={iconSx} />,
+    icon: <PinchIcon sx={iconSx} secondary={secondary} />,
     label: t('home.helpScreen.pinch'),
   },
   {
-    icon: <TapIcon sx={iconSx} />,
+    icon: <TapIcon sx={iconSx} secondary={secondary} />,
     label: t('home.helpScreen.tap'),
   },
 ]
@@ -69,15 +71,16 @@ const steps = (t: TFunction): Step[] => [
 type AvailableSteps = 0 | 1 | 2
 
 interface HelpScreenProps {
+  network: Network
   setParaTimeStep: (value: ParaTimeSelectorStep) => void
 }
 
 const localStore = storage()
 
-const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
+const HelpScreen: FC<HelpScreenProps> = ({ network, setParaTimeStep }) => {
   const { t } = useTranslation()
   const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
-  const allSteps = steps(t)
+  const allSteps = steps(t, network === Network.mainnet ? COLORS.aqua : COLORS.brandExtraDark)
   const totalSteps = allSteps.length
   const currentStep = allSteps[activeStep]
 
@@ -109,7 +112,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
         <swiper-container style={{ height: '100%' }} ref={swiperElRef} slides-per-view="1">
           {allSteps.map(({ icon, label }, index) => (
             <swiper-slide
-              style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}
               key={label}
             >
               {Math.abs(activeStep - index) < totalSteps ? <>{icon}</> : null}
@@ -117,7 +120,11 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography variant="h4" color="inherit" sx={{ marginBottom: 5 }}>
+      <Typography
+        variant="h4"
+        color="inherit"
+        sx={{ marginBottom: 5, fontWeight: 500, textTransform: 'capitalize' }}
+      >
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (
