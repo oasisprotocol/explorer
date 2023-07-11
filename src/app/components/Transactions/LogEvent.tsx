@@ -16,6 +16,42 @@ import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
+import { parseEvmEvent } from '../../utils/parseEvmEvent'
+import { TokenTransferIcon, TokenTransferLabel } from '../Tokens/TokenTransferIcon'
+import Box from '@mui/material/Box'
+import { TransferIcon } from './../CustomIcons/Transfer'
+import { DepositIcon } from './../CustomIcons/Deposit'
+import { WithdrawIcon } from './../CustomIcons/Withdraw'
+import { COLORS } from '../../../styles/theme/colors'
+import StreamIcon from '@mui/icons-material/Stream'
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+
+const EventTypeIcon: FC<{
+  eventType: RuntimeEventType
+  eventName: string
+}> = ({ eventType, eventName }) => {
+  const eventTypeIcons: Record<RuntimeEventType, React.ReactNode> = {
+    [RuntimeEventType.accountstransfer]: <TransferIcon fontSize="inherit" />,
+    [RuntimeEventType.evmlog]: <></>,
+    [RuntimeEventType.coregas_used]: <></>,
+    [RuntimeEventType.consensus_accountswithdraw]: <WithdrawIcon fontSize="inherit" />,
+    [RuntimeEventType.consensus_accountsdeposit]: <DepositIcon fontSize="inherit" />,
+    [RuntimeEventType.accountsmint]: <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />,
+    [RuntimeEventType.accountsburn]: (
+      <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
+    ),
+  }
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <b>{eventName}</b>
+      &nbsp;
+      <Box component="span" sx={{ fontSize: 25, lineHeight: 0 }}>
+        {eventTypeIcons[eventType]}
+      </Box>
+    </Box>
+  )
+}
 
 const EvmEventParamData: FC<{
   scope: SearchScope
@@ -112,7 +148,8 @@ const LogEvent: FC<{
           {eventName}: {event.body.amount.toLocaleString()}
         </span>
       )
-    case RuntimeEventType.evmlog:
+    case RuntimeEventType.evmlog: {
+      const { parsedEvmLogName } = parseEvmEvent(event)
       if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
         return (
           <div>
@@ -128,10 +165,14 @@ const LogEvent: FC<{
       }
       return (
         <div>
-          <div>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {eventName}: &nbsp;
-            <b>{event.evm_log_name}</b>
-          </div>
+            <b>
+              <TokenTransferLabel name={parsedEvmLogName} />
+            </b>
+            &nbsp;
+            <TokenTransferIcon name={parsedEvmLogName} size={25} />
+          </Box>
           <br />
           {event.evm_log_params && event.evm_log_params.length > 0 && (
             <Table sx={{ border: '1px solid lightgray' }}>
@@ -157,13 +198,13 @@ const LogEvent: FC<{
           )}
         </div>
       )
+    }
 
     case RuntimeEventType.accountsburn:
     case RuntimeEventType.accountsmint:
       return (
         <div>
-          <b>{eventName}</b>
-          <br />
+          <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('transactionEvent.fields.owner')}</dt>
             <dd>
@@ -191,8 +232,7 @@ const LogEvent: FC<{
     case RuntimeEventType.consensus_accountswithdraw:
       return (
         <div>
-          <b>{eventName}</b>
-          <br />
+          <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.from')}</dt>
             <dd>
