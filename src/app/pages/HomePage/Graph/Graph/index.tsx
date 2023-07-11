@@ -623,7 +623,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               {t('common.view')}
             </text>
           )}
-          {hoveredLayer === Layer.sapphire && disabledMap[Layer.sapphire] && (
+          {!isMobile && hoveredLayer === Layer.sapphire && disabledMap[Layer.sapphire] && (
             <text x="106" y="305" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               <tspan dx="-4" dy="-5">
                 {t('home.coming')}
@@ -693,7 +693,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               {t('common.view')}
             </text>
           )}
-          {hoveredLayer === Layer.consensus && disabledMap[Layer.consensus] && (
+          {!isMobile && hoveredLayer === Layer.consensus && disabledMap[Layer.consensus] && (
             <text x="170" y="212" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               <tspan dx="-4" dy="-5">
                 {t('home.coming')}
@@ -742,7 +742,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               {t('common.view')}
             </text>
           )}
-          {hoveredLayer === Layer.cipher && disabledMap[Layer.cipher] && (
+          {!isMobile && hoveredLayer === Layer.cipher && disabledMap[Layer.cipher] && (
             <text x="290" y="205" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               <tspan dx="-4" dy="-5">
                 {t('home.coming')}
