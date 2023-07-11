@@ -21,8 +21,7 @@ import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { useTokenWithBase64Address } from './hooks'
 import { TokenTypeTag } from './TokenList'
-
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+import { parseEvmEvent } from '../../utils/parseEvmEvent'
 
 const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -153,12 +152,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
     { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
   ]
   const tableRows = transfers?.map((transfer, index) => {
-    const fromAddress = transfer.evm_log_params?.find(param => param.name === 'from')?.value as
-      | string
-      | undefined
-    const toAddress = transfer.evm_log_params?.find(param => param.name === 'to')?.value as string | undefined
-    const isMinting = fromAddress === NULL_ADDRESS
-    const isBurning = toAddress === NULL_ADDRESS
+    const { fromAddress, toAddress, isMinting, parsedEvmLogName } = parseEvmEvent(transfer)
 
     return {
       key: `event-${index + (pagination ? (pagination.selectedPage - 1) * pagination.rowsPerPage : 0)}`,
@@ -180,11 +174,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'type',
           align: TableCellAlign.Center,
-          content: (
-            <TokenTransferIcon
-              name={isMinting ? 'Minting' : isBurning ? 'Burning' : transfer.evm_log_name || undefined}
-            />
-          ),
+          content: <TokenTransferIcon name={parsedEvmLogName} />,
         },
 
         {
