@@ -46,7 +46,7 @@ describe('RoundedBalance', () => {
     it('whole number', () => {
       render(<RoundedBalance value="1111111111111111111111111111111111111111111111111111" ticker="ROSE" />)
       expect(
-        screen.getByText('1111111111111111111111111111111111111111111111111111 ROSE'),
+        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111 ROSE'),
       ).toBeInTheDocument()
     })
 
@@ -58,14 +58,14 @@ describe('RoundedBalance', () => {
         />,
       )
       expect(
-        screen.getByText('1111111111111111111111111111111111111111111111111111.00000… ROSE'),
+        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111.00000… ROSE'),
       ).toBeInTheDocument()
     })
 
     it('without converting to sci notation', () => {
       render(<RoundedBalance value="1000000000000000000000000000000000000000000000000000" ticker="ROSE" />)
       expect(
-        screen.getByText('1000000000000000000000000000000000000000000000000000 ROSE'),
+        screen.getByText('1,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000 ROSE'),
       ).toBeInTheDocument()
     })
   })

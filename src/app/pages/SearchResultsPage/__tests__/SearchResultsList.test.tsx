@@ -78,8 +78,8 @@ describe('SearchResultsView', () => {
     )
 
     expect(screen.getByText('Tokens')).toBeInTheDocument()
-    expect(screen.getByText('337325.43836… FTP')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /337325.43836/ })).toHaveAttribute(
+    expect(screen.getByText('337,325.43836… FTP')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /337,325.43836/ })).toHaveAttribute(
       'href',
       '/mainnet/emerald/address/0xBA504818FdD8D3dBA2Ef8fD9B4F4D5c71aD1d1D3/tokens/erc-20#oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
     )
