@@ -109,7 +109,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
         <swiper-container style={{ height: '100%' }} ref={swiperElRef} slides-per-view="1">
           {allSteps.map(({ icon, label }, index) => (
             <swiper-slide
-              style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}
               key={label}
             >
               {Math.abs(activeStep - index) < totalSteps ? <>{icon}</> : null}
@@ -117,7 +117,11 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography variant="h4" color="inherit" sx={{ marginBottom: 5 }}>
+      <Typography
+        variant="h4"
+        color="inherit"
+        sx={{ marginBottom: 5, fontWeight: 500, textTransform: 'capitalize' }}
+      >
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (

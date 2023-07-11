@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     networkBubbleBorder?: string
     titleOnBackground?: string
     graphZoomOutText?: string
+    helpScreenIconColor?: string
   }
 
   interface PaletteColor extends CustomLayoutPalette {}
@@ -106,6 +107,7 @@ export const defaultTheme = createTheme({
       networkBubbleBorder: COLORS.white,
       titleOnBackground: COLORS.white,
       graphZoomOutText: COLORS.white,
+      helpScreenIconColor: COLORS.aqua,
     },
     primary: {
       main: COLORS.brandMedium,
@@ -786,16 +788,15 @@ export const defaultTheme = createTheme({
         dot: ({ theme }) => ({
           width: '30px',
           height: '4px',
-          background: theme.palette.layout.secondary,
+          background: 'transparent',
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: theme.palette.layout.lightBorder,
+          borderColor: theme.palette.layout.main,
           borderRadius: theme.spacing(2),
-          boxShadow: '0 4px 50px 15px rgba(0, 0, 98, 0.54)',
         }),
-        dotActive: {
-          background: COLORS.white,
-        },
+        dotActive: ({ theme }) => ({
+          background: theme.palette.layout.main,
+        }),
       },
     },
     MuiIconButton: {
