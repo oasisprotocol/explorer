@@ -14,6 +14,7 @@ import {
   MouseEvent,
   KeyboardEvent,
   FocusEvent,
+  ReactNode,
 } from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -144,7 +145,7 @@ const SelectOption = <T extends SelectOptionBase>({ value, label }: T): ReactEle
 )
 
 interface SelectCmpProps<T extends SelectOptionBase> {
-  label?: string
+  label?: ReactNode
   options: T[]
   defaultValue?: T['value']
   handleChange?: (selectedOption: T['value'] | null) => void
@@ -179,11 +180,7 @@ const SelectCmp = <T extends SelectOptionBase>({
 
   return (
     <Box className={className}>
-      {label && (
-        <label htmlFor={selectId}>
-          <Typography variant="body2">{label}</Typography>
-        </label>
-      )}
+      {label && <label htmlFor={selectId}>{label}</label>}
       <CustomSelect<T['value']>
         id={selectId}
         defaultValue={defaultValue}

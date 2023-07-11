@@ -235,7 +235,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     <>
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
-          <QuickPinchZoomOuter network={network}>
+          <QuickPinchZoomOuter>
             <QuickPinchZoom
               ref={quickPinchZoomRef}
               onUpdate={onPinchZoom}

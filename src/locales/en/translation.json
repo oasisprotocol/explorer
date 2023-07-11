@@ -376,8 +376,7 @@
       "consensusDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
       "close": "Close"
     },
-    "selectNetwork": "Selected net",
-    "selectNetworkAria": "Toggle network selector",
+    "selectedNetwork": "Selected network",
     "coming": "Coming",
     "soon": "soon"
   },
