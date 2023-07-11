@@ -9,13 +9,13 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
 
-export const useAccount = (scope: SearchScope, address: string) => {
+export const useAccount = (scope: SearchScope, oasisAddress: string) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const query = useGetRuntimeAccountsAddress(network, layer, address!)
+  const query = useGetRuntimeAccountsAddress(network, layer, oasisAddress!)
   const account = query.data?.data
   const { isLoading, isError, isFetched } = query
 
