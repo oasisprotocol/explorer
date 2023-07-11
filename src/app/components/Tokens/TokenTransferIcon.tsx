@@ -6,8 +6,9 @@ import { tooltipDelay } from '../../../styles/theme'
 import { UnknownIcon } from './../CustomIcons/Unknown'
 import { TransferIcon } from './../CustomIcons/Transfer'
 import { COLORS } from '../../../styles/theme/colors'
-import Stream from '@mui/icons-material/Stream'
-import LocalFireDepartment from '@mui/icons-material/LocalFireDepartment'
+import StreamIcon from '@mui/icons-material/Stream'
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import ApprovalIcon from '@mui/icons-material/Approval'
 
 const getTokenTransferLabel = (t: TFunction, name: string | undefined): string => {
   switch (name) {
@@ -15,6 +16,8 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
       return t('tokens.transferEventType.unavailable')
     case 'Transfer':
       return t('tokens.transferEventType.transfer')
+    case 'Approval':
+      return t('tokens.transferEventType.approval')
     case 'Minting':
       return t('tokens.transferEventType.minting')
     case 'Burning':
@@ -32,10 +35,12 @@ const getTokenTransferIcon = (name: string | undefined) => {
       return <UnknownIcon sx={iconStyles} />
     case 'Transfer':
       return <TransferIcon sx={iconStyles} />
+    case 'Approval':
+      return <ApprovalIcon sx={iconStyles} htmlColor={COLORS.eucalyptus} />
     case 'Minting':
-      return <Stream sx={iconStyles} htmlColor={COLORS.eucalyptus} />
+      return <StreamIcon sx={iconStyles} htmlColor={COLORS.eucalyptus} />
     case 'Burning':
-      return <LocalFireDepartment sx={iconStyles} htmlColor={COLORS.eucalyptus} />
+      return <LocalFireDepartmentIcon sx={iconStyles} htmlColor={COLORS.eucalyptus} />
     default:
       return <UnknownIcon sx={iconStyles} />
   }
