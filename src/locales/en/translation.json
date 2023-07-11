@@ -118,7 +118,8 @@
       "title": "Verification",
       "isVerified": "Verified",
       "isNotVerified": "Unverified",
-      "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>"
+      "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>",
+      "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
     }
   },
   "nodes": {
