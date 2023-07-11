@@ -6,8 +6,10 @@ import { tooltipDelay } from '../../../styles/theme'
 import { UnknownIcon } from './../CustomIcons/Unknown'
 import { TransferIcon } from './../CustomIcons/Transfer'
 import { COLORS } from '../../../styles/theme/colors'
-import Stream from '@mui/icons-material/Stream'
-import LocalFireDepartment from '@mui/icons-material/LocalFireDepartment'
+import StreamIcon from '@mui/icons-material/Stream'
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import ApprovalIcon from '@mui/icons-material/Approval'
+import Box from '@mui/material/Box'
 
 const getTokenTransferLabel = (t: TFunction, name: string | undefined): string => {
   switch (name) {
@@ -15,6 +17,8 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
       return t('tokens.transferEventType.unavailable')
     case 'Transfer':
       return t('tokens.transferEventType.transfer')
+    case 'Approval':
+      return t('tokens.transferEventType.approval')
     case 'Minting':
       return t('tokens.transferEventType.minting')
     case 'Burning':
@@ -24,24 +28,25 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
   }
 }
 
-const iconStyles = { fontSize: '40px' }
 const getTokenTransferIcon = (name: string | undefined) => {
   switch (name) {
     case undefined:
       // Method may be undefined if the transaction was malformed.
-      return <UnknownIcon sx={iconStyles} />
+      return <UnknownIcon fontSize="inherit" />
     case 'Transfer':
-      return <TransferIcon sx={iconStyles} />
+      return <TransferIcon fontSize="inherit" />
+    case 'Approval':
+      return <ApprovalIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
     case 'Minting':
-      return <Stream sx={iconStyles} htmlColor={COLORS.eucalyptus} />
+      return <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
     case 'Burning':
-      return <LocalFireDepartment sx={iconStyles} htmlColor={COLORS.eucalyptus} />
+      return <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
     default:
-      return <UnknownIcon sx={iconStyles} />
+      return <UnknownIcon fontSize="inherit" />
   }
 }
 
-type TokenTransferLabelProps = {
+interface TokenTransferLabelProps {
   /**
    * The event name
    */
@@ -54,7 +59,11 @@ export const TokenTransferLabel: FC<TokenTransferLabelProps> = ({ name }) => {
   return <>{getTokenTransferLabel(t, name)}</>
 }
 
-export const TokenTransferIcon: FC<TokenTransferLabelProps> = ({ name }) => {
+interface TokenTransferIconProps extends TokenTransferLabelProps {
+  size: number
+}
+
+export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, size }) => {
   const { t } = useTranslation()
 
   return (
@@ -65,7 +74,9 @@ export const TokenTransferIcon: FC<TokenTransferLabelProps> = ({ name }) => {
       enterDelay={tooltipDelay}
       enterNextDelay={tooltipDelay}
     >
-      <span>{getTokenTransferIcon(name)}</span>
+      <Box component="span" sx={{ fontSize: size, lineHeight: 0 }}>
+        {getTokenTransferIcon(name)}
+      </Box>
     </Tooltip>
   )
 }

@@ -220,6 +220,7 @@
     "transfers": "Token Transfers",
     "transferEventType": {
       "transfer": "Transfer",
+      "approval": "Approval",
       "minting": "Minting",
       "burning": "Burning",
       "unavailable": "Unknown token transfer event",
