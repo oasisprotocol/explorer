@@ -27,6 +27,8 @@ export const ResultListFrame = styled(Box)(({ theme: wantedTheme }) => {
         background: COLORS.white,
         borderRadius: 12,
         boxShadow: '-20px 4px 40px rgba(34, 47, 63, 0.24)',
+        // Negative margins won't work with default Card overflow
+        [`&& .${cardClasses.root}`]: { overflow: 'initial' },
         [`&& .${cardClasses.root} > .${boxClasses.root}`]: {
           background: wantedTheme.palette.layout.networkBubbleBorder,
           marginLeft: -78,
