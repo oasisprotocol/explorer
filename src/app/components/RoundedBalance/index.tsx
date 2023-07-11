@@ -1,18 +1,30 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { getNameForTicker } from '../../../types/ticker'
+import { SearchScope } from '../../../types/searchScope'
+import { TokenLink } from '../Tokens/TokenLink'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 
 type RoundedBalanceProps = {
   ticker?: string
   value?: string
+  scope?: SearchScope
+  tokenAddress?: string
+  tickerAsLink?: boolean | undefined
 }
 
 const numberOfDecimals = 5
 
-export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
+export const RoundedBalance: FC<RoundedBalanceProps> = ({
+  ticker,
+  value,
+  scope,
+  tokenAddress,
+  tickerAsLink,
+}) => {
   const { t } = useTranslation()
 
   if (!value) {
@@ -24,9 +36,25 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
 
   const tickerName = ticker ? getNameForTicker(t, ticker) : ''
 
+  const tickerLink =
+    tickerAsLink && !!scope && !!tokenAddress ? (
+      <TokenLink scope={scope} address={tokenAddress} name={tickerName} />
+    ) : (
+      <PlaceholderLabel label={tickerName} />
+    )
+
   if (number.isEqualTo(truncatedNumber)) {
-    return <span>{t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}</span>
+    return (
+      <Trans
+        t={t}
+        i18nKey="common.valueInTokenWithLink"
+        values={{ value: number.toFixed() }}
+        components={{ TickerLink: tickerLink }}
+      />
+    )
   }
+
+  const almostZero = !number.isZero() && truncatedNumber.isZero()
 
   return (
     <span>
@@ -38,12 +66,15 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({ ticker, value }) => {
         enterNextDelay={tooltipDelay}
       >
         <span>
-          {!number.isZero() && truncatedNumber.isZero()
-            ? t('common.lessThanAmount', {
-                value: truncatedNumber.toFixed(numberOfDecimals),
-                ticker: tickerName,
-              })
-            : t('common.roundedValueInToken', { value: truncatedNumber.toFixed(), ticker: tickerName })}
+          <Trans
+            t={t}
+            i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
+            values={{
+              value: almostZero ? truncatedNumber.toFixed(numberOfDecimals) : truncatedNumber.toFixed(),
+            }}
+            shouldUnescape={true}
+            components={{ TickerLink: tickerLink }}
+          />
         </span>
       </Tooltip>
     </span>

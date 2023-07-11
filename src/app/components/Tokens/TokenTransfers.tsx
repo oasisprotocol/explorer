@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { styled } from '@mui/material/styles'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
-import { Layer, RuntimeEvent, useGetRuntimeEvmTokensAddress } from '../../../oasis-nexus/api'
+import { EvmTokenType, RuntimeEvent } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
@@ -15,8 +15,12 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { fromBaseUnits, getEthAccountAddressFromBase64, getEvmBech32Address } from '../../utils/helpers'
-import { AppErrors } from '../../../types/errors'
+import { fromBaseUnits } from '../../utils/helpers'
+import Skeleton from '@mui/material/Skeleton'
+import { TokenLink } from './TokenLink'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
+import { useTokenWithBase64Address } from './hooks'
+import { TokenTypeTag } from './TokenList'
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -42,42 +46,85 @@ type TableRuntimeEvent = RuntimeEvent & {
  * This is a wrapper around RoundedBalance which is able to find out the ticker by looking at an event
  * @constructor
  */
-const DelayedEventBalance: FC<
-  Omit<Exclude<Parameters<typeof RoundedBalance>[0], undefined>, 'ticker'> & {
-    event: RuntimeEvent
-  }
-> = props => {
+const DelayedEventBalance: FC<{
+  event: RuntimeEvent
+  tickerAsLink?: boolean | undefined
+}> = ({ event, tickerAsLink }) => {
   const { t } = useTranslation()
-  const [oasisAddress, setOasisAddress] = useState('')
-  const { event, value, ...rest } = props
+  const { isLoading, isError, ethAddress, token } = useTokenWithBase64Address(event, event.body.address)
 
-  if (event.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
+  if (isLoading) {
+    return <Skeleton variant="text" />
+  }
+  if (isError || !token) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Event:', JSON.stringify(event, null, '  '))
+      throw new Error("Can't identify token for this event! (See console.)")
+    }
+    return t('common.missing')
   }
 
-  const b64Address = event.body.address
-  const ethAddress = b64Address ? getEthAccountAddressFromBase64(b64Address) : undefined
-  useEffect(() => {
-    if (ethAddress) {
-      getEvmBech32Address(ethAddress).then(setOasisAddress)
-    }
-  }, [ethAddress])
+  const ticker = token.symbol || t('common.missing')
 
-  const tokenQuery = useGetRuntimeEvmTokensAddress(event.network, event.layer, oasisAddress, {
-    query: {
-      enabled: !!oasisAddress,
-    },
-  })
+  if (token.type === EvmTokenType.ERC20) {
+    // We are calling it 'raw' since it's not yet normalized according to decimals.
+    const rawValue = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
+    const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, token?.decimals || 0)
 
-  const token = tokenQuery.data?.data
-  const realValue = value === undefined ? undefined : fromBaseUnits(value, token?.decimals || 0)
-  const ticker = token?.symbol || t('common.missing')
+    return (
+      <RoundedBalance
+        value={value}
+        ticker={ticker}
+        scope={event}
+        tokenAddress={ethAddress}
+        tickerAsLink={tickerAsLink}
+      />
+    )
+  } else if (token.type === EvmTokenType.ERC721) {
+    const tokenID = event.evm_log_params?.find(param => param.name === 'tokenID')?.value as string | undefined
+    return tokenID ? (
+      <Trans
+        t={t}
+        i18nKey="common.tokenInstance"
+        components={{
+          InstanceLink: <PlaceholderLabel label={tokenID} />,
+          TickerLink: tickerAsLink ? (
+            <TokenLink scope={event} address={ethAddress!} name={ticker} />
+          ) : (
+            <PlaceholderLabel label={ticker} />
+          ),
+        }}
+      />
+    ) : (
+      t('common.missing')
+    )
+  } else {
+    return token.type
+  }
+}
 
-  return <RoundedBalance {...rest} value={realValue} ticker={ticker} />
+const DelayedTokenTransferTokenType: FC<{ event: RuntimeEvent }> = ({ event }) => {
+  const { t } = useTranslation()
+  const { isLoading, isError, token } = useTokenWithBase64Address(event, event.body.address)
+
+  if (isLoading) {
+    return <Skeleton variant="text" />
+  }
+  if (isError || !token) {
+    return t('common.missing')
+  }
+  return <TokenTypeTag tokenType={token.type} />
 }
 
 type TokenTransfersProps = {
   transfers?: TableRuntimeEvent[]
+  /**
+   * Are we trying to display transfers for (potentially) multiple different tokens?
+   *
+   * If yes, we will show more information about each token (token type, link to token dashboard, etc.),
+   * which would be redundant if we are listing transfers of a single token.
+   */
+  differentTokens?: boolean | undefined
   ownAddress?: string
   isLoading: boolean
   limit: number
@@ -89,6 +136,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   limit,
   pagination,
   transfers,
+  differentTokens,
   ownAddress,
 }) => {
   const { t } = useTranslation()
@@ -99,6 +147,9 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
     { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
     { key: 'from', content: t('common.from'), width: '150px' },
     { key: 'to', content: t('common.to'), width: '150px' },
+    ...(differentTokens
+      ? [{ key: 'tokenType', content: t('tokens.type'), align: TableCellAlign.Center }]
+      : []),
     { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
   ]
   const tableRows = transfers?.map((transfer, index) => {
@@ -106,7 +157,6 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
       | string
       | undefined
     const toAddress = transfer.evm_log_params?.find(param => param.name === 'to')?.value as string | undefined
-    const value = transfer.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
     const isMinting = fromAddress === NULL_ADDRESS
     const isBurning = toAddress === NULL_ADDRESS
 
@@ -190,11 +240,20 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
             <AccountLink scope={transfer} address={toAddress} alwaysTrim={true} />
           ),
         },
-
+        ...(differentTokens
+          ? [
+              {
+                key: 'tokenType',
+                // TODO: temporary workaround until token type becomes available as part of RuntimeEvent
+                content: <DelayedTokenTransferTokenType event={transfer} />,
+                align: TableCellAlign.Center,
+              },
+            ]
+          : []),
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: value === undefined ? '' : <DelayedEventBalance value={value} event={transfer} />,
+          content: <DelayedEventBalance event={transfer} tickerAsLink={differentTokens} />,
         },
       ],
       highlight: transfer.markAsNew,
