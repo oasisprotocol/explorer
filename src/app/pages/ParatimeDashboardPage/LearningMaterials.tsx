@@ -13,10 +13,10 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
 import { Layer } from '../../../oasis-nexus/api'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
 import { SpecifiedPerEnabledLayer } from '../../utils/route-utils'
+import { SearchScope } from '../../../types/searchScope'
 
 const StyledLink = styled(Link)(() => ({
   width: '44px',
@@ -130,9 +130,9 @@ const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ..
   )
 }
 
-export const LearningMaterials = () => {
+export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
-  const { layer, network } = useRequiredScopeParam()
+  const { layer, network } = scope
   const content = getContent(t)[network][layer]
 
   if (!content) {

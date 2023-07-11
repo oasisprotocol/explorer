@@ -11,31 +11,33 @@ import { TotalTransactions } from './TotalTransactions'
 import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
+  const scope = useRequiredScopeParam()
 
   return (
     <PageLayout>
-      <ParaTimeSnapshot />
+      <ParaTimeSnapshot scope={scope} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <LatestTransactions />
+      <LatestTransactions scope={scope} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
-          <LearningMaterials />
+          <LearningMaterials scope={scope} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <LatestBlocks />
+          <LatestBlocks scope={scope} />
         </Grid>
         {isMobile && (
           <Grid item xs={12}>
-            <TopTokens />
+            <TopTokens scope={scope} />
           </Grid>
         )}
       </Grid>
-      {!isMobile && <TopTokens />}
-      <TransactionsStats />
-      <TotalTransactions />
+      {!isMobile && <TopTokens scope={scope} />}
+      <TransactionsStats scope={scope} />
+      <TotalTransactions scope={scope} />
       <Social />
     </PageLayout>
   )

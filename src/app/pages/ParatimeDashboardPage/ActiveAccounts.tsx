@@ -18,7 +18,7 @@ import {
   filterHourlyActiveAccounts,
   sumBucketsByStartDuration,
 } from '../../utils/chart-utils'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { SearchScope } from '../../../types/searchScope'
 
 export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
   switch (duration) {
@@ -56,6 +56,7 @@ export const getChartLabelFormatParams = (duration: ChartDuration) => {
 }
 
 type ActiveAccountsProps = {
+  scope: SearchScope
   chartDuration: ChartDuration
 }
 
@@ -66,7 +67,7 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
   [ChartDuration.ALL_TIME]: t('chartDuration.lastMonth'),
 })
 
-export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
+export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
   const { limit, bucket_size_seconds } = {
@@ -78,7 +79,6 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ chartDuration }) => {
         ? dailyLimitWithoutBuffer
         : durationToQueryParams[chartDuration].limit,
   }
-  const scope = useRequiredScopeParam()
   const activeAccountsQuery = useGetLayerStatsActiveAccounts(
     scope.network,
     scope.layer,

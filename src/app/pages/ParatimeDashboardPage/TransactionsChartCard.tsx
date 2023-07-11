@@ -14,7 +14,7 @@ import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { PercentageGain } from '../../components/PercentageGain'
 import startOfHour from 'date-fns/startOfHour'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { SearchScope } from '../../../types/searchScope'
 
 const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
   [ChartDuration.TODAY]: t('chartDuration.lastHour'),
@@ -24,15 +24,15 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
 })
 
 interface TransactionsChartCardProps {
+  scope: SearchScope
   chartDuration: ChartDuration
 }
 
-const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ chartDuration }) => {
+const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chartDuration }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
   const { isMobile } = useScreenSize()
   const statsParams = durationToQueryParams[chartDuration]
-  const scope = useRequiredScopeParam()
   const { data, isFetched } = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
     query: { staleTime: chartUseQueryStaleTimeMs },
   })
