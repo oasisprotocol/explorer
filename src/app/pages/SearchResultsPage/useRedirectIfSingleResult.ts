@@ -7,7 +7,11 @@ import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
 
 /** If search only finds one result then redirect to it */
-export function useRedirectIfSingleResult(scope: SearchScope | undefined, results: SearchResults) {
+export function useRedirectIfSingleResult(
+  scope: SearchScope | undefined,
+  searchTerm: string,
+  results: SearchResults,
+) {
   const navigate = useNavigate()
 
   let shouldRedirect = results.length === 1
@@ -35,7 +39,10 @@ export function useRedirectIfSingleResult(scope: SearchScope | undefined, result
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
         break
       case 'token':
-        redirectTo = RouteUtils.getTokenRoute(item, item.eth_contract_addr || item.contract_addr)
+        redirectTo = `${RouteUtils.getTokenRoute(
+          item,
+          item.eth_contract_addr || item.contract_addr,
+        )}?q=${searchTerm}`
         break
       case 'proposal':
         redirectTo = RouteUtils.getProposalRoute(item.network, item.id)

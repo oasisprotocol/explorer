@@ -26,7 +26,7 @@ export const GlobalSearchResultsView: FC<{
 }> = ({ searchTerm, searchResults, tokenPrices }) => {
   const { t } = useTranslation()
   const [othersOpen, setOthersOpen] = useState(false)
-  useRedirectIfSingleResult(undefined, searchResults)
+  useRedirectIfSingleResult(undefined, searchTerm, searchResults)
 
   const themes = getThemesForNetworks()
   const networkNames = getNetworkNames(t)
