@@ -7,8 +7,8 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
 import { useLoaderData } from 'react-router-dom'
-import { getTokenTypeName } from '../../../types/tokens'
 import Skeleton from '@mui/material/Skeleton'
+import { getTokenTypeDescription, getTokenTypeStrictName } from '../../../types/tokens'
 
 export const TokenTypeCard: FC = () => {
   const { t } = useTranslation()
@@ -28,12 +28,30 @@ export const TokenTypeCard: FC = () => {
             <Typography
               component="span"
               sx={{
-                fontSize: '48px',
+                fontSize: '32px',
                 fontWeight: 700,
                 color: COLORS.brandDark,
+                textAlign: 'center',
               }}
             >
-              {token?.type ? getTokenTypeName(t, token.type) : '-'}
+              {token?.type ? (
+                <>
+                  {getTokenTypeDescription(t, token.type)}
+                  <Typography
+                    component="span"
+                    sx={{
+                      display: 'flex',
+                      fontSize: '24px',
+                      fontWeight: 700,
+                      color: COLORS.grayMedium,
+                    }}
+                  >
+                    ({getTokenTypeStrictName(t, token.type)})
+                  </Typography>
+                </>
+              ) : (
+                '-'
+              )}
             </Typography>
           )
         )}

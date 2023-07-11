@@ -49,12 +49,6 @@ export const getTokenTypeStrictName = (t: TFunction, tokenType: EvmTokenType): s
   }
 }
 
-export const getTokenTypeName = (t: TFunction, tokenType: EvmTokenType): string =>
-  t('tokens.typeDescription', {
-    spec: getTokenTypeStrictName(t, tokenType),
-    description: getTokenTypeDescription(t, tokenType),
-  })
-
 export const getTokenTypePluralName = (t: TFunction, tokenType: EvmTokenType): string =>
   t('tokens.typeDescription', {
     spec: getTokenTypeStrictName(t, tokenType),

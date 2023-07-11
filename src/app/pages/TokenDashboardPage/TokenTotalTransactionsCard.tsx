@@ -32,7 +32,7 @@ export const TokenTotalTransactionsCard: FC = () => {
             <Typography
               component="span"
               sx={{
-                fontSize: '48px',
+                fontSize: '32px',
                 fontWeight: 700,
                 color: COLORS.brandDark,
               }}
