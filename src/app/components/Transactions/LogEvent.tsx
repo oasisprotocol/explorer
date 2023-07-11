@@ -116,7 +116,7 @@ const LogEvent: FC<{
       if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
         return (
           <div>
-            <div>{eventName}</div>
+            <b>{eventName}</b>
             <br />
             <LongDataDisplay
               data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
@@ -128,16 +128,11 @@ const LogEvent: FC<{
       }
       return (
         <div>
-          <div>{eventName}</div>
+          <div>
+            {eventName}: &nbsp;
+            <b>{event.evm_log_name}</b>
+          </div>
           <br />
-
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-            <dt>{t('common.type')}</dt>
-            <dd>
-              <b>{event.evm_log_name}</b>
-            </dd>
-          </StyledDescriptionList>
-
           {event.evm_log_params && event.evm_log_params.length > 0 && (
             <Table sx={{ border: '1px solid lightgray' }}>
               <TableHead>
@@ -167,7 +162,7 @@ const LogEvent: FC<{
     case RuntimeEventType.accountsmint:
       return (
         <div>
-          <div>{eventName}</div>
+          <b>{eventName}</b>
           <br />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('transactionEvent.fields.owner')}</dt>
@@ -196,7 +191,7 @@ const LogEvent: FC<{
     case RuntimeEventType.consensus_accountswithdraw:
       return (
         <div>
-          <div>{eventName}</div>
+          <b>{eventName}</b>
           <br />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.from')}</dt>
@@ -233,7 +228,7 @@ const LogEvent: FC<{
       exhaustedTypeWarning('Unexpected event type', event.type)
       return (
         <div>
-          <div>{eventName}</div>
+          <b>{event.type}</b>
           <br />
           <pre>{JSON.stringify(event, null, ' ')}</pre>
         </div>
