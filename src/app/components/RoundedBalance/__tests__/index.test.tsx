@@ -14,12 +14,12 @@ describe('RoundedBalance', () => {
 
   it('should render sparse decimals', () => {
     render(<RoundedBalance value="0.10000000001" ticker="USDC" />)
-    expect(screen.getByText('0.1… USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.10000… USDC')).toBeInTheDocument()
   })
 
   it('should render sparse whole number', () => {
     render(<RoundedBalance value="100.00000000001" ticker="USDC" />)
-    expect(screen.getByText('100… USDC')).toBeInTheDocument()
+    expect(screen.getByText('100.00000… USDC')).toBeInTheDocument()
   })
 
   it('should render variant when rounded value is equal zero', () => {
@@ -58,7 +58,7 @@ describe('RoundedBalance', () => {
         />,
       )
       expect(
-        screen.getByText('1111111111111111111111111111111111111111111111111111… ROSE'),
+        screen.getByText('1111111111111111111111111111111111111111111111111111.00000… ROSE'),
       ).toBeInTheDocument()
     })
 

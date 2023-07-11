@@ -70,7 +70,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             t={t}
             i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
             values={{
-              value: almostZero ? truncatedNumber.toFixed(numberOfDecimals) : truncatedNumber.toFixed(),
+              value: truncatedNumber.toFixed(numberOfDecimals),
             }}
             shouldUnescape={true}
             components={{ TickerLink: tickerLink }}
