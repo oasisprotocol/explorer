@@ -8,16 +8,15 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
 import { useAccount, useAccountTokenTransfers } from './hook'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
+import { useOutletContext } from 'react-router-dom'
+import { AccountDetailsContext } from './index'
 
 export const accountTokenTransfersContainerId = 'transfers'
 
 export const AccountTokenTransfersCard: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { scope, address } = useOutletContext<AccountDetailsContext>()
 
   const { isLoading, isFetched, transfers, pagination, totalCount, isTotalCountClipped } =
     useAccountTokenTransfers(scope, address)

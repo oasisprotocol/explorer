@@ -84,27 +84,22 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 element: <AccountTransactionsCard />,
-                loader: addressParamLoader,
               },
               {
                 path: 'token-transfers',
                 element: <AccountTokenTransfersCard />,
-                loader: addressParamLoader,
               },
               {
                 path: 'tokens/erc-20',
                 element: <AccountTokensCard type="ERC20" />,
-                loader: addressParamLoader,
               },
               {
                 path: 'tokens/erc-721',
                 element: <AccountTokensCard type="ERC721" />,
-                loader: addressParamLoader,
               },
               {
                 path: 'code',
                 element: <ContractCodeCard />,
-                loader: addressParamLoader,
               },
             ],
           },

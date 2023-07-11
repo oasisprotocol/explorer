@@ -18,6 +18,12 @@ import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
+import { SearchScope } from '../../../types/searchScope'
+
+export type AccountDetailsContext = {
+  scope: SearchScope
+  address: string
+}
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -44,6 +50,8 @@ export const AccountDetailsPage: FC = () => {
 
   const showDetails = showTxs || showErc20
   const isLoading = isAccountLoading || isTokenLoading
+
+  const context: AccountDetailsContext = { scope, address }
 
   return (
     <PageLayout>
@@ -77,6 +85,7 @@ export const AccountDetailsPage: FC = () => {
             },
             { label: t('contract.code'), to: codeLink, visible: showCode },
           ]}
+          context={context}
         />
       )}
     </PageLayout>

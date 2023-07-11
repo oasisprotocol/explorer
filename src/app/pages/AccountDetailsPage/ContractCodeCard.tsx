@@ -4,8 +4,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hook'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import { CardEmptyState } from './CardEmptyState'
 import Typography from '@mui/material/Typography'
 import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
@@ -13,6 +12,7 @@ import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
+import { AccountDetailsContext } from './index'
 
 export const contractCodeContainerId = 'code'
 
@@ -51,8 +51,7 @@ const CodeDisplay: FC<{ rawData: string | undefined; label: string; extraTopPadd
 
 export const ContractCodeCard: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { scope, address } = useOutletContext<AccountDetailsContext>()
 
   const { isFetched, account } = useAccount(scope, address)
   const contract = account?.evm_contract

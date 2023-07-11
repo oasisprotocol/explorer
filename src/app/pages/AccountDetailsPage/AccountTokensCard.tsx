@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData, useLocation } from 'react-router-dom'
+import { useLocation, useOutletContext } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -12,7 +12,6 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAccount } from './hook'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -23,6 +22,7 @@ import {
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import Skeleton from '@mui/material/Skeleton'
+import { AccountDetailsContext } from './index'
 
 type AccountTokensCardProps = {
   type: EvmTokenType
@@ -50,8 +50,7 @@ export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string 
 }
 
 export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { scope, address } = useOutletContext<AccountDetailsContext>()
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenListLabel = getTokenTypePluralName(t, type)
@@ -61,7 +60,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
     { key: 'balance', align: TableCellAlign.Right, content: t('common.balance') },
     { key: 'ticker', align: TableCellAlign.Right, content: t('common.ticker') },
   ]
-  const { layer } = useRequiredScopeParam()
+  const { layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
