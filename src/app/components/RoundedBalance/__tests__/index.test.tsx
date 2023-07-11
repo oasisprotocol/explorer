@@ -12,6 +12,16 @@ describe('RoundedBalance', () => {
     expect(screen.getByText('0.00223… USDC')).toBeInTheDocument()
   })
 
+  it('should render sparse decimals', () => {
+    render(<RoundedBalance value="0.10000000001" ticker="USDC" />)
+    expect(screen.getByText('0.1… USDC')).toBeInTheDocument()
+  })
+
+  it('should render sparse whole number', () => {
+    render(<RoundedBalance value="100.00000000001" ticker="USDC" />)
+    expect(screen.getByText('100… USDC')).toBeInTheDocument()
+  })
+
   it('should render variant when rounded value is equal zero', () => {
     render(<RoundedBalance value="0.00000000000002231" ticker="USDC" />)
     expect(screen.getByText('< 0.00000 USDC')).toBeInTheDocument()
@@ -30,5 +40,33 @@ describe('RoundedBalance', () => {
   it('should render value with ROSE ticker symbol', () => {
     render(<RoundedBalance value="0.002231" ticker="ROSE" />)
     expect(screen.getByText('0.00223… ROSE')).toBeInTheDocument()
+  })
+
+  describe('should render large values', () => {
+    it('whole number', () => {
+      render(<RoundedBalance value="1111111111111111111111111111111111111111111111111111" ticker="ROSE" />)
+      expect(
+        screen.getByText('1111111111111111111111111111111111111111111111111111 ROSE'),
+      ).toBeInTheDocument()
+    })
+
+    it('with decimals', () => {
+      render(
+        <RoundedBalance
+          value="1111111111111111111111111111111111111111111111111111.00000000000002231"
+          ticker="ROSE"
+        />,
+      )
+      expect(
+        screen.getByText('1111111111111111111111111111111111111111111111111111… ROSE'),
+      ).toBeInTheDocument()
+    })
+
+    it('without converting to sci notation', () => {
+      render(<RoundedBalance value="1000000000000000000000000000000000000000000000000000" ticker="ROSE" />)
+      expect(
+        screen.getByText('1000000000000000000000000000000000000000000000000000 ROSE'),
+      ).toBeInTheDocument()
+    })
   })
 })
