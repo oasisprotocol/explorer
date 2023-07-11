@@ -114,14 +114,17 @@ export const sumBucketsByStartDuration = <
     return []
   }
 
-  const durationMap = buckets.reduce((accMap, item) => {
-    const key = startDurationFn(new Date(item[dateKey])).toISOString()
+  const durationMap = buckets.reduce(
+    (accMap, item) => {
+      const key = startDurationFn(new Date(item[dateKey])).toISOString()
 
-    return {
-      ...accMap,
-      [key]: (accMap[key] || 0) + item[sumKey],
-    }
-  }, {} as { [key: string]: number })
+      return {
+        ...accMap,
+        [key]: (accMap[key] || 0) + item[sumKey],
+      }
+    },
+    {} as { [key: string]: number },
+  )
 
   // For daily charts we want to skip the first and last buckets.
   // They are not full and we want to avoid chart drop.
