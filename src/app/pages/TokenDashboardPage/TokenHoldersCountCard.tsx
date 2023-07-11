@@ -4,16 +4,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenInfo } from './hook'
-import { useLoaderData } from 'react-router-dom'
 import Skeleton from '@mui/material/Skeleton'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TokenHoldersCountCard: FC = () => {
+export const TokenHoldersCountCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-
-  const address = useLoaderData() as string
 
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 

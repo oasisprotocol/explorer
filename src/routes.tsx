@@ -129,17 +129,14 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 element: <TokenTransfersCard />,
-                loader: addressParamLoader,
               },
               {
                 path: 'holders',
                 element: <TokenHoldersCard />,
-                loader: addressParamLoader,
               },
               {
                 path: 'code',
                 element: <ContractCodeCard />,
-                loader: addressParamLoader,
               },
             ],
           },

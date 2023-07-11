@@ -5,19 +5,18 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useAccount } from '../AccountDetailsPage/hook'
 import { useTokenInfo, useTokenTransfers } from './hook'
+import { TokenDashboardContext } from './index'
 
 export const tokenTransfersContainerId = 'transfers'
 
 export const TokenTransfersCard: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { scope, address } = useOutletContext<TokenDashboardContext>()
 
   const {
     isLoading: areTransfersLoading,

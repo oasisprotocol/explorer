@@ -13,6 +13,12 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
 import { contractCodeContainerId } from '../AccountDetailsPage/ContractCodeCard'
 import { tokenHoldersContainerId } from './TokenHoldersCard'
+import { SearchScope } from '../../../types/searchScope'
+
+export type TokenDashboardContext = {
+  scope: SearchScope
+  address: string
+}
 
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
@@ -30,18 +36,24 @@ export const TokenDashboardPage: FC = () => {
   const tokenHoldersLink = useHref(`holders#${tokenHoldersContainerId}`)
   const codeLink = useHref(`code#${contractCodeContainerId}`)
 
+  const context: TokenDashboardContext = {
+    scope,
+    address,
+  }
+
   return (
     <PageLayout>
-      <TokenTitleCard />
-      <TokenSnapshot />
+      <TokenTitleCard scope={scope} address={address} />
+      <TokenSnapshot scope={scope} address={address} />
       {!isMobile && <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />}
-      <TokenDetailsCard />
+      <TokenDetailsCard scope={scope} address={address} />
       <RouterTabs
         tabs={[
           { label: t('tokens.transfers'), to: tokenTransfersLink },
           { label: t('tokens.holders'), to: tokenHoldersLink },
           { label: t('contract.code'), to: codeLink },
         ]}
+        context={context}
       />
     </PageLayout>
   )

@@ -4,15 +4,11 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
 import { useAccount } from '../AccountDetailsPage/hook'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TokenGasUsedCard: FC = () => {
+export const TokenGasUsedCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-
-  const address = useLoaderData() as string
 
   const { account, isFetched } = useAccount(scope, address)
 
