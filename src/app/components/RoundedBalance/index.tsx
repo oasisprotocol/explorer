@@ -48,7 +48,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Trans
         t={t}
         i18nKey="common.valueInTokenWithLink"
-        values={{ value: number.toFixed() }}
+        values={{ value: number.toFormat() }}
         components={{ TickerLink: tickerLink }}
       />
     )
@@ -61,7 +61,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { value: number.toFixed(), ticker: tickerName })}
+        title={t('common.valueInToken', { value: number.toFormat(), ticker: tickerName })}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -70,7 +70,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             t={t}
             i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
             values={{
-              value: almostZero ? truncatedNumber.toFixed(numberOfDecimals) : truncatedNumber.toFixed(),
+              value: truncatedNumber.toFormat(numberOfDecimals),
             }}
             shouldUnescape={true}
             components={{ TickerLink: tickerLink }}
