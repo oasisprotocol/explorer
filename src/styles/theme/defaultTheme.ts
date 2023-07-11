@@ -366,7 +366,6 @@ export const defaultTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: ({ theme }) => ({
-          overflow: 'initial',
           borderRadius: 12,
           boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
