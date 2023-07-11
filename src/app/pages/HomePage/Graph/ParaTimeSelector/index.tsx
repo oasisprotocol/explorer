@@ -126,12 +126,17 @@ const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
 
-const QuickPinchZoomOuter = styled('div')(() => ({
+const QuickPinchZoomOuter = styled('div')(({ theme }) => ({
   '> div': {
     position: 'absolute',
     inset: 0,
-    border: '22px solid transparent',
+    border: '10px solid transparent',
     borderRadius: '50%',
+  },
+  [theme.breakpoints.up('sm')]: {
+    '> div': {
+      border: '22px solid transparent',
+    },
   },
 }))
 
