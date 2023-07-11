@@ -63,10 +63,7 @@ export const TokenDetailsCard: FC = () => {
 
             <dt>{t('contract.creator')}</dt>
             <dd>
-              <DelayedContractCreatorInfo
-                scope={token}
-                contractAddress={token.eth_contract_addr || token.contract_addr}
-              />
+              <DelayedContractCreatorInfo scope={token} contractOasisAddress={token.contract_addr} />
             </dd>
 
             <dt>{t('common.balance')} </dt>

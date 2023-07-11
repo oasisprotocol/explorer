@@ -71,9 +71,13 @@ export const ContractCreatorInfo: FC<{
 
 export const DelayedContractCreatorInfo: FC<{
   scope: SearchScope
-  contractAddress: string | undefined
-}> = ({ scope, contractAddress }) => {
-  const accountQuery = useGetRuntimeAccountsAddress(scope.network, scope.layer as Runtime, contractAddress!)
+  contractOasisAddress: string | undefined
+}> = ({ scope, contractOasisAddress }) => {
+  const accountQuery = useGetRuntimeAccountsAddress(
+    scope.network,
+    scope.layer as Runtime,
+    contractOasisAddress!,
+  )
 
   const account = accountQuery.data?.data
   const contract = account?.evm_contract
