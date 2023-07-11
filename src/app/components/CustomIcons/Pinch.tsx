@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
-import { COLORS } from '../../../styles/theme/colors'
+import { useTheme } from '@mui/material/styles'
 
-export const PinchIcon: FC<SvgIconProps & { secondary?: string }> = ({
-  secondary = COLORS.white,
-  ...restProps
-}) => {
+export const PinchIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, ...restProps }) => {
+  const theme = useTheme()
+  const secondaryColor = secondary ?? theme.palette.layout.helpScreenIconColor
+
   return (
     <SvgIcon width="50" height="50" viewBox="0 0 50 50" {...restProps}>
       <path
@@ -19,24 +19,27 @@ export const PinchIcon: FC<SvgIconProps & { secondary?: string }> = ({
       />
       <path
         d="M5 20L16 9"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M16 13V9H12"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M5 16V20H9"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
     </SvgIcon>
   )

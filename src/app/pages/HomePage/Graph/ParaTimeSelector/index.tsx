@@ -256,7 +256,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
             </ExploreBtn>
           )}
           {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile, showInfoScreen) && (
-            <HelpScreen setParaTimeStep={setStep} network={network} />
+            <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>
         {step === ParaTimeSelectorStep.Explore && (

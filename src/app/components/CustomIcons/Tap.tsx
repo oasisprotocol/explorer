@@ -1,16 +1,16 @@
 import { FC } from 'react'
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
-import { COLORS } from '../../../styles/theme/colors'
+import { useTheme } from '@mui/material/styles'
 
-export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({
-  secondary = COLORS.white,
-  ...restProps
-}) => {
+export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, ...restProps }) => {
+  const theme = useTheme()
+  const secondaryColor = secondary ?? theme.palette.layout.helpScreenIconColor
+
   return (
     <SvgIcon width="50" height="50" viewBox="0 0 50 50" {...restProps}>
       <path
         d="M31.8682 23.8414C34.9708 21.6721 37 18.073 37 14C37 7.37258 31.6274 2 25 2C18.3726 2 13 7.37258 13 14C13 18.073 15.0292 21.6721 18.1318 23.8414"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeWidth="2"
         strokeMiterlimit="10"
         strokeLinecap="round"

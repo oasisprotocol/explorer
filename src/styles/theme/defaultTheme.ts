@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     networkBubbleBorder?: string
     titleOnBackground?: string
     graphZoomOutText?: string
+    helpScreenIconColor?: string
   }
 
   interface PaletteColor extends CustomLayoutPalette {}
@@ -106,6 +107,7 @@ export const defaultTheme = createTheme({
       networkBubbleBorder: COLORS.white,
       titleOnBackground: COLORS.white,
       graphZoomOutText: COLORS.white,
+      helpScreenIconColor: COLORS.aqua,
     },
     primary: {
       main: COLORS.brandMedium,

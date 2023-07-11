@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
-import { COLORS } from '../../../styles/theme/colors'
+import { useTheme } from '@mui/material/styles'
 
-export const NavigateIcon: FC<SvgIconProps & { secondary?: string }> = ({
-  secondary = COLORS.white,
-  ...restProps
-}) => {
+export const NavigateIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, ...restProps }) => {
+  const theme = useTheme()
+  const secondaryColor = secondary ?? theme.palette.layout.helpScreenIconColor
+
   return (
     <SvgIcon width="50" height="50" viewBox="0 0 50 50" {...restProps}>
       <path
@@ -19,45 +19,51 @@ export const NavigateIcon: FC<SvgIconProps & { secondary?: string }> = ({
       />
       <path
         d="M34 3V15"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M32 4L34 2L36 4"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M32 14L34 16L36 14"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M41 9H27"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M39 7L41 9L39 11"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
       <path
         d="M29 7L27 9L29 11"
-        stroke={secondary}
+        stroke={secondaryColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="transparent"
       />
     </SvgIcon>
   )

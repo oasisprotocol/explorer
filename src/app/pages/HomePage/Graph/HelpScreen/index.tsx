@@ -14,8 +14,6 @@ import { TapIcon } from '../../../../components/CustomIcons/Tap'
 import { PinchIcon } from '../../../../components/CustomIcons/Pinch'
 import { NavigateIcon } from '../../../../components/CustomIcons/Navigate'
 import { Theme } from '@mui/material/styles/createTheme'
-import { COLORS } from '../../../../../styles/theme/colors'
-import { Network } from '../../../../../types/network'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -53,17 +51,17 @@ const iconSx = (theme: Theme) => ({
   fontSize: 50,
 })
 
-const steps = (t: TFunction, secondary: string): Step[] => [
+const steps = (t: TFunction): Step[] => [
   {
-    icon: <NavigateIcon sx={iconSx} secondary={secondary} />,
+    icon: <NavigateIcon sx={iconSx} />,
     label: t('home.helpScreen.navigate'),
   },
   {
-    icon: <PinchIcon sx={iconSx} secondary={secondary} />,
+    icon: <PinchIcon sx={iconSx} />,
     label: t('home.helpScreen.pinch'),
   },
   {
-    icon: <TapIcon sx={iconSx} secondary={secondary} />,
+    icon: <TapIcon sx={iconSx} />,
     label: t('home.helpScreen.tap'),
   },
 ]
@@ -71,16 +69,15 @@ const steps = (t: TFunction, secondary: string): Step[] => [
 type AvailableSteps = 0 | 1 | 2
 
 interface HelpScreenProps {
-  network: Network
   setParaTimeStep: (value: ParaTimeSelectorStep) => void
 }
 
 const localStore = storage()
 
-const HelpScreen: FC<HelpScreenProps> = ({ network, setParaTimeStep }) => {
+const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   const { t } = useTranslation()
   const [activeStep, setActiveStep] = useState<AvailableSteps>(0)
-  const allSteps = steps(t, network === Network.mainnet ? COLORS.aqua : COLORS.brandExtraDark)
+  const allSteps = steps(t)
   const totalSteps = allSteps.length
   const currentStep = allSteps[activeStep]
 
