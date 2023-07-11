@@ -26,7 +26,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 
-const EventTypeIcon: FC<{
+export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
   eventName: string
 }> = ({ eventType, eventName }) => {
