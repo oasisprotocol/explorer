@@ -50,6 +50,7 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
 
   return {
     [Network.mainnet]: {
+      // @ts-expect-error Emerald will be enabled as soon as Nexus re-indexing will be finished
       [Layer.emerald]: {
         primary: {
           description: t('learningMaterials.emerald.description'),

@@ -15,7 +15,7 @@ export type SpecifiedPerEnabledLayer<T = any> = {
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
     [Network.mainnet]: {
-      [Layer.emerald]: true,
+      // [Layer.emerald]: true,
       [Layer.sapphire]: true,
     },
     [Network.testnet]: {
