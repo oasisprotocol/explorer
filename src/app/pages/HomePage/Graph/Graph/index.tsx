@@ -7,7 +7,6 @@ import {
   memo,
   MouseEventHandler,
   PropsWithChildren,
-  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -263,30 +262,18 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     setOutOfDateMap({})
   }, [network])
 
-  const isLayerDisabled = useCallback(
-    (Layer: Layer) => {
-      return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
-    },
-    [network],
-  )
+  const isLayerDisabled = (Layer: Layer) => {
+    return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
+  }
 
-  const disabledMap: Record<Layer, boolean> = useMemo(
-    () => ({
-      [Layer.emerald]: isLayerDisabled(Layer.emerald),
-      [Layer.consensus]: isLayerDisabled(Layer.consensus),
-      [Layer.cipher]: isLayerDisabled(Layer.cipher),
-      [Layer.sapphire]: isLayerDisabled(Layer.sapphire),
-    }),
-    [isLayerDisabled],
-  )
+  const disabledMap: Record<Layer, boolean> = {
+    [Layer.emerald]: isLayerDisabled(Layer.emerald),
+    [Layer.consensus]: isLayerDisabled(Layer.consensus),
+    [Layer.cipher]: isLayerDisabled(Layer.cipher),
+    [Layer.sapphire]: isLayerDisabled(Layer.sapphire),
+  }
 
-  const enabledLayers: Layer[] = useMemo(
-    () =>
-      Object.keys(disabledMap)
-        .filter(layer => !disabledMap[layer as Layer])
-        .map(layer => layer as Layer),
-    [disabledMap],
-  )
+  const enabledLayers: Layer[] = useMemo(() => RouteUtils.getEnabledLayersForNetwork(network), [network])
 
   const onSelectLayer = (layer: Layer) => {
     if (isMobile && isZoomedIn) {
