@@ -10,16 +10,15 @@ import { Transactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { SearchScope } from '../../../types/searchScope'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestTransactions: FC = () => {
+export const LatestTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isTablet } = useScreenSize()
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer

@@ -12,16 +12,14 @@ import {
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TransactionsStats: FC = () => {
+export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   const statsParams = durationToQueryParams[chartDuration]
-
-  const scope = useRequiredScopeParam()
 
   const dailyVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
     query: {

@@ -9,15 +9,14 @@ import { Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { RouteUtils } from '../../utils/route-utils'
 import { TokenList } from '../../components/Tokens/TokenList'
+import { SearchScope } from '../../../types/searchScope'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const TopTokens: FC = () => {
+export const TopTokens: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer

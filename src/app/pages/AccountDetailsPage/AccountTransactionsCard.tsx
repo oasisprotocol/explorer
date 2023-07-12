@@ -9,15 +9,12 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
 import { useAccountTransactions } from './hook'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
+import { AccountDetailsContext } from './index'
 
 export const accountTransactionsContainerId = 'transactions'
 
-export const AccountTransactionsCard: FC = () => {
+export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
 
   const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
     useAccountTransactions(scope, address)

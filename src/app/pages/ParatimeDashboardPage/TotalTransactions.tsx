@@ -8,10 +8,10 @@ import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/cha
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TotalTransactions: FC = () => {
+export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
@@ -20,7 +20,6 @@ export const TotalTransactions: FC = () => {
     // We want to start from the beginning of offset as cumulative sum generates a line chart that always goes up
     offset: 0,
   }
-  const scope = useRequiredScopeParam()
   const dailyVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
     query: {
       keepPreviousData: true,

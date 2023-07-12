@@ -1,7 +1,5 @@
 import { FC } from 'react'
 import Card from '@mui/material/Card'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
 import { useTokenInfo } from './hook'
 import { useAccount } from '../AccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -15,11 +13,10 @@ import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
+import { SearchScope } from '../../../types/searchScope'
 
-export const TokenDetailsCard: FC = () => {
+export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
   const { isMobile } = useScreenSize()
 
   const { token, isLoading: tokenIsLoading } = useTokenInfo(scope, address)

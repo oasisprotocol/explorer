@@ -1,22 +1,22 @@
-import { FC } from 'react'
 import { useLocation, Outlet } from 'react-router-dom'
 import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
-type RouterTabsProps = {
+type RouterTabsProps<Context> = {
   tabs: {
     label: string
     to: string
     visible?: boolean
   }[]
+  context?: Context
 }
 
 function getPathname(tab: { to: string }) {
   return new URL(tab.to, 'https://a.b').pathname
 }
 
-export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
+export function RouterTabs<Context>({ tabs, context }: RouterTabsProps<Context>) {
   const { pathname } = useLocation()
   const currentTab = tabs.find(tab => getPathname(tab) === pathname)
 
@@ -35,7 +35,7 @@ export const RouterTabs: FC<RouterTabsProps> = ({ tabs }) => {
             />
           ))}
       </Tabs>
-      <Outlet />
+      <Outlet context={context} />
     </>
   )
 }

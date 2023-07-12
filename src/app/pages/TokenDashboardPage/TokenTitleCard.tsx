@@ -1,6 +1,4 @@
 import { FC } from 'react'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -12,13 +10,12 @@ import { AccountLink } from '../../components/Account/AccountLink'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTranslation } from 'react-i18next'
+import { SearchScope } from '../../../types/searchScope'
 
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
-export const TokenTitleCard: FC = () => {
+export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
 
   const { isLoading, token } = useTokenInfo(scope, address)
 

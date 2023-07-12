@@ -8,14 +8,13 @@ import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer, useGetRuntimeStatus } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { paraTimesConfig } from '../../../config'
+import { SearchScope } from '../../../types/searchScope'
 
-export const Nodes: FC = () => {
+export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
   if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }

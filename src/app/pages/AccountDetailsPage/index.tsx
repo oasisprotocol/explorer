@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
@@ -18,6 +18,14 @@ import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
+import { SearchScope } from '../../../types/searchScope'
+
+export type AccountDetailsContext = {
+  scope: SearchScope
+  address: string
+}
+
+export const useAccountDetailsProps = () => useOutletContext<AccountDetailsContext>()
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -44,6 +52,8 @@ export const AccountDetailsPage: FC = () => {
 
   const showDetails = showTxs || showErc20
   const isLoading = isAccountLoading || isTokenLoading
+
+  const context: AccountDetailsContext = { scope, address }
 
   return (
     <PageLayout>
@@ -77,6 +87,7 @@ export const AccountDetailsPage: FC = () => {
             },
             { label: t('contract.code'), to: codeLink, visible: showCode },
           ]}
+          context={context}
         />
       )}
     </PageLayout>

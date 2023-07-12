@@ -14,20 +14,19 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Network } from '../../../types/network'
 import { getLayerNames } from '../../../types/layers'
 import { TestnetFaucet } from './TestnetFaucet'
+import { SearchScope } from '../../../types/searchScope'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
 }))
 
-export const ParaTimeSnapshot: FC = () => {
+export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
-  const scope = useRequiredScopeParam()
   const paratime = getLayerNames(t)[scope.layer]
   const theme = useTheme()
   const { isMobile } = useScreenSize()
@@ -62,13 +61,13 @@ export const ParaTimeSnapshot: FC = () => {
 
       <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
         <StyledGrid item xs={22} md={6}>
-          <TransactionsChartCard chartDuration={chartDuration} />
+          <TransactionsChartCard scope={scope} chartDuration={chartDuration} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
-          <ActiveAccounts chartDuration={chartDuration} />
+          <ActiveAccounts scope={scope} chartDuration={chartDuration} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
-          <Nodes />
+          <Nodes scope={scope} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
           {scope.network === Network.mainnet && <RosePriceCard />}
