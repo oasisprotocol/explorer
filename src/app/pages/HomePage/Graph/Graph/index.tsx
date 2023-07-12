@@ -567,7 +567,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               {t('common.view')}
             </text>
           )}
-          {hoveredLayer === Layer.emerald && disabledMap[Layer.emerald] && (
+          {!isMobile && hoveredLayer === Layer.emerald && disabledMap[Layer.emerald] && (
             <text x="177.4" y="97" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
               <tspan dx="-4" dy="-5">
                 {t('home.coming')}
