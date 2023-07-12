@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { useOutletContext } from 'react-router-dom'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useTokenHolders, useTokenInfo } from './hook'
 import { TokenHolders } from '../../components/Tokens/TokenHolders'
@@ -14,9 +13,8 @@ import { TokenDashboardContext } from './index'
 
 export const tokenHoldersContainerId = 'holders'
 
-export const TokenHoldersCard: FC = () => {
+export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const { scope, address } = useOutletContext<TokenDashboardContext>()
 
   const { isLoading: isTokenLoading, token } = useTokenInfo(scope, address)
 

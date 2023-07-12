@@ -9,14 +9,12 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
 import { useAccount, useAccountTokenTransfers } from './hook'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
-import { useOutletContext } from 'react-router-dom'
 import { AccountDetailsContext } from './index'
 
 export const accountTokenTransfersContainerId = 'transfers'
 
-export const AccountTokenTransfersCard: FC = () => {
+export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const { scope, address } = useOutletContext<AccountDetailsContext>()
 
   const { isLoading, isFetched, transfers, pagination, totalCount, isTotalCountClipped } =
     useAccountTokenTransfers(scope, address)

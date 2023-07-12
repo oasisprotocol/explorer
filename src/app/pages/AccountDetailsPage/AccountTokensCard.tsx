@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useOutletContext } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -24,7 +24,7 @@ import { SearchScope } from '../../../types/searchScope'
 import Skeleton from '@mui/material/Skeleton'
 import { AccountDetailsContext } from './index'
 
-type AccountTokensCardProps = {
+type AccountTokensCardProps = AccountDetailsContext & {
   type: EvmTokenType
 }
 
@@ -49,8 +49,7 @@ export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string 
   )
 }
 
-export const AccountTokensCard: FC<AccountTokensCardProps> = ({ type }) => {
-  const { scope, address } = useOutletContext<AccountDetailsContext>()
+export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, type }) => {
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenListLabel = getTokenTypePluralName(t, type)

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Account } from '../../components/Account'
@@ -24,6 +24,8 @@ export type AccountDetailsContext = {
   scope: SearchScope
   address: string
 }
+
+export const useAccountDetailsProps = () => useOutletContext<AccountDetailsContext>()
 
 export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()

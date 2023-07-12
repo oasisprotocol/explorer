@@ -5,7 +5,7 @@ import { TransactionsPage } from './app/pages/TransactionsPage'
 import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { BlockDetailPage } from './app/pages/BlockDetailPage'
-import { AccountDetailsPage } from './app/pages/AccountDetailsPage'
+import { AccountDetailsPage, useAccountDetailsProps } from './app/pages/AccountDetailsPage'
 import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
 import { AccountTokensCard } from './app/pages/AccountDetailsPage/AccountTokensCard'
 import { SearchResultsPage } from './app/pages/SearchResultsPage'
@@ -21,7 +21,7 @@ import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwor
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
-import { TokenDashboardPage } from './app/pages/TokenDashboardPage'
+import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
@@ -83,23 +83,23 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                element: <AccountTransactionsCard />,
+                Component: () => <AccountTransactionsCard {...useAccountDetailsProps()} />,
               },
               {
                 path: 'token-transfers',
-                element: <AccountTokenTransfersCard />,
+                Component: () => <AccountTokenTransfersCard {...useAccountDetailsProps()} />,
               },
               {
                 path: 'tokens/erc-20',
-                element: <AccountTokensCard type="ERC20" />,
+                Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC20" />,
               },
               {
                 path: 'tokens/erc-721',
-                element: <AccountTokensCard type="ERC721" />,
+                Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
               },
               {
                 path: 'code',
-                element: <ContractCodeCard />,
+                Component: () => <ContractCodeCard {...useAccountDetailsProps()} />,
               },
             ],
           },
@@ -123,15 +123,15 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                element: <TokenTransfersCard />,
+                Component: () => <TokenTransfersCard {...useTokenDashboardProps()} />,
               },
               {
                 path: 'holders',
-                element: <TokenHoldersCard />,
+                Component: () => <TokenHoldersCard {...useTokenDashboardProps()} />,
               },
               {
                 path: 'code',
-                element: <ContractCodeCard />,
+                Component: () => <ContractCodeCard {...useTokenDashboardProps()} />,
               },
             ],
           },

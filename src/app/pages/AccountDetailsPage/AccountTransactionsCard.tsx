@@ -10,12 +10,10 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
 import { useAccountTransactions } from './hook'
 import { AccountDetailsContext } from './index'
-import { useOutletContext } from 'react-router-dom'
 
 export const accountTransactionsContainerId = 'transactions'
 
-export const AccountTransactionsCard: FC = () => {
-  const { scope, address } = useOutletContext<AccountDetailsContext>()
+export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =

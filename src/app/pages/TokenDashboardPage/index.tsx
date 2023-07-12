@@ -6,7 +6,7 @@ import { TokenTitleCard } from './TokenTitleCard'
 import { TokenSnapshot } from './TokenSnapshot'
 import { TokenDetailsCard } from './TokenDetailsCard'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { useTokenInfo } from './hook'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -19,6 +19,8 @@ export type TokenDashboardContext = {
   scope: SearchScope
   address: string
 }
+
+export const useTokenDashboardProps = () => useOutletContext<TokenDashboardContext>()
 
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
