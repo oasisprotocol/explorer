@@ -30,7 +30,7 @@ export abstract class GraphUtils {
       case Layer.sapphire:
         return {
           scale: 2.4,
-          x: 0.35 * width,
+          x: 0.33 * width,
           y: 1.2 * height,
         }
       case Layer.consensus:
