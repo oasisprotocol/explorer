@@ -135,7 +135,7 @@ const QuickPinchZoomOuter = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('sm')]: {
     '> div': {
-      border: '22px solid transparent',
+      border: '1.7cqmin solid transparent',
     },
   },
 }))

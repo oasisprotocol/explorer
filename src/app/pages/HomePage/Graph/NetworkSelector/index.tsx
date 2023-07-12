@@ -33,7 +33,6 @@ const StyledNetworkSelector = styled(Select<NetworkOption>)(({ theme }) => ({
   width: '100%',
   alignItems: 'center',
   [theme.breakpoints.up('sm')]: {
-    gap: theme.spacing(4),
     bottom: theme.spacing(5),
   },
 }))
