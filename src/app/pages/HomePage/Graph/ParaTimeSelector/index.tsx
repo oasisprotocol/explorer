@@ -104,7 +104,7 @@ ExploreBtn.defaultProps = {
 export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   color: theme.palette.layout.graphZoomOutText,
   position: 'absolute',
-  top: theme.spacing(4),
+  top: theme.spacing(5),
   left: '50%',
   transform: 'translateX(-50%)',
   lineHeight: '18px',
@@ -126,10 +126,19 @@ const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
 
-const QuickPinchZoomOuter = styled('div')(() => ({
+const QuickPinchZoomOuter = styled('div')(({ theme }) => ({
   '> div': {
     position: 'absolute',
     inset: 0,
+    borderWidth: 10,
+    borderStyle: 'solid',
+    borderRadius: '50%',
+    borderColor: theme.palette.layout.darkBorder,
+  },
+  [theme.breakpoints.up('sm')]: {
+    '> div': {
+      borderWidth: 15,
+    },
   },
 }))
 
@@ -212,7 +221,14 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
-  const isZoomedIn = scale > 1.005
+  const clearSelectedLayer = () => {
+    if (selectedLayer?.current) {
+      setSelectedLayer(undefined)
+    }
+  }
+
+  // true when scale larger than initial zoom
+  const isZoomedIn = scale > 1.07
 
   useEffect(() => {
     onGraphZoomedIn(isZoomedIn)
@@ -223,7 +239,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
       <ParaTimeSelectorGlow disabled={disabled} network={network}>
         <ParaTimeSelectorGlobe network={network}>
           <QuickPinchZoomOuter>
-            <QuickPinchZoom ref={quickPinchZoomRef} onUpdate={onPinchZoom} maxZoom={2.5} minZoom={0.5}>
+            <QuickPinchZoom
+              ref={quickPinchZoomRef}
+              onUpdate={onPinchZoom}
+              maxZoom={2.5}
+              minZoom={0.5}
+              onDragEnd={clearSelectedLayer}
+            >
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
                   ref={graphRef}

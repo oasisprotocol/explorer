@@ -54,7 +54,7 @@ const GraphTooltipIcon = styled(Box, {
   flex: '0 0 120px',
   height: '100%',
   borderRight: `2px solid ${COLORS.aqua}`,
-  backgroundColor: COLORS.brandExtraDark + (isMobile ? 'c7' : ''),
+  backgroundColor: COLORS.brandExtraDark + (isMobile ? '7a' : ''),
   borderRadius: isMobile ? '12px 0 0 12px' : '0 0 0 0',
   color: COLORS.white,
 }))
@@ -75,7 +75,7 @@ const GraphTooltipText = styled(Box, {
   justifyContent: 'space-between',
   flex: '0 1 100%',
   padding: theme.spacing(4),
-  backgroundColor: (disabled ? COLORS.shadowBlue : COLORS.brandExtraDark) + (isMobile ? 'c7' : ''),
+  backgroundColor: (disabled ? COLORS.shadowBlue : COLORS.brandExtraDark) + (isMobile ? '7a' : ''),
   borderRadius: isMobile ? '0 12px 0 0' : '0 12px 12px 0',
 }))
 
@@ -123,49 +123,65 @@ interface GraphTooltipMobileProps {
 type TooltipInfo = {
   disabled: boolean
   failing?: boolean
-  enableNavigation?: boolean
   body: GraphTooltipBodyProps
 }
 
+const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate = false) => {
+  if (!enabled) {
+    return t('home.tooltip.coming')
+  }
+
+  return outOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline')
+}
+
 const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
+  const isSapphireEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.sapphire)
+  const isEmeraldEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.emerald)
+  const isCipherEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.cipher)
+  const isConsensusEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.consensus)
+
   const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
   const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
   return {
     [Layer.sapphire]: {
-      disabled: false,
-      failing: isSapphireOutOfDate,
-      enableNavigation: true,
+      disabled: !isSapphireEnabled,
       body: {
         title: (t: TFunction) => t('common.sapphire'),
-        caption: (t: TFunction) =>
-          isSapphireOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline'),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isSapphireEnabled, isSapphireOutOfDate),
         body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
       },
+      ...(isSapphireEnabled
+        ? {
+            failing: isSapphireOutOfDate,
+          }
+        : {}),
     },
     [Layer.emerald]: {
-      disabled: false,
-      failing: isEmeraldOutOfDate,
-      enableNavigation: true,
+      disabled: !isEmeraldEnabled,
       body: {
         title: (t: TFunction) => t('common.emerald'),
-        caption: (t: TFunction) =>
-          isEmeraldOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline'),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isEmeraldEnabled, isEmeraldOutOfDate),
         body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
       },
+      ...(isEmeraldEnabled
+        ? {
+            failing: isEmeraldOutOfDate,
+          }
+        : {}),
     },
     [Layer.cipher]: {
-      disabled: true,
+      disabled: !isCipherEnabled,
       body: {
         title: (t: TFunction) => t('common.cipher'),
-        caption: (t: TFunction) => t('home.tooltip.coming'),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isCipherEnabled),
         body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },
     [Layer.consensus]: {
-      disabled: true,
+      disabled: !isConsensusEnabled,
       body: {
         title: (t: TFunction) => t('common.consensus'),
-        caption: (t: TFunction) => t('home.tooltip.coming'),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isConsensusEnabled),
         body: (t: TFunction) => t('home.tooltip.consensusDesc'),
       },
     },
@@ -245,10 +261,10 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const { body, disabled, failing, enableNavigation } = useLayerTooltipMap(network)[layer]
+  const { body, disabled, failing } = useLayerTooltipMap(network)[layer]
 
   const navigateTo = () => {
-    if (!enableNavigation) {
+    if (disabled) {
       return
     }
 

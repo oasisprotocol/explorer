@@ -26,10 +26,15 @@ interface NetworkOption extends SelectOptionBase {
 
 const StyledNetworkSelector = styled(Select<NetworkOption>)(({ theme }) => ({
   position: 'absolute',
-  bottom: theme.spacing(5),
+  bottom: theme.spacing(3),
   display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(3),
   width: '100%',
-  justifyContent: 'center',
+  alignItems: 'center',
+  [theme.breakpoints.up('sm')]: {
+    bottom: theme.spacing(5),
+  },
 }))
 
 const StyledButton = styled(StyledSelectButton)(({ theme }) => ({
@@ -117,6 +122,8 @@ interface NetworkSelectProps {
 }
 
 export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork }) => {
+  const { t } = useTranslation()
+
   const options = RouteUtils.getEnabledNetworks().map(network => ({
     label: network,
     value: network,
@@ -131,6 +138,11 @@ export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork })
       root={NetworkSelectorButton}
       Option={SelectOption}
       listbox={StyledListbox}
+      label={
+        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.main })}>
+          {t('home.selectedNetwork')}
+        </Typography>
+      }
     />
   )
 }
