@@ -125,6 +125,11 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
   })
 }
 
+const adjustRuntimeTransactionMethod = (
+  method: string | undefined,
+  isLikelyNativeTokenTransfer: boolean | undefined,
+) => (isLikelyNativeTokenTransfer ? 'accounts.Transfer' : method)
+
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
   network,
   runtime,
@@ -151,6 +156,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 layer: runtime,
                 network,
                 ticker,
+                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
           }
@@ -221,6 +227,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 layer: runtime,
                 network,
                 ticker,
+                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
           }
