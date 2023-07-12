@@ -406,6 +406,10 @@
         "title": "Blocks",
         "viewLink": "View Block"
       },
+      "contracts": {
+        "title": "Contracts",
+        "viewLink": "View Contract"
+      },
       "tokens": {
         "title": "Tokens",
         "viewLink": "View Token"

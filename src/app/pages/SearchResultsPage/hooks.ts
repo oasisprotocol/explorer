@@ -23,7 +23,7 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account' | 'token'
+  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token'
 }
 
 export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
@@ -32,9 +32,11 @@ export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { re
 
 export type AccountResult = SearchResultItemCore & RuntimeAccount & { resultType: 'account' }
 
+export type ContractResult = SearchResultItemCore & RuntimeAccount & { resultType: 'contract' }
+
 export type TokenResult = SearchResultItemCore & EvmToken & { resultType: 'token' }
 
-export type SearchResultItem = BlockResult | TransactionResult | AccountResult | TokenResult
+export type SearchResultItem = BlockResult | TransactionResult | AccountResult | ContractResult | TokenResult
 
 export type SearchResults = SearchResultItem[]
 
@@ -157,7 +159,12 @@ export const useSearch = (q: SearchParams) => {
     : [
         ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
         ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
-        ...accounts.map((account): AccountResult => ({ ...account, resultType: 'account' })),
+        ...accounts
+          .filter(account => !account.evm_contract)
+          .map((account): AccountResult => ({ ...account, resultType: 'account' })),
+        ...accounts
+          .filter(account => account.evm_contract)
+          .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
         ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
       ]
   return {

@@ -5,7 +5,14 @@ import { BlockDetailView } from '../BlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage'
-import { AccountResult, BlockResult, SearchResults, TokenResult, TransactionResult } from './hooks'
+import {
+  AccountResult,
+  BlockResult,
+  ContractResult,
+  SearchResults,
+  TokenResult,
+  TransactionResult,
+} from './hooks'
 import { getThemesForNetworks } from '../../../styles/theme'
 import { Network } from '../../../types/network'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -82,6 +89,22 @@ export const SearchResultsList: FC<{
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
           linkLabel={t('search.results.accounts.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.contracts.title')}
+          results={searchResults.filter((item): item is ContractResult => item.resultType === 'contract')}
+          resultComponent={item => (
+            <AccountDetailsView
+              isLoading={false}
+              isError={false}
+              account={item}
+              tokenPriceInfo={tokenPrices[item.network]}
+              showLayer={true}
+            />
+          )}
+          link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
+          linkLabel={t('search.results.contracts.viewLink')}
         />
 
         <ResultsGroupByType
