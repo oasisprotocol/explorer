@@ -48,7 +48,7 @@ const GraphStyled = styled('svg', {
 })<GraphStyledProps>(({ theme, disabled, transparent, selectedLayer }) => ({
   position: 'absolute',
   left: '50%',
-  top: '50%',
+  top: '45%',
   width: '80%',
   height: '80%',
   transform: 'translate(-50%, -50%)',

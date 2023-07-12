@@ -18,7 +18,7 @@ export abstract class GraphUtils {
       case Layer.emerald:
         return {
           scale: 2.4,
-          x: 0.7 * width,
+          x: 0.68 * width,
           y: 0.1 * height,
         }
       case Layer.cipher:
@@ -30,8 +30,8 @@ export abstract class GraphUtils {
       case Layer.sapphire:
         return {
           scale: 2.4,
-          x: 0.33 * width,
-          y: 1.2 * height,
+          x: 0.31 * width,
+          y: 1.1 * height,
         }
       case Layer.consensus:
         return initialValue
