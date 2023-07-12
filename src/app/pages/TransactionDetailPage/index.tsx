@@ -32,7 +32,6 @@ import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
-import { isValidTxOasisHash } from '../../utils/helpers'
 import { TransactionEncrypted } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
@@ -88,13 +87,7 @@ export const TransactionDetailPage: FC = () => {
 
   const [addressSwitchOption, setAddressSwitchOption] = useState<
     AddressSwitchOption.Oasis | AddressSwitchOption.ETH
-  >(() => {
-    if (isValidTxOasisHash(hash)) {
-      return AddressSwitchOption.Oasis
-    }
-
-    return AddressSwitchOption.ETH
-  })
+  >(AddressSwitchOption.ETH)
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
     scope.network,
