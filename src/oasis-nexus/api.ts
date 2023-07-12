@@ -532,6 +532,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
           return {
             ...data,
             events: data.events.map(event => {
+              const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
               if (
                 event.type === 'accounts.transfer' ||
                 event.type === 'accounts.mint' ||
@@ -541,6 +542,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
               ) {
                 return {
                   ...event,
+                  eth_tx_hash: adjustedHash,
                   body: {
                     ...event.body,
                     amount:
@@ -562,6 +564,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
               }
               return {
                 ...event,
+                eth_tx_hash: adjustedHash,
                 layer: runtime,
                 network,
               }
