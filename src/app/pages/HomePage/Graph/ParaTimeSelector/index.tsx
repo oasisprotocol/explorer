@@ -130,12 +130,14 @@ const QuickPinchZoomOuter = styled('div')(({ theme }) => ({
   '> div': {
     position: 'absolute',
     inset: 0,
-    border: '10px solid transparent',
+    borderWidth: 10,
+    borderStyle: 'solid',
     borderRadius: '50%',
+    borderColor: theme.palette.layout.darkBorder,
   },
   [theme.breakpoints.up('sm')]: {
     '> div': {
-      border: '1.7cqmin solid transparent',
+      borderWidth: 15,
     },
   },
 }))
@@ -225,6 +227,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     }
   }
 
+  // true when scale larger than initial zoom
   const isZoomedIn = scale > 1.07
 
   useEffect(() => {
