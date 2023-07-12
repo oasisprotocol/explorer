@@ -150,7 +150,7 @@ const LogEvent: FC<{
       )
     case RuntimeEventType.evmlog: {
       const { parsedEvmLogName } = parseEvmEvent(event)
-      if (!event.evm_log_name && !event.evm_log_params && event.body.data) {
+      if (!event.evm_log_name && !event.evm_log_params) {
         return (
           <div>
             <b>{eventName}</b>
