@@ -25,7 +25,16 @@ export const LatestTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
     // Listing the latest consensus transactions is not yet supported.
     // We should use useGetConsensusTransactions()
   }
-  const transactionsQuery = useGetRuntimeTransactions(network, layer, { limit })
+  const transactionsQuery = useGetRuntimeTransactions(
+    network,
+    layer,
+    { limit },
+    {
+      query: {
+        cacheTime: 0,
+      },
+    },
+  )
 
   return (
     <Card>
