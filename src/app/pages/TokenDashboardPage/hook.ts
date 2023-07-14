@@ -8,6 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS } from '../AccountDetailsPage/hook'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -44,7 +45,7 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
       limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       offset: offset,
       rel: address,
-      // type: 'evm.log',
+      type: 'evm.log',
       // TODO: maybe restrict this more later.
       // If the token is a payable account (usually they're not, AFAIK),
       // this will also return events where tokens were transferred to or from the token account itself.
@@ -55,7 +56,9 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
 
   const { isFetched, isLoading, data } = query
 
-  const transfers = data?.data.events
+  const transfers = data?.data.events.filter(
+    event => !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
+  )
 
   const totalCount = data?.data.total_count
   const isTotalCountClipped = data?.data.is_total_count_clipped

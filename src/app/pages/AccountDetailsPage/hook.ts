@@ -56,7 +56,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
   }
 }
 
-const WANTED_EVM_LOG_EVENTS: string[] = ['Transfer']
+export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS: string[] = ['Transfer']
 
 export const useAccountTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
@@ -81,7 +81,7 @@ export const useAccountTokenTransfers = (scope: SearchScope, address: string) =>
   const { isFetched, isLoading, data } = query
 
   const transfers = data?.data.events.filter(
-    event => !!event.evm_log_name && WANTED_EVM_LOG_EVENTS.includes(event.evm_log_name),
+    event => !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
   )
 
   // TODO: fix pagination messed up by client-side filtering
