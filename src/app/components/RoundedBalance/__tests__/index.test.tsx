@@ -69,4 +69,26 @@ describe('RoundedBalance', () => {
       ).toBeInTheDocument()
     })
   })
+
+  describe('should format large numbers with i18next when compactLargeNumbers prop is true', () => {
+    it('should format large number', () => {
+      render(<RoundedBalance compactLargeNumbers value="15000000" />)
+      expect(screen.getByText('15M')).toBeInTheDocument()
+    })
+
+    it('should format large number and include ticker', () => {
+      render(<RoundedBalance compactLargeNumbers value="15000000" ticker="ROSE" />)
+      expect(screen.getByText('15M ROSE')).toBeInTheDocument()
+    })
+
+    it('should format large number with decimals', () => {
+      render(<RoundedBalance compactLargeNumbers value="100000.00000000000002231" />)
+      expect(screen.getByText('100K')).toBeInTheDocument()
+    })
+
+    it('should not format if number is too small', () => {
+      render(<RoundedBalance compactLargeNumbers value="99999.00000000000002231" />)
+      expect(screen.getByText('99,999.00000…')).toBeInTheDocument()
+    })
+  })
 })

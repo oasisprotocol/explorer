@@ -14,6 +14,7 @@ type RoundedBalanceProps = {
   scope?: SearchScope
   tokenAddress?: string
   tickerAsLink?: boolean | undefined
+  compactLargeNumbers?: boolean
 }
 
 const numberOfDecimals = 5
@@ -24,6 +25,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
   scope,
   tokenAddress,
   tickerAsLink,
+  compactLargeNumbers,
 }) => {
   const { t } = useTranslation()
 
@@ -42,6 +44,31 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
     ) : (
       <PlaceholderLabel label={tickerName} />
     )
+
+  if (number.isGreaterThan(100_000) && compactLargeNumbers) {
+    return (
+      <Tooltip
+        arrow
+        placement="top"
+        title={t('common.valueInToken', { value: number.toFormat(), ticker: tickerName })}
+        enterDelay={tooltipDelay}
+        enterNextDelay={tooltipDelay}
+      >
+        <span>
+          {t('common.valuePair', {
+            value: number.toFixed(),
+            formatParams: {
+              value: {
+                notation: 'compact',
+              } satisfies Intl.NumberFormatOptions,
+            },
+          })}
+          &nbsp;
+          {ticker}
+        </span>
+      </Tooltip>
+    )
+  }
 
   if (number.isEqualTo(truncatedNumber)) {
     return (
