@@ -8,10 +8,9 @@
 
 Official explorer for the Oasis Network.
 
-:warning:
-**Oasis Explorer is currently in development. Development deploy is available
-at <https://explorer.dev.oasis.io>.**
-:warning:
+The official deployment of Oasis Explorer lives at <https://explorer.oasis.io>.
+
+Development deploy is available at <https://explorer.dev.oasis.io>.
 
 ## Getting started
 
