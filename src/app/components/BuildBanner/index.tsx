@@ -9,7 +9,7 @@ export const BuildBanner: FC = () => {
   if (window.location.origin === deploys.localhost) {
     return null
   }
-  if (window.location.origin === deploys.production) {
+  if (deploys.production.includes(window.location.origin)) {
     return null
   }
   if (window.location.origin === deploys.staging) {
