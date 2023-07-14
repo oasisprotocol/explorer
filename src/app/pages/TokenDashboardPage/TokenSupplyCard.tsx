@@ -7,6 +7,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
 import Skeleton from '@mui/material/Skeleton'
 import { SearchScope } from '../../../types/searchScope'
+import { RoundedBalance } from '../../components/RoundedBalance'
 
 export const TokenSupplyCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -34,9 +35,11 @@ export const TokenSupplyCard: FC<{ scope: SearchScope; address: string }> = ({ s
                 width: '100%',
               }}
             >
-              {token.total_supply
-                ? t('tokens.totalSupplyValue', { value: token.total_supply })
-                : t('common.undefined')}
+              {token.total_supply ? (
+                <RoundedBalance value={token.total_supply} compactLargeNumbers />
+              ) : (
+                t('common.undefined')
+              )}
             </Typography>
           )
         )}

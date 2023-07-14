@@ -130,7 +130,7 @@ export const TokenList = (props: TokensProps) => {
           align: TableCellAlign.Right,
         },
         {
-          content: <RoundedBalance value={token.total_supply} ticker={token.symbol} />,
+          content: <RoundedBalance compactLargeNumbers value={token.total_supply} ticker={token.symbol} />,
           key: 'supply',
           align: TableCellAlign.Right,
         },
