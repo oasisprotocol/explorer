@@ -64,7 +64,7 @@ A detailed post on Git commit messages: [How To Write a Git Commit Message].
 
 ### Oasis Nexus API
 
-Deployed version is at <https://index.oasislabs.com/v1/> with OpenAPI
+Deployed version is at <https://nexus.oasis.io/v1/> with OpenAPI
 [HTML][nexus-html-spec] and [YAML][nexus-yaml-spec] specs.
 
 <details>
@@ -120,7 +120,7 @@ REACT_APP_API=http://localhost:8008/v1/ yarn start
 [github-release-link]: https://github.com/oasisprotocol/explorer/actions?query=workflow:release
 [github-renovate-badge]: https://img.shields.io/badge/renovate-enabled-brightgreen.svg
 [github-renovate-link]: https://www.mend.io/renovate/
-[nexus-html-spec]: https://index.oasislabs.com/v1/spec/v1.html
-[nexus-yaml-spec]: https://index.oasislabs.com/v1/spec/v1.yaml
+[nexus-html-spec]: https://nexus.oasis.io/v1/spec/v1.html
+[nexus-yaml-spec]: https://nexus.oasis.io/v1/spec/v1.yaml
 [nexus-bleeding-edge-spec]: https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
 [replace-lines-to-run-latest-emerald]: https://github.com/oasisprotocol/nexus/blob/d48de37/tests/e2e/config/e2e-dev.yml#L1-L8
