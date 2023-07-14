@@ -25,7 +25,16 @@ export const LatestBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
     // Listing the latest consensus blocks is not yet implemented.
     // We should use useGetConsensusBlocks()
   }
-  const blocksQuery = useGetRuntimeBlocks(network, layer, { limit })
+  const blocksQuery = useGetRuntimeBlocks(
+    network,
+    layer,
+    { limit },
+    {
+      query: {
+        cacheTime: 0,
+      },
+    },
+  )
 
   return (
     <Card>
