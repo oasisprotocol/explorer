@@ -35,7 +35,8 @@ export const AccountDetailsPage: FC = () => {
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
-  const { totalCount: numberOfTokenTransfers } = useAccountTokenTransfers(scope, address)
+  const { results: tokenResults } = useAccountTokenTransfers(scope, address)
+  const numberOfTokenTransfers = tokenResults.tablePaginationProps.totalCount
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
 

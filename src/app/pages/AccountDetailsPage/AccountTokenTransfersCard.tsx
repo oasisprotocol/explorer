@@ -16,10 +16,10 @@ export const accountTokenTransfersContainerId = 'transfers'
 export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const { isLoading, isFetched, transfers, pagination, totalCount, isTotalCountClipped } =
-    useAccountTokenTransfers(scope, address)
+  const { isLoading, isFetched, results } = useAccountTokenTransfers(scope, address)
 
   const { account } = useAccount(scope, address)
+  const transfers = results.data
 
   return (
     <Card>
@@ -34,13 +34,7 @@ export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, ad
             ownAddress={account?.address_eth}
             isLoading={isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount,
-              isTotalCountClipped,
-              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-            }}
+            pagination={results.tablePaginationProps}
             differentTokens
           />
         </ErrorBoundary>

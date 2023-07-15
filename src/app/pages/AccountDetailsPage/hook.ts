@@ -1,5 +1,6 @@
 import {
   Layer,
+  RuntimeEvent,
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
   useGetRuntimeTransactions,
@@ -8,6 +9,7 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
+import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
 
 export const useAccount = (scope: SearchScope, oasisAddress: string) => {
   const { network, layer } = scope
@@ -60,8 +62,14 @@ export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS: string[] = ['Transfer'
 
 export const useAccountTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const pagination = useClientSizePagination({
+    paramName: 'page',
+    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    serverPageSize: 1000,
+    filter: (event: RuntimeEvent) =>
+      !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
+  })
+
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading transactions on the consensus layer is not supported yet.
@@ -71,8 +79,7 @@ export const useAccountTokenTransfers = (scope: SearchScope, address: string) =>
     network,
     layer, // This is OK since consensus has been handled separately
     {
-      limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-      offset: offset,
+      ...pagination.paramsForQuery,
       rel: address,
       type: 'evm.log',
     },
@@ -80,21 +87,9 @@ export const useAccountTokenTransfers = (scope: SearchScope, address: string) =>
 
   const { isFetched, isLoading, data } = query
 
-  const transfers = data?.data.events.filter(
-    event => !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
-  )
-
-  // TODO: fix pagination messed up by client-side filtering
-
-  const totalCount = data?.data.total_count
-  const isTotalCountClipped = data?.data.is_total_count_clipped
-
   return {
     isLoading,
     isFetched,
-    transfers,
-    pagination,
-    totalCount,
-    isTotalCountClipped,
+    results: pagination.getResults(data?.data),
   }
 }
