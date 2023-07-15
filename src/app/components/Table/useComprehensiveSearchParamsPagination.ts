@@ -1,8 +1,41 @@
 import { To, useSearchParams } from 'react-router-dom'
 import { AppErrors } from '../../../types/errors'
 import { ComprehensivePaginationEngine } from './PaginationEngine'
+import { List } from '../../../oasis-nexus/api'
+import { TablePaginationProps } from './TablePagination'
 
-export function useComprehensiveSearchParamsPagination(paramName: string): ComprehensivePaginationEngine {
+type ComprehensiveSearchParamsPaginationParams<Item> = {
+  paramName: string
+  pageSize: number
+  /**
+   * @deprecated this will mess up page size.
+   *
+   * Consider using client-side pagination instead.
+   */
+  filter?: (item: Item) => boolean
+}
+
+const knownListKeys: string[] = ['total_count', 'is_total_count_clipped']
+
+function findListIn<T extends List, Item>(data: T): Item[] {
+  const candidates = Object.keys(data).filter(
+    key => !knownListKeys.includes(key) && Array.isArray(data[key as keyof T]),
+  ) as (keyof T)[]
+  switch (candidates.length) {
+    case 0:
+      throw new Error('Data not found!')
+    case 1:
+      return data[candidates[0]] as Item[]
+    default:
+      throw new Error('Data not found!')
+  }
+}
+
+export function useComprehensiveSearchParamsPagination<Item, QueryResult extends List>({
+  paramName,
+  pageSize,
+  filter,
+}: ComprehensiveSearchParamsPaginationParams<Item>): ComprehensivePaginationEngine<Item, QueryResult> {
   const [searchParams] = useSearchParams()
   const selectedPageString = searchParams.get(paramName)
   const selectedPage = parseInt(selectedPageString ?? '1', 10)
@@ -23,5 +56,36 @@ export function useComprehensiveSearchParamsPagination(paramName: string): Compr
     return { search: newSearchParams.toString() }
   }
 
-  return { selectedPage, linkToPage }
+  const limit = pageSize
+  const offset = (selectedPage - 1) * pageSize
+  const paramsForQuery = {
+    offset,
+    limit,
+  }
+
+  return {
+    offsetForQuery: offset,
+    limitForQuery: limit,
+    paramsForQuery,
+    getResults: (queryResult, key) => {
+      const data = queryResult
+        ? key
+          ? (queryResult[key] as Item[])
+          : findListIn<QueryResult, Item>(queryResult)
+        : undefined
+      const filteredData = !!data && !!filter ? data.filter(filter) : data
+      const tableProps: TablePaginationProps = {
+        selectedPage,
+        linkToPage,
+        totalCount: queryResult?.total_count,
+        isTotalCountClipped: queryResult?.is_total_count_clipped,
+        rowsPerPage: pageSize,
+      }
+      return {
+        tablePaginationProps: tableProps,
+        data: filteredData,
+      }
+    },
+    // tableProps,
+  }
 }
