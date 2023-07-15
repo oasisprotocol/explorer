@@ -7,6 +7,7 @@ import {
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS } from '../AccountDetailsPage/hook'
 
@@ -31,7 +32,7 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
 
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
-  const pagination = useSearchParamsPagination('page')
+  const pagination = useComprehensiveSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
