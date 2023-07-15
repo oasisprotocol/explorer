@@ -35,7 +35,8 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   const pagination = useClientSizePagination({
     paramName: 'page',
-    pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    serverPageSize: 1000,
     filter: (event: RuntimeEvent) =>
       !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
   })
