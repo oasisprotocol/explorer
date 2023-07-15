@@ -1,7 +1,8 @@
 import { To, useSearchParams } from 'react-router-dom'
 import { AppErrors } from '../../../types/errors'
+import { SimplePaginationEngine } from './PaginationEngine'
 
-export function useSearchParamsPagination(paramName: string) {
+export function useSearchParamsPagination(paramName: string): SimplePaginationEngine {
   const [searchParams] = useSearchParams()
   const selectedPageString = searchParams.get(paramName)
   const selectedPage = parseInt(selectedPageString ?? '1', 10)
