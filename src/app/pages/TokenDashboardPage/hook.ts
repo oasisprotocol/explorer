@@ -8,9 +8,9 @@ import {
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS } from '../AccountDetailsPage/hook'
+import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -33,7 +33,7 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
 
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
-  const pagination = useComprehensiveSearchParamsPagination({
+  const pagination = useClientSizePagination({
     paramName: 'page',
     pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     filter: (event: RuntimeEvent) =>
