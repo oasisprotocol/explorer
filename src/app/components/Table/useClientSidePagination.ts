@@ -83,7 +83,12 @@ export function useClientSizePagination<Item, QueryResult extends List>({
       const tableProps: TablePaginationProps = {
         selectedPage: selectedClientPage,
         linkToPage,
-        totalCount: filteredData?.length,
+        totalCount: filteredData
+          ? // This correction is here to simulate the bogus behavior of server-side pagination
+            // Remove this when server-side pagination is fixed,
+            // and so the work-around in the pagination widget is fixed.
+            filteredData.length - clientPageSize * (selectedClientPage - 1)
+          : undefined,
         isTotalCountClipped: queryResult?.is_total_count_clipped, // TODO
         rowsPerPage: clientPageSize,
       }
