@@ -7,7 +7,8 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './CardEmptyState'
-import { useAccount, useAccountTokenTransfers } from './hook'
+import { useAccount } from './hook'
+import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { AccountDetailsContext } from './index'
 
@@ -16,7 +17,7 @@ export const accountTokenTransfersContainerId = 'transfers'
 export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const { isLoading, isFetched, results } = useAccountTokenTransfers(scope, address)
+  const { isLoading, isFetched, results } = useTokenTransfers(scope, address)
 
   const { account } = useAccount(scope, address)
   const transfers = results.data

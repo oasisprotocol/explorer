@@ -9,7 +9,6 @@ import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS } from '../AccountDetailsPage/hook'
 import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
@@ -31,6 +30,8 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
   }
 }
 
+export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TOKEN_TRANSFERS: string[] = ['Transfer']
+
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   const pagination = useClientSizePagination({
@@ -38,7 +39,7 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
     clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     serverPageSize: 1000,
     filter: (event: RuntimeEvent) =>
-      !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
+      !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TOKEN_TRANSFERS.includes(event.evm_log_name),
   })
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer

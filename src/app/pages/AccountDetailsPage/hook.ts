@@ -1,15 +1,8 @@
-import {
-  Layer,
-  RuntimeEvent,
-  useGetRuntimeAccountsAddress,
-  useGetRuntimeEvents,
-  useGetRuntimeTransactions,
-} from '../../../oasis-nexus/api'
+import { Layer, useGetRuntimeAccountsAddress, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
-import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
 
 export const useAccount = (scope: SearchScope, oasisAddress: string) => {
   const { network, layer } = scope
@@ -55,41 +48,5 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     pagination,
     totalCount,
     isTotalCountClipped,
-  }
-}
-
-export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS: string[] = ['Transfer']
-
-export const useAccountTokenTransfers = (scope: SearchScope, address: string) => {
-  const { network, layer } = scope
-  const pagination = useClientSizePagination({
-    paramName: 'page',
-    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    serverPageSize: 1000,
-    filter: (event: RuntimeEvent) =>
-      !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TRANSFERS.includes(event.evm_log_name),
-  })
-
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Loading transactions on the consensus layer is not supported yet.
-    // We should use useGetConsensusTransactions()
-  }
-  const query = useGetRuntimeEvents(
-    network,
-    layer, // This is OK since consensus has been handled separately
-    {
-      ...pagination.paramsForQuery,
-      rel: address,
-      type: 'evm.log',
-    },
-  )
-
-  const { isFetched, isLoading, data } = query
-
-  return {
-    isLoading,
-    isFetched,
-    results: pagination.getResults(data?.data),
   }
 }

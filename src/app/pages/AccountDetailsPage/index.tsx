@@ -10,12 +10,12 @@ import { Ticker } from '../../../types/ticker'
 
 import { EvmToken, EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
-import { useAccount, useAccountTokenTransfers } from './hook'
+import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { showEmptyAccountDetails } from '../../../config'
 import { CardEmptyState } from './CardEmptyState'
 import { contractCodeContainerId } from './ContractCodeCard'
-import { useTokenInfo } from '../TokenDashboardPage/hook'
+import { useTokenInfo, useTokenTransfers } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
@@ -35,7 +35,7 @@ export const AccountDetailsPage: FC = () => {
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
-  const { results: tokenResults } = useAccountTokenTransfers(scope, address)
+  const { results: tokenResults } = useTokenTransfers(scope, address)
   const numberOfTokenTransfers = tokenResults.tablePaginationProps.totalCount
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
