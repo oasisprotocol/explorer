@@ -38,7 +38,7 @@ export const TokenSupplyCard: FC<{ scope: SearchScope; address: string }> = ({ s
               {token.total_supply ? (
                 <RoundedBalance value={token.total_supply} compactLargeNumbers />
               ) : (
-                t('common.undefined')
+                t('common.not_defined')
               )}
             </Typography>
           )
