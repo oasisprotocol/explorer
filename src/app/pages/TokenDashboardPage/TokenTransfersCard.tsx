@@ -16,20 +16,14 @@ export const tokenTransfersContainerId = 'transfers'
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const {
-    isLoading: areTransfersLoading,
-    isFetched,
-    transfers,
-    pagination,
-    totalCount,
-    isTotalCountClipped,
-  } = useTokenTransfers(scope, address)
+  const { isLoading: areTransfersLoading, isFetched, results } = useTokenTransfers(scope, address)
 
   const { isLoading: isTokenLoading } = useTokenInfo(scope, address)
 
   const { isLoading: isAccountLoading, account } = useAccount(scope, address)
 
   const isLoading = isTokenLoading || isAccountLoading || areTransfersLoading
+  const transfers = results.data
 
   return (
     <Card>
@@ -42,13 +36,7 @@ export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }
             ownAddress={account?.address_eth}
             isLoading={isLoading}
             limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount,
-              isTotalCountClipped,
-              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-            }}
+            pagination={results.tablePaginationProps}
           />
         </ErrorBoundary>
       </CardContent>
