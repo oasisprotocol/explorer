@@ -16,6 +16,23 @@ export const tokenHoldersContainerId = 'holders'
 export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
+  return (
+    <Card>
+      <LinkableDiv id={tokenHoldersContainerId}>
+        <CardHeader disableTypography component="h3" title={t('tokens.holders')} />
+      </LinkableDiv>
+      <CardContent>
+        <ErrorBoundary light={true}>
+          <TokenHoldersView scope={scope} address={address} />
+        </ErrorBoundary>
+      </CardContent>
+    </Card>
+  )
+}
+
+const TokenHoldersView: FC<TokenDashboardContext> = ({ scope, address }) => {
+  const { t } = useTranslation()
+
   const { isLoading: isTokenLoading, token } = useTokenInfo(scope, address)
 
   const {
@@ -30,29 +47,22 @@ export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) 
   const isLoading = isTokenLoading || areHoldersLoading
 
   return (
-    <Card>
-      <LinkableDiv id={tokenHoldersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.holders')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyTokenHolderList')} />}
-          <TokenHolders
-            holders={holders}
-            decimals={token?.decimals ?? 0}
-            totalSupply={token?.total_supply}
-            isLoading={isLoading}
-            limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount,
-              isTotalCountClipped,
-              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-            }}
-          />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <>
+      {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyTokenHolderList')} />}
+      <TokenHolders
+        holders={holders}
+        decimals={token?.decimals ?? 0}
+        totalSupply={token?.total_supply}
+        isLoading={isLoading}
+        limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+        pagination={{
+          selectedPage: pagination.selectedPage,
+          linkToPage: pagination.linkToPage,
+          totalCount,
+          isTotalCountClipped,
+          rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+        }}
+      />
+    </>
   )
 }
