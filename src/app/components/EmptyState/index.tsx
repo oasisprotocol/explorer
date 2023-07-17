@@ -50,7 +50,7 @@ export const EmptyState: FC<EmptyStateProps> = ({ description, title, light }) =
   )
   return light ? (
     <StyledBoxLight>
-      {<CancelIcon color="error" fontSize="large" />}
+      <CancelIcon color="error" fontSize="large" />
       {content}
     </StyledBoxLight>
   ) : (
