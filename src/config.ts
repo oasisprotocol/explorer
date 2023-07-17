@@ -118,8 +118,6 @@ export const paraTimesConfig = {
   [Layer.consensus]: null,
 } satisfies LayersConfig
 
-export const showEmptyAccountDetails = true
-
 export const deploys = {
   production: ['https://explorer.oasis.io', 'https://explorer.prd.oasis.io'],
   staging: 'https://explorer.stg.oasis.io',
