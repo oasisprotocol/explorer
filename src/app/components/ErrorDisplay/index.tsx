@@ -28,6 +28,18 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
       />
     ),
   }),
+  [AppErrors.PageDoesNotExist]: t => ({
+    title: t('errors.pageDoesNotExist'),
+    message: (
+      <Trans
+        t={t}
+        i18nKey="errors.validateURLOrGoToFirstPage"
+        components={{
+          FirstPageLink: <GoToFirstPageLink />,
+        }}
+      />
+    ),
+  }),
   [AppErrors.NotFoundBlockHeight]: t => ({
     title: t('errors.notFoundBlockHeight'),
     message: t('errors.validateURL'),

@@ -36,8 +36,12 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     },
   )
   const { isFetched, isLoading, data } = query
-
   const transactions = data?.data.transactions
+
+  if (isFetched && pagination.selectedPage > 1 && !transactions?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   const totalCount = data?.data.total_count
   const isTotalCountClipped = data?.data.is_total_count_clipped
 
