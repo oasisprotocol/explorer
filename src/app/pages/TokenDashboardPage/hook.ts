@@ -63,6 +63,12 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
 
   const { isFetched, isLoading, data } = query
 
+  const results = pagination.getResults(data?.data)
+
+  if (isFetched && pagination.selectedPage > 1 && !results.data?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return {
     isLoading,
     isFetched,
