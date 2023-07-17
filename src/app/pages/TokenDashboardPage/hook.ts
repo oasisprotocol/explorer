@@ -93,6 +93,10 @@ export const useTokenHolders = (scope: SearchScope, address: string) => {
 
   const holders = data?.data.holders
 
+  if (isFetched && pagination.selectedPage > 1 && !holders?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   const totalCount = data?.data.total_count
   const isTotalCountClipped = data?.data.is_total_count_clipped
 
