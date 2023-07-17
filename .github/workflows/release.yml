@@ -42,14 +42,19 @@ jobs:
           cd build/
           zip -r ../oasis-explorer-${{ steps.vars.outputs.VERSION }}.zip .
       - name: Parse CHANGELOG.md file and extract changes for the given version
-        run: |
-          node ./internals/scripts/version-changelog.js ${{ steps.vars.outputs.VERSION }}
+        #   run: |
+        #     node ./internals/scripts/version-changelog.js ${{ steps.vars.outputs.VERSION }}
+        uses: buberdds/extract-changelog-action@0.1.0
+        id: changelog
+        with:
+          version: ${{ steps.vars.outputs.VERSION }}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             oasis-explorer-${{ steps.vars.outputs.VERSION }}.zip
           name: Oasis Explorer ${{ steps.vars.outputs.VERSION }}
-          body_path: ${{ github.workspace }}/CHANGELOG_SUMMARY.md
+          # body_path: ${{ github.workspace }}/CHANGELOG_SUMMARY.md
+          body: ${{ steps.changelog.outputs.content }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
