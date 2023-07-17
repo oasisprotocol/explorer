@@ -44,7 +44,7 @@ jobs:
       - name: Parse CHANGELOG.md file and extract changes for the given version
         #   run: |
         #     node ./internals/scripts/version-changelog.js ${{ steps.vars.outputs.VERSION }}
-        uses: buberdds/extract-changelog-action@1.0.0
+        uses: buberdds/extract-changelog-action@v1
         id: changelog
         with:
           version: ${{ steps.vars.outputs.VERSION }}
