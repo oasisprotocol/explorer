@@ -78,12 +78,17 @@ export const BlocksPage: FC = () => {
     },
   )
 
+  const { isLoading, isFetched, data } = blocksQuery
+  const blocks = data?.data.blocks
+
+  if (isFetched && offset && !blocks?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return (
     <PageLayout
       mobileFooterAction={
-        tableView === TableLayout.Vertical && (
-          <LoadMoreButton pagination={pagination} isLoading={blocksQuery.isLoading} />
-        )
+        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
       {!isMobile && <Divider variant="layout" />}
@@ -94,29 +99,27 @@ export const BlocksPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <Blocks
-            isLoading={blocksQuery.isLoading}
-            blocks={blocksQuery.data?.data.blocks}
+            isLoading={isLoading}
+            blocks={blocks}
             limit={PAGE_SIZE}
             type={BlocksTableType.Desktop}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
-              totalCount: blocksQuery.data?.data.total_count,
-              isTotalCountClipped: blocksQuery.data?.data.is_total_count_clipped,
+              totalCount: data?.data.total_count,
+              isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
             }}
           />
         )}
         {tableView === TableLayout.Vertical && (
           <BlockDetails>
-            {blocksQuery.isLoading &&
+            {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <BlockDetailView key={key} isLoading={true} block={undefined} standalone />
               ))}
-            {!blocksQuery.isLoading &&
-              blocksQuery.data?.data.blocks.map(block => (
-                <BlockDetailView key={block.hash} block={block} standalone />
-              ))}
+            {!isLoading &&
+              data?.data.blocks.map(block => <BlockDetailView key={block.hash} block={block} standalone />)}
           </BlockDetails>
         )}
       </SubPageCard>
