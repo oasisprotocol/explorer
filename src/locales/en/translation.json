@@ -132,6 +132,7 @@
   "errors": {
     "code": "error code",
     "error": "Error",
+    "loadFirstPage": "load the first page",
     "unknown": "Unknown error",
     "unsupportedLayer": "Unsupported layer",
     "unsupportedNetwork": "Unsupported network",
@@ -142,7 +143,7 @@
     "notFoundBlockHeight": "Block not found",
     "notFoundTx": "Transaction not found",
     "validateURL": "Please validate provided URL",
-    "validateURLOrGoToFirstTab": "Please check the URL or load the first tab.",
+    "validateURLOrGoToFirstPage": "Please check the URL or <FirstPageLink />.",
     "invalidUrl": "Invalid URL",
     "storage": "Access to browser storage denied"
   },

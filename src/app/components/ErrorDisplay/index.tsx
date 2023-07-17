@@ -1,11 +1,12 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, ReactNode } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { isRouteErrorResponse } from 'react-router-dom'
 import { EmptyState } from '../EmptyState'
 import { AppError, AppErrors, ErrorPayload } from '../../../types/errors'
 import { TFunction } from 'i18next'
+import { GoToFirstPageLink } from '../Table/GoToFirstPageLink'
 
-type FormattedError = { title: string; message: string }
+type FormattedError = { title: string; message: ReactNode }
 
 const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => FormattedError> = {
   [AppErrors.Unknown]: (t, error) => ({ title: t('errors.unknown'), message: error.message }),
@@ -17,7 +18,15 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
   [AppErrors.InvalidTxHash]: t => ({ title: t('errors.invalidTxHash'), message: t('errors.validateURL') }),
   [AppErrors.InvalidPageNumber]: t => ({
     title: t('errors.invalidPageNumber'),
-    message: t('errors.validateURLOrGoToFirstTab'),
+    message: (
+      <Trans
+        t={t}
+        i18nKey="errors.validateURLOrGoToFirstPage"
+        components={{
+          FirstPageLink: <GoToFirstPageLink />,
+        }}
+      />
+    ),
   }),
   [AppErrors.NotFoundBlockHeight]: t => ({
     title: t('errors.notFoundBlockHeight'),
