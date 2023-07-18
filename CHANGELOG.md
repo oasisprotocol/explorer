@@ -12,6 +12,193 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.0.0 (2023-07-18)
+
+### Removals and Breaking Changes
+
+- Update NEXUS URLs
+  ([#735](https://github.com/oasisprotocol/explorer/issues/735))
+
+### Features
+
+- Handle situations when a Paratime is unavailable
+  ([#619](https://github.com/oasisprotocol/explorer/issues/619))
+
+- Graph redesign
+  ([#644](https://github.com/oasisprotocol/explorer/issues/644))
+
+- Add check against sending menmonics to search
+  ([#656](https://github.com/oasisprotocol/explorer/issues/656))
+
+- Graph network dropdown
+  ([#667](https://github.com/oasisprotocol/explorer/issues/667))
+
+- Link from unverified contracts to Sourcify to encourage verifying
+  ([#669](https://github.com/oasisprotocol/explorer/issues/669))
+
+- Show a warning when search text string it too short
+  ([#671](https://github.com/oasisprotocol/explorer/issues/671))
+
+- Fully bring back support for ERC-721 tokens
+  ([#681](https://github.com/oasisprotocol/explorer/issues/681))
+
+- Display type in tokens table
+  ([#685](https://github.com/oasisprotocol/explorer/issues/685))
+
+- Properly display balance on ERC-721 token transfers
+  ([#687](https://github.com/oasisprotocol/explorer/issues/687))
+
+- Make tickers into links in account token transfers
+  ([#687](https://github.com/oasisprotocol/explorer/issues/687))
+
+- Token dashboard: make sure all cards have loading state
+  ([#691](https://github.com/oasisprotocol/explorer/issues/691))
+
+- Add icons to event names in event logs
+  ([#720](https://github.com/oasisprotocol/explorer/issues/720))
+
+- Disable automatically setting AddressSwitch based on URL
+  ([#727](https://github.com/oasisprotocol/explorer/issues/727))
+
+  Default to ETH instead. This shows more consistent information when seeing
+  consensus withdrawals in transactions list (oasis tx hash, from eth, to
+  oasis1) and then opening it:
+
+  - before: oasis tx hash, from oasis1, to oasis1
+  - after: oasis tx hash, from eth, to oasis1
+
+### Bug Fixes and Improvements
+
+- Don't die on ERC-721 tokens
+  ([#679](https://github.com/oasisprotocol/explorer/issues/679))
+
+- Recognize out of data paratime data (again)
+  ([#686](https://github.com/oasisprotocol/explorer/issues/686))
+
+- Fix contract creation info for tokens
+  ([#710](https://github.com/oasisprotocol/explorer/issues/710))
+
+- Fix issue with charts responsive container
+  ([#713](https://github.com/oasisprotocol/explorer/issues/713))
+
+- Graph feedback
+  ([#716](https://github.com/oasisprotocol/explorer/issues/716))
+
+- Separate contracts from accounts search results
+  ([#725](https://github.com/oasisprotocol/explorer/issues/725))
+
+- Add missing 0x prefix to eth hashes in runtime events
+  ([#728](https://github.com/oasisprotocol/explorer/issues/728))
+
+- Compact large numbers in token total supply
+  ([#732](https://github.com/oasisprotocol/explorer/issues/732))
+
+  Enable formatting of large numbers in token snapshot card and token list
+
+- Implement client-side pagination for token transfers
+  ([#738](https://github.com/oasisprotocol/explorer/issues/738))
+
+- Filter token transfers consistently
+  ([#743](https://github.com/oasisprotocol/explorer/issues/743))
+
+- Un-break lots of pagination-related error pages
+  ([#746](https://github.com/oasisprotocol/explorer/issues/746))
+
+### Internal Changes
+
+- Update i18n dependencies
+  ([#540](https://github.com/oasisprotocol/explorer/issues/540))
+
+- Update dependency swiper to v10
+  ([#642](https://github.com/oasisprotocol/explorer/issues/642))
+
+- Update storybook dependencies to v7.0.26
+  ([#660](https://github.com/oasisprotocol/explorer/issues/660))
+
+- Fix description alignment in description list
+  ([#668](https://github.com/oasisprotocol/explorer/issues/668))
+
+- Update lint dependencies
+  ([#670](https://github.com/oasisprotocol/explorer/issues/670))
+
+- Remove "Decoded" column from events to improve mobile layout
+  ([#672](https://github.com/oasisprotocol/explorer/issues/672))
+
+- Update dependency @types/testing-library__jest-dom to v5.14.7
+  ([#673](https://github.com/oasisprotocol/explorer/issues/673))
+
+- Pull the API specs directly from GitHub
+  ([#678](https://github.com/oasisprotocol/explorer/issues/678))
+
+- Clean up theme.spacing usage and React imports
+  ([#680](https://github.com/oasisprotocol/explorer/issues/680))
+
+- Fix full reload when clicking on TokenPills
+  ([#682](https://github.com/oasisprotocol/explorer/issues/682))
+
+- Update test dependencies to v29.6.1
+  ([#684](https://github.com/oasisprotocol/explorer/issues/684))
+
+- Update dependency swiper to v10.0.4
+  ([#692](https://github.com/oasisprotocol/explorer/issues/692))
+
+- Update dependency orval to ^6.17.0
+  ([#693](https://github.com/oasisprotocol/explorer/issues/693))
+
+- Update fontsource monorepo to ^5.0.6
+  ([#694](https://github.com/oasisprotocol/explorer/issues/694))
+
+- Update dependency react-i18next to v13.0.2
+  ([#706](https://github.com/oasisprotocol/explorer/issues/706))
+
+- Update lint dependencies to v5.62.0
+  ([#707](https://github.com/oasisprotocol/explorer/issues/707))
+
+- Move all router access to page-level components
+  ([#712](https://github.com/oasisprotocol/explorer/issues/712))
+
+- Fix changelog fragment file name
+  ([#714](https://github.com/oasisprotocol/explorer/issues/714))
+
+- Update dependency @types/testing-library__jest-dom to v5.14.8
+  ([#717](https://github.com/oasisprotocol/explorer/issues/717))
+
+- Update material-ui monorepo
+  ([#718](https://github.com/oasisprotocol/explorer/issues/718))
+
+- Update dependency i18next to v23.2.10
+  ([#719](https://github.com/oasisprotocol/explorer/issues/719))
+
+- Disable Emerald Mainnet
+  ([#722](https://github.com/oasisprotocol/explorer/issues/722))
+
+- Update storybook dependencies to v7.0.27
+  ([#726](https://github.com/oasisprotocol/explorer/issues/726))
+
+- Update dependency @types/react-dom to v18.2.7
+  ([#729](https://github.com/oasisprotocol/explorer/issues/729))
+
+- Update dependency i18next to v23.2.11
+  ([#730](https://github.com/oasisprotocol/explorer/issues/730))
+
+- Update actions/setup-python action to v4.7.0
+  ([#733](https://github.com/oasisprotocol/explorer/issues/733))
+
+- Update dependency @types/react to v18.2.15
+  ([#734](https://github.com/oasisprotocol/explorer/issues/734))
+
+- Replace indexer api urls with nexus
+  ([#736](https://github.com/oasisprotocol/explorer/issues/736))
+
+- Update react dependencies to v4.29.25
+  ([#740](https://github.com/oasisprotocol/explorer/issues/740))
+
+- Update dependency eslint to v8.45.0
+  ([#741](https://github.com/oasisprotocol/explorer/issues/741))
+
+- Update lint dependencies to v6.1.0
+  ([#747](https://github.com/oasisprotocol/explorer/issues/747))
+
 ## 0.2.0 (2023-07-05)
 
 ### Removals and Breaking Changes
