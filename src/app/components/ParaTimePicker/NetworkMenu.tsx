@@ -12,6 +12,17 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
 import { getNetworkIcons } from '../../utils/content'
+import { styled } from '@mui/material/styles'
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginLeft: '48px',
+  color: COLORS.brandDark,
+  fontWeight: 700,
+  '&&:hover': {
+    textDecoration: 'none',
+    color: COLORS.brandDark,
+  },
+}))
 
 type NetworkMenuItemProps = Omit<NetworkMenuProps, 'options'> & {
   divider: boolean
@@ -114,14 +125,9 @@ export const NetworkMenu: FC<NetworkMenuProps> = ({ activeNetwork, selectedNetwo
         </Collapse>
       </MenuList>
       {!!filteredOptions.length && (
-        <Button
-          onClick={() => setExpandNetworkMenu(!expandNetworkMenu)}
-          size="small"
-          variant="text"
-          sx={{ ml: '48px' }}
-        >
+        <StyledButton onClick={() => setExpandNetworkMenu(!expandNetworkMenu)} size="small" variant="text">
           {expandNetworkMenu ? t('paraTimePicker.less') : t('paraTimePicker.more')}
-        </Button>
+        </StyledButton>
       )}
     </>
   )

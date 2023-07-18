@@ -9,7 +9,7 @@ import { accountTokenContainerId } from '../../pages/AccountDetailsPage/AccountT
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
-  fontWeight: 600,
+  fontWeight: 700,
   textDecoration: 'none',
   whiteSpace: 'nowrap',
   marginLeft: theme.spacing(4),

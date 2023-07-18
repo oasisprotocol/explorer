@@ -35,7 +35,7 @@ export const TopTokens: FC<{ scope: SearchScope }> = ({ scope }) => {
           <Link
             component={RouterLink}
             to={RouteUtils.getTopTokensRoute(scope)}
-            sx={{ color: COLORS.brandExtraDark }}
+            sx={{ color: COLORS.brandDark }}
           >
             {t('common.viewAll')}
           </Link>
