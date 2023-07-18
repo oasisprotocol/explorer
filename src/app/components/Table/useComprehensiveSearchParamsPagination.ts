@@ -64,6 +64,7 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
   }
 
   return {
+    selectedPage,
     offsetForQuery: offset,
     limitForQuery: limit,
     paramsForQuery,

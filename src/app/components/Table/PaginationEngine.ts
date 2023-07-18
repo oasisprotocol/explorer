@@ -13,6 +13,7 @@ export interface PaginatedResults<Item> {
 }
 
 export interface ComprehensivePaginationEngine<Item, QueryResult extends List> {
+  selectedPage: number
   offsetForQuery: number
   limitForQuery: number
   paramsForQuery: { offset: number; limit: number }

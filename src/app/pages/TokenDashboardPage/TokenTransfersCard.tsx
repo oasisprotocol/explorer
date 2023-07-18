@@ -11,9 +11,22 @@ import { useAccount } from '../AccountDetailsPage/hook'
 import { useTokenInfo, useTokenTransfers } from './hook'
 import { TokenDashboardContext } from './index'
 
-export const tokenTransfersContainerId = 'transfers'
-
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
+  const { t } = useTranslation()
+
+  return (
+    <Card>
+      <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+      <CardContent>
+        <ErrorBoundary light={true}>
+          <TokenTransfersView scope={scope} address={address} />
+        </ErrorBoundary>
+      </CardContent>
+    </Card>
+  )
+}
+
+const TokenTransfersView: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const { isLoading: areTransfersLoading, isFetched, results } = useTokenTransfers(scope, address)
@@ -26,20 +39,15 @@ export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }
   const transfers = results.data
 
   return (
-    <Card>
-      <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
-      <CardContent>
-        <ErrorBoundary light={true}>
-          {isFetched && !transfers?.length && <CardEmptyState label={t('account.emptyTokenTransferList')} />}
-          <TokenTransfers
-            transfers={transfers}
-            ownAddress={account?.address_eth}
-            isLoading={isLoading}
-            limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={results.tablePaginationProps}
-          />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <>
+      {isFetched && !transfers?.length && <CardEmptyState label={t('account.emptyTokenTransferList')} />}
+      <TokenTransfers
+        transfers={transfers}
+        ownAddress={account?.address_eth}
+        isLoading={isLoading}
+        limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+        pagination={results.tablePaginationProps}
+      />
+    </>
   )
 }

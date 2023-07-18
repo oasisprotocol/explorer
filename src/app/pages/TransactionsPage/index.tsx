@@ -83,12 +83,18 @@ export const TransactionsPage: FC = () => {
     },
   )
 
+  const { isLoading, isFetched, data } = transactionsQuery
+
+  const transactions = data?.data.transactions
+
+  if (isFetched && pagination.selectedPage > 1 && !transactions?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return (
     <PageLayout
       mobileFooterAction={
-        tableView === TableLayout.Vertical && (
-          <LoadMoreButton pagination={pagination} isLoading={transactionsQuery.isLoading} />
-        )
+        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
       {!isMobile && <Divider variant="layout" />}
@@ -99,14 +105,14 @@ export const TransactionsPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <Transactions
-            transactions={transactionsQuery.data?.data.transactions}
-            isLoading={transactionsQuery.isLoading}
+            transactions={data?.data.transactions}
+            isLoading={isLoading}
             limit={limit}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
-              totalCount: transactionsQuery.data?.data.total_count,
-              isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
+              totalCount: data?.data.total_count,
+              isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: limit,
             }}
           />
@@ -114,7 +120,7 @@ export const TransactionsPage: FC = () => {
 
         {tableView === TableLayout.Vertical && (
           <TransactionDetails>
-            {transactionsQuery.isLoading &&
+            {isLoading &&
               [...Array(limit).keys()].map(key => (
                 <TransactionDetailView
                   key={key}
@@ -125,8 +131,8 @@ export const TransactionsPage: FC = () => {
                 />
               ))}
 
-            {!transactionsQuery.isLoading &&
-              transactionsQuery.data?.data.transactions.map(tx => (
+            {!isLoading &&
+              data?.data.transactions.map(tx => (
                 <TransactionDetailView
                   key={tx.hash}
                   transaction={tx}

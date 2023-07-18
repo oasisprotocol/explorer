@@ -16,8 +16,6 @@ export const accountTransactionsContainerId = 'transactions'
 export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
-    useAccountTransactions(scope, address)
   return (
     <Card>
       <LinkableDiv id={accountTransactionsContainerId}>
@@ -25,22 +23,34 @@ export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, addr
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
-          <Transactions
-            transactions={transactions}
-            ownAddress={address}
-            isLoading={isLoading}
-            limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount,
-              isTotalCountClipped,
-              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-            }}
-          />
+          <AccountTransactions scope={scope} address={address} />
         </ErrorBoundary>
       </CardContent>
     </Card>
+  )
+}
+
+const AccountTransactions: FC<AccountDetailsContext> = ({ scope, address }) => {
+  const { t } = useTranslation()
+
+  const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
+    useAccountTransactions(scope, address)
+  return (
+    <>
+      {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
+      <Transactions
+        transactions={transactions}
+        ownAddress={address}
+        isLoading={isLoading}
+        limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+        pagination={{
+          selectedPage: pagination.selectedPage,
+          linkToPage: pagination.linkToPage,
+          totalCount,
+          isTotalCountClipped,
+          rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+        }}
+      />
+    </>
   )
 }

@@ -65,6 +65,7 @@ export function useClientSizePagination<Item, QueryResult extends List>({
   }
 
   return {
+    selectedPage: selectedClientPage,
     offsetForQuery: offset,
     limitForQuery: limit,
     paramsForQuery,

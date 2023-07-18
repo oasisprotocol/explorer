@@ -62,12 +62,16 @@ export const TokensPage: FC = () => {
     },
   )
 
+  const { isLoading, isFetched, data } = tokensQuery
+  const tokens = data?.data.evm_tokens
+  if (isFetched && pagination.selectedPage > 1 && !tokens?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return (
     <PageLayout
       mobileFooterAction={
-        tableView === TableLayout.Vertical && (
-          <LoadMoreButton pagination={pagination} isLoading={tokensQuery.isLoading} />
-        )
+        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
       {!isMobile && <Divider variant="layout" />}
@@ -78,29 +82,27 @@ export const TokensPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <TokenList
-            isLoading={tokensQuery.isLoading}
-            tokens={tokensQuery.data?.data.evm_tokens}
+            isLoading={isLoading}
+            tokens={tokens}
             limit={PAGE_SIZE}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
-              totalCount: tokensQuery.data?.data.total_count,
-              isTotalCountClipped: tokensQuery.data?.data.is_total_count_clipped,
+              totalCount: data?.data.total_count,
+              isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
             }}
           />
         )}
         {tableView === TableLayout.Vertical && (
           <TokenDetailsBox>
-            {tokensQuery.isLoading &&
+            {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <TokenDetails key={key} isLoading={true} token={undefined} standalone />
               ))}
 
-            {!tokensQuery.isLoading &&
-              tokensQuery.data?.data.evm_tokens.map(token => (
-                <TokenDetails key={token.contract_addr} token={token} standalone />
-              ))}
+            {!isLoading &&
+              tokens!.map(token => <TokenDetails key={token.contract_addr} token={token} standalone />)}
           </TokenDetailsBox>
         )}
       </SubPageCard>

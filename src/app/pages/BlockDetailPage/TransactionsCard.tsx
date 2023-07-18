@@ -28,16 +28,24 @@ const TransactionList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scop
     offset: txsOffset,
   })
 
+  const { isLoading, isFetched, data } = transactionsQuery
+
+  const transactions = data?.data.transactions
+
+  if (isFetched && txsPagination.selectedPage > 1 && !transactions?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return (
     <Transactions
-      transactions={transactionsQuery.data?.data.transactions}
-      isLoading={transactionsQuery.isLoading}
+      transactions={transactions}
+      isLoading={isLoading}
       limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
       pagination={{
         selectedPage: txsPagination.selectedPage,
         linkToPage: txsPagination.linkToPage,
-        totalCount: transactionsQuery.data?.data.total_count,
-        isTotalCountClipped: transactionsQuery.data?.data.is_total_count_clipped,
+        totalCount: data?.data.total_count,
+        isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
     />
