@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiatMoneyAmountBox } from '../../components/Account'
+import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import HelpIcon from '@mui/icons-material/Help'
@@ -14,7 +15,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
   const { t } = useTranslation()
   return price === undefined ? null : (
     <FiatMoneyAmountBox>
-      <span>
+      <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
         {t('common.fiatValueInUSD', {
           value: amount * price,
           formatParams: {
@@ -25,9 +26,9 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
         })}
         &nbsp;
         <Tooltip title={t('currentFiatValue.explanation')}>
-          <HelpIcon fontSize="small" />
+          <HelpIcon />
         </Tooltip>
-      </span>
+      </Box>
       {hasUsedCoinGecko && <CoinGeckoReferral />}
     </FiatMoneyAmountBox>
   )
