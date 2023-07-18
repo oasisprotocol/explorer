@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar'
 import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { useTheme } from '@mui/material/styles'
-import { Logotype } from './Logotype'
+import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
@@ -44,7 +44,7 @@ export const Header: FC = () => {
           }}
         >
           <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Logotype
+            <HomePageLink
               color={scrollTrigger ? theme.palette.layout.contrastMain : undefined}
               showText={!scrollTrigger && !isMobile}
             />
