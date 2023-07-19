@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Logotype } from '../PageLayout/Logotype'
+import { HomePageLink } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
@@ -101,7 +101,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
   return (
     <StyledParaTimePickerContent>
       <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
-        <Logotype color={COLORS.brandExtraDark} showText={!isMobile} />
+        <HomePageLink color={COLORS.brandExtraDark} showText={!isMobile} />
       </Box>
       {isTablet && (
         <TabletActionBar>

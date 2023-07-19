@@ -2,6 +2,7 @@ import { FC } from 'react'
 import Link from '@mui/material/Link'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 import { Link as RouterLink } from 'react-router-dom'
 import { OasisIcon } from '../CustomIcons/OasisIcon'
 import Typography from '@mui/material/Typography'
@@ -12,6 +13,14 @@ interface LogotypeProps {
   showText: boolean
 }
 
+export const HomePageLink: FC<LogotypeProps> = ({ color, showText }) => {
+  return (
+    <Link to="/" component={RouterLink} sx={{ display: 'inline-flex' }}>
+      <Logotype color={color} showText={showText} />
+    </Link>
+  )
+}
+
 export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const { t } = useTranslation()
   const theme = useTheme()
@@ -19,9 +28,7 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const logoSize = isMobile ? 32 : 40
 
   return (
-    <Link
-      to="/"
-      component={RouterLink}
+    <Box
       sx={{
         textDecoration: 'none',
         display: 'inline-flex',
@@ -36,6 +43,6 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
           {t('pageTitle')}
         </Typography>
       )}
-    </Link>
+    </Box>
   )
 }
