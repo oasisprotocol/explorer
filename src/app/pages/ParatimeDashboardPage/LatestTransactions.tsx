@@ -46,7 +46,7 @@ export const LatestTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
           <Link
             component={RouterLink}
             to={RouteUtils.getLatestTransactionsRoute(scope)}
-            sx={{ color: COLORS.brandExtraDark }}
+            sx={{ color: COLORS.brandDark }}
           >
             {t('common.viewAll')}
           </Link>

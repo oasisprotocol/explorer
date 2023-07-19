@@ -46,7 +46,7 @@ export const LatestBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
           <Link
             component={RouterLink}
             to={RouteUtils.getLatestBlocksRoute(scope)}
-            sx={{ color: COLORS.brandExtraDark }}
+            sx={{ color: COLORS.brandDark }}
           >
             {t('common.viewAll')}
           </Link>

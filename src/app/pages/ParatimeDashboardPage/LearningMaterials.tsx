@@ -146,12 +146,7 @@ export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
         component="h3"
         title={t('learningMaterials.header')}
         action={
-          <Link
-            href={docs.home}
-            rel="noopener noreferrer"
-            target="_blank"
-            sx={{ color: COLORS.brandExtraDark }}
-          >
+          <Link href={docs.home} rel="noopener noreferrer" target="_blank" sx={{ color: COLORS.brandDark }}>
             {t('common.viewAll')}
           </Link>
         }
