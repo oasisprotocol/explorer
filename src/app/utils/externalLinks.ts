@@ -36,5 +36,5 @@ export const testnet = {
 }
 
 export const api = {
-  spec: `${process.env.VITE_API}spec/v1.html`,
+  spec: `${import.meta.env.VITE_API}spec/v1.html`,
 }

@@ -56,7 +56,7 @@ const DelayedEventBalance: FC<{
     return <Skeleton variant="text" />
   }
   if (isError || !token) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (!import.meta.env.PROD) {
       console.log('Event:', JSON.stringify(event, null, '  '))
       throw new Error("Can't identify token for this event! (See console.)")
     }

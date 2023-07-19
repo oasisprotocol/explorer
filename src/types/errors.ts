@@ -38,7 +38,7 @@ export function exhaustedTypeWarning(
   const message = `${messagePrefix}: Expected type to be exhausted, but this type was not handled: ${JSON.stringify(
     exhaustedType,
   )}`
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     console.warn(message)
   } else {
     throw new Error(message)
