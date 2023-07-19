@@ -58,15 +58,15 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
         ) : (
           <>
             <StyledBox>
-              {process.env.REACT_APP_BUILD_SHA && (
+              {process.env.VITE_BUILD_SHA && (
                 <Typography variant="footer">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
                     components={{
-                      ReleaseLink: process.env.REACT_APP_BUILD_VERSION ? (
+                      ReleaseLink: process.env.VITE_BUILD_VERSION ? (
                         <Link
-                          href={`${github.releaseTag}${process.env.REACT_APP_BUILD_VERSION}`}
+                          href={`${github.releaseTag}${process.env.VITE_BUILD_VERSION}`}
                           rel="noopener noreferrer"
                           target="_blank"
                           sx={{ color: theme.palette.layout.main }}
@@ -76,7 +76,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                       ),
                       CommitLink: (
                         <Link
-                          href={`${github.commit}${process.env.REACT_APP_BUILD_SHA}`}
+                          href={`${github.commit}${process.env.VITE_BUILD_SHA}`}
                           rel="noopener noreferrer"
                           target="_blank"
                           sx={{ color: theme.palette.layout.main }}
@@ -85,7 +85,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                     }}
                     values={{
                       buildTime: t('common.formattedDateTime', {
-                        timestamp: new Date(Number(process.env.REACT_APP_BUILD_DATETIME)),
+                        timestamp: new Date(Number(process.env.VITE_BUILD_DATETIME)),
                         formatParams: {
                           timestamp: {
                             year: 'numeric',
@@ -97,9 +97,9 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                           } satisfies Intl.DateTimeFormatOptions,
                         },
                       }),
-                      sha: process.env.REACT_APP_BUILD_SHA.substring(0, 7),
-                      version: process.env.REACT_APP_BUILD_VERSION
-                        ? process.env.REACT_APP_BUILD_VERSION.replace('v', '')
+                      sha: process.env.VITE_BUILD_SHA.substring(0, 7),
+                      version: process.env.VITE_BUILD_VERSION
+                        ? process.env.VITE_BUILD_VERSION.replace('v', '')
                         : '-',
                     }}
                   />
