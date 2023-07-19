@@ -120,6 +120,7 @@ const GraphStyled = styled('svg', {
   },
   text: {
     userSelect: 'none',
+    pointerEvents: 'none',
   },
   'g.highlight': {
     '&:hover, &:focus-visible': {
