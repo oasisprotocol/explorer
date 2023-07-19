@@ -37,14 +37,15 @@ interface GraphProps extends GraphBaseProps {
 
 interface GraphStyledProps extends GraphBaseProps {
   selectedLayer?: Layer
+  hoveredLayer: Layer | null
 }
 
 const GraphStyled = styled('svg', {
   shouldForwardProp: prop =>
-    !(['disabled', 'transparent', 'selectedLayer'] as (keyof GraphStyledProps)[]).includes(
+    !(['disabled', 'transparent', 'selectedLayer', 'hoveredLayer'] as (keyof GraphStyledProps)[]).includes(
       prop as keyof GraphStyledProps,
     ),
-})<GraphStyledProps>(({ theme, disabled, transparent, selectedLayer }) => ({
+})<GraphStyledProps>(({ theme, disabled, transparent, selectedLayer, hoveredLayer }) => ({
   position: 'absolute',
   left: '50%',
   top: '45%',
@@ -105,8 +106,7 @@ const GraphStyled = styled('svg', {
         },
       },
     },
-    // TODO: :has not supported in Firefox
-    'g[id$=circle]:has( + g[id$=label]:hover)': {
+    [`g[id$=${hoveredLayer}-circle]`]: {
       'ellipse:not(.hover-bg)': {
         display: 'none',
       },
@@ -367,6 +367,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         ref={ref}
         className={network}
         selectedLayer={selectedLayer}
+        hoveredLayer={hoveredLayer}
       >
         <path
           d="M257.947 218.31C259.1 209.19 258.447 199.932 256.023 191.064C253.598 182.197 249.452 173.894 243.819 166.629C238.186 159.364 231.177 153.28 223.193 148.724C215.208 144.168 206.405 141.229 197.285 140.075C188.164 138.921 178.906 139.575 170.039 141.999C161.172 144.423 152.868 148.57 145.604 154.203C138.339 159.836 132.255 166.844 127.698 174.829C123.142 182.813 120.203 191.617 119.05 200.737C117.896 209.857 118.549 219.115 120.974 227.982C123.398 236.85 127.545 245.153 133.178 252.418C138.811 259.683 145.819 265.767 153.804 270.323C161.788 274.879 170.591 277.818 179.712 278.972C188.832 280.126 198.09 279.472 206.957 277.048C215.825 274.624 224.128 270.477 231.393 264.844C238.657 259.211 244.742 252.202 249.298 244.218C253.854 236.233 256.793 227.43 257.947 218.31L257.947 218.31Z"
