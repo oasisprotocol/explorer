@@ -175,6 +175,7 @@ export const HomePage: FC = () => {
                 setStep={setStep}
                 disabled={searchHasFocus}
                 showInfoScreen={showInfoScreen}
+                graphZoomedIn={isGraphZoomedIn}
                 onGraphZoomedIn={setIsGraphZoomedIn}
               />
             </Box>
