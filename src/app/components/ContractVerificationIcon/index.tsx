@@ -50,7 +50,7 @@ const StyledBox = styled(Box, {
 })
 
 type ContractVerificationIconProps = {
-  account: RuntimeAccount | undefined
+  account: Pick<RuntimeAccount, 'address_eth' | 'evm_contract'> | undefined
   noLink?: boolean
 }
 
@@ -62,14 +62,22 @@ const Waiting: FC = () => (
 )
 
 export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ account, noLink = false }) => {
-  const { t } = useTranslation()
-
   if (!account) {
     return <Waiting />
   }
 
   const verified = !!account.evm_contract?.verification
   const address_eth = account.address_eth!
+
+  return <VerificationIcon address_eth={address_eth} verified={verified} noLink={noLink} />
+}
+
+export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLink?: boolean }> = ({
+  address_eth,
+  verified,
+  noLink = false,
+}) => {
+  const { t } = useTranslation()
 
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   const statusLabel: Record<VerificationStatus, string> = {
