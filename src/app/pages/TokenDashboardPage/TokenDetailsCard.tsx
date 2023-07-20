@@ -8,7 +8,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { DelayedContractVerificationIcon } from '../../components/ContractVerificationIcon'
+import { DelayedContractVerificationIcon, VerificationIcon } from '../../components/ContractVerificationIcon'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
@@ -50,7 +50,11 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ 
 
             <dt>{t('contract.verification.title')}</dt>
             <dd>
-              <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
+              {token.is_verified === undefined ? ( // Workaround for old Nexus versions. TODO: remove when new version of Nexus has been deployed everywhere.
+                <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
+              ) : (
+                <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} />
+              )}
             </dd>
 
             <dt>{t('common.type')} </dt>

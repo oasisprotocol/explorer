@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
 import Skeleton from '@mui/material/Skeleton'
-import { DelayedContractVerificationIcon } from '../../components/ContractVerificationIcon'
+import { DelayedContractVerificationIcon, VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -67,11 +67,19 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ sc
                   alignItems: 'center',
                 }}
               >
-                <DelayedContractVerificationIcon
-                  scope={token}
-                  contractOasisAddress={token.contract_addr}
-                  noLink
-                />
+                {token.is_verified === undefined ? ( // Workaround for old Nexus versions. TODO: remove when new version of Nexus has been deployed everywhere.
+                  <DelayedContractVerificationIcon
+                    scope={token}
+                    contractOasisAddress={token.contract_addr}
+                    noLink
+                  />
+                ) : (
+                  <VerificationIcon
+                    address_eth={token.eth_contract_addr}
+                    verified={token.is_verified}
+                    noLink
+                  />
+                )}
                 <AccountLink scope={token} address={token.eth_contract_addr || token.contract_addr} />
                 <CopyToClipboard value={token.eth_contract_addr || token.contract_addr} />
               </Box>
