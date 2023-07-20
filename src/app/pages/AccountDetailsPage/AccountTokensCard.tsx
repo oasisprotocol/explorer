@@ -40,7 +40,10 @@ export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string 
     return <Skeleton variant={'text'} />
   }
 
-  const address = contract?.address_eth ?? oasisAddress
+  return <ContractLink scope={scope} address={contract?.address_eth ?? oasisAddress} />
+}
+
+export const ContractLink: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   return (
     <Box sx={{ display: 'flex', alignContent: 'center' }}>
       <AccountLink scope={scope} address={address} />
