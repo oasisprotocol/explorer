@@ -75,7 +75,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         content: (
           <TokenLink
             scope={scope}
-            address={item.token_contract_addr}
+            address={item.token_contract_addr_eth}
             name={item.token_name || t('common.missing')}
           />
         ),
@@ -83,9 +83,8 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       },
       {
         content: (
-          <LinkableDiv id={item.token_contract_addr}>
-            {/* TODO remove temporal workaround when token_contract_addr_eth becomes available as part of RuntimeEvmBalance */}
-            <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
+          <LinkableDiv id={item.token_contract_addr_eth}>
+            <ContractLink scope={scope} address={item.token_contract_addr_eth} />
           </LinkableDiv>
         ),
         key: 'hash',
@@ -101,7 +100,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         key: 'ticker',
       },
     ],
-    highlight: item.token_contract_addr === locationHash,
+    highlight: item.token_contract_addr_eth === locationHash,
   }))
 
   return (
