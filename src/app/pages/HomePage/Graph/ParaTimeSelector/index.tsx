@@ -126,6 +126,7 @@ const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
 
+// border affecting scale (quick-pinch-zoom)
 const QuickPinchZoomOuter = styled('div')(({ theme }) => ({
   '> div': {
     position: 'absolute',
@@ -152,6 +153,7 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
   step: ParaTimeSelectorStep
   setStep: (value: ParaTimeSelectorStep) => void
   showInfoScreen: boolean
+  graphZoomedIn: boolean
   onGraphZoomedIn: (isGraphZoomedIn: boolean) => void
 }
 
@@ -162,6 +164,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   step,
   setStep,
   showInfoScreen,
+  graphZoomedIn,
   onGraphZoomedIn,
 }) => {
   const graphRef = useRef<SVGSVGElement & HTMLElement>(null)
@@ -227,12 +230,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     }
   }
 
-  // true when scale larger than initial zoom
-  const isZoomedIn = scale > 1.07
-
   useEffect(() => {
+    // true when scale larger than "safe" zoom, due to viewport
+    const isZoomedIn = scale > 1.5
+
     onGraphZoomedIn(isZoomedIn)
-  }, [isZoomedIn, onGraphZoomedIn])
+  }, [scale, onGraphZoomedIn])
 
   return (
     <>
@@ -256,13 +259,13 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
                   setSelectedLayer={(layer: Layer) => setSelectedLayer({ current: layer })}
                   scale={scale}
                   setActiveMobileGraphTooltip={setActiveMobileGraphTooltip}
-                  isZoomedIn={isZoomedIn}
+                  isZoomedIn={graphZoomedIn}
                 />
               </QuickPinchZoomInner>
             </QuickPinchZoom>
           </QuickPinchZoomOuter>
           {!isMobile && (
-            <ZoomOutBtnFade in={isZoomedIn}>
+            <ZoomOutBtnFade in={graphZoomedIn}>
               <ZoomOutBtn onClick={onZoomOutClick} disabled={disabled}>
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
