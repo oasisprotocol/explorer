@@ -95,6 +95,7 @@
     "undefined": "Undefined",
     "unknown": "Unknown",
     "value": "Value",
+    "valueLong": "{{value, number}}",
     "valueInToken": "{{value}} {{ticker}}",
     "roundedValueInToken": "{{value}}… <TickerLink />",
     "valueInTokenWithLink": "{{value}} <TickerLink />",
