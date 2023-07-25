@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import HelpIcon from '@mui/icons-material/Help'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
+import BigNumber from 'bignumber.js'
 
 type CurrentFiatValueProps = Pick<TokenPriceInfo, 'price' | 'hasUsedCoinGecko'> & {
   amount: string
@@ -17,7 +18,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
     <FiatMoneyAmountBox>
       <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
         {t('common.fiatValueInUSD', {
-          value: parseFloat(amount) * price,
+          value: new BigNumber(amount).multipliedBy(price).toFixed(),
           formatParams: {
             value: {
               currency: 'USD',

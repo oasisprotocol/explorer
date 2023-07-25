@@ -29,7 +29,7 @@ test('formatting fiat currency with i18n', () => {
   const { result } = renderHook(() => {
     const { t } = useTranslation()
     return t('does_not_exist.use_default', '{{value, currency}}', {
-      value: 123.456789,
+      value: '111222333444555666777888999.111222333444555666',
       formatParams: {
         value: {
           currency: 'USD',
@@ -38,7 +38,7 @@ test('formatting fiat currency with i18n', () => {
     }) as string
   })
 
-  expect(result.current).toBe('$123.46')
+  expect(result.current).toBe('$111,222,333,444,555,666,777,888,999.11')
 })
 
 test('formatting block sizes with i18n', () => {

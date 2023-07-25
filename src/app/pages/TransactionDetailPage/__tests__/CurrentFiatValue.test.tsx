@@ -10,7 +10,7 @@ describe('CurrentFiatValue', () => {
         price={0.55555}
       />,
     )
-    expect(screen.getByText('$555,550,000,055,555,000,000,000,000,000,000,000,000.00')).toBeInTheDocument()
+    expect(screen.getByText('$555,550,000,055,555,000,005,555,500,000,555,550,000.06')).toBeInTheDocument()
     expect(screen.getByText('CoinGecko')).toBeInTheDocument()
   })
 })
