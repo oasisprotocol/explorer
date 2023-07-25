@@ -69,9 +69,6 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ 
                 ? t('common.missing')
                 : t('common.valueInToken', { value: balance, ticker: tickerName })}
             </dd>
-
-            <dt>{t('common.transactions')}</dt>
-            <dd>{account.stats.num_txns.toLocaleString()}</dd>
           </StyledDescriptionList>
         )}
       </CardContent>
