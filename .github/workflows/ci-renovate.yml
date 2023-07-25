@@ -34,7 +34,8 @@ jobs:
           echo "FILE_NAME=.changelog/${{ github.event.pull_request.number }}.internal.md" >> $GITHUB_OUTPUT
       - name: Create Change Log file
         run: |
-          echo ${{ github.event.pull_request.title }} > ${{ steps.vars.outputs.FILE_NAME }}
+          # echo ${{ github.event.pull_request.title }} > ${{ steps.vars.outputs.FILE_NAME }}
+           printf "%s" "${{ github.event.pull_request.title }}" > "${{ steps.vars.outputs.FILE_NAME }}"
       - name: Commit Change Log file
         run: |
           # Set git user email and name to match author of the last commit.
