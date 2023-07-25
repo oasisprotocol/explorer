@@ -35,7 +35,7 @@ jobs:
       - name: Create Change Log file
         run: |
           # echo ${{ github.event.pull_request.title }} > ${{ steps.vars.outputs.FILE_NAME }}
-           printf "%s" "${{ github.event.pull_request.title }}" > "${{ steps.vars.outputs.FILE_NAME }}"
+          printf '%s' "${{ github.event.pull_request.title }}" > "${{ steps.vars.outputs.FILE_NAME }}"
       - name: Commit Change Log file
         run: |
           # Set git user email and name to match author of the last commit.
