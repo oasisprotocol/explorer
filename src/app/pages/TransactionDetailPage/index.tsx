@@ -308,7 +308,7 @@ export const TransactionDetailView: FC<{
               <>
                 <dt>{t('currentFiatValue.title')}</dt>
                 <dd>
-                  <CurrentFiatValue amount={parseFloat(transaction.amount)} {...tokenPriceInfo} />
+                  <CurrentFiatValue amount={transaction.amount} {...tokenPriceInfo} />
                 </dd>
               </>
             )}

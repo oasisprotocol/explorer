@@ -8,7 +8,7 @@ import HelpIcon from '@mui/icons-material/Help'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
 
 type CurrentFiatValueProps = Pick<TokenPriceInfo, 'price' | 'hasUsedCoinGecko'> & {
-  amount: number
+  amount: string
 }
 
 export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, hasUsedCoinGecko }) => {
@@ -17,7 +17,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
     <FiatMoneyAmountBox>
       <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
         {t('common.fiatValueInUSD', {
-          value: amount * price,
+          value: parseFloat(amount) * price,
           formatParams: {
             value: {
               currency: 'USD',
