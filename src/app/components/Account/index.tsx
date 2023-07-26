@@ -22,6 +22,7 @@ import { TokenPriceInfo } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
+import BigNumber from 'bignumber.js'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -154,7 +155,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
               <dd>
                 <FiatMoneyAmountBox>
                   {t('common.fiatValueInUSD', {
-                    value: parseFloat(balance) * tokenFiatValue,
+                    value: new BigNumber(balance).multipliedBy(tokenFiatValue).toFixed(),
                     formatParams: {
                       value: {
                         currency: 'USD',
