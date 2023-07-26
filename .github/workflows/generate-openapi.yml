@@ -18,10 +18,10 @@ jobs:
         working-directory: src/oasis-nexus
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Node.js 19
+      - name: Set up Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: '19.x'
+          node-version: '20.x'
           cache: yarn
           cache-dependency-path: src/oasis-nexus/yarn.lock
       - run: yarn install --frozen-lockfile
