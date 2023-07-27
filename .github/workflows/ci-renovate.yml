@@ -80,17 +80,23 @@ jobs:
           CHECK_TITLE="Lint Check"
           API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
 
-          # List check runs for the pull request's head commit
-          RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL)
+          # Get all check runs for the current pull request
+          CHECK_RUNS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "$API_URL?head_sha=${{ github.event.pull_request.head.sha }}")
 
-          # Extract the CHECK_RUN_ID of the check run with the matching name (if exists)
-          CHECK_RUN_ID=$(echo $RESPONSE | jq -r '.check_runs[] | select(.name == "'$CHECK_NAME'") | .id')
+          # Loop through each check run and re-request it
+          for check_run in $(echo "$CHECK_RUNS" | jq -r '.check_runs[] | @base64'); do
+            _jq() {
+              echo "${check_run}" | base64 --decode | jq -r "${1}"
+            }
+            CHECK_RUN_ID=$(_jq '.id')
+            CONCLUSION=$(_jq '.conclusion')
 
-          if [ -z "$CHECK_RUN_ID" ]; then
-            echo "Check run with name $CHECK_NAME not found."
-            exit 1
-          fi
-
-          echo "Found Check run with ID: $CHECK_RUN_ID"
-
-          curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL/$CHECK_RUN_ID/rerequest
+            # Re-request the check run if it is completed (not in progress)
+            if [ "$CONCLUSION" != "in_progress" ]; then
+              curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  -H "Content-Type: application/json" \
+                  -d "{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"queued\", \"started_at\":\"$(date --utc +%FT%TZ)\"}" \
+                  "$API_URL/$CHECK_RUN_ID/rerequest"
+            fi
+          done
