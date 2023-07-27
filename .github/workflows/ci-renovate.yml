@@ -41,7 +41,12 @@ jobs:
           git config --local user.email "$(git log --pretty='%ae' -1)"
           git config --local user.name "$(git log --pretty=format:'%an' -1)"
           git add ${{ steps.vars.outputs.FILE_NAME }}
-          git commit --amend --no-edit
-      - name: Push changes back to branch
-        run: |
-          git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
+          git commit -m "Append Change Log fragment"
+        # run: |
+        # git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
+      # - name: Push changes back to branch
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.head_ref }}
+          force_with_lease: true
