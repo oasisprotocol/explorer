@@ -28,7 +28,6 @@ jobs:
           # Checkout pull request HEAD commit instead of merge commit.
           # ref: ${{ github.event.pull_request.head.sha }}
           ref: ${{ github.head_ref }}
-        fetch-depth: 0
       - name: Set workflow variables
         # Id is needed to access output in a next step.
         id: vars
