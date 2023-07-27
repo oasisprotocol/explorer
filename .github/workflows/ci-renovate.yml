@@ -80,17 +80,17 @@ jobs:
           CHECK_TITLE="Lint Check"
           API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
 
-          # Get the check runs for this pull request
-          CHECK_RUNS=$(curl -X GET -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL?head_sha=${{ github.event.pull_request.head.sha }})
+          # List check runs for the pull request's head commit
+          RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL)
 
-          # Check if CHECK_RUNS is empty
-          if [ -z "$CHECK_RUNS" ]; then
-            # If there are no existing check runs, create a new one
-            curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "{\"name\": \"$CHECK_NAME\", \"head_sha\": \"${{ github.event.pull_request.head.sha }}\", \"status\": \"completed\", \"conclusion\": \"neutral\", \"output\": {\"title\": \"$CHECK_TITLE\", \"summary\": \"No linting check needed.\"}}" $API_URL
-          else
-            # Find the specific check run for the CHECK_NAME
-            CHECK_RUN_ID=$(echo $CHECK_RUNS | jq --arg CHECK_NAME "$CHECK_NAME" '.check_runs[] | select(.name == $CHECK_NAME) | .id')
+          # Extract the CHECK_RUN_ID of the check run with the matching name
+          CHECK_RUN_ID=$(echo $RESPONSE | jq -r '.check_runs[] | select(.name == "'$CHECK_NAME'") | .id')
 
-            # Update the check run by re-requesting it
-            curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL/$CHECK_RUN_ID/rerequest
+          if [ -z "$CHECK_RUN_ID" ]; then
+            echo "Check run with name $CHECK_NAME not found."
+            exit 1
           fi
+
+          echo "Found Check run with ID: $CHECK_RUN_ID"
+
+          curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL/$CHECK_RUN_ID/rerequest
