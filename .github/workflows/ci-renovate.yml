@@ -40,7 +40,11 @@ jobs:
           else
             echo "FILE_EXISTS=false" >> $GITHUB_ENV
           fi
+      - name: Print FILE_EXISTS variable
+        run: |
+          echo "FILE_EXISTS: ${{ steps.check_file.outputs.FILE_EXISTS }}"
       - name: Create Change Log file
+        if: steps.check_file.outputs.FILE_EXISTS != 'true'
         run: |
           echo "${{ github.event.pull_request.title }}" > ${{ steps.vars.outputs.FILE_NAME }}
       - name: Commit Change Log file
@@ -52,11 +56,11 @@ jobs:
           git add ${{ steps.vars.outputs.FILE_NAME }}
           git commit --amend --no-edit
       - name: Push changes back to branch
-        if: steps.check_file.outputs.FILE_EXISTS == 'false'
+        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
       - name: Trigger all checks again
-        if: steps.check_file.outputs.FILE_EXISTS == 'false'
+        if: steps.check_file.outputs.FILE_EXISTS == true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
