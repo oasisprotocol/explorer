@@ -89,10 +89,10 @@ jobs:
               echo "${check_run}" | base64 --decode | jq -r "${1}"
             }
             CHECK_RUN_ID=$(_jq '.id')
-            CONCLUSION=$(_jq '.conclusion')
+            STATUS=$(_jq '.status')
 
-            # Re-request the check run if it is completed (not in progress)
-            if [ "$CONCLUSION" != "in_progress" ]; then
+            # Re-request the check run if it is not in a completed state
+            if [ "$STATUS" != "completed" ]; then
               curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github.v3+json" \
                   -H "Content-Type: application/json" \
