@@ -19,9 +19,6 @@ jobs:
     permissions:
       # Enable creating, updating files
       contents: write
-      # Enable updating commit status
-      checks: write
-      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -35,23 +32,10 @@ jobs:
         id: vars
         run: |
           echo "FILE_NAME=.changelog/${{ github.event.pull_request.number }}.internal.md" >> $GITHUB_OUTPUT
-      - name: Check if file exists
-        id: check_file
-        run: |
-          if [ -f ${{ steps.vars.outputs.FILE_NAME }} ]; then
-            echo "FILE_EXISTS=true" >> $GITHUB_ENV
-          else
-            echo "FILE_EXISTS=false" >> $GITHUB_ENV
-          fi
-      - name: Print FILE_EXISTS variable
-        run: |
-          echo "FILE_EXISTS: ${{ steps.check_file.outputs.FILE_EXISTS }}"
       - name: Create Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           echo "${{ github.event.pull_request.title }}" > ${{ steps.vars.outputs.FILE_NAME }}
       - name: Commit Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           # Set git user email and name to match author of the last commit.
           git config --local user.email "$(git log --pretty='%ae' -1)"
@@ -59,15 +43,5 @@ jobs:
           git add ${{ steps.vars.outputs.FILE_NAME }}
           git commit --amend --no-edit
       - name: Push changes back to branch
-        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
-      - name: Trigger all checks again
-        if: steps.check_file.outputs.FILE_EXISTS == false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
-          CHECK_NAME="ci-lint"
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
