@@ -53,9 +53,6 @@ jobs:
         id: commit
         run: |
           echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
-      - name: debug
-        run: |
-          echo github.event.pull_request
       - name: Dispatch custom event FooBar
         run: |
           payload='{"event_type": "fooBar"}'
@@ -64,10 +61,38 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -d "$payload" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
-      - name: Rerun
+
+      - name: Create Check Run and Trigger ci-lint
+        env:
+          # Replace 'YOUR_GITHUB_TOKEN' with the token you generated earlier
+          GITHUB_TOKEN: ${{ secrets.YOUR_GITHUB_TOKEN }}
         run: |
-          curl -X POST \
+          # Create a check run
+          check_run_response=$(curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            -d "$payload" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/jobs/ci-lint/rerun"
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"name": "ci-lint"}' \
+            "https://api.github.com/repos/${{ github.repository }}/check-runs")
+
+          # Extract the check run ID from the response
+          check_run_id=$(echo "$check_run_response" | jq -r '.id')
+
+          # Wait for a moment to allow the check run to be created
+          sleep 5
+
+          # Trigger ci-lint workflow
+          dispatch_response=$(curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"event_type": "workflow_dispatch"}' \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/ci-lint.yml/dispatches")
+
+          # Extract the workflow run ID from the response
+          workflow_run_id=$(echo "$dispatch_response" | jq -r '.id')
+
+          # Update the check run with the workflow run ID
+          curl -X PATCH \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"external_id": "'"$workflow_run_id"'"}' \
+            "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
