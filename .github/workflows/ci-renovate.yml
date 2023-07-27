@@ -47,15 +47,19 @@ jobs:
         run: |
           # git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
           git push origin HEAD:refs/heads/${{ github.head_ref }}
+      - name: Get the new commit hash
+        id: commit
+        run: |
+          echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
       - name: Dispatch pull_request event
         run: |
-          # Customize the payload with the new commit hash and other necessary details
-          payload="{\"event_type\": \"pull_request\", \"client_payload\": {\"commit_hash\": \"${{ github.event.pull_request.head.sha }}\"}}"
+          payload="{\"event_type\": \"pull_request\", \"client_payload\": {\"commit_hash\": \"${{ steps.commit.outputs.commit_hash }}\"}}"
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -d "$payload" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
+
       # - name: Dispatch custom event FooBar
       #   run: |
       #     # Customize the payload as needed
