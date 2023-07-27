@@ -10,12 +10,15 @@ on:
   # matched branches.
   pull_request:
     branches: [master]
-  repository_dispatch:
-    types: [fooBar]
-  workflow_dispatch:
-  workflow_call:
-  check_run:
-    types: [created, rerequested]
+
+  pull_request_target:
+    types: [synchronize]
+  # repository_dispatch:
+  # types: [fooBar]
+  # workflow_dispatch:
+  # workflow_call:
+  # check_run:
+  # types: [created, rerequested]
 
 jobs:
   lint:
