@@ -66,6 +66,10 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -d "$payload" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
+      - name: Debug
+        run: |
+          echo ${{ steps.create_check.outputs.check_run_id }}
+
       - name: Create Check Run and Trigger ci-lint
         run: |
           # Use the check_run_id from the previous step to update the check run
