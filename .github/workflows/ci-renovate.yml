@@ -83,6 +83,12 @@ jobs:
           # Get all check runs for the current pull request
           CHECK_RUNS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "$API_URL?head_sha=${{ github.event.pull_request.head.sha }}")
 
+          # Check if any check runs were fetched
+          if [ "$CHECK_RUNS" = "null" ]; then
+            echo "No check runs found for the pull request."
+            exit 0
+          fi
+
           # Loop through each check run and re-request it
           for check_run in $(echo "$CHECK_RUNS" | jq -r '.check_runs[] | @base64'); do
             _jq() {
@@ -96,7 +102,7 @@ jobs:
               curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github.v3+json" \
                   -H "Content-Type: application/json" \
-                  -d "{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.head_ref }}\", \"status\":\"queued\", \"started_at\":\"$(date --utc +%FT%TZ)\"}" \
+                  -d "{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"queued\", \"started_at\":\"$(date --utc +%FT%TZ)\"}" \
                   "$API_URL/$CHECK_RUN_ID/rerequest"
             fi
           done
