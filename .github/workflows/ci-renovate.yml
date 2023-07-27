@@ -61,6 +61,26 @@ jobs:
         if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
+      - name: Close PR
+        if: steps.check_file.outputs.FILE_EXISTS == false
+        run: |
+          curl -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"state":"closed"}' \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
+        - name: Wait for PR to close
+          if: steps.check_file.outputs.FILE_EXISTS == false
+          run: |
+            sleep 10
+        - name: Reopen PR
+          if: steps.check_file.outputs.FILE_EXISTS == false
+          run: |
+            curl -X PATCH \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"state":"open"}' \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
       # - name: Trigger all checks again
       #   if: steps.check_file.outputs.FILE_EXISTS == false
       #   env:
@@ -70,14 +90,16 @@ jobs:
       #     API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
       #     CHECK_NAME="ci-lint"
       #     curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
-      - name: Update or Create Check Run
-        if: steps.check_file.outputs.FILE_EXISTS == false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          CHECK_NAME="ci-lint"
-          CHECK_TITLE="Lint Check"
-          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
+      # - name: Update or Create Check Run
+      #   if: steps.check_file.outputs.FILE_EXISTS == false
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     PR_NUMBER=${{ github.event.pull_request.number }}
+      #     CHECK_NAME="ci-lint"
+      #     CHECK_TITLE="Lint Check"
+      #     API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
 
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
+      #     curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
+
+      # close and open PR to trigger all checks again
