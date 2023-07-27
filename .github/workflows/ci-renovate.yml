@@ -83,9 +83,14 @@ jobs:
           # Get the check runs for this pull request
           CHECK_RUNS=$(curl -X GET -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL?head_sha=${{ github.event.pull_request.head.sha }})
 
-          # Find the specific check run for the CHECK_NAME
-          CHECK_RUN_ID=$(echo $CHECK_RUNS | jq --arg CHECK_NAME "$CHECK_NAME" '.check_runs[] | select(.name == $CHECK_NAME) | .id')
+          # Check if CHECK_RUNS is empty
+          if [ -z "$CHECK_RUNS" ]; then
+            # If there are no existing check runs, create a new one
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "{\"name\": \"$CHECK_NAME\", \"head_sha\": \"${{ github.event.pull_request.head.sha }}\", \"status\": \"completed\", \"conclusion\": \"neutral\", \"output\": {\"title\": \"$CHECK_TITLE\", \"summary\": \"No linting check needed.\"}}" $API_URL
+          else
+            # Find the specific check run for the CHECK_NAME
+            CHECK_RUN_ID=$(echo $CHECK_RUNS | jq --arg CHECK_NAME "$CHECK_NAME" '.check_runs[] | select(.name == $CHECK_NAME) | .id')
 
-          # CHECK_PAYLOAD="{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"completed\", \"conclusion\":\"success\", \"output\":{\"title\":\"$CHECK_TITLE\", \"summary\":\"Lint check passed.\"}}"
-          # curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "$CHECK_PAYLOAD" "$API_URL/$CHECK_RUN_ID"
-          curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json"  $API_URL/$CHECK_RUN_ID/rerequest
+            # Update the check run by re-requesting it
+            curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL/$CHECK_RUN_ID/rerequest
+          fi
