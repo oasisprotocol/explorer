@@ -19,6 +19,7 @@ jobs:
     permissions:
       # Enable creating, updating files
       contents: write
+      checks: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
