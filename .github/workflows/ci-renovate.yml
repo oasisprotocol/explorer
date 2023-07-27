@@ -46,12 +46,28 @@ jobs:
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
 
-      - name: Rerun all workflows using PAT
-        env:
-          PAT: ${{ secrets.PAT_SECRET }}
-        run: |
-          curl -X POST \
-            -H "Authorization: Bearer $PAT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
-            -d '{"ref": "${{ github.head_ref }}"}'
+      - name: Create Check Run
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data } = await github.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Your Check Name', // Replace with your desired check name
+              head_sha: context.sha,
+              status: 'in_progress',
+              started_at: new Date().toISOString(),
+            });
+            console.log(`Check run created: ${data.url}`);
+            core.setOutput('check_run_id', data.id);
+
+      # - name: Rerun all workflows using PAT
+      #   env:
+      #     PAT: ${{ secrets.PAT_SECRET }}
+      #   run: |
+      #     curl -X POST \
+      #       -H "Authorization: Bearer $PAT" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
+      #       -d '{"ref": "${{ github.head_ref }}"}'
