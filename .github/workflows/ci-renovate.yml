@@ -54,25 +54,12 @@ jobs:
       - name: debug
         run: |
           echo github.event.pull_request
-      - name: Dispatch pull_request event
+      - name: Dispatch custom event FooBar
         run: |
-          # Prepare the custom payload for the pull_request event
-          NEW_COMMIT_HASH=$(echo "${{ steps.commit.outputs.commit_hash }}")
-          PAYLOAD="{\"commit_hash\": \"$NEW_COMMIT_HASH\"}"
-
-          # Dispatch the pull_request event with the custom payload
+          # Customize the payload as needed
+          payload='{"event_type": "fooBar"}'
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
-            -d "$PAYLOAD" \
+            -d "$payload" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
-
-      # - name: Dispatch custom event FooBar
-      #   run: |
-      #     # Customize the payload as needed
-      #     payload='{"event_type": "fooBar"}'
-      #     curl -X POST \
-      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-      #       -H "Accept: application/vnd.github+json" \
-      #       -d "$payload" \
-      #       "https://api.github.com/repos/${{ github.repository }}/dispatches"
