@@ -50,7 +50,7 @@ jobs:
       - name: Dispatch pull_request event
         run: |
           # Customize the payload with the new commit hash and other necessary details
-          payload="{\"event_type\": \"pull_request\", \"client_payload\": {\"commit_hash\": \"${{ github.head_ref }}\"}}"
+          payload="{\"event_type\": \"pull_request\", \"client_payload\": {\"commit_hash\": \"${{ github.event.pull_request.head.sha }}\"}}"
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
