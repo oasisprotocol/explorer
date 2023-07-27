@@ -62,37 +62,12 @@ jobs:
         if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
-
       - name: Trigger all checks again
         if: steps.check_file.outputs.FILE_EXISTS == false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
+          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
           CHECK_NAME="ci-lint"
-
-          # Get the latest commit SHA for the pull request
-          NEW_COMMIT_SHA=$(git rev-parse "${{ github.head_ref }}")
-
-          # Find the check run ID of the previous run for the pull request
-          PREVIOUS_CHECK_RUN_ID=$(curl -s -X GET \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.antiope-preview+json" \
-            "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.event.pull_request.head.sha }}/check-runs" \
-            | jq '.check_runs[] | select(.name == "'"$CHECK_NAME"'" and .head_sha == "'"$NEW_COMMIT_SHA"'") | .id')
-
-          if [ -n "$PREVIOUS_CHECK_RUN_ID" ]; then
-            # Re-run the previous check run for the new commit hash
-            RESPONSE=$(curl -s -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github.antiope-preview+json" \
-              -d "{\"name\":\"$CHECK_NAME\",\"head_sha\":\"$NEW_COMMIT_SHA\",\"status\":\"in_progress\",\"started_at\":\"$(date --iso-8601=seconds)\"}" \
-              "https://api.github.com/repos/${{ github.repository }}/check-runs/$PREVIOUS_CHECK_RUN_ID/rerequest")
-          else
-            # If no previous check run found, create a new check run for the new commit hash
-            RESPONSE=$(curl -s -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github.antiope-preview+json" \
-              -d "{\"name\":\"$CHECK_NAME\",\"head_sha\":\"$NEW_COMMIT_SHA\",\"status\":\"in_progress\",\"started_at\":\"$(date --iso-8601=seconds)\"}" \
-              "https://api.github.com/repos/${{ github.repository }}/check-runs")
-          fi
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
