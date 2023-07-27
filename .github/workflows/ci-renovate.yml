@@ -90,7 +90,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
+          API_URL="https://api.github.com/repos/${{ github.repository }}/dispatches"
           CHECK_NAME="ci-lint"
           curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"event_type\":\"foo\"}" $API_URL
       # - name: Update or Create Check Run
