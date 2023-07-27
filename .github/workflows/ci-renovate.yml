@@ -79,9 +79,11 @@ jobs:
         run: |
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.antiope-preview+json" \
             -H "Content-Type: application/json" \
-            -d '{"name":"ci-lint"}' \
+            -d '{"head_sha":"${{ github.event.pull_request.head.sha }}","name":"ci-renovate"}' \
             "https://api.github.com/repos/${{ github.repository }}/check-runs"
+
       # - name: Trigger all checks again
       #   if: steps.check_file.outputs.FILE_EXISTS == false
       #   env:
