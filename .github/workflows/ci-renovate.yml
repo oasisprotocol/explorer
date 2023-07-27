@@ -51,7 +51,7 @@ jobs:
         id: commit
         run: |
           echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
-        - name: Dispatch pull_request event
+      - name: Dispatch pull_request event
         run: |
           # Get the original pull_request payload using jq
           ORIGINAL_PAYLOAD=$(cat $GITHUB_EVENT_PATH | jq .)
