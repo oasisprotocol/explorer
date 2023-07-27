@@ -15,7 +15,7 @@ on:
   # types: [synchronize]
   # repository_dispatch:
   # types: [fooBar]
-  # workflow_dispatch:
+  workflow_dispatch:
   # workflow_call:
   # check_run:
   # types: [created, rerequested]
