@@ -14,6 +14,7 @@ import { DelayedContractCreatorInfo } from '../../components/Account/ContractCre
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -71,7 +72,7 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ 
             <dd>
               {balance === undefined
                 ? t('common.missing')
-                : t('common.valueInToken', { value: balance, ticker: tickerName })}
+                : t('common.valueInToken', { ...getPreciseNumberFormat(balance), ticker: tickerName })}
             </dd>
           </StyledDescriptionList>
         )}

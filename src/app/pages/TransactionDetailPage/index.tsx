@@ -35,6 +35,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { TransactionEncrypted } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -298,7 +299,14 @@ export const TransactionDetailView: FC<{
           )}
 
           <dt>{t('common.value')}</dt>
-          <dd>{t('common.valueInToken', { value: transaction.amount, ticker: tickerName })}</dd>
+          <dd>
+            {transaction.amount != null
+              ? t('common.valueInToken', {
+                  ...getPreciseNumberFormat(transaction.amount),
+                  ticker: tickerName,
+                })
+              : t('common.missing')}
+          </dd>
 
           {transaction.amount !== undefined &&
             !!tokenPriceInfo &&
@@ -314,7 +322,9 @@ export const TransactionDetailView: FC<{
             )}
 
           <dt>{t('common.txnFee')}</dt>
-          <dd>{t('common.valueInToken', { value: transaction.fee, ticker: tickerName })}</dd>
+          <dd>
+            {t('common.valueInToken', { ...getPreciseNumberFormat(transaction.fee), ticker: tickerName })}
+          </dd>
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>
