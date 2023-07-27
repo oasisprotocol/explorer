@@ -86,12 +86,6 @@ jobs:
           # Find the specific check run for the CHECK_NAME
           CHECK_RUN_ID=$(echo $CHECK_RUNS | jq --arg CHECK_NAME "$CHECK_NAME" '.check_runs[] | select(.name == $CHECK_NAME) | .id')
 
-          # If the check run exists, update it
-          if [ -n "$CHECK_RUN_ID" ]; then
-            CHECK_PAYLOAD="{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"completed\", \"conclusion\":\"success\", \"output\":{\"title\":\"$CHECK_TITLE\", \"summary\":\"Lint check passed.\"}}"
-            curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "$CHECK_PAYLOAD" "$API_URL/$CHECK_RUN_ID"
-          else
-            # If the check run doesn't exist, create a new one
-            CHECK_PAYLOAD="{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"completed\", \"conclusion\":\"success\", \"output\":{\"title\":\"$CHECK_TITLE\", \"summary\":\"Lint check passed.\"}}"
-            curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "$CHECK_PAYLOAD" "$API_URL"
-          fi
+          # CHECK_PAYLOAD="{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"completed\", \"conclusion\":\"success\", \"output\":{\"title\":\"$CHECK_TITLE\", \"summary\":\"Lint check passed.\"}}"
+          # curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" -d "$CHECK_PAYLOAD" "$API_URL/$CHECK_RUN_ID"
+          curl -X PATCH -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json"  $API_URL/$CHECK_RUN_ID/rerequest
