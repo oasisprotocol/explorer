@@ -54,7 +54,7 @@ jobs:
             const { data } = await github.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'Your Check Name', // Replace with your desired check name
+              name: 'ci-lint', // Replace with your desired check name
               head_sha: context.sha,
               status: 'in_progress',
               started_at: new Date().toISOString(),
