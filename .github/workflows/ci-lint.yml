@@ -11,8 +11,8 @@ on:
   pull_request:
     branches: [master]
 
-  pull_request_target:
-    types: [synchronize]
+  # pull_request_target:
+  # types: [synchronize]
   # repository_dispatch:
   # types: [fooBar]
   # workflow_dispatch:
