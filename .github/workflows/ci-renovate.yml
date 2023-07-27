@@ -51,10 +51,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { data } = await github.checks.create({
+            const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'ci-lint', // Replace with your desired check name
+              name: 'ci-lint',
               head_sha: context.sha,
               status: 'in_progress',
               started_at: new Date().toISOString(),
