@@ -53,5 +53,5 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer $PAT" \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/ci-lint/dispatches" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
             -d '{"ref": "${{ github.head_ref }}"}'
