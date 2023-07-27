@@ -11,15 +11,6 @@ on:
   pull_request:
     branches: [master]
 
-  # pull_request_target:
-  # types: [synchronize]
-  # repository_dispatch:
-  # types: [fooBar]
-  workflow_dispatch:
-  # workflow_call:
-  # check_run:
-  # types: [created, rerequested]
-
 jobs:
   lint:
     # NOTE: This name appears in GitHub's Checks API.

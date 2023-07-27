@@ -13,14 +13,12 @@ jobs:
     # NOTE: This name appears in GitHub's Checks API.
     name: add-changelog
     # Trigger job only for dependency update bot.
-    # if: github.actor == 'renovate[bot]'
+    if: github.actor == 'renovate[bot]'
     runs-on: ubuntu-latest
     # Permissions needed to update PR.
     permissions:
       # Enable creating, updating files
       contents: write
-      pull-requests: write
-      checks: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,47 +41,7 @@ jobs:
           git config --local user.email "$(git log --pretty='%ae' -1)"
           git config --local user.name "$(git log --pretty=format:'%an' -1)"
           git add ${{ steps.vars.outputs.FILE_NAME }}
-          git commit -m "Append change log fragment"
-          # git commit --amend --no-edit
+          git commit --amend --no-edit
       - name: Push changes back to branch
         run: |
-          # git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
-          git push origin HEAD:refs/heads/${{ github.head_ref }}
-      - name: Create Check Run
-        id: create_check
-        run: |
-          check_run_response=$(curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"name": "ci-lint"}' \
-            "https://api.github.com/repos/${{ github.repository }}/check-runs")
-          echo "::set-output name=check_run_id::$(echo "$check_run_response" | jq -r '.id')"
-      - name: Dispatch custom event FooBar
-        run: |
-          payload='{"event_type": "fooBar"}'
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            -d "$payload" \
-            "https://api.github.com/repos/${{ github.repository }}/dispatches"
-      - name: Debug
-        run: |
-          echo ${{ steps.create_check.outputs.check_run_id }}
-
-      - name: Create Check Run and Trigger ci-lint
-        run: |
-          # Use the check_run_id from the previous step to update the check run
-          check_run_id=${{ steps.create_check.outputs.check_run_id }}
-          dispatch_response=$(curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"event_type": "workflow_dispatch"}' \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/ci-lint.yml/dispatches")
-          sleep 5
-          workflow_run_id=$(echo "$dispatch_response" | jq -r '.id')
-          # Update the check run with the workflow run ID
-          curl -X PATCH \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"external_id": "'"$workflow_run_id"'"}' \
-            "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
+          git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
