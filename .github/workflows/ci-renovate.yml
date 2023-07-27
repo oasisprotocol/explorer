@@ -83,7 +83,7 @@ jobs:
           # List check runs for the pull request's head commit
           RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" $API_URL)
 
-          # Extract the CHECK_RUN_ID of the check run with the matching name
+          # Extract the CHECK_RUN_ID of the check run with the matching name (if exists)
           CHECK_RUN_ID=$(echo $RESPONSE | jq -r '.check_runs[] | select(.name == "'$CHECK_NAME'") | .id')
 
           if [ -z "$CHECK_RUN_ID" ]; then
