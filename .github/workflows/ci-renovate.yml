@@ -67,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs"
+          API_URL="https://api.github.com/repos/${{ github.repository }}/check-runs/ci-lint"
           CHECK_NAME="ci-lint"
           curl -X POST -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.antiope-preview+json" -d "{\"name\":\"${CHECK_NAME}\", \"head_sha\":\"${{ github.head_ref }}\"}" $API_URL
