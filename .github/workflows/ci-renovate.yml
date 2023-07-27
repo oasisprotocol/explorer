@@ -51,20 +51,20 @@ jobs:
         id: commit
         run: |
           echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
+      - name: debug
+        run: |
+          echo github.event.pull_request
       - name: Dispatch pull_request event
         run: |
-          # Get the original pull_request payload using jq
-          ORIGINAL_PAYLOAD=$(cat $GITHUB_EVENT_PATH | jq .)
-
-          # Update the head.sha field with the new commit hash
+          # Prepare the custom payload for the pull_request event
           NEW_COMMIT_HASH=$(echo "${{ steps.commit.outputs.commit_hash }}")
-          UPDATED_PAYLOAD=$(echo "$ORIGINAL_PAYLOAD" | jq ".pull_request.head.sha = \"$NEW_COMMIT_HASH\"")
+          PAYLOAD="{\"commit_hash\": \"$NEW_COMMIT_HASH\"}"
 
-          # Dispatch the pull_request event with the updated payload
+          # Dispatch the pull_request event with the custom payload
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
-            -d "$UPDATED_PAYLOAD" \
+            -d "$PAYLOAD" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
 
       # - name: Dispatch custom event FooBar
