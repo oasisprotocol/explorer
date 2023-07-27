@@ -90,9 +90,9 @@ jobs:
           # Extract the workflow run ID from the response
           workflow_run_id=$(echo "$dispatch_response" | jq -r '.id')
 
-          # Update the check run with the workflow run ID
-          curl -X PATCH \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"external_id": "'"$workflow_run_id"'"}' \
-            "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
+          # # Update the check run with the workflow run ID
+          # curl -X PATCH \
+          #   -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          #   -H "Accept: application/vnd.github.v3+json" \
+          #   -d '{"external_id": "'"$workflow_run_id"'"}' \
+          #   "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
