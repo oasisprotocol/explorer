@@ -10,6 +10,7 @@ on:
   # matched branches.
   pull_request:
     branches: [master]
+  workflow_call:
   check_run:
     types: [created, rerequested]
 
