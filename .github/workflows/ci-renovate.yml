@@ -44,11 +44,11 @@ jobs:
         run: |
           echo "FILE_EXISTS: ${{ steps.check_file.outputs.FILE_EXISTS }}"
       - name: Create Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS != 'true'
+        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           echo "${{ github.event.pull_request.title }}" > ${{ steps.vars.outputs.FILE_NAME }}
       - name: Commit Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS == 'false'
+        if: steps.check_file.outputs.FILE_EXISTS == false
         run: |
           # Set git user email and name to match author of the last commit.
           git config --local user.email "$(git log --pretty='%ae' -1)"
@@ -60,7 +60,7 @@ jobs:
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
       - name: Trigger all checks again
-        if: steps.check_file.outputs.FILE_EXISTS == true
+        if: steps.check_file.outputs.FILE_EXISTS == false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
