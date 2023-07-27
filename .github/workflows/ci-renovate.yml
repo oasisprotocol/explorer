@@ -74,11 +74,11 @@ jobs:
             -d '{"name": "ci-lint"}' \
             "https://api.github.com/repos/${{ github.repository }}/check-runs")
 
-          # Extract the check run ID from the response
-          check_run_id=$(echo "$check_run_response" | jq -r '.id')
-
           # Wait for a moment to allow the check run to be created
           sleep 5
+
+          # Extract the check run ID from the response
+          check_run_id=$(echo "$check_run_response" | jq -r '.id')
 
           # Trigger ci-lint workflow
           dispatch_response=$(curl -X POST \
@@ -87,12 +87,15 @@ jobs:
             -d '{"event_type": "workflow_dispatch"}' \
             "https://api.github.com/repos/${{ github.repository }}/actions/workflows/ci-lint.yml/dispatches")
 
+          # Wait for a moment to allow the check run to be created
+          sleep 5
+
           # Extract the workflow run ID from the response
           workflow_run_id=$(echo "$dispatch_response" | jq -r '.id')
 
-          # # Update the check run with the workflow run ID
-          # curl -X PATCH \
-          #   -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          #   -H "Accept: application/vnd.github.v3+json" \
-          #   -d '{"external_id": "'"$workflow_run_id"'"}' \
-          #   "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
+          # Update the check run with the workflow run ID
+          curl -X PATCH \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"external_id": "'"$workflow_run_id"'"}' \
+            "https://api.github.com/repos/${{ github.repository }}/check-runs/$check_run_id"
