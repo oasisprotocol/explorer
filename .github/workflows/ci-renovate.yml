@@ -53,6 +53,6 @@ jobs:
           payload='{"event_type": "fooBar"}'
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/application/vnd.github+json" \
+            -H "Accept: application/vnd.github+json" \
             -d "$payload" \
             "https://api.github.com/repos/${{ github.repository }}/dispatches"
