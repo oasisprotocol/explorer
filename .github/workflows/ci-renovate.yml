@@ -96,7 +96,7 @@ jobs:
               curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github.v3+json" \
                   -H "Content-Type: application/json" \
-                  -d "{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.event.pull_request.head.sha }}\", \"status\":\"queued\", \"started_at\":\"$(date --utc +%FT%TZ)\"}" \
+                  -d "{\"name\":\"$CHECK_NAME\", \"head_sha\":\"${{ github.head_ref }}\", \"status\":\"queued\", \"started_at\":\"$(date --utc +%FT%TZ)\"}" \
                   "$API_URL/$CHECK_RUN_ID/rerequest"
             fi
           done
