@@ -46,11 +46,11 @@ jobs:
             echo "FILE_EXISTS=true" >> $GITHUB_OUTPUT
           fi
       - name: Create Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS == false
+        if: steps.check_file.outputs.FILE_EXISTS == 'false'
         run: |
           echo "${{ github.event.pull_request.title }}" > ${{ steps.vars.outputs.FILE_NAME }}
       - name: Commit Change Log file
-        if: steps.check_file.outputs.FILE_EXISTS == false
+        if: steps.check_file.outputs.FILE_EXISTS == 'false'
         run: |
           # Set git user email and name to match author of the last commit.
           git config --local user.email "$(git log --pretty='%ae' -1)"
@@ -59,12 +59,12 @@ jobs:
           git commit --amend --no-edit
           # git commit -m "Append Change Log fragment"
       - name: Push changes back to branch
-        if: steps.check_file.outputs.FILE_EXISTS == false
+        if: steps.check_file.outputs.FILE_EXISTS == 'false'
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
           # git push origin HEAD:refs/heads/${{ github.head_ref }}
       - name: Create Check Run
-        if: steps.check_file.outputs.FILE_EXISTS == false
+        if: steps.check_file.outputs.FILE_EXISTS == 'false'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.PAT_SECRET }}
