@@ -70,6 +70,7 @@ jobs:
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
+              name: 'ci-lint',
               head_sha: context.payload.after,
               status: 'in_progress',
               started_at: new Date().toISOString(),
