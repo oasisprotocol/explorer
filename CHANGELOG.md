@@ -16,11 +16,6 @@ The format is inspired by [Keep a Changelog].
 
 ### Removals and Breaking Changes
 
-- Update routes to conform to [EIP-3091]
-  ([#534](https://github.com/oasisprotocol/explorer/issues/534))
-
-  [EIP-3091]: https://eips.ethereum.org/EIPS/eip-3091
-
 - Remove explorer support for token types dropped by indexer, incl. ERC721
   ([#542](https://github.com/oasisprotocol/explorer/issues/542))
 
