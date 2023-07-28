@@ -68,9 +68,8 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_SECRET }}
           script: |
-            const { data } = await github.rest.checks.create({
+            const { data } = await github.rest.checks.createSuite({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'ci-lint',
               head_sha: context.payload.after
             });
