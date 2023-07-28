@@ -28,7 +28,7 @@ jobs:
           # Checkout pull request HEAD commit instead of merge commit.
           ref: ${{ github.event.pull_request.head.sha }}
           # Needed for Create Check Run step.
-          token: ${{ secrets.PAT_SECRET }}
+          # token: ${{ secrets.PAT_SECRET }}
       - name: Set workflow variables
         # Id is needed to access output in a next step.
         id: vars
@@ -56,12 +56,10 @@ jobs:
           git config --local user.name "$(git log --pretty=format:'%an' -1)"
           git add ${{ steps.vars.outputs.FILE_NAME }}
           git commit --amend --no-edit
-          # git commit -m "Append Change Log fragment"
       - name: Push changes back to branch
         if: steps.check_file.outputs.FILE_EXISTS == 'false'
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
-          # git push origin HEAD:refs/heads/${{ github.head_ref }}
       - name: Create Check Run
         if: steps.check_file.outputs.FILE_EXISTS == 'false'
         uses: actions/github-script@v6
