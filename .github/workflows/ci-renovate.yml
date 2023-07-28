@@ -72,8 +72,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'ci-lint',
-              head_sha: context.payload.after,
-              status: 'in_progress',
-              started_at: new Date().toISOString(),
+              head_sha: context.payload.after
             });
             core.setOutput('check_run_id', data.id);
