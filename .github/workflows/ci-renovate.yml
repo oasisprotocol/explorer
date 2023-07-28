@@ -57,7 +57,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'ci-lint',
-              head_sha: '$(git rev-parse HEAD)',
+              head_sha: context.payload.after,
               status: 'in_progress',
               started_at: new Date().toISOString(),
             });
