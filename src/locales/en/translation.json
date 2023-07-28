@@ -1,5 +1,5 @@
 {
-  "appName": "Oasis Explorer",
+  "appName": "Oasis Explorer 1",
   "account": {
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "emptyTokenList": "This account holds no {{spec}} {{description}}.",
@@ -69,7 +69,7 @@
     "not_defined": "Not defined",
     "oasis": "Oasis",
     "paratime": "Paratime",
-    "parentheses":"({{subject}})",
+    "parentheses": "({{subject}})",
     "percentage": "Percentage",
     "rank": "Rank",
     "select": "Select",
