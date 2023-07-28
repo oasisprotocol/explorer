@@ -77,18 +77,18 @@ jobs:
       #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
       #       -d '{"ref": "${{ github.head_ref }}"}'
 
-      - name: Rerun all workflows using PAT
-        env:
-          PAT: ${{ secrets.PAT_SECRET }}
-        run: |
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/check-runs" \
-            -d '{
-              "name": "ci-lint",
-              "head_sha": "${{ github.sha }}",
-              "status": "in_progress"
+      # - name: Rerun all workflows using PAT
+      #   env:
+      #     PAT: ${{ secrets.PAT_SECRET }}
+      #   run: |
+      #     curl -X POST \
+      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/check-runs" \
+      #       -d '{
+      #         "name": "ci-lint",
+      #         "head_sha": "${{ github.sha }}",
+      #         "status": "in_progress"
             }'
       #     curl -X POST \
       #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
