@@ -43,10 +43,12 @@ jobs:
           git config --local user.email "$(git log --pretty='%ae' -1)"
           git config --local user.name "$(git log --pretty=format:'%an' -1)"
           git add ${{ steps.vars.outputs.FILE_NAME }}
-          git commit --amend --no-edit
+          # git commit --amend --no-edit
+          git commit -m "Append Change Log fragment"
       - name: Push changes back to branch
         run: |
-          git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
+          # git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
+          git push origin HEAD:refs/heads/${{ github.head_ref }}
 
       - name: Create Check Run
         uses: actions/github-script@v5
