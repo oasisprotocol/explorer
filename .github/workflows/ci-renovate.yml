@@ -54,7 +54,7 @@ jobs:
       - name: Create Check Run
         uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_SECRET }}
           script: |
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
@@ -78,6 +78,8 @@ jobs:
       #       -d '{"ref": "${{ github.head_ref }}"}'
 
       - name: Rerun all workflows using PAT
+        env:
+          PAT: ${{ secrets.PAT_SECRET }}
         run: |
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
