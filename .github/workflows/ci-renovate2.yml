@@ -35,22 +35,6 @@ jobs:
         id: vars
         run: |
           echo "FILE_NAME=.changelog/${{ github.event.pull_request.number }}.internal.md" >> $GITHUB_OUTPUT
-
-      - name: Check if Change Log file exists
-        id: check_file
-        run: |
-          if [[ ! -f "${{ steps.vars.outputs.FILE_NAME }}" ]]; then
-            # Change Log file does not exist, continue with other steps.
-            echo "FILE_EXISTS=false" >> $GITHUB_OUTPUT
-          else
-            # File exists, skip all other steps.
-            echo "FILE_EXISTS=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Print FILE_EXISTS value
-        run: |
-          echo "FILE_EXISTS: ${{ steps.check_file.outputs.FILE_EXISTS }}"
-
       - name: Create Change Log file
         run: |
           echo "${{ github.event.pull_request.title }}" > ${{ steps.vars.outputs.FILE_NAME }}
@@ -63,12 +47,11 @@ jobs:
           git commit --amend --no-edit
           # git commit -m "Append Change Log fragment"
       - name: Push changes back to branch
-        if: steps.check_file.outputs.FILE_EXISTS == 'false'
         run: |
           git push --force-with-lease origin HEAD:refs/heads/${{ github.head_ref }}
           # git push origin HEAD:refs/heads/${{ github.head_ref }}
+
       - name: Create Check Run
-        if: steps.check_file.outputs.FILE_EXISTS == false
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.PAT_SECRET }}
@@ -83,3 +66,32 @@ jobs:
             });
             console.log(`Check run created: ${data.url}`);
             core.setOutput('check_run_id', data.id);
+
+      # - name: Rerun all workflows using PAT
+      #   env:
+      #     PAT: ${{ secrets.PAT_SECRET }}
+      #   run: |
+      #     curl -X POST \
+      #       -H "Authorization: Bearer $PAT" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
+      #       -d '{"ref": "${{ github.head_ref }}"}'
+
+      # - name: Rerun all workflows using PAT
+      #   env:
+      #     PAT: ${{ secrets.PAT_SECRET }}
+      #   run: |
+      #     curl -X POST \
+      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/check-runs" \
+      #       -d '{
+      #         "name": "ci-lint",
+      #         "head_sha": "${{ github.sha }}",
+      #         "status": "in_progress"
+      #       }'
+      #     curl -X POST \
+      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
+      #       -d '{"ref": "${{ github.head_ref }}"}'
