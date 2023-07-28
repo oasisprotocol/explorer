@@ -19,8 +19,6 @@ jobs:
     permissions:
       # Enable creating, updating files
       contents: write
-      checks: write
-      actions: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,7 +28,7 @@ jobs:
           # Checkout pull request HEAD commit instead of merge commit.
           ref: ${{ github.event.pull_request.head.sha }}
           # Needed for Create Check Run step.
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_SECRET }}
       - name: Set workflow variables
         # Id is needed to access output in a next step.
         id: vars
@@ -68,7 +66,7 @@ jobs:
         if: steps.check_file.outputs.FILE_EXISTS == 'false'
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_SECRET }}
           script: |
             const { data } = await github.rest.checks.createSuite({
               owner: context.repo.owner,
