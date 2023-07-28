@@ -29,6 +29,8 @@ jobs:
           fetch-depth: 0
           # Checkout pull request HEAD commit instead of merge commit.
           ref: ${{ github.event.pull_request.head.sha }}
+          # Needed for Create Check Run step.
+          token: ${{ secrets.PAT_SECRET }}
       - name: Set workflow variables
         # Id is needed to access output in a next step.
         id: vars
