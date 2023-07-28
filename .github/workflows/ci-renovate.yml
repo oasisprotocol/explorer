@@ -13,7 +13,7 @@ jobs:
     # NOTE: This name appears in GitHub's Checks API.
     name: add-changelog
     # Trigger job only for dependency update bot.
-    # if: github.actor == 'renovate[bot]'
+    if: github.actor == 'renovate[bot]'
     runs-on: ubuntu-latest
     # Permissions needed to update PR.
     permissions:
