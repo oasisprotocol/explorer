@@ -71,10 +71,7 @@ jobs:
           script: |
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
-              repo: context.repo.repo,
-              head_sha: context.payload.after,
-              status: 'in_progress',
-              started_at: new Date().toISOString(),
+              repo: context.repo.repo
             });
             console.log(`Check run created: ${data.url}`);
             core.setOutput('check_run_id', data.id);
