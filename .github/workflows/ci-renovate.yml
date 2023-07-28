@@ -66,6 +66,7 @@ jobs:
         if: steps.check_file.outputs.FILE_EXISTS == 'false'
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
