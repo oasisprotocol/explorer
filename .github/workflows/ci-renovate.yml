@@ -43,7 +43,7 @@ jobs:
             echo "FILE_EXISTS=false" >> $GITHUB_OUTPUT
           else
             # File exists, skip all other steps.
-            echo "FILE_EXISTS=true >> $GITHUB_OUTPUT
+            echo "FILE_EXISTS=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Print FILE_EXISTS value
