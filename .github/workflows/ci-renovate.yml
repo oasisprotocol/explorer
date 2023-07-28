@@ -51,7 +51,7 @@ jobs:
       - name: Create Check Run
         uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
