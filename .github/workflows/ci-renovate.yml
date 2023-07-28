@@ -56,24 +56,13 @@ jobs:
             const { data } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
+              name: 'ci-lint',
+              head_sha: context.payload.after,
+              status: 'in_progress',
+              started_at: new Date().toISOString(),
             });
             console.log(`Check run created: ${data.url}`);
             core.setOutput('check_run_id', data.id);
-      # - name: Create Check Run
-      #   uses: actions/github-script@v5
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       const { data } = await github.rest.checks.create({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         name: 'ci-lint',
-      #         head_sha: context.payload.after,
-      #         status: 'in_progress',
-      #         started_at: new Date().toISOString(),
-      #       });
-      #       console.log(`Check run created: ${data.url}`);
-      #       core.setOutput('check_run_id', data.id);
 
       # - name: Rerun all workflows using PAT
       #   env:
@@ -85,22 +74,22 @@ jobs:
       #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
       #       -d '{"ref": "${{ github.head_ref }}"}'
 
-      # - name: Rerun all workflows using PAT
-      #   env:
-      #     PAT: ${{ secrets.PAT_SECRET }}
-      #   run: |
+      - name: Rerun all workflows using PAT
+        env:
+          PAT: ${{ secrets.PAT_SECRET }}
+        run: |
       #     curl -X POST \
       #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
       #       -H "Accept: application/vnd.github.v3+json" \
       #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/54895214/dispatches" \
       #       -d '{"ref": "${{ github.head_ref }}"}'
 
-      #     curl -X POST \
-      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-      #       -H "Accept: application/vnd.github.v3+json" \
-      #       "https://api.github.com/repos/${{ github.repository }}/check-runs" \
-      #       -d '{
-      #         "name": "ci-lint",
-      #         "head_sha": "${{ github.sha }}",
-      #         "status": "in_progress"
-      #       }'
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/check-runs" \
+            -d '{
+              "name": "ci-lint",
+              "head_sha": "${{ github.sha }}",
+              "status": "in_progress"
+            }'
