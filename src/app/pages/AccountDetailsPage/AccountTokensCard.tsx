@@ -75,7 +75,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         content: (
           <TokenLink
             scope={scope}
-            address={item.token_contract_addr_eth}
+            address={item.token_contract_addr_eth ?? item.token_contract_addr}
             name={item.token_name || t('common.missing')}
           />
         ),
@@ -83,8 +83,15 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       },
       {
         content: (
-          <LinkableDiv id={item.token_contract_addr_eth}>
-            <ContractLink scope={scope} address={item.token_contract_addr_eth} />
+          <LinkableDiv id={item.token_contract_addr_eth ?? item.token_contract_addr}>
+            {item.token_contract_addr_eth === undefined ? ( // TODO remove temporal workaround when latest Nexus is deployed
+              <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
+            ) : (
+              <ContractLink
+                scope={scope}
+                address={item.token_contract_addr_eth ?? item.token_contract_addr}
+              />
+            )}
           </LinkableDiv>
         ),
         key: 'hash',
@@ -100,7 +107,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         key: 'ticker',
       },
     ],
-    highlight: item.token_contract_addr_eth === locationHash,
+    highlight: item.token_contract_addr_eth === locationHash || item.token_contract_addr === locationHash,
   }))
 
   return (
