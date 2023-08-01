@@ -40,6 +40,7 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
     {
       balance: '337325.438367711264207872',
       token_contract_addr: 'oasis1qpssvkplnlpzdvwxpgmrhf9j5lkyvaylcvujhjhg',
+      token_contract_addr_eth: '0xF8E3DE55D24D13607A12628E0A113B66BA578bD1',
       token_decimals: 18,
       token_name: 'FTP',
       token_symbol: 'FTP',
@@ -48,6 +49,7 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
     {
       balance: '-3372955.09999999999999995',
       token_contract_addr: 'oasis1qqz8706pmf38wmptl6dkcaec8yykw0rvfv7ql6fc',
+      token_contract_addr_eth: '0xF8E3DE55D24D13607A12628E0A113B66BA578bD2',
       token_decimals: 18,
       token_name: 'YUZU',
       token_symbol: 'YUZU',
