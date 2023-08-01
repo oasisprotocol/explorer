@@ -15,7 +15,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { fromBaseUnits } from '../../utils/helpers'
+import { fromBaseUnits, getEthAccountAddressFromBase64 } from '../../utils/helpers'
 import Skeleton from '@mui/material/Skeleton'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
@@ -42,15 +42,14 @@ type TableRuntimeEvent = RuntimeEvent & {
 }
 
 /**
- * This is a wrapper around RoundedBalance which is able to find out the ticker by looking at an event
- * @constructor
+ * This is a wrapper around EventBalance which is able to load the referenced token for extra data
  */
 const DelayedEventBalance: FC<{
   event: RuntimeEvent
   tickerAsLink?: boolean | undefined
 }> = ({ event, tickerAsLink }) => {
   const { t } = useTranslation()
-  const { isLoading, isError, ethAddress, token } = useTokenWithBase64Address(event, event.body.address)
+  const { isLoading, isError, token } = useTokenWithBase64Address(event, event.body.address)
 
   if (isLoading) {
     return <Skeleton variant="text" />
@@ -63,23 +62,52 @@ const DelayedEventBalance: FC<{
     return t('common.missing')
   }
 
-  const ticker = token.symbol || t('common.missing')
+  return (
+    <EventBalance
+      event={{
+        ...event,
+        evm_token: {
+          ...(event.evm_token ?? {}),
+          type: token.type,
+          decimals: token.decimals,
+          symbol: token.symbol,
+        },
+      }}
+      tickerAsLink={tickerAsLink}
+    />
+  )
+}
 
-  if (token.type === EvmTokenType.ERC20) {
+/**
+ * This is a wrapper around RoundedBalance which is able to display event balance properly, based on the token type
+ */
+export const EventBalance: FC<{
+  event: RuntimeEvent
+  tickerAsLink?: boolean | undefined
+}> = ({ event, tickerAsLink }) => {
+  const { t } = useTranslation()
+
+  const base64address = event.body.address
+  const tokenEthAddress = getEthAccountAddressFromBase64(base64address)
+  const tokenType = event.evm_token?.type
+  const tokenDecimals = event.evm_token?.decimals
+  const ticker = event.evm_token?.symbol
+
+  if (tokenType === EvmTokenType.ERC20) {
     // We are calling it 'raw' since it's not yet normalized according to decimals.
     const rawValue = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
-    const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, token?.decimals || 0)
+    const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, tokenDecimals || 0)
 
     return (
       <RoundedBalance
         value={value}
         ticker={ticker}
         scope={event}
-        tokenAddress={ethAddress}
+        tokenAddress={tokenEthAddress}
         tickerAsLink={tickerAsLink}
       />
     )
-  } else if (token.type === EvmTokenType.ERC721) {
+  } else if (tokenType === EvmTokenType.ERC721) {
     const tokenID = event.evm_log_params?.find(param => param.name === 'tokenID')?.value as string | undefined
     return tokenID ? (
       <Trans
@@ -88,9 +116,9 @@ const DelayedEventBalance: FC<{
         components={{
           InstanceLink: <PlaceholderLabel label={tokenID} />,
           TickerLink: tickerAsLink ? (
-            <TokenLink scope={event} address={ethAddress!} name={ticker} />
+            <TokenLink scope={event} address={tokenEthAddress} name={ticker} />
           ) : (
-            <PlaceholderLabel label={ticker} />
+            <PlaceholderLabel label={ticker ?? t('common.missing')} />
           ),
         }}
       />
@@ -98,7 +126,7 @@ const DelayedEventBalance: FC<{
       t('common.missing')
     )
   } else {
-    return token.type
+    return tokenType
   }
 }
 
@@ -234,8 +262,11 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           ? [
               {
                 key: 'tokenType',
-                // TODO: temporary workaround until token type becomes available as part of RuntimeEvent
-                content: <DelayedTokenTransferTokenType event={transfer} />,
+                content: transfer.evm_token?.type ? (
+                  <TokenTypeTag tokenType={transfer.evm_token.type} />
+                ) : (
+                  <DelayedTokenTransferTokenType event={transfer} />
+                ),
                 align: TableCellAlign.Center,
               },
             ]
@@ -243,7 +274,11 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: <DelayedEventBalance event={transfer} tickerAsLink={differentTokens} />,
+          content: transfer.evm_token?.type ? (
+            <EventBalance event={transfer} tickerAsLink={differentTokens} />
+          ) : (
+            <DelayedEventBalance event={transfer} tickerAsLink={differentTokens} />
+          ),
         },
       ],
       highlight: transfer.markAsNew,
