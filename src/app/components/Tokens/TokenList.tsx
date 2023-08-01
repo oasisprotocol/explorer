@@ -5,7 +5,11 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
-import { DelayedContractVerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
+import {
+  DelayedContractVerificationIcon,
+  VerificationIcon,
+  verificationIconBoxHeight,
+} from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import {
   getTokenTypeDescription,
@@ -116,11 +120,15 @@ export const TokenList = (props: TokensProps) => {
                 width: '100%',
               }}
             >
-              <DelayedContractVerificationIcon
-                scope={token}
-                contractOasisAddress={token.contract_addr}
-                noLink
-              />
+              {token.is_verified === undefined ? ( // Workaround for old Nexus versions. TODO: remove when new version of Nexus has been deployed everywhere.
+                <DelayedContractVerificationIcon
+                  scope={token}
+                  contractOasisAddress={token.contract_addr}
+                  noLink
+                />
+              ) : (
+                <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
+              )}
             </Box>
           ),
         },
