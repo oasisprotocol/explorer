@@ -40,7 +40,10 @@ export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string 
     return <Skeleton variant={'text'} />
   }
 
-  const address = contract?.address_eth ?? oasisAddress
+  return <ContractLink scope={scope} address={contract?.address_eth ?? oasisAddress} />
+}
+
+export const ContractLink: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   return (
     <Box sx={{ display: 'flex', alignContent: 'center' }}>
       <AccountLink scope={scope} address={address} />
@@ -72,7 +75,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         content: (
           <TokenLink
             scope={scope}
-            address={item.token_contract_addr}
+            address={item.token_contract_addr_eth ?? item.token_contract_addr}
             name={item.token_name || t('common.missing')}
           />
         ),
@@ -80,9 +83,15 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       },
       {
         content: (
-          <LinkableDiv id={item.token_contract_addr}>
-            {/* TODO remove temporal workaround when token_contract_addr_eth becomes available as part of RuntimeEvmBalance */}
-            <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
+          <LinkableDiv id={item.token_contract_addr_eth ?? item.token_contract_addr}>
+            {item.token_contract_addr_eth === undefined ? ( // TODO remove temporal workaround when latest Nexus is deployed
+              <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
+            ) : (
+              <ContractLink
+                scope={scope}
+                address={item.token_contract_addr_eth ?? item.token_contract_addr}
+              />
+            )}
           </LinkableDiv>
         ),
         key: 'hash',
@@ -98,7 +107,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         key: 'ticker',
       },
     ],
-    highlight: item.token_contract_addr === locationHash,
+    highlight: item.token_contract_addr_eth === locationHash || item.token_contract_addr === locationHash,
   }))
 
   return (

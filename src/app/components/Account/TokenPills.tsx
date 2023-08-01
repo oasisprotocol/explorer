@@ -45,7 +45,7 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
     account,
     account.address_eth ?? account.address,
     pill.token_type!,
-    pill.token_contract_addr,
+    pill.token_contract_addr_eth ?? pill.token_contract_addr,
   )
 
   return (
@@ -54,7 +54,7 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
       color="tertiary"
       component={RouterLink}
       to={tokenRoute}
-      key={pill.token_contract_addr}
+      key={pill.token_contract_addr_eth ?? pill.token_contract_addr}
       label={
         <>
           <RoundedBalance value={pill.balance} ticker={pill.token_symbol || t('common.missing')} />
