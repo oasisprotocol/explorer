@@ -225,10 +225,6 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         placeholder={searchPlaceholderTranslated}
         fullWidth
         FormHelperTextProps={{
-          // turn off TS temporary for next line
-          // issue https://github.com/mui/material-ui/issues/33339
-          // fix https://github.com/mui/material-ui/pull/35924
-          // @ts-expect-error The component property iw missing from the TypeScript definition
           component: 'div', // replace p with div tag
           sx: {
             marginTop: 0,
