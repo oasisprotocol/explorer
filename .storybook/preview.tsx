@@ -3,15 +3,30 @@ import { Preview } from '@storybook/react'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import '../src/locales/i18n'
 import { withDefaultTheme } from '../src/app/components/ThemeByNetwork'
+import { initialize, mswLoader } from 'msw-storybook-addon'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { handlers } from '../internals/mocks/msw-handlers'
+const queryClient = new QueryClient()
+
+initialize({
+  onUnhandledRequest: 'bypass',
+})
 
 const preview: Preview = {
-  decorators: [Story => withDefaultTheme(<Story />)],
+  decorators: [
+    Story => <QueryClientProvider client={queryClient}>{Story()}</QueryClientProvider>,
+    Story => withDefaultTheme(<Story />),
+  ],
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+    msw: {
+      handlers,
     },
     viewport: {
       viewports: INITIAL_VIEWPORTS,
