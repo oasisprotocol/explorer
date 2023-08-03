@@ -23,6 +23,7 @@ import {
 import { SearchScope } from '../../../types/searchScope'
 import Skeleton from '@mui/material/Skeleton'
 import { AccountDetailsContext } from './index'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 type AccountTokensCardProps = AccountDetailsContext & {
   type: EvmTokenType
@@ -98,7 +99,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       },
       {
         align: TableCellAlign.Right,
-        content: item.balance,
+        content: t('common.valueLong', getPreciseNumberFormat(item.balance)),
         key: 'balance',
       },
       {
