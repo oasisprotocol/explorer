@@ -51,7 +51,7 @@ async function setup(page: Page, balance: string, decimals: number) {
 }
 
 test.describe('getPreciseNumberFormat', () => {
-  test('large number should be precise and formatted or fallback to rounded in browsers without support', async ({
+  test('large number should be precise and formatted or fallback to precise unformatted number in browsers without support', async ({
     page,
   }) => {
     await setup(page, '111222333444555666777888999111222333444555666', 18)
@@ -59,7 +59,7 @@ test.describe('getPreciseNumberFormat', () => {
       page
         .getByText('111,222,333,444,555,666,777,888,999.111222333444555666', { exact: true })
         // Expect precise fallback when browser doesn't support precise formatting
-        .or(page.getByText('111,222,333,444,555,670,000,000,000', { exact: true })),
+        .or(page.getByText('111222333444555666777888999.111222333444555666', { exact: true })),
     ).toBeVisible()
   })
 
