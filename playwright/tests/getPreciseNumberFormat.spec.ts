@@ -51,6 +51,12 @@ async function setup(page: Page, balance: string, decimals: number) {
 }
 
 test.describe('getPreciseNumberFormat', () => {
+  test('small number should be precise and formatted', async ({ page }) => {
+    await setup(page, '111222333444555', 9)
+    // Expect precisely formatted small number even when browser doesn't support precise formatting for large numbers
+    await expect(page.getByText('111,222.333444555', { exact: true })).toBeVisible()
+  })
+
   test('large number should be precise and formatted or fallback to precise unformatted number in browsers without support', async ({
     page,
   }) => {

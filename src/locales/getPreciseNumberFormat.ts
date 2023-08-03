@@ -10,6 +10,7 @@ const isPreciseIntlSupported =
 
 export function getPreciseNumberFormat(value: string) {
   const decimalPlaces = new BigNumber(value).decimalPlaces()
+  const isFloatPrecise = new BigNumber(value).isEqualTo(parseFloat(value))
   // Fallback if types are not strict enough to prevent value=undefined and ''
   if (value == null || value === '' || decimalPlaces == null) {
     if (process.env.NODE_ENV !== 'production') {
@@ -26,7 +27,8 @@ export function getPreciseNumberFormat(value: string) {
         // TODO: Intl internals only work up to maximumFractionDigits: 20.
         // `new Intl.NumberFormat(undefined, { maximumFractionDigits: 21 }).format('1')`
         // throws an error, i18n silences it, and displays unformatted original string
-        maximumFractionDigits: isPreciseIntlSupported && decimalPlaces <= 20 ? 20 : Infinity,
+        maximumFractionDigits:
+          (isPreciseIntlSupported || isFloatPrecise) && decimalPlaces <= 20 ? 20 : Infinity,
       } satisfies Intl.NumberFormatOptions,
     },
   }
