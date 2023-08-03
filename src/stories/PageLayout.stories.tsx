@@ -4,6 +4,7 @@ import { EmptyState } from '../app/components/EmptyState'
 import { PageLayout } from '../app/components/PageLayout'
 import { Network } from '../types/network'
 import { Layer } from '../oasis-nexus/api'
+import { statusApiFailureHandler } from '../../internals/mocks/msw-handlers'
 
 export default {
   title: 'Example/PageLayout',
@@ -47,6 +48,17 @@ export const Mobile: Story = {
     layout: 'fullscreen',
     viewport: { defaultViewport: 'iphone6' },
     reactRouter: sapphireRoute,
+  },
+}
+
+export const ApiError: Story = {
+  render: Template,
+  parameters: {
+    layout: 'fullscreen',
+    reactRouter: sapphireRoute,
+    msw: {
+      handlers: statusApiFailureHandler,
+    },
   },
 }
 

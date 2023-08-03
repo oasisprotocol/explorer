@@ -6,7 +6,13 @@ import { withDefaultTheme } from '../src/app/components/ThemeByNetwork'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { handlers } from '../internals/mocks/msw-handlers'
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+})
 
 initialize({
   onUnhandledRequest: 'bypass',

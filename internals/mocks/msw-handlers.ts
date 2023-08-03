@@ -7,3 +7,7 @@ export const handlers = [
     res(ctx.json(runtimeStatusResponse)),
   ),
 ]
+
+export const statusApiFailureHandler = [
+  rest.get(process.env.REACT_APP_API!, (req, res, ctx) => res(ctx.status(403))),
+]
