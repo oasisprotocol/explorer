@@ -1621,15 +1621,15 @@
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
   integrity sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==
 
-"@fontsource-variable/figtree@^5.0.7":
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/figtree/-/figtree-5.0.7.tgz#84e3f01480092873cee5b2c46c2e0bf26d899a42"
-  integrity sha512-URg5pqCMpF0vAIDzXXsiDYFipqxXaO/I7WfdlHtHaaALTXTlqfIYrsbRYaYJKX+eFhF/YeS95xUOLWjJv3ik2A==
+"@fontsource-variable/figtree@^5.0.8":
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/figtree/-/figtree-5.0.8.tgz#3f21435a39959dea50573ea635f18f93090c4809"
+  integrity sha512-/LkrJrXaARFPoRKWg62nxJi7t5D2+2JtjuGJY/xrGHUKXZDpN9lM9e2oolzx7aKPAKYWvskEriB3S0sDrILeLA==
 
-"@fontsource-variable/roboto-mono@^5.0.7":
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-mono/-/roboto-mono-5.0.7.tgz#7ee51d967a6606034ac41e0f426a04ba38fd53a6"
-  integrity sha512-pwz1g6BBhUoSZgTUc+WkR6JQ833UqyChuz0bk4wWnkfTMXVL3UGIQ9M6ookR9Zulk5TU030jUYHlf/As3qaVHQ==
+"@fontsource-variable/roboto-mono@^5.0.8":
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-mono/-/roboto-mono-5.0.8.tgz#17b5e128be284b0eca62b3b19dbe581c3d73e9bf"
+  integrity sha512-kErkkEF7QbmSLiJyGMMIwbxdPz3edsHTAwThDHYY8r+a9/+sXuorEtOZNAl87mP4WqtQTTxlgOYcwXpJUYWaOQ==
 
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
