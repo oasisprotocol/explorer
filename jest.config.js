@@ -24,6 +24,10 @@ const config = {
   transformIgnorePatterns: [
     '/node_modules/(?!(cborg)/)',
   ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/playwright/'
+  ],
 }
 
 module.exports = config

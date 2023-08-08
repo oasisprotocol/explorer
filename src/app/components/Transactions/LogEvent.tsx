@@ -25,6 +25,7 @@ import { WithdrawIcon } from './../CustomIcons/Withdraw'
 import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
@@ -220,7 +221,7 @@ const LogEvent: FC<{
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
               {t('common.valueInToken', {
-                value: event.body.amount.Amount,
+                ...getPreciseNumberFormat(event.body.amount.Amount),
                 ticker: event.body.amount.Denomination,
               })}
             </dd>
@@ -257,7 +258,7 @@ const LogEvent: FC<{
             <dt>{t('transactionEvent.fields.amount')}</dt>
             <dd>
               {t('common.valueInToken', {
-                value: event.body.amount.Amount,
+                ...getPreciseNumberFormat(event.body.amount.Amount),
                 ticker: event.body.amount.Denomination,
               })}
             </dd>

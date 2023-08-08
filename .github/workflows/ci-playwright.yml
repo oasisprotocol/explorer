@@ -1,0 +1,39 @@
+# NOTE: This name appears in GitHub's Checks API and in workflow's status badge.
+name: ci-playwright
+
+# Trigger the workflow when:
+on:
+  # A push occurs to one of the matched branches.
+  push:
+    branches: [master]
+  # Or when a pull request event occurs for a pull request against one of the
+  # matched branches.
+  pull_request:
+    branches: [master]
+
+jobs:
+  playwright:
+    # NOTE: This name appears in GitHub's Checks API.
+    name: playwright
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run dev server
+        run: yarn start &
+      - name: Install playwright
+        run: yarn install --frozen-lockfile
+        working-directory: playwright
+      - name: Install playwright dependencies
+        run: yarn playwright install --with-deps
+        working-directory: playwright
+      - name: Run playwright tests
+        run: yarn test
+        working-directory: playwright

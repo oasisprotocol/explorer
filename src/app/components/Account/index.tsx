@@ -23,6 +23,7 @@ import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
 import BigNumber from 'bignumber.js'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
   '&&': {
@@ -141,7 +142,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
           <dd>
             {balance === undefined
               ? t('common.missing')
-              : t('common.valueInToken', { value: balance, ticker: nativeTickerName })}
+              : t('common.valueInToken', { ...getPreciseNumberFormat(balance), ticker: nativeTickerName })}
           </dd>
 
           <dt>{t('common.tokens')}</dt>
@@ -181,11 +182,19 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
 
           <dt>{t('account.totalReceived')}</dt>
           <dd>
-            {t('common.valueInToken', { value: account.stats.total_received, ticker: nativeTickerName })}
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(account.stats.total_received),
+              ticker: nativeTickerName,
+            })}
           </dd>
 
           <dt>{t('account.totalSent')}</dt>
-          <dd>{t('common.valueInToken', { value: account.stats.total_sent, ticker: nativeTickerName })}</dd>
+          <dd>
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(account.stats.total_sent),
+              ticker: nativeTickerName,
+            })}
+          </dd>
         </StyledDescriptionList>
       )}
     </>

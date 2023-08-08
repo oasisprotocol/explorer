@@ -7,6 +7,7 @@ import { getNameForTicker } from '../../../types/ticker'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../Tokens/TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 type RoundedBalanceProps = {
   ticker?: string
@@ -50,13 +51,13 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { value: number.toFormat(), ticker: tickerName })}
+        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: tickerName })}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
         <span>
           {t('common.valuePair', {
-            value: number.toFixed(),
+            value: value,
             formatParams: {
               value: {
                 notation: 'compact',
@@ -75,7 +76,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Trans
         t={t}
         i18nKey="common.valueInTokenWithLink"
-        values={{ value: number.toFormat() }}
+        values={{ ...getPreciseNumberFormat(value) }}
         components={{ TickerLink: tickerLink }}
       />
     )
@@ -88,7 +89,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { value: number.toFormat(), ticker: tickerName })}
+        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: tickerName })}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -97,7 +98,13 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             t={t}
             i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
             values={{
-              value: truncatedNumber.toFormat(numberOfDecimals),
+              value: truncatedNumber.toFixed(numberOfDecimals),
+              formatParams: {
+                value: {
+                  minimumFractionDigits: numberOfDecimals,
+                  maximumFractionDigits: numberOfDecimals,
+                } satisfies Intl.NumberFormatOptions,
+              },
             }}
             shouldUnescape={true}
             components={{ TickerLink: tickerLink }}
