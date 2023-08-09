@@ -5,11 +5,7 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
-import {
-  DelayedContractVerificationIcon,
-  VerificationIcon,
-  verificationIconBoxHeight,
-} from '../ContractVerificationIcon'
+import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import {
   getTokenTypeDescription,
@@ -30,13 +26,16 @@ type TokensProps = {
   pagination: false | TablePaginationProps
 }
 
-export const TokenTypeTag: FC<{ tokenType: EvmTokenType; sx?: SxProps }> = ({ tokenType, sx = {} }) => {
+export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProps }> = ({
+  tokenType,
+  sx = {},
+}) => {
   const { t } = useTranslation()
   return (
     <Box
       sx={{
-        background: tokenBackgroundColor[tokenType],
-        border: `1px solid ${tokenBorderColor[tokenType]}`,
+        background: tokenBackgroundColor[tokenType ?? 'missing'],
+        border: `1px solid ${tokenBorderColor[tokenType ?? 'missing']}`,
         display: 'inline-block',
         borderRadius: 2,
         py: 1,
@@ -51,7 +50,7 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType; sx?: SxProps }> = ({ to
       <Typography component="span">{getTokenTypeDescription(t, tokenType)}</Typography>
       &nbsp;
       <Typography component="span" color={COLORS.grayMedium}>
-        {t('common.parentheses', { subject: getTokenTypeStrictName(t, tokenType) })}
+        {t('common.parentheses', { subject: getTokenTypeStrictName(t, tokenType ?? 'missing') })}
       </Typography>
     </Box>
   )
@@ -120,15 +119,7 @@ export const TokenList = (props: TokensProps) => {
                 width: '100%',
               }}
             >
-              {token.is_verified === undefined ? ( // Workaround for old Nexus versions. TODO: remove when new version of Nexus has been deployed everywhere.
-                <DelayedContractVerificationIcon
-                  scope={token}
-                  contractOasisAddress={token.contract_addr}
-                  noLink
-                />
-              ) : (
-                <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
-              )}
+              <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
             </Box>
           ),
         },

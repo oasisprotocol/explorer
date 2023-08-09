@@ -117,7 +117,7 @@ export const routes: RouteObject[] = [
             element: <TokensPage />,
           },
           {
-            path: `token/:address`, // This is a temporal workaround, until we have the required dedicated functionality for tokens
+            path: `token/:address`,
             element: <TokenDashboardPage />,
             loader: addressParamLoader,
             children: [

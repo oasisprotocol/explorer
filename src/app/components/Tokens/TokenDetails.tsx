@@ -8,7 +8,7 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import { DelayedContractVerificationIcon, VerificationIcon } from '../ContractVerificationIcon'
+import { VerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
@@ -55,11 +55,7 @@ export const TokenDetails: FC<{
       </dd>
       <dt>{t('contract.verification.title')}</dt>
       <dd>
-        {token.is_verified === undefined ? ( // Workaround for old Nexus versions. TODO: remove when new version of Nexus has been deployed everywhere.
-          <DelayedContractVerificationIcon scope={token} contractOasisAddress={token.contract_addr} />
-        ) : (
-          <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} />
-        )}
+        <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} />
       </dd>
 
       <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>

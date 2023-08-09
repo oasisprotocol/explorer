@@ -8,9 +8,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
-import { Runtime, RuntimeAccount } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
-import { useGetRuntimeAccountsAddress } from '../../../oasis-nexus/api'
+import { RuntimeAccount } from '../../../oasis-nexus/api'
 
 type VerificationStatus = 'verified' | 'unverified'
 
@@ -115,18 +113,4 @@ export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLi
       )}
     </>
   )
-}
-
-export const DelayedContractVerificationIcon: FC<{
-  scope: SearchScope
-  contractOasisAddress: string
-  noLink?: boolean | undefined
-}> = ({ scope, contractOasisAddress, noLink }) => {
-  const accountQuery = useGetRuntimeAccountsAddress(
-    scope.network,
-    scope.layer as Runtime,
-    contractOasisAddress,
-  )
-
-  return <ContractVerificationIcon account={accountQuery.data?.data} noLink={noLink} />
 }

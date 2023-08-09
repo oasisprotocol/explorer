@@ -21,7 +21,6 @@ import {
   getTokenTypeStrictName,
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
-import Skeleton from '@mui/material/Skeleton'
 import { AccountDetailsContext } from './index'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
@@ -30,19 +29,6 @@ type AccountTokensCardProps = AccountDetailsContext & {
 }
 
 export const accountTokenContainerId = 'tokens'
-
-export const DelayedContractLink: FC<{ scope: SearchScope; oasisAddress: string }> = ({
-  scope,
-  oasisAddress,
-}) => {
-  const { isLoading, account: contract } = useAccount(scope, oasisAddress)
-
-  if (isLoading) {
-    return <Skeleton variant={'text'} />
-  }
-
-  return <ContractLink scope={scope} address={contract?.address_eth ?? oasisAddress} />
-}
 
 export const ContractLink: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   return (
@@ -85,14 +71,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       {
         content: (
           <LinkableDiv id={item.token_contract_addr_eth ?? item.token_contract_addr}>
-            {item.token_contract_addr_eth === undefined ? ( // TODO remove temporal workaround when latest Nexus is deployed
-              <DelayedContractLink scope={scope} oasisAddress={item.token_contract_addr} />
-            ) : (
-              <ContractLink
-                scope={scope}
-                address={item.token_contract_addr_eth ?? item.token_contract_addr}
-              />
-            )}
+            <ContractLink scope={scope} address={item.token_contract_addr_eth ?? item.token_contract_addr} />
           </LinkableDiv>
         ),
         key: 'hash',
