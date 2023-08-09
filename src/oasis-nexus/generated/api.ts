@@ -48,15 +48,6 @@ import GetRuntimeAccountsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
-export type GetLayerStatsActiveAccountsWindowStepSeconds = typeof GetLayerStatsActiveAccountsWindowStepSeconds[keyof typeof GetLayerStatsActiveAccountsWindowStepSeconds];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const GetLayerStatsActiveAccountsWindowStepSeconds = {
-  NUMBER_300: 300,
-  NUMBER_86400: 86400,
-} as const;
-
 export type GetLayerStatsActiveAccountsParams = {
 /**
  * The maximum numbers of items to return.
@@ -74,7 +65,7 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 86400 (1 day). Requests with other values may be rejected.
 
  */
-window_step_seconds?: GetLayerStatsActiveAccountsWindowStepSeconds;
+window_step_seconds?: number;
 };
 
 export type GetLayerStatsTxVolumeParams = {
@@ -89,12 +80,19 @@ limit?: number;
  */
 offset?: number;
 /**
- * The size of buckets into which the statistic is grouped, in seconds.
-The backend supports a limited number of bucket sizes: 300 (5 minutes) and
+ * The size of windows into which the statistic is grouped, in seconds.
+The backend supports a limited number of window sizes: 300 (5 minutes) and
 86400 (1 day). Requests with other values may be rejected.
 
  */
-bucket_size_seconds?: number;
+window_size_seconds?: number;
+/**
+ * The size of the step between returned statistic windows, in seconds.
+The backend supports a limited number of step sizes: 300 (5 minutes) and
+86400 (1 day). Requests with other values may be rejected.
+
+ */
+window_step_seconds?: number;
 };
 
 export type GetRuntimeEvmTokensAddressHoldersParams = {
@@ -562,7 +560,7 @@ export type HumanReadableErrorResponse = {
 export interface ActiveAccounts {
   /** The date for the end of the daily active accounts measurement window. */
   window_end: string;
-  /** The number of active accounts for the 24hour window starting at bucket_start. */
+  /** The number of active accounts for the 24hour window ending at window_end. */
   active_accounts: number;
 }
 
@@ -577,9 +575,9 @@ export interface ActiveAccountsList {
 }
 
 export interface TxVolume {
-  /** The date for this daily transaction volume measurement. */
-  bucket_start: string;
-  /** The transaction volume on this day. */
+  /** The end timestamp for this daily transaction volume measurement. */
+  window_end: string;
+  /** The transaction volume for this window. */
   tx_volume: number;
 }
 
@@ -588,9 +586,9 @@ export interface TxVolume {
 
  */
 export interface TxVolumeList {
-  bucket_size_seconds: number;
+  window_size_seconds: number;
   /** The list of daily transaction volumes. */
-  buckets: TxVolume[];
+  windows: TxVolume[];
 }
 
 export interface AccountStats {
@@ -997,6 +995,8 @@ export interface RuntimeBlock {
 export type RuntimeBlockListAllOf = {
   blocks: RuntimeBlock[];
 };
+
+export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 export interface ProposalVote {
   /** The staking address casting this vote. */
@@ -1580,8 +1580,6 @@ the query would return with limit=infinity.
   /** Whether total_count is clipped for performance reasons. */
   is_total_count_clipped: boolean;
 }
-
-export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 /**
  * A list of consensus blocks.
@@ -3345,7 +3343,7 @@ export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof 
 
 
 /**
- * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token.
 This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
 
  */
@@ -3392,7 +3390,7 @@ export type GetRuntimeEvmTokensAddressHoldersQueryResult = NonNullable<Awaited<R
 export type GetRuntimeEvmTokensAddressHoldersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token.
 This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
 
  */
