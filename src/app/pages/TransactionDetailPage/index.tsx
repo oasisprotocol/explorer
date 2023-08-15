@@ -323,8 +323,14 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.txnFee')}</dt>
           <dd>
-            {t('common.valueInToken', { ...getPreciseNumberFormat(transaction.fee), ticker: tickerName })}
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(transaction.charged_fee),
+              ticker: tickerName,
+            })}
           </dd>
+
+          <dt>{t('common.gasUsed')}</dt>
+          <dd>{transaction.gas_used.toLocaleString()}</dd>
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>

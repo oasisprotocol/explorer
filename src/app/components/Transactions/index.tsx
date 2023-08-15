@@ -188,7 +188,7 @@ export const Transactions: FC<TransactionsProps> = ({
             },
             {
               align: TableCellAlign.Right,
-              content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
+              content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.ticker} />,
               key: 'fee_amount',
             },
             {
