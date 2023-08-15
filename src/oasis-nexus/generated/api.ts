@@ -751,7 +751,7 @@ execute it.
 ParaTime base units, as a string).
 Calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`.
  */
-  charged_fee?: string;
+  charged_fee: string;
   /** The total byte size of the transaction. */
   size: number;
   /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
