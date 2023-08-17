@@ -16,10 +16,8 @@ import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { fromBaseUnits, getEthAccountAddressFromBase64 } from '../../utils/helpers'
-import Skeleton from '@mui/material/Skeleton'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
-import { useTokenWithBase64Address } from './hooks'
 import { TokenTypeTag } from './TokenList'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 
@@ -39,43 +37,6 @@ const StyledCircle = styled(Box)(({ theme }) => ({
 
 type TableRuntimeEvent = RuntimeEvent & {
   markAsNew?: boolean
-}
-
-/**
- * This is a wrapper around EventBalance which is able to load the referenced token for extra data
- */
-const DelayedEventBalance: FC<{
-  event: RuntimeEvent
-  tickerAsLink?: boolean | undefined
-}> = ({ event, tickerAsLink }) => {
-  const { t } = useTranslation()
-  const { isLoading, isError, token } = useTokenWithBase64Address(event, event.body.address)
-
-  if (isLoading) {
-    return <Skeleton variant="text" />
-  }
-  if (isError || !token) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Event:', JSON.stringify(event, null, '  '))
-      throw new Error("Can't identify token for this event! (See console.)")
-    }
-    return t('common.missing')
-  }
-
-  return (
-    <EventBalance
-      event={{
-        ...event,
-        evm_token: {
-          ...(event.evm_token ?? {}),
-          type: token.type,
-          decimals: token.decimals,
-          symbol: token.symbol,
-        },
-      }}
-      tickerAsLink={tickerAsLink}
-    />
-  )
 }
 
 /**
@@ -128,19 +89,6 @@ export const EventBalance: FC<{
   } else {
     return tokenType
   }
-}
-
-const DelayedTokenTransferTokenType: FC<{ event: RuntimeEvent }> = ({ event }) => {
-  const { t } = useTranslation()
-  const { isLoading, isError, token } = useTokenWithBase64Address(event, event.body.address)
-
-  if (isLoading) {
-    return <Skeleton variant="text" />
-  }
-  if (isError || !token) {
-    return t('common.missing')
-  }
-  return <TokenTypeTag tokenType={token.type} />
 }
 
 type TokenTransfersProps = {
@@ -262,11 +210,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           ? [
               {
                 key: 'tokenType',
-                content: transfer.evm_token?.type ? (
-                  <TokenTypeTag tokenType={transfer.evm_token.type} />
-                ) : (
-                  <DelayedTokenTransferTokenType event={transfer} />
-                ),
+                content: <TokenTypeTag tokenType={transfer.evm_token!.type} />,
                 align: TableCellAlign.Center,
               },
             ]
@@ -274,11 +218,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'value',
           align: TableCellAlign.Right,
-          content: transfer.evm_token?.type ? (
-            <EventBalance event={transfer} tickerAsLink={differentTokens} />
-          ) : (
-            <DelayedEventBalance event={transfer} tickerAsLink={differentTokens} />
-          ),
+          content: <EventBalance event={transfer} tickerAsLink={differentTokens} />,
         },
       ],
       highlight: transfer.markAsNew,
