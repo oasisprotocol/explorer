@@ -2,6 +2,9 @@ import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { EmptyState } from '../app/components/EmptyState'
 import { PageLayout } from '../app/components/PageLayout'
+import { Network } from '../types/network'
+import { Layer } from '../oasis-nexus/api'
+import { statusApiFailureHandler } from '../../internals/mocks/msw-handlers'
 
 export default {
   title: 'Example/PageLayout',
@@ -15,36 +18,47 @@ const Template: StoryFn<typeof PageLayout> = args => (
   </PageLayout>
 )
 
-const emeraldRoute = {
-  routePath: '/:layer',
-  routeParams: { layer: 'emerald' },
+const sapphireRoute = {
+  routePath: '/:network/:layer',
+  routeParams: { network: Network.mainnet, layer: Layer.sapphire },
 }
 
 type Story = StoryObj<typeof PageLayout>
 
-export const Emerald: Story = {
+export const Desktop: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
-    reactRouter: emeraldRoute,
+    reactRouter: sapphireRoute,
   },
 }
 
-export const EmeraldIpad: Story = {
+export const Ipad: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
     viewport: { defaultViewport: 'ipad' },
-    reactRouter: emeraldRoute,
+    reactRouter: sapphireRoute,
   },
 }
 
-export const EmeraldMobile: Story = {
+export const Mobile: Story = {
   render: Template,
   parameters: {
     layout: 'fullscreen',
     viewport: { defaultViewport: 'iphone6' },
-    reactRouter: emeraldRoute,
+    reactRouter: sapphireRoute,
+  },
+}
+
+export const ApiError: Story = {
+  render: Template,
+  parameters: {
+    layout: 'fullscreen',
+    reactRouter: sapphireRoute,
+    msw: {
+      handlers: statusApiFailureHandler,
+    },
   },
 }
 
