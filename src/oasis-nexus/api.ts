@@ -151,7 +151,8 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
+                fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
@@ -222,7 +223,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                fee: tx.fee ? fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals) : undefined,
+                fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
