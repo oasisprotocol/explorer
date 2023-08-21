@@ -321,7 +321,7 @@ export const TransactionDetailView: FC<{
               </>
             )}
 
-          <dt>{t('common.txnFee')}</dt>
+          <dt>{t('common.transactionFee')}</dt>
           <dd>
             {t('common.valueInToken', {
               ...getPreciseNumberFormat(transaction.charged_fee),

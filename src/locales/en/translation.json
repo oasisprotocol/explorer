@@ -89,7 +89,7 @@
     "totalSent": "Total Sent",
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
-    "txnFee": "Txn Fee",
+    "transactionFee": "Transaction Fee",
     "type": "Type",
     "quantity": "Quantity",
     "undefined": "Undefined",
