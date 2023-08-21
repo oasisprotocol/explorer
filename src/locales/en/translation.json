@@ -46,7 +46,6 @@
     "cipher": "Cipher",
     "consensus": "Consensus",
     "eth": "ETH",
-    "ethHash": "ETH hash",
     "events": "Events",
     "failed": "Failed",
     "fiatValue": "Fiat Value",
@@ -86,13 +85,11 @@
     "token": "Token",
     "tokenInstance": "TokenID [<InstanceLink />] <TickerLink/>",
     "tokens": "Tokens",
-    "totalSent": "Total Sent",
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
     "transactionFee": "Transaction Fee",
     "type": "Type",
     "quantity": "Quantity",
-    "undefined": "Undefined",
     "unknown": "Unknown",
     "value": "Value",
     "valueLong": "{{value, number}}",
@@ -163,7 +160,6 @@
     },
     "sapphire": {
       "header": "What is the Sapphire network?",
-      "testnetHeader": "Getting started with Sapphire Testnet",
       "description": "The Sapphire ParaTime is our official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
     },
     "header": "Learning materials",
@@ -233,9 +229,7 @@
     "type": "Token Type"
   },
   "tokenSnapshot": {
-    "header": "Token Snapshot",
-    "supply": "Supply",
-    "title": "Tokens"
+    "header": "Token Snapshot"
   },
   "totalTransactions": {
     "header": "Total Transactions",
@@ -369,14 +363,11 @@
       "infoIconAria": "Toggle info screen"
     },
     "tooltip": {
-      "comingSoonAria": "Coming soon...",
       "coming": "Coming soon",
-      "online": "Online",
       "openParatime": "Open ParaTime",
       "sapphireParaTimeDesc": "Confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility",
       "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
       "cipherParaTimeDesc": "The Cipher ParaTime is a Confidential ParaTime for executing Wasm smart contracts.",
-      "discoverMore": "Discover more",
       "consensusDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
       "close": "Close"
     },
@@ -429,7 +420,6 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
-    "sectionHeader": "Results on {{ scope }}",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   }
 }
