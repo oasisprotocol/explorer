@@ -48,8 +48,8 @@
   },
   "resolutions": {
     "**/@emotion/styled": "11.11.0",
-    "@typescript-eslint/eslint-plugin": "6.4.0",
-    "@typescript-eslint/parser": "6.4.0",
+    "@typescript-eslint/eslint-plugin": "6.4.1",
+    "@typescript-eslint/parser": "6.4.1",
     "react-refresh": "0.14.0"
   },
   "alias": {
@@ -103,8 +103,8 @@
     "@types/node": "18.17.6",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "6.4.0",
-    "@typescript-eslint/parser": "6.4.0",
+    "@typescript-eslint/eslint-plugin": "6.4.1",
+    "@typescript-eslint/parser": "6.4.1",
     "buffer": "6.0.3",
     "eslint": "8.47.0",
     "eslint-config-prettier": "9.0.0",
