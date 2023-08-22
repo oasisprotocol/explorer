@@ -12,7 +12,7 @@ import {
   dailyLimitWithoutBuffer,
   durationToQueryParams,
   filterHourlyActiveAccounts,
-  sumBucketsByStartDuration,
+  sumWindowsByStartDuration,
 } from '../../utils/chart-utils'
 import { SearchScope } from '../../../types/searchScope'
 
@@ -21,7 +21,7 @@ export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windo
     case ChartDuration.TODAY:
       return filterHourlyActiveAccounts(windows)
     case ChartDuration.ALL_TIME:
-      return sumBucketsByStartDuration(windows, 'active_accounts', 'window_end', startOfMonth)
+      return sumWindowsByStartDuration(windows, 'active_accounts', 'window_end', startOfMonth)
     default:
       return windows
   }
@@ -68,8 +68,8 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }
   const labels = getLabels(t)
   const { limit, window_step_seconds } = {
     ...durationToQueryParams[chartDuration],
-    // By default we fetch data with additional buckets buffer, but it does not apply to active accounts.
-    // Active accounts daily buckets are overlapping, so we cannot sum buckets like in other daily charts.
+    // By default we fetch data with additional buffer, but it does not apply to active accounts.
+    // Active accounts daily windows are overlapping, so we cannot sum windows like in other daily charts.
     limit:
       chartDuration === ChartDuration.TODAY
         ? dailyLimitWithoutBuffer

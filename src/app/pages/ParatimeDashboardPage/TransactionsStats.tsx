@@ -7,7 +7,7 @@ import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {
   chartUseQueryStaleTimeMs,
   durationToQueryParams,
-  getMonthlyBucketsDailyAverage,
+  getMonthlyWindowsDailyAverage,
 } from '../../utils/chart-utils'
 import { DurationPills } from './DurationPills'
 import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
@@ -28,8 +28,8 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
     },
   })
   const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
-  const buckets = allTime
-    ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.windows)
+  const windows = allTime
+    ? getMonthlyWindowsDailyAverage(dailyVolumeQuery.data?.data.windows)
     : dailyVolumeQuery.data?.data.windows
   const formatParams = allTime
     ? {
@@ -49,12 +49,12 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
         title={t('transactionStats.header')}
       />
       <CardContent sx={{ height: 450 }}>
-        {buckets && (
+        {windows && (
           <BarChart
             barSize={chartDuration === ChartDuration.WEEK ? 125 : undefined}
             barRadius={chartDuration === ChartDuration.WEEK ? 20 : undefined}
             cartesianGrid
-            data={buckets.slice().reverse()}
+            data={windows.slice().reverse()}
             dataKey="tx_volume"
             formatters={{
               data: (value: number) => t('transactionStats.perDay', { value: value.toLocaleString() }),

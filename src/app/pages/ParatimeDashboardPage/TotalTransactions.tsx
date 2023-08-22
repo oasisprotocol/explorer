@@ -27,7 +27,7 @@ export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
     },
   })
 
-  const buckets = dailyVolumeQuery.data?.data.windows
+  const windows = dailyVolumeQuery.data?.data.windows
     ? cumulativeSum(dailyVolumeQuery.data?.data.windows.slice().reverse(), 'tx_volume')
     : undefined
 
@@ -40,13 +40,13 @@ export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
         title={t('totalTransactions.header')}
       />
       <CardContent sx={{ height: 450 }}>
-        {buckets && (
+        {windows && (
           <LineChart
             tooltipActiveDotRadius={9}
             cartesianGrid
             strokeWidth={3}
             dataKey="tx_volume"
-            data={buckets}
+            data={windows}
             margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
             tickMargin={16}
             withLabels

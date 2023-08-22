@@ -5,7 +5,7 @@ import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
   durationToQueryParams,
-  sumBucketsByStartDuration,
+  sumWindowsByStartDuration,
 } from '../../utils/chart-utils'
 import { LineChart } from '../../components/charts/LineChart'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -38,10 +38,10 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chart
   })
 
   const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
-  const buckets = data?.data?.windows
+  const windows = data?.data?.windows
   const lineChartData = isDailyChart
-    ? sumBucketsByStartDuration(buckets, 'tx_volume', 'window_end', startOfHour)
-    : buckets
+    ? sumWindowsByStartDuration(windows, 'tx_volume', 'window_end', startOfHour)
+    : windows
   const formatParams = isDailyChart
     ? {
         timestamp: {

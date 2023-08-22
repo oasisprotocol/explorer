@@ -14,7 +14,7 @@ export enum ChartDuration {
   ALL_TIME = 'ALL_TIME',
 }
 
-export const dailyLimitWithoutBuffer = (60 / 5) * 24 // full day for 5 minutes buckets,
+export const dailyLimitWithoutBuffer = (60 / 5) * 24 // full day for 5 minutes windows
 
 /*
   window_size_seconds refers to the number of data points in one chunk
@@ -28,7 +28,7 @@ export const durationToQueryParams = {
     window_step_seconds: fiveMinutesWindowSize,
     limit:
       dailyLimitWithoutBuffer +
-      // daily data needs additional 2 buckets to make sure we have at least full 24 buckets
+      // daily data needs additional 2 windows to make sure we have at least full 24 windows
       (60 / 5) * 2,
   },
   [ChartDuration.WEEK]: {
@@ -60,11 +60,11 @@ export const chartDurationToDaysMap = {
 
 export const chartUseQueryStaleTimeMs = durationToQueryParams[ChartDuration.TODAY].window_size_seconds * 1000
 
-type Buckets = TxVolume[] | undefined
+type Windows = TxVolume[] | undefined
 type MonthlyTxVolume = TxVolume & { numberOfItemsInGroup: number }
 
-const groupWindowsByMonth = (buckets: Buckets) => {
-  return buckets?.reduce((acc: MonthlyTxVolume[], cur, index, arr) => {
+const groupWindowsByMonth = (windows: Windows) => {
+  return windows?.reduce((acc: MonthlyTxVolume[], cur, index, arr) => {
     if (index > 0 && isSameMonth(new Date(cur.window_end), new Date(arr[index - 1].window_end))) {
       acc[acc.length - 1].tx_volume += cur.tx_volume
       acc[acc.length - 1].numberOfItemsInGroup += 1
@@ -79,10 +79,10 @@ const groupWindowsByMonth = (buckets: Buckets) => {
   }, [])
 }
 
-export const getMonthlyBucketsDailyAverage = (buckets: Buckets): Buckets => {
-  const monthlyBuckets = groupWindowsByMonth(buckets)
+export const getMonthlyWindowsDailyAverage = (windows: Windows): Windows => {
+  const monthlyWindows = groupWindowsByMonth(windows)
 
-  return monthlyBuckets?.map(item => ({
+  return monthlyWindows?.map(item => ({
     ...item,
     tx_volume: Math.round((item.tx_volume / item.numberOfItemsInGroup) * 100) / 100,
   }))
@@ -113,21 +113,21 @@ type StringOnly<T> = {
   [key in keyof T as T[key] extends string | undefined ? key : never]: T[key]
 }
 
-export const sumBucketsByStartDuration = <
+export const sumWindowsByStartDuration = <
   T extends NumberOnly<any> & StringOnly<any>,
   N extends keyof NumberOnly<T>,
   S extends keyof StringOnly<T>,
 >(
-  buckets: T[] | undefined,
+  windows: T[] | undefined,
   sumKey: N,
   dateKey: S,
   startDurationFn: typeof startOfHour | typeof startOfDay | typeof startOfMonth,
 ) => {
-  if (!buckets) {
+  if (!windows) {
     return []
   }
 
-  const durationMap = buckets.reduce(
+  const durationMap = windows.reduce(
     (accMap, item) => {
       const key = startDurationFn(new Date(item[dateKey])).toISOString()
 
@@ -139,7 +139,7 @@ export const sumBucketsByStartDuration = <
     {} as { [key: string]: number },
   )
 
-  // For daily charts we want to skip the first and last buckets.
+  // For daily charts we want to skip the first and last windows.
   // They are not full and we want to avoid chart drop.
   const filteredDurationMap =
     startDurationFn === startOfHour
