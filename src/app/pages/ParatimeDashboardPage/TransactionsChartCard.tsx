@@ -38,9 +38,9 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chart
   })
 
   const isDailyChart = isFetched && chartDuration === ChartDuration.TODAY
-  const buckets = data?.data?.buckets
+  const buckets = data?.data?.windows
   const lineChartData = isDailyChart
-    ? sumBucketsByStartDuration(buckets, 'tx_volume', 'bucket_start', startOfHour)
+    ? sumBucketsByStartDuration(buckets, 'tx_volume', 'window_end', startOfHour)
     : buckets
   const formatParams = isDailyChart
     ? {

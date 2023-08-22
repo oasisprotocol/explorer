@@ -27,8 +27,8 @@ export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
     },
   })
 
-  const buckets = dailyVolumeQuery.data?.data.buckets
-    ? cumulativeSum(dailyVolumeQuery.data?.data.buckets.slice().reverse(), 'tx_volume')
+  const buckets = dailyVolumeQuery.data?.data.windows
+    ? cumulativeSum(dailyVolumeQuery.data?.data.windows.slice().reverse(), 'tx_volume')
     : undefined
 
   return (

@@ -5,11 +5,7 @@ import startOfMonth from 'date-fns/startOfMonth'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { BarChart } from '../../components/charts/BarChart'
-import {
-  useGetLayerStatsActiveAccounts,
-  GetLayerStatsActiveAccountsWindowStepSeconds,
-  type ActiveAccounts as Windows,
-} from '../../../oasis-nexus/api'
+import { useGetLayerStatsActiveAccounts, type ActiveAccounts as Windows } from '../../../oasis-nexus/api'
 import {
   ChartDuration,
   chartUseQueryStaleTimeMs,
@@ -70,7 +66,7 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
-  const { limit, bucket_size_seconds } = {
+  const { limit, window_step_seconds } = {
     ...durationToQueryParams[chartDuration],
     // By default we fetch data with additional buckets buffer, but it does not apply to active accounts.
     // Active accounts daily buckets are overlapping, so we cannot sum buckets like in other daily charts.
@@ -84,7 +80,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }
     scope.layer,
     {
       limit,
-      window_step_seconds: bucket_size_seconds as GetLayerStatsActiveAccountsWindowStepSeconds,
+      window_step_seconds,
     },
     {
       query: {

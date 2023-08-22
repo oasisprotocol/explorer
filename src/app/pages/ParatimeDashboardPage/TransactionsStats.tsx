@@ -29,8 +29,8 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
   })
   const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
   const buckets = allTime
-    ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.buckets)
-    : dailyVolumeQuery.data?.data.buckets
+    ? getMonthlyBucketsDailyAverage(dailyVolumeQuery.data?.data.windows)
+    : dailyVolumeQuery.data?.data.windows
   const formatParams = allTime
     ? {
         timestamp: {
