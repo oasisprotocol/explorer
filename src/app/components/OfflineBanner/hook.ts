@@ -26,7 +26,8 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
   const query = useGetRuntimeStatus(scope.network, scope.layer)
-  const timeDistance = useFormattedTimestampString(query?.data?.data.latest_block_time)
+  const data = query.data?.data
+  const lastUpdate = useFormattedTimestampString(data?.latest_block_time)
 
   if (query.isError) {
     return {
@@ -48,14 +49,12 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
       outOfDate: false,
     }
   }
-  const data = query.data?.data
   if (!query.isSuccess || !data) {
     return {
       outOfDate: true,
     }
   }
-  const { latest_block } = data
-  if (latest_block === -1) {
+  if (data.latest_block === -1) {
     return {
       outOfDate: true,
     }
@@ -64,6 +63,6 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   const { outOfDateThreshold } = paraTimesConfig[scope.layer]
   return {
     outOfDate: timeSinceLastUpdate > outOfDateThreshold,
-    lastUpdate: timeDistance,
+    lastUpdate: lastUpdate,
   }
 }
