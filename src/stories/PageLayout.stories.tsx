@@ -1,5 +1,5 @@
 import { Meta, StoryFn, StoryObj } from '@storybook/react'
-import { withRouter } from 'storybook-addon-react-router-v6'
+import { withRouter, reactRouterParameters } from 'storybook-addon-react-router-v6'
 import { EmptyState } from '../app/components/EmptyState'
 import { PageLayout } from '../app/components/PageLayout'
 import { Network } from '../types/network'
@@ -18,10 +18,14 @@ const Template: StoryFn<typeof PageLayout> = args => (
   </PageLayout>
 )
 
-const sapphireRoute = {
-  routePath: '/:network/:layer',
-  routeParams: { network: Network.mainnet, layer: Layer.sapphire },
-}
+const sapphireRoute = reactRouterParameters({
+  location: {
+    pathParams: { network: Network.mainnet, layer: Layer.sapphire },
+  },
+  routing: {
+    path: '/:network/:layer',
+  },
+})
 
 type Story = StoryObj<typeof PageLayout>
 
