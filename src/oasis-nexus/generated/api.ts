@@ -622,6 +622,9 @@ detected or is not supported, this field will be null/absent.
   type: EvmTokenType;
   /** The total number of base units available. */
   total_supply?: string;
+  /** The total number of transfers of this token.
+ */
+  num_transfers?: number;
   /** The number of addresses that have a nonzero balance of this token.
  */
   num_holders: number;
