@@ -3,11 +3,7 @@
 exports[`TrimLinkLabel snapshot 1`] = `
 .emotion-0-MuiTypography-root-MuiLink-root {
   margin: 0;
-  font-family: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
+  font: inherit;
   color: #0092f6;
   -webkit-text-decoration: underline;
   text-decoration: underline;

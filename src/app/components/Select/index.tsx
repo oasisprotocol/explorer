@@ -1,6 +1,6 @@
-import SelectUnstyled, { SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
-import Option, { optionClasses } from '@mui/base/Option'
-import Popper, { PopperPlacementType } from '@mui/base/Popper'
+import { Select as SelectUnstyled, SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
+import { Option, optionClasses } from '@mui/base/Option'
+import { Popper, PopperPlacementType } from '@mui/base/Popper'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import {
