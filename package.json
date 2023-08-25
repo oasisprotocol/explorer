@@ -51,7 +51,7 @@
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "@typescript-eslint/parser": "6.4.1",
     "react-refresh": "0.14.0",
-    "jackspeak": "2.1.1",
+    "jackspeak": "2.3.0",
     "eslint-plugin-react": "7.32.2"
   },
   "alias": {
