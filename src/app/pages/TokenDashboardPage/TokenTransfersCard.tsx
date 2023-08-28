@@ -10,13 +10,18 @@ import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useAccount } from '../AccountDetailsPage/hook'
 import { useTokenInfo, useTokenTransfers } from './hook'
 import { TokenDashboardContext } from './index'
+import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
+
+export const tokenTransfersContainerId = 'tokenTransfers'
 
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+      <LinkableDiv id={tokenTransfersContainerId}>
+        <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+      </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
           <TokenTransfersView scope={scope} address={address} />

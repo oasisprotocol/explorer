@@ -1,5 +1,7 @@
 import { FC } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import Card from '@mui/material/Card'
+import Link from '@mui/material/Link'
 import { useTokenInfo } from './hook'
 import { useAccount } from '../AccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -15,6 +17,8 @@ import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { RouteUtils } from '../../utils/route-utils'
+import { tokenTransfersContainerId } from '../../pages/TokenDashboardPage/TokenTransfersCard'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -70,6 +74,23 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ 
                 ? t('common.missing')
                 : t('common.valueInToken', { ...getPreciseNumberFormat(balance), ticker: tickerName })}
             </dd>
+
+            {token.num_transfers && (
+              <>
+                <dt>{t('tokens.transfers')}</dt>
+                <dd>
+                  <Link
+                    component={RouterLink}
+                    to={`${RouteUtils.getTokenRoute(
+                      scope,
+                      token.eth_contract_addr,
+                    )}#${tokenTransfersContainerId}`}
+                  >
+                    {token.num_transfers.toLocaleString()}
+                  </Link>
+                </dd>
+              </>
+            )}
           </StyledDescriptionList>
         )}
       </CardContent>
