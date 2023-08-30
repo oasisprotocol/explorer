@@ -12,6 +12,258 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.1.0 (2023-08-30)
+
+### Features
+
+- Precisely format large numbers using Intl through i18n
+  ([#773](https://github.com/oasisprotocol/explorer/issues/773))
+
+### Bug Fixes and Improvements
+
+- Fix charts by syncing with the latest tx_volume stats API changes
+  ([#812](https://github.com/oasisprotocol/explorer/issues/812))
+  
+- Homepage fixes
+  ([#754](https://github.com/oasisprotocol/explorer/issues/754),
+   [#759](https://github.com/oasisprotocol/explorer/issues/759),
+   [#752](https://github.com/oasisprotocol/explorer/issues/752),
+   [#758](https://github.com/oasisprotocol/explorer/issues/758))
+
+- Fix alignment of fiat value tooltip in Account details
+  ([#753](https://github.com/oasisprotocol/explorer/issues/753))
+
+- Update typography in various places
+  ([#756](https://github.com/oasisprotocol/explorer/issues/756))
+
+- Make fiat conversions accurate
+  ([#770](https://github.com/oasisprotocol/explorer/issues/770))
+
+- Show used gas and fee instead of limit
+  ([#800](https://github.com/oasisprotocol/explorer/issues/800))
+
+- Remove number of transactions from Token page
+  ([#768](https://github.com/oasisprotocol/explorer/issues/768))
+
+- Improve performance when displaying token lists, using newly available data
+  ([#760](https://github.com/oasisprotocol/explorer/issues/760))
+
+- Use direct data when displaying balances and token types on token transfers
+  ([#761](https://github.com/oasisprotocol/explorer/issues/761))
+
+- When listing token balances, use locally available data
+  ([#762](https://github.com/oasisprotocol/explorer/issues/762))
+  
+### Internal Changes
+
+- Handle Renovate default commitMessageExtra description
+  ([#767](https://github.com/oasisprotocol/explorer/issues/767))
+  
+- Follow Nexus API changes
+  ([#737](https://github.com/oasisprotocol/explorer/issues/737))
+
+- Replace changelog release script with github action
+  ([#738](https://github.com/oasisprotocol/explorer/issues/738))
+
+- Fix Storybook and init API mocks
+  ([#787](https://github.com/oasisprotocol/explorer/issues/787))
+
+  Resolves issues in Storybook:
+
+  - No QueryClient set, use QueryClientProvider to set one
+  - Unexpected Application Error
+
+- Remove fallbacks for old Nexus versions
+  ([#796](https://github.com/oasisprotocol/explorer/issues/796))
+
+- Regenerate orval lockfile to bump subdependencies
+  ([#798](https://github.com/oasisprotocol/explorer/issues/798))
+
+- Re-run PR checks after appending Change Log fragment
+  ([#777](https://github.com/oasisprotocol/explorer/issues/777))
+
+- Remove unused translations
+  ([#814](https://github.com/oasisprotocol/explorer/issues/814))
+
+- Fix variable names in useRuntimeFreshness
+  ([#811](https://github.com/oasisprotocol/explorer/issues/811))
+  
+- Update storybook dependencies to v7.3.2
+  ([#749](https://github.com/oasisprotocol/explorer/issues/749))
+
+- Update dependency @testing-library/jest-dom to v5.17.0
+  ([#751](https://github.com/oasisprotocol/explorer/issues/751))
+
+- Update material-ui monorepo
+  ([#757](https://github.com/oasisprotocol/explorer/issues/757),
+   [#783](https://github.com/oasisprotocol/explorer/issues/783),
+   [#795](https://github.com/oasisprotocol/explorer/issues/795),
+   [#840](https://github.com/oasisprotocol/explorer/issues/840))
+
+- Update dependency @types/node to v18.17.0
+  ([#763](https://github.com/oasisprotocol/explorer/issues/763))
+
+- Update lint dependencies to v6.2.0
+  ([#764](https://github.com/oasisprotocol/explorer/issues/764))
+
+- Update dependency @types/testing-library__jest-dom to v5.14.9
+  ([#765](https://github.com/oasisprotocol/explorer/issues/765))
+
+- Update dependency @mui/material to v5.14.2
+  ([#766](https://github.com/oasisprotocol/explorer/issues/766))
+
+- Update dependency @types/node to v18.17.1
+  ([#769](https://github.com/oasisprotocol/explorer/issues/769))
+
+- Update dependency i18next to v23.3.0
+  ([#771](https://github.com/oasisprotocol/explorer/issues/771))
+
+- Update test dependencies to v29.6.2
+  ([#774](https://github.com/oasisprotocol/explorer/issues/774))
+
+- Update dependency eslint-config-prettier to v8.9.0
+  ([#776](https://github.com/oasisprotocol/explorer/issues/776))
+
+- Update dependency eslint to v8.46.0
+  ([#778](https://github.com/oasisprotocol/explorer/issues/778))
+
+- Update dependency i18next to v23.4.1
+  ([#779](https://github.com/oasisprotocol/explorer/issues/779))
+
+- Update dependency react-i18next to v13.0.3
+  ([#780](https://github.com/oasisprotocol/explorer/issues/780))
+
+- Update lint dependencies to v6.2.1
+  ([#781](https://github.com/oasisprotocol/explorer/issues/781))
+
+- Update dependency swiper to v10.1.0
+  ([#782](https://github.com/oasisprotocol/explorer/issues/782))
+
+- Update dependency storybook-addon-react-router-v6 to v2
+  ([#784](https://github.com/oasisprotocol/explorer/issues/784))
+
+- Update fontsource monorepo to ^5.0.7
+  ([#785](https://github.com/oasisprotocol/explorer/issues/785))
+
+- Update lint dependencies
+  ([#786](https://github.com/oasisprotocol/explorer/issues/786),
+   [#794](https://github.com/oasisprotocol/explorer/issues/794))
+
+- Update fontsource monorepo to ^5.0.8
+  ([#788](https://github.com/oasisprotocol/explorer/issues/788))
+
+- Update dependency @types/node to v18.17.2
+  ([#789](https://github.com/oasisprotocol/explorer/issues/789))
+
+- Update dependency @types/node to v18.17.5
+  ([#790](https://github.com/oasisprotocol/explorer/issues/790))
+
+- Update dependency eslint-config-prettier to v9
+  ([#791](https://github.com/oasisprotocol/explorer/issues/791))
+
+- Update fontsource monorepo to ^5.0.9
+  ([#792](https://github.com/oasisprotocol/explorer/issues/792))
+
+- Update i18n dependencies
+  ([#793](https://github.com/oasisprotocol/explorer/issues/793),
+   [#817](https://github.com/oasisprotocol/explorer/issues/817))
+
+- Update dependency recharts to v2.7.3
+  ([#801](https://github.com/oasisprotocol/explorer/issues/801))
+
+- Update dependency @playwright/test to ^1.37.1
+  ([#802](https://github.com/oasisprotocol/explorer/issues/802))
+
+- Update dependency @ethereumjs/util to v9
+  ([#803](https://github.com/oasisprotocol/explorer/issues/803))
+
+- Update dependency @testing-library/jest-dom to v6
+  ([#804](https://github.com/oasisprotocol/explorer/issues/804))
+
+- Update dependency swiper to v10.2.0
+  ([#805](https://github.com/oasisprotocol/explorer/issues/805))
+
+- Update dependency @testing-library/jest-dom to v6.0.1
+  ([#806](https://github.com/oasisprotocol/explorer/issues/806))
+
+- Update dependency @types/node to v18.17.6
+  ([#807](https://github.com/oasisprotocol/explorer/issues/807))
+
+- Update test dependencies to v29.6.3
+  ([#808](https://github.com/oasisprotocol/explorer/issues/808))
+
+- Update lint dependencies to v6.4.1
+  ([#809](https://github.com/oasisprotocol/explorer/issues/809))
+
+- Consistently capitalize columns and description terms
+  ([#810](https://github.com/oasisprotocol/explorer/issues/810))
+
+- Update dependency @types/node to v18.17.7
+  ([#813](https://github.com/oasisprotocol/explorer/issues/813))
+
+- Update test dependencies
+  ([#815](https://github.com/oasisprotocol/explorer/issues/815))
+
+- Update dependency @types/node to v18.17.8
+  ([#816](https://github.com/oasisprotocol/explorer/issues/816))
+
+- Update dependency @testing-library/jest-dom to v6.1.1
+  ([#818](https://github.com/oasisprotocol/explorer/issues/818))
+
+- Update dependency @types/node to v18.17.9
+  ([#819](https://github.com/oasisprotocol/explorer/issues/819))
+
+- Update dependency @testing-library/jest-dom to v6.1.2
+  ([#820](https://github.com/oasisprotocol/explorer/issues/820))
+
+- Regenerate lockfile to fix issue with Storybook
+  ([#821](https://github.com/oasisprotocol/explorer/issues/821))
+
+- Update test dependencies to v29.6.4
+  ([#823](https://github.com/oasisprotocol/explorer/issues/823))
+
+- Update dependency typescript to v5.2.2
+  ([#824](https://github.com/oasisprotocol/explorer/issues/824))
+
+- Update dependency @types/node to v18.17.11
+  ([#825](https://github.com/oasisprotocol/explorer/issues/825))
+
+- Update dependency msw to ^1.2.4
+  ([#826](https://github.com/oasisprotocol/explorer/issues/826))
+
+- Update dependency recharts to v2.8.0
+  ([#827](https://github.com/oasisprotocol/explorer/issues/827))
+
+- Update dependency i18next to v23.4.6
+  ([#829](https://github.com/oasisprotocol/explorer/issues/829))
+
+- Update dependency eslint to v8.48.0
+  ([#830](https://github.com/oasisprotocol/explorer/issues/830))
+
+- Update dependency axios to v1.5.0
+  ([#831](https://github.com/oasisprotocol/explorer/issues/831))
+
+- Update dependency @types/node to v18.17.12
+  ([#832](https://github.com/oasisprotocol/explorer/issues/832))
+
+- Update dependency msw to ^1.2.5
+  ([#833](https://github.com/oasisprotocol/explorer/issues/833))
+
+- Update dependency bignumber.js to v9.1.2
+  ([#834](https://github.com/oasisprotocol/explorer/issues/834))
+
+- Update lint dependencies to v6.5.0
+  ([#835](https://github.com/oasisprotocol/explorer/issues/835))
+
+- Update storybook dependencies to v7.4.0
+  ([#836](https://github.com/oasisprotocol/explorer/issues/836))
+
+- Update dependency prettier to v3.0.3
+  ([#837](https://github.com/oasisprotocol/explorer/issues/837))
+
+- Update dependency react-i18next to v13.2.1
+  ([#838](https://github.com/oasisprotocol/explorer/issues/838))
+
 ## 1.0.0 (2023-07-18)
 
 ### Removals and Breaking Changes
