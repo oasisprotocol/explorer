@@ -36,10 +36,10 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
   },
   testnet: {
     emerald: {
-      suggestedBlock: '1398623',
+      suggestedBlock: '1398623', // The prod testnet deploy only started processing blocks from round 1398623.
       suggestedTransaction: '0x7b118fadc9e6569b933edf3a9b8c442eb145fc22613bc11111b8aeb223d4e271',
       suggestedAccount: '0x6d5A9A4C063b840ef3fe792E5DD6232fbf2c0982',
-      suggestedTokenFragment: 'yuzu',
+      suggestedTokenFragment: 'yuzu', // Not available until a full reindex with all analyzers is done.
     },
     sapphire: {
       suggestedBlock: '4260',
