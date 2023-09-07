@@ -19,7 +19,7 @@ export abstract class RouteUtils {
       [Layer.sapphire]: true,
     },
     [Network.testnet]: {
-      // [Layer.emerald]: true,
+      [Layer.emerald]: true,
       [Layer.sapphire]: true,
     },
   } satisfies Partial<Record<Network, Partial<Record<Layer, true>>>>
