@@ -21,7 +21,6 @@ type LayerSuggestions = {
 
 export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {
   mainnet: {
-    // @ts-expect-error Emerald will be enabled as soon as Nexus re-indexing will be finished
     emerald: {
       suggestedBlock: '4260',
       suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1',
