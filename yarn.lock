@@ -1486,10 +1486,10 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.1.tgz#1a5b1959a528e374e8037c4396c3e825d6cf4a83"
   integrity sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==
 
-"@fontsource-variable/figtree@^5.0.9":
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/figtree/-/figtree-5.0.9.tgz#e488e678961681900db2f089dc1b3cf6c7a66388"
-  integrity sha512-M0seKvBNYZNX/gPHfiGFWJOnQzpypC6P4IjleWZvxcpFgXY4XgqVaWBwwOPpWwt3dadohhb7QG42EUvFZILGkA==
+"@fontsource-variable/figtree@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/figtree/-/figtree-5.0.13.tgz#1672603df1dea46f05712e81862b8dc0d245d976"
+  integrity sha512-gYKtD+QPzb/dRokUbgAIzMHG1k0Yxooh/rVvlDKB86GnI7D6t4rrjJvRSQGeN1J3KzxEehb5zo5zqSlW6ri0Gg==
 
 "@fontsource-variable/roboto-mono@^5.0.9":
   version "5.0.9"
