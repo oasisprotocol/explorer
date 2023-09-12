@@ -12,6 +12,72 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.2.0 (2023-09-12)
+
+### Features
+
+- Enable Emerald Mainnet and Testnet
+  ([#857](https://github.com/oasisprotocol/explorer/issues/857))
+
+### Internal Changes
+
+- Update react dependencies
+  ([#748](https://github.com/oasisprotocol/explorer/issues/748))
+
+- Update dependency react-i18next to v13.2.2
+  ([#845](https://github.com/oasisprotocol/explorer/issues/845))
+
+- Update dependency markdownlint-cli to v0.36.0
+  ([#846](https://github.com/oasisprotocol/explorer/issues/846))
+
+- Update dependency msw to ^1.3.0
+  ([#847](https://github.com/oasisprotocol/explorer/issues/847))
+
+- Update dependency @types/node to v18.17.14
+  ([#849](https://github.com/oasisprotocol/explorer/issues/849))
+
+- Update actions/checkout action to v4
+  ([#850](https://github.com/oasisprotocol/explorer/issues/850))
+
+- Update lint dependencies to v6.6.0
+  ([#851](https://github.com/oasisprotocol/explorer/issues/851))
+
+- Update material-ui monorepo
+  ([#852](https://github.com/oasisprotocol/explorer/issues/852))
+
+- Update dependency i18next to v23.4.9
+  ([#853](https://github.com/oasisprotocol/explorer/issues/853))
+
+- Update dependency @testing-library/jest-dom to v6.1.3
+  ([#854](https://github.com/oasisprotocol/explorer/issues/854))
+
+- Update dependency i18next to v23.5.0
+  ([#855](https://github.com/oasisprotocol/explorer/issues/855))
+
+- Update react dependencies to v4.35.0
+  ([#856](https://github.com/oasisprotocol/explorer/issues/856))
+
+- Update dependency i18next to v23.5.1
+  ([#858](https://github.com/oasisprotocol/explorer/issues/858))
+
+- Update dependency @types/node to v18.17.15
+  ([#859](https://github.com/oasisprotocol/explorer/issues/859))
+
+- Update dependency eslint to v8.49.0
+  ([#860](https://github.com/oasisprotocol/explorer/issues/860))
+
+- Update dependency @fontsource-variable/figtree to ^5.0.13
+  ([#861](https://github.com/oasisprotocol/explorer/issues/861))
+
+- Update storybook dependencies
+  ([#862](https://github.com/oasisprotocol/explorer/issues/862))
+
+- Update lint dependencies to v6.7.0
+  ([#863](https://github.com/oasisprotocol/explorer/issues/863))
+
+- Update test dependencies to v29.7.0
+  ([#864](https://github.com/oasisprotocol/explorer/issues/864))
+
 ## 1.1.0 (2023-08-30)
 
 ### Features
