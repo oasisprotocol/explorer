@@ -68,7 +68,7 @@
     "not_defined": "Not defined",
     "oasis": "Oasis",
     "paratime": "Paratime",
-    "parentheses":"({{subject}})",
+    "parentheses": "({{subject}})",
     "percentage": "Percentage",
     "rank": "Rank",
     "select": "Select",
@@ -156,7 +156,9 @@
   "learningMaterials": {
     "emerald": {
       "header": "What is the Emerald network?",
-      "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility."
+      "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility.",
+      "gateway": "Web3 Gateway",
+      "gatewayDescription": "To get started building on our Emerald ParaTime, you can use our public Web3 gateway, fully compatible with Ethereum's Web3 gateway."
     },
     "sapphire": {
       "header": "What is the Sapphire network?",

@@ -50,7 +50,6 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
 
   return {
     [Network.mainnet]: {
-      // @ts-expect-error Emerald will be enabled as soon as Nexus re-indexing will be finished
       [Layer.emerald]: {
         primary: {
           description: t('learningMaterials.emerald.description'),
@@ -87,6 +86,23 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
       },
     },
     [Network.testnet]: {
+      [Layer.emerald]: {
+        primary: {
+          description: t('learningMaterials.emerald.description'),
+          header: t('learningMaterials.emerald.header'),
+          url: docs.emeraldTestnet,
+        },
+        secondary: {
+          description: t('learningMaterials.testnet.description'),
+          header: t('learningMaterials.testnet.header'),
+          url: docs.emeraldTestnetNode,
+        },
+        tertiary: {
+          description: t('learningMaterials.emerald.gatewayDescription'),
+          header: t('learningMaterials.emerald.gateway'),
+          url: docs.emeraldGateway,
+        },
+      },
       [Layer.sapphire]: {
         primary: {
           description: t('learningMaterials.sapphire.description'),
@@ -96,7 +112,7 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
         secondary: {
           description: t('learningMaterials.testnet.description'),
           header: t('learningMaterials.testnet.header'),
-          url: docs.testnetNode,
+          url: docs.sapphireTestnetNode,
         },
         tertiary: {
           description: t('learningMaterials.hardhat.description'),

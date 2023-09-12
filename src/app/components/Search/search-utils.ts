@@ -21,7 +21,6 @@ type LayerSuggestions = {
 
 export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {
   mainnet: {
-    // @ts-expect-error Emerald will be enabled as soon as Nexus re-indexing will be finished
     emerald: {
       suggestedBlock: '4260',
       suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1',
@@ -36,6 +35,12 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
     },
   },
   testnet: {
+    emerald: {
+      suggestedBlock: '1398623', // The prod testnet deploy only started processing blocks from round 1398623.
+      suggestedTransaction: '0x7b118fadc9e6569b933edf3a9b8c442eb145fc22613bc11111b8aeb223d4e271',
+      suggestedAccount: '0x6d5A9A4C063b840ef3fe792E5DD6232fbf2c0982',
+      suggestedTokenFragment: 'yuzu', // Not available until a full reindex with all analyzers is done.
+    },
     sapphire: {
       suggestedBlock: '4260',
       suggestedTransaction: '0xd9b5c08be1cb74229abedd9b3e1afb8b43228085a6abf72993db415959ab6b35',
