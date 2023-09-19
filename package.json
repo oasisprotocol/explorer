@@ -44,7 +44,7 @@
     ]
   },
   "engines": {
-    "node": ">=19"
+    "node": ">=19.9.0"
   },
   "resolutions": {
     "**/@emotion/styled": "11.11.0",
