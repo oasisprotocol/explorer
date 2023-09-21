@@ -665,8 +665,8 @@ export interface RuntimeStatus {
   latest_block: number;
   /** The RFC 3339 formatted consensus time of when the latest indexed block for this runtime was produced. */
   latest_block_time: string;
-  /** The RFC 3339 formatted time when Nexus processed the latest block for this runtime. Compare with current time for approximate indexing progress with the Oasis Network. */
-  latest_update: string;
+  /** The number of milliseconds since Nexus processed the latest block. */
+  latest_update_age_ms: number;
 }
 
 export interface RuntimeAccount {
@@ -1569,12 +1569,16 @@ export type BlockListAllOf = {
 };
 
 export interface Status {
-  /** The height of the most recent indexed block. Query a synced Oasis node for the latest block produced. */
+  /** The height of the most recent indexed block. Compare with latest_node_block to measure
+how far behind Nexus is from the chain. 
+ */
   latest_block: number;
-  /** The RFC 3339 formatted consensus time of when the most recent block was produced. */
+  /** The height of the most recently produced block on-chain as seen by Nexus. */
+  latest_node_block: number;
+  /** The RFC 3339 formatted consensus time of when the most recently indexed block was produced. */
   latest_block_time: string;
-  /** The RFC 3339 formatted time when Nexus processed the latest block. Compare with current time for approximate indexing progress with the Oasis Network. */
-  latest_update: string;
+  /** The number of milliseconds since Nexus processed the latest block. */
+  latest_update_age_ms: number;
 }
 
 export interface List {
