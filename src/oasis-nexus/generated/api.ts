@@ -760,6 +760,8 @@ In practice, Nexus currently expects only the following methods:
   - "accounts.Transfer"
   - "consensus.Deposit"
   - "consensus.Withdraw"
+  - "consensus.Delegate"
+  - "consensus.Undelegate"
   - "evm.Create"
   - "evm.Call"
 May be null if the transaction was malformed or encrypted.
@@ -779,7 +781,9 @@ Note: Other transactions with method "evm.Call", and possibly "evm.Create", may 
 if applicable. The meaning varies based on the transaction method. Some notable examples:
   - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
   - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Withdraw"`, this is a consensus (!) account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
   - For `method = "evm.Create"`, this is the address of the newly created smart contract.
   - For `method = "evm.Call"`, this is the address of the called smart contract
  */
@@ -907,6 +911,9 @@ export const RuntimeEventType = {
   accountsmint: 'accounts.mint',
   consensus_accountsdeposit: 'consensus_accounts.deposit',
   consensus_accountswithdraw: 'consensus_accounts.withdraw',
+  consensus_accountsdelegate: 'consensus_accounts.delegate',
+  consensus_accountsundelegate_start: 'consensus_accounts.undelegate_start',
+  consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
 } as const;
