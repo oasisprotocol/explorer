@@ -7,11 +7,13 @@ import { paraTimesConfig } from '../../../config'
 
 export const useIsApiReachable = (
   network: Network,
-): { reachable: true } | { reachable: false; reason: 'userOffline' | 'apiOffline' } => {
+):
+  | { reachable: true; latestNodeBlock: number | undefined }
+  | { reachable: false; reason: 'userOffline' | 'apiOffline'; latestNodeBlock?: undefined } => {
   const query = useGetStatus(network)
   if (query.isPaused) return { reachable: false, reason: 'userOffline' }
   if (query.isFetched && !query.isSuccess) return { reachable: false, reason: 'apiOffline' }
-  return { reachable: true }
+  return { reachable: true, latestNodeBlock: query.data?.data.latest_node_block }
 }
 
 export type FreshnessInfo = {
@@ -21,7 +23,7 @@ export type FreshnessInfo = {
 }
 
 export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
-  const isApiReachable = useIsApiReachable(scope.network).reachable
+  const { reachable: isApiReachable, latestNodeBlock } = useIsApiReachable(scope.network)
   if (scope.layer === Layer.consensus) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
@@ -62,7 +64,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   const timeSinceLastUpdate = query.dataUpdatedAt - new Date(data.latest_block_time).getTime()
   const { outOfDateThreshold } = paraTimesConfig[scope.layer]
   return {
-    outOfDate: timeSinceLastUpdate > outOfDateThreshold,
+    outOfDate: data.latest_block !== latestNodeBlock || timeSinceLastUpdate > outOfDateThreshold,
     lastUpdate: lastUpdate,
   }
 }
