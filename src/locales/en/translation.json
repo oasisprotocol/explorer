@@ -290,6 +290,9 @@
     "accountstransfer": "Transfer",
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
+    "consensusDelegate": "Delegate to consensus",
+    "consensusUndelegateStart": "Start to undelegate from consensus",
+    "consensusUndelegateDone": "Undelegate from consensus finished",
     "evmLog": "EVM log message",
     "gasUsed": "Gas used",
     "fields": {
