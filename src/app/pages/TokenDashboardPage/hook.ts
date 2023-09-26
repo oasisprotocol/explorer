@@ -1,6 +1,7 @@
 import {
   Layer,
   RuntimeEvent,
+  RuntimeEventList,
   useGetRuntimeEvents,
   useGetRuntimeEvmTokensAddress,
   useGetRuntimeEvmTokensAddressHolders,
@@ -9,7 +10,7 @@ import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
+import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -30,16 +31,11 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
   }
 }
 
-export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TOKEN_TRANSFERS: string[] = ['Transfer']
-
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
-  const pagination = useClientSizePagination({
+  const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
     paramName: 'page',
-    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    serverPageSize: 1000,
-    filter: (event: RuntimeEvent) =>
-      !!event.evm_log_name && WANTED_EVM_LOG_EVENTS_FOR_LISTING_TOKEN_TRANSFERS.includes(event.evm_log_name),
+    pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
   })
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -53,11 +49,8 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
       ...pagination.paramsForQuery,
       rel: address,
       type: 'evm.log',
-      // TODO: maybe restrict this more later.
-      // If the token is a payable account (usually they're not, AFAIK),
-      // this will also return events where tokens were transferred to or from the token account itself.
-      // I think let's ignore this possibility for now.
-      // We can limit these unwanted (?) results further by adding &type=evm.log
+      // The following is the hex-encoded signature for Transfer(address,address,uint256)
+      evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
     },
   )
 
