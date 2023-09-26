@@ -27,7 +27,7 @@ function findListIn<T extends List, Item>(data: T): Item[] {
   }
 }
 
-export function useClientSizePagination<Item, QueryResult extends List>({
+export function useClientSidePagination<Item, QueryResult extends List>({
   paramName,
   clientPageSize,
   serverPageSize,

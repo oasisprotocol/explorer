@@ -9,7 +9,7 @@ import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { useClientSizePagination } from '../../components/Table/useClientSidePagination'
+import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -34,7 +34,7 @@ export const WANTED_EVM_LOG_EVENTS_FOR_LISTING_TOKEN_TRANSFERS: string[] = ['Tra
 
 export const useTokenTransfers = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
-  const pagination = useClientSizePagination({
+  const pagination = useClientSidePagination({
     paramName: 'page',
     clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     serverPageSize: 1000,
