@@ -267,6 +267,7 @@
   "transaction": {
     "header": "Transaction",
     "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
+    "rawData": "Raw Data",
     "tooltips": {
       "txTooltipEth": "Ethereum hash for the transaction",
       "senderTooltipEth": "Ethereum address for the sender",
