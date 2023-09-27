@@ -64,6 +64,8 @@ jobs:
           projectName: oasis-explorer
           # Use output directory of build command.
           directory: build
+          # Action has issues with aliased. Providing branch param mitigates it.
+          # branch: ${{ github.head_ref }}
       # On a subsequent run the original comment will be updated.
       - name: Update PR comment
         uses: mshick/add-pr-comment@v2
@@ -84,6 +86,10 @@ jobs:
                 <td><strong>Preview URL:</strong></td>
                 <td><a href="${{ steps.cloudflare.outputs.url }}">${{ steps.cloudflare.outputs.url }}</a></td>
                </tr>
+              <tr>
+                <td><strong>Alias:</strong></td>
+                <td><a href="${{ steps.cloudflare.outputs.alias }}">${{ steps.cloudflare.outputs.alias }}</a></td>
+              </tr>
             </table>
           message-failure: |
             ## Deployed to <a href="https://pages.dev">Cloudflare Pages</a>
