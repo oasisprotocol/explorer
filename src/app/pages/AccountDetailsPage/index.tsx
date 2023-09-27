@@ -79,6 +79,7 @@ export const AccountDetailsPage: FC = () => {
           { label: t('contract.code'), to: codeLink, visible: showCode },
         ]}
         context={context}
+        matchPartialPath={true}
       />
     </PageLayout>
   )

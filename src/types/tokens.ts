@@ -3,6 +3,10 @@ import { TFunction } from 'i18next'
 import { exhaustedTypeWarning } from './errors'
 import { COLORS } from '../styles/theme/colors'
 
+const nftTokenTypes: EvmTokenType[] = [EvmTokenType.ERC721]
+
+export const isTokenTypeNFT = (tokenType: EvmTokenType): boolean => nftTokenTypes.includes(tokenType)
+
 export const getTokenTypeDescription = (t: TFunction, tokenType: EvmTokenType | undefined): string => {
   switch (tokenType ?? 'missing') {
     case 'missing':
@@ -63,3 +67,9 @@ export const getTokenTypePluralName = (t: TFunction, tokenType: EvmTokenType): s
 
 export const getNFTInstanceLabel = (instance: EvmNft) =>
   instance.name ? `"${instance.name}" (#${instance.id})` : `ID: #${instance.id}`
+
+export const getTokenTypeCollectionTitle = (t: TFunction, tokenType: EvmTokenType): string =>
+  t('tokens.collectionTitle', {
+    spec: getTokenTypeStrictName(t, tokenType),
+    description: t('common.tokens'),
+  })

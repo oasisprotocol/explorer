@@ -68,6 +68,7 @@
     "nfts": "NFTs",
     "not_defined": "Not defined",
     "oasis": "Oasis",
+    "owned": "Owned",
     "paratime": "Paratime",
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
@@ -214,6 +215,7 @@
   },
   "tokens": {
     "typeDescription": "{{description}} ({{spec}})",
+    "collectionTitle": "{{spec}} {{description}}",
     "emptyTokenHolderList": "There are no token holders on record for this token.",
     "holders": "Token Holders",
     "instanceId": "Instance ID",

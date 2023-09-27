@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -19,10 +20,12 @@ import {
   getTokenTypePluralDescription,
   getTokenTypePluralName,
   getTokenTypeStrictName,
+  isTokenTypeNFT,
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { AccountDetailsContext } from './index'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import Link from '@mui/material/Link'
 
 type AccountTokensCardProps = AccountDetailsContext & {
   type: EvmTokenType
@@ -43,11 +46,20 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenListLabel = getTokenTypePluralName(t, type)
+  const isNft = isTokenTypeNFT(type)
   const tableColumns: TableColProps[] = [
-    { key: 'name', content: t('common.name') },
+    { key: 'name', content: t(isNft ? 'common.collection' : 'common.name') },
     { key: 'contract', content: t('common.smartContract') },
-    { key: 'balance', align: TableCellAlign.Right, content: t('common.balance') },
+    { key: 'balance', align: TableCellAlign.Right, content: t(isNft ? 'common.owned' : 'common.balance') },
     { key: 'ticker', align: TableCellAlign.Right, content: t('common.ticker') },
+    ...(isNft
+      ? [
+          {
+            key: 'link',
+            content: '',
+          },
+        ]
+      : []),
   ]
   const { layer } = scope
   if (layer === Layer.consensus) {
@@ -85,6 +97,17 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         align: TableCellAlign.Right,
         content: item.token_symbol || t('common.missing'),
         key: 'ticker',
+      },
+      {
+        align: TableCellAlign.Right,
+        key: 'link',
+        content: (
+          <Link component={RouterLink} to={item.token_contract_addr_eth}>
+            {t('common.viewAll')}
+            &nbsp; &nbsp;
+            {' >'}
+          </Link>
+        ),
       },
     ],
     highlight: item.token_contract_addr_eth === locationHash || item.token_contract_addr === locationHash,

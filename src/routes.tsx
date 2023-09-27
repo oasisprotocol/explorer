@@ -26,6 +26,7 @@ import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/Accoun
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
 import { NFTInstanceDashboardPage } from './app/pages/NFTInstanceDashboardPage'
+import { AccountNFTCollectionCard } from './app/pages/AccountDetailsPage/AccountNFTCollectionCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -97,6 +98,10 @@ export const routes: RouteObject[] = [
               {
                 path: 'tokens/erc-721',
                 Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
+              },
+              {
+                path: 'tokens/erc-721/:contractAddress',
+                Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} type="ERC721" />,
               },
               {
                 path: 'code',
