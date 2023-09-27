@@ -37,6 +37,7 @@ export const TokenDashboardPage: FC = () => {
   const tokenTransfersLink = useHref(``)
   const tokenHoldersLink = useHref(`holders#${tokenHoldersContainerId}`)
   const codeLink = useHref(`code#${contractCodeContainerId}`)
+  const inventoryLink = useHref(`inventory#${contractCodeContainerId}`)
 
   const context: TokenDashboardContext = {
     scope,
@@ -53,6 +54,7 @@ export const TokenDashboardPage: FC = () => {
         tabs={[
           { label: t('tokens.transfers'), to: tokenTransfersLink },
           { label: t('tokens.holders'), to: tokenHoldersLink },
+          { label: t('common.inventory'), to: inventoryLink },
           { label: t('contract.code'), to: codeLink },
         ]}
         context={context}

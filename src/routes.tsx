@@ -26,6 +26,7 @@ import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/Accoun
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
 import { NFTInstanceDashboardPage } from './app/pages/NFTInstanceDashboardPage'
+import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -133,6 +134,10 @@ export const routes: RouteObject[] = [
               {
                 path: 'holders',
                 Component: () => <TokenHoldersCard {...useTokenDashboardProps()} />,
+              },
+              {
+                path: 'inventory',
+                Component: () => <TokenInventoryCard {...useTokenDashboardProps()} />,
               },
               {
                 path: 'code',

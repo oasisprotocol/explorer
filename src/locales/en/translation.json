@@ -60,6 +60,7 @@
     "hash": "Hash",
     "height": "Height",
     "hide": "Hide",
+    "inventory": "Inventory",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "missing": "n/a",
@@ -216,6 +217,7 @@
   "tokens": {
     "typeDescription": "{{description}} ({{spec}})",
     "emptyTokenHolderList": "There are no token holders on record for this token.",
+    "emptyInventory": "There are no instances in this collection yet.",
     "holders": "Token Holders",
     "instanceId": "Instance ID",
     "holdersValue": "{{ value, number }}",
