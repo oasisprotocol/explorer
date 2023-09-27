@@ -36,6 +36,7 @@ import { TransactionEncrypted } from '../../components/TransactionEncryptionStat
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { base64ToHex } from '../../utils/helpers'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -334,6 +335,15 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>
+
+          {transaction.body?.data !== undefined && !transaction.encryption_envelope && (
+            <>
+              <dt>{t('transaction.rawData')}</dt>
+              <dd>
+                <LongDataDisplay data={base64ToHex(transaction.body.data)} threshold={300} />
+              </dd>
+            </>
+          )}
 
           {transaction.encryption_envelope && (
             <>
