@@ -1,5 +1,5 @@
 {
-  "appName": "Oasis Explorer",
+  "appName": "Oasis Explorer test 1",
   "account": {
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "emptyTokenList": "This account holds no {{spec}} {{description}}.",
