@@ -3,22 +3,37 @@ import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
+type TabConfig = {
+  label: string
+  to: string
+  visible?: boolean
+}
+
 type RouterTabsProps<Context> = {
-  tabs: {
-    label: string
-    to: string
-    visible?: boolean
-  }[]
+  tabs: TabConfig[]
   context?: Context
+  matchPartialPath?: boolean
 }
 
 function getPathname(tab: { to: string }) {
   return new URL(tab.to, 'https://a.b').pathname
 }
 
-export function RouterTabs<Context>({ tabs, context }: RouterTabsProps<Context>) {
+export function RouterTabs<Context>({ tabs, context, matchPartialPath }: RouterTabsProps<Context>) {
   const { pathname } = useLocation()
-  const currentTab = tabs.find(tab => getPathname(tab) === pathname)
+
+  let currentTab = tabs.find(tab => getPathname(tab) === pathname)
+
+  if (matchPartialPath) {
+    const tabPaths = tabs.map(getPathname)
+    const shortestPath = tabPaths.sort((p1, p2) => p1.length - p2.length)[0]
+    const shortestPathIsRoot = tabPaths.every(path => path.startsWith(shortestPath))
+    const rootPath = shortestPathIsRoot ? shortestPath : undefined
+    currentTab = tabs.find(tab => {
+      const tabPath = getPathname(tab)
+      return tabPath === pathname || (tabPath !== rootPath && pathname.startsWith(tabPath))
+    })
+  }
 
   return (
     <>
