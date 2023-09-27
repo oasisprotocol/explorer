@@ -44,7 +44,9 @@ import GetRuntimeEventsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeEvmTokensMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeEvmTokensAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeEvmTokensAddressHoldersMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeEvmNftsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeAccountsAddressMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeAccountsAddressEvmNftsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
@@ -93,6 +95,32 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 
  */
 window_step_seconds?: number;
+};
+
+export type GetRuntimeAccountsAddressEvmNftsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeEvmNftsAddressParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetRuntimeEvmTokensAddressHoldersParams = {
@@ -600,6 +628,66 @@ export interface AccountStats {
   num_txns: number;
 }
 
+export interface EvmNft {
+  /** The Oasis address of this NFT's contract. */
+  contract_addr: string;
+  /** The Ethereum address of this token's contract. */
+  eth_contract_addr?: string;
+  token_name?: string;
+  token_symbol?: string;
+  token_type?: EvmTokenType;
+  token_total_supply?: string;
+  id: string;
+  /** The Oasis address of this NFT instance's owner. */
+  owner?: string;
+  /** The Ethereum address of this NFT instance's owner. */
+  owner_eth?: string;
+  metadata_uri?: string;
+  metadata_accessed?: string;
+  /** Identifies the asset which this NFT represents */
+  name?: string;
+  /** Describes the asset which this NFT represents */
+  description?: string;
+  /** A URI pointing to a resource with mime type image/* representing
+the asset which this NFT represents. (Additional
+non-descriptive text from ERC-721 omitted.)
+ */
+  image?: string;
+}
+
+/**
+ * A list of NFT instances.
+ */
+export type EvmNftListAllOf = {
+  /** A list of L2 EVM NFT (ERC-721, ...) instances. */
+  evm_nfts: EvmNft[];
+};
+
+export type EvmNftList = List & EvmNftListAllOf;
+
+/**
+ * A list of tokens in a runtime.
+ */
+export type EvmTokenListAllOf = {
+  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
+  evm_tokens: EvmToken[];
+};
+
+export type EvmTokenList = List & EvmTokenListAllOf;
+
+/**
+ * The type of a EVM token.
+
+ */
+export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const EvmTokenType = {
+  ERC20: 'ERC20',
+  ERC721: 'ERC721',
+} as const;
+
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
   contract_addr: string;
@@ -635,29 +723,6 @@ the `/{runtime}/accounts/{address}` endpoint.
   is_verified: boolean;
 }
 
-/**
- * A list of tokens in a runtime.
- */
-export type EvmTokenListAllOf = {
-  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
-  evm_tokens: EvmToken[];
-};
-
-export type EvmTokenList = List & EvmTokenListAllOf;
-
-/**
- * The type of a EVM token.
-
- */
-export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const EvmTokenType = {
-  ERC20: 'ERC20',
-  ERC721: 'ERC721',
-} as const;
-
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
   active_nodes: number;
@@ -667,27 +732,6 @@ export interface RuntimeStatus {
   latest_block_time: string;
   /** The number of milliseconds since Nexus processed the latest block. */
   latest_update_age_ms: number;
-}
-
-export interface RuntimeAccount {
-  /** The staking address for this account. */
-  address: string;
-  address_preimage?: AddressPreimage;
-  /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
-produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
-managed by smart contracts deployed in this runtime. For example, in EVM-compatible runtimes,
-this does not include ERC-20 tokens
- */
-  balances: RuntimeSdkBalance[];
-  /** Data on the EVM smart contract associated with this account address. Only present for accounts
-that represent a smart contract on EVM.
- */
-  evm_contract?: RuntimeEvmContract;
-  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
-NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
- */
-  evm_balances: RuntimeEvmBalance[];
-  stats: AccountStats;
 }
 
 export interface RuntimeTransactionEncryptionEnvelope {
@@ -867,6 +911,27 @@ process is stalled).
 contracts that have been verified successfully by Sourcify.
  */
   verification?: RuntimeEvmContractVerification;
+}
+
+export interface RuntimeAccount {
+  /** The staking address for this account. */
+  address: string;
+  address_preimage?: AddressPreimage;
+  /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
+produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
+managed by smart contracts deployed in this runtime. For example, in EVM-compatible runtimes,
+this does not include ERC-20 tokens
+ */
+  balances: RuntimeSdkBalance[];
+  /** Data on the EVM smart contract associated with this account address. Only present for accounts
+that represent a smart contract on EVM.
+ */
+  evm_contract?: RuntimeEvmContract;
+  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
+NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
+ */
+  evm_balances: RuntimeEvmBalance[];
+  stats: AccountStats;
 }
 
 /**
@@ -3429,6 +3494,76 @@ export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<
 
 
 /**
+ * @summary Returns the list of non-fungible token (NFT) instances of an EVM (ERC-721, ...) token.
+This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
+
+ */
+export const GetRuntimeEvmNftsAddress = (
+    network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmNftsAddressParams,
+ options?: SecondParameter<typeof GetRuntimeEvmNftsAddressMutator>,signal?: AbortSignal
+) => {
+      return GetRuntimeEvmNftsAddressMutator<EvmNftList>(
+      {url: `/${network}/${runtime}/evm_nfts/${address}`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeEvmNftsAddressQueryKey = (network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmNftsAddressParams,) => [`/${network}/${runtime}/evm_nfts/${address}`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeEvmNftsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmNftsAddressParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmNftsAddressMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeEvmNftsAddressQueryKey(network,runtime,address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>> = ({ signal }) => GetRuntimeEvmNftsAddress(network,runtime,address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions}}
+
+export type GetRuntimeEvmNftsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>>
+export type GetRuntimeEvmNftsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns the list of non-fungible token (NFT) instances of an EVM (ERC-721, ...) token.
+This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
+
+ */
+export const useGetRuntimeEvmNftsAddress = <TData = Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmNftsAddressParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmNftsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmNftsAddressMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeEvmNftsAddressQueryOptions(network,runtime,address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
  * @summary Returns a runtime account.
  */
 export const GetRuntimeAccountsAddress = (
@@ -3480,6 +3615,74 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof G
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeAccountsAddressQueryOptions(network,runtime,address,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns the list of non-fungible token (NFT) instances owned by an account.
+
+ */
+export const GetRuntimeAccountsAddressEvmNfts = (
+    network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeAccountsAddressEvmNftsParams,
+ options?: SecondParameter<typeof GetRuntimeAccountsAddressEvmNftsMutator>,signal?: AbortSignal
+) => {
+      return GetRuntimeAccountsAddressEvmNftsMutator<EvmNftList>(
+      {url: `/${network}/${runtime}/accounts/${address}/evm_nfts`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeAccountsAddressEvmNftsQueryKey = (network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeAccountsAddressEvmNftsParams,) => [`/${network}/${runtime}/accounts/${address}/evm_nfts`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeAccountsAddressEvmNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeAccountsAddressEvmNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressEvmNftsMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeAccountsAddressEvmNftsQueryKey(network,runtime,address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>> = ({ signal }) => GetRuntimeAccountsAddressEvmNfts(network,runtime,address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions}}
+
+export type GetRuntimeAccountsAddressEvmNftsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>>
+export type GetRuntimeAccountsAddressEvmNftsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns the list of non-fungible token (NFT) instances owned by an account.
+
+ */
+export const useGetRuntimeAccountsAddressEvmNfts = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet',
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeAccountsAddressEvmNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressEvmNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressEvmNftsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeAccountsAddressEvmNftsQueryOptions(network,runtime,address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
