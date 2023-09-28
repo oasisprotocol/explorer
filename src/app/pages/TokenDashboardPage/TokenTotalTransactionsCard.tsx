@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { useAccount } from '../AccountDetailsPage/hook'
 import Skeleton from '@mui/material/Skeleton'
 import { useTokenInfo } from './hook'
 import { SearchScope } from '../../../types/searchScope'
@@ -14,15 +13,10 @@ export const TokenTotalTransactionsCard: FC<{ scope: SearchScope; address: strin
   address,
 }) => {
   const { t } = useTranslation()
-
-  const { isLoading: isAccountLoading, isFetched, account } = useAccount(scope, address)
-  const { isLoading: isTokenLoading } = useTokenInfo(scope, address)
-  const value = account?.stats.num_txns
-
-  const isLoading = isAccountLoading || isTokenLoading
+  const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotCard title={t('totalTransactions.header')} withConstantHeight>
+    <SnapshotCard title={t('tokens.transfers')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isLoading ? (
           <Skeleton variant="text" sx={{ width: '50%' }} />
@@ -36,7 +30,7 @@ export const TokenTotalTransactionsCard: FC<{ scope: SearchScope; address: strin
                 color: COLORS.brandDark,
               }}
             >
-              {t('totalTransactions.value', { value })}
+              {t('common.valuePair', { value: token?.num_transfers })}
             </Typography>
           )
         )}

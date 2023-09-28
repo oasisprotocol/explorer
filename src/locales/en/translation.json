@@ -235,8 +235,7 @@
   },
   "totalTransactions": {
     "header": "Total Transactions",
-    "tooltip": "{{value, number}} total transactions",
-    "value": "{{value, number}}"
+    "tooltip": "{{value, number}} total transactions"
   },
   "transactions": {
     "encryption": {
