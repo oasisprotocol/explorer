@@ -8,6 +8,7 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useTokenInventory } from './hook'
 import { TokenDashboardContext } from './index'
+import { NFTInstanceThumbnail } from '../../components/NFTInstance/thumbnail'
 
 export const tokenInventoryContainerId = 'inventory'
 
@@ -33,12 +34,24 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
 
   const { isFetched, totalCount, inventory } = useTokenInventory(scope, address)
 
-  console.log('Inventory is', inventory)
+  console.log(
+    'Inventory is',
+    // (inventory || []).map(instance => `${instance.id}-${instance.name}`),
+    (inventory || []).map(instance => instance.name),
+  )
 
   return (
     <>
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
-      <span>Under construction</span>
+      <div>
+        {(inventory || []).map(instance => (
+          <NFTInstanceThumbnail
+            key={`${instance.contract_addr}.${instance.id}`}
+            scope={scope}
+            instance={instance}
+          />
+        ))}
+      </div>
     </>
   )
 }
