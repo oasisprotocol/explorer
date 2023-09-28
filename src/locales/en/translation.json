@@ -37,6 +37,7 @@
     "address": "Address",
     "age": "Age",
     "balance": "Balance",
+    "base64": "Base64",
     "block": "Block",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
@@ -61,6 +62,7 @@
     "gasLimit": "Gas Limit",
     "hash": "Hash",
     "height": "Height",
+    "hex": "Hex",
     "hide": "Hide",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
@@ -509,5 +511,9 @@
     "title": "Validator",
     "uptime": "Uptime",
     "voting": "Voting %"
+  },
+  "dataFormatSwitch": {
+    "label": "Data format:",
+    "explanation": "Which data format to use when displaying raw data?"
   }
 }
