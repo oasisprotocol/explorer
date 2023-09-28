@@ -1,4 +1,5 @@
 import {
+  EvmNft,
   Layer,
   RuntimeEvent,
   RuntimeEventList,
@@ -12,6 +13,9 @@ import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
+// import mockData from './fake-data/nfts-phase1.json'
+// import mockData from './fake-data/nfts-phase2.json'
+import mockData from './fake-data/nfts-phase3.json'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -118,6 +122,19 @@ export const useTokenInventory = (scope: SearchScope, address: string) => {
   })
 
   const { isFetched, isLoading, data } = query
+
+  if (address === mockData.evm_nfts[0].contract_addr) {
+    // We can use our fake data
+
+    return {
+      isLoading: false,
+      isFetched: true,
+      inventory: mockData.evm_nfts as EvmNft[],
+      pagination,
+      totalCount: mockData.total_count,
+      isTotalCountClipped: mockData.is_total_count_clipped,
+    }
+  }
 
   const inventory = data?.data.evm_nfts
 
