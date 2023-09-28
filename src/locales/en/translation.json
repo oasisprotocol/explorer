@@ -255,6 +255,8 @@
       },
       "consensus": {
         "deposit": "Consensus Deposit",
+        "delegate": "Consensus Delegate",
+        "undelegate": "Consensus Undelegate",
         "withdraw": "Consensus Withdraw"
       },
       "evm": {
