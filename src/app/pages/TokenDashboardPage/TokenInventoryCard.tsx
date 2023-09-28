@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
-import { useTokenHolders } from './hook'
+import { useTokenInventory } from './hook'
 import { TokenDashboardContext } from './index'
 
 export const tokenInventoryContainerId = 'inventory'
@@ -31,7 +31,9 @@ export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }
 const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const { isFetched, totalCount } = useTokenHolders(scope, address)
+  const { isFetched, totalCount, inventory } = useTokenInventory(scope, address)
+
+  console.log('Inventory is', inventory)
 
   return (
     <>

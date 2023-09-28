@@ -3,6 +3,7 @@ import {
   RuntimeEvent,
   RuntimeEventList,
   useGetRuntimeEvents,
+  useGetRuntimeEvmNftsAddress,
   useGetRuntimeEvmTokensAddress,
   useGetRuntimeEvmTokensAddressHolders,
 } from '../../../oasis-nexus/api'
@@ -97,6 +98,40 @@ export const useTokenHolders = (scope: SearchScope, address: string) => {
     isLoading,
     isFetched,
     holders,
+    pagination,
+    totalCount,
+    isTotalCountClipped,
+  }
+}
+
+export const useTokenInventory = (scope: SearchScope, address: string) => {
+  const { network, layer } = scope
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // There are no tokens on the consensus layer.
+  }
+  const query = useGetRuntimeEvmNftsAddress(network, layer, address, {
+    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    offset: offset,
+  })
+
+  const { isFetched, isLoading, data } = query
+
+  const inventory = data?.data.evm_nfts
+
+  if (isFetched && pagination.selectedPage > 1 && !inventory?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  const totalCount = data?.data.total_count
+  const isTotalCountClipped = data?.data.is_total_count_clipped
+
+  return {
+    isLoading,
+    isFetched,
+    inventory,
     pagination,
     totalCount,
     isTotalCountClipped,
