@@ -336,7 +336,7 @@ export const TransactionDetailView: FC<{
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>
 
-          {transaction.body?.data !== undefined && !transaction.encryption_envelope && (
+          {!!transaction.body?.data && !transaction.encryption_envelope && (
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
