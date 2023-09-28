@@ -9,6 +9,8 @@ import { ContractCallIcon } from './../CustomIcons/ContractCall'
 import { DepositIcon } from './../CustomIcons/Deposit'
 import { WithdrawIcon } from './../CustomIcons/Withdraw'
 import { TransferIcon } from './../CustomIcons/Transfer'
+import { DelegateIcon } from '../CustomIcons/Delegate'
+import { UndelegateIcon } from '../CustomIcons/Undelegate'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -25,6 +27,10 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
       return t('transactions.method.consensus.withdraw')
     case 'accounts.Transfer':
       return t('transactions.method.accounts.transfer')
+    case 'consensus.Delegate':
+      return t('transactions.method.consensus.delegate')
+    case 'consensus.Undelegate':
+      return t('transactions.method.consensus.undelegate')
     default:
       return t('transactions.method.unknown', { method })
   }
@@ -44,6 +50,10 @@ const getRuntimeTransactionIcon = (method: string | undefined) => {
       return <DepositIcon sx={iconStyles} />
     case 'consensus.Withdraw':
       return <WithdrawIcon sx={iconStyles} />
+    case 'consensus.Delegate':
+      return <DelegateIcon sx={iconStyles} />
+    case 'consensus.Undelegate':
+      return <UndelegateIcon sx={iconStyles} />
     case 'accounts.Transfer':
       return <TransferIcon sx={iconStyles} />
     default:
@@ -62,6 +72,8 @@ type RuntimeTransactionLabelProps = {
    *   - "accounts.Transfer"
    *   - "consensus.Deposit"
    *   - "consensus.Withdraw"
+   *   - "consensus.Delegate"
+   *   - "consensus.Undelegate"
    *   - "evm.Create"
    *   - "evm.Call"
    */
