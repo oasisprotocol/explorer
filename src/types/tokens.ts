@@ -1,4 +1,4 @@
-import { EvmTokenType } from '../oasis-nexus/api'
+import { EvmNft, EvmTokenType } from '../oasis-nexus/api'
 import { TFunction } from 'i18next'
 import { exhaustedTypeWarning } from './errors'
 import { COLORS } from '../styles/theme/colors'
@@ -60,3 +60,6 @@ export const getTokenTypePluralName = (t: TFunction, tokenType: EvmTokenType): s
     spec: getTokenTypeStrictName(t, tokenType),
     description: getTokenTypePluralDescription(t, tokenType),
   })
+
+export const getNFTInstanceLabel = (instance: EvmNft) =>
+  instance.name ? `"${instance.name}" (#${instance.id})` : `ID: #${instance.id}`
