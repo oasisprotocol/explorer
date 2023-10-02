@@ -71,7 +71,7 @@ export const TokenList = (props: TokensProps) => {
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
-    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Right },
+    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -136,7 +136,7 @@ export const TokenList = (props: TokensProps) => {
         {
           content: token.symbol,
           key: 'ticker',
-          align: TableCellAlign.Right,
+          align: TableCellAlign.Left,
         },
       ],
     }
