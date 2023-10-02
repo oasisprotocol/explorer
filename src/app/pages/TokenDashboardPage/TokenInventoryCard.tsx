@@ -9,6 +9,7 @@ import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { useTokenInventory } from './hook'
 import { TokenDashboardContext } from './index'
 import { NFTInstanceThumbnail } from '../../components/NFTInstance/thumbnail'
+import Box from '@mui/material/Box'
 
 export const tokenInventoryContainerId = 'inventory'
 
@@ -41,9 +42,15 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
   )
 
   return (
-    <>
+    <LinkableDiv id={tokenInventoryContainerId}>
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
-      <div>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 5,
+        }}
+      >
         {(inventory || []).map(instance => (
           <NFTInstanceThumbnail
             key={`${instance.contract_addr}.${instance.id}`}
@@ -51,7 +58,7 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
             instance={instance}
           />
         ))}
-      </div>
-    </>
+      </Box>
+    </LinkableDiv>
   )
 }

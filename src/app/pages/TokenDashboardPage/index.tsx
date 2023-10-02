@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { contractCodeContainerId } from '../AccountDetailsPage/ContractCodeCard'
 import { tokenHoldersContainerId } from './TokenHoldersCard'
 import { SearchScope } from '../../../types/searchScope'
+import { tokenInventoryContainerId } from './TokenInventoryCard'
 
 export type TokenDashboardContext = {
   scope: SearchScope
@@ -37,7 +38,7 @@ export const TokenDashboardPage: FC = () => {
   const tokenTransfersLink = useHref(``)
   const tokenHoldersLink = useHref(`holders#${tokenHoldersContainerId}`)
   const codeLink = useHref(`code#${contractCodeContainerId}`)
-  const inventoryLink = useHref(`inventory#${contractCodeContainerId}`)
+  const inventoryLink = useHref(`inventory#${tokenInventoryContainerId}`)
 
   const context: TokenDashboardContext = {
     scope,
