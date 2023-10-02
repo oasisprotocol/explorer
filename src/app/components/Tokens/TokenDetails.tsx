@@ -12,6 +12,7 @@ import { VerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -64,7 +65,10 @@ export const TokenDetails: FC<{
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>
         {token.total_supply
-          ? t('tokens.totalSupplyValue', { value: token.total_supply, ticker: token.symbol })
+          ? t('tokens.totalSupplyValue', {
+              ...getPreciseNumberFormat(token.total_supply),
+              ticker: token.symbol,
+            })
           : t('common.missing')}
       </dd>
     </StyledDescriptionList>
