@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { getNameForTicker } from '../../../types/ticker'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../Tokens/TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
@@ -37,7 +36,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
   const number = new BigNumber(value)
   const truncatedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_DOWN)
 
-  const tickerName = ticker ? getNameForTicker(t, ticker) : ''
+  const tickerName = ticker ?? ''
 
   const tickerLink =
     tickerAsLink && !!scope && !!tokenAddress ? (

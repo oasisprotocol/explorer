@@ -1,5 +1,4 @@
 import { Network } from './network'
-import { TFunction } from 'i18next'
 
 export type NativeTicker = (typeof Ticker)[keyof typeof Ticker]
 
@@ -14,8 +13,3 @@ const networkTicker: Record<Network, NativeTicker> = {
 }
 
 export const getTickerForNetwork = (network: Network): NativeTicker => networkTicker[network]
-
-export const getNameForTicker = (t: TFunction, ticker: string): string => {
-  // TODO: how do we translate ticker names?
-  return ticker
-}
