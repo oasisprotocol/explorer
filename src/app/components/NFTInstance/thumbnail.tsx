@@ -23,8 +23,10 @@ export const NFTInstanceThumbnail: FC<{ scope: SearchScope; instance: EvmNft }> 
       width={210}
       style={{
         width: 212,
-        height: 275,
+        // height: 275,
+        height: 350,
         borderRadius: 8,
+        padding: 10,
         border: '1px solid var(--brand-extra-dark, #000062)',
       }}
     >
