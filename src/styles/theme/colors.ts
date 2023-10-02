@@ -21,6 +21,7 @@ export const COLORS = {
   eucalyptus: '#4cd4a9',
   grayDark: '#31435a',
   grayExtraDark: '#06152b',
+  grayExtraLight: '#fff',
   grayLight: '#f4f5f7',
   grayMedium: '#565b61',
   grayMedium2: '#d5d6d7',
