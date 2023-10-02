@@ -34,7 +34,7 @@ export const InstanceTitleCard: FC<{ scope: SearchScope; contractAddress: string
       <CardContent>
         {isLoading ? (
           <TitleSkeleton />
-        ) : (
+        ) : !instance ? null : (
           <Box
             sx={{
               display: 'flex',

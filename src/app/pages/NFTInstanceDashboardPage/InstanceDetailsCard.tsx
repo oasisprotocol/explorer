@@ -24,10 +24,16 @@ export const InstanceDetailsCard: FC<{ scope: SearchScope; contractAddress: stri
   const { isMobile } = useScreenSize()
 
   const { token, isLoading: tokenLoading } = useTokenInfo(scope, contractAddress)
-  const { instance, isLoading: instanceIsLoading } = useInstanceInfo(scope, contractAddress, instanceId)
+  const {
+    instance,
+    isLoading: instanceIsLoading,
+    transfers,
+  } = useInstanceInfo(scope, contractAddress, instanceId)
 
   const { account, isLoading: accountIsLoading } = useAccount(scope, contractAddress)
   const isLoading = instanceIsLoading || accountIsLoading || tokenLoading
+
+  const owner = instance?.owner_eth ?? instance?.owner
 
   return (
     <Card>
@@ -55,19 +61,22 @@ export const InstanceDetailsCard: FC<{ scope: SearchScope; contractAddress: stri
               <TokenTypeTag tokenType={instance.token_type} />
             </dd>
 
-            <dt>{t('tokens.owner')}</dt>
-            <dd>
-              {/*TODO*/}
-              Unknown
-            </dd>
+            {owner && (
+              <>
+                <dt>{t('tokens.owner')}</dt>
+                <dd>
+                  <AccountLink scope={scope} address={owner} />
+                  <CopyToClipboard value={owner} />
+                </dd>
+              </>
+            )}
 
-            <dt>{t('common.transfers')}</dt>
-            <dd>
-              42
-              {/*TODO*/}
-            </dd>
-
-            {/*Transfers*/}
+            {transfers !== undefined && (
+              <>
+                <dt>{t('common.transfers')}</dt>
+                <dd>{transfers!.toLocaleString()}</dd>
+              </>
+            )}
 
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>

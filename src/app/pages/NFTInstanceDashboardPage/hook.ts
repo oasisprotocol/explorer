@@ -1,7 +1,17 @@
 import { SearchScope } from '../../../types/searchScope'
 import type { EvmNft } from '../../../oasis-nexus/api'
 
-export const useInstanceInfo = (scope: SearchScope, contractAddress: string, instanceId: string) => {
+type InstanceInfo = {
+  isLoading: boolean
+  instance: EvmNft | undefined
+  transfers: number | undefined
+}
+
+export const useInstanceInfo = (
+  scope: SearchScope,
+  contractAddress: string,
+  instanceId: string,
+): InstanceInfo => {
   const isLoading = false
   // TODO: load real data here
   const instance: EvmNft | undefined = {
@@ -17,9 +27,12 @@ export const useInstanceInfo = (scope: SearchScope, contractAddress: string, ins
     token_symbol: 'MOOC2021',
     token_total_supply: '331',
     token_type: 'ERC721',
+    owner: 'oasis1qrels9582m4wf25guu5057wtg74jncvqay8u6947',
+    owner_eth: '0xDEF1009df2d6872C214cd9148c6883893B7c4D91',
   }
   return {
     isLoading,
     instance,
+    transfers: 0, // TODO: get data when available on API
   }
 }

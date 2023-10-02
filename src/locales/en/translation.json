@@ -68,6 +68,7 @@
     "nfts": "NFTs",
     "not_defined": "Not defined",
     "oasis": "Oasis",
+    "openInFull": "Open in full",
     "paratime": "Paratime",
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
@@ -432,5 +433,8 @@
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
+  },
+  "darkMode": {
+    "hint": "Switch between dark and light background"
   }
 }
