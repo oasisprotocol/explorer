@@ -64,7 +64,7 @@ export const TokenDetails: FC<{
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>
         {token.total_supply
-          ? t('tokens.totalSupplyValue', { value: token.total_supply })
+          ? t('tokens.totalSupplyValue', { value: token.total_supply, ticker: token.symbol })
           : t('common.missing')}
       </dd>
     </StyledDescriptionList>
