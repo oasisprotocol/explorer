@@ -71,7 +71,7 @@ export const TokenList = (props: TokensProps) => {
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
-    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Right },
+    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -129,14 +129,14 @@ export const TokenList = (props: TokensProps) => {
           align: TableCellAlign.Right,
         },
         {
-          content: <RoundedBalance compactLargeNumbers value={token.total_supply} ticker={token.symbol} />,
+          content: <RoundedBalance compactLargeNumbers value={token.total_supply} />,
           key: 'supply',
           align: TableCellAlign.Right,
         },
         {
           content: token.symbol,
           key: 'ticker',
-          align: TableCellAlign.Right,
+          align: TableCellAlign.Left,
         },
       ],
     }
