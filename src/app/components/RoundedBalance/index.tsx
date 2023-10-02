@@ -65,7 +65,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             },
           })}
           &nbsp;
-          {ticker}
+          {tickerName}
         </span>
       </Tooltip>
     )
