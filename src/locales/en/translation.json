@@ -218,7 +218,7 @@
     "holdersCount": "Holders Count",
     "holdersCount_short": "Holders",
     "totalSupply": "Total Supply",
-    "totalSupplyValue": "{{ value, number }}",
+    "totalSupplyValue": "{{ value, number }} {{ticker}}",
     "transfers": "Token Transfers",
     "transferEventType": {
       "transfer": "Transfer",
