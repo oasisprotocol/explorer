@@ -10917,10 +10917,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-quick-pinch-zoom@4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-4.9.0.tgz#13d91adb7ea2e75c5a2ff43d71d2a0e04a56cf62"
-  integrity sha512-gCPnZu5+rkYDNvewi/d7A2wgLs7izQNMuC6kjt+KLC1qqHnRU27Ed8AgcEcnWAZKdMr3ZKoKhSvjlZSVZI0fuw==
+react-quick-pinch-zoom@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-5.0.0.tgz#1608b10f717ed3f9fc0709db3ea2b2aaab939e44"
+  integrity sha512-497ngiMfWUcBuA8fakYU7rxjCEb6uSglQ6jn5GMvLUURnBN7aI/Li2nWs/otlHtksvVvxaBpz1rDW07/r/I6Rw==
   dependencies:
     tslib ">=2.0.0"
 
