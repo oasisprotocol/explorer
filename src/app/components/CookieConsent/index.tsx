@@ -76,10 +76,10 @@ const CookieConsent = () => {
           justifyContent: 'center',
           marginBottom: '21px',
           flexWrap: 'wrap',
-          paddingLeft: '0'
+          paddingLeft: '0',
         },
         '& .MuiTypography-root a': {
-          color:  COLORS.graphLabel
+          color: COLORS.graphLabel,
         },
       }}
       open={open}
