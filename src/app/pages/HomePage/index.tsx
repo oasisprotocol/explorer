@@ -17,6 +17,7 @@ import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkPar
 import { ThemeByNetwork } from '../../components/ThemeByNetwork'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
+import CookieConsent from 'app/components/CookieConsent'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -180,6 +181,7 @@ export const HomePage: FC = () => {
               />
             </Box>
           </ThemeByNetwork>
+          <CookieConsent />
         </Content>
 
         {!isTablet && (
