@@ -97,7 +97,7 @@ const CookieConsent = () => {
           At Oasis Foundation we believe in your privacy, so you can choose to browse our site without any
           tracking or by clicking “Accept”, you help us to improve our site and help us grow our ecosystem.
           View our{' '}
-          <a href="/privacy-policy" target="_blank">
+          <a href="https://oasisprotocol.org/privacy-policy" target="_blank">
             Privacy Policy
           </a>{' '}
           for more information.{' '}
@@ -105,12 +105,8 @@ const CookieConsent = () => {
       }
       action={
         <Fragment>
-          <AcceptCookiesButton color="secondary" onClick={handleClose}>
-            Accept
-          </AcceptCookiesButton>
-          <DeclineCookiesButton color="secondary" onClick={handleClose}>
-            Decline
-          </DeclineCookiesButton>
+          <AcceptCookiesButton onClick={handleClose}>Accept</AcceptCookiesButton>
+          <DeclineCookiesButton onClick={handleClose}>Decline</DeclineCookiesButton>
         </Fragment>
       }
     />
