@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -104,10 +104,10 @@ const CookieConsent = () => {
         </Typography>
       }
       action={
-        <Fragment>
+        <>
           <AcceptCookiesButton onClick={handleClose}>Accept</AcceptCookiesButton>
           <DeclineCookiesButton onClick={handleClose}>Decline</DeclineCookiesButton>
-        </Fragment>
+        </>
       }
     />
   )
