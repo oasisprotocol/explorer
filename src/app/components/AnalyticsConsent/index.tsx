@@ -43,6 +43,7 @@ export const AnalyticsConsent = () => {
   }, [location.key])
 
   const handleClose = () => {
+    // TODO https://developer.matomo.org/guides/tracking-javascript-guide#optional-creating-a-custom-opt-out-form
     setOpen(false)
   }
 
