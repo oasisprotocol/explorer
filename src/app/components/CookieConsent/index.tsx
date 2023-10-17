@@ -10,6 +10,17 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { useScreenSize } from 'app/hooks/useScreensize'
 
+const AcceptCookiesButton = styled(Button)(({ theme }) => ({
+  paddingLeft: theme.spacing(5),
+  paddingRight: theme.spacing(5),
+}))
+
+const DeclineCookiesButton = styled(Button)(({ theme }) => ({
+  textTransform: 'capitalize',
+  paddingLeft: theme.spacing(5),
+  paddingRight: theme.spacing(5),
+}))
+
 const CookieConsent = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(true)
@@ -18,17 +29,6 @@ const CookieConsent = () => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  const AcceptCookiesButton = styled(Button)(({ theme }) => ({
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
-  }))
-
-  const DeclineCookiesButton = styled(Button)(({ theme }) => ({
-    textTransform: 'capitalize',
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
-  }))
 
   return (
     <Snackbar
