@@ -46,5 +46,6 @@ const d = document,
   g = d.createElement('script'),
   s = d.getElementsByTagName('script')[0]
 g.async = true
+// TODO:? g.integrity="sha384-...";
 g.src = `${matomoDomain}matomo.js`
 s.parentNode?.insertBefore(g, s)
