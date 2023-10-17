@@ -10,6 +10,7 @@ import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
+import { AnalyticsConsent } from 'app/components/AnalyticsConsent'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -133,6 +134,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
             </Typography>
           </>
         )}
+        <AnalyticsConsent />
       </FooterBox>
     </footer>
   )

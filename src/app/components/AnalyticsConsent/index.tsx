@@ -21,7 +21,7 @@ const DeclineCookiesButton = styled(Button)(({ theme }) => ({
   paddingRight: theme.spacing(5),
 }))
 
-export const CookieConsent = () => {
+export const AnalyticsConsent = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(true)
   const { isMobile } = useScreenSize()
@@ -41,7 +41,7 @@ export const CookieConsent = () => {
       }}
       open={open}
     >
-      <Card>
+      <Card elevation={4}>
         <CardContent>
           <Typography
             sx={{

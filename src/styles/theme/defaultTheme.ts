@@ -372,7 +372,6 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,
-          boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
             padding: theme.spacing(4, 4, 0),
