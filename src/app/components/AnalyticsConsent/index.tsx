@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -9,6 +10,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { useScreenSize } from 'app/hooks/useScreensize'
+import './initializeMatomo'
 
 const AcceptCookiesButton = styled(Button)(({ theme }) => ({
   paddingLeft: theme.spacing(5),
@@ -25,6 +27,20 @@ export const AnalyticsConsent = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(true)
   const { isMobile } = useScreenSize()
+
+  const location = useLocation()
+  const [previousURL, setPreviousURL] = useState(document.referrer)
+  useEffect(() => {
+    const newURL = location.pathname + location.search + location.hash
+    // Adjusted snippet from https://developer.matomo.org/guides/spa-tracking#measuring-single-page-apps-complete-example
+    window._paq.push(['setReferrerUrl', previousURL])
+    window._paq.push(['setCustomUrl', newURL])
+    window._paq.push(['setDocumentTitle', document.title])
+    window._paq.push(['trackPageView'])
+    window._paq.push(['enableLinkTracking'])
+    setPreviousURL(newURL)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger when URL changes
+  }, [location.key])
 
   const handleClose = () => {
     setOpen(false)
