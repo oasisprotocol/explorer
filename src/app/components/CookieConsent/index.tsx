@@ -4,8 +4,12 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
+import { Trans, useTranslation } from 'react-i18next'
 
 const CookieConsent = () => {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(true)
 
   const handleClose = () => {
@@ -13,10 +17,6 @@ const CookieConsent = () => {
   }
 
   const AcceptCookiesButton = styled(Button)(({ theme }) => ({
-    marginRight: '8px',
-    // [theme.breakpoints.up('sm')]: {
-    //   width: '126px',
-    // },
     padding: '12px',
     [theme.breakpoints.up('sm')]: {
       paddingLeft: theme.spacing(5),
@@ -26,16 +26,10 @@ const CookieConsent = () => {
 
   const DeclineCookiesButton = styled(Button)(({ theme }) => ({
     textTransform: 'capitalize',
-    marginLeft: '8px',
-
     [theme.breakpoints.up('sm')]: {
       paddingLeft: theme.spacing(5),
       paddingRight: theme.spacing(5),
     },
-
-    // [theme.breakpoints.up('sm')]: {
-    //   width: '126px',
-    // },
   }))
 
   return (
@@ -51,10 +45,10 @@ const CookieConsent = () => {
         borderRadius: '12px',
         lineHeight: '1.25',
         backgroundColor: COLORS.white,
-        '& .MuiPaper-elevation': {
-          backgroundColor: COLORS.white,
-          borderRadius: '12px',
-        },
+        // '& .MuiPaper-elevation': {
+        //   backgroundColor: COLORS.white,
+        //   borderRadius: '12px',
+        // },
         '& .MuiSnackbarContent-action': {
           margin: '0',
           width: '100%',
@@ -63,9 +57,6 @@ const CookieConsent = () => {
           marginBottom: '21px',
           flexWrap: 'wrap',
           paddingLeft: '0',
-        },
-        '& .MuiTypography-root a': {
-          color: COLORS.graphLabel,
         },
       }}
       open={open}
@@ -80,24 +71,36 @@ const CookieConsent = () => {
             lineHeight: '1.25',
           }}
         >
-          At Oasis Foundation we believe in your privacy, so you can choose to browse our site without any
-          tracking or by clicking “Accept”, you help us to improve our site and help us grow our ecosystem.
-          View our{' '}
-          <a href="https://oasisprotocol.org/privacy-policy" target="_blank">
-            Privacy Policy
-          </a>{' '}
-          for more information.{' '}
+          <Trans
+            i18nKey="analyticsConsent.text"
+            t={t}
+            components={{
+              PrivacyPolicyLink: (
+                <Link
+                  href="https://oasisprotocol.org/privacy-policy"
+                  target="_blank"
+                  sx={{ fontWeight: 400, textDecoration: 'underline' }}
+                />
+              ),
+            }}
+            values={{ acceptButtonLabel: t('analyticsConsent.acceptButtonLabel') }}
+          />
         </Typography>
       }
       action={
-        <>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '16px',
+          }}
+        >
           <AcceptCookiesButton onClick={handleClose} color="primary" variant="contained">
-            Accept
+            {t('analyticsConsent.acceptButtonLabel')}
           </AcceptCookiesButton>
           <DeclineCookiesButton onClick={handleClose} color="secondary" variant="outlined">
-            Decline
+            {t('analyticsConsent.declineButtonLabel')}
           </DeclineCookiesButton>
-        </>
+        </Box>
       }
     />
   )

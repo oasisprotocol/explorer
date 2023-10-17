@@ -18,6 +18,11 @@
     "title": "Active Accounts",
     "tooltip": "{{value, number}} accounts"
   },
+  "analyticsConsent": {
+    "text": "At Oasis Foundation we believe in your privacy, so you can choose to browse our site without any tracking or by clicking “{{acceptButtonLabel}}”, you help us to improve our site and help us grow our ecosystem. View our <PrivacyPolicyLink>Privacy Policy</PrivacyPolicyLink> for more information.",
+    "acceptButtonLabel": "Accept",
+    "declineButtonLabel": "Decline"
+  },
   "blocks": {
     "latest": "Latest Blocks",
     "viewingFirst": "You are viewing the first block",
