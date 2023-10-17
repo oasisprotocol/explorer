@@ -2,8 +2,8 @@ import { useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
+import Button from '@mui/material/Button'
 
 const CookieConsent = () => {
   const [open, setOpen] = useState(true)
@@ -12,44 +12,30 @@ const CookieConsent = () => {
     setOpen(false)
   }
 
-  const AcceptCookiesButton = styled(Box)(({ theme }) => ({
-    width: '100%',
-    height: '47px',
-    borderRadius: '46px',
-    backgroundColor: COLORS.brandMedium,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '18px',
-    color: 'white',
-    fontWeight: '400',
-    marginRight: '0',
-    marginBottom: '16px',
+  const AcceptCookiesButton = styled(Button)(({ theme }) => ({
+    marginRight: '8px',
+    // [theme.breakpoints.up('sm')]: {
+    //   width: '126px',
+    // },
+    padding: '12px',
     [theme.breakpoints.up('sm')]: {
-      width: '126px',
-      marginRight: '8px',
-      marginBottom: '0',
+      paddingLeft: theme.spacing(5),
+      paddingRight: theme.spacing(5),
     },
   }))
 
-  const DeclineCookiesButton = styled(Box)(({ theme }) => ({
-    width: '100%',
-    height: '47px',
-    borderRadius: '46px',
-    backgroundColor: COLORS.white,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '18px',
-    color: COLORS.graphLabel,
-    fontWeight: '400',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    borderColor: COLORS.graphLabel,
+  const DeclineCookiesButton = styled(Button)(({ theme }) => ({
+    textTransform: 'capitalize',
+    marginLeft: '8px',
+
     [theme.breakpoints.up('sm')]: {
-      width: '126px',
-      marginLeft: '8px',
+      paddingLeft: theme.spacing(5),
+      paddingRight: theme.spacing(5),
     },
+
+    // [theme.breakpoints.up('sm')]: {
+    //   width: '126px',
+    // },
   }))
 
   return (
@@ -105,8 +91,12 @@ const CookieConsent = () => {
       }
       action={
         <>
-          <AcceptCookiesButton onClick={handleClose}>Accept</AcceptCookiesButton>
-          <DeclineCookiesButton onClick={handleClose}>Decline</DeclineCookiesButton>
+          <AcceptCookiesButton onClick={handleClose} color="primary" variant="contained">
+            Accept
+          </AcceptCookiesButton>
+          <DeclineCookiesButton onClick={handleClose} color="secondary" variant="outlined">
+            Decline
+          </DeclineCookiesButton>
         </>
       }
     />
