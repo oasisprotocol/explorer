@@ -21,7 +21,7 @@ const DeclineCookiesButton = styled(Button)(({ theme }) => ({
   paddingRight: theme.spacing(5),
 }))
 
-const CookieConsent = () => {
+export const CookieConsent = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(true)
   const { isMobile } = useScreenSize()
@@ -79,4 +79,3 @@ const CookieConsent = () => {
   )
 }
 
-export default CookieConsent
