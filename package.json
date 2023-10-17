@@ -89,7 +89,6 @@
   "devDependencies": {
     "@emotion/jest": "11.11.0",
     "@parcel/packager-raw-url": "2.11.0",
-    "@parcel/resolver-default": "^2.10.0",
     "@parcel/transformer-webmanifest": "2.11.0",
     "@storybook/addon-actions": "7.6.10",
     "@storybook/addon-essentials": "7.6.10",
