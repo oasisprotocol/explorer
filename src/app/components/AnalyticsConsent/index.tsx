@@ -46,9 +46,9 @@ export const AnalyticsConsent = () => {
           <Typography
             sx={{
               paddingBottom: '12px',
-              textAlign: 'center',
               lineHeight: '1.25',
             }}
+            align='center'
           >
             <Trans
               i18nKey="analyticsConsent.text"
