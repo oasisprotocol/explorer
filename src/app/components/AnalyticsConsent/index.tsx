@@ -65,7 +65,7 @@ export const AnalyticsConsent = () => {
               paddingBottom: '12px',
               lineHeight: '1.25',
             }}
-            align='center'
+            align="center"
           >
             <Trans
               i18nKey="analyticsConsent.text"
@@ -95,4 +95,3 @@ export const AnalyticsConsent = () => {
     </Snackbar>
   )
 }
-
