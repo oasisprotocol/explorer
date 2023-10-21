@@ -103,7 +103,6 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   border: `solid 1px ${COLORS.brandExtraDark}`,
   fontSize: '14px',
   fontWeight: 500,
-  textTransform: 'capitalize',
   color: COLORS.brandDark,
   gap: theme.spacing(3),
   height: '30px',

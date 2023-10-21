@@ -53,7 +53,6 @@ const StyledContent = styled(Box)(({ theme }) => ({
 const TabletBackButton = styled(Button)({
   color: COLORS.brandDark,
   width: 'fit-content',
-  textTransform: 'capitalize',
   textDecoration: 'none',
 })
 

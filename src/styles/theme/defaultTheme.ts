@@ -218,6 +218,7 @@ export const defaultTheme = createTheme({
           lineHeight: '23px',
           height: '47px',
           borderRadius: 47,
+          textTransform: 'capitalize',
           '&:disabled': {
             backgroundColor: COLORS.lavenderGray,
             color: COLORS.white,
@@ -227,7 +228,6 @@ export const defaultTheme = createTheme({
           borderWidth: '1px',
           borderStyle: 'solid',
           borderColor: COLORS.grayMediumLight,
-          textTransform: 'capitalize',
           ':disabled': {
             backgroundColor: COLORS.disabledPrimaryBackground,
             color: COLORS.disabledPrimaryText,
@@ -241,9 +241,6 @@ export const defaultTheme = createTheme({
             backgroundColor: COLORS.brandExtraDark,
             borderColor: COLORS.brandExtraDark,
           },
-        },
-        outlined: {
-          textTransform: 'capitalize',
         },
         outlinedSecondary: {
           borderColor: COLORS.brandExtraDark,
@@ -263,12 +260,8 @@ export const defaultTheme = createTheme({
             borderColor: COLORS.brandExtraDark,
           },
         },
-        containedSecondary: {
-          textTransform: 'capitalize',
-        },
         textPrimary: {
           color: COLORS.brandDark,
-          textTransform: 'capitalize',
           '&&:hover, &&:focus-visible, &&:active': {
             color: COLORS.brandExtraDark,
             backgroundColor: 'transparent',
