@@ -242,6 +242,9 @@ export const defaultTheme = createTheme({
             borderColor: COLORS.brandExtraDark,
           },
         },
+        outlined: {
+          textTransform: 'capitalize',
+        },
         outlinedSecondary: {
           borderColor: COLORS.brandExtraDark,
           color: COLORS.brandExtraDark,

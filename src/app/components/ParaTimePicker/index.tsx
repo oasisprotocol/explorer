@@ -178,13 +178,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
         </Grid>
 
         <ActionBar>
-          <Button
-            onClick={onClose}
-            color="secondary"
-            variant="outlined"
-            sx={{ textTransform: 'capitalize' }}
-            size="large"
-          >
+          <Button onClick={onClose} color="secondary" variant="outlined" size="large">
             {t('common.cancel')}
           </Button>
 

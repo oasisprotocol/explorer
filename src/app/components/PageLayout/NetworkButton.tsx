@@ -21,7 +21,6 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   borderWidth: theme.spacing(1),
   backgroundColor: COLORS.white,
   color: COLORS.brandDark,
-  textTransform: 'capitalize',
   textAlign: 'left',
   overflow: 'hidden',
 

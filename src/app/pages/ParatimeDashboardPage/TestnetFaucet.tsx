@@ -42,7 +42,6 @@ export const TestnetFaucet: FC<TestnetFaucetProps> = ({ layer }) => {
           rel="noopener noreferrer"
           color="secondary"
           variant="outlined"
-          sx={{ textTransform: 'capitalize', textAlign: 'center' }}
         >
           {t('testnetFaucet.request')}
         </Button>
