@@ -27,7 +27,8 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          # Towncrier fork does not work with 3.12.
+          python-version: '3.11.6'
       - name: Set up Node.js 20
         uses: actions/setup-node@v3
         with:
