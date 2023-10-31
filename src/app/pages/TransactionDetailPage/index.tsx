@@ -32,7 +32,7 @@ import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
-import { TransactionEncrypted } from '../../components/TransactionEncryptionStatus'
+import { TransactionEncrypted, TransactionNotEncrypted } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -245,6 +245,19 @@ export const TransactionDetailView: FC<{
             <RuntimeTransactionLabel method={transaction.method} />
           </dd>
 
+          <dt>{t('transactions.encryption.format')}</dt>
+          <dd>
+            {transaction.encryption_envelope ? (
+              <>
+                {transaction.encryption_envelope.format} &nbsp; <TransactionEncrypted />
+              </>
+            ) : (
+              <>
+                {t('transactions.encryption.plain')} &nbsp; <TransactionNotEncrypted />
+              </>
+            )}
+          </dd>
+
           <dt>{t('common.timestamp')}</dt>
           <dd>{formattedTimestamp}</dd>
 
@@ -347,11 +360,6 @@ export const TransactionDetailView: FC<{
 
           {transaction.encryption_envelope && (
             <>
-              <dt>{t('transactions.encryption.format')}</dt>
-              <dd>
-                {transaction.encryption_envelope.format} &nbsp; <TransactionEncrypted />
-              </dd>
-
               {transaction.encryption_envelope.public_key !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.publicKey')}</dt>
