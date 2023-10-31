@@ -2,7 +2,6 @@ import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-ne
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
@@ -19,9 +18,9 @@ import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 import { TokenTransferIcon, TokenTransferLabel } from '../Tokens/TokenTransferIcon'
 import Box from '@mui/material/Box'
-import { TransferIcon } from './../CustomIcons/Transfer'
-import { DepositIcon } from './../CustomIcons/Deposit'
-import { WithdrawIcon } from './../CustomIcons/Withdraw'
+import { TransferIcon } from '../CustomIcons/Transfer'
+import { DepositIcon } from '../CustomIcons/Deposit'
+import { WithdrawIcon } from '../CustomIcons/Withdraw'
 import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
@@ -125,7 +124,7 @@ const EvmLogRow: FC<{
   )
 }
 
-const LogEvent: FC<{
+export const RuntimeEventDetails: FC<{
   scope: SearchScope
   event: RuntimeEvent
   addressSwitchOption: AddressSwitchOption
@@ -275,18 +274,4 @@ const LogEvent: FC<{
         </div>
       )
   }
-}
-
-export const TransactionLogEvent: FC<{
-  scope: SearchScope
-  event: RuntimeEvent
-  isFirst: boolean
-  addressSwitchOption: AddressSwitchOption
-}> = ({ scope, event, isFirst, addressSwitchOption }) => {
-  return (
-    <>
-      {!isFirst && <Divider variant="card" />}
-      <LogEvent scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
-    </>
-  )
 }

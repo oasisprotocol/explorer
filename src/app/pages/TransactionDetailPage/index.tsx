@@ -23,7 +23,7 @@ import { TextSkeleton } from '../../components/Skeleton'
 import Box from '@mui/material/Box'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
-import { TransactionLogs } from '../../components/Transactions/Logs'
+import { TransactionEvents } from '../../components/Transactions/TransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { getNameForTicker, getTickerForNetwork, Ticker } from '../../../types/ticker'
@@ -130,7 +130,7 @@ export const TransactionDetailPage: FC = () => {
       </SubPageCard>
       {transaction && (
         <SubPageCard title={t('common.events')}>
-          <TransactionLogs transaction={transaction} addressSwitchOption={addressSwitchOption} />
+          <TransactionEvents transaction={transaction} addressSwitchOption={addressSwitchOption} />
         </SubPageCard>
       )}
     </PageLayout>

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
-import { EventTypeIcon } from './LogEvent'
-import { TokenTransferIcon } from '../Tokens/TokenTransferIcon'
+import { EventTypeIcon } from '../RuntimeEventDetails'
+import { TokenTransferIcon } from '../../Tokens/TokenTransferIcon'
 
 test('Transfer, burn, and mint icons should match in EventTypeIcon and evm TokenTransferIcon', () => {
   const transfer = render(<EventTypeIcon eventType="accounts.transfer" eventName="Transfer" />).container
