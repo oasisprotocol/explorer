@@ -19,6 +19,7 @@ export abstract class RouteUtils {
       [Layer.sapphire]: true,
     },
     [Network.testnet]: {
+      [Layer.consensus]: true,
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
     },
