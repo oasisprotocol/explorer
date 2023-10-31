@@ -2,22 +2,20 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
-import { SubPageCard } from '../../components/SubPageCard'
-import { Account } from '../../components/Account'
 import { RouterTabs } from '../../components/RouterTabs'
-import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
+import { useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
-import { EvmToken, EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
+import { EvmTokenType } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { CardEmptyState } from './CardEmptyState'
 import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
+import { AccountDetailsCard } from './AccountDetailsCard'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -51,19 +49,14 @@ export const AccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard
-        featured
-        isLoadingTitle={isLoading}
-        title={isContract ? t('contract.title') : t('account.title')}
-      >
-        <AccountDetailsView
-          isLoading={isLoading}
-          isError={isError}
-          account={account}
-          token={token}
-          tokenPriceInfo={tokenPriceInfo}
-        />
-      </SubPageCard>
+      <AccountDetailsCard
+        isLoading={isLoading}
+        isError={isError}
+        isContract={isContract}
+        account={account}
+        token={token}
+        tokenPriceInfo={tokenPriceInfo}
+      />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
@@ -81,27 +74,5 @@ export const AccountDetailsPage: FC = () => {
         context={context}
       />
     </PageLayout>
-  )
-}
-
-export const AccountDetailsView: FC<{
-  isLoading: boolean
-  isError: boolean
-  account: RuntimeAccount | undefined
-  token?: EvmToken
-  tokenPriceInfo: TokenPriceInfo
-  showLayer?: boolean
-}> = ({ isLoading, isError, account, token, tokenPriceInfo, showLayer }) => {
-  const { t } = useTranslation()
-  return isError ? (
-    <CardEmptyState label={t('account.cantLoadDetails')} />
-  ) : (
-    <Account
-      account={account}
-      token={token}
-      isLoading={isLoading}
-      tokenPriceInfo={tokenPriceInfo}
-      showLayer={showLayer}
-    />
   )
 }
