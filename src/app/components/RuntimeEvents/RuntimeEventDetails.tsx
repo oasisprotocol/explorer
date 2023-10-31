@@ -132,13 +132,13 @@ export const RuntimeEventDetails: FC<{
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const eventTypeNames: Record<RuntimeEventType, string> = {
-    [RuntimeEventType.accountstransfer]: t('transactionEvent.accountstransfer'),
-    [RuntimeEventType.evmlog]: t('transactionEvent.evmLog'),
-    [RuntimeEventType.coregas_used]: t('transactionEvent.gasUsed'),
-    [RuntimeEventType.consensus_accountswithdraw]: t('transactionEvent.consensusWithdrawal'),
-    [RuntimeEventType.consensus_accountsdeposit]: t('transactionEvent.consensusDeposit'),
-    [RuntimeEventType.accountsmint]: t('transactionEvent.accountsmint'),
-    [RuntimeEventType.accountsburn]: t('transactionEvent.accountsburn'),
+    [RuntimeEventType.accountstransfer]: t('runtimeEvent.accountstransfer'),
+    [RuntimeEventType.evmlog]: t('runtimeEvent.evmLog'),
+    [RuntimeEventType.coregas_used]: t('runtimeEvent.gasUsed'),
+    [RuntimeEventType.consensus_accountswithdraw]: t('runtimeEvent.consensusWithdrawal'),
+    [RuntimeEventType.consensus_accountsdeposit]: t('runtimeEvent.consensusDeposit'),
+    [RuntimeEventType.accountsmint]: t('runtimeEvent.accountsmint'),
+    [RuntimeEventType.accountsburn]: t('runtimeEvent.accountsburn'),
   }
   const eventName = eventTypeNames[event.type]
   switch (event.type) {
@@ -206,7 +206,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-            <dt>{t('transactionEvent.fields.owner')}</dt>
+            <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
               <AccountLink
                 address={event.body.owner}
@@ -217,7 +217,7 @@ export const RuntimeEventDetails: FC<{
                 <CopyToClipboard value={event.body.owner} />
               )}
             </dd>
-            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
               {t('common.valueInToken', {
                 ...getPreciseNumberFormat(event.body.amount.Amount),
@@ -254,7 +254,7 @@ export const RuntimeEventDetails: FC<{
               />
               {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
-            <dt>{t('transactionEvent.fields.amount')}</dt>
+            <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
               {t('common.valueInToken', {
                 ...getPreciseNumberFormat(event.body.amount.Amount),

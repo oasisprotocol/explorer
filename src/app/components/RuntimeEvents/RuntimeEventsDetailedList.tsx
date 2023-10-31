@@ -32,7 +32,7 @@ export const RuntimeEventsDetailedList: FC<{
   const { t } = useTranslation()
   return (
     <>
-      {isError && <CardEmptyState label={t('transactionEvent.cantLoadEvents')} />}
+      {isError && <CardEmptyState label={t('runtimeEvent.cantLoadEvents')} />}
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (
