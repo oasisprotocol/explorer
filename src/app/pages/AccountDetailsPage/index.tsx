@@ -8,7 +8,7 @@ import { Ticker } from '../../../types/ticker'
 
 import { EvmTokenType } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
-import { useAccount } from './hook'
+import { useAccount, useAccountEvents } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
@@ -16,6 +16,7 @@ import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { AccountDetailsCard } from './AccountDetailsCard'
+import { AccountEventsCard } from './AccountEventsCard'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -34,6 +35,8 @@ export const AccountDetailsPage: FC = () => {
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
+
+  const { isLoading: areEventsLoading, isError: isEventsError, events } = useAccountEvents(scope, address)
 
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
@@ -73,6 +76,7 @@ export const AccountDetailsPage: FC = () => {
         ]}
         context={context}
       />
+      <AccountEventsCard scope={scope} isLoading={areEventsLoading} isError={isEventsError} events={events} />
     </PageLayout>
   )
 }
