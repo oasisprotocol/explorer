@@ -18,6 +18,7 @@ import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { EventsCard } from './EventsCard'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -43,6 +44,7 @@ export const BlockDetailPage: FC = () => {
         <BlockDetailView isLoading={isLoading} block={block} />
       </SubPageCard>
       {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
+      <EventsCard scope={scope} blockHeight={blockHeight} />
     </PageLayout>
   )
 }
