@@ -243,6 +243,7 @@
       "encryptedData": "Data (encrypted)",
       "encryptedResult": "Result (encrypted)",
       "format": "Format",
+      "plain": "Plain",
       "publicKey": "Public Key",
       "resultNonce": "Result Nonce"
     },
