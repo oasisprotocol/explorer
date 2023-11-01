@@ -284,7 +284,7 @@
       "recipientTooltipUnavailable": "Recipient not available in selected address format"
     }
   },
-  "transactionEvent": {
+  "runtimeEvent": {
     "cantLoadEvents": "Unfortunately we couldn't load the list of events. Please try again later.",
     "accountsburn": "Tokens burnt",
     "accountsmint": "Tokens minted",
