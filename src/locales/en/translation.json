@@ -292,6 +292,10 @@
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
     "evmLog": "EVM log message",
+    "filter": {
+      "all": "All events",
+      "nonTx": "Non-transactional"
+    },
     "gasUsed": "Gas used",
     "fields": {
       "amount": "Amount",
