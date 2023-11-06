@@ -90,10 +90,10 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
     }
 
     const swiperEl = swiperElRef.current
-    swiperEl?.addEventListener<'slidechange'>('slidechange', handleSlideChange)
+    swiperEl?.addEventListener<'swiperslidechange'>('swiperslidechange', handleSlideChange)
 
     return () => {
-      swiperEl?.removeEventListener<'slidechange'>('slidechange', handleSlideChange)
+      swiperEl?.removeEventListener<'swiperslidechange'>('swiperslidechange', handleSlideChange)
     }
   }, [])
 

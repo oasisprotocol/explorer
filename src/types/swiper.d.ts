@@ -13,7 +13,7 @@ declare global {
   }
 
   interface ElementEventMap {
-    slidechange: SlideChangeEvent
+    swiperslidechange: SlideChangeEvent
   }
 }
 
