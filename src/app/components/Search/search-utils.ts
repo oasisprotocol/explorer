@@ -21,6 +21,11 @@ type LayerSuggestions = {
 
 export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {
   mainnet: {
+    consensus: {
+      suggestedBlock: '4260', // TODO
+      suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1', // TODO
+      suggestedAccount: '0x0266562AB0aE2a80C14373029a70F73A9A3dB9d3', // TODO
+    },
     emerald: {
       suggestedBlock: '4260',
       suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1',
@@ -35,6 +40,11 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
     },
   },
   testnet: {
+    consensus: {
+      suggestedBlock: '4260', // TODO
+      suggestedTransaction: '0x2f461f83745e1fa1177138aa815e210e1c69305db8065af9015b2e490a5033f1', // TODO
+      suggestedAccount: '0x0266562AB0aE2a80C14373029a70F73A9A3dB9d3', // TODO
+    },
     emerald: {
       suggestedBlock: '1398623', // The prod testnet deploy only started processing blocks from round 1398623.
       suggestedTransaction: '0x7b118fadc9e6569b933edf3a9b8c442eb145fc22613bc11111b8aeb223d4e271',
