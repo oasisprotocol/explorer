@@ -16,7 +16,7 @@ type LayerSuggestions = {
   suggestedBlock: string
   suggestedTransaction: string
   suggestedAccount: string
-  suggestedTokenFragment: string
+  suggestedTokenFragment?: string
 }
 
 export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {

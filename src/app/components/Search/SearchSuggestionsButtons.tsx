@@ -55,7 +55,11 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
             AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
             AccountLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedAccount)} />,
             TokenIcon: <TokenIcon sx={{ fontSize: '18px' }} />,
-            TokenLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTokenFragment)} />,
+            TokenLink: suggestedTokenFragment ? (
+              <SuggestionButton onClick={() => onClickSuggestion(suggestedTokenFragment)} />
+            ) : (
+              <></>
+            ),
           }}
         />
       </Typography>

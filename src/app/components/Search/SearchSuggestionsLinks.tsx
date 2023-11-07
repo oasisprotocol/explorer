@@ -32,8 +32,10 @@ export const SearchSuggestionsLinks: FC<Props> = ({ scope }) => {
         AccountIcon: <></>,
         AccountLink: <Link component={RouterLink} to={RouteUtils.getSearchRoute(scope, suggestedAccount)} />,
         TokenIcon: <></>,
-        TokenLink: (
+        TokenLink: suggestedTokenFragment ? (
           <Link component={RouterLink} to={RouteUtils.getSearchRoute(scope, suggestedTokenFragment)} />
+        ) : (
+          <></>
         ),
       }}
     />
