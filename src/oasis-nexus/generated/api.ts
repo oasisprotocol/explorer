@@ -643,6 +643,10 @@ the asset which this NFT represents. (Additional
 non-descriptive text from ERC-721 omitted.)
  */
   image?: string;
+  /** A metadata document for this NFT instance.
+Currently only ERC-721 is supported, where the document is an Asset Metadata from the ERC721 Metadata JSON Schema.
+ */
+  metadata?: unknown;
   metadata_accessed?: string;
   metadata_uri?: string;
   /** Identifies the asset which this NFT represents */
@@ -1478,6 +1482,7 @@ export const ConsensusEventType = {
   registrynode_unfrozen: 'registry.node_unfrozen',
   registrynode: 'registry.node',
   registryruntime: 'registry.runtime',
+  registryruntime_suspended: 'registry.runtime_suspended',
   roothashexecution_discrepancy: 'roothash.execution_discrepancy',
   roothashexecutor_committed: 'roothash.executor_committed',
   roothashfinalized: 'roothash.finalized',
