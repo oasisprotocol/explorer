@@ -42,7 +42,7 @@ type Content = {
 type LayerContent = {
   primary: Content
   secondary: Content
-  tertiary: Content
+  tertiary?: Content
 }
 type NetworkContent = Partial<Record<Layer, LayerContent>>
 const getContent = (t: TFunction): Record<Network, NetworkContent> => {
@@ -185,13 +185,15 @@ export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
                 url={content.secondary.url}
               />
             </Grid>
-            <Grid>
-              <LearningSection
-                description={content.tertiary.description}
-                title={content.tertiary.header}
-                url={content.tertiary.url}
-              />
-            </Grid>
+            {content.tertiary && (
+              <Grid>
+                <LearningSection
+                  description={content.tertiary.description}
+                  title={content.tertiary.header}
+                  url={content.tertiary.url}
+                />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </CardContent>
