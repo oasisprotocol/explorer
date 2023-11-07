@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
@@ -17,6 +17,7 @@ import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { AccountDetailsCard } from './AccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
+import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterSwitch'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -35,8 +36,13 @@ export const AccountDetailsPage: FC = () => {
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
 
   const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
+  const [eventFilterMode, setEventFilterMode] = useState<EventFilterMode>(EventFilterMode.All)
 
-  const { isLoading: areEventsLoading, isError: isEventsError, events } = useAccountEvents(scope, address)
+  const {
+    isLoading: areEventsLoading,
+    isError: isEventsError,
+    events,
+  } = useAccountEvents(scope, address, eventFilterMode)
 
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
@@ -76,7 +82,14 @@ export const AccountDetailsPage: FC = () => {
         ]}
         context={context}
       />
-      <AccountEventsCard scope={scope} isLoading={areEventsLoading} isError={isEventsError} events={events} />
+      <AccountEventsCard
+        scope={scope}
+        filterMode={eventFilterMode}
+        setFilterMode={setEventFilterMode}
+        isLoading={areEventsLoading}
+        isError={isEventsError}
+        events={events}
+      />
     </PageLayout>
   )
 }

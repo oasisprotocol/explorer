@@ -1,5 +1,6 @@
 import {
   Layer,
+  RuntimeEventType,
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
   useGetRuntimeTransactions,
@@ -8,6 +9,7 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
+import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterSwitch'
 
 export const useAccount = (scope: SearchScope, oasisAddress: string) => {
   const { network, layer } = scope
@@ -60,7 +62,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
   }
 }
 
-export const useAccountEvents = (scope: SearchScope, address: string) => {
+export const useAccountEvents = (scope: SearchScope, address: string, filterMode: EventFilterMode) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -72,6 +74,8 @@ export const useAccountEvents = (scope: SearchScope, address: string) => {
     // TODO: implement filtering for non-transactional events
   })
   const { isFetched, isLoading, isError, data } = query
-  const events = data?.data.events
+  const events = data?.data.events.filter(
+    event => filterMode === EventFilterMode.All || event.type !== RuntimeEventType.accountstransfer,
+  )
   return { isFetched, isLoading, isError, events }
 }
