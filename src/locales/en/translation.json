@@ -154,6 +154,10 @@
     "github": "GitHub"
   },
   "learningMaterials": {
+    "consensus": {
+      "header": "What is the Consensus Layer? TODO",
+      "description": "The consensus layer is an interface that provides a number of important services to other parts of Oasis Core. TODO",
+    },
     "emerald": {
       "header": "What is the Emerald network?",
       "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility.",

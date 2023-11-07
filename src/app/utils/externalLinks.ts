@@ -12,6 +12,7 @@ const docsUrl = 'https://docs.oasis.io/'
 export const docs = {
   home: docsUrl,
   consensus: `${docsUrl}core/consensus/`,
+  consensusTransfer: 'TODO',
   cipher: `${docsUrl}dapp/cipher/`,
   emerald: `${docsUrl}dapp/emerald/`,
   emeraldTestnet: `${docsUrl}dapp/emerald/#testnet`,

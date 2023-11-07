@@ -50,6 +50,18 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
 
   return {
     [Network.mainnet]: {
+      [Layer.consensus]: {
+        primary: {
+          description: t('learningMaterials.consensus.description'),
+          header: t('learningMaterials.consensus.header'),
+          url: docs.consensus,
+        },
+        secondary: {
+          description: t('learningMaterials.transfer.description', { layer: labels['consensus'] }),
+          header: t('learningMaterials.transfer.header'),
+          url: docs.consensusTransfer,
+        },
+      },
       [Layer.emerald]: {
         primary: {
           description: t('learningMaterials.emerald.description'),
@@ -86,6 +98,18 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
       },
     },
     [Network.testnet]: {
+      [Layer.consensus]: {
+        primary: {
+          description: t('learningMaterials.consensus.description'),
+          header: t('learningMaterials.consensus.header'),
+          url: docs.consensus,
+        },
+        secondary: {
+          description: t('learningMaterials.transfer.description', { layer: labels['consensus'] }),
+          header: t('learningMaterials.transfer.header'),
+          url: docs.consensusTransfer,
+        },
+      },
       [Layer.emerald]: {
         primary: {
           description: t('learningMaterials.emerald.description'),
