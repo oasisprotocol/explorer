@@ -20,6 +20,7 @@ import { getNameForScope } from '../../../types/searchScope'
 import { useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { isConsensus } from '../../../types/layers'
 
 type LayerDetailsContent = {
   description: string
@@ -34,6 +35,14 @@ type NetworkDetails = Partial<Record<Layer, LayerDetailsContent>>
 type Details = Record<Network, NetworkDetails>
 const getDetails = (t: TFunction): Details => ({
   [Network.mainnet]: {
+    [Layer.consensus]: {
+      description: t('paraTimePicker.mainnet.consensus'),
+      rpcHttp: 'https://consensus.oasis.dev', // TODO
+      rpcWebSockets: 'wss://consensus.oasis.dev/ws', // TODO
+      chainHexId: '0xffff', // TODO
+      chainDecimalId: '12345', // TODO
+      docs: docs.consensus,
+    },
     [Layer.emerald]: {
       description: t('paraTimePicker.mainnet.emerald'),
       rpcHttp: 'https://emerald.oasis.dev',
@@ -93,15 +102,32 @@ type LayerDetailsProps = {
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({ handleConfirm, network, selectedLayer }) => {
+export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
+  isConsensus(props.selectedLayer) ? <ConsensusDetails {...props} /> : <RuntimeDetails {...props} />
+
+const ConsensusDetails: FC<LayerDetailsProps> = props => {
+  const isOutOfDate = false // TODO
+  return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
+}
+
+const RuntimeDetails: FC<LayerDetailsProps> = props => {
+  const { network, selectedLayer: layer } = props
+  const isOutOfDate = useRuntimeFreshness({ network, layer }).outOfDate
+  return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
+}
+
+const LayerDetailsView: FC<LayerDetailsProps & { isOutOfDate: boolean | undefined }> = ({
+  network,
+  selectedLayer: layer,
+  handleConfirm,
+  isOutOfDate,
+}) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = selectedLayer
-  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
   const details = getDetails(t)[network][layer]
 
   if (!details) {

@@ -36,3 +36,5 @@ export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
 
 export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[] | undefined): boolean =>
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
+
+export const isConsensus = (layer: Layer): boolean => layer === Layer.consensus
