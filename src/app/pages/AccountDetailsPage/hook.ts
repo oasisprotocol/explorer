@@ -1,4 +1,9 @@
-import { Layer, useGetRuntimeAccountsAddress, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
+import {
+  Layer,
+  useGetRuntimeAccountsAddress,
+  useGetRuntimeEvents,
+  useGetRuntimeTransactions,
+} from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
@@ -53,4 +58,20 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     totalCount,
     isTotalCountClipped,
   }
+}
+
+export const useAccountEvents = (scope: SearchScope, address: string) => {
+  const { network, layer } = scope
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // Loading events on the consensus layer is not supported yet.
+    // We should use useGetConsensusEvents()
+  }
+  const query = useGetRuntimeEvents(network, layer, {
+    rel: address,
+    // TODO: implement filtering for non-transactional events
+  })
+  const { isFetched, isLoading, isError, data } = query
+  const events = data?.data.events
+  return { isFetched, isLoading, isError, events }
 }
