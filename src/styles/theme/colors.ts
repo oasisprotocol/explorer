@@ -9,6 +9,7 @@ export const COLORS = {
   brandExtraDark: '#000062',
   brandExtraLight: '#e5e5ef',
   brandLight: '#6665d8',
+  brandLightBlue: '#E8F5FF',
   brandMedium: '#0092f6',
   brandMedium15: '#d9effe',
   brightGray2: '#ececec',

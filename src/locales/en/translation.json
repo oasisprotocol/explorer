@@ -286,12 +286,18 @@
   },
   "runtimeEvent": {
     "cantLoadEvents": "Unfortunately we couldn't load the list of events. Please try again later.",
+    "noEvents": "No events",
+    "cantFindMatchingEvents": "We can't find any matching events.",
     "accountsburn": "Tokens burnt",
     "accountsmint": "Tokens minted",
     "accountstransfer": "Transfer",
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
     "evmLog": "EVM log message",
+    "filter": {
+      "all": "All events",
+      "nonTx": "Non-transactional"
+    },
     "gasUsed": "Gas used",
     "fields": {
       "amount": "Amount",
