@@ -25,6 +25,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { UnknownIcon } from '../CustomIcons/Unknown'
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
@@ -36,6 +37,9 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.coregas_used]: <></>,
     [RuntimeEventType.consensus_accountswithdraw]: <WithdrawIcon fontSize="inherit" />,
     [RuntimeEventType.consensus_accountsdeposit]: <DepositIcon fontSize="inherit" />,
+    [RuntimeEventType.consensus_accountsdelegate]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
+    [RuntimeEventType.consensus_accountsundelegate_start]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
+    [RuntimeEventType.consensus_accountsundelegate_done]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
     [RuntimeEventType.accountsmint]: <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />,
     [RuntimeEventType.accountsburn]: (
       <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
@@ -137,6 +141,9 @@ export const RuntimeEventDetails: FC<{
     [RuntimeEventType.coregas_used]: t('runtimeEvent.gasUsed'),
     [RuntimeEventType.consensus_accountswithdraw]: t('runtimeEvent.consensusWithdrawal'),
     [RuntimeEventType.consensus_accountsdeposit]: t('runtimeEvent.consensusDeposit'),
+    [RuntimeEventType.consensus_accountsdelegate]: t('runtimeEvent.consensusDelegate'),
+    [RuntimeEventType.consensus_accountsundelegate_start]: t('runtimeEvent.consensusUndelegateStart'),
+    [RuntimeEventType.consensus_accountsundelegate_done]: t('runtimeEvent.consensusUndelegateDone'),
     [RuntimeEventType.accountsmint]: t('runtimeEvent.accountsmint'),
     [RuntimeEventType.accountsburn]: t('runtimeEvent.accountsburn'),
   }
@@ -230,6 +237,9 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
     case RuntimeEventType.consensus_accountswithdraw:
+    case RuntimeEventType.consensus_accountsdelegate: // TODO show this properly
+    case RuntimeEventType.consensus_accountsundelegate_start: // TODO show this properly
+    case RuntimeEventType.consensus_accountsundelegate_done: // TODO show this properly
       return (
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />

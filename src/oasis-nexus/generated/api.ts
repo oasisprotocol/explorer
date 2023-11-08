@@ -979,6 +979,9 @@ export const RuntimeEventType = {
   accountsmint: 'accounts.mint',
   consensus_accountsdeposit: 'consensus_accounts.deposit',
   consensus_accountswithdraw: 'consensus_accounts.withdraw',
+  consensus_accountsdelegate: 'consensus_accounts.delegate',
+  consensus_accountsundelegate_start: 'consensus_accounts.undelegate_start',
+  consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
 } as const;
