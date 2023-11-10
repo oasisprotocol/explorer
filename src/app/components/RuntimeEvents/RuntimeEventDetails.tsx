@@ -264,13 +264,18 @@ export const RuntimeEventDetails: FC<{
               />
               {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
-            <dt>{t('runtimeEvent.fields.amount')}</dt>
-            <dd>
-              {t('common.valueInToken', {
-                ...getPreciseNumberFormat(event.body.amount.Amount),
-                ticker: event.body.amount.Denomination,
-              })}
-            </dd>
+            {/* TODO check is needed because some consensus events temporarily use this for rendering */}
+            {event.body.amount?.Amount && event.body.amount?.Denomination && (
+              <>
+                <dt>{t('runtimeEvent.fields.amount')}</dt>
+                <dd>
+                  {t('common.valueInToken', {
+                    ...getPreciseNumberFormat(event.body.amount.Amount),
+                    ticker: event.body.amount.Denomination,
+                  })}
+                </dd>
+              </>
+            )}
           </StyledDescriptionList>
         </div>
       )
