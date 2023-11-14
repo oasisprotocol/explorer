@@ -38,8 +38,8 @@ export const RuntimeOfflineBanner: FC = () => {
       {unavailable
         ? t('home.runtimeUnavailable', { target })
         : lastUpdate
-        ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
-        : t('home.runtimeOutOfDate', { target })}
+          ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
+          : t('home.runtimeOutOfDate', { target })}
     </StickyAlert>
   )
 }
