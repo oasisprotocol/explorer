@@ -22,7 +22,7 @@ export function RouterTabs<Context>({ tabs, context }: RouterTabsProps<Context>)
 
   return (
     <>
-      <Tabs value={currentTab?.to}>
+      <Tabs value={currentTab?.to} variant="scrollable" scrollButtons={false}>
         {tabs
           .filter(tab => tab === currentTab || tab.visible !== false)
           .map(tab => (
