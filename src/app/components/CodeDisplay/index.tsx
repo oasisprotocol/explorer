@@ -6,7 +6,6 @@ import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
-import { type } from 'os'
 
 type CodeDisplayProps = {
   code: ReactNode
