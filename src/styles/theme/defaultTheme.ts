@@ -201,6 +201,13 @@ export const defaultTheme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,

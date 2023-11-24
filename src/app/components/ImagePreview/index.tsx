@@ -92,7 +92,7 @@ export const ImagePreview: FC<ImagePreviewProps> = ({
                 <CancelIcon sx={{ fontSize: '40px', color: COLORS.white }} />
               </IconButton>
             </Box>
-            <StyledImage src={src} title={label} />
+            <StyledImage src={src} alt={label} />
           </Box>
         </Fade>
       </Modal>
