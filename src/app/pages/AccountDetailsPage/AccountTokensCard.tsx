@@ -13,7 +13,6 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { useAccount } from './hook'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { AccountLink } from '../../components/Account/AccountLink'
 import {

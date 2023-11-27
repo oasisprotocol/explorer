@@ -66,6 +66,23 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
   ticker: Ticker.ROSE,
 })
 
+export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
+  address: 'oasis1qz64azk6qr5nzq537l5cgpd4uxltrhpkhqdx5tqy',
+  address_preimage: undefined,
+  address_eth: undefined,
+  balances: [],
+  evm_balances: [],
+  stats: {
+    num_txns: 0,
+    total_received: '0',
+    total_sent: '0',
+  },
+  layer: Layer.emerald,
+  network: Network.mainnet,
+  ticker: Ticker.ROSE,
+  evm_contract: undefined,
+})
+
 export const suggestedParsedAccountResult: AccountResult = {
   ...suggestedParsedAccount,
   resultType: 'account',

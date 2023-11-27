@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { getOasisAddress, isValidTxHash } from './helpers'
+import { isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
@@ -141,11 +141,10 @@ const validateTxHashParam = (hash: string) => {
   return true
 }
 
-export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
+export const addressParamLoader = ({ params }: LoaderFunctionArgs): string => {
   validateAddressParam(params.address!)
-  // TODO: remove conversion when API supports querying by EVM address
-  const address = await getOasisAddress(params.address!)
-  return address
+
+  return params.address!
 }
 
 export const contractAddressParamLoader = async ({ params }: LoaderFunctionArgs) => {

@@ -4,11 +4,12 @@ import axios, { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { UseQueryOptions } from '@tanstack/react-query'
-import { EvmToken, Layer, RuntimeAccount } from './generated/api'
-import { fromBaseUnits, getEthAccountAddressFromPreimage } from '../app/utils/helpers'
+import { EvmToken, EvmTokenType, Layer, RuntimeAccount } from './generated/api'
+import { fromBaseUnits, getEthAddressForAccount } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
+import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddress'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -21,24 +22,29 @@ declare module './generated/api' {
     layer: Layer
     ticker: NativeTicker
   }
+
   export interface RuntimeTransaction {
     network: Network
     layer: Layer
     ticker: NativeTicker
   }
+
   export interface Block {
     network: Network
     layer: Layer
   }
+
   export interface RuntimeBlock {
     network: Network
     layer: Layer
   }
+
   export interface Account {
     network: Network
     layer: Layer
     ticker: NativeTicker
   }
+
   export interface RuntimeAccount {
     network: Network
     layer: Layer
@@ -46,6 +52,7 @@ declare module './generated/api' {
     ticker: NativeTicker
     tokenBalances: Partial<Record<EvmTokenType, generated.RuntimeEvmBalance[]>>
   }
+
   export interface RuntimeEvent {
     network: Network
     layer: Layer
@@ -55,6 +62,7 @@ declare module './generated/api' {
     network: Network
     layer: Layer
   }
+
   export interface BareTokenHolder {
     network: Network
     layer: Layer
@@ -271,11 +279,17 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   network,
   runtime,
   address,
-  options?,
+  options,
 ) => {
+  const oasisAddress = useTransformToOasisAddress(address)
+
   const ticker = getTickerForNetwork(network)
-  return generated.useGetRuntimeAccountsAddress(network, runtime, address, {
+  return generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
+    query: {
+      ...(options?.query ?? {}),
+      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+    },
     request: {
       ...options?.request,
       transformResponse: [
@@ -284,7 +298,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return groupAccountTokenBalances({
             ...data,
-            address_eth: getEthAccountAddressFromPreimage(data.address_preimage),
+            address_eth: getEthAddressForAccount(data, address),
             evm_contract: data.evm_contract && {
               ...data.evm_contract,
               eth_creation_tx: data.evm_contract.eth_creation_tx
@@ -494,8 +508,14 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   address,
   options,
 ) => {
-  return generated.useGetRuntimeEvmTokensAddress(network, runtime, address, {
+  const oasisAddress = useTransformToOasisAddress(address)
+
+  return generated.useGetRuntimeEvmTokensAddress(network, runtime, oasisAddress!, {
     ...options,
+    query: {
+      ...(options?.query ?? {}),
+      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+    },
     request: {
       ...options?.request,
       transformResponse: [
