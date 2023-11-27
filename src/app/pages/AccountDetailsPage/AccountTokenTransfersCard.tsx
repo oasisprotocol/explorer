@@ -14,7 +14,7 @@ import { AccountDetailsContext } from './index'
 
 export const accountTokenTransfersContainerId = 'transfers'
 
-export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address }) => {
+export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
   return (
     <Card>
@@ -23,19 +23,17 @@ export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, ad
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          <AccountTokenTransfers scope={scope} address={address} />
+          <AccountTokenTransfers scope={scope} address={address} account={account} />
         </ErrorBoundary>
       </CardContent>
     </Card>
   )
 }
 
-const AccountTokenTransfers: FC<AccountDetailsContext> = ({ scope, address }) => {
+const AccountTokenTransfers: FC<AccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
-
   const { isLoading, isFetched, results } = useTokenTransfers(scope, address)
 
-  const { account } = useAccount(scope, address)
   const transfers = results.data
 
   return (

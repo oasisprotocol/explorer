@@ -22,6 +22,7 @@ import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterS
 export type AccountDetailsContext = {
   scope: SearchScope
   address: string
+  account?: RuntimeAccount
 }
 
 export const useAccountDetailsProps = () => useOutletContext<AccountDetailsContext>()
