@@ -14,17 +14,19 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { TokenDashboardContext } from './index'
 import { getNftInstanceLabel } from '../../utils/nft'
-import { processNftImageUrl } from 'app/utils/nft-images'
+import { isNftImageUrlValid, processNftImageUrl } from 'app/utils/nft-images'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { Layer, useGetRuntimeEvmTokensAddressNfts } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
+import { NoPreview } from '../../components/NoPreview'
 
 export const tokenInventoryContainerId = 'inventory'
+const imageSize = '210px'
 
 const StyledImage = styled('img')({
-  maxWidth: '210px',
-  maxHeight: ' 210px',
+  maxWidth: imageSize,
+  maxHeight: imageSize,
 })
 
 export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }) => {
@@ -64,7 +66,7 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
           sx={{
             // default gridTemplateColumns is set by cols prop default number via inline styles
             // and cannot be overridden without !important statement
-            gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 210px))!important',
+            gridTemplateColumns: `repeat(auto-fill, minmax(${imageSize}, ${imageSize}))!important`,
           }}
         >
           {inventory?.map(instance => {
@@ -73,11 +75,15 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
             return (
               <ImageListItem key={instance.id}>
                 <Link component={RouterLink} to={to}>
-                  <StyledImage
-                    src={processNftImageUrl(instance.image)}
-                    alt={getNftInstanceLabel(instance)}
-                    loading="lazy"
-                  />
+                  {isNftImageUrlValid(instance.image) ? (
+                    <StyledImage
+                      src={processNftImageUrl(instance.image)}
+                      alt={getNftInstanceLabel(instance)}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <NoPreview placeholderSize={imageSize} />
+                  )}
                 </Link>
                 <ImageListItemBar
                   title={

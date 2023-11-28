@@ -8,14 +8,19 @@ import ContrastIcon from '@mui/icons-material/Contrast'
 import Skeleton from '@mui/material/Skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import NotInterestedIcon from '@mui/icons-material/NotInterested'
 import { styled } from '@mui/material/styles'
 import { EvmNft } from 'oasis-nexus/api'
 import { isNftImageUrlValid, processNftImageUrl } from '../../utils/nft-images'
 import { COLORS } from '../../../styles/theme/colors'
 import { ImagePreview } from '../../components/ImagePreview'
+import { NoPreview } from '../../components/NoPreview'
 
-const maxImageSize = '350px'
+const imageSize = '350px'
+
+export const StyledImage = styled('img')({
+  maxWidth: imageSize,
+  maxHeight: imageSize,
+})
 
 const StyledButton = styled(Button, {
   shouldForwardProp: prop => prop !== 'darkMode',
@@ -68,7 +73,6 @@ type InstanceImageCardProps = {
 }
 
 export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoading, nft }) => {
-  const { t } = useTranslation()
   const [darkMode, setDarkMode] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const handlePreviewOpen = () => setPreviewOpen(true)
@@ -89,22 +93,8 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
             alignItems: 'center',
           }}
         >
-          {isLoading && <Skeleton variant="rectangular" width={maxImageSize} height={maxImageSize} />}
-          {isFetched && nft && !isNftImageUrlValid(nft.image) && (
-            <Box
-              paddingY={6}
-              gap={4}
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                color: COLORS.grayMedium2,
-              }}
-            >
-              <NotInterestedIcon sx={{ fontSize: '72px' }} />
-              {t('nft.noPreview')}
-            </Box>
-          )}
+          {isLoading && <Skeleton variant="rectangular" width={imageSize} height={imageSize} />}
+          {isFetched && nft && !isNftImageUrlValid(nft.image) && <NoPreview placeholderSize={imageSize} />}
           {isFetched && nft && isNftImageUrlValid(nft.image) && (
             <>
               <Box
@@ -120,7 +110,7 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
                   previewOpen={previewOpen}
                   src={processNftImageUrl(nft.image)}
                   title={nft.name}
-                  maxThumbnailSize={maxImageSize}
+                  maxThumbnailSize={imageSize}
                 />
               </Box>
               <Box
