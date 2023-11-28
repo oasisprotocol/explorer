@@ -25,6 +25,7 @@ import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDas
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
+import { NFTInstanceDashboardPage } from './app/pages/NFTInstanceDashboardPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -115,6 +116,10 @@ export const routes: RouteObject[] = [
           {
             path: `token`,
             element: <TokensPage />,
+          },
+          {
+            path: 'token/:address/instance/:instanceId',
+            element: <NFTInstanceDashboardPage />,
           },
           {
             path: `token/:address`,
