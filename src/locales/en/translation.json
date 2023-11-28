@@ -121,6 +121,16 @@
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
     }
   },
+  "nft": {
+    "collection": "Collection",
+    "instanceTokenId": "Token ID",
+    "instanceTitleSuffix": "(NFT Instance)",
+    "noPreview": "No preview available",
+    "openInFullscreen": "Open in fullscreen",
+    "owner": "Owner",
+    "switchBackgroundColor": "Switch between dark and light background",
+    "transfers": "Transfers"
+  },
   "nodes": {
     "title": "Active nodes",
     "unknown": "Consensus layer indexer is not caught up with the latest blocks. The number of active nodes is unknown.",

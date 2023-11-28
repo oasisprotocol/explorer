@@ -41,3 +41,7 @@ export const testnet = {
 export const api = {
   spec: `${process.env.REACT_APP_API}spec/v1.html`,
 }
+
+export const ipfs = {
+  proxyPrefix: 'https://ipfs.io/ipfs/',
+}

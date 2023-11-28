@@ -31,6 +31,7 @@ onlyRunOnCI('externalLinks', () => {
         if (url.startsWith(externalLinksModule.referrals.coinGecko)) continue // CoinGecko has CloudFlare DDOS protection
         if (url.startsWith(externalLinksModule.github.commit)) continue // We store only partial url in constants
         if (url.startsWith(externalLinksModule.github.releaseTag)) continue // We store only partial url in constants
+        if (url.startsWith(externalLinksModule.ipfs.proxyPrefix)) continue // We store only partial url in constants
 
         it.concurrent(`${linksGroupName} ${linkName} ${url}`, async () => {
           const response = await nodeFetch(url, { method: 'GET' })
