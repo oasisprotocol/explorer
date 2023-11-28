@@ -121,6 +121,11 @@
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
     }
   },
+  "nft": {
+    "noPreview": "No preview available",
+    "openInFullscreen": "Open in fullscreen",
+    "switchBackgroundColor": "Switch between dark and light background"
+  },
   "nodes": {
     "title": "Active nodes",
     "unknown": "Consensus layer indexer is not caught up with the latest blocks. The number of active nodes is unknown.",
