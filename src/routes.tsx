@@ -25,6 +25,7 @@ import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDas
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
+import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
 import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTInstanceDashboardPage'
 import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
 
@@ -141,6 +142,10 @@ export const routes: RouteObject[] = [
               {
                 path: 'holders',
                 Component: () => <TokenHoldersCard {...useTokenDashboardProps()} />,
+              },
+              {
+                path: 'inventory',
+                Component: () => <TokenInventoryCard {...useTokenDashboardProps()} />,
               },
               {
                 path: 'code',
