@@ -122,6 +122,7 @@
     }
   },
   "nft": {
+    "instanceTitleSuffix": "(NFT Instance)",
     "noPreview": "No preview available",
     "openInFullscreen": "Open in fullscreen",
     "switchBackgroundColor": "Switch between dark and light background"
