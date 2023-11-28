@@ -85,6 +85,15 @@ export abstract class RouteUtils {
     )}`
   }
 
+  static getNFTInstanceRoute = (
+    { network, layer }: SearchScope,
+    contractAddress: string,
+    instanceId: string,
+  ): string =>
+    `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+      contractAddress,
+    )}/instance/${encodeURIComponent(instanceId)}`
+
   static getEnabledLayersForNetwork(network: Network): Layer[] {
     return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network]) as Layer[]
   }
