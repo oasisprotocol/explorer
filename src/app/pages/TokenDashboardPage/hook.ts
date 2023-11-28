@@ -5,6 +5,7 @@ import {
   useGetRuntimeEvents,
   useGetRuntimeEvmTokensAddress,
   useGetRuntimeEvmTokensAddressHolders,
+  useGetRuntimeEvmTokensAddressNfts,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -100,5 +101,43 @@ export const useTokenHolders = (scope: SearchScope, address: string) => {
     pagination,
     totalCount,
     isTotalCountClipped,
+  }
+}
+
+// specific to NFT gallery only
+const NUMBER_OF_INVENTORY_ITEMS = 15
+
+export const useTokenInventory = (scope: SearchScope, address: string) => {
+  const { network, layer } = scope
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * NUMBER_OF_INVENTORY_ITEMS
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // There are no tokens on the consensus layer.
+  }
+  const query = useGetRuntimeEvmTokensAddressNfts(network, layer, address, {
+    limit: NUMBER_OF_INVENTORY_ITEMS,
+    offset: offset,
+  })
+  const { isFetched, isLoading, data } = query
+  const inventory = data?.data.evm_nfts
+
+  if (isFetched && pagination.selectedPage > 1 && !inventory?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  const totalCount = data?.data.total_count
+  const isTotalCountClipped = data?.data.is_total_count_clipped
+
+  return {
+    isLoading,
+    isFetched,
+    inventory,
+    pagination: {
+      ...pagination,
+      isTotalCountClipped,
+      rowsPerPage: NUMBER_OF_INVENTORY_ITEMS,
+    },
+    totalCount,
   }
 }

@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -17,9 +18,9 @@ import { getNftInstanceLabel } from '../../utils/nft'
 import { isNftImageUrlValid, processNftImageUrl } from 'app/utils/nft-images'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
-import { Layer, useGetRuntimeEvmTokensAddressNfts } from '../../../oasis-nexus/api'
-import { AppErrors } from '../../../types/errors'
 import { NoPreview } from '../../components/NoPreview'
+import { TablePagination } from '../../components/Table/TablePagination'
+import { useTokenInventory } from './hook'
 
 export const tokenInventoryContainerId = 'inventory'
 const imageSize = '210px'
@@ -48,18 +49,11 @@ export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }
 
 const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const { network, layer } = scope
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // There are no tokens on the consensus layer.
-  }
-  const { isFetched, data } = useGetRuntimeEvmTokensAddressNfts(network, layer, address)
-  const inventory = data?.data.evm_nfts
+  const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
 
   return (
     <>
-      {isFetched && !data?.data.total_count && <CardEmptyState label={t('tokens.emptyInventory')} />}
-
+      {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
       {inventory && (
         <ImageList
           gap={10}
@@ -108,6 +102,11 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
             )
           })}
         </ImageList>
+      )}
+      {pagination && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <TablePagination {...pagination} totalCount={totalCount} />
+        </Box>
       )}
     </>
   )
