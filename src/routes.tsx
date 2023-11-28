@@ -25,7 +25,8 @@ import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDas
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
-import { NFTInstanceDashboardPage } from './app/pages/NFTInstanceDashboardPage'
+import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTInstanceDashboardPage'
+import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -120,6 +121,13 @@ export const routes: RouteObject[] = [
           {
             path: 'token/:address/instance/:instanceId',
             element: <NFTInstanceDashboardPage />,
+            loader: addressParamLoader,
+            children: [
+              {
+                path: '',
+                Component: () => <NFTMetadataCard {...useNftDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `token/:address`,
