@@ -25,7 +25,7 @@ export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }>
           height: '349px',
           overflowY: 'scroll',
           p: 4,
-          maxWidth: '100%',
+          width: '100%',
         }}
       >
         <Typography
