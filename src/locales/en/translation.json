@@ -122,10 +122,14 @@
     }
   },
   "nft": {
+    "collection": "Collection",
+    "instanceTokenId": "Token ID",
     "instanceTitleSuffix": "(NFT Instance)",
     "noPreview": "No preview available",
     "openInFullscreen": "Open in fullscreen",
-    "switchBackgroundColor": "Switch between dark and light background"
+    "owner": "Owner",
+    "switchBackgroundColor": "Switch between dark and light background",
+    "transfers": "Transfers"
   },
   "nodes": {
     "title": "Active nodes",
