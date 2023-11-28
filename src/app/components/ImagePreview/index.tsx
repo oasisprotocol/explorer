@@ -25,8 +25,8 @@ const StyledButton = styled(Button)({
 })
 
 const StyledImage = styled('img')({
-  maxWidth: '90%',
-  maxHeight: ' 90%',
+  maxWidth: '80dvw',
+  maxHeight: ' 80dvh',
 })
 
 type ImagePreviewProps = {
