@@ -125,6 +125,7 @@
     "collection": "Collection",
     "instanceTokenId": "Token ID",
     "instanceTitleSuffix": "(NFT Instance)",
+    "imagePreview": "Image preview",
     "metadata": "Metadata",
     "noMetadata": "There is no metadata on record for this NFT.",
     "noPreview": "No preview available",
