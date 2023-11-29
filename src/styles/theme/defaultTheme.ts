@@ -515,6 +515,29 @@ export const defaultTheme = createTheme({
         }),
       },
     },
+    MuiImageListItem: {
+      styleOverrides: {
+        root: {
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: COLORS.brandExtraDark,
+          borderRadius: 8,
+          overflow: 'hidden',
+          transition: 'box-shadow 250ms ease-in-out',
+          '&:hover, &:focus-visible': {
+            boxShadow: '0px 8px 8px 0px rgba(0, 0, 0, 0.15)',
+          },
+        },
+      },
+    },
+    MuiImageListItemBar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          paddingLeft: theme.spacing(3),
+          paddingRight: theme.spacing(3),
+        }),
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {

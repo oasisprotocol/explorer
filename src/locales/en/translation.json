@@ -123,6 +123,7 @@
   },
   "nft": {
     "collection": "Collection",
+    "instanceIdLink": "ID: <InstanceLink />",
     "instanceTokenId": "Token ID",
     "instanceTitleSuffix": "(NFT Instance)",
     "imagePreview": "Image preview",
@@ -225,11 +226,13 @@
   },
   "tokens": {
     "typeDescription": "{{description}} ({{spec}})",
+    "emptyInventory": "Token has no inventory associated with it.",
     "emptyTokenHolderList": "There are no token holders on record for this token.",
     "holders": "Token Holders",
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders Count",
     "holdersCount_short": "Holders",
+    "inventory": "Inventory",
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }} {{ticker}}",
     "transfers": "Token Transfers",
