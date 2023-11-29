@@ -98,7 +98,12 @@ export const routes: RouteObject[] = [
               },
               {
                 path: 'tokens/erc-721',
-                Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
+                children: [
+                  {
+                    path: '',
+                    Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
+                  },
+                ],
               },
               {
                 path: 'code',

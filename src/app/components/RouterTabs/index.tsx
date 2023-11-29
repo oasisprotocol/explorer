@@ -1,4 +1,4 @@
-import { useLocation, Outlet } from 'react-router-dom'
+import { useLocation, Outlet, useMatches } from 'react-router-dom'
 import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -18,13 +18,20 @@ function getPathname(tab: { to: string }) {
 
 export function RouterTabs<Context>({ tabs, context }: RouterTabsProps<Context>) {
   const { pathname } = useLocation()
-  const currentTab = tabs.find(tab => getPathname(tab) === pathname)
+  let targetTab = tabs.find(tab => getPathname(tab) === pathname)
+  const matches = useMatches()
+
+  if (!targetTab) {
+    /// the last index is the current route, -2 is the first parent in route hierarchy
+    const parentPathname = matches?.at(-2)?.pathname
+    targetTab = tabs.find(tab => getPathname(tab) === parentPathname)
+  }
 
   return (
     <>
-      <Tabs value={currentTab?.to} variant="scrollable" scrollButtons={false}>
+      <Tabs value={targetTab?.to} variant="scrollable" scrollButtons={false}>
         {tabs
-          .filter(tab => tab === currentTab || tab.visible !== false)
+          .filter(tab => tab === targetTab || tab.visible !== false)
           .map(tab => (
             <Tab
               key={tab.to}
