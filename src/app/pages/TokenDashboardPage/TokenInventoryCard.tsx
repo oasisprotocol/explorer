@@ -45,42 +45,44 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
   return (
     <>
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
-      {inventory && (
-        <ImageList gap={10}>
-          {inventory?.map(instance => {
-            const owner = instance?.owner_eth ?? instance?.owner
-            const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.contract_addr, instance.id)
-            return (
-              <ImageListItem key={instance.id}>
-                <ImageListItemImage instance={instance} to={to} />
-                <ImageListItemBar
-                  title={
-                    <Trans
-                      i18nKey="nft.instanceIdLink"
-                      t={t}
-                      components={{
-                        InstanceLink: (
-                          <Link component={RouterLink} to={to}>
-                            #{instance.id}
-                          </Link>
-                        ),
-                      }}
-                    />
-                  }
-                  subtitle={
-                    owner ? <AccountLink scope={scope} address={owner} alwaysTrim={true} /> : undefined
-                  }
-                  position="below"
-                />
-              </ImageListItem>
-            )
-          })}
-        </ImageList>
-      )}
-      {pagination && (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TablePagination {...pagination} totalCount={totalCount} />
-        </Box>
+      {!!inventory?.length && (
+        <>
+          <ImageList gap={10}>
+            {inventory?.map(instance => {
+              const owner = instance?.owner_eth ?? instance?.owner
+              const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.contract_addr, instance.id)
+              return (
+                <ImageListItem key={instance.id}>
+                  <ImageListItemImage instance={instance} to={to} />
+                  <ImageListItemBar
+                    title={
+                      <Trans
+                        i18nKey="nft.instanceIdLink"
+                        t={t}
+                        components={{
+                          InstanceLink: (
+                            <Link component={RouterLink} to={to}>
+                              #{instance.id}
+                            </Link>
+                          ),
+                        }}
+                      />
+                    }
+                    subtitle={
+                      owner ? <AccountLink scope={scope} address={owner} alwaysTrim={true} /> : undefined
+                    }
+                    position="below"
+                  />
+                </ImageListItem>
+              )
+            })}
+          </ImageList>
+          {pagination && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <TablePagination {...pagination} totalCount={totalCount} />
+            </Box>
+          )}
+        </>
       )}
     </>
   )
