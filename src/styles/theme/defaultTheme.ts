@@ -515,6 +515,15 @@ export const defaultTheme = createTheme({
         }),
       },
     },
+    MuiImageList: {
+      styleOverrides: {
+        root: {
+          // default gridTemplateColumns is set by cols prop default number via inline styles
+          // and cannot be overridden without !important statement
+          gridTemplateColumns: `repeat(auto-fill, minmax(210px, 210px))!important`,
+        },
+      },
+    },
     MuiImageListItem: {
       styleOverrides: {
         root: {
