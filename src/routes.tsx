@@ -23,6 +23,7 @@ import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
+import { AccountNFTCollectionCard } from './app/pages/AccountDetailsPage/AccountNFTCollectionCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
 import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
@@ -102,6 +103,10 @@ export const routes: RouteObject[] = [
                   {
                     path: '',
                     Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
+                  },
+                  {
+                    path: ':contractAddress',
+                    Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} />,
                   },
                 ],
               },

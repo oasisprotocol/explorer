@@ -122,6 +122,7 @@
     }
   },
   "nft": {
+    "accountCollection": "ERC-721 Tokens",
     "collection": "Collection",
     "instanceIdLink": "ID: <InstanceLink />",
     "instanceTokenId": "Token ID",
