@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link as RouterLink } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Link from '@mui/material/Link'
 import { CardEmptyState } from './CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -43,11 +44,20 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenListLabel = getTokenTypePluralName(t, type)
+  const isERC721 = type === EvmTokenType.ERC721
   const tableColumns: TableColProps[] = [
-    { key: 'name', content: t('common.name') },
+    { key: 'name', content: t(isERC721 ? 'common.collection' : 'common.name') },
     { key: 'contract', content: t('common.smartContract') },
-    { key: 'balance', align: TableCellAlign.Right, content: t('common.balance') },
+    { key: 'balance', align: TableCellAlign.Right, content: t(isERC721 ? 'common.owned' : 'common.balance') },
     { key: 'ticker', align: TableCellAlign.Right, content: t('common.ticker') },
+    ...(isERC721
+      ? [
+          {
+            key: 'link',
+            content: '',
+          },
+        ]
+      : []),
   ]
   const { layer } = scope
   if (layer === Layer.consensus) {
@@ -85,6 +95,15 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         align: TableCellAlign.Right,
         content: item.token_symbol || t('common.missing'),
         key: 'ticker',
+      },
+      {
+        align: TableCellAlign.Right,
+        key: 'link',
+        content: (
+          <Link component={RouterLink} to={item.token_contract_addr_eth}>
+            {t('common.viewAll')}
+          </Link>
+        ),
       },
     ],
     highlight: item.token_contract_addr_eth === locationHash || item.token_contract_addr === locationHash,

@@ -55,7 +55,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             )}
             <dt>{t('nft.instanceTokenId')}</dt>
             <dd>{nft.id}</dd>
-            <dt>{t('nft.collection')} </dt>
+            <dt>{t('common.collection')} </dt>
             <dd>
               <TokenLink scope={scope} address={contractAddress} name={token?.name} />
             </dd>

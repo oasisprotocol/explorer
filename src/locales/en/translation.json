@@ -40,6 +40,7 @@
     "block": "Block",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
+    "collection": "Collection",
     "copy": "Copy",
     "data": "Data",
     "emerald": "Emerald",
@@ -67,6 +68,7 @@
     "nfts": "NFTs",
     "not_defined": "Not defined",
     "oasis": "Oasis",
+    "owned": "Owned",
     "paratime": "Paratime",
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
@@ -123,7 +125,6 @@
   },
   "nft": {
     "accountCollection": "ERC-721 Tokens",
-    "collection": "Collection",
     "instanceIdLink": "ID: <InstanceLink />",
     "instanceTokenId": "Token ID",
     "instanceTitleSuffix": "(NFT Instance)",
