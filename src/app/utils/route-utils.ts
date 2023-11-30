@@ -148,6 +148,13 @@ export const addressParamLoader = async ({ params }: LoaderFunctionArgs) => {
   return address
 }
 
+export const contractAddressParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  validateAddressParam(params.contractAddress!)
+  // TODO: remove conversion when API supports querying by EVM address
+  const oasisContractAddress = await getOasisAddress(params.contractAddress!)
+  return { ethContractAddress: params.contractAddress, oasisContractAddress }
+}
+
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
   return validateBlockHeightParam(params.blockHeight!)
 }
