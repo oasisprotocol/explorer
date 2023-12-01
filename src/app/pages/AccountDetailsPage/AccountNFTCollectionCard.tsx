@@ -84,6 +84,7 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
           <AccountNFTCollection
             inventory={inventory}
             isFetched={isFetched}
+            isLoading={isLoading}
             totalCount={totalCount}
             isTotalCountClipped={isTotalCountClipped}
             pagination={pagination}
@@ -97,6 +98,7 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
 
 type AccountNFTCollectionProps = {
   inventory: EvmNft[] | undefined
+  isLoading: boolean
   isFetched: boolean
   isTotalCountClipped: boolean | undefined
   totalCount: number | undefined
@@ -110,6 +112,7 @@ type AccountNFTCollectionProps = {
 
 const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
   inventory,
+  isLoading,
   isFetched,
   isTotalCountClipped,
   pagination,
@@ -120,6 +123,7 @@ const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
 
   return (
     <>
+      {isLoading && <Skeleton variant="rectangular" sx={{ height: 200 }} />}
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
       {!!inventory?.length && (
         <>
