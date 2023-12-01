@@ -26,7 +26,7 @@ import { TablePagination } from '../../components/Table/TablePagination'
 import { useAccountTokenInventory } from '../TokenDashboardPage/hook'
 import { EvmNft } from 'oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
-import { NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
+import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
 
 export const accountTokenContainerId = 'nftCollection'
 
@@ -128,7 +128,7 @@ const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
                 <ImageListItem key={instance.id}>
                   <ImageListItemImage instance={instance} to={to} />
                   <ImageListItemBar
-                    title={'TODO'}
+                    title={<NFTCollectionLink instance={instance} scope={scope} />}
                     subtitle={<NFTInstanceLink instance={instance} scope={scope} />}
                     position="below"
                   />
