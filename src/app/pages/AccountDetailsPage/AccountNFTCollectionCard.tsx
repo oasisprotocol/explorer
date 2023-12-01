@@ -64,9 +64,11 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
                 {isFetched && (
                   <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={2}>
                     <Typography color={COLORS.brandExtraDark} fontSize={24}>
-                      {inventory?.[0].token.name ? inventory?.[0].token.name : t('common.collection')}
+                      {inventory?.length && inventory?.[0].token.name
+                        ? inventory?.[0].token.name
+                        : t('common.collection')}
                     </Typography>
-                    {totalCount && (
+                    {!!totalCount && (
                       <Typography>({`${isTotalCountClipped ? ' > ' : ''}${totalCount}`})</Typography>
                     )}
                   </Box>
