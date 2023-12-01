@@ -172,9 +172,9 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     inventory,
     pagination: {
       ...pagination,
-      isTotalCountClipped,
       rowsPerPage: NUMBER_OF_INVENTORY_ITEMS,
     },
+    isTotalCountClipped,
     totalCount,
   }
 }
