@@ -12,6 +12,7 @@ const imageSize = '210px'
 const StyledImage = styled('img')({
   width: imageSize,
   height: imageSize,
+  objectFit: 'cover',
 })
 
 type ImageListItemImageProps = {
