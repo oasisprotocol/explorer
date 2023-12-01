@@ -15,7 +15,6 @@ import Skeleton from '@mui/material/Skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { AccountDetailsContext } from './index'
-import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
 import { RouteUtils } from 'app/utils/route-utils'
@@ -28,7 +27,7 @@ import { EvmNft } from 'oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
 
-export const accountTokenContainerId = 'nftCollection'
+export const accountNFTCollectionContainerId = 'nftCollection'
 
 export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -41,7 +40,7 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
 
   return (
     <Card>
-      <LinkableDiv id={accountTokenTransfersContainerId}>
+      <LinkableDiv id={accountNFTCollectionContainerId}>
         <CardHeader
           action={
             <Box sx={{ display: 'flex', alignItems: 'flex-start', paddingY: 3 }}>
@@ -55,8 +54,9 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
               <Breadcrumbs separator="›" aria-label="breadcrumb">
                 <Typography fontSize={24}>
                   <Link
+                    preventScrollReset={true}
                     component={RouterLink}
-                    to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', ethContractAddress)}
+                    to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
                   >
                     {t('nft.accountCollection')}
                   </Link>

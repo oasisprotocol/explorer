@@ -100,7 +100,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
         align: TableCellAlign.Right,
         key: 'link',
         content: (
-          <Link component={RouterLink} to={item.token_contract_addr_eth}>
+          <Link component={RouterLink} to={item.token_contract_addr_eth} preventScrollReset={true}>
             {t('common.viewAll')}
           </Link>
         ),
