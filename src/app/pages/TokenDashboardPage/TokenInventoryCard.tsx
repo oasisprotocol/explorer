@@ -1,6 +1,5 @@
 import { FC } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -8,7 +7,6 @@ import CardContent from '@mui/material/CardContent'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
-import Link from '@mui/material/Link'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
@@ -18,6 +16,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { TablePagination } from '../../components/Table/TablePagination'
 import { useTokenInventory } from './hook'
 import { ImageListItemImage } from './ImageListItemImage'
+import { NFTInstanceLink } from './NFTLinks'
 
 export const tokenInventoryContainerId = 'inventory'
 
@@ -55,19 +54,7 @@ const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
                 <ImageListItem key={instance.id}>
                   <ImageListItemImage instance={instance} to={to} />
                   <ImageListItemBar
-                    title={
-                      <Trans
-                        i18nKey="nft.instanceIdLink"
-                        t={t}
-                        components={{
-                          InstanceLink: (
-                            <Link component={RouterLink} to={to}>
-                              #{instance.id}
-                            </Link>
-                          ),
-                        }}
-                      />
-                    }
+                    title={<NFTInstanceLink scope={scope} instance={instance} />}
                     subtitle={
                       owner ? <AccountLink scope={scope} address={owner} alwaysTrim={true} /> : undefined
                     }

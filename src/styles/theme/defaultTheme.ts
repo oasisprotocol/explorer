@@ -398,6 +398,19 @@ export const defaultTheme = createTheme({
         },
       },
     },
+    MuiBreadcrumbs: {
+      styleOverrides: {
+        li: {
+          fontSize: '24px',
+        },
+        separator: {
+          color: COLORS.brandDark,
+          fontSize: '24px',
+          paddingRight: 3,
+          paddingLeft: 3,
+        },
+      },
+    },
     MuiCardHeader: {
       styleOverrides: {
         root: ({ theme }) => ({
