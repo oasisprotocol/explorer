@@ -83,7 +83,7 @@ export const routes: RouteObject[] = [
           {
             path: `address/:address`,
             element: <AccountDetailsPage />,
-            loader: addressParamLoader,
+            loader: addressParamLoader(),
             children: [
               {
                 path: '',
@@ -107,7 +107,7 @@ export const routes: RouteObject[] = [
                   {
                     path: ':contractAddress',
                     Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} />,
-                    loader: addressParamLoader,
+                    loader: addressParamLoader('contractAddress'),
                   },
                 ],
               },
@@ -133,7 +133,7 @@ export const routes: RouteObject[] = [
           {
             path: 'token/:address/instance/:instanceId',
             element: <NFTInstanceDashboardPage />,
-            loader: addressParamLoader,
+            loader: addressParamLoader(),
             children: [
               {
                 path: '',
@@ -144,7 +144,7 @@ export const routes: RouteObject[] = [
           {
             path: `token/:address`,
             element: <TokenDashboardPage />,
-            loader: addressParamLoader,
+            loader: addressParamLoader(),
             children: [
               {
                 path: '',

@@ -184,6 +184,7 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
   }
 
   const oasisAddress = useTransformToOasisAddress(address)
+  const oasisTokenAddress = useTransformToOasisAddress(tokenAddress)
   const query = useGetRuntimeAccountsAddressNfts(
     network,
     layer,
@@ -191,11 +192,11 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     {
       limit: NUMBER_OF_INVENTORY_ITEMS,
       offset: offset,
-      token_address: tokenAddress,
+      token_address: oasisTokenAddress!,
     },
     {
       query: {
-        enabled: !!oasisAddress,
+        enabled: !!oasisAddress && !!oasisTokenAddress,
       },
     },
   )
