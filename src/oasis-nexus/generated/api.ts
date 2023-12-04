@@ -701,8 +701,8 @@ Affects display only. Often equals 18, to match ETH.
   decimals?: number;
   /** The Ethereum address of this token's contract. */
   eth_contract_addr: string;
-  /** Whether the contract has been successfully verified by Sourcify. 
-Additional information on verified contracts is available via 
+  /** Whether the contract has been successfully verified by Sourcify.
+Additional information on verified contracts is available via
 the `/{runtime}/accounts/{address}` endpoint.
  */
   is_verified: boolean;
@@ -1131,6 +1131,14 @@ cancelling an existing proposal.
   /** The number of invalid votes for this proposal, after tallying.
  */
   invalid_votes: string;
+  /** The base64 encoded raw cbor representing the updated parameters
+which are to be changed by this 'parameters_change' proposal.
+ */
+  parameters_change?: string;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
   /** The state of the proposal. */
   state: string;
   /** The staking address of the proposal submitter. */
@@ -1646,7 +1654,7 @@ export type BlockListAllOf = {
 
 export interface Status {
   /** The height of the most recent indexed block. Compare with latest_node_block to measure
-how far behind Nexus is from the chain. 
+how far behind Nexus is from the chain.
  */
   latest_block: number;
   /** The RFC 3339 formatted consensus time of when the most recently indexed block was produced. */
