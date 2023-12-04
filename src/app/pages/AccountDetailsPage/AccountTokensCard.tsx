@@ -13,7 +13,6 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { useAccount } from './hook'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { AccountLink } from '../../components/Account/AccountLink'
 import {
@@ -40,7 +39,7 @@ export const ContractLink: FC<{ scope: SearchScope; address: string }> = ({ scop
   )
 }
 
-export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, type }) => {
+export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, type }) => {
   const { t } = useTranslation()
   const locationHash = useLocation().hash.replace('#', '')
   const tokenListLabel = getTokenTypePluralName(t, type)
@@ -64,7 +63,6 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const { isLoading, account } = useAccount(scope, address)
   const tableRows = (account?.tokenBalances[type] || []).map(item => ({
     key: item.token_contract_addr,
     data: [
@@ -114,7 +112,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
       <LinkableDiv id={accountTokenContainerId}>
         <CardHeader disableTypography component="h3" title={tokenListLabel} />
         <CardContent>
-          {!isLoading && !account?.tokenBalances[type]?.length && (
+          {!!account && !account?.tokenBalances[type]?.length && (
             <CardEmptyState
               label={t('account.emptyTokenList', {
                 spec: getTokenTypeStrictName(t, type),
@@ -128,7 +126,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, address, 
             rows={tableRows}
             rowsNumber={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
             name={tokenListLabel}
-            isLoading={isLoading}
+            isLoading={!account}
             pagination={false}
           />
         </CardContent>

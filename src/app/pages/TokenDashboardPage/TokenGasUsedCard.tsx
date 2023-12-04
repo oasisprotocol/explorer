@@ -12,8 +12,6 @@ export const TokenGasUsedCard: FC<{ scope: SearchScope; address: string }> = ({ 
 
   const { account, isFetched } = useAccount(scope, address)
 
-  console.log('Account', account)
-
   return (
     <SnapshotCard title={t('common.gasUsed')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>

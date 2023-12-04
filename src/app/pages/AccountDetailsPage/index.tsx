@@ -6,7 +6,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 
-import { EvmTokenType } from '../../../oasis-nexus/api'
+import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount, useAccountEvents } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -22,6 +22,7 @@ import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterS
 export type AccountDetailsContext = {
   scope: SearchScope
   address: string
+  account?: RuntimeAccount
 }
 
 export const useAccountDetailsProps = () => useOutletContext<AccountDetailsContext>()
@@ -54,7 +55,7 @@ export const AccountDetailsPage: FC = () => {
 
   const isLoading = isAccountLoading || isTokenLoading
 
-  const context: AccountDetailsContext = { scope, address }
+  const context: AccountDetailsContext = { scope, address, account }
 
   return (
     <PageLayout>

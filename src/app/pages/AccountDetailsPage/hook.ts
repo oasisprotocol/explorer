@@ -10,14 +10,15 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
 import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterSwitch'
+import { useTransformToOasisAddress } from '../../hooks/useTransformToOasisAddress'
 
-export const useAccount = (scope: SearchScope, oasisAddress: string) => {
+export const useAccount = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const query = useGetRuntimeAccountsAddress(network, layer, oasisAddress!)
+  const query = useGetRuntimeAccountsAddress(network, layer, address)
   const account = query.data?.data
   const { isLoading, isError, isFetched } = query
 
@@ -33,13 +34,20 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // Loading transactions on the consensus layer is not supported yet.
     // We should use useGetConsensusTransactions()
   }
+
+  const oasisAddress = useTransformToOasisAddress(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       offset: offset,
-      rel: address,
+      rel: oasisAddress!,
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
     },
   )
   const { isFetched, isLoading, data } = query
@@ -69,10 +77,21 @@ export const useAccountEvents = (scope: SearchScope, address: string, filterMode
     // Loading events on the consensus layer is not supported yet.
     // We should use useGetConsensusEvents()
   }
-  const query = useGetRuntimeEvents(network, layer, {
-    rel: address,
-    // TODO: implement filtering for non-transactional events
-  })
+
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeEvents(
+    network,
+    layer,
+    {
+      rel: oasisAddress!,
+      // TODO: implement filtering for non-transactional events
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
+    },
+  )
   const { isFetched, isLoading, isError, data } = query
   const events = data?.data.events.filter(
     event => filterMode === EventFilterMode.All || event.type !== RuntimeEventType.accountstransfer,

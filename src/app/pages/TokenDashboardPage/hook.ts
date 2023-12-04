@@ -13,6 +13,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
+import { useTransformToOasisAddress } from '../../hooks/useTransformToOasisAddress'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -44,15 +45,22 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
     // Loading transactions on the consensus layer is not supported yet.
     // We should use useGetConsensusTransactions()
   }
+
+  const oasisAddress = useTransformToOasisAddress(address)
   const query = useGetRuntimeEvents(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       ...pagination.paramsForQuery,
-      rel: address,
+      rel: oasisAddress!,
       type: 'evm.log',
       // The following is the hex-encoded signature for Transfer(address,address,uint256)
       evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
     },
   )
 
@@ -79,10 +87,22 @@ export const useTokenHolders = (scope: SearchScope, address: string) => {
     throw AppErrors.UnsupportedLayer
     // There are no token holders on the consensus layer.
   }
-  const query = useGetRuntimeEvmTokensAddressHolders(network, layer, address, {
-    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-    offset: offset,
-  })
+
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeEvmTokensAddressHolders(
+    network,
+    layer,
+    oasisAddress!,
+    {
+      limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+      offset: offset,
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
+    },
+  )
 
   const { isFetched, isLoading, data } = query
 
@@ -116,10 +136,21 @@ export const useTokenInventory = (scope: SearchScope, address: string) => {
     throw AppErrors.UnsupportedLayer
     // There are no tokens on the consensus layer.
   }
-  const query = useGetRuntimeEvmTokensAddressNfts(network, layer, address, {
-    limit: NUMBER_OF_INVENTORY_ITEMS,
-    offset: offset,
-  })
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeEvmTokensAddressNfts(
+    network,
+    layer,
+    oasisAddress!,
+    {
+      limit: NUMBER_OF_INVENTORY_ITEMS,
+      offset: offset,
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
+    },
+  )
   const { isFetched, isLoading, data } = query
   const inventory = data?.data.evm_nfts
 
@@ -151,11 +182,23 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     throw AppErrors.UnsupportedLayer
     // There are no tokens on the consensus layer.
   }
-  const query = useGetRuntimeAccountsAddressNfts(network, layer, address, {
-    limit: NUMBER_OF_INVENTORY_ITEMS,
-    offset: offset,
-    token_address: tokenAddress,
-  })
+
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeAccountsAddressNfts(
+    network,
+    layer,
+    oasisAddress!,
+    {
+      limit: NUMBER_OF_INVENTORY_ITEMS,
+      offset: offset,
+      token_address: tokenAddress,
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
+    },
+  )
   const { isFetched, isLoading, data } = query
   const inventory = data?.data.evm_nfts
 

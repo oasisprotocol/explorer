@@ -31,9 +31,9 @@ export const accountNFTCollectionContainerId = 'nftCollection'
 
 export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const oasisContractAddress = useLoaderData() as string
+  const contractAddress = useLoaderData() as string
   const { inventory, isFetched, isLoading, isTotalCountClipped, pagination, totalCount } =
-    useAccountTokenInventory(scope, address, oasisContractAddress)
+    useAccountTokenInventory(scope, address, contractAddress)
   const firstToken = inventory?.length ? inventory?.[0].token : undefined
 
   return (
