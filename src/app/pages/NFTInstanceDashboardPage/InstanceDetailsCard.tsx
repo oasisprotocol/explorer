@@ -72,12 +72,14 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
                 </dd>
               </>
             )}
-            {nft?.token?.num_transfers && (
+            {/* 
+            // TODO: uncomment when instance num_transfers is available
+            {nft?.num_transfers && (
               <>
                 <dt>{t('nft.transfers')}</dt>
                 <dd>{nft.token.num_transfers!.toLocaleString()}</dd>
               </>
-            )}
+            )} */}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
               <AccountLink scope={account} address={account.address_eth || account.address} />
