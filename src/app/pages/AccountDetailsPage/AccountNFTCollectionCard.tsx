@@ -31,22 +31,23 @@ export const accountNFTCollectionContainerId = 'nftCollection'
 
 export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const { ethContractAddress, oasisContractAddress } = useLoaderData() as {
-    ethContractAddress: string
-    oasisContractAddress: string
-  }
+  const oasisContractAddress = useLoaderData() as string
   const { inventory, isFetched, isLoading, isTotalCountClipped, pagination, totalCount } =
     useAccountTokenInventory(scope, address, oasisContractAddress)
+  const firstToken = inventory?.length ? inventory?.[0].token : undefined
 
   return (
     <Card>
       <LinkableDiv id={accountNFTCollectionContainerId}>
         <CardHeader
           action={
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', paddingY: 3 }}>
-              <AccountLink scope={scope} address={ethContractAddress} />
-              <CopyToClipboard value={ethContractAddress} />
-            </Box>
+            isFetched &&
+            firstToken && (
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', paddingY: 3 }}>
+                <AccountLink scope={scope} address={firstToken?.eth_contract_addr} />
+                <CopyToClipboard value={firstToken?.eth_contract_addr} />
+              </Box>
+            )
           }
           disableTypography
           title={
@@ -64,9 +65,7 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
                 {isFetched && (
                   <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={2}>
                     <Typography color={COLORS.brandExtraDark} fontSize={24}>
-                      {inventory?.length && inventory?.[0].token.name
-                        ? inventory?.[0].token.name
-                        : t('common.collection')}
+                      {firstToken?.name ? inventory?.[0].token.name : t('common.collection')}
                     </Typography>
                     {!!totalCount && (
                       <Typography>({`${isTotalCountClipped ? ' > ' : ''}${totalCount}`})</Typography>
