@@ -12,7 +12,6 @@ import { SearchResultsPage } from './app/pages/SearchResultsPage'
 import {
   addressParamLoader,
   blockHeightParamLoader,
-  contractAddressParamLoader,
   transactionParamLoader,
   scopeLoader,
 } from './app/utils/route-utils'
@@ -108,7 +107,7 @@ export const routes: RouteObject[] = [
                   {
                     path: ':contractAddress',
                     Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} />,
-                    loader: contractAddressParamLoader,
+                    loader: addressParamLoader,
                   },
                 ],
               },

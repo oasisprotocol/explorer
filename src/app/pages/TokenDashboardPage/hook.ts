@@ -182,11 +182,23 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     throw AppErrors.UnsupportedLayer
     // There are no tokens on the consensus layer.
   }
-  const query = useGetRuntimeAccountsAddressNfts(network, layer, address, {
-    limit: NUMBER_OF_INVENTORY_ITEMS,
-    offset: offset,
-    token_address: tokenAddress,
-  })
+
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeAccountsAddressNfts(
+    network,
+    layer,
+    oasisAddress!,
+    {
+      limit: NUMBER_OF_INVENTORY_ITEMS,
+      offset: offset,
+      token_address: tokenAddress,
+    },
+    {
+      query: {
+        enabled: !!oasisAddress,
+      },
+    },
+  )
   const { isFetched, isLoading, data } = query
   const inventory = data?.data.evm_nfts
 
