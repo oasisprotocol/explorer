@@ -8,7 +8,7 @@ export const useTransformToOasisAddress = (ethOrOasisAddress: string): string | 
     let shouldUpdate = true
 
     const transformToOasisAddress = async (addr: string) => {
-      const oasisAddr = await getOasisAddress(addr)
+      const oasisAddr = await getOasisAddress(addr).catch(() => Promise.resolve(null))
       if (shouldUpdate) {
         setOasisAddress(oasisAddr)
       }
