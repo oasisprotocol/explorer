@@ -6,7 +6,8 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { testnet } from '../../utils/externalLinks'
+import { faucet } from '../../utils/externalLinks'
+import { Layer } from '../../../oasis-nexus/api'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(5),
@@ -17,7 +18,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
 }))
 
-export const TestnetFaucet: FC = () => {
+type TestnetFaucetProps = {
+  layer: Layer
+}
+
+export const TestnetFaucet: FC<TestnetFaucetProps> = ({ layer }) => {
   const { t } = useTranslation()
 
   return (
@@ -32,7 +37,7 @@ export const TestnetFaucet: FC = () => {
           {t('testnetFaucet.description')}
         </Typography>
         <Button
-          href={testnet.faucet}
+          href={faucet[layer]}
           target="_blank"
           rel="noopener noreferrer"
           color="secondary"
