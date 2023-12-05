@@ -71,7 +71,7 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
           {scope.network === Network.mainnet && <RosePriceCard />}
-          {scope.network === Network.testnet && <TestnetFaucet />}
+          {scope.network === Network.testnet && <TestnetFaucet layer={scope.layer} />}
         </StyledGrid>
       </Grid>
     </>
