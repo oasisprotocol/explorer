@@ -141,11 +141,13 @@ const validateTxHashParam = (hash: string) => {
   return true
 }
 
-export const addressParamLoader = ({ params }: LoaderFunctionArgs): string => {
-  validateAddressParam(params.address!)
+export const addressParamLoader =
+  (queryParam: string = 'address') =>
+  ({ params }: LoaderFunctionArgs): string => {
+    validateAddressParam(params[queryParam]!)
 
-  return params.address!
-}
+    return params[queryParam]!
+  }
 
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
   return validateBlockHeightParam(params.blockHeight!)
