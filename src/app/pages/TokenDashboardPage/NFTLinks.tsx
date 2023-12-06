@@ -36,7 +36,7 @@ export const NFTCollectionLink: FC<NFTLinkProps> = ({ scope, instance }) => {
 
 export const NFTInstanceLink: FC<NFTLinkProps> = ({ scope, instance }) => {
   const { t } = useTranslation()
-  const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.contract_addr, instance.id)
+  const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.eth_contract_addr, instance.id)
 
   return (
     <Typography>
