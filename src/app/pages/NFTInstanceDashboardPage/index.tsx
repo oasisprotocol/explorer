@@ -32,12 +32,15 @@ export const NFTInstanceDashboardPage: FC = () => {
     throw AppErrors.InvalidUrl
   }
 
-  const { data, isFetched, isLoading } = useGetRuntimeEvmTokensAddressNftsId(
+  const { data, isError, isFetched, isLoading } = useGetRuntimeEvmTokensAddressNftsId(
     scope.network,
     scope.layer as Runtime,
     address,
     instanceId,
   )
+  if (isError) {
+    throw AppErrors.InvalidAddress
+  }
   const nft = data?.data
   const metadataLink = useHref('')
   const context: NftDashboardContext = {
