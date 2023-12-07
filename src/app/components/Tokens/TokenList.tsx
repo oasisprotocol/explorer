@@ -67,7 +67,7 @@ export const TokenList = (props: TokensProps) => {
     { key: 'verification', content: t('contract.verification.title') },
     {
       key: 'holders',
-      content: t('tokens.holdersCount'),
+      content: t('tokens.holdersCount_short'),
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
@@ -98,7 +98,11 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           key: 'type',
-          content: <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />,
+          content: (
+            <Box sx={{ pr: 4 }}>
+              <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />
+            </Box>
+          ),
         },
         {
           content: (
