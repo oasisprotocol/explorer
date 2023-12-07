@@ -9,12 +9,16 @@ interface AppendMobileSearchProps {
   action?: ReactNode
 }
 
+interface AppendMobileSearchLayoutProps {
+  action?: ReactNode
+  isMobile: boolean
+}
+
 const Layout = styled(Box, {
-  shouldForwardProp: (prop: PropertyKey) =>
-    !(['action'] as (keyof AppendMobileSearchProps)[]).includes(prop as keyof AppendMobileSearchProps),
-})<AppendMobileSearchProps>(({ action }) => ({
+  shouldForwardProp: prop => prop !== 'action' && prop !== 'isMobile',
+})<AppendMobileSearchLayoutProps>(({ action, isMobile }) => ({
   position: 'relative',
-  alignItems: 'flex-start',
+  alignItems: isMobile ? 'center' : 'flex-start',
   width: '100%',
   ...(action
     ? {
@@ -41,7 +45,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
   const { isMobile } = useScreenSize()
 
   return (
-    <Layout action={action}>
+    <Layout action={action} isMobile={isMobile}>
       <Box>{children}</Box>
 
       {action}

@@ -49,7 +49,7 @@ export const TokenDashboardPage: FC = () => {
     <PageLayout>
       <TokenTitleCard scope={scope} address={address} />
       <TokenSnapshot scope={scope} address={address} />
-      {!isMobile && <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />}
+      <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <TokenDetailsCard scope={scope} address={address} />
       <RouterTabs
         tabs={[

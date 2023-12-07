@@ -16,7 +16,6 @@ import { SearchScope } from '../../../types/searchScope'
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
 }))
-
 export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 
@@ -29,10 +28,7 @@ export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ sco
         <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
           <AppendMobileSearch scope={scope}>
             <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
-              <Typography
-                variant="h3"
-                sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
-              >
+              <Typography variant="h3" sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3 }}>
                 {t('tokenSnapshot.header')}
               </Typography>
             </Box>
