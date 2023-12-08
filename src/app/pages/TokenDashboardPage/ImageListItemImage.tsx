@@ -6,14 +6,21 @@ import { isNftImageUrlValid, processNftImageUrl } from 'app/utils/nft-images'
 import { NoPreview } from '../../components/NoPreview'
 import { getNftInstanceLabel } from '../../utils/nft'
 import { EvmNft } from '../../../oasis-nexus/api'
+import { useScreenSize } from 'app/hooks/useScreensize'
 
+const minMobileSize = '150px'
+const mobileSize = '100%'
 const imageSize = '210px'
 
-const StyledImage = styled('img')({
-  width: imageSize,
-  height: imageSize,
+const StyledImage = styled('img', {
+  shouldForwardProp: prop => prop !== 'isMobile',
+})<{ isMobile: boolean }>(({ isMobile }) => ({
+  minWidth: isMobile ? minMobileSize : imageSize,
+  minHeight: isMobile ? minMobileSize : imageSize,
+  width: isMobile ? mobileSize : imageSize,
+  height: isMobile ? mobileSize : imageSize,
   objectFit: 'cover',
-})
+}))
 
 type ImageListItemImageProps = {
   instance: EvmNft
@@ -21,6 +28,8 @@ type ImageListItemImageProps = {
 }
 
 export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }) => {
+  const { isMobile } = useScreenSize()
+
   return (
     <Link component={RouterLink} to={to}>
       {isNftImageUrlValid(instance.image) ? (
@@ -28,6 +37,7 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
           src={processNftImageUrl(instance.image)}
           alt={getNftInstanceLabel(instance)}
           loading="lazy"
+          isMobile={isMobile}
         />
       ) : (
         <NoPreview placeholderSize={imageSize} />
