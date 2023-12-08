@@ -40,9 +40,9 @@ const faucetUrl = 'https://faucet.testnet.oasis.dev/'
 const faucetParaTimeBaseUrl = `${faucetUrl}?paratime=`
 export const faucet = {
   [Layer.consensus]: faucetUrl,
-  [Layer.emerald]: `${faucetParaTimeBaseUrl}${Layer.emerald}`,
-  [Layer.sapphire]: `${faucetParaTimeBaseUrl}${Layer.sapphire}`,
-  [Layer.cipher]: `${faucetParaTimeBaseUrl}${Layer.cipher}`,
+  [Layer.emerald]: `${faucetParaTimeBaseUrl}emerald`,
+  [Layer.sapphire]: `${faucetParaTimeBaseUrl}sapphire`,
+  [Layer.cipher]: `${faucetParaTimeBaseUrl}cipher`,
 }
 
 export const api = {
