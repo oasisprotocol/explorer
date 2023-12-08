@@ -40,7 +40,9 @@ export type SearchResultItem = BlockResult | TransactionResult | AccountResult |
 
 export type SearchResults = SearchResultItem[]
 
-export function useBlocksConditionally(blockHeight: string | undefined): ConditionalResults<RuntimeBlock> {
+export function useBlocksByHeightConditionally(
+  blockHeight: string | undefined,
+): ConditionalResults<RuntimeBlock> {
   const queries = RouteUtils.getEnabledScopes()
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
@@ -134,7 +136,7 @@ export function useRuntimeTokenConditionally(
 
 export const useSearch = (q: SearchParams) => {
   const queries = {
-    blockHeight: useBlocksConditionally(q.blockHeight),
+    blockHeight: useBlocksByHeightConditionally(q.blockHeight),
     // TODO: searchQuery.blockHash when API is ready
     txHash: useTransactionsConditionally(q.txHash),
     oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
