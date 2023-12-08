@@ -547,9 +547,10 @@ export const defaultTheme = createTheme({
           borderColor: COLORS.brandExtraDark,
           borderRadius: 8,
           overflow: 'hidden',
-          transition: 'box-shadow 250ms ease-in-out',
+          transition: 'border-color, box-shadow 250ms ease-in-out',
           '&:hover, &:focus-visible': {
             boxShadow: '0px 8px 8px 0px rgba(0, 0, 0, 0.15)',
+            borderColor: COLORS.brandDark,
           },
         },
       },
