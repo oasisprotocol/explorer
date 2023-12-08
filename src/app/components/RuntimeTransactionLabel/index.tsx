@@ -10,7 +10,7 @@ import { DepositIcon } from './../CustomIcons/Deposit'
 import { WithdrawIcon } from './../CustomIcons/Withdraw'
 import { TransferIcon } from './../CustomIcons/Transfer'
 import { DelegateIcon } from '../CustomIcons/Delegate'
-import { UndelegateIcon } from '../CustomIcons/Undelegate'
+import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -53,7 +53,7 @@ const getRuntimeTransactionIcon = (method: string | undefined) => {
     case 'consensus.Delegate':
       return <DelegateIcon sx={iconStyles} />
     case 'consensus.Undelegate':
-      return <UndelegateIcon sx={iconStyles} />
+      return <UndelegateStartIcon sx={iconStyles} />
     case 'accounts.Transfer':
       return <TransferIcon sx={iconStyles} />
     default:

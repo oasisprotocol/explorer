@@ -25,7 +25,9 @@ import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
-import { UnknownIcon } from '../CustomIcons/Unknown'
+import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
+import { UndelegateFinishIcon } from '../CustomIcons/UndelegateFinish'
+import { DelegateIcon } from '../CustomIcons/Delegate'
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
@@ -37,9 +39,9 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.coregas_used]: <></>,
     [RuntimeEventType.consensus_accountswithdraw]: <WithdrawIcon fontSize="inherit" />,
     [RuntimeEventType.consensus_accountsdeposit]: <DepositIcon fontSize="inherit" />,
-    [RuntimeEventType.consensus_accountsdelegate]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
-    [RuntimeEventType.consensus_accountsundelegate_start]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
-    [RuntimeEventType.consensus_accountsundelegate_done]: <UnknownIcon fontSize="inherit" />, // TODO: use correct icon
+    [RuntimeEventType.consensus_accountsdelegate]: <DelegateIcon fontSize="inherit" />,
+    [RuntimeEventType.consensus_accountsundelegate_start]: <UndelegateStartIcon fontSize="inherit" />,
+    [RuntimeEventType.consensus_accountsundelegate_done]: <UndelegateFinishIcon fontSize="inherit" />,
     [RuntimeEventType.accountsmint]: <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />,
     [RuntimeEventType.accountsburn]: (
       <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
@@ -147,6 +149,7 @@ export const RuntimeEventDetails: FC<{
     [RuntimeEventType.accountsmint]: t('runtimeEvent.accountsmint'),
     [RuntimeEventType.accountsburn]: t('runtimeEvent.accountsburn'),
   }
+
   const eventName = eventTypeNames[event.type]
   switch (event.type) {
     case RuntimeEventType.coregas_used:
@@ -237,9 +240,6 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
     case RuntimeEventType.consensus_accountswithdraw:
-    case RuntimeEventType.consensus_accountsdelegate: // TODO show this properly
-    case RuntimeEventType.consensus_accountsundelegate_start: // TODO show this properly
-    case RuntimeEventType.consensus_accountsundelegate_done: // TODO show this properly
       return (
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
@@ -264,18 +264,123 @@ export const RuntimeEventDetails: FC<{
               />
               {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
-            {/* TODO check is needed because some consensus events temporarily use this for rendering */}
-            {event.body.amount?.Amount && event.body.amount?.Denomination && (
-              <>
-                <dt>{t('runtimeEvent.fields.amount')}</dt>
-                <dd>
-                  {t('common.valueInToken', {
-                    ...getPreciseNumberFormat(event.body.amount.Amount),
-                    ticker: event.body.amount.Denomination,
-                  })}
-                </dd>
-              </>
-            )}
+            <dt>{t('runtimeEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                ...getPreciseNumberFormat(event.body.amount.Amount),
+                ticker: event.body.amount?.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.consensus_accountsdelegate:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.from')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.from}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.from} />
+              )}
+            </dd>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.to}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
+            </dd>
+            <dt>{t('runtimeEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                ...getPreciseNumberFormat(event.body.amount.Amount),
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.consensus_accountsundelegate_start:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.from')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.from}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.from} />
+              )}
+            </dd>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.to}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
+            </dd>
+            <dt>{t('runtimeEvent.fields.activeShares')}</dt>
+            <dd>
+              {t('common.valueLong', {
+                ...getPreciseNumberFormat(event.body.shares),
+              })}
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.consensus_accountsundelegate_done:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <dt>{t('common.from')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.from}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && (
+                <CopyToClipboard value={event.body.from} />
+              )}
+            </dd>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <AccountLink
+                address={event.body.to}
+                scope={scope}
+                plain={addressSwitchOption !== AddressSwitchOption.Oasis}
+              />
+              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
+            </dd>
+            <dt>{t('runtimeEvent.fields.amount')}</dt>
+            <dd>
+              {t('common.valueInToken', {
+                ...getPreciseNumberFormat(event.body.amount.Amount),
+                ticker: event.body.amount.Denomination,
+              })}
+            </dd>
+            <dt>{t('runtimeEvent.fields.debondingShares')}</dt>
+            <dd>
+              {t('common.valueLong', {
+                ...getPreciseNumberFormat(event.body.shares),
+              })}
+            </dd>
           </StyledDescriptionList>
         </div>
       )

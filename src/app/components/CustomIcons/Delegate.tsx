@@ -4,18 +4,20 @@ import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 export const DelegateIcon: FC<SvgIconProps> = props => {
   return (
     <SvgIcon {...props}>
-      <defs>
-        <clipPath id="clippath">
-          <rect fill="none" x="4.2" y="4.2" width="15.6" height="15.6" />
-        </clipPath>
-      </defs>
-      <circle fill="#E8F6FF" cx="12" cy="12" r="12" />
-      <g clipPath="url(#clippath)">
-        <path
-          fill="#6665D8"
-          d="M11.46,17.36H7.18v-3.75h1.61v-2.14h2.68v-1.07h-1.61v-3.75h4.29v3.75h-1.61v1.07h2.68v2.14h1.61v3.75h-4.29v-3.75h1.61v-1.07h-4.29v1.07h1.61v3.75Z"
-        />
-      </g>
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="20" fill="#E8F5FF" />
+        <g clipPath="url(#clip0_7391_89888)">
+          <path
+            d="M18.75 32.5L8.75 32.5L8.75 23.75L12.5 23.75L12.5 18.75L18.75 18.75L18.75 16.25L15 16.25L15 7.5L25 7.5L25 16.25L21.25 16.25L21.25 18.75L27.5 18.75L27.5 23.75L31.25 23.75L31.25 32.5L21.25 32.5L21.25 23.75L25 23.75L25 21.25L15 21.25L15 23.75L18.75 23.75L18.75 32.5Z"
+            fill="#6665D8"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_7391_89888">
+            <rect width="30" height="30" fill="white" transform="translate(5 5)" />
+          </clipPath>
+        </defs>
+      </svg>
     </SvgIcon>
   )
 }
