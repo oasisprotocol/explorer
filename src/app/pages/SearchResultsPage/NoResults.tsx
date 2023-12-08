@@ -4,7 +4,7 @@ import { EmptyState } from '../../components/EmptyState'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import { SearchSuggestionsLinks } from '../../components/Search/SearchSuggestionsLinks'
+import { SearchSuggestionsLinksForNoResults } from '../../components/Search/SearchSuggestionsLinksForNoResults'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { useTheme } from '@mui/material/styles'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
@@ -41,7 +41,7 @@ export const NoResults: FC<{
             />
           </p>
           <p>
-            <SearchSuggestionsLinks scope={layer && network ? { network, layer } : undefined} />
+            <SearchSuggestionsLinksForNoResults scope={layer && network ? { network, layer } : undefined} />
           </p>
         </Box>
       }

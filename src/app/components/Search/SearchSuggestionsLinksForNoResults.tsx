@@ -11,7 +11,7 @@ interface Props {
   scope: SearchScope | undefined
 }
 
-export const SearchSuggestionsLinks: FC<Props> = ({ scope }) => {
+export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope }) => {
   const { t } = useTranslation()
   const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
     (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
