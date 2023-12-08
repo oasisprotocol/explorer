@@ -3,13 +3,23 @@
 import axios, { AxiosResponse } from 'axios'
 import { paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { UseQueryOptions } from '@tanstack/react-query'
-import { EvmToken, EvmTokenType, Layer, RuntimeAccount } from './generated/api'
+import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import {
+  EvmToken,
+  EvmTokenType,
+  GetRuntimeAccountsAddress,
+  HumanReadableErrorResponse,
+  Layer,
+  NotFoundErrorResponse,
+  RuntimeAccount,
+} from './generated/api'
 import { fromBaseUnits, getEthAddressForAccount } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
 import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddress'
+import { useEffect, useState } from 'react'
+import { RpcUtils } from '../app/utils/rpc-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -281,10 +291,12 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
+  const [rpcAccountBalance, setRpcAccountBalance] = useState<string | null>(null)
+
   const oasisAddress = useTransformToOasisAddress(address)
 
   const ticker = getTickerForNetwork(network)
-  return generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
+  const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
     query: {
       ...(options?.query ?? {}),
@@ -338,7 +350,69 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
         ...arrayify(options?.request?.transformResponse),
       ],
     },
-  })
+  }) as UseQueryResult<
+    Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>,
+    HumanReadableErrorResponse | NotFoundErrorResponse
+  > & { queryKey: QueryKey }
+
+  const runtimeAccount = query.data?.data as RuntimeAccount
+
+  // TODO: Remove after account balances on Nexus are in sync with the node
+  useEffect(() => {
+    // Trigger only if the account has been fetched from Nexus and is not a contract and has eth address
+    if (!runtimeAccount || !!runtimeAccount.evm_contract || !runtimeAccount.address_eth) {
+      return
+    }
+
+    let shouldUpdate = true
+
+    const fetchAccountBalance = async () => {
+      setRpcAccountBalance(null)
+
+      const balance = await RpcUtils.getAccountBalance(runtimeAccount.address_eth!, {
+        context: {
+          network: runtimeAccount.network,
+          layer: runtimeAccount.layer,
+        },
+      })
+
+      if (shouldUpdate) {
+        setRpcAccountBalance(balance)
+      }
+    }
+
+    fetchAccountBalance()
+
+    return () => {
+      shouldUpdate = false
+    }
+  }, [runtimeAccount])
+
+  const data: any =
+    rpcAccountBalance !== null && runtimeAccount
+      ? {
+          ...runtimeAccount,
+          balances: runtimeAccount.balances?.length
+            ? [
+                {
+                  ...runtimeAccount.balances[0],
+                  balance: rpcAccountBalance,
+                },
+              ]
+            : [],
+        }
+      : runtimeAccount
+
+  return {
+    ...query,
+    data: query.data
+      ? {
+          ...query.data,
+          data,
+        }
+      : query.data,
+    // TypeScript complaining for no good reason
+  } as any
 }
 
 export function useGetConsensusBlockByHeight(
