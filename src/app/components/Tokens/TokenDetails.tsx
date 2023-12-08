@@ -12,7 +12,7 @@ import { VerificationIcon } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { RoundedBalance } from '../RoundedBalance'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -39,7 +39,9 @@ export const TokenDetails: FC<{
       <dt>{t('common.name')}</dt>
       <dd>
         <TokenLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} name={token.name} />
-        <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium }}>({token.symbol})</Box>
+        <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
+          ({token.symbol})
+        </Box>
       </dd>
 
       <dt>{t('common.type')}</dt>
@@ -64,12 +66,11 @@ export const TokenDetails: FC<{
 
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>
-        {token.total_supply
-          ? t('tokens.totalSupplyValue', {
-              ...getPreciseNumberFormat(token.total_supply),
-              ticker: token.symbol,
-            })
-          : t('common.missing')}
+        {token.total_supply ? (
+          <RoundedBalance compactLargeNumbers value={token.total_supply} />
+        ) : (
+          t('common.missing')
+        )}
       </dd>
     </StyledDescriptionList>
   )

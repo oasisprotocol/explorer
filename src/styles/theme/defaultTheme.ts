@@ -607,7 +607,9 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           [theme.breakpoints.down('sm')]: {
             paddingRight: theme.spacing(4),
+            // force scrollbar to cover the whole table horizontally
             marginLeft: `-${theme.spacing(4)}`,
+            width: `calc(100% + ${theme.spacing(4)})`,
           },
         }),
       },
