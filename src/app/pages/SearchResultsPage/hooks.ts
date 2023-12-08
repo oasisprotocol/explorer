@@ -12,6 +12,7 @@ import {
   useGetRuntimeEvmTokens,
   EvmTokenList,
   EvmToken,
+  useGetRuntimeBlockByHash,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -57,6 +58,32 @@ export function useBlocksByHeightConditionally(
       useGetRuntimeBlockByHeight(scope.network, scope.layer as Runtime, parseInt(blockHeight!), {
         query: {
           enabled: !!blockHeight,
+        },
+      }),
+    )
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
+export function useBlocksByHashConditionally(
+  blockHash: string | undefined,
+): ConditionalResults<RuntimeBlock> {
+  const queries = RouteUtils.getEnabledScopes()
+    .filter(scope => scope.layer !== Layer.consensus)
+    .map(scope =>
+      /**
+       * Normally, calling React hooks from callbacks and other conditional code
+       * is not a good idea, but in this case, we can be sure that the number of
+       * enabled combinations will never change during runtime
+       * (since it's hard-coded in route-utils.ts), so we can just ignore
+       * the lint warning about abusing the rules of hooks.
+       */
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetRuntimeBlockByHash(scope.network, scope.layer as Runtime, blockHash || '', {
+        query: {
+          enabled: !!blockHash,
         },
       }),
     )
@@ -137,7 +164,7 @@ export function useRuntimeTokenConditionally(
 export const useSearch = (q: SearchParams) => {
   const queries = {
     blockHeight: useBlocksByHeightConditionally(q.blockHeight),
-    // TODO: searchQuery.blockHash when API is ready
+    blockHash: useBlocksByHashConditionally(q.blockHash),
     txHash: useTransactionsConditionally(q.txHash),
     oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
@@ -145,7 +172,7 @@ export const useSearch = (q: SearchParams) => {
     tokens: useRuntimeTokenConditionally(q.evmTokenNameFragment),
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
-  const blocks = queries.blockHeight.results || []
+  const blocks = [...queries.blockHeight.results, ...queries.blockHash.results]
   const transactions = queries.txHash.results || []
   const accounts = [
     ...(queries.oasisAccount.results || []),

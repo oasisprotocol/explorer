@@ -443,6 +443,34 @@ export function useGetConsensusBlockByHeight(
   return result
 }
 
+export function useGetConsensusBlockByHash(
+  network: Network,
+  blockHash: string,
+  options?: { query?: UseQueryOptions<any, any> },
+) {
+  const result = generated.useGetConsensusBlocks(
+    network,
+    { hash: blockHash },
+    {
+      ...options,
+      request: {
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (block: generated.Block, headers, status) => {
+            if (status !== 200) return block
+            return {
+              ...block,
+              layer: Layer.consensus,
+              network,
+            }
+          },
+        ],
+      },
+    },
+  )
+  return result
+}
+
 // TODO: replace with an appropriate API
 export function useGetRuntimeBlockByHeight(
   network: Network,
@@ -464,6 +492,47 @@ export function useGetRuntimeBlockByHeight(
             if (status !== 200) return data
             const block = data.blocks[0]
             if (!block || block.round !== blockHeight) {
+              throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
+                status: 404,
+                statusText: 'not found',
+                config: this,
+                data: 'not found',
+                headers: {},
+              })
+            }
+            return {
+              ...block,
+              layer: runtime,
+              network,
+            }
+          },
+        ],
+      },
+    },
+  )
+  return result
+}
+
+export function useGetRuntimeBlockByHash(
+  network: Network,
+  runtime: generated.Runtime,
+  blockHash: string,
+  options?: { query?: UseQueryOptions<any, any> },
+) {
+  const params: generated.GetRuntimeBlocksParams = { hash: blockHash }
+  const result = generated.useGetRuntimeBlocks<AxiosResponse<generated.RuntimeBlock, any>>(
+    network,
+    runtime,
+    params,
+    {
+      ...options,
+      request: {
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          function (data: generated.RuntimeBlockList, headers, status) {
+            if (status !== 200) return data
+            const block = data.blocks[0]
+            if (!block || block.hash !== blockHash) {
               throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
                 status: 404,
                 statusText: 'not found',
