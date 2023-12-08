@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { BareTokenHolder } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { fromBaseUnits } from '../../utils/helpers'
 import { RoundedBalance } from '../RoundedBalance'
+import { ProgressBar } from '../ProgressBar'
 
 type TableTokenHolder = BareTokenHolder & {
   markAsNew?: boolean
@@ -30,16 +32,14 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
 }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
-    { key: 'rank', content: t('common.rank'), align: TableCellAlign.Center },
+    { key: 'rank', content: t('common.rank') },
     { key: 'address', content: t('common.address') },
     { key: 'quantity', content: t('common.quantity'), align: TableCellAlign.Right },
     { key: 'percentage', content: t('common.percentage'), align: TableCellAlign.Right },
   ]
 
-  const calculateRatio = (balance: string): string => {
-    return totalSupply === undefined
-      ? t('common.missing')
-      : `${((100 * parseFloat(fromBaseUnits(balance, decimals))) / parseFloat(totalSupply)).toFixed(4)}%`
+  const calculateRatio = (balance: string, totalSupply: string, decimals: number): number => {
+    return (100 * parseFloat(fromBaseUnits(balance, decimals))) / parseFloat(totalSupply)
   }
 
   const tableRows = holders?.map((holder, index) => {
@@ -49,7 +49,6 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
         {
           key: 'rank',
           content: holder.rank.toLocaleString(),
-          align: TableCellAlign.Center,
         },
         {
           key: 'address',
@@ -64,7 +63,21 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
         },
         {
           key: 'percentage',
-          content: calculateRatio(holder.balance),
+          content: (
+            <>
+              {totalSupply ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} gap={4}>
+                  {`${calculateRatio(holder.balance, totalSupply, decimals).toFixed(4)}%`}
+                  <ProgressBar
+                    value={calculateRatio(holder.balance, totalSupply, decimals)}
+                    variant="determinate"
+                  />
+                </Box>
+              ) : (
+                <Box>{t('common.missing')}</Box>
+              )}
+            </>
+          ),
           align: TableCellAlign.Right,
         },
       ],

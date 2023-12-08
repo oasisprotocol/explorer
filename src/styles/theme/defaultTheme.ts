@@ -599,7 +599,6 @@ export const defaultTheme = createTheme({
           borderRadius: 5,
         },
         bar: {
-          backgroundColor: COLORS.brandDark,
           borderRadius: 5,
         },
       },
