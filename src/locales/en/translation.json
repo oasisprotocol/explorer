@@ -123,6 +123,12 @@
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
     }
   },
+  "dapps":{
+    "wrose": {
+      "description": "Looking to wrap or unwrap your wROSE?",
+      "label": "Use our ROSE (un)wrapper"
+    }
+  },
   "nft": {
     "accountCollection": "ERC-721 Tokens",
     "collectionLink": "Collection: <CollectionLink />",

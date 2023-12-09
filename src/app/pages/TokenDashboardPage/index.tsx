@@ -15,6 +15,7 @@ import { contractCodeContainerId } from '../AccountDetailsPage/ContractCodeCard'
 import { tokenHoldersContainerId } from './TokenHoldersCard'
 import { SearchScope } from '../../../types/searchScope'
 import { tokenInventoryContainerId } from './TokenInventoryCard'
+import { DappBanner } from '../../components/DappBanner'
 
 export type TokenDashboardContext = {
   scope: SearchScope
@@ -29,7 +30,7 @@ export const TokenDashboardPage: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { isError } = useTokenInfo(scope, address)
+  const { token, isError } = useTokenInfo(scope, address)
 
   if (isError) {
     throw AppErrors.InvalidAddress
@@ -48,6 +49,7 @@ export const TokenDashboardPage: FC = () => {
   return (
     <PageLayout>
       <TokenTitleCard scope={scope} address={address} />
+      <DappBanner scope={scope} ethAddress={token?.eth_contract_addr} />
       <TokenSnapshot scope={scope} address={address} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <TokenDetailsCard scope={scope} address={address} />
