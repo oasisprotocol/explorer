@@ -13,16 +13,16 @@ import { useScreenSize } from 'app/hooks/useScreensize'
 import { COLORS } from 'styles/theme/colors'
 
 const minMobileSize = '150px'
-const mobileSize = '100%'
-const imageSize = '210px'
+const minSize = '210px'
 
 const StyledImage = styled('img', {
   shouldForwardProp: prop => prop !== 'isMobile',
 })<{ isMobile: boolean }>(({ isMobile }) => ({
-  minWidth: isMobile ? minMobileSize : imageSize,
-  minHeight: isMobile ? minMobileSize : imageSize,
-  width: isMobile ? mobileSize : imageSize,
-  height: isMobile ? mobileSize : imageSize,
+  minWidth: isMobile ? minMobileSize : minSize,
+  minHeight: isMobile ? minMobileSize : minSize,
+  width: '100%',
+  height: '100%',
+  maxHeight: minSize,
   objectFit: 'cover',
   transition: 'opacity 250ms ease-in-out',
   '&:hover, &:focus-visible': {
@@ -68,7 +68,7 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
           isMobile={isMobile}
         />
       ) : (
-        <NoPreview placeholderSize={imageSize} />
+        <NoPreview placeholderSize={isMobile ? minMobileSize : minSize} />
       )}
       <StyledBox gap={3}>
         <OpenInBrowserIcon sx={{ fontSize: '40px' }} />
