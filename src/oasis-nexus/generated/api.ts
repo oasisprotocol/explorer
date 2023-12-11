@@ -273,6 +273,10 @@ after?: string;
  * A filter on maximum block time, exclusive.
  */
 before?: string;
+/**
+ * A filter on the block hash.
+ */
+hash?: string;
 };
 
 export type GetConsensusProposalsProposalIdVotesParams = {
@@ -578,6 +582,10 @@ after?: string;
  * A filter on maximum block time, exclusive.
  */
 before?: string;
+/**
+ * A filter on the block hash.
+ */
+hash?: string;
 };
 
 /**
@@ -3297,7 +3305,7 @@ export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnTy
 
 
 /**
- * @summary Returns a list of Emerald blocks.
+ * @summary Returns a list of Runtime blocks.
  */
 export const GetRuntimeBlocks = (
     network: 'mainnet' | 'testnet',
@@ -3347,7 +3355,7 @@ export type GetRuntimeBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof 
 export type GetRuntimeBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of Emerald blocks.
+ * @summary Returns a list of Runtime blocks.
  */
 export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
@@ -3369,7 +3377,7 @@ export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof GetRuntime
 
 
 /**
- * @summary Returns a list of Emerald transactions.
+ * @summary Returns a list of Runtime transactions.
  */
 export const GetRuntimeTransactions = (
     network: 'mainnet' | 'testnet',
@@ -3419,7 +3427,7 @@ export type GetRuntimeTransactionsQueryResult = NonNullable<Awaited<ReturnType<t
 export type GetRuntimeTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of Emerald transactions.
+ * @summary Returns a list of Runtime transactions.
  */
 export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
