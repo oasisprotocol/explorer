@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SearchScope } from '../../../types/searchScope'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import {
   Layer,
@@ -60,15 +60,8 @@ export const ContractCreatorInfo: FC<{
       }}
     >
       <TxSender scope={scope} txHash={creationTxHash} />
-      <Box>
-        <Trans
-          t={t}
-          i18nKey="contract.createdAt"
-          components={{
-            TransactionLink: <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />,
-          }}
-        />
-      </Box>
+      <Box>{t('contract.createdAt')}</Box>
+      <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />
     </Box>
   )
 }

@@ -111,7 +111,7 @@
     "copyButton": "Copy {{subject}}",
     "creationByteCode": "Creation ByteCode",
     "creator": "Creator",
-    "createdAt": "at <TransactionLink>",
+    "createdAt": "at",
     "noCode": "There is no bytecode on record for this account. (Are you sure this is a contract?)",
     "title": "Contract",
     "runtimeByteCode": "Runtime ByteCode",
