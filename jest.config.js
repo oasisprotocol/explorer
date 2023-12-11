@@ -16,18 +16,16 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/internals/jest/setupTests.ts'],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': ['ts-jest', {
-      // Disable typechecking to speedup tests. We have `yarn checkTs`.
-      isolatedModules: true,
-    }],
+    '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': [
+      'ts-jest',
+      {
+        // Disable typechecking to speedup tests. We have `yarn checkTs`.
+        isolatedModules: true,
+      },
+    ],
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!(cborg)/)',
-  ],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/playwright/'
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!(cborg|@oasisprotocol)/)'],
+  testPathIgnorePatterns: ['/node_modules/', '/playwright/'],
 }
 
 module.exports = config
