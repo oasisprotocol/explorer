@@ -2995,20 +2995,20 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oasisprotocol/client-rt@0.2.1-alpha.2":
-  version "0.2.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-0.2.1-alpha.2.tgz#acbf9fafdbe0d68e910be3f90c33992086a567f6"
-  integrity sha512-BZHx4OhIg+gFCo6x/RvAPN2iLCp0OeEwQTIoCszvU8V4ZlhcNn3gHZi8mcCPC//HKuTR3awkbG8VRWfWyN7Fqg==
+"@oasisprotocol/client-rt@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-1.0.0.tgz#7a0ee858251fdeb0d2e03af7c649a7e1b9ee3f66"
+  integrity sha512-ugfMdsG+Z+jdqYv+hDX6/VXXqW4Fax75359QKgyAWo6hCfVIU9X9PJBc93Ykk3+pQAZq6VWzkye7M4sxItNSFA==
   dependencies:
-    "@oasisprotocol/client" "^0.1.1-alpha.1"
-    deoxysii "^0.0.2"
+    "@oasisprotocol/client" "^1.0.0"
+    "@oasisprotocol/deoxysii" "^0.0.5"
     elliptic "^6.5.3"
     js-sha512 "^0.8.0"
     randombytes "^2.0.1"
     sha3 "^2.1.4"
     tweetnacl "^1.0.3"
 
-"@oasisprotocol/client@0.1.1-alpha.2", "@oasisprotocol/client@^0.1.1-alpha.1":
+"@oasisprotocol/client@0.1.1-alpha.2":
   version "0.1.1-alpha.2"
   resolved "https://registry.yarnpkg.com/@oasisprotocol/client/-/client-0.1.1-alpha.2.tgz#0b5807253bc138710528eeaaec0233607aec00c7"
   integrity sha512-iKFOjMvBWVs7eVSd+H/wWthuYeXXCcJZ0AxX4anLu+UQvmaXUzzbGwiM1YH3XkpJsYhrIDebU/L8WUr7C21LuA==
@@ -3020,6 +3020,27 @@
     js-sha512 "^0.8.0"
     protobufjs "~7.1.2"
     tweetnacl "^1.0.3"
+
+"@oasisprotocol/client@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/client/-/client-1.0.0.tgz#a2f2cb3b42a881d541e59800e3eb521ba19ff824"
+  integrity sha512-mpRlji3LOtL6URZgeBm5zQkUIslGcbPrkG1YGbjVzkhh8mFm+mU3siw13nWV373fk2dFd94EBCm2G5cPFI+afg==
+  dependencies:
+    bech32 "^2.0.0"
+    bip39 "^3.1.0"
+    cborg "^2.0.3"
+    grpc-web "^1.5.0"
+    js-sha512 "^0.8.0"
+    protobufjs "~7.2.5"
+    tweetnacl "^1.0.3"
+
+"@oasisprotocol/deoxysii@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/deoxysii/-/deoxysii-0.0.5.tgz#82d1146e0effe9d0974ef2361461bc0be4409961"
+  integrity sha512-a6wYPjk8ALDIiQW/971AKOTSTY1qSdld+Y05F44gVZvlb3FOyHfgbIxXm7CZnUG1A+jK49g5SCWYP+V3/Tc75Q==
+  dependencies:
+    bsaes "0.0.2"
+    uint32 "^0.2.1"
 
 "@open-draft/until@^1.0.3":
   version "1.0.3"
@@ -6676,6 +6697,11 @@ cborg@^1.9.5:
   resolved "https://registry.yarnpkg.com/cborg/-/cborg-1.10.2.tgz#83cd581b55b3574c816f82696307c7512db759a1"
   integrity sha512-b3tFPA9pUr2zCUiCfRd2+wok2/LBSNUMKOuRRok+WlvvAgEt/PlbgPTsZUcwCOs53IJvLgTp0eotwtosE6njug==
 
+cborg@^2.0.3:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/cborg/-/cborg-2.0.5.tgz#b5393c8b1843d5c1a61f2b79b4c9f752052a4d44"
+  integrity sha512-xVW1rSIw1ZXbkwl2XhJ7o/jAv0vnVoQv/QlfQxV8a7V5PlA4UU/AcIiXqmpyybwNWy/GPQU1m/aBVNIWr7/T0w==
+
 chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -7405,14 +7431,6 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
-
-deoxysii@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/deoxysii/-/deoxysii-0.0.2.tgz#bfdb65ed7808a03fb88622595b5a4ba682b6778b"
-  integrity sha512-mMob/2wDZBatPC48g188hFt5xxrbfYMl9L+XQGOZuHPU4ScCHpAKkbZiAU1yg/kROj6nPKZp5eItuNI3LdU7vA==
-  dependencies:
-    bsaes "0.0.2"
-    uint32 "^0.2.1"
 
 depd@2.0.0:
   version "2.0.0"
@@ -8841,6 +8859,11 @@ grpc-web@^1.4.1:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/grpc-web/-/grpc-web-1.4.2.tgz#86995f76471ce6b2119106ec26f909b7b69e7d43"
   integrity sha512-gUxWq42l5ldaRplcKb4Pw5O4XBONWZgz3vxIIXnfIeJj8Jc3wYiq2O4c9xzx/NGbbPEej4rhI62C9eTENwLGNw==
+
+grpc-web@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/grpc-web/-/grpc-web-1.5.0.tgz#154e4007ab59a94bf7726b87ef6c5bd8815ecf6e"
+  integrity sha512-y1tS3BBIoiVSzKTDF3Hm7E8hV2n7YY7pO0Uo7depfWJqKzWE+SKr0jvHNIJsJJYILQlpYShpi/DRJJMbosgDMQ==
 
 gunzip-maybe@^1.4.2:
   version "1.4.2"
@@ -11606,6 +11629,24 @@ protobufjs@~7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.1.2.tgz#a0cf6aeaf82f5625bffcf5a38b7cd2a7de05890c"
   integrity sha512-4ZPTPkXCdel3+L81yw3dG6+Kq3umdWKh7Dc7GW/CpNk4SX3hK58iPCWeCyhVTDrbkNeKrYNZ7EojM5WDaEWTLQ==
+  dependencies:
+    "@protobufjs/aspromise" "^1.1.2"
+    "@protobufjs/base64" "^1.1.2"
+    "@protobufjs/codegen" "^2.0.4"
+    "@protobufjs/eventemitter" "^1.1.0"
+    "@protobufjs/fetch" "^1.1.0"
+    "@protobufjs/float" "^1.0.2"
+    "@protobufjs/inquire" "^1.1.0"
+    "@protobufjs/path" "^1.1.2"
+    "@protobufjs/pool" "^1.1.0"
+    "@protobufjs/utf8" "^1.1.0"
+    "@types/node" ">=13.7.0"
+    long "^5.0.0"
+
+protobufjs@~7.2.5:
+  version "7.2.5"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.5.tgz#45d5c57387a6d29a17aab6846dcc283f9b8e7f2d"
+  integrity sha512-gGXRSXvxQ7UiPgfw8gevrfRWcTlSbOFg+p/N+JVJEK5VhueL2miT6qTymqAmjr1Q5WbOCyJbyrk6JfWKwlFn6A==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
