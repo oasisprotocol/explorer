@@ -418,7 +418,7 @@
     "noResults": {
       "header": "No results found",
       "scopeHeader": "No results found on {{scope}}",
-      "description": "Please try another search query <OptionalBreak>or <HomeLink>explore Oasis</HomeLink></OptionalBreak>"
+      "description": "Please try another search query <OptionalBreak> or explore the <HomeLink>Oasis ecosystem</HomeLink>.</OptionalBreak>"
     },
     "otherResults": {
       "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
@@ -453,6 +453,7 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
+    "searchSuggestionsForNoResults": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   }
 }
