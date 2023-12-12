@@ -72,10 +72,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
                 </dd>
               </>
             )}
-            {nft?.token?.num_transfers && (
+            {nft?.num_transfers && (
               <>
                 <dt>{t('nft.transfers')}</dt>
-                <dd>{nft.token.num_transfers!.toLocaleString()}</dd>
+                <dd>{nft.num_transfers.toLocaleString()}</dd>
               </>
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
