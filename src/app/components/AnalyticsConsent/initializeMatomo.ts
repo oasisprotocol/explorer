@@ -16,7 +16,7 @@ window._paq.push(['setCookieDomain', '*.example.org'])
 window._paq.push(['setDoNotTrack', true])
 window._paq.push(['enableLinkTracking'])
 window._paq.push(['setTrackerUrl', `${matomoDomain}matomo.php`])
-window._paq.push(['setSiteId', '1'])
+window._paq.push(['setSiteId', '3'])
 
 window._paq.push([
   'setCustomRequestProcessing',
