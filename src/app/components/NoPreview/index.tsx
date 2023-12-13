@@ -18,6 +18,7 @@ export const NoPreview: FC<NoPreviewProps> = ({ placeholderSize }) => {
         height: placeholderSize,
         width: placeholderSize,
         display: 'flex',
+        flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',

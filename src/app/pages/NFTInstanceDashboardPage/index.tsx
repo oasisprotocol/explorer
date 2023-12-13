@@ -6,10 +6,10 @@ import { PageLayout } from '../../components/PageLayout'
 import { InstanceTitleCard } from './InstanceTitleCard'
 import { InstanceDetailsCard } from './InstanceDetailsCard'
 import { InstanceImageCard } from './InstanceImageCard'
-import { Layer, Runtime, useGetRuntimeEvmTokensAddressNftsId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from 'app/components/RouterTabs'
 import { SearchScope } from '../../../types/searchScope'
+import { useNFTInstance } from '../TokenDashboardPage/hook'
 
 export type NftDashboardContext = {
   scope: SearchScope
@@ -23,22 +23,11 @@ export const NFTInstanceDashboardPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const { address, instanceId } = useParams()
-  if (scope.layer === Layer.consensus) {
-    // There can be no ERC-20 or ERC-721 tokens on consensus
-    throw AppErrors.UnsupportedLayer
-  }
-
   if (!address || !instanceId) {
     throw AppErrors.InvalidUrl
   }
+  const { isFetched, isLoading, nft } = useNFTInstance(scope, address, instanceId)
 
-  const { data, isFetched, isLoading } = useGetRuntimeEvmTokensAddressNftsId(
-    scope.network,
-    scope.layer as Runtime,
-    address,
-    instanceId,
-  )
-  const nft = data?.data
   const metadataLink = useHref('')
   const context: NftDashboardContext = {
     scope,

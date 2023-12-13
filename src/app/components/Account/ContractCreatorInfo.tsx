@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SearchScope } from '../../../types/searchScope'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import {
   Layer,
@@ -12,6 +12,7 @@ import { AppErrors } from '../../../types/errors'
 import { AccountLink } from './AccountLink'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash }) => {
   const { t } = useTranslation()
@@ -42,6 +43,7 @@ export const ContractCreatorInfo: FC<{
   creationTxHash: string | undefined
 }> = ({ scope, isLoading, creationTxHash }) => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
 
   return isLoading ? (
     <Skeleton variant="text" sx={{ width: '50%' }} />
@@ -51,20 +53,15 @@ export const ContractCreatorInfo: FC<{
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'center',
-        gap: 3,
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: isMobile ? 'flex-start' : 'center',
+        gap: isMobile ? 0 : 2,
         minWidth: '25%',
       }}
     >
       <TxSender scope={scope} txHash={creationTxHash} />
-      &nbsp;
-      <Trans
-        t={t}
-        i18nKey="contract.createdAt"
-        components={{
-          TransactionLink: <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />,
-        }}
-      />
+      <Box>{t('contract.createdAt')}</Box>
+      <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />
     </Box>
   )
 }

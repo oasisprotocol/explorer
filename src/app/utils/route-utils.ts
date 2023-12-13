@@ -85,6 +85,12 @@ export abstract class RouteUtils {
     )}`
   }
 
+  static getTokenHoldersRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
+    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+      tokenAddress,
+    )}/holders`
+  }
+
   static getNFTInstanceRoute = (
     { network, layer }: SearchScope,
     contractAddress: string,

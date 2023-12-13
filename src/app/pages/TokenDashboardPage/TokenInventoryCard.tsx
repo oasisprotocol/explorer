@@ -17,29 +17,68 @@ import { TablePagination } from '../../components/Table/TablePagination'
 import { useTokenInventory } from './hook'
 import { ImageListItemImage } from './ImageListItemImage'
 import { NFTInstanceLink } from './NFTLinks'
+import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
+import { EvmNft } from 'oasis-nexus/api'
+import { To } from 'react-router-dom'
+import { SearchScope } from 'types/searchScope'
 
 export const tokenInventoryContainerId = 'inventory'
 
 export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
+  const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
 
   return (
     <Card>
       <LinkableDiv id={tokenInventoryContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.inventory')} />
+        <CardHeader
+          disableTypography
+          component="h3"
+          title={
+            <CardHeaderWithCounter
+              label={t('tokens.inventory')}
+              totalCount={totalCount}
+              isTotalCountClipped={pagination.isTotalCountClipped}
+            />
+          }
+        />
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
-          <TokenInventoryView scope={scope} address={address} />
+          <TokenInventoryView
+            inventory={inventory}
+            isFetched={isFetched}
+            pagination={pagination}
+            scope={scope}
+            totalCount={totalCount}
+          />
         </ErrorBoundary>
       </CardContent>
     </Card>
   )
 }
 
-const TokenInventoryView: FC<TokenDashboardContext> = ({ scope, address }) => {
+type TokenInventoryViewProps = {
+  inventory: EvmNft[] | undefined
+  isFetched: boolean
+  totalCount: number | undefined
+  pagination: {
+    isTotalCountClipped: boolean | undefined
+    rowsPerPage: number
+    selectedPage: number
+    linkToPage: (pageNumber: number) => To
+  }
+  scope: SearchScope
+}
+
+const TokenInventoryView: FC<TokenInventoryViewProps> = ({
+  inventory,
+  isFetched,
+  pagination,
+  scope,
+  totalCount,
+}) => {
   const { t } = useTranslation()
-  const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
 
   return (
     <>

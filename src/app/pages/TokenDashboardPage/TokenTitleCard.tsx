@@ -8,19 +8,26 @@ import Skeleton from '@mui/material/Skeleton'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTranslation } from 'react-i18next'
 import { SearchScope } from '../../../types/searchScope'
+
+export const StyledCard = styled(Card)(() => ({
+  '&': {
+    paddingTop: '24px', // custom spacing
+    marginBottom: '50px',
+  },
+}))
 
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
 export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-
   const { isLoading, token } = useTokenInfo(scope, address)
 
   return (
-    <Card>
+    <StyledCard>
       <CardContent>
         {isLoading ? (
           <TitleSkeleton />
@@ -32,32 +39,29 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ sc
               justifyContent: 'space-between',
               alignItems: 'center',
             }}
+            gap={3}
           >
-            <Box
+            <Typography
+              variant="h2"
               sx={{
-                display: 'flex',
-                width: '50%',
+                display: 'inline-flex',
+                fontWeight: 700,
+                flexWrap: 'wrap',
               }}
             >
-              <Typography
-                variant="h2"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                {token?.name ?? t('common.missing')}
-              </Typography>
+              {token?.name ?? t('common.missing')}
               &nbsp;
               <Typography
-                variant="h2"
+                component="span"
                 sx={{
                   color: COLORS.grayMedium,
+                  fontSize: '24px',
                   fontWeight: 700,
                 }}
               >
-                {token?.symbol ?? t('common.missing')}
+                ({token?.symbol ?? t('common.missing')})
               </Typography>
-            </Box>
+            </Typography>
 
             {token && (
               <Box
@@ -75,6 +79,6 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ sc
           </Box>
         )}
       </CardContent>
-    </Card>
+    </StyledCard>
   )
 }

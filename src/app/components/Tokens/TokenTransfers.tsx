@@ -20,6 +20,7 @@ import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { TokenTypeTag } from './TokenList'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
+import { formatDistanceToNow } from '../../utils/dateFormatter'
 
 const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -119,6 +120,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
+    { key: 'timestamp', content: t('common.age'), align: TableCellAlign.Right },
     { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
     { key: 'from', content: t('common.from'), width: '150px' },
     { key: 'to', content: t('common.to'), width: '150px' },
@@ -146,6 +148,11 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           content: <BlockLink scope={transfer} height={transfer.round} />,
           key: 'round',
+        },
+        {
+          align: TableCellAlign.Right,
+          content: formatDistanceToNow(new Date(transfer.timestamp)),
+          key: 'timestamp',
         },
         {
           key: 'type',

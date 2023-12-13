@@ -18,7 +18,6 @@ import { AccountDetailsContext } from './index'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
 import { RouteUtils } from 'app/utils/route-utils'
-import { COLORS } from 'styles/theme/colors'
 import { ImageListItemImage } from '../TokenDashboardPage/ImageListItemImage'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { TablePagination } from '../../components/Table/TablePagination'
@@ -26,6 +25,7 @@ import { useAccountTokenInventory } from '../TokenDashboardPage/hook'
 import { EvmNft } from 'oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
+import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 
 export const accountNFTCollectionContainerId = 'nftCollection'
 
@@ -63,14 +63,11 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
                   </Link>
                 </Typography>
                 {isFetched && (
-                  <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={2}>
-                    <Typography color={COLORS.brandExtraDark} fontSize={24}>
-                      {firstToken?.name ? inventory?.[0].token.name : t('common.collection')}
-                    </Typography>
-                    {!!totalCount && (
-                      <Typography>({`${isTotalCountClipped ? ' > ' : ''}${totalCount}`})</Typography>
-                    )}
-                  </Box>
+                  <CardHeaderWithCounter
+                    label={firstToken?.name ? inventory?.[0].token.name : t('common.collection')}
+                    totalCount={totalCount}
+                    isTotalCountClipped={isTotalCountClipped}
+                  />
                 )}
               </Breadcrumbs>
               {isLoading && <Skeleton variant="text" sx={{ width: '50%' }} />}

@@ -74,7 +74,7 @@ export const TokensPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <Divider variant="layout" sx={{ mb: 6 }} />}
       <SubPageCard
         title={t('common.tokens')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}

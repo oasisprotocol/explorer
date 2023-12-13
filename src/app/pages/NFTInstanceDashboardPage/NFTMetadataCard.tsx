@@ -2,23 +2,18 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import { Runtime, useGetRuntimeEvmTokensAddressNftsId } from '../../../oasis-nexus/api'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from './../AccountDetailsPage/CardEmptyState'
 import { NftDashboardContext } from '../NFTInstanceDashboardPage'
 import { JsonCodeDisplay } from '../../components/CodeDisplay'
+import { useNFTInstance } from '../TokenDashboardPage/hook'
 
 export const nftMetadataId = 'metadata'
 
 export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, instanceId }) => {
   const { t } = useTranslation()
-  const { data, isFetched } = useGetRuntimeEvmTokensAddressNftsId(
-    scope.network,
-    scope.layer as Runtime,
-    address,
-    instanceId,
-  )
-  const metadata = data?.data?.metadata
+  const { isFetched, nft } = useNFTInstance(scope, address, instanceId)
+  const metadata = nft?.metadata
 
   return (
     <Card>

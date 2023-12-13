@@ -530,11 +530,13 @@ export const defaultTheme = createTheme({
     },
     MuiImageList: {
       styleOverrides: {
-        root: {
-          // default gridTemplateColumns is set by cols prop default number via inline styles
-          // and cannot be overridden without !important statement
-          gridTemplateColumns: `repeat(auto-fill, minmax(210px, 210px))!important`,
-        },
+        root: ({ theme }) => ({
+          [theme.breakpoints.up('sm')]: {
+            // default gridTemplateColumns is set by cols prop default number via inline styles
+            // and cannot be overridden without !important statement
+            gridTemplateColumns: `repeat(auto-fill, minmax(210px, auto))!important`,
+          },
+        }),
       },
     },
     MuiImageListItem: {
@@ -545,9 +547,10 @@ export const defaultTheme = createTheme({
           borderColor: COLORS.brandExtraDark,
           borderRadius: 8,
           overflow: 'hidden',
-          transition: 'box-shadow 250ms ease-in-out',
+          transition: 'border-color, box-shadow 250ms ease-in-out',
           '&:hover, &:focus-visible': {
             boxShadow: '0px 8px 8px 0px rgba(0, 0, 0, 0.15)',
+            borderColor: COLORS.brandDark,
           },
         },
       },
@@ -597,7 +600,6 @@ export const defaultTheme = createTheme({
           borderRadius: 5,
         },
         bar: {
-          backgroundColor: COLORS.brandDark,
           borderRadius: 5,
         },
       },
@@ -607,7 +609,9 @@ export const defaultTheme = createTheme({
         root: ({ theme }) => ({
           [theme.breakpoints.down('sm')]: {
             paddingRight: theme.spacing(4),
+            // force scrollbar to cover the whole table horizontally
             marginLeft: `-${theme.spacing(4)}`,
+            width: `calc(100% + ${theme.spacing(4)})`,
           },
         }),
       },

@@ -7,6 +7,7 @@ import {
   useGetRuntimeEvmTokensAddressHolders,
   useGetRuntimeEvmTokensAddressNfts,
   useGetRuntimeAccountsAddressNfts,
+  useGetRuntimeEvmTokensAddressNftsId,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -220,5 +221,31 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     },
     isTotalCountClipped,
     totalCount,
+  }
+}
+
+export const useNFTInstance = (scope: SearchScope, address: string, id: string) => {
+  const { network, layer } = scope
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+    // There are no tokens on the consensus layer.
+  }
+  const oasisAddress = useTransformToOasisAddress(address)
+  const query = useGetRuntimeEvmTokensAddressNftsId(network, layer, oasisAddress!, id, {
+    query: {
+      enabled: !!oasisAddress,
+    },
+  })
+
+  const { data, isError, isFetched, isLoading } = query
+  if (isError) {
+    throw AppErrors.InvalidAddress
+  }
+  const nft = data?.data
+
+  return {
+    isLoading,
+    isFetched,
+    nft,
   }
 }
