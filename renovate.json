@@ -19,6 +19,10 @@
       "matchPackagePatterns": ["i18n"]
     },
     {
+      "groupName": "TypeScript type definitions",
+      "matchPackagePatterns": ["@types/"]
+    },
+    {
       "groupName": "storybook dependencies",
       "matchPackagePatterns": ["storybook"]
     },
