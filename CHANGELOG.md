@@ -12,6 +12,205 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.4.0 (2023-12-14)
+
+### Features
+
+- Add NFT feature
+  ([#909](https://github.com/oasisprotocol/explorer/issues/909),
+  [#1036](https://github.com/oasisprotocol/explorer/issues/1036),
+  [#1038](https://github.com/oasisprotocol/explorer/issues/1038),
+  [#1043](https://github.com/oasisprotocol/explorer/issues/1043),
+  [#1051](https://github.com/oasisprotocol/explorer/issues/1051),
+  [#1052](https://github.com/oasisprotocol/explorer/issues/1052),
+  [#1069](https://github.com/oasisprotocol/explorer/issues/1069))
+
+- Show block-level evens in block details
+  ([#990](https://github.com/oasisprotocol/explorer/issues/990))
+
+- Show events on account details page
+  ([#992](https://github.com/oasisprotocol/explorer/issues/992))
+
+- Implement searching for blocks by hash
+  ([#1081](https://github.com/oasisprotocol/explorer/issues/1081))
+
+### Bug Fixes and Improvements
+
+- Prevent app crash when rendering new event types
+  ([#1012](https://github.com/oasisprotocol/explorer/issues/1012))
+
+- Fix address formatting on empty account
+  ([#1039](https://github.com/oasisprotocol/explorer/issues/1039),
+  [#1061](https://github.com/oasisprotocol/explorer/issues/1061))
+
+- Fix Testnet Faucet links
+  ([#1065](https://github.com/oasisprotocol/explorer/issues/1065))
+
+- Fetch account balance from RPC node
+  ([#1073](https://github.com/oasisprotocol/explorer/issues/1073))
+
+### Internal Changes
+
+- Add basic handling of new event types
+  ([#893](https://github.com/oasisprotocol/explorer/issues/893))
+
+- Install setuptools to make Towncrier fork work with Python 3.12
+  ([#980](https://github.com/oasisprotocol/explorer/issues/980))
+
+- Refactor code for showing events
+  ([#991](https://github.com/oasisprotocol/explorer/issues/991))
+
+- Don't directly include internal enum values in URLs
+  ([#1079](https://github.com/oasisprotocol/explorer/issues/1079))
+
+- Use Oasis bot token in renovate workflow
+  ([#1021](https://github.com/oasisprotocol/explorer/issues/1021))
+
+- Update API bindings
+  ([#1059](https://github.com/oasisprotocol/explorer/issues/1059),
+  [#1004](https://github.com/oasisprotocol/explorer/issues/1004),
+  [#948](https://github.com/oasisprotocol/explorer/issues/948),
+  [#977](https://github.com/oasisprotocol/explorer/issues/977),
+  [#1089](https://github.com/oasisprotocol/explorer/issues/1089))
+
+- Update lint dependencies
+  ([#972](https://github.com/oasisprotocol/explorer/issues/972),
+  [#986](https://github.com/oasisprotocol/explorer/issues/986),
+  [#1003](https://github.com/oasisprotocol/explorer/issues/1003),
+  [#1015](https://github.com/oasisprotocol/explorer/issues/1015),
+  [#1029](https://github.com/oasisprotocol/explorer/issues/1029),
+  [#1040](https://github.com/oasisprotocol/explorer/issues/1040),
+  [#1058](https://github.com/oasisprotocol/explorer/issues/1058),
+  [#1063](https://github.com/oasisprotocol/explorer/issues/1063),
+  [#1091](https://github.com/oasisprotocol/explorer/issues/1091),
+  [#1026](https://github.com/oasisprotocol/explorer/issues/1026),
+  [#999](https://github.com/oasisprotocol/explorer/issues/999))
+
+- Update material-ui monorepo
+  ([#974](https://github.com/oasisprotocol/explorer/issues/974),
+  [#1002](https://github.com/oasisprotocol/explorer/issues/1002),
+  [#1016](https://github.com/oasisprotocol/explorer/issues/1016),
+  [#1050](https://github.com/oasisprotocol/explorer/issues/1050),
+  [#1067](https://github.com/oasisprotocol/explorer/issues/1067),
+  [#1092](https://github.com/oasisprotocol/explorer/issues/1092))
+
+- Update swiper dependencies
+  ([#976](https://github.com/oasisprotocol/explorer/issues/976),
+  [#1010](https://github.com/oasisprotocol/explorer/issues/1010),
+  [#1034](https://github.com/oasisprotocol/explorer/issues/1034))
+
+- Update react dependencies
+  ([#982](https://github.com/oasisprotocol/explorer/issues/982),
+  [#1008](https://github.com/oasisprotocol/explorer/issues/1008),
+  [#1031](https://github.com/oasisprotocol/explorer/issues/1031),
+  [#1032](https://github.com/oasisprotocol/explorer/issues/1032),
+  [#1041](https://github.com/oasisprotocol/explorer/issues/1041),
+  [#1057](https://github.com/oasisprotocol/explorer/issues/1057))
+
+- Update recharts dependencies
+  ([#983](https://github.com/oasisprotocol/explorer/issues/983),
+  [#994](https://github.com/oasisprotocol/explorer/issues/994),
+  [#1005](https://github.com/oasisprotocol/explorer/issues/1005),
+  [#1027](https://github.com/oasisprotocol/explorer/issues/1027),
+  [#1047](https://github.com/oasisprotocol/explorer/issues/1047),
+  [#1055](https://github.com/oasisprotocol/explorer/issues/1055))
+
+- Update storybook dependencies
+  ([#984](https://github.com/oasisprotocol/explorer/issues/984),
+  [#1044](https://github.com/oasisprotocol/explorer/issues/1044),
+  [#1048](https://github.com/oasisprotocol/explorer/issues/1048),
+  [#1053](https://github.com/oasisprotocol/explorer/issues/1053),
+  [#1056](https://github.com/oasisprotocol/explorer/issues/1056),
+  [#1078](https://github.com/oasisprotocol/explorer/issues/1078),
+  [#998](https://github.com/oasisprotocol/explorer/issues/998),
+  [#1017](https://github.com/oasisprotocol/explorer/issues/1017))
+
+- Update i18next dependencies
+  ([#1013](https://github.com/oasisprotocol/explorer/issues/1013),
+  [#1022](https://github.com/oasisprotocol/explorer/issues/1022),
+  [#1045](https://github.com/oasisprotocol/explorer/issues/1045),
+  [#1076](https://github.com/oasisprotocol/explorer/issues/1076),
+  [#1093](https://github.com/oasisprotocol/explorer/issues/1093),
+  [#1014](https://github.com/oasisprotocol/explorer/issues/1014))
+
+- Update test dependencies
+  ([#1025](https://github.com/oasisprotocol/explorer/issues/1025),
+  [#1030](https://github.com/oasisprotocol/explorer/issues/1030),
+  [#1046](https://github.com/oasisprotocol/explorer/issues/1046),
+  [#1054](https://github.com/oasisprotocol/explorer/issues/1054),
+  [#1024](https://github.com/oasisprotocol/explorer/issues/1024))
+
+- Update TypeScript type definitions
+  ([#981](https://github.com/oasisprotocol/explorer/issues/981),
+  [#987](https://github.com/oasisprotocol/explorer/issues/987),
+  [#1001](https://github.com/oasisprotocol/explorer/issues/1001),
+  [#1007](https://github.com/oasisprotocol/explorer/issues/1007),
+  [#1000](https://github.com/oasisprotocol/explorer/issues/1000),
+  [#1033](https://github.com/oasisprotocol/explorer/issues/1033),
+  [#1064](https://github.com/oasisprotocol/explorer/issues/1064),
+  [#1068](https://github.com/oasisprotocol/explorer/issues/1068),
+  [#1087](https://github.com/oasisprotocol/explorer/issues/1087),
+  [#1094](https://github.com/oasisprotocol/explorer/issues/1094))
+
+- Update axios dependencies
+  ([#1009](https://github.com/oasisprotocol/explorer/issues/1009),
+  [#985](https://github.com/oasisprotocol/explorer/issues/985),
+  [#1019](https://github.com/oasisprotocol/explorer/issues/1019))
+
+- Update fontsource monorepo
+  ([#968](https://github.com/oasisprotocol/explorer/issues/968),
+  [#1074](https://github.com/oasisprotocol/explorer/issues/1074))
+
+- Update Node.js to v20
+  ([#973](https://github.com/oasisprotocol/explorer/issues/973))
+
+- Update actions/setup-node action to v4
+  ([#971](https://github.com/oasisprotocol/explorer/issues/971))
+
+- Update parcel monorepo
+  ([#975](https://github.com/oasisprotocol/explorer/issues/975),
+  [#995](https://github.com/oasisprotocol/explorer/issues/995),
+  [#1020](https://github.com/oasisprotocol/explorer/issues/1020))
+
+- Update dependency @ethereumjs/util to v9.0.1
+  ([#996](https://github.com/oasisprotocol/explorer/issues/996))
+
+- Update dependency orval to ^6.20.0
+  ([#1011](https://github.com/oasisprotocol/explorer/issues/1011))
+
+- Update dependency react-router-dom to v6.19.0
+  ([#1023](https://github.com/oasisprotocol/explorer/issues/1023))
+
+- Update dependency typescript to v5.3.2
+  ([#1028](https://github.com/oasisprotocol/explorer/issues/1028))
+
+- Update dependency orval to ^6.21.0
+  ([#1042](https://github.com/oasisprotocol/explorer/issues/1042))
+
+- Update actions/setup-python action to v5
+  ([#1072](https://github.com/oasisprotocol/explorer/issues/1072))
+
+- Update dependency typescript to v5.3.3
+  ([#1075](https://github.com/oasisprotocol/explorer/issues/1075))
+
+- Update dependency @oasisprotocol/client to v1
+  ([#1083](https://github.com/oasisprotocol/explorer/issues/1083))
+
+- Update dependency @oasisprotocol/client-rt to v1
+  ([#1084](https://github.com/oasisprotocol/explorer/issues/1084))
+
+- Update dependency markdownlint-cli to v0.38.0
+  ([#1086](https://github.com/oasisprotocol/explorer/issues/1086))
+
+- Update dependency prettier to v3.1.1
+  ([#1088](https://github.com/oasisprotocol/explorer/issues/1088))
+
+- Update critical dependency @babel/traverse to v7.23.6
+  ([#1090](https://github.com/oasisprotocol/explorer/issues/1090))
+
+- Add CODEOWNERS
+  ([#1095](https://github.com/oasisprotocol/explorer/issues/1095))
+
 ## 1.3.0 (2023-10-23)
 
 ### Features
@@ -37,11 +236,11 @@ The format is inspired by [Keep a Changelog].
 
 - Update material-ui monorepo
   ([#867](https://github.com/oasisprotocol/explorer/issues/867),
-   [#875](https://github.com/oasisprotocol/explorer/issues/875),
-   [#895](https://github.com/oasisprotocol/explorer/issues/895),
-   [#927](https://github.com/oasisprotocol/explorer/issues/927),
-   [#936](https://github.com/oasisprotocol/explorer/issues/936),
-   [#952](https://github.com/oasisprotocol/explorer/issues/952))
+  [#875](https://github.com/oasisprotocol/explorer/issues/875),
+  [#895](https://github.com/oasisprotocol/explorer/issues/895),
+  [#927](https://github.com/oasisprotocol/explorer/issues/927),
+  [#936](https://github.com/oasisprotocol/explorer/issues/936),
+  [#952](https://github.com/oasisprotocol/explorer/issues/952))
 
 - Update dependency react-router-dom to v6.16.0
   ([#868](https://github.com/oasisprotocol/explorer/issues/868))
@@ -60,17 +259,17 @@ The format is inspired by [Keep a Changelog].
 
 - Update storybook dependencies
   ([#873](https://github.com/oasisprotocol/explorer/issues/873),
-   [#951](https://github.com/oasisprotocol/explorer/issues/951))
+  [#951](https://github.com/oasisprotocol/explorer/issues/951))
 
 - Update test dependencies
   ([#874](https://github.com/oasisprotocol/explorer/issues/874))
 
 - Update react dependencies
   ([#876](https://github.com/oasisprotocol/explorer/issues/876),
-   [#926](https://github.com/oasisprotocol/explorer/issues/926),
-   [#931](https://github.com/oasisprotocol/explorer/issues/931),
-   [#935](https://github.com/oasisprotocol/explorer/issues/935),
-   [#937](https://github.com/oasisprotocol/explorer/issues/937))
+  [#926](https://github.com/oasisprotocol/explorer/issues/926),
+  [#931](https://github.com/oasisprotocol/explorer/issues/931),
+  [#935](https://github.com/oasisprotocol/explorer/issues/935),
+  [#937](https://github.com/oasisprotocol/explorer/issues/937))
 
 - Update lint dependencies to v6.7.2
   ([#877](https://github.com/oasisprotocol/explorer/issues/877))
@@ -140,8 +339,8 @@ The format is inspired by [Keep a Changelog].
 
 - Update fontsource monorepo
   ([#923](https://github.com/oasisprotocol/explorer/issues/923),
-   [#932](https://github.com/oasisprotocol/explorer/issues/932),
-   [#962](https://github.com/oasisprotocol/explorer/issues/962))
+  [#932](https://github.com/oasisprotocol/explorer/issues/932),
+  [#962](https://github.com/oasisprotocol/explorer/issues/962))
 
 - Update storybook dependencies to v7.4.6
   ([#924](https://github.com/oasisprotocol/explorer/issues/924))
@@ -298,12 +497,11 @@ The format is inspired by [Keep a Changelog].
 
 - Fix charts by syncing with the latest tx_volume stats API changes
   ([#812](https://github.com/oasisprotocol/explorer/issues/812))
-  
 - Homepage fixes
   ([#754](https://github.com/oasisprotocol/explorer/issues/754),
-   [#759](https://github.com/oasisprotocol/explorer/issues/759),
-   [#752](https://github.com/oasisprotocol/explorer/issues/752),
-   [#758](https://github.com/oasisprotocol/explorer/issues/758))
+  [#759](https://github.com/oasisprotocol/explorer/issues/759),
+  [#752](https://github.com/oasisprotocol/explorer/issues/752),
+  [#758](https://github.com/oasisprotocol/explorer/issues/758))
 
 - Fix alignment of fiat value tooltip in Account details
   ([#753](https://github.com/oasisprotocol/explorer/issues/753))
@@ -328,12 +526,11 @@ The format is inspired by [Keep a Changelog].
 
 - When listing token balances, use locally available data
   ([#762](https://github.com/oasisprotocol/explorer/issues/762))
-  
+
 ### Internal Changes
 
 - Handle Renovate default commitMessageExtra description
   ([#767](https://github.com/oasisprotocol/explorer/issues/767))
-  
 - Follow Nexus API changes
   ([#737](https://github.com/oasisprotocol/explorer/issues/737))
 
@@ -362,7 +559,6 @@ The format is inspired by [Keep a Changelog].
 
 - Fix variable names in useRuntimeFreshness
   ([#811](https://github.com/oasisprotocol/explorer/issues/811))
-  
 - Update storybook dependencies to v7.3.2
   ([#749](https://github.com/oasisprotocol/explorer/issues/749))
 
@@ -371,9 +567,9 @@ The format is inspired by [Keep a Changelog].
 
 - Update material-ui monorepo
   ([#757](https://github.com/oasisprotocol/explorer/issues/757),
-   [#783](https://github.com/oasisprotocol/explorer/issues/783),
-   [#795](https://github.com/oasisprotocol/explorer/issues/795),
-   [#840](https://github.com/oasisprotocol/explorer/issues/840))
+  [#783](https://github.com/oasisprotocol/explorer/issues/783),
+  [#795](https://github.com/oasisprotocol/explorer/issues/795),
+  [#840](https://github.com/oasisprotocol/explorer/issues/840))
 
 - Update dependency @types/node to v18.17.0
   ([#763](https://github.com/oasisprotocol/explorer/issues/763))
@@ -381,7 +577,7 @@ The format is inspired by [Keep a Changelog].
 - Update lint dependencies to v6.2.0
   ([#764](https://github.com/oasisprotocol/explorer/issues/764))
 
-- Update dependency @types/testing-library__jest-dom to v5.14.9
+- Update dependency @types/testing-library\_\_jest-dom to v5.14.9
   ([#765](https://github.com/oasisprotocol/explorer/issues/765))
 
 - Update dependency @mui/material to v5.14.2
@@ -422,7 +618,7 @@ The format is inspired by [Keep a Changelog].
 
 - Update lint dependencies
   ([#786](https://github.com/oasisprotocol/explorer/issues/786),
-   [#794](https://github.com/oasisprotocol/explorer/issues/794))
+  [#794](https://github.com/oasisprotocol/explorer/issues/794))
 
 - Update fontsource monorepo to ^5.0.8
   ([#788](https://github.com/oasisprotocol/explorer/issues/788))
@@ -441,7 +637,7 @@ The format is inspired by [Keep a Changelog].
 
 - Update i18n dependencies
   ([#793](https://github.com/oasisprotocol/explorer/issues/793),
-   [#817](https://github.com/oasisprotocol/explorer/issues/817))
+  [#817](https://github.com/oasisprotocol/explorer/issues/817))
 
 - Update dependency recharts to v2.7.3
   ([#801](https://github.com/oasisprotocol/explorer/issues/801))
@@ -651,7 +847,7 @@ The format is inspired by [Keep a Changelog].
 - Remove "Decoded" column from events to improve mobile layout
   ([#672](https://github.com/oasisprotocol/explorer/issues/672))
 
-- Update dependency @types/testing-library__jest-dom to v5.14.7
+- Update dependency @types/testing-library\_\_jest-dom to v5.14.7
   ([#673](https://github.com/oasisprotocol/explorer/issues/673))
 
 - Pull the API specs directly from GitHub
@@ -687,7 +883,7 @@ The format is inspired by [Keep a Changelog].
 - Fix changelog fragment file name
   ([#714](https://github.com/oasisprotocol/explorer/issues/714))
 
-- Update dependency @types/testing-library__jest-dom to v5.14.8
+- Update dependency @types/testing-library\_\_jest-dom to v5.14.8
   ([#717](https://github.com/oasisprotocol/explorer/issues/717))
 
 - Update material-ui monorepo
