@@ -8,6 +8,7 @@ import {
   useGetRuntimeEvmTokensAddressNfts,
   useGetRuntimeAccountsAddressNfts,
   useGetRuntimeEvmTokensAddressNftsId,
+  RuntimeEventType,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -35,7 +36,7 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
   }
 }
 
-export const useTokenTransfers = (scope: SearchScope, address: string) => {
+export const useTokenTransfers = (scope: SearchScope, address: string, nftInstanceId?: string) => {
   const { network, layer } = scope
   const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
     paramName: 'page',
@@ -48,15 +49,24 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
   }
 
   const oasisAddress = useTransformToOasisAddress(address)
+  const params = nftInstanceId
+    ? {
+        nft_id: nftInstanceId,
+        contract_address: oasisAddress!,
+      }
+    : {
+        rel: oasisAddress!,
+      }
+
   const query = useGetRuntimeEvents(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       ...pagination.paramsForQuery,
-      rel: oasisAddress!,
-      type: 'evm.log',
+      type: RuntimeEventType.evmlog,
       // The following is the hex-encoded signature for Transfer(address,address,uint256)
       evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+      ...params,
     },
     {
       query: {

@@ -30,9 +30,9 @@ export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
   )
 }
 
-const NFTTokenTransfersView: FC<NftDashboardContext> = ({ scope, address }) => {
+const NFTTokenTransfersView: FC<NftDashboardContext> = ({ scope, address, instanceId }) => {
   const { t } = useTranslation()
-  const { isLoading, isFetched, results } = useTokenTransfers(scope, address)
+  const { isLoading, isFetched, results } = useTokenTransfers(scope, address, instanceId)
   const transfers = results.data
 
   return (
