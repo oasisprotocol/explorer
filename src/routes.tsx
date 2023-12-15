@@ -29,6 +29,7 @@ import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCar
 import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
 import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTInstanceDashboardPage'
 import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
+import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTTokenTransfersCard'
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
@@ -158,6 +159,10 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
+                Component: () => <NFTTokenTransfersCard {...useNftDetailsProps()} />,
+              },
+              {
+                path: 'metadata',
                 Component: () => <NFTMetadataCard {...useNftDetailsProps()} />,
               },
             ],
