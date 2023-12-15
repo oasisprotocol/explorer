@@ -81,7 +81,7 @@
     "react-dom": "18.2.0",
     "react-i18next": "13.5.0",
     "react-quick-pinch-zoom": "5.1.0",
-    "react-router-dom": "6.20.1",
+    "react-router-dom": "6.21.0",
     "recharts": "2.10.3",
     "swiper": "11.0.5",
     "use-resize-observer": "9.1.0"
