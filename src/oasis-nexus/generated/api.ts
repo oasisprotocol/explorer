@@ -659,8 +659,6 @@ Currently only ERC-721 is supported, where the document is an Asset Metadata fro
   metadata_uri?: string;
   /** Identifies the asset which this NFT represents */
   name?: string;
-  /** The total number of transfers of this NFT instance. */
-  num_transfers?: number;
   /** The Oasis address of this NFT instance's owner. */
   owner?: string;
   /** The Ethereum address of this NFT instance's owner. */
