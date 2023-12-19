@@ -11,12 +11,11 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { TokenDashboardContext } from './index'
-import { AccountLink } from '../../components/Account/AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { TablePagination } from '../../components/Table/TablePagination'
 import { useTokenInventory } from './hook'
 import { ImageListItemImage } from './ImageListItemImage'
-import { NFTInstanceLink } from './NFTLinks'
+import { NFTInstanceLink, NFTOwnerLink } from './NFTLinks'
 import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 import { EvmNft } from 'oasis-nexus/api'
 import { To } from 'react-router-dom'
@@ -94,9 +93,7 @@ const TokenInventoryView: FC<TokenInventoryViewProps> = ({
                   <ImageListItemImage instance={instance} to={to} />
                   <ImageListItemBar
                     title={<NFTInstanceLink scope={scope} instance={instance} />}
-                    subtitle={
-                      owner ? <AccountLink scope={scope} address={owner} alwaysTrim={true} /> : undefined
-                    }
+                    subtitle={owner ? <NFTOwnerLink scope={scope} owner={owner} /> : undefined}
                     position="below"
                   />
                 </ImageListItem>

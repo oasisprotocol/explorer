@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { trimLongString } from '../../utils/trimLongString'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 type NFTLinkProps = {
   scope: SearchScope
@@ -56,6 +57,26 @@ export const NFTInstanceLink: FC<NFTLinkProps> = ({ scope, instance }) => {
               {instance.id}
             </Link>
           ),
+        }}
+      />
+    </StyledTypography>
+  )
+}
+
+type NFTOwnerLinkProps = {
+  scope: SearchScope
+  owner: string
+}
+export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledTypography>
+      <Trans
+        i18nKey="nft.ownerLink"
+        t={t}
+        components={{
+          OwnerLink: <AccountLink scope={scope} address={owner} alwaysTrim={true} />,
         }}
       />
     </StyledTypography>
