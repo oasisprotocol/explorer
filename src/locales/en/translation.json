@@ -135,6 +135,7 @@
     "noPreview": "No preview available",
     "openInFullscreen": "Open in fullscreen",
     "owner": "Owner",
+    "ownerLink": "Owner: <OwnerLink />",
     "switchBackgroundColor": "Switch between dark and light background",
     "transfers": "Transfers"
   },
