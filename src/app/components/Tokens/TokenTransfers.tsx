@@ -217,7 +217,11 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           ? [
               {
                 key: 'tokenType',
-                content: <TokenTypeTag tokenType={transfer.evm_token!.type} />,
+                content: transfer.evm_token ? (
+                  <TokenTypeTag tokenType={transfer.evm_token.type} />
+                ) : (
+                  t('common.missing')
+                ),
                 align: TableCellAlign.Center,
               },
             ]
