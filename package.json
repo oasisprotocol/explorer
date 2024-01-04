@@ -58,7 +58,7 @@
     "swiper/element/bundle": "swiper/swiper-element-bundle"
   },
   "dependencies": {
-    "@emotion/react": "11.11.1",
+    "@emotion/react": "11.11.3",
     "@emotion/styled": "11.11.0",
     "@ethereumjs/util": "9.0.1",
     "@fontsource-variable/figtree": "^5.0.19",
