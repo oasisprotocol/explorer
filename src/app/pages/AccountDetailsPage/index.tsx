@@ -18,6 +18,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { AccountDetailsCard } from './AccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
 import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterSwitch'
+import { DappBanner } from '../../components/DappBanner'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -67,6 +68,7 @@ export const AccountDetailsPage: FC = () => {
         token={token}
         tokenPriceInfo={tokenPriceInfo}
       />
+      <DappBanner scope={scope} ethAddress={account?.address_eth} />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },

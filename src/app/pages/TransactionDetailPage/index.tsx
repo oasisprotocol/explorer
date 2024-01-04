@@ -37,6 +37,7 @@ import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
+import { DappBanner } from '../../components/DappBanner'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -128,6 +129,8 @@ export const TransactionDetailPage: FC = () => {
           addressSwitchOption={addressSwitchOption}
         />
       </SubPageCard>
+      <DappBanner scope={scope} ethAddress={transaction?.sender_0_eth} />
+      <DappBanner scope={scope} ethAddress={transaction?.to_eth} />
       {transaction && (
         <SubPageCard title={t('common.events')}>
           <TransactionEvents transaction={transaction} addressSwitchOption={addressSwitchOption} />
