@@ -18,17 +18,17 @@ import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
-import { useRuntimeFreshness } from '../OfflineBanner/hook'
 
 type ParaTimePickerProps = {
   onClose: () => void
   onConfirm: (network: Network, layer: Layer) => void
   open: boolean
+  isOutOfDate: boolean | undefined
 }
 
-export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open }) => (
+export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open, isOutOfDate }) => (
   <Drawer anchor="top" open={open} onClose={onClose}>
-    <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} />
+    <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
   </Drawer>
 )
 
@@ -82,7 +82,7 @@ enum ParaTimePickerTabletStep {
   ParaTimeDetails,
 }
 
-const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConfirm }) => {
+const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, onClose, onConfirm }) => {
   const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
@@ -96,7 +96,6 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
     setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
   }
   const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
-  const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return (
     <StyledParaTimePickerContent>
@@ -130,7 +129,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
             )}
           </div>
           <MobileNetworkButton
-            isOutOfDate={outOfDate}
+            isOutOfDate={isOutOfDate}
             network={network}
             layer={layer}
             onClick={handleConfirm}

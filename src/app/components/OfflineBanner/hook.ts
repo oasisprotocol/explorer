@@ -20,6 +20,13 @@ export type FreshnessInfo = {
   lastUpdate?: string
 }
 
+export const useConsensusFreshness = () => {
+  // TODO: Placeholder for consensus freshness checks
+  return {
+    outOfDate: false,
+  }
+}
+
 export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   const isApiReachable = useIsApiReachable(scope.network).reachable
   if (scope.layer === Layer.consensus) {

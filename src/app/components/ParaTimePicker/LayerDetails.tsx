@@ -88,12 +88,32 @@ type LayerDetailsProps = {
   handleConfirm: () => void
   network: Network
   selectedLayer: Layer
+  isOutOfDate: boolean | undefined
 }
 
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = ({ handleConfirm, network, selectedLayer }) => {
+export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
+  props.selectedLayer === Layer.consensus ? <ConsensusDetails /> : <RuntimeDetails {...props} />
+
+// TODO: Placeholder for Consensus LayerDetailsView
+const ConsensusDetails = () => {
+  return <></>
+}
+
+const RuntimeDetails: FC<LayerDetailsProps> = props => {
+  const { network, selectedLayer: layer } = props
+  const isOutOfDate = useRuntimeFreshness({ network, layer }).outOfDate
+  return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
+}
+
+export const LayerDetailsView: FC<LayerDetailsProps> = ({
+  handleConfirm,
+  isOutOfDate,
+  network,
+  selectedLayer,
+}) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
@@ -101,7 +121,6 @@ export const LayerDetails: FC<LayerDetailsProps> = ({ handleConfirm, network, se
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
   const layer = selectedLayer
-  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
   const details = getDetails(t)[network][layer]
 
   if (!details) {
