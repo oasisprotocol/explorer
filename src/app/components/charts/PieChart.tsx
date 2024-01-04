@@ -13,6 +13,7 @@ import { Props } from 'recharts/types/component/DefaultLegendContent'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 
 interface PieChartProps<T extends object> extends Formatters {
+  compact: boolean
   data: T[]
   dataKey: Extract<keyof T, string>
 }
@@ -21,10 +22,11 @@ const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testn
 
 type CustomLegendProps = Props & {
   activeIndex?: number
+  compact: boolean
 }
 
 const CustomLegend = (props: CustomLegendProps) => {
-  const { activeIndex, payload } = props
+  const { activeIndex, compact, payload } = props
   const { t } = useTranslation()
 
   return (
@@ -41,8 +43,8 @@ const CustomLegend = (props: CustomLegendProps) => {
           <ListItem key={`item-${label}-${index}`} sx={{ padding: 0 }}>
             <Box
               sx={{
-                width: 48,
-                height: 48,
+                width: compact ? 32 : 48,
+                height: compact ? 32 : 48,
                 display: 'flex',
                 position: 'relative',
                 alignItems: 'center',
@@ -51,13 +53,13 @@ const CustomLegend = (props: CustomLegendProps) => {
                 backgroundColor: isActive ? `${item.color}40` : 'transparent',
               }}
             >
-              <CircleIcon sx={{ color: item.color, fontSize: 18 }} />
+              <CircleIcon sx={{ color: item.color, fontSize: compact ? 12 : 18 }} />
             </Box>
             <Typography
               component="span"
               sx={{
                 color: isActive ? item.color : COLORS.grayMedium,
-                fontSize: 18,
+                fontSize: compact ? 12 : 18,
                 ml: 2,
                 fontWeight: isActive ? 700 : 400,
               }}
@@ -81,7 +83,7 @@ const CustomLegend = (props: CustomLegendProps) => {
   )
 }
 
-const PieChartCmp = <T extends object>({ data, dataKey, formatters }: PieChartProps<T>) => {
+const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: PieChartProps<T>) => {
   const [activeIndex, setActiveIndex] = useState<number>()
   if (!data.length) {
     return null
@@ -100,19 +102,21 @@ const PieChartCmp = <T extends object>({ data, dataKey, formatters }: PieChartPr
           offset={15}
         />
         <Legend
-          width={250}
+          width={compact ? 150 : 250}
           layout="vertical"
           align="left"
           verticalAlign="middle"
-          content={props => <CustomLegend activeIndex={activeIndex} payload={props.payload} />}
+          content={props => (
+            <CustomLegend activeIndex={activeIndex} compact={compact} payload={props.payload} />
+          )}
         />
         <Pie
           onMouseEnter={(_, index) => setActiveIndex(index)}
           onMouseLeave={() => setActiveIndex(undefined)}
           stroke="none"
           data={data}
-          innerRadius={40}
-          outerRadius={90}
+          innerRadius={compact ? 25 : 40}
+          outerRadius={compact ? 50 : 90}
           paddingAngle={0}
           dataKey={dataKey}
         >

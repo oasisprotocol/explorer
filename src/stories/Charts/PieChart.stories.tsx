@@ -31,6 +31,7 @@ type Story = StoryObj<typeof PieChart<DataItem>>
 export const SamplePieChart: Story = {
   render: Template,
   args: {
+    compact: true,
     data,
     dataKey: 'y',
     formatters: {
