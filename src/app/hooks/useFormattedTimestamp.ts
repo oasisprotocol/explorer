@@ -1,4 +1,4 @@
-import formatDistanceStrict from 'date-fns/formatDistanceStrict'
+import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
 import { useTranslation } from 'react-i18next'
 import { useScreenSize } from './useScreensize'
 

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import startOfMonth from 'date-fns/startOfMonth'
+import { startOfMonth } from 'date-fns/startOfMonth'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { BarChart } from '../../components/charts/BarChart'

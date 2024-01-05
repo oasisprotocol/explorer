@@ -13,7 +13,7 @@ import { FC, memo } from 'react'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { SnapshotCardDurationLabel } from '../../components/Snapshots/SnapshotCardDurationLabel'
 import { PercentageGain } from '../../components/PercentageGain'
-import startOfHour from 'date-fns/startOfHour'
+import { startOfHour } from 'date-fns/startOfHour'
 import { SearchScope } from '../../../types/searchScope'
 
 const getLabels = (t: TFunction): Record<ChartDuration, string> => ({

@@ -6,8 +6,8 @@ import {
   secondsInWeek,
   secondsInYear,
 } from 'date-fns/constants'
-import differenceInSeconds from 'date-fns/differenceInSeconds'
-import intlFormatDistance from 'date-fns/intlFormatDistance'
+import { differenceInSeconds } from 'date-fns/differenceInSeconds'
+import { intlFormatDistance } from 'date-fns/intlFormatDistance'
 
 const dateFormat = new Intl.DateTimeFormat()
 
