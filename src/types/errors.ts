@@ -19,8 +19,10 @@ export enum AppErrors {
   PageDoesNotExist = 'page_does_not_exist',
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
+  NotFoundTokenAddress = 'not_found_token_address',
   InvalidUrl = 'invalid_url',
   Storage = 'storage',
+  CannotLoadData = 'cannot_load_data',
 }
 
 export interface ErrorPayload {

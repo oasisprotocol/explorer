@@ -28,12 +28,21 @@ export const BlockDetailPage: FC = () => {
     // We should use useGetConsensusBlocksHeight()
   }
   const blockHeight = parseInt(useParams().blockHeight!, 10)
-  const { isLoading, data } = useGetRuntimeBlockByHeight(
+  const { isLoading, data, error } = useGetRuntimeBlockByHeight(
     scope.network,
     scope.layer, // This is OK, since consensus is already handled separately
     blockHeight,
   )
-  if (!data && !isLoading) {
+
+  if (!data?.data && !isLoading) {
+    const errorCode = (error as any)?.code
+    switch (errorCode) {
+      case 'ERR_NETWORK':
+        throw AppErrors.CannotLoadData
+      default:
+      // TODO: look for other error codes, too.
+      // (Currently we are not aware of anything else)
+    }
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data

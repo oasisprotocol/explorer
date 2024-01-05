@@ -30,10 +30,20 @@ export const TokenDashboardPage: FC = () => {
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
 
-  const { token, isError } = useTokenInfo(scope, address)
+  const { token, isError, errorCode } = useTokenInfo(scope, address)
 
   if (isError) {
-    throw AppErrors.InvalidAddress
+    switch (errorCode) {
+      case 'ERR_NETWORK':
+        throw AppErrors.CannotLoadData
+      case 'ERR_BAD_REQUEST':
+        throw AppErrors.NotFoundTokenAddress
+      default:
+        // TODO: look for other error codes, too
+        // (Currently we are not aware of anything else.)
+        console.log('Error code is', errorCode)
+        throw AppErrors.NotFoundTokenAddress
+    }
   }
 
   const tokenTransfersLink = useHref(``)

@@ -8,6 +8,7 @@ import { TokenPriceInfo } from '../../../coin-gecko/api'
 type AccountDetailsProps = {
   isLoading: boolean
   isError: boolean
+  errorCode: any
   isContract: boolean
   account: RuntimeAccount | undefined
   token: EvmToken | undefined
@@ -17,6 +18,7 @@ type AccountDetailsProps = {
 export const AccountDetailsCard: FC<AccountDetailsProps> = ({
   isLoading,
   isError,
+  errorCode,
   isContract,
   account,
   token,
@@ -32,6 +34,7 @@ export const AccountDetailsCard: FC<AccountDetailsProps> = ({
       <AccountDetailsView
         isLoading={isLoading}
         isError={isError}
+        errorCode={errorCode}
         account={account}
         token={token}
         tokenPriceInfo={tokenPriceInfo}

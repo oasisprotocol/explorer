@@ -497,13 +497,7 @@ export function useGetRuntimeBlockByHeight(
             if (status !== 200) return data
             const block = data.blocks[0]
             if (!block || block.round !== blockHeight) {
-              throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
-                status: 404,
-                statusText: 'not found',
-                config: this,
-                data: 'not found',
-                headers: {},
-              })
+              return undefined
             }
             return {
               ...block,

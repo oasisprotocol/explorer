@@ -8,15 +8,23 @@ import { Account } from '../../components/Account'
 export const AccountDetailsView: FC<{
   isLoading: boolean
   isError: boolean
+  errorCode: any
   account: RuntimeAccount | undefined
   token?: EvmToken
   tokenPriceInfo: TokenPriceInfo
   showLayer?: boolean
-}> = ({ isLoading, isError, account, token, tokenPriceInfo, showLayer }) => {
+}> = ({ isLoading, isError, errorCode, account, token, tokenPriceInfo, showLayer }) => {
   const { t } = useTranslation()
-  return isError ? (
-    <CardEmptyState label={t('account.cantLoadDetails')} />
-  ) : (
+  if (isError) {
+    switch (errorCode) {
+      case 'ERR_NETWORK':
+        return <CardEmptyState label={t('account.cantLoadDetails')} />
+      default:
+        // TODO: what other error cases do we have?
+        console.log('Error code is', errorCode)
+    }
+  }
+  return (
     <Account
       account={account}
       token={token}

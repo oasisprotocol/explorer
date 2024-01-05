@@ -28,11 +28,12 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
     query: { enabled },
   })
   const token = query.data?.data
-  const { isLoading, isError, isFetched } = query
+  const { isLoading, isError, error, isFetched } = query
   return {
     token,
     isLoading: isLoading && enabled, // By default, we get true for isLoading on disabled queries. We don't want that.
     isError,
+    errorCode: (error as any)?.code,
     isFetched,
   }
 }

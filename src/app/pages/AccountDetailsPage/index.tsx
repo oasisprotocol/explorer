@@ -32,7 +32,7 @@ export const AccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const address = useLoaderData() as string
-  const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
+  const { account, isLoading: isAccountLoading, isError, errorCode } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
 
@@ -57,6 +57,7 @@ export const AccountDetailsPage: FC = () => {
       <AccountDetailsCard
         isLoading={isLoading}
         isError={isError}
+        errorCode={errorCode}
         isContract={isContract}
         account={account}
         token={token}

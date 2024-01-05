@@ -11,6 +11,10 @@ type FormattedError = { title: string; message: ReactNode }
 const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => FormattedError> = {
   [AppErrors.Unknown]: (t, error) => ({ title: t('errors.unknown'), message: error.message }),
   [AppErrors.InvalidAddress]: t => ({ title: t('errors.invalidAddress'), message: t('errors.validateURL') }),
+  [AppErrors.CannotLoadData]: t => ({
+    title: t('errors.canNotLoadData'),
+    message: t('errors.canNotReachDataSource'),
+  }),
   [AppErrors.InvalidBlockHeight]: t => ({
     title: t('errors.invalidBlockHeight'),
     message: t('errors.validateURL'),
@@ -42,6 +46,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
   }),
   [AppErrors.NotFoundBlockHeight]: t => ({
     title: t('errors.notFoundBlockHeight'),
+    message: t('errors.validateURL'),
+  }),
+  [AppErrors.NotFoundTokenAddress]: t => ({
+    title: t('errors.notFoundToken'),
     message: t('errors.validateURL'),
   }),
   [AppErrors.NotFoundTxHash]: t => ({ title: t('errors.notFoundTx'), message: t('errors.validateURL') }),
