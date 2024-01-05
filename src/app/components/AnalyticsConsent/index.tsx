@@ -18,7 +18,6 @@ const AcceptCookiesButton = styled(Button)(({ theme }) => ({
 }))
 
 const DeclineCookiesButton = styled(Button)(({ theme }) => ({
-  textTransform: 'capitalize',
   paddingLeft: theme.spacing(5),
   paddingRight: theme.spacing(5),
 }))
