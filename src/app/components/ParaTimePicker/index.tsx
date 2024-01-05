@@ -53,7 +53,6 @@ const StyledContent = styled(Box)(({ theme }) => ({
 const TabletBackButton = styled(Button)({
   color: COLORS.brandDark,
   width: 'fit-content',
-  textTransform: 'capitalize',
   textDecoration: 'none',
 })
 
@@ -178,13 +177,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ onClose, onConf
         </Grid>
 
         <ActionBar>
-          <Button
-            onClick={onClose}
-            color="secondary"
-            variant="outlined"
-            sx={{ textTransform: 'capitalize' }}
-            size="large"
-          >
+          <Button onClick={onClose} color="secondary" variant="outlined" size="large">
             {t('common.cancel')}
           </Button>
 

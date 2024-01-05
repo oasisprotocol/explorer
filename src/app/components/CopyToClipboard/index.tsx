@@ -54,13 +54,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value, label }) => {
   return (
     <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
       {label ? (
-        <Button
-          variant="outlined"
-          color="secondary"
-          sx={{ textTransform: 'capitalize' }}
-          onClick={handleCopyToClipboard}
-          aria-label={ariaLabel}
-        >
+        <Button variant="outlined" color="secondary" onClick={handleCopyToClipboard} aria-label={ariaLabel}>
           {label}
         </Button>
       ) : (
