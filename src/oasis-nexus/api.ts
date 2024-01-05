@@ -12,6 +12,7 @@ import {
   Layer,
   NotFoundErrorResponse,
   RuntimeAccount,
+  RuntimeEventType,
 } from './generated/api'
 import { fromBaseUnits, getEthAddressForAccount } from '../app/utils/helpers'
 import { Network } from '../types/network'
@@ -699,11 +700,13 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
             events: data.events.map(event => {
               const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
               if (
-                event.type === 'accounts.transfer' ||
-                event.type === 'accounts.mint' ||
-                event.type === 'accounts.burn' ||
-                event.type === 'consensus_accounts.deposit' ||
-                event.type === 'consensus_accounts.withdraw'
+                event.type === RuntimeEventType.accountstransfer ||
+                event.type === RuntimeEventType.accountsmint ||
+                event.type === RuntimeEventType.accountsburn ||
+                event.type === RuntimeEventType.consensus_accountsdeposit ||
+                event.type === RuntimeEventType.consensus_accountswithdraw ||
+                event.type === RuntimeEventType.consensus_accountsdelegate ||
+                event.type === RuntimeEventType.consensus_accountsundelegate_done
               ) {
                 return {
                   ...event,

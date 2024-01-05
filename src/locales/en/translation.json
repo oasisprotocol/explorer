@@ -330,7 +330,9 @@
     "gasUsed": "Gas used",
     "fields": {
       "amount": "Amount",
-      "owner": "Owner"
+      "owner": "Owner",
+      "activeShares": "Active Shares",
+      "debondingShares": "Debonding Shares"
     }
   },
   "transactionStats": {
