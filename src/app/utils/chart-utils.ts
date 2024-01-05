@@ -1,7 +1,7 @@
-import startOfHour from 'date-fns/startOfHour'
-import startOfDay from 'date-fns/startOfDay'
-import isSameMonth from 'date-fns/isSameMonth'
-import startOfMonth from 'date-fns/startOfMonth'
+import { startOfHour } from 'date-fns/startOfHour'
+import { startOfDay } from 'date-fns/startOfDay'
+import { isSameMonth } from 'date-fns/isSameMonth'
+import { startOfMonth } from 'date-fns/startOfMonth'
 import { GetLayerStatsTxVolumeParams, type TxVolume, type ActiveAccounts } from '../../oasis-nexus/api'
 
 const fiveMinutesWindowSize = 60 * 5
