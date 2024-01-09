@@ -15,7 +15,7 @@ import { docs } from '../../utils/externalLinks'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
-import { SpecifiedPerEnabledLayer } from '../../utils/route-utils'
+import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 
 const StyledLink = styled(Link)(() => ({
@@ -121,7 +121,7 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
         },
       },
     },
-  } satisfies SpecifiedPerEnabledLayer
+  } satisfies SpecifiedPerEnabledRuntime
 }
 
 type LearningSectionProps = PaperProps & {
