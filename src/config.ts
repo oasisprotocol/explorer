@@ -123,3 +123,6 @@ export const deploys = {
   staging: 'https://explorer.stg.oasis.io',
   localhost: 'http://localhost:1234',
 }
+
+const stableDeploys = [...deploys.production, deploys.staging]
+export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)

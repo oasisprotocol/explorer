@@ -8,7 +8,7 @@ import {
   getEvmBech32Address,
 } from '../../utils/helpers'
 import { Network } from '../../../types/network'
-import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
+import { RouteUtils, SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { Layer } from '../../../oasis-nexus/api'
 
@@ -48,7 +48,7 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedTokenFragment: 'USD',
     },
   },
-} satisfies SpecifiedPerEnabledLayer
+} satisfies SpecifiedPerEnabledRuntime
 
 export const textSearchMininumLength = 3
 
