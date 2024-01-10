@@ -12,6 +12,88 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.5.0 (2024-01-09)
+
+### Features
+
+- Support advertising specific dApps on relevant token pages
+  ([#1085](https://github.com/oasisprotocol/explorer/issues/1085))
+
+- Add icons and display appropriate fields for new event types
+  ([#1082](https://github.com/oasisprotocol/explorer/issues/1082))
+
+### Bug Fixes and Improvements
+
+- Fix owner link formatting in NFT gallery
+  ([#1109](https://github.com/oasisprotocol/explorer/issues/1109))
+
+- Handle missing data when displaying token transfers
+  ([#1126](https://github.com/oasisprotocol/explorer/issues/1126))
+
+### Internal Changes
+
+- Use theme to capitalize all buttons
+  ([#966](https://github.com/oasisprotocol/explorer/issues/966))
+
+- Add TypeScript type definitions group to Renovate bot config
+  ([#1099](https://github.com/oasisprotocol/explorer/issues/1099))
+
+- Update TypeScript type definitions
+  ([#1100](https://github.com/oasisprotocol/explorer/issues/1100))
+
+- Update dependency react-router-dom to v6.21.0
+  ([#1096](https://github.com/oasisprotocol/explorer/issues/1096))
+
+- Update actions/upload-artifact action to v4
+  ([#1102](https://github.com/oasisprotocol/explorer/issues/1102))
+
+- Update storybook dependencies
+  ([#1103](https://github.com/oasisprotocol/explorer/issues/1103),
+  [#1112](https://github.com/oasisprotocol/explorer/issues/1112),
+  [#1128](https://github.com/oasisprotocol/explorer/issues/1128))
+
+- Update lint dependencies
+  ([#1104](https://github.com/oasisprotocol/explorer/issues/1104),
+  [#1108](https://github.com/oasisprotocol/explorer/issues/1108),
+  [#1117](https://github.com/oasisprotocol/explorer/issues/1117),
+  [#1120](https://github.com/oasisprotocol/explorer/issues/1120))
+
+- Update i18next dependencies
+  ([#1101](https://github.com/oasisprotocol/explorer/issues/1101),
+  [#1125](https://github.com/oasisprotocol/explorer/issues/1125),
+  [#1116](https://github.com/oasisprotocol/explorer/issues/1116))
+
+- Update material-ui monorepo
+  ([#1110](https://github.com/oasisprotocol/explorer/issues/1110),
+  [#1122](https://github.com/oasisprotocol/explorer/issues/1122))
+
+- Update dependency axios to v1.6.4
+  ([#1123](https://github.com/oasisprotocol/explorer/issues/1123))
+
+- Update dependency axios to v1.6.5
+  ([#1135](https://github.com/oasisprotocol/explorer/issues/1135))
+
+- Update dependency date-fns to v3
+  ([#1106](https://github.com/oasisprotocol/explorer/issues/1106))
+
+- Update dependency ethers to ^6.9.1
+  ([#1113](https://github.com/oasisprotocol/explorer/issues/1113))
+
+- Update dependency ethers to ^6.9.2
+  ([#1127](https://github.com/oasisprotocol/explorer/issues/1127))
+
+- Update dependency react-router-dom to v6.21.1
+  ([#1118](https://github.com/oasisprotocol/explorer/issues/1118))
+
+- Update dependency @emotion/react to v11.11.3
+  ([#1119](https://github.com/oasisprotocol/explorer/issues/1119))
+
+- Update test dependencies
+  ([#1124](https://github.com/oasisprotocol/explorer/issues/1124))
+
+- Update parcel monorepo to v2.11.0
+  ([#1130](https://github.com/oasisprotocol/explorer/issues/1130))
+
 ## 1.4.0 (2023-12-14)
 
 ### Features
