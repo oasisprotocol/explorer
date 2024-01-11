@@ -5,7 +5,7 @@ import {
   getFilterForScope,
   getNameForScope,
   getInverseFilterForScope,
-  SearchScope,
+  SearchScopeCandidate,
 } from '../../../types/searchScope'
 import { getThemesForNetworks } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
@@ -17,7 +17,7 @@ import { HideMoreResults, ShowMoreResults } from './notifications'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 
 export const ScopedSearchResultsView: FC<{
-  wantedScope: SearchScope
+  wantedScope: SearchScopeCandidate
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
 }> = ({ wantedScope, searchResults, tokenPrices }) => {

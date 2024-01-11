@@ -4,7 +4,7 @@ import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './he
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
-import { SearchScope } from '../../types/searchScope'
+import { SearchScope, SearchScopeCandidate } from '../../types/searchScope'
 
 export type SpecifiedPerEnabledLayer<T = any> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
@@ -73,8 +73,8 @@ export abstract class RouteUtils {
     return tokenAddress ? `${tokenRoutes}#${encodeURIComponent(tokenAddress)}` : tokenRoutes
   }
 
-  static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
-    return scope
+  static getSearchRoute = (scope: SearchScopeCandidate | undefined, searchTerm: string) => {
+    return scope?.valid
       ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Divider from '@mui/material/Divider'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -12,7 +12,7 @@ import { getFilterForLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
 
 export const SearchResultsView: FC<{
-  wantedScope?: SearchScope
+  wantedScope?: SearchScopeCandidate
   searchResults: SearchResults
   isLoading: boolean
   tokenPrices: AllTokenPrices

@@ -9,12 +9,12 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import TokenIcon from '@mui/icons-material/Token'
 import { RouteUtils } from '../../utils/route-utils'
 import { OptionalBreak } from '../OptionalBreak'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SxProps } from '@mui/material/styles'
 
 interface Props {
-  scope: SearchScope | undefined
+  scope: SearchScopeCandidate | undefined
 }
 
 const iconSxProps: SxProps = {

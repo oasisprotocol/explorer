@@ -36,7 +36,12 @@ export const GlobalSearchResultsView: FC<{ searchResults: SearchResults; tokenPr
 
   return (
     <>
-      {!mainnetResults.length && (otherResults.length ? <NoResultsOnMainnet /> : <NoResultsWhatsoever />)}
+      {!mainnetResults.length &&
+        (otherResults.length ? (
+          <NoResultsOnMainnet isScopeValid={true} />
+        ) : (
+          <NoResultsWhatsoever isScopeValid={true} />
+        ))}
       {
         <SearchResultsList
           key={Network.mainnet}
