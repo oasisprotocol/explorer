@@ -11,12 +11,12 @@ import { TokenSupplyCard } from './TokenSupplyCard'
 import { TokenHoldersCountCard } from './TokenHoldersCountCard'
 import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
 }))
-export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenSnapshot: FC<{ scope: SearchScopeCandidate; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const theme = useTheme()

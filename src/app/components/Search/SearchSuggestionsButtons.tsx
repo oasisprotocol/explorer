@@ -10,7 +10,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import TokenIcon from '@mui/icons-material/Token'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 
 const PlainTextButton = styled(Button)({
   fontSize: 'inherit',
@@ -30,14 +30,17 @@ export const SuggestionButton = styled(PlainTextButton)({
 })
 
 interface Props {
-  scope: SearchScope | undefined
+  scope: SearchScopeCandidate | undefined
   onClickSuggestion: (suggestion: string) => void
 }
 
 export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }) => {
   const { t } = useTranslation()
   const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
-    (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
+    (scope?.network &&
+      scope?.layer &&
+      (scope?.valid || undefined) &&
+      searchSuggestionTerms[scope.network][scope.layer]) ??
     searchSuggestionTerms['mainnet']['sapphire']!
 
   return (

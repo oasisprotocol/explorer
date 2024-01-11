@@ -23,12 +23,14 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
-  const isApiReachable = useIsApiReachable(scope?.network || Network.mainnet).reachable
+  const isApiReachable = useIsApiReachable(
+    scope?.valid && scope.network ? scope?.network : Network.mainnet,
+  ).reachable
 
   return (
     <>
       <BuildBanner />
-      <NetworkOfflineBanner />
+      {scope?.valid && <NetworkOfflineBanner />}
       {scope?.valid && <RuntimeOfflineBanner />}
       <Box
         sx={{

@@ -1,14 +1,15 @@
 import { Layer, useGetRuntimeStatus, useGetStatus } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScope, SearchScopeCandidate } from '../../../types/searchScope'
 import { AppError, AppErrors } from '../../../types/errors'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { paraTimesConfig } from '../../../config'
 
 export const useIsApiReachable = (
   network: Network,
+  enabled = true,
 ): { reachable: true } | { reachable: false; reason: 'userOffline' | 'apiOffline' } => {
-  const query = useGetStatus(network)
+  const query = useGetStatus(network, { query: { enabled } })
   if (query.isPaused) return { reachable: false, reason: 'userOffline' }
   if (query.isFetched && !query.isSuccess) return { reachable: false, reason: 'apiOffline' }
   return { reachable: true }
@@ -20,14 +21,21 @@ export type FreshnessInfo = {
   lastUpdate?: string
 }
 
-export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
-  const isApiReachable = useIsApiReachable(scope.network).reachable
+export const useRuntimeFreshness = (scope: SearchScopeCandidate | SearchScope): FreshnessInfo => {
+  const isScopeValid = (scope as SearchScopeCandidate).valid ?? true
+  const isApiReachable = useIsApiReachable(scope.network, isScopeValid).reachable
   if (scope.layer === Layer.consensus) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
   const query = useGetRuntimeStatus(scope.network, scope.layer)
   const data = query.data?.data
   const lastUpdate = useFormattedTimestampString(data?.latest_block_time)
+
+  if (!isScopeValid) {
+    return {
+      outOfDate: undefined,
+    }
+  }
 
   if (query.isError) {
     return {

@@ -8,7 +8,7 @@ import Link from '@mui/material/Link'
 import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 
 const FooterBox = styled(Box)(({ theme }) => ({
@@ -36,7 +36,7 @@ const StyledLinksGroup = styled(Box)(({ theme }) => ({
 }))
 
 interface FooterProps {
-  scope?: SearchScope
+  scope?: SearchScopeCandidate
   mobileSearchAction?: ReactNode
 }
 

@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton'
 import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 import { textSearchMininumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
@@ -95,7 +95,7 @@ SearchButton.defaultProps = {
 }
 
 export interface SearchProps {
-  scope?: SearchScope
+  scope?: SearchScopeCandidate
   variant: SearchVariant
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void

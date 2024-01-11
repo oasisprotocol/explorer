@@ -2,7 +2,7 @@ import { useParams, useRouteError } from 'react-router-dom'
 import { Network } from '../../types/network'
 import { RouteUtils } from '../utils/route-utils'
 import { AppError, AppErrors } from '../../types/errors'
-import { SearchScope } from '../../types/searchScope'
+import { SearchScopeCandidate } from '../../types/searchScope'
 import { Layer } from '../../oasis-nexus/api'
 
 export const useNetworkParam = (): Network | undefined => {
@@ -10,20 +10,16 @@ export const useNetworkParam = (): Network | undefined => {
   return network as Network | undefined
 }
 
-type ScopeInfo = SearchScope & {
-  valid: boolean
-}
-
 /**
  * Use this in situations where we might or might not have a scope
  */
-export const useScopeParam = (): ScopeInfo | undefined => {
+export const useScopeParam = (): SearchScopeCandidate | undefined => {
   const { network, layer } = useParams()
   const error = useRouteError()
 
   if (network === undefined && layer === undefined) return undefined
 
-  const scope: ScopeInfo = {
+  const scope: SearchScopeCandidate = {
     network: network as Network,
     layer: layer as Layer,
     valid: true,
@@ -42,7 +38,7 @@ export const useScopeParam = (): ScopeInfo | undefined => {
     if (!error) throw new AppError(AppErrors.UnsupportedNetwork)
   }
 
-  if (!RouteUtils.getEnabledLayersForNetwork(scope.network).includes(scope.layer)) {
+  if (scope.valid && !RouteUtils.getEnabledLayersForNetwork(scope.network).includes(scope.layer)) {
     scope.valid = false
     if (!error) throw new AppError(AppErrors.UnsupportedLayer)
   }
@@ -53,7 +49,7 @@ export const useScopeParam = (): ScopeInfo | undefined => {
 /**
  * Use this in situations where we require to have a scope
  */
-export const useRequiredScopeParam = (): ScopeInfo => {
+export const useRequiredScopeParam = (): SearchScopeCandidate => {
   const scope = useScopeParam()
 
   if (!scope) throw new AppError(AppErrors.UnsupportedNetwork)

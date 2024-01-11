@@ -8,6 +8,13 @@ export interface SearchScope {
   layer: Layer
 }
 
+/**
+ * Use this in situations where a proposed search scope might be invalid
+ */
+export type SearchScopeCandidate = SearchScope & {
+  valid: boolean
+}
+
 export const MainnetEmerald: SearchScope = {
   network: Network.mainnet,
   layer: Layer.emerald,

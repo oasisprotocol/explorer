@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { Search } from '../Search'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 
 interface AppendMobileSearchProps {
   action?: ReactNode
@@ -37,11 +37,9 @@ const SearchWrapper = styled(Box)(() => ({
   marginLeft: 'auto',
 }))
 
-export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> & { scope?: SearchScope }> = ({
-  scope,
-  children,
-  action,
-}) => {
+export const AppendMobileSearch: FC<
+  PropsWithChildren<AppendMobileSearchProps> & { scope?: SearchScopeCandidate }
+> = ({ scope, children, action }) => {
   const { isMobile } = useScreenSize()
 
   return (

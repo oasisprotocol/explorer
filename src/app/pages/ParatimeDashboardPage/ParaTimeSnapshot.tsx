@@ -17,13 +17,13 @@ import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { Network } from '../../../types/network'
 import { getLayerNames } from '../../../types/layers'
 import { TestnetFaucet } from './TestnetFaucet'
-import { SearchScope } from '../../../types/searchScope'
+import { SearchScopeCandidate } from '../../../types/searchScope'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
 }))
 
-export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const ParaTimeSnapshot: FC<{ scope: SearchScopeCandidate }> = ({ scope }) => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
