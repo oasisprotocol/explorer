@@ -122,7 +122,6 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   useEffect(() => {
     setValue(valueInSearchParams)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueInSearchParams]) // We only want to update the value from code when the URL changes
 
   const onChange = (newValue: string) => {

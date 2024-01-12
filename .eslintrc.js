@@ -12,6 +12,8 @@ const config = {
   parser: '@typescript-eslint/parser',
 
   settings: {},
+  reportUnusedDisableDirectives: true,
+
   rules: {
     'no-restricted-imports': [
       'error',
