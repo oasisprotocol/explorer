@@ -22,19 +22,28 @@ export type Formatters = {
   }
 }
 
-type TooltipContentProps = TooltipProps<number, string> & Formatters
+type TooltipContentProps = TooltipProps<number, string> &
+  Formatters & {
+    labelKey?: string
+  }
 
-export const TooltipContent = ({ active, payload, formatters }: TooltipContentProps) => {
+export const TooltipContent = ({
+  active,
+  payload,
+  formatters,
+  labelKey: dataLabelKey,
+}: TooltipContentProps) => {
   if (!active || !payload || !payload.length) {
     return null
   }
+
   const { [payload[0].dataKey!]: value, ...rest } = payload[0].payload
-  const labelKey = Object.keys(rest)[0]
+  const labelKey = dataLabelKey || Object.keys(rest)[0]
 
   return (
     <StyledPaper>
       <Typography paragraph={false} sx={{ fontSize: 12 }}>
-        {formatters?.label ? formatters.label(payload[0]?.payload[labelKey]) : payload[0]?.payload[labelKey]}
+        {formatters?.label ? formatters.label(payload[0].payload[labelKey]) : payload[0].payload[labelKey]}
       </Typography>
       <Typography paragraph={false} sx={{ fontSize: 12, fontWeight: 600 }}>
         {formatters?.data ? formatters.data(payload[0].value!) : payload[0].value}
