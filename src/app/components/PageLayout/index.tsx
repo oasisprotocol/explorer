@@ -10,6 +10,7 @@ import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiReachable } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
+import { Layer } from '../../../oasis-nexus/api'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -29,7 +30,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
     <>
       <BuildBanner />
       <NetworkOfflineBanner />
-      {scope?.valid && <RuntimeOfflineBanner />}
+      {scope?.valid && scope.layer !== Layer.consensus && <RuntimeOfflineBanner />}
       <Box
         sx={{
           minHeight: '100vh',

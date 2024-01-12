@@ -11,7 +11,7 @@ import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { ParaTimePicker } from './../ParaTimePicker'
 import { RouteUtils } from '../../utils/route-utils'
-import { useRuntimeFreshness } from '../OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   marginLeft: `-${theme.spacing(1)}`,
@@ -31,7 +31,31 @@ type NetworkSelectorProps = {
   network: Network
 }
 
-export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
+export const NetworkSelector: FC<NetworkSelectorProps> = props => {
+  return props.layer === Layer.consensus ? (
+    <ConsensusNetworkSelector {...props} />
+  ) : (
+    <RuntimeNetworkSelector {...props} />
+  )
+}
+
+const ConsensusNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
+  const { outOfDate } = useConsensusFreshness()
+
+  return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />
+}
+
+const RuntimeNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
+  const { outOfDate } = useRuntimeFreshness({ network, layer })
+
+  return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />
+}
+
+type NetworkSelectorViewProps = NetworkSelectorProps & {
+  isOutOfDate: boolean | undefined
+}
+
+const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer, network }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile, isTablet } = useScreenSize()
@@ -39,7 +63,6 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
   const [openDrawer, setOpenDrawer] = useState(false)
   const handleDrawerClose = () => setOpenDrawer(false)
   const handleDrawerOpen = () => setOpenDrawer(true)
-  const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return (
     <Box
@@ -56,9 +79,10 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
           handleDrawerClose()
           navigate(RouteUtils.getDashboardRoute({ network, layer }))
         }}
+        isOutOfDate={isOutOfDate}
       />
       {!isMobile && (
-        <NetworkButton isOutOfDate={outOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
+        <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
       {!isTablet && network !== Network.mainnet && (
         <StyledBox>
@@ -74,7 +98,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) =>
       )}
       {isMobile && (
         <MobileNetworkButton
-          isOutOfDate={outOfDate}
+          isOutOfDate={isOutOfDate}
           network={network}
           layer={layer}
           onClick={handleDrawerOpen}
