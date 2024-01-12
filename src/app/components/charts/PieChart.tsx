@@ -21,26 +21,26 @@ interface PieChartProps<T extends object> extends Formatters {
 const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testnet, COLORS.grayMedium2]
 
 type CustomLegendProps = Props & {
-  activeIndex?: number
+  activeLabel?: string
   compact: boolean
 }
 
 const CustomLegend = (props: CustomLegendProps) => {
-  const { activeIndex, compact, payload } = props
+  const { activeLabel, compact, payload } = props
   const { t } = useTranslation()
 
   return (
     <List sx={{ listStyleType: 'none' }}>
-      {payload?.map((item, index) => {
+      {payload?.map(item => {
         if (!item.payload) {
           return null
         }
 
         const payload = item.payload as PieSectorDataItem
-        const isActive = activeIndex === index
         const label = payload.name
+        const isActive = activeLabel === label
         return (
-          <ListItem key={`item-${label}-${index}`} sx={{ padding: 0 }}>
+          <ListItem key={label} sx={{ padding: 0 }}>
             <Box
               sx={{
                 width: compact ? 32 : 48,
@@ -84,7 +84,7 @@ const CustomLegend = (props: CustomLegendProps) => {
 }
 
 const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: PieChartProps<T>) => {
-  const [activeIndex, setActiveIndex] = useState<number>()
+  const [activeLabel, setActiveLabel] = useState<string>()
   if (!data.length) {
     return null
   }
@@ -107,12 +107,12 @@ const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: P
           align="left"
           verticalAlign="middle"
           content={props => (
-            <CustomLegend activeIndex={activeIndex} compact={compact} payload={props.payload} />
+            <CustomLegend activeLabel={activeLabel} compact={compact} payload={props.payload} />
           )}
         />
         <Pie
-          onMouseEnter={(_, index) => setActiveIndex(index)}
-          onMouseLeave={() => setActiveIndex(undefined)}
+          onMouseEnter={(item, index) => setActiveLabel(item[labelKey])}
+          onMouseLeave={() => setActiveLabel(undefined)}
           stroke="none"
           data={data}
           innerRadius={compact ? 25 : 40}
@@ -128,7 +128,7 @@ const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: P
                 key={`${label}-${index}`}
                 name={label}
                 style={{
-                  filter: activeIndex === index ? `drop-shadow(0px 0px 5px ${COLORS.grayMedium}` : 'none',
+                  filter: activeLabel === label ? `drop-shadow(0px 0px 5px ${COLORS.grayMedium}` : 'none',
                 }}
               />
             )
