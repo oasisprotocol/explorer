@@ -9,8 +9,8 @@ import {
   durationToQueryParams,
   getMonthlyWindowsDailyAverage,
 } from '../../utils/chart-utils'
-import { DurationPills } from './DurationPills'
-import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
+import { DurationPills } from '../../components/DurationPills'
+import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
