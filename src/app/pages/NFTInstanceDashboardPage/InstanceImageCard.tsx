@@ -99,7 +99,10 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
           }}
         >
           {isLoading && <Skeleton variant="rectangular" width={imageSize} height={imageSize} />}
-          {isFetched && nft && imageLoadError && (
+          {/* API did not process NFT data fully */}
+          {isFetched && !nft?.image && <NoPreview placeholderSize={imageSize} />}
+          {/* API processed NFT data, but image prop is not valid image source */}
+          {isFetched && nft?.image && imageLoadError && (
             <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
               <Box
                 sx={{
