@@ -91,8 +91,10 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
     ParaTimePickerTabletStep.ParaTimeDetails,
   )
   const selectNetwork = (newNetwork: Network) => {
+    const enabledLayers = RouteUtils.getEnabledLayersForNetwork(newNetwork)
+    const targetLayer = enabledLayers.includes(selectedLayer) ? selectedLayer : enabledLayers[0]
     setSelectedNetwork(newNetwork)
-    setSelectedLayer(RouteUtils.getEnabledLayersForNetwork(newNetwork)[0])
+    setSelectedLayer(targetLayer)
   }
   const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
 
