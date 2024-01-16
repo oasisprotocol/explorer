@@ -5,6 +5,7 @@ import { Button } from '@mui/base/Button'
 import CardContent from '@mui/material/CardContent'
 import Card from '@mui/material/Card'
 import ContrastIcon from '@mui/icons-material/Contrast'
+import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
@@ -73,10 +74,12 @@ type InstanceImageCardProps = {
 }
 
 export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoading, nft }) => {
+  const { t } = useTranslation()
   const [darkMode, setDarkMode] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const handlePreviewOpen = () => setPreviewOpen(true)
   const handlePreviewClose = () => setPreviewOpen(false)
+  const [imageLoadError, setImageLoadError] = useState(false)
 
   return (
     <Card
@@ -91,11 +94,30 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'space-between',
+            minHeight: imageSize,
           }}
         >
           {isLoading && <Skeleton variant="rectangular" width={imageSize} height={imageSize} />}
-          {isFetched && nft && !isNftImageUrlValid(nft.image) && <NoPreview placeholderSize={imageSize} />}
-          {isFetched && nft && isNftImageUrlValid(nft.image) && (
+          {isFetched && nft && imageLoadError && (
+            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <NoPreview placeholderSize={imageSize} />
+                {isNftImageUrlValid(nft.image) && (
+                  <Link href={nft.image} rel="noopener noreferrer" target="_blank">
+                    {t('nft.openInNewTab')}
+                  </Link>
+                )}
+              </Box>
+            </Box>
+          )}
+          {isFetched && nft && isNftImageUrlValid(nft.image) && !imageLoadError && (
             <>
               <Box
                 sx={{
@@ -109,6 +131,7 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
                   handlePreviewOpen={handlePreviewOpen}
                   previewOpen={previewOpen}
                   src={processNftImageUrl(nft.image)}
+                  onError={() => setImageLoadError(true)}
                   title={nft.name}
                   maxThumbnailSize={imageSize}
                 />

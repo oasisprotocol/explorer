@@ -32,6 +32,7 @@ const StyledImage = styled('img')({
 type ImagePreviewProps = {
   handlePreviewClose: () => void
   handlePreviewOpen: () => void
+  onError: () => void
   previewOpen: boolean
   src: string
   title: string | undefined
@@ -41,6 +42,7 @@ type ImagePreviewProps = {
 export const ImagePreview: FC<ImagePreviewProps> = ({
   handlePreviewClose,
   handlePreviewOpen,
+  onError,
   previewOpen,
   src,
   title,
@@ -53,7 +55,7 @@ export const ImagePreview: FC<ImagePreviewProps> = ({
     <>
       <Box>
         <StyledButton onClick={handlePreviewOpen}>
-          <StyledThumbnail src={src} alt={label} maxThumbnailSize={maxThumbnailSize} />
+          <StyledThumbnail onError={onError} src={src} alt={label} maxThumbnailSize={maxThumbnailSize} />
         </StyledButton>
       </Box>
       <Modal

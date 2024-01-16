@@ -140,6 +140,7 @@
     "noMetadata": "There is no metadata on record for this NFT.",
     "noPreview": "No preview available",
     "openInFullscreen": "Open in fullscreen",
+    "openInNewTab": "Open in a new tab",
     "owner": "Owner",
     "ownerLink": "Owner: <OwnerLink />",
     "switchBackgroundColor": "Switch between dark and light background",
