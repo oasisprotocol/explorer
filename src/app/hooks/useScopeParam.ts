@@ -1,4 +1,4 @@
-import { useParams, useRouteError } from 'react-router-dom'
+import { useRouteLoaderData, useParams, useRouteError } from 'react-router-dom'
 import { Network } from '../../types/network'
 import { RouteUtils } from '../utils/route-utils'
 import { AppError, AppErrors } from '../../types/errors'
@@ -14,14 +14,23 @@ type ScopeInfo = SearchScope & {
   valid: boolean
 }
 
+type Scope = {
+  layer: Layer | undefined
+  network: Network | undefined
+}
+
 /**
  * Use this in situations where we might or might not have a scope
  */
 export const useScopeParam = (): ScopeInfo | undefined => {
-  const { network, layer } = useParams()
+  const runtimeScope = useRouteLoaderData('runtimeScope') as Scope
+  const consensusScope = useRouteLoaderData('consensusScope') as Scope
+  const loaderData = runtimeScope || consensusScope
   const error = useRouteError()
 
-  if (network === undefined && layer === undefined) return undefined
+  if (loaderData?.network === undefined && loaderData?.layer === undefined) return undefined
+
+  const { network, layer } = loaderData
 
   const scope: ScopeInfo = {
     network: network as Network,

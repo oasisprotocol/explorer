@@ -176,7 +176,22 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
-export const scopeLoader = async (args: LoaderFunctionArgs) => {
+export const scopeConsensusLoader = async (args: LoaderFunctionArgs) => {
+  const {
+    params: { network },
+  } = args
+
+  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
+    throw new AppError(AppErrors.InvalidUrl)
+  }
+
+  return {
+    network: network as Network,
+    layer: Layer.consensus,
+  }
+}
+
+export const scopeRuntimeLoader = async (args: LoaderFunctionArgs) => {
   const {
     params: { network, layer },
   } = args
@@ -192,5 +207,8 @@ export const scopeLoader = async (args: LoaderFunctionArgs) => {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
 
-  return true
+  return {
+    network: network as Network,
+    layer: layer as Layer,
+  }
 }
