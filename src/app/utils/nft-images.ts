@@ -1,7 +1,7 @@
 import { AppError, AppErrors } from 'types/errors'
 import { accessIpfsUrl } from './ipfs'
 
-const validProtocols = ['http:', 'https:', 'ftp:', 'ipfs:']
+const validProtocols = ['http:', 'https:', 'ftp:', 'ipfs:', 'data:']
 
 export const isNftImageUrlValid = (url: string | undefined): boolean => {
   if (!url) {

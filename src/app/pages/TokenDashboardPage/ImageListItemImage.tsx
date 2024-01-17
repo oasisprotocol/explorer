@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -57,11 +57,13 @@ type ImageListItemImageProps = {
 export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const [imageLoadError, setImageLoadError] = useState(false)
 
   return (
     <Link component={RouterLink} to={to} sx={{ display: 'flex', position: 'relative' }}>
-      {isNftImageUrlValid(instance.image) ? (
+      {isNftImageUrlValid(instance.image) && !imageLoadError ? (
         <StyledImage
+          onError={() => setImageLoadError(true)}
           src={processNftImageUrl(instance.image)}
           alt={getNftInstanceLabel(instance)}
           loading="lazy"
