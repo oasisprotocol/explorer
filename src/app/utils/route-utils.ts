@@ -5,15 +5,16 @@ import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
+import { isStableDeploy } from '../../config'
 
-export type SpecifiedPerEnabledLayer<T = any> = {
-  [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
-    [L in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N]]: T
+export type SpecifiedPerEnabledRuntime<T = any> = {
+  [N in keyof (typeof RouteUtils)['ENABLED_RUNTIMES_FOR_NETWORK']]: {
+    [L in keyof (typeof RouteUtils)['ENABLED_RUNTIMES_FOR_NETWORK'][N]]: T
   }
 }
 
 export abstract class RouteUtils {
-  private static ENABLED_LAYERS_FOR_NETWORK = {
+  private static ENABLED_RUNTIMES_FOR_NETWORK = {
     [Network.mainnet]: {
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
@@ -23,6 +24,12 @@ export abstract class RouteUtils {
       [Layer.sapphire]: true,
     },
   } satisfies Partial<Record<Network, Partial<Record<Layer, true>>>>
+
+  private static ENABLED_CONSENSUS_FOR_NETWORK = {
+    // Disable WIP Consensus on production an staging
+    [Network.mainnet]: !isStableDeploy,
+    [Network.testnet]: false,
+  }
 
   static getDashboardRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
@@ -101,7 +108,9 @@ export abstract class RouteUtils {
     )}/instance/${encodeURIComponent(instanceId)}`
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
-    return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network]) as Layer[]
+    const enabledRuntimes = Object.keys(RouteUtils.ENABLED_RUNTIMES_FOR_NETWORK[network]) as Layer[]
+    const enabledConsensus = RouteUtils.ENABLED_CONSENSUS_FOR_NETWORK[network] ? [Layer.consensus] : []
+    return [...enabledRuntimes, ...enabledConsensus]
   }
 
   static getEnabledScopes(): SearchScope[] {
@@ -111,7 +120,11 @@ export abstract class RouteUtils {
   }
 
   static getEnabledNetworks() {
-    return Object.keys(RouteUtils.ENABLED_LAYERS_FOR_NETWORK) as Network[]
+    const networks = new Set([
+      ...Object.keys(RouteUtils.ENABLED_RUNTIMES_FOR_NETWORK),
+      ...Object.keys(RouteUtils.ENABLED_CONSENSUS_FOR_NETWORK),
+    ])
+    return Array.from(networks) as Network[]
   }
 
   static getEnabledSearchScopes(): SearchScope[] {
