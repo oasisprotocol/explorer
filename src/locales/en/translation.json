@@ -123,7 +123,7 @@
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
     }
   },
-  "dapps":{
+  "dapps": {
     "wrose": {
       "description": "Looking to wrap or unwrap your wROSE?",
       "label": "Use our ROSE (un)wrapper"
@@ -223,7 +223,7 @@
     "header": "Join us",
     "reddit": "Reddit",
     "telegram": "Telegram",
-    "twitter": "Twitter",
+    "twitter": "X",
     "youtube": "Youtube"
   },
   "tableLayoutButton": {

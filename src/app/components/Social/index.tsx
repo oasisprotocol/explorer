@@ -27,7 +27,13 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
       href={href}
       color={COLORS.white}
       underline="none"
-      sx={{ display: 'flex', flexDirection: 'column', mx: isMobile ? 4 : 0, mt: isMobile ? 4 : 0 }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        mx: isMobile ? 4 : 0,
+        mt: isMobile ? 4 : 0,
+      }}
       rel="noopener noreferrer"
       target="_blank"
     >
