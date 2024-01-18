@@ -44,8 +44,7 @@ type LayerContent = {
   secondary: Content
   tertiary: Content
 }
-type NetworkContent = Partial<Record<Layer, LayerContent>>
-const getContent = (t: TFunction): Record<Network, NetworkContent> => {
+const getContent = (t: TFunction) => {
   const labels = getLayerLabels(t)
 
   return {
@@ -84,6 +83,8 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
           url: docs.paraTimeTransfer,
         },
       },
+      [Layer.cipher]: undefined,
+      [Layer.consensus]: undefined,
     },
     [Network.testnet]: {
       [Layer.emerald]: {
@@ -120,8 +121,10 @@ const getContent = (t: TFunction): Record<Network, NetworkContent> => {
           url: docs.sapphireTestnetHardhat,
         },
       },
+      [Layer.cipher]: undefined,
+      [Layer.consensus]: undefined,
     },
-  } satisfies SpecifiedPerEnabledRuntime
+  } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }
 
 type LearningSectionProps = PaperProps & {

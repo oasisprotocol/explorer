@@ -8,28 +8,29 @@ import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
 
 export type SpecifiedPerEnabledRuntime<T = any> = {
-  [N in keyof (typeof RouteUtils)['ENABLED_RUNTIMES_FOR_NETWORK']]: {
-    [L in keyof (typeof RouteUtils)['ENABLED_RUNTIMES_FOR_NETWORK'][N]]: T
+  [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
+    [L in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N]]: (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N][L] extends true
+      ? T
+      : T | undefined
   }
 }
 
 export abstract class RouteUtils {
-  private static ENABLED_RUNTIMES_FOR_NETWORK = {
+  private static ENABLED_LAYERS_FOR_NETWORK = {
     [Network.mainnet]: {
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
+      [Layer.cipher]: false,
+      // Disable WIP Consensus on production an staging
+      [Layer.consensus]: !isStableDeploy,
     },
     [Network.testnet]: {
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
+      [Layer.cipher]: false,
+      [Layer.consensus]: false,
     },
-  } satisfies Partial<Record<Network, Partial<Record<Layer, true>>>>
-
-  private static ENABLED_CONSENSUS_FOR_NETWORK = {
-    // Disable WIP Consensus on production an staging
-    [Network.mainnet]: !isStableDeploy,
-    [Network.testnet]: false,
-  }
+  } satisfies Record<Network, Record<Layer, boolean>>
 
   static getDashboardRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
@@ -108,9 +109,7 @@ export abstract class RouteUtils {
     )}/instance/${encodeURIComponent(instanceId)}`
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
-    const enabledRuntimes = Object.keys(RouteUtils.ENABLED_RUNTIMES_FOR_NETWORK[network]) as Layer[]
-    const enabledConsensus = RouteUtils.ENABLED_CONSENSUS_FOR_NETWORK[network] ? [Layer.consensus] : []
-    return [...enabledRuntimes, ...enabledConsensus]
+    return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
   }
 
   static getEnabledScopes(): SearchScope[] {
@@ -119,12 +118,10 @@ export abstract class RouteUtils {
     )
   }
 
-  static getEnabledNetworks() {
-    const networks = new Set([
-      ...Object.keys(RouteUtils.ENABLED_RUNTIMES_FOR_NETWORK),
-      ...Object.keys(RouteUtils.ENABLED_CONSENSUS_FOR_NETWORK),
-    ])
-    return Array.from(networks) as Network[]
+  static getEnabledNetworks(): Network[] {
+    return Object.values(Network).filter(network => {
+      return RouteUtils.getEnabledLayersForNetwork(network).length > 0
+    })
   }
 
   static getEnabledSearchScopes(): SearchScope[] {

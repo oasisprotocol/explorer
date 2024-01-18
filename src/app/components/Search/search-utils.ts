@@ -10,7 +10,6 @@ import {
 import { Network } from '../../../types/network'
 import { RouteUtils, SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
-import { Layer } from '../../../oasis-nexus/api'
 
 type LayerSuggestions = {
   suggestedBlock: string
@@ -19,7 +18,7 @@ type LayerSuggestions = {
   suggestedTokenFragment: string
 }
 
-export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerSuggestions>>> = {
+export const searchSuggestionTerms = {
   mainnet: {
     emerald: {
       suggestedBlock: '4260',
@@ -33,6 +32,8 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedAccount: '0x90adE3B7065fa715c7a150313877dF1d33e777D5',
       suggestedTokenFragment: 'mock',
     },
+    cipher: undefined,
+    consensus: undefined,
   },
   testnet: {
     emerald: {
@@ -47,8 +48,10 @@ export const searchSuggestionTerms: Record<Network, Partial<Record<Layer, LayerS
       suggestedAccount: '0xfA3AC9f65C9D75EE3978ab76c6a1105f03156204',
       suggestedTokenFragment: 'USD',
     },
+    cipher: undefined,
+    consensus: undefined,
   },
-} satisfies SpecifiedPerEnabledRuntime
+} satisfies SpecifiedPerEnabledRuntime<LayerSuggestions>
 
 export const textSearchMininumLength = 3
 
