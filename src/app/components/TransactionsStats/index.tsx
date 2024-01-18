@@ -27,7 +27,7 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
-  const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
+  const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.YEAR
   const windows = allTime
     ? getMonthlyWindowsDailyAverage(dailyVolumeQuery.data?.data.windows)
     : dailyVolumeQuery.data?.data.windows

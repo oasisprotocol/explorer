@@ -20,7 +20,7 @@ export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windo
   switch (duration) {
     case ChartDuration.TODAY:
       return filterHourlyActiveAccounts(windows)
-    case ChartDuration.ALL_TIME:
+    case ChartDuration.YEAR:
       return sumWindowsByStartDuration(windows, 'active_accounts', 'window_end', startOfMonth)
     default:
       return windows
@@ -39,7 +39,7 @@ export const getChartLabelFormatParams = (duration: ChartDuration) => {
           minute: 'numeric',
         } satisfies Intl.DateTimeFormatOptions,
       }
-    case ChartDuration.ALL_TIME:
+    case ChartDuration.YEAR:
       return {
         timestamp: {
           year: 'numeric',
@@ -60,7 +60,7 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
   [ChartDuration.TODAY]: t('chartDuration.lastHour'),
   [ChartDuration.WEEK]: t('chartDuration.lastDay'),
   [ChartDuration.MONTH]: t('chartDuration.lastDay'),
-  [ChartDuration.ALL_TIME]: t('chartDuration.lastMonth'),
+  [ChartDuration.YEAR]: t('chartDuration.lastMonth'),
 })
 
 export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }) => {
