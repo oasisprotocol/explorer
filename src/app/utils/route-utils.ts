@@ -173,26 +173,13 @@ export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateTxHashParam(params.hash!)
 }
 
-export const scopeConsensusLoader = async (args: LoaderFunctionArgs) => {
-  const {
-    params: { network },
-  } = args
-
-  if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
-    throw new AppError(AppErrors.InvalidUrl)
-  }
-
-  return {
-    network: network as Network,
-    layer: Layer.consensus,
-  }
-}
-
-export const scopeRuntimeLoader = async (args: LoaderFunctionArgs) => {
-  const {
-    params: { network, layer },
-  } = args
-
+export const assertEnabledScope = ({
+  network,
+  layer,
+}: {
+  network: string | undefined
+  layer: string | undefined
+}): SearchScope => {
   if (!network || !RouteUtils.getEnabledNetworks().includes(network as Network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
@@ -203,9 +190,5 @@ export const scopeRuntimeLoader = async (args: LoaderFunctionArgs) => {
   ) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
-
-  return {
-    network: network as Network,
-    layer: layer as Layer,
-  }
+  return { network, layer } as SearchScope
 }

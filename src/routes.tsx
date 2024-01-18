@@ -13,8 +13,7 @@ import {
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
-  scopeConsensusLoader,
-  scopeRuntimeLoader,
+  assertEnabledScope,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
@@ -31,6 +30,8 @@ import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventor
 import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTInstanceDashboardPage'
 import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
+import { Layer } from './oasis-nexus/api'
+import { SearchScope } from './types/searchScope'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -61,7 +62,9 @@ export const routes: RouteObject[] = [
         path: '/:network/consensus',
         element: <NetworkSpecificPart />,
         errorElement: withDefaultTheme(<RoutingErrorPage />),
-        loader: scopeConsensusLoader,
+        loader: async ({ params }): Promise<SearchScope> => {
+          return assertEnabledScope({ network: params.network, layer: Layer.consensus })
+        },
         id: 'consensusScope',
         children: [
           {
@@ -74,7 +77,9 @@ export const routes: RouteObject[] = [
         path: '/:network/:layer',
         element: <NetworkSpecificPart />,
         errorElement: withDefaultTheme(<RoutingErrorPage />),
-        loader: scopeRuntimeLoader,
+        loader: async ({ params }): Promise<SearchScope> => {
+          return assertEnabledScope({ network: params.network, layer: params.layer })
+        },
         id: 'runtimeScope',
         children: [
           {
