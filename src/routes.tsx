@@ -59,11 +59,11 @@ export const routes: RouteObject[] = [
         loader: searchParamLoader,
       },
       {
-        path: '/:network/consensus',
+        path: '/:_network/consensus',
         element: <NetworkSpecificPart />,
         errorElement: withDefaultTheme(<RoutingErrorPage />),
         loader: async ({ params }): Promise<SearchScope> => {
-          return assertEnabledScope({ network: params.network, layer: Layer.consensus })
+          return assertEnabledScope({ network: params._network, layer: Layer.consensus })
         },
         id: 'consensusScope',
         children: [
@@ -74,11 +74,11 @@ export const routes: RouteObject[] = [
         ],
       },
       {
-        path: '/:network/:layer',
+        path: '/:_network/:_layer',
         element: <NetworkSpecificPart />,
         errorElement: withDefaultTheme(<RoutingErrorPage />),
         loader: async ({ params }): Promise<SearchScope> => {
-          return assertEnabledScope({ network: params.network, layer: params.layer })
+          return assertEnabledScope({ network: params._network, layer: params._layer })
         },
         id: 'runtimeScope',
         children: [
