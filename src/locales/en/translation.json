@@ -130,6 +130,11 @@
     }
   },
   "networkProposal": {
+    "close": "Closes Epoch",
+    "create": "Created Epoch",
+    "deposit": "Deposit",
+    "handler": "Handler",
+    "id": "ID",
     "listTitle": "Network Change Proposals"
   },
   "nft": {

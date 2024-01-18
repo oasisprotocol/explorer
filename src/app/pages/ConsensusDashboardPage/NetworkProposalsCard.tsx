@@ -9,6 +9,7 @@ import { useGetConsensusProposals } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
+import { NetworkProposalsList } from '../../components/NetworkProposalsList'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -34,7 +35,14 @@ export const NetworkProposalsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
           </Link>
         }
       />
-      <CardContent />
+      <CardContent>
+        <NetworkProposalsList
+          proposals={proposalsQuery.data?.data.proposals}
+          isLoading={proposalsQuery.isLoading}
+          limit={limit}
+          pagination={false}
+        />
+      </CardContent>
     </Card>
   )
 }
