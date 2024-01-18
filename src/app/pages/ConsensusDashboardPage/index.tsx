@@ -8,6 +8,7 @@ import { TransactionsStats } from '../../components/TransactionsStats'
 import { Social } from '../../components/Social'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { LearningMaterials } from './LearningMaterials'
+import { NetworkProposalsCard } from './NetworkProposalsCard'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -21,6 +22,7 @@ export const ConsensusDashboardPage: FC = () => {
           <TotalTransactions scope={scope} />
         </Grid>
       </Grid>
+      <NetworkProposalsCard scope={scope} />
       <TransactionsStats scope={scope} />
       <LearningMaterials />
       <Social />

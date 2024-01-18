@@ -129,6 +129,9 @@
       "label": "Use our ROSE (un)wrapper"
     }
   },
+  "networkProposal": {
+    "listTitle": "Network Change Proposals"
+  },
   "nft": {
     "accountCollection": "ERC-721 Tokens",
     "collectionLink": "Collection: <CollectionLink />",
