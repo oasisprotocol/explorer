@@ -7,6 +7,7 @@
     "emptyTokenTransferList": "There are no token transfers on record for this account.",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
+    "listTitle": "Accounts",
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
     "title": "Account",
