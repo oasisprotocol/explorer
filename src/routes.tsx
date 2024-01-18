@@ -13,7 +13,8 @@ import {
   addressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
-  scopeLoader,
+  scopeConsensusLoader,
+  scopeRuntimeLoader,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
@@ -29,6 +30,7 @@ import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCar
 import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
 import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTInstanceDashboardPage'
 import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
+import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -56,10 +58,24 @@ export const routes: RouteObject[] = [
         loader: searchParamLoader,
       },
       {
+        path: '/:network/consensus',
+        element: <NetworkSpecificPart />,
+        errorElement: withDefaultTheme(<RoutingErrorPage />),
+        loader: scopeConsensusLoader,
+        id: 'consensusScope',
+        children: [
+          {
+            path: '',
+            element: <ConsensusDashboardPage />,
+          },
+        ],
+      },
+      {
         path: '/:network/:layer',
         element: <NetworkSpecificPart />,
         errorElement: withDefaultTheme(<RoutingErrorPage />),
-        loader: scopeLoader,
+        loader: scopeRuntimeLoader,
+        id: 'runtimeScope',
         children: [
           {
             path: '',
