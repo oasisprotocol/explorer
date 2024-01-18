@@ -95,3 +95,21 @@ export function fromBaseUnits(valueInBaseUnits: string, decimals: number): strin
 }
 
 export const isValidMnemonic = (candidate: string): boolean => validateMnemonic(candidate)
+
+export const getAccountSize = (value: bigint) => {
+  if (value >= 100_000_000_000_000_000n) {
+    return 'XXL'
+  } else if (value >= 50_000_000_000_000_000n && value <= 99_999_999_000_000_000n) {
+    return 'XL'
+  } else if (value >= 25_000_000_000_000_000n && value <= 49_999_999_000_000_000n) {
+    return 'L'
+  } else if (value >= 1_000_000_000_000_000n && value <= 24_999_999_000_000_000n) {
+    return 'M'
+  } else if (value >= 500_000_000_000_000n && value <= 999_999_000_000_000n) {
+    return 'S'
+  } else if (value >= 100_000_000_000_000n && value <= 499_99_000_000_0009n) {
+    return 'XS'
+  } else {
+    return 'XXS'
+  }
+}
