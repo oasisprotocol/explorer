@@ -30,7 +30,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
     <>
       <BuildBanner />
       <NetworkOfflineBanner />
-      {scope?.valid && scope.layer !== Layer.consensus && <RuntimeOfflineBanner />}
+      {scope && scope.layer !== Layer.consensus && <RuntimeOfflineBanner />}
       <Box
         sx={{
           minHeight: '100vh',
