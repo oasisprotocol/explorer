@@ -1,4 +1,4 @@
-import { useRouteLoaderData, useParams, useRouteError } from 'react-router-dom'
+import { useRouteLoaderData, useParams } from 'react-router-dom'
 import { Network } from '../../types/network'
 import { AppError, AppErrors } from '../../types/errors'
 import { SearchScope } from '../../types/searchScope'
@@ -14,9 +14,6 @@ export const useNetworkParam = (): Network | undefined => {
 export const useScopeParam = (): SearchScope | undefined => {
   const runtimeScope = useRouteLoaderData('runtimeScope') as SearchScope | undefined
   const consensusScope = useRouteLoaderData('consensusScope') as SearchScope | undefined
-  const error = useRouteError()
-
-  if (error) throw error
   return runtimeScope ?? consensusScope ?? undefined
 }
 
