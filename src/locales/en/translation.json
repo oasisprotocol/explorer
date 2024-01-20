@@ -122,7 +122,8 @@
       "isVerified": "Verified",
       "isNotVerified": "Unverified",
       "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>",
-      "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>"
+      "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>",
+      "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here."
     }
   },
   "dapps": {
