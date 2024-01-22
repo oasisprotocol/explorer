@@ -103,9 +103,54 @@ const ConsensusDetails = () => {
 }
 
 const RuntimeDetails: FC<LayerDetailsProps> = props => {
-  const { network, selectedLayer: layer } = props
-  const isOutOfDate = useRuntimeFreshness({ network, layer }).outOfDate
-  return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
+  const { t } = useTranslation()
+  const { handleConfirm, network, selectedLayer } = props
+  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
+  const details = getDetails(t)[network][selectedLayer]
+  if (!details) {
+    return null
+  }
+
+  return (
+    <LayerDetailsSection
+      docsUrl={details.docs}
+      handleConfirm={handleConfirm}
+      isOutOfDate={isOutOfDate}
+      selectedLayer={selectedLayer}
+      network={network}
+    >
+      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        {details.description}
+      </Typography>
+      <TextList>
+        <TextListItem>
+          {t('paraTimePicker.rpcHttp', {
+            endpoint: details.rpcHttp,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('paraTimePicker.rpcWebSockets', {
+            endpoint: details.rpcWebSockets,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('paraTimePicker.chainId')}
+          <TextList>
+            <TextListItem>
+              {t('paraTimePicker.hex', {
+                id: details.chainHexId,
+              })}
+            </TextListItem>
+            <TextListItem>
+              {t('paraTimePicker.decimal', {
+                id: details.chainDecimalId,
+              })}
+            </TextListItem>
+          </TextList>
+        </TextListItem>
+      </TextList>
+    </LayerDetailsSection>
+  )
 }
 
 type LayerDetailsSectionProps = LayerDetailsProps & {
@@ -178,59 +223,5 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
         </Link>
       </Box>
     </Box>
-  )
-}
-
-export const LayerDetailsView: FC<LayerDetailsProps> = ({
-  handleConfirm,
-  isOutOfDate,
-  network,
-  selectedLayer,
-}) => {
-  const { t } = useTranslation()
-  const details = getDetails(t)[network][selectedLayer]
-  if (!details) {
-    return null
-  }
-
-  return (
-    <LayerDetailsSection
-      docsUrl={details.docs}
-      handleConfirm={handleConfirm}
-      isOutOfDate={isOutOfDate}
-      selectedLayer={selectedLayer}
-      network={network}
-    >
-      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-        {details.description}
-      </Typography>
-      <TextList>
-        <TextListItem>
-          {t('paraTimePicker.rpcHttp', {
-            endpoint: details.rpcHttp,
-          })}
-        </TextListItem>
-        <TextListItem>
-          {t('paraTimePicker.rpcWebSockets', {
-            endpoint: details.rpcWebSockets,
-          })}
-        </TextListItem>
-        <TextListItem>
-          {t('paraTimePicker.chainId')}
-          <TextList>
-            <TextListItem>
-              {t('paraTimePicker.hex', {
-                id: details.chainHexId,
-              })}
-            </TextListItem>
-            <TextListItem>
-              {t('paraTimePicker.decimal', {
-                id: details.chainDecimalId,
-              })}
-            </TextListItem>
-          </TextList>
-        </TextListItem>
-      </TextList>
-    </LayerDetailsSection>
   )
 }
