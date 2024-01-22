@@ -20,7 +20,7 @@ export type FreshnessInfo = {
   lastUpdate?: string
 }
 
-export const useConsensusFreshness = () => {
+export const useConsensusFreshness = (network: Network) => {
   // TODO: Placeholder for consensus freshness checks
   return {
     outOfDate: false,

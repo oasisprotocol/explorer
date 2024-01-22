@@ -125,7 +125,7 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
                   setTabletStep(ParaTimePickerTabletStep.ParaTime)
                 }}
               >
-                {t('paraTimePicker.viewParaTimes')}
+                {t('paraTimePicker.viewLayers')}
               </TabletBackButton>
             )}
           </div>

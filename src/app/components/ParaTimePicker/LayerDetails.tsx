@@ -17,7 +17,7 @@ import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { getNameForScope } from '../../../types/searchScope'
-import { useRuntimeFreshness } from '../OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
 
@@ -95,11 +95,26 @@ type LayerDetailsProps = {
 const contentMinHeight = '270px'
 
 export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
-  props.selectedLayer === Layer.consensus ? <ConsensusDetails /> : <RuntimeDetails {...props} />
+  props.selectedLayer === Layer.consensus ? <ConsensusDetails {...props} /> : <RuntimeDetails {...props} />
 
-// TODO: Placeholder for Consensus LayerDetailsView
-const ConsensusDetails = () => {
-  return <></>
+const ConsensusDetails: FC<LayerDetailsProps> = props => {
+  const { t } = useTranslation()
+  const { handleConfirm, network, selectedLayer } = props
+  const isOutOfDate = useConsensusFreshness(network).outOfDate
+
+  return (
+    <LayerDetailsSection
+      docsUrl={docs.consensus}
+      handleConfirm={handleConfirm}
+      isOutOfDate={isOutOfDate}
+      selectedLayer={selectedLayer}
+      network={network}
+    >
+      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        {t('paraTimePicker.consensus')}
+      </Typography>
+    </LayerDetailsSection>
+  )
 }
 
 const RuntimeDetails: FC<LayerDetailsProps> = props => {
@@ -199,7 +214,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           <StyledButton variant="text" onClick={handleConfirm}>
             {getNameForScope(t, { network, layer: selectedLayer })}
           </StyledButton>
-          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile} />
+          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile && selectedLayer !== Layer.consensus} />
         </Box>
         {children}
         <Link

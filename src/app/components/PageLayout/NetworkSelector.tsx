@@ -40,7 +40,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = props => {
 }
 
 const ConsensusNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
-  const { outOfDate } = useConsensusFreshness()
+  const { outOfDate } = useConsensusFreshness(network)
 
   return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />
 }
