@@ -363,7 +363,7 @@
   "paraTimeSnapshot": {
     "header": "{{ paratime }} Snapshot"
   },
-  "paraTimePicker": {
+  "layerPicker": {
     "chainId": "Chain ID:",
     "decimal": "Decimal: {{ id }}",
     "comingSoonTitle": "Coming soon",

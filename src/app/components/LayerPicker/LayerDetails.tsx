@@ -35,7 +35,7 @@ type Details = Record<Network, NetworkDetails>
 const getDetails = (t: TFunction): Details => ({
   [Network.mainnet]: {
     [Layer.emerald]: {
-      description: t('paraTimePicker.mainnet.emerald'),
+      description: t('layerPicker.mainnet.emerald'),
       rpcHttp: 'https://emerald.oasis.dev',
       rpcWebSockets: 'wss://emerald.oasis.dev/ws',
       chainHexId: '0xa516',
@@ -43,7 +43,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.emerald,
     },
     [Layer.sapphire]: {
-      description: t('paraTimePicker.mainnet.sapphire'),
+      description: t('layerPicker.mainnet.sapphire'),
       rpcHttp: 'https://sapphire.oasis.io',
       rpcWebSockets: 'wss://sapphire.oasis.io/ws',
       chainHexId: '0x5afe',
@@ -53,7 +53,7 @@ const getDetails = (t: TFunction): Details => ({
   },
   [Network.testnet]: {
     [Layer.emerald]: {
-      description: t('paraTimePicker.testnet.emerald'),
+      description: t('layerPicker.testnet.emerald'),
       rpcHttp: 'https://testnet.emerald.oasis.dev',
       rpcWebSockets: 'wss://testnet.emerald.oasis.dev/ws',
       chainHexId: '0xa515',
@@ -61,7 +61,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.emerald,
     },
     [Layer.sapphire]: {
-      description: t('paraTimePicker.testnet.sapphire'),
+      description: t('layerPicker.testnet.sapphire'),
       rpcHttp: 'https://testnet.sapphire.oasis.dev',
       rpcWebSockets: 'wss://testnet.sapphire.oasis.dev/ws',
       chainHexId: '0x5aff',
@@ -111,7 +111,7 @@ const ConsensusDetails: FC<LayerDetailsProps> = props => {
       network={network}
     >
       <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-        {t('paraTimePicker.consensus')}
+        {t('layerPicker.consensus')}
       </Typography>
     </LayerDetailsSection>
   )
@@ -139,25 +139,25 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
       </Typography>
       <TextList>
         <TextListItem>
-          {t('paraTimePicker.rpcHttp', {
+          {t('layerPicker.rpcHttp', {
             endpoint: details.rpcHttp,
           })}
         </TextListItem>
         <TextListItem>
-          {t('paraTimePicker.rpcWebSockets', {
+          {t('layerPicker.rpcWebSockets', {
             endpoint: details.rpcWebSockets,
           })}
         </TextListItem>
         <TextListItem>
-          {t('paraTimePicker.chainId')}
+          {t('layerPicker.chainId')}
           <TextList>
             <TextListItem>
-              {t('paraTimePicker.hex', {
+              {t('layerPicker.hex', {
                 id: details.chainHexId,
               })}
             </TextListItem>
             <TextListItem>
-              {t('paraTimePicker.decimal', {
+              {t('layerPicker.decimal', {
                 id: details.chainDecimalId,
               })}
             </TextListItem>
@@ -230,7 +230,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
             fontWeight: 400,
           }}
         >
-          {t('paraTimePicker.readMore', {
+          {t('layerPicker.readMore', {
             layer: layerLabels[selectedLayer],
             network: labels[network],
           })}

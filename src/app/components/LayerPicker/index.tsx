@@ -112,7 +112,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                   setTabletStep(LayerPickerTabletStep.Network)
                 }}
               >
-                {t('paraTimePicker.viewNetworks')}
+                {t('layerPicker.viewNetworks')}
               </TabletBackButton>
             )}
             {tabletStep === LayerPickerTabletStep.ParaTimeDetails && (
@@ -123,7 +123,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                   setTabletStep(LayerPickerTabletStep.ParaTime)
                 }}
               >
-                {t('paraTimePicker.viewLayers')}
+                {t('layerPicker.viewLayers')}
               </TabletBackButton>
             )}
           </div>
@@ -183,7 +183,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
 
           <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
             {selectedNetwork === network && selectedLayer === layer
-              ? t('paraTimePicker.goToDashboard')
+              ? t('layerPicker.goToDashboard')
               : t('common.select')}
           </Button>
         </ActionBar>

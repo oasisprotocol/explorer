@@ -66,7 +66,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
             component="span"
             sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
           >
-            {t('paraTimePicker.selected')}
+            {t('layerPicker.selected')}
           </Typography>
         )}
       </ListItemText>
@@ -126,7 +126,7 @@ export const NetworkMenu: FC<NetworkMenuProps> = ({ activeNetwork, selectedNetwo
       </MenuList>
       {!!filteredOptions.length && (
         <StyledButton onClick={() => setExpandNetworkMenu(!expandNetworkMenu)} size="small" variant="text">
-          {expandNetworkMenu ? t('paraTimePicker.less') : t('paraTimePicker.more')}
+          {expandNetworkMenu ? t('layerPicker.less') : t('layerPicker.more')}
         </StyledButton>
       )}
     </>
