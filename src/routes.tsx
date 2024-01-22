@@ -41,7 +41,7 @@ const NetworkSpecificPart = () => (
 
 export const routes: RouteObject[] = [
   {
-    errorElement: withDefaultTheme(<RoutingErrorPage />),
+    errorElement: <RoutingErrorPage />,
     element: (
       <>
         <ScrollRestoration />
@@ -61,7 +61,7 @@ export const routes: RouteObject[] = [
       {
         path: '/:_network/consensus',
         element: <NetworkSpecificPart />,
-        errorElement: withDefaultTheme(<RoutingErrorPage />),
+        errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: Layer.consensus })
         },
@@ -76,7 +76,7 @@ export const routes: RouteObject[] = [
       {
         path: '/:_network/:_layer',
         element: <NetworkSpecificPart />,
-        errorElement: withDefaultTheme(<RoutingErrorPage />),
+        errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: params._layer })
         },
