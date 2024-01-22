@@ -7,6 +7,7 @@ import { TotalTransactions } from '../ParatimeDashboardPage/TotalTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
 import { Social } from '../../components/Social'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { LearningMaterials } from './LearningMaterials'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -21,6 +22,7 @@ export const ConsensusDashboardPage: FC = () => {
         </Grid>
       </Grid>
       <TransactionsStats scope={scope} />
+      <LearningMaterials />
       <Social />
     </PageLayout>
   )

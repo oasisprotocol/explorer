@@ -11,9 +11,15 @@ export const socialMedia = {
 }
 
 const docsUrl = 'https://docs.oasis.io/'
+const consensusDocsUrl = `${docsUrl}core/consensus/`
 export const docs = {
   home: docsUrl,
-  consensus: `${docsUrl}core/consensus/`,
+  consensus: consensusDocsUrl,
+  consensusTransactions: `${consensusDocsUrl}transactions/`,
+  consensusServices: `${consensusDocsUrl}services/`,
+  consensusGenesis: `${consensusDocsUrl}genesis/`,
+  consensusVectors: `${consensusDocsUrl}test-vectors/`,
+  consensusComet: `${consensusDocsUrl}#cometbft`,
   cipher: `${docsUrl}dapp/cipher/`,
   emerald: `${docsUrl}dapp/emerald/`,
   emeraldTestnet: `${docsUrl}dapp/emerald/#testnet`,
