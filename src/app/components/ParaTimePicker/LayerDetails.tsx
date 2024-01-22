@@ -108,7 +108,14 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
   return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
 }
 
-export const LayerDetailsView: FC<LayerDetailsProps> = ({
+type LayerDetailsSectionProps = LayerDetailsProps & {
+  children: React.ReactNode
+  docsUrl: string
+}
+
+export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
+  children,
+  docsUrl,
   handleConfirm,
   isOutOfDate,
   network,
@@ -120,12 +127,6 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = selectedLayer
-  const details = getDetails(t)[network][layer]
-
-  if (!details) {
-    return null
-  }
 
   return (
     <Box sx={{ px: isTablet ? 2 : 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
@@ -151,44 +152,14 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
           }}
         >
           <StyledButton variant="text" onClick={handleConfirm}>
-            {getNameForScope(t, { network, layer })}
+            {getNameForScope(t, { network, layer: selectedLayer })}
           </StyledButton>
           <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile} />
         </Box>
-        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-          {details.description}
-        </Typography>
-
-        <TextList>
-          <TextListItem>
-            {t('paraTimePicker.rpcHttp', {
-              endpoint: details.rpcHttp,
-            })}
-          </TextListItem>
-          <TextListItem>
-            {t('paraTimePicker.rpcWebSockets', {
-              endpoint: details.rpcWebSockets,
-            })}
-          </TextListItem>
-          <TextListItem>
-            {t('paraTimePicker.chainId')}
-            <TextList>
-              <TextListItem>
-                {t('paraTimePicker.hex', {
-                  id: details.chainHexId,
-                })}
-              </TextListItem>
-              <TextListItem>
-                {t('paraTimePicker.decimal', {
-                  id: details.chainDecimalId,
-                })}
-              </TextListItem>
-            </TextList>
-          </TextListItem>
-        </TextList>
+        {children}
         <Link
           component={RouterLink}
-          to={details.docs}
+          to={docsUrl}
           target="_blank"
           rel="noopener noreferrer"
           sx={{
@@ -200,12 +171,66 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
           }}
         >
           {t('paraTimePicker.readMore', {
-            layer: layerLabels[layer],
+            layer: layerLabels[selectedLayer],
             network: labels[network],
           })}
           <OpenInNewIcon sx={{ fontSize: '16px' }} />
         </Link>
       </Box>
     </Box>
+  )
+}
+
+export const LayerDetailsView: FC<LayerDetailsProps> = ({
+  handleConfirm,
+  isOutOfDate,
+  network,
+  selectedLayer,
+}) => {
+  const { t } = useTranslation()
+  const details = getDetails(t)[network][selectedLayer]
+  if (!details) {
+    return null
+  }
+
+  return (
+    <LayerDetailsSection
+      docsUrl={details.docs}
+      handleConfirm={handleConfirm}
+      isOutOfDate={isOutOfDate}
+      selectedLayer={selectedLayer}
+      network={network}
+    >
+      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        {details.description}
+      </Typography>
+      <TextList>
+        <TextListItem>
+          {t('paraTimePicker.rpcHttp', {
+            endpoint: details.rpcHttp,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('paraTimePicker.rpcWebSockets', {
+            endpoint: details.rpcWebSockets,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('paraTimePicker.chainId')}
+          <TextList>
+            <TextListItem>
+              {t('paraTimePicker.hex', {
+                id: details.chainHexId,
+              })}
+            </TextListItem>
+            <TextListItem>
+              {t('paraTimePicker.decimal', {
+                id: details.chainDecimalId,
+              })}
+            </TextListItem>
+          </TextList>
+        </TextListItem>
+      </TextList>
+    </LayerDetailsSection>
   )
 }
