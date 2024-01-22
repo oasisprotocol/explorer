@@ -1,18 +1,14 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import Link from '@mui/material/Link'
-import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
 import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
+import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
 import { LearningSection } from '../../components/LearningMaterialsCard/LearningSection'
 
 type Content = {
@@ -118,45 +114,33 @@ export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
   }
 
   return (
-    <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={t('learningMaterials.header')}
-        action={
-          <Link href={docs.home} rel="noopener noreferrer" target="_blank" sx={{ color: COLORS.brandDark }}>
-            {t('common.viewAll')}
-          </Link>
-        }
-      />
-      <CardContent>
-        <Grid container spacing={3}>
-          <Grid xs={12} md={6}>
+    <LearningMaterialsCard>
+      <Grid container spacing={3}>
+        <Grid xs={12} md={6}>
+          <LearningSection
+            description={content.primary.description}
+            title={content.primary.header}
+            url={content.primary.url}
+            sx={{ height: '100%' }}
+          />
+        </Grid>
+        <Grid xs={12} md={6} spacing={3}>
+          <Grid sx={{ pb: 3 }}>
             <LearningSection
-              description={content.primary.description}
-              title={content.primary.header}
-              url={content.primary.url}
-              sx={{ height: '100%' }}
+              description={content.secondary.description}
+              title={content.secondary.header}
+              url={content.secondary.url}
             />
           </Grid>
-          <Grid xs={12} md={6} spacing={3}>
-            <Grid sx={{ pb: 3 }}>
-              <LearningSection
-                description={content.secondary.description}
-                title={content.secondary.header}
-                url={content.secondary.url}
-              />
-            </Grid>
-            <Grid>
-              <LearningSection
-                description={content.tertiary.description}
-                title={content.tertiary.header}
-                url={content.tertiary.url}
-              />
-            </Grid>
+          <Grid>
+            <LearningSection
+              description={content.tertiary.description}
+              title={content.tertiary.header}
+              url={content.tertiary.url}
+            />
           </Grid>
         </Grid>
-      </CardContent>
-    </Card>
+      </Grid>
+    </LearningMaterialsCard>
   )
 }
