@@ -20,7 +20,7 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
   [ChartDuration.TODAY]: t('chartDuration.lastHour'),
   [ChartDuration.WEEK]: t('chartDuration.lastDay'),
   [ChartDuration.MONTH]: t('chartDuration.lastDay'),
-  [ChartDuration.ALL_TIME]: t('chartDuration.lastDay'),
+  [ChartDuration.YEAR]: t('chartDuration.lastDay'),
 })
 
 interface TransactionsChartCardProps {

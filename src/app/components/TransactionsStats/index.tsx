@@ -9,8 +9,8 @@ import {
   durationToQueryParams,
   getMonthlyWindowsDailyAverage,
 } from '../../utils/chart-utils'
-import { DurationPills } from './DurationPills'
-import { CardHeaderWithResponsiveActions } from './CardHeaderWithResponsiveActions'
+import { DurationPills } from '../../components/DurationPills'
+import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
@@ -27,7 +27,7 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
-  const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.ALL_TIME
+  const allTime = dailyVolumeQuery.isFetched && chartDuration === ChartDuration.YEAR
   const windows = allTime
     ? getMonthlyWindowsDailyAverage(dailyVolumeQuery.data?.data.windows)
     : dailyVolumeQuery.data?.data.windows

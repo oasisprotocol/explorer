@@ -32,8 +32,8 @@ export const DurationPills: FC<DurationPillsProps> = ({ handleChange, value }) =
       value: ChartDuration.MONTH,
     },
     {
-      label: t('chartDuration.allTime'),
-      value: ChartDuration.ALL_TIME,
+      label: t('chartDuration.year'),
+      value: ChartDuration.YEAR,
     },
   ]
 

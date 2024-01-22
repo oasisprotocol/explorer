@@ -11,7 +11,7 @@ export enum ChartDuration {
   TODAY = 'TODAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH',
-  ALL_TIME = 'ALL_TIME',
+  YEAR = 'YEAR',
 }
 
 export const dailyLimitWithoutBuffer = (60 / 5) * 24 // full day for 5 minutes windows
@@ -43,7 +43,7 @@ export const durationToQueryParams = {
     limit: 30, // Defined as 30 days, should be more dynamic depending on the month
     offset: 1, // offset to skip the first day
   },
-  [ChartDuration.ALL_TIME]: {
+  [ChartDuration.YEAR]: {
     window_size_seconds: oneDayWindowSize,
     window_step_seconds: oneDayWindowSize,
     limit: 365, // Defined as a full year
@@ -55,7 +55,7 @@ export const chartDurationToDaysMap = {
   [ChartDuration.TODAY]: 1,
   [ChartDuration.WEEK]: 7,
   [ChartDuration.MONTH]: 30,
-  [ChartDuration.ALL_TIME]: 365,
+  [ChartDuration.YEAR]: 365,
 }
 
 export const chartUseQueryStaleTimeMs = durationToQueryParams[ChartDuration.TODAY].window_size_seconds * 1000

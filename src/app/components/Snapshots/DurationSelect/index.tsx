@@ -30,8 +30,8 @@ const DurationSelectCmp: FC<DurationSelectProps> = ({ defaultValue = ChartDurati
       value: ChartDuration.MONTH,
     },
     {
-      label: t('chartDuration.allTime'),
-      value: ChartDuration.ALL_TIME,
+      label: t('chartDuration.pastYear'),
+      value: ChartDuration.YEAR,
     },
   ]
 
