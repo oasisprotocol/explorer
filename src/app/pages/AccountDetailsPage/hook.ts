@@ -1,6 +1,5 @@
 import {
   Layer,
-  RuntimeEventType,
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
   useGetRuntimeTransactions,
@@ -9,7 +8,6 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
-import { EventFilterMode } from '../../components/RuntimeEvents/EventListFilterSwitch'
 import { useTransformToOasisAddress } from '../../hooks/useTransformToOasisAddress'
 
 export const useAccount = (scope: SearchScope, address: string) => {
@@ -71,7 +69,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
   }
 }
 
-export const useAccountEvents = (scope: SearchScope, address: string, filterMode: EventFilterMode) => {
+export const useAccountEvents = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -94,8 +92,6 @@ export const useAccountEvents = (scope: SearchScope, address: string, filterMode
     },
   )
   const { isFetched, isLoading, isError, data } = query
-  const events = data?.data.events.filter(
-    event => filterMode === EventFilterMode.All || event.type !== RuntimeEventType.accountstransfer,
-  )
+  const events = data?.data.events
   return { isFetched, isLoading, isError, events }
 }
