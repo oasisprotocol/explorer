@@ -8,7 +8,7 @@ import {
   getEvmBech32Address,
 } from '../../utils/helpers'
 import { Network } from '../../../types/network'
-import { RouteUtils, SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
+import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 
 type LayerSuggestions = {
@@ -51,7 +51,7 @@ export const searchSuggestionTerms = {
     cipher: undefined,
     consensus: undefined,
   },
-} satisfies SpecifiedPerEnabledRuntime<LayerSuggestions>
+} satisfies SpecifiedPerEnabledLayer<LayerSuggestions>
 
 export const textSearchMininumLength = 3
 

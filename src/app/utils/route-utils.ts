@@ -7,13 +7,16 @@ import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
 
-export type SpecifiedPerEnabledRuntime<T = any> = {
+export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
-    [L in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N]]: (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N][L] extends true
-      ? T
-      : T | undefined
+    [L in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N] as Exclude<
+      L,
+      ExcludeLayers
+    >]: (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK'][N][L] extends true ? T : T | undefined
   }
 }
+
+export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, typeof Layer.consensus>
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {

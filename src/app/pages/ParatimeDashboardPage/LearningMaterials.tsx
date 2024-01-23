@@ -10,6 +10,7 @@ import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
 import { LearningSection } from '../../components/LearningMaterialsCard/LearningSection'
+import { AppErrors } from 'types/errors'
 
 type Content = {
   description: string
@@ -61,7 +62,6 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
-      [Layer.consensus]: undefined,
     },
     [Network.testnet]: {
       [Layer.emerald]: {
@@ -99,7 +99,6 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
-      [Layer.consensus]: undefined,
     },
   } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }
@@ -107,6 +106,9 @@ const getContent = (t: TFunction) => {
 export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { layer, network } = scope
+  if (layer === Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+  }
   const content = getContent(t)[network][layer]
 
   if (!content) {
