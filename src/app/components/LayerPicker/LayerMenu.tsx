@@ -34,13 +34,13 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, lay
   const labels = getLayerLabels(t)
 
   return (
-    <Tooltip arrow placement="top" title={t('paraTimePicker.comingSoonTitle')}>
+    <Tooltip arrow placement="top" title={t('layerPicker.comingSoonTitle')}>
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>
           <ListItemText>
             {labels[layer]}
-            {isTablet && <LayerMenuItemCaption>{t('paraTimePicker.comingSoonLabel')}</LayerMenuItemCaption>}
+            {isTablet && <LayerMenuItemCaption>{t('layerPicker.comingSoonLabel')}</LayerMenuItemCaption>}
           </ListItemText>
         </MenuItem>
       </div>
@@ -85,7 +85,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
       <ListItemText>
         {labels[layer]}
         {selectedNetwork === network && activeLayer === layer && (
-          <LayerMenuItemCaption>{t('paraTimePicker.selected')}</LayerMenuItemCaption>
+          <LayerMenuItemCaption>{t('layerPicker.selected')}</LayerMenuItemCaption>
         )}
       </ListItemText>
       {layer === selectedLayer && <KeyboardArrowRightIcon />}

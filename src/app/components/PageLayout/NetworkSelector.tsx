@@ -9,7 +9,7 @@ import { NetworkButton, MobileNetworkButton } from './NetworkButton'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
-import { ParaTimePicker } from './../ParaTimePicker'
+import { LayerPicker } from './../LayerPicker'
 import { RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 
@@ -40,7 +40,7 @@ export const NetworkSelector: FC<NetworkSelectorProps> = props => {
 }
 
 const ConsensusNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
-  const { outOfDate } = useConsensusFreshness()
+  const { outOfDate } = useConsensusFreshness(network)
 
   return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />
 }
@@ -72,7 +72,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
         justifyContent: isTablet ? 'flex-end' : 'center',
       }}
     >
-      <ParaTimePicker
+      <LayerPicker
         open={openDrawer}
         onClose={handleDrawerClose}
         onConfirm={(network: Network, layer: Layer) => {

@@ -17,7 +17,7 @@ import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { getNameForScope } from '../../../types/searchScope'
-import { useRuntimeFreshness } from '../OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
 
@@ -35,7 +35,7 @@ type Details = Record<Network, NetworkDetails>
 const getDetails = (t: TFunction): Details => ({
   [Network.mainnet]: {
     [Layer.emerald]: {
-      description: t('paraTimePicker.mainnet.emerald'),
+      description: t('layerPicker.mainnet.emerald'),
       rpcHttp: 'https://emerald.oasis.dev',
       rpcWebSockets: 'wss://emerald.oasis.dev/ws',
       chainHexId: '0xa516',
@@ -43,7 +43,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.emerald,
     },
     [Layer.sapphire]: {
-      description: t('paraTimePicker.mainnet.sapphire'),
+      description: t('layerPicker.mainnet.sapphire'),
       rpcHttp: 'https://sapphire.oasis.io',
       rpcWebSockets: 'wss://sapphire.oasis.io/ws',
       chainHexId: '0x5afe',
@@ -53,7 +53,7 @@ const getDetails = (t: TFunction): Details => ({
   },
   [Network.testnet]: {
     [Layer.emerald]: {
-      description: t('paraTimePicker.testnet.emerald'),
+      description: t('layerPicker.testnet.emerald'),
       rpcHttp: 'https://testnet.emerald.oasis.dev',
       rpcWebSockets: 'wss://testnet.emerald.oasis.dev/ws',
       chainHexId: '0xa515',
@@ -61,7 +61,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.emerald,
     },
     [Layer.sapphire]: {
-      description: t('paraTimePicker.testnet.sapphire'),
+      description: t('layerPicker.testnet.sapphire'),
       rpcHttp: 'https://testnet.sapphire.oasis.dev',
       rpcWebSockets: 'wss://testnet.sapphire.oasis.dev/ws',
       chainHexId: '0x5aff',
@@ -95,20 +95,87 @@ type LayerDetailsProps = {
 const contentMinHeight = '270px'
 
 export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
-  props.selectedLayer === Layer.consensus ? <ConsensusDetails /> : <RuntimeDetails {...props} />
+  props.selectedLayer === Layer.consensus ? <ConsensusDetails {...props} /> : <RuntimeDetails {...props} />
 
-// TODO: Placeholder for Consensus LayerDetailsView
-const ConsensusDetails = () => {
-  return <></>
+const ConsensusDetails: FC<LayerDetailsProps> = props => {
+  const { t } = useTranslation()
+  const { handleConfirm, network, selectedLayer } = props
+  const isOutOfDate = useConsensusFreshness(network).outOfDate
+
+  return (
+    <LayerDetailsSection
+      docsUrl={docs.consensus}
+      handleConfirm={handleConfirm}
+      isOutOfDate={isOutOfDate}
+      selectedLayer={selectedLayer}
+      network={network}
+    >
+      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        {t('layerPicker.consensus')}
+      </Typography>
+    </LayerDetailsSection>
+  )
 }
 
 const RuntimeDetails: FC<LayerDetailsProps> = props => {
-  const { network, selectedLayer: layer } = props
-  const isOutOfDate = useRuntimeFreshness({ network, layer }).outOfDate
-  return <LayerDetailsView {...props} isOutOfDate={isOutOfDate} />
+  const { t } = useTranslation()
+  const { handleConfirm, network, selectedLayer } = props
+  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
+  const details = getDetails(t)[network][selectedLayer]
+  if (!details) {
+    return null
+  }
+
+  return (
+    <LayerDetailsSection
+      docsUrl={details.docs}
+      handleConfirm={handleConfirm}
+      isOutOfDate={isOutOfDate}
+      selectedLayer={selectedLayer}
+      network={network}
+    >
+      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        {details.description}
+      </Typography>
+      <TextList>
+        <TextListItem>
+          {t('layerPicker.rpcHttp', {
+            endpoint: details.rpcHttp,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('layerPicker.rpcWebSockets', {
+            endpoint: details.rpcWebSockets,
+          })}
+        </TextListItem>
+        <TextListItem>
+          {t('layerPicker.chainId')}
+          <TextList>
+            <TextListItem>
+              {t('layerPicker.hex', {
+                id: details.chainHexId,
+              })}
+            </TextListItem>
+            <TextListItem>
+              {t('layerPicker.decimal', {
+                id: details.chainDecimalId,
+              })}
+            </TextListItem>
+          </TextList>
+        </TextListItem>
+      </TextList>
+    </LayerDetailsSection>
+  )
 }
 
-export const LayerDetailsView: FC<LayerDetailsProps> = ({
+type LayerDetailsSectionProps = LayerDetailsProps & {
+  children: React.ReactNode
+  docsUrl: string
+}
+
+export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
+  children,
+  docsUrl,
   handleConfirm,
   isOutOfDate,
   network,
@@ -120,12 +187,6 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
-  const layer = selectedLayer
-  const details = getDetails(t)[network][layer]
-
-  if (!details) {
-    return null
-  }
 
   return (
     <Box sx={{ px: isTablet ? 2 : 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
@@ -151,44 +212,14 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
           }}
         >
           <StyledButton variant="text" onClick={handleConfirm}>
-            {getNameForScope(t, { network, layer })}
+            {getNameForScope(t, { network, layer: selectedLayer })}
           </StyledButton>
-          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile} />
+          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile && selectedLayer !== Layer.consensus} />
         </Box>
-        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-          {details.description}
-        </Typography>
-
-        <TextList>
-          <TextListItem>
-            {t('paraTimePicker.rpcHttp', {
-              endpoint: details.rpcHttp,
-            })}
-          </TextListItem>
-          <TextListItem>
-            {t('paraTimePicker.rpcWebSockets', {
-              endpoint: details.rpcWebSockets,
-            })}
-          </TextListItem>
-          <TextListItem>
-            {t('paraTimePicker.chainId')}
-            <TextList>
-              <TextListItem>
-                {t('paraTimePicker.hex', {
-                  id: details.chainHexId,
-                })}
-              </TextListItem>
-              <TextListItem>
-                {t('paraTimePicker.decimal', {
-                  id: details.chainDecimalId,
-                })}
-              </TextListItem>
-            </TextList>
-          </TextListItem>
-        </TextList>
+        {children}
         <Link
           component={RouterLink}
-          to={details.docs}
+          to={docsUrl}
           target="_blank"
           rel="noopener noreferrer"
           sx={{
@@ -199,8 +230,8 @@ export const LayerDetailsView: FC<LayerDetailsProps> = ({
             fontWeight: 400,
           }}
         >
-          {t('paraTimePicker.readMore', {
-            layer: layerLabels[layer],
+          {t('layerPicker.readMore', {
+            layer: layerLabels[selectedLayer],
             network: labels[network],
           })}
           <OpenInNewIcon sx={{ fontSize: '16px' }} />

@@ -19,20 +19,20 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
 
-type ParaTimePickerProps = {
+type LayerPickerProps = {
   onClose: () => void
   onConfirm: (network: Network, layer: Layer) => void
   open: boolean
   isOutOfDate: boolean | undefined
 }
 
-export const ParaTimePicker: FC<ParaTimePickerProps> = ({ onClose, onConfirm, open, isOutOfDate }) => (
+export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, isOutOfDate }) => (
   <Drawer anchor="top" open={open} onClose={onClose}>
-    <ParaTimePickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
+    <LayerPickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
   </Drawer>
 )
 
-const StyledParaTimePickerContent = styled(Box)(({ theme }) => ({
+const StyledLayerPickerContent = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     display: 'flex',
     flexDirection: 'column',
@@ -73,23 +73,21 @@ const ActionBar = styled(Box)(({ theme }) => ({
   },
 }))
 
-type ParaTimePickerContentProps = Omit<ParaTimePickerProps, 'open'>
+type LayerPickerContentProps = Omit<LayerPickerProps, 'open'>
 
-enum ParaTimePickerTabletStep {
+enum LayerPickerTabletStep {
   Network,
   ParaTime,
   ParaTimeDetails,
 }
 
-const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, onClose, onConfirm }) => {
+const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose, onConfirm }) => {
   const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = useRequiredScopeParam()
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
-  const [tabletStep, setTabletStep] = useState<ParaTimePickerTabletStep>(
-    ParaTimePickerTabletStep.ParaTimeDetails,
-  )
+  const [tabletStep, setTabletStep] = useState<LayerPickerTabletStep>(LayerPickerTabletStep.ParaTimeDetails)
   const selectNetwork = (newNetwork: Network) => {
     const enabledLayers = RouteUtils.getEnabledLayersForNetwork(newNetwork)
     const targetLayer = enabledLayers.includes(selectedLayer) ? selectedLayer : enabledLayers[0]
@@ -99,33 +97,33 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
   const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
 
   return (
-    <StyledParaTimePickerContent>
+    <StyledLayerPickerContent>
       <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
         <HomePageLink color={COLORS.brandExtraDark} showText={!isMobile} />
       </Box>
       {isTablet && (
         <TabletActionBar>
           <div>
-            {tabletStep === ParaTimePickerTabletStep.ParaTime && (
+            {tabletStep === LayerPickerTabletStep.ParaTime && (
               <TabletBackButton
                 variant="text"
                 startIcon={<KeyboardArrowLeft />}
                 onClick={() => {
-                  setTabletStep(ParaTimePickerTabletStep.Network)
+                  setTabletStep(LayerPickerTabletStep.Network)
                 }}
               >
-                {t('paraTimePicker.viewNetworks')}
+                {t('layerPicker.viewNetworks')}
               </TabletBackButton>
             )}
-            {tabletStep === ParaTimePickerTabletStep.ParaTimeDetails && (
+            {tabletStep === LayerPickerTabletStep.ParaTimeDetails && (
               <TabletBackButton
                 variant="text"
                 startIcon={<KeyboardArrowLeft />}
                 onClick={() => {
-                  setTabletStep(ParaTimePickerTabletStep.ParaTime)
+                  setTabletStep(LayerPickerTabletStep.ParaTime)
                 }}
               >
-                {t('paraTimePicker.viewParaTimes')}
+                {t('layerPicker.viewLayers')}
               </TabletBackButton>
             )}
           </div>
@@ -140,19 +138,19 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
       <Divider />
       <StyledContent>
         <Grid container>
-          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.Network)) && (
+          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
             <Grid xs={12} md={3}>
               <NetworkMenu
                 activeNetwork={network}
                 selectedNetwork={selectedNetwork}
                 setSelectedNetwork={network => {
                   selectNetwork(network)
-                  setTabletStep(ParaTimePickerTabletStep.ParaTime)
+                  setTabletStep(LayerPickerTabletStep.ParaTime)
                 }}
               />
             </Grid>
           )}
-          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTime)) && (
+          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.ParaTime)) && (
             <Grid xs={12} md={3}>
               <LayerMenu
                 activeLayer={layer}
@@ -161,12 +159,12 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
                 selectedNetwork={selectedNetwork}
                 setSelectedLayer={layer => {
                   setSelectedLayer(layer)
-                  setTabletStep(ParaTimePickerTabletStep.ParaTimeDetails)
+                  setTabletStep(LayerPickerTabletStep.ParaTimeDetails)
                 }}
               />
             </Grid>
           )}
-          {(!isTablet || (isTablet && tabletStep === ParaTimePickerTabletStep.ParaTimeDetails)) && (
+          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.ParaTimeDetails)) && (
             <Grid xs={12} md={6}>
               <LayerDetails
                 handleConfirm={handleConfirm}
@@ -185,11 +183,11 @@ const ParaTimePickerContent: FC<ParaTimePickerContentProps> = ({ isOutOfDate, on
 
           <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
             {selectedNetwork === network && selectedLayer === layer
-              ? t('paraTimePicker.goToDashboard')
+              ? t('layerPicker.goToDashboard')
               : t('common.select')}
           </Button>
         </ActionBar>
       </StyledContent>
-    </StyledParaTimePickerContent>
+    </StyledLayerPickerContent>
   )
 }
