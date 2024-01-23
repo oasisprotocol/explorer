@@ -4,6 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { ProposalState } from '../../../oasis-nexus/api'
 
 type ProposalStatus = {
   success: boolean
@@ -39,17 +40,15 @@ const StyledIcon = styled(Box, {
 }))
 
 type ProposalStatusIconProps = {
-  status: string
+  status: ProposalState
 }
 
-const knownStatuses = ['active', 'passed', 'failed', 'rejected']
-
 export const ProposalStatusIcon: FC<ProposalStatusIconProps> = ({ status }) => {
-  if (!knownStatuses.includes(status)) {
+  if (!ProposalState[status]) {
     return null
   }
   // TODO: we don't have designs for all types of statuses
-  const success = status === 'active' || status === 'passed'
+  const success = status === ProposalState.active || status === ProposalState.passed
   return (
     <StyledBox success={success}>
       <StyledIcon success={success}>
