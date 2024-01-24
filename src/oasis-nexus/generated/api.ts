@@ -304,13 +304,13 @@ limit?: number;
  */
 offset?: number;
 /**
- * The submitter of the proposal.
+ * Filter on the submitter of the proposal.
  */
 submitter?: string;
 /**
- * The state of the proposal.
+ * Filter on the state of the proposal.
  */
-state?: string;
+state?: ProposalState;
 };
 
 export type GetConsensusEpochsParams = {
@@ -1109,6 +1109,20 @@ export type ProposalVotesAllOf = {
 export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
+ * The state of the proposal.
+ */
+export type ProposalState = typeof ProposalState[keyof typeof ProposalState];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ProposalState = {
+  active: 'active',
+  passed: 'passed',
+  failed: 'failed',
+  rejected: 'rejected',
+} as const;
+
+/**
  * The target propotocol versions for this upgrade proposal.
  */
 export interface ProposalTarget {
@@ -1149,8 +1163,7 @@ which are to be changed by this 'parameters_change' proposal.
 by this 'parameters_change' proposal.
  */
   parameters_change_module?: string;
-  /** The state of the proposal. */
-  state: string;
+  state: ProposalState;
   /** The staking address of the proposal submitter. */
   submitter: string;
   target?: ProposalTarget;

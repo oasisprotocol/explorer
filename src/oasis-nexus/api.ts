@@ -1,7 +1,7 @@
 /** @file Wrappers around generated API */
 
 import axios, { AxiosResponse } from 'axios'
-import { paraTimesConfig } from '../config'
+import { consensusDecimals, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import {
@@ -768,6 +768,35 @@ export const useGetRuntimeEvmTokensAddressHolders: typeof generated.useGetRuntim
                 rank: index + (params?.offset ?? 0) + 1,
                 layer: runtime,
                 network,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusProposals: typeof generated.useGetConsensusProposals = (
+  network,
+  params?,
+  options?,
+) => {
+  return generated.useGetConsensusProposals(network, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.ProposalList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            proposals: data.proposals.map(proposal => {
+              return {
+                ...proposal,
+                deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
               }
             }),
           }

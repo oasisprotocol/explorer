@@ -129,6 +129,14 @@
       "label": "Use our ROSE (un)wrapper"
     }
   },
+  "networkProposal": {
+    "close": "Closes Epoch",
+    "create": "Created Epoch",
+    "deposit": "Deposit",
+    "handler": "Handler",
+    "id": "ID",
+    "listTitle": "Network Change Proposals"
+  },
   "nft": {
     "accountCollection": "ERC-721 Tokens",
     "collectionLink": "Collection: <CollectionLink />",
