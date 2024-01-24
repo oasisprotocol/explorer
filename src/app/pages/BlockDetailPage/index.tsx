@@ -19,6 +19,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { EventsCard } from './EventsCard'
+import { NextBlockButton, PrevBlockButton } from '../../components/BlockNavigationButtons'
 
 export const BlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -88,6 +89,8 @@ export const BlockDetailView: FC<{
       <dd>
         <BlockLink scope={block} height={block.round} />
         <CopyToClipboard value={block.round.toString()} />
+        <PrevBlockButton scope={block} currentRound={block.round} />
+        <NextBlockButton scope={block} currentRound={block.round} />
       </dd>
 
       <dt>{t('common.hash')}</dt>

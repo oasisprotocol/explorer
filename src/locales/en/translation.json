@@ -19,7 +19,11 @@
     "tooltip": "{{value, number}} accounts"
   },
   "blocks": {
-    "latest": "Latest Blocks"
+    "latest": "Latest Blocks",
+    "viewingFirst": "You are viewing the first block",
+    "viewingLatest": "You are viewing the latest block",
+    "viewNext": "View next block",
+    "viewPrevious": "View previous block"
   },
   "block": {
     "gasUsed": "{{value, number}} | {{percentage, number}}"
