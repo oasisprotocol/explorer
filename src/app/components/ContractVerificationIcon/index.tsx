@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -35,6 +35,7 @@ const StyledBox = styled(Box, {
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   return {
     display: 'flex',
+    flexShrink: 0,
     justifyContent: 'center',
     height: verificationIconBoxHeight,
     fontSize: '12px',
@@ -76,6 +77,7 @@ export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLi
   noLink = false,
 }) => {
   const { t } = useTranslation()
+  const [explainDelay, setExplainDelay] = useState(false)
 
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   const statusLabel: Record<VerificationStatus, string> = {
@@ -105,10 +107,12 @@ export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLi
                   rel="noopener noreferrer"
                   target="_blank"
                   sx={{ fontWeight: 400, color: 'inherit', textDecoration: 'underline' }}
+                  onClick={verified ? undefined : () => setExplainDelay(true)}
                 />
               ),
             }}
-          />
+          />{' '}
+          {explainDelay && t('contract.verification.explainVerificationDelay')}
         </Typography>
       )}
     </>
