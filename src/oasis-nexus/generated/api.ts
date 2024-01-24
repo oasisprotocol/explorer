@@ -208,6 +208,27 @@ Note: The filter will only match on parsed (verified) EVM events.
 
  */
 evm_log_signature?: string;
+/**
+ * A filter on a smart contract. Every returned event will have been
+emitted by the contract at this Oasis address.
+
+ */
+contract_address?: string;
+/**
+ * A filter on NFT events. Every returned event will be specifically
+about this NFT instance ID. You must specify the contract_address
+filter with this filter.
+Currently this only supports ERC-721 Transfer events.
+This may expand to support other event types in the future.
+If you want only ERC-721 Transfer events, specify
+evm_log_signature=ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+to avoid inadvertently getting other event types if they are
+supported later.
+Using an evm_log_signature filter with this set to any other value
+will match no events.
+
+ */
+nft_id?: string;
 };
 
 export type GetRuntimeTransactionsParams = {
@@ -239,8 +260,8 @@ this account in a way. For example, for an `accounts.Transfer` tx, this will be
 the sender or the recipient of tokens.
 Nexus detects related accounts inside EVM transactions and events on a
 best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
-However, you must provide the oasis-style derived address here, not the Eth address.
-See `AddressPreimage` for more info on oasis-style vs Eth addresses.
+However, you must provide the Oasis-style derived address here, not the Eth address.
+See `AddressPreimage` for more info on Oasis-style vs Eth addresses.
 
  */
 rel?: string;
@@ -659,7 +680,8 @@ Currently only ERC-721 is supported, where the document is an Asset Metadata fro
   metadata_uri?: string;
   /** Identifies the asset which this NFT represents */
   name?: string;
-  /** The total number of transfers of this NFT instance. */
+  /** The total number of transfers of this NFT instance.
+ */
   num_transfers?: number;
   /** The Oasis address of this NFT instance's owner. */
   owner?: string;
@@ -781,7 +803,8 @@ Usually in native denomination, ParaTime units. As a string.
   body?: RuntimeTransactionBody;
   /** The fee that was charged for the transaction execution (total, native denomination,
 ParaTime base units, as a string).
-Calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`.
+For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
+For other transactions this equals to `fee`.
  */
   charged_fee: string;
   /** The data relevant to the encrypted transaction. Only present for encrypted
@@ -1245,7 +1268,7 @@ export interface BareTokenHolder {
   balance: string;
   /** The Ethereum address of the same account holder, if meaningfully defined. */
   eth_holder_address?: string;
-  /** The oasis address of the account holder. */
+  /** The Oasis address of the account holder. */
   holder_address: string;
 }
 
@@ -1265,7 +1288,7 @@ export type TokenHolderList = List & TokenHolderListAllOf;
 export interface RuntimeEvmBalance {
   /** Number of tokens held, in base units. */
   balance: string;
-  /** The oasis address of this token's contract. */
+  /** The Oasis address of this token's contract. */
   token_contract_addr: string;
   /** The EVM address of this token's contract. */
   token_contract_addr_eth: string;
@@ -1306,28 +1329,28 @@ export const AddressDerivationContext = {
 /**
  * The data from which a consensus-style address (`oasis1...`)
 was derived. Notably, for EVM runtimes like Sapphire,
-this links the oasis address and the Ethereum address.
+this links the Oasis address and the Ethereum address.
 
 Oasis addresses are derived from a piece of data, such as an ed25519
 public key or an Ethereum address. For example, [this](https://github.com/oasisprotocol/oasis-sdk/blob/b37e6da699df331f5a2ac62793f8be099c68469c/client-sdk/go/helpers/address.go#L90-L91)
-is how an Ethereum is converted to an oasis address. The type of underlying data usually also
+is how an Ethereum is converted to an Oasis address. The type of underlying data usually also
 determines how the signatuers for this address are verified.
 
 Consensus supports only "staking addresses" (`context="oasis-core/address: staking"`
 below; always ed25519-backed).
 Runtimes support all types. This means that every consensus address is also
 valid in every runtime. For example, in EVM runtimes, you can use staking
-addresses, but only with oasis tools (e.g. a wallet); EVM contracts such as
+addresses, but only with Oasis tools (e.g. a wallet); EVM contracts such as
 ERC20 tokens or tools such as Metamask cannot interact with staking addresses.
 
  */
 export interface AddressPreimage {
-  /** The base64-encoded data from which the oasis address was derived.
+  /** The base64-encoded data from which the Oasis address was derived.
 When `context = "oasis-runtime-sdk/address: secp256k1eth"`, this
 is the Ethereum address (in base64, not hex!).
  */
   address_data: string;
-  /** The method by which the oasis address was derived from `address_data`.
+  /** The method by which the Oasis address was derived from `address_data`.
  */
   context: AddressDerivationContext;
   /** Version of the `context`. */

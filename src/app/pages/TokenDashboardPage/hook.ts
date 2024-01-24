@@ -8,6 +8,8 @@ import {
   useGetRuntimeEvmTokensAddressNfts,
   useGetRuntimeAccountsAddressNfts,
   useGetRuntimeEvmTokensAddressNftsId,
+  RuntimeEventType,
+  GetRuntimeEventsParams,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -35,7 +37,27 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
   }
 }
 
-export const useTokenTransfers = (scope: SearchScope, address: string) => {
+export const useTokenTransfers = (scope: SearchScope, params: { address: string }) => {
+  const oasisAddress = useTransformToOasisAddress(params.address)
+  return _useTokenTransfers(scope, oasisAddress ? { rel: oasisAddress } : undefined)
+}
+
+export const useNFTInstanceTransfers = (
+  scope: SearchScope,
+  params: { nft_id: string; contract_address: string },
+) => {
+  const oasisAddress = useTransformToOasisAddress(params.contract_address)
+  return _useTokenTransfers(
+    scope,
+    oasisAddress ? { nft_id: params.nft_id, contract_address: oasisAddress } : undefined,
+  )
+}
+
+export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRuntimeEventsParams) => {
+  if (params && Object.values(params).some(value => value === undefined || value === null)) {
+    throw new Error('Must set params=undefined while some values are unavailable')
+  }
+
   const { network, layer } = scope
   const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
     paramName: 'page',
@@ -46,21 +68,19 @@ export const useTokenTransfers = (scope: SearchScope, address: string) => {
     // Loading transactions on the consensus layer is not supported yet.
     // We should use useGetConsensusTransactions()
   }
-
-  const oasisAddress = useTransformToOasisAddress(address)
   const query = useGetRuntimeEvents(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       ...pagination.paramsForQuery,
-      rel: oasisAddress!,
-      type: 'evm.log',
+      type: RuntimeEventType.evmlog,
       // The following is the hex-encoded signature for Transfer(address,address,uint256)
       evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+      ...params,
     },
     {
       query: {
-        enabled: !!oasisAddress,
+        enabled: !!params,
       },
     },
   )
