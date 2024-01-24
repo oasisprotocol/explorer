@@ -21,6 +21,7 @@ import { getTickerForNetwork, NativeTicker } from '../types/ticker'
 import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddress'
 import { useEffect, useState } from 'react'
 import { RpcUtils } from '../app/utils/rpc-utils'
+import { toChecksumAddress } from '@ethereumjs/util'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -685,6 +686,14 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   })
 }
 
+const fixChecksumAddressInEvmEventParam = (param: generated.EvmEventParam): generated.EvmEventParam =>
+  param.evm_type === 'address'
+    ? {
+        ...param,
+        value: toChecksumAddress(param.value as string),
+      }
+    : param
+
 export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
   network,
   runtime,
@@ -714,6 +723,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
               ) {
                 return {
                   ...event,
+                  evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                   eth_tx_hash: adjustedHash,
                   body: {
                     ...event.body,
@@ -736,6 +746,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
               }
               return {
                 ...event,
+                evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                 eth_tx_hash: adjustedHash,
                 layer: runtime,
                 network,
