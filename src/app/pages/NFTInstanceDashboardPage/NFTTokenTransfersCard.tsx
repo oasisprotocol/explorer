@@ -9,7 +9,7 @@ import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { NftDashboardContext } from './'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
-import { useTokenTransfers } from '../TokenDashboardPage/hook'
+import { useNFTInstanceTransfers } from '../TokenDashboardPage/hook'
 
 export const nftTokenTransfersContainerId = 'nftTokenTransfers'
 
@@ -32,7 +32,10 @@ export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
 
 const NFTTokenTransfersView: FC<NftDashboardContext> = ({ scope, address, instanceId }) => {
   const { t } = useTranslation()
-  const { isLoading, isFetched, results } = useTokenTransfers(scope, address, instanceId)
+  const { isLoading, isFetched, results } = useNFTInstanceTransfers(scope, {
+    contract_address: address,
+    nft_id: instanceId,
+  })
   const transfers = results.data
 
   return (

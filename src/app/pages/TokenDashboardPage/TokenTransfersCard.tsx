@@ -34,7 +34,7 @@ export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }
 const TokenTransfersView: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
-  const { isLoading: areTransfersLoading, isFetched, results } = useTokenTransfers(scope, address)
+  const { isLoading: areTransfersLoading, isFetched, results } = useTokenTransfers(scope, { address })
 
   const { isLoading: isTokenLoading } = useTokenInfo(scope, address)
 
