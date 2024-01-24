@@ -179,6 +179,20 @@
     "github": "GitHub"
   },
   "learningMaterials": {
+    "consensus": {
+      "header": "What is the Consensus layer?",
+      "description": "Oasis Core is designed around the principle of modularity. The consensus layer is an interface that provides a number of important services to other parts of Oasis Core.",
+      "transactions": "How do transactions work?",
+      "transactionsDescription": "The consensus layer uses a common transaction...",
+      "services": "What services are required?",
+      "servicesDescription": "Each consensus backend needs to provide the following...",
+      "genesis": "Genesis Document",
+      "genesisDescription": "The genesis document contains a set of parameters that outline the initial state of the consensus layer and its services. For more details about the actual genesis document's API, see genesis API documentation.",
+      "vectors": "Transaction Test Vectors",
+      "vectorsDescription": "In order to test transaction generation, parsing...",
+      "comet": "CometBFT",
+      "cometDescription": "The CometBFT consensus backend lives in ..."
+    },
     "emerald": {
       "header": "What is the Emerald network?",
       "description": "The Emerald ParaTime is our official EVM Compatible ParaTime providing smart contract environment with full EVM compatibility.",
