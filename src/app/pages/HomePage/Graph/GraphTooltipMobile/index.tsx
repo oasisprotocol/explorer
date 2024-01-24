@@ -126,12 +126,18 @@ type TooltipInfo = {
   body: GraphTooltipBodyProps
 }
 
-const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate = false) => {
+const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, outOfDate = false) => {
   if (!enabled) {
     return t('home.tooltip.coming')
   }
 
-  return outOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline')
+  return layer === Layer.consensus
+    ? outOfDate
+      ? t('common.consensusOutOfDate')
+      : t('common.consensusOnline')
+    : outOfDate
+      ? t('common.paraTimeOutOfDate')
+      : t('common.paraTimeOnline')
 }
 
 const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
@@ -147,7 +153,8 @@ const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
       disabled: !isSapphireEnabled,
       body: {
         title: (t: TFunction) => t('common.sapphire'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, isSapphireEnabled, isSapphireOutOfDate),
+        caption: (t: TFunction) =>
+          layerTooltipBodyCaption(t, Layer.sapphire, isSapphireEnabled, isSapphireOutOfDate),
         body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
       },
       ...(isSapphireEnabled
@@ -160,7 +167,8 @@ const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
       disabled: !isEmeraldEnabled,
       body: {
         title: (t: TFunction) => t('common.emerald'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, isEmeraldEnabled, isEmeraldOutOfDate),
+        caption: (t: TFunction) =>
+          layerTooltipBodyCaption(t, Layer.emerald, isEmeraldEnabled, isEmeraldOutOfDate),
         body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
       },
       ...(isEmeraldEnabled
@@ -173,7 +181,7 @@ const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
       disabled: !isCipherEnabled,
       body: {
         title: (t: TFunction) => t('common.cipher'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, isCipherEnabled),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, Layer.cipher, isCipherEnabled),
         body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },
@@ -181,7 +189,7 @@ const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
       disabled: !isConsensusEnabled,
       body: {
         title: (t: TFunction) => t('common.consensus'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, isConsensusEnabled),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, Layer.consensus, isConsensusEnabled),
         body: (t: TFunction) => t('home.tooltip.consensusDesc'),
       },
     },
@@ -191,9 +199,10 @@ const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
 interface GraphTooltipHeaderProps {
   disabled: boolean
   network: Network
+  layer: Layer
 }
 
-const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) => {
+const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, layer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const icons = getNetworkIcons({ size: 38 })
@@ -210,7 +219,7 @@ const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network }) 
             color={COLORS.white}
             sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
           >
-            {t('home.tooltip.openParatime')}
+            {layer === Layer.consensus ? t('home.tooltip.openConsensus') : t('home.tooltip.openParatime')}
           </Typography>
         </>
       )}
@@ -280,7 +289,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
             <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
           </IconButton>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-            <GraphTooltipHeader disabled={disabled} network={network} />
+            <GraphTooltipHeader disabled={disabled} network={network} layer={layer} />
             <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
           </GraphTooltipStyled>
         </MobileGraphTooltip>

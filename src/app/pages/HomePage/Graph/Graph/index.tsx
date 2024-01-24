@@ -17,7 +17,7 @@ import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { COLORS } from '../../../../../styles/theme/testnet/colors'
 import { useTranslation } from 'react-i18next'
-import { useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { SearchScope } from '../../../../../types/searchScope'
 
 interface GraphBaseProps {
@@ -214,7 +214,23 @@ const GraphParaTimeStatus: FC<
   )
 }
 
-const LayerStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) => void }> = ({
+const ConsensusStatus: FC<{ network: Network; statusChange: (outOfDate?: boolean) => void }> = ({
+  network,
+  statusChange,
+}) => {
+  const { outOfDate } = useConsensusFreshness(network)
+
+  useEffect(() => {
+    statusChange(outOfDate)
+    return () => {
+      statusChange(undefined)
+    }
+  }, [outOfDate, statusChange])
+
+  return null
+}
+
+const RuntimeStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) => void }> = ({
   scope,
   statusChange,
 }) => {
@@ -229,6 +245,16 @@ const LayerStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) 
 
   return null
 }
+
+const LayerStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) => void }> = ({
+  scope,
+  statusChange,
+}) =>
+  scope.layer === Layer.consensus ? (
+    <ConsensusStatus network={scope.network} statusChange={statusChange} />
+  ) : (
+    <RuntimeStatus scope={scope} statusChange={statusChange} />
+  )
 
 const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   {

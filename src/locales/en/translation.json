@@ -41,6 +41,8 @@
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
     "collection": "Collection",
+    "consensusOnline": "Consensus Online",
+    "consensusOutOfDate": "Consensus out of date",
     "copy": "Copy",
     "data": "Data",
     "emerald": "Emerald",
@@ -431,6 +433,7 @@
     },
     "tooltip": {
       "coming": "Coming soon",
+      "openConsensus": "Open Consensus",
       "openParatime": "Open ParaTime",
       "sapphireParaTimeDesc": "Confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility",
       "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
