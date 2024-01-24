@@ -12,6 +12,7 @@
     "listTitle": "Accounts",
     "noTokens": "This account holds no tokens",
     "showMore": "+ {{counter}} more",
+    "sizeTooltip": "This account is indicated as an {{size}} account based on sum of assets they own.",
     "staked": "Staked",
     "title": "Account",
     "transactionsListTitle": "Account Transactions",

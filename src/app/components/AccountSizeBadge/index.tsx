@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
 import { styled } from '@mui/material/styles'
 import { FC } from 'react'
 import { COLORS } from 'styles/theme/colors'
@@ -25,5 +27,11 @@ type AccountSizeBadgeProps = {
 }
 
 export const AccountSizeBadge: FC<AccountSizeBadgeProps> = ({ size }) => {
-  return <StyledBox>{size}</StyledBox>
+  const { t } = useTranslation()
+
+  return (
+    <Tooltip arrow placement="top" title={t('account.sizeTooltip', { size })}>
+      <StyledBox>{size}</StyledBox>
+    </Tooltip>
+  )
 }
