@@ -34,14 +34,14 @@ export enum RuntimeTypes {
 
 const emeraldConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 60,
+    activeNodes: 65,
     address: 'oasis1qzvlg0grjxwgjj58tx2xvmv26era6t2csqn22pte',
     // Match max_batch_gas https://github.com/oasisprotocol/emerald-paratime/blob/5a36a646b989e510fadc0029178fe96a24cad101/src/lib.rs#L112-L112
     blockGasLimit: 10_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000e2eaa99fc008f87f',
   },
   testnet: {
-    activeNodes: 28,
+    activeNodes: 32,
     address: 'oasis1qr629x0tg9gm5fyhedgs9lw5eh3d8ycdnsxf0run',
     blockGasLimit: 30_000_000,
     runtimeId: '00000000000000000000000000000000000000000000000072c8215e60d5bca7',
@@ -83,14 +83,14 @@ const cipherConfig: LayerConfig = {
 
 const sapphireConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 31,
+    activeNodes: 41,
     address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/5cbcdf764390bba3ae27411c551a4f4444117f3f/runtime/src/lib.rs#L146
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000f80306c9858e7279',
   },
   testnet: {
-    activeNodes: 16,
+    activeNodes: 21,
     address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd',
     blockGasLimit: 30_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
