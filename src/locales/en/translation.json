@@ -497,10 +497,13 @@
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   },
   "validator": {
+    "active": "Active",
     "change": "Change (24h)",
     "commission": "Commission",
     "cumulativeVoting": "Cumulative Voting %",
     "delegators": "Delegators",
+    "groupStatus": "{{status}} validators",
+    "inactive": "Inactive",
     "listTitle": "Validators",
     "staked": "Staked",
     "title": "Validator",

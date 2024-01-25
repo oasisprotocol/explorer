@@ -6,6 +6,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { Snapshot } from '../../components/Snapshots/Snapshot'
 import { SnapshotEpoch } from './SnapshotEpoch'
 import { SnapshotDelegators } from './SnapshotDelegators'
+import { SnapshotValidators } from './SnapshotValidators'
 import { SnapshotStaked } from './SnapshotStaked'
 
 const StyledGrid = styled(Grid)(() => ({
@@ -20,7 +21,9 @@ export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
       <StyledGrid item xs={22} md={5}>
         <SnapshotEpoch />
       </StyledGrid>
-      <StyledGrid item xs={22} md={6} />
+      <StyledGrid item xs={22} md={6}>
+        <SnapshotValidators scope={scope} />
+      </StyledGrid>
       <StyledGrid item xs={22} md={5}>
         <SnapshotDelegators />
       </StyledGrid>
