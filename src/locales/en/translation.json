@@ -126,6 +126,7 @@
       "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here."
     }
   },
+  "consensusSnapshot": "Consensus Snapshot",
   "dapps": {
     "wrose": {
       "description": "Looking to wrap or unwrap your wROSE?",

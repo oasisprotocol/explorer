@@ -10,6 +10,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { LearningMaterials } from './LearningMaterials'
 import { NetworkProposalsCard } from './NetworkProposalsCard'
 import { ValidatorsCard } from './Validators'
+import { ConsensusSnapshot } from './ConsensusSnapshot'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -17,6 +18,7 @@ export const ConsensusDashboardPage: FC = () => {
 
   return (
     <PageLayout>
+      <ConsensusSnapshot scope={scope} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>

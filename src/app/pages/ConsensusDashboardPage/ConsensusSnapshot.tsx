@@ -1,0 +1,46 @@
+import { FC } from 'react'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
+import { AppendMobileSearch } from '../../components/AppendMobileSearch'
+import { SearchScope } from '../../../types/searchScope'
+
+const StyledGrid = styled(Grid)(() => ({
+  display: 'flex',
+}))
+
+export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const { isMobile } = useScreenSize()
+
+  return (
+    <>
+      <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
+        <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
+          <AppendMobileSearch scope={scope}>
+            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
+              <Typography
+                variant="h3"
+                sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
+              >
+                {t('consensusSnapshot')}
+              </Typography>
+            </Box>
+          </AppendMobileSearch>
+        </Grid>
+      </Grid>
+
+      <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
+        <StyledGrid item xs={22} md={5} />
+        <StyledGrid item xs={22} md={6} />
+        <StyledGrid item xs={22} md={5} />
+        <StyledGrid item xs={22} md={6} />
+      </Grid>
+    </>
+  )
+}
