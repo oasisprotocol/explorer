@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { COLORS } from 'styles/theme/colors'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -66,5 +67,30 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
         </CardActions>
       )}
     </StyledCard>
+  )
+}
+
+type SnapshotTextCardProps = {
+  children: ReactNode
+  label?: ReactNode
+  title: ReactNode
+}
+
+export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({ children, label, title }) => {
+  return (
+    <SnapshotCard title={title} label={label}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: '32px',
+            fontWeight: 700,
+            color: COLORS.brandDark,
+          }}
+        >
+          {children}
+        </Typography>
+      </Box>
+    </SnapshotCard>
   )
 }
