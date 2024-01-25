@@ -12,6 +12,64 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.6.0 (2024-01-24)
+
+### Features
+
+- Add NFT instance token transfers tab
+  ([#1066](https://github.com/oasisprotocol/explorer/issues/1066))
+
+- Create pie chart component
+  ([#1115](https://github.com/oasisprotocol/explorer/issues/1115))
+
+- Simplify UI: remove event filtering switch
+  ([#1174](https://github.com/oasisprotocol/explorer/issues/1174))
+
+### Bug Fixes and Improvements
+
+- Handle NFT image loading errors
+  ([#1147](https://github.com/oasisprotocol/explorer/issues/1147))
+
+- Do not change runtime to Emerald when switching network
+  ([#1152](https://github.com/oasisprotocol/explorer/issues/1152))
+
+### Internal Changes
+
+- Switch to staging API
+  ([#1173](https://github.com/oasisprotocol/explorer/issues/1173))
+
+- Simplify search scopes and fix search on error pages
+  ([#1159](https://github.com/oasisprotocol/explorer/issues/1159))
+- Update dependency date-fns to v3.2.0
+  ([#1132](https://github.com/oasisprotocol/explorer/issues/1132))
+
+- Update TypeScript type definitions
+  ([#1136](https://github.com/oasisprotocol/explorer/issues/1136))
+
+- Update lint dependencies
+  ([#1137](https://github.com/oasisprotocol/explorer/issues/1137),
+  [#1150](https://github.com/oasisprotocol/explorer/issues/1150),
+  [#1153](https://github.com/oasisprotocol/explorer/issues/1153))
+
+- Update dependency recharts to v2.10.4
+  ([#1140](https://github.com/oasisprotocol/explorer/issues/1140))
+
+- Update material-ui monorepo
+  ([#1143](https://github.com/oasisprotocol/explorer/issues/1143),
+  [#1158](https://github.com/oasisprotocol/explorer/issues/1158))
+
+- Update dependency react-router-dom to v6.21.2
+  ([#1148](https://github.com/oasisprotocol/explorer/issues/1148))
+
+- Update storybook dependencies to v7.6.10
+  ([#1149](https://github.com/oasisprotocol/explorer/issues/1149))
+
+- Update dependency ethers to ^6.10.0
+  ([#1151](https://github.com/oasisprotocol/explorer/issues/1151))
+
+- Update test dependencies
+  ([#1156](https://github.com/oasisprotocol/explorer/issues/1156))
+
 ## 1.5.0 (2024-01-09)
 
 ### Features
