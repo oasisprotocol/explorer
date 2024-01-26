@@ -72,9 +72,7 @@ export const Blocks: FC<BlocksProps> = ({
       key: block.hash,
       data: [
         {
-          content: (
-            <VerticalProgressBar variant="determinate" value={(100 * block.gas_used) / blockGasLimit} />
-          ),
+          content: <VerticalProgressBar value={(100 * block.gas_used) / blockGasLimit} />,
           key: 'fill',
         },
         {
