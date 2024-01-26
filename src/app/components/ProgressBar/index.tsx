@@ -1,17 +1,32 @@
-import MuiLinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress'
+import { FC } from 'react'
+import Box from '@mui/material/Box'
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress'
 import { styled } from '@mui/material/styles'
 import { COLORS } from 'styles/theme/colors'
 
-export const VerticalProgressBar = styled(MuiLinearProgress)(() => ({
+type VerticalProgressBarProps = {
+  value: number
+}
+
+const barSize = 36
+
+export const VerticalProgressBar: FC<VerticalProgressBarProps> = ({ value }) => {
+  return (
+    <Box sx={{ width: barSize, height: barSize, transform: 'rotate(-90deg)' }}>
+      <StyledLinearProgress variant="determinate" value={value} />
+    </Box>
+  )
+}
+
+const StyledLinearProgress = styled(LinearProgress)(() => ({
   [`&.${linearProgressClasses.determinate} > .${linearProgressClasses.bar1Determinate}`]: {
     backgroundColor: COLORS.brandDark,
   },
-  height: 36,
-  width: 36,
-  transform: 'rotate(-90deg)',
+  height: barSize,
+  width: barSize,
 }))
 
-export const ProgressBar = styled(MuiLinearProgress)(() => ({
+export const ProgressBar = styled(LinearProgress)(() => ({
   [`&.${linearProgressClasses.determinate} > .${linearProgressClasses.bar1Determinate}`]: {
     backgroundColor: COLORS.eucalyptus,
   },
