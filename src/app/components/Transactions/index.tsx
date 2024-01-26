@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
-import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
+import { StatusIcon } from '../StatusIcon'
 import { RuntimeTransactionIcon } from '../../components/RuntimeTransactionLabel'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-nexus/api'
@@ -89,7 +89,7 @@ export const Transactions: FC<TransactionsProps> = ({
     key: transaction.hash,
     data: [
       {
-        content: <TransactionStatusIcon success={transaction.success} error={transaction.error} />,
+        content: <StatusIcon success={transaction.success} error={transaction.error} />,
         key: 'success',
       },
       ...(verbose && canHaveEncryption

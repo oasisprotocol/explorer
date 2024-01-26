@@ -79,6 +79,10 @@ declare module './generated/api' {
     layer: Layer
     rank: number
   }
+
+  export interface Validator {
+    ticker: NativeTicker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -797,6 +801,37 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
               return {
                 ...proposal,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusValidators: typeof generated.useGetConsensusValidators = (
+  network,
+  params?,
+  options?,
+) => {
+  const ticker = getTickerForNetwork(network)
+  return generated.useGetConsensusValidators(network, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.ValidatorList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            validators: data.validators.map(validator => {
+              return {
+                ...validator,
+                escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+                ticker,
               }
             }),
           }

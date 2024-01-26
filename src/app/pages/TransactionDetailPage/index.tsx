@@ -10,7 +10,7 @@ import {
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { TransactionStatusIcon } from '../../components/TransactionStatusIcon'
+import { StatusIcon } from '../../components/StatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
 import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
 import { styled } from '@mui/material/styles'
@@ -235,7 +235,7 @@ export const TransactionDetailView: FC<{
 
           <dt>{t('common.status')}</dt>
           <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
-            <TransactionStatusIcon success={transaction.success} error={transaction.error} withText={true} />
+            <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
           </dd>
 
           <dt>{t('common.block')}</dt>

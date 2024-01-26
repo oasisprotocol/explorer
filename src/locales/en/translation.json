@@ -493,5 +493,16 @@
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
     "searchSuggestionsForNoResults": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
+  },
+  "validator": {
+    "title": "Validator",
+    "cumulativeVoting": "Cumulative Voting %",
+    "listTitle": "Validators",
+    "change": "Change (24h)",
+    "voting": "Voting %",
+    "delegators": "Delegators",
+    "commission": "Commission",
+    "uptime": "Uptime",
+    "staked": "Staked"
   }
 }

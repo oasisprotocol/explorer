@@ -31,7 +31,7 @@ const statusIcon: Record<TxStatus, ReactNode> = {
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'success' && prop !== 'withText',
-})(({ success, withText }: TransactionStatusIconProps) => {
+})(({ success, withText }: StatusIconProps) => {
   const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
 
   return {
@@ -63,7 +63,7 @@ const ErrorBox = styled(Box)(() => ({
   paddingRight: 12,
 }))
 
-type TransactionStatusIconProps = {
+type StatusIconProps = {
   /**
    * Did the transaction succeed?
    * A missing value means unknown. (For encrypted transactions).
@@ -73,7 +73,7 @@ type TransactionStatusIconProps = {
   withText?: boolean
 }
 
-export const TransactionStatusIcon: FC<TransactionStatusIconProps> = ({ success, error, withText }) => {
+export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) => {
   const { t } = useTranslation()
   const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
   const statusLabel: Record<TxStatus, string> = {
