@@ -1,9 +1,5 @@
 import { FC, useState } from 'react'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import { useScreenSize } from '../../hooks/useScreensize'
-import { useTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 import { DurationSelect } from '../../components/Snapshots/DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
@@ -13,11 +9,11 @@ import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
-import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { Network } from '../../../types/network'
 import { getLayerNames } from '../../../types/layers'
 import { TestnetFaucet } from './TestnetFaucet'
 import { SearchScope } from '../../../types/searchScope'
+import { Snapshot } from 'app/components/Snapshots/Snapshot'
 
 const StyledGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -28,8 +24,6 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
   const paratime = getLayerNames(t)[scope.layer]
-  const theme = useTheme()
-  const { isMobile } = useScreenSize()
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
     if (!duration) {
       return
@@ -40,26 +34,16 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
 
   return (
     <>
-      <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
-        <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
-          <AppendMobileSearch scope={scope}>
-            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
-              <Typography
-                variant="h3"
-                sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
-              >
-                {t('paraTimeSnapshot.header', { paratime })}
-              </Typography>
-              <DurationSelect
-                defaultValue={defaultChartDurationValue}
-                handleChange={handleDurationSelectedChange}
-              />
-            </Box>
-          </AppendMobileSearch>
-        </Grid>
-      </Grid>
-
-      <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
+      <Snapshot
+        header={
+          <DurationSelect
+            defaultValue={defaultChartDurationValue}
+            handleChange={handleDurationSelectedChange}
+          />
+        }
+        title={t('paraTimeSnapshot.header', { paratime })}
+        scope={scope}
+      >
         <StyledGrid item xs={22} md={6}>
           <TransactionsChartCard scope={scope} chartDuration={chartDuration} />
         </StyledGrid>
@@ -73,7 +57,7 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
           {scope.network === Network.mainnet && <RosePriceCard />}
           {scope.network === Network.testnet && <TestnetFaucet layer={scope.layer} />}
         </StyledGrid>
-      </Grid>
+      </Snapshot>
     </>
   )
 }

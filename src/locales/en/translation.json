@@ -126,6 +126,8 @@
       "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here."
     }
   },
+  "consensusSnapshot": "Consensus Snapshot",
+  "currentEpoch": "Current Epoch",
   "dapps": {
     "wrose": {
       "description": "Looking to wrap or unwrap your wROSE?",
@@ -495,14 +497,17 @@
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
   },
   "validator": {
-    "title": "Validator",
-    "cumulativeVoting": "Cumulative Voting %",
-    "listTitle": "Validators",
+    "active": "Active",
     "change": "Change (24h)",
-    "voting": "Voting %",
-    "delegators": "Delegators",
     "commission": "Commission",
+    "cumulativeVoting": "Cumulative Voting %",
+    "delegators": "Delegators",
+    "groupStatus": "{{status}} validators",
+    "inactive": "Inactive",
+    "listTitle": "Validators",
+    "staked": "Staked",
+    "title": "Validator",
     "uptime": "Uptime",
-    "staked": "Staked"
+    "voting": "Voting %"
   }
 }
