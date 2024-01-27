@@ -6,12 +6,14 @@ import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { useTranslation } from 'react-i18next'
 import { RoundedBalance } from '../RoundedBalance'
 import { ProposalStatusIcon } from '../ProposalStatusIcon'
+import { HighlightedText } from '../HighlightedText'
 
-export const ProposalDetails: FC<{ proposal: Proposal; showLayer?: boolean; standalone?: boolean }> = ({
-  proposal,
-  showLayer = false,
-  standalone = false,
-}) => {
+export const ProposalDetails: FC<{
+  proposal: Proposal
+  highlightedPart?: string
+  showLayer?: boolean
+  standalone?: boolean
+}> = ({ proposal, highlightedPart, showLayer = false, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   return (
@@ -29,7 +31,9 @@ export const ProposalDetails: FC<{ proposal: Proposal; showLayer?: boolean; stan
       <dd>{proposal.id}</dd>
 
       <dt>{t('networkProposal.handler')}</dt>
-      <dd>{proposal.handler}</dd>
+      <dd>
+        <HighlightedText text={proposal.handler} pattern={highlightedPart} />
+      </dd>
 
       <dt>{t('networkProposal.deposit')}</dt>
       <dd>

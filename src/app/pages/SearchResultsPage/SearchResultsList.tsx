@@ -121,7 +121,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
-          resultComponent={item => <ProposalDetails proposal={item} showLayer />}
+          resultComponent={item => <ProposalDetails proposal={item} highlightedPart={searchTerm} showLayer />}
           link={() => ''}
           linkLabel=""
         />
