@@ -16,6 +16,7 @@ import { tokenHoldersContainerId } from './TokenHoldersCard'
 import { SearchScope } from '../../../types/searchScope'
 import { tokenInventoryContainerId } from './TokenInventoryCard'
 import { DappBanner } from '../../components/DappBanner'
+import { AddressLoaderData } from '../../utils/route-utils'
 
 export type TokenDashboardContext = {
   scope: SearchScope
@@ -28,7 +29,7 @@ export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { address } = useLoaderData() as AddressLoaderData
 
   const { token, isError } = useTokenInfo(scope, address)
 
