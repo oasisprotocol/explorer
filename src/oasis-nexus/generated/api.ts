@@ -769,6 +769,27 @@ export interface RuntimeStatus {
   latest_update_age_ms: number;
 }
 
+export interface RuntimeAccount {
+  /** The staking address for this account. */
+  address: string;
+  address_preimage?: AddressPreimage;
+  /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
+produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
+managed by smart contracts deployed in this runtime. For example, in EVM-compatible runtimes,
+this does not include ERC-20 tokens
+ */
+  balances: RuntimeSdkBalance[];
+  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
+NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
+ */
+  evm_balances: RuntimeEvmBalance[];
+  /** Data on the EVM smart contract associated with this account address. Only present for accounts
+that represent a smart contract on EVM.
+ */
+  evm_contract?: RuntimeEvmContract;
+  stats: AccountStats;
+}
+
 export interface RuntimeTransactionEncryptionEnvelope {
   /** The base64-encoded encrypted transaction data. */
   data?: string;
@@ -788,6 +809,97 @@ export interface RuntimeTransactionEncryptionEnvelope {
  * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
+
+/**
+ * A list of runtime transactions.
+
+ */
+export type RuntimeTransactionListAllOf = {
+  transactions: RuntimeTransaction[];
+};
+
+export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
+
+export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
+
+/**
+ * The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+
+ */
+export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
+
+export interface RuntimeEvmContractVerification {
+  /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+ */
+  compilation_metadata?: RuntimeEvmContractVerificationCompilationMetadata;
+  /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
+ */
+  source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
+}
+
+export interface RuntimeEvmContract {
+  /** The creation bytecode of the smart contract. This includes the constructor logic
+and the constructor parameters. When run, this code generates the runtime bytecode.
+Can be omitted for contracts that were created by another contract, as opposed
+to a direct `Create` call.
+ */
+  creation_bytecode?: string;
+  /** The Oasis cryptographic hash of the transaction that created the smart contract.
+Can be omitted for contracts that were created by another contract, as opposed
+to a direct `Create` call.
+ */
+  creation_tx?: string;
+  /** The Ethereum transaction hash of the transaction in `creation_tx`.
+Encoded as a lowercase hex string.
+ */
+  eth_creation_tx?: string;
+  /** The total amount of gas used to create or call this contract. */
+  gas_used: number;
+  /** The runtime bytecode of the smart contract. This is the code stored on-chain that
+describes a smart contract. Every contract has this info, but Nexus fetches
+it separately, so the field may be missing for very fresh contracts (or if the fetching
+process is stalled).
+ */
+  runtime_bytecode?: string;
+  /** Additional information obtained from contract verification. Only available for smart
+contracts that have been verified successfully by Sourcify.
+ */
+  verification?: RuntimeEvmContractVerification;
+}
+
+/**
+ * Details about the EVM token involved in the event, if any.
+
+ */
+export interface EvmEventToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  type?: EvmTokenType;
+}
+
+/**
+ * A decoded parameter of an event or error emitted from an EVM runtime.
+Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
+
+ */
+export interface EvmAbiParam {
+  /** The solidity type of the parameter. */
+  evm_type: string;
+  /** The parameter name. */
+  name: string;
+  /** The parameter value. */
+  value: unknown;
+}
 
 /**
  * A runtime transaction.
@@ -819,6 +931,14 @@ which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hy
 Absent for non-Ethereum-format transactions.
  */
   eth_hash?: string;
+  /** The name of the smart contract function called by the transaction.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_name?: string;
+  /** The decoded parameters with which the smart contract function was called.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_params?: EvmAbiParam[];
   /** The fee that this transaction's sender committed to pay to execute
 it (total, native denomination, ParaTime base units, as a string).
  */
@@ -890,118 +1010,6 @@ if applicable. The meaning varies based on the transaction method. Some notable 
   to_eth?: string;
 }
 
-/**
- * A list of runtime transactions.
-
- */
-export type RuntimeTransactionListAllOf = {
-  transactions: RuntimeTransaction[];
-};
-
-export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
-
-export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
-
-/**
- * The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
-Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
-
- */
-export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
-
-export interface RuntimeEvmContractVerification {
-  /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
-Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
- */
-  compilation_metadata?: RuntimeEvmContractVerificationCompilationMetadata;
-  /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
- */
-  source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
-}
-
-export interface RuntimeEvmContract {
-  /** The creation bytecode of the smart contract. This includes the constructor logic
-and the constructor parameters. When run, this code generates the runtime bytecode.
-Can be omitted for contracts that were created by another contract, as opposed
-to a direct `Create` call.
- */
-  creation_bytecode?: string;
-  /** The Oasis cryptographic hash of the transaction that created the smart contract.
-Can be omitted for contracts that were created by another contract, as opposed
-to a direct `Create` call.
- */
-  creation_tx?: string;
-  /** The Ethereum transaction hash of the transaction in `creation_tx`.
-Encoded as a lowercase hex string.
- */
-  eth_creation_tx?: string;
-  /** The total amount of gas used to create or call this contract. */
-  gas_used: number;
-  /** The runtime bytecode of the smart contract. This is the code stored on-chain that
-describes a smart contract. Every contract has this info, but Nexus fetches
-it separately, so the field may be missing for very fresh contracts (or if the fetching
-process is stalled).
- */
-  runtime_bytecode?: string;
-  /** Additional information obtained from contract verification. Only available for smart
-contracts that have been verified successfully by Sourcify.
- */
-  verification?: RuntimeEvmContractVerification;
-}
-
-export interface RuntimeAccount {
-  /** The staking address for this account. */
-  address: string;
-  address_preimage?: AddressPreimage;
-  /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
-produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
-managed by smart contracts deployed in this runtime. For example, in EVM-compatible runtimes,
-this does not include ERC-20 tokens
- */
-  balances: RuntimeSdkBalance[];
-  /** The balances of this account in each runtime, as managed by EVM smart contracts (notably, ERC-20).
-NOTE: This field is limited to 1000 entries. If you need more, please let us know in a GitHub issue.
- */
-  evm_balances: RuntimeEvmBalance[];
-  /** Data on the EVM smart contract associated with this account address. Only present for accounts
-that represent a smart contract on EVM.
- */
-  evm_contract?: RuntimeEvmContract;
-  stats: AccountStats;
-}
-
-/**
- * Details about the EVM token involved in the event, if any.
-
- */
-export interface EvmEventToken {
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  type?: EvmTokenType;
-}
-
-/**
- * A decoded parameter of an event emitted from an EVM runtime.
-Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
-Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
-Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
-Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
-
- */
-export interface EvmEventParam {
-  /** The solidity type of the event parameter. */
-  evm_type: string;
-  /** The parameter name. */
-  name: string;
-  /** The parameter value. */
-  value: unknown;
-}
-
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
 
 
@@ -1044,16 +1052,15 @@ OR `evm > Event`.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
-  /** If the event type is `evm.log`, this field describes the human-readable type of evm event, e.g.
-`Transfer`. We currently only support two types of evm events, ERC20 `Transfer` and `Approve`.
+  /** If the event type is `evm.log`, this field describes the human-readable type of 
+evm event, e.g. `Transfer`. 
 Absent if the event type is not `evm.log`.
  */
   evm_log_name?: string | null;
-  /** The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer`
-and `Approve`.
+  /** The decoded `evm.log` event data.
 Absent if the event type is not `evm.log`.
  */
-  evm_log_params?: EvmEventParam[];
+  evm_log_params?: EvmAbiParam[];
   evm_token?: EvmEventToken;
   /** The block height at which this event was generated. */
   round: number;
@@ -1555,10 +1562,28 @@ export const ConsensusEventType = {
 export interface TxError {
   /** The status code of a failed transaction. */
   code: number;
-  /** The message of a failed transaction. */
+  /** The message of a failed transaction.
+This field, like `code` and `module`, can represent an error that originated
+anywhere in the paratime, i.e. either inside or outside a smart contract.
+
+A common special case worth calling out: When the paratime is 
+EVM-compatible (e.g. Emerald or Sapphire) and the error originates 
+inside a smart contract (using `revert` in solidity), the following 
+will be true:
+- `module` will be "evm" and `code` will be 8; see [here](https://github.com/oasisprotocol/oasis-sdk/blob/runtime-sdk/v0.8.3/runtime-sdk/modules/evm/src/lib.rs#L128) for other possible errors in the `evm` module.
+- `message` will contain the best-effort human-readable revert reason.
+ */
   message?: string;
   /** The module of a failed transaction. */
   module?: string;
+  /** The error parameters, as decoded using the contract abi. Present only when
+- the error originated from within a smart contract (e.g. via `revert` in Solidity), and 
+- the contract is verified or the revert reason is a plain String.
+If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
+Note that users should be cautious when evaluating error data since the
+data origin is not tracked and error information can be faked.
+ */
+  revert_params?: EvmAbiParam[];
 }
 
 /**
