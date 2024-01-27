@@ -171,6 +171,9 @@ const validateTxHashParam = (hash: string) => {
   }
   return true
 }
+export type AddressLoaderData = {
+  address: string
+}
 
 const validateProposalIdParam = (proposalId: string) => {
   const isValid = isValidProposalId(proposalId)
@@ -183,10 +186,12 @@ const validateProposalIdParam = (proposalId: string) => {
 
 export const addressParamLoader =
   (queryParam: string = 'address') =>
-  ({ params }: LoaderFunctionArgs): string => {
+  ({ params }: LoaderFunctionArgs): AddressLoaderData => {
     validateAddressParam(params[queryParam]!)
-
-    return params[queryParam]!
+    console.log('Returning address data based on ', params)
+    return {
+      address: params[queryParam]!,
+    }
   }
 
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
