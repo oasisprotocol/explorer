@@ -166,6 +166,8 @@
     "value": "{{value, number}}"
   },
   "errors": {
+    "canNotLoadData": "Can not load data",
+    "canNotReachDataSource": "We were unable to reach the data source to request this data. This is probably a temporary (network?) problem. Please try again later.",
     "code": "error code",
     "error": "Error",
     "loadFirstPage": "load the first page",
@@ -177,6 +179,7 @@
     "invalidPageNumber": "Invalid page number",
     "invalidTxHash": "Invalid transaction hash",
     "notFoundBlockHeight": "Block not found",
+    "notFoundToken": "Token not found",
     "notFoundTx": "Transaction not found",
     "pageDoesNotExist": "The page you are looking for does not exist.",
     "validateURL": "Please validate provided URL",

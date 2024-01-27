@@ -82,6 +82,7 @@ export const SearchResultsList: FC<{
             <AccountDetailsView
               isLoading={false}
               isError={false}
+              errorCode={undefined}
               account={item}
               tokenPriceInfo={tokenPrices[item.network]}
               showLayer={true}
@@ -98,6 +99,7 @@ export const SearchResultsList: FC<{
             <AccountDetailsView
               isLoading={false}
               isError={false}
+              errorCode={undefined}
               account={item}
               tokenPriceInfo={tokenPrices[item.network]}
               showLayer={true}

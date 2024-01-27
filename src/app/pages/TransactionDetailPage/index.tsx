@@ -92,7 +92,7 @@ export const TransactionDetailPage: FC = () => {
     AddressSwitchOption.Oasis | AddressSwitchOption.ETH
   >(AddressSwitchOption.ETH)
 
-  const { isLoading, data } = useGetRuntimeTransactionsTxHash(
+  const { isLoading, data, error } = useGetRuntimeTransactionsTxHash(
     scope.network,
     scope.layer, // This is OK since consensus has been handled separately
     hash,
@@ -105,7 +105,16 @@ export const TransactionDetailPage: FC = () => {
   const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
 
   if (!transaction && !isLoading) {
-    throw AppErrors.NotFoundTxHash
+    const errorCode = (error as any)?.code
+    switch (errorCode) {
+      case 'ERR_NETWORK':
+        throw AppErrors.CannotLoadData
+      default:
+        // TODO: what other error codes are there?
+        // (We are not aware of anything else)
+        console.log('Error code is', errorCode)
+        throw AppErrors.NotFoundTxHash
+    }
   }
   return (
     <PageLayout>
