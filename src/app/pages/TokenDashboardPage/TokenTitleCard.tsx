@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTranslation } from 'react-i18next'
 import { SearchScope } from '../../../types/searchScope'
+import { HighlightedText } from '../../components/HighlightedText'
 
 export const StyledCard = styled(Card)(() => ({
   '&': {
@@ -22,7 +23,11 @@ export const StyledCard = styled(Card)(() => ({
 
 const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
 
-export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenTitleCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
+  scope,
+  address,
+  searchTerm,
+}) => {
   const { t } = useTranslation()
   const { isLoading, token } = useTokenInfo(scope, address)
 
@@ -49,7 +54,7 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ sc
                 flexWrap: 'wrap',
               }}
             >
-              {token?.name ?? t('common.missing')}
+              {token?.name ? <HighlightedText text={token.name} pattern={searchTerm} /> : t('common.missing')}
               &nbsp;
               <Typography
                 component="span"
@@ -59,7 +64,11 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string }> = ({ sc
                   fontWeight: 700,
                 }}
               >
-                ({token?.symbol ?? t('common.missing')})
+                {token?.symbol ? (
+                  <HighlightedText text={token.symbol} pattern={searchTerm} />
+                ) : (
+                  t('common.missing')
+                )}
               </Typography>
             </Typography>
 
