@@ -6,6 +6,7 @@ import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
+import { getSearchTermFromRequest } from '../components/Search/search-utils'
 
 export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
@@ -161,15 +162,16 @@ const validateTxHashParam = (hash: string) => {
 }
 export type AddressLoaderData = {
   address: string
+  searchTerm: string
 }
 
 export const addressParamLoader =
   (queryParam: string = 'address') =>
-  ({ params }: LoaderFunctionArgs): AddressLoaderData => {
+  ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
     validateAddressParam(params[queryParam]!)
-    console.log('Returning address data based on ', params)
     return {
       address: params[queryParam]!,
+      searchTerm: getSearchTermFromRequest(request),
     }
   }
 
