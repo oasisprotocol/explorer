@@ -17,7 +17,7 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { AccountDetailsContext } from './index'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
-import { RouteUtils } from 'app/utils/route-utils'
+import { AddressLoaderData, RouteUtils } from 'app/utils/route-utils'
 import { ImageListItemImage } from '../TokenDashboardPage/ImageListItemImage'
 import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
 import { TablePagination } from '../../components/Table/TablePagination'
@@ -31,7 +31,7 @@ export const accountNFTCollectionContainerId = 'nftCollection'
 
 export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const contractAddress = useLoaderData() as string
+  const { address: contractAddress } = useLoaderData() as AddressLoaderData
   const { inventory, isFetched, isLoading, isTotalCountClipped, pagination, totalCount } =
     useAccountTokenInventory(scope, address, contractAddress)
   const firstToken = inventory?.length ? inventory?.[0].token : undefined
