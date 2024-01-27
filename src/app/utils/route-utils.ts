@@ -172,6 +172,7 @@ const validateTxHashParam = (hash: string) => {
   }
   return true
 }
+
 export type AddressLoaderData = {
   address: string
   searchTerm: string
@@ -224,6 +225,15 @@ export const assertEnabledScope = ({
   return { network, layer } as SearchScope
 }
 
-export const proposalIdParamLoader = async ({ params }: LoaderFunctionArgs) => {
-  return validateProposalIdParam(params.proposalId!)
+export type ProposalIdLoaderData = {
+  proposalId: number
+  searchTerm: string
+}
+
+export const proposalIdParamLoader = async ({ params, request }: LoaderFunctionArgs) => {
+  validateProposalIdParam(params.proposalId!)
+  return {
+    proposalId: parseInt(params.proposalId!),
+    searchTerm: getSearchTermFromRequest(request),
+  }
 }

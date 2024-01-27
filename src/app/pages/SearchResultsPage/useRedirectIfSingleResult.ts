@@ -45,7 +45,7 @@ export function useRedirectIfSingleResult(
         )}?q=${searchTerm}`
         break
       case 'proposal':
-        redirectTo = RouteUtils.getProposalRoute(item.network, item.id)
+        redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${searchTerm}`
         break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
