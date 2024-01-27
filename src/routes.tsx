@@ -38,6 +38,7 @@ import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
+import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -94,6 +95,10 @@ export const routes: RouteObject[] = [
             path: `validators/:address`,
             element: <ValidatorDetailsPage />,
             loader: addressParamLoader(),
+          },
+          {
+            path: `block`,
+            element: <ConsensusBlocksPage />,
           },
         ],
       },

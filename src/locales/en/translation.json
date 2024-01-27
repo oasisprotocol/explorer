@@ -20,6 +20,7 @@
   },
   "blocks": {
     "latest": "Latest Blocks",
+    "title": "Blocks",
     "viewingFirst": "You are viewing the first block",
     "viewingLatest": "You are viewing the latest block",
     "viewNext": "View next block",
@@ -80,6 +81,7 @@
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
     "proposal": "Proposal",
+    "proposer": "Proposer",
     "rank": "Rank",
     "select": "Select",
     "size": "Size",
