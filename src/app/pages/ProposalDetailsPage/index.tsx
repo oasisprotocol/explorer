@@ -6,7 +6,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Layer, Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
-import { useParams } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { StyledDescriptionList } from 'app/components/StyledDescriptionList'
@@ -16,6 +16,8 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 import { TextSkeleton } from '../../components/Skeleton'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { HighlightedText } from '../../components/HighlightedText'
+import { ProposalIdLoaderData } from '../../utils/route-utils'
 import { COLORS } from 'styles/theme/colors'
 import { getTypeNameForProposal } from '../../../types/proposalType'
 
@@ -25,7 +27,7 @@ export const ProposalDetailsPage: FC = () => {
   if (scope.layer !== Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
-  const proposalId = parseInt(useParams().proposalId!, 10)
+  const { proposalId, searchTerm } = useLoaderData() as ProposalIdLoaderData
 
   const { isLoading, data } = useGetConsensusProposalsProposalId(scope.network, proposalId)
   if (!data?.data && !isLoading) {
@@ -35,7 +37,7 @@ export const ProposalDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.proposal')}>
-        <ProposalDetailView isLoading={isLoading} proposal={proposal} />
+        <ProposalDetailView isLoading={isLoading} proposal={proposal} highlightedPart={searchTerm} />
       </SubPageCard>
     </PageLayout>
   )
@@ -43,10 +45,11 @@ export const ProposalDetailsPage: FC = () => {
 
 export const ProposalDetailView: FC<{
   proposal: Proposal
+  highlightedPart?: string
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
-}> = ({ proposal, isLoading, showLayer = false, standalone = false }) => {
+}> = ({ proposal, highlightedPart, isLoading, showLayer = false, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -68,7 +71,9 @@ export const ProposalDetailView: FC<{
       <dd>{proposal.id}</dd>
 
       <dt>{t('common.title')}</dt>
-      <dd>{proposal.handler}</dd>
+      <dd>
+        <HighlightedText text={proposal.handler} pattern={highlightedPart} />
+      </dd>
 
       <dt>{t('common.type')}</dt>
       <dd>{proposalType}</dd>
