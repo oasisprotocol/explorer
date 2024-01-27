@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ResultsGroupByType } from './ResultsGroupByType'
-import { BlockDetailView } from '../BlockDetailPage'
+import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage/AccountDetailsView'
@@ -55,7 +55,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.blocks.title')}
           results={searchResults.filter((item): item is BlockResult => item.resultType === 'block')}
-          resultComponent={item => <BlockDetailView isLoading={false} block={item} showLayer={true} />}
+          resultComponent={item => <RuntimeBlockDetailView isLoading={false} block={item} showLayer={true} />}
           link={block => RouteUtils.getBlockRoute(block, block.round)}
           linkLabel={t('search.results.blocks.viewLink')}
         />

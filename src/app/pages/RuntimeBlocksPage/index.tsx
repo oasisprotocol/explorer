@@ -6,10 +6,10 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Layer, useGetRuntimeBlocks } from '../../../oasis-nexus/api'
-import { Blocks, BlocksTableType, TableRuntimeBlockList } from '../../components/Blocks'
+import { RuntimeBlocks, BlocksTableType, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { BlockDetailView } from '../BlockDetailPage'
+import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
@@ -18,7 +18,7 @@ import { VerticalList } from '../../components/VerticalList'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
-export const BlocksPage: FC = () => {
+export const RuntimeBlocksPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
@@ -89,7 +89,7 @@ export const BlocksPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
       >
         {tableView === TableLayout.Horizontal && (
-          <Blocks
+          <RuntimeBlocks
             isLoading={isLoading}
             blocks={blocks}
             limit={PAGE_SIZE}
@@ -107,10 +107,10 @@ export const BlocksPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <BlockDetailView key={key} isLoading={true} block={undefined} standalone />
+                <RuntimeBlockDetailView key={key} isLoading={true} block={undefined} standalone />
               ))}
             {!isLoading &&
-              data?.data.blocks.map(block => <BlockDetailView key={block.hash} block={block} standalone />)}
+              data?.data.blocks.map(block => <RuntimeBlockDetailView key={block.hash} block={block} standalone />)}
           </VerticalList>
         )}
       </SubPageCard>

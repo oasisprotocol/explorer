@@ -21,7 +21,7 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { EventsCard } from './EventsCard'
 import { NextBlockButton, PrevBlockButton } from '../../components/BlockNavigationButtons'
 
-export const BlockDetailPage: FC = () => {
+export const RuntimeBlockDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   if (scope.layer === Layer.consensus) {
@@ -42,7 +42,7 @@ export const BlockDetailPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.block')}>
-        <BlockDetailView enableBlockNavigation isLoading={isLoading} block={block} />
+        <RuntimeBlockDetailView enableBlockNavigation={true} isLoading={isLoading} block={block} />
       </SubPageCard>
       {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
       <EventsCard scope={scope} blockHeight={blockHeight} />
@@ -54,7 +54,7 @@ export type BlockDetailRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
 }
 
-export const BlockDetailView: FC<{
+export const RuntimeBlockDetailView: FC<{
   isLoading?: boolean
   block: BlockDetailRuntimeBlock | undefined
   showLayer?: boolean

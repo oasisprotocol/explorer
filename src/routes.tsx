@@ -1,10 +1,10 @@
 import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
-import { BlocksPage } from './app/pages/BlocksPage'
+import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { TransactionsPage } from './app/pages/TransactionsPage'
 import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
-import { BlockDetailPage } from './app/pages/BlockDetailPage'
+import { RuntimeBlockDetailPage } from './app/pages/RuntimeBlockDetailPage'
 import { AccountDetailsPage, useAccountDetailsProps } from './app/pages/AccountDetailsPage'
 import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
 import { AccountTokensCard } from './app/pages/AccountDetailsPage/AccountTokensCard'
@@ -118,11 +118,11 @@ export const routes: RouteObject[] = [
 
           {
             path: `block`,
-            element: <BlocksPage />,
+            element: <RuntimeBlocksPage />,
           },
           {
             path: `block/:blockHeight`,
-            element: <BlockDetailPage />,
+            element: <RuntimeBlockDetailPage />,
             loader: blockHeightParamLoader,
           },
           {

@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { Layer, useGetRuntimeBlocks } from '../../../oasis-nexus/api'
-import { Blocks, BlocksTableType } from '../../components/Blocks'
+import { RuntimeBlocks, BlocksTableType } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
@@ -16,7 +16,7 @@ import { SearchScope } from '../../../types/searchScope'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LatestRuntimeBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = scope
@@ -53,7 +53,7 @@ export const LatestBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <Blocks
+        <RuntimeBlocks
           isLoading={blocksQuery.isLoading}
           blocks={blocksQuery.data?.data.blocks}
           limit={limit}
