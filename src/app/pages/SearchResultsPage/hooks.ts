@@ -13,6 +13,8 @@ import {
   EvmTokenList,
   EvmToken,
   useGetRuntimeBlockByHash,
+  Proposal,
+  useGetConsensusProposalsByName,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -24,7 +26,7 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token'
+  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal'
 }
 
 export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
@@ -37,7 +39,15 @@ export type ContractResult = SearchResultItemCore & RuntimeAccount & { resultTyp
 
 export type TokenResult = SearchResultItemCore & EvmToken & { resultType: 'token' }
 
-export type SearchResultItem = BlockResult | TransactionResult | AccountResult | ContractResult | TokenResult
+export type ProposalResult = SearchResultItemCore & Proposal & { resultType: 'proposal' }
+
+export type SearchResultItem =
+  | BlockResult
+  | TransactionResult
+  | AccountResult
+  | ContractResult
+  | TokenResult
+  | ProposalResult
 
 export type SearchResults = SearchResultItem[]
 
@@ -161,6 +171,24 @@ export function useRuntimeTokenConditionally(
   }
 }
 
+export function useNetworkProposalsConditionally(
+  nameFragment: string | undefined,
+): ConditionalResults<Proposal> {
+  const queries = RouteUtils.getEnabledNetworks()
+    .filter(network => RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.consensus))
+    .map(network =>
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetConsensusProposalsByName(network, nameFragment),
+    )
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries
+      .map(query => query.results)
+      .filter(isDefined)
+      .flat(),
+  }
+}
+
 export const useSearch = (q: SearchParams) => {
   const queries = {
     blockHeight: useBlocksByHeightConditionally(q.blockHeight),
@@ -170,6 +198,7 @@ export const useSearch = (q: SearchParams) => {
     // TODO: remove evmBech32Account and use evmAccount when API is ready
     evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
     tokens: useRuntimeTokenConditionally(q.evmTokenNameFragment),
+    proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
   const blocks = [...queries.blockHeight.results, ...queries.blockHash.results]
@@ -182,6 +211,7 @@ export const useSearch = (q: SearchParams) => {
     .map(l => l.evm_tokens)
     .flat()
     .sort((t1, t2) => t2.num_holders - t1.num_holders)
+  const proposals = queries.proposals.results
 
   const results: SearchResultItem[] = isLoading
     ? []
@@ -195,6 +225,7 @@ export const useSearch = (q: SearchParams) => {
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
         ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
+        ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
       ]
   return {
     isLoading,

@@ -9,6 +9,7 @@ import {
   AccountResult,
   BlockResult,
   ContractResult,
+  ProposalResult,
   SearchResults,
   TokenResult,
   TransactionResult,
@@ -19,6 +20,7 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
+import { ProposalDetailView } from '../ProposalDetailsPage'
 
 /**
  * Component for displaying a list of search results
@@ -113,6 +115,14 @@ export const SearchResultsList: FC<{
           resultComponent={item => <TokenDetails token={item} showLayer />}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.proposals.title')}
+          results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
+          resultComponent={item => <ProposalDetailView proposal={item} showLayer />}
+          link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
+          linkLabel={t('search.results.proposals.viewLink')}
         />
       </SubPageCard>
     </ResultListFrame>
