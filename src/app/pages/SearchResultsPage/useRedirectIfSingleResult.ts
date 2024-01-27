@@ -43,6 +43,9 @@ export function useRedirectIfSingleResult(
           item.eth_contract_addr || item.contract_addr,
         )}?q=${searchTerm}`
         break
+      case 'proposal':
+        // We don't want to redirect to proposals
+        break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
     }

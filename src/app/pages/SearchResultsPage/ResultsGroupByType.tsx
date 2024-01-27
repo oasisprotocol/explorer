@@ -47,17 +47,22 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
           {title}
         </Typography>
       </Box>
-      {results.map((item, i) => (
-        <div key={i}>
-          {resultComponent(item)}
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-            <ViewResultButton component={RouterLink} to={link(item)}>
-              {linkLabel}
-            </ViewResultButton>
-          </Box>
-          {i < results.length - 1 && <Divider variant="card" />}
-        </div>
-      ))}
+      {results.map((item, i) => {
+        const itemLink = link(item)
+        return (
+          <div key={i}>
+            {resultComponent(item)}
+            {!!itemLink && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                <ViewResultButton component={RouterLink} to={itemLink}>
+                  {linkLabel}
+                </ViewResultButton>
+              </Box>
+            )}
+            {i < results.length - 1 && <Divider variant="card" />}
+          </div>
+        )
+      })}
     </>
   )
 }

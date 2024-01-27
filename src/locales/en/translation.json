@@ -66,6 +66,7 @@
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "missing": "n/a",
     "name": "Name",
+    "network": "Network",
     "nft": "NFT",
     "nfts": "NFTs",
     "not_defined": "Not defined",
@@ -485,6 +486,9 @@
       "transactions": {
         "title": "Transactions",
         "viewLink": "View Transaction"
+      },
+      "proposals": {
+        "title": "Proposals"
       },
       "count_one": "1 result",
       "count_other": "{{ count }} results",

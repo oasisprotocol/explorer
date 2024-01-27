@@ -83,6 +83,10 @@ declare module './generated/api' {
   export interface Validator {
     ticker: NativeTicker
   }
+
+  export interface Proposal {
+    network: Network
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -800,6 +804,7 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
             proposals: data.proposals.map(proposal => {
               return {
                 ...proposal,
+                network,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
               }
             }),

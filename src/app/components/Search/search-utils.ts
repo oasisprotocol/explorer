@@ -10,6 +10,7 @@ import {
 import { Network } from '../../../types/network'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
+import { Proposal } from '../../../oasis-nexus/api'
 
 type LayerSuggestions = {
   suggestedBlock: string
@@ -100,6 +101,11 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
+  networkProposalNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length >= textSearchMininumLength) {
+      return searchTerm.toLowerCase()
+    }
+  },
 } satisfies { [name: string]: (searchTerm: string) => string | undefined }
 
 export function isSearchValid(searchTerm: string) {
@@ -133,3 +139,8 @@ export const useParamSearch = () => {
 }
 
 export type SearchParams = ReturnType<typeof useParamSearch>
+
+export const getProposalTextMatcherFor = (textFragment: string | undefined) =>
+  textFragment
+    ? (proposal: Proposal): boolean => !!proposal.handler && proposal.handler?.indexOf(textFragment) !== -1
+    : () => false
