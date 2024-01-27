@@ -280,7 +280,8 @@
       "minting": "Minting",
       "burning": "Burning",
       "unavailable": "Unknown token transfer event",
-      "unknown": "Unknown: {{name}}"
+      "unknown": "Unknown: {{name}}",
+      "taskAcceptorChanged": "Task acceptor changed"
     },
     "type": "Token Type"
   },
