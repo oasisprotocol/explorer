@@ -20,7 +20,7 @@ import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { TokenTypeTag } from './TokenList'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
-import { formatDistanceToNow } from '../../utils/dateFormatter'
+import { Age } from '../Age'
 
 const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -151,7 +151,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceToNow(new Date(transfer.timestamp)),
+          content: <Age sinceTimestamp={transfer.timestamp} />,
           key: 'timestamp',
         },
         {

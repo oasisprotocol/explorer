@@ -5,7 +5,7 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
-import { formatDistanceToNow } from '../../utils/dateFormatter'
+import { Age } from '../Age'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC } from 'react'
 
@@ -82,7 +82,7 @@ export const Blocks: FC<BlocksProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: formatDistanceToNow(new Date(block.timestamp)),
+          content: <Age sinceTimestamp={block.timestamp} />,
           key: 'timestamp',
         },
         ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite

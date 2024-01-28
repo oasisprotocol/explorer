@@ -18,7 +18,7 @@ import { trimLongString } from '../../utils/trimLongString'
 import Typography from '@mui/material/Typography'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
-import { formatDistanceToNow } from '../../utils/dateFormatter'
+import { Age } from '../Age'
 
 const iconSize = '28px'
 const StyledCircle = styled(Box)(({ theme }) => ({
@@ -116,8 +116,7 @@ export const Transactions: FC<TransactionsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: formatDistanceToNow(new Date(transaction.timestamp)),
-
+        content: <Age sinceTimestamp={transaction.timestamp} />,
         key: 'timestamp',
       },
       ...(verbose
