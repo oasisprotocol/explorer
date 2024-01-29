@@ -48,7 +48,7 @@ export const NextBlockButton: FC<{ scope: SearchScope; currentRound: number }> =
           component={RouterLink}
           to={RouteUtils.getBlockRoute(scope, currentRound + 1)}
           type="next"
-          disabled={latestBlock === currentRound}
+          disabled={disabled}
           sx={{ background: COLORS.grayMediumLight }}
         />
       </Box>
