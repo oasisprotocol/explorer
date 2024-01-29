@@ -11,6 +11,7 @@ import { Validators } from '../../components/Validators'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
+import { RouteUtils } from 'app/utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -47,8 +48,7 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
         action={
           <Link
             component={RouterLink}
-            // TODO: Update when Validators page is ready
-            to={''}
+            to={RouteUtils.getValidatorsRoute(scope.network)}
             sx={{ color: COLORS.brandDark }}
           >
             {t('common.viewAll')}
