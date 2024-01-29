@@ -5,13 +5,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import { useGetConsensusValidators } from '../../../oasis-nexus/api'
 import { Validators } from '../../components/Validators'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
 import { RouteUtils } from 'app/utils/route-utils'
+import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -36,14 +36,11 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
         disableTypography
         component="h3"
         title={
-          <>
-            {t('validator.listTitle')}{' '}
-            {validators?.total_count && (
-              <Typography component="span" sx={{ color: COLORS.grayMedium, fontSize: 18, fontWeight: 700 }}>
-                ({validators?.total_count})
-              </Typography>
-            )}
-          </>
+          <CardHeaderWithCounter
+            label={t('validator.listTitle')}
+            totalCount={validators?.total_count}
+            isTotalCountClipped={validators?.is_total_count_clipped}
+          />
         }
         action={
           <Link

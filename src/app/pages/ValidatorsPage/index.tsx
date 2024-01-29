@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -13,7 +12,7 @@ import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButt
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Validators } from '../../components/Validators'
-import { COLORS } from 'styles/theme/colors'
+import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -57,14 +56,12 @@ export const ValidatorsPage: FC = () => {
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={
-          <>
-            {t('validator.listTitle')}{' '}
-            {validatorsData?.total_count && (
-              <Typography component="span" sx={{ color: COLORS.grayMedium, fontSize: 18, fontWeight: 700 }}>
-                ({validatorsData?.total_count})
-              </Typography>
-            )}
-          </>
+          <CardHeaderWithCounter
+            changeMobileColors
+            label={t('validator.listTitle')}
+            totalCount={validatorsData?.total_count}
+            isTotalCountClipped={validatorsData?.is_total_count_clipped}
+          />
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
