@@ -13,17 +13,8 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Validators } from '../../components/Validators'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import { COLORS } from 'styles/theme/colors'
 import { ValidatorDetailsView } from '../ValidatorDetailsPage'
-
-const ValidatorDetails = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: `0 ${theme.spacing(2)}`,
-  backgroundColor: COLORS.brandDark,
-}))
+import { VerticalList } from '../../components/VerticalList'
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -92,7 +83,7 @@ export const ValidatorsPage: FC = () => {
           />
         )}
         {tableView === TableLayout.Vertical && (
-          <ValidatorDetails>
+          <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
@@ -101,7 +92,7 @@ export const ValidatorsPage: FC = () => {
               validatorsData?.validators.map(validator => (
                 <ValidatorDetailsView key={validator.entity_address} validator={validator} standalone />
               ))}
-          </ValidatorDetails>
+          </VerticalList>
         )}
       </SubPageCard>
     </PageLayout>
