@@ -40,7 +40,9 @@ export const NextBlockButton: FC<{ scope: SearchScope; currentRound: number }> =
 }) => {
   const { latestBlock } = useRuntimeFreshness(scope)
   const { t } = useTranslation()
-  const disabled = latestBlock === currentRound
+  const disabled = !!latestBlock && currentRound >= latestBlock
+  // If the next button is disabled, we want to poll the freshness info, because it will probably be enabled in a few secs
+  useRuntimeFreshness(scope, { polling: disabled }) // This will trigger refreshing to see if there isa new block
   return (
     <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')} placement="top">
       <Box>

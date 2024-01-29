@@ -28,12 +28,17 @@ export const useConsensusFreshness = (network: Network) => {
   }
 }
 
-export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
+export const useRuntimeFreshness = (
+  scope: SearchScope,
+  queryParams: { polling?: boolean } = {},
+): FreshnessInfo => {
   const isApiReachable = useIsApiReachable(scope.network).reachable
   if (scope.layer === Layer.consensus) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }
-  const query = useGetRuntimeStatus(scope.network, scope.layer)
+  const query = useGetRuntimeStatus(scope.network, scope.layer, {
+    query: { refetchInterval: queryParams.polling ? 8000 : undefined },
+  })
   const data = query.data?.data
   const lastUpdate = useFormattedTimestampStringWithDistance(data?.latest_block_time)
   const latestBlock = data?.latest_block
