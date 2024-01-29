@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Validator } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -10,6 +8,7 @@ import { StatusIcon } from '../StatusIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { ValidatorImage } from './ValidatorImage'
 import { ValidatorCommission } from './ValidatorCommission'
+import { ValidatorCumulativeVoting } from './ValidatorCumulativeVoting'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -17,23 +16,6 @@ type ValidatorsProps = {
   limit: number
   pagination: false | TablePaginationProps
 }
-
-const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'value',
-})<{ value: number }>(({ value, theme }) => ({
-  position: 'relative',
-  textAlign: 'center',
-  '&::before': {
-    content: '""',
-    width: `${value}%`,
-    height: `calc(100% + ${theme.spacing(5)})`,
-    borderRight: 'solid 5px #6665D860',
-    backgroundColor: '#6665D820',
-    position: 'absolute',
-    left: 0,
-    top: `-${theme.spacing(4)}`,
-  },
-}))
 
 export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators }) => {
   const { t } = useTranslation()
@@ -73,15 +55,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         align: TableCellAlign.Right,
         // TODO: provide cumulative voting when it is implemented in the API
-        content: (
-          <Box>
-            <StyledBox value={0}>
-              <Typography component="span" sx={{ position: 'relative', zIndex: 2 }}>
-                -
-              </Typography>
-            </StyledBox>
-          </Box>
-        ),
+        content: <ValidatorCumulativeVoting value={0} />,
         key: 'cumulativeVoting',
       },
       {
