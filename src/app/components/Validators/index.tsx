@@ -55,7 +55,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         align: TableCellAlign.Right,
         // TODO: provide cumulative voting when it is implemented in the API
-        content: <ValidatorCumulativeVoting value={0} />,
+        content: <ValidatorCumulativeVoting containerMarginThemeSpacing={5} value={0} />,
         key: 'cumulativeVoting',
       },
       {
