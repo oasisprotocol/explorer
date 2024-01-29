@@ -33,6 +33,7 @@ import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadat
 import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTTokenTransfersCard'
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { ValidatorsPage } from './app/pages/ValidatorsPage'
+import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
@@ -83,6 +84,11 @@ export const routes: RouteObject[] = [
           {
             path: `validators`,
             element: <ValidatorsPage />,
+          },
+          {
+            path: `validators/:address`,
+            element: <ValidatorDetailsPage />,
+            loader: addressParamLoader(),
           },
         ],
       },
