@@ -9,6 +9,7 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'
 import { RoundedBalance } from '../RoundedBalance'
 import { ValidatorImage } from './ValidatorImage'
+import { ValidatorCommission } from './ValidatorCommission'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -108,19 +109,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        content: (
-          <>
-            {t('common.valuePair', {
-              value: validator.current_rate / 100000,
-              formatParams: {
-                value: {
-                  style: 'percent',
-                  maximumFractionDigits: 2,
-                } satisfies Intl.NumberFormatOptions,
-              },
-            })}
-          </>
-        ),
+        content: <ValidatorCommission commission={validator.current_rate} />,
         key: 'commission',
       },
       {
