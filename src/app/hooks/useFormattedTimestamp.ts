@@ -2,7 +2,7 @@ import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
 import { useTranslation } from 'react-i18next'
 import { useScreenSize } from './useScreensize'
 
-export const useFormattedTimestamp = (timestamp: Date | undefined) => {
+export const useFormattedTimestampWithDistance = (timestamp: Date | undefined) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   if (!timestamp) return ''
@@ -27,5 +27,5 @@ export const useFormattedTimestamp = (timestamp: Date | undefined) => {
       })
 }
 
-export const useFormattedTimestampString = (timestamp: string | undefined) =>
-  useFormattedTimestamp(timestamp ? new Date(timestamp) : undefined)
+export const useFormattedTimestampStringWithDistance = (timestamp: string | undefined) =>
+  useFormattedTimestampWithDistance(timestamp ? new Date(timestamp) : undefined)

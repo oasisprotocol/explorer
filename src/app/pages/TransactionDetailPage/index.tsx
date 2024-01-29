@@ -12,7 +12,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { StatusIcon } from '../../components/StatusIcon'
 import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
-import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { styled } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -179,7 +179,7 @@ export const TransactionDetailView: FC<{
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  const formattedTimestamp = useFormattedTimestampString(transaction?.timestamp)
+  const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
 
   const isOasisAddressFormat = addressSwitchOption === AddressSwitchOption.Oasis
   const hash = isOasisAddressFormat ? transaction?.hash : transaction?.eth_hash
