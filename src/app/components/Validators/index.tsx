@@ -8,7 +8,7 @@ import { Validator } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'
 import { RoundedBalance } from '../RoundedBalance'
-import { hasValidProtocol } from '../../utils/url'
+import { ValidatorImage } from './ValidatorImage'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -16,13 +16,6 @@ type ValidatorsProps = {
   limit: number
   pagination: false | TablePaginationProps
 }
-
-const StyledImage = styled('img')({
-  width: '28px',
-  height: '28px',
-  borderRadius: 5,
-  marginRight: 15,
-})
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'value',
@@ -68,17 +61,11 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         // TODO: Enable link when validator detail page is ready
         content: (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <>
-              {validator.media?.logotype && hasValidProtocol(validator.media?.logotype) && (
-                <StyledImage
-                  alt={validator.media?.name || validator.entity_address}
-                  src={validator.media?.logotype}
-                />
-              )}
-              {validator.media?.name || validator.entity_address}
-            </>
-          </Box>
+          <ValidatorImage
+            address={validator.entity_address}
+            name={validator.media?.name}
+            logotype={validator.media?.logotype}
+          />
         ),
         key: 'name',
       },
