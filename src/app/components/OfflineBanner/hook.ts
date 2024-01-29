@@ -18,6 +18,7 @@ export type FreshnessInfo = {
   unavailable?: boolean
   outOfDate?: boolean
   lastUpdate?: string
+  latestBlock?: number
 }
 
 export const useConsensusFreshness = (network: Network) => {
@@ -35,6 +36,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   const query = useGetRuntimeStatus(scope.network, scope.layer)
   const data = query.data?.data
   const lastUpdate = useFormattedTimestampString(data?.latest_block_time)
+  const latestBlock = data?.latest_block
 
   if (query.isError) {
     return {
@@ -71,5 +73,6 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   return {
     outOfDate: timeSinceLastUpdate > outOfDateThreshold,
     lastUpdate: lastUpdate,
+    latestBlock,
   }
 }
