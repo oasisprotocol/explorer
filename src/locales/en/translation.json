@@ -157,6 +157,11 @@
       "failed": "Failed",
       "passed": "Passed",
       "rejected": "Rejected"
+    },
+    "type": {
+      "upgrade": "Upgrade",
+      "parameterUpgrade": "Parameter upgrade",
+      "cancellation": "Cancellation"
     }
   },
   "nft": {

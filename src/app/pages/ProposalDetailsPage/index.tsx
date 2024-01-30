@@ -17,6 +17,7 @@ import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIco
 import { TextSkeleton } from '../../components/Skeleton'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { COLORS } from 'styles/theme/colors'
+import { getTypeNameForProposal } from '../../../types/proposalType'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -50,6 +51,8 @@ export const ProposalDetailView: FC<{
   const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={7} />
 
+  const proposalType = getTypeNameForProposal(t, proposal)
+
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={standalone}>
       {showLayer && (
@@ -67,9 +70,8 @@ export const ProposalDetailView: FC<{
       <dt>{t('common.title')}</dt>
       <dd>{proposal.handler}</dd>
 
-      {/*Not enough data*/}
-      {/*<dt>{t('common.type')}</dt>*/}
-      {/*<dd>???</dd>*/}
+      <dt>{t('common.type')}</dt>
+      <dd>{proposalType}</dd>
 
       <dt>{t('common.submitter')}</dt>
       <dd>
