@@ -39,7 +39,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
     data: [
       {
         align: TableCellAlign.Center,
-        content: <ProposalLink network={proposal.network} proposalId={proposal.id} />,
+        content: <>{proposal.id}</>,
         key: 'id',
       },
       {
