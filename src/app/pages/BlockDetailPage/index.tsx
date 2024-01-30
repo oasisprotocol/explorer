@@ -9,7 +9,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
-import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
@@ -62,7 +62,7 @@ export const BlockDetailView: FC<{
 }> = ({ isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const formattedTime = useFormattedTimestampString(block?.timestamp)
+  const formattedTime = useFormattedTimestampStringWithDistance(block?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (!block) return <></>

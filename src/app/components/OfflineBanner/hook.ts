@@ -2,7 +2,7 @@ import { Layer, useGetRuntimeStatus, useGetStatus } from '../../../oasis-nexus/a
 import { Network } from '../../../types/network'
 import { SearchScope } from '../../../types/searchScope'
 import { AppError, AppErrors } from '../../../types/errors'
-import { useFormattedTimestampString } from '../../hooks/useFormattedTimestamp'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { paraTimesConfig } from '../../../config'
 
 export const useIsApiReachable = (
@@ -35,7 +35,7 @@ export const useRuntimeFreshness = (scope: SearchScope): FreshnessInfo => {
   }
   const query = useGetRuntimeStatus(scope.network, scope.layer)
   const data = query.data?.data
-  const lastUpdate = useFormattedTimestampString(data?.latest_block_time)
+  const lastUpdate = useFormattedTimestampStringWithDistance(data?.latest_block_time)
   const latestBlock = data?.latest_block
 
   if (query.isError) {
