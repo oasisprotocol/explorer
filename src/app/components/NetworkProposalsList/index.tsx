@@ -14,6 +14,7 @@ type NetworkProposalsListProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  verbose?: boolean
 }
 
 export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
@@ -21,11 +22,13 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
   limit,
   pagination,
   proposals,
+  verbose,
 }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
     { align: TableCellAlign.Center, key: 'id', content: t('networkProposal.id') },
     { key: 'handler', content: t('networkProposal.handler') },
+    ...(verbose ? [{ key: 'voting', content: 'Voting' }] : []),
     { align: TableCellAlign.Right, key: 'deposit', content: t('networkProposal.deposit') },
     { align: TableCellAlign.Right, key: 'create', content: t('networkProposal.create') },
     { align: TableCellAlign.Right, key: 'close', content: t('networkProposal.close') },
@@ -46,6 +49,17 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
         ),
         key: 'handler',
       },
+      ...(verbose
+        ? [
+            {
+              key: 'voting',
+              content: (
+                // TODO: add voting component when API is ready
+                <>-</>
+              ),
+            },
+          ]
+        : []),
       {
         align: TableCellAlign.Right,
         content: <RoundedBalance value={proposal.deposit} />,

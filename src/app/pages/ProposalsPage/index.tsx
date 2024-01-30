@@ -81,6 +81,7 @@ export const ProposalsPage: FC = () => {
               isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: PAGE_SIZE,
             }}
+            verbose
           />
         )}
         {tableView === TableLayout.Vertical && (
