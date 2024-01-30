@@ -25,11 +25,13 @@ export interface HighlightOptions {
   sx?: SxProps
 }
 
+const defaultHighlightStyle: SxProps = {
+  background: '#FFFF54',
+  padding: 1,
+}
+
 const defaultHighlight: HighlightOptions = {
-  sx: {
-    background: '#FFFF54',
-    padding: 1,
-  },
+  sx: defaultHighlightStyle,
 }
 
 interface HighlightedTextProps {
@@ -53,11 +55,8 @@ interface HighlightedTextProps {
  * Display a text, with potential pattern matches highlighted with html SPANs
  */
 export const HighlightedText: FC<HighlightedTextProps> = ({ text, pattern, options = defaultHighlight }) => {
-  const match = findTextMatch(text, [pattern])
-  const {
-    // className,
-    sx,
-  } = options
+  const { sx = defaultHighlightStyle, findOptions = {} } = options
+  const match = findTextMatch(text, [pattern], findOptions)
 
   return text === undefined ? undefined : match ? (
     <>
