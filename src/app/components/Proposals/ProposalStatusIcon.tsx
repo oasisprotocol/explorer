@@ -13,11 +13,9 @@ type ProposalStatus = {
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'success',
 })<ProposalStatus>(({ success }) => ({
-  // justifyContent: 'end',
   color: success ? COLORS.eucalyptus : COLORS.errorIndicatorBackground,
   textTransform: 'capitalize',
-  display: 'flex',
-  flexDirection: 'row',
+  display: 'inline-flex',
   alignItems: 'center',
   gap: 3,
   flex: 1,

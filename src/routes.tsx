@@ -14,6 +14,7 @@ import {
   blockHeightParamLoader,
   transactionParamLoader,
   assertEnabledScope,
+  proposalIdParamLoader,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
@@ -33,6 +34,7 @@ import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTT
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
+import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -71,6 +73,11 @@ export const routes: RouteObject[] = [
           {
             path: '',
             element: <ConsensusDashboardPage />,
+          },
+          {
+            path: `proposal/:proposalId`,
+            element: <ProposalDetailsPage />,
+            loader: proposalIdParamLoader,
           },
         ],
       },

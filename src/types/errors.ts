@@ -15,10 +15,12 @@ export enum AppErrors {
   InvalidAddress = 'invalid_address',
   InvalidBlockHeight = 'invalid_block_height',
   InvalidTxHash = 'invalid_tx_hash',
+  InvalidProposalId = 'invalid_proposal_id',
   InvalidPageNumber = 'invalid_page_number',
   PageDoesNotExist = 'page_does_not_exist',
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
+  NotFoundProposalId = 'not_found_proposal_id',
   InvalidUrl = 'invalid_url',
   Storage = 'storage',
 }

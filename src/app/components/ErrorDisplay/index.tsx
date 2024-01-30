@@ -16,6 +16,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     message: t('errors.validateURL'),
   }),
   [AppErrors.InvalidTxHash]: t => ({ title: t('errors.invalidTxHash'), message: t('errors.validateURL') }),
+  [AppErrors.InvalidProposalId]: t => ({
+    title: t('errors.invalidProposalId'),
+    message: t('errors.validateURL'),
+  }),
   [AppErrors.InvalidPageNumber]: t => ({
     title: t('errors.invalidPageNumber'),
     message: (
@@ -45,6 +49,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     message: t('errors.validateURL'),
   }),
   [AppErrors.NotFoundTxHash]: t => ({ title: t('errors.notFoundTx'), message: t('errors.validateURL') }),
+  [AppErrors.NotFoundProposalId]: t => ({
+    title: t('errors.notFoundProposal'),
+    message: t('errors.validateURL'),
+  }),
   [AppErrors.InvalidUrl]: t => ({ title: t('errors.invalidUrl'), message: t('errors.validateURL') }),
   [AppErrors.UnsupportedLayer]: t => ({
     title: t('errors.error'),
