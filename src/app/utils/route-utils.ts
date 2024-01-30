@@ -115,6 +115,10 @@ export abstract class RouteUtils {
     return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
   }
 
+  static getProposalRoute = (network: Network, proposalId: string | number) => {
+    return `/${encodeURIComponent(network)}/consensus/proposal/${encodeURIComponent(proposalId)}`
+  }
+
   static getEnabledScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
       RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),

@@ -5,6 +5,7 @@ import { Proposal } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
+import { ProposalLink } from '../Proposals/ProposalLink'
 
 type NetworkProposalsListProps = {
   proposals?: Proposal[]
@@ -33,13 +34,14 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
     data: [
       {
         align: TableCellAlign.Center,
-        content: <>{proposal.id}</>,
+        content: <ProposalLink network={proposal.network} proposalId={proposal.id} />,
         key: 'id',
       },
       {
         align: TableCellAlign.Left,
-        // TODO: link to Proposals page once it is ready
-        content: <>{proposal.handler}</>,
+        content: (
+          <ProposalLink network={proposal.network} proposalId={proposal.id} label={proposal.handler} />
+        ),
         key: 'handler',
       },
       {
