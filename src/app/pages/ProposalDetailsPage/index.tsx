@@ -45,14 +45,14 @@ export const ProposalDetailView: FC<{
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={7} />
-  console.log('loaded proposal', proposal)
+
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={standalone}>
       {showLayer && (
         <>
           <dt>{t('common.network')}</dt>
           <dd>
-            <DashboardLink scope={{ network: proposal.network, layer: Layer.consensus }} />
+            <DashboardLink scope={proposal} />
           </dd>
         </>
       )}
@@ -69,10 +69,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.submitter')}</dt>
       <dd>
-        <AccountLink
-          scope={{ network: proposal.network, layer: Layer.consensus }}
-          address={proposal.submitter}
-        />
+        <AccountLink scope={proposal} address={proposal.submitter} />
       </dd>
 
       {/*Not enough data*/}

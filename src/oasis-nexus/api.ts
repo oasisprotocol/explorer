@@ -87,6 +87,7 @@ declare module './generated/api' {
 
   export interface Proposal {
     network: Network
+    layer: typeof Layer.consensus
   }
 }
 
@@ -843,6 +844,7 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
           return {
             ...data,
             network,
+            layer: Layer.consensus,
             deposit: fromBaseUnits(data.deposit, consensusDecimals),
           }
         },
