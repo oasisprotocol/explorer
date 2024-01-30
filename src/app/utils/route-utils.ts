@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { isValidTxHash } from './helpers'
+import { isValidProposalId, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
@@ -115,6 +115,10 @@ export abstract class RouteUtils {
     return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
   }
 
+  static getProposalRoute = (network: Network, proposalId: string | number) => {
+    return `/${encodeURIComponent(network)}/consensus/proposal/${encodeURIComponent(proposalId)}`
+  }
+
   static getEnabledScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
       RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
@@ -160,6 +164,15 @@ const validateTxHashParam = (hash: string) => {
   return true
 }
 
+const validateProposalIdParam = (proposalId: string) => {
+  const isValid = isValidProposalId(proposalId)
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidProposalId)
+  }
+
+  return isValid
+}
+
 export const addressParamLoader =
   (queryParam: string = 'address') =>
   ({ params }: LoaderFunctionArgs): string => {
@@ -194,4 +207,8 @@ export const assertEnabledScope = ({
     throw new AppError(AppErrors.UnsupportedLayer)
   }
   return { network, layer } as SearchScope
+}
+
+export const proposalIdParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  return validateProposalIdParam(params.proposalId!)
 }

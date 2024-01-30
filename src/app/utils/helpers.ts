@@ -24,6 +24,8 @@ export const isValidEthAddress = (hexAddress: string): boolean => {
   return /^0x[0-9a-fA-F]{40}$/.test(hexAddress)
 }
 
+export const isValidProposalId = (proposalId: string): boolean => /^[0-9]+$/.test(proposalId)
+
 export async function getEvmBech32Address(evmAddress: string) {
   const ethAddrU8 = oasis.misc.fromHex(evmAddress.replace('0x', ''))
   const addr = await oasis.address.fromData(

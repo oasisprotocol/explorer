@@ -84,6 +84,11 @@ declare module './generated/api' {
   export interface Validator {
     ticker: NativeTicker
   }
+
+  export interface Proposal {
+    network: Network
+    layer: typeof Layer.consensus
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -811,9 +816,36 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
             proposals: data.proposals.map(proposal => {
               return {
                 ...proposal,
+                network,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
               }
             }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensusProposalsProposalId = (
+  network,
+  proposalId,
+  options?,
+) => {
+  return generated.useGetConsensusProposalsProposalId(network, proposalId, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.Proposal, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            network,
+            layer: Layer.consensus,
+            deposit: fromBaseUnits(data.deposit, consensusDecimals),
           }
         },
         ...arrayify(options?.request?.transformResponse),
