@@ -1,28 +1,15 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import Collapse from '@mui/material/Collapse'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
 import { getNetworkIcons } from '../../utils/content'
-import { styled } from '@mui/material/styles'
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  marginLeft: '48px',
-  color: COLORS.brandDark,
-  fontWeight: 700,
-  '&&:hover': {
-    textDecoration: 'none',
-    color: COLORS.brandDark,
-  },
-}))
 
 type NetworkMenuItemProps = Omit<NetworkMenuProps, 'options'> & {
   divider: boolean
@@ -82,53 +69,23 @@ type NetworkMenuProps = {
 }
 
 export const NetworkMenu: FC<NetworkMenuProps> = ({ activeNetwork, selectedNetwork, setSelectedNetwork }) => {
-  const { t } = useTranslation()
-  const [expandNetworkMenu, setExpandNetworkMenu] = useState(activeNetwork !== Network.mainnet)
   const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
   const options: Network[] = RouteUtils.getEnabledNetworks()
 
-  const shouldAlwaysShow = (net: Network) =>
-    net === Network.mainnet || net === activeNetwork || net === selectedNetwork
-  const shouldSometimesHide = (net: Network) => !shouldAlwaysShow(net)
-
-  const stableOptions = options.filter(shouldAlwaysShow)
-  const filteredOptions = options.filter(shouldSometimesHide)
-
   return (
-    <>
-      <MenuList>
-        {stableOptions.map((network, index) => (
-          <NetworkMenuItem
-            activeNetwork={activeNetwork}
-            divider={index !== stableOptions.length - 1}
-            key={network}
-            hoveredNetwork={hoveredNetwork}
-            selectedNetwork={selectedNetwork}
-            setHoveredNetwork={setHoveredNetwork}
-            setSelectedNetwork={setSelectedNetwork}
-            network={network}
-          />
-        ))}
-        <Collapse orientation="vertical" in={expandNetworkMenu}>
-          {filteredOptions.map((network, index) => (
-            <NetworkMenuItem
-              activeNetwork={activeNetwork}
-              divider={index !== filteredOptions.length - 1}
-              hoveredNetwork={hoveredNetwork}
-              key={network}
-              network={network}
-              selectedNetwork={selectedNetwork}
-              setHoveredNetwork={setHoveredNetwork}
-              setSelectedNetwork={setSelectedNetwork}
-            />
-          ))}
-        </Collapse>
-      </MenuList>
-      {!!filteredOptions.length && (
-        <StyledButton onClick={() => setExpandNetworkMenu(!expandNetworkMenu)} size="small" variant="text">
-          {expandNetworkMenu ? t('layerPicker.less') : t('layerPicker.more')}
-        </StyledButton>
-      )}
-    </>
+    <MenuList>
+      {options.map((network, index) => (
+        <NetworkMenuItem
+          activeNetwork={activeNetwork}
+          divider={index !== options.length - 1}
+          key={network}
+          hoveredNetwork={hoveredNetwork}
+          selectedNetwork={selectedNetwork}
+          setHoveredNetwork={setHoveredNetwork}
+          setSelectedNetwork={setSelectedNetwork}
+          network={network}
+        />
+      ))}
+    </MenuList>
   )
 }
