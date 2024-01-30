@@ -817,6 +817,7 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
               return {
                 ...proposal,
                 network,
+                layer: Layer.consensus,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
               }
             }),
@@ -852,6 +853,23 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
       ],
     },
   })
+}
+
+export const useGetConsensusProposalsByName = (network: Network, nameFragment: string | undefined) => {
+  const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
+  const { isLoading, isInitialLoading, data, status, error } = query
+  const textMatcher = nameFragment
+    ? (proposal: generated.Proposal): boolean =>
+        !!proposal.handler && proposal.handler?.includes(nameFragment)
+    : () => false
+  const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
+  return {
+    isLoading,
+    isInitialLoading,
+    status,
+    error,
+    results,
+  }
 }
 
 export const useGetConsensusValidators: typeof generated.useGetConsensusValidators = (

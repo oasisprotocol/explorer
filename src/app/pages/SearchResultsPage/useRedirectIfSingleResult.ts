@@ -18,6 +18,7 @@ export function useRedirectIfSingleResult(scope: SearchScope | undefined, result
   }
 
   let redirectTo: string | undefined
+
   if (shouldRedirect) {
     const item = results[0]
     switch (item.resultType) {
@@ -35,6 +36,9 @@ export function useRedirectIfSingleResult(scope: SearchScope | undefined, result
         break
       case 'token':
         redirectTo = RouteUtils.getTokenRoute(item, item.eth_contract_addr || item.contract_addr)
+        break
+      case 'proposal':
+        redirectTo = RouteUtils.getProposalRoute(item.network, item.id)
         break
       default:
         exhaustedTypeWarning('Unexpected result type', item)

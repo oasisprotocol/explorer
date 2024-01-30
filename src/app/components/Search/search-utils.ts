@@ -100,6 +100,11 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
+  networkProposalNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length >= textSearchMininumLength) {
+      return searchTerm.toLowerCase()
+    }
+  },
 } satisfies { [name: string]: (searchTerm: string) => string | undefined }
 
 export function isSearchValid(searchTerm: string) {
