@@ -4,7 +4,7 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Proposal } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
-import { ProposalStatusIcon } from '../../components/ProposalStatusIcon'
+import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 
 type NetworkProposalsListProps = {
   proposals?: Proposal[]
