@@ -38,6 +38,7 @@ import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
+import { DataFormatSwitch, DataFormatSwitchOption } from '../../components/DataFormatSwitch'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -92,6 +93,10 @@ export const TransactionDetailPage: FC = () => {
     AddressSwitchOption.Oasis | AddressSwitchOption.ETH
   >(AddressSwitchOption.ETH)
 
+  const [dataFormatSwitchOption, setDataFormatSwitchOption] = useState<
+    DataFormatSwitchOption.Hex | DataFormatSwitchOption.Base64
+  >(DataFormatSwitchOption.Hex)
+
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
     scope.network,
     scope.layer, // This is OK since consensus has been handled separately
@@ -116,10 +121,17 @@ export const TransactionDetailPage: FC = () => {
         featured
         title={t('transaction.header')}
         action={
-          <AddressSwitch
-            selected={addressSwitchOption}
-            onSelectionChange={addressSwitch => setAddressSwitchOption(addressSwitch)}
-          />
+          <span style={{ display: 'inline-flex' }}>
+            <DataFormatSwitch
+              selected={dataFormatSwitchOption}
+              onSelectionChange={dataFormat => setDataFormatSwitchOption(dataFormat)}
+            />
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <AddressSwitch
+              selected={addressSwitchOption}
+              onSelectionChange={addressSwitch => setAddressSwitchOption(addressSwitch)}
+            />
+          </span>
         }
       >
         <TransactionDetailView
@@ -127,6 +139,7 @@ export const TransactionDetailPage: FC = () => {
           transaction={transaction}
           tokenPriceInfo={tokenPriceInfo}
           addressSwitchOption={addressSwitchOption}
+          dataFormatSwitchOption={dataFormatSwitchOption}
         />
       </SubPageCard>
       <DappBanner scope={scope} ethAddress={transaction?.sender_0_eth} />
@@ -168,6 +181,7 @@ export const TransactionDetailView: FC<{
   standalone?: boolean
   tokenPriceInfo: TokenPriceInfo
   addressSwitchOption?: AddressSwitchOption
+  dataFormatSwitchOption?: DataFormatSwitchOption
 }> = ({
   isLoading,
   transaction,
@@ -175,6 +189,7 @@ export const TransactionDetailView: FC<{
   standalone = false,
   tokenPriceInfo,
   addressSwitchOption = AddressSwitchOption.ETH,
+  dataFormatSwitchOption = DataFormatSwitchOption.Hex,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -188,6 +203,9 @@ export const TransactionDetailView: FC<{
 
   const ticker = transaction?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, ticker)
+
+  const formatBase64Data = (base64Data: string): string =>
+    dataFormatSwitchOption === DataFormatSwitchOption.Hex ? base64ToHex(base64Data) : base64Data
 
   return (
     <>
@@ -356,7 +374,7 @@ export const TransactionDetailView: FC<{
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
-                <LongDataDisplay data={base64ToHex(transaction.body.data)} threshold={300} />
+                <LongDataDisplay data={formatBase64Data(transaction.body.data)} threshold={300} />
               </dd>
             </>
           )}
@@ -368,7 +386,7 @@ export const TransactionDetailView: FC<{
                   <dt>{t('transactions.encryption.publicKey')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {transaction.encryption_envelope.public_key}
+                      {formatBase64Data(transaction.encryption_envelope.public_key)}
                     </Typography>
                   </dd>
                 </>
@@ -379,7 +397,7 @@ export const TransactionDetailView: FC<{
                   <dt>{t('transactions.encryption.dataNonce')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {transaction.encryption_envelope.data_nonce}
+                      {formatBase64Data(transaction.encryption_envelope.data_nonce)}
                     </Typography>
                   </dd>
                 </>
@@ -389,7 +407,10 @@ export const TransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.encryptedData')}</dt>
                   <dd>
-                    <LongDataDisplay data={transaction.encryption_envelope.data} threshold={300} />
+                    <LongDataDisplay
+                      data={formatBase64Data(transaction.encryption_envelope.data)}
+                      threshold={300}
+                    />
                   </dd>
                 </>
               )}
@@ -399,7 +420,7 @@ export const TransactionDetailView: FC<{
                   <dt>{t('transactions.encryption.resultNonce')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ fontWeight: 400 }}>
-                      {transaction.encryption_envelope.result_nonce}
+                      {formatBase64Data(transaction.encryption_envelope.result_nonce)}
                     </Typography>
                   </dd>
                 </>
@@ -410,7 +431,7 @@ export const TransactionDetailView: FC<{
                   <dt>{t('transactions.encryption.encryptedResult')}</dt>
                   <dd>
                     <LongDataDisplay
-                      data={transaction.encryption_envelope.result}
+                      data={formatBase64Data(transaction.encryption_envelope.result)}
                       fontWeight={400}
                       threshold={300}
                     />
