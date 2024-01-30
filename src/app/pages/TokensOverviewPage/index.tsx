@@ -108,7 +108,6 @@ export const TokensPage: FC = () => {
                 />
               ))}
           </VerticalList>
-
         )}
       </SubPageCard>
     </PageLayout>
