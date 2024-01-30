@@ -1,36 +1,29 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { Layer, useGetRuntimeBlocks } from '../../../oasis-nexus/api'
-import { Blocks, BlocksTableType, TableRuntimeBlockList } from '../../components/Blocks'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
+import { useGetConsensusValidators } from '../../../oasis-nexus/api'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as PAGE_SIZE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { BlockDetailView } from '../BlockDetailPage'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { Validators } from '../../components/Validators'
+import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
+import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
 
-const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-
-export const BlocksPage: FC = () => {
+export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
-  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus blocks is not yet implemented.
-    // we should call useGetConsensusBlocks()
-  }
+  const { network } = scope
 
   useEffect(() => {
     if (!isMobile) {
@@ -38,41 +31,21 @@ export const BlocksPage: FC = () => {
     }
   }, [isMobile, setTableView])
 
-  const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
-    scope.network,
-    scope.layer, // This is OK, since consensus is already handled separately
+  const validatorsQuery = useGetConsensusValidators(
+    network,
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
     },
     {
       query: {
-        refetchInterval: REFETCH_INTERVAL,
-        structuralSharing: (previousState, nextState) => {
-          const oldBlockIds = new Set(previousState?.data.blocks.map(block => block.round))
-          return {
-            ...nextState,
-            data: {
-              ...nextState.data,
-              blocks: nextState.data.blocks.map(block => {
-                return {
-                  ...block,
-                  markAsNew: previousState ? !oldBlockIds.has(block.round) : false,
-                }
-              }),
-            },
-          }
-        },
-        // Keep showing data while loading more
-        keepPreviousData: tableView === TableLayout.Vertical,
+        cacheTime: 0,
       },
     },
   )
-
-  const { isLoading, isFetched, data } = blocksQuery
-  const blocks = data?.data.blocks
-
-  if (isFetched && offset && !blocks?.length) {
+  const { isLoading, isFetched, data } = validatorsQuery
+  const validatorsData = data?.data
+  if (isFetched && offset && !validatorsData?.validators?.length) {
     throw AppErrors.PageDoesNotExist
   }
 
@@ -84,22 +57,28 @@ export const BlocksPage: FC = () => {
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
-        title={t('blocks.latest')}
+        title={
+          <CardHeaderWithCounter
+            changeMobileColors
+            label={t('validator.listTitle')}
+            totalCount={validatorsData?.total_count}
+            isTotalCountClipped={validatorsData?.is_total_count_clipped}
+          />
+        }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
       >
         {tableView === TableLayout.Horizontal && (
-          <Blocks
-            isLoading={isLoading}
-            blocks={blocks}
+          <Validators
+            validators={validatorsQuery.data?.data.validators}
+            isLoading={validatorsQuery.isLoading}
             limit={PAGE_SIZE}
-            type={BlocksTableType.Desktop}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
               totalCount: data?.data.total_count,
               isTotalCountClipped: data?.data.is_total_count_clipped,
-              rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+              rowsPerPage: PAGE_SIZE,
             }}
           />
         )}
@@ -107,10 +86,12 @@ export const BlocksPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <BlockDetailView key={key} isLoading={true} block={undefined} standalone />
+                <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
               ))}
             {!isLoading &&
-              data?.data.blocks.map(block => <BlockDetailView key={block.hash} block={block} standalone />)}
+              validatorsData?.validators.map(validator => (
+                <ValidatorDetailsView key={validator.entity_address} validator={validator} standalone />
+              ))}
           </VerticalList>
         )}
       </SubPageCard>

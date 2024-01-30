@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
@@ -13,21 +12,13 @@ import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
-import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { TransactionDetailView } from '../TransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { getTickerForNetwork } from '../../../types/ticker'
+import { VerticalList } from '../../components/VerticalList'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-
-const TransactionDetails = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: `0 ${theme.spacing(2)}`,
-  backgroundColor: COLORS.brandDark,
-}))
 
 export const TransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -119,7 +110,7 @@ export const TransactionsPage: FC = () => {
         )}
 
         {tableView === TableLayout.Vertical && (
-          <TransactionDetails>
+          <VerticalList>
             {isLoading &&
               [...Array(limit).keys()].map(key => (
                 <TransactionDetailView
@@ -140,7 +131,7 @@ export const TransactionsPage: FC = () => {
                   standalone
                 />
               ))}
-          </TransactionDetails>
+          </VerticalList>
         )}
       </SubPageCard>
     </PageLayout>

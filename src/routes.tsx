@@ -32,6 +32,8 @@ import { NFTInstanceDashboardPage, useNftDetailsProps } from './app/pages/NFTIns
 import { NFTMetadataCard } from './app/pages/NFTInstanceDashboardPage/NFTMetadataCard'
 import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTTokenTransfersCard'
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
+import { ValidatorsPage } from './app/pages/ValidatorsPage'
+import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
@@ -78,6 +80,15 @@ export const routes: RouteObject[] = [
             path: `proposal/:proposalId`,
             element: <ProposalDetailsPage />,
             loader: proposalIdParamLoader,
+          },
+          {
+            path: `validators`,
+            element: <ValidatorsPage />,
+          },
+          {
+            path: `validators/:address`,
+            element: <ValidatorDetailsPage />,
+            loader: addressParamLoader(),
           },
         ],
       },

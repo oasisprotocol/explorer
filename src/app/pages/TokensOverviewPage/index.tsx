@@ -2,29 +2,20 @@ import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { TokenList } from '../../components/Tokens/TokenList'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
+import { VerticalList } from '../../components/VerticalList'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-
-const TokenDetailsBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: `0 ${theme.spacing(2)}`,
-  backgroundColor: COLORS.brandDark,
-}))
 
 export const TokensPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -95,7 +86,7 @@ export const TokensPage: FC = () => {
           />
         )}
         {tableView === TableLayout.Vertical && (
-          <TokenDetailsBox>
+          <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <TokenDetails key={key} isLoading={true} token={undefined} standalone />
@@ -103,7 +94,7 @@ export const TokensPage: FC = () => {
 
             {!isLoading &&
               tokens!.map(token => <TokenDetails key={token.contract_addr} token={token} standalone />)}
-          </TokenDetailsBox>
+          </VerticalList>
         )}
       </SubPageCard>
     </PageLayout>

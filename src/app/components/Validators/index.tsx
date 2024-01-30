@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Validator } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'
 import { RoundedBalance } from '../RoundedBalance'
-import { hasValidProtocol } from '../../utils/url'
+import { ValidatorImage } from './ValidatorImage'
+import { ValidatorCommission } from './ValidatorCommission'
+import { ValidatorCumulativeVoting } from './ValidatorCumulativeVoting'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -16,30 +16,6 @@ type ValidatorsProps = {
   limit: number
   pagination: false | TablePaginationProps
 }
-
-const StyledImage = styled('img')({
-  width: '28px',
-  height: '28px',
-  borderRadius: 5,
-  marginRight: 15,
-})
-
-const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'value',
-})<{ value: number }>(({ value, theme }) => ({
-  position: 'relative',
-  textAlign: 'center',
-  '&::before': {
-    content: '""',
-    width: `${value}%`,
-    height: `calc(100% + ${theme.spacing(5)})`,
-    borderRight: 'solid 5px #6665D860',
-    backgroundColor: '#6665D820',
-    position: 'absolute',
-    left: 0,
-    top: `-${theme.spacing(4)}`,
-  },
-}))
 
 export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators }) => {
   const { t } = useTranslation()
@@ -68,32 +44,18 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         // TODO: Enable link when validator detail page is ready
         content: (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <>
-              {validator.media?.logotype && hasValidProtocol(validator.media?.logotype) && (
-                <StyledImage
-                  alt={validator.media?.name || validator.entity_address}
-                  src={validator.media?.logotype}
-                />
-              )}
-              {validator.media?.name || validator.entity_address}
-            </>
-          </Box>
+          <ValidatorImage
+            address={validator.entity_address}
+            name={validator.media?.name}
+            logotype={validator.media?.logotype}
+          />
         ),
         key: 'name',
       },
       {
         align: TableCellAlign.Right,
         // TODO: provide cumulative voting when it is implemented in the API
-        content: (
-          <Box>
-            <StyledBox value={0}>
-              <Typography component="span" sx={{ position: 'relative', zIndex: 2 }}>
-                -
-              </Typography>
-            </StyledBox>
-          </Box>
-        ),
+        content: <ValidatorCumulativeVoting containerMarginThemeSpacing={5} value={0} />,
         key: 'cumulativeVoting',
       },
       {
@@ -121,19 +83,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        content: (
-          <>
-            {t('common.valuePair', {
-              value: validator.current_rate / 100000,
-              formatParams: {
-                value: {
-                  style: 'percent',
-                  maximumFractionDigits: 2,
-                } satisfies Intl.NumberFormatOptions,
-              },
-            })}
-          </>
-        ),
+        content: <ValidatorCommission commission={validator.current_rate} />,
         key: 'commission',
       },
       {
