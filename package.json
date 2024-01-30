@@ -98,7 +98,7 @@
     "@storybook/react": "7.6.10",
     "@storybook/react-webpack5": "7.6.10",
     "@storybook/testing-library": "0.2.2",
-    "@testing-library/jest-dom": "6.2.0",
+    "@testing-library/jest-dom": "6.4.0",
     "@testing-library/react": "14.1.2",
     "@testing-library/user-event": "14.5.2",
     "@types/jest": "^29.5.11",
@@ -125,7 +125,7 @@
     "storybook": "7.6.10",
     "storybook-addon-react-router-v6": "2.0.10",
     "stream-browserify": "3.0.0",
-    "ts-jest": "29.1.1",
+    "ts-jest": "29.1.2",
     "typescript": "5.3.3"
   },
   "msw": {
