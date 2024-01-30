@@ -6,36 +6,52 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { ProposalState } from '../../../oasis-nexus/api'
 
-type ProposalStatus = {
-  success: boolean
-}
-
-const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'success',
-})<ProposalStatus>(({ success }) => ({
-  color: success ? COLORS.eucalyptus : COLORS.errorIndicatorBackground,
+const StyledBox = styled(Box)(({ theme }) => ({
   textTransform: 'capitalize',
   display: 'inline-flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   gap: 3,
   flex: 1,
+  borderRadius: 10,
+  padding: theme.spacing(2, 2, 2, '10px'),
+  fontSize: '12px',
+  minWidth: '85px',
 }))
 
-const StyledIcon = styled(Box, {
-  shouldForwardProp: prop => prop !== 'success',
-})<ProposalStatus>(({ success }) => ({
+const StyledIcon = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '28px',
-  height: '28px',
-  fontSize: '15px',
-  backgroundColor: success ? COLORS.honeydew : COLORS.linen,
-  borderRadius: 10,
-  padding: 4,
-  paddingLeft: 12,
-  paddingRight: 12,
-}))
+  fontSize: '18px',
+})
+
+const statuses = {
+  [ProposalState.active]: {
+    textColor: COLORS.grayExtraDark,
+    backgroundColor: COLORS.honeydew,
+    iconColor: COLORS.eucalyptus,
+    icon: CheckCircleIcon,
+  },
+  [ProposalState.passed]: {
+    textColor: COLORS.white,
+    backgroundColor: COLORS.eucalyptus,
+    iconColor: COLORS.honeydew,
+    icon: CheckCircleIcon,
+  },
+  [ProposalState.rejected]: {
+    textColor: COLORS.white,
+    backgroundColor: COLORS.errorIndicatorBackground,
+    iconColor: COLORS.linen,
+    icon: CancelIcon,
+  },
+  [ProposalState.failed]: {
+    textColor: COLORS.grayExtraDark,
+    backgroundColor: COLORS.linen,
+    iconColor: COLORS.errorIndicatorBackground,
+    icon: CancelIcon,
+  },
+}
 
 type ProposalStatusIconProps = {
   status: ProposalState
@@ -45,18 +61,16 @@ export const ProposalStatusIcon: FC<ProposalStatusIconProps> = ({ status }) => {
   if (!ProposalState[status]) {
     return null
   }
-  // TODO: we don't have designs for all types of statuses
-  const success = status === ProposalState.active || status === ProposalState.passed
+
+  const statusConfig = statuses[status]
+  const IconComponent = statusConfig.icon
+
   return (
-    <StyledBox success={success}>
-      <StyledIcon success={success}>
-        {success ? (
-          <CheckCircleIcon color="success" fontSize="inherit" />
-        ) : (
-          <CancelIcon color="error" fontSize="inherit" />
-        )}
-      </StyledIcon>
+    <StyledBox sx={{ backgroundColor: statusConfig.backgroundColor, color: statusConfig.textColor }}>
       {status}
+      <StyledIcon sx={{ color: statusConfig.iconColor }}>
+        <IconComponent color="inherit" fontSize="inherit" />
+      </StyledIcon>
     </StyledBox>
   )
 }
