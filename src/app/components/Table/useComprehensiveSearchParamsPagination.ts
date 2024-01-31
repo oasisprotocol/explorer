@@ -64,10 +64,8 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
   }
 
   return {
-    selectedPage,
-    offsetForQuery: offset,
-    limitForQuery: limit,
-    paramsForQuery,
+    selectedPageForClient: selectedPage,
+    paramsForServer: paramsForQuery,
     getResults: (queryResult, key) => {
       const data = queryResult
         ? key

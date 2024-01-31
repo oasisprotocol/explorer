@@ -66,6 +66,7 @@
     "hash": "Hash",
     "height": "Height",
     "hide": "Hide",
+    "invalidVotes": "Invalid votes",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "missing": "n/a",
@@ -111,6 +112,9 @@
     "valueInTokenWithLink": "{{value, number}} <TickerLink />",
     "view": "View",
     "viewAll": "View all",
+    "vote": "Vote",
+    "voter": "Voter",
+    "votes": "Votes",
     "paraTimeOnline": "ParaTime Online",
     "paraTimeOutOfDate": "ParaTime Out of date",
     "mainnet": "Mainnet",
@@ -149,6 +153,7 @@
     "create": "Created",
     "createTooltip": "Voting created on epoch shown.",
     "deposit": "Deposit",
+    "failedToLoadAllVotes": "Failed to load all the votes, number might be incomplete!",
     "handler": "Title",
     "id": "ID",
     "listTitle": "Network Change Proposals",
@@ -157,7 +162,14 @@
       "failed": "Failed",
       "passed": "Passed",
       "rejected": "Rejected"
-    }
+    },
+    "vote": {
+      "yes": "Yes",
+      "no": "No",
+      "abstain": "Abstained",
+      "all": "All votes"
+    },
+    "searchForVoters": "Search for voters"
   },
   "nft": {
     "accountCollection": "ERC-721 Tokens",

@@ -5,9 +5,27 @@ import { List } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from './TablePagination'
 
 type ClientSizePaginationParams<Item> = {
+  /**
+   * How should we call the query parameter (in the URL)?
+   */
   paramName: string
+
+  /**
+   * The pagination page size from the POV of the data consumer component
+   */
   clientPageSize: number
+
+  /**
+   * The pagination page size used for actually loading the data from the server.
+   *
+   * Please note that currently this engine doesn't handle when the data consumer requires data which is not
+   * part of the initial window on the server side.
+   */
   serverPageSize: number
+
+  /**
+   * Filtering to be applied after loading the data from the server, before presenting it to the data consumer component
+   */
   filter?: (item: Item) => boolean
 }
 
@@ -27,13 +45,15 @@ function findListIn<T extends List, Item>(data: T): Item[] {
   }
 }
 
+/**
+ * The ClientSidePagination engine loads the data from the server with a big window in one go, for in-memory pagination
+ */
 export function useClientSidePagination<Item, QueryResult extends List>({
   paramName,
   clientPageSize,
   serverPageSize,
   filter,
 }: ClientSizePaginationParams<Item>): ComprehensivePaginationEngine<Item, QueryResult> {
-  const selectedServerPage = 1
   const [searchParams] = useSearchParams()
   const selectedClientPageString = searchParams.get(paramName)
   const selectedClientPage = parseInt(selectedClientPageString ?? '1', 10)
@@ -57,30 +77,35 @@ export function useClientSidePagination<Item, QueryResult extends List>({
     return { search: newSearchParams.toString() }
   }
 
-  const limit = serverPageSize
-  const offset = (selectedServerPage - 1) * clientPageSize
+  // From the server, we always want to load the first batch of data, with the provided (big) window.
+  // In theory, we could move this window as required, but currently this is not implemented.
+  const selectedServerPage = 1
+
+  // The query parameters that should be used for loading the data from the server
   const paramsForQuery = {
-    offset,
-    limit,
+    offset: (selectedServerPage - 1) * serverPageSize,
+    limit: serverPageSize,
   }
 
   return {
-    selectedPage: selectedClientPage,
-    offsetForQuery: offset,
-    limitForQuery: limit,
-    paramsForQuery,
+    selectedPageForClient: selectedClientPage,
+    paramsForServer: paramsForQuery,
     getResults: (queryResult, key) => {
-      const data = queryResult
-        ? key
-          ? (queryResult[key] as Item[])
-          : findListIn<QueryResult, Item>(queryResult)
+      const data = queryResult // we want to get list of items out from the incoming results
+        ? key // do we know where (in which field) to look?
+          ? (queryResult[key] as Item[]) // If yes, just get out the data
+          : findListIn<QueryResult, Item>(queryResult) // If no, we will try to guess
         : undefined
+
+      // Apply the specified client-side filtering
       const filteredData = !!data && !!filter ? data.filter(filter) : data
 
+      // The data window from the POV of the data consumer component
       const offset = (selectedClientPage - 1) * clientPageSize
       const limit = clientPageSize
       const dataWindow = filteredData ? filteredData.slice(offset, offset + limit) : undefined
 
+      // The control interface for the data consumer component (i.e. Table)
       const tableProps: TablePaginationProps = {
         selectedPage: selectedClientPage,
         linkToPage,
@@ -98,6 +123,5 @@ export function useClientSidePagination<Item, QueryResult extends List>({
         data: dataWindow,
       }
     },
-    // tableProps,
   }
 }
