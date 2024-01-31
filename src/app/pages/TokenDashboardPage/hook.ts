@@ -72,7 +72,7 @@ export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRu
     network,
     layer, // This is OK since consensus has been handled separately
     {
-      ...pagination.paramsForQuery,
+      ...pagination.paramsForServer,
       type: RuntimeEventType.evmlog,
       // The following is the hex-encoded signature for Transfer(address,address,uint256)
       evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
@@ -89,7 +89,7 @@ export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRu
 
   const results = pagination.getResults(data?.data)
 
-  if (isFetched && pagination.selectedPage > 1 && !results.data?.length) {
+  if (isFetched && pagination.selectedPageForClient > 1 && !results.data?.length) {
     throw AppErrors.PageDoesNotExist
   }
 

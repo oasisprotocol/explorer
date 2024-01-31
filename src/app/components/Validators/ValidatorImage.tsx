@@ -4,6 +4,8 @@ import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported'
 import { hasValidProtocol } from '../../utils/url'
 import { COLORS } from 'styles/theme/colors'
 import { Circle } from '../Circle'
+import { HighlightedText } from '../HighlightedText'
+import Box from "@mui/material/Box";
 
 const StyledImage = styled('img')({
   width: '28px',
@@ -15,9 +17,10 @@ type ValidatorImageProps = {
   address: string
   name: string | undefined
   logotype: string | undefined
+  highlightedPart?: string | undefined
 }
 
-export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotype }) => {
+export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotype, highlightedPart }) => {
   return (
     <>
       {logotype && hasValidProtocol(logotype) ? (
@@ -27,6 +30,13 @@ export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotyp
           <ImageNotSupportedIcon sx={{ color: COLORS.grayMedium, fontSize: 18 }} />
         </Circle>
       )}
+      {name ? (
+        <Box sx={{ display: 'inline' }}>
+          <HighlightedText text={name} pattern={highlightedPart} />
+        </Box>
+      ) : (
+        address
+      )}{' '}
     </>
   )
 }
