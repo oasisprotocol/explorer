@@ -151,7 +151,13 @@
     "deposit": "Deposit",
     "handler": "Title",
     "id": "ID",
-    "listTitle": "Network Change Proposals"
+    "listTitle": "Network Change Proposals",
+    "state": {
+      "active": "Active",
+      "failed": "Failed",
+      "passed": "Passed",
+      "rejected": "Rejected"
+    }
   },
   "nft": {
     "accountCollection": "ERC-721 Tokens",

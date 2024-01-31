@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { TFunction } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -7,7 +9,6 @@ import { COLORS } from '../../../styles/theme/colors'
 import { ProposalState } from '../../../oasis-nexus/api'
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  textTransform: 'capitalize',
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -26,48 +27,54 @@ const StyledIcon = styled(Box)({
   fontSize: '18px',
 })
 
-const statuses = {
+const getStatuses = (t: TFunction) => ({
   [ProposalState.active]: {
-    textColor: COLORS.grayExtraDark,
     backgroundColor: COLORS.honeydew,
-    iconColor: COLORS.eucalyptus,
     icon: CheckCircleIcon,
+    iconColor: COLORS.eucalyptus,
+    label: t('networkProposal.state.active'),
+    textColor: COLORS.grayExtraDark,
   },
   [ProposalState.passed]: {
-    textColor: COLORS.white,
     backgroundColor: COLORS.eucalyptus,
-    iconColor: COLORS.honeydew,
     icon: CheckCircleIcon,
+    iconColor: COLORS.honeydew,
+    label: t('networkProposal.state.passed'),
+    textColor: COLORS.white,
   },
   [ProposalState.rejected]: {
-    textColor: COLORS.white,
     backgroundColor: COLORS.errorIndicatorBackground,
-    iconColor: COLORS.linen,
     icon: CancelIcon,
+    iconColor: COLORS.linen,
+    label: t('networkProposal.state.rejected'),
+    textColor: COLORS.white,
   },
   [ProposalState.failed]: {
-    textColor: COLORS.grayExtraDark,
     backgroundColor: COLORS.linen,
-    iconColor: COLORS.errorIndicatorBackground,
     icon: CancelIcon,
+    iconColor: COLORS.errorIndicatorBackground,
+    label: t('networkProposal.state.failed'),
+    textColor: COLORS.grayExtraDark,
   },
-}
+})
 
 type ProposalStatusIconProps = {
   status: ProposalState
 }
 
 export const ProposalStatusIcon: FC<ProposalStatusIconProps> = ({ status }) => {
+  const { t } = useTranslation()
+
   if (!ProposalState[status]) {
     return null
   }
 
-  const statusConfig = statuses[status]
+  const statusConfig = getStatuses(t)[status]
   const IconComponent = statusConfig.icon
 
   return (
     <StyledBox sx={{ backgroundColor: statusConfig.backgroundColor, color: statusConfig.textColor }}>
-      {status}
+      {statusConfig.label}
       <StyledIcon sx={{ color: statusConfig.iconColor }}>
         <IconComponent color="inherit" fontSize="inherit" />
       </StyledIcon>
