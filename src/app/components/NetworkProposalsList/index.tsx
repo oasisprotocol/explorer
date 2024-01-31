@@ -1,5 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Proposal } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -12,6 +14,7 @@ type NetworkProposalsListProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  verbose?: boolean
 }
 
 export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
@@ -19,11 +22,13 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
   limit,
   pagination,
   proposals,
+  verbose,
 }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
     { align: TableCellAlign.Center, key: 'id', content: t('networkProposal.id') },
     { key: 'handler', content: t('networkProposal.handler') },
+    ...(verbose ? [{ key: 'voting', content: 'Voting' }] : []),
     { align: TableCellAlign.Right, key: 'deposit', content: t('networkProposal.deposit') },
     { align: TableCellAlign.Right, key: 'create', content: t('networkProposal.create') },
     { align: TableCellAlign.Right, key: 'close', content: t('networkProposal.close') },
@@ -34,7 +39,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
     data: [
       {
         align: TableCellAlign.Center,
-        content: <ProposalLink network={proposal.network} proposalId={proposal.id} />,
+        content: <>{proposal.id}</>,
         key: 'id',
       },
       {
@@ -44,6 +49,17 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
         ),
         key: 'handler',
       },
+      ...(verbose
+        ? [
+            {
+              key: 'voting',
+              content: (
+                // TODO: add voting component when API is ready
+                <>-</>
+              ),
+            },
+          ]
+        : []),
       {
         align: TableCellAlign.Right,
         content: <RoundedBalance value={proposal.deposit} />,
@@ -51,12 +67,20 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <>{proposal.created_at}</>,
+        content: (
+          <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
+            <Box>{proposal.created_at}</Box>
+          </Tooltip>
+        ),
         key: 'create',
       },
       {
         align: TableCellAlign.Right,
-        content: <>{proposal.closes_at}</>,
+        content: (
+          <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
+            <Box>{proposal.closes_at}</Box>
+          </Tooltip>
+        ),
         key: 'close',
       },
       {

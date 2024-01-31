@@ -119,6 +119,10 @@ export abstract class RouteUtils {
     return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
   }
 
+  static getProposalsRoute = (network: Network) => {
+    return `/${encodeURIComponent(network)}/consensus/proposal`
+  }
+
   static getProposalRoute = (network: Network, proposalId: string | number) => {
     return `/${encodeURIComponent(network)}/consensus/proposal/${encodeURIComponent(proposalId)}`
   }

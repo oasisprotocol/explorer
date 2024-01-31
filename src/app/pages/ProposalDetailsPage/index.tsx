@@ -1,5 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Layer, Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
@@ -13,6 +16,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 import { TextSkeleton } from '../../components/Skeleton'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { COLORS } from 'styles/theme/colors'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -78,7 +82,9 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.status')}</dt>
       <dd>
-        <ProposalStatusIcon status={proposal.state} />
+        <Box>
+          <ProposalStatusIcon status={proposal.state} />
+        </Box>
       </dd>
 
       <dt>{t('networkProposal.deposit')}</dt>
@@ -87,10 +93,24 @@ export const ProposalDetailView: FC<{
       </dd>
 
       <dt>{t('networkProposal.create')}</dt>
-      <dd>{proposal.created_at}</dd>
+      <dd>
+        <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
+          <Box sx={{ display: 'flex' }} gap={2}>
+            {proposal.created_at}
+            <InfoIcon htmlColor={COLORS.brandDark} />
+          </Box>
+        </Tooltip>
+      </dd>
 
       <dt>{t('networkProposal.close')}</dt>
-      <dd>{proposal.closes_at}</dd>
+      <dd>
+        <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
+          <Box sx={{ display: 'flex' }} gap={2}>
+            {proposal.closes_at}
+            <InfoIcon htmlColor={COLORS.brandDark} />
+          </Box>
+        </Tooltip>
+      </dd>
     </StyledDescriptionList>
   )
 }

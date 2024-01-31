@@ -10,6 +10,7 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
 import { NetworkProposalsList } from '../../components/NetworkProposalsList'
+import { RouteUtils } from 'app/utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -27,8 +28,7 @@ export const NetworkProposalsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
         action={
           <Link
             component={RouterLink}
-            // TODO: Update when Proposals page is ready
-            to={''}
+            to={RouteUtils.getProposalsRoute(network)}
             sx={{ color: COLORS.brandDark }}
           >
             {t('common.viewAll')}
