@@ -14,6 +14,7 @@ import {
 } from '../../../types/vote'
 import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { useBooleanFlagInUrl } from '../../hooks/useBooleanFlagInUrl'
 import { useStringInUrl } from '../../hooks/useStringInUrl'
 
 export type AllVotesData = List & {
@@ -43,7 +44,7 @@ const useValidatorMap = (network: Network) => {
   }
 }
 
-export const useAllVotes = (network: Network, proposalId: number): AllVotesData => {
+const useAllVotes = (network: Network, proposalId: number): AllVotesData => {
   const query = useGetConsensusProposalsProposalIdVotes(network, proposalId)
   const {
     map: validators,
@@ -157,21 +158,31 @@ const useWantedVoteFilter = (): VoteFilter => {
   }
 }
 
+export const useOrder = () => {
+  const { value, setValue, toggleValue } = useBooleanFlagInUrl('inverse', true)
+  return { isReverse: value, setReverse: setValue, toggleReverse: toggleValue }
+}
+
 export const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const useDisplayedVotes = (network: Network, proposalId: number) => {
   const filter = useWantedVoteFilter()
 
+  const { isReverse } = useOrder()
+
   const pagination = useClientSidePagination<ExtendedVote, AllVotesData>({
     paramName: 'page',
     clientPageSize: PAGE_SIZE,
     serverPageSize: 1000,
-    filter,
+    transform: votes => {
+      const wantedVotes = votes.filter(filter)
+      return isReverse ? wantedVotes.reverse() : wantedVotes
+    },
   })
 
   // Get all the votes
   const allVotes = useAllVotes(network, proposalId)
 
   // Get the section of the votes that we should display in the table
-  return pagination.getResults(allVotes)
+  return pagination.getResults(allVotes.isLoading, allVotes)
 }

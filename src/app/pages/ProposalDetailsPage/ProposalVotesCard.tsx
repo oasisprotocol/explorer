@@ -4,12 +4,13 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { useTranslation } from 'react-i18next'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
 import {
   PAGE_SIZE,
-  useAllVotes,
   useDisplayedVotes,
+  useOrder,
   useVoterSearch,
   useVoterSearchPattern,
   useWantedVoteType,
@@ -34,9 +35,12 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagina
   const scope = useRequiredScopeParam()
 
   const voterNameFragment = useVoterSearchPattern()
+  const { toggleReverse: toggleReverseOrder } = useOrder()
+
+  const OrderTrigger: FC = () => <SwapVertIcon onClick={toggleReverseOrder} />
 
   const tableColumns: TableColProps[] = [
-    { key: 'index', content: <></>, width: '50px' },
+    { key: 'index', content: <OrderTrigger />, width: '50px' },
     { key: 'voter', content: t('common.voter'), align: TableCellAlign.Left },
     { key: 'vote', content: t('common.vote'), align: TableCellAlign.Right },
   ]
@@ -84,16 +88,19 @@ export const ProposalVotesView: FC = () => {
   const { network } = useRequiredScopeParam()
   const proposalId = parseInt(useParams().proposalId!, 10)
 
-  const { isLoading } = useAllVotes(network, proposalId)
   const displayedVotes = useDisplayedVotes(network, proposalId)
 
-  if (!isLoading && displayedVotes.tablePaginationProps.selectedPage > 1 && !displayedVotes.data?.length) {
+  if (
+    !displayedVotes.isLoading &&
+    displayedVotes.tablePaginationProps.selectedPage > 1 &&
+    !displayedVotes.data?.length
+  ) {
     throw AppErrors.PageDoesNotExist
   }
 
   return (
     <ProposalVotes
-      isLoading={isLoading}
+      isLoading={displayedVotes.isLoading}
       votes={displayedVotes.data}
       limit={PAGE_SIZE}
       pagination={displayedVotes.tablePaginationProps}
