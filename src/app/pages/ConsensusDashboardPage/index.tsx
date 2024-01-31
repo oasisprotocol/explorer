@@ -12,7 +12,7 @@ import { NetworkProposalsCard } from './NetworkProposalsCard'
 import { ValidatorsCard } from './Validators'
 import { ConsensusSnapshot } from './ConsensusSnapshot'
 import { LatestConsensusBlocks } from './LatestConsensusBlocks'
-import { AccountsCard } from './Accounts'
+import { AccountsCard } from './AccountsCard'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()

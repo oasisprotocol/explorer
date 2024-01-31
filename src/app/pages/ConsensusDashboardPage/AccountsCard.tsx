@@ -9,6 +9,7 @@ import { useGetConsensusAccounts } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
+import { AccountList } from 'app/components/AccountList'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -35,7 +36,14 @@ export const AccountsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
           </Link>
         }
       />
-      <CardContent />
+      <CardContent>
+        <AccountList
+          accounts={accountsQuery.data?.data.accounts}
+          isLoading={accountsQuery.isLoading}
+          limit={limit}
+          pagination={false}
+        />
+      </CardContent>
     </Card>
   )
 }
