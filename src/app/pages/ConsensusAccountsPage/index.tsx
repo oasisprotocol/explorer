@@ -79,6 +79,7 @@ export const ConsensusAccountsPage: FC = () => {
               isTotalCountClipped: accountsData?.is_total_count_clipped,
               rowsPerPage: PAGE_SIZE,
             }}
+            verbose
           />
         )}
         {tableView === TableLayout.Vertical && (
