@@ -72,7 +72,8 @@ export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRu
     network,
     layer, // This is OK since consensus has been handled separately
     {
-      ...pagination.paramsForQuery,
+      offset: pagination.offsetForQuery,
+      limit: pagination.limitForQuery,
       type: RuntimeEventType.evmlog,
       // The following is the hex-encoded signature for Transfer(address,address,uint256)
       evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',

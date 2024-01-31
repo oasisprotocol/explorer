@@ -61,7 +61,7 @@ const DesktopValidatorLink: FC<DesktopValidatorLinkProps> = ({ address, name, to
   }
   return (
     <Link component={RouterLink} to={to}>
-      {name || address}
+      {name ?? address}
     </Link>
   )
 }
