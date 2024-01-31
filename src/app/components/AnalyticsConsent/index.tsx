@@ -10,7 +10,11 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { useScreenSize } from 'app/hooks/useScreensize'
-import './initializeMatomo'
+import { storage } from 'app/utils/storage'
+import { StorageKeys } from 'types/storage'
+import { addMatomo } from './initializeMatomo'
+
+const localStore = storage()
 
 const AcceptCookiesButton = styled(Button)(({ theme }) => ({
   paddingLeft: theme.spacing(5),
@@ -24,11 +28,24 @@ const DeclineCookiesButton = styled(Button)(({ theme }) => ({
 
 export const AnalyticsConsent = () => {
   const { t } = useTranslation()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(localStore.get(StorageKeys.AnalyticsConsentOpen) ?? true)
+  const [optedIn, setOptedIn] = useState(localStore.get(StorageKeys.AnalyticsOptedIn) ?? false)
   const { isMobile } = useScreenSize()
 
   const location = useLocation()
   const [previousURL, setPreviousURL] = useState(document.referrer)
+  useEffect(() => {
+    if (optedIn) {
+      addMatomo()
+      // Warning: There's no cleanup for this.
+      // Matomo docs give no advice for SPAs.
+      // https://developer.matomo.org/guides/tracking-consent#b-if-you-use-your-own-consent-tool-to-remember-the-consent
+      // We currently don't have any in-app UI to revisit the consent.
+      // If we add one, we have to reload the page to be without the analytics
+      // library.
+    }
+    // Warning: When not opted in, window._paq array will grow indefinitely.
+  }, [optedIn])
   useEffect(() => {
     const newURL = location.pathname + location.search + location.hash
     // Adjusted snippet from https://developer.matomo.org/guides/spa-tracking#measuring-single-page-apps-complete-example
@@ -41,9 +58,11 @@ export const AnalyticsConsent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger when URL changes
   }, [location.key])
 
-  const handleClose = () => {
-    // TODO https://developer.matomo.org/guides/tracking-javascript-guide#optional-creating-a-custom-opt-out-form
+  const handleClose = (accepted: boolean) => {
+    localStore.set(StorageKeys.AnalyticsConsentOpen, false)
+    localStore.set(StorageKeys.AnalyticsOptedIn, accepted)
     setOpen(false)
+    setOptedIn(accepted)
   }
 
   return (
@@ -83,10 +102,10 @@ export const AnalyticsConsent = () => {
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'center', paddingBottom: isMobile ? '16px' : '32px' }}>
-          <AcceptCookiesButton onClick={handleClose} color="primary" variant="contained">
+          <AcceptCookiesButton onClick={() => handleClose(true)} color="primary" variant="contained">
             {t('analyticsConsent.acceptButtonLabel')}
           </AcceptCookiesButton>
-          <DeclineCookiesButton onClick={handleClose} color="secondary" variant="outlined">
+          <DeclineCookiesButton onClick={() => handleClose(false)} color="secondary" variant="outlined">
             {t('analyticsConsent.declineButtonLabel')}
           </DeclineCookiesButton>
         </CardActions>

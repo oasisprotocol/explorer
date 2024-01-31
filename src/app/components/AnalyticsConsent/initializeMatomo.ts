@@ -35,10 +35,16 @@ window._paq.push([
   },
 ])
 
-const d = document,
-  g = d.createElement('script'),
-  s = d.getElementsByTagName('script')[0]
-g.async = true
-// TODO:? g.integrity="sha384-...";
-g.src = `${matomoDomain}matomo.js`
-s.parentNode?.insertBefore(g, s)
+let addedMatomo = false
+
+export function addMatomo() {
+  if (addedMatomo) return
+  addedMatomo = true
+  const d = document,
+    g = d.createElement('script'),
+    s = d.getElementsByTagName('script')[0]
+  g.async = true
+  // TODO:? g.integrity="sha384-...";
+  g.src = `${matomoDomain}matomo.js`
+  s.parentNode?.insertBefore(g, s)
+}
