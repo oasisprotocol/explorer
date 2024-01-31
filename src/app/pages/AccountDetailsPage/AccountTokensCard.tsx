@@ -94,15 +94,19 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
         content: item.token_symbol || t('common.missing'),
         key: 'ticker',
       },
-      {
-        align: TableCellAlign.Right,
-        key: 'link',
-        content: (
-          <Link component={RouterLink} to={item.token_contract_addr_eth} preventScrollReset={true}>
-            {t('common.viewAll')}
-          </Link>
-        ),
-      },
+      ...(isERC721
+        ? [
+            {
+              align: TableCellAlign.Right,
+              key: 'link',
+              content: (
+                <Link component={RouterLink} to={item.token_contract_addr_eth} preventScrollReset={true}>
+                  {t('common.viewAll')}
+                </Link>
+              ),
+            },
+          ]
+        : []),
     ],
     highlight: item.token_contract_addr_eth === locationHash || item.token_contract_addr === locationHash,
   }))
