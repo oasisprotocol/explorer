@@ -14,7 +14,7 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import { fromBaseUnits, getEthAddressForAccount } from '../app/utils/helpers'
+import { fromBaseUnits, getEthAddressForAccount, getAccountSize } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { getTickerForNetwork, NativeTicker } from '../types/ticker'
@@ -55,6 +55,8 @@ declare module './generated/api' {
     network: Network
     layer: Layer
     ticker: NativeTicker
+    size: string
+    total: string
   }
 
   export interface RuntimeAccount {
@@ -892,6 +894,45 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
               return {
                 ...validator,
                 escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+                ticker,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts = (
+  network,
+  params?,
+  options?,
+) => {
+  const ticker = getTickerForNetwork(network)
+  return generated.useGetConsensusAccounts(network, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.AccountList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            accounts: data.accounts.map(account => {
+              // TODO: remove when API returns total value, looking at query filters we store that data in Nexus
+              // or sum proper fields when they are available. Currently API does not return correct fields in accounts list endpoint
+              // https://github.com/oasisprotocol/explorer/pull/1160#discussion_r1459577303
+              const total = BigInt(account.available)
+              return {
+                ...account,
+                available: fromBaseUnits(account.available, consensusDecimals),
+                total: fromBaseUnits(total.toString(), consensusDecimals),
+                layer: Layer.consensus,
+                network,
+                size: getAccountSize(total),
                 ticker,
               }
             }),
