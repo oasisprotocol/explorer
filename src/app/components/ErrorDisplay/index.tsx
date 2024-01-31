@@ -66,6 +66,7 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     title: t('errors.error'),
     message: t('errors.storage'),
   }),
+  [AppErrors.InvalidVote]: t => ({ title: t('errors.invalidVote'), message: null }),
 }
 
 export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
