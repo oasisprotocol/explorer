@@ -66,7 +66,7 @@ export const Blocks: FC<BlocksProps> = ({
   ]
 
   const tableRows = blocks?.map(block => {
-    const blockGasLimit = paraTimesConfig[block.layer]?.mainnet.blockGasLimit
+    const blockGasLimit = paraTimesConfig[block.layer]?.[block.network]?.blockGasLimit
     if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
     return {
       key: block.hash,
