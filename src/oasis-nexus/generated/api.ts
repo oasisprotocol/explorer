@@ -819,6 +819,14 @@ which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hy
 Absent for non-Ethereum-format transactions.
  */
   eth_hash?: string;
+  /** The name of the smart contract function called by the transaction.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_name?: string;
+  /** The decoded parameters with which the smart contract function was called.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_params?: EvmAbiParam[];
   /** The fee that this transaction's sender committed to pay to execute
 it (total, native denomination, ParaTime base units, as a string).
  */
@@ -986,15 +994,15 @@ Affects display only. Often equals 18, to match ETH.
 }
 
 /**
- * A decoded parameter of an event emitted from an EVM runtime.
+ * A decoded parameter of an event or error emitted from an EVM runtime.
 Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
 Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
 Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
 Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
 
  */
-export interface EvmEventParam {
-  /** The solidity type of the event parameter. */
+export interface EvmAbiParam {
+  /** The solidity type of the parameter. */
   evm_type: string;
   /** The parameter name. */
   name: string;
@@ -1044,16 +1052,15 @@ OR `evm > Event`.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
-  /** If the event type is `evm.log`, this field describes the human-readable type of evm event, e.g.
-`Transfer`. We currently only support two types of evm events, ERC20 `Transfer` and `Approve`.
+  /** If the event type is `evm.log`, this field describes the human-readable type of
+evm event, e.g. `Transfer`.
 Absent if the event type is not `evm.log`.
  */
   evm_log_name?: string | null;
-  /** The decoded `evm.log` event data. We currently support only two types of evm events, ERC20 `Transfer`
-and `Approve`.
+  /** The decoded `evm.log` event data.
 Absent if the event type is not `evm.log`.
  */
-  evm_log_params?: EvmEventParam[];
+  evm_log_params?: EvmAbiParam[];
   evm_token?: EvmEventToken;
   /** The block height at which this event was generated. */
   round: number;
@@ -1555,10 +1562,28 @@ export const ConsensusEventType = {
 export interface TxError {
   /** The status code of a failed transaction. */
   code: number;
-  /** The message of a failed transaction. */
+  /** The message of a failed transaction.
+This field, like `code` and `module`, can represent an error that originated
+anywhere in the paratime, i.e. either inside or outside a smart contract.
+
+A common special case worth calling out: When the paratime is
+EVM-compatible (e.g. Emerald or Sapphire) and the error originates
+inside a smart contract (using `revert` in solidity), the following
+will be true:
+- `module` will be "evm" and `code` will be 8; see [here](https://github.com/oasisprotocol/oasis-sdk/blob/runtime-sdk/v0.8.3/runtime-sdk/modules/evm/src/lib.rs#L128) for other possible errors in the `evm` module.
+- `message` will contain the best-effort human-readable revert reason.
+ */
   message?: string;
   /** The module of a failed transaction. */
   module?: string;
+  /** The error parameters, as decoded using the contract abi. Present only when
+- the error originated from within a smart contract (e.g. via `revert` in Solidity), and
+- the contract is verified or the revert reason is a plain String.
+If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
+Note that users should be cautious when evaluating error data since the
+data origin is not tracked and error information can be faked.
+ */
+  revert_params?: EvmAbiParam[];
 }
 
 /**
