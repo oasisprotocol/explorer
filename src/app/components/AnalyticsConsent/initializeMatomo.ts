@@ -44,7 +44,10 @@ export function addMatomo() {
     g = d.createElement('script'),
     s = d.getElementsByTagName('script')[0]
   g.async = true
-  // TODO:? g.integrity="sha384-...";
+  // TODO: Enable CORS on matomo.js to make SRI work.
+  // Warning: https://github.com/matomo-org/matomo/commits/5.x-dev/js/piwik.min.js
+  // changed 5 times between 2023 Feb and 2024 Jan.
+  g.integrity = 'sha384-yGkhmoBpWPCg9IZSGIz64itCivgzaXu+CXflD1GthTMPW3YUjF4FoJ8YUBGDTOF7'
   g.src = `${matomoDomain}matomo.js`
   s.parentNode?.insertBefore(g, s)
 }
