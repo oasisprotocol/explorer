@@ -42,7 +42,7 @@ export const BlockDetailPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.block')}>
-        <BlockDetailView isLoading={isLoading} block={block} />
+        <BlockDetailView enableBlockNavigation isLoading={isLoading} block={block} />
       </SubPageCard>
       {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
       <EventsCard scope={scope} blockHeight={blockHeight} />
@@ -59,7 +59,8 @@ export const BlockDetailView: FC<{
   block: BlockDetailRuntimeBlock | undefined
   showLayer?: boolean
   standalone?: boolean
-}> = ({ isLoading, block, showLayer, standalone = false }) => {
+  enableBlockNavigation?: boolean
+}> = ({ enableBlockNavigation, isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(block?.timestamp)
@@ -89,8 +90,12 @@ export const BlockDetailView: FC<{
       <dd>
         <BlockLink scope={block} height={block.round} />
         <CopyToClipboard value={block.round.toString()} />
-        <PrevBlockButton scope={block} currentRound={block.round} />
-        <NextBlockButton scope={block} currentRound={block.round} />
+        {enableBlockNavigation && (
+          <>
+            <PrevBlockButton scope={block} currentRound={block.round} />
+            <NextBlockButton scope={block} currentRound={block.round} />
+          </>
+        )}
       </dd>
 
       <dt>{t('common.hash')}</dt>
