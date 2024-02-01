@@ -1,4 +1,4 @@
-import { EvmEventParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
+import { EvmAbiParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
@@ -61,7 +61,7 @@ export const EventTypeIcon: FC<{
 
 const EvmEventParamData: FC<{
   scope: SearchScope
-  param: EvmEventParam
+  param: EvmAbiParam
   address?: string
 }> = ({ scope, param, address }) => {
   /**
@@ -86,7 +86,7 @@ const EvmEventParamData: FC<{
 
 const EvmLogRow: FC<{
   scope: SearchScope
-  param: EvmEventParam
+  param: EvmAbiParam
   addressSwitchOption: AddressSwitchOption
 }> = ({ scope, param, addressSwitchOption }) => {
   const [address, setAddress] = useState<string>()

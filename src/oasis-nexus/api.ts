@@ -691,7 +691,7 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   })
 }
 
-const fixChecksumAddressInEvmEventParam = (param: generated.EvmEventParam): generated.EvmEventParam =>
+const fixChecksumAddressInEvmEventParam = (param: generated.EvmAbiParam): generated.EvmAbiParam =>
   param.evm_type === 'address'
     ? {
         ...param,
