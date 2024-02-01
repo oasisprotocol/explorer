@@ -13,7 +13,8 @@ export const DeferredValidatorLink: FC<{
   validator: Validator | undefined
   isLoading: boolean
   isError: boolean
-}> = ({ network, address, validator, isError, isLoading }) => {
+  highlightedPart?: string | undefined
+}> = ({ network, address, validator, isError, isLoading, highlightedPart }) => {
   const scope: SearchScope = { network, layer: Layer.consensus }
 
   // TODO: switch to ValidatorLink, when validator detail pages become available
@@ -35,6 +36,7 @@ export const DeferredValidatorLink: FC<{
       address={validator.entity_address}
       name={validator.media?.name}
       logotype={validator.media?.logotype}
+      highlightedPart={highlightedPart}
     />
   )
   return <AccountLink scope={scope} address={address} title={validatorImage} />

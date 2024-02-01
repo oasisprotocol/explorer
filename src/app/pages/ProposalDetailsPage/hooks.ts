@@ -143,7 +143,7 @@ const SEARCH_PARAM = 'voter'
 
 export const useVoterSearch = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const voterSearchPattern = searchParams.get(SEARCH_PARAM) ?? ''
+  const voterSearchInput = searchParams.get(SEARCH_PARAM) ?? ''
   const setVoterSearchPattern = (pattern: string) => {
     if (pattern === '') {
       searchParams.delete(SEARCH_PARAM)
@@ -153,14 +153,19 @@ export const useVoterSearch = () => {
     searchParams.delete('page')
     setSearchParams(searchParams, { preventScrollReset: true })
   }
-  return { voterSearchPattern, setVoterSearchPattern }
+  return { voterSearchInput, setVoterSearchPattern }
+}
+
+export const useVoterSearchPattern = () => {
+  const { voterSearchInput } = useVoterSearch()
+  return voterSearchInput.length < 3 ? undefined : voterSearchInput
 }
 
 export const useWantedVoteFilter = (): VoteFilter => {
   const { wantedVoteType } = useWantedVoteType()
-  const { voterSearchPattern } = useVoterSearch()
+  const voterSearchPattern = useVoterSearchPattern()
   const typeFilter = getFilterForVoteType(wantedVoteType)
-  if (voterSearchPattern.length < 3) {
+  if (!voterSearchPattern) {
     return typeFilter
   } else {
     return (vote: ExtendedVote) =>

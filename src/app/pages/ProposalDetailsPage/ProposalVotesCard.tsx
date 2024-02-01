@@ -8,7 +8,14 @@ import { useTranslation } from 'react-i18next'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
 import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
-import { AllVotesData, useAllVotes, useVoterSearch, useWantedVoteFilter, useWantedVoteType } from './hooks'
+import {
+  AllVotesData,
+  useAllVotes,
+  useVoterSearch,
+  useVoterSearchPattern,
+  useWantedVoteFilter,
+  useWantedVoteType,
+} from './hooks'
 import { ProposalVoteIndicator } from '../../components/Proposals/ProposalVoteIndicator'
 import { DeferredValidatorLink } from '../../components/Validators/DeferredValidatorLink'
 import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
@@ -29,6 +36,8 @@ type ProposalVotesProps = {
 const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagination }) => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
+
+  const voterNameFragment = useVoterSearchPattern()
 
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '', width: '50px' },
@@ -52,6 +61,7 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagina
               isLoading={vote.areValidatorsLoading}
               isError={vote.haveValidatorsFailed}
               validator={vote.validator}
+              highlightedPart={voterNameFragment}
             />
           ),
         },
@@ -116,14 +126,14 @@ export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
 
   const { wantedVoteType, setWantedVoteType } = useWantedVoteType()
-  const { voterSearchPattern, setVoterSearchPattern } = useVoterSearch()
+  const { voterSearchInput, setVoterSearchPattern } = useVoterSearch()
 
   return (
     <SubPageCard>
       <CardHeaderWithResponsiveActions
         action={
           <>
-            <VoterSearchBar variant={'button'} value={voterSearchPattern} onChange={setVoterSearchPattern} />
+            <VoterSearchBar variant={'button'} value={voterSearchInput} onChange={setVoterSearchPattern} />
             <VoteTypePills handleChange={setWantedVoteType} value={wantedVoteType} />
           </>
         }
