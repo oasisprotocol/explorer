@@ -25,7 +25,7 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
     { align: TableCellAlign.Right, key: 'available', content: t('account.available') },
     { align: TableCellAlign.Right, key: 'staked', content: t('account.staked') },
     { align: TableCellAlign.Right, key: 'debonding', content: t('account.debonding') },
-    { align: TableCellAlign.Right, key: 'total', content: t('account.totalBalance') },
+    { align: TableCellAlign.Right, key: 'total', content: <strong>{t('account.totalBalance')}</strong> },
   ]
   const tableRows = accounts?.map(account => ({
     key: account.address,

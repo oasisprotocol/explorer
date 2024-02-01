@@ -14,6 +14,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { VerticalList } from '../../components/VerticalList'
 import { AccountList } from 'app/components/AccountList'
+import { ConsensusAccountDetailsView } from '../ConsensusAccountDetailsPage '
 
 export const ConsensusAccountsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -84,7 +85,14 @@ export const ConsensusAccountsPage: FC = () => {
         )}
         {tableView === TableLayout.Vertical && (
           <VerticalList>
-            <>{/* TODO: ConsensusAccountDetialsView */}</>
+            {isLoading &&
+              [...Array(PAGE_SIZE).keys()].map(key => (
+                <ConsensusAccountDetailsView key={key} isLoading={true} account={undefined} standalone />
+              ))}
+            {!isLoading &&
+              accountsData?.accounts.map(account => (
+                <ConsensusAccountDetailsView key={account.address} account={account} standalone />
+              ))}
           </VerticalList>
         )}
       </SubPageCard>
