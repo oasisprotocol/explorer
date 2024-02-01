@@ -886,15 +886,19 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.ValidatorList, headers, status) => {
           if (status !== 200) return data
+          const validators = data.validators.map(validator => {
+            return {
+              ...validator,
+              escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+              ticker,
+            }
+          })
+          const map = new Map<string, generated.Validator>()
+          validators.forEach(validator => map.set(validator.entity_address, validator))
           return {
             ...data,
-            validators: data.validators.map(validator => {
-              return {
-                ...validator,
-                escrow: fromBaseUnits(validator.escrow, consensusDecimals),
-                ticker,
-              }
-            }),
+            validators,
+            map,
           }
         },
         ...arrayify(options?.request?.transformResponse),
