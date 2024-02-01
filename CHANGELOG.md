@@ -12,6 +12,49 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.7.0 (2024-02-01)
+
+### Features
+
+- In block details, add prev and next buttons
+  ([#1178](https://github.com/oasisprotocol/explorer/issues/1178),
+  [#1219](https://github.com/oasisprotocol/explorer/issues/1219))
+
+### Bug Fixes and Improvements
+
+- Fix Safari buggy display of block fill
+  ([#1186](https://github.com/oasisprotocol/explorer/issues/1186))
+
+- Show view all link only for ERC721 tokens
+  ([#1210](https://github.com/oasisprotocol/explorer/issues/1210))
+
+- Stop using mainnet block gas limit on testnet
+  ([#1215](https://github.com/oasisprotocol/explorer/issues/1215))
+
+### Internal Changes
+
+- Switch to production API
+  ([#1199](https://github.com/oasisprotocol/explorer/issues/1199))
+
+- Update Testnet Sapphire block gas limit
+  ([#1182](https://github.com/oasisprotocol/explorer/issues/1182))
+
+- Group all renovate dependency updates under on Changelog entry
+  ([#1184](https://github.com/oasisprotocol/explorer/issues/1184))
+
+- Update dependencies
+  ([#1162](https://github.com/oasisprotocol/explorer/issues/1162),
+  [#1163](https://github.com/oasisprotocol/explorer/issues/1163),
+  [#1166](https://github.com/oasisprotocol/explorer/issues/1166),
+  [#1167](https://github.com/oasisprotocol/explorer/issues/1167),
+  [#1169](https://github.com/oasisprotocol/explorer/issues/1169),
+  [#1171](https://github.com/oasisprotocol/explorer/issues/1171),
+  [#1180](https://github.com/oasisprotocol/explorer/issues/1180),
+  [#1183](https://github.com/oasisprotocol/explorer/issues/1183),
+  [#1187](https://github.com/oasisprotocol/explorer/issues/1187),
+  [#1188](https://github.com/oasisprotocol/explorer/issues/1188),
+  [#1195](https://github.com/oasisprotocol/explorer/issues/1195))
+
 ## 1.6.0 (2024-01-24)
 
 ### Features
