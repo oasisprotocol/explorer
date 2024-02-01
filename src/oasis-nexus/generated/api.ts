@@ -1792,7 +1792,7 @@ export const getStatus = (
       
       
       return getStatusMutator<Status>(
-      {url: `/${network}/`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/`, method: 'GET', signal
     },
       options);
     }
@@ -1855,7 +1855,7 @@ export const GetConsensusBlocks = (
       
       
       return GetConsensusBlocksMutator<BlockList>(
-      {url: `/${network}/consensus/blocks`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/blocks`, method: 'GET',
         params, signal
     },
       options);
@@ -1922,7 +1922,7 @@ export const GetConsensusBlocksHeight = (
       
       
       return GetConsensusBlocksHeightMutator<Block>(
-      {url: `/${network}/consensus/blocks/${height}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/blocks/${encodeURIComponent(String(height))}`, method: 'GET', signal
     },
       options);
     }
@@ -1988,7 +1988,7 @@ export const GetConsensusTransactions = (
       
       
       return GetConsensusTransactionsMutator<TransactionList>(
-      {url: `/${network}/consensus/transactions`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/transactions`, method: 'GET',
         params, signal
     },
       options);
@@ -2055,7 +2055,7 @@ export const GetConsensusTransactionsTxHash = (
       
       
       return GetConsensusTransactionsTxHashMutator<Transaction>(
-      {url: `/${network}/consensus/transactions/${txHash}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/transactions/${encodeURIComponent(String(txHash))}`, method: 'GET', signal
     },
       options);
     }
@@ -2121,7 +2121,7 @@ export const GetConsensusEvents = (
       
       
       return GetConsensusEventsMutator<ConsensusEventList>(
-      {url: `/${network}/consensus/events`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/events`, method: 'GET',
         params, signal
     },
       options);
@@ -2188,7 +2188,7 @@ export const GetConsensusEntities = (
       
       
       return GetConsensusEntitiesMutator<EntityList>(
-      {url: `/${network}/consensus/entities`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities`, method: 'GET',
         params, signal
     },
       options);
@@ -2255,7 +2255,7 @@ export const GetConsensusEntitiesEntityId = (
       
       
       return GetConsensusEntitiesEntityIdMutator<Entity>(
-      {url: `/${network}/consensus/entities/${entityId}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}`, method: 'GET', signal
     },
       options);
     }
@@ -2322,7 +2322,7 @@ export const GetConsensusEntitiesEntityIdNodes = (
       
       
       return GetConsensusEntitiesEntityIdNodesMutator<NodeList>(
-      {url: `/${network}/consensus/entities/${entityId}/nodes`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}/nodes`, method: 'GET',
         params, signal
     },
       options);
@@ -2393,7 +2393,7 @@ export const GetConsensusEntitiesEntityIdNodesNodeId = (
       
       
       return GetConsensusEntitiesEntityIdNodesNodeIdMutator<Node>(
-      {url: `/${network}/consensus/entities/${entityId}/nodes/${nodeId}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}/nodes/${encodeURIComponent(String(nodeId))}`, method: 'GET', signal
     },
       options);
     }
@@ -2462,7 +2462,7 @@ export const GetConsensusValidators = (
       
       
       return GetConsensusValidatorsMutator<ValidatorList>(
-      {url: `/${network}/consensus/validators`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/validators`, method: 'GET',
         params, signal
     },
       options);
@@ -2529,7 +2529,7 @@ export const GetConsensusValidatorsEntityId = (
       
       
       return GetConsensusValidatorsEntityIdMutator<Validator>(
-      {url: `/${network}/consensus/validators/${entityId}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/validators/${encodeURIComponent(String(entityId))}`, method: 'GET', signal
     },
       options);
     }
@@ -2595,7 +2595,7 @@ export const GetConsensusAccounts = (
       
       
       return GetConsensusAccountsMutator<AccountList>(
-      {url: `/${network}/consensus/accounts`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts`, method: 'GET',
         params, signal
     },
       options);
@@ -2662,7 +2662,7 @@ export const GetConsensusAccountsAddress = (
       
       
       return GetConsensusAccountsAddressMutator<Account>(
-      {url: `/${network}/consensus/accounts/${address}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
     }
@@ -2729,7 +2729,7 @@ export const GetConsensusAccountsAddressDelegations = (
       
       
       return GetConsensusAccountsAddressDelegationsMutator<DelegationList>(
-      {url: `/${network}/consensus/accounts/${address}/delegations`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts/${encodeURIComponent(String(address))}/delegations`, method: 'GET',
         params, signal
     },
       options);
@@ -2800,7 +2800,7 @@ export const GetConsensusAccountsAddressDelegationsTo = (
       
       
       return GetConsensusAccountsAddressDelegationsToMutator<DelegationList>(
-      {url: `/${network}/consensus/accounts/${address}/delegations_to`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts/${encodeURIComponent(String(address))}/delegations_to`, method: 'GET',
         params, signal
     },
       options);
@@ -2871,7 +2871,7 @@ export const GetConsensusAccountsAddressDebondingDelegations = (
       
       
       return GetConsensusAccountsAddressDebondingDelegationsMutator<DebondingDelegationList>(
-      {url: `/${network}/consensus/accounts/${address}/debonding_delegations`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts/${encodeURIComponent(String(address))}/debonding_delegations`, method: 'GET',
         params, signal
     },
       options);
@@ -2942,7 +2942,7 @@ export const GetConsensusAccountsAddressDebondingDelegationsTo = (
       
       
       return GetConsensusAccountsAddressDebondingDelegationsToMutator<DebondingDelegationList>(
-      {url: `/${network}/consensus/accounts/${address}/debonding_delegations_to`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/accounts/${encodeURIComponent(String(address))}/debonding_delegations_to`, method: 'GET',
         params, signal
     },
       options);
@@ -3012,7 +3012,7 @@ export const GetConsensusEpochs = (
       
       
       return GetConsensusEpochsMutator<EpochList>(
-      {url: `/${network}/consensus/epochs`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/epochs`, method: 'GET',
         params, signal
     },
       options);
@@ -3079,7 +3079,7 @@ export const GetConsensusEpochsEpoch = (
       
       
       return GetConsensusEpochsEpochMutator<Epoch>(
-      {url: `/${network}/consensus/epochs/${epoch}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/epochs/${encodeURIComponent(String(epoch))}`, method: 'GET', signal
     },
       options);
     }
@@ -3145,7 +3145,7 @@ export const GetConsensusProposals = (
       
       
       return GetConsensusProposalsMutator<ProposalList>(
-      {url: `/${network}/consensus/proposals`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/proposals`, method: 'GET',
         params, signal
     },
       options);
@@ -3212,7 +3212,7 @@ export const GetConsensusProposalsProposalId = (
       
       
       return GetConsensusProposalsProposalIdMutator<Proposal>(
-      {url: `/${network}/consensus/proposals/${proposalId}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/consensus/proposals/${encodeURIComponent(String(proposalId))}`, method: 'GET', signal
     },
       options);
     }
@@ -3279,7 +3279,7 @@ export const GetConsensusProposalsProposalIdVotes = (
       
       
       return GetConsensusProposalsProposalIdVotesMutator<ProposalVotes>(
-      {url: `/${network}/consensus/proposals/${proposalId}/votes`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/consensus/proposals/${encodeURIComponent(String(proposalId))}/votes`, method: 'GET',
         params, signal
     },
       options);
@@ -3350,7 +3350,7 @@ export const GetRuntimeBlocks = (
       
       
       return GetRuntimeBlocksMutator<RuntimeBlockList>(
-      {url: `/${network}/${runtime}/blocks`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/blocks`, method: 'GET',
         params, signal
     },
       options);
@@ -3421,7 +3421,7 @@ export const GetRuntimeTransactions = (
       
       
       return GetRuntimeTransactionsMutator<RuntimeTransactionList>(
-      {url: `/${network}/${runtime}/transactions`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/transactions`, method: 'GET',
         params, signal
     },
       options);
@@ -3492,7 +3492,7 @@ export const GetRuntimeTransactionsTxHash = (
       
       
       return GetRuntimeTransactionsTxHashMutator<RuntimeTransactionList>(
-      {url: `/${network}/${runtime}/transactions/${txHash}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/transactions/${encodeURIComponent(String(txHash))}`, method: 'GET', signal
     },
       options);
     }
@@ -3562,7 +3562,7 @@ export const GetRuntimeEvents = (
       
       
       return GetRuntimeEventsMutator<RuntimeEventList>(
-      {url: `/${network}/${runtime}/events`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/events`, method: 'GET',
         params, signal
     },
       options);
@@ -3633,7 +3633,7 @@ export const GetRuntimeEvmTokens = (
       
       
       return GetRuntimeEvmTokensMutator<EvmTokenList>(
-      {url: `/${network}/${runtime}/evm_tokens`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/evm_tokens`, method: 'GET',
         params, signal
     },
       options);
@@ -3704,7 +3704,7 @@ export const GetRuntimeEvmTokensAddress = (
       
       
       return GetRuntimeEvmTokensAddressMutator<EvmToken>(
-      {url: `/${network}/${runtime}/evm_tokens/${address}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/evm_tokens/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
     }
@@ -3777,7 +3777,7 @@ export const GetRuntimeEvmTokensAddressHolders = (
       
       
       return GetRuntimeEvmTokensAddressHoldersMutator<TokenHolderList>(
-      {url: `/${network}/${runtime}/evm_tokens/${address}/holders`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/evm_tokens/${encodeURIComponent(String(address))}/holders`, method: 'GET',
         params, signal
     },
       options);
@@ -3856,7 +3856,7 @@ export const GetRuntimeEvmTokensAddressNfts = (
       
       
       return GetRuntimeEvmTokensAddressNftsMutator<EvmNftList>(
-      {url: `/${network}/${runtime}/evm_tokens/${address}/nfts`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/evm_tokens/${encodeURIComponent(String(address))}/nfts`, method: 'GET',
         params, signal
     },
       options);
@@ -3934,7 +3934,7 @@ export const GetRuntimeEvmTokensAddressNftsId = (
       
       
       return GetRuntimeEvmTokensAddressNftsIdMutator<EvmNft>(
-      {url: `/${network}/${runtime}/evm_tokens/${address}/nfts/${id}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/evm_tokens/${encodeURIComponent(String(address))}/nfts/${encodeURIComponent(String(id))}`, method: 'GET', signal
     },
       options);
     }
@@ -4008,7 +4008,7 @@ export const GetRuntimeAccountsAddress = (
       
       
       return GetRuntimeAccountsAddressMutator<RuntimeAccount>(
-      {url: `/${network}/${runtime}/accounts/${address}`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/accounts/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
     }
@@ -4080,7 +4080,7 @@ export const GetRuntimeAccountsAddressNfts = (
       
       
       return GetRuntimeAccountsAddressNftsMutator<EvmNftList>(
-      {url: `/${network}/${runtime}/accounts/${address}/nfts`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/accounts/${encodeURIComponent(String(address))}/nfts`, method: 'GET',
         params, signal
     },
       options);
@@ -4154,7 +4154,7 @@ export const GetRuntimeStatus = (
       
       
       return GetRuntimeStatusMutator<RuntimeStatus>(
-      {url: `/${network}/${runtime}/status`, method: 'GET', signal
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/status`, method: 'GET', signal
     },
       options);
     }
@@ -4223,7 +4223,7 @@ export const GetLayerStatsTxVolume = (
       
       
       return GetLayerStatsTxVolumeMutator<TxVolumeList>(
-      {url: `/${network}/${layer}/stats/tx_volume`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(layer))}/stats/tx_volume`, method: 'GET',
         params, signal
     },
       options);
@@ -4298,7 +4298,7 @@ export const GetLayerStatsActiveAccounts = (
       
       
       return GetLayerStatsActiveAccountsMutator<ActiveAccountsList>(
-      {url: `/${network}/${layer}/stats/active_accounts`, method: 'GET',
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(layer))}/stats/active_accounts`, method: 'GET',
         params, signal
     },
       options);
