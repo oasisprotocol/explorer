@@ -86,7 +86,8 @@ export const RuntimeBlocksPage: FC = () => {
       <SubPageCard
         title={t('blocks.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
-        noPadding={tableView === TableLayout.Vertical}
+        // noPadding={tableView === TableLayout.Vertical}
+        noPadding
       >
         {tableView === TableLayout.Horizontal && (
           <RuntimeBlocks

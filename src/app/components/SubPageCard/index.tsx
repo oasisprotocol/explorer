@@ -95,7 +95,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
           {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
         </Box>
       )}
-      <StyledCard featured={featured} noPadding={noPadding}>
+      <StyledCard featured={featured} noPadding={noPadding} sx={{ backgroundColor: 'transparent' }}>
         {!isMobile && (
           <StyledBox featured={featured}>
             <CardHeader

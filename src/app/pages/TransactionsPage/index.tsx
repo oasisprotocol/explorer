@@ -92,7 +92,8 @@ export const TransactionsPage: FC = () => {
       <SubPageCard
         title={t('transactions.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
-        noPadding={tableView === TableLayout.Vertical}
+        // noPadding={tableView === TableLayout.Vertical}
+        noPadding
       >
         {tableView === TableLayout.Horizontal && (
           <Transactions

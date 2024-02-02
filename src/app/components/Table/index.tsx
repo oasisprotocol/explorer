@@ -108,15 +108,26 @@ export const Table: FC<TableProps> = ({
 
   return (
     <>
-      <TableContainer>
-        <MuiTable aria-label={name}>
-          <TableHead>
-            <TableRow>
+      <TableContainer
+        sx={{ width: '100% !important', marginLeft: '0 !important', paddingRight: '0 !important' }}
+      >
+        <MuiTable aria-label={name} sx={{ display: 'flex' }}>
+          <TableHead sx={{ display: 'flex' }}>
+            <TableRow
+              sx={{
+                display: 'flex',
+
+                position: 'absolute',
+                top: '-9999px',
+                left: '-9999px',
+              }}
+            >
               {columns.map((column, index) => (
                 <TableCell
                   key={column.key}
                   align={column.align}
                   sx={{
+                    display: 'flex',
                     width: column.width || 'auto',
                     ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
                   }}
@@ -126,17 +137,33 @@ export const Table: FC<TableProps> = ({
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
             {(alwaysWaitWhileLoading || !rows) && isLoading && (
               <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
-              <StyledTableRow key={row.key} highlight={row.highlight}>
+              <StyledTableRow
+                key={row.key}
+                highlight={row.highlight}
+                sx={{ backgroundColor: 'white', borderRadius: 5, marginBottom: '16px', padding: '8px 16px' }}
+              >
                 {row.data.map((cell, index) => (
                   <TableCell
+                    data-title={columns[index].content}
                     key={cell.key}
-                    align={cell.align}
+                    // align={cell.align}
                     sx={{
+                      display: 'flex',
+                      content: 'attr(data-title)',
+                      border: 'none',
+                      position: 'relative',
+                      padding: '8px 0 8px 0',
+                      '&:before': {
+                        width: '100px',
+                        content: 'attr(data-title)',
+                        whiteSpace: 'break-spaces',
+                      },
+
                       ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
                       ...(extraHorizontalSpaceOnMobile && isMobile ? extraHorizontalPaddingStyles : {}),
                     }}
