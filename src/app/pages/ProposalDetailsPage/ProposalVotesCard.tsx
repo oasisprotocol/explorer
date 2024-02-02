@@ -2,18 +2,17 @@ import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { SubPageCard } from '../../components/SubPageCard'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { useTranslation } from 'react-i18next'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
-import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 import {
-  AllVotesData,
-  useAllVotes,
+  PAGE_SIZE,
+  useDisplayedVotes,
+  useOrder,
   useVoterSearch,
   useVoterSearchPattern,
-  useWantedVoteFilter,
   useWantedVoteType,
 } from './hooks'
 import { ProposalVoteIndicator } from '../../components/Proposals/ProposalVoteIndicator'
@@ -23,8 +22,6 @@ import { VoteTypePills } from '../../components/Proposals/VoteTypePills'
 import { AppErrors } from '../../../types/errors'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { VoterSearchBar } from '../../components/Proposals/VoterSearchBar'
-
-const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -38,9 +35,12 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagina
   const scope = useRequiredScopeParam()
 
   const voterNameFragment = useVoterSearchPattern()
+  const { toggleReverse: toggleReverseOrder } = useOrder()
+
+  const OrderTrigger: FC = () => <SwapVertIcon onClick={toggleReverseOrder} />
 
   const tableColumns: TableColProps[] = [
-    { key: 'index', content: '', width: '50px' },
+    { key: 'index', content: <OrderTrigger />, width: '50px' },
     { key: 'voter', content: t('common.voter'), align: TableCellAlign.Left },
     { key: 'vote', content: t('common.vote'), align: TableCellAlign.Right },
   ]
@@ -89,23 +89,10 @@ export const ProposalVotesView: FC = () => {
   const { network } = useRequiredScopeParam()
   const proposalId = parseInt(useParams().proposalId!, 10)
 
-  const filter = useWantedVoteFilter()
-
-  const pagination = useClientSidePagination<ExtendedVote, AllVotesData>({
-    paramName: 'page',
-    clientPageSize: PAGE_SIZE,
-    serverPageSize: 1000,
-    filter,
-  })
-
-  // Get all the votes
-  const allVotes = useAllVotes(network, proposalId)
-
-  // Get the section of the votes that we should display in the table
-  const displayedVotes = pagination.getResults(allVotes)
+  const displayedVotes = useDisplayedVotes(network, proposalId)
 
   if (
-    !allVotes.isLoading &&
+    !displayedVotes.isLoading &&
     displayedVotes.tablePaginationProps.selectedPage > 1 &&
     !displayedVotes.data?.length
   ) {
@@ -114,7 +101,7 @@ export const ProposalVotesView: FC = () => {
 
   return (
     <ProposalVotes
-      isLoading={allVotes.isLoading}
+      isLoading={displayedVotes.isLoading}
       votes={displayedVotes.data}
       limit={PAGE_SIZE}
       pagination={displayedVotes.tablePaginationProps}

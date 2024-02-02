@@ -12,7 +12,10 @@ import {
   VoteFilter,
   VoteType,
 } from '../../../types/vote'
-import { useSearchParams } from 'react-router-dom'
+import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { useBooleanFlagInUrl } from '../../hooks/useBooleanFlagInUrl'
+import { useStringInUrl } from '../../hooks/useStringInUrl'
 
 export type AllVotesData = List & {
   isLoading: boolean
@@ -41,7 +44,7 @@ const useValidatorMap = (network: Network) => {
   }
 }
 
-export const useAllVotes = (network: Network, proposalId: number): AllVotesData => {
+const useAllVotes = (network: Network, proposalId: number): AllVotesData => {
   const query = useGetConsensusProposalsProposalIdVotes(network, proposalId)
   const {
     map: validators,
@@ -121,37 +124,21 @@ export const useVoteStats = (network: Network, proposalId: number): VoteStats =>
   }
 }
 
-const TYPE_PARAM = 'vote'
 export const useWantedVoteType = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const wantedVoteType: VoteType = (searchParams.get(TYPE_PARAM) as VoteType) ?? 'any'
-  const setWantedVoteType = (newType: VoteType) => {
-    if (newType === 'any') {
-      searchParams.delete(TYPE_PARAM)
-    } else {
-      searchParams.set(TYPE_PARAM, newType)
-    }
-    searchParams.delete('page')
-    setSearchParams(searchParams, { preventScrollReset: true })
+  const { value, setValue } = useStringInUrl('vote', 'any')
+
+  return {
+    wantedVoteType: value as VoteType,
+    setWantedVoteType: (newType: VoteType) => setValue(newType, { deleteParams: ['page'] }),
   }
-  return { wantedVoteType, setWantedVoteType }
 }
 
-const SEARCH_PARAM = 'voter'
-
 export const useVoterSearch = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const voterSearchInput = searchParams.get(SEARCH_PARAM) ?? ''
-  const setVoterSearchPattern = (pattern: string) => {
-    if (pattern === '') {
-      searchParams.delete(SEARCH_PARAM)
-    } else {
-      searchParams.set(SEARCH_PARAM, pattern)
-    }
-    searchParams.delete('page')
-    setSearchParams(searchParams, { preventScrollReset: true })
+  const { value, setValue } = useStringInUrl('voter')
+  return {
+    voterSearchInput: value,
+    setVoterSearchPattern: (newValue: string) => setValue(newValue, { deleteParams: ['page'] }),
   }
-  return { voterSearchInput, setVoterSearchPattern }
 }
 
 export const useVoterSearchPattern = () => {
@@ -159,14 +146,43 @@ export const useVoterSearchPattern = () => {
   return voterSearchInput.length < 3 ? undefined : voterSearchInput
 }
 
-export const useWantedVoteFilter = (): VoteFilter => {
-  const { wantedVoteType } = useWantedVoteType()
+const useWantedVoteFilter = (): VoteFilter => {
+  const typeFilter = getFilterForVoteType(useWantedVoteType().wantedVoteType)
   const voterSearchPattern = useVoterSearchPattern()
-  const typeFilter = getFilterForVoteType(wantedVoteType)
+
   if (!voterSearchPattern) {
     return typeFilter
   } else {
     return (vote: ExtendedVote) =>
       typeFilter(vote) && !!vote.validator?.media?.name?.toLowerCase().includes(voterSearchPattern)
   }
+}
+
+export const useOrder = () => {
+  const { value, setValue, toggleValue } = useBooleanFlagInUrl('inverse', true)
+  return { isReverse: value, setReverse: setValue, toggleReverse: toggleValue }
+}
+
+export const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+
+export const useDisplayedVotes = (network: Network, proposalId: number) => {
+  const filter = useWantedVoteFilter()
+
+  const { isReverse } = useOrder()
+
+  const pagination = useClientSidePagination<ExtendedVote, AllVotesData>({
+    paramName: 'page',
+    clientPageSize: PAGE_SIZE,
+    serverPageSize: 1000,
+    transform: votes => {
+      const wantedVotes = votes.filter(filter)
+      return isReverse ? wantedVotes.reverse() : wantedVotes
+    },
+  })
+
+  // Get all the votes
+  const allVotes = useAllVotes(network, proposalId)
+
+  // Get the section of the votes that we should display in the table
+  return pagination.getResults(allVotes.isLoading, allVotes)
 }
