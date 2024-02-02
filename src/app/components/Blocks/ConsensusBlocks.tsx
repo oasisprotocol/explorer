@@ -47,7 +47,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
           },
         ]
       : []),
-    { key: 'proposer', content: t('common.proposer'), align: TableCellAlign.Left },
+    // { key: 'proposer', content: t('common.proposer'), align: TableCellAlign.Left },
     { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
   ]
 
@@ -78,11 +78,11 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
               },
             ]
           : []),
-        {
-          key: 'proposer',
-          content:
-            'The Validator Who Has Mined This Block Who Might Actually Have A Really Really Annoyingly Long Name',
-        },
+        // {
+        //   key: 'proposer',
+        //   content:
+        //     'The Validator Who Has Mined This Block Who Might Actually Have A Really Really Annoyingly Long Name',
+        // },
         {
           align: TableCellAlign.Right,
           content: <Age sinceTimestamp={block.timestamp} />,
