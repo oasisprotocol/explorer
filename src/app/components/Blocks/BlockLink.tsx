@@ -16,15 +16,16 @@ export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, h
   </Typography>
 )
 
-export const BlockHashLink: FC<{ scope: SearchScope; hash: string; height: number }> = ({
-  scope,
-  hash,
-  height,
-}) => {
+export const BlockHashLink: FC<{
+  scope: SearchScope
+  hash: string
+  height: number
+  alwaysTrim?: boolean
+}> = ({ scope, hash, height, alwaysTrim }) => {
   const { isTablet } = useScreenSize()
   return (
     <Typography variant="mono">
-      {isTablet ? (
+      {isTablet || alwaysTrim ? (
         <TrimLinkLabel label={hash} to={RouteUtils.getBlockRoute(scope, height)} />
       ) : (
         <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>

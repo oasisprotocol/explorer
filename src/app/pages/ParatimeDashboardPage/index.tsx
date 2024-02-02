@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Social } from '../../components/Social'
 import { LearningMaterials } from './LearningMaterials'
-import { LatestBlocks } from './LatestBlocks'
+import { LatestRuntimeBlocks } from './LatestRuntimeBlocks'
 import { LatestTransactions } from './LatestTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
 import { TotalTransactions } from './TotalTransactions'
@@ -27,7 +27,7 @@ export const ParatimeDashboardPage: FC = () => {
           <LearningMaterials scope={scope} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <LatestBlocks scope={scope} />
+          <LatestRuntimeBlocks scope={scope} />
         </Grid>
         {isMobile && (
           <Grid item xs={12}>
