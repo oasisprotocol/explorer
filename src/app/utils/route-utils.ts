@@ -6,6 +6,7 @@ import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
+import { getSearchTermFromRequest } from '../components/Search/search-utils'
 
 export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
@@ -172,6 +173,11 @@ const validateTxHashParam = (hash: string) => {
   return true
 }
 
+export type AddressLoaderData = {
+  address: string
+  searchTerm: string
+}
+
 const validateProposalIdParam = (proposalId: string) => {
   const isValid = isValidProposalId(proposalId)
   if (!isValid) {
@@ -183,10 +189,12 @@ const validateProposalIdParam = (proposalId: string) => {
 
 export const addressParamLoader =
   (queryParam: string = 'address') =>
-  ({ params }: LoaderFunctionArgs): string => {
+  ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
     validateAddressParam(params[queryParam]!)
-
-    return params[queryParam]!
+    return {
+      address: params[queryParam]!,
+      searchTerm: getSearchTermFromRequest(request),
+    }
   }
 
 export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => {
@@ -217,6 +225,15 @@ export const assertEnabledScope = ({
   return { network, layer } as SearchScope
 }
 
-export const proposalIdParamLoader = async ({ params }: LoaderFunctionArgs) => {
-  return validateProposalIdParam(params.proposalId!)
+export type ProposalIdLoaderData = {
+  proposalId: number
+  searchTerm: string
+}
+
+export const proposalIdParamLoader = async ({ params, request }: LoaderFunctionArgs) => {
+  validateProposalIdParam(params.proposalId!)
+  return {
+    proposalId: parseInt(params.proposalId!),
+    searchTerm: getSearchTermFromRequest(request),
+  }
 }

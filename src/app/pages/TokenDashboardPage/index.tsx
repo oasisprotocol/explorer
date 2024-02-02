@@ -16,6 +16,7 @@ import { tokenHoldersContainerId } from './TokenHoldersCard'
 import { SearchScope } from '../../../types/searchScope'
 import { tokenInventoryContainerId } from './TokenInventoryCard'
 import { DappBanner } from '../../components/DappBanner'
+import { AddressLoaderData } from '../../utils/route-utils'
 
 export type TokenDashboardContext = {
   scope: SearchScope
@@ -28,7 +29,7 @@ export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { address, searchTerm } = useLoaderData() as AddressLoaderData
 
   const { token, isError } = useTokenInfo(scope, address)
 
@@ -48,11 +49,11 @@ export const TokenDashboardPage: FC = () => {
 
   return (
     <PageLayout>
-      <TokenTitleCard scope={scope} address={address} />
+      <TokenTitleCard scope={scope} address={address} searchTerm={searchTerm} />
       <DappBanner scope={scope} ethAddress={token?.eth_contract_addr} />
       <TokenSnapshot scope={scope} address={address} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <TokenDetailsCard scope={scope} address={address} />
+      <TokenDetailsCard scope={scope} address={address} searchTerm={searchTerm} />
       <RouterTabs
         tabs={[
           { label: t('tokens.transfers'), to: tokenTransfersLink },

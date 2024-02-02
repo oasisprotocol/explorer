@@ -21,8 +21,13 @@ import { RouteUtils } from '../../utils/route-utils'
 import { tokenTransfersContainerId } from '../../pages/TokenDashboardPage/TokenTransfersCard'
 import { tokenHoldersContainerId } from '../../pages/TokenDashboardPage/TokenHoldersCard'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import { HighlightedText } from '../../components/HighlightedText'
 
-export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
+  scope,
+  address,
+  searchTerm,
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -41,7 +46,9 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string }> = ({ 
         {!isLoading && account && token && (
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.token')}</dt>
-            <dd>{token.name}</dd>
+            <dd>
+              <HighlightedText text={token.name} pattern={searchTerm} />
+            </dd>
 
             {isMobile && (
               <>

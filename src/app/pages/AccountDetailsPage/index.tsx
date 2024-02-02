@@ -18,6 +18,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { AccountDetailsCard } from './AccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
+import { AddressLoaderData } from '../../utils/route-utils'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -31,7 +32,7 @@ export const AccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
-  const address = useLoaderData() as string
+  const { address } = useLoaderData() as AddressLoaderData
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)

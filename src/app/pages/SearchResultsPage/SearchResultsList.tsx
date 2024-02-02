@@ -33,7 +33,8 @@ export const SearchResultsList: FC<{
   networkForTheme: Network
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
-}> = ({ title, networkForTheme, searchResults, tokenPrices }) => {
+  searchTerm?: string
+}> = ({ title, networkForTheme, searchResults, tokenPrices, searchTerm = '' }) => {
   const { t } = useTranslation()
 
   const numberOfResults = searchResults.length
@@ -112,7 +113,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.tokens.title')}
           results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} showLayer />}
+          resultComponent={item => <TokenDetails token={item} highlightedPartOfName={searchTerm} showLayer />}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
         />
@@ -120,7 +121,9 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
-          resultComponent={item => <ProposalDetailView proposal={item} showLayer />}
+          resultComponent={item => (
+            <ProposalDetailView proposal={item} highlightedPart={searchTerm} showLayer />
+          )}
           link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
           linkLabel={t('search.results.proposals.viewLink')}
         />

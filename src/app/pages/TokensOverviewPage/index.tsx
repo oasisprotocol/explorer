@@ -89,11 +89,24 @@ export const TokensPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <TokenDetails key={key} isLoading={true} token={undefined} standalone />
+                <TokenDetails
+                  key={key}
+                  isLoading={true}
+                  token={undefined}
+                  highlightedPartOfName={undefined}
+                  standalone
+                />
               ))}
 
             {!isLoading &&
-              tokens!.map(token => <TokenDetails key={token.contract_addr} token={token} standalone />)}
+              tokens!.map(token => (
+                <TokenDetails
+                  key={token.contract_addr}
+                  token={token}
+                  highlightedPartOfName={undefined}
+                  standalone
+                />
+              ))}
           </VerticalList>
         )}
       </SubPageCard>

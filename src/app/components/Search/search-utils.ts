@@ -111,17 +111,21 @@ export function isSearchValid(searchTerm: string) {
   return Object.values(validateAndNormalize).some(fn => !!fn(searchTerm))
 }
 
+export const getSearchTermFromRequest = (request: Request) =>
+  new URL(request.url).searchParams.get('q')?.trim() ?? ''
+
 export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const { network } = params
   if (!!network && !RouteUtils.getEnabledNetworks().includes(network as Network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 
-  const searchTerm = new URL(request.url).searchParams.get('q')?.trim() ?? ''
+  const searchTerm = getSearchTermFromRequest(request)
   const normalized = Object.fromEntries(
     Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(searchTerm)]),
   ) as { [Key in keyof typeof validateAndNormalize]: string | undefined }
   return {
+    searchTerm,
     ...normalized,
     // TODO: remove conversion when API supports querying by EVM address
     // TODO: without async conversion, this won't need to even be a loader

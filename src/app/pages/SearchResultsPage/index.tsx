@@ -15,6 +15,7 @@ export const SearchResultsPage: FC = () => {
   return (
     <SearchResultsView
       wantedScope={scope}
+      searchTerm={searchParams.searchTerm}
       searchResults={results}
       isLoading={isLoading}
       tokenPrices={tokenPrices}
