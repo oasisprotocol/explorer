@@ -2,6 +2,7 @@
   "appName": "Oasis Explorer",
   "account": {
     "available": "Available",
+    "birth": "Birth",
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "debonding": "Debonding",
     "emptyTokenList": "This account holds no {{spec}} {{description}}.",

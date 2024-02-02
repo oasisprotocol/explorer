@@ -70,6 +70,10 @@ export abstract class RouteUtils {
     )}`
   }
 
+  static getAccountsRoute = (network: Network) => {
+    return `/${encodeURIComponent(network)}/consensus/address`
+  }
+
   static getValidatorsRoute = (network: Network) => {
     return `/${encodeURIComponent(network)}/consensus/validators`
   }
