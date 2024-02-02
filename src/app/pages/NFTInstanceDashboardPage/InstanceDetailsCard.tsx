@@ -72,7 +72,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
                 </dd>
               </>
             )}
-            {typeof nft?.num_transfers === 'number' && !isNaN(nft?.num_transfers) && (
+            {!!nft?.num_transfers && (
               <>
                 <dt>{t('nft.transfers')}</dt>
                 <dd>{nft.num_transfers.toLocaleString()}</dd>
