@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Block } from '../../../oasis-nexus/api'
+import { Block, Layer, useGetConsensusBlocksHeight } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -9,6 +9,35 @@ import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormatte
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { AppErrors } from '../../../types/errors'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useParams } from 'react-router-dom'
+import { PageLayout } from '../../components/PageLayout'
+import { SubPageCard } from '../../components/SubPageCard'
+
+export const ConsensusBlockDetailPage: FC = () => {
+  const { t } = useTranslation()
+  const scope = useRequiredScopeParam()
+  if (scope.layer !== Layer.consensus) {
+    throw AppErrors.UnsupportedLayer
+  }
+  const blockHeight = parseInt(useParams().blockHeight!, 10)
+  const { isLoading, data } = useGetConsensusBlocksHeight(scope.network, blockHeight)
+  if (!data && !isLoading) {
+    throw AppErrors.NotFoundBlockHeight
+  }
+  const block = data?.data
+
+  return (
+    <PageLayout>
+      <SubPageCard featured title={t('common.block')}>
+        <ConsensusBlockDetailView isLoading={isLoading} block={block} />
+      </SubPageCard>
+      {/*{!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}*/}
+      {/*<EventsCard scope={scope} blockHeight={blockHeight} />*/}
+    </PageLayout>
+  )
+}
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean
