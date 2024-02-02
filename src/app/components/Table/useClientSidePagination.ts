@@ -24,9 +24,11 @@ type ClientSizePaginationParams<Item> = {
   serverPageSize: number
 
   /**
-   * Filtering to be applied after loading the data from the server, before presenting it to the data consumer component
+   * Transformation to be applied after loading the data from the server, before presenting it to the data consumer component
+   *
+   * Can be used for filtering, ordering, etc
    */
-  filter?: (item: Item) => boolean
+  transform?: (input: Item[]) => Item[]
 }
 
 const knownListKeys: string[] = ['total_count', 'is_total_count_clipped']
@@ -52,7 +54,7 @@ export function useClientSidePagination<Item, QueryResult extends List>({
   paramName,
   clientPageSize,
   serverPageSize,
-  filter,
+  transform,
 }: ClientSizePaginationParams<Item>): ComprehensivePaginationEngine<Item, QueryResult> {
   const [searchParams] = useSearchParams()
   const selectedClientPageString = searchParams.get(paramName)
@@ -90,15 +92,15 @@ export function useClientSidePagination<Item, QueryResult extends List>({
   return {
     selectedPageForClient: selectedClientPage,
     paramsForServer: paramsForQuery,
-    getResults: (queryResult, key) => {
+    getResults: (isLoading, queryResult, key) => {
       const data = queryResult // we want to get list of items out from the incoming results
         ? key // do we know where (in which field) to look?
           ? (queryResult[key] as Item[]) // If yes, just get out the data
           : findListIn<QueryResult, Item>(queryResult) // If no, we will try to guess
         : undefined
 
-      // Apply the specified client-side filtering
-      const filteredData = !!data && !!filter ? data.filter(filter) : data
+      // Apply the specified client-side transformation
+      const filteredData = !!data && !!transform ? transform(data) : data
 
       // The data window from the POV of the data consumer component
       const offset = (selectedClientPage - 1) * clientPageSize
@@ -121,6 +123,7 @@ export function useClientSidePagination<Item, QueryResult extends List>({
       return {
         tablePaginationProps: tableProps,
         data: dataWindow,
+        isLoading,
       }
     },
   }

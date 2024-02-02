@@ -66,7 +66,7 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
   return {
     selectedPageForClient: selectedPage,
     paramsForServer: paramsForQuery,
-    getResults: (queryResult, key) => {
+    getResults: (isLoading, queryResult, key) => {
       const data = queryResult
         ? key
           ? (queryResult[key] as Item[])
@@ -83,6 +83,7 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
       return {
         tablePaginationProps: tableProps,
         data: filteredData,
+        isLoading,
       }
     },
     // tableProps,

@@ -87,7 +87,7 @@ export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRu
 
   const { isFetched, isLoading, data } = query
 
-  const results = pagination.getResults(data?.data)
+  const results = pagination.getResults(isLoading, data?.data)
 
   if (isFetched && pagination.selectedPageForClient > 1 && !results.data?.length) {
     throw AppErrors.PageDoesNotExist
@@ -96,7 +96,7 @@ export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRu
   return {
     isLoading,
     isFetched,
-    results: pagination.getResults(data?.data),
+    results: pagination.getResults(isLoading, data?.data),
   }
 }
 

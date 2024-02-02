@@ -20,6 +20,11 @@ export interface PaginatedResults<Item> {
    * The data provided to the data consumer in the current window
    */
   data: Item[] | undefined
+
+  /**
+   * Is the data set still loading from the server?
+   */
+  isLoading: boolean
 }
 
 /**
@@ -41,8 +46,13 @@ export interface ComprehensivePaginationEngine<Item, QueryResult extends List> {
   /**
    * Get the current data/state info for the data consumer component.
    *
+   * @param isLoading Is the data still being loaded from the server?
    * @param queryResult the data coming in the server, requested according to this engine's specs, including metadata
    * @param key The field where the actual records can be found within queryResults
    */
-  getResults: (queryResult: QueryResult | undefined, key?: keyof QueryResult) => PaginatedResults<Item>
+  getResults: (
+    isLoading: boolean,
+    queryResult: QueryResult | undefined,
+    key?: keyof QueryResult,
+  ) => PaginatedResults<Item>
 }
