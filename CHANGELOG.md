@@ -12,6 +12,31 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.8.0 (2024-02-05)
+
+### Features
+
+- Highlight matching part in token names in search results
+  ([#646](https://github.com/oasisprotocol/explorer/issues/646))
+
+### Bug Fixes and Improvements
+
+- Fix condition for number of transfer in token details
+  ([#1228](https://github.com/oasisprotocol/explorer/issues/1228))
+
+- Use correct, custom formatter in Age component
+  ([#1230](https://github.com/oasisprotocol/explorer/issues/1230))
+
+### Internal Changes
+
+- Update gitlint and markdownlint configs
+  ([#1227](https://github.com/oasisprotocol/explorer/issues/1227))
+
+- Update dependencies
+  ([#1198](https://github.com/oasisprotocol/explorer/issues/1198),
+  [#1211](https://github.com/oasisprotocol/explorer/issues/1211),
+  [#1216](https://github.com/oasisprotocol/explorer/issues/1216))
+
 ## 1.7.0 (2024-02-01)
 
 ### Features
