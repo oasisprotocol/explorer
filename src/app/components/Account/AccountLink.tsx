@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
@@ -11,12 +11,18 @@ import { SearchScope } from '../../../types/searchScope'
 export const AccountLink: FC<{
   scope: SearchScope
   address: string
+  title?: ReactNode
   alwaysTrim?: boolean
   plain?: boolean
-}> = ({ scope, address, alwaysTrim, plain }) => {
+}> = ({ scope, address, title, alwaysTrim, plain }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
-  return (
+
+  return title ? (
+    <Link component={RouterLink} to={to}>
+      {title}
+    </Link>
+  ) : (
     <Typography
       variant="mono"
       component="span"
