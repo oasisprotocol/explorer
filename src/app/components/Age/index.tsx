@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow } from '../../utils/dateFormatter'
 import Box from '@mui/material/Box'
 import { useFormattedTimestamp } from '../../hooks/useFormattedTimestamp'
 import { tooltipDelay } from '../../../styles/theme'
