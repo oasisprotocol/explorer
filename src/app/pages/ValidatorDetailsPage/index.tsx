@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Validator } from '../../../oasis-nexus/api'
+import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -9,9 +10,27 @@ import { StatusIcon } from '../../components/StatusIcon'
 import { ValidatorImage } from '../../components/Validators/ValidatorImage'
 import { ValidatorCommission } from '../../components/Validators/ValidatorCommission'
 import { ValidatorCumulativeVoting } from '../../components/Validators/ValidatorCumulativeVoting'
+import { ValidatorTitleCard } from './ValidatorTitleCard'
+import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
+
+import { useLoaderData } from 'react-router-dom'
+import { AddressLoaderData } from 'app/utils/route-utils'
 
 export const ValidatorDetailsPage: FC = () => {
-  return <PageLayout>{/* TODO: Implement validator details cards */}</PageLayout>
+  const { isMobile } = useScreenSize()
+  const { network } = useRequiredScopeParam()
+  // TODO: currently API does not work with address query param. Wait for API update or switch to entity_id
+  const { address } = useLoaderData() as AddressLoaderData
+  const validatorQuery = useGetConsensusValidatorsEntityId(network, address)
+  const { isLoading, data } = validatorQuery
+  const validator = data?.data
+
+  return (
+    <PageLayout>
+      <ValidatorTitleCard isLoading={isLoading} network={network} validator={validator} />
+      <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
+    </PageLayout>
+  )
 }
 
 export const ValidatorDetailsView: FC<{
