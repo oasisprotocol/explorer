@@ -23,6 +23,7 @@ const config = {
       target: './generated/api.ts',
       client: 'react-query',
       mode: 'single',
+      urlEncodeParameters: true,
       override: {
         operationName: removeNetworkFromName,
         mutator: './replaceNetworkWithBaseURL.ts',
