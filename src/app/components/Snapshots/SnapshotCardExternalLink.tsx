@@ -18,9 +18,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 type SnapshotCardExternalLinkProps = {
   description: string
-  label: string
+  label?: string
   title: string
-  url: string
+  url?: string
 }
 
 export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
@@ -40,7 +40,7 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
         >
           {description}
         </Typography>
-        {hasValidProtocol(url) && (
+        {url && hasValidProtocol(url) && (
           <Button href={url} target="_blank" rel="noopener noreferrer" color="secondary" variant="outlined">
             {label}
           </Button>

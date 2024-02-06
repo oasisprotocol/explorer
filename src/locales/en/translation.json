@@ -552,16 +552,21 @@
   },
   "validator": {
     "active": "Active",
+    "balanceDistribution": "Balance Distribution",
     "change": "Change (24h)",
     "commission": "Commission",
     "cumulativeVoting": "Cumulative Voting %",
     "delegators": "Delegators",
+    "externalLink": "External Link",
+    "externalLinkDescriotion": "Oasis is not responsible for any content on external pages.",
     "groupStatus": "{{status}} validators",
     "inactive": "Inactive",
     "listTitle": "Validators",
+    "snapshot": "Validator Snapshot",
     "staked": "Staked",
     "title": "Validator",
     "uptime": "Uptime",
-    "voting": "Voting %"
+    "voting": "Voting %",
+    "votingPower": "Voting Power"
   }
 }

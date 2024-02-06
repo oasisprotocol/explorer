@@ -12,22 +12,23 @@ import { ValidatorCommission } from '../../components/Validators/ValidatorCommis
 import { ValidatorCumulativeVoting } from '../../components/Validators/ValidatorCumulativeVoting'
 import { ValidatorTitleCard } from './ValidatorTitleCard'
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
-
 import { useLoaderData } from 'react-router-dom'
 import { AddressLoaderData } from 'app/utils/route-utils'
+import { ValidatorSnapshot } from './ValidatorSnapshot'
 
 export const ValidatorDetailsPage: FC = () => {
   const { isMobile } = useScreenSize()
-  const { network } = useRequiredScopeParam()
+  const scope = useRequiredScopeParam()
   // TODO: currently API does not work with address query param. Wait for API update or switch to entity_id
   const { address } = useLoaderData() as AddressLoaderData
-  const validatorQuery = useGetConsensusValidatorsEntityId(network, address)
+  const validatorQuery = useGetConsensusValidatorsEntityId(scope.network, address)
   const { isLoading, data } = validatorQuery
   const validator = data?.data
 
   return (
     <PageLayout>
-      <ValidatorTitleCard isLoading={isLoading} network={network} validator={validator} />
+      <ValidatorTitleCard isLoading={isLoading} network={scope.network} validator={validator} />
+      <ValidatorSnapshot scope={scope} validator={validator} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
     </PageLayout>
   )
