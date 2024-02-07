@@ -4,6 +4,7 @@ import { useHref, useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -18,6 +19,7 @@ import { ValidatorTitleCard } from './ValidatorTitleCard'
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
+import { SignedBlocks } from './SignedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 
 export const ValidatorDetailsPage: FC = () => {
@@ -38,6 +40,14 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorSnapshot scope={scope} validator={validator} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <></>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <SignedBlocks />
+        </Grid>
+      </Grid>
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
