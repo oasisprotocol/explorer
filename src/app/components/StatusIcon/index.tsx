@@ -71,9 +71,10 @@ type StatusIconProps = {
   success: undefined | boolean
   error: undefined | TxError
   withText?: boolean
+  customLabel?: string
 }
 
-export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) => {
+export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, customLabel }) => {
   const { t } = useTranslation()
   const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
   const statusLabel: Record<TxStatus, string> = {
@@ -82,12 +83,12 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) =>
     failure: t('common.failed'),
   }
   const errorMessage = error ? `${error.message} (${t('errors.code')} ${error.code})` : undefined
-
+  const label = customLabel || statusLabel[status]
   if (withText) {
     return (
       <>
         <StyledBox success={success} error={error} withText={withText}>
-          {statusLabel[status]}
+          {label}
           &nbsp;
           {statusIcon[status]}
         </StyledBox>
@@ -96,11 +97,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) =>
     )
   } else {
     return (
-      <Tooltip
-        arrow
-        placement="top"
-        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
-      >
+      <Tooltip arrow placement="top" title={errorMessage ? `${label}: ${errorMessage}` : label}>
         <StyledBox success={success} error={error} withText={withText}>
           {statusIcon[status]}
         </StyledBox>
