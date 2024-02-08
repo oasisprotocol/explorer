@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { isValidProposalId, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { EvmTokenType, Layer } from '../../oasis-nexus/api'
+import { EvmTokenType, Layer, Runtime } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
@@ -128,6 +128,20 @@ export abstract class RouteUtils {
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
     return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
+  }
+
+  static getRuntimesForNetwork(network: Network, isEnabled: boolean): Runtime[] {
+    return Object.values(Runtime).filter(
+      runtime => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][runtime] === isEnabled,
+    )
+  }
+
+  static getEnabledRuntimesForNetwork(network: Network): Runtime[] {
+    return RouteUtils.getRuntimesForNetwork(network, true)
+  }
+
+  static getDisabledRuntimesForNetwork(network: Network): Runtime[] {
+    return RouteUtils.getRuntimesForNetwork(network, false)
   }
 
   static getProposalsRoute = (network: Network) => {
