@@ -18,7 +18,7 @@ interface Props {
   descriptionWidth?: string
 }
 
-const InlineDescriptionList = styled('dl', {
+export const InlineDescriptionList = styled('dl', {
   shouldForwardProp: prop => prop !== 'titleWidth' && prop !== 'descriptionWidth',
 })<Props>`
   display: grid;
