@@ -1,6 +1,4 @@
 import { FC, useState } from 'react'
-import Grid from '@mui/material/Grid'
-import { styled } from '@mui/material/styles'
 import { DurationSelect } from '../../components/Snapshots/DurationSelect'
 import { TransactionsChartCard } from './TransactionsChartCard'
 import { RosePriceCard } from './RosePriceCard'
@@ -13,11 +11,7 @@ import { Network } from '../../../types/network'
 import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { SearchScope } from '../../../types/searchScope'
-import { Snapshot } from 'app/components/Snapshots/Snapshot'
-
-const StyledGrid = styled(Grid)(() => ({
-  display: 'flex',
-}))
+import { Snapshot, StyledGrid } from 'app/components/Snapshots/Snapshot'
 
 export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
