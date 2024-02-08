@@ -18,8 +18,10 @@ import { BlockLink } from '../../components/Blocks/BlockLink'
 import { RouterLinkCircle } from '../../components/StyledLinks'
 import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
+import { ChartDuration } from '../../utils/chart-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
+import { TransactionsChartCard } from '../ParatimeDashboardPage/TransactionsChartCard'
 
 const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
   marginBottom: theme.spacing(4),
@@ -176,8 +178,22 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
       </StyledList>
       <StyledBox>
         <Box gap={3} sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
-          {t('paratimes.noData')}
+          {status ? (
+            <Box sx={{ width: '100%' }}>
+              <TransactionsChartCard
+                scope={{
+                  layer: runtime,
+                  network,
+                }}
+                chartDuration={ChartDuration.TODAY}
+              />
+            </Box>
+          ) : (
+            <>
+              <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
+              {t('paratimes.noData')}
+            </>
+          )}
         </Box>
       </StyledBox>
     </Box>
