@@ -498,6 +498,15 @@
     "coming": "Coming",
     "soon": "soon"
   },
+  "paratimes": {
+    "active": "Active",
+    "activeNodes": "{{nodes}} active",
+    "blockNumber": "Block number:",
+    "inactive": "Suspended",
+    "listTitle": "ParaTimes",
+    "noData": "No data available",
+    "nodes": "Nodes:"
+  },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
