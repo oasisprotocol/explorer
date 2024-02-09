@@ -11,10 +11,18 @@ import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { EnabledRuntimePreview, InactiveRuntimePreview } from './RuntimePreview'
 
-const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
   '> div:not(:last-child)': {
-    borderRight: `1px solid ${COLORS.grayMediumLight}`,
+    [theme.breakpoints.down('md')]: {
+      borderBottom: `1px solid ${COLORS.grayMediumLight}`,
+    },
+    [theme.breakpoints.up('md')]: {
+      borderRight: `1px solid ${COLORS.grayMediumLight}`,
+    },
   },
 }))
 
