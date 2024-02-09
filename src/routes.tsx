@@ -1,4 +1,4 @@
-import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
+import { Outlet, RouteObject, ScrollRestoration, useNavigate } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
 import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
@@ -15,6 +15,15 @@ import {
   transactionParamLoader,
   assertEnabledScope,
   proposalIdParamLoader,
+  fixedNetwork,
+  hasFixedNetworkAndLayer,
+  fixedLayer,
+  isFixedOnParatime,
+  isFixedOnConsensus,
+  networkRoutePath,
+  consensusRoutePath,
+  layerRoutePath,
+  RouteUtils,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
@@ -41,12 +50,76 @@ import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
+import { FC, useEffect } from 'react'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByNetwork>
 )
+
+/**
+ * Use the passed RouteObject unless we have a fixed layer.
+ *
+ * Normally, this will just wrap the RouteObject into an array.
+ * Unless the condition is true, because in that case, and empty array will be returned.
+ */
+const unlessFixedLayer = (route: RouteObject): RouteObject[] => (fixedLayer ? [] : [route])
+
+/**
+ * Use the passed RouteObject unless we have a fixed network and layer.
+ *
+ * Normally, this will just wrap the RouteObject into an array.
+ * Unless the condition is true, because in that case, and empty array will be returned.
+ */
+const unlessFixedNetworkAndLayer = (route: RouteObject): RouteObject[] =>
+  hasFixedNetworkAndLayer ? [] : [route]
+
+/**
+ * Use the passed RouteObject unless we are fixed on a ParaTime.
+ *
+ * Normally, this will just wrap the RouteObject into an array.
+ * Unless the condition is true, because in that case, and empty array will be returned.
+ */
+const unlessFixedOnParatime = (route: RouteObject): RouteObject[] => (isFixedOnParatime ? [] : [route])
+
+/**
+ * Use the passed RouteObject unless we are fixed on consensus.
+ *
+ * Normally, this will just wrap the RouteObject into an array.
+ * Unless the condition is true, because in that case, and empty array will be returned.
+ */
+const unlessFixedOnConsensus = (route: RouteObject): RouteObject[] => (isFixedOnConsensus ? [] : [route])
+
+/**
+ * Use the passed RouteObject if we have a fixed layer but no network
+ *
+ * Normally, this will just wrap the RouteObject into an array.
+ * Unless the condition is true, because in that case, and empty array will be returned.
+ */
+const whenFixedLayerButNoNetwork = (route: RouteObject): RouteObject[] =>
+  !!fixedLayer && !fixedNetwork ? [route] : []
+
+/**
+ * In case of being restricted to a specific layer, jump to a network
+ *
+ * This should be rendered on the landing page,
+ * in order to redirect to a network, since we don't want the
+ * opening graph.
+ */
+const RedirectToNetwork: FC = () => {
+  const navigate = useNavigate()
+
+  useEffect(() =>
+    navigate(
+      RouteUtils.getDashboardRoute({
+        network: RouteUtils.getEnabledNetworksForLayer(fixedLayer!)[0]!,
+        layer: fixedLayer!,
+      }),
+    ),
+  )
+  return null
+}
 
 export const routes: RouteObject[] = [
   {
@@ -58,21 +131,28 @@ export const routes: RouteObject[] = [
       </>
     ),
     children: [
-      {
+      ...unlessFixedLayer({
         path: '/',
-        element: withDefaultTheme(<HomePage />),
-      },
-      {
+        element: withDefaultTheme(<HomePage />, true),
+      }),
+      ...whenFixedLayerButNoNetwork({
+        path: '/',
+        element: <RedirectToNetwork />,
+      }),
+      ...unlessFixedNetworkAndLayer({
         path: '/search', // Global search
         element: withDefaultTheme(<SearchResultsPage />),
         loader: searchParamLoader,
-      },
-      {
-        path: '/:_network/consensus',
+      }),
+      ...unlessFixedOnParatime({
+        path: `${networkRoutePath}${consensusRoutePath}`,
         element: <NetworkSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
-          return assertEnabledScope({ network: params._network, layer: Layer.consensus })
+          return assertEnabledScope({
+            network: fixedNetwork ?? params._network,
+            layer: Layer.consensus,
+          })
         },
         id: 'consensusScope',
         children: [
@@ -111,13 +191,16 @@ export const routes: RouteObject[] = [
             element: <ConsensusTransactionsPage />,
           },
         ],
-      },
-      {
-        path: '/:_network/:_layer',
+      }),
+      ...unlessFixedOnConsensus({
+        path: `${networkRoutePath}${layerRoutePath}`,
         element: <NetworkSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
-          return assertEnabledScope({ network: params._network, layer: params._layer })
+          return assertEnabledScope({
+            network: fixedNetwork ?? params._network,
+            layer: fixedLayer ?? params._layer,
+          })
         },
         id: 'runtimeScope',
         children: [
@@ -229,7 +312,7 @@ export const routes: RouteObject[] = [
             ],
           },
         ],
-      },
+      }),
     ],
   },
 ]

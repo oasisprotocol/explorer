@@ -5,10 +5,12 @@ import Button, { buttonClasses } from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { Network } from '../../../types/network'
+import { getNetworkNames, Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { LayerStatus } from '../LayerStatus'
+import { fixedLayer } from '../../utils/route-utils'
+import { TFunction } from 'i18next'
 
 export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   alignItems: 'center',
@@ -75,9 +77,13 @@ type NetworkButtonProps = {
   onClick: () => void
 }
 
+const getNetworkButtonLabel = (t: TFunction, network: Network, layer: Layer) =>
+  fixedLayer // If we are fixed to a layer,
+    ? getNetworkNames(t)[network] // let's show the name of the network,
+    : getLayerLabels(t)[layer] // otherwise, the name of the layer.
+
 export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLayerLabels(t)
   const icons = getNetworkIcons()
 
   return (
@@ -90,7 +96,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
       onClick={onClick}
     >
       <StyledBox>
-        {labels[layer]}
+        {getNetworkButtonLabel(t, network, layer)}
         <LayerStatus isOutOfDate={isOutOfDate} />
       </StyledBox>
     </StyledNetworkButton>
@@ -115,11 +121,10 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
 
 export const MobileNetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLayerLabels(t)
 
   return (
     <StyledMobileNetworkButton onClick={onClick}>
-      {labels[layer]}
+      {getNetworkButtonLabel(t, network, layer)}
       <LayerStatus isOutOfDate={isOutOfDate} />
     </StyledMobileNetworkButton>
   )

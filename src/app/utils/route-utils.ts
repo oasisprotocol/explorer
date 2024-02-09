@@ -7,6 +7,33 @@ import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
+import { isLayerHidden } from '../../types/layers'
+import { isTesting } from './env'
+
+export const fixedNetwork = isTesting
+  ? undefined
+  : (process.env.REACT_APP_FIXED_NETWORK as Network | undefined)
+export const fixedLayer = isTesting ? undefined : (process.env.REACT_APP_FIXED_LAYER as Layer | undefined)
+
+export type ScopeFreedom =
+  | 'network' // We can select only the network
+  | 'layer' // We can select only the layer
+  | 'network-layer' // We can select both network and layer
+  | 'none' // We can't select anything, everything is fixed
+
+export const scopeFreedom: ScopeFreedom = fixedNetwork
+  ? fixedLayer
+    ? 'none'
+    : 'layer'
+  : fixedLayer
+    ? 'network'
+    : 'network-layer'
+
+export const hasFixedNetworkAndLayer = !!fixedNetwork && !!fixedLayer
+
+export const isFixedOnConsensus = fixedLayer === Layer.consensus
+
+export const isFixedOnParatime = !!fixedLayer && fixedLayer !== Layer.consensus
 
 export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
@@ -17,7 +44,20 @@ export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   }
 }
 
+export const networkRoutePath = fixedNetwork ? '' : `/:_network`
+
+export const layerRoutePath = fixedLayer ? '' : `/:_layer`
+
+export const consensusRoutePath = isFixedOnConsensus ? '' : '/consensus'
+
 export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, typeof Layer.consensus>
+
+const getNetworkPath = (network: Network) => (fixedNetwork ? '' : `/${encodeURIComponent(network)}`)
+
+const getLayerPath = (layer: Layer) => (fixedLayer ? '' : `/${encodeURIComponent(layer)}`)
+
+const getNetworkAndLayerPath = (network: Network, layer: Layer) =>
+  `${getNetworkPath(network)}${getLayerPath(layer)}`
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
@@ -39,45 +79,39 @@ export abstract class RouteUtils {
   } satisfies Record<Network, Record<Layer, boolean>>
 
   static getDashboardRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
+    return `${getNetworkAndLayerPath(network, layer)}`
   }
 
   static getLatestTransactionsRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/tx`
+    return `${getNetworkAndLayerPath(network, layer)}/tx`
   }
 
   static getTopTokensRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token`
+    return `${getNetworkAndLayerPath(network, layer)}/token`
   }
 
   static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block`
+    return `${getNetworkAndLayerPath(network, layer)}/block`
   }
 
   static getBlockRoute = ({ network, layer }: SearchScope, blockHeight: number) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block/${encodeURIComponent(
-      blockHeight,
-    )}`
+    return `${getNetworkAndLayerPath(network, layer)}/block/${encodeURIComponent(blockHeight)}`
   }
 
   static getTransactionRoute = (scope: SearchScope, txHash: string) => {
-    return `/${encodeURIComponent(scope.network)}/${encodeURIComponent(scope.layer)}/tx/${encodeURIComponent(
-      txHash,
-    )}`
+    return `${getNetworkAndLayerPath(scope.network, scope.layer)}/tx/${encodeURIComponent(txHash)}`
   }
 
   static getAccountRoute = ({ network, layer }: SearchScope, account: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/address/${encodeURIComponent(
-      account,
-    )}`
+    return `${getNetworkAndLayerPath(network, layer)}/address/${encodeURIComponent(account)}`
   }
 
   static getAccountsRoute = (network: Network) => {
-    return `/${encodeURIComponent(network)}/consensus/address`
+    return `${getNetworkPath(network)}${consensusRoutePath}/address`
   }
 
   static getValidatorsRoute = (network: Network) => {
-    return `/${encodeURIComponent(network)}/consensus/validators`
+    return `${getNetworkPath(network)}${consensusRoutePath}/validators`
   }
 
   static getAccountTokensRoute = (
@@ -97,20 +131,16 @@ export abstract class RouteUtils {
 
   static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
     return scope
-      ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
+      ? `${getNetworkAndLayerPath(scope.network, scope.layer)}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
   static getTokenRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
-      tokenAddress,
-    )}`
+    return `${getNetworkAndLayerPath(network, layer)}/token/${encodeURIComponent(tokenAddress)}`
   }
 
   static getTokenHoldersRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
-      tokenAddress,
-    )}/holders`
+    return `${getNetworkAndLayerPath(network, layer)}/token/${encodeURIComponent(tokenAddress)}/holders`
   }
 
   static getNFTInstanceRoute = (
@@ -118,38 +148,62 @@ export abstract class RouteUtils {
     contractAddress: string,
     instanceId: string,
   ): string =>
-    `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+    `${getNetworkAndLayerPath(network, layer)}/token/${encodeURIComponent(
       contractAddress,
     )}/instance/${encodeURIComponent(instanceId)}`
 
   static getEnabledLayersForNetwork(network: Network): Layer[] {
-    return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
+    return (fixedLayer ? [fixedLayer] : Object.values(Layer)).filter(
+      layer => this.ENABLED_LAYERS_FOR_NETWORK[network][layer],
+    )
+  }
+
+  static getVisibleLayersForNetwork(network: Network, currentScope: SearchScope | undefined): Layer[] {
+    return this.getEnabledLayersForNetwork(network).filter(
+      layer => !isLayerHidden(layer) || layer === currentScope?.layer,
+    )
   }
 
   static getProposalsRoute = (network: Network) => {
-    return `/${encodeURIComponent(network)}/consensus/proposal`
+    return `${getNetworkPath(network)}/consensus/proposal`
   }
 
   static getProposalRoute = (network: Network, proposalId: string | number) => {
-    return `/${encodeURIComponent(network)}/consensus/proposal/${encodeURIComponent(proposalId)}`
+    return `${getNetworkPath(network)}/consensus/proposal/${encodeURIComponent(proposalId)}`
   }
 
   static getEnabledScopes(): SearchScope[] {
-    return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+    return this.getEnabledNetworks().flatMap(network =>
+      this.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
     )
   }
 
+  /**
+   * Get the list of enabled networks.
+   *
+   * If this Explorer is fixed to a specific network, the only that network will be returned.
+   * Furthermore, if this Explorer is fixed to a specific layer, only networks that support that layer are returned.
+   */
   static getEnabledNetworks(): Network[] {
-    return Object.values(Network).filter(network => {
-      return RouteUtils.getEnabledLayersForNetwork(network).length > 0
-    })
+    const networks = fixedNetwork
+      ? [fixedNetwork]
+      : Object.values(Network).filter(network => {
+          return this.getEnabledLayersForNetwork(network).length > 0
+        })
+    return fixedLayer
+      ? networks.filter(network => {
+          return this.getEnabledLayersForNetwork(network).includes(fixedLayer)
+        })
+      : networks
   }
 
-  static getEnabledSearchScopes(): SearchScope[] {
-    return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
-    )
+  static getEnabledNetworksForLayer(layer: Layer | undefined): Network[] {
+    const networks = this.getEnabledNetworks()
+    return layer
+      ? networks.filter(network => {
+          return this.getEnabledLayersForNetwork(network).includes(layer)
+        })
+      : networks
   }
 }
 
@@ -241,5 +295,22 @@ export const proposalIdParamLoader = async ({ params, request }: LoaderFunctionA
   return {
     proposalId: parseInt(params.proposalId!),
     searchTerm: getSearchTermFromRequest(request),
+  }
+}
+
+/**
+ * Is it possible to change the scope, given the current configuration?
+ */
+export const isScopeSelectorNeeded = (sourceScope: SearchScope | undefined) => {
+  if (!sourceScope) return false
+  switch (scopeFreedom) {
+    case 'network':
+      return RouteUtils.getEnabledNetworks().length > 1
+    case 'layer':
+      return RouteUtils.getVisibleLayersForNetwork(fixedNetwork!, sourceScope).length > 1
+    case 'network-layer':
+      return RouteUtils.getEnabledScopes().length > 1
+    case 'none':
+      return false
   }
 }

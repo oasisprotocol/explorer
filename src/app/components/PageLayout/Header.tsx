@@ -8,11 +8,13 @@ import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { isScopeSelectorNeeded } from '../../utils/route-utils'
 
 export const Header: FC = () => {
   const theme = useTheme()
   const { isMobile } = useScreenSize()
   const scope = useScopeParam()
+  const withScopeSelector = isScopeSelectorNeeded(scope)
   const scrollTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -49,10 +51,10 @@ export const Header: FC = () => {
               showText={!scrollTrigger && !isMobile}
             />
           </Grid>
-          {scope && (
+          {withScopeSelector && (
             <>
               <Grid lg={6} xs={8}>
-                <NetworkSelector layer={scope.layer} network={scope.network} />
+                <NetworkSelector layer={scope!.layer} network={scope!.network} />
               </Grid>
               <Grid lg={3} xs={0} />
             </>
