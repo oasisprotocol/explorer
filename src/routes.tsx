@@ -1,4 +1,4 @@
-import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
+import { Outlet, RouteObject, ScrollRestoration, useNavigate } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
 import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
@@ -16,6 +16,9 @@ import {
   transactionParamLoader,
   assertEnabledScope,
   proposalIdParamLoader,
+  fixedNetwork,
+  fixedLayer,
+  RouteUtils,
 } from './app/utils/route-utils'
 import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
@@ -43,12 +46,32 @@ import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
+import { FC, useEffect } from 'react'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByNetwork>
 )
+
+/**
+ * In case of being restricted to a specific layer, jump to a dashboard
+ *
+ * This should be rendered on the landing page, since we don't want the opening graph.
+ */
+const RedirectToDashboard: FC = () => {
+  const navigate = useNavigate()
+
+  useEffect(() =>
+    navigate(
+      RouteUtils.getDashboardRoute({
+        network: fixedNetwork ?? RouteUtils.getEnabledNetworksForLayer(fixedLayer!)[0]!,
+        layer: fixedLayer!,
+      }),
+    ),
+  )
+  return null
+}
 
 export const routes: RouteObject[] = [
   {
@@ -62,13 +85,17 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: withDefaultTheme(<HomePage />),
+        element: fixedLayer ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
       },
-      {
-        path: '/search', // Global search
-        element: withDefaultTheme(<SearchResultsPage />),
-        loader: searchParamLoader,
-      },
+      ...(!!fixedNetwork && !!fixedLayer
+        ? []
+        : [
+            {
+              path: '/search', // Global search
+              element: withDefaultTheme(<SearchResultsPage />),
+              loader: searchParamLoader,
+            },
+          ]),
       {
         path: '/:_network/consensus',
         element: <NetworkSpecificPart />,

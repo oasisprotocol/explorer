@@ -174,12 +174,10 @@ export function useRuntimeTokenConditionally(
 export function useNetworkProposalsConditionally(
   nameFragment: string | undefined,
 ): ConditionalResults<Proposal> {
-  const queries = RouteUtils.getEnabledNetworks()
-    .filter(network => RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.consensus))
-    .map(network =>
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useGetConsensusProposalsByName(network, nameFragment),
-    )
+  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetConsensusProposalsByName(network, nameFragment),
+  )
   return {
     isLoading: queries.some(query => query.isInitialLoading),
     results: queries

@@ -23,6 +23,8 @@ declare global {
       REACT_APP_SOCIAL_HOME?: string
       REACT_APP_PRODUCTION_URLS: string
       REACT_APP_STAGING_URLS?: string
+      REACT_APP_FIXED_NETWORK?: string
+      REACT_APP_FIXED_LAYER?: string
     }
   }
 }
