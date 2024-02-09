@@ -33,5 +33,6 @@ export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[]
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
 
 export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
+export const isLayerNotHidden = (layer: Layer): boolean => !hiddenLayers.includes(layer)
 
 export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)

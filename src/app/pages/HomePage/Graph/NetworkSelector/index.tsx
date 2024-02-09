@@ -18,6 +18,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { getNetworkIcons } from '../../../../utils/content'
 import { optionClasses } from '@mui/base/Option'
+import { Layer } from '../../../../../oasis-nexus/api'
 
 interface NetworkOption extends SelectOptionBase {
   label: Network
@@ -119,12 +120,19 @@ const NetworkSelectorButton = forwardRef(
 interface NetworkSelectProps {
   network: Network
   setNetwork: (network: Network | null) => void
+  forLayer?: Layer
 }
 
-export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork }) => {
+export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork, forLayer }) => {
   const { t } = useTranslation()
 
-  const options = RouteUtils.getEnabledNetworks().map(network => ({
+  const networks = forLayer
+    ? RouteUtils.getEnabledNetworksForLayer(forLayer)
+    : RouteUtils.getEnabledNetworks()
+
+  if (networks.length === 1) return null
+
+  const options = networks.map(network => ({
     label: network,
     value: network,
   }))

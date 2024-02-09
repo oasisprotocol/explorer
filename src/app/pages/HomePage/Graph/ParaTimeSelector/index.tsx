@@ -24,6 +24,7 @@ import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetw
 import { storage } from '../../../../utils/storage'
 import { StorageKeys } from '../../../../../types/storage'
 import { GraphTooltipMobile } from '../GraphTooltipMobile'
+import { hasFixedNetwork } from '../../../../utils/route-utils'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -284,7 +285,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
             <HelpScreen setParaTimeStep={setStep} />
           )}
         </ParaTimeSelectorGlobe>
-        {step === ParaTimeSelectorStep.Explore && (
+        {!hasFixedNetwork() && step === ParaTimeSelectorStep.Explore && (
           <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? Network.mainnet)} />
         )}
       </ParaTimeSelectorGlow>

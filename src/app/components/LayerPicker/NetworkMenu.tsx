@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
-import { RouteUtils } from '../../utils/route-utils'
+import { getFixedLayer, RouteUtils } from '../../utils/route-utils'
 import { getNetworkIcons } from '../../utils/content'
 
 type NetworkMenuItemProps = Omit<NetworkMenuProps, 'options'> & {
@@ -70,7 +70,10 @@ type NetworkMenuProps = {
 
 export const NetworkMenu: FC<NetworkMenuProps> = ({ activeNetwork, selectedNetwork, setSelectedNetwork }) => {
   const [hoveredNetwork, setHoveredNetwork] = useState<undefined | Network>()
-  const options: Network[] = RouteUtils.getEnabledNetworks()
+  const fixedLayer = getFixedLayer()
+  const options: Network[] = fixedLayer // If we are fixed to a specific layer,
+    ? RouteUtils.getEnabledNetworksForLayer(fixedLayer) // offer only the networks on which that layer is enabled.
+    : RouteUtils.getEnabledNetworks() // Otherwise, get all the enabled networks.
 
   return (
     <MenuList>

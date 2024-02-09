@@ -13,7 +13,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
-import { RouteUtils } from '../../utils/route-utils'
+import { getScopeFreedom, RouteUtils } from '../../utils/route-utils'
 import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -96,6 +96,9 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   }
   const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
 
+  // What kind of selection do we need?
+  const selectionMode = getScopeFreedom()
+
   return (
     <StyledLayerPickerContent>
       <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
@@ -104,28 +107,33 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
       {isTablet && (
         <TabletActionBar>
           <div>
-            {tabletStep === LayerPickerTabletStep.Layer && (
-              <TabletBackButton
-                variant="text"
-                startIcon={<KeyboardArrowLeft />}
-                onClick={() => {
-                  setTabletStep(LayerPickerTabletStep.Network)
-                }}
-              >
-                {t('layerPicker.viewNetworks')}
-              </TabletBackButton>
-            )}
-            {tabletStep === LayerPickerTabletStep.LayerDetails && (
-              <TabletBackButton
-                variant="text"
-                startIcon={<KeyboardArrowLeft />}
-                onClick={() => {
-                  setTabletStep(LayerPickerTabletStep.Layer)
-                }}
-              >
-                {t('layerPicker.viewLayers')}
-              </TabletBackButton>
-            )}
+            {
+              // Do we need a "back to networks" button ?
+              ((selectionMode === 'both' && tabletStep === LayerPickerTabletStep.Layer) || // Stepping back from layers
+                (selectionMode === 'network' && tabletStep === LayerPickerTabletStep.LayerDetails)) && ( // Stepping back from details, skipping layers
+                <TabletBackButton
+                  variant="text"
+                  startIcon={<KeyboardArrowLeft />}
+                  onClick={() => {
+                    setTabletStep(LayerPickerTabletStep.Network)
+                  }}
+                >
+                  {t('layerPicker.viewNetworks')}
+                </TabletBackButton>
+              )
+            }
+            {selectionMode !== 'network' &&
+              tabletStep === LayerPickerTabletStep.LayerDetails && ( // Stepping back from details, going to layers
+                <TabletBackButton
+                  variant="text"
+                  startIcon={<KeyboardArrowLeft />}
+                  onClick={() => {
+                    setTabletStep(LayerPickerTabletStep.Layer)
+                  }}
+                >
+                  {t('layerPicker.viewLayers')}
+                </TabletBackButton>
+              )}
           </div>
           <MobileNetworkButton
             isOutOfDate={isOutOfDate}
@@ -138,32 +146,38 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
       <Divider />
       <StyledContent>
         <Grid container>
-          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
-            <Grid xs={12} md={3}>
-              <NetworkMenu
-                activeNetwork={network}
-                selectedNetwork={selectedNetwork}
-                setSelectedNetwork={network => {
-                  selectNetwork(network)
-                  setTabletStep(LayerPickerTabletStep.Layer)
-                }}
-              />
-            </Grid>
-          )}
-          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
-            <Grid xs={12} md={3}>
-              <LayerMenu
-                activeLayer={layer}
-                network={network}
-                selectedLayer={selectedLayer}
-                selectedNetwork={selectedNetwork}
-                setSelectedLayer={layer => {
-                  setSelectedLayer(layer)
-                  setTabletStep(LayerPickerTabletStep.LayerDetails)
-                }}
-              />
-            </Grid>
-          )}
+          {selectionMode !== 'layer' &&
+            (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
+              <Grid xs={12} md={3}>
+                <NetworkMenu
+                  activeNetwork={network}
+                  selectedNetwork={selectedNetwork}
+                  setSelectedNetwork={network => {
+                    selectNetwork(network)
+                    setTabletStep(
+                      selectionMode === 'network' // Are we fixed to a specific layer, selecting only network?
+                        ? LayerPickerTabletStep.LayerDetails // If so, skip layer selection, go straight to layer details.
+                        : LayerPickerTabletStep.Layer, // Otherwise, go to layer selection.
+                    )
+                  }}
+                />
+              </Grid>
+            )}
+          {selectionMode !== 'network' &&
+            (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
+              <Grid xs={12} md={3}>
+                <LayerMenu
+                  activeLayer={layer}
+                  network={network}
+                  selectedLayer={selectedLayer}
+                  selectedNetwork={selectedNetwork}
+                  setSelectedLayer={layer => {
+                    setSelectedLayer(layer)
+                    setTabletStep(LayerPickerTabletStep.LayerDetails)
+                  }}
+                />
+              </Grid>
+            )}
           {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
             <Grid xs={12} md={6}>
               <LayerDetails

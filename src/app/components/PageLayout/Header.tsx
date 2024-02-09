@@ -8,6 +8,23 @@ import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { getFixedLayer, getFixedNetwork, getScopeFreedom, RouteUtils } from '../../utils/route-utils'
+
+/**
+ * Do we need to display a scope selector, given the current configuration?
+ */
+const needsScopeSelector = (): boolean => {
+  switch (getScopeFreedom()) {
+    case 'network':
+      return RouteUtils.getEnabledNetworksForLayer(getFixedLayer()!).length > 1
+    case 'layer':
+      return RouteUtils.getVisibleLayersForNetwork(getFixedNetwork()!).length > 1
+    case 'both':
+      return RouteUtils.getEnabledScopes().length > 1
+    case 'none':
+      return false
+  }
+}
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -49,7 +66,7 @@ export const Header: FC = () => {
               showText={!scrollTrigger && !isMobile}
             />
           </Grid>
-          {scope && (
+          {scope && needsScopeSelector() && (
             <>
               <Grid lg={6} xs={8}>
                 <NetworkSelector layer={scope.layer} network={scope.network} />

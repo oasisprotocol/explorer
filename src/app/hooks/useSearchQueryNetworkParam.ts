@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { Network } from '../../types/network'
-import { RouteUtils } from '../utils/route-utils'
+import { getFixedNetwork, hasFixedNetwork, RouteUtils } from '../utils/route-utils'
 import { AppErrors } from '../../types/errors'
 
 /**
@@ -12,6 +12,12 @@ export const useSearchQueryNetworkParam = (): {
   setNetwork: (network: Network) => void
 } => {
   const [searchParams, setSearchParams] = useSearchParams()
+  if (hasFixedNetwork()) {
+    return {
+      network: getFixedNetwork()!,
+      setNetwork: () => {},
+    }
+  }
   const networkQueryParam = searchParams.get('network') ?? Network.mainnet
   if (!RouteUtils.getEnabledNetworks().includes(networkQueryParam as any)) {
     throw AppErrors.InvalidUrl

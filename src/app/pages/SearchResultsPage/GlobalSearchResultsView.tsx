@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { RouteUtils } from '../../utils/route-utils'
+import { getFixedNetwork, hasFixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { NoResultsOnMainnet, NoResultsWhatsoever } from './NoResults'
 import { SearchResultsList } from './SearchResultsList'
@@ -30,6 +30,25 @@ export const GlobalSearchResultsView: FC<{
 
   const themes = getThemesForNetworks()
   const networkNames = getNetworkNames(t)
+
+  if (hasFixedNetwork()) {
+    const network = getFixedNetwork()!
+    const wantedResults = searchResults.filter(result => result.network === network)
+    return (
+      <>
+        {!wantedResults.length && <NoResultsWhatsoever />}
+        <SearchResultsList
+          key={network}
+          title={networkNames[network]}
+          searchTerm={searchTerm}
+          searchResults={wantedResults}
+          networkForTheme={network}
+          tokenPrices={tokenPrices}
+        />
+      </>
+    )
+  }
+
   const otherNetworks = RouteUtils.getEnabledNetworks().filter(isNotMainnet)
   const notificationTheme = themes[Network.testnet]
   const mainnetResults = searchResults.filter(isOnMainnet).sort(orderByLayer)

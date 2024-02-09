@@ -5,10 +5,11 @@ import Button, { buttonClasses } from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
-import { Network } from '../../../types/network'
+import { getNetworkNames, Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { LayerStatus } from '../LayerStatus'
+import { hasFixedLayer } from '../../utils/route-utils'
 
 export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   alignItems: 'center',
@@ -77,8 +78,11 @@ type NetworkButtonProps = {
 
 export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLayerLabels(t)
   const icons = getNetworkIcons()
+
+  const label = hasFixedLayer() // If we are fixed to a layer,
+    ? getNetworkNames(t)[network] // let's show the name of the network,
+    : getLayerLabels(t)[layer] // otherwise, the name of the layer.
 
   return (
     <StyledNetworkButton
@@ -90,7 +94,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
       onClick={onClick}
     >
       <StyledBox>
-        {labels[layer]}
+        {label}
         <LayerStatus isOutOfDate={isOutOfDate} />
       </StyledBox>
     </StyledNetworkButton>
@@ -115,11 +119,14 @@ export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
 
 export const MobileNetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, network, onClick }) => {
   const { t } = useTranslation()
-  const labels = getLayerLabels(t)
+
+  const label = hasFixedLayer() // If we are fixed to a layer,
+    ? getNetworkNames(t)[network] // let's show the name of the network,
+    : getLayerLabels(t)[layer] // otherwise, the name of the layer.
 
   return (
     <StyledMobileNetworkButton onClick={onClick}>
-      {labels[layer]}
+      {label}
       <LayerStatus isOutOfDate={isOutOfDate} />
     </StyledMobileNetworkButton>
   )
