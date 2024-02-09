@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { Link as RouterLink } from 'react-router-dom'
 import { OasisIcon } from '../CustomIcons/OasisIcon'
 import Typography from '@mui/material/Typography'
-import { useTranslation } from 'react-i18next'
+import { getAppTitle } from '../../../config'
 
 interface LogotypeProps {
   color?: string
@@ -22,7 +22,6 @@ export const HomePageLink: FC<LogotypeProps> = ({ color, showText }) => {
 }
 
 export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
-  const { t } = useTranslation()
   const theme = useTheme()
   const { isMobile } = useScreenSize()
   const logoSize = isMobile ? 32 : 40
@@ -40,7 +39,7 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
       <OasisIcon sx={{ fontSize: logoSize }} />
       {showText && (
         <Typography variant="h1" color={color || theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
-          {t('pageTitle')}
+          {getAppTitle()}
         </Typography>
       )}
     </Box>

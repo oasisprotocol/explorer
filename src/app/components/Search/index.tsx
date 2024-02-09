@@ -24,6 +24,7 @@ import { isValidBlockHeight } from '../../utils/helpers'
 import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 import Collapse from '@mui/material/Collapse'
+import { getAppTitle } from '../../../config'
 
 export type SearchVariant = 'button' | 'icon' | 'expandable'
 
@@ -163,7 +164,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const hasError = !!errorMessage
 
   const warningMessage = hasPrivacyProblem
-    ? t('search.error.privacy', { appName: t('appName'), wordsOfPower })
+    ? t('search.error.privacy', { appName: getAppTitle(), wordsOfPower })
     : undefined
   const hasWarning = !!warningMessage
 

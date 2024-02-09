@@ -1,13 +1,16 @@
 import { Layer } from '../../oasis-nexus/api'
 
 export const socialMedia = {
-  telegram: 'https://t.me/oasisprotocolcommunity',
-  twitter: 'https://twitter.com/oasisprotocol',
-  discord: 'https://oasis.io/discord',
+  telegram: process.env.REACT_APP_SOCIAL_TELEGRAM,
+  twitter: process.env.REACT_APP_SOCIAL_TWITTER,
+  discord: process.env.REACT_APP_SOCIAL_DISCORD,
   // This API link is for testing if invite is still valid.
   isDiscordStillValid: 'https://oasis.io/discord/invite-api-check',
-  youtube: 'https://www.youtube.com/channel/UC35UFPcZ2F1wjPxhPrSsESQ',
-  reddit: 'https://www.reddit.com/r/oasisnetwork/',
+  youtube: process.env.REACT_APP_SOCIAL_YOUTUBE,
+  reddit: process.env.REACT_APP_SOCIAL_REDDIT,
+  linkedin: process.env.REACT_APP_SOCIAL_LINKEDIN,
+  docs: process.env.REACT_APP_SOCIAL_DOCS,
+  home: process.env.REACT_APP_SOCIAL_HOME,
 }
 
 const docsUrl = 'https://docs.oasis.io/'

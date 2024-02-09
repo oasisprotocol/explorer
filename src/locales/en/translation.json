@@ -1,5 +1,4 @@
 {
-  "appName": "Oasis Explorer",
   "account": {
     "available": "Available",
     "birth": "Birth",
@@ -38,7 +37,7 @@
   },
   "banner": {
     "buildStaging": "Please note this is an internal launch meant to gather your feedback.",
-    "buildPreview": "Please note this is an experimental build of Oasis Explorer and that data that is shown might be incorrect."
+    "buildPreview": "Please note this is an experimental build of {{appTitle}} and that data that is shown might be incorrect."
   },
   "clipboard": {
     "label": "Copy to clipboard",
@@ -268,7 +267,6 @@
       "description": "Rose is the currency powering the {{layer}} network."
     }
   },
-  "pageTitle": "Oasis Explorer",
   "pageHeader": {
     "ribbon": "You are viewing {{network}} data"
   },
@@ -286,7 +284,10 @@
     "reddit": "Reddit",
     "telegram": "Telegram",
     "twitter": "X",
-    "youtube": "Youtube"
+    "youtube": "Youtube",
+    "linkedin": "LinkedIn",
+    "docs": "Documentation",
+    "home": "Home"
   },
   "tableLayoutButton": {
     "changeView": "Change view"

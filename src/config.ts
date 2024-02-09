@@ -146,11 +146,21 @@ export const paraTimesConfig = {
   [Layer.consensus]: null,
 } satisfies LayersConfig
 
+const parseUrl = (input: string | undefined): string[] =>
+  input
+    ? input
+        .split(',')
+        .filter(s => !!s)
+        .map(s => s.trim())
+    : []
+
 export const deploys = {
-  production: ['https://explorer.oasis.io', 'https://explorer.prd.oasis.io'],
-  staging: 'https://explorer.stg.oasis.io',
+  production: parseUrl(process.env.REACT_APP_PROD_URL),
+  staging: parseUrl(process.env.REACT_APP_STAGING_URL),
   localhost: 'http://localhost:1234',
 }
 
 const stableDeploys = [...deploys.production, deploys.staging]
 export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)
+
+export const getAppTitle = () => process.env.REACT_APP_TITLE
