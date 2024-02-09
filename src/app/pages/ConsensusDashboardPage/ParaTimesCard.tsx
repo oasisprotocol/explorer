@@ -4,10 +4,19 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { EnabledRuntimePreview, InactiveRuntimePreview } from './RuntimePreview'
+
+const StyledBox = styled(Box)(() => ({
+  display: 'flex',
+  '> div:not(:last-child)': {
+    borderRight: `1px solid ${COLORS.grayMediumLight}`,
+  },
+}))
 
 type ParaTimesCardProps = { scope: SearchScope }
 
@@ -32,7 +41,7 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
         }
       />
       <CardContent>
-        <Box sx={{ display: 'flex' }}>
+        <StyledBox>
           {!!enabledRuntimes.length &&
             enabledRuntimes.map(runtime => (
               <EnabledRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
@@ -41,7 +50,7 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
             disabledRuntimes.map(runtime => (
               <InactiveRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
             ))}
-        </Box>
+        </StyledBox>
       </CardContent>
     </Card>
   )

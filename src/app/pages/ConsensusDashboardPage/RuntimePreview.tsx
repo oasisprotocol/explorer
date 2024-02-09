@@ -98,7 +98,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
   const dashboardLink = RouteUtils.getDashboardRoute({ network, layer: runtime })
 
   return (
-    <Box sx={{ flex: 1, padding: 3 }}>
+    <Box sx={{ flex: 1, padding: 4 }}>
       <Box sx={{ marginBottom: 4 }}>
         <StyledTypography>
           {status ? (
