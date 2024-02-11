@@ -32,7 +32,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
-  const { address } = useLoaderData() as AddressLoaderData
+  const { address, searchTerm } = useLoaderData() as AddressLoaderData
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
@@ -62,6 +62,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
         account={account}
         token={token}
         tokenPrices={tokenPrices}
+        highlightedPartOfName={searchTerm}
       />
       <DappBanner scope={scope} ethAddress={account?.address_eth} />
       <RouterTabs

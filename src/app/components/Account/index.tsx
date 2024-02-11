@@ -30,9 +30,17 @@ type AccountProps = {
   isLoading: boolean
   tokenPrices: AllTokenPrices
   showLayer?: boolean
+  highlightedPartOfName: string | undefined
 }
 
-export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPrices, showLayer }) => {
+export const Account: FC<AccountProps> = ({
+  account,
+  token,
+  isLoading,
+  tokenPrices,
+  showLayer,
+  highlightedPartOfName,
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const address = account ? account.address_eth ?? account.address : undefined
@@ -67,7 +75,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             <AccountAvatar account={account} />
           </StyledListTitleWithAvatar>
           <dd>
-            <AccountLink scope={account} address={address!} />
+            <AccountLink scope={account} address={address!} highlightedPartOfName={highlightedPartOfName} />
             <CopyToClipboard value={address!} />
           </dd>
 
