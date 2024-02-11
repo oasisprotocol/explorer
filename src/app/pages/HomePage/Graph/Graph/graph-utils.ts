@@ -27,6 +27,10 @@ export abstract class GraphUtils {
           x: 1.2 * width,
           y: 0.7 * height,
         }
+      case Layer.pontusx:
+        // TODO: update this if/when we want to display this layer
+        // We meed this case here since this switch/case is declared to be exhaustive.
+        return initialValue
       case Layer.sapphire:
         return {
           scale: 2.4,

@@ -87,6 +87,7 @@
     "paratime": "Paratime",
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
+    "pontusx": "Pontus-X",
     "proposal": "Proposal",
     "proposer": "Proposer",
     "rank": "Rank",
@@ -472,6 +473,7 @@
       "sapphireParaTimeDesc": "Confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility",
       "emeraldParaTimeDesc": "EVM Compatible ParaTime providing smart contract environment with EVM compatibility.",
       "cipherParaTimeDesc": "The Cipher ParaTime is a Confidential ParaTime for executing Wasm smart contracts.",
+      "pontusxParaTimeDesc": "Pontus-X ParaTime",
       "consensusDesc": "Our scalable, high-throughput, secure, proof-of-stake consensus layer run by a decentralized set of validator nodes.",
       "close": "Close"
     },

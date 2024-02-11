@@ -20,6 +20,7 @@ const LAYER_DECIMALS: Record<Layer, number> = {
   [Layer.emerald]: paraTimesConfig[Layer.emerald].decimals,
   [Layer.sapphire]: paraTimesConfig[Layer.sapphire].decimals,
   [Layer.cipher]: paraTimesConfig[Layer.cipher].decimals,
+  [Layer.pontusx]: paraTimesConfig[Layer.pontusx].decimals,
   [Layer.consensus]: consensusDecimals,
 }
 

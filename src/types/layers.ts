@@ -10,6 +10,7 @@ export const getLayerNames = (t: TFunction): Record<Layer, string> => ({
   [Layer.emerald]: t('common.emerald'),
   [Layer.sapphire]: t('common.sapphire'),
   [Layer.cipher]: t('common.cipher'),
+  [Layer.pontusx]: t('common.pontusx'),
   [Layer.consensus]: t('common.consensus'),
 })
 
@@ -24,9 +25,10 @@ const layerOrder: Record<Layer, number> = {
   [Layer.sapphire]: 2,
   [Layer.emerald]: 3,
   [Layer.cipher]: 4,
+  [Layer.pontusx]: 5,
 }
 
-const hiddenLayers: Layer[] = []
+const hiddenLayers: Layer[] = [Layer.pontusx]
 
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
@@ -40,3 +42,5 @@ export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[]
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
 
 export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
+
+export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)

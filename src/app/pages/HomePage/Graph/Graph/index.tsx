@@ -293,7 +293,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
   }
 
-  const disabledMap: Record<Layer, boolean> = {
+  const disabledMap: Partial<Record<Layer, boolean>> = {
     [Layer.emerald]: isLayerDisabled(Layer.emerald),
     [Layer.consensus]: isLayerDisabled(Layer.consensus),
     [Layer.cipher]: isLayerDisabled(Layer.cipher),
