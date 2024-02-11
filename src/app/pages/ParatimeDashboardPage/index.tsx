@@ -14,12 +14,15 @@ import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { paraTimesConfig } from '../../../config'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const isLocal = isLocalnet(scope.network)
   const [method, setMethod] = useTypedSearchParam('tx_method', 'any')
+
+  const { hideTokensFromDashboard } = paraTimesConfig[scope.layer]!
 
   return (
     <PageLayout>
@@ -35,11 +38,11 @@ export const ParatimeDashboardPage: FC = () => {
         </Grid>
         {isMobile && (
           <Grid item xs={12}>
-            <TopTokens scope={scope} />
+            {!hideTokensFromDashboard && <TopTokens scope={scope} />}
           </Grid>
         )}
       </Grid>
-      {!isMobile && <TopTokens scope={scope} />}
+      {!hideTokensFromDashboard && !isMobile && <TopTokens scope={scope} />}
       {!isLocal && (
         <>
           <Grid container spacing={4}>

@@ -67,13 +67,19 @@ function invertSpecialScopePaths() {
 invertSpecialScopePaths()
 
 export const hiddenScopes: SearchScope[] = [
-  { network: Network.testnet, layer: Layer.pontusxdev },
+  { network: Network.testnet, layer: Layer.consensus },
+  { network: Network.testnet, layer: Layer.sapphire },
+  { network: Network.testnet, layer: Layer.emerald },
+  { network: Network.testnet, layer: Layer.cipher },
+  { network: Network.mainnet, layer: Layer.consensus },
+  { network: Network.mainnet, layer: Layer.emerald },
+  { network: Network.mainnet, layer: Layer.cipher },
   { network: Network.mainnet, layer: Layer.pontusxdev },
   { network: Network.mainnet, layer: Layer.pontusxtest },
   // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
 ]
 
-export const mergeNetworksInLayerSelector = false
+export const mergeNetworksInLayerSelector = true
 
 export const isScopeHidden = (scope: SearchScope): boolean =>
   !!hiddenScopes.find(s => s.network === scope.network && s.layer === scope.layer)
@@ -88,15 +94,15 @@ export abstract class RouteUtils {
       [Layer.cipher]: false,
       [Layer.pontusxdev]: false,
       [Layer.pontusxtest]: false,
-      [Layer.consensus]: true,
+      [Layer.consensus]: false,
     },
     [Network.testnet]: {
-      [Layer.emerald]: true,
-      [Layer.sapphire]: true,
+      [Layer.emerald]: false,
+      [Layer.sapphire]: false,
       [Layer.cipher]: false,
       [Layer.pontusxdev]: true,
       [Layer.pontusxtest]: true,
-      [Layer.consensus]: true,
+      [Layer.consensus]: false,
     },
     [Network.localnet]: {
       [Layer.emerald]: process.env.REACT_APP_LOCALNET_EMERALD === 'true',
