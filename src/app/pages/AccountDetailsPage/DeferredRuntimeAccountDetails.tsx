@@ -12,8 +12,9 @@ export const DeferredRuntimeAccountDetails: FC<{
   layer: Runtime
   address: string
   tokenPrices: AllTokenPrices
+  highlightedPartOfName: string | undefined
   showLayer?: boolean
-}> = ({ network, layer, address, tokenPrices, showLayer }) => {
+}> = ({ network, layer, address, tokenPrices, highlightedPartOfName, showLayer }) => {
   const { data, isLoading, isError } = useGetRuntimeAccountsAddress(network, layer, address)
   return (
     <AccountDetailsView
@@ -22,6 +23,7 @@ export const DeferredRuntimeAccountDetails: FC<{
       account={data?.data}
       tokenPrices={tokenPrices}
       showLayer={showLayer}
+      highlightedPartOfName={highlightedPartOfName}
     />
   )
 }

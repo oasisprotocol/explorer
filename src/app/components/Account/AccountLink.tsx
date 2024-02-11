@@ -11,6 +11,8 @@ import { useAccountName } from '../../hooks/useAccountName'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
 import Box from '@mui/material/Box'
+import { HighlightedText } from '../HighlightedText'
+import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 
 const WithTypographyAndLink: FC<{
@@ -61,12 +63,17 @@ export const AccountLink: FC<{
   plain?: boolean
 
   /**
+   * What part of the name should be highlighted (if any)
+   */
+  highlightedPartOfName?: string | undefined
+
+  /**
    * Any extra tooltips to display
    *
    * (Besides the content necessary because of potential shortening)
    */
   extraTooltip?: ReactNode
-}> = ({ scope, address, alwaysTrim, plain, extraTooltip }) => {
+}> = ({ scope, address, alwaysTrim, plain, highlightedPartOfName, extraTooltip }) => {
   const { isTablet } = useScreenSize()
   const { name: accountName } = useAccountName(scope, address)
   const to = RouteUtils.getAccountRoute(scope, address)
@@ -112,7 +119,7 @@ export const AccountLink: FC<{
         <MaybeWithTooltip title={tooltipPostfix}>
           {accountName ? (
             <span>
-              {accountName} ({address})
+              <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
             </span>
           ) : (
             address
@@ -128,7 +135,11 @@ export const AccountLink: FC<{
   return (
     <WithTypographyAndLink to={to} plain={plain} mobile>
       <>
-        <AdaptiveTrimmer text={accountName} strategy="end" extraTooltip={extraTooltip} />
+        <AdaptiveHighlightedText
+          text={accountName}
+          pattern={highlightedPartOfName}
+          extraTooltip={extraTooltip}
+        />
         <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
       </>
     </WithTypographyAndLink>

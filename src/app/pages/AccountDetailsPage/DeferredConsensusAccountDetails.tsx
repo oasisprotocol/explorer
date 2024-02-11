@@ -9,6 +9,7 @@ export const DeferredConsensusAccountDetails: FC<{
   network: Network
   address: string
   tokenPrices: AllTokenPrices
+  highlightedPartOfName: string | undefined
   showLayer?: boolean
 }> = () =>
   // {
