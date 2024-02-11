@@ -65,7 +65,7 @@ function invertSpecialScopePaths() {
 
 invertSpecialScopePaths()
 
-export const hiddenLayers: Layer[] = [Layer.pontusxdev]
+export const hiddenLayers: Layer[] = [Layer.consensus, Layer.sapphire, Layer.emerald, Layer.cipher]
 
 export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
 
@@ -83,8 +83,8 @@ export abstract class RouteUtils {
       [Layer.consensus]: !isStableDeploy,
     },
     [Network.testnet]: {
-      [Layer.emerald]: true,
-      [Layer.sapphire]: true,
+      [Layer.emerald]: false,
+      [Layer.sapphire]: false,
       [Layer.cipher]: false,
       [Layer.pontusxdev]: true,
       [Layer.pontusxtest]: true,

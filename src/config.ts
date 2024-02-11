@@ -5,6 +5,8 @@ import { NativeToken, NativeTokenInfo } from './types/ticker'
 import { SearchScope } from './types/searchScope'
 import { Network } from './types/network'
 import type { Theme } from '@mui/material/styles/createTheme'
+import { pontusXDevnetTheme } from './styles/theme/pontusx/devnetTheme'
+import { pontusXTestnetTheme } from './styles/theme/pontusx/testnetTheme'
 
 export const consensusDecimals = 9
 /**
@@ -207,15 +209,24 @@ export const showFiatValues = process.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
 
 export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
   [Network.mainnet]: {},
-  [Network.testnet]: {},
+  [Network.testnet]: {
+    [Layer.pontusxdev]: 'Pontus-X Devnet',
+    [Layer.pontusxtest]: 'Pontus-X Testnet',
+  },
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
   [Network.mainnet]: {},
-  [Network.testnet]: {},
+  [Network.testnet]: {
+    [Layer.pontusxdev]: ['pontusx', 'dev'],
+    [Layer.pontusxtest]: ['pontusx', 'test'],
+  },
 }
 
 export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
   [Network.mainnet]: {},
-  [Network.testnet]: {},
+  [Network.testnet]: {
+    [Layer.pontusxdev]: pontusXDevnetTheme,
+    [Layer.pontusxtest]: pontusXTestnetTheme,
+  },
 }
