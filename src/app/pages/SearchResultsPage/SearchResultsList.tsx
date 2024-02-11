@@ -109,6 +109,7 @@ export const SearchResultsList: FC<{
                 network={item.network}
                 address={item.address}
                 tokenPrices={tokenPrices}
+                highlightedPartOfName={searchTerm}
                 showLayer={true}
               />
             ) : (
@@ -117,6 +118,7 @@ export const SearchResultsList: FC<{
                 layer={item.layer}
                 address={item.address}
                 tokenPrices={tokenPrices}
+                highlightedPartOfName={searchTerm}
                 showLayer={true}
               />
             )
