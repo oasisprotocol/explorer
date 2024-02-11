@@ -13,6 +13,7 @@ import { LayerPicker } from './../LayerPicker'
 import { fixedLayer, fixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RuntimeScope, SearchScope } from '../../../types/searchScope'
+import { hideNetworkRibbon } from '../../../config'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
@@ -88,7 +89,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
       {!isMobile && (
         <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
-      {!fixedNetwork && !fixedLayer && !isTablet && network !== 'mainnet' && (
+      {!hideNetworkRibbon && !fixedNetwork && !fixedLayer && !isTablet && network !== 'mainnet' && (
         <StyledBox>
           <Typography
             component="span"

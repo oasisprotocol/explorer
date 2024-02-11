@@ -5,8 +5,8 @@ import Link from '@mui/material/Link'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { Link as RouterLink } from 'react-router-dom'
-import { OasisIcon } from '../CustomIcons/OasisIcon'
-import { ExplorerIcon } from '../CustomIcons/ExplorerIcon'
+import { PontusxIcon } from '../CustomIcons/PontusxIcon'
+import pontusxIcon from '../CustomIcons/pontusx_horizontal_white.svg'
 
 interface LogotypeProps {
   color?: string
@@ -32,15 +32,19 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const theme = useTheme()
   const { isMobile } = useScreenSize()
   const oasisLogoSize = isMobile ? 32 : 40
-  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 40, width: 214 }
 
+  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 58, width: 228 }
   return (
     <Box
       sx={{
         color: color || theme.palette.layout.main,
       }}
     >
-      {!showText ? <OasisIcon sx={logoSize} /> : <ExplorerIcon sx={logoSize} />}
+      {!showText ? (
+        <PontusxIcon sx={logoSize} />
+      ) : (
+        <img src={pontusxIcon} width={logoSize.width} alt="Pontus-X Logo" />
+      )}
     </Box>
   )
 }
