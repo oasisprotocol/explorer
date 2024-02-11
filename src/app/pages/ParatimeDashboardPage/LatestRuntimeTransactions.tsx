@@ -7,7 +7,7 @@ import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
-import { FILTERING_ON_DASHBOARD, NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
+import { FILTERING_ON_DASHBOARD } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeScope } from '../../../types/searchScope'
@@ -17,7 +17,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
 
-const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
+const limit = 15 // NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
 
 const LatestRuntimeTransactionsContent: FC<{

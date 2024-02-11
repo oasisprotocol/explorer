@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Link as RouterLink } from 'react-router-dom'
-import { OasisIcon } from '../CustomIcons/OasisIcon'
-import { ExplorerIcon } from '../CustomIcons/ExplorerIcon'
+import { PontusxIcon } from '../CustomIcons/PontusxIcon'
+import pontusxIcon from '../CustomIcons/pontusx_horizontal_white.svg'
 
 interface LogotypeProps {
   showText: boolean
@@ -22,11 +22,15 @@ export const HomePageLink: FC<LogotypeProps> = ({ showText }) => {
 export const Logotype: FC<LogotypeProps> = ({ showText }) => {
   const { isMobile } = useScreenSize()
   const oasisLogoSize = isMobile ? 32 : 40
-  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 40, width: 214 }
 
+  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 58, width: 228 }
   return (
     <div className="flex items-center text-primary">
-      {!showText ? <OasisIcon sx={logoSize} /> : <ExplorerIcon sx={logoSize} />}
+      {!showText ? (
+        <PontusxIcon sx={logoSize} />
+      ) : (
+        <img src={pontusxIcon} width={logoSize.width} alt="Pontus-X Logo" />
+      )}
     </div>
   )
 }

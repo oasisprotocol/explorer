@@ -127,7 +127,7 @@
     "seeMore": "See more",
     "select": "Select",
     "size": "Size",
-    "sapphire": "Sapphire",
+    "sapphire": "Oasis Sapphire",
     "shares": "Shares",
     "show": "Show",
     "smartContract": "Smart Contract",
@@ -169,8 +169,8 @@
     "online": "Online",
     "outOfDate": "Indexing out of date",
     "recipient": "Recipient",
-    "mainnet": "Mainnet",
-    "testnet": "Testnet",
+    "mainnet": "Oasis Mainnet",
+    "testnet": "Oasis Testnet",
     "valuePair": "{{value, number}}"
   },
   "contract": {
@@ -377,7 +377,7 @@
     "last": "Last"
   },
   "social": {
-    "description": "Be part of the community and stay in the loop on everything Oasis",
+    "description": "Learn more about Pontus-X and the team behind it",
     "discord": "Discord",
     "header": "Join us",
     "reddit": "Reddit",
@@ -714,8 +714,8 @@
     "canNotReadStatus": "Can't load status paratime '{{name}}'."
   },
   "pontusx": {
-    "devnet": "Pontus-X devnet",
-    "testnet": "Pontus-X",
+    "devnet": "Pontus-X Devnet",
+    "testnet": "Pontus-X Testnet",
     "testTokens": {
       "description": "Do you need some tokens for testing?",
       "header": "Test tokens",

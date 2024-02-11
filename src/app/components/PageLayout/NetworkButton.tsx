@@ -88,6 +88,9 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
 
   return (
     <StyledNetworkButton
+      sx={{
+        width: 300,
+      }}
       size="small"
       variant="outlined"
       startIcon={icons[network]}

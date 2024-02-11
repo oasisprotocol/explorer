@@ -5,6 +5,8 @@ import { NativeToken, NativeTokenInfo } from './types/ticker'
 import { SearchScope } from './types/searchScope'
 import { Network } from './types/network'
 import type { Theme } from '@mui/material/styles/createTheme'
+import { pontusXDevnetTheme } from './styles/theme/pontusx/devnetTheme'
+import { pontusXTestnetTheme } from './styles/theme/pontusx/testnetTheme'
 
 export const NUMBER_OF_ITEMS_ON_DASHBOARD = 5
 export const FILTERING_ON_DASHBOARD = true
@@ -44,6 +46,7 @@ type LayerConfig = {
   localnet?: LayerNetwork
   decimals: number
   type: RuntimeTypes
+  hideTokensFromDashboard?: boolean
   offerRoflTxTypes?: boolean
 }
 
@@ -110,7 +113,7 @@ const cipherConfig: LayerConfig = {
 const sapphireConfig: LayerConfig = {
   mainnet: {
     address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
-    // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
+    // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/maiNativeTokenn/runtime/src/lib.rs#L166
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000f80306c9858e7279',
     tokens: [NativeToken.ROSE],
@@ -167,6 +170,7 @@ const pontusxTestConfig: LayerConfig = {
   },
   decimals: 18,
   type: RuntimeTypes.Evm,
+  hideTokensFromDashboard: true,
 }
 
 type LayersConfig = {
@@ -210,16 +214,32 @@ export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
 export const showFiatValues = import.meta.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
 
 export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
-  mainnet: {},
-  testnet: {},
+  mainnet: {
+    sapphire: 'Oasis Sapphire Mainnet',
+  },
+  testnet: {
+    pontusxdev: 'Pontus-X Devnet',
+    pontusxtest: 'Pontus-X Testnet',
+  },
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
-  mainnet: {},
-  testnet: {},
+  mainnet: {
+    sapphire: ['oasis', 'sapphire'],
+  },
+  testnet: {
+    pontusxdev: ['pontusx', 'dev'],
+    pontusxtest: ['pontusx', 'test'],
+  },
 }
 
 export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
   mainnet: {},
-  testnet: {},
+  testnet: {
+    pontusxdev: pontusXDevnetTheme,
+    pontusxtest: pontusXTestnetTheme,
+  },
 }
+
+export const hideNetworkRibbon = true
+export const hideRoseAppButton = true
