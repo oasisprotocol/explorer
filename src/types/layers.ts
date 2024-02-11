@@ -26,6 +26,8 @@ const layerOrder: Record<Layer, number> = {
   [Layer.cipher]: 4,
 }
 
+const hiddenLayers: Layer[] = []
+
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
 
@@ -36,3 +38,5 @@ export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
 
 export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[] | undefined): boolean =>
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
+
+export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)

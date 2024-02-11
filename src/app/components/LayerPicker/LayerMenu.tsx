@@ -11,7 +11,7 @@ import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
-import { orderByLayer } from '../../../types/layers'
+import { isLayerHidden, orderByLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
 
 type BaseLayerMenuItemProps = {
@@ -109,6 +109,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
 }) => {
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const options = Object.values(Layer)
+    .filter(layer => !isLayerHidden(layer))
     .map(layer => ({
       layer,
       enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork || network).includes(layer),
