@@ -38,6 +38,8 @@ type LayerConfig = {
    * Specified in milliseconds.
    */
   outOfDateThreshold: number
+
+  hideTokensFromDashboard?: boolean
 }
 
 export enum RuntimeTypes {
@@ -148,6 +150,7 @@ const pontusxConfig: LayerConfig = {
   decimals: 18,
   type: RuntimeTypes.Evm,
   outOfDateThreshold: 2 * 60 * 1000,
+  hideTokensFromDashboard: true,
 }
 
 type LayersConfig = {
