@@ -4,15 +4,6 @@ import { uniq } from '../app/utils/helpers'
 // a cycle of imports which confuse jest
 // eslint-disable-next-line no-restricted-imports
 import { Layer } from '../oasis-nexus/generated/api'
-import { TFunction } from 'i18next'
-
-export const getLayerNames = (t: TFunction): Record<Layer, string> => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.pontusx]: t('common.pontusx'),
-  [Layer.consensus]: t('common.consensus'),
-})
 
 interface HasLayer {
   layer: Layer

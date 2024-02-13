@@ -10,7 +10,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
 import { Network } from '../../../types/network'
-import { getLayerNames } from '../../../types/layers'
+import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { SearchScope } from '../../../types/searchScope'
 import { Snapshot } from 'app/components/Snapshots/Snapshot'
@@ -23,7 +23,7 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
-  const paratime = getLayerNames(t)[scope.layer]
+  const paratime = getLayerLabels(t)[scope.layer]
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
     if (!duration) {
       return
