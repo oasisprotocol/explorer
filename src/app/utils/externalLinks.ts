@@ -34,6 +34,9 @@ export const docs = {
   sapphireTestnetNode: `${docsUrl}node/testnet/#sapphire`,
   sapphireTestnet: `${docsUrl}dapp/sapphire/#testnet`,
   sapphireTestnetHardhat: `${docsUrl}dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
+  pontusx1: 'https://docs.pontus-x.eu/',
+  pontusx2: 'https://docs.pontus-x.eu/docs/Development/quick_start',
+  pontusx3: 'https://github.com/deltaDAO/mvg-portal/blob/main/chains.config.js',
 }
 
 export const referrals = { coinGecko: 'https://www.coingecko.com' }

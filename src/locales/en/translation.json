@@ -254,6 +254,20 @@
       "header": "Add the {{ layer }} Testnet to Hardhat",
       "description": "Open up your hardhat.config.ts and drop in these lines."
     },
+    "pontusx": {
+      "1": {
+        "header": "What is the Pontus-X Network?",
+        "description": "The Pontus-X Network is our official confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
+      },
+      "2": {
+        "header": "Testnet Parameters",
+        "description": "The Testnet for Pontus-X may undergo frequent version upgrades."
+      },
+      "3": {
+        "header": "Adding the Pontus-X Testnet to Hardhat",
+        "description": "To integrate with Pontus-X, open your hardhat.config.ts file and insert the following configurations."
+      }
+    },
     "token": {
       "header": "Token Metrics and Distribution",
       "description": "Rose is the currency powering the Oasis network."
