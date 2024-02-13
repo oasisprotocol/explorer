@@ -15,11 +15,11 @@ declare global {
       REACT_APP_SOCIAL_DISCORD?: string
       REACT_APP_SOCIAL_YOUTUBE?: string
       REACT_APP_SOCIAL_REDDIT?: string
-      READ_APP_SOCIAL_LINKEDIN?: string
-      READ_APP_SOCIAL_DOCS?: string
-      READ_APP_SOCIAL_HOME?: string
-      REACT_APP_PROD_URL: string
-      REACT_APP_STAGING_URL?: string
+      REACT_APP_SOCIAL_LINKEDIN?: string
+      REACT_APP_SOCIAL_DOCS?: string
+      REACT_APP_SOCIAL_HOME?: string
+      REACT_APP_PRODUCTION_URLS: string
+      REACT_APP_STAGING_URLS?: string
     }
   }
 }

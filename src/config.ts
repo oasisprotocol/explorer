@@ -146,7 +146,7 @@ export const paraTimesConfig = {
   [Layer.consensus]: null,
 } satisfies LayersConfig
 
-const parseUrl = (input: string | undefined): string[] =>
+const splitUrls = (input: string | undefined): string[] =>
   input
     ? input
         .split(',')
@@ -155,8 +155,8 @@ const parseUrl = (input: string | undefined): string[] =>
     : []
 
 export const deploys = {
-  production: parseUrl(process.env.REACT_APP_PROD_URL),
-  staging: parseUrl(process.env.REACT_APP_STAGING_URL),
+  production: splitUrls(process.env.REACT_APP_PRODUCTION_URLS),
+  staging: splitUrls(process.env.REACT_APP_STAGING_URLS),
   localhost: 'http://localhost:1234',
 }
 
