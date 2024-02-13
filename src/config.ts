@@ -40,6 +40,7 @@ type LayerConfig = {
   testnet: LayerNetwork
   decimals: number
   type: RuntimeTypes
+  hideTokensFromDashboard?: boolean
 }
 
 export enum RuntimeTypes {
@@ -156,6 +157,7 @@ const pontusxTestConfig: LayerConfig = {
   },
   decimals: 18,
   type: RuntimeTypes.Evm,
+  hideTokensFromDashboard: true,
 }
 
 type LayersConfig = {
