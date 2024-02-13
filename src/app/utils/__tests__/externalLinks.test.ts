@@ -18,7 +18,7 @@ onlyRunOnCI('externalLinks', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const [_linkName, url] of Object.entries(linksGroup)) {
         expect(typeof url).toBe('string')
-        expect(url).toMatch(/^https:/)
+        expect(url).toMatch(/^(https|mailto):/)
       }
     }
   })
@@ -32,6 +32,7 @@ onlyRunOnCI('externalLinks', () => {
         if (url.startsWith(externalLinksModule.github.commit)) continue // We store only partial url in constants
         if (url.startsWith(externalLinksModule.github.releaseTag)) continue // We store only partial url in constants
         if (url.startsWith(externalLinksModule.ipfs.proxyPrefix)) continue // We store only partial url in constants
+        if (url.startsWith('mailto')) continue // We can't test email addresses
 
         it.concurrent(`${linksGroupName} ${linkName} ${url}`, async () => {
           const response = await nodeFetch(url, { method: 'GET' })

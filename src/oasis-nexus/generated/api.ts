@@ -1759,6 +1759,7 @@ export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
   cipher: 'cipher',
+  pontusx: 'pontusx',
 } as const;
 
 export type Layer = typeof Layer[keyof typeof Layer];
@@ -1769,6 +1770,7 @@ export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
   cipher: 'cipher',
+  pontusx: 'pontusx',
   consensus: 'consensus',
 } as const;
 

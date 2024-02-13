@@ -62,6 +62,7 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
+      [Layer.pontusx]: undefined,
     },
     [Network.testnet]: {
       [Layer.emerald]: {
@@ -99,8 +100,9 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
+      [Layer.pontusx]: undefined,
     },
-  } satisfies SpecifiedPerEnabledRuntime<LayerContent>
+  } satisfies SpecifiedPerEnabledRuntime<LayerContent | undefined>
 }
 
 export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {

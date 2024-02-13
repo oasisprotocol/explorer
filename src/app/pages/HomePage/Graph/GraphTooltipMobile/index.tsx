@@ -140,7 +140,7 @@ const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, o
       : t('common.paraTimeOnline')
 }
 
-const useLayerTooltipMap = (network: Network): Record<Layer, TooltipInfo> => {
+const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo>> => {
   const isSapphireEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.sapphire)
   const isEmeraldEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.emerald)
   const isCipherEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.cipher)
@@ -270,7 +270,9 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const { body, disabled, failing } = useLayerTooltipMap(network)[layer]
+  const tooltip = useLayerTooltipMap(network)[layer]
+  if (!tooltip) return
+  const { body, disabled, failing } = tooltip
 
   const navigateTo = () => {
     if (disabled) {

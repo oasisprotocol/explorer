@@ -48,6 +48,7 @@ export const faucet = {
   [Layer.consensus]: faucetUrl,
   [Layer.emerald]: `${faucetParaTimeBaseUrl}emerald`,
   [Layer.sapphire]: `${faucetParaTimeBaseUrl}sapphire`,
+  [Layer.pontusx]: 'mailto:contact@delta-dao.com?subject=tokens',
   [Layer.cipher]: `${faucetParaTimeBaseUrl}cipher`,
 }
 

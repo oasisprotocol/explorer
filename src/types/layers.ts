@@ -4,14 +4,6 @@ import { uniq } from '../app/utils/helpers'
 // a cycle of imports which confuse jest
 // eslint-disable-next-line no-restricted-imports
 import { Layer } from '../oasis-nexus/generated/api'
-import { TFunction } from 'i18next'
-
-export const getLayerNames = (t: TFunction): Record<Layer, string> => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.consensus]: t('common.consensus'),
-})
 
 interface HasLayer {
   layer: Layer
@@ -24,7 +16,10 @@ const layerOrder: Record<Layer, number> = {
   [Layer.sapphire]: 2,
   [Layer.emerald]: 3,
   [Layer.cipher]: 4,
+  [Layer.pontusx]: 5,
 }
+
+const hiddenLayers: Layer[] = [Layer.pontusx]
 
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
@@ -36,3 +31,7 @@ export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
 
 export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[] | undefined): boolean =>
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
+
+export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
+
+export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)

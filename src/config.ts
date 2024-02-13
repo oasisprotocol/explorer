@@ -108,6 +108,32 @@ const sapphireConfig: LayerConfig = {
   outOfDateThreshold: 2 * 60 * 1000,
 }
 
+const pontusxConfig: LayerConfig = {
+  mainnet: {
+    activeNodes: undefined,
+    address: undefined,
+    blockGasLimit: undefined,
+    runtimeId: undefined,
+  },
+  testnet: {
+    activeNodes: 8, // TODO use correct number
+    address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd', // TODO use correct address
+    // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
+    blockGasLimit: 15_000_000,
+    runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
+  },
+  local: {
+    activeNodes: undefined,
+    address: undefined,
+    blockGasLimit: undefined,
+    runtimeId: undefined,
+  },
+
+  decimals: 18,
+  type: RuntimeTypes.Evm,
+  outOfDateThreshold: 2 * 60 * 1000,
+}
+
 type LayersConfig = {
   [key in Layer]: LayerConfig | null
 }
@@ -116,6 +142,7 @@ export const paraTimesConfig = {
   [Layer.cipher]: cipherConfig,
   [Layer.emerald]: emeraldConfig,
   [Layer.sapphire]: sapphireConfig,
+  [Layer.pontusx]: pontusxConfig,
   [Layer.consensus]: null,
 } satisfies LayersConfig
 

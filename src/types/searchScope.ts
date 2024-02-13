@@ -1,5 +1,5 @@
 import { getNetworkNames, Network } from './network'
-import { getLayerNames } from './layers'
+import { getLayerLabels } from '../app/utils/content'
 import { HasScope, Layer } from '../oasis-nexus/api'
 import { TFunction } from 'i18next'
 
@@ -14,7 +14,7 @@ export const MainnetEmerald: SearchScope = {
 }
 
 export const getNameForScope = (t: TFunction, scope: SearchScope) =>
-  `${getLayerNames(t)[scope.layer]} ${getNetworkNames(t)[scope.network]}`
+  `${getLayerLabels(t)[scope.layer]} ${getNetworkNames(t)[scope.network]}`
 
 export const getKeyForScope: (scope: SearchScope) => string = ({ network, layer }) => `${network}.${layer}`
 
