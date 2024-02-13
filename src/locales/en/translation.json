@@ -299,7 +299,7 @@
     "last": "Last"
   },
   "social": {
-    "description": "Be part of the community and stay in the loop on everything Oasis",
+    "description": "Learn more about Pontus-X and the team behind it",
     "discord": "Discord",
     "header": "Join us",
     "reddit": "Reddit",
@@ -314,8 +314,8 @@
     "changeView": "Change view"
   },
   "testnetFaucet": {
-    "description": "Drops are limited to 10 TEST tokens",
-    "header": "Oasis Testnet Faucet",
+    "description": "Do you need some tokens for testing?",
+    "header": "Test tokens",
     "request": "Request test tokens"
   },
   "tokens": {
