@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
@@ -11,6 +11,9 @@ import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import DocsIcon from '@mui/icons-material/MenuBook'
+import HomeIcon from '@mui/icons-material/Cottage'
 import { COLORS } from '../../../styles/theme/colors'
 import { socialMedia } from '../../utils/externalLinks'
 
@@ -18,10 +21,11 @@ type SocialLinkProps = {
   label: string
   href: string
   isMobile: boolean
-  img: string
+  imgSrc?: string
+  img?: ReactNode
 }
 
-const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
+const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, imgSrc, img }) => {
   return (
     <Link
       href={href}
@@ -38,12 +42,17 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, img }) => {
       target="_blank"
     >
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-        <img src={img} alt={label} height={40} />
+        <>
+          {imgSrc && <img src={imgSrc} alt={label} height={40} />}
+          {img}
+        </>
       </Box>
       <Typography sx={{ fontSize: 18, fontWeight: 700, mb: isMobile ? 4 : 0 }}>{label}</Typography>
     </Link>
   )
 }
+
+const iconProps = { sx: { fontSize: 50, margin: '-4px' } }
 
 export const Social: FC = () => {
   const { t } = useTranslation()
@@ -84,31 +93,70 @@ export const Social: FC = () => {
             height: '100%',
           }}
         >
-          <SocialLink
-            isMobile={isMobile}
-            label={t('social.telegram')}
-            href={socialMedia.telegram}
-            img={telegram}
-          />
-          <SocialLink
-            isMobile={isMobile}
-            label={t('social.twitter')}
-            href={socialMedia.twitter}
-            img={twitter}
-          />
-          <SocialLink
-            isMobile={isMobile}
-            label={t('social.discord')}
-            href={socialMedia.discord}
-            img={discord}
-          />
-          <SocialLink
-            isMobile={isMobile}
-            label={t('social.youtube')}
-            href={socialMedia.youtube}
-            img={youtube}
-          />
-          <SocialLink isMobile={isMobile} label={t('social.reddit')} href={socialMedia.reddit} img={reddit} />
+          {socialMedia.telegram && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.telegram')}
+              href={socialMedia.telegram}
+              imgSrc={telegram}
+            />
+          )}
+          {socialMedia.twitter && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.twitter')}
+              href={socialMedia.twitter}
+              imgSrc={twitter}
+            />
+          )}
+          {socialMedia.discord && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.discord')}
+              href={socialMedia.discord}
+              imgSrc={discord}
+            />
+          )}
+          {socialMedia.youtube && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.youtube')}
+              href={socialMedia.youtube}
+              imgSrc={youtube}
+            />
+          )}
+          {socialMedia.reddit && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.reddit')}
+              href={socialMedia.reddit}
+              imgSrc={reddit}
+            />
+          )}
+          {socialMedia.linkedin && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.linkedin')}
+              href={socialMedia.linkedin}
+              img={<LinkedInIcon {...iconProps} />}
+            />
+          )}
+          {socialMedia.docs && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.docs')}
+              href={socialMedia.docs}
+              img={<DocsIcon {...iconProps} />}
+            />
+          )}
+          {socialMedia.home && (
+            <SocialLink
+              isMobile={isMobile}
+              label={t('social.home')}
+              href={socialMedia.home}
+              img={<HomeIcon {...iconProps} />}
+            />
+          )}
         </Box>
       </Grid>
     </Grid>
