@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
-import { Transactions } from '../../components/Transactions'
+import { RuntimeTransactions } from '../../components/Transactions'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -37,7 +37,7 @@ const TransactionList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scop
   }
 
   return (
-    <Transactions
+    <RuntimeTransactions
       transactions={transactions}
       isLoading={isLoading}
       limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}

@@ -1,8 +1,8 @@
 import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
 import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
-import { TransactionsPage } from './app/pages/TransactionsPage'
-import { TransactionDetailPage } from './app/pages/TransactionDetailPage'
+import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
+import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { RuntimeBlockDetailPage } from './app/pages/RuntimeBlockDetailPage'
 import { AccountDetailsPage, useAccountDetailsProps } from './app/pages/AccountDetailsPage'
@@ -174,11 +174,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: `tx`,
-            element: <TransactionsPage />,
+            element: <RuntimeTransactionsPage />,
           },
           {
             path: `tx/:hash`,
-            element: <TransactionDetailPage />,
+            element: <RuntimeTransactionDetailPage />,
             loader: transactionParamLoader,
           },
           {

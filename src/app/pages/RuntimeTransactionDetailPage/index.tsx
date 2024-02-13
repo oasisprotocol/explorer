@@ -75,7 +75,7 @@ const StyledAlert = styled(Alert)(() => ({
   marginBottom: '1em',
 }))
 
-export const TransactionDetailPage: FC = () => {
+export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
@@ -122,7 +122,7 @@ export const TransactionDetailPage: FC = () => {
           />
         }
       >
-        <TransactionDetailView
+        <RuntimeTransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
           tokenPriceInfo={tokenPriceInfo}
@@ -161,7 +161,7 @@ const TransactionInfoTooltip: FC<PropsWithChildren<{ label: string }>> = ({ labe
   )
 }
 
-export const TransactionDetailView: FC<{
+export const RuntimeTransactionDetailView: FC<{
   isLoading?: boolean
   transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean

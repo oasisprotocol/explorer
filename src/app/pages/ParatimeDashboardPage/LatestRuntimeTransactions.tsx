@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
-import { Transactions } from '../../components/Transactions'
+import { RuntimeTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
@@ -16,7 +16,7 @@ import { SearchScope } from '../../../types/searchScope'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = scope
@@ -53,7 +53,7 @@ export const LatestTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <Transactions
+        <RuntimeTransactions
           transactions={transactionsQuery.data?.data.transactions}
           isLoading={transactionsQuery.isLoading}
           limit={limit}
