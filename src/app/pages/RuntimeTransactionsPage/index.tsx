@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { TableRuntimeTransactionList, Transactions } from '../../components/Transactions'
+import { TableRuntimeTransactionList, RuntimeTransactions } from '../../components/Transactions'
 import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
-import { TransactionDetailView } from '../TransactionDetailPage'
+import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { getTickerForNetwork } from '../../../types/ticker'
@@ -20,7 +20,7 @@ import { VerticalList } from '../../components/VerticalList'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
-export const TransactionsPage: FC = () => {
+export const RuntimeTransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -95,7 +95,7 @@ export const TransactionsPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
       >
         {tableView === TableLayout.Horizontal && (
-          <Transactions
+          <RuntimeTransactions
             transactions={data?.data.transactions}
             isLoading={isLoading}
             limit={limit}
@@ -113,7 +113,7 @@ export const TransactionsPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(limit).keys()].map(key => (
-                <TransactionDetailView
+                <RuntimeTransactionDetailView
                   key={key}
                   isLoading={true}
                   transaction={undefined}
@@ -124,7 +124,7 @@ export const TransactionsPage: FC = () => {
 
             {!isLoading &&
               data?.data.transactions.map(tx => (
-                <TransactionDetailView
+                <RuntimeTransactionDetailView
                   key={tx.hash}
                   transaction={tx}
                   tokenPriceInfo={tokenPriceInfo}

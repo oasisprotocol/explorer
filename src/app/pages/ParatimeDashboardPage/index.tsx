@@ -5,7 +5,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { Social } from '../../components/Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestRuntimeBlocks } from './LatestRuntimeBlocks'
-import { LatestTransactions } from './LatestTransactions'
+import { LatestRuntimeTransactions } from './LatestRuntimeTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
 import { TotalTransactions } from './TotalTransactions'
 import { PageLayout } from '../../components/PageLayout'
@@ -21,7 +21,7 @@ export const ParatimeDashboardPage: FC = () => {
     <PageLayout>
       <ParaTimeSnapshot scope={scope} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <LatestTransactions scope={scope} />
+      <LatestRuntimeTransactions scope={scope} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
           <LearningMaterials scope={scope} />

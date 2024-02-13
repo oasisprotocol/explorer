@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Transactions } from '../../components/Transactions'
+import { RuntimeTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
@@ -38,7 +38,7 @@ const AccountTransactions: FC<AccountDetailsContext> = ({ scope, address }) => {
   return (
     <>
       {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
-      <Transactions
+      <RuntimeTransactions
         transactions={transactions}
         ownAddress={address}
         isLoading={isLoading}

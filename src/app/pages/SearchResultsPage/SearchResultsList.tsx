@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ResultsGroupByType } from './ResultsGroupByType'
 import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
-import { TransactionDetailView } from '../TransactionDetailPage'
+import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage/AccountDetailsView'
 import {
   AccountResult,
@@ -67,7 +67,7 @@ export const SearchResultsList: FC<{
             (item): item is TransactionResult => item.resultType === 'transaction',
           )}
           resultComponent={item => (
-            <TransactionDetailView
+            <RuntimeTransactionDetailView
               isLoading={false}
               transaction={item}
               tokenPriceInfo={tokenPrices[item.network]}
