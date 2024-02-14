@@ -163,4 +163,4 @@ export const deploys = {
 const stableDeploys = [...deploys.production, deploys.staging]
 export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)
 
-export const getAppTitle = () => process.env.REACT_APP_TITLE
+export const getAppTitle = () => process.env.REACT_APP_META_TITLE
