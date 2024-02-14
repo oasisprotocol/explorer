@@ -8,8 +8,11 @@ declare global {
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
       REACT_APP_SHOW_BUILD_BANNERS?: 'true' | 'false'
-      REACT_APP_TITLE: string
-      REACT_APP_DESC: string
+      REACT_APP_META_TITLE: string
+      REACT_APP_META_IMAGE: string
+      REACT_APP_META_MANIFEST: string
+      REACT_APP_META_FAVICON: string
+      REACT_APP_META_DESC: string
       REACT_APP_SOCIAL_TELEGRAM?: string
       REACT_APP_SOCIAL_TWITTER?: string
       REACT_APP_SOCIAL_DISCORD?: string
