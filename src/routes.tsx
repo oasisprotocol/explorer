@@ -42,6 +42,7 @@ import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
+import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -84,6 +85,11 @@ export const routes: RouteObject[] = [
           {
             path: `address`,
             element: <ConsensusAccountsPage />,
+          },
+          {
+            path: `address/:address`,
+            element: <ConsensusAccountDetailsPage />,
+            loader: consensusAddressParamLoader(),
           },
           {
             path: `proposal`,
