@@ -13,6 +13,7 @@ import { ValidatorsCard } from './Validators'
 import { ConsensusSnapshot } from './ConsensusSnapshot'
 import { LatestConsensusBlocks } from './LatestConsensusBlocks'
 import { AccountsCard } from './AccountsCard'
+import { LatestConsensusTransactions } from './LatestConsensusTransactions'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -32,6 +33,7 @@ export const ConsensusDashboardPage: FC = () => {
       </Grid>
       <ValidatorsCard scope={scope} />
       <AccountsCard scope={scope} />
+      <LatestConsensusTransactions scope={scope} />
       <NetworkProposalsCard scope={scope} />
       <TransactionsStats scope={scope} />
       <LearningMaterials />

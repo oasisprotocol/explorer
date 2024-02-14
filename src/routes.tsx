@@ -39,7 +39,8 @@ import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
-import { ConsensusAccountsPage } from 'app/pages/ConsensusAccountsPage'
+import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
+import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -104,6 +105,10 @@ export const routes: RouteObject[] = [
           {
             path: `block`,
             element: <ConsensusBlocksPage />,
+          },
+          {
+            path: 'tx',
+            element: <ConsensusTransactionsPage />,
           },
         ],
       },
