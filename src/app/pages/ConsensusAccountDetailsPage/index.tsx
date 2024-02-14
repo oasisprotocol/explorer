@@ -1,16 +1,31 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLoaderData } from 'react-router-dom'
+import { Account, useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Account } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { TextSkeleton } from '../../components/Skeleton'
-import { AccountSizeBadge } from 'app/components/AccountSizeBadge'
-import { AccountLink } from 'app/components/Account/AccountLink'
-import { RoundedBalance } from 'app/components/RoundedBalance'
+import { AccountSizeBadge } from '../../components/AccountSizeBadge'
+import { AccountLink } from '../../components/Account/AccountLink'
+import { RoundedBalance } from '../..//components/RoundedBalance'
+import { AddressLoaderData } from '../../utils/route-utils'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 
 export const ConsensusAccountDetailsPage: FC = () => {
-  return <PageLayout>{/* TODO: Implement account details cards */}</PageLayout>
+  const scope = useRequiredScopeParam()
+  const { network } = scope
+  const { address } = useLoaderData() as AddressLoaderData
+  const accountQuery = useGetConsensusAccountsAddress(network, address)
+  const { isLoading, data } = accountQuery
+  const account = data?.data
+
+  return (
+    <PageLayout>
+      <ConsensusAccountDetailsCard isLoading={isLoading} account={account} />
+    </PageLayout>
+  )
 }
 
 export const ConsensusAccountDetailsView: FC<{
