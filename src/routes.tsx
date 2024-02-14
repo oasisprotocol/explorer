@@ -10,7 +10,8 @@ import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountT
 import { AccountTokensCard } from './app/pages/AccountDetailsPage/AccountTokensCard'
 import { SearchResultsPage } from './app/pages/SearchResultsPage'
 import {
-  addressParamLoader,
+  consensusAddressParamLoader,
+  runtimeAddressParamLoader,
   blockHeightParamLoader,
   transactionParamLoader,
   assertEnabledScope,
@@ -100,7 +101,7 @@ export const routes: RouteObject[] = [
           {
             path: `validators/:address`,
             element: <ValidatorDetailsPage />,
-            loader: addressParamLoader(),
+            loader: consensusAddressParamLoader(),
           },
           {
             path: `block`,
@@ -143,7 +144,7 @@ export const routes: RouteObject[] = [
           {
             path: `address/:address`,
             element: <AccountDetailsPage />,
-            loader: addressParamLoader(),
+            loader: runtimeAddressParamLoader(),
             children: [
               {
                 path: '',
@@ -167,7 +168,7 @@ export const routes: RouteObject[] = [
                   {
                     path: ':contractAddress',
                     Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} />,
-                    loader: addressParamLoader('contractAddress'),
+                    loader: runtimeAddressParamLoader('contractAddress'),
                   },
                 ],
               },
@@ -193,7 +194,7 @@ export const routes: RouteObject[] = [
           {
             path: 'token/:address/instance/:instanceId',
             element: <NFTInstanceDashboardPage />,
-            loader: addressParamLoader(),
+            loader: runtimeAddressParamLoader(),
             children: [
               {
                 path: '',
@@ -208,7 +209,7 @@ export const routes: RouteObject[] = [
           {
             path: `token/:address`,
             element: <TokenDashboardPage />,
-            loader: addressParamLoader(),
+            loader: runtimeAddressParamLoader(),
             children: [
               {
                 path: '',
