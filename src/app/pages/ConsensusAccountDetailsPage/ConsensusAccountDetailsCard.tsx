@@ -1,15 +1,17 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import { Account } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { StyledDescriptionList } from '../../components/StyledDescriptionList'
+import { StyledDescriptionList, StyledListTitleWithAvatar } from '../../components/StyledDescriptionList'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { AccountSizeBadge } from '../../components/AccountSizeBadge'
 import { TextSkeleton } from '../../components/Skeleton'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { AccountAvatar } from '../../components/AccountAvatar'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -39,9 +41,12 @@ const ConsensusAccountDetails: FC<ConsensusAccountDetailsCardProps> = ({ account
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'}>
-      <dt>
-        <AccountSizeBadge size={account.size} />
-      </dt>
+      <StyledListTitleWithAvatar>
+        <Box gap={1} sx={{ display: 'flex', alignItems: 'center' }}>
+          <AccountAvatar address={account.address} />
+          <AccountSizeBadge size={account.size} />
+        </Box>
+      </StyledListTitleWithAvatar>
       <dd>
         <AccountLink scope={account} address={account.address} />
         <CopyToClipboard value={account.address} />
