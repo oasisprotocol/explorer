@@ -24,7 +24,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 type LayerDetailsContent = {
   description: string
   rpcHttp: string
-  rpcWebSockets: string
+  rpcWebSockets?: string
   chainHexId: string
   chainDecimalId: string
   docs: string
@@ -143,11 +143,13 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
             endpoint: details.rpcHttp,
           })}
         </TextListItem>
-        <TextListItem>
-          {t('layerPicker.rpcWebSockets', {
-            endpoint: details.rpcWebSockets,
-          })}
-        </TextListItem>
+        {details.rpcWebSockets && (
+          <TextListItem>
+            {t('layerPicker.rpcWebSockets', {
+              endpoint: details.rpcWebSockets,
+            })}
+          </TextListItem>
+        )}
         <TextListItem>
           {t('layerPicker.chainId')}
           <TextList>
