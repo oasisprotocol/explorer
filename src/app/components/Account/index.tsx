@@ -1,13 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import { staking } from '@oasisprotocol/client'
 import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
-import { StyledDescriptionList } from '../../components/StyledDescriptionList'
+import { StyledDescriptionList, StyledListTitleWithAvatar } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { JazzIcon } from '../../components/JazzIcon'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
 import { EvmToken, type RuntimeAccount } from '../../../oasis-nexus/api'
@@ -24,25 +22,7 @@ import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
 import BigNumber from 'bignumber.js'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
-
-export const StyledAvatarContainer = styled('dt')(({ theme }) => ({
-  '&&': {
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2, 0),
-    },
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(3, 0),
-    },
-  },
-}))
-
-export const addressToNumber = (address: string) => {
-  // https://github.com/oasisprotocol/oasis-wallet-ext/blob/da7ad67/src/popup/component/AccountIcon/index.js#L26
-  const addressU8 = staking.addressFromBech32(address)
-  const seed = addressU8[20] | (addressU8[19] << 8) | (addressU8[18] << 16) | (addressU8[17] << 24)
-
-  return seed
-}
+import { AccountAvatar } from '../AccountAvatar'
 
 export const FiatMoneyAmountBox = styled(Box)(() => ({
   display: 'flex',
@@ -96,9 +76,9 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
               </dd>
             </>
           )}
-          <StyledAvatarContainer>
-            <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToNumber(account.address)} />
-          </StyledAvatarContainer>
+          <StyledListTitleWithAvatar>
+            <AccountAvatar address={account.address} />
+          </StyledListTitleWithAvatar>
           <dd>
             <AccountLink scope={account} address={address!} />
             <CopyToClipboard value={address!} />

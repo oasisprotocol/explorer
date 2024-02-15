@@ -72,3 +72,14 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
   }),
   ...(highlight && backgroundColorAnimation),
 }))
+
+export const StyledListTitleWithAvatar = styled('dt')(({ theme }) => ({
+  '&&': {
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2, 0),
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(3, 0),
+    },
+  },
+}))
