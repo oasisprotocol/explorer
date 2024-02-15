@@ -77,8 +77,8 @@ type LayerPickerContentProps = Omit<LayerPickerProps, 'open'>
 
 enum LayerPickerTabletStep {
   Network,
-  ParaTime,
-  ParaTimeDetails,
+  Layer,
+  LayerDetails,
 }
 
 const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose, onConfirm }) => {
@@ -87,7 +87,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   const { network, layer } = useRequiredScopeParam()
   const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
-  const [tabletStep, setTabletStep] = useState<LayerPickerTabletStep>(LayerPickerTabletStep.ParaTimeDetails)
+  const [tabletStep, setTabletStep] = useState<LayerPickerTabletStep>(LayerPickerTabletStep.LayerDetails)
   const selectNetwork = (newNetwork: Network) => {
     const enabledLayers = RouteUtils.getAllLayersForNetwork(newNetwork).enabled
     const targetLayer = enabledLayers.includes(selectedLayer) ? selectedLayer : enabledLayers[0]
@@ -104,7 +104,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
       {isTablet && (
         <TabletActionBar>
           <div>
-            {tabletStep === LayerPickerTabletStep.ParaTime && (
+            {tabletStep === LayerPickerTabletStep.Layer && (
               <TabletBackButton
                 variant="text"
                 startIcon={<KeyboardArrowLeft />}
@@ -115,12 +115,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 {t('layerPicker.viewNetworks')}
               </TabletBackButton>
             )}
-            {tabletStep === LayerPickerTabletStep.ParaTimeDetails && (
+            {tabletStep === LayerPickerTabletStep.LayerDetails && (
               <TabletBackButton
                 variant="text"
                 startIcon={<KeyboardArrowLeft />}
                 onClick={() => {
-                  setTabletStep(LayerPickerTabletStep.ParaTime)
+                  setTabletStep(LayerPickerTabletStep.Layer)
                 }}
               >
                 {t('layerPicker.viewLayers')}
@@ -140,12 +140,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 selectedNetwork={selectedNetwork}
                 setSelectedNetwork={network => {
                   selectNetwork(network)
-                  setTabletStep(LayerPickerTabletStep.ParaTime)
+                  setTabletStep(LayerPickerTabletStep.Layer)
                 }}
               />
             </Grid>
           )}
-          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.ParaTime)) && (
+          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
             <Grid xs={12} md={3}>
               <LayerMenu
                 activeLayer={layer}
@@ -154,12 +154,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 selectedNetwork={selectedNetwork}
                 setSelectedLayer={layer => {
                   setSelectedLayer(layer)
-                  setTabletStep(LayerPickerTabletStep.ParaTimeDetails)
+                  setTabletStep(LayerPickerTabletStep.LayerDetails)
                 }}
               />
             </Grid>
           )}
-          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.ParaTimeDetails)) && (
+          {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
             <Grid xs={12} md={6}>
               <LayerDetails
                 handleConfirm={handleConfirm}
