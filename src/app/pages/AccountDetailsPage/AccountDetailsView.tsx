@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { EvmToken, RuntimeAccount } from '../../../oasis-nexus/api'
 import { useTranslation } from 'react-i18next'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
-import { CardEmptyState } from './CardEmptyState'
+import { CardEmptyState } from '../../components/CardEmptyState'
 import { Account } from '../../components/Account'
 
 export const AccountDetailsView: FC<{

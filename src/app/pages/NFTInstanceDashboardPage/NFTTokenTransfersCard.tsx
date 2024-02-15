@@ -8,7 +8,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { NftDashboardContext } from './'
-import { CardEmptyState } from '../AccountDetailsPage/CardEmptyState'
+import { CardEmptyState } from '../../components/CardEmptyState'
 import { useNFTInstanceTransfers } from '../TokenDashboardPage/hook'
 
 export const nftTokenTransfersContainerId = 'nftTokenTransfers'

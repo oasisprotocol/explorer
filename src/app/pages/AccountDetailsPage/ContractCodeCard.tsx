@@ -4,7 +4,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hook'
-import { CardEmptyState } from './CardEmptyState'
+import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from '../TokenDashboardPage'
 import { RawDataDisplay } from '../../components/CodeDisplay'
 
