@@ -18,12 +18,12 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const { network } = scope
   const { address } = useLoaderData() as AddressLoaderData
   const accountQuery = useGetConsensusAccountsAddress(network, address)
-  const { isLoading, data } = accountQuery
+  const { isError, isLoading, data } = accountQuery
   const account = data?.data
 
   return (
     <PageLayout>
-      <ConsensusAccountDetailsCard isLoading={isLoading} account={account} />
+      <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
     </PageLayout>
   )
 }

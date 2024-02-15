@@ -12,31 +12,38 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AccountAvatar } from '../../components/AccountAvatar'
+import { CardEmptyState } from '../../components/CardEmptyState'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
 }))
 
 type ConsensusAccountDetailsCardProps = {
-  isLoading: boolean
   account: Account | undefined
+  isError: boolean
+  isLoading: boolean
 }
 
-export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({ account, isLoading }) => {
+export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({
+  account,
+  isError,
+  isLoading,
+}) => {
   const { t } = useTranslation()
 
   return (
     <SubPageCard featured isLoadingTitle={isLoading} title={t('account.title')}>
-      <ConsensusAccountDetails isLoading={isLoading} account={account} />
+      <ConsensusAccountDetails isError={isError} isLoading={isLoading} account={account} />
     </SubPageCard>
   )
 }
 
-const ConsensusAccountDetails: FC<ConsensusAccountDetailsCardProps> = ({ account, isLoading }) => {
+const ConsensusAccountDetails: FC<ConsensusAccountDetailsCardProps> = ({ account, isError, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
+  if (isError) return <CardEmptyState label={t('account.cantLoadDetails')} />
   if (!account) return null
 
   return (
