@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
+import Grid from '@mui/material/Grid'
 import { Account, useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -13,6 +14,7 @@ import { AddressLoaderData } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 import { RouterTabs } from '../../components/RouterTabs'
+import { BalanceDistribution } from './BalanceDistribution'
 import { ConsensusAccountDetailsContext } from './hooks'
 
 export const ConsensusAccountDetailsPage: FC = () => {
@@ -29,6 +31,12 @@ export const ConsensusAccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <BalanceDistribution account={account} isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} md={6} />
+      </Grid>
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )

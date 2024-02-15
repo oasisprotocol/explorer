@@ -1,6 +1,7 @@
 {
   "account": {
     "available": "Available",
+    "balanceDistribution": "Balance Distribution",
     "birth": "Birth",
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "debonding": "Debonding",
@@ -21,7 +22,8 @@
     "transactionsListTitle": "Account Transactions",
     "totalBalance": "Total Balance",
     "totalReceived": "Total Received",
-    "totalSent": "Total Sent"
+    "totalSent": "Total Sent",
+    "totalValue": "Total {{value}}"
   },
   "activeAccounts": {
     "title": "Active Accounts",
