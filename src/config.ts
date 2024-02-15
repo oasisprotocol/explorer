@@ -131,11 +131,10 @@ const pontusxConfig: LayerConfig = {
     runtimeId: undefined,
   },
   testnet: {
-    activeNodes: 8, // TODO use correct number
-    address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd', // TODO use correct address
-    // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
+    activeNodes: 1,
+    address: 'oasis1qr02702pr8ecjuff2z3es254pw9xl6z2yg9qcc6c',
     blockGasLimit: 15_000_000,
-    runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
+    runtimeId: '0000000000000000000000000000000000000000000000004febe52eb412b421',
     tokens: [NativeToken.EUROe, NativeToken.TEST],
     fiatCurrency: 'eur',
   },
