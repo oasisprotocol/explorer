@@ -15,7 +15,7 @@ import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButt
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTokenPrice } from '../../../coin-gecko/api'
-import { getTickerForNetwork } from '../../../types/ticker'
+import { getTickerForScope } from '../../../config'
 import { VerticalList } from '../../components/VerticalList'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -35,7 +35,7 @@ export const RuntimeTransactionsPage: FC = () => {
     // we should call useGetConsensusTransactions()
   }
 
-  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
+  const tokenPriceInfo = useTokenPrice(getTickerForScope(scope))
 
   useEffect(() => {
     if (!isMobile) {

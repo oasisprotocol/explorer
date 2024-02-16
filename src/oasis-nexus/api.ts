@@ -1,7 +1,7 @@
 /** @file Wrappers around generated API */
 
 import axios, { AxiosResponse } from 'axios'
-import { consensusDecimals, paraTimesConfig } from '../config'
+import { consensusDecimals, getTickerForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import {
@@ -167,7 +167,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   params?,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTickerForScope({ network, layer: runtime })
   return generated.useGetRuntimeTransactions(network, runtime, params, {
     ...options,
     request: {
@@ -239,7 +239,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
 ) => {
   // Sometimes we will call this with an undefined txHash, so we must be careful here.
   const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTickerForScope({ network, layer: runtime })
   return generated.useGetRuntimeTransactionsTxHash(network, runtime, actualHash, {
     ...options,
     request: {
@@ -320,7 +320,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 
   const oasisAddress = useTransformToOasisAddress(address)
 
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTickerForScope({ network, layer: runtime })
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
     query: {
@@ -755,7 +755,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                               event.body.amount.Amount,
                               paraTimesConfig[runtime].decimals,
                             ),
-                            Denomination: getTickerForNetwork(network),
+                            Denomination: getTickerForScope({ network, layer: runtime }),
                           }
                         : event.body.amount,
                   },

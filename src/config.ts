@@ -1,5 +1,8 @@
+// We get this from the generated code to avoid circular imports
 // eslint-disable-next-line no-restricted-imports
-import { Layer } from './oasis-nexus/generated/api' // We get this from the generated code to avoid circular imports
+import { Layer } from './oasis-nexus/generated/api'
+import { getTickerForNetwork, NativeTicker } from './types/ticker'
+import { SearchScope } from './types/searchScope'
 
 export const consensusDecimals = 9
 
@@ -8,6 +11,13 @@ type LayerNetwork = {
   address: string | undefined
   blockGasLimit: number | undefined
   runtimeId: string | undefined
+
+  /**
+   * What do we call the native ticker on this layer?
+   *
+   * (If not given, the network's default token will be used.)
+   */
+  ticker?: NativeTicker
 }
 
 type LayerConfig = {
@@ -164,3 +174,12 @@ const stableDeploys = [...deploys.production, deploys.staging]
 export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)
 
 export const getAppTitle = () => process.env.REACT_APP_META_TITLE
+
+export const getTickerForScope = ({ network, layer }: SearchScope): NativeTicker => {
+  const networkDefault = getTickerForNetwork(network)
+
+  if (layer !== Layer.consensus) {
+    return paraTimesConfig[layer][network].ticker ?? networkDefault
+  }
+  return networkDefault
+}

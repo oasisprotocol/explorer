@@ -21,6 +21,7 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
+import { getTickerForScope } from '../../../config'
 
 /**
  * Component for displaying a list of search results
@@ -70,7 +71,7 @@ export const SearchResultsList: FC<{
             <RuntimeTransactionDetailView
               isLoading={false}
               transaction={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPriceInfo={tokenPrices[getTickerForScope(item)]}
               showLayer={true}
             />
           )}
@@ -86,7 +87,7 @@ export const SearchResultsList: FC<{
               isLoading={false}
               isError={false}
               account={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPriceInfo={tokenPrices[getTickerForScope(item)]}
               showLayer={true}
             />
           )}
@@ -102,7 +103,7 @@ export const SearchResultsList: FC<{
               isLoading={false}
               isError={false}
               account={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPriceInfo={tokenPrices[getTickerForScope(item)]}
               showLayer={true}
             />
           )}

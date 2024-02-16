@@ -26,7 +26,8 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionEvents } from '../../components/Transactions/TransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { getNameForTicker, getTickerForNetwork, Ticker } from '../../../types/ticker'
+import { getNameForTicker, Ticker } from '../../../types/ticker'
+import { getTickerForScope } from '../../../config'
 import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
@@ -102,7 +103,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
     data?.data,
   )
 
-  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
+  const tokenPriceInfo = useTokenPrice(getTickerForScope(scope))
 
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash

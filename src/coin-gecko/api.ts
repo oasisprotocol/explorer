@@ -1,8 +1,8 @@
 import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { getTickerForNetwork, NativeTicker, Ticker } from '../types/ticker'
-import { Network } from '../types/network'
+import { NativeTicker, Ticker } from '../types/ticker'
+import { getTickerForScope } from '../config'
 import { RouteUtils } from '../app/utils/route-utils'
 import { exhaustedTypeWarning } from '../types/errors'
 
@@ -78,12 +78,15 @@ export const useTokenPrice = (ticker: NativeTicker): TokenPriceInfo => {
   }
 }
 
-export type AllTokenPrices = Record<Network, TokenPriceInfo>
+export type AllTokenPrices = Record<NativeTicker, TokenPriceInfo>
 
 export const useAllTokenPrices = (): AllTokenPrices => {
   const results = {} as any
-  // The list of networks will never change on the run, so we can do this
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  RouteUtils.getEnabledNetworks().forEach(net => (results[net] = useTokenPrice(getTickerForNetwork(net))))
+  RouteUtils.getEnabledScopes().forEach(scope => {
+    const ticker = getTickerForScope(scope)
+    // The list of networks will never change on the run, so we can do this
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    results[ticker] = useTokenPrice(ticker)
+  })
   return results
 }
