@@ -118,7 +118,7 @@ const getContent = (t: TFunction) => {
         },
       },
     },
-  } satisfies SpecifiedPerEnabledRuntime<LayerContent | undefined>
+  } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }
 
 export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
