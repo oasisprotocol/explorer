@@ -23,7 +23,7 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <CardHeader
         action={
           <Link

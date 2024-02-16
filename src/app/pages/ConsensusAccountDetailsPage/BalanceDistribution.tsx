@@ -21,7 +21,7 @@ export const BalanceDistribution: FC<BalanceDistributionProps> = ({ account, isL
   const { t } = useTranslation()
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <CardHeader disableTypography component="h3" title={t('account.balanceDistribution')} />
       <CardContent>
         {isLoading && <Skeleton variant="rectangular" height={300} />}
