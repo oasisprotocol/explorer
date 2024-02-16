@@ -90,6 +90,12 @@ declare module './generated/api' {
     network: Network
     layer: typeof Layer.consensus
   }
+
+  export interface Delegation {
+    network: Network
+    layer: typeof Layer.consensus
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -949,3 +955,34 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
     },
   })
 }
+
+export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetConsensusAccountsAddressDelegations =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusAccountsAddressDelegations(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              delegations: data.delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  shares: fromBaseUnits(delegation.shares, consensusDecimals),
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
