@@ -700,29 +700,6 @@ export type EvmNftListAllOf = {
 
 export type EvmNftList = List & EvmNftListAllOf;
 
-/**
- * A list of tokens in a runtime.
- */
-export type EvmTokenListAllOf = {
-  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
-  evm_tokens: EvmToken[];
-};
-
-export type EvmTokenList = List & EvmTokenListAllOf;
-
-/**
- * The type of a EVM token.
-
- */
-export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const EvmTokenType = {
-  ERC20: 'ERC20',
-  ERC721: 'ERC721',
-} as const;
-
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
   contract_addr: string;
@@ -757,6 +734,29 @@ detected or is not supported, this field will be null/absent.
  */
   type: EvmTokenType;
 }
+
+/**
+ * A list of tokens in a runtime.
+ */
+export type EvmTokenListAllOf = {
+  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
+  evm_tokens: EvmToken[];
+};
+
+export type EvmTokenList = List & EvmTokenListAllOf;
+
+/**
+ * The type of a EVM token.
+
+ */
+export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const EvmTokenType = {
+  ERC20: 'ERC20',
+  ERC721: 'ERC721',
+} as const;
 
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
@@ -809,97 +809,6 @@ export interface RuntimeTransactionEncryptionEnvelope {
  * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
-
-/**
- * A list of runtime transactions.
-
- */
-export type RuntimeTransactionListAllOf = {
-  transactions: RuntimeTransaction[];
-};
-
-export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
-
-export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
-
-/**
- * The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
-Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
-
- */
-export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
-
-export interface RuntimeEvmContractVerification {
-  /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
-Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
- */
-  compilation_metadata?: RuntimeEvmContractVerificationCompilationMetadata;
-  /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
- */
-  source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
-}
-
-export interface RuntimeEvmContract {
-  /** The creation bytecode of the smart contract. This includes the constructor logic
-and the constructor parameters. When run, this code generates the runtime bytecode.
-Can be omitted for contracts that were created by another contract, as opposed
-to a direct `Create` call.
- */
-  creation_bytecode?: string;
-  /** The Oasis cryptographic hash of the transaction that created the smart contract.
-Can be omitted for contracts that were created by another contract, as opposed
-to a direct `Create` call.
- */
-  creation_tx?: string;
-  /** The Ethereum transaction hash of the transaction in `creation_tx`.
-Encoded as a lowercase hex string.
- */
-  eth_creation_tx?: string;
-  /** The total amount of gas used to create or call this contract. */
-  gas_used: number;
-  /** The runtime bytecode of the smart contract. This is the code stored on-chain that
-describes a smart contract. Every contract has this info, but Nexus fetches
-it separately, so the field may be missing for very fresh contracts (or if the fetching
-process is stalled).
- */
-  runtime_bytecode?: string;
-  /** Additional information obtained from contract verification. Only available for smart
-contracts that have been verified successfully by Sourcify.
- */
-  verification?: RuntimeEvmContractVerification;
-}
-
-/**
- * Details about the EVM token involved in the event, if any.
-
- */
-export interface EvmEventToken {
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  type?: EvmTokenType;
-}
-
-/**
- * A decoded parameter of an event or error emitted from an EVM runtime.
-Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
-Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
-Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
-Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
-
- */
-export interface EvmAbiParam {
-  /** The solidity type of the parameter. */
-  evm_type: string;
-  /** The parameter name. */
-  name: string;
-  /** The parameter value. */
-  value: unknown;
-}
 
 /**
  * A runtime transaction.
@@ -1008,6 +917,97 @@ if applicable. The meaning varies based on the transaction method. Some notable 
   /** A reasonable "to" Ethereum address associated with this transaction,
  */
   to_eth?: string;
+}
+
+/**
+ * A list of runtime transactions.
+
+ */
+export type RuntimeTransactionListAllOf = {
+  transactions: RuntimeTransaction[];
+};
+
+export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
+
+export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
+
+/**
+ * The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+
+ */
+export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
+
+export interface RuntimeEvmContractVerification {
+  /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+ */
+  compilation_metadata?: RuntimeEvmContractVerificationCompilationMetadata;
+  /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
+ */
+  source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
+}
+
+export interface RuntimeEvmContract {
+  /** The creation bytecode of the smart contract. This includes the constructor logic
+and the constructor parameters. When run, this code generates the runtime bytecode.
+Can be omitted for contracts that were created by another contract, as opposed
+to a direct `Create` call.
+ */
+  creation_bytecode?: string;
+  /** The Oasis cryptographic hash of the transaction that created the smart contract.
+Can be omitted for contracts that were created by another contract, as opposed
+to a direct `Create` call.
+ */
+  creation_tx?: string;
+  /** The Ethereum transaction hash of the transaction in `creation_tx`.
+Encoded as a lowercase hex string.
+ */
+  eth_creation_tx?: string;
+  /** The total amount of gas used to create or call this contract. */
+  gas_used: number;
+  /** The runtime bytecode of the smart contract. This is the code stored on-chain that
+describes a smart contract. Every contract has this info, but Nexus fetches
+it separately, so the field may be missing for very fresh contracts (or if the fetching
+process is stalled).
+ */
+  runtime_bytecode?: string;
+  /** Additional information obtained from contract verification. Only available for smart
+contracts that have been verified successfully by Sourcify.
+ */
+  verification?: RuntimeEvmContractVerification;
+}
+
+/**
+ * Details about the EVM token involved in the event, if any.
+
+ */
+export interface EvmEventToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  type?: EvmTokenType;
+}
+
+/**
+ * A decoded parameter of an event or error emitted from an EVM runtime.
+Values of EVM type `int128`, `uint128`, `int256`, `uint256`, `fixed`, and `ufixed` are represented as strings.
+Values of EVM type `address` and `address payable` are represented as lowercase hex strings with a "0x" prefix.
+Values of EVM type `bytes` and `bytes<N>` are represented as base64 strings.
+Values of other EVM types (integer types, strings, arrays, etc.) are represented as their JSON counterpart.
+
+ */
+export interface EvmAbiParam {
+  /** The solidity type of the parameter. */
+  evm_type: string;
+  /** The parameter name. */
+  name: string;
+  /** The parameter value. */
+  value: unknown;
 }
 
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
@@ -1499,31 +1499,6 @@ the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
 export type ConsensusEventBody = { [key: string]: any };
 
 /**
- * An event emitted by the consensus layer.
-
- */
-export interface ConsensusEvent {
-  /** The block height at which this event was generated. */
-  block: number;
-  /** The event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
-This object will conform to one of the `*Event` types two levels down
-the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
- */
-  body: ConsensusEventBody;
-  /** Hash of this event's originating transaction.
-Absent if the event did not originate from a transaction.
- */
-  tx_hash?: string | null;
-  /** 0-based index of this event's originating transaction within its block.
-Absent if the event did not originate from a transaction.
- */
-  tx_index?: number | null;
-  /** The type of the event. */
-  type: ConsensusEventType;
-}
-
-/**
  * A list of consensus events.
 
  */
@@ -1559,6 +1534,31 @@ export const ConsensusEventType = {
   stakingtransfer: 'staking.transfer',
 } as const;
 
+/**
+ * An event emitted by the consensus layer.
+
+ */
+export interface ConsensusEvent {
+  /** The block height at which this event was generated. */
+  block: number;
+  /** The event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
+This object will conform to one of the `*Event` types two levels down
+the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
+ */
+  body: ConsensusEventBody;
+  /** Hash of this event's originating transaction.
+Absent if the event did not originate from a transaction.
+ */
+  tx_hash?: string | null;
+  /** 0-based index of this event's originating transaction within its block.
+Absent if the event did not originate from a transaction.
+ */
+  tx_index?: number | null;
+  /** The type of the event. */
+  type: ConsensusEventType;
+}
+
 export interface TxError {
   /** The status code of a failed transaction. */
   code: number;
@@ -1593,8 +1593,6 @@ data origin is not tracked and error information can be faked.
 export type TransactionListAllOf = {
   transactions: Transaction[];
 };
-
-export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -1677,8 +1675,6 @@ export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
 };
 
-export type DebondingDelegationList = List & DebondingDelegationListAllOf;
-
 /**
  * A delegation.
 
@@ -1744,6 +1740,10 @@ the query would return with limit=infinity.
  */
   total_count: number;
 }
+
+export type TransactionList = List & TransactionListAllOf;
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A list of consensus blocks.
