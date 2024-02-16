@@ -127,12 +127,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
               </TabletBackButton>
             )}
           </div>
-          <MobileNetworkButton
-            isOutOfDate={isOutOfDate}
-            network={network}
-            layer={layer}
-            onClick={handleConfirm}
-          />
+          <MobileNetworkButton isOutOfDate={isOutOfDate} network={network} layer={layer} onClick={onClose} />
         </TabletActionBar>
       )}
       <Divider />
