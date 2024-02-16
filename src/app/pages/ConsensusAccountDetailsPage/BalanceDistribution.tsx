@@ -42,6 +42,10 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
     ...getPreciseNumberFormat(account.total),
     ticker: account.ticker,
   })
+  if (Number(account.total) === 0) {
+    return <>{/* TODO: we need designs for this case */}</>
+  }
+
   const data = [
     {
       label: t('account.available'),
