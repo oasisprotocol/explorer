@@ -112,7 +112,7 @@ offset?: number;
 /**
  * Only return NFT instances from the token contract at the given staking address.
  */
-token_address?: string;
+token_address?: StakingAddress;
 };
 
 export type GetRuntimeEvmTokensAddressNftsParams = {
@@ -264,7 +264,7 @@ However, you must provide the Oasis-style derived address here, not the Eth addr
 See `AddressPreimage` for more info on Oasis-style vs Eth addresses.
 
  */
-rel?: string;
+rel?: StakingAddress;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -327,7 +327,7 @@ offset?: number;
 /**
  * Filter on the submitter of the proposal.
  */
-submitter?: string;
+submitter?: StakingAddress;
 /**
  * Filter on the state of the proposal.
  */
@@ -413,35 +413,35 @@ offset?: number;
 /**
  * A filter on the minimum available account balance.
  */
-minAvailable?: string;
+minAvailable?: TextBigInt;
 /**
  * A filter on the maximum available account balance.
  */
-maxAvailable?: string;
+maxAvailable?: TextBigInt;
 /**
  * A filter on the minimum active escrow account balance.
  */
-minEscrow?: string;
+minEscrow?: TextBigInt;
 /**
  * A filter on the maximum active escrow account balance.
  */
-maxEscrow?: string;
+maxEscrow?: TextBigInt;
 /**
  * A filter on the minimum debonding account balance.
  */
-minDebonding?: string;
+minDebonding?: TextBigInt;
 /**
  * A filter on the maximum debonding account balance.
  */
-maxDebonding?: string;
+maxDebonding?: TextBigInt;
 /**
  * A filter on the minimum total account balance.
  */
-minTotalBalance?: string;
+minTotalBalance?: TextBigInt;
 /**
  * A filter on the maximum total account balance.
  */
-maxTotalBalance?: string;
+maxTotalBalance?: TextBigInt;
 };
 
 export type GetConsensusValidatorsParams = {
@@ -520,7 +520,7 @@ this account. For example, for a `Transfer` event, this will be the
 the sender or the recipient of tokens.
 
  */
-rel?: string;
+rel?: StakingAddress;
 /**
  * A filter on the event type.
  */
@@ -549,7 +549,7 @@ method?: ConsensusTxMethod;
 /**
  * A filter on transaction sender.
  */
-sender?: string;
+sender?: StakingAddress;
 /**
  * A filter on related accounts.
  */
@@ -557,11 +557,11 @@ rel?: string;
 /**
  * A filter on minimum transaction fee, inclusive.
  */
-minFee?: string;
+minFee?: TextBigInt;
 /**
  * A filter on maximum transaction fee, inclusive.
  */
-maxFee?: string;
+maxFee?: TextBigInt;
 /**
  * A filter on transaction status code.
  */
@@ -657,16 +657,16 @@ export interface AccountStats {
   /** The total number of transactions this account was involved with. */
   num_txns: number;
   /** The total number of tokens received, in base units. */
-  total_received: string;
+  total_received: TextBigInt;
   /** The total number of tokens sent, in base units. */
-  total_sent: string;
+  total_sent: TextBigInt;
 }
 
 export interface EvmNft {
   /** Describes the asset which this NFT represents */
   description?: string;
   /** The instance ID of this NFT within the collection represented by `token`. */
-  id: string;
+  id: TextBigInt;
   /** A URI pointing to a resource with mime type image/* representing
 the asset which this NFT represents. (Additional
 non-descriptive text from ERC-721 omitted.)
@@ -684,7 +684,7 @@ Currently only ERC-721 is supported, where the document is an Asset Metadata fro
  */
   num_transfers?: number;
   /** The Oasis address of this NFT instance's owner. */
-  owner?: string;
+  owner?: Address;
   /** The Ethereum address of this NFT instance's owner. */
   owner_eth?: string;
   token: EvmToken;
@@ -699,29 +699,6 @@ export type EvmNftListAllOf = {
 };
 
 export type EvmNftList = List & EvmNftListAllOf;
-
-/**
- * A list of tokens in a runtime.
- */
-export type EvmTokenListAllOf = {
-  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
-  evm_tokens: EvmToken[];
-};
-
-export type EvmTokenList = List & EvmTokenListAllOf;
-
-/**
- * The type of a EVM token.
-
- */
-export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const EvmTokenType = {
-  ERC20: 'ERC20',
-  ERC721: 'ERC721',
-} as const;
 
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
@@ -749,7 +726,7 @@ the `/{runtime}/accounts/{address}` endpoint.
   /** Symbol of the token, as provided by token contract's `symbol()` method. */
   symbol?: string;
   /** The total number of base units available. */
-  total_supply?: string;
+  total_supply?: TextBigInt;
   /** The heuristically determined interface that the token contract implements.
 A less specialized variant of the token might be detected; for example, an
 ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
@@ -757,6 +734,29 @@ detected or is not supported, this field will be null/absent.
  */
   type: EvmTokenType;
 }
+
+/**
+ * A list of tokens in a runtime.
+ */
+export type EvmTokenListAllOf = {
+  /** A list of L2 EVM tokens (ERC-20, ERC-721, ...). */
+  evm_tokens: EvmToken[];
+};
+
+export type EvmTokenList = List & EvmTokenListAllOf;
+
+/**
+ * The type of a EVM token.
+
+ */
+export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const EvmTokenType = {
+  ERC20: 'ERC20',
+  ERC721: 'ERC721',
+} as const;
 
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
@@ -796,7 +796,7 @@ export interface RuntimeTransactionEncryptionEnvelope {
   /** The base64-encoded nonce used to encrypt the transaction data. */
   data_nonce?: string;
   /** The format of the encrypted evm transaction envelope. */
-  format: string;
+  format: CallFormat;
   /** The base64-encoded public key used to encrypt the transaction. */
   public_key?: string;
   /** The base64-encoded encrypted result data. */
@@ -809,6 +809,115 @@ export interface RuntimeTransactionEncryptionEnvelope {
  * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
+
+/**
+ * A runtime transaction.
+
+ */
+export interface RuntimeTransaction {
+  /** A reasonable "amount" associated with this transaction, if
+applicable. The meaning varies based on the transaction method.
+Usually in native denomination, ParaTime units. As a string.
+ */
+  amount?: string;
+  /** The method call body. May be null if the transaction was malformed. */
+  body?: RuntimeTransactionBody;
+  /** The fee that was charged for the transaction execution (total, native denomination,
+ParaTime base units, as a string).
+For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
+For other transactions this equals to `fee`.
+ */
+  charged_fee: string;
+  /** The data relevant to the encrypted transaction. Only present for encrypted
+transactions in confidential EVM runtimes like Sapphire.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
+  /** Error details of a failed transaction. */
+  error?: TxError;
+  /** The Ethereum cryptographic hash of this transaction's encoding.
+Absent for non-Ethereum-format transactions.
+ */
+  eth_hash?: string;
+  /** The name of the smart contract function called by the transaction.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_name?: string;
+  /** The decoded parameters with which the smart contract function was called.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_params?: EvmAbiParam[];
+  /** The fee that this transaction's sender committed to pay to execute
+it (total, native denomination, ParaTime base units, as a string).
+ */
+  fee: string;
+  /** The maximum gas that this transaction's sender committed to use to
+execute it.
+ */
+  gas_limit: number;
+  /** The total gas used by the transaction. */
+  gas_used: number;
+  /** The Oasis cryptographic hash of this transaction's encoding. */
+  hash: string;
+  /** The 0-based index of this transaction in the block. */
+  index: number;
+  /** Whether this transaction likely represents a native token transfer.
+This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
+The current heuristic sets this to `true` for:
+ - Transactions with method "accounts.Transfer". Those are always native token transfers.
+ - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
+Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
+ */
+  is_likely_native_token_transfer?: boolean;
+  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
+In practice, Nexus currently expects only the following methods:
+  - "accounts.Transfer"
+  - "consensus.Deposit"
+  - "consensus.Withdraw"
+  - "consensus.Delegate"
+  - "consensus.Undelegate"
+  - "evm.Create"
+  - "evm.Call"
+May be null if the transaction was malformed or encrypted.
+ */
+  method?: string;
+  /** The nonce used with this transaction's 0th signer, to prevent replay. */
+  nonce_0: number;
+  /** The block round at which this transaction was executed. */
+  round: number;
+  /** The Oasis address of this transaction's 0th signer.
+Unlike Ethereum, Oasis natively supports multiple-signature transactions.
+However, the great majority of transactions only have a single signer in practice.
+Retrieving the other signers is currently not supported by this API.
+ */
+  sender_0: Address;
+  /** The Ethereum address of this transaction's 0th signer.
+ */
+  sender_0_eth?: string;
+  /** The total byte size of the transaction. */
+  size: number;
+  /** Whether this transaction successfully executed.
+Can be absent (meaning "unknown") for confidential runtimes.
+ */
+  success?: boolean;
+  /** The second-granular consensus time when this tx's block was proposed. */
+  timestamp: string;
+  /** A reasonable "to" Oasis address associated with this transaction,
+if applicable. The meaning varies based on the transaction method. Some notable examples:
+  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
+  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
+  - For `method = "evm.Call"`, this is the address of the called smart contract
+ */
+  to?: Address;
+  /** A reasonable "to" Ethereum address associated with this transaction,
+ */
+  to_eth?: string;
+}
 
 /**
  * A list of runtime transactions.
@@ -899,115 +1008,6 @@ export interface EvmAbiParam {
   name: string;
   /** The parameter value. */
   value: unknown;
-}
-
-/**
- * A runtime transaction.
-
- */
-export interface RuntimeTransaction {
-  /** A reasonable "amount" associated with this transaction, if
-applicable. The meaning varies based on the transaction method.
-Usually in native denomination, ParaTime units. As a string.
- */
-  amount?: string;
-  /** The method call body. May be null if the transaction was malformed. */
-  body?: RuntimeTransactionBody;
-  /** The fee that was charged for the transaction execution (total, native denomination,
-ParaTime base units, as a string).
-For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
-For other transactions this equals to `fee`.
- */
-  charged_fee: string;
-  /** The data relevant to the encrypted transaction. Only present for encrypted
-transactions in confidential EVM runtimes like Sapphire.
-Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
- */
-  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
-  /** Error details of a failed transaction. */
-  error?: TxError;
-  /** The Ethereum cryptographic hash of this transaction's encoding.
-Absent for non-Ethereum-format transactions.
- */
-  eth_hash?: string;
-  /** The name of the smart contract function called by the transaction.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_name?: string;
-  /** The decoded parameters with which the smart contract function was called.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_params?: EvmAbiParam[];
-  /** The fee that this transaction's sender committed to pay to execute
-it (total, native denomination, ParaTime base units, as a string).
- */
-  fee: string;
-  /** The maximum gas that this transaction's sender committed to use to
-execute it.
- */
-  gas_limit: number;
-  /** The total gas used by the transaction. */
-  gas_used: number;
-  /** The Oasis cryptographic hash of this transaction's encoding. */
-  hash: string;
-  /** The 0-based index of this transaction in the block. */
-  index: number;
-  /** Whether this transaction likely represents a native token transfer.
-This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
-The current heuristic sets this to `true` for:
- - Transactions with method "accounts.Transfer". Those are always native token transfers.
- - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
-Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
- */
-  is_likely_native_token_transfer?: boolean;
-  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
-In practice, Nexus currently expects only the following methods:
-  - "accounts.Transfer"
-  - "consensus.Deposit"
-  - "consensus.Withdraw"
-  - "consensus.Delegate"
-  - "consensus.Undelegate"
-  - "evm.Create"
-  - "evm.Call"
-May be null if the transaction was malformed or encrypted.
- */
-  method?: string;
-  /** The nonce used with this transaction's 0th signer, to prevent replay. */
-  nonce_0: number;
-  /** The block round at which this transaction was executed. */
-  round: number;
-  /** The Oasis address of this transaction's 0th signer.
-Unlike Ethereum, Oasis natively supports multiple-signature transactions.
-However, the great majority of transactions only have a single signer in practice.
-Retrieving the other signers is currently not supported by this API.
- */
-  sender_0: string;
-  /** The Ethereum address of this transaction's 0th signer.
- */
-  sender_0_eth?: string;
-  /** The total byte size of the transaction. */
-  size: number;
-  /** Whether this transaction successfully executed.
-Can be absent (meaning "unknown") for confidential runtimes.
- */
-  success?: boolean;
-  /** The second-granular consensus time when this tx's block was proposed. */
-  timestamp: string;
-  /** A reasonable "to" Oasis address associated with this transaction,
-if applicable. The meaning varies based on the transaction method. Some notable examples:
-  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
-  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
-  - For `method = "evm.Call"`, this is the address of the called smart contract
- */
-  to?: string;
-  /** A reasonable "to" Ethereum address associated with this transaction,
- */
-  to_eth?: string;
 }
 
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
@@ -1175,7 +1175,7 @@ cancelling an existing proposal.
   /** The epoch at which this proposal was created. */
   created_at: number;
   /** The deposit attached to this proposal. */
-  deposit: string;
+  deposit: TextBigInt;
   /** The epoch at which the proposed upgrade will happen. */
   epoch?: number;
   /** The name of the upgrade handler. */
@@ -1184,7 +1184,7 @@ cancelling an existing proposal.
   id: number;
   /** The number of invalid votes for this proposal, after tallying.
  */
-  invalid_votes: string;
+  invalid_votes: TextBigInt;
   /** The base64 encoded raw cbor representing the updated parameters
 which are to be changed by this 'parameters_change' proposal.
  */
@@ -1236,7 +1236,7 @@ export interface Allowance {
   /** The allowed account. */
   address: string;
   /** The amount allowed for the allowed account. */
-  amount: string;
+  amount: TextBigInt;
 }
 
 /**
@@ -1249,19 +1249,19 @@ export interface Account {
   /** The allowances made by this account. */
   allowances: Allowance[];
   /** The available balance, in base units. */
-  available: string;
+  available: TextBigInt;
   /** The debonding escrow balance, in base units. */
-  debonding: string;
+  debonding: TextBigInt;
   /** The debonding delegations balance, in base units.
 For efficiency, this field is omitted when listing multiple-accounts.
  */
-  debonding_delegations_balance?: string;
+  debonding_delegations_balance?: TextBigInt;
   /** The delegations balance, in base units.
 For efficiency, this field is omitted when listing multiple-accounts.
  */
-  delegations_balance?: string;
+  delegations_balance?: TextBigInt;
   /** The active escrow balance, in base units. */
-  escrow: string;
+  escrow: TextBigInt;
   /** A nonce used to prevent replay. */
   nonce: number;
 }
@@ -1272,7 +1272,7 @@ For efficiency, this field is omitted when listing multiple-accounts.
  */
 export interface BareTokenHolder {
   /** Number of tokens held, in base units. */
-  balance: string;
+  balance: TextBigInt;
   /** The Ethereum address of the same account holder, if meaningfully defined. */
   eth_holder_address?: string;
   /** The Oasis address of the account holder. */
@@ -1294,7 +1294,7 @@ export type TokenHolderList = List & TokenHolderListAllOf;
  */
 export interface RuntimeEvmBalance {
   /** Number of tokens held, in base units. */
-  balance: string;
+  balance: TextBigInt;
   /** The Oasis address of this token's contract. */
   token_contract_addr: string;
   /** The EVM address of this token's contract. */
@@ -1313,7 +1313,7 @@ export interface RuntimeEvmBalance {
  */
 export interface RuntimeSdkBalance {
   /** Number of tokens held, in base units. */
-  balance: string;
+  balance: TextBigInt;
   /** The number of decimals of precision for this token. */
   token_decimals: number;
   /** The token ticker symbol. Unique across all oasis-sdk tokens in the same runtime. */
@@ -1448,7 +1448,7 @@ export interface Validator {
   /** The public key identifying this Validator. */
   entity_id: string;
   /** The amount staked. */
-  escrow: string;
+  escrow: TextBigInt;
   media?: ValidatorMedia;
   /** The public key identifying this Validator's node. */
   node_id: string;
@@ -1499,31 +1499,6 @@ the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
 export type ConsensusEventBody = { [key: string]: any };
 
 /**
- * An event emitted by the consensus layer.
-
- */
-export interface ConsensusEvent {
-  /** The block height at which this event was generated. */
-  block: number;
-  /** The event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
-This object will conform to one of the `*Event` types two levels down
-the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
- */
-  body: ConsensusEventBody;
-  /** Hash of this event's originating transaction.
-Absent if the event did not originate from a transaction.
- */
-  tx_hash?: string | null;
-  /** 0-based index of this event's originating transaction within its block.
-Absent if the event did not originate from a transaction.
- */
-  tx_index?: number | null;
-  /** The type of the event. */
-  type: ConsensusEventType;
-}
-
-/**
  * A list of consensus events.
 
  */
@@ -1559,6 +1534,31 @@ export const ConsensusEventType = {
   stakingtransfer: 'staking.transfer',
 } as const;
 
+/**
+ * An event emitted by the consensus layer.
+
+ */
+export interface ConsensusEvent {
+  /** The block height at which this event was generated. */
+  block: number;
+  /** The event contents. This spec does not encode the many possible types;
+instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
+This object will conform to one of the `*Event` types two levels down
+the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
+ */
+  body: ConsensusEventBody;
+  /** Hash of this event's originating transaction.
+Absent if the event did not originate from a transaction.
+ */
+  tx_hash?: string | null;
+  /** 0-based index of this event's originating transaction within its block.
+Absent if the event did not originate from a transaction.
+ */
+  tx_index?: number | null;
+  /** The type of the event. */
+  type: ConsensusEventType;
+}
+
 export interface TxError {
   /** The status code of a failed transaction. */
   code: number;
@@ -1593,8 +1593,6 @@ data origin is not tracked and error information can be faked.
 export type TransactionListAllOf = {
   transactions: Transaction[];
 };
-
-export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -1633,7 +1631,7 @@ export interface Transaction {
   /** The fee that this transaction's sender committed
 to pay to execute it.
  */
-  fee: string;
+  fee: TextBigInt;
   /** The cryptographic hash of this transaction's encoding. */
   hash: string;
   /** 0-based index of this transaction in its block */
@@ -1658,13 +1656,13 @@ to pay to execute it.
  */
 export interface DebondingDelegation {
   /** The amount of tokens delegated in base units. */
-  amount: string;
+  amount: TextBigInt;
   /** The epoch at which the debonding ends. */
   debond_end: number;
   /** The delegator address. */
   delegator: string;
   /** The shares of tokens delegated. */
-  shares: string;
+  shares: TextBigInt;
   /** The delegatee (validator) address. */
   validator: string;
 }
@@ -1677,19 +1675,17 @@ export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
 };
 
-export type DebondingDelegationList = List & DebondingDelegationListAllOf;
-
 /**
  * A delegation.
 
  */
 export interface Delegation {
   /** The amount of tokens delegated in base units. */
-  amount: string;
+  amount: TextBigInt;
   /** The delegator address. */
   delegator: string;
   /** The shares of tokens delegated. */
-  shares: string;
+  shares: TextBigInt;
   /** The delegatee (validator) address. */
   validator: string;
 }
@@ -1745,11 +1741,34 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
+export type TransactionList = List & TransactionListAllOf;
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
+
 /**
  * A list of consensus blocks.
 
  */
 export type BlockList = List & BlockListAllOf;
+
+export type CallFormat = string;
+
+/**
+ * A base64-encoded ed25519 public key.
+ */
+export type Ed25519PubKey = string;
+
+/**
+ * An Oasis-style (bech32) address.
+ */
+export type Address = string;
+
+export type TextBigInt = string;
+
+/**
+ * An Oasis-style (bech32) address.
+ */
+export type StakingAddress = string;
 
 export type Runtime = typeof Runtime[keyof typeof Runtime];
 
@@ -2251,7 +2270,7 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetCon
  */
 export const GetConsensusEntitiesEntityId = (
     network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
  options?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>,signal?: AbortSignal
 ) => {
       
@@ -2264,13 +2283,13 @@ export const GetConsensusEntitiesEntityId = (
   
 
 export const getGetConsensusEntitiesEntityIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: string,) => {
+    entityId: Ed25519PubKey,) => {
     return [`/${network}/consensus/entities/${entityId}`] as const;
     }
 
     
 export const getGetConsensusEntitiesEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
+    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -2296,7 +2315,7 @@ export type GetConsensusEntitiesEntityIdQueryError = HumanReadableErrorResponse 
  */
 export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
+    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2317,7 +2336,7 @@ export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeo
  */
 export const GetConsensusEntitiesEntityIdNodes = (
     network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
     params?: GetConsensusEntitiesEntityIdNodesParams,
  options?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>,signal?: AbortSignal
 ) => {
@@ -2332,14 +2351,14 @@ export const GetConsensusEntitiesEntityIdNodes = (
   
 
 export const getGetConsensusEntitiesEntityIdNodesQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
     params?: GetConsensusEntitiesEntityIdNodesParams,) => {
     return [`/${network}/consensus/entities/${entityId}/nodes`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getGetConsensusEntitiesEntityIdNodesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
     params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>}
 ) => {
 
@@ -2366,7 +2385,7 @@ export type GetConsensusEntitiesEntityIdNodesQueryError = HumanReadableErrorResp
  */
 export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
     params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2388,8 +2407,8 @@ export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<
  */
 export const GetConsensusEntitiesEntityIdNodesNodeId = (
     network: 'mainnet' | 'testnet',
-    entityId: string,
-    nodeId: string,
+    entityId: Ed25519PubKey,
+    nodeId: Ed25519PubKey,
  options?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>,signal?: AbortSignal
 ) => {
       
@@ -2402,15 +2421,15 @@ export const GetConsensusEntitiesEntityIdNodesNodeId = (
   
 
 export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: string,
-    nodeId: string,) => {
+    entityId: Ed25519PubKey,
+    nodeId: Ed25519PubKey,) => {
     return [`/${network}/consensus/entities/${entityId}/nodes/${nodeId}`] as const;
     }
 
     
 export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: string,
-    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
+    entityId: Ed25519PubKey,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -2436,8 +2455,8 @@ export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = HumanReadableErr
  */
 export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: string,
-    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
+    entityId: Ed25519PubKey,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2525,7 +2544,7 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetC
  */
 export const GetConsensusValidatorsEntityId = (
     network: 'mainnet' | 'testnet',
-    entityId: string,
+    entityId: Ed25519PubKey,
  options?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>,signal?: AbortSignal
 ) => {
       
@@ -2538,13 +2557,13 @@ export const GetConsensusValidatorsEntityId = (
   
 
 export const getGetConsensusValidatorsEntityIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: string,) => {
+    entityId: Ed25519PubKey,) => {
     return [`/${network}/consensus/validators/${entityId}`] as const;
     }
 
     
 export const getGetConsensusValidatorsEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
+    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -2570,7 +2589,7 @@ export type GetConsensusValidatorsEntityIdQueryError = HumanReadableErrorRespons
  */
 export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
+    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2658,7 +2677,7 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetCon
  */
 export const GetConsensusAccountsAddress = (
     network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
  options?: SecondParameter<typeof GetConsensusAccountsAddressMutator>,signal?: AbortSignal
 ) => {
       
@@ -2671,13 +2690,13 @@ export const GetConsensusAccountsAddress = (
   
 
 export const getGetConsensusAccountsAddressQueryKey = (network: 'mainnet' | 'testnet',
-    address: string,) => {
+    address: StakingAddress,) => {
     return [`/${network}/consensus/accounts/${address}`] as const;
     }
 
     
 export const getGetConsensusAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -2703,7 +2722,7 @@ export type GetConsensusAccountsAddressQueryError = HumanReadableErrorResponse |
  */
 export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2724,7 +2743,7 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
  */
 export const GetConsensusAccountsAddressDelegations = (
     network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>,signal?: AbortSignal
 ) => {
@@ -2739,14 +2758,14 @@ export const GetConsensusAccountsAddressDelegations = (
   
 
 export const getGetConsensusAccountsAddressDelegationsQueryKey = (network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams,) => {
     return [`/${network}/consensus/accounts/${address}/delegations`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getGetConsensusAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>}
 ) => {
 
@@ -2773,7 +2792,7 @@ export type GetConsensusAccountsAddressDelegationsQueryError = HumanReadableErro
  */
 export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2795,7 +2814,7 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
  */
 export const GetConsensusAccountsAddressDelegationsTo = (
     network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>,signal?: AbortSignal
 ) => {
@@ -2810,14 +2829,14 @@ export const GetConsensusAccountsAddressDelegationsTo = (
   
 
 export const getGetConsensusAccountsAddressDelegationsToQueryKey = (network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams,) => {
     return [`/${network}/consensus/accounts/${address}/delegations_to`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>}
 ) => {
 
@@ -2844,7 +2863,7 @@ export type GetConsensusAccountsAddressDelegationsToQueryError = HumanReadableEr
  */
 export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2866,7 +2885,7 @@ export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<Retu
  */
 export const GetConsensusAccountsAddressDebondingDelegations = (
     network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>,signal?: AbortSignal
 ) => {
@@ -2881,14 +2900,14 @@ export const GetConsensusAccountsAddressDebondingDelegations = (
   
 
 export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams,) => {
     return [`/${network}/consensus/accounts/${address}/debonding_delegations`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getGetConsensusAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>}
 ) => {
 
@@ -2915,7 +2934,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsQueryError = HumanRea
  */
 export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2937,7 +2956,7 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
  */
 export const GetConsensusAccountsAddressDebondingDelegationsTo = (
     network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>,signal?: AbortSignal
 ) => {
@@ -2952,14 +2971,14 @@ export const GetConsensusAccountsAddressDebondingDelegationsTo = (
   
 
 export const getGetConsensusAccountsAddressDebondingDelegationsToQueryKey = (network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams,) => {
     return [`/${network}/consensus/accounts/${address}/debonding_delegations_to`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>}
 ) => {
 
@@ -2986,7 +3005,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = HumanR
  */
 export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    address: string,
+    address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3700,7 +3719,7 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof GetRunt
 export const GetRuntimeEvmTokensAddress = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>,signal?: AbortSignal
 ) => {
       
@@ -3714,14 +3733,14 @@ export const GetRuntimeEvmTokensAddress = (
 
 export const getGetRuntimeEvmTokensAddressQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,) => {
+    address: StakingAddress,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}`] as const;
     }
 
     
 export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3748,7 +3767,7 @@ export type GetRuntimeEvmTokensAddressQueryError = HumanReadableErrorResponse | 
 export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3772,7 +3791,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const GetRuntimeEvmTokensAddressHolders = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>,signal?: AbortSignal
 ) => {
@@ -3788,7 +3807,7 @@ export const GetRuntimeEvmTokensAddressHolders = (
 
 export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/holders`, ...(params ? [params]: [])] as const;
     }
@@ -3796,7 +3815,7 @@ export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' 
     
 export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
 ) => {
 
@@ -3826,7 +3845,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3851,7 +3870,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const GetRuntimeEvmTokensAddressNfts = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -3867,7 +3886,7 @@ export const GetRuntimeEvmTokensAddressNfts = (
 
 export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/nfts`, ...(params ? [params]: [])] as const;
     }
@@ -3875,7 +3894,7 @@ export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | '
     
 export const getGetRuntimeEvmTokensAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
 ) => {
 
@@ -3905,7 +3924,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3929,8 +3948,8 @@ export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typ
 export const GetRuntimeEvmTokensAddressNftsId = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
-    id: string,
+    address: StakingAddress,
+    id: TextBigInt,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>,signal?: AbortSignal
 ) => {
       
@@ -3944,16 +3963,16 @@ export const GetRuntimeEvmTokensAddressNftsId = (
 
 export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
-    id: string,) => {
+    address: StakingAddress,
+    id: TextBigInt,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/nfts/${id}`] as const;
     }
 
     
 export const getGetRuntimeEvmTokensAddressNftsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
-    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
+    address: StakingAddress,
+    id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3981,8 +4000,8 @@ export type GetRuntimeEvmTokensAddressNftsIdQueryError = HumanReadableErrorRespo
 export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
-    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
+    address: StakingAddress,
+    id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -4004,7 +4023,7 @@ export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<t
 export const GetRuntimeAccountsAddress = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
  options?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>,signal?: AbortSignal
 ) => {
       
@@ -4018,14 +4037,14 @@ export const GetRuntimeAccountsAddress = (
 
 export const getGetRuntimeAccountsAddressQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,) => {
+    address: StakingAddress,) => {
     return [`/${network}/${runtime}/accounts/${address}`] as const;
     }
 
     
 export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -4052,7 +4071,7 @@ export type GetRuntimeAccountsAddressQueryError = HumanReadableErrorResponse | N
 export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -4075,7 +4094,7 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof G
 export const GetRuntimeAccountsAddressNfts = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeAccountsAddressNftsParams,
  options?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -4091,7 +4110,7 @@ export const GetRuntimeAccountsAddressNfts = (
 
 export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeAccountsAddressNftsParams,) => {
     return [`/${network}/${runtime}/accounts/${address}/nfts`, ...(params ? [params]: [])] as const;
     }
@@ -4099,7 +4118,7 @@ export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 't
     
 export const getGetRuntimeAccountsAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
 ) => {
 
@@ -4128,7 +4147,7 @@ export type GetRuntimeAccountsAddressNftsQueryError = HumanReadableErrorResponse
 export const useGetRuntimeAccountsAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: string,
+    address: StakingAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
