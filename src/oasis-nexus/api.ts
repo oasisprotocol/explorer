@@ -124,15 +124,6 @@ function arrayify<T>(arrayOrItem: null | undefined | T | T[]): T[] {
   return arrayOrItem
 }
 
-// TODO: remove when pontusx API is ready
-axios.interceptors.request.use(config => {
-  // Mock pontusx
-  if (config.url?.includes('/v1/pontusx')) {
-    config.url = config.url.replace('/v1/pontusx', '/v1/sapphire')
-  }
-  return config
-})
-
 export const useGetConsensusTransactions: typeof generated.useGetConsensusTransactions = (
   network,
   params?,
