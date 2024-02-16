@@ -85,60 +85,90 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
         ]
       : []),
   ]
-  const tableRows = transactions?.map(transaction => ({
-    key: transaction.hash,
-    data: [
-      {
-        content: <StatusIcon success={transaction.success} error={transaction.error} />,
-        key: 'success',
-      },
-      ...(verbose && canHaveEncryption
-        ? [
-            {
-              content: <TransactionEncryptionStatus envelope={transaction.encryption_envelope} />,
-              key: 'encrypted',
-            },
-          ]
-        : []),
-      {
-        content: (
-          <TransactionLink
-            scope={transaction}
-            alwaysTrim={true}
-            hash={transaction.eth_hash || transaction.hash}
-          />
-        ),
-        key: 'hash',
-      },
-      {
-        content: <BlockLink scope={transaction} height={transaction.round} />,
-        key: 'round',
-      },
-      {
-        align: TableCellAlign.Right,
-        content: <Age sinceTimestamp={transaction.timestamp} />,
-        key: 'timestamp',
-      },
-      ...(verbose
-        ? [
-            {
-              align: TableCellAlign.Center,
-              content: <RuntimeTransactionIcon method={transaction.method} />,
-              key: 'type',
-            },
-            {
-              align: TableCellAlign.Right,
-              content: (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    position: 'relative',
-                    pr: 3,
-                  }}
-                >
-                  {!!ownAddress &&
-                  (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
+  const tableRows = transactions?.map(transaction => {
+    const targetAddress = transaction.to_eth || transaction.to
+    return {
+      key: transaction.hash,
+      data: [
+        {
+          content: <StatusIcon success={transaction.success} error={transaction.error} />,
+          key: 'success',
+        },
+        ...(verbose && canHaveEncryption
+          ? [
+              {
+                content: <TransactionEncryptionStatus envelope={transaction.encryption_envelope} />,
+                key: 'encrypted',
+              },
+            ]
+          : []),
+        {
+          content: (
+            <TransactionLink
+              scope={transaction}
+              alwaysTrim={true}
+              hash={transaction.eth_hash || transaction.hash}
+            />
+          ),
+          key: 'hash',
+        },
+        {
+          content: <BlockLink scope={transaction} height={transaction.round} />,
+          key: 'round',
+        },
+        {
+          align: TableCellAlign.Right,
+          content: <Age sinceTimestamp={transaction.timestamp} />,
+          key: 'timestamp',
+        },
+        ...(verbose
+          ? [
+              {
+                align: TableCellAlign.Center,
+                content: <RuntimeTransactionIcon method={transaction.method} />,
+                key: 'type',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      position: 'relative',
+                      pr: 3,
+                    }}
+                  >
+                    {!!ownAddress &&
+                    (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
+                      <Typography
+                        variant="mono"
+                        component="span"
+                        sx={{
+                          fontWeight: 700,
+                        }}
+                      >
+                        {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
+                      </Typography>
+                    ) : (
+                      <AccountLink
+                        scope={transaction}
+                        address={transaction.sender_0_eth || transaction.sender_0}
+                        alwaysTrim={true}
+                      />
+                    )}
+                    {targetAddress && (
+                      <StyledCircle>
+                        <ArrowForwardIcon fontSize="inherit" />
+                      </StyledCircle>
+                    )}
+                  </Box>
+                ),
+                key: 'from',
+              },
+              {
+                content: targetAddress ? (
+                  !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
                     <Typography
                       variant="mono"
                       component="span"
@@ -146,60 +176,30 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                         fontWeight: 700,
                       }}
                     >
-                      {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
+                      {trimLongString(targetAddress)}
                     </Typography>
                   ) : (
-                    <AccountLink
-                      scope={transaction}
-                      address={transaction.sender_0_eth || transaction.sender_0}
-                      alwaysTrim={true}
-                    />
-                  )}
-                  {transaction.to && (
-                    <StyledCircle>
-                      <ArrowForwardIcon fontSize="inherit" />
-                    </StyledCircle>
-                  )}
-                </Box>
-              ),
-              key: 'from',
-            },
-            {
-              content:
-                !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
-                  <Typography
-                    variant="mono"
-                    component="span"
-                    sx={{
-                      fontWeight: 700,
-                    }}
-                  >
-                    {trimLongString(transaction.to_eth || transaction.to!)}
-                  </Typography>
-                ) : (
-                  <AccountLink
-                    scope={transaction}
-                    address={transaction.to_eth || transaction.to!}
-                    alwaysTrim={true}
-                  />
-                ),
-              key: 'to',
-            },
-            {
-              align: TableCellAlign.Right,
-              content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.ticker} />,
-              key: 'fee_amount',
-            },
-            {
-              align: TableCellAlign.Right,
-              content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
-              key: 'value',
-            },
-          ]
-        : []),
-    ],
-    highlight: transaction.markAsNew,
-  }))
+                    <AccountLink scope={transaction} address={targetAddress} alwaysTrim={true} />
+                  )
+                ) : null,
+                key: 'to',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.ticker} />,
+                key: 'fee_amount',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
+                key: 'value',
+              },
+            ]
+          : []),
+      ],
+      highlight: transaction.markAsNew,
+    }
+  })
 
   return (
     <Table
