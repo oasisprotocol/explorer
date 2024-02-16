@@ -160,7 +160,7 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.voting')}</dt>
           <dd>-</dd>
-          <dt>{t('validator.staked')}</dt>
+          <dt>{t('common.staked')}</dt>
           <dd>-</dd>
           <dt>{t('validator.change')}</dt>
           <dd>-</dd>

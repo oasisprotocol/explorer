@@ -14,7 +14,7 @@ export const SnapshotStaked: FC = () => {
 
   return (
     <SnapshotTextCard
-      title={t('validator.staked')}
+      title={t('common.staked')}
       label={
         percentageValue && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>

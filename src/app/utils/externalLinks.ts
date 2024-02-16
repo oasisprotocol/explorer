@@ -18,6 +18,7 @@ export const docs = {
   consensus: 'https://docs.oasis.io/core/consensus/',
   consensusTransactions: `https://docs.oasis.io/core/consensus/transactions/`,
   consensusServices: `https://docs.oasis.io/core/consensus/services/`,
+  consensusStaking: `https://docs.oasis.io/core/consensus/services/staking/`,
   consensusGenesis: `https://docs.oasis.io/core/consensus/genesis/`,
   consensusVectors: `https://docs.oasis.io/core/consensus/test-vectors/`,
   consensusComet: `https://docs.oasis.io/core/consensus/#cometbft`,

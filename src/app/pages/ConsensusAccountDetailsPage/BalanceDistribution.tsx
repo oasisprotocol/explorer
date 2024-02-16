@@ -48,7 +48,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
       value: Number(account.available),
     },
     {
-      label: t('account.staking'),
+      label: t('common.staking'),
       value: Number(account.delegations_balance),
     },
     {

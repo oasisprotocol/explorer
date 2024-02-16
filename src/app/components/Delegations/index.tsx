@@ -18,7 +18,7 @@ export const Delegations: FC<DelegationsProps> = ({ delegations, isLoading, limi
   const tableColumns: TableColProps[] = [
     { key: 'name', content: t('validator.title') },
     { align: TableCellAlign.Right, key: 'shares', content: t('validator.shares') },
-    { align: TableCellAlign.Right, key: 'staked', content: t('validator.staked') },
+    { align: TableCellAlign.Right, key: 'staked', content: t('common.staked') },
   ]
   const tableRows = delegations?.map(delegation => ({
     key: delegation.validator,
@@ -48,7 +48,7 @@ export const Delegations: FC<DelegationsProps> = ({ delegations, isLoading, limi
       columns={tableColumns}
       rows={tableRows}
       rowsNumber={limit}
-      name={t('validator.staking')}
+      name={t('common.staking')}
       isLoading={isLoading}
       pagination={pagination}
     />

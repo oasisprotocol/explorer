@@ -15,6 +15,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
+import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 
 export const ConsensusAccountDetailsPage: FC = () => {
@@ -35,7 +36,9 @@ export const ConsensusAccountDetailsPage: FC = () => {
         <Grid item xs={12} md={6}>
           <BalanceDistribution account={account} isLoading={isLoading} />
         </Grid>
-        <Grid item xs={12} md={6} />
+        <Grid item xs={12} md={6}>
+          <Staking account={account} isLoading={isLoading} />
+        </Grid>
       </Grid>
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
@@ -72,7 +75,7 @@ export const ConsensusAccountDetailsView: FC<{
       <dd>
         <RoundedBalance value={account.available} ticker={account.ticker} />
       </dd>
-      <dt>{t('account.staked')}</dt>
+      <dt>{t('common.staked')}</dt>
       <dd>
         <>-</>
       </dd>

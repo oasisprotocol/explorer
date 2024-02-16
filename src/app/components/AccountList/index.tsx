@@ -23,7 +23,7 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
     { key: 'address', content: t('common.address') },
     ...(verbose ? [{ key: 'creationDate', content: t('account.birth') }] : []),
     { align: TableCellAlign.Right, key: 'available', content: t('account.available') },
-    { align: TableCellAlign.Right, key: 'staked', content: t('account.staked') },
+    { align: TableCellAlign.Right, key: 'staked', content: t('common.staked') },
     { align: TableCellAlign.Right, key: 'debonding', content: t('account.debonding') },
     { align: TableCellAlign.Right, key: 'total', content: <strong>{t('account.totalBalance')}</strong> },
   ]
