@@ -7,17 +7,20 @@ import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
-import { Network } from '../../../types/network'
+import { Ticker } from '../../../types/ticker'
+import { getTickerForScope } from '../../../config'
 import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { SearchScope } from '../../../types/searchScope'
 import { Snapshot, StyledGrid } from 'app/components/Snapshots/Snapshot'
+import { getFaucetLink } from '../../utils/faucet-links'
 
 export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
   const paratime = getLayerLabels(t)[scope.layer]
+  const ticker = getTickerForScope(scope)
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
     if (!duration) {
       return
@@ -25,6 +28,8 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
 
     setChartDuration(duration)
   }
+
+  const faucetLink = getFaucetLink(scope.network, scope.layer, ticker)
 
   return (
     <>
@@ -48,8 +53,8 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
           <Nodes scope={scope} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
-          {scope.network === Network.mainnet && <RosePriceCard />}
-          {scope.network === Network.testnet && <TestnetFaucet layer={scope.layer} />}
+          {ticker === Ticker.ROSE && <RosePriceCard />}
+          {faucetLink && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={ticker} />}
         </StyledGrid>
       </Snapshot>
     </>
