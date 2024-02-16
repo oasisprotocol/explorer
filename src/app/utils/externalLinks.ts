@@ -61,3 +61,7 @@ export const api = {
 export const ipfs = {
   proxyPrefix: 'https://ipfs.io/ipfs/',
 }
+
+export const wallet = {
+  homepage: 'https://wallet.oasis.io/',
+}
