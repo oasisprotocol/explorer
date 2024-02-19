@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/renderWithProviders'
-import { TrimLinkLabel, TrimLinkNameLabel } from '..'
+import { TrimLinkLabel, TrimEndLinkLabel } from '..'
 
 test('TrimLinkLabel snapshot', () => {
   const { container } = renderWithProviders(
@@ -9,14 +9,14 @@ test('TrimLinkLabel snapshot', () => {
   expect(container).toMatchSnapshot()
 })
 
-describe('TrimLinkNameLabel', () => {
+describe('TrimEndLinkLabel', () => {
   test('should trim long name', () => {
-    renderWithProviders(<TrimLinkNameLabel label="P2P.ORG - P2P Validator" to="/home" />)
+    renderWithProviders(<TrimEndLinkLabel label="P2P.ORG - P2P Validator" to="/home" trimStart={14} />)
     expect(screen.getByText('P2P.ORG - P2P …')).toBeInTheDocument()
   })
 
   test('should not trim short names', () => {
-    renderWithProviders(<TrimLinkNameLabel label="BinanceStaking" to="/home" />)
+    renderWithProviders(<TrimEndLinkLabel label="BinanceStaking" to="/home" trimStart={14} />)
     expect(screen.getByText('BinanceStaking')).toBeInTheDocument()
   })
 })

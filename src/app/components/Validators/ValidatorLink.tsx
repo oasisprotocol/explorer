@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
-import { TrimLinkLabel, TrimLinkNameLabel } from '../TrimLinkLabel'
+import { TrimLinkLabel, TrimEndLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
@@ -30,6 +30,15 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({ address, name, network }
   )
 }
 
+type TrimValidatorEndLinkLabelProps = {
+  name: string
+  to: string
+}
+
+const TrimValidatorEndLinkLabel: FC<TrimValidatorEndLinkLabelProps> = ({ name, to }) => (
+  <TrimEndLinkLabel label={name} to={to} trimStart={14} />
+)
+
 type TabletValidatorLinkProps = {
   address: string
   name?: string
@@ -38,7 +47,7 @@ type TabletValidatorLinkProps = {
 
 const TabletValidatorLink: FC<TabletValidatorLinkProps> = ({ address, name, to }) => {
   if (name) {
-    return <TrimLinkNameLabel label={name} to={to} />
+    return <TrimValidatorEndLinkLabel name={name} to={to} />
   }
   return <TrimLinkLabel label={address} to={to} />
 }

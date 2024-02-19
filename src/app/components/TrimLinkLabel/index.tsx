@@ -19,8 +19,12 @@ export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to, plain }) => {
   return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} plain={plain} />
 }
 
-export const TrimLinkNameLabel: FC<TrimLinkLabelProps> = ({ label, to, plain }) => {
-  const trimmedLabel = trimLongString(label, 14, 0)
+type TrimEndLinkLabelProps = TrimLinkLabelProps & {
+  trimStart: number
+}
+
+export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, plain, trimStart }) => {
+  const trimmedLabel = trimLongString(label, trimStart, 0)
   if (!trimmedLabel) {
     return null
   }
