@@ -13,14 +13,21 @@ import { EnabledRuntimePreview, InactiveRuntimePreview } from './RuntimePreview'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
+  [theme.breakpoints.up('md')]: {
+    paddingRight: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
+  },
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
   },
   '> div:not(:last-child)': {
     [theme.breakpoints.down('md')]: {
+      paddingBottom: theme.spacing(4),
       borderBottom: `1px solid ${COLORS.grayMediumLight}`,
     },
     [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(5),
+      marginRight: theme.spacing(5),
       borderRight: `1px solid ${COLORS.grayMediumLight}`,
     },
   },
