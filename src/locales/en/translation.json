@@ -502,7 +502,7 @@
     "active": "Active",
     "activeNodes": "{{nodes}} active",
     "blockNumber": "Block number:",
-    "inactive": "Suspended",
+    "inactive": "Coming soon",
     "listTitle": "ParaTimes",
     "noData": "No data available",
     "nodes": "Nodes:"

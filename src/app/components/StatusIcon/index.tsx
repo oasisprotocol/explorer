@@ -39,7 +39,7 @@ export const StyledBox = styled(Box, {
     justifyContent: 'center',
     alignItems: 'center',
     width: withText ? undefined : '28px',
-    height: '28px',
+    minHeight: '28px',
     fontSize: '15px',
     backgroundColor: statusBgColor[status],
     color: statusFgColor[status],
