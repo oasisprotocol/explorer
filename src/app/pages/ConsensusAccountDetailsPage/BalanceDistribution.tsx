@@ -65,13 +65,18 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
 
   return (
     <>
-      {!isMobile && (
-        <Typography sx={{ fontSize: '24px', fontWeight: 700, color: COLORS.brandDark, mb: 3 }}>
-          {t('account.totalValue', {
-            value: totalValue,
-          })}
-        </Typography>
-      )}
+      <Typography
+        sx={{
+          fontSize: isMobile ? '14px' : '24px',
+          fontWeight: isMobile ? 500 : 700,
+          color: COLORS.brandDark,
+          mb: 3,
+        }}
+      >
+        {t('account.totalValue', {
+          value: totalValue,
+        })}
+      </Typography>
       <Box sx={{ height: '250px' }}>
         <PieChart
           compact={false}
