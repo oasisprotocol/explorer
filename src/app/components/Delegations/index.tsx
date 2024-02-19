@@ -4,6 +4,7 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Delegation } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
+import { ValidatorLink } from '../Validators/ValidatorLink'
 
 type DelegationsProps = {
   delegations?: Delegation[]
@@ -24,9 +25,8 @@ export const Delegations: FC<DelegationsProps> = ({ delegations, isLoading, limi
     key: delegation.validator,
     data: [
       {
-        // TODO: Enable link with trimmed label when validator details page #1232 is merged
         // TODO: Use trimmed name when API is updated
-        content: <>{delegation.validator}</>,
+        content: <ValidatorLink address={delegation.validator} alwaysTrim network={delegation.network} />,
         key: 'name',
       },
       {
