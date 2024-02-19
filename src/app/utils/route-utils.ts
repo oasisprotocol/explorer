@@ -80,6 +80,10 @@ export abstract class RouteUtils {
     return `/${encodeURIComponent(network)}/consensus/validators`
   }
 
+  static getValidatorRoute = (network: Network, address: string) => {
+    return `/${encodeURIComponent(network)}/consensus/validators/${encodeURIComponent(address)}`
+  }
+
   static getAccountTokensRoute = (
     scope: SearchScope,
     account: string,

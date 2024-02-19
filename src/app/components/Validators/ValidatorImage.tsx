@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported'
 import { hasValidProtocol } from '../../utils/url'
@@ -20,7 +19,7 @@ type ValidatorImageProps = {
 
 export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotype }) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }} gap={3}>
+    <>
       {logotype && hasValidProtocol(logotype) ? (
         <StyledImage alt={name || address} src={logotype} />
       ) : (
@@ -28,7 +27,6 @@ export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotyp
           <ImageNotSupportedIcon sx={{ color: COLORS.grayMedium, fontSize: 18 }} />
         </Circle>
       )}
-      {name || address}
-    </Box>
+    </>
   )
 }

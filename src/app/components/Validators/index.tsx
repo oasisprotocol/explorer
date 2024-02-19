@@ -9,6 +9,8 @@ import { RoundedBalance } from '../RoundedBalance'
 import { ValidatorImage } from './ValidatorImage'
 import { ValidatorCommission } from './ValidatorCommission'
 import { ValidatorCumulativeVoting } from './ValidatorCumulativeVoting'
+import { ValidatorLink } from './ValidatorLink'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -19,6 +21,7 @@ type ValidatorsProps = {
 
 export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators }) => {
   const { t } = useTranslation()
+  const { network } = useRequiredScopeParam()
 
   const tableColumns: TableColProps[] = [
     { align: TableCellAlign.Center, key: 'rank', content: t('common.rank') },
@@ -42,13 +45,19 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
         key: 'rank',
       },
       {
-        // TODO: Enable link when validator detail page is ready
         content: (
-          <ValidatorImage
-            address={validator.entity_address}
-            name={validator.media?.name}
-            logotype={validator.media?.logotype}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'center' }} gap={4}>
+            <ValidatorImage
+              address={validator.entity_address}
+              name={validator.media?.name}
+              logotype={validator.media?.logotype}
+            />
+            <ValidatorLink
+              address={validator.entity_address}
+              name={validator.media?.name}
+              network={network}
+            />
+          </Box>
         ),
         key: 'name',
       },
