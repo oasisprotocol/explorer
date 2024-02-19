@@ -11,7 +11,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import CircleIcon from '@mui/icons-material/Circle'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
-import { StatusIcon } from '../../components/StatusIcon'
+import { RuntimeStatusIcon } from '../../components/RuntimeStatusIcon'
 import { InlineDescriptionList } from '../../components/StyledDescriptionList'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { RouterLinkCircle } from '../../components/StyledLinks'
@@ -116,12 +116,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
       <StyledList>
         <dt>{t('common.status')}:</dt>
         <dd>
-          <StatusIcon
-            customLabel={status ? t('paratimes.active') : t('paratimes.inactive')}
-            success={!!status}
-            error={undefined}
-            withText
-          />
+          <RuntimeStatusIcon hasStatus={!!status} />
         </dd>
         <dt>{t('paratimes.blockNumber')}</dt>
         <dd>
