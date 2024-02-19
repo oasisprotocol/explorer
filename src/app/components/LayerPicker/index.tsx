@@ -89,7 +89,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
   const [tabletStep, setTabletStep] = useState<LayerPickerTabletStep>(LayerPickerTabletStep.ParaTimeDetails)
   const selectNetwork = (newNetwork: Network) => {
-    const enabledLayers = RouteUtils.getEnabledLayersForNetwork(newNetwork)
+    const enabledLayers = RouteUtils.getAllLayersForNetwork(newNetwork).enabled
     const targetLayer = enabledLayers.includes(selectedLayer) ? selectedLayer : enabledLayers[0]
     setSelectedNetwork(newNetwork)
     setSelectedLayer(targetLayer)

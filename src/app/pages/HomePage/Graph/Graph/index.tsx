@@ -290,7 +290,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   }, [network])
 
   const isLayerDisabled = (Layer: Layer) => {
-    return !RouteUtils.getEnabledLayersForNetwork(network).includes(Layer)
+    return !RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer)
   }
 
   const disabledMap: Partial<Record<Layer, boolean>> = {
@@ -300,7 +300,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     [Layer.sapphire]: isLayerDisabled(Layer.sapphire),
   }
 
-  const enabledLayers: Layer[] = useMemo(() => RouteUtils.getEnabledLayersForNetwork(network), [network])
+  const enabledLayers: Layer[] = useMemo(() => RouteUtils.getAllLayersForNetwork(network).enabled, [network])
 
   const onSelectLayer = (layer: Layer) => {
     if (isMobile && isZoomedIn) {
@@ -312,7 +312,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
     if (
       ((!isMobile && !isZoomedIn) || layer === selectedLayer) &&
-      RouteUtils.getEnabledLayersForNetwork(network).includes(layer)
+      RouteUtils.getAllLayersForNetwork(network).enabled.includes(layer)
     ) {
       navigate(RouteUtils.getDashboardRoute({ network, layer }))
 

@@ -5,6 +5,8 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material/styles'
+import { Layer, Runtime } from '../../../oasis-nexus/api'
+import { isNotOnHiddenLayer } from '../../../types/layers'
 import { COLORS } from '../../../styles/theme/colors'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { RouteUtils } from '../../utils/route-utils'
@@ -33,14 +35,19 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }))
 
+function shouldIncludeLayer(layer: Layer) {
+  return layer !== Layer.consensus && isNotOnHiddenLayer({ layer })
+}
+
 type ParaTimesCardProps = { scope: SearchScope }
 
 export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
-  const enabledRuntimes = RouteUtils.getEnabledRuntimesForNetwork(network)
-  const disabledRuntimes = RouteUtils.getDisabledRuntimesForNetwork(network)
-  const runtimesNumber = enabledRuntimes.length + disabledRuntimes.length
+  const { enabled, disabled } = RouteUtils.getAllLayersForNetwork(network)
+  const enabledOasisRuntimes = enabled.filter(shouldIncludeLayer) as Runtime[]
+  const disabledOasisRuntimes = disabled.filter(shouldIncludeLayer) as Runtime[]
+  const runtimesNumber = enabledOasisRuntimes.length + disabledOasisRuntimes.length
 
   return (
     <Card>
@@ -57,12 +64,12 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
       />
       <CardContent>
         <StyledBox>
-          {!!enabledRuntimes.length &&
-            enabledRuntimes.map(runtime => (
+          {!!enabledOasisRuntimes.length &&
+            enabledOasisRuntimes.map(runtime => (
               <EnabledRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
             ))}
-          {!!disabledRuntimes.length &&
-            disabledRuntimes.map(runtime => (
+          {!!disabledOasisRuntimes.length &&
+            disabledOasisRuntimes.map(runtime => (
               <InactiveRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
             ))}
         </StyledBox>

@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { isValidProposalId, isValidTxHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { EvmTokenType, Layer, Runtime } from '../../oasis-nexus/api'
+import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
@@ -126,22 +126,18 @@ export abstract class RouteUtils {
       contractAddress,
     )}/instance/${encodeURIComponent(instanceId)}`
 
-  static getEnabledLayersForNetwork(network: Network): Layer[] {
-    return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
-  }
+  static getAllLayersForNetwork(network: Network): { enabled: Layer[]; disabled: Layer[] } {
+    const enabled: Layer[] = []
+    const disabled: Layer[] = []
 
-  static getRuntimesForNetwork(network: Network, isEnabled: boolean): Runtime[] {
-    return Object.values(Runtime).filter(
-      runtime => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][runtime] === isEnabled,
+    Object.values(Layer).forEach(layer =>
+      RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer] ? enabled.push(layer) : disabled.push(layer),
     )
-  }
 
-  static getEnabledRuntimesForNetwork(network: Network): Runtime[] {
-    return RouteUtils.getRuntimesForNetwork(network, true)
-  }
-
-  static getDisabledRuntimesForNetwork(network: Network): Runtime[] {
-    return RouteUtils.getRuntimesForNetwork(network, false)
+    return {
+      enabled,
+      disabled,
+    }
   }
 
   static getProposalsRoute = (network: Network) => {
@@ -154,19 +150,19 @@ export abstract class RouteUtils {
 
   static getEnabledScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+      RouteUtils.getAllLayersForNetwork(network).enabled.map(layer => ({ network, layer })),
     )
   }
 
   static getEnabledNetworks(): Network[] {
     return Object.values(Network).filter(network => {
-      return RouteUtils.getEnabledLayersForNetwork(network).length > 0
+      return RouteUtils.getAllLayersForNetwork(network).enabled.length > 0
     })
   }
 
   static getEnabledSearchScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+      RouteUtils.getAllLayersForNetwork(network).enabled.map(layer => ({ network, layer })),
     )
   }
 }
@@ -261,7 +257,7 @@ export const assertEnabledScope = ({
 
   if (
     !layer || // missing param
-    !RouteUtils.getEnabledLayersForNetwork(network as Network).includes(layer as Layer) // unsupported on network
+    !RouteUtils.getAllLayersForNetwork(network as Network).enabled.includes(layer as Layer) // unsupported on network
   ) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }

@@ -141,10 +141,10 @@ const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, o
 }
 
 const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo>> => {
-  const isSapphireEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.sapphire)
-  const isEmeraldEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.emerald)
-  const isCipherEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.cipher)
-  const isConsensusEnabled = RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.consensus)
+  const isSapphireEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.sapphire)
+  const isEmeraldEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.emerald)
+  const isCipherEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.cipher)
+  const isConsensusEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.consensus)
 
   const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
   const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
