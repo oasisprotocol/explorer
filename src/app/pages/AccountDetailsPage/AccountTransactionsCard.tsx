@@ -7,7 +7,7 @@ import { RuntimeTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { CardEmptyState } from './CardEmptyState'
+import { CardEmptyState } from '../../components/CardEmptyState'
 import { useAccountTransactions } from './hook'
 import { AccountDetailsContext } from './index'
 

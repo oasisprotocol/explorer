@@ -285,10 +285,22 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.Account, headers, status) => {
           if (status !== 200) return data
+          // TODO: remove defaults when API is updated
+          const { available, delegations_balance = 0, debonding_delegations_balance = 0 } = data
+          const total =
+            BigInt(data.available) + BigInt(delegations_balance) + BigInt(debonding_delegations_balance)
           return {
             ...data,
+            available: fromBaseUnits(available, consensusDecimals),
+            total: fromBaseUnits(total.toString(), consensusDecimals),
+            delegations_balance: fromBaseUnits(delegations_balance.toString(), consensusDecimals),
+            debonding_delegations_balance: fromBaseUnits(
+              debonding_delegations_balance.toString(),
+              consensusDecimals,
+            ),
             layer: Layer.consensus,
             network,
+            size: getAccountSize(total),
             ticker,
           }
         },

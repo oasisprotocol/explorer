@@ -153,7 +153,16 @@ export abstract class RouteUtils {
   }
 }
 
-const validateAddressParam = (address: string) => {
+const validateConsensusAddressParam = (address: string) => {
+  const isValid = isValidOasisAddress(address)
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidAddress)
+  }
+
+  return isValid
+}
+
+const validateRuntimeAddressParam = (address: string) => {
   const isValid = isValidOasisAddress(address) || isValidEthAddress(address)
   if (!isValid) {
     throw new AppError(AppErrors.InvalidAddress)
@@ -193,10 +202,20 @@ const validateProposalIdParam = (proposalId: string) => {
   return isValid
 }
 
-export const addressParamLoader =
+export const consensusAddressParamLoader =
   (queryParam: string = 'address') =>
   ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
-    validateAddressParam(params[queryParam]!)
+    validateConsensusAddressParam(params[queryParam]!)
+    return {
+      address: params[queryParam]!,
+      searchTerm: getSearchTermFromRequest(request),
+    }
+  }
+
+export const runtimeAddressParamLoader =
+  (queryParam: string = 'address') =>
+  ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
+    validateRuntimeAddressParam(params[queryParam]!)
     return {
       address: params[queryParam]!,
       searchTerm: getSearchTermFromRequest(request),
