@@ -11,6 +11,7 @@ import { PieChart } from '../../components/charts/PieChart'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { COLORS } from '../../../styles/theme/colors'
+import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
 
 type BalanceDistributionProps = {
   account: Account | undefined
@@ -42,8 +43,9 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
     ...getPreciseNumberFormat(account.total),
     ticker: account.ticker,
   })
-  if (Number(account.total) === 0) {
-    return <>{/* TODO: we need designs for this case */}</>
+
+  if (account.total === '0') {
+    return <ConsensusAccountCardEmptyState label={t('account.noBalances')} />
   }
 
   const data = [

@@ -11,9 +11,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   [theme.breakpoints.down('sm')]: {
+    minHeight: '150px',
     paddingTop: theme.spacing(3),
   },
   [theme.breakpoints.up('sm')]: {
+    minHeight: '200px',
     paddingTop: theme.spacing(6),
   },
 }))

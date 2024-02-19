@@ -14,6 +14,7 @@
     "lastNonce": "Last Nonce",
     "listTitle": "Accounts",
     "noTokens": "This account holds no tokens",
+    "noBalances": "This account currently has no balances.",
     "notStaking": "This account is currently not staking.",
     "showMore": "+ {{counter}} more",
     "sizeTooltip": "This account is indicated as an {{size}} account based on sum of assets they own.",
