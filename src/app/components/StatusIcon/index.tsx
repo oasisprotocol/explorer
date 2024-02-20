@@ -50,7 +50,7 @@ export const StyledBox = styled(Box, {
   }
 })
 
-const ErrorBox = styled(Box)(() => ({
+export const ErrorBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
