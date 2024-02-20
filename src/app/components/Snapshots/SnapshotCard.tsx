@@ -15,6 +15,7 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   justifyContent: 'space-between',
   '&': {
     padding: 0,
+    margin: 0,
   },
   height: 186,
 }))

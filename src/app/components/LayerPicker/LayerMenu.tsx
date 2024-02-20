@@ -112,7 +112,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
     .filter(layer => !isLayerHidden(layer))
     .map(layer => ({
       layer,
-      enabled: RouteUtils.getEnabledLayersForNetwork(selectedNetwork || network).includes(layer),
+      enabled: RouteUtils.getAllLayersForNetwork(selectedNetwork || network).enabled.includes(layer),
     }))
     .sort(orderByLayer)
 

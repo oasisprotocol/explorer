@@ -1,17 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Grid from '@mui/material/Grid'
-import { styled } from '@mui/material/styles'
 import { SearchScope } from '../../../types/searchScope'
-import { Snapshot } from '../../components/Snapshots/Snapshot'
+import { Snapshot, StyledGrid } from '../../components/Snapshots/Snapshot'
 import { SnapshotEpoch } from './SnapshotEpoch'
 import { SnapshotDelegators } from './SnapshotDelegators'
 import { SnapshotValidators } from './SnapshotValidators'
 import { SnapshotStaked } from './SnapshotStaked'
-
-const StyledGrid = styled(Grid)(() => ({
-  display: 'flex',
-}))
 
 export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()

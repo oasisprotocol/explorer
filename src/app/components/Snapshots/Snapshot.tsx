@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -42,3 +43,13 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
     </>
   )
 }
+
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('sm')]: {
+    paddingBottom: theme.spacing(4),
+  },
+  [theme.breakpoints.up('sm')]: {
+    paddingBottom: theme.spacing(5),
+  },
+}))

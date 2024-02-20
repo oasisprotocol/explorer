@@ -126,8 +126,18 @@ export abstract class RouteUtils {
       contractAddress,
     )}/instance/${encodeURIComponent(instanceId)}`
 
-  static getEnabledLayersForNetwork(network: Network): Layer[] {
-    return Object.values(Layer).filter(layer => RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer])
+  static getAllLayersForNetwork(network: Network): { enabled: Layer[]; disabled: Layer[] } {
+    const enabled: Layer[] = []
+    const disabled: Layer[] = []
+
+    Object.values(Layer).forEach(layer =>
+      RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer] ? enabled.push(layer) : disabled.push(layer),
+    )
+
+    return {
+      enabled,
+      disabled,
+    }
   }
 
   static getProposalsRoute = (network: Network) => {
@@ -140,19 +150,19 @@ export abstract class RouteUtils {
 
   static getEnabledScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+      RouteUtils.getAllLayersForNetwork(network).enabled.map(layer => ({ network, layer })),
     )
   }
 
   static getEnabledNetworks(): Network[] {
     return Object.values(Network).filter(network => {
-      return RouteUtils.getEnabledLayersForNetwork(network).length > 0
+      return RouteUtils.getAllLayersForNetwork(network).enabled.length > 0
     })
   }
 
   static getEnabledSearchScopes(): SearchScope[] {
     return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getEnabledLayersForNetwork(network).map(layer => ({ network, layer })),
+      RouteUtils.getAllLayersForNetwork(network).enabled.map(layer => ({ network, layer })),
     )
   }
 }
@@ -247,7 +257,7 @@ export const assertEnabledScope = ({
 
   if (
     !layer || // missing param
-    !RouteUtils.getEnabledLayersForNetwork(network as Network).includes(layer as Layer) // unsupported on network
+    !RouteUtils.getAllLayersForNetwork(network as Network).enabled.includes(layer as Layer) // unsupported on network
   ) {
     throw new AppError(AppErrors.UnsupportedLayer)
   }

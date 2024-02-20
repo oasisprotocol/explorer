@@ -175,7 +175,7 @@ export function useNetworkProposalsConditionally(
   nameFragment: string | undefined,
 ): ConditionalResults<Proposal> {
   const queries = RouteUtils.getEnabledNetworks()
-    .filter(network => RouteUtils.getEnabledLayersForNetwork(network).includes(Layer.consensus))
+    .filter(network => RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.consensus))
     .map(network =>
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetConsensusProposalsByName(network, nameFragment),

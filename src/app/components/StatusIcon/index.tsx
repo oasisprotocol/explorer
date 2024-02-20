@@ -23,13 +23,13 @@ const statusFgColor: Record<TxStatus, string> = {
   failure: COLORS.errorIndicatorBackground,
 }
 
-const statusIcon: Record<TxStatus, ReactNode> = {
+export const statusIcon: Record<TxStatus, ReactNode> = {
   unknown: <HelpIcon color="inherit" fontSize="inherit" />,
   success: <CheckCircleIcon color="success" fontSize="inherit" />,
   failure: <CancelIcon color="error" fontSize="inherit" />,
 }
 
-const StyledBox = styled(Box, {
+export const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'success' && prop !== 'withText',
 })(({ success, withText }: StatusIconProps) => {
   const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
@@ -39,7 +39,7 @@ const StyledBox = styled(Box, {
     justifyContent: 'center',
     alignItems: 'center',
     width: withText ? undefined : '28px',
-    height: '28px',
+    minHeight: '28px',
     fontSize: '15px',
     backgroundColor: statusBgColor[status],
     color: statusFgColor[status],
