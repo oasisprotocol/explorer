@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiatMoneyAmountBox } from '../../components/Account'
+import { FiatMoneyAmountBox } from '../../components/Balance/FiatMoneyAmount'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
@@ -21,7 +21,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
           value: new BigNumber(amount).multipliedBy(price).toFixed(),
           formatParams: {
             value: {
-              currency: 'USD',
+              currency: 'USD', // TODO: why are we fixated on USD
             } satisfies Intl.NumberFormatOptions,
           },
         })}

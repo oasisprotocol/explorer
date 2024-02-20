@@ -1,10 +1,10 @@
-import { NativeTicker, Ticker } from 'types/ticker'
+import { Ticker } from 'types/ticker'
 import { Network } from '../../types/network'
 import { Layer } from '../../oasis-nexus/api'
 
 const testnetFaucetUrl = 'https://faucet.testnet.oasis.dev/'
 const faucetParaTimeBaseUrl = `${testnetFaucetUrl}?paratime=`
-const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<NativeTicker, string>>>>>> = {
+const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<Ticker, string>>>>>> = {
   [Network.testnet]: {
     [Layer.consensus]: { [Ticker.TEST]: testnetFaucetUrl },
     [Layer.emerald]: { [Ticker.TEST]: `${faucetParaTimeBaseUrl}emerald` },
@@ -14,5 +14,5 @@ const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<
   },
 }
 
-export const getFaucetLink = (network: Network, layer: Layer, ticker: NativeTicker) =>
+export const getFaucetLink = (network: Network, layer: Layer, ticker: Ticker) =>
   faucetLinks[network]?.[layer]?.[ticker]

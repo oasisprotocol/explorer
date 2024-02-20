@@ -36,6 +36,12 @@ describe('SearchResultsView', () => {
             isFree: true,
             hasUsedCoinGecko: false,
           },
+          [Ticker.EUROe]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            hasUsedCoinGecko: true,
+          },
         }}
         title="test search"
         networkForTheme={Network.mainnet}
@@ -73,6 +79,12 @@ describe('SearchResultsView', () => {
             isLoading: false,
             isFree: true,
             hasUsedCoinGecko: false,
+          },
+          [Ticker.EUROe]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            hasUsedCoinGecko: true,
           },
         }}
       />,

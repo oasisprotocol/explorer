@@ -27,8 +27,7 @@ import { TransactionEvents } from '../../components/Transactions/TransactionEven
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
-import { getTickerForScope } from '../../../config'
-import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
+import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import InfoIcon from '@mui/icons-material/Info'
@@ -103,7 +102,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
     data?.data,
   )
 
-  const tokenPriceInfo = useTokenPrice(getTickerForScope(scope))
+  const tokenPrices = useAllTokenPrices()
 
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
@@ -126,7 +125,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
         <RuntimeTransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
-          tokenPriceInfo={tokenPriceInfo}
+          tokenPrices={tokenPrices}
           addressSwitchOption={addressSwitchOption}
         />
       </SubPageCard>
@@ -167,14 +166,14 @@ export const RuntimeTransactionDetailView: FC<{
   transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
   standalone?: boolean
-  tokenPriceInfo: TokenPriceInfo
+  tokenPrices: AllTokenPrices
   addressSwitchOption?: AddressSwitchOption
 }> = ({
   isLoading,
   transaction,
   showLayer,
   standalone = false,
-  tokenPriceInfo,
+  tokenPrices,
   addressSwitchOption = AddressSwitchOption.ETH,
 }) => {
   const { t } = useTranslation()
@@ -189,6 +188,7 @@ export const RuntimeTransactionDetailView: FC<{
 
   const ticker = transaction?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, ticker)
+  const tokenPriceInfo = tokenPrices[ticker]
 
   return (
     <>

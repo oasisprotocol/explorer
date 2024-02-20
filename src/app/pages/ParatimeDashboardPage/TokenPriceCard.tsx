@@ -4,10 +4,11 @@ import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
-import { useGetRosePrice } from '../../../coin-gecko/api'
+import { useTokenPrice } from '../../../coin-gecko/api'
 import { COLORS } from '../../../styles/theme/colors'
 import Typography from '@mui/material/Typography'
-import { SmallLogo } from '../../components/logo/SmallLogo'
+import { NativeTokenInfo } from '../../../types/ticker'
+import { SmallTokenLogo } from '../../components/logo/SmallTokenLogo'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -15,20 +16,20 @@ const StyledBox = styled(Box)(({ theme }) => ({
   left: theme.spacing(4),
 }))
 
-const formatFiatRoseParams = {
+const formatFiatParams = {
   value: {
-    currency: 'USD',
+    currency: 'USD', // TODO: why are we fixated on USD
     maximumFractionDigits: 5,
   } satisfies Intl.NumberFormatOptions,
 }
 
-export const RosePriceCard: FC = () => {
+export const TokenPriceCard: FC<{ token: NativeTokenInfo }> = ({ token }) => {
   const { t } = useTranslation()
-  const rosePriceQuery = useGetRosePrice()
-  const priceString = rosePriceQuery.data
+  const priceQuery = useTokenPrice(token.ticker)
+  const priceString = priceQuery.price
     ? t('common.fiatValueInUSD', {
-        value: rosePriceQuery.data,
-        formatParams: formatFiatRoseParams,
+        value: priceQuery.price,
+        formatParams: formatFiatParams,
       })
     : ''
 
@@ -36,8 +37,8 @@ export const RosePriceCard: FC = () => {
     <SnapshotCard
       title={
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <SmallLogo />
-          {t('rosePrice.header')}
+          <SmallTokenLogo ticker={token.ticker} />
+          {t('tokenPrice.header', { ticker: token.ticker })}
         </Box>
       }
     >

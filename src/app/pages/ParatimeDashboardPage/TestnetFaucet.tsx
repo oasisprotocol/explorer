@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { SnapshotCardExternalLink } from '../../components/Snapshots/SnapshotCardExternalLink'
 import { getFaucetLink } from '../../utils/faucet-links'
 import { Layer } from '../../../oasis-nexus/api'
-import { NativeTicker } from '../../../types/ticker'
+import { Ticker } from '../../../types/ticker'
 import { Network } from '../../../types/network'
 
 type TestnetFaucetProps = {
   network: Network
   layer: Layer
-  ticker: NativeTicker
+  ticker: Ticker
 }
 
 export const TestnetFaucet: FC<TestnetFaucetProps> = ({ network, layer, ticker }) => {

@@ -1,5 +1,4 @@
 import { EvmTokenType, groupAccountTokenBalances, Layer, RuntimeAccount } from '../../oasis-nexus/api'
-import { Ticker } from '../../types/ticker'
 import { Network } from '../../types/network'
 import { AccountResult, BlockResult } from '../pages/SearchResultsPage/hooks'
 
@@ -63,7 +62,6 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
   },
   layer: Layer.emerald,
   network: Network.mainnet,
-  ticker: Ticker.ROSE,
 })
 
 export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
@@ -79,7 +77,6 @@ export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
   },
   layer: Layer.emerald,
   network: Network.mainnet,
-  ticker: Ticker.ROSE,
   evm_contract: undefined,
 })
 
