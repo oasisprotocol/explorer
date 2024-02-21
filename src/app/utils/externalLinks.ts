@@ -13,27 +13,25 @@ export const socialMedia = {
   home: process.env.REACT_APP_SOCIAL_HOME,
 }
 
-const docsUrl = 'https://docs.oasis.io/'
-const consensusDocsUrl = `${docsUrl}core/consensus/`
 export const docs = {
-  home: docsUrl,
-  consensus: consensusDocsUrl,
-  consensusTransactions: `${consensusDocsUrl}transactions/`,
-  consensusServices: `${consensusDocsUrl}services/`,
-  consensusGenesis: `${consensusDocsUrl}genesis/`,
-  consensusVectors: `${consensusDocsUrl}test-vectors/`,
-  consensusComet: `${consensusDocsUrl}#cometbft`,
-  cipher: `${docsUrl}dapp/cipher/`,
-  emerald: `${docsUrl}dapp/emerald/`,
-  emeraldTestnet: `${docsUrl}dapp/emerald/#testnet`,
-  emeraldTestnetNode: `${docsUrl}node/testnet/#emerald`,
-  emeraldGateway: `${docsUrl}dapp/emerald/#web3-gateway`,
-  sapphire: `${docsUrl}dapp/sapphire/`,
-  token: `${docsUrl}general/oasis-network/token-metrics-and-distribution`,
-  paraTimeTransfer: `${docsUrl}general/manage-tokens/how-to-transfer-rose-into-paratime`,
-  sapphireTestnetNode: `${docsUrl}node/testnet/#sapphire`,
-  sapphireTestnet: `${docsUrl}dapp/sapphire/#testnet`,
-  sapphireTestnetHardhat: `${docsUrl}dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
+  home: 'https://docs.oasis.io/',
+  consensus: 'https://docs.oasis.io/core/consensus/',
+  consensusTransactions: `https://docs.oasis.io/core/consensus/transactions/`,
+  consensusServices: `https://docs.oasis.io/core/consensus/services/`,
+  consensusGenesis: `https://docs.oasis.io/core/consensus/genesis/`,
+  consensusVectors: `https://docs.oasis.io/core/consensus/test-vectors/`,
+  consensusComet: `https://docs.oasis.io/core/consensus/#cometbft`,
+  cipher: `https://docs.oasis.io/dapp/cipher/`,
+  emerald: `https://docs.oasis.io/dapp/emerald/`,
+  emeraldTestnet: `https://docs.oasis.io/dapp/emerald/#testnet`,
+  emeraldTestnetNode: `https://docs.oasis.io/node/testnet/#emerald`,
+  emeraldGateway: `https://docs.oasis.io/dapp/emerald/#web3-gateway`,
+  sapphire: `https://docs.oasis.io/dapp/sapphire/`,
+  token: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution`,
+  paraTimeTransfer: `https://docs.oasis.io/general/manage-tokens/how-to-transfer-rose-into-paratime`,
+  sapphireTestnetNode: `https://docs.oasis.io/node/testnet/#sapphire`,
+  sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
+  sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
   pontusx1: 'https://docs.pontus-x.eu/',
   pontusx2: 'https://docs.pontus-x.eu/docs/Development/quick_start',
   pontusx3: 'https://github.com/deltaDAO/mvg-portal/blob/main/chains.config.js',
@@ -41,11 +39,10 @@ export const docs = {
 
 export const referrals = { coinGecko: 'https://www.coingecko.com' }
 
-const githubLink = 'https://github.com/oasisprotocol/explorer/'
 export const github = {
-  home: githubLink,
-  commit: `${githubLink}commit/`,
-  releaseTag: `${githubLink}releases/tag/`,
+  home: 'https://github.com/oasisprotocol/explorer/',
+  commit: `https://github.com/oasisprotocol/explorer/commit/`,
+  releaseTag: `https://github.com/oasisprotocol/explorer/releases/tag/`,
 }
 
 export const api = {
