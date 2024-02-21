@@ -148,6 +148,7 @@
     }
   },
   "consensusSnapshot": {
+    "blockHeight": "Block Height <BlockHeight />",
     "title": "Consensus Snapshot",
     "totalCirculation": "This is <StakedPercentage /> of the total circulation"
   },
