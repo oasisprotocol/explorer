@@ -8,11 +8,16 @@ import HelpIcon from '@mui/icons-material/Help'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
 import BigNumber from 'bignumber.js'
 
-type CurrentFiatValueProps = Pick<TokenPriceInfo, 'price' | 'hasUsedCoinGecko'> & {
+type CurrentFiatValueProps = Pick<TokenPriceInfo, 'price' | 'fiatCurrency' | 'hasUsedCoinGecko'> & {
   amount: string
 }
 
-export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, hasUsedCoinGecko }) => {
+export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({
+  amount,
+  price,
+  fiatCurrency,
+  hasUsedCoinGecko,
+}) => {
   const { t } = useTranslation()
   return price === undefined ? null : (
     <FiatMoneyAmountBox>
@@ -21,7 +26,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({ amount, price, has
           value: new BigNumber(amount).multipliedBy(price).toFixed(),
           formatParams: {
             value: {
-              currency: 'USD', // TODO: why are we fixated on USD
+              currency: fiatCurrency,
             } satisfies Intl.NumberFormatOptions,
           },
         })}

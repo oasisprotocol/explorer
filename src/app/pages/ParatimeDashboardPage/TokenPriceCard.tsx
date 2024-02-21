@@ -9,6 +9,8 @@ import { COLORS } from '../../../styles/theme/colors'
 import Typography from '@mui/material/Typography'
 import { NativeTokenInfo } from '../../../types/ticker'
 import { SmallTokenLogo } from '../../components/logo/SmallTokenLogo'
+import { getFiatCurrencyForScope } from '../../../config'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   position: 'absolute',
@@ -16,16 +18,19 @@ const StyledBox = styled(Box)(({ theme }) => ({
   left: theme.spacing(4),
 }))
 
-const formatFiatParams = {
-  value: {
-    currency: 'USD', // TODO: why are we fixated on USD
-    maximumFractionDigits: 5,
-  } satisfies Intl.NumberFormatOptions,
-}
-
 export const TokenPriceCard: FC<{ token: NativeTokenInfo }> = ({ token }) => {
   const { t } = useTranslation()
-  const priceQuery = useTokenPrice(token.ticker)
+  const scope = useScopeParam()
+  const fiatCurrency = getFiatCurrencyForScope(scope)
+  const priceQuery = useTokenPrice(token.ticker, fiatCurrency)
+
+  const formatFiatParams = {
+    value: {
+      currency: fiatCurrency,
+      maximumFractionDigits: 5,
+    } satisfies Intl.NumberFormatOptions,
+  }
+
   const priceString = priceQuery.price
     ? t('common.fiatValueInUSD', {
         value: priceQuery.price,

@@ -18,6 +18,11 @@ type LayerNetwork = {
    * (If not given, the network's default token will be used.)
    */
   tokens?: NativeTokenInfo[]
+
+  /**
+   * What fiat currency should we use for displaying value?
+   */
+  fiatCurrency?: string
 }
 
 type LayerConfig = {
@@ -132,6 +137,7 @@ const pontusxConfig: LayerConfig = {
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
     tokens: [NativeToken.EUROe, NativeToken.TEST],
+    fiatCurrency: 'eur',
   },
   local: {
     activeNodes: undefined,
@@ -188,3 +194,6 @@ export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenIn
   }
   return [networkDefault]
 }
+
+export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
+  (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'

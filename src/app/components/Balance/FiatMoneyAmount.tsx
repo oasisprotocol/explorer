@@ -16,7 +16,13 @@ export const FiatMoneyAmountBox = styled(Box)(() => ({
   flex: 1,
 }))
 
-export const FiatMoneyAmount: FC<FiatValueInfo> = ({ value, hasUsedCoinGecko, unknownTickers, loading }) => {
+export const FiatMoneyAmount: FC<FiatValueInfo> = ({
+  value,
+  fiatCurrency,
+  hasUsedCoinGecko,
+  unknownTickers,
+  loading,
+}) => {
   const { t } = useTranslation()
   return (
     <FiatMoneyAmountBox>
@@ -25,7 +31,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({ value, hasUsedCoinGecko, un
           value,
           formatParams: {
             value: {
-              currency: 'USD', // TODO: why are we fixated on USD?
+              currency: fiatCurrency,
             } satisfies Intl.NumberFormatOptions,
           },
         })}

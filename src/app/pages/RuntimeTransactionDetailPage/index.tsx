@@ -38,6 +38,7 @@ import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
+import { getFiatCurrencyForScope } from '../../../config'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -102,7 +103,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
     data?.data,
   )
 
-  const tokenPrices = useAllTokenPrices()
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash

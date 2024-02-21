@@ -4,13 +4,14 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { useSearch } from './hooks'
 import { SearchResultsView } from './SearchResultsView'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
+import { getFiatCurrencyForScope } from '../../../config'
 
 export const SearchResultsPage: FC = () => {
   const searchParams = useParamSearch()
   const scope = useScopeParam()
   const { results, isLoading } = useSearch(searchParams)
 
-  const tokenPrices = useAllTokenPrices()
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   return (
     <SearchResultsView

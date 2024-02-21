@@ -31,18 +31,20 @@ export const getTokenPricesFromGecko = (
 
 const staleTime = 1000 * 60 * 3 // 3 minutes
 
-export function useGetTokenPricesFromGecko(tokenIds: string[]) {
+export function useGetTokenPricesFromGecko(tokenIds: string[], fiatCurrency: string) {
   return useQuery<AxiosResponse<TokenPriceMap>, AxiosError<unknown>>(
     ['tokenFiatPrices'],
     () =>
       getTokenPricesFromGecko({
         ids: tokenIds.join(','),
-        vs_currencies: 'usd',
+        vs_currencies: fiatCurrency ?? 'usd',
       }),
     {
       select: ({ data }) => {
         const result: TokenPriceMap = {}
-        Object.keys(data).forEach(key => (result[key] = (data as any)[key].usd)) // TODO why are we fixated on USD
+        Object.keys(data).forEach(key => {
+          result[key] = (data as any)[key][fiatCurrency]
+        })
         return result as any
       },
       staleTime,
@@ -52,13 +54,14 @@ export function useGetTokenPricesFromGecko(tokenIds: string[]) {
 
 export type TokenPriceInfo = {
   price?: number
+  fiatCurrency?: string
   isLoading: boolean
   isFree: boolean
   hasUsedCoinGecko: boolean
 }
 
-export const useTokenPrice = (ticker: Ticker): TokenPriceInfo => {
-  const tokenPrices = useAllTokenPrices()
+export const useTokenPrice = (ticker: Ticker, fiatCurrency: string): TokenPriceInfo => {
+  const tokenPrices = useAllTokenPrices(fiatCurrency)
   const price = tokenPrices[ticker]
   if (!price) {
     exhaustedTypeWarning('Checking price of unknown token ticker', ticker as any)
@@ -68,10 +71,10 @@ export const useTokenPrice = (ticker: Ticker): TokenPriceInfo => {
 
 export type AllTokenPrices = Partial<Record<Ticker, TokenPriceInfo>>
 
-export const useAllTokenPrices = (): AllTokenPrices => {
+export const useAllTokenPrices = (fiatCurrency: string): AllTokenPrices => {
   const tokens = uniq(RouteUtils.getEnabledScopes().map(getTokensForScope).flat())
   const geckoIds = tokens.map(token => token.geckoId).filter((id): id is string => !!id)
-  const { isLoading: geckoIsLoading, data: geckoPrices } = useGetTokenPricesFromGecko(geckoIds)
+  const { isLoading: geckoIsLoading, data: geckoPrices } = useGetTokenPricesFromGecko(geckoIds, fiatCurrency)
   const results: AllTokenPrices = {}
   tokens.forEach(token => {
     results[token.ticker] = {
@@ -79,6 +82,7 @@ export const useAllTokenPrices = (): AllTokenPrices => {
       isFree: !!token.free,
       hasUsedCoinGecko: !!token.geckoId,
       price: token.geckoId && geckoPrices ? (geckoPrices as any)[token.geckoId] : undefined,
+      fiatCurrency: token.geckoId && geckoPrices ? fiatCurrency : 'xx',
     }
   })
   return results

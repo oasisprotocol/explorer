@@ -18,6 +18,7 @@ import { AccountDetailsCard } from './AccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
+import { getFiatCurrencyForScope } from '../../../config'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -36,7 +37,7 @@ export const AccountDetailsPage: FC = () => {
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
 
-  const tokenPrices = useAllTokenPrices()
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   const { isLoading: areEventsLoading, isError: isEventsError, events } = useAccountEvents(scope, address)
 

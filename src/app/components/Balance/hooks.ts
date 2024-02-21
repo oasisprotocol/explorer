@@ -18,6 +18,11 @@ export type FiatValueInfo = {
   value?: string
 
   /**
+   * The fiat currency used to express the value
+   */
+  fiatCurrency: string
+
+  /**
    * Have we used CoinGecko for calculating this value?
    */
   hasUsedCoinGecko: boolean
@@ -36,6 +41,7 @@ export type FiatValueInfo = {
 export const calculateFiatValue = (
   balances: RuntimeSdkBalance[] = [],
   tokenPrices: AllTokenPrices,
+  fiatCurrency: string,
 ): FiatValueInfo => {
   let hasValue = false
   let value = new BigNumber(0)
@@ -72,5 +78,6 @@ export const calculateFiatValue = (
     loading,
     unknownTickers: unknown,
     value: value.toFixed(),
+    fiatCurrency,
   }
 }

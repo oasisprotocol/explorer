@@ -16,6 +16,7 @@ import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
+import { getFiatCurrencyForScope } from '../../../config'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -34,7 +35,7 @@ export const RuntimeTransactionsPage: FC = () => {
     // we should call useGetConsensusTransactions()
   }
 
-  const tokenPrices = useAllTokenPrices()
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   useEffect(() => {
     if (!isMobile) {

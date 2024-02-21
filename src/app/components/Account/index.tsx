@@ -22,7 +22,7 @@ import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
 import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
-import { getTokensForScope } from '../../../config'
+import { getFiatCurrencyForScope, getTokensForScope } from '../../../config'
 
 type AccountProps = {
   account?: RuntimeAccount
@@ -48,7 +48,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
   const nativeTokens = getTokensForScope(account || { network: 'mainnet', layer: 'sapphire' })
   const nativeTickerNames = nativeTokens.map(token => getNameForTicker(t, token.ticker))
   const contract = account?.evm_contract
-  const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices)
+  const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))
 
   return (
     <>

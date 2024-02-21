@@ -29,6 +29,7 @@ describe('SearchResultsView', () => {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
           [Ticker.TEST]: {
@@ -40,6 +41,7 @@ describe('SearchResultsView', () => {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
         }}
@@ -73,6 +75,7 @@ describe('SearchResultsView', () => {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
           [Ticker.TEST]: {
@@ -84,6 +87,7 @@ describe('SearchResultsView', () => {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
         }}
