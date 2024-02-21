@@ -39,15 +39,17 @@ export const SnapshotValidators: FC<{ scope: SearchScope }> = ({ scope }) => {
 
   return (
     <SnapshotCard title={t('validator.listTitle')}>
-      <PieChart
-        compact
-        data={countValidatorsState(t, validators)}
-        dataKey="value"
-        formatters={{
-          data: (value: number) => value.toLocaleString(),
-          label: (status: string) => t('validator.groupStatus', { status }),
-        }}
-      />
+      {!!validators?.length && (
+        <PieChart
+          compact
+          data={countValidatorsState(t, validators)}
+          dataKey="value"
+          formatters={{
+            data: (value: number) => value.toLocaleString(),
+            label: (status: string) => t('validator.groupStatus', { status }),
+          }}
+        />
+      )}
     </SnapshotCard>
   )
 }
