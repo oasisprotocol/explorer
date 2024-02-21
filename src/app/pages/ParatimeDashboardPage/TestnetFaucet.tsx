@@ -22,6 +22,7 @@ export const TestnetFaucet: FC<TestnetFaucetProps> = ({ network, layer, ticker }
       label={t('testnetFaucet.request')}
       title={t('testnetFaucet.header')}
       url={link}
+      emailAccepted={true}
     />
   ) : null
 }

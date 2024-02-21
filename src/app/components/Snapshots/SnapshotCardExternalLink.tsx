@@ -21,6 +21,16 @@ type SnapshotCardExternalLinkProps = {
   label?: string
   title: string
   url?: string
+
+  /**
+   * Should we accept "mailto:" links?
+   *
+   * Those are more dangerous than other types, since they can
+   * facilitate displaying malicious URLs like javascript: and mailto:?attach=
+   *
+   * In order to prevent this, only enable this flag if we can be sure that the link is safe.
+   */
+  emailAccepted?: boolean
 }
 
 export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
@@ -28,6 +38,7 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
   label,
   title,
   url,
+  emailAccepted,
 }) => {
   return (
     <SnapshotCard title={title} withContentPadding={false}>
@@ -40,7 +51,7 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
         >
           {description}
         </Typography>
-        {url && hasValidProtocol(url) && (
+        {url && (hasValidProtocol(url) || (emailAccepted && url.startsWith('mailto:'))) && (
           <Button href={url} target="_blank" rel="noopener noreferrer" color="secondary" variant="outlined">
             {label}
           </Button>
