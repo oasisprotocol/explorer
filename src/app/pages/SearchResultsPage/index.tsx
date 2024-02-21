@@ -9,7 +9,7 @@ import { getFiatCurrencyForScope } from '../../../config'
 export const SearchResultsPage: FC = () => {
   const searchParams = useParamSearch()
   const scope = useScopeParam()
-  const { results, isLoading } = useSearch(searchParams)
+  const { results, isLoading } = useSearch(scope, searchParams)
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 

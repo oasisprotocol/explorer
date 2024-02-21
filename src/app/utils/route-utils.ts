@@ -182,6 +182,12 @@ export abstract class RouteUtils {
     )
   }
 
+  static getVisibleScopes(currentScope: SearchScope | undefined): SearchScope[] {
+    return RouteUtils.getEnabledScopes().filter(
+      ({ network, layer }) => !isLayerHidden(layer) || layer === currentScope?.layer,
+    )
+  }
+
   /**
    * Get the list of enabled networks.
    *
