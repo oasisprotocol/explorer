@@ -45,6 +45,10 @@ export const github = {
   releaseTag: `https://github.com/oasisprotocol/explorer/releases/tag/`,
 }
 
+export const faucets = {
+  oasisTestnet: 'https://faucet.testnet.oasis.dev/',
+}
+
 export const api = {
   spec: `${process.env.REACT_APP_API}spec/v1.html`,
 }
