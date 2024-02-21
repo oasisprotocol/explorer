@@ -1,3 +1,5 @@
+/** @file Put all external links into this file so tests make sure links are still reachable */
+
 export const socialMedia = {
   telegram: process.env.REACT_APP_SOCIAL_TELEGRAM,
   twitter: process.env.REACT_APP_SOCIAL_TWITTER,
