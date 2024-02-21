@@ -28,6 +28,7 @@ import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
 import { UndelegateFinishIcon } from '../CustomIcons/UndelegateFinish'
 import { DelegateIcon } from '../CustomIcons/Delegate'
+import { MaybeEventErrorLine } from './EventError'
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
@@ -244,6 +245,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink
@@ -279,6 +281,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink
@@ -314,6 +317,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink
@@ -348,6 +352,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <EventTypeIcon eventType={event.type} eventName={eventName} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink

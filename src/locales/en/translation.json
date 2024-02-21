@@ -201,6 +201,7 @@
   },
   "errors": {
     "code": "error code",
+    "module": "module",
     "error": "Error",
     "loadFirstPage": "load the first page",
     "unknown": "Unknown error",
