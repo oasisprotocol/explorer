@@ -24,7 +24,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 type LayerDetailsContent = {
   description: string
   rpcHttp: string
-  rpcWebSockets: string
+  rpcWebSockets?: string
   chainHexId: string
   chainDecimalId: string
   docs: string
@@ -67,6 +67,13 @@ const getDetails = (t: TFunction): Details => ({
       chainHexId: '0x5aff',
       chainDecimalId: '23295',
       docs: docs.sapphire,
+    },
+    [Layer.pontusx]: {
+      description: t('layerPicker.testnet.pontusx'),
+      rpcHttp: 'https://pontusx.not.si:443',
+      chainHexId: '0x7ec8',
+      chainDecimalId: '32456',
+      docs: docs.pontusx1,
     },
   },
 })
@@ -143,11 +150,13 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
             endpoint: details.rpcHttp,
           })}
         </TextListItem>
-        <TextListItem>
-          {t('layerPicker.rpcWebSockets', {
-            endpoint: details.rpcWebSockets,
-          })}
-        </TextListItem>
+        {details.rpcWebSockets && (
+          <TextListItem>
+            {t('layerPicker.rpcWebSockets', {
+              endpoint: details.rpcWebSockets,
+            })}
+          </TextListItem>
+        )}
         <TextListItem>
           {t('layerPicker.chainId')}
           <TextList>

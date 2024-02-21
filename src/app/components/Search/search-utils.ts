@@ -51,11 +51,10 @@ export const searchSuggestionTerms = {
     },
     cipher: undefined,
     pontusx: {
-      // TODO: provide proper suggestions
-      suggestedBlock: '4260',
-      suggestedTransaction: '0xd9b5c08be1cb74229abedd9b3e1afb8b43228085a6abf72993db415959ab6b35',
-      suggestedAccount: '0xfA3AC9f65C9D75EE3978ab76c6a1105f03156204',
-      suggestedTokenFragment: 'USD',
+      suggestedBlock: '390632',
+      suggestedTransaction: '0x244f71bcc67a0359c0d1e417b302ec3b358193769399e71f0112c58135f0fc82',
+      suggestedAccount: '0xC09c6A1d5538E7ed135d6146241c8da11e92130B',
+      suggestedTokenFragment: 'Ocean',
     },
     consensus: undefined,
   },
