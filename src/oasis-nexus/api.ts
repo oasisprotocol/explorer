@@ -166,7 +166,6 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   params?,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: runtime })[0].ticker // TODO: find this out from tx data
   return generated.useGetRuntimeTransactions(network, runtime, params, {
     ...options,
     request: {
@@ -186,7 +185,8 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
-                ticker,
+                ticker:
+                  tx.body?.amount?.Denomination ?? getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
@@ -238,7 +238,6 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
 ) => {
   // Sometimes we will call this with an undefined txHash, so we must be careful here.
   const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
-  const ticker = getTokensForScope({ network, layer: runtime })[0].ticker // TODO: find this out from tx data
   return generated.useGetRuntimeTransactionsTxHash(network, runtime, actualHash, {
     ...options,
     request: {
@@ -258,7 +257,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
-                ticker,
+                ticker:
+                  tx.body?.amount?.Denomination ?? getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
@@ -752,7 +752,9 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                               event.body.amount.Amount,
                               paraTimesConfig[runtime].decimals,
                             ),
-                            Denomination: getTokensForScope({ network, layer: runtime })[0].ticker, // TODO find this out from event data
+                            Denomination:
+                              event.body?.Denomination ??
+                              getTokensForScope({ network, layer: runtime })[0].ticker,
                           }
                         : event.body.amount,
                   },
