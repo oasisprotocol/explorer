@@ -1,4 +1,4 @@
-const validProtocols = ['http:', 'https:', 'ftp:', 'ipfs:', 'data:']
+const validProtocols = ['http:', 'https:', 'ftp:', 'ipfs:', 'data:', 'mailto:']
 
 export const hasValidProtocol = (url: string | undefined): boolean => {
   if (!url) {

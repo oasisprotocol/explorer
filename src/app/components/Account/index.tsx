@@ -22,7 +22,7 @@ import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
 import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
-import { getFiatCurrencyForScope, getTokensForScope } from '../../../config'
+import { getFiatCurrencyForScope, getTokensForScope, showFiatValues } from '../../../config'
 
 type AccountProps = {
   account?: RuntimeAccount
@@ -115,7 +115,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             <TokenPills account={account} tokens={account.evm_balances} />
           </dd>
 
-          {!fiatValueInfo.loading && fiatValueInfo.hasValue && (
+          {showFiatValues && !fiatValueInfo.loading && fiatValueInfo.hasValue && (
             <>
               <dt>{t('common.fiatValue')}</dt>
               <dd>

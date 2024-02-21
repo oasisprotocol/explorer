@@ -9,7 +9,9 @@ const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<
     [Layer.consensus]: { [Ticker.TEST]: testnetFaucetUrl },
     [Layer.emerald]: { [Ticker.TEST]: `${faucetParaTimeBaseUrl}emerald` },
     [Layer.sapphire]: { [Ticker.TEST]: `${faucetParaTimeBaseUrl}sapphire` },
-    [Layer.pontusx]: { [Ticker.TEST]: 'mailto:contact@delta-dao.com?subject=tokens' },
+    [Layer.pontusx]: {
+      [Ticker.EUROe]: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens')}`,
+    },
     [Layer.cipher]: { [Ticker.TEST]: `${faucetParaTimeBaseUrl}cipher` },
   },
 }
