@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { RuntimeSdkBalance } from '../../../oasis-nexus/api'
 import { useTranslation } from 'react-i18next'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import Box from '@mui/material/Box'
 
 export const RuntimeBalanceDisplay: FC<{ balances: RuntimeSdkBalance[] | undefined }> = ({
   balances = [],
@@ -11,15 +12,15 @@ export const RuntimeBalanceDisplay: FC<{ balances: RuntimeSdkBalance[] | undefin
     return t('common.missing')
   }
   return (
-    <>
+    <Box>
       {balances.map(balance => (
-        <span key={balance.token_symbol}>
+        <div key={balance.token_symbol}>
           {t('common.valueInToken', {
             ...getPreciseNumberFormat(balance.balance),
             ticker: balance.token_symbol,
           })}
-        </span>
+        </div>
       ))}
-    </>
+    </Box>
   )
 }
