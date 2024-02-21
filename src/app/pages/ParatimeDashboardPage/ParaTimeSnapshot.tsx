@@ -7,7 +7,7 @@ import { ActiveAccounts } from './ActiveAccounts'
 import { ChartDuration } from '../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
 import { useConstant } from '../../hooks/useConstant'
-import { getTokensForScope } from '../../../config'
+import { getTokensForScope, showFiatValues } from '../../../config'
 import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { SearchScope } from '../../../types/searchScope'
@@ -53,7 +53,7 @@ export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
           <Nodes scope={scope} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
-          {!mainToken.free && <TokenPriceCard token={mainToken} />}
+          {showFiatValues && !mainToken.free && <TokenPriceCard token={mainToken} />}
           {faucetLink && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
         </StyledGrid>
       </Snapshot>

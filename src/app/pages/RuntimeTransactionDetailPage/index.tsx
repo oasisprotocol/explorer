@@ -38,7 +38,7 @@ import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
-import { getFiatCurrencyForScope } from '../../../config'
+import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -327,7 +327,8 @@ export const RuntimeTransactionDetailView: FC<{
               : t('common.missing')}
           </dd>
 
-          {transaction.amount !== undefined &&
+          {showFiatValues &&
+            transaction.amount !== undefined &&
             !!tokenPriceInfo &&
             !tokenPriceInfo.isLoading &&
             !tokenPriceInfo.isFree &&

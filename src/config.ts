@@ -197,3 +197,5 @@ export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenIn
 
 export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
   (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'
+
+export const showFiatValues = process.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
