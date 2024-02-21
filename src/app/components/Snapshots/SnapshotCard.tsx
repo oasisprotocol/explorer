@@ -61,7 +61,13 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
             }}
           >
             <Box>{badge}</Box>
-            <Typography variant="h2" sx={{ fontWeight: 'fontWeightRegular' }}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: 400,
+                flex: 1,
+              }}
+            >
               {label}
             </Typography>
           </Box>
