@@ -748,13 +748,8 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                       event.body.amount.Denomination === ''
                         ? {
                             ...event.body.amount,
-                            Amount: fromBaseUnits(
-                              event.body.amount.Amount,
-                              paraTimesConfig[runtime].decimals,
-                            ),
-                            Denomination:
-                              event.body?.Denomination ??
-                              getTokensForScope({ network, layer: runtime })[0].ticker,
+                            Amount: fromBaseUnits(event.body.Amount, paraTimesConfig[runtime].decimals),
+                            Denomination: getTokensForScope({ network, layer: runtime })[0].ticker,
                           }
                         : event.body.amount,
                   },
