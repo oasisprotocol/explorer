@@ -7,6 +7,24 @@ import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
+import { isLayerHidden } from '../../types/layers'
+
+export const fixedNetwork = process.env.REACT_APP_FIXED_NETWORK as Network | undefined
+export const fixedLayer = process.env.REACT_APP_FIXED_LAYER as Layer | undefined
+
+export type ScopeFreedom =
+  | 'network' // We can select only the network
+  | 'layer' // We can select only the layer
+  | 'network-layer' // We can select both network and layer
+  | 'none' // We can't select anything, everything is fixed
+
+export const scopeFreedom: ScopeFreedom = fixedNetwork
+  ? fixedLayer
+    ? 'none'
+    : 'layer'
+  : fixedLayer
+    ? 'network'
+    : 'network-layer'
 
 export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   [N in keyof (typeof RouteUtils)['ENABLED_LAYERS_FOR_NETWORK']]: {
@@ -101,7 +119,7 @@ export abstract class RouteUtils {
 
   static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
     return scope
-      ? `/${scope.network}/${scope.layer}/search?q=${encodeURIComponent(searchTerm)}`
+      ? `/${encodeURIComponent(scope.network)}/${encodeURIComponent(scope.layer)}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
@@ -130,14 +148,24 @@ export abstract class RouteUtils {
     const enabled: Layer[] = []
     const disabled: Layer[] = []
 
-    Object.values(Layer).forEach(layer =>
-      RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer] ? enabled.push(layer) : disabled.push(layer),
-    )
+    Object.values(Layer).forEach(layer => {
+      if ((!fixedLayer || layer === fixedLayer) && RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer]) {
+        enabled.push(layer)
+      } else {
+        disabled.push(layer)
+      }
+    })
 
     return {
       enabled,
       disabled,
     }
+  }
+
+  static getVisibleLayersForNetwork(network: Network, currentScope: SearchScope | undefined): Layer[] {
+    return this.getAllLayersForNetwork(network).enabled.filter(
+      layer => !isLayerHidden(layer) || layer === currentScope?.layer,
+    )
   }
 
   static getProposalsRoute = (network: Network) => {
@@ -154,16 +182,32 @@ export abstract class RouteUtils {
     )
   }
 
+  /**
+   * Get the list of enabled networks.
+   *
+   * If this Explorer is fixed to a specific network, the only that network will be returned.
+   * Furthermore, if this Explorer is fixed to a specific layer, only networks that support that layer are returned.
+   */
   static getEnabledNetworks(): Network[] {
-    return Object.values(Network).filter(network => {
-      return RouteUtils.getAllLayersForNetwork(network).enabled.length > 0
-    })
+    const networks = fixedNetwork
+      ? [fixedNetwork]
+      : Object.values(Network).filter(network => {
+          return this.getAllLayersForNetwork(network).enabled.length > 0
+        })
+    return fixedLayer
+      ? networks.filter(network => {
+          return this.getAllLayersForNetwork(network).enabled.includes(fixedLayer)
+        })
+      : networks
   }
 
-  static getEnabledSearchScopes(): SearchScope[] {
-    return RouteUtils.getEnabledNetworks().flatMap(network =>
-      RouteUtils.getAllLayersForNetwork(network).enabled.map(layer => ({ network, layer })),
-    )
+  static getEnabledNetworksForLayer(layer: Layer | undefined): Network[] {
+    const networks = this.getEnabledNetworks()
+    return layer
+      ? networks.filter(network => {
+          return this.getAllLayersForNetwork(network).enabled.includes(layer)
+        })
+      : networks
   }
 }
 
@@ -274,5 +318,21 @@ export const proposalIdParamLoader = async ({ params, request }: LoaderFunctionA
   return {
     proposalId: parseInt(params.proposalId!),
     searchTerm: getSearchTermFromRequest(request),
+  }
+}
+
+/**
+ * Is it possible to change the scope, given the current configuration?
+ */
+export const isScopeSelectorNeeded = (sourceScope: SearchScope) => {
+  switch (scopeFreedom) {
+    case 'network':
+      return RouteUtils.getEnabledNetworks().length > 1
+    case 'layer':
+      return RouteUtils.getVisibleLayersForNetwork(fixedNetwork!, sourceScope).length > 1
+    case 'network-layer':
+      return RouteUtils.getEnabledScopes().length > 1
+    case 'none':
+      return false
   }
 }

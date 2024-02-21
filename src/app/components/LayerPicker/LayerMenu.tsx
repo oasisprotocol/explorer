@@ -13,6 +13,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { isLayerHidden, orderByLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { useScopeParam } from '../../hooks/useScopeParam'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
@@ -107,9 +108,11 @@ export const LayerMenu: FC<LayerMenuProps> = ({
   selectedNetwork,
   setSelectedLayer,
 }) => {
+  const currentScope = useScopeParam()
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const options = Object.values(Layer)
-    .filter(layer => !isLayerHidden(layer))
+    // Don't show hidden layers, unless we are already viewing them.
+    .filter(layer => !isLayerHidden(layer) || layer === currentScope?.layer)
     .map(layer => ({
       layer,
       enabled: RouteUtils.getAllLayersForNetwork(selectedNetwork || network).enabled.includes(layer),
