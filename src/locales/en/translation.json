@@ -7,6 +7,7 @@
     "emptyTokenList": "This account holds no {{spec}} {{description}}.",
     "emptyTransactionList": "There are no transactions on record for this account.",
     "emptyTokenTransferList": "There are no token transfers on record for this account.",
+    "failedToLookUpTickers": "We don't have the price for: {{tickers}}",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
     "lastNonce": "Last Nonce",
@@ -290,9 +291,6 @@
     "first": "First",
     "last": "Last"
   },
-  "rosePrice": {
-    "header": "ROSE Price"
-  },
   "social": {
     "description": "Be part of the community and stay in the loop on everything Oasis",
     "discord": "Discord",
@@ -337,6 +335,9 @@
   },
   "tokenSnapshot": {
     "header": "Token Snapshot"
+  },
+  "tokenPrice": {
+    "header": "{{ticker}} Price"
   },
   "totalTransactions": {
     "header": "Total Transactions",

@@ -1,5 +1,8 @@
+// We get this from the generated code to avoid circular imports
 // eslint-disable-next-line no-restricted-imports
-import { Layer } from './oasis-nexus/generated/api' // We get this from the generated code to avoid circular imports
+import { Layer } from './oasis-nexus/generated/api'
+import { getTokenForNetwork, NativeToken, NativeTokenInfo } from './types/ticker'
+import { SearchScope } from './types/searchScope'
 
 export const consensusDecimals = 9
 
@@ -8,6 +11,18 @@ type LayerNetwork = {
   address: string | undefined
   blockGasLimit: number | undefined
   runtimeId: string | undefined
+
+  /**
+   * What are the native tokens on this layer?
+   *
+   * (If not given, the network's default token will be used.)
+   */
+  tokens?: NativeTokenInfo[]
+
+  /**
+   * What fiat currency should we use for displaying value?
+   */
+  fiatCurrency?: string
 }
 
 type LayerConfig = {
@@ -121,6 +136,8 @@ const pontusxConfig: LayerConfig = {
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
+    tokens: [NativeToken.EUROe, NativeToken.TEST],
+    fiatCurrency: 'eur',
   },
   local: {
     activeNodes: undefined,
@@ -164,3 +181,19 @@ const stableDeploys = [...deploys.production, deploys.staging]
 export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)
 
 export const getAppTitle = () => process.env.REACT_APP_META_TITLE
+
+export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {
+  if (!scope) {
+    return []
+  }
+  const { network, layer } = scope
+  const networkDefault = getTokenForNetwork(network)
+
+  if (layer !== Layer.consensus) {
+    return paraTimesConfig[layer][network].tokens ?? [networkDefault]
+  }
+  return [networkDefault]
+}
+
+export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
+  (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'

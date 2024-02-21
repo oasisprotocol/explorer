@@ -14,9 +14,9 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { useTokenPrice } from '../../../coin-gecko/api'
-import { getTickerForNetwork } from '../../../types/ticker'
+import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
+import { getFiatCurrencyForScope } from '../../../config'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -35,7 +35,7 @@ export const RuntimeTransactionsPage: FC = () => {
     // we should call useGetConsensusTransactions()
   }
 
-  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   useEffect(() => {
     if (!isMobile) {
@@ -117,7 +117,7 @@ export const RuntimeTransactionsPage: FC = () => {
                   key={key}
                   isLoading={true}
                   transaction={undefined}
-                  tokenPriceInfo={tokenPriceInfo}
+                  tokenPrices={tokenPrices}
                   standalone
                 />
               ))}
@@ -127,7 +127,7 @@ export const RuntimeTransactionsPage: FC = () => {
                 <RuntimeTransactionDetailView
                   key={tx.hash}
                   transaction={tx}
-                  tokenPriceInfo={tokenPriceInfo}
+                  tokenPrices={tokenPrices}
                   standalone
                 />
               ))}

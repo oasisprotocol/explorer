@@ -26,8 +26,8 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionEvents } from '../../components/Transactions/TransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { getNameForTicker, getTickerForNetwork, Ticker } from '../../../types/ticker'
-import { TokenPriceInfo, useTokenPrice } from '../../../coin-gecko/api'
+import { getNameForTicker, Ticker } from '../../../types/ticker'
+import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import InfoIcon from '@mui/icons-material/Info'
@@ -38,6 +38,7 @@ import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
+import { getFiatCurrencyForScope } from '../../../config'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -102,7 +103,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
     data?.data,
   )
 
-  const tokenPriceInfo = useTokenPrice(getTickerForNetwork(scope.network))
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
@@ -125,7 +126,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
         <RuntimeTransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
-          tokenPriceInfo={tokenPriceInfo}
+          tokenPrices={tokenPrices}
           addressSwitchOption={addressSwitchOption}
         />
       </SubPageCard>
@@ -166,14 +167,14 @@ export const RuntimeTransactionDetailView: FC<{
   transaction: TransactionDetailRuntimeBlock | undefined
   showLayer?: boolean
   standalone?: boolean
-  tokenPriceInfo: TokenPriceInfo
+  tokenPrices: AllTokenPrices
   addressSwitchOption?: AddressSwitchOption
 }> = ({
   isLoading,
   transaction,
   showLayer,
   standalone = false,
-  tokenPriceInfo,
+  tokenPrices,
   addressSwitchOption = AddressSwitchOption.ETH,
 }) => {
   const { t } = useTranslation()
@@ -188,6 +189,7 @@ export const RuntimeTransactionDetailView: FC<{
 
   const ticker = transaction?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, ticker)
+  const tokenPriceInfo = tokenPrices[ticker]
 
   return (
     <>

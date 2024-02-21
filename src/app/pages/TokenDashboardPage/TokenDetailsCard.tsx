@@ -11,17 +11,16 @@ import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
-import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { RouteUtils } from '../../utils/route-utils'
 import { tokenTransfersContainerId } from '../../pages/TokenDashboardPage/TokenTransfersCard'
 import { tokenHoldersContainerId } from '../../pages/TokenDashboardPage/TokenHoldersCard'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { HighlightedText } from '../../components/HighlightedText'
+import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
   scope,
@@ -34,10 +33,6 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
   const { token, isLoading: tokenIsLoading } = useTokenInfo(scope, address)
   const { account, isLoading: accountIsLoading } = useAccount(scope, address)
   const isLoading = tokenIsLoading || accountIsLoading
-
-  const balance = account?.balances[0]?.balance
-  const nativeToken = account?.ticker || Ticker.ROSE
-  const tickerName = getNameForTicker(t, nativeToken)
 
   return (
     <Card>
@@ -79,9 +74,7 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
 
             <dt>{t('common.balance')} </dt>
             <dd>
-              {balance === undefined
-                ? t('common.missing')
-                : t('common.valueInToken', { ...getPreciseNumberFormat(balance), ticker: tickerName })}
+              <RuntimeBalanceDisplay balances={account?.balances} />
             </dd>
 
             <dt>{t('tokens.totalSupply')}</dt>

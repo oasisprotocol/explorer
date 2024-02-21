@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { RouterTabs } from '../../components/RouterTabs'
-import { useTokenPrice } from '../../../coin-gecko/api'
-import { Ticker } from '../../../types/ticker'
+import { useAllTokenPrices } from '../../../coin-gecko/api'
 
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
@@ -19,6 +18,7 @@ import { AccountDetailsCard } from './AccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
+import { getFiatCurrencyForScope } from '../../../config'
 
 export type AccountDetailsContext = {
   scope: SearchScope
@@ -37,7 +37,7 @@ export const AccountDetailsPage: FC = () => {
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
 
-  const tokenPriceInfo = useTokenPrice(account?.ticker || Ticker.ROSE)
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   const { isLoading: areEventsLoading, isError: isEventsError, events } = useAccountEvents(scope, address)
 
@@ -61,7 +61,7 @@ export const AccountDetailsPage: FC = () => {
         isContract={isContract}
         account={account}
         token={token}
-        tokenPriceInfo={tokenPriceInfo}
+        tokenPrices={tokenPrices}
       />
       <DappBanner scope={scope} ethAddress={account?.address_eth} />
       <RouterTabs

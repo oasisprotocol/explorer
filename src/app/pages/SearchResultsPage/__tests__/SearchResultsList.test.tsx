@@ -8,6 +8,7 @@ import {
 } from '../../../utils/test-fixtures'
 import { Network } from '../../../../types/network'
 import { SearchResultsList } from '../SearchResultsList'
+import { Ticker } from '../../../../types/ticker'
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
@@ -24,16 +25,24 @@ describe('SearchResultsView', () => {
       <SearchResultsList
         searchResults={[suggestedParsedBlock, sapphireParsedBlock]}
         tokenPrices={{
-          [Network.mainnet]: {
+          [Ticker.ROSE]: {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
-          [Network.testnet]: {
+          [Ticker.TEST]: {
             isLoading: false,
             isFree: true,
             hasUsedCoinGecko: false,
+          },
+          [Ticker.EUROe]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            fiatCurrency: 'usd',
+            hasUsedCoinGecko: true,
           },
         }}
         title="test search"
@@ -62,16 +71,24 @@ describe('SearchResultsView', () => {
         title="test search"
         networkForTheme={Network.mainnet}
         tokenPrices={{
-          [Network.mainnet]: {
+          [Ticker.ROSE]: {
             isLoading: false,
             isFree: false,
             price: 1,
+            fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
-          [Network.testnet]: {
+          [Ticker.TEST]: {
             isLoading: false,
             isFree: true,
             hasUsedCoinGecko: false,
+          },
+          [Ticker.EUROe]: {
+            isLoading: false,
+            isFree: false,
+            price: 1,
+            fiatCurrency: 'usd',
+            hasUsedCoinGecko: true,
           },
         }}
       />,

@@ -1,5 +1,3 @@
-import { Layer } from '../../oasis-nexus/api'
-
 export const socialMedia = {
   telegram: process.env.REACT_APP_SOCIAL_TELEGRAM,
   twitter: process.env.REACT_APP_SOCIAL_TWITTER,
@@ -46,16 +44,6 @@ export const github = {
   home: githubLink,
   commit: `${githubLink}commit/`,
   releaseTag: `${githubLink}releases/tag/`,
-}
-
-const faucetUrl = 'https://faucet.testnet.oasis.dev/'
-const faucetParaTimeBaseUrl = `${faucetUrl}?paratime=`
-export const faucet = {
-  [Layer.consensus]: faucetUrl,
-  [Layer.emerald]: `${faucetParaTimeBaseUrl}emerald`,
-  [Layer.sapphire]: `${faucetParaTimeBaseUrl}sapphire`,
-  [Layer.pontusx]: 'mailto:contact@delta-dao.com?subject=tokens',
-  [Layer.cipher]: `${faucetParaTimeBaseUrl}cipher`,
 }
 
 export const api = {

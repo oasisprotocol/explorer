@@ -1,12 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { CoinGeckoReferral } from '../../components/CoinGeckoReferral'
 import { TextSkeleton } from '../../components/Skeleton'
 import { EvmToken, type RuntimeAccount } from '../../../oasis-nexus/api'
 import { TokenPills } from './TokenPills'
@@ -15,34 +12,29 @@ import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/AccountDetailsPage/AccountTransactionsCard'
 import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import { getNameForTicker, Ticker } from '../../../types/ticker'
-import { TokenPriceInfo } from '../../../coin-gecko/api'
+import { getNameForTicker } from '../../../types/ticker'
+import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
-import BigNumber from 'bignumber.js'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountAvatar } from '../AccountAvatar'
-
-export const FiatMoneyAmountBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  flex: 1,
-}))
+import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
+import { calculateFiatValue } from '../Balance/hooks'
+import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
+import { getFiatCurrencyForScope, getTokensForScope } from '../../../config'
 
 type AccountProps = {
   account?: RuntimeAccount
   token?: EvmToken
   isLoading: boolean
-  tokenPriceInfo: TokenPriceInfo
+  tokenPrices: AllTokenPrices
   showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPriceInfo, showLayer }) => {
+export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPrices, showLayer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const balance = account?.balances[0]?.balance
   const address = account ? account.address_eth ?? account.address : undefined
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
@@ -53,15 +45,10 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
       )}#${accountTransactionsContainerId}`
     : undefined
 
-  const nativeToken = account?.ticker || Ticker.ROSE
-  const nativeTickerName = getNameForTicker(t, nativeToken)
-  const {
-    isLoading: isPriceLoading,
-    price: tokenFiatValue,
-    isFree: isTokenFree,
-    hasUsedCoinGecko,
-  } = tokenPriceInfo
+  const nativeTokens = getTokensForScope(account || { network: 'mainnet', layer: 'sapphire' })
+  const nativeTickerNames = nativeTokens.map(token => getNameForTicker(t, token.ticker))
   const contract = account?.evm_contract
+  const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))
 
   return (
     <>
@@ -120,9 +107,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
 
           <dt>{t('common.balance')}</dt>
           <dd>
-            {balance === undefined
-              ? t('common.missing')
-              : t('common.valueInToken', { ...getPreciseNumberFormat(balance), ticker: nativeTickerName })}
+            <RuntimeBalanceDisplay balances={account.balances} />
           </dd>
 
           <dt>{t('common.tokens')}</dt>
@@ -130,21 +115,11 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             <TokenPills account={account} tokens={account.evm_balances} />
           </dd>
 
-          {!isPriceLoading && !isTokenFree && tokenFiatValue !== undefined && balance && (
+          {!fiatValueInfo.loading && fiatValueInfo.hasValue && (
             <>
               <dt>{t('common.fiatValue')}</dt>
               <dd>
-                <FiatMoneyAmountBox>
-                  {t('common.fiatValueInUSD', {
-                    value: new BigNumber(balance).multipliedBy(tokenFiatValue).toFixed(),
-                    formatParams: {
-                      value: {
-                        currency: 'USD',
-                      } satisfies Intl.NumberFormatOptions,
-                    },
-                  })}
-                  {hasUsedCoinGecko && <CoinGeckoReferral />}
-                </FiatMoneyAmountBox>
+                <FiatMoneyAmount {...fiatValueInfo} />
               </dd>
             </>
           )}
@@ -160,21 +135,25 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             )}
           </dd>
 
-          <dt>{t('account.totalReceived')}</dt>
-          <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(account.stats.total_received),
-              ticker: nativeTickerName,
-            })}
-          </dd>
+          {nativeTokens.length === 1 && (
+            <>
+              <dt>{t('account.totalReceived')}</dt>
+              <dd>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(account.stats.total_received),
+                  ticker: nativeTickerNames[0],
+                })}
+              </dd>
 
-          <dt>{t('account.totalSent')}</dt>
-          <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(account.stats.total_sent),
-              ticker: nativeTickerName,
-            })}
-          </dd>
+              <dt>{t('account.totalSent')}</dt>
+              <dd>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(account.stats.total_sent),
+                  ticker: nativeTickerNames[0],
+                })}
+              </dd>
+            </>
+          )}
         </StyledDescriptionList>
       )}
     </>

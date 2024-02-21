@@ -1,7 +1,7 @@
 /** @file Wrappers around generated API */
 
 import axios, { AxiosResponse } from 'axios'
-import { consensusDecimals, paraTimesConfig } from '../config'
+import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import {
@@ -17,7 +17,7 @@ import {
 import { fromBaseUnits, getEthAddressForAccount, getAccountSize } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
-import { getTickerForNetwork, NativeTicker } from '../types/ticker'
+import { Ticker } from '../types/ticker'
 import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddress'
 import { useEffect, useState } from 'react'
 import { RpcUtils } from '../app/utils/rpc-utils'
@@ -32,13 +32,13 @@ declare module './generated/api' {
   export interface Transaction {
     network: Network
     layer: Layer
-    ticker: NativeTicker
+    ticker: Ticker
   }
 
   export interface RuntimeTransaction {
     network: Network
     layer: Layer
-    ticker: NativeTicker
+    ticker: Ticker
   }
 
   export interface Block {
@@ -54,7 +54,7 @@ declare module './generated/api' {
   export interface Account {
     network: Network
     layer: Layer
-    ticker: NativeTicker
+    ticker: Ticker
     size: string
     total: string
   }
@@ -63,7 +63,6 @@ declare module './generated/api' {
     network: Network
     layer: Layer
     address_eth?: string
-    ticker: NativeTicker
     tokenBalances: Partial<Record<EvmTokenType, generated.RuntimeEvmBalance[]>>
   }
 
@@ -84,7 +83,7 @@ declare module './generated/api' {
   }
 
   export interface Validator {
-    ticker: NativeTicker
+    ticker: Ticker
   }
 
   export interface Proposal {
@@ -129,7 +128,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
   params?,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusTransactions(network, params, {
     ...options,
     request: {
@@ -167,7 +166,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   params?,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: runtime })[0].ticker // TODO: find this out from tx data
   return generated.useGetRuntimeTransactions(network, runtime, params, {
     ...options,
     request: {
@@ -204,7 +203,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
   txHash,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusTransactionsTxHash(network, txHash, {
     ...options,
     request: {
@@ -239,7 +238,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
 ) => {
   // Sometimes we will call this with an undefined txHash, so we must be careful here.
   const actualHash = txHash?.startsWith('0x') ? txHash.substring(2) : txHash
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: runtime })[0].ticker // TODO: find this out from tx data
   return generated.useGetRuntimeTransactionsTxHash(network, runtime, actualHash, {
     ...options,
     request: {
@@ -276,7 +275,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
   address,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusAccountsAddress(network, address, {
     ...options,
     request: {
@@ -320,7 +319,6 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 
   const oasisAddress = useTransformToOasisAddress(address)
 
-  const ticker = getTickerForNetwork(network)
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
     query: {
@@ -369,7 +367,6 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
                 ? fromBaseUnits(data.stats?.total_sent, paraTimesConfig[runtime].decimals)
                 : '0',
             },
-            ticker,
           })
         },
         ...arrayify(options?.request?.transformResponse),
@@ -755,7 +752,7 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                               event.body.amount.Amount,
                               paraTimesConfig[runtime].decimals,
                             ),
-                            Denomination: getTickerForNetwork(network),
+                            Denomination: getTokensForScope({ network, layer: runtime })[0].ticker, // TODO find this out from event data
                           }
                         : event.body.amount,
                   },
@@ -891,7 +888,7 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
   params?,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusValidators(network, params, {
     ...options,
     request: {
@@ -922,7 +919,7 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
   params?,
   options?,
 ) => {
-  const ticker = getTickerForNetwork(network)
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusAccounts(network, params, {
     ...options,
     request: {

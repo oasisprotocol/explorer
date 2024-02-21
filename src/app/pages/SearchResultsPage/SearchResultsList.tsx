@@ -70,7 +70,7 @@ export const SearchResultsList: FC<{
             <RuntimeTransactionDetailView
               isLoading={false}
               transaction={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPrices={tokenPrices}
               showLayer={true}
             />
           )}
@@ -86,7 +86,7 @@ export const SearchResultsList: FC<{
               isLoading={false}
               isError={false}
               account={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPrices={tokenPrices}
               showLayer={true}
             />
           )}
@@ -102,7 +102,7 @@ export const SearchResultsList: FC<{
               isLoading={false}
               isError={false}
               account={item}
-              tokenPriceInfo={tokenPrices[item.network]}
+              tokenPrices={tokenPrices}
               showLayer={true}
             />
           )}
