@@ -35,3 +35,12 @@ export const ProgressBar = styled(LinearProgress)(() => ({
   height: '12px',
   width: '85px',
 }))
+
+export const BrandProgressBar = styled(LinearProgress)(() => ({
+  [`&.${linearProgressClasses.determinate} > .${linearProgressClasses.bar1Determinate}`]: {
+    backgroundColor: COLORS.brandDark,
+  },
+  borderColor: COLORS.grayLight,
+  backgroundColor: COLORS.grayLight,
+  height: '12px',
+}))
