@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
-import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { TokenSupplyCard } from './TokenSupplyCard'
@@ -12,10 +11,8 @@ import { TokenHoldersCountCard } from './TokenHoldersCountCard'
 import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 import { SearchScope } from '../../../types/searchScope'
+import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
-const StyledGrid = styled(Grid)(() => ({
-  display: 'flex',
-}))
 export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 

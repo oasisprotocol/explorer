@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
-import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { ExternalLinkCard } from './ExternalLinkCard'
@@ -13,10 +12,7 @@ import { UptimeCard } from './UptimeCard'
 import { VotingPowerCard } from './VotingPowerCard'
 import { BalanceDistributionCard } from './BalanceDistributionCard'
 import { Validator } from '../../../oasis-nexus/api'
-
-const StyledGrid = styled(Grid)(() => ({
-  display: 'flex',
-}))
+import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
 type ValidatorSnapshotProps = {
   scope: SearchScope
