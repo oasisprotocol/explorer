@@ -13,7 +13,7 @@ export const SnapshotCardDurationLabel: FC<SnapshotCardLabelProps> = ({ label, v
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 3 }}>
       <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>{label}</Typography>
       <Typography sx={{ fontSize: 'inherit' }}>{value.toLocaleString()}</Typography>
     </Box>

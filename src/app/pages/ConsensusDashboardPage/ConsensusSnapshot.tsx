@@ -11,9 +11,9 @@ export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
-    <Snapshot title={t('consensusSnapshot')} scope={scope}>
+    <Snapshot title={t('consensusSnapshot.title')} scope={scope}>
       <StyledGrid item xs={22} md={5}>
-        <SnapshotEpoch />
+        <SnapshotEpoch scope={scope} />
       </StyledGrid>
       <StyledGrid item xs={22} md={6}>
         <SnapshotValidators scope={scope} />

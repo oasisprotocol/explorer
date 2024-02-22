@@ -147,7 +147,11 @@
       "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here."
     }
   },
-  "consensusSnapshot": "Consensus Snapshot",
+  "consensusSnapshot": {
+    "blockHeight": "Block Height <BlockHeight />",
+    "title": "Consensus Snapshot",
+    "totalCirculation": "This is <StakedPercentage /> of the total circulation"
+  },
   "currentEpoch": "Current Epoch",
   "dapps": {
     "wrose": {
