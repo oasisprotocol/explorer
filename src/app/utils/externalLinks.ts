@@ -49,6 +49,10 @@ export const faucets = {
   oasisTestnet: 'https://faucet.testnet.oasis.dev/',
 }
 
+export const dapps = {
+  wRose: 'https://wrose.oasis.io/',
+}
+
 export const api = {
   spec: `${process.env.REACT_APP_API}spec/v1.html`,
 }
