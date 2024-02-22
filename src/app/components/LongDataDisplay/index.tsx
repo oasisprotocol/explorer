@@ -1,47 +1,79 @@
-import Collapse from '@mui/material/Collapse'
-import Link from '@mui/material/Link'
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
+import { COLORS } from '../../../styles/theme/colors'
 
-export const LongDataDisplay: FC<{ data: string; threshold: number; fontWeight?: number }> = ({
+const StyledButton = styled(Button)(({ theme }) => ({
+  color: COLORS.brandDark,
+  fontWeight: 700,
+  minWidth: 'auto',
+  height: 'auto',
+  padding: 0,
+  [theme.breakpoints.down('sm')]: {
+    margin: theme.spacing(3, 0, 0, 0),
+  },
+  [theme.breakpoints.up('sm')]: {
+    margin: theme.spacing(4, 0, 0, 0),
+  },
+  '&&:hover, &&:active, &&:focus-visible': {
+    color: COLORS.brandDark,
+    textDecoration: 'none',
+    borderRadius: 0,
+  },
+}))
+
+const lineHeight = 22
+
+export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedLinesNumber?: number }> = ({
   data,
-  threshold,
   fontWeight = 700,
+  collapsedLinesNumber = 2,
 }) => {
   const { t } = useTranslation()
-  const [showData, setShowData] = useState(false)
-  const needsHiding = data.length > threshold
-  if (!needsHiding) {
-    return (
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+  const textRef = useRef<HTMLDivElement | null>(null)
+  const collapsedContainerMaxHeight = collapsedLinesNumber * lineHeight
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (textRef.current) {
+        const isOverflow = textRef.current.scrollHeight > textRef.current.clientHeight
+        setIsOverflowing(isOverflow)
+      }
+    }
+
+    checkOverflow()
+    const handleResize = () => {
+      checkOverflow()
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [data])
+
+  return (
+    <div>
       <Typography
         variant="mono"
+        ref={textRef}
         sx={{
           fontWeight,
+          maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
+          overflow: 'hidden',
+          display: 'flex',
+          lineHeight: `${lineHeight}px`,
           overflowWrap: 'anywhere',
         }}
       >
         {data}
       </Typography>
-    )
-  }
-  return (
-    <div>
-      <Collapse orientation="vertical" in={showData} onClick={() => setShowData(true)} collapsedSize="3em">
-        <Typography
-          variant="mono"
-          sx={{
-            fontWeight,
-            overflowWrap: 'anywhere',
-          }}
-        >
-          {data}
-        </Typography>
-      </Collapse>
-      {data.length > threshold && (
-        <Link sx={{ cursor: 'pointer' }} onClick={() => setShowData(!showData)}>
-          {showData ? t('common.hide') : t('common.show')}
-        </Link>
+      {(isOverflowing || isExpanded) && (
+        <StyledButton onClick={() => setIsExpanded(!isExpanded)}>
+          {isExpanded ? t('common.hide') : t('common.show')}
+        </StyledButton>
       )}
     </div>
   )

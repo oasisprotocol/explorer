@@ -359,7 +359,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
-                <LongDataDisplay data={base64ToHex(transaction.body.data)} threshold={300} />
+                <LongDataDisplay data={base64ToHex(transaction.body.data)} />
               </dd>
             </>
           )}
@@ -392,7 +392,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.encryptedData')}</dt>
                   <dd>
-                    <LongDataDisplay data={transaction.encryption_envelope.data} threshold={300} />
+                    <LongDataDisplay data={transaction.encryption_envelope.data} />
                   </dd>
                 </>
               )}
@@ -412,11 +412,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.encryptedResult')}</dt>
                   <dd>
-                    <LongDataDisplay
-                      data={transaction.encryption_envelope.result}
-                      fontWeight={400}
-                      threshold={300}
-                    />
+                    <LongDataDisplay data={transaction.encryption_envelope.result} fontWeight={400} />
                   </dd>
                 </>
               )}

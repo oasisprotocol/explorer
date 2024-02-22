@@ -168,7 +168,6 @@ export const RuntimeEventDetails: FC<{
             <br />
             <LongDataDisplay
               data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
-              threshold={300}
               fontWeight={400}
             />
           </div>
