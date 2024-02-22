@@ -93,6 +93,10 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({ children, label, t
             fontSize: '32px',
             fontWeight: 700,
             color: COLORS.brandDark,
+            flex: 1,
+            textAlign: 'center',
+            paddingLeft: 4,
+            paddingRight: 4,
           }}
         >
           {children}
