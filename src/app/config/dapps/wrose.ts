@@ -1,3 +1,4 @@
+import { dapps } from '../../utils/externalLinks'
 import type { DappReference } from './index'
 import type { TFunction } from 'i18next'
 
@@ -13,6 +14,6 @@ export const wRose = {
   app: (t: TFunction): DappReference => ({
     description: t('dapps.wrose.description'),
     label: t('dapps.wrose.label'),
-    url: 'https://wrose.oasis.io/',
+    url: dapps.wRose,
   }),
 }
