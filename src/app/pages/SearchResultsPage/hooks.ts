@@ -18,6 +18,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
+import { SearchScope } from '../../../types/searchScope'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -52,9 +53,10 @@ export type SearchResultItem =
 export type SearchResults = SearchResultItem[]
 
 export function useBlocksByHeightConditionally(
+  currentScope: SearchScope | undefined,
   blockHeight: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
-  const queries = RouteUtils.getEnabledScopes()
+  const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       /**
@@ -78,9 +80,10 @@ export function useBlocksByHeightConditionally(
 }
 
 export function useBlocksByHashConditionally(
+  currentScope: SearchScope | undefined,
   blockHash: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
-  const queries = RouteUtils.getEnabledScopes()
+  const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       /**
@@ -103,9 +106,10 @@ export function useBlocksByHashConditionally(
   }
 }
 export function useTransactionsConditionally(
+  currentScope: SearchScope | undefined,
   txHash: string | undefined,
 ): ConditionalResults<RuntimeTransaction> {
-  const queries = RouteUtils.getEnabledScopes()
+  const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // See explanation above
@@ -122,9 +126,10 @@ export function useTransactionsConditionally(
   }
 }
 export function useRuntimeAccountConditionally(
+  currentScope: SearchScope | undefined,
   address: string | undefined,
 ): ConditionalResults<RuntimeAccount> {
-  const queries = RouteUtils.getEnabledScopes()
+  const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // See explanation above
@@ -143,9 +148,10 @@ export function useRuntimeAccountConditionally(
 }
 
 export function useRuntimeTokenConditionally(
+  currentScope: SearchScope | undefined,
   nameFragment: string | undefined,
 ): ConditionalResults<EvmTokenList> {
-  const queries = RouteUtils.getEnabledScopes()
+  const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
     .map(scope =>
       // See explanation above
@@ -187,15 +193,15 @@ export function useNetworkProposalsConditionally(
   }
 }
 
-export const useSearch = (q: SearchParams) => {
+export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
-    blockHeight: useBlocksByHeightConditionally(q.blockHeight),
-    blockHash: useBlocksByHashConditionally(q.blockHash),
-    txHash: useTransactionsConditionally(q.txHash),
-    oasisAccount: useRuntimeAccountConditionally(q.consensusAccount),
+    blockHeight: useBlocksByHeightConditionally(currentScope, q.blockHeight),
+    blockHash: useBlocksByHashConditionally(currentScope, q.blockHash),
+    txHash: useTransactionsConditionally(currentScope, q.txHash),
+    oasisAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
-    evmBech32Account: useRuntimeAccountConditionally(q.evmBech32Account),
-    tokens: useRuntimeTokenConditionally(q.evmTokenNameFragment),
+    evmBech32Account: useRuntimeAccountConditionally(currentScope, q.evmBech32Account),
+    tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
