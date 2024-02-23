@@ -1,8 +1,4 @@
-declare global {
-  interface Window {
-    _paq: [string, ...any[]][]
-  }
-}
+/// <reference types="matomo-js-client-types" />
 
 // Generate snippet https://matomo.oasis.io/index.php?module=CoreAdminHome&action=trackingCodeGenerator&idSite=1&period=day&date=yesterday&updated=false
 // Snippet from https://developer.matomo.org/guides/tracking-javascript-guide#finding-the-piwik-tracking-code

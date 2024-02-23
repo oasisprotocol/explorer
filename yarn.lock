@@ -11064,6 +11064,11 @@ markdownlint@~0.33.0:
     markdown-it "14.0.0"
     markdownlint-micromark "0.1.8"
 
+matomo-js-client-types@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/matomo-js-client-types/-/matomo-js-client-types-5.0.0.tgz#6b08bd1eaa4b294663bfd82a6fc9e5c55d35c2c0"
+  integrity sha512-CF41gD+0MjLz/yTtEC0WDTt+NT2qJiW5kl+dZse3f6WMPM1gR9LTcHm5VH86UIKZBJmh1gqQhb71n8v3jEnzBw==
+
 mdast-util-definitions@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/mdast-util-definitions/-/mdast-util-definitions-4.0.0.tgz#c5c1a84db799173b4dcf7643cda999e440c24db2"
