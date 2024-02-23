@@ -607,6 +607,7 @@
     "signed": "Signed",
     "signedBlocks": "Signed Blocks",
     "signedBlocksDescription": "Last 100 blocks",
+    "proposedBlocks": "Proposed Blocks",
     "snapshot": "Validator Snapshot",
     "staked": "Staked",
     "stakingTrend": "Staking Trend",

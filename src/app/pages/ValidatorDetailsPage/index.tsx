@@ -21,6 +21,7 @@ import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
 import { SignedBlocks } from './SignedBlocks'
 import { StakingTrend } from './StakingTrend'
+import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 
 export const ValidatorDetailsPage: FC = () => {
@@ -49,6 +50,7 @@ export const ValidatorDetailsPage: FC = () => {
           <SignedBlocks />
         </Grid>
       </Grid>
+      <ProposedBlocks scope={scope} />
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
