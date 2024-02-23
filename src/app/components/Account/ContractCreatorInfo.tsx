@@ -14,7 +14,11 @@ import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import { useScreenSize } from '../../hooks/useScreensize'
 
-const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash }) => {
+const TxSender: FC<{ scope: SearchScope; txHash: string; alwaysTrim?: boolean }> = ({
+  scope,
+  txHash,
+  alwaysTrim,
+}) => {
   const { t } = useTranslation()
   if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -31,7 +35,7 @@ const TxSender: FC<{ scope: SearchScope; txHash: string }> = ({ scope, txHash })
       }}
     />
   ) : senderAddress ? (
-    <AccountLink scope={scope} address={senderAddress} alwaysTrim />
+    <AccountLink scope={scope} address={senderAddress} alwaysTrim={alwaysTrim} />
   ) : (
     t('common.missing')
   )
@@ -41,7 +45,8 @@ export const ContractCreatorInfo: FC<{
   scope: SearchScope
   isLoading?: boolean
   creationTxHash: string | undefined
-}> = ({ scope, isLoading, creationTxHash }) => {
+  alwaysTrim?: boolean
+}> = ({ scope, isLoading, creationTxHash, alwaysTrim }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -59,9 +64,9 @@ export const ContractCreatorInfo: FC<{
         minWidth: '25%',
       }}
     >
-      <TxSender scope={scope} txHash={creationTxHash} />
+      <TxSender scope={scope} txHash={creationTxHash} alwaysTrim={alwaysTrim} />
       <Box>{t('contract.createdAt')}</Box>
-      <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim />
+      <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim={alwaysTrim} />
     </Box>
   )
 }
@@ -69,7 +74,8 @@ export const ContractCreatorInfo: FC<{
 export const DelayedContractCreatorInfo: FC<{
   scope: SearchScope
   contractOasisAddress: string | undefined
-}> = ({ scope, contractOasisAddress }) => {
+  alwaysTrim?: boolean
+}> = ({ scope, contractOasisAddress, alwaysTrim }) => {
   const accountQuery = useGetRuntimeAccountsAddress(
     scope.network,
     scope.layer as Runtime,
@@ -82,6 +88,11 @@ export const DelayedContractCreatorInfo: FC<{
   const creationTxHash = contract?.eth_creation_tx || contract?.creation_tx
 
   return (
-    <ContractCreatorInfo scope={scope} isLoading={accountQuery.isLoading} creationTxHash={creationTxHash} />
+    <ContractCreatorInfo
+      scope={scope}
+      isLoading={accountQuery.isLoading}
+      creationTxHash={creationTxHash}
+      alwaysTrim={alwaysTrim}
+    />
   )
 }

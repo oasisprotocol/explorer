@@ -14,7 +14,8 @@ const WithTypographyAndLink: FC<{
   to: string
   mobile?: boolean
   children: ReactNode
-}> = ({ children, to, mobile }) => {
+  labelOnly?: boolean
+}> = ({ children, to, mobile, labelOnly }) => {
   return (
     <Typography
       variant="mono"
@@ -28,9 +29,13 @@ const WithTypographyAndLink: FC<{
           : {}),
       }}
     >
-      <Link component={RouterLink} to={to}>
-        {children}
-      </Link>
+      {labelOnly ? (
+        children
+      ) : (
+        <Link component={RouterLink} to={to}>
+          {children}
+        </Link>
+      )}
     </Typography>
   )
 }
@@ -50,9 +55,16 @@ interface Props {
    * (Besides the content necessary because of potential shortening)
    */
   extraTooltip?: ReactNode
+
+  /**
+   * Should we display this as a simple label, with no link?
+   *
+   * (Used for own address)
+   */
+  labelOnly?: boolean
 }
 
-export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraTooltip }) => {
+export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraTooltip, labelOnly }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
 
@@ -68,7 +80,7 @@ export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraToolti
     // In a table, we only ever want a short line
 
     return (
-      <WithTypographyAndLink to={to}>
+      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
         <MaybeWithTooltip title={address}>{trimLongString(address, 6, 6)}</MaybeWithTooltip>
       </WithTypographyAndLink>
     )
@@ -79,7 +91,7 @@ export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraToolti
     // We want one long line
 
     return (
-      <WithTypographyAndLink to={to}>
+      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
         <MaybeWithTooltip title={extraTooltipWithIcon}>{address} </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
@@ -88,7 +100,7 @@ export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraToolti
   // We need to show the data in details mode on mobile.
   // Line adaptively shortened to fill available space
   return (
-    <WithTypographyAndLink to={to} mobile>
+    <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
       <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
     </WithTypographyAndLink>
   )

@@ -30,10 +30,14 @@ type AccountTokensCardProps = RuntimeAccountDetailsContext & {
 
 export const accountTokenContainerId = 'tokens'
 
-export const ContractLink: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const ContractLink: FC<{ scope: SearchScope; address: string; alwaysTrim?: boolean }> = ({
+  scope,
+  address,
+  alwaysTrim,
+}) => {
   return (
     <Box sx={{ display: 'flex', alignContent: 'center' }}>
-      <AccountLink scope={scope} address={address} />
+      <AccountLink scope={scope} address={address} alwaysTrim={alwaysTrim} />
       <CopyToClipboard value={address} />
     </Box>
   )
@@ -79,7 +83,11 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
       {
         content: (
           <LinkableDiv id={item.token_contract_addr_eth ?? item.token_contract_addr}>
-            <ContractLink scope={scope} address={item.token_contract_addr_eth ?? item.token_contract_addr} />
+            <ContractLink
+              scope={scope}
+              address={item.token_contract_addr_eth ?? item.token_contract_addr}
+              alwaysTrim
+            />
           </LinkableDiv>
         ),
         key: 'hash',
