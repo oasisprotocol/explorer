@@ -20,6 +20,7 @@ export const ScopedSearchResultsView: FC<{
   wantedScope: SearchScope
   searchTerm: string
   searchResults: SearchResults
+  isPotentiallyIncomplete: boolean // Some of the searches failed, so we might not see everything // TODO: indicate this on the UI
   tokenPrices: AllTokenPrices
 }> = ({ wantedScope, searchTerm, searchResults, tokenPrices }) => {
   const { t } = useTranslation()

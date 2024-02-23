@@ -34,7 +34,7 @@ export function useRedirectIfSingleResult(
         redirectTo = RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)
         break
       case 'account':
-        redirectTo = RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
+        redirectTo = `${RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)}?q=${searchTerm}`
         break
       case 'contract':
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)

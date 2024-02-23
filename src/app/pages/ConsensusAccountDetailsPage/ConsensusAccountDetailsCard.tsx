@@ -13,18 +13,25 @@ type ConsensusAccountDetailsCardProps = {
   account: Account | undefined
   isError: boolean
   isLoading: boolean
+  highlightedPartOfName?: string | undefined
 }
 
 export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({
   account,
   isError,
   isLoading,
+  highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
 
   return (
     <SubPageCard featured isLoadingTitle={isLoading} title={t('account.title')} mainTitle>
-      <ConsensusAccountDetailsView isError={isError} isLoading={isLoading} account={account} />
+      <ConsensusAccountDetailsView
+        isError={isError}
+        isLoading={isLoading}
+        account={account}
+        highlightedPartOfName={highlightedPartOfName}
+      />
     </SubPageCard>
   )
 }

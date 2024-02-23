@@ -119,7 +119,7 @@ const EvmEventParamData: FC<{
     // TODO: handle more EVM types
     case 'address':
       return address ? (
-        <AccountLink address={address} scope={scope} alwaysTrimOnTable={alwaysTrimOnTable} />
+        <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256':
       // TODO: format with BigNumber

@@ -16,8 +16,9 @@ export const SearchResultsView: FC<{
   searchTerm: string
   searchResults: SearchResults
   isLoading: boolean
+  isPotentiallyIncomplete: boolean
   tokenPrices: AllTokenPrices
-}> = ({ wantedScope, searchTerm, searchResults, isLoading, tokenPrices }) => {
+}> = ({ wantedScope, searchTerm, searchResults, isLoading, isPotentiallyIncomplete, tokenPrices }) => {
   const { isMobile } = useScreenSize()
   return (
     <PageLayout>
@@ -31,12 +32,14 @@ export const SearchResultsView: FC<{
           wantedScope={wantedScope}
           searchTerm={searchTerm}
           searchResults={searchResults.filter(getFilterForLayer(wantedScope.layer))}
+          isPotentiallyIncomplete={isPotentiallyIncomplete}
           tokenPrices={tokenPrices}
         />
       ) : (
         <GlobalSearchResultsView
           searchTerm={searchTerm}
           searchResults={searchResults}
+          isPotentiallyIncomplete={isPotentiallyIncomplete}
           tokenPrices={tokenPrices}
         />
       )}

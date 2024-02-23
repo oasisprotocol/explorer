@@ -13,6 +13,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   isLoading,
   showLayer,
   standalone,
+  highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
 
@@ -24,6 +25,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       account={account}
       showLayer={showLayer}
       standalone={standalone}
+      highlightedPartOfName={highlightedPartOfName}
     />
   )
 }

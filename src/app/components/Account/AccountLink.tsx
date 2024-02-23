@@ -6,8 +6,12 @@ import { RouteUtils } from '../../utils/route-utils'
 import InfoIcon from '@mui/icons-material/Info'
 import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
+import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
+import Box from '@mui/material/Box'
+import { HighlightedText } from '../HighlightedText'
+import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 
 const WithTypographyAndLink: FC<{
@@ -24,7 +28,7 @@ const WithTypographyAndLink: FC<{
         ...(mobile
           ? {
               maxWidth: '100%',
-              overflowX: 'hidden',
+              overflow: 'hidden',
             }
           : {}),
       }}
@@ -52,7 +56,12 @@ interface Props {
   /**
    * Should we always trim the text to a short line when on mobile or Tablet?
    */
-  alwaysTrimOnTable?: boolean
+  alwaysTrimOnTablet?: boolean
+
+  /**
+   * What part of the name should be highlighted (if any)
+   */
+  highlightedPartOfName?: string | undefined
 
   /**
    * Any extra tooltips to display
@@ -73,47 +82,87 @@ export const AccountLink: FC<Props> = ({
   scope,
   address,
   alwaysTrim,
-  alwaysTrimOnTable,
+  alwaysTrimOnTablet,
+  highlightedPartOfName,
   extraTooltip,
   labelOnly,
 }) => {
   const { isTablet } = useScreenSize()
+  const {
+    metadata: accountMetadata,
+    // isError, // Use this to indicate that we have failed to load the name for this account
+  } = useAccountMetadata(scope, address)
+  const accountName = accountMetadata?.name // TODO: we should also use the description
+
   const to = RouteUtils.getAccountRoute(scope, address)
 
   const extraTooltipWithIcon = extraTooltip ? (
-    <>
+    <Box
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        verticalAlign: 'middle',
+        gap: 2,
+      }}
+    >
       <InfoIcon />
       {extraTooltip}
-    </>
+    </Box>
   ) : undefined
 
   // Are we in a situation when we should always trim?
-  if (alwaysTrim || (alwaysTrimOnTable && isTablet)) {
+  if (alwaysTrim || (alwaysTrimOnTablet && isTablet)) {
     // In a table, we only ever want a short line
 
     return (
       <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={address}>{trimLongString(address, 6, 6)}</MaybeWithTooltip>
+        <MaybeWithTooltip
+          title={
+            <div>
+              {accountName && <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>}
+              <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+              {extraTooltipWithIcon}
+            </div>
+          }
+        >
+          {accountName ? trimLongString(accountName, 12, 0) : trimLongString(address, 6, 6)}
+        </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
   }
 
   if (!isTablet) {
     // Details in desktop mode.
-    // We want one long line
+    // We want one long line, with name and address.
 
     return (
       <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={extraTooltipWithIcon}>{address} </MaybeWithTooltip>
+        <MaybeWithTooltip title={extraTooltipWithIcon}>
+          {accountName ? (
+            <span>
+              <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
+            </span>
+          ) : (
+            address
+          )}
+        </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
   }
 
   // We need to show the data in details mode on mobile.
-  // Line adaptively shortened to fill available space
+  // We want two lines, one for name (if available), one for address
+  // Both lines adaptively shortened to fill available space
   return (
     <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
-      <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
+      <>
+        <AdaptiveHighlightedText
+          text={accountName}
+          pattern={highlightedPartOfName}
+          extraTooltip={extraTooltip}
+        />
+        <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
+      </>
     </WithTypographyAndLink>
   )
 }

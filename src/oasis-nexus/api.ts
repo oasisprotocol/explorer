@@ -12,6 +12,7 @@ import {
   HumanReadableErrorResponse,
   Layer,
   NotFoundErrorResponse,
+  Runtime,
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
@@ -110,17 +111,20 @@ declare module './generated/api' {
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
   if (account.layer === Layer.consensus) {
-    const { available, size, nonce, debonding_delegations_balance, delegations_balance, escrow, total } =
-      account as Account
-    return (
-      available === '0' &&
-      debonding_delegations_balance === '0' &&
-      delegations_balance === '0' &&
-      escrow === '0' &&
-      total === '0' &&
-      nonce === 0 &&
-      size === 'XXS'
-    )
+    // TODO: find a sane way to recognize an important consensus account.
+    // The heuristics below is clearly insufficient, because it would indicate even named accounts like "Governance Escrow" to be empty.
+    return false
+    // const { available, size, nonce, debonding_delegations_balance, delegations_balance, escrow, total } =
+    //   account as Account
+    // return (
+    //   available === '0' &&
+    //   debonding_delegations_balance === '0' &&
+    //   delegations_balance === '0' &&
+    //   escrow === '0' &&
+    //   total === '0' &&
+    //   nonce === 0 &&
+    //   size === 'XXS'
+    // )
     // TODO: we should also check the number of transactions, where it becomes available
   } else {
     const { balances, evm_balances, stats } = account as RuntimeAccount
@@ -304,6 +308,10 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
   const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
   return generated.useGetConsensusAccountsAddress(network, address, {
     ...options,
+    query: {
+      ...options?.query,
+      queryKey: [network, Layer.consensus, 'accounts', 'byAddress', address],
+    },
     request: {
       ...options?.request,
       transformResponse: [
@@ -341,6 +349,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
+  // console.log('Should we get', runtime, '/', address, '?', options?.query?.enabled)
   const oasisAddress = getOasisAddressOrNull(address)
 
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
@@ -348,6 +357,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     query: {
       ...(options?.query ?? {}),
       enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+      queryKey: [network, runtime, 'accounts', 'byAddress', address],
     },
     request: {
       ...options?.request,
@@ -431,6 +441,64 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
       : query.data,
     // TypeScript complaining for no good reason
   } as any
+}
+
+const MAX_LOADED_ADDRESSES = 100
+const MASS_LOAD_INDEXES = [...Array(MAX_LOADED_ADDRESSES).keys()]
+
+type RuntimeTarget = {
+  network: Network
+  layer: Runtime
+  address: string
+}
+
+export const useGetRuntimeAccountsAddresses = (
+  targets: RuntimeTarget[] | undefined = [],
+  queryOptions: { enabled: boolean },
+) => {
+  const queries = MASS_LOAD_INDEXES.map((i): RuntimeTarget | undefined => targets[i]).map(target =>
+    // The number of iterations is constant here, so we will always call the hook the same number.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetRuntimeAccountsAddress(
+      target?.network ?? Network.mainnet,
+      target?.layer ?? Layer.emerald,
+      target?.address ?? '',
+      {
+        query: { enabled: queryOptions.enabled && !!target?.address },
+      },
+    ),
+  )
+  return {
+    isLoading: !!targets?.length && queries.some(query => query.isLoading && query.fetchStatus !== 'idle'),
+    isError: queries.some(query => query.isError),
+    isFetched: !queries.some(query => !query.isFetched),
+    data: queries.map(query => query.data?.data).filter(account => !!account) as RuntimeAccount[],
+  }
+}
+
+type ConsensusTarget = {
+  network: Network
+  address: string
+}
+
+export const useGetConsensusAccountsAddresses = (
+  targets: ConsensusTarget[] | undefined = [],
+  queryOptions: { enabled: boolean },
+) => {
+  const queries = MASS_LOAD_INDEXES.map((i): ConsensusTarget | undefined => targets[i]).map(target =>
+    // The number of iterations is constant here, so we will always call the hook the same number.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetConsensusAccountsAddress(target?.network ?? Network.mainnet, target?.address ?? '', {
+      query: { enabled: queryOptions.enabled && !!target?.address },
+    }),
+  )
+
+  return {
+    isLoading: !!targets?.length && queries.some(query => query.isLoading && query.fetchStatus !== 'idle'),
+    isError: queries.some(query => query.isError),
+    isFetched: !queries.some(query => !query.isFetched),
+    data: queries.map(query => query.data?.data).filter(account => !!account) as generated.Account[],
+  }
 }
 
 export function useGetConsensusBlockByHeight(
@@ -866,7 +934,7 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
 
 export const useGetConsensusProposalsByName = (network: Network, nameFragment: string | undefined) => {
   const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
-  const { isLoading, isInitialLoading, data, status, error } = query
+  const { isError, isLoading, isInitialLoading, data, status, error } = query
   const textMatcher = nameFragment
     ? (proposal: generated.Proposal): boolean =>
         !!proposal.handler && proposal.handler?.includes(nameFragment)
@@ -874,6 +942,7 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragment: s
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {
     isLoading,
+    isError,
     isInitialLoading,
     status,
     error,

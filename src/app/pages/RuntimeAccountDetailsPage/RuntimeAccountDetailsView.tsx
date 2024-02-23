@@ -12,7 +12,8 @@ export const RuntimeAccountDetailsView: FC<{
   token?: EvmToken
   tokenPrices: AllTokenPrices
   showLayer?: boolean
-}> = ({ isLoading, isError, account, token, tokenPrices, showLayer }) => {
+  highlightedPartOfName?: string | undefined
+}> = ({ isLoading, isError, account, token, tokenPrices, showLayer, highlightedPartOfName }) => {
   const { t } = useTranslation()
   return isError ? (
     <CardEmptyState label={t('account.cantLoadDetails')} />
@@ -23,6 +24,7 @@ export const RuntimeAccountDetailsView: FC<{
       isLoading={isLoading}
       tokenPrices={tokenPrices}
       showLayer={showLayer}
+      highlightedPartOfName={highlightedPartOfName}
     />
   )
 }
