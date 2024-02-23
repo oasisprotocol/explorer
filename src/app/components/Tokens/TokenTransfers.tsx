@@ -116,7 +116,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   ownAddress,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
@@ -139,7 +139,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           content: (
             <TransactionLink
               scope={transfer}
-              alwaysTrim={isMobile}
+              alwaysTrim={isTablet}
               hash={transfer.eth_tx_hash || transfer.tx_hash!}
             />
           ),
