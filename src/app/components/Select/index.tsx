@@ -1,6 +1,5 @@
 import { Select as SelectUnstyled, SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
 import { Option, optionClasses } from '@mui/base/Option'
-import { Popper, PopperPlacementType } from '@mui/base/Popper'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import {
@@ -23,8 +22,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTranslation } from 'react-i18next'
 import { WithOptionalOwnerState } from '@mui/base/utils'
-import { SelectPopperSlotProps, SelectSlots } from '@mui/base/Select/Select.types'
-import * as React from 'react'
+import { SelectPopupSlotProps, SelectSlots } from '@mui/base/Select/Select.types'
+import { PopupProps } from '@mui/base/Unstable_Popup'
 
 export const StyledSelectButton = styled(Button)(({ theme }) => ({
   height: '36px',
@@ -77,7 +76,7 @@ export const StyledSelectOption = styled(Option)(({ theme }) => ({
   transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 }))
 
-const StyledPopper = styled(Popper)`
+const StyledPopup = styled('div')`
   z-index: 1;
 `
 
@@ -101,16 +100,16 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
   {
     root,
     listbox,
-    popper,
+    popup,
     placement,
     ...restProps
-  }: SelectProps<TValue, false> & SelectSlots<TValue, false> & Partial<SelectPopperSlotProps<TValue, false>>,
+  }: SelectProps<TValue, false> & SelectSlots & Partial<SelectPopupSlotProps<TValue, false>>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
   const slots: SelectProps<TValue, false>['slots'] = {
     root,
     listbox,
-    popper,
+    popup,
     ...restProps.slots,
   }
 
@@ -120,7 +119,7 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
       ref={ref}
       slots={slots}
       slotProps={{
-        popper: {
+        popup: {
           placement,
         },
       }}
@@ -128,8 +127,8 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
   )
 }) as <TValue extends string | number>(
   props: SelectProps<TValue, false> &
-    SelectSlots<TValue, false> &
-    Partial<SelectPopperSlotProps<TValue, false>> &
+    SelectSlots &
+    Partial<SelectPopupSlotProps<TValue, false>> &
     RefAttributes<HTMLButtonElement>,
 ) => JSX.Element
 
@@ -149,12 +148,12 @@ interface SelectCmpProps<T extends SelectOptionBase> {
   options: T[]
   defaultValue?: T['value']
   handleChange?: (selectedOption: T['value'] | null) => void
-  placement?: PopperPlacementType
+  placement?: PopupProps['placement']
   className?: string
   root?: React.ElementType
   Option?: typeof SelectOption<T> | undefined
   listbox?: React.ElementType
-  popper?: React.ComponentType<WithOptionalOwnerState<SelectPopperSlotProps<T['value'], false>>>
+  popup?: React.ComponentType<WithOptionalOwnerState<SelectPopupSlotProps<T['value'], false>>>
 }
 
 const SelectCmp = <T extends SelectOptionBase>({
@@ -166,7 +165,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   className,
   root = TertiaryButton,
   listbox = StyledSelectListbox,
-  popper = StyledPopper,
+  popup = StyledPopup,
   Option = SelectOption,
 }: SelectCmpProps<T>): ReactElement => {
   const selectId = useId()
@@ -187,7 +186,7 @@ const SelectCmp = <T extends SelectOptionBase>({
         onChange={onChange}
         root={root}
         listbox={listbox}
-        popper={popper}
+        popup={popup}
         placement={placement}
       >
         {options.map((props: T) => (
