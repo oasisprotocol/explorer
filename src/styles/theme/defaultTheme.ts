@@ -383,10 +383,12 @@ export const defaultTheme = createTheme({
       },
     },
     MuiCard: {
+      defaultProps: {
+        elevation: 0,
+      },
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 12,
-          boxShadow: 'none',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
             padding: theme.spacing(4, 4, 0),
