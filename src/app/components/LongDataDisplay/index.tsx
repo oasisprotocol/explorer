@@ -66,8 +66,8 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
           lineHeight: `${lineHeight}px`,
           overflowWrap: 'anywhere',
           display: '-webkit-box',
-          '-webkit-line-clamp': isExpanded ? 'none' : `${collapsedLinesNumber}`, // keep it as string to avoid MUI adding px
-          '-webkit-box-orient': 'vertical',
+          WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
+          WebkitBoxOrient: 'vertical',
         }}
       >
         {data}
