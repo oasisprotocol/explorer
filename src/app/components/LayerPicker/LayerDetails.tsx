@@ -85,9 +85,10 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: 24,
   color: COLORS.brandDark,
   fontWeight: 700,
-  '&&:hover, &&:active': {
+  '&&:hover, &&:active, &&:focus-visible': {
     color: COLORS.brandDark,
     textDecoration: 'none',
+    borderRadius: 0,
   },
 }))
 

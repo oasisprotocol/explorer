@@ -82,6 +82,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
         setSelectedLayer(layer)
       }}
       selected={activeLayerSelection}
+      tabIndex={activeLayerSelection ? 0 : -1}
     >
       <ListItemText>
         {labels[layer]}
