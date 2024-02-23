@@ -1,7 +1,7 @@
 import { SearchScope } from '../../types/searchScope'
 import Chance from 'chance'
 import { Layer } from '../../oasis-nexus/api'
-import { usePontusXAccountName } from '../data/pontusx-account-names'
+import { usePontusXAccountName, useSearchForPontusXAccountsByName } from '../data/pontusx-account-names'
 
 const NO_MATCH = '__no_match__'
 
@@ -58,4 +58,15 @@ export const useAccountName = (scope: SearchScope, address: string, dropCache = 
     name,
     loading: false,
   }
+}
+
+export const useSearchForAccountsByName = (scope: SearchScope, nameFragment = '') => {
+  const isValidPontusXSearch = scope.layer === Layer.pontusx && !!nameFragment
+  const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragment, isValidPontusXSearch)
+  return isValidPontusXSearch
+    ? pontusXResults
+    : {
+        isLoading: false,
+        results: [],
+      }
 }
