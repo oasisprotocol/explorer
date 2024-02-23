@@ -7,8 +7,10 @@ import InfoIcon from '@mui/icons-material/Info'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
+import { useAccountName } from '../../hooks/useAccountName'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
+import Box from '@mui/material/Box'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 
 const WithTypographyAndLink: FC<{
@@ -25,7 +27,7 @@ const WithTypographyAndLink: FC<{
         ...(mobile
           ? {
               maxWidth: '100%',
-              overflowX: 'hidden',
+              overflow: 'hidden',
             }
           : {}),
         ...(plain
@@ -66,6 +68,7 @@ export const AccountLink: FC<{
   extraTooltip?: ReactNode
 }> = ({ scope, address, alwaysTrim, plain, extraTooltip }) => {
   const { isTablet } = useScreenSize()
+  const { name: accountName } = useAccountName(scope, address)
   const to = RouteUtils.getAccountRoute(scope, address)
 
   const tooltipPostfix = extraTooltip ? (
@@ -81,7 +84,21 @@ export const AccountLink: FC<{
 
     return (
       <WithTypographyAndLink to={to} plain={plain}>
-        <MaybeWithTooltip title={address}>{trimLongString(address, 6, 6)}</MaybeWithTooltip>
+        <MaybeWithTooltip
+          title={
+            accountName ? (
+              <div>
+                <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>
+                <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+                {tooltipPostfix}
+              </div>
+            ) : (
+              address
+            )
+          }
+        >
+          {accountName ? trimLongString(accountName, 12, 0) : trimLongString(address, 6, 6)}
+        </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
   }
@@ -92,7 +109,15 @@ export const AccountLink: FC<{
 
     return (
       <WithTypographyAndLink to={to} plain={plain}>
-        <MaybeWithTooltip title={tooltipPostfix}>{address} </MaybeWithTooltip>
+        <MaybeWithTooltip title={tooltipPostfix}>
+          {accountName ? (
+            <span>
+              {accountName} ({address})
+            </span>
+          ) : (
+            address
+          )}
+        </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
   }
@@ -102,7 +127,10 @@ export const AccountLink: FC<{
   // Both line adaptively shortened to fill available space
   return (
     <WithTypographyAndLink to={to} plain={plain} mobile>
-      <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
+      <>
+        <AdaptiveTrimmer text={accountName} strategy="end" extraTooltip={extraTooltip} />
+        <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
+      </>
     </WithTypographyAndLink>
   )
 }
