@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import type { AccountNameInfo } from '../hooks/useAccountName'
+import { Layer } from '../../oasis-nexus/api'
+import { Network } from '../../types/network'
+import { findTextMatch } from '../components/HighlightedText/text-matching'
 import * as process from 'process'
 
 const DATA_SOURCE_URL = 'https://raw.githubusercontent.com/deltaDAO/mvg-portal/main/pontusxAddresses.json'
@@ -61,5 +64,31 @@ export const usePontusXAccountName = (address: string, enabled: boolean): Accoun
   return {
     name: allNames?.map.get(address),
     loading: isLoading,
+  }
+}
+
+export const useSearchForPontusXAccountsByName = (
+  network: Network,
+  nameFragment: string,
+  enabled: boolean,
+) => {
+  const { isLoading, error, data: allNames } = usePontusXAccountNames(enabled)
+  if (error) {
+    console.log('Failed to load Pontus-X account names', error)
+  }
+
+  const textMatcher =
+    nameFragment && enabled
+      ? (entry: AccountEntry): boolean => {
+          return !!findTextMatch(entry.name, [nameFragment])
+        }
+      : () => false
+  return {
+    results: (allNames?.list || []).filter(textMatcher).map(entry => ({
+      network,
+      layer: Layer.pontusx,
+      address: entry.address,
+    })),
+    isLoading,
   }
 }
