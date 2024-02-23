@@ -609,6 +609,7 @@
     "signedBlocksDescription": "Last 100 blocks",
     "snapshot": "Validator Snapshot",
     "staked": "Staked",
+    "stakingTrend": "Staking Trend",
     "startDate": "Start Date",
     "title": "Validator",
     "totalShare": "Total Share",

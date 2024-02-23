@@ -20,6 +20,7 @@ import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
 import { SignedBlocks } from './SignedBlocks'
+import { StakingTrend } from './StakingTrend'
 import { ValidatorDetailsContext } from './hooks'
 
 export const ValidatorDetailsPage: FC = () => {
@@ -42,7 +43,7 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <></>
+          <StakingTrend scope={scope} />
         </Grid>
         <Grid item xs={12} md={6}>
           <SignedBlocks />
