@@ -18,7 +18,7 @@ export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, ad
   return (
     <Card>
       <LinkableDiv id={accountTokenTransfersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+        <CardHeader disableTypography component="h3" title={t('common.transfers')} />
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>

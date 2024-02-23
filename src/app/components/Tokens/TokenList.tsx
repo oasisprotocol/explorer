@@ -67,7 +67,7 @@ export const TokenList = (props: TokensProps) => {
     { key: 'verification', content: t('contract.verification.title') },
     {
       key: 'holders',
-      content: t('tokens.holdersCount_short'),
+      content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },

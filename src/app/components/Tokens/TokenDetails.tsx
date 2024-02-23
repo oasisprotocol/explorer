@@ -68,7 +68,7 @@ export const TokenDetails: FC<{
         <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} />
       </dd>
 
-      <dt>{t(isMobile ? 'tokens.holdersCount_short' : 'tokens.holdersCount')}</dt>
+      <dt>{t(isMobile ? 'tokens.holders' : 'tokens.holdersCount')}</dt>
       <dd>{token.num_holders.toLocaleString()}</dd>
 
       <dt>{t('tokens.totalSupply')}</dt>

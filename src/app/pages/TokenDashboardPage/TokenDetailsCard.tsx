@@ -100,7 +100,7 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
 
             {token.num_transfers && (
               <>
-                <dt>{t('tokens.transfers')}</dt>
+                <dt>{t('common.transfers')}</dt>
                 <dd>
                   <Link
                     component={RouterLink}

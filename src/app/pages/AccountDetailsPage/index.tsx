@@ -67,7 +67,7 @@ export const AccountDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
-          { label: t('tokens.transfers'), to: tokenTransfersLink },
+          { label: t('common.transfers'), to: tokenTransfersLink },
           {
             label: getTokenTypePluralName(t, EvmTokenType.ERC20),
             to: erc20Link,
