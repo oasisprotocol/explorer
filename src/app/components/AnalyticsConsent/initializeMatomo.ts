@@ -1,5 +1,7 @@
 /// <reference types="matomo-js-client-types" />
 
+import { redactURL } from './redact'
+
 // Generate snippet https://matomo.oasis.io/index.php?module=CoreAdminHome&action=trackingCodeGenerator&idSite=1&period=day&date=yesterday&updated=false
 // Snippet from https://developer.matomo.org/guides/tracking-javascript-guide#finding-the-piwik-tracking-code
 window._paq = window._paq || []
@@ -14,6 +16,21 @@ window._paq.push(['setTrackerUrl', `${matomoDomain}matomo.php`])
 // window._paq.push(['setDomains', ['*.domain1.com', '*.domain2.com']])
 // window._paq.push(['enableCrossDomainLinking'])
 // window._paq.push(['setCookieDomain', '*.example.org'])
+
+window._paq.push([
+  'setCustomRequestProcessing',
+  (queryString: string) => {
+    const params = new URLSearchParams(queryString)
+    for (const name of ['action_name', 'url', 'urlref']) {
+      const v = params.get(name)
+      if (v) {
+        params.set(name, redactURL(v))
+      }
+    }
+
+    return params.toString()
+  },
+])
 
 export function loadMatomo() {
   const d = document,
