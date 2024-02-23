@@ -66,8 +66,9 @@ export const NFTInstanceLink: FC<NFTLinkProps> = ({ scope, instance }) => {
 type NFTOwnerLinkProps = {
   scope: SearchScope
   owner: string
+  alwaysTrim?: boolean
 }
-export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
+export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner, alwaysTrim }) => {
   const { t } = useTranslation()
 
   return (
@@ -76,7 +77,7 @@ export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
         i18nKey="nft.ownerLink"
         t={t}
         components={{
-          OwnerLink: <AccountLink scope={scope} address={owner} alwaysTrim={true} />,
+          OwnerLink: <AccountLink scope={scope} address={owner} alwaysTrim={alwaysTrim} />,
         }}
       />
     </StyledTypography>

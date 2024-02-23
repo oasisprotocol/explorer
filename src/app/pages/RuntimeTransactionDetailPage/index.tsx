@@ -270,24 +270,21 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.from')}</dt>
               <dd>
-                <TransactionInfoTooltip
-                  label={
+                <AccountLink
+                  scope={transaction}
+                  address={
+                    from ||
+                    ((isOasisAddressFormat ? transaction?.sender_0_eth : transaction?.sender_0) as string)
+                  }
+                  plain={!from}
+                  extraTooltip={
                     from
                       ? isOasisAddressFormat
                         ? t('transaction.tooltips.senderTooltipOasis')
                         : t('transaction.tooltips.senderTooltipEth')
                       : t('transaction.tooltips.senderTooltipUnavailable')
                   }
-                >
-                  <AccountLink
-                    scope={transaction}
-                    address={
-                      from ||
-                      ((isOasisAddressFormat ? transaction?.sender_0_eth : transaction?.sender_0) as string)
-                    }
-                    plain={!from}
-                  />
-                </TransactionInfoTooltip>
+                />
                 {from && <CopyToClipboard value={from} />}
               </dd>
             </>
@@ -297,21 +294,18 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <TransactionInfoTooltip
-                  label={
+                <AccountLink
+                  scope={transaction}
+                  address={to || ((isOasisAddressFormat ? transaction?.to_eth : transaction?.to) as string)}
+                  plain={!to}
+                  extraTooltip={
                     to
                       ? isOasisAddressFormat
                         ? t('transaction.tooltips.recipientTooltipOasis')
                         : t('transaction.tooltips.recipientTooltipEth')
                       : t('transaction.tooltips.recipientTooltipUnavailable')
                   }
-                >
-                  <AccountLink
-                    scope={transaction}
-                    address={to || ((isOasisAddressFormat ? transaction?.to_eth : transaction?.to) as string)}
-                    plain={!to}
-                  />
-                </TransactionInfoTooltip>
+                />
                 {to && <CopyToClipboard value={to} />}
               </dd>
             </>

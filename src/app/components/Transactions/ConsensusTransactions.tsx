@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { Transaction } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
-import { trimLongString } from '../../utils/trimLongString'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
@@ -65,7 +63,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         key: 'success',
       },
       {
-        content: <TransactionLink scope={transaction} alwaysTrim={true} hash={transaction.hash} />,
+        content: <TransactionLink scope={transaction} alwaysTrim hash={transaction.hash} />,
         key: 'hash',
       },
       {
@@ -96,19 +94,12 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
                     pr: 3,
                   }}
                 >
-                  {!!ownAddress && transaction.sender === ownAddress ? (
-                    <Typography
-                      variant="mono"
-                      component="span"
-                      sx={{
-                        fontWeight: 700,
-                      }}
-                    >
-                      {trimLongString(transaction.sender)}
-                    </Typography>
-                  ) : (
-                    <AccountLink scope={transaction} address={transaction.sender} alwaysTrim={true} />
-                  )}
+                  <AccountLink
+                    scope={transaction}
+                    address={transaction.sender}
+                    alwaysTrim
+                    plain={!!ownAddress && transaction.sender === ownAddress}
+                  />
                 </Box>
               ),
               key: 'from',
