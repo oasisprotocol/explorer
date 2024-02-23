@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from 'react'
+import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -20,7 +20,6 @@ import Alert from '@mui/material/Alert'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
-import Box from '@mui/material/Box'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TransactionEvents } from '../../components/Transactions/TransactionEvents'
@@ -30,8 +29,6 @@ import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
-import InfoIcon from '@mui/icons-material/Info'
-import Tooltip from '@mui/material/Tooltip'
 import { TransactionEncrypted, TransactionNotEncrypted } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
@@ -146,23 +143,6 @@ export type TransactionDetailRuntimeBlock = RuntimeTransaction & {
   markAsNew?: boolean
 }
 
-const TransactionInfoTooltip: FC<PropsWithChildren<{ label: string }>> = ({ label, children }) => {
-  return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <InfoIcon />
-          {label}
-        </Box>
-      }
-    >
-      <Box>{children}</Box>
-    </Tooltip>
-  )
-}
-
 export const RuntimeTransactionDetailView: FC<{
   isLoading?: boolean
   transaction: TransactionDetailRuntimeBlock | undefined
@@ -214,22 +194,20 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.hash')}</dt>
               <dd>
-                <TransactionInfoTooltip
-                  label={
+                <TransactionLink
+                  scope={transaction}
+                  hash={
+                    hash || ((isOasisAddressFormat ? transaction?.eth_hash : transaction?.hash) as string)
+                  }
+                  extraTooltip={
                     hash
                       ? isOasisAddressFormat
                         ? t('transaction.tooltips.txTooltipOasis')
                         : t('transaction.tooltips.txTooltipEth')
                       : t('transaction.tooltips.txTooltipHashUnavailable')
                   }
-                >
-                  <TransactionLink
-                    scope={transaction}
-                    hash={
-                      hash || ((isOasisAddressFormat ? transaction?.eth_hash : transaction?.hash) as string)
-                    }
-                  />
-                </TransactionInfoTooltip>
+                />
+
                 {hash && <CopyToClipboard value={hash} />}
               </dd>
             </>
