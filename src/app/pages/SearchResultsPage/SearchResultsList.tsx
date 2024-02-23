@@ -7,6 +7,7 @@ import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { AccountDetailsView } from '../AccountDetailsPage/AccountDetailsView'
 import {
   AccountResult,
+  AccountAddressResult,
   BlockResult,
   ContractResult,
   ProposalResult,
@@ -21,6 +22,9 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
+import { DeferredRuntimeAccountDetails } from '../AccountDetailsPage/DeferredRuntimeAccountDetails'
+import { Layer } from '../../../oasis-nexus/api'
+import { DeferredConsensusAccountDetails } from '../AccountDetailsPage/DeferredConsensusAccountDetails'
 
 /**
  * Component for displaying a list of search results
@@ -91,6 +95,33 @@ export const SearchResultsList: FC<{
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
+          linkLabel={t('search.results.accounts.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.accounts.title')}
+          results={searchResults.filter(
+            (item): item is AccountAddressResult => item.resultType === 'accountAddress',
+          )}
+          resultComponent={item =>
+            item.layer === Layer.consensus ? (
+              <DeferredConsensusAccountDetails
+                network={item.network}
+                address={item.address}
+                tokenPrices={tokenPrices}
+                showLayer={true}
+              />
+            ) : (
+              <DeferredRuntimeAccountDetails
+                network={item.network}
+                layer={item.layer}
+                address={item.address}
+                tokenPrices={tokenPrices}
+                showLayer={true}
+              />
+            )
+          }
+          link={acc => RouteUtils.getAccountRoute(acc, acc.address)}
           linkLabel={t('search.results.accounts.viewLink')}
         />
 
