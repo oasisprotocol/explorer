@@ -186,7 +186,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                     {trimLongString(fromAddress)}
                   </Typography>
                 ) : (
-                  <AccountLink scope={transfer} address={fromAddress} alwaysTrim={true} />
+                  <AccountLink scope={transfer} address={fromAddress} alwaysTrim />
                 )}
 
                 <StyledCircle>
@@ -210,7 +210,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
               {trimLongString(toAddress)}
             </Typography>
           ) : (
-            <AccountLink scope={transfer} address={toAddress} alwaysTrim={true} />
+            <AccountLink scope={transfer} address={toAddress} alwaysTrim />
           ),
         },
         ...(differentTokens

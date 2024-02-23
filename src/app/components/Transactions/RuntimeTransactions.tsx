@@ -14,8 +14,6 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
 import { TransactionLink } from './TransactionLink'
-import { trimLongString } from '../../utils/trimLongString'
-import Typography from '@mui/material/Typography'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
 import { Age } from '../Age'
@@ -58,7 +56,6 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
   limit,
   pagination,
   transactions,
-  ownAddress,
   verbose = true,
 }) => {
   const { t } = useTranslation()
@@ -104,11 +101,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
           : []),
         {
           content: (
-            <TransactionLink
-              scope={transaction}
-              alwaysTrim={true}
-              hash={transaction.eth_hash || transaction.hash}
-            />
+            <TransactionLink scope={transaction} alwaysTrim hash={transaction.eth_hash || transaction.hash} />
           ),
           key: 'hash',
         },
@@ -138,24 +131,11 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                       pr: 3,
                     }}
                   >
-                    {!!ownAddress &&
-                    (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress) ? (
-                      <Typography
-                        variant="mono"
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                        }}
-                      >
-                        {trimLongString(transaction.sender_0_eth || transaction.sender_0)}
-                      </Typography>
-                    ) : (
-                      <AccountLink
-                        scope={transaction}
-                        address={transaction.sender_0_eth || transaction.sender_0}
-                        alwaysTrim={true}
-                      />
-                    )}
+                    <AccountLink
+                      scope={transaction}
+                      address={transaction.sender_0_eth || transaction.sender_0}
+                      alwaysTrim
+                    />
                     {targetAddress && (
                       <StyledCircle>
                         <ArrowForwardIcon fontSize="inherit" />
@@ -167,19 +147,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
               },
               {
                 content: targetAddress ? (
-                  !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress) ? (
-                    <Typography
-                      variant="mono"
-                      component="span"
-                      sx={{
-                        fontWeight: 700,
-                      }}
-                    >
-                      {trimLongString(targetAddress)}
-                    </Typography>
-                  ) : (
-                    <AccountLink scope={transaction} address={targetAddress} alwaysTrim={true} />
-                  )
+                  <AccountLink scope={transaction} address={targetAddress} alwaysTrim />
                 ) : null,
                 key: 'to',
               },
