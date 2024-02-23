@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme, css } from '@mui/material/styles'
 import { COLORS } from './colors'
 import Fade from '@mui/material/Fade'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
@@ -6,6 +6,8 @@ import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 import { tabClasses } from '@mui/material/Tab'
 import { menuItemClasses } from '@mui/material/MenuItem'
+import { switchClasses } from '@mui/material/Switch'
+import { buttonBaseClasses } from '@mui/material/ButtonBase'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -365,6 +367,18 @@ export const defaultTheme = createTheme({
           '&:focus-visible': {
             outline: 'revert',
           },
+        },
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          // Fixes accessibility: MUI relied on ripples to show focus.
+          // https://css-tricks.com/copy-the-browsers-native-focus-styles/
+          [`&.${buttonBaseClasses.focusVisible} .${switchClasses.thumb}`]: css`
+            outline: 5px auto Highlight;
+            outline: 5px auto -webkit-focus-ring-color;
+          `,
         },
       },
     },
