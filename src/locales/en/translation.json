@@ -223,6 +223,7 @@
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstPage": "Please check the URL or <FirstPageLink />.",
     "invalidUrl": "Invalid URL",
+    "revertedWithoutMessage": "reverted without a message",
     "storage": "Access to browser storage denied"
   },
   "footer": {
