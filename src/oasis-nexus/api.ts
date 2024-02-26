@@ -214,14 +214,9 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
           if (status !== 200) return data
           return {
             ...data,
-            transactions: data.transactions.map(tx => {
-              return {
-                ...tx,
-                layer: Layer.consensus,
-                network,
-                ticker,
-              }
-            }),
+            layer: Layer.consensus,
+            network,
+            ticker,
           }
         },
         ...arrayify(options?.request?.transformResponse),
