@@ -41,6 +41,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
         setHoveredNetwork(undefined)
       }}
       selected={activeNetworkSelection}
+      tabIndex={activeNetworkSelection ? 0 : -1}
       onClick={() => {
         setSelectedNetwork(network)
       }}
