@@ -74,7 +74,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             )}
             {!!nft?.num_transfers && (
               <>
-                <dt>{t('nft.transfers')}</dt>
+                <dt>{t('common.transfers')}</dt>
                 <dd>{nft.num_transfers.toLocaleString()}</dd>
               </>
             )}

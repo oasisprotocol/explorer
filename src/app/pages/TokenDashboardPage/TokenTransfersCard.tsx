@@ -20,7 +20,7 @@ export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }
   return (
     <Card>
       <LinkableDiv id={tokenTransfersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+        <CardHeader disableTypography component="h3" title={t('common.transfers')} />
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>

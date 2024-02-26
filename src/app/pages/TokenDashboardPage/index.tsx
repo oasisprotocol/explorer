@@ -56,7 +56,7 @@ export const TokenDashboardPage: FC = () => {
       <TokenDetailsCard scope={scope} address={address} searchTerm={searchTerm} />
       <RouterTabs
         tabs={[
-          { label: t('tokens.transfers'), to: tokenTransfersLink },
+          { label: t('common.transfers'), to: tokenTransfersLink },
           { label: t('tokens.holders'), to: tokenHoldersLink },
           { label: t('tokens.inventory'), to: inventoryLink },
           { label: t('contract.code'), to: codeLink },

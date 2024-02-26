@@ -19,7 +19,7 @@ export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
   return (
     <Card>
       <LinkableDiv id={nftTokenTransfersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.transfers')} />
+        <CardHeader disableTypography component="h3" title={t('common.transfers')} />
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>

@@ -16,7 +16,7 @@ export const TokenTotalTransactionsCard: FC<{ scope: SearchScope; address: strin
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotCard title={t('tokens.transfers')} withConstantHeight>
+    <SnapshotCard title={t('common.transfers')} withConstantHeight>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isLoading ? (
           <Skeleton variant="text" sx={{ width: '50%' }} />

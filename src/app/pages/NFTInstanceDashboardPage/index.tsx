@@ -49,7 +49,7 @@ export const NFTInstanceDashboardPage: FC = () => {
       />
       <RouterTabs
         tabs={[
-          { label: t('tokens.transfers'), to: tokenTransfersLink },
+          { label: t('common.transfers'), to: tokenTransfersLink },
           { label: t('nft.metadata'), to: metadataLink },
         ]}
         context={context}

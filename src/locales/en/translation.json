@@ -113,6 +113,7 @@
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
     "transactionFee": "Transaction Fee",
+    "transfers": "Transfers",
     "type": "Type",
     "quantity": "Quantity",
     "unknown": "Unknown",
@@ -194,8 +195,7 @@
     "openInNewTab": "Open in a new tab",
     "owner": "Owner",
     "ownerLink": "Owner: <OwnerLink />",
-    "switchBackgroundColor": "Switch between dark and light background",
-    "transfers": "Transfers"
+    "switchBackgroundColor": "Switch between dark and light background"
   },
   "nodes": {
     "title": "Active nodes",
@@ -319,15 +319,13 @@
   "tokens": {
     "typeDescription": "{{description}} ({{spec}})",
     "emptyInventory": "Token has no inventory associated with it.",
-    "emptyTokenHolderList": "There are no token holders on record for this token.",
-    "holders": "Token Holders",
+    "emptyTokenHolderList": "There are no holders on record for this token.",
+    "holders": "Holders",
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders Count",
-    "holdersCount_short": "Holders",
     "inventory": "Inventory",
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }} {{ticker}}",
-    "transfers": "Token Transfers",
     "transferEventType": {
       "transfer": "Transfer",
       "approval": "Approval",
