@@ -44,16 +44,21 @@ export type TransactionDetailConsensusBlock = Transaction & {
 export const ConsensusTransactionDetailView: FC<{
   isLoading?: boolean
   transaction: TransactionDetailConsensusBlock | undefined
-}> = ({ isLoading, transaction }) => {
+  detailsPage?: boolean
+}> = ({ detailsPage, isLoading, transaction }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
 
-  if (isLoading) return <TextSkeleton numberOfRows={13} />
+  if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 13 : 7} />
   if (!transaction) return <></>
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList
+      titleWidth={isMobile ? '100px' : '200px'}
+      standalone={!detailsPage}
+      highlight={transaction.markAsNew}
+    >
       <dt>{t('common.hash')}</dt>
       <dd>
         <TransactionLink scope={transaction} hash={transaction.hash} />
@@ -87,24 +92,28 @@ export const ConsensusTransactionDetailView: FC<{
         {/* TODO: getPreciseNumberFormat when API returns amount prop */}
         <>-</>
       </dd>
-      <dt>{t('currentFiatValue.title')}</dt>
-      <dd>
-        {/* TODO: show CurrentFiatValue when API returns amount prop */}
-        <>-</>
-      </dd>
-      <dt>{t('common.transactionFee')}</dt>
-      <dd>
-        <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
-      </dd>
-      <dt>{t('common.gasUsed')}</dt>
-      <dd>
-        {/* TODO: show when API returns gas_used prop */}
-        <>-</>
-      </dd>
-      <dt>{t('common.nonce')}</dt>
-      <dd>
-        <>{transaction.nonce.toLocaleString()}</>
-      </dd>
+      {detailsPage && (
+        <>
+          <dt>{t('currentFiatValue.title')}</dt>
+          <dd>
+            {/* TODO: show CurrentFiatValue when API returns amount prop */}
+            <>-</>
+          </dd>
+          <dt>{t('common.transactionFee')}</dt>
+          <dd>
+            <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
+          </dd>
+          <dt>{t('common.gasUsed')}</dt>
+          <dd>
+            {/* TODO: show when API returns gas_used prop */}
+            <>-</>
+          </dd>
+          <dt>{t('common.nonce')}</dt>
+          <dd>
+            <>{transaction.nonce.toLocaleString()}</>
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }

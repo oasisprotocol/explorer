@@ -14,6 +14,7 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
+import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 
 export const ConsensusTransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -94,7 +95,16 @@ export const ConsensusTransactionsPage: FC = () => {
         )}
 
         {tableView === TableLayout.Vertical && (
-          <VerticalList>{/* TODO: Add when details page is ready  */}</VerticalList>
+          <VerticalList>
+            {isLoading &&
+              [...Array(limit).keys()].map(key => (
+                <ConsensusTransactionDetailView key={key} isLoading={true} transaction={undefined} />
+              ))}
+            {!isLoading &&
+              transactions?.map(transaction => (
+                <ConsensusTransactionDetailView key={transaction.hash} transaction={transaction} />
+              ))}
+          </VerticalList>
         )}
       </SubPageCard>
     </PageLayout>
