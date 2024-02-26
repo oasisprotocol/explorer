@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { isValidProposalId, isValidTxHash } from './helpers'
+import { isValidProposalId, isValidTxHash, isValidTxOasisHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
@@ -244,7 +244,15 @@ const validateBlockHeightParam = (blockHeight: string) => {
   return isValid
 }
 
-const validateTxHashParam = (hash: string) => {
+const validateConsensusTxHashParam = (hash: string) => {
+  const isValid = isValidTxOasisHash(hash)
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidTxHash)
+  }
+  return true
+}
+
+const validateRuntimeTxHashParam = (hash: string) => {
   const isValid = isValidTxHash(hash)
   if (!isValid) {
     throw new AppError(AppErrors.InvalidTxHash)
@@ -290,8 +298,12 @@ export const blockHeightParamLoader = async ({ params }: LoaderFunctionArgs) => 
   return validateBlockHeightParam(params.blockHeight!)
 }
 
-export const transactionParamLoader = async ({ params }: LoaderFunctionArgs) => {
-  return validateTxHashParam(params.hash!)
+export const consensusTransactionParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  return validateConsensusTxHashParam(params.hash!)
+}
+
+export const runtimeTransactionParamLoader = async ({ params }: LoaderFunctionArgs) => {
+  return validateRuntimeTxHashParam(params.hash!)
 }
 
 export const assertEnabledScope = ({
