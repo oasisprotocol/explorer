@@ -14,7 +14,7 @@ export const SignedBlocks: FC = () => {
   const dataKey = ''
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <CardHeader
         disableTypography
         component="h3"

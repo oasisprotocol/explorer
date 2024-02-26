@@ -14,7 +14,7 @@ export const StakingTrend: FC<{ scope: SearchScope }> = ({ scope }) => {
   const windows = undefined
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <CardHeader disableTypography component="h3" title={t('validator.stakingTrend')} />
       <CardContent sx={{ height: 250 }}>
         {windows && (

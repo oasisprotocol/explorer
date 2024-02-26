@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
@@ -24,6 +25,12 @@ import { StakingTrend } from './StakingTrend'
 import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+  },
+}))
+
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -43,12 +50,12 @@ export const ValidatorDetailsPage: FC = () => {
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <StyledGrid item xs={12} md={6}>
           <StakingTrend scope={scope} />
-        </Grid>
-        <Grid item xs={12} md={6}>
+        </StyledGrid>
+        <StyledGrid item xs={12} md={6}>
           <SignedBlocks />
-        </Grid>
+        </StyledGrid>
       </Grid>
       <ProposedBlocks scope={scope} />
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
