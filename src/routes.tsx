@@ -46,8 +46,12 @@ import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
-import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
+import {
+  ConsensusAccountDetailsPage,
+  useConsensusAccountDetailsProps,
+} from './app/pages/ConsensusAccountDetailsPage'
+import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 
 const NetworkSpecificPart = () => (
@@ -119,6 +123,12 @@ export const routes: RouteObject[] = [
             path: `address/:address`,
             element: <ConsensusAccountDetailsPage />,
             loader: consensusAddressParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <ConsensusAccountTransactionsCard {...useConsensusAccountDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `proposal`,

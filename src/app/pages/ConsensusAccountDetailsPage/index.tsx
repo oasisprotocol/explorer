@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { Account, useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
+import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -12,18 +13,30 @@ import { RoundedBalance } from '../..//components/RoundedBalance'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
+import { RouterTabs } from '../../components/RouterTabs'
+
+export type ConsensusAccountDetailsContext = {
+  scope: SearchScope
+  address: string
+}
+
+export const useConsensusAccountDetailsProps = () => useOutletContext<ConsensusAccountDetailsContext>()
 
 export const ConsensusAccountDetailsPage: FC = () => {
+  const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address } = useLoaderData() as AddressLoaderData
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
+  const transactionsLink = useHref('')
+  const context: ConsensusAccountDetailsContext = { scope, address }
 
   return (
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
+      <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
 }
