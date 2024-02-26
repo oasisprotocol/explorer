@@ -39,7 +39,7 @@ import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTT
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { ValidatorsPage } from './app/pages/ValidatorsPage'
 import { ProposalsPage } from './app/pages/ProposalsPage'
-import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
+import { ValidatorDetailsPage, useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
@@ -147,6 +147,12 @@ export const routes: RouteObject[] = [
             path: `validators/:address`,
             element: <ValidatorDetailsPage />,
             loader: consensusAddressParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <ConsensusAccountTransactionsCard {...useValidatorDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `block`,
