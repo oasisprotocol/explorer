@@ -78,6 +78,7 @@
     "hide": "Hide",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
+    "method": "Method",
     "missing": "n/a",
     "name": "Name",
     "network": "Network",

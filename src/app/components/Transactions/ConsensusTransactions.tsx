@@ -47,10 +47,10 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
     { key: 'status', content: t('common.status') },
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
-    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'age', content: t('common.age') },
     ...(verbose
       ? [
-          { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
+          { key: 'method', content: t('common.method') },
           { key: 'from', content: t('common.from'), width: '150px' },
           { key: 'to', content: t('common.to'), width: '150px' },
           { key: 'txnFee', content: t('common.transactionFee'), align: TableCellAlign.Right, width: '250px' },
@@ -74,7 +74,6 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         key: 'round',
       },
       {
-        align: TableCellAlign.Right,
         content: <Age sinceTimestamp={transaction.timestamp} />,
         key: 'timestamp',
       },
@@ -83,7 +82,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
             {
               align: TableCellAlign.Center,
               content: <ConsensusTransactionMethod method={transaction.method} />,
-              key: 'type',
+              key: 'method',
             },
             {
               align: TableCellAlign.Right,
