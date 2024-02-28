@@ -76,6 +76,7 @@ import { RoflAppInstanceTransactionsCard } from 'app/pages/RoflAppDetailsPage/Ro
 import { RoflAppInstanceDetailsPage } from 'app/pages/RoflAppInstanceDetailsPage'
 import { useRoflAppInstanceDetailsProps } from 'app/pages/RoflAppInstanceDetailsPage/hooks'
 import { RoflAppInstanceRakTransactionsCard } from 'app/pages/RoflAppInstanceDetailsPage/RoflAppInstanceRakTransactionsCard'
+import { PontusxPrivacyPage } from './app/pages/PontusxPrivacyPage'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -339,6 +340,10 @@ export const routes: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/privacy',
+        element: <PontusxPrivacyPage />,
       },
     ],
   },
