@@ -8,6 +8,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
 import { TxError } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
+import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 
 type TxStatus = 'unknown' | 'success' | 'failure'
 
@@ -81,7 +82,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) =>
     success: t('common.success'),
     failure: t('common.failed'),
   }
-  const errorMessage = error ? `${error.message} (${t('errors.code')} ${error.code})` : undefined
+  const errorMessage = useTxErrorMessage(error)
 
   if (withText) {
     return (
