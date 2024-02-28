@@ -67,6 +67,7 @@ import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { useLocalConfig } from './app/hooks/useLocalConfig'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
+import { PontusxPrivacyPage } from './app/pages/PontusxPrivacyPage'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -363,6 +364,10 @@ export const routes: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/privacy',
+        element: <PontusxPrivacyPage />,
       },
     ],
   },
