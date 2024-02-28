@@ -4,12 +4,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
+import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
+import { showPrivacyPolicy } from '../../../config'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -128,6 +130,13 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                 </Typography>
               </StyledLinksGroup>
             </StyledBox>
+            {showPrivacyPolicy && (
+              <Typography variant="footer">
+                <Link component={RouterLink} to={'/privacy'} sx={{ color: theme.palette.layout.main }}>
+                  {t('privacyPolicy.title')}
+                </Link>
+              </Typography>
+            )}
             <Typography variant="footer">
               {isTablet ? t('footer.mobileTitle') : t('footer.title')} | {currentYear}
             </Typography>

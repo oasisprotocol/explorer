@@ -47,6 +47,8 @@ import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
 import { FC, useEffect } from 'react'
+import { PrivacyPage } from './app/pages/PrivacyPage'
+import { showPrivacyPolicy } from './config'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork network={useRequiredScopeParam().network}>
@@ -264,6 +266,14 @@ export const routes: RouteObject[] = [
           },
         ],
       },
+      ...(showPrivacyPolicy
+        ? [
+            {
+              path: '/privacy',
+              element: withDefaultTheme(<PrivacyPage />),
+            },
+          ]
+        : []),
     ],
   },
 ]
