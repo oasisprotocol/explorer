@@ -530,6 +530,9 @@
     "noData": "No data available",
     "nodes": "Nodes:"
   },
+  "privacyPolicy": {
+    "title": "Privacy Policy"
+  },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {

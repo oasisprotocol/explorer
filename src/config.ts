@@ -198,3 +198,5 @@ export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
   (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'
 
 export const showFiatValues = process.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
+
+export const showPrivacyPolicy = process.env.REACT_APP_SHOW_PRIVACY_POLICY === 'true'
