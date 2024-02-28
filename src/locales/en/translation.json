@@ -653,6 +653,9 @@
     "devnet": "Pontus-X Devnet",
     "testnet": "Pontus-X Testnet"
   },
+  "privacyPolicy": {
+    "title": "Privacy Policy"
+  },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
