@@ -89,7 +89,9 @@
   },
   "devDependencies": {
     "@emotion/jest": "11.11.0",
+    "@mdx-js/react": "^1.6.22",
     "@parcel/packager-raw-url": "2.11.0",
+    "@parcel/transformer-mdx": "2.11.0",
     "@parcel/transformer-webmanifest": "2.11.0",
     "@plasmohq/parcel-transformer-inject-env": "^0.2.11",
     "@storybook/addon-actions": "7.6.17",
