@@ -12,6 +12,7 @@ import { AccountLink } from '../Account/AccountLink'
 import { StatusIcon } from '../StatusIcon'
 import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
+import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -81,8 +82,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         ? [
             {
               align: TableCellAlign.Center,
-              // TODO: needs icons for ConsensusTxMethod
-              content: <>-</>,
+              content: <ConsensusTransactionMethod method={transaction.method} />,
               key: 'type',
             },
             {
