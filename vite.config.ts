@@ -1,10 +1,15 @@
 import { defineConfig, UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import mdx from '@mdx-js/rollup'
 
 export default defineConfig((): UserConfig => {
   return {
-    plugins: [react(), tsconfigPaths()],
+    plugins: [
+      { enforce: 'pre', ...mdx() }, // Run MDX plugin before React plugin
+      react({ include: /\.(jsx|js|mdx|ts|tsx)$/ }), // Include .mdx files for React Fast Refresh
+      tsconfigPaths(),
+    ],
     build: {
       outDir: 'build',
       sourcemap: true,
