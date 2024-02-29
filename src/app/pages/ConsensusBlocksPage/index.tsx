@@ -90,6 +90,7 @@ export const ConsensusBlocksPage: FC = () => {
         title={t('blocks.title')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
+        mainTitle
       >
         {tableView === TableLayout.Horizontal && (
           <ConsensusBlocks

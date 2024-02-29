@@ -32,7 +32,7 @@ export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> =
   const { t } = useTranslation()
 
   return (
-    <SubPageCard featured isLoadingTitle={isLoading} title={t('account.title')}>
+    <SubPageCard featured isLoadingTitle={isLoading} title={t('account.title')} mainTitle>
       <ConsensusAccountDetails isError={isError} isLoading={isLoading} account={account} />
     </SubPageCard>
   )

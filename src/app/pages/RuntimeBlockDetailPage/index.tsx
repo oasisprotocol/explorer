@@ -41,7 +41,7 @@ export const RuntimeBlockDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={t('common.block')}>
+      <SubPageCard featured title={t('common.block')} mainTitle>
         <RuntimeBlockDetailView enableBlockNavigation={true} isLoading={isLoading} block={block} />
       </SubPageCard>
       {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}

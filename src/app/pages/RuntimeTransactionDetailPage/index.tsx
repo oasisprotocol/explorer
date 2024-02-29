@@ -122,6 +122,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
             onSelectionChange={addressSwitch => setAddressSwitchOption(addressSwitch)}
           />
         }
+        mainTitle
       >
         <RuntimeTransactionDetailView
           isLoading={isLoading}

@@ -26,7 +26,7 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
           <AppendMobileSearch scope={scope}>
             <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
               <Typography
-                variant="h3"
+                variant="h2"
                 sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
               >
                 {title}

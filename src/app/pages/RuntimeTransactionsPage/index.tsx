@@ -93,6 +93,7 @@ export const RuntimeTransactionsPage: FC = () => {
         title={t('transactions.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
+        mainTitle
       >
         {tableView === TableLayout.Horizontal && (
           <RuntimeTransactions

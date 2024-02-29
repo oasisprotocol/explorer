@@ -59,6 +59,7 @@ export const ValidatorsPage: FC = () => {
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
+        mainTitle
       >
         {tableView === TableLayout.Horizontal && (
           <Validators
