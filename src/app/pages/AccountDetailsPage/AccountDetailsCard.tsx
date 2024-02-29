@@ -12,6 +12,7 @@ type AccountDetailsProps = {
   account: RuntimeAccount | undefined
   token: EvmToken | undefined
   tokenPrices: AllTokenPrices
+  highlightedPartOfName?: string | undefined
 }
 
 export const AccountDetailsCard: FC<AccountDetailsProps> = ({
@@ -21,6 +22,7 @@ export const AccountDetailsCard: FC<AccountDetailsProps> = ({
   account,
   token,
   tokenPrices,
+  highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
   return (
@@ -35,6 +37,7 @@ export const AccountDetailsCard: FC<AccountDetailsProps> = ({
         account={account}
         token={token}
         tokenPrices={tokenPrices}
+        highlightedPartOfName={highlightedPartOfName}
       />
     </SubPageCard>
   )

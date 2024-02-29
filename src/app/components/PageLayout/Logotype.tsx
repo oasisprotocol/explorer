@@ -4,7 +4,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { Link as RouterLink } from 'react-router-dom'
-import { OasisIcon } from '../CustomIcons/OasisIcon'
+import pontusXIcon from '../CustomIcons/pontusx.svg'
 import Typography from '@mui/material/Typography'
 import { getAppTitle } from '../../../config'
 
@@ -36,7 +36,7 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
         color: color || theme.palette.layout.main,
       }}
     >
-      <OasisIcon sx={{ fontSize: logoSize }} />
+      <img src={pontusXIcon} alt="Pontus-X logo" width={logoSize} />
       {showText && (
         <Typography variant="h1" color={color || theme.palette.layout.main} sx={{ whiteSpace: 'nowrap' }}>
           {getAppTitle()}

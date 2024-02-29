@@ -39,7 +39,7 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
         key: 'size',
       },
       {
-        content: <AccountLink scope={account} address={account.address} />,
+        content: <AccountLink scope={account} address={account.address} alwaysTrim />,
         key: 'address',
       },
       ...(verbose
