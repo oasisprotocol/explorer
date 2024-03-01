@@ -24,6 +24,7 @@ import { SignedBlocks } from './SignedBlocks'
 import { StakingTrend } from './StakingTrend'
 import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
+import { validatorDebondingContainerId } from './DebondingDelegationsCard'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -41,6 +42,7 @@ export const ValidatorDetailsPage: FC = () => {
   const { isLoading, data } = validatorQuery
   const validator = data?.data
   const transactionsLink = useHref('')
+  const debondingDelegationsLink = useHref(`debonding-delegations#${validatorDebondingContainerId}`)
   const context: ValidatorDetailsContext = { scope, address }
 
   return (
@@ -58,7 +60,13 @@ export const ValidatorDetailsPage: FC = () => {
         </StyledGrid>
       </Grid>
       <ProposedBlocks scope={scope} />
-      <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: transactionsLink },
+          { label: t('validator.undelegations'), to: debondingDelegationsLink },
+        ]}
+        context={context}
+      />
     </PageLayout>
   )
 }
