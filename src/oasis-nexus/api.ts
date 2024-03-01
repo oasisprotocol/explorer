@@ -1009,6 +1009,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof genera
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  shares: fromBaseUnits(delegation.shares, consensusDecimals),
                   layer: Layer.consensus,
                   network,
                   ticker,
@@ -1039,6 +1040,7 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  shares: fromBaseUnits(delegation.shares, consensusDecimals),
                   layer: Layer.consensus,
                   network,
                   ticker,

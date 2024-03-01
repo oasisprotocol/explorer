@@ -40,14 +40,12 @@ export const Delegations: FC<DelegationsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={delegation.amount} ticker={delegation.ticker} />,
+        content: <RoundedBalance value={delegation.amount} />,
         key: 'amount',
       },
-
       {
         align: TableCellAlign.Right,
-        // TODO: Add when API returns correct value
-        content: <>-</>,
+        content: <RoundedBalance value={delegation.shares} />,
         key: 'shares',
       },
       ...(debonding
