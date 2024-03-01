@@ -1021,3 +1021,33 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof genera
       },
     })
   }
+
+export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGetConsensusAccountsAddressDelegationsTo =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusAccountsAddressDelegationsTo(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              delegations: data.delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
