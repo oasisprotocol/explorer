@@ -49,7 +49,8 @@ const DebondingDelegationsView: FC<ValidatorDetailsContext> = ({ scope, address 
         <CardEmptyState label={t('validator.emptyDebondingList')} />
       )}
       <Delegations
-        debondingDelegations={debondingDelegations}
+        debonding
+        delegations={debondingDelegations}
         isLoading={isLoading}
         limit={limit}
         pagination={{

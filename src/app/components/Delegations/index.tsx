@@ -1,28 +1,37 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DebondingDelegation } from '../../../oasis-nexus/api'
+import { DebondingDelegation, Delegation } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
 import { AccountLink } from '../Account/AccountLink'
 
 type DelegationsProps = {
-  debondingDelegations?: DebondingDelegation[]
+  debonding?: boolean
+  delegations?: Delegation[] | DebondingDelegation[]
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
 }
 
-export const Delegations: FC<DelegationsProps> = ({ debondingDelegations, isLoading, limit, pagination }) => {
+export const Delegations: FC<DelegationsProps> = ({
+  debonding,
+  delegations,
+  isLoading,
+  limit,
+  pagination,
+}) => {
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
     { key: 'delegator', content: t('common.address') },
     { key: 'amount', content: t('validator.amount'), align: TableCellAlign.Right },
     { key: 'shares', content: t('validator.shares'), align: TableCellAlign.Right },
-    { key: 'debondingEnd', content: t('validator.debondingEnd'), align: TableCellAlign.Right },
+    ...(debonding
+      ? [{ key: 'debondingEnd', content: t('validator.debondingEnd'), align: TableCellAlign.Right }]
+      : []),
   ]
-  const tableRows = debondingDelegations?.map(delegation => ({
+  const tableRows = delegations?.map(delegation => ({
     key: delegation.delegator,
     data: [
       {
@@ -41,12 +50,16 @@ export const Delegations: FC<DelegationsProps> = ({ debondingDelegations, isLoad
         content: <>-</>,
         key: 'shares',
       },
-      {
-        align: TableCellAlign.Right,
-        // TODO: Add when API returns correct value and provides current epoch
-        content: <>-</>,
-        key: 'debondingEnd',
-      },
+      ...(debonding
+        ? [
+            {
+              align: TableCellAlign.Right,
+              // TODO: Add when API returns correct value and provides current epoch
+              content: <>-</>,
+              key: 'debondingEnd',
+            },
+          ]
+        : []),
     ],
   }))
 
@@ -55,7 +68,7 @@ export const Delegations: FC<DelegationsProps> = ({ debondingDelegations, isLoad
       columns={tableColumns}
       rows={tableRows}
       rowsNumber={limit}
-      name={t('validator.undelegations')}
+      name={debonding ? t('validator.undelegations') : t('validator.delegators')}
       isLoading={isLoading}
       pagination={pagination}
     />
