@@ -9,7 +9,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { DebondingDelegations } from '../../components/Delegations'
+import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
 
 export const validatorDebondingContainerId = 'debonding'
@@ -48,7 +48,7 @@ const DebondingDelegationsView: FC<ValidatorDetailsContext> = ({ scope, address 
       {isFetched && !debondingDelegations?.length && (
         <CardEmptyState label={t('validator.emptyDebondingList')} />
       )}
-      <DebondingDelegations
+      <Delegations
         debondingDelegations={debondingDelegations}
         isLoading={isLoading}
         limit={limit}
