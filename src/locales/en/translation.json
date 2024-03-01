@@ -612,6 +612,7 @@
     "debondingEnd": "End of debonding",
     "delegators": "Delegators",
     "emptyDebondingList": "No one is debonding delegations from this validator.",
+    "emptyDelegationsList": "No one is delegating to this validator.",
     "entityId": "Entity ID",
     "externalLink": "External Link",
     "externalLinkDescriotion": "Oasis is not responsible for any content on external pages.",
