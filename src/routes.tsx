@@ -39,7 +39,8 @@ import { NFTTokenTransfersCard } from './app/pages/NFTInstanceDashboardPage/NFTT
 import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { ValidatorsPage } from './app/pages/ValidatorsPage'
 import { ProposalsPage } from './app/pages/ProposalsPage'
-import { ValidatorDetailsPage, useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage'
+import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
+import { useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage/hooks'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
@@ -47,10 +48,8 @@ import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
-import {
-  ConsensusAccountDetailsPage,
-  useConsensusAccountDetailsProps,
-} from './app/pages/ConsensusAccountDetailsPage'
+import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
+import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 

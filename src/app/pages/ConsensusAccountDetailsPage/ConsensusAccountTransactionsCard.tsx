@@ -10,9 +10,9 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { ConsensusAccountDetailsContext } from './index'
+import { ConsensusAccountDetailsContext } from './hooks'
 
-export const consensusAccountTransactionsContainerId = 'transactions'
+const consensusAccountTransactionsContainerId = 'transactions'
 
 export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()

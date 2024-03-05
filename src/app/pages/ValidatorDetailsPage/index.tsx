@@ -1,12 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
 import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -19,13 +18,7 @@ import { ValidatorTitleCard } from './ValidatorTitleCard'
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
-
-export type ValidatorDetailsContext = {
-  scope: SearchScope
-  address: string
-}
-
-export const useValidatorDetailsProps = () => useOutletContext<ValidatorDetailsContext>()
+import { ValidatorDetailsContext } from './hooks'
 
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()

@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router-dom'
 import { Account, useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -14,13 +13,7 @@ import { AddressLoaderData } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 import { RouterTabs } from '../../components/RouterTabs'
-
-export type ConsensusAccountDetailsContext = {
-  scope: SearchScope
-  address: string
-}
-
-export const useConsensusAccountDetailsProps = () => useOutletContext<ConsensusAccountDetailsContext>()
+import { ConsensusAccountDetailsContext } from './hooks'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
