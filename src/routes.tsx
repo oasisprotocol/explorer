@@ -40,14 +40,17 @@ import { ConsensusDashboardPage } from 'app/pages/ConsensusDashboardPage'
 import { ValidatorsPage } from './app/pages/ValidatorsPage'
 import { ProposalsPage } from './app/pages/ProposalsPage'
 import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
+import { useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage/hooks'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
-import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
+import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
+import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
+import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 
 const NetworkSpecificPart = () => (
@@ -119,6 +122,12 @@ export const routes: RouteObject[] = [
             path: `address/:address`,
             element: <ConsensusAccountDetailsPage />,
             loader: consensusAddressParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <ConsensusAccountTransactionsCard {...useConsensusAccountDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `proposal`,
@@ -137,6 +146,12 @@ export const routes: RouteObject[] = [
             path: `validators/:address`,
             element: <ValidatorDetailsPage />,
             loader: consensusAddressParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <ConsensusAccountTransactionsCard {...useValidatorDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `block`,

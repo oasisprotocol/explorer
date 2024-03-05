@@ -1,10 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useHref, useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
+import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -14,11 +16,12 @@ import { ValidatorCommission } from '../../components/Validators/ValidatorCommis
 import { ValidatorCumulativeVoting } from '../../components/Validators/ValidatorCumulativeVoting'
 import { ValidatorTitleCard } from './ValidatorTitleCard'
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
-import { useLoaderData } from 'react-router-dom'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
+import { ValidatorDetailsContext } from './hooks'
 
 export const ValidatorDetailsPage: FC = () => {
+  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   // TODO: currently API does not work with address query param. Wait for API update or switch to entity_id
@@ -26,6 +29,8 @@ export const ValidatorDetailsPage: FC = () => {
   const validatorQuery = useGetConsensusValidatorsEntityId(scope.network, address)
   const { isLoading, data } = validatorQuery
   const validator = data?.data
+  const transactionsLink = useHref('')
+  const context: ValidatorDetailsContext = { scope, address }
 
   return (
     <PageLayout>
@@ -33,6 +38,7 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorSnapshot scope={scope} validator={validator} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
+      <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
 }
