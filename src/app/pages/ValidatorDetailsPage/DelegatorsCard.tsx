@@ -11,15 +11,14 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
-
-export const validatorDelegatorsContainerId = 'delegators'
+import { delegatorsContainerId } from './tabAnchors'
 
 export const DelegatorsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   return (
     <Card>
-      <LinkableDiv id={validatorDelegatorsContainerId}>
+      <LinkableDiv id={delegatorsContainerId}>
         <CardHeader disableTypography component="h3" title={t('validator.delegators')} />
       </LinkableDiv>
       <CardContent>

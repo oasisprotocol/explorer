@@ -11,15 +11,14 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
-
-export const validatorDebondingContainerId = 'debonding'
+import { debondingContainerId } from './tabAnchors'
 
 export const DebondingDelegationsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   return (
     <Card>
-      <LinkableDiv id={validatorDebondingContainerId}>
+      <LinkableDiv id={debondingContainerId}>
         <CardHeader disableTypography component="h3" title={t('validator.undelegations')} />
       </LinkableDiv>
       <CardContent>
