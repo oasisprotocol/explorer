@@ -20,6 +20,7 @@ import { ConsensusAccountDetailsContext } from './hooks'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address } = useLoaderData() as AddressLoaderData
@@ -32,7 +33,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
-      <Grid container spacing={4}>
+      <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
         <Grid item xs={12} md={6}>
           <BalanceDistribution account={account} isLoading={isLoading} />
         </Grid>
