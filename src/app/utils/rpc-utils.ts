@@ -13,6 +13,7 @@ const RPC_ENDPOINTS: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.testnet]: {
     [Layer.emerald]: 'https://testnet.emerald.oasis.dev',
     [Layer.sapphire]: 'https://testnet.sapphire.oasis.dev',
+    [Layer.pontusx]: 'https://grpc.sapphire.testnet.oasiscloud.io:443',
   },
 }
 

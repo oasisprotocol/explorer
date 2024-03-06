@@ -70,7 +70,8 @@ const getDetails = (t: TFunction): Details => ({
     },
     [Layer.pontusx]: {
       description: t('layerPicker.testnet.pontusx'),
-      rpcHttp: 'https://pontusx.not.si:443',
+      rpcHttp: 'https://grpc.sapphire.testnet.oasiscloud.io:443',
+      // rpcWebSockets: 'wss://grpc.sapphire.testnet.oasiscloud.io/ws',
       chainHexId: '0x7ec8',
       chainDecimalId: '32456',
       docs: docs.pontusx1,
