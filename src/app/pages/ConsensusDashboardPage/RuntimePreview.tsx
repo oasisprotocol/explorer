@@ -116,7 +116,9 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
       <StyledList>
         <dt>{t('common.status')}:</dt>
         <dd>
-          <RuntimeStatusIcon hasStatus={!!status} />
+          <Box>
+            <RuntimeStatusIcon status={status ? 'active' : 'inactive'} />
+          </Box>
         </dd>
         <dt>{t('paratimes.blockNumber')}</dt>
         <dd>
