@@ -523,13 +523,14 @@
     "soon": "soon"
   },
   "paratimes": {
-    "active": "Active",
     "activeNodes": "{{nodes}} active",
     "blockNumber": "Block number:",
     "inactive": "Coming soon",
     "listTitle": "ParaTimes",
     "noData": "No data available",
-    "nodes": "Nodes:"
+    "nodes": "Nodes:",
+    "online": "Online",
+    "outdated": "Out-of-date"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
