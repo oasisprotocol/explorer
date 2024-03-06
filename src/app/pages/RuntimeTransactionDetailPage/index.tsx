@@ -364,6 +364,15 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
+          {!transaction.encryption_envelope && transaction.body?.init_code && (
+            <>
+              <dt>{t('transaction.rawData')}</dt>
+              <dd>
+                <LongDataDisplay data={base64ToHex(transaction.body.init_code)} />
+              </dd>
+            </>
+          )}
+
           {transaction.encryption_envelope && (
             <>
               {transaction.encryption_envelope.public_key !== undefined && (
