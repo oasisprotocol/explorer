@@ -9,11 +9,11 @@ import { COLORS as TESTNET_COLORS } from '../../../styles/theme/testnet/colors'
 import { Badge } from '../../components/Badge'
 
 type RuntimeStatusIconProps = {
-  status: 'active' | 'outdated' | 'inactive'
+  status: 'stable' | 'outdated' | 'inactive'
 }
 
 const getStatuses = (t: TFunction) => ({
-  active: {
+  stable: {
     backgroundColor: COLORS.honeydew,
     icon: CheckCircleIcon,
     iconColor: COLORS.eucalyptus,

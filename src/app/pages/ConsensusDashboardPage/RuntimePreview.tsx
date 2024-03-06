@@ -11,6 +11,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import CircleIcon from '@mui/icons-material/Circle'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
+import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
 import { RuntimeStatusIcon } from '../../components/RuntimeStatusIcon'
 import { InlineDescriptionList } from '../../components/StyledDescriptionList'
 import { BlockLink } from '../../components/Blocks/BlockLink'
@@ -64,7 +65,12 @@ type RuntimeProps = {
 
 export const EnabledRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) => {
   const query = useGetRuntimeStatus(network, runtime)
+  const { outOfDate } = useRuntimeFreshness({
+    network,
+    layer: runtime,
+  })
   const runtimeStatus = query?.data?.data
+
   return (
     <RuntimePreview
       network={network}
@@ -72,6 +78,7 @@ export const EnabledRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) =>
       status={{
         activeNodes: runtimeStatus?.active_nodes,
         latestBlock: runtimeStatus?.latest_block,
+        outOfDate,
       }}
     />
   )
@@ -85,6 +92,7 @@ type RuntimePreviewProps = RuntimeProps & {
   status?: {
     activeNodes: number | undefined
     latestBlock: number | undefined
+    outOfDate: boolean | undefined
   }
 }
 
@@ -96,7 +104,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
   const layerLabels = getLayerLabels(t)
   const runtimeLabel = layerLabels[runtime]
   const dashboardLink = RouteUtils.getDashboardRoute({ network, layer: runtime })
-
+  const runtimeStatus = status ? (status.outOfDate ? 'outdated' : 'stable') : 'inactive'
   return (
     <Box sx={{ flex: 1, paddingY: 3 }}>
       <Box sx={{ marginBottom: 4 }}>
@@ -117,7 +125,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
         <dt>{t('common.status')}:</dt>
         <dd>
           <Box>
-            <RuntimeStatusIcon status={status ? 'active' : 'inactive'} />
+            <RuntimeStatusIcon status={runtimeStatus} />
           </Box>
         </dd>
         <dt>{t('paratimes.blockNumber')}</dt>
