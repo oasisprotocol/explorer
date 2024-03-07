@@ -12,6 +12,7 @@ const config = {
   parser: '@typescript-eslint/parser',
 
   settings: {},
+  plugins: ['react-refresh'],
   rules: {
     'no-restricted-imports': [
       'error',
@@ -44,6 +45,8 @@ const config = {
     'react/react-in-jsx-scope': 'off', // Not needed after React v17
     'react/display-name': 'off', // TODO: Maybe enable
     'react/self-closing-comp': ['error', { component: true, html: true }],
+
+    'react-refresh/only-export-components': 'error', // https://parceljs.org/recipes/react/#fast-refresh
 
     '@typescript-eslint/no-empty-function': 'off', // Allow empty reducers for saga
     '@typescript-eslint/no-non-null-assertion': 'off',
