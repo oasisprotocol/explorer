@@ -19,15 +19,7 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
 
-  const validatorsQuery = useGetConsensusValidators(
-    network,
-    { limit },
-    {
-      query: {
-        cacheTime: 0,
-      },
-    },
-  )
+  const validatorsQuery = useGetConsensusValidators(network, { limit })
   const validators = validatorsQuery.data?.data
 
   return (

@@ -58,16 +58,7 @@ const StakingContent: FC<StakingContentProps> = ({ address }) => {
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
   const { network } = scope
-  const delegationsQuery = useGetConsensusAccountsAddressDelegations(
-    network,
-    address,
-    {},
-    {
-      query: {
-        cacheTime: 0,
-      },
-    },
-  )
+  const delegationsQuery = useGetConsensusAccountsAddressDelegations(network, address)
   const { isLoading, isFetched, data } = delegationsQuery
   if (isFetched && offset && !delegationsQuery.data?.data?.delegations?.length) {
     throw AppErrors.PageDoesNotExist
