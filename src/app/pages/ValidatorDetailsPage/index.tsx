@@ -1,9 +1,11 @@
 import { FC } from 'react'
+import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -18,7 +20,16 @@ import { ValidatorTitleCard } from './ValidatorTitleCard'
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
+import { SignedBlocks } from './SignedBlocks'
+import { StakingTrend } from './StakingTrend'
+import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
+
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+  },
+}))
 
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -38,6 +49,15 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorSnapshot scope={scope} validator={validator} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
+      <Grid container spacing={4}>
+        <StyledGrid item xs={12} md={6}>
+          <StakingTrend scope={scope} />
+        </StyledGrid>
+        <StyledGrid item xs={12} md={6}>
+          <SignedBlocks />
+        </StyledGrid>
+      </Grid>
+      <ProposedBlocks scope={scope} />
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
