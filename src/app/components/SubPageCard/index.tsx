@@ -15,6 +15,7 @@ type StyledComponentProps = {
   subheader?: string
   action?: ReactNode
   noPadding?: boolean
+  mainTitle?: boolean
 }
 type SubPageCardProps = PropsWithChildren<StyledComponentProps>
 
@@ -69,6 +70,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   subheader,
   action,
   noPadding = false,
+  mainTitle = false,
 }) => {
   const theme = useTheme()
   const { isMobile } = useScreenSize()
@@ -78,8 +80,8 @@ export const SubPageCard: FC<SubPageCardProps> = ({
       {isMobile && (title || subheader || action) && (
         <Box sx={{ position: 'relative', display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
           <Typography
-            variant="h3"
-            component="h3"
+            variant={mainTitle ? 'h2' : 'h3'}
+            component={mainTitle ? 'h2' : 'h3'}
             sx={{ display: 'inline' }}
             color={theme.palette.layout.titleOnBackground}
           >
@@ -102,8 +104,8 @@ export const SubPageCard: FC<SubPageCardProps> = ({
               title={isLoadingTitle ? <TitleSkeleton /> : title}
               titleTypographyProps={{
                 display: 'inline',
-                component: 'h3',
-                variant: 'h3',
+                component: mainTitle ? 'h2' : 'h3',
+                variant: mainTitle ? 'h2' : 'h3',
               }}
               subheader={subheader}
               subheaderTypographyProps={{

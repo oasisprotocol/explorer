@@ -143,8 +143,8 @@ export const defaultTheme = createTheme({
     },
     h2: {
       fontSize: '24px',
-      fontWeight: 500,
-      lineHeight: '140%',
+      fontWeight: 600,
+      lineHeight: '32px',
       color: COLORS.brandExtraDark,
     },
     h3: {

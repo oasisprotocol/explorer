@@ -36,7 +36,7 @@ export const ProposalDetailsPage: FC = () => {
   const proposal = data?.data!
   return (
     <PageLayout>
-      <SubPageCard featured title={t('common.proposal')}>
+      <SubPageCard featured title={t('common.proposal')} mainTitle>
         <ProposalDetailView isLoading={isLoading} proposal={proposal} highlightedPart={searchTerm} />
       </SubPageCard>
     </PageLayout>

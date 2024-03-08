@@ -87,6 +87,7 @@ export const RuntimeBlocksPage: FC = () => {
         title={t('blocks.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
+        mainTitle
       >
         {tableView === TableLayout.Horizontal && (
           <RuntimeBlocks

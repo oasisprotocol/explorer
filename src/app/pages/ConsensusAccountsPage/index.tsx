@@ -57,6 +57,7 @@ export const ConsensusAccountsPage: FC = () => {
             isTotalCountClipped={accountsData?.is_total_count_clipped}
           />
         }
+        mainTitle
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
       >

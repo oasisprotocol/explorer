@@ -28,6 +28,7 @@ export const AccountDetailsCard: FC<AccountDetailsProps> = ({
       featured
       isLoadingTitle={isLoading}
       title={isContract ? t('contract.title') : t('account.title')}
+      mainTitle
     >
       <AccountDetailsView
         isLoading={isLoading}
