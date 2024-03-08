@@ -31,18 +31,10 @@ export const ValidatorsPage: FC = () => {
     }
   }, [isMobile, setTableView])
 
-  const validatorsQuery = useGetConsensusValidators(
-    network,
-    {
-      limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
-      offset: tableView === TableLayout.Vertical ? 0 : offset,
-    },
-    {
-      query: {
-        cacheTime: 0,
-      },
-    },
-  )
+  const validatorsQuery = useGetConsensusValidators(network, {
+    limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
+    offset: tableView === TableLayout.Vertical ? 0 : offset,
+  })
   const { isLoading, isFetched, data } = validatorsQuery
   const validatorsData = data?.data
   if (isFetched && offset && !validatorsData?.validators?.length) {

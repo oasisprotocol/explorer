@@ -76,7 +76,7 @@ const ConsensusAccountDetails: FC<ConsensusAccountDetailsCardProps> = ({ account
           ticker: account.ticker,
         })}
       </dd>
-      <StyledListTitle>{t('account.staking')}</StyledListTitle>
+      <StyledListTitle>{t('common.staking')}</StyledListTitle>
       <dd>
         {t('common.valueInToken', {
           ...getPreciseNumberFormat(account.delegations_balance!),

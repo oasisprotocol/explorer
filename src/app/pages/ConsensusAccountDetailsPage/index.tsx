@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
+import Grid from '@mui/material/Grid'
 import { Account, useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -13,10 +14,13 @@ import { AddressLoaderData } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 import { RouterTabs } from '../../components/RouterTabs'
+import { BalanceDistribution } from './BalanceDistribution'
+import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address } = useLoaderData() as AddressLoaderData
@@ -29,6 +33,14 @@ export const ConsensusAccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
+      <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
+        <Grid item xs={12} md={6}>
+          <BalanceDistribution account={account} isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Staking account={account} isLoading={isLoading} />
+        </Grid>
+      </Grid>
       <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
     </PageLayout>
   )
@@ -64,7 +76,7 @@ export const ConsensusAccountDetailsView: FC<{
       <dd>
         <RoundedBalance value={account.available} ticker={account.ticker} />
       </dd>
-      <dt>{t('account.staked')}</dt>
+      <dt>{t('common.staked')}</dt>
       <dd>
         <>-</>
       </dd>

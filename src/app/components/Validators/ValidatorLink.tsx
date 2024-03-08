@@ -12,9 +12,10 @@ type ValidatorLinkProps = {
   address: string
   name?: string
   network: Network
+  alwaysTrim?: boolean
 }
 
-export const ValidatorLink: FC<ValidatorLinkProps> = ({ address, name, network }) => {
+export const ValidatorLink: FC<ValidatorLinkProps> = ({ address, name, network, alwaysTrim }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getValidatorRoute(network, address)
   return (
@@ -22,9 +23,7 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({ address, name, network }
       {isTablet ? (
         <TabletValidatorLink address={address} name={name} to={to} />
       ) : (
-        <Link component={RouterLink} to={to}>
-          {name || address}
-        </Link>
+        <DesktopValidatorLink address={address} alwaysTrim={alwaysTrim} name={name} to={to} />
       )}
     </Typography>
   )
@@ -50,4 +49,19 @@ const TabletValidatorLink: FC<TabletValidatorLinkProps> = ({ address, name, to }
     return <TrimValidatorEndLinkLabel name={name} to={to} />
   }
   return <TrimLinkLabel label={address} to={to} />
+}
+
+type DesktopValidatorLinkProps = TabletValidatorLinkProps & {
+  alwaysTrim?: boolean
+}
+
+const DesktopValidatorLink: FC<DesktopValidatorLinkProps> = ({ address, name, to, alwaysTrim }) => {
+  if (alwaysTrim) {
+    return <TrimLinkLabel label={address} to={to} />
+  }
+  return (
+    <Link component={RouterLink} to={to}>
+      {name || address}
+    </Link>
+  )
 }

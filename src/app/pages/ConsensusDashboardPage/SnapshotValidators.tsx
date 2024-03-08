@@ -26,15 +26,7 @@ export const SnapshotValidators: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
 
-  const validatorsQuery = useGetConsensusValidators(
-    network,
-    { limit: API_MAX_TOTAL_COUNT },
-    {
-      query: {
-        cacheTime: 0,
-      },
-    },
-  )
+  const validatorsQuery = useGetConsensusValidators(network, { limit: API_MAX_TOTAL_COUNT })
   const validators = validatorsQuery.data?.data.validators
 
   return (
