@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
@@ -13,8 +13,19 @@ import { useScreenSize } from 'app/hooks/useScreensize'
 import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
 
+const AnalyticsContext = createContext<{
+  reopenAnalyticsConsent: () => void
+} | null>(null)
+
 export const AnalyticsConsent = () => {
-  const { t } = useTranslation()
+  return (
+    <AnalyticsConsentProvider>
+      <ReopenAnalyticsConsentButton />
+    </AnalyticsConsentProvider>
+  )
+}
+
+export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
   const [hasAccepted, setHasAccepted] = useState<matomo.HasAccepted>('timed_out_matomo_not_loaded')
 
   useEffect(() => {
@@ -45,10 +56,8 @@ export const AnalyticsConsent = () => {
   }, [location.key, hasAccepted])
 
   return (
-    <>
-      <Button size="small" color="inherit" onClick={() => setHasAccepted('not-chosen')}>
-        {t('analyticsConsent.settings')}
-      </Button>
+    <AnalyticsContext.Provider value={{ reopenAnalyticsConsent: () => setHasAccepted('not-chosen') }}>
+      {props.children}
       <AnalyticsConsentView
         isOpen={hasAccepted === 'not-chosen'}
         onAccept={async () => {
@@ -60,7 +69,18 @@ export const AnalyticsConsent = () => {
           setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
         }}
       />
-    </>
+    </AnalyticsContext.Provider>
+  )
+}
+
+export const ReopenAnalyticsConsentButton = () => {
+  const { t } = useTranslation()
+  const context = useContext(AnalyticsContext)
+  if (context === null) throw new Error('must be used within AnalyticsContext')
+  return (
+    <Button size="small" color="inherit" onClick={() => context.reopenAnalyticsConsent()}>
+      {t('analyticsConsent.settings')}
+    </Button>
   )
 }
 
