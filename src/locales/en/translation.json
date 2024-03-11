@@ -600,6 +600,7 @@
   },
   "validator": {
     "active": "Active",
+    "amount": "Amount",
     "balanceDistribution": "Balance Distribution",
     "blockWithHeight": "Block {{height}}",
     "boundsNotSet": "No bounds set (0% - 100%)",
@@ -608,6 +609,7 @@
     "commissionBounds": "Commission Bounds",
     "commissionRates": "Commission Rates",
     "cumulativeVoting": "Cumulative Voting %",
+    "debondingEnd": "End of debonding",
     "delegators": "Delegators",
     "entityId": "Entity ID",
     "externalLink": "External Link",
@@ -630,6 +632,7 @@
     "startDate": "Start Date",
     "title": "Validator",
     "totalShare": "Total Share",
+    "undelegations": "Undelegations",
     "uptime": "Uptime",
     "voting": "Voting %",
     "votingPower": "Voting Power"
