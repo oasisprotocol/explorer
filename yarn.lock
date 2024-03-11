@@ -5638,10 +5638,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.13.tgz#f64277c341150c979e42b00e4ac289290c9df469"
   integrity sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==
 
-"@types/node@20.11.24":
-  version "20.11.24"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.24.tgz#cc207511104694e84e9fb17f9a0c4c42d4517792"
-  integrity sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==
+"@types/node@20.11.25":
+  version "20.11.25"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.25.tgz#0f50d62f274e54dd7a49f7704cc16bfbcccaf49f"
+  integrity sha512-TBHyJxk2b7HceLVGFcpAUjsa5zIdsPWlR6XHfyGzd0SFu+/NFgQgMAl96MSDZgQDvJAvV6BKsFOrt6zIL09JDw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -5685,10 +5685,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@18.2.19":
-  version "18.2.19"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.19.tgz#b84b7c30c635a6c26c6a6dfbb599b2da9788be58"
-  integrity sha512-aZvQL6uUbIJpjZk4U8JZGbau9KDeAwMfmhyWorxgBkqDIEf6ROjRozcmPIicqsUwPUjbkDfHKgGee1Lq65APcA==
+"@types/react-dom@18.2.21":
+  version "18.2.21"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.21.tgz#b8c81715cebdebb2994378616a8d54ace54f043a"
+  integrity sha512-gnvBA/21SA4xxqNXEwNiVcP0xSGHh/gi1VhWv9Bl46a0ItbTT5nFY+G9VSQpaG/8N/qdJpJ+vftQ4zflTtnjLw==
   dependencies:
     "@types/react" "*"
 
@@ -5715,10 +5715,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@18.2.61":
-  version "18.2.61"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.61.tgz#5607308495037436779939ec0348a5816c08799d"
-  integrity sha512-NURTN0qNnJa7O/k4XUkEW2yfygA+NxS0V5h1+kp9jPwhzZy95q3ADoGMP0+JypMhrZBTTgjKAUlTctde1zzeQA==
+"@types/react@18.2.64":
+  version "18.2.64"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.64.tgz#3700fbb6b2fa60a6868ec1323ae4cbd446a2197d"
+  integrity sha512-MlmPvHgjj2p3vZaxbQgFUQFvD8QiZwACfGqEdDSWou5yISWxDQ4/74nCAwsUiX7UFLKZz3BbVSPj+YxeoGGCfg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
