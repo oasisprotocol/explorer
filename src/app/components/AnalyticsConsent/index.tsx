@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -8,7 +10,59 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { useScreenSize } from 'app/hooks/useScreensize'
+import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
+
+export const AnalyticsConsent = () => {
+  const { t } = useTranslation()
+  const [hasAccepted, setHasAccepted] = useState<matomo.HasAccepted>('timed_out_matomo_not_loaded')
+
+  useEffect(() => {
+    matomo.addMatomo()
+  }, [])
+
+  useEffect(() => {
+    const setInitialHasAccepted = async () => {
+      setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+    }
+    setInitialHasAccepted()
+  }, [])
+
+  const location = useLocation()
+  const [previousURL, setPreviousURL] = useState(document.referrer)
+  useEffect(() => {
+    const newURL = location.pathname + location.search + location.hash
+    if (hasAccepted === 'opted-in') {
+      // Adjusted snippet from https://developer.matomo.org/guides/spa-tracking#measuring-single-page-apps-complete-example
+      window._paq.push(['setReferrerUrl', previousURL])
+      window._paq.push(['setCustomUrl', newURL])
+      window._paq.push(['setDocumentTitle', document.title])
+      window._paq.push(['trackPageView'])
+      window._paq.push(['enableLinkTracking'])
+    }
+    setPreviousURL(newURL)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger when URL changes
+  }, [location.key, hasAccepted])
+
+  return (
+    <>
+      <Button size="small" color="inherit" onClick={() => setHasAccepted('not-chosen')}>
+        {t('analyticsConsent.settings')}
+      </Button>
+      <AnalyticsConsentView
+        isOpen={hasAccepted === 'not-chosen'}
+        onAccept={async () => {
+          matomo.optInForOneYear()
+          setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+        }}
+        onDecline={async () => {
+          matomo.decline()
+          setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+        }}
+      />
+    </>
+  )
+}
 
 const AcceptCookiesButton = styled(Button)(({ theme }) => ({
   paddingLeft: theme.spacing(5),
