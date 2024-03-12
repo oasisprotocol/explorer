@@ -10,7 +10,7 @@ import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
-import { AnalyticsConsent } from 'app/components/AnalyticsConsent'
+import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -53,7 +53,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
         {isTablet ? (
           <AppendMobileSearch scope={scope} action={isMobile && mobileSearchAction}>
             <Typography variant="footer">
-              {t('footer.mobileTitle')} | <AnalyticsConsent /> | {currentYear}
+              {t('footer.mobileTitle')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </AppendMobileSearch>
         ) : (
@@ -130,7 +130,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
               </StyledLinksGroup>
             </StyledBox>
             <Typography variant="footer">
-              {t('footer.title')} | <AnalyticsConsent /> | {currentYear}
+              {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>
         )}

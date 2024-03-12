@@ -12,18 +12,12 @@ import CardActions from '@mui/material/CardActions'
 import { useScreenSize } from 'app/hooks/useScreensize'
 import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
+import { ThemeByNetwork } from '../ThemeByNetwork'
+import { Network } from '../../../types/network'
 
 const AnalyticsContext = createContext<{
   reopenAnalyticsConsent: () => void
 } | null>(null)
-
-export const AnalyticsConsent = () => {
-  return (
-    <AnalyticsConsentProvider>
-      <ReopenAnalyticsConsentButton />
-    </AnalyticsConsentProvider>
-  )
-}
 
 export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
   const [hasAccepted, setHasAccepted] = useState<matomo.HasAccepted>('timed_out_matomo_not_loaded')
@@ -58,17 +52,20 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
   return (
     <AnalyticsContext.Provider value={{ reopenAnalyticsConsent: () => setHasAccepted('not-chosen') }}>
       {props.children}
-      <AnalyticsConsentView
-        isOpen={hasAccepted === 'not-chosen'}
-        onAccept={async () => {
-          matomo.optInForOneYear()
-          setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
-        }}
-        onDecline={async () => {
-          matomo.decline()
-          setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
-        }}
-      />
+      {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
+      <ThemeByNetwork network={Network.mainnet}>
+        <AnalyticsConsentView
+          isOpen={hasAccepted === 'not-chosen'}
+          onAccept={async () => {
+            matomo.optInForOneYear()
+            setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+          }}
+          onDecline={async () => {
+            matomo.decline()
+            setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+          }}
+        />
+      </ThemeByNetwork>
     </AnalyticsContext.Provider>
   )
 }
