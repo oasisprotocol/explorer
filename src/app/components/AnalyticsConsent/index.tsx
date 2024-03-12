@@ -53,7 +53,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
     <AnalyticsContext.Provider value={{ reopenAnalyticsConsent: () => setHasAccepted('not-chosen') }}>
       {props.children}
       {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
-      <ThemeByNetwork network={Network.mainnet}>
+      <ThemeByNetwork isRootTheme={false} network={Network.mainnet}>
         <AnalyticsConsentView
           isOpen={hasAccepted === 'not-chosen'}
           onAccept={async () => {

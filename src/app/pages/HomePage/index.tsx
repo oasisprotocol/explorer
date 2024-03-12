@@ -168,7 +168,7 @@ export const HomePage: FC = () => {
               </InfoScreenBtn>
             )}
           </SearchInputContainer>
-          <ThemeByNetwork network={network}>
+          <ThemeByNetwork isRootTheme={false} network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
               <ParaTimeSelector
                 step={step}

@@ -55,7 +55,7 @@ import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 
 const NetworkSpecificPart = () => (
-  <ThemeByNetwork network={useRequiredScopeParam().network}>
+  <ThemeByNetwork isRootTheme={true} network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByNetwork>
 )
