@@ -5,6 +5,7 @@ declare global {
       REACT_APP_BUILD_DATETIME: string
       REACT_APP_BUILD_SHA: string
       REACT_APP_BUILD_VERSION: string
+      REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: 'true' | 'false'
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
       REACT_APP_SHOW_BUILD_BANNERS: 'true' | 'false'

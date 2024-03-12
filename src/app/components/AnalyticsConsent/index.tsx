@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS can't change in runtime */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Snackbar from '@mui/material/Snackbar'
@@ -20,6 +21,8 @@ const AnalyticsContext = createContext<{
 } | null>(null)
 
 export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
+  if (process.env.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <>{props.children}</>
+
   const [hasAccepted, setHasAccepted] = useState<matomo.HasAccepted>('timed_out_matomo_not_loaded')
 
   useEffect(() => {
@@ -71,6 +74,8 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
 }
 
 export const ReopenAnalyticsConsentButton = () => {
+  if (process.env.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
+
   const { t } = useTranslation()
   const context = useContext(AnalyticsContext)
   if (context === null) throw new Error('must be used within AnalyticsContext')
