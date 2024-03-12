@@ -10,7 +10,7 @@ import { Network } from '../../../types/network'
 export const RoutingErrorPage: FC = () => {
   const scope = useScopeParam()
   return (
-    <ThemeByNetwork network={scope?.network ?? Network.mainnet}>
+    <ThemeByNetwork isRootTheme={true} network={scope?.network ?? Network.mainnet}>
       <PageLayout>
         <Divider variant="layout" />
         <ErrorDisplay error={useRouteError()} />

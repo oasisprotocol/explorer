@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redactURL 1`] = `
+[
+  "https://explorer.dev.oasis.io/mainnet/emerald/tx/0x...",
+  "https://explorer.dev.oasis.io/mainnet/sapphire/address/0x.../tokens/erc-721#0x...",
+  "https://explorer.dev.oasis.io/mainnet/emerald/address/oasis1...",
+  "https://explorer.dev.oasis.io/search?q=...",
+  "https://explorer.dev.oasis.io/mainnet/emerald/tx/...",
+  "https://explorer.dev.oasis.io/search?q=...",
+]
+`;

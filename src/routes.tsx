@@ -52,9 +52,10 @@ import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetails
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
+import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 
 const NetworkSpecificPart = () => (
-  <ThemeByNetwork network={useRequiredScopeParam().network}>
+  <ThemeByNetwork isRootTheme={true} network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByNetwork>
 )
@@ -82,10 +83,10 @@ export const routes: RouteObject[] = [
   {
     errorElement: <RoutingErrorPage />,
     element: (
-      <>
+      <AnalyticsConsentProvider>
         <ScrollRestoration />
         <Outlet />
-      </>
+      </AnalyticsConsentProvider>
     ),
     children: [
       {

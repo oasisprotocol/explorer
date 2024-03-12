@@ -65,3 +65,7 @@ export const ipfs = {
 export const wallet = {
   homepage: 'https://wallet.oasis.io/',
 }
+
+export const legalDocuments = {
+  privacyPolicy: 'https://oasisprotocol.org/privacy-policy',
+}

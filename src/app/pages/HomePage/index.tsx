@@ -106,10 +106,10 @@ const SearchInputBox = styled(Box)(({ theme }) => ({
 const FooterStyled = styled(Box)(({ theme }) => ({
   width: '100%',
   flex: '0 0 0',
+  padding: `0 ${theme.spacing(6)}`,
   [theme.breakpoints.up('md')]: {
     // needed to make footer elements clickable
     zIndex: zIndexHomePage.paraTimeSelector,
-    padding: `0 ${theme.spacing(6)}`,
   },
 }))
 
@@ -122,7 +122,7 @@ const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
-  const { isMobile, isTablet } = useScreenSize()
+  const { isMobile } = useScreenSize()
   const { network } = useSearchQueryNetworkParam()
   const isApiReachable = useIsApiReachable(network).reachable
 
@@ -168,7 +168,7 @@ export const HomePage: FC = () => {
               </InfoScreenBtn>
             )}
           </SearchInputContainer>
-          <ThemeByNetwork network={network}>
+          <ThemeByNetwork isRootTheme={false} network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
               <ParaTimeSelector
                 step={step}
@@ -182,11 +182,9 @@ export const HomePage: FC = () => {
           </ThemeByNetwork>
         </Content>
 
-        {!isTablet && (
-          <FooterStyled>
-            <Footer />
-          </FooterStyled>
-        )}
+        <FooterStyled>
+          <Footer />
+        </FooterStyled>
       </HomepageLayout>
     </>
   )

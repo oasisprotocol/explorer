@@ -5,18 +5,22 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import CssBaseline from '@mui/material/CssBaseline'
 import { fixedNetwork } from '../../utils/route-utils'
 
-export const ThemeByNetwork: FC<{ network: Network; children: React.ReactNode }> = ({
+export const ThemeByNetwork: FC<{ network: Network; isRootTheme: boolean; children: React.ReactNode }> = ({
   network,
+  isRootTheme,
   children,
 }) => (
   <ThemeProvider theme={getThemesForNetworks()[network]}>
-    <CssBaseline />
+    {isRootTheme && <CssBaseline />}
     {children}
   </ThemeProvider>
 )
 
 export const withDefaultTheme = (node: ReactNode, alwaysMainnet = false) => (
-  <ThemeByNetwork network={alwaysMainnet ? Network.mainnet : fixedNetwork ?? Network.mainnet}>
+  <ThemeByNetwork
+    isRootTheme={true}
+    network={alwaysMainnet ? Network.mainnet : fixedNetwork ?? Network.mainnet}
+  >
     {node}
   </ThemeByNetwork>
 )
