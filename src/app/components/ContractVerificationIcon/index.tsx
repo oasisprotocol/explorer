@@ -30,7 +30,7 @@ const statusIcon: Record<VerificationStatus, ReactNode> = {
 export const verificationIconBoxHeight = 28
 
 const StyledPill = styled(Box, {
-  shouldForwardProp: prop => prop !== 'verified',
+  shouldForwardProp: prop => prop !== 'verified' && prop !== 'address_eth',
 })(({ verified }: { verified: boolean; address_eth: string }) => {
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   return {
