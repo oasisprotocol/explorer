@@ -15,6 +15,7 @@ import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
 import { ThemeByNetwork } from '../ThemeByNetwork'
 import { Network } from '../../../types/network'
+import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
 
 const AnalyticsContext = createContext<{
   reopenAnalyticsConsent: () => void
@@ -23,7 +24,9 @@ const AnalyticsContext = createContext<{
 export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
   if (process.env.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <>{props.children}</>
 
-  const [hasAccepted, setHasAccepted] = useState<matomo.HasAccepted>('timed_out_matomo_not_loaded')
+  const [hasAccepted, setHasAccepted] = useState<
+    matomo.HasAccepted | 'loading' | 'timed_out_matomo_not_loaded_force_open'
+  >('loading')
 
   useEffect(() => {
     matomo.addMatomo()
@@ -53,7 +56,17 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
   }, [location.key, hasAccepted])
 
   return (
-    <AnalyticsContext.Provider value={{ reopenAnalyticsConsent: () => setHasAccepted('not-chosen') }}>
+    <AnalyticsContext.Provider
+      value={{
+        reopenAnalyticsConsent: () => {
+          if (hasAccepted === 'timed_out_matomo_not_loaded' || hasAccepted === 'loading') {
+            setHasAccepted('timed_out_matomo_not_loaded_force_open')
+          } else {
+            setHasAccepted('not-chosen')
+          }
+        },
+      }}
+    >
       {props.children}
       {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
       <ThemeByNetwork isRootTheme={false} network={Network.mainnet}>
@@ -67,6 +80,11 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
             matomo.decline()
             setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
           }}
+        />
+        <AnalyticsIsBlocked
+          isOpen={hasAccepted === 'timed_out_matomo_not_loaded_force_open'}
+          onReload={() => window.location.reload()}
+          onClose={() => setHasAccepted('timed_out_matomo_not_loaded')}
         />
       </ThemeByNetwork>
     </AnalyticsContext.Provider>
@@ -86,12 +104,7 @@ export const ReopenAnalyticsConsentButton = () => {
   )
 }
 
-const AcceptCookiesButton = styled(Button)(({ theme }) => ({
-  paddingLeft: theme.spacing(5),
-  paddingRight: theme.spacing(5),
-}))
-
-const DeclineCookiesButton = styled(Button)(({ theme }) => ({
+const StyledButton = styled(Button)(({ theme }) => ({
   paddingLeft: theme.spacing(5),
   paddingRight: theme.spacing(5),
 }))
@@ -118,6 +131,7 @@ export const AnalyticsConsentView = (props: {
         <Card elevation={4}>
           <CardContent>
             <Typography
+              fontSize="14px"
               sx={{
                 paddingBottom: '12px',
                 lineHeight: '1.25',
@@ -141,12 +155,12 @@ export const AnalyticsConsentView = (props: {
             </Typography>
           </CardContent>
           <CardActions sx={{ justifyContent: 'center', paddingBottom: isMobile ? '16px' : '32px' }}>
-            <AcceptCookiesButton onClick={() => props.onAccept()} color="primary" variant="contained">
+            <StyledButton onClick={() => props.onAccept()} color="primary" variant="contained">
               {t('analyticsConsent.acceptButtonLabel')}
-            </AcceptCookiesButton>
-            <DeclineCookiesButton onClick={() => props.onDecline()} color="secondary" variant="outlined">
+            </StyledButton>
+            <StyledButton onClick={() => props.onDecline()} color="secondary" variant="outlined">
               {t('analyticsConsent.declineButtonLabel')}
-            </DeclineCookiesButton>
+            </StyledButton>
           </CardActions>
         </Card>
       </Snackbar>
