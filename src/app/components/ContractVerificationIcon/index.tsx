@@ -29,7 +29,7 @@ const statusIcon: Record<VerificationStatus, ReactNode> = {
 
 export const verificationIconBoxHeight = 28
 
-const StyledBox = styled(Box, {
+const StyledPill = styled(Box, {
   shouldForwardProp: prop => prop !== 'verified',
 })(({ verified }: { verified: boolean; address_eth: string }) => {
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
@@ -45,6 +45,9 @@ const StyledBox = styled(Box, {
     padding: 4,
     paddingLeft: 10,
     paddingRight: 5,
+    '&&': {
+      textDecoration: 'none',
+    },
   }
 })
 
@@ -84,14 +87,23 @@ export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLi
     verified: t('contract.verification.isVerified'),
     unverified: t('contract.verification.isNotVerified'),
   }
+  const linkProps = {
+    href: `https://sourcify.dev/#/lookup/${address_eth}`,
+    rel: 'noopener noreferrer',
+    target: '_blank',
+    sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
+    onClick: verified ? undefined : () => setExplainDelay(true),
+  }
+  const Component = noLink ? Box : Link
+  const componentProps = noLink ? {} : linkProps
 
   return (
     <>
-      <StyledBox verified={verified} address_eth={address_eth}>
+      <StyledPill component={Component} verified={verified} address_eth={address_eth} {...componentProps}>
         {statusLabel[status]}
         &nbsp; &nbsp;
         {statusIcon[status]}
-      </StyledBox>
+      </StyledPill>
       &nbsp; &nbsp;
       {!noLink && (
         <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
@@ -101,15 +113,7 @@ export const VerificationIcon: FC<{ address_eth: string; verified: boolean; noLi
               verified ? 'contract.verification.openInSourcify' : 'contract.verification.verifyInSourcify'
             }
             components={{
-              SourcifyLink: (
-                <Link
-                  href={`https://sourcify.dev/#/lookup/${address_eth}`}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  sx={{ fontWeight: 400, color: 'inherit', textDecoration: 'underline' }}
-                  onClick={verified ? undefined : () => setExplainDelay(true)}
-                />
-              ),
+              SourcifyLink: <Link {...linkProps} />,
             }}
           />{' '}
           {explainDelay && t('contract.verification.explainVerificationDelay')}
