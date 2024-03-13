@@ -4,6 +4,7 @@ import { DebondingDelegation, Delegation } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
+import { ValidatorLink } from '../Validators/ValidatorLink'
 import { AccountLink } from '../Account/AccountLink'
 
 type DelegationsProps = {
@@ -11,6 +12,7 @@ type DelegationsProps = {
   delegations?: Delegation[] | DebondingDelegation[]
   isLoading: boolean
   limit: number
+  linkType?: 'delegator' | 'validator'
   pagination: false | TablePaginationProps
 }
 
@@ -19,6 +21,7 @@ export const Delegations: FC<DelegationsProps> = ({
   delegations,
   isLoading,
   limit,
+  linkType,
   pagination,
 }) => {
   const { t } = useTranslation()
@@ -32,10 +35,15 @@ export const Delegations: FC<DelegationsProps> = ({
       : []),
   ]
   const tableRows = delegations?.map(delegation => ({
-    key: delegation.delegator,
+    key: linkType === 'validator' ? delegation.validator : delegation.delegator,
     data: [
       {
-        content: <AccountLink scope={delegation} address={delegation.delegator} />,
+        content:
+          linkType === 'validator' ? (
+            <ValidatorLink address={delegation.validator} alwaysTrim network={delegation.network} />
+          ) : (
+            <AccountLink scope={delegation} address={delegation.delegator} />
+          ),
         key: 'delegator',
       },
       {
