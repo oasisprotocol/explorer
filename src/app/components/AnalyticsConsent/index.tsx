@@ -1,21 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS can't change in runtime */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import Snackbar from '@mui/material/Snackbar'
-import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import { useScreenSize } from 'app/hooks/useScreensize'
 import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
 import { ThemeByNetwork } from '../ThemeByNetwork'
 import { Network } from '../../../types/network'
 import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
+import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'
 
 const AnalyticsContext = createContext<{
   reopenAnalyticsConsent: () => void
@@ -115,55 +110,35 @@ export const AnalyticsConsentView = (props: {
   onDecline: () => void
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   return (
-    <>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        sx={{
-          maxWidth: '450px',
-        }}
-        open={props.isOpen}
-      >
-        <Card elevation={4}>
-          <CardContent>
-            <Typography
-              fontSize="14px"
-              sx={{
-                paddingBottom: '12px',
-                lineHeight: '1.25',
-              }}
-              align="center"
-            >
-              <Trans
-                i18nKey="analyticsConsent.text"
-                t={t}
-                components={{
-                  PrivacyPolicyLink: (
-                    <Link
-                      href={legalDocuments.privacyPolicy}
-                      target="_blank"
-                      sx={{ fontWeight: 400, textDecoration: 'underline' }}
-                    />
-                  ),
-                }}
-                values={{ acceptButtonLabel: t('analyticsConsent.acceptButtonLabel') }}
+    <AnalyticsDialogLayout
+      isOpen={props.isOpen}
+      message={
+        <Trans
+          i18nKey="analyticsConsent.text"
+          t={t}
+          components={{
+            PrivacyPolicyLink: (
+              <Link
+                href={legalDocuments.privacyPolicy}
+                target="_blank"
+                sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: 'center', paddingBottom: isMobile ? '16px' : '32px' }}>
-            <StyledButton onClick={() => props.onAccept()} color="primary" variant="contained">
-              {t('analyticsConsent.acceptButtonLabel')}
-            </StyledButton>
-            <StyledButton onClick={() => props.onDecline()} color="secondary" variant="outlined">
-              {t('analyticsConsent.declineButtonLabel')}
-            </StyledButton>
-          </CardActions>
-        </Card>
-      </Snackbar>
-    </>
+            ),
+          }}
+          values={{ acceptButtonLabel: t('analyticsConsent.acceptButtonLabel') }}
+        />
+      }
+      actions={
+        <>
+          <StyledButton onClick={() => props.onAccept()} color="primary" variant="contained">
+            {t('analyticsConsent.acceptButtonLabel')}
+          </StyledButton>
+          <StyledButton onClick={() => props.onDecline()} color="secondary" variant="outlined">
+            {t('analyticsConsent.declineButtonLabel')}
+          </StyledButton>
+        </>
+      }
+    />
   )
 }
