@@ -50,7 +50,7 @@ const ConsensusAccountDetails: FC<ConsensusAccountDetailsCardProps> = ({ account
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'}>
       <StyledListTitleWithAvatar>
         <Box gap={1} sx={{ display: 'flex', alignItems: 'center' }}>
-          <AccountAvatar address={account.address} />
+          <AccountAvatar account={account} />
           <AccountSizeBadge size={account.size} />
         </Box>
       </StyledListTitleWithAvatar>
