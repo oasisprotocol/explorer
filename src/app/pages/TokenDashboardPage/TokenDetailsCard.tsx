@@ -69,7 +69,11 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
 
             <dt>{t('contract.creator')}</dt>
             <dd>
-              <DelayedContractCreatorInfo scope={token} contractOasisAddress={token.contract_addr} />
+              <DelayedContractCreatorInfo
+                scope={token}
+                contractOasisAddress={token.contract_addr}
+                alwaysTrim
+              />
             </dd>
 
             <dt>{t('common.balance')} </dt>

@@ -61,6 +61,8 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
     color: COLORS.brandExtraDark,
     overflowWrap: 'anywhere',
     alignItems: 'center',
+    maxWidth: '100%',
+    overflowX: 'hidden',
   },
   ...(standalone && {
     '&&': {

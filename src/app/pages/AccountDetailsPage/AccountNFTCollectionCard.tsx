@@ -44,7 +44,7 @@ export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, add
             isFetched &&
             firstToken && (
               <Box sx={{ display: 'flex', alignItems: 'flex-start', paddingY: 3 }}>
-                <AccountLink scope={scope} address={firstToken?.eth_contract_addr} />
+                <AccountLink scope={scope} address={firstToken?.eth_contract_addr} alwaysTrim />
                 <CopyToClipboard value={firstToken?.eth_contract_addr} />
               </Box>
             )

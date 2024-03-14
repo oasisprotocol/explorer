@@ -19,6 +19,7 @@ import {
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
+import { useSearchForAccountsByName } from '../../hooks/useAccountName'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -27,7 +28,7 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal'
+  resultType: 'block' | 'transaction' | 'account' | 'accountAddress' | 'contract' | 'token' | 'proposal'
 }
 
 export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
@@ -35,6 +36,10 @@ export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'b
 export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { resultType: 'transaction' }
 
 export type AccountResult = SearchResultItemCore & RuntimeAccount & { resultType: 'account' }
+
+export type AccountAddressResult = SearchResultItemCore & { address: string } & {
+  resultType: 'accountAddress'
+}
 
 export type ContractResult = SearchResultItemCore & RuntimeAccount & { resultType: 'contract' }
 
@@ -46,6 +51,7 @@ export type SearchResultItem =
   | BlockResult
   | TransactionResult
   | AccountResult
+  | AccountAddressResult
   | ContractResult
   | TokenResult
   | ProposalResult
@@ -193,6 +199,25 @@ export function useNetworkProposalsConditionally(
   }
 }
 
+type AccountAddressInfo = Pick<RuntimeAccount, 'network' | 'layer' | 'address'>
+
+export function useNamedAccountConditionally(
+  currentScope: SearchScope | undefined,
+  nameFragment: string | undefined,
+): ConditionalResults<AccountAddressInfo> {
+  const queries = RouteUtils.getVisibleScopes(currentScope).map(scope =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useSearchForAccountsByName(scope, nameFragment),
+  )
+  return {
+    isLoading: queries.some(query => query.isLoading),
+    results: queries
+      .map(query => query.results)
+      .filter(isDefined)
+      .flat(),
+  }
+}
+
 export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
     blockHeight: useBlocksByHeightConditionally(currentScope, q.blockHeight),
@@ -201,6 +226,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
     evmBech32Account: useRuntimeAccountConditionally(currentScope, q.evmBech32Account),
+    accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
   }
@@ -211,6 +237,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...(queries.oasisAccount.results || []),
     ...(queries.evmBech32Account.results || []),
   ].filter(isAccountNonEmpty)
+  const accountAddresses = queries.accountsByName.results || []
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
     .flat()
@@ -228,6 +255,9 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
         ...accounts
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
+        ...accountAddresses.map(
+          (account): AccountAddressResult => ({ ...account, resultType: 'accountAddress' }),
+        ),
         ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
         ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
       ]
