@@ -53,7 +53,11 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
         {
           key: 'address',
           content: (
-            <AccountLink scope={holder} address={holder.eth_holder_address || holder.holder_address} />
+            <AccountLink
+              scope={holder}
+              address={holder.eth_holder_address || holder.holder_address}
+              alwaysTrim
+            />
           ),
         },
         {

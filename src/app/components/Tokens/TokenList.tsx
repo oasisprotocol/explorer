@@ -107,7 +107,11 @@ export const TokenList = (props: TokensProps) => {
         {
           content: (
             <span>
-              <AccountLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} />
+              <AccountLink
+                scope={token}
+                address={token.eth_contract_addr ?? token.contract_addr}
+                alwaysTrim
+              />
               <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
             </span>
           ),

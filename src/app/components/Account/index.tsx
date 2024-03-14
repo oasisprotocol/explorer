@@ -100,6 +100,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
                 <ContractCreatorInfo
                   scope={account}
                   creationTxHash={contract.eth_creation_tx || contract.creation_tx}
+                  alwaysTrim
                 />
               </dd>
             </>
