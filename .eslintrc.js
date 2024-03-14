@@ -38,6 +38,15 @@ const config = {
         ],
       },
     ],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector:
+          'MemberExpression[object.object.name="process"][object.property.name="env"][property.name="REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS"]',
+        message:
+          'Replace with window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS to support overriding in e2e tests',
+      },
+    ],
     'prefer-template': 'error',
 
     'react/jsx-no-target-blank': 'off', // Not needed with modern browsers

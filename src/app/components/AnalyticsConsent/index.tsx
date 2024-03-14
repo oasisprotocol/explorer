@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS can't change in runtime */
+/* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
@@ -17,7 +17,7 @@ const AnalyticsContext = createContext<{
 } | null>(null)
 
 export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
-  if (process.env.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <>{props.children}</>
+  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <>{props.children}</>
 
   const [hasAccepted, setHasAccepted] = useState<
     matomo.HasAccepted | 'loading' | 'timed_out_matomo_not_loaded_force_open'
@@ -87,7 +87,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
 }
 
 export const ReopenAnalyticsConsentButton = () => {
-  if (process.env.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
+  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
 
   const { t } = useTranslation()
   const context = useContext(AnalyticsContext)
