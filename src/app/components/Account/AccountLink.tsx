@@ -5,7 +5,6 @@ import Link from '@mui/material/Link'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
 
 export const AccountLink: FC<{
@@ -17,21 +16,11 @@ export const AccountLink: FC<{
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
-    <Typography
-      variant="mono"
-      component="span"
-      sx={
-        plain
-          ? { color: COLORS.grayExtraDark, fontWeight: 400 }
-          : { color: COLORS.brandDark, fontWeight: 700 }
-      }
-    >
+    <Typography variant="mono" component="span">
       {alwaysTrim || isTablet ? (
-        <TrimLinkLabel label={address} to={to} />
-      ) : plain ? (
-        address
+        <TrimLinkLabel label={address} to={to} plain={plain} />
       ) : (
-        <Link component={RouterLink} to={to}>
+        <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
           {address}
         </Link>
       )}

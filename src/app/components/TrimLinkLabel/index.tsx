@@ -38,13 +38,9 @@ type TrimLinkProps = TrimLinkLabelProps & {
 const TrimLink: FC<TrimLinkProps> = ({ label, to, trimmedLabel, plain }) => {
   return (
     <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      {plain ? (
-        <>{trimmedLabel}</>
-      ) : (
-        <Link component={RouterLink} to={to}>
-          {trimmedLabel}
-        </Link>
-      )}
+      <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
+        {trimmedLabel}
+      </Link>
     </Tooltip>
   )
 }

@@ -6,7 +6,6 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { TrimLinkLabel } from '../TrimLinkLabel'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
-import { COLORS } from '../../../styles/theme/colors'
 
 export const TransactionLink: FC<{
   alwaysTrim?: boolean
@@ -18,13 +17,11 @@ export const TransactionLink: FC<{
   const to = RouteUtils.getTransactionRoute(scope, hash)
 
   return (
-    <Typography variant="mono" sx={{ ...(plain ? { color: COLORS.grayExtraDark, fontWeight: 400 } : {}) }}>
+    <Typography variant="mono">
       {alwaysTrim || isMobile ? (
         <TrimLinkLabel label={hash} to={to} plain={plain} />
-      ) : plain ? (
-        hash
       ) : (
-        <Link component={RouterLink} to={to}>
+        <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
           {hash}
         </Link>
       )}
