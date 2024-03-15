@@ -5,8 +5,6 @@ declare global {
       REACT_APP_BUILD_DATETIME: string
       REACT_APP_BUILD_SHA: string
       REACT_APP_BUILD_VERSION: string
-      /** Access it through {@link window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS} instead, to support overriding it in e2e tests */
-      REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: never
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
       REACT_APP_SHOW_BUILD_BANNERS: 'true' | 'false'
@@ -29,10 +27,6 @@ declare global {
       REACT_APP_FIXED_LAYER?: string
       REACT_APP_SHOW_FIAT_VALUES: 'true' | 'false'
     }
-  }
-
-  interface Window {
-    REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: 'true' | 'false'
   }
 }
 
