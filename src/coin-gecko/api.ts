@@ -25,7 +25,7 @@ const staleTime = 1000 * 60 * 3 // 3 minutes
 
 export function useGetTokenPricesFromGecko(tokenIds: string[], fiatCurrency: string) {
   return useQuery<TokenPriceMap, AxiosError<unknown>>(
-    ['tokenFiatPrices'],
+    ['tokenFiatPrices', tokenIds, fiatCurrency],
     () =>
       axios
         .get<GetTokenPricesFromGeckoResponse>('https://api.coingecko.com/api/v3/simple/price', {
