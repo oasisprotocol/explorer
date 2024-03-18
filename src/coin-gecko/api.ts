@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosResponse, AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { Ticker } from '../types/ticker'
 import { getTokensForScope } from '../config'
@@ -17,36 +17,31 @@ type GetTokenPricesFromGeckoParams = {
   precision?: string
 }
 
-type TokenPriceMap = Partial<Record<string, number>>
+type TokenPriceMap = { [tokenId in string]?: number }
 
-type GetTokenPricesFromGeckoResponse = TokenPriceMap
-
-export const getTokenPricesFromGecko = (
-  params: GetTokenPricesFromGeckoParams,
-): Promise<AxiosResponse<GetTokenPricesFromGeckoResponse>> => {
-  return axios.get('https://api.coingecko.com/api/v3/simple/price', {
-    params: { ...params },
-  })
-}
+type GetTokenPricesFromGeckoResponse = { [tokenId in string]?: { [fiatCurrency in string]: number } }
 
 const staleTime = 1000 * 60 * 3 // 3 minutes
 
 export function useGetTokenPricesFromGecko(tokenIds: string[], fiatCurrency: string) {
-  return useQuery<AxiosResponse<TokenPriceMap>, AxiosError<unknown>>(
-    ['tokenFiatPrices'],
+  return useQuery<TokenPriceMap, AxiosError<unknown>>(
+    ['tokenFiatPrices', tokenIds, fiatCurrency],
     () =>
-      getTokenPricesFromGecko({
-        ids: tokenIds.join(','),
-        vs_currencies: fiatCurrency ?? 'usd',
-      }),
-    {
-      select: ({ data }) => {
-        const result: TokenPriceMap = {}
-        Object.keys(data).forEach(key => {
-          result[key] = (data as any)[key][fiatCurrency]
+      axios
+        .get<GetTokenPricesFromGeckoResponse>('https://api.coingecko.com/api/v3/simple/price', {
+          params: {
+            ids: tokenIds.join(','),
+            vs_currencies: fiatCurrency ?? 'usd',
+          } satisfies GetTokenPricesFromGeckoParams,
         })
-        return result as any
-      },
+        .then(({ data }) => {
+          const result: TokenPriceMap = {}
+          Object.keys(data).forEach(key => {
+            result[key] = data[key]![fiatCurrency]
+          })
+          return result
+        }),
+    {
       staleTime,
     },
   )
@@ -81,7 +76,7 @@ export const useAllTokenPrices = (fiatCurrency: string): AllTokenPrices => {
       isLoading: geckoIsLoading,
       isFree: !!token.free,
       hasUsedCoinGecko: !!token.geckoId,
-      price: token.geckoId && geckoPrices ? (geckoPrices as any)[token.geckoId] : undefined,
+      price: token.geckoId && geckoPrices ? geckoPrices[token.geckoId] : undefined,
       fiatCurrency: token.geckoId && geckoPrices ? fiatCurrency : 'xx',
     }
   })
