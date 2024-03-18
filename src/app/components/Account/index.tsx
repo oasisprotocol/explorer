@@ -64,7 +64,7 @@ export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPric
             </>
           )}
           <StyledListTitleWithAvatar>
-            <AccountAvatar address={account.address} />
+            <AccountAvatar account={account} />
           </StyledListTitleWithAvatar>
           <dd>
             <AccountLink scope={account} address={address!} />

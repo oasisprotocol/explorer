@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountAvatar 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
+.css-u1jr60 {
+  height: 40px;
+}
+
+<div>
+  <div
+    class="MuiBox-root css-u1jr60"
+  >
+    <div
+      style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(24, 176, 242);"
+    >
+      <svg
+        height="40"
+        width="40"
+        x="0"
+        y="0"
+      >
+        <rect
+          fill="#2379E1"
+          height="40"
+          transform="translate(-6.945989692731529 0.32115178241911047) rotate(235.0 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#C8145F"
+          height="40"
+          transform="translate(14.018637111953444 -0.47420211342535534) rotate(386.9 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#FA5C00"
+          height="40"
+          transform="translate(-10.402967052188837 26.35656726370734) rotate(272.7 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountAvatar 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
+.css-u1jr60 {
+  height: 40px;
+}
+
+<div>
+  <div
+    class="MuiBox-root css-u1jr60"
+  >
+    <div
+      style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(200, 20, 77);"
+    >
+      <svg
+        height="40"
+        width="40"
+        x="0"
+        y="0"
+      >
+        <rect
+          fill="#FA7500"
+          height="40"
+          transform="translate(3.496428085960211 0.9543273601271858) rotate(73.1 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#03505E"
+          height="40"
+          transform="translate(-1.7889269471246652 22.858814016961635) rotate(198.4 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#F5C400"
+          height="40"
+          transform="translate(32.775245824257574 10.339084748854654) rotate(24.9 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountAvatar oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
+.css-u1jr60 {
+  height: 40px;
+}
+
+<div>
+  <div
+    class="MuiBox-root css-u1jr60"
+  >
+    <div
+      style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(24, 107, 242);"
+    >
+      <svg
+        height="40"
+        width="40"
+        x="0"
+        y="0"
+      >
+        <rect
+          fill="#C81426"
+          height="40"
+          transform="translate(3.7843096507965064 4.023915713645318) rotate(215.5 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#FAAB00"
+          height="40"
+          transform="translate(7.197619155693995 17.627626245569452) rotate(191.1 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#FB182F"
+          height="40"
+          transform="translate(-12.609925629480594 -36.744362966080686) rotate(293.2 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountAvatar oasis1qz0k5q8vjqvu4s4nwxyj406ylnflkc4vrcjghuwk 1`] = `
+.css-u1jr60 {
+  height: 40px;
+}
+
+<div>
+  <div
+    class="MuiBox-root css-u1jr60"
+  >
+    <div
+      style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(250, 129, 0);"
+    >
+      <svg
+        height="40"
+        width="40"
+        x="0"
+        y="0"
+      >
+        <rect
+          fill="#034C5E"
+          height="40"
+          transform="translate(0.3818771468595514 3.250780466393402) rotate(113.6 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#FB1855"
+          height="40"
+          transform="translate(-8.577413853985599 -15.393951003871173) rotate(301.3 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="#C81444"
+          height="40"
+          transform="translate(23.976907854261782 -14.298620081968732) rotate(475.7 20 20)"
+          width="40"
+          x="0"
+          y="0"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
