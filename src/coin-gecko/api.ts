@@ -82,7 +82,7 @@ export const useAllTokenPrices = (fiatCurrency: string): AllTokenPrices => {
       isFree: !!token.free,
       hasUsedCoinGecko: !!token.geckoId,
       price: token.geckoId && geckoPrices ? (geckoPrices as any)[token.geckoId] : undefined,
-      fiatCurrency: token.geckoId && geckoPrices ? fiatCurrency : 'xx',
+      fiatCurrency,
     }
   })
   return results

@@ -3,9 +3,6 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import BigNumber from 'bignumber.js'
 import { Ticker } from '../../../types/ticker'
 
-export const hasRuntimeBalance = (balances: RuntimeSdkBalance[] = []) =>
-  balances.some(balance => balance.token_decimals)
-
 export type FiatValueInfo = {
   /**
    * Do we have any known real value?
