@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SnapshotCardExternalLink } from 'app/components/Snapshots/SnapshotCardExternalLink'
 
 type ExternalLinkCardProps = {
-  label?: string
+  label?: ReactNode
   link: string | undefined
 }
 

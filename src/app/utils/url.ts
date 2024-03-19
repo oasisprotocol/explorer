@@ -12,3 +12,16 @@ export const hasValidProtocol = (url: string | undefined): boolean => {
     return false
   }
 }
+
+export const getHostname = (url: string | undefined): string => {
+  if (!url) {
+    return ''
+  }
+
+  try {
+    const parsedUrl = new URL(url)
+    return parsedUrl.hostname
+  } catch (error) {
+    return ''
+  }
+}
