@@ -23,7 +23,10 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
       return t('tokens.transferEventType.minting')
     case 'Burning':
       return t('tokens.transferEventType.burning')
+    case 'TaskAcceptorChanged':
+      return t('tokens.transferEventType.taskAcceptorChanged')
     default:
+      console.log('We have no idea about transfer event', name)
       return t('tokens.transferEventType.unknown', { name })
   }
 }
