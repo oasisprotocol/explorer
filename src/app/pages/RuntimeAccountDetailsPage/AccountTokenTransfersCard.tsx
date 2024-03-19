@@ -9,11 +9,11 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
-import { AccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './index'
 
 export const accountTokenTransfersContainerId = 'transfers'
 
-export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, address, account }) => {
+export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
   return (
     <Card>
@@ -29,7 +29,7 @@ export const AccountTokenTransfersCard: FC<AccountDetailsContext> = ({ scope, ad
   )
 }
 
-const AccountTokenTransfers: FC<AccountDetailsContext> = ({ scope, address, account }) => {
+const AccountTokenTransfers: FC<RuntimeAccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
   const { isLoading, isFetched, results } = useTokenTransfers(scope, { address })
 

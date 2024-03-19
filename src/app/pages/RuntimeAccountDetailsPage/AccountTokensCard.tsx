@@ -21,10 +21,10 @@ import {
   getTokenTypeStrictName,
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
-import { AccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './index'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
-type AccountTokensCardProps = AccountDetailsContext & {
+type AccountTokensCardProps = RuntimeAccountDetailsContext & {
   type: EvmTokenType
 }
 

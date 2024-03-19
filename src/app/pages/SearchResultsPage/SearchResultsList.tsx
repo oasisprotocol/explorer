@@ -4,7 +4,7 @@ import { ResultsGroupByType } from './ResultsGroupByType'
 import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
-import { AccountDetailsView } from '../AccountDetailsPage/AccountDetailsView'
+import { AccountDetailsView } from '../RuntimeAccountDetailsPage/AccountDetailsView'
 import {
   AccountResult,
   BlockResult,

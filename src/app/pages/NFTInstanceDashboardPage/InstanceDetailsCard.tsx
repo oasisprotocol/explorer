@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Card from '@mui/material/Card'
-import { useAccount } from '../AccountDetailsPage/hook'
+import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'

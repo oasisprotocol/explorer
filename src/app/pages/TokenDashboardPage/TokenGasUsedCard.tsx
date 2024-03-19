@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { useAccount } from '../AccountDetailsPage/hook'
+import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { SearchScope } from '../../../types/searchScope'
 
 export const TokenGasUsedCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {

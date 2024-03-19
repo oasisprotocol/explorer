@@ -20,15 +20,15 @@ import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
 
-export type AccountDetailsContext = {
+export type RuntimeAccountDetailsContext = {
   scope: SearchScope
   address: string
   account?: RuntimeAccount
 }
 
-export const useAccountDetailsProps = () => useOutletContext<AccountDetailsContext>()
+export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
 
-export const AccountDetailsPage: FC = () => {
+export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
@@ -51,7 +51,7 @@ export const AccountDetailsPage: FC = () => {
 
   const isLoading = isAccountLoading || isTokenLoading
 
-  const context: AccountDetailsContext = { scope, address, account }
+  const context: RuntimeAccountDetailsContext = { scope, address, account }
 
   return (
     <PageLayout>

@@ -14,7 +14,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar'
 import Skeleton from '@mui/material/Skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { AccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './index'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
 import { AddressLoaderData, RouteUtils } from 'app/utils/route-utils'
@@ -29,7 +29,7 @@ import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 
 export const accountNFTCollectionContainerId = 'nftCollection'
 
-export const AccountNFTCollectionCard: FC<AccountDetailsContext> = ({ scope, address }) => {
+export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
   const { address: contractAddress } = useLoaderData() as AddressLoaderData
   const { inventory, isFetched, isLoading, isTotalCountClipped, pagination, totalCount } =

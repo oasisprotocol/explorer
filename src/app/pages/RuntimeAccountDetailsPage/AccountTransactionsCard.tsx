@@ -9,11 +9,11 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useAccountTransactions } from './hook'
-import { AccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './index'
 
 export const accountTransactionsContainerId = 'transactions'
 
-export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, address }) => {
+export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   return (
@@ -30,7 +30,7 @@ export const AccountTransactionsCard: FC<AccountDetailsContext> = ({ scope, addr
   )
 }
 
-const AccountTransactions: FC<AccountDetailsContext> = ({ scope, address }) => {
+const AccountTransactions: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
