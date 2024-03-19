@@ -25,10 +25,10 @@ export const ConsensusDashboardPage: FC = () => {
       <ConsensusSnapshot scope={scope} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <TotalTransactions scope={scope} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <LatestConsensusBlocks scope={scope} />
         </Grid>
       </Grid>

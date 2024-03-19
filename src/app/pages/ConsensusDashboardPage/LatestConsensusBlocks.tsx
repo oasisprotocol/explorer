@@ -30,7 +30,7 @@ export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => 
   )
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <CardHeader
         disableTypography
         component="h3"

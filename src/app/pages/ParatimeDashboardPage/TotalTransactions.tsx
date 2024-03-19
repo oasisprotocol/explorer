@@ -32,7 +32,7 @@ export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
     : undefined
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <CardHeaderWithResponsiveActions
         action={<DurationPills handleChange={setChartDuration} value={chartDuration} />}
         disableTypography
