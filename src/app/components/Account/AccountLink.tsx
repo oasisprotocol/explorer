@@ -11,16 +11,15 @@ export const AccountLink: FC<{
   scope: SearchScope
   address: string
   alwaysTrim?: boolean
-  plain?: boolean
-}> = ({ scope, address, alwaysTrim, plain }) => {
+}> = ({ scope, address, alwaysTrim }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <Typography variant="mono" component="span">
       {alwaysTrim || isTablet ? (
-        <TrimLinkLabel label={address} to={to} plain={plain} />
+        <TrimLinkLabel label={address} to={to} />
       ) : (
-        <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
+        <Link component={RouterLink} to={to}>
           {address}
         </Link>
       )}

@@ -8,37 +8,36 @@ import { tooltipDelay } from '../../../styles/theme'
 type TrimLinkLabelProps = {
   label: string
   to: string
-  plain?: boolean
 }
 
-export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to, plain }) => {
+export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   const trimmedLabel = trimLongString(label)
   if (!trimmedLabel) {
     return null
   }
-  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} plain={plain} />
+  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} />
 }
 
 type TrimEndLinkLabelProps = TrimLinkLabelProps & {
   trimStart: number
 }
 
-export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, plain, trimStart }) => {
+export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, trimStart }) => {
   const trimmedLabel = trimLongString(label, trimStart, 0)
   if (!trimmedLabel) {
     return null
   }
-  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} plain={plain} />
+  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} />
 }
 
 type TrimLinkProps = TrimLinkLabelProps & {
   trimmedLabel: string
 }
 
-const TrimLink: FC<TrimLinkProps> = ({ label, to, trimmedLabel, plain }) => {
+const TrimLink: FC<TrimLinkProps> = ({ label, to, trimmedLabel }) => {
   return (
     <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
+      <Link component={RouterLink} to={to}>
         {trimmedLabel}
       </Link>
     </Tooltip>

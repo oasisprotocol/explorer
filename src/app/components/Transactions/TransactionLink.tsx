@@ -11,17 +11,16 @@ export const TransactionLink: FC<{
   alwaysTrim?: boolean
   scope: SearchScope
   hash: string
-  plain?: boolean
-}> = ({ alwaysTrim, hash, scope, plain }) => {
+}> = ({ alwaysTrim, hash, scope }) => {
   const { isMobile } = useScreenSize()
   const to = RouteUtils.getTransactionRoute(scope, hash)
 
   return (
     <Typography variant="mono">
       {alwaysTrim || isMobile ? (
-        <TrimLinkLabel label={hash} to={to} plain={plain} />
+        <TrimLinkLabel label={hash} to={to} />
       ) : (
-        <Link component={RouterLink} to={to} sx={{ fontWeight: plain ? 400 : undefined }}>
+        <Link component={RouterLink} to={to}>
           {hash}
         </Link>
       )}

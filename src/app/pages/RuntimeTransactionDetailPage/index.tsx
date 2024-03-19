@@ -228,7 +228,6 @@ export const RuntimeTransactionDetailView: FC<{
                     hash={
                       hash || ((isOasisAddressFormat ? transaction?.eth_hash : transaction?.hash) as string)
                     }
-                    plain={!hash}
                   />
                 </TransactionInfoTooltip>
                 {hash && <CopyToClipboard value={hash} />}
@@ -286,7 +285,6 @@ export const RuntimeTransactionDetailView: FC<{
                       from ||
                       ((isOasisAddressFormat ? transaction?.sender_0_eth : transaction?.sender_0) as string)
                     }
-                    plain={!from}
                   />
                 </TransactionInfoTooltip>
                 {from && <CopyToClipboard value={from} />}
@@ -310,7 +308,6 @@ export const RuntimeTransactionDetailView: FC<{
                   <AccountLink
                     scope={transaction}
                     address={to || ((isOasisAddressFormat ? transaction?.to_eth : transaction?.to) as string)}
-                    plain={!to}
                   />
                 </TransactionInfoTooltip>
                 {to && <CopyToClipboard value={to} />}
