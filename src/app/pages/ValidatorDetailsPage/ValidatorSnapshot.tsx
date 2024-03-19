@@ -49,7 +49,7 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
           <UptimeCard />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
-          <ExternalLinkCard link={validator?.media?.website_link} />
+          <ExternalLinkCard label={validator?.media?.name} link={validator?.media?.website_link} />
         </StyledGrid>
       </Grid>
     </>
