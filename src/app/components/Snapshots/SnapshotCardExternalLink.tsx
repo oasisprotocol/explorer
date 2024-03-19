@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
@@ -18,7 +18,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 type SnapshotCardExternalLinkProps = {
   description: string
-  label?: string
+  label?: ReactNode
   title: string
   url?: string
 }

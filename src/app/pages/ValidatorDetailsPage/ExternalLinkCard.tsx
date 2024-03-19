@@ -1,18 +1,19 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SnapshotCardExternalLink } from 'app/components/Snapshots/SnapshotCardExternalLink'
 
 type ExternalLinkCardProps = {
-  link?: string
+  label?: ReactNode
+  link: string | undefined
 }
 
-export const ExternalLinkCard: FC<ExternalLinkCardProps> = ({ link }) => {
+export const ExternalLinkCard: FC<ExternalLinkCardProps> = ({ label, link }) => {
   const { t } = useTranslation()
 
   return (
     <SnapshotCardExternalLink
       description={t('validator.externalLinkDescriotion')}
-      label={link}
+      label={label || link}
       title={t('validator.externalLink')}
       url={link}
     />

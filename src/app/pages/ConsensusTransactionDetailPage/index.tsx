@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { styled } from '@mui/material/styles'
 import { Transaction, useGetConsensusTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -13,10 +14,14 @@ import { TransactionLink } from 'app/components/Transactions/TransactionLink'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
 import { StatusIcon } from 'app/components/StatusIcon'
 import { BlockLink } from 'app/components/Blocks/BlockLink'
-import { RuntimeTransactionLabel } from 'app/components/RuntimeTransactionLabel'
+import { ConsensusTransactionMethod } from 'app/components/ConsensusTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from 'app/hooks/useFormattedTimestamp'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { AccountLink } from 'app/components/Account/AccountLink'
+
+const StyledDescriptionDetails = styled('dd')({
+  '&&': { padding: 0 },
+})
 
 export const ConsensusTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -69,9 +74,9 @@ export const ConsensusTransactionDetailView: FC<{
         <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
       </dd>
       <dt>{t('common.type')}</dt>
-      <dd>
-        <RuntimeTransactionLabel method={transaction.method} />
-      </dd>
+      <StyledDescriptionDetails>
+        <ConsensusTransactionMethod method={transaction.method} />
+      </StyledDescriptionDetails>
       <dt>{t('common.timestamp')}</dt>
       <dd>{formattedTimestamp}</dd>
       <dt>{t('common.height')}</dt>

@@ -11,7 +11,10 @@ import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
 
-export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const TotalTransactions: FC<{ chartContainerHeight?: number; scope: SearchScope }> = ({
+  chartContainerHeight = 450,
+  scope,
+}) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
@@ -32,14 +35,14 @@ export const TotalTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
     : undefined
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <CardHeaderWithResponsiveActions
         action={<DurationPills handleChange={setChartDuration} value={chartDuration} />}
         disableTypography
         component="h3"
         title={t('totalTransactions.header')}
       />
-      <CardContent sx={{ height: 450 }}>
+      <CardContent sx={{ height: chartContainerHeight }}>
         {windows && (
           <LineChart
             tooltipActiveDotRadius={9}

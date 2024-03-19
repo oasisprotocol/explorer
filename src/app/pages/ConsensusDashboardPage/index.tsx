@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
 import { PageLayout } from '../../components/PageLayout'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { TotalTransactions } from '../ParatimeDashboardPage/TotalTransactions'
+import { TotalTransactions } from '../../components/TotalTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
 import { Social } from '../../components/Social'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -25,10 +25,10 @@ export const ConsensusDashboardPage: FC = () => {
       <ConsensusSnapshot scope={scope} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <TotalTransactions scope={scope} />
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+          <TotalTransactions chartContainerHeight={350} scope={scope} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <LatestConsensusBlocks scope={scope} />
         </Grid>
       </Grid>

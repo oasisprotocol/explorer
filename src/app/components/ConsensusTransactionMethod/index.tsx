@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -61,7 +62,7 @@ const MethodIcon: FC<MethodIconProps> = ({ icon, label, color = 'blue' }) => {
       >
         {icon}
       </Box>
-      {label}
+      <Typography sx={{ textTransform: 'capitalize' }}>{label}</Typography>
     </Box>
   )
 }
@@ -147,7 +148,7 @@ const getConsensusTransactionMethod = (t: TFunction, method: ConsensusTxMethod |
         <MethodIcon icon={<MiscellaneousServicesIcon />} label={t('transactions.method.beaconVRFProve')} />
       )
     default:
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} label={t('common.unknown')} />
+      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} label={method || t('common.unknown')} />
   }
 }
 

@@ -5,9 +5,12 @@ import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
 import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { RuntimeBlockDetailPage } from './app/pages/RuntimeBlockDetailPage'
-import { AccountDetailsPage, useAccountDetailsProps } from './app/pages/AccountDetailsPage'
-import { AccountTransactionsCard } from './app/pages/AccountDetailsPage/AccountTransactionsCard'
-import { AccountTokensCard } from './app/pages/AccountDetailsPage/AccountTokensCard'
+import {
+  RuntimeAccountDetailsPage,
+  useRuntimeAccountDetailsProps,
+} from './app/pages/RuntimeAccountDetailsPage'
+import { AccountTransactionsCard } from './app/pages/RuntimeAccountDetailsPage/AccountTransactionsCard'
+import { AccountTokensCard } from './app/pages/RuntimeAccountDetailsPage/AccountTokensCard'
 import { SearchResultsPage } from './app/pages/SearchResultsPage'
 import {
   consensusAddressParamLoader,
@@ -26,10 +29,10 @@ import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
-import { ContractCodeCard } from './app/pages/AccountDetailsPage/ContractCodeCard'
+import { ContractCodeCard } from './app/pages/RuntimeAccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDashboardPage'
-import { AccountTokenTransfersCard } from './app/pages/AccountDetailsPage/AccountTokenTransfersCard'
-import { AccountNFTCollectionCard } from './app/pages/AccountDetailsPage/AccountNFTCollectionCard'
+import { AccountTokenTransfersCard } from './app/pages/RuntimeAccountDetailsPage/AccountTokenTransfersCard'
+import { AccountNFTCollectionCard } from './app/pages/RuntimeAccountDetailsPage/AccountNFTCollectionCard'
 import { TokenTransfersCard } from './app/pages/TokenDashboardPage/TokenTransfersCard'
 import { TokenHoldersCard } from './app/pages/TokenDashboardPage/TokenHoldersCard'
 import { TokenInventoryCard } from './app/pages/TokenDashboardPage/TokenInventoryCard'
@@ -199,38 +202,38 @@ export const routes: RouteObject[] = [
           },
           {
             path: `address/:address`,
-            element: <AccountDetailsPage />,
+            element: <RuntimeAccountDetailsPage />,
             loader: runtimeAddressParamLoader(),
             children: [
               {
                 path: '',
-                Component: () => <AccountTransactionsCard {...useAccountDetailsProps()} />,
+                Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
               },
               {
                 path: 'token-transfers',
-                Component: () => <AccountTokenTransfersCard {...useAccountDetailsProps()} />,
+                Component: () => <AccountTokenTransfersCard {...useRuntimeAccountDetailsProps()} />,
               },
               {
                 path: 'tokens/erc-20',
-                Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC20" />,
+                Component: () => <AccountTokensCard {...useRuntimeAccountDetailsProps()} type="ERC20" />,
               },
               {
                 path: 'tokens/erc-721',
                 children: [
                   {
                     path: '',
-                    Component: () => <AccountTokensCard {...useAccountDetailsProps()} type="ERC721" />,
+                    Component: () => <AccountTokensCard {...useRuntimeAccountDetailsProps()} type="ERC721" />,
                   },
                   {
                     path: ':contractAddress',
-                    Component: () => <AccountNFTCollectionCard {...useAccountDetailsProps()} />,
+                    Component: () => <AccountNFTCollectionCard {...useRuntimeAccountDetailsProps()} />,
                     loader: runtimeAddressParamLoader('contractAddress'),
                   },
                 ],
               },
               {
                 path: 'code',
-                Component: () => <ContractCodeCard {...useAccountDetailsProps()} />,
+                Component: () => <ContractCodeCard {...useRuntimeAccountDetailsProps()} />,
               },
             ],
           },
