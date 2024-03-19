@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
-import { createContext, useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
@@ -7,38 +6,31 @@ import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
 import { legalDocuments } from '../../utils/externalLinks'
-import { ThemeByNetwork } from '../ThemeByNetwork'
-import { Network } from '../../../types/network'
-import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
-import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'
 
-const AnalyticsContext = createContext<{
-  reopenAnalyticsConsent: () => void
-} | null>(null)
 
-export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) => {
-  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <>{props.children}</>
+const localStore = storage()
 
-  const [hasAccepted, setHasAccepted] = useState<
-    matomo.HasAccepted | 'loading' | 'timed_out_matomo_not_loaded_force_open'
-  >('loading')
+export const AnalyticsConsent = () => {
+  const [open, setOpen] = useState(localStore.get(StorageKeys.AnalyticsConsentOpen) ?? true)
+  const [optedIn, setOptedIn] = useState(localStore.get(StorageKeys.AnalyticsOptedIn) ?? false)
 
   useEffect(() => {
-    matomo.addMatomo()
-  }, [])
-
-  useEffect(() => {
-    const setInitialHasAccepted = async () => {
-      setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
+    if (optedIn) {
+      matomo.addMatomo()
+      // Warning: There's no cleanup for this.
+      // Matomo docs give no advice for SPAs.
+      // https://developer.matomo.org/guides/tracking-consent#b-if-you-use-your-own-consent-tool-to-remember-the-consent
+      // We currently don't have any in-app UI to revisit the consent.
+      // If we add one, we have to reload the page to be without the analytics
+      // library.
     }
-    setInitialHasAccepted()
-  }, [])
+  }, [optedIn])
 
   const location = useLocation()
   const [previousURL, setPreviousURL] = useState(document.referrer)
   useEffect(() => {
     const newURL = location.pathname + location.search + location.hash
-    if (hasAccepted === 'opted-in') {
+    if (optedIn) {
       // Adjusted snippet from https://developer.matomo.org/guides/spa-tracking#measuring-single-page-apps-complete-example
       window._paq.push(['setReferrerUrl', previousURL])
       window._paq.push(['setCustomUrl', newURL])
@@ -48,54 +40,21 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
     }
     setPreviousURL(newURL)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger when URL changes
-  }, [location.key, hasAccepted])
+  }, [location.key, optedIn])
+
+  const handleClose = (accepted: boolean) => {
+    localStore.set(StorageKeys.AnalyticsConsentOpen, false)
+    localStore.set(StorageKeys.AnalyticsOptedIn, accepted)
+    setOpen(false)
+    setOptedIn(accepted)
+  }
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        reopenAnalyticsConsent: () => {
-          if (hasAccepted === 'timed_out_matomo_not_loaded' || hasAccepted === 'loading') {
-            setHasAccepted('timed_out_matomo_not_loaded_force_open')
-          } else {
-            setHasAccepted('not-chosen')
-          }
-        },
-      }}
-    >
-      {props.children}
-      {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
-      <ThemeByNetwork isRootTheme={false} network={Network.mainnet}>
-        <AnalyticsConsentView
-          isOpen={hasAccepted === 'not-chosen'}
-          onAccept={async () => {
-            matomo.optInForOneYear()
-            setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
-          }}
-          onDecline={async () => {
-            matomo.decline()
-            setHasAccepted(await matomo.hasAccepted({ timeout: 10_000 }))
-          }}
-        />
-        <AnalyticsIsBlocked
-          isOpen={hasAccepted === 'timed_out_matomo_not_loaded_force_open'}
-          onReload={() => window.location.reload()}
-          onClose={() => setHasAccepted('timed_out_matomo_not_loaded')}
-        />
-      </ThemeByNetwork>
-    </AnalyticsContext.Provider>
-  )
-}
-
-export const ReopenAnalyticsConsentButton = () => {
-  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
-
-  const { t } = useTranslation()
-  const context = useContext(AnalyticsContext)
-  if (context === null) throw new Error('must be used within AnalyticsContext')
-  return (
-    <Button size="small" color="inherit" onClick={() => context.reopenAnalyticsConsent()}>
-      {t('analyticsConsent.settings')}
-    </Button>
+    <AnalyticsConsentView
+      isOpen={open}
+      onAccept={() => handleClose(true)}
+      onDecline={() => handleClose(false)}
+    />
   )
 }
 

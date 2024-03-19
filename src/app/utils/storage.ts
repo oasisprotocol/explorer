@@ -3,6 +3,8 @@ import { StorageKeys } from '../../types/storage'
 
 interface StorageType {
   [StorageKeys.MobileHelpScreenShown]: boolean
+  [StorageKeys.AnalyticsConsentOpen]: boolean
+  [StorageKeys.AnalyticsOptedIn]: boolean
 }
 
 export const storage = (storage = localStorage) => {
