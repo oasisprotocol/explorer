@@ -192,7 +192,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 layer: runtime,
                 network,
                 ticker:
-                  tx.body?.amount?.Denomination ?? getTokensForScope({ network, layer: runtime })[0].ticker,
+                  tx.body?.amount?.Denomination || getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
@@ -259,7 +259,7 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 layer: runtime,
                 network,
                 ticker:
-                  tx.body?.amount?.Denomination ?? getTokensForScope({ network, layer: runtime })[0].ticker,
+                  tx.body?.amount?.Denomination || getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
