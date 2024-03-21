@@ -13,6 +13,7 @@ import {
   NotFoundErrorResponse,
   RuntimeAccount,
   RuntimeEventType,
+  RuntimeSdkBalance,
 } from './generated/api'
 import { fromBaseUnits, getEthAddressForAccount, getAccountSize } from '../app/utils/helpers'
 import { Network } from '../types/network'
@@ -22,6 +23,7 @@ import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddr
 import { useEffect, useState } from 'react'
 import { RpcUtils } from '../app/utils/rpc-utils'
 import { toChecksumAddress } from '@ethereumjs/util'
+import { ArrayUtils } from '../app/utils/array-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -316,7 +318,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  const [rpcAccountBalance, setRpcAccountBalance] = useState<string | null>(null)
+  const [rpcAccountBalance, setRpcAccountBalance] = useState<RuntimeSdkBalance | null>(null)
 
   const oasisAddress = useTransformToOasisAddress(address)
 
@@ -415,14 +417,11 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     rpcAccountBalance !== null && runtimeAccount
       ? {
           ...runtimeAccount,
-          balances: runtimeAccount.balances?.length
-            ? [
-                {
-                  ...runtimeAccount.balances[0],
-                  balance: rpcAccountBalance,
-                },
-              ]
-            : [],
+          balances: ArrayUtils.replaceOrAppend(
+            runtimeAccount.balances,
+            rpcAccountBalance,
+            (a, b) => a.token_symbol === b.token_symbol,
+          ),
         }
       : runtimeAccount
 

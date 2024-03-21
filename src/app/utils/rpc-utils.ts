@@ -1,9 +1,9 @@
 import { JsonRpcProvider, formatUnits } from 'ethers'
 import { Network } from '../../types/network'
-import { consensusDecimals, paraTimesConfig } from '../../config'
+import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../../config'
 // oasis-nexus/api introduces circular dependency
 // eslint-disable-next-line no-restricted-imports
-import { Layer } from '../../oasis-nexus/generated/api'
+import { Layer, RuntimeSdkBalance } from '../../oasis-nexus/generated/api'
 
 const RPC_ENDPOINTS: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
@@ -58,7 +58,10 @@ export abstract class RpcUtils {
     return RpcUtils._provider
   }
 
-  static async getAccountBalance(address: string, opts: RpcProviderOptions): Promise<string | null> {
+  static async getAccountBalance(
+    address: string,
+    opts: RpcProviderOptions,
+  ): Promise<RuntimeSdkBalance | null> {
     const provider = RpcUtils._getProvider(opts)
 
     if (!provider) {
@@ -67,10 +70,17 @@ export abstract class RpcUtils {
 
     const balance = await provider.getBalance(address)
 
-    const {
-      context: { layer },
-    } = opts
+    const { context } = opts
+    const { layer } = context
     const decimals = LAYER_DECIMALS[layer]
-    return formatUnits(balance.toString(), decimals)
+
+    const token = getTokensForScope(context)
+    const [{ ticker }] = token
+
+    return {
+      balance: formatUnits(balance.toString(), decimals),
+      token_decimals: decimals,
+      token_symbol: ticker,
+    }
   }
 }
