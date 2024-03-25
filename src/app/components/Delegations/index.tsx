@@ -53,7 +53,7 @@ export const Delegations: FC<DelegationsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={delegation.shares} />,
+        content: <RoundedBalance compactLargeNumbers value={delegation.shares} />,
         key: 'shares',
       },
       ...(debonding
