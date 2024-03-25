@@ -47,7 +47,7 @@ jobs:
         with:
           version: ${{ steps.vars.outputs.VERSION }}
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             oasis-explorer-${{ steps.vars.outputs.VERSION }}.zip
