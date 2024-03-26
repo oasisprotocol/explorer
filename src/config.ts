@@ -135,6 +135,7 @@ const pontusxConfig: LayerConfig = {
     address: 'oasis1qr02702pr8ecjuff2z3es254pw9xl6z2yg9qcc6c',
     blockGasLimit: 15_000_000,
     runtimeId: '0000000000000000000000000000000000000000000000004febe52eb412b421',
+    // Kindly note, the sequence is important as src/app/utils/rpc-utils.ts will utilize the first token.
     tokens: [NativeToken.EUROe, NativeToken.TEST],
     fiatCurrency: 'eur',
   },
