@@ -58,6 +58,7 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
+import { customRoutes } from './app/config/customRoutes'
 
 const NetworkSpecificPart = () => (
   <ThemeByNetwork isRootTheme={true} network={useRequiredScopeParam().network}>
@@ -300,6 +301,7 @@ export const routes: RouteObject[] = [
           },
         ],
       },
+      ...customRoutes,
     ],
   },
 ]
