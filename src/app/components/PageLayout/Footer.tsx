@@ -11,6 +11,7 @@ import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
+import { CustomFooter } from '../../config/CustomFooter'
 
 const FooterBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -66,6 +67,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                 {!hasMobileAction && ' | '}
               </Box>
               <Box>{currentYear}</Box>
+              <CustomFooter tablet />
             </StyledTypography>
           </AppendMobileSearch>
         ) : (
@@ -141,6 +143,11 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
                   </Link>
                 </Typography>
               </StyledLinksGroup>
+            </StyledBox>
+            <StyledBox>
+              <Typography variant="footer">
+                <CustomFooter />
+              </Typography>
             </StyledBox>
             <Typography variant="footer">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
