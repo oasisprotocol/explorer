@@ -12,6 +12,13 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.9.1 (2024-03-27)
+
+### Bug Fixes and Improvements
+
+- Fix stable deploys array
+  ([#1346](https://github.com/oasisprotocol/explorer/issues/1346))
+
 ## 1.9.0 (2024-03-26)
 
 ### Features
