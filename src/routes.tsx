@@ -44,6 +44,8 @@ import { ValidatorsPage } from './app/pages/ValidatorsPage'
 import { ProposalsPage } from './app/pages/ProposalsPage'
 import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
 import { useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage/hooks'
+import { DebondingDelegationsCard } from './app/pages/ValidatorDetailsPage/DebondingDelegationsCard'
+import { DelegatorsCard } from './app/pages/ValidatorDetailsPage/DelegatorsCard'
 import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
@@ -154,6 +156,14 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <ConsensusAccountTransactionsCard {...useValidatorDetailsProps()} />,
+              },
+              {
+                path: 'delegators',
+                Component: () => <DelegatorsCard {...useValidatorDetailsProps()} />,
+              },
+              {
+                path: 'debonding-delegations',
+                Component: () => <DebondingDelegationsCard {...useValidatorDetailsProps()} />,
               },
             ],
           },

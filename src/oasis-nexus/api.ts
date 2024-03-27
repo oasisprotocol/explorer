@@ -98,6 +98,12 @@ declare module './generated/api' {
     layer: typeof Layer.consensus
     ticker: Ticker
   }
+
+  export interface DebondingDelegation {
+    layer: typeof Layer.consensus
+    network: Network
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount) => {
@@ -971,7 +977,66 @@ export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetC
               delegations: data.delegations.map(delegation => {
                 return {
                   ...delegation,
-                  shares: fromBaseUnits(delegation.shares, consensusDecimals),
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
+export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof generated.useGetConsensusAccountsAddressDebondingDelegationsTo =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusAccountsAddressDebondingDelegationsTo(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DebondingDelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              debonding_delegations: data.debonding_delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
+export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGetConsensusAccountsAddressDelegationsTo =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusAccountsAddressDelegationsTo(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              delegations: data.delegations.map(delegation => {
+                return {
+                  ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
                   layer: Layer.consensus,
                   network,

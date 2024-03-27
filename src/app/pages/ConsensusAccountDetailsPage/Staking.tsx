@@ -81,6 +81,7 @@ const StakingContent: FC<StakingContentProps> = ({ address }) => {
           delegations={delegationsQuery.data?.data.delegations}
           isLoading={isLoading}
           limit={PAGE_SIZE}
+          linkType="validator"
           pagination={{
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,

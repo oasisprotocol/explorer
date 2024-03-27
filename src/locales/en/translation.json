@@ -600,6 +600,7 @@
   },
   "validator": {
     "active": "Active",
+    "amount": "Amount",
     "balanceDistribution": "Balance Distribution",
     "blockWithHeight": "Block {{height}}",
     "boundsNotSet": "No bounds set (0% - 100%)",
@@ -608,7 +609,10 @@
     "commissionBounds": "Commission Bounds",
     "commissionRates": "Commission Rates",
     "cumulativeVoting": "Cumulative Voting %",
+    "debondingEnd": "End of debonding",
     "delegators": "Delegators",
+    "emptyDebondingList": "No one is debonding delegations from this validator.",
+    "emptyDelegationsList": "No one is delegating to this validator.",
     "entityId": "Entity ID",
     "externalLink": "External Link",
     "externalLinkDescriotion": "Oasis is not responsible for any content on external pages.",
@@ -630,6 +634,7 @@
     "startDate": "Start Date",
     "title": "Validator",
     "totalShare": "Total Share",
+    "undelegations": "Undelegations",
     "uptime": "Uptime",
     "voting": "Voting %",
     "votingPower": "Voting Power"
