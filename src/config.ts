@@ -5,6 +5,12 @@ import { getTokenForNetwork, NativeToken, NativeTokenInfo } from './types/ticker
 import { SearchScope } from './types/searchScope'
 
 export const consensusDecimals = 9
+/**
+ * The maximum processing delay above which we consider the data on this paratime to be out of date.
+ *
+ * Specified in milliseconds.
+ */
+export const outOfDateThreshold = 2 * 60 * 1000
 
 type LayerNetwork = {
   activeNodes: number | undefined
@@ -31,13 +37,6 @@ type LayerConfig = {
   local: LayerNetwork
   decimals: number
   type: RuntimeTypes
-
-  /**
-   * The maximum processing delay above which we consider the data on this paratime to be out of date.
-   *
-   * Specified in milliseconds.
-   */
-  outOfDateThreshold: number
 }
 
 export enum RuntimeTypes {
@@ -69,7 +68,6 @@ const emeraldConfig: LayerConfig = {
   },
   decimals: 18,
   type: RuntimeTypes.Evm,
-  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 const cipherConfig: LayerConfig = {
@@ -93,7 +91,6 @@ const cipherConfig: LayerConfig = {
   },
   decimals: 9,
   type: RuntimeTypes.Oasis,
-  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 const sapphireConfig: LayerConfig = {
@@ -120,7 +117,6 @@ const sapphireConfig: LayerConfig = {
 
   decimals: 18,
   type: RuntimeTypes.Evm,
-  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 const pontusxConfig: LayerConfig = {
@@ -148,7 +144,6 @@ const pontusxConfig: LayerConfig = {
 
   decimals: 18,
   type: RuntimeTypes.Evm,
-  outOfDateThreshold: 2 * 60 * 1000,
 }
 
 type LayersConfig = {

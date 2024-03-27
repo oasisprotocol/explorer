@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRequiredScopeParam, useScopeParam } from '../../hooks/useScopeParam'
 import { getNetworkNames, Network } from '../../../types/network'
-import { useIsApiReachable, useRuntimeFreshness } from './hook'
-import { getNameForScope } from '../../../types/searchScope'
+import { FreshnessInfo, useConsensusFreshness, useIsApiReachable, useRuntimeFreshness } from './hook'
+import { SearchScope, getNameForScope } from '../../../types/searchScope'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { StickyAlert } from '../StickyAlert'
 
@@ -26,20 +26,38 @@ export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNe
   return null
 }
 
-export const RuntimeOfflineBanner: FC = () => {
-  const scope = useRequiredScopeParam()
-  const { t } = useTranslation()
+type OfflineBannerProps = {
+  layerStatus: FreshnessInfo
+  scope: SearchScope
+}
 
-  const { outOfDate, lastUpdate, unavailable } = useRuntimeFreshness(scope)
+export const OfflineBanner: FC<OfflineBannerProps> = ({ layerStatus, scope }) => {
+  const { t } = useTranslation()
+  const { outOfDate, lastUpdate, unavailable } = layerStatus
   if (!outOfDate && !unavailable) return null
   const target = getNameForScope(t, scope)
+
   return (
     <StickyAlert severity="warning">
       {unavailable
-        ? t('home.runtimeUnavailable', { target })
+        ? t('home.layerUnavailable', { target })
         : lastUpdate
-          ? t('home.runtimeOutOfDateSince', { target, lastUpdate })
-          : t('home.runtimeOutOfDate', { target })}
+          ? t('home.layerOutOfDateSince', { target, lastUpdate })
+          : t('home.layerOutOfDate', { target })}
     </StickyAlert>
   )
+}
+
+export const ConsensusOfflineBanner: FC = () => {
+  const scope = useRequiredScopeParam()
+  const layerStatus = useConsensusFreshness(scope.network)
+
+  return <OfflineBanner layerStatus={layerStatus} scope={scope} />
+}
+
+export const RuntimeOfflineBanner: FC = () => {
+  const scope = useRequiredScopeParam()
+  const layerStatus = useRuntimeFreshness(scope)
+
+  return <OfflineBanner layerStatus={layerStatus} scope={scope} />
 }

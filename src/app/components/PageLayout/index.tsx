@@ -6,7 +6,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { styled, useTheme } from '@mui/material/styles'
 import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
-import { NetworkOfflineBanner, RuntimeOfflineBanner } from '../OfflineBanner'
+import { NetworkOfflineBanner, RuntimeOfflineBanner, ConsensusOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiReachable } from '../OfflineBanner/hook'
 import { Network } from '../../../types/network'
@@ -31,6 +31,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       <BuildBanner />
       <NetworkOfflineBanner />
       {scope && scope.layer !== Layer.consensus && <RuntimeOfflineBanner />}
+      {scope && scope.layer === Layer.consensus && <ConsensusOfflineBanner />}
       <Box
         sx={{
           minHeight: '100vh',
