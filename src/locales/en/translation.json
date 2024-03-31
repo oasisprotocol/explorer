@@ -188,6 +188,7 @@
     "createTooltip": "Voting created on epoch shown.",
     "deposit": "Deposit",
     "failedToLoadAllVotes": "Failed to load all the votes, number might be incomplete!",
+    "thereAreNoVotes": "No votes have been registered.",
     "handler": "Title",
     "id": "ID",
     "listTitle": "Network Change Proposals",
@@ -197,6 +198,7 @@
       "passed": "Passed",
       "rejected": "Rejected"
     },
+    "searchForVoter": "Search for voter",
     "type": {
       "upgrade": "Upgrade",
       "parameterUpgrade": "Parameter upgrade",

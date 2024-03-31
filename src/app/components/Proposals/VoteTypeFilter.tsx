@@ -33,7 +33,7 @@ export const VoteTypeFilter: FC<VoteTypeFilterProps> = ({ onSelect, value }) => 
   ]
 
   return (
-    <>
+    <Box sx={{ display: 'inline-flex' }}>
       {options.map(option => {
         const selected = option.value === value
         return (
@@ -59,6 +59,6 @@ export const VoteTypeFilter: FC<VoteTypeFilterProps> = ({ onSelect, value }) => 
           />
         )
       })}
-    </>
+    </Box>
   )
 }

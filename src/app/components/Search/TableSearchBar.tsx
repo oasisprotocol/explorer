@@ -6,7 +6,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import { COLORS } from '../../../styles/theme/colors'
 import IconButton from '@mui/material/IconButton'
 import { useScreenSize } from '../../hooks/useScreensize'
-import Box from '@mui/material/Box'
 import WarningIcon from '@mui/icons-material/WarningAmber'
 import { typingDelay } from '../../../styles/theme'
 import Typography from '@mui/material/Typography'
@@ -25,16 +24,16 @@ export interface TableSearchBarProps {
 export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, placeholder, warning }) => {
   const { isTablet } = useScreenSize()
 
-  const [isProblemFresh, setIsProblemFresh] = useState(false)
+  const [isWarningFresh, setIsWarningFresh] = useState(false)
 
   useEffect(() => {
     if (warning) {
       const timeout = setTimeout(() => {
-        setIsProblemFresh(false)
+        setIsWarningFresh(false)
       }, typingDelay)
       return () => clearTimeout(timeout)
     } else {
-      setIsProblemFresh(true)
+      setIsWarningFresh(true)
     }
   }, [warning])
 
@@ -61,7 +60,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
     </InputAdornment>
   )
 
-  const helperText = isProblemFresh ? undefined : (
+  const helperText = isWarningFresh ? undefined : (
     <Typography
       component="span"
       sx={{

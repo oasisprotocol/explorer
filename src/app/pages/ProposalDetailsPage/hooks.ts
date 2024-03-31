@@ -6,11 +6,13 @@ import {
   useGetConsensusValidators,
 } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
-import { ExtendedVote, ProposalVoteValue, VoteFilter, VoteType } from '../../../types/vote'
-import { getFilterForVoteType, getRandomVote } from '../../utils/vote'
+import { ExtendedVote, ProposalVoteValue, VoteType } from '../../../types/vote'
+import { getFilterForVoterNameFragment, getFilterForVoteType, getRandomVote } from '../../utils/vote'
 import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 
 export type AllVotesData = List & {
   isLoading: boolean
@@ -116,28 +118,67 @@ export const useVoteStats = (network: Network, proposalId: number): VoteStats =>
   }
 }
 
-export const useWantedVoteType = () =>
-  useTypedSearchParam<VoteType>('vote', 'any', {
+export const useVoteFiltering = () => {
+  const { t } = useTranslation()
+  const setSearchParams = useSearchParams()[1]
+  const [wantedType, setWantedType] = useTypedSearchParam<VoteType>('vote', 'any', {
     deleteParams: ['page'],
   })
+  const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('voter', '', { deleteParams: ['page'] })
+  const wantedNamePattern = wantedNameInput.length < 3 ? undefined : wantedNameInput
+  const nameError = !!wantedNameInput && !wantedNamePattern ? t('tableSearch.error.tooShort') : undefined
+  const hasFilters = wantedType !== 'any' || !!wantedNamePattern
+  const clearFilters = () => {
+    setSearchParams(searchParams => {
+      searchParams.delete('vote')
+      searchParams.delete('voter')
+      searchParams.delete('page')
+      return searchParams
+    })
+  }
+  return {
+    wantedType,
+    setWantedType,
+    wantedNameInput,
+    setWantedNameInput,
+    wantedNamePattern,
+    nameError,
+    hasFilters,
+    clearFilters,
+  }
+}
 
-const useWantedVoteFilter = (): VoteFilter => getFilterForVoteType(useWantedVoteType()[0])
-
-export const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-
-export const useDisplayedVotes = (network: Network, proposalId: number) => {
-  const filter = useWantedVoteFilter()
+export const useVotes = (network: Network, proposalId: number) => {
+  const { hasFilters, wantedType, wantedNamePattern } = useVoteFiltering()
+  const typeFilter = getFilterForVoteType(wantedType)
+  const nameFilter = getFilterForVoterNameFragment(wantedNamePattern)
 
   const pagination = useClientSidePagination<ExtendedVote, AllVotesData>({
     paramName: 'page',
-    clientPageSize: PAGE_SIZE,
+    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     serverPageSize: 1000,
-    filter,
+    filter: (vote: ExtendedVote) => typeFilter(vote) && nameFilter(vote),
   })
 
   // Get all the votes
   const allVotes = useAllVotes(network, proposalId)
 
   // Get the section of the votes that we should display in the table
-  return pagination.getResults(allVotes)
+  const results = pagination.getResults(allVotes)
+
+  const { isLoading } = allVotes
+  const isOnFirstPage = results.tablePaginationProps.selectedPage === 1
+  const hasData = !!results.data?.length
+  const hasNoResultsOnSelectedPage = !isLoading && !isOnFirstPage && !hasData
+  const hasNoResultsWhatsoever = !isLoading && !allVotes.total_count
+  const hasNoResultsBecauseOfFilters =
+    !isLoading && !hasData && isOnFirstPage && hasFilters && !hasNoResultsWhatsoever
+
+  return {
+    results,
+    isLoading,
+    hasNoResultsOnSelectedPage,
+    hasNoResultsBecauseOfFilters,
+    hasNoResultsWhatsoever,
+  }
 }

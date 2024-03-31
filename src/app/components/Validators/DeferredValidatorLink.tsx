@@ -9,12 +9,20 @@ export const DeferredValidatorLink: FC<{
   address: string
   validator: Validator | undefined
   isError: boolean
-}> = ({ network, address, validator, isError }) => {
+  highlightedPart?: string | undefined
+}> = ({ network, address, validator, isError, highlightedPart }) => {
   const scope: SearchScope = { network, layer: Layer.consensus }
 
   if (isError) {
     console.log('Warning: failed to look up validators!')
   }
 
-  return <ValidatorLink address={address} network={scope.network} name={validator?.media?.name} />
+  return (
+    <ValidatorLink
+      address={address}
+      network={scope.network}
+      name={validator?.media?.name}
+      highlightedPart={highlightedPart}
+    />
+  )
 }
