@@ -1,18 +1,28 @@
 import { To, useSearchParams } from 'react-router-dom'
 import { AppErrors } from '../../../types/errors'
-import { ComprehensivePaginationEngine } from './PaginationEngine'
+import { ComprehensivePaginatedResults, ComprehensivePaginationEngine } from './PaginationEngine'
 import { List } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from './TablePagination'
+
+type Filter<Item> = (item: Item) => boolean
 
 type ComprehensiveSearchParamsPaginationParams<Item> = {
   paramName: string
   pageSize: number
+
   /**
    * @deprecated this will mess up page size.
    *
    * Consider using client-side pagination instead.
    */
-  filter?: (item: Item) => boolean
+  filter?: Filter<Item> | undefined
+
+  /**
+   * @deprecated this will mess up page size.
+   *
+   * Consider using client-side pagination instead.
+   */
+  filters?: (Filter<Item> | undefined)[]
 }
 
 const knownListKeys: string[] = ['total_count', 'is_total_count_clipped']
@@ -35,6 +45,7 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
   paramName,
   pageSize,
   filter,
+  filters,
 }: ComprehensiveSearchParamsPaginationParams<Item>): ComprehensivePaginationEngine<Item, QueryResult> {
   const [searchParams] = useSearchParams()
   const selectedPageString = searchParams.get(paramName)
@@ -64,17 +75,26 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
   }
 
   return {
-    selectedPage,
-    offsetForQuery: offset,
-    limitForQuery: limit,
-    paramsForQuery,
-    getResults: (queryResult, key) => {
+    selectedPageForClient: selectedPage,
+    paramsForServer: paramsForQuery,
+    getResults: (isLoading, isFetched, queryResult, key): ComprehensivePaginatedResults<Item> => {
       const data = queryResult
         ? key
           ? (queryResult[key] as Item[])
           : findListIn<QueryResult, Item>(queryResult)
         : undefined
-      const filteredData = !!data && !!filter ? data.filter(filter) : data
+
+      // Select the filters to use. (filter field, filters field, drop undefined ones)
+      const filtersToApply = [filter, ...(filters ?? [])].filter(f => !!f) as Filter<Item>[]
+
+      // Apply the specified filtering
+      const filteredData = data
+        ? filtersToApply.reduce<Item[]>(
+            (partiallyFiltered, nextFilter) => partiallyFiltered.filter(nextFilter),
+            data,
+          )
+        : data
+
       const tableProps: TablePaginationProps = {
         selectedPage,
         linkToPage,
@@ -82,9 +102,23 @@ export function useComprehensiveSearchParamsPagination<Item, QueryResult extends
         isTotalCountClipped: queryResult?.is_total_count_clipped,
         rowsPerPage: pageSize,
       }
+
+      const isOnFirstPage = tableProps.selectedPage === 1
+      const hasData = !!filteredData?.length
+      const hasNoResultsOnSelectedPage = !isLoading && !isOnFirstPage && !hasData
+      const hasNoResultsWhatsoever = !isLoading && !queryResult?.total_count
+      const hasNoResultsBecauseOfFilters = !isLoading && !!data?.length && !filteredData?.length
+
       return {
         tablePaginationProps: tableProps,
         data: filteredData,
+        isLoading,
+        isFetched,
+        hasData,
+        isOnFirstPage,
+        hasNoResultsOnSelectedPage,
+        hasNoResultsWhatsoever,
+        hasNoResultsBecauseOfFilters,
       }
     },
     // tableProps,
