@@ -6,7 +6,6 @@ import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
-import { legalDocuments } from '../../utils/externalLinks'
 import { ThemeByNetwork } from '../ThemeByNetwork'
 import { Network } from '../../../types/network'
 import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
@@ -97,7 +96,7 @@ const StyledPrivacyButton = styled(Button)(() => ({
 export const PrivacyPolicyFooterLink: FC = () => {
   const { t } = useTranslation()
   return (
-    <Link href={legalDocuments.privacyPolicy} target="_blank" color="inherit">
+    <Link href={process.env.REACT_APP_PRIVACY_POLICY} target="_blank" color="inherit">
       {t('analyticsConsent.privacyPolicy')}
     </Link>
   )
@@ -137,7 +136,7 @@ export const AnalyticsConsentView = (props: {
           components={{
             PrivacyPolicyLink: (
               <Link
-                href={legalDocuments.privacyPolicy}
+                href={process.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
                 sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />
