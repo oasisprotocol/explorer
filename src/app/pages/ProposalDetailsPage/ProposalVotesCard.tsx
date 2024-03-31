@@ -6,13 +6,21 @@ import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { useTranslation } from 'react-i18next'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
-import { PAGE_SIZE, useAllVotes, useDisplayedVotes, useWantedVoteType } from './hooks'
+import {
+  PAGE_SIZE,
+  useAllVotes,
+  useDisplayedVotes,
+  useVoterSearch,
+  useVoterSearchPattern,
+  useWantedVoteType,
+} from './hooks'
 import { ProposalVoteIndicator } from '../../components/Proposals/ProposalVoteIndicator'
 import { DeferredValidatorLink } from '../../components/Validators/DeferredValidatorLink'
 import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
 import { VoteTypePills } from '../../components/Proposals/VoteTypePills'
 import { AppErrors } from '../../../types/errors'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { VoterSearchBar } from '../../components/Proposals/VoterSearchBar'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -24,6 +32,8 @@ type ProposalVotesProps = {
 const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagination }) => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
+
+  const voterNameFragment = useVoterSearchPattern()
 
   const tableColumns: TableColProps[] = [
     { key: 'index', content: <></>, width: '50px' },
@@ -46,6 +56,7 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, limit, pagina
               address={vote.address}
               isError={vote.haveValidatorsFailed}
               validator={vote.validator}
+              highlightedPart={voterNameFragment}
             />
           ),
         },
@@ -94,11 +105,17 @@ export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
 
   const { wantedVoteType, setWantedVoteType } = useWantedVoteType()
+  const { voterSearchInput, setVoterSearchPattern } = useVoterSearch()
 
   return (
     <SubPageCard>
       <CardHeaderWithResponsiveActions
-        action={<VoteTypePills handleChange={setWantedVoteType} value={wantedVoteType} />}
+        action={
+          <>
+            <VoterSearchBar variant={'button'} value={voterSearchInput} onChange={setVoterSearchPattern} />
+            <VoteTypePills handleChange={setWantedVoteType} value={wantedVoteType} />
+          </>
+        }
         disableTypography
         component="h3"
         title={t('common.votes')}

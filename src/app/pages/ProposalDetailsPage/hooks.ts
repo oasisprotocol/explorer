@@ -132,7 +132,30 @@ export const useWantedVoteType = () => {
   }
 }
 
-const useWantedVoteFilter = (): VoteFilter => getFilterForVoteType(useWantedVoteType().wantedVoteType)
+export const useVoterSearch = () => {
+  const { value, setValue } = useStringInUrl('voter')
+  return {
+    voterSearchInput: value,
+    setVoterSearchPattern: (newValue: string) => setValue(newValue, { deleteParams: ['page'] }),
+  }
+}
+
+export const useVoterSearchPattern = () => {
+  const { voterSearchInput } = useVoterSearch()
+  return voterSearchInput.length < 3 ? undefined : voterSearchInput
+}
+
+const useWantedVoteFilter = (): VoteFilter => {
+  const typeFilter = getFilterForVoteType(useWantedVoteType().wantedVoteType)
+  const voterSearchPattern = useVoterSearchPattern()
+
+  if (!voterSearchPattern) {
+    return typeFilter
+  } else {
+    return (vote: ExtendedVote) =>
+      typeFilter(vote) && !!vote.validator?.media?.name?.toLowerCase().includes(voterSearchPattern)
+  }
+}
 
 export const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
