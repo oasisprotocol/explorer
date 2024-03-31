@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
@@ -91,10 +91,20 @@ const StyledPrivacyButton = styled(Button)(() => ({
   textAlign: 'left',
   height: 'auto',
   fontSize: 'inherit',
+  fontWeight: 700,
 }))
 
+export const PrivacyPolicyFooterLink: FC = () => {
+  const { t } = useTranslation()
+  return (
+    <Link href={legalDocuments.privacyPolicy} target="_blank" color="inherit">
+      {t('analyticsConsent.privacyPolicy')}
+    </Link>
+  )
+}
+
 export const ReopenAnalyticsConsentButton = () => {
-  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
+  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <PrivacyPolicyFooterLink />
 
   const { t } = useTranslation()
   const context = useContext(AnalyticsContext)
