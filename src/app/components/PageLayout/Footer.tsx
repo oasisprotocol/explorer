@@ -31,9 +31,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyledLinksGroup = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(3),
-  borderLeft: `1px solid ${theme.palette.layout.main}`,
-  paddingLeft: theme.spacing(3),
-  marginLeft: theme.spacing(3),
+  paddingLeft: theme.spacing(2),
+}))
+
+const StyledTypography = styled(Typography)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 2,
+  flexWrap: 'wrap',
 }))
 
 interface FooterProps {
@@ -46,15 +51,22 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
+  const hasMobileAction = isMobile && mobileSearchAction
+  const privacyPolicyLinkStyles = hasMobileAction ? { order: 1, flexBasis: '100%' } : {}
 
   return (
     <footer>
       <FooterBox>
         {isTablet ? (
           <AppendMobileSearch scope={scope} action={isMobile && mobileSearchAction}>
-            <Typography variant="footer">
-              {t('footer.mobileTitle')} | <ReopenAnalyticsConsentButton /> | {currentYear}
-            </Typography>
+            <StyledTypography variant="footer">
+              <Box sx={{ whiteSpace: 'nowrap' }}>{t('footer.mobileTitle')} |</Box>
+              <Box sx={privacyPolicyLinkStyles}>
+                <ReopenAnalyticsConsentButton />
+                {!hasMobileAction && ' | '}
+              </Box>
+              <Box>{currentYear}</Box>
+            </StyledTypography>
           </AppendMobileSearch>
         ) : (
           <>
@@ -108,6 +120,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
               )}
               <StyledLinksGroup>
                 <Typography variant="footer">
+                  {' | '}
                   <Link
                     href={api.spec}
                     rel="noopener noreferrer"

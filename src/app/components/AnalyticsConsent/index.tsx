@@ -86,6 +86,13 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
   )
 }
 
+const StyledPrivacyButton = styled(Button)(() => ({
+  padding: 0,
+  textAlign: 'left',
+  height: 'auto',
+  fontSize: 'inherit',
+}))
+
 export const ReopenAnalyticsConsentButton = () => {
   if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
 
@@ -93,9 +100,9 @@ export const ReopenAnalyticsConsentButton = () => {
   const context = useContext(AnalyticsContext)
   if (context === null) throw new Error('must be used within AnalyticsContext')
   return (
-    <Button size="small" color="inherit" onClick={() => context.reopenAnalyticsConsent()}>
+    <StyledPrivacyButton size="small" color="inherit" onClick={() => context.reopenAnalyticsConsent()}>
       {t('analyticsConsent.settings')}
-    </Button>
+    </StyledPrivacyButton>
   )
 }
 
