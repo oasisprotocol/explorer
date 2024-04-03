@@ -86,7 +86,7 @@ export const RuntimeTransactionLabel: FC<RuntimeTransactionLabelProps> = ({ meth
   return <>{getRuntimeTransactionLabel(t, method)}</>
 }
 
-export const RuntimeTransactionIcon: FC<RuntimeTransactionLabelProps> = ({ method }) => {
+export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method }) => {
   const { t } = useTranslation()
 
   return (

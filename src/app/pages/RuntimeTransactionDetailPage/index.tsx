@@ -11,7 +11,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { StatusIcon } from '../../components/StatusIcon'
-import { RuntimeTransactionLabel } from '../../components/RuntimeTransactionLabel'
+import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { styled } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -247,7 +247,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.type')}</dt>
           <dd>
-            <RuntimeTransactionLabel method={transaction.method} />
+            <RuntimeTransactionMethod method={transaction.method} />
           </dd>
 
           <dt>{t('transactions.encryption.format')}</dt>
