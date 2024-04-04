@@ -29,6 +29,7 @@ import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
 import { UndelegateFinishIcon } from '../CustomIcons/UndelegateFinish'
 import { DelegateIcon } from '../CustomIcons/Delegate'
 import { MaybeEventErrorLine } from './EventError'
+import { AccountLinkWithAddressSwitch } from '../Account/AccountLinkWithAddressSwitch'
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
@@ -203,7 +204,13 @@ export const RuntimeEventDetails: FC<{
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
-              <AccountLink address={event.body.owner} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.owner_eth ?? event.body.owner}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.owner_eth}
+                oasisAddress={event.body.owner}
+              />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -225,11 +232,23 @@ export const RuntimeEventDetails: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={event.body.from} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.from_eth ?? event.body.from}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.from_eth}
+                oasisAddress={event.body.from}
+              />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLink address={event.body.to} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.to_eth ?? event.body.to}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.to_eth}
+                oasisAddress={event.body.to}
+              />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -249,11 +268,23 @@ export const RuntimeEventDetails: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={event.body.from} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.from_eth ?? event.body.from}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.from_eth}
+                oasisAddress={event.body.from}
+              />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLink address={event.body.to} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.to_eth ?? event.body.to}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.to_eth}
+                oasisAddress={event.body.to}
+              />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -273,11 +304,23 @@ export const RuntimeEventDetails: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={event.body.from} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.from_eth ?? event.body.from}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.from_eth}
+                oasisAddress={event.body.from}
+              />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLink address={event.body.to} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.to_eth ?? event.body.to}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.to_eth}
+                oasisAddress={event.body.to}
+              />
             </dd>
             <dt>{t('runtimeEvent.fields.activeShares')}</dt>
             <dd>
@@ -296,11 +339,23 @@ export const RuntimeEventDetails: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={event.body.from} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.from_eth ?? event.body.from}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.from_eth}
+                oasisAddress={event.body.from}
+              />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLink address={event.body.to} scope={scope} />
+              <AccountLinkWithAddressSwitch
+                address={event.body.to_eth ?? event.body.to}
+                scope={scope}
+                addressSwitchOption={addressSwitchOption}
+                ethAddress={event.body.to_eth}
+                oasisAddress={event.body.to}
+              />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
