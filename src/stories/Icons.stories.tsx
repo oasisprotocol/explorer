@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography'
 import { ConsensusTransactionMethod } from '../app/components/ConsensusTransactionMethod'
 import { RuntimeTransactionMethod } from '../app/components/RuntimeTransactionMethod'
 import { TokenTransferIcon } from '../app/components/Tokens/TokenTransferIcon'
-import { ConsensusTxMethod } from '../oasis-nexus/api'
+import { EventTypeIcon } from '../app/components/RuntimeEvents/RuntimeEventDetails'
+import { ConsensusTxMethod, RuntimeEventType } from '../oasis-nexus/api'
 import { COLORS } from '../styles/theme/colors'
 
 export default {
@@ -86,5 +87,27 @@ const TokensTemplate: StoryFn = () => {
 
 export const TokenTransactionIcons: StoryObj = {
   render: TokensTemplate,
+  args: {},
+}
+
+const EventsTemplate: StoryFn = () => {
+  return (
+    <Box>
+      {Object.values(RuntimeEventType).map(method => (
+        <Box
+          key={method}
+          gap={4}
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}
+        >
+          <EventTypeIcon eventType={method} eventName="" />
+          <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({method})</Typography>
+        </Box>
+      ))}
+    </Box>
+  )
+}
+
+export const EventIcons: StoryObj = {
+  render: EventsTemplate,
   args: {},
 }
