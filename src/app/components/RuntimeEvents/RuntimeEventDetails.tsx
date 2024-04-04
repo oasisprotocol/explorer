@@ -204,9 +204,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
               <AccountLink address={event.body.owner} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && (
-                <CopyToClipboard value={event.body.owner} />
-              )}
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -229,14 +226,10 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink address={event.body.from} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && (
-                <CopyToClipboard value={event.body.from} />
-              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink address={event.body.to} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -257,14 +250,10 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink address={event.body.from} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && (
-                <CopyToClipboard value={event.body.from} />
-              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink address={event.body.to} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -285,14 +274,10 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink address={event.body.from} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && (
-                <CopyToClipboard value={event.body.from} />
-              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink address={event.body.to} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('runtimeEvent.fields.activeShares')}</dt>
             <dd>
@@ -312,14 +297,10 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLink address={event.body.from} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && (
-                <CopyToClipboard value={event.body.from} />
-              )}
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLink address={event.body.to} scope={scope} />
-              {addressSwitchOption === AddressSwitchOption.Oasis && <CopyToClipboard value={event.body.to} />}
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
