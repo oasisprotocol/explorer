@@ -2,7 +2,8 @@ import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { ConsensusTransactionMethod } from '../app/components/ConsensusTransactionMethod'
-import { RuntimeTransactionMethod } from 'app/components/RuntimeTransactionMethod'
+import { RuntimeTransactionMethod } from '../app/components/RuntimeTransactionMethod'
+import { TokenTransferIcon } from '../app/components/Tokens/TokenTransferIcon'
 import { ConsensusTxMethod } from '../oasis-nexus/api'
 import { COLORS } from '../styles/theme/colors'
 
@@ -61,5 +62,29 @@ const RuntimeTemplate: StoryFn = () => {
 
 export const RuntimeTransactionIcons: StoryObj = {
   render: RuntimeTemplate,
+  args: {},
+}
+
+const storyTokensMethods = ['Transfer', 'Approval', 'Minting', 'Burning']
+
+const TokensTemplate: StoryFn = () => {
+  return (
+    <Box>
+      {storyTokensMethods.map(name => (
+        <Box
+          key={name}
+          gap={4}
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}
+        >
+          <TokenTransferIcon name={name} />
+          <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({name})</Typography>
+        </Box>
+      ))}
+    </Box>
+  )
+}
+
+export const TokenTransactionIcons: StoryObj = {
+  render: TokensTemplate,
   args: {},
 }
