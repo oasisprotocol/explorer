@@ -5,9 +5,9 @@ import euroELogo from '../../../../public/euroe.png'
 
 export const SmallTokenLogo: FC<{ ticker: Ticker }> = ({ ticker }) => {
   switch (ticker) {
-    case 'ROSE':
+    case Ticker.ROSE:
       return <SmallOasisLogo />
-    case 'EUROe':
+    case Ticker.EUROe:
       return <img src={euroELogo} width={25} alt={ticker} />
     default:
       return null

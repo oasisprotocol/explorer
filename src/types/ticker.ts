@@ -1,4 +1,3 @@
-import { Network } from './network'
 import { TFunction } from 'i18next'
 
 export type Ticker = (typeof Ticker)[keyof typeof Ticker]
@@ -30,13 +29,6 @@ export const NativeToken = {
     geckoId: 'euroe-stablecoin',
   },
 } as const
-
-export const networkToken: Record<Network, NativeTokenInfo> = {
-  [Network.mainnet]: NativeToken.ROSE,
-  [Network.testnet]: NativeToken.TEST,
-}
-
-export const getTokenForNetwork = (network: Network): NativeTokenInfo => networkToken[network]
 
 export const getNameForTicker = (_t: TFunction, ticker: string): string => {
   // TODO: how do we translate ticker names?
