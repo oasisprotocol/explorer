@@ -8,7 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
-import { useTransformToOasisAddress } from '../../hooks/useTransformToOasisAddress'
+import { getOasisAddressOrNull } from '../../utils/helpers'
 
 export const useAccount = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
@@ -34,7 +34,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusTransactions()
   }
 
-  const oasisAddress = useTransformToOasisAddress(address)
+  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
@@ -77,7 +77,7 @@ export const useAccountEvents = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusEvents()
   }
 
-  const oasisAddress = useTransformToOasisAddress(address)
+  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeEvents(
     network,
     layer,

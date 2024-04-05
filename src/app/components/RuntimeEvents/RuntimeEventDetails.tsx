@@ -1,5 +1,5 @@
 import { EvmAbiParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -90,24 +90,9 @@ const EvmLogRow: FC<{
   param: EvmAbiParam
   addressSwitchOption: AddressSwitchOption
 }> = ({ scope, param, addressSwitchOption }) => {
-  const [address, setAddress] = useState<string>()
-
-  useEffect(() => {
-    if (param.evm_type !== 'address') {
-      return
-    }
-
-    const resolveAddresses = async () => {
-      if (addressSwitchOption === AddressSwitchOption.Oasis) {
-        const oasisAddress = await getOasisAddress(param.value as string)
-        setAddress(oasisAddress)
-      } else {
-        setAddress(param.value as string)
-      }
-    }
-
-    resolveAddresses()
-  }, [param, addressSwitchOption])
+  const evmAddress = param.evm_type === 'address' ? (param.value as string) : undefined
+  const oasisAddress = evmAddress ? getOasisAddress(evmAddress) : undefined
+  const address = addressSwitchOption === AddressSwitchOption.Oasis ? oasisAddress : evmAddress
 
   const getCopyToClipboardValue = () => {
     if (address) {

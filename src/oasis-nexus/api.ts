@@ -15,11 +15,15 @@ import {
   RuntimeEventType,
   RuntimeSdkBalance,
 } from './generated/api'
-import { fromBaseUnits, getEthAddressForAccount, getAccountSize } from '../app/utils/helpers'
+import {
+  fromBaseUnits,
+  getEthAddressForAccount,
+  getAccountSize,
+  getOasisAddressOrNull,
+} from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
-import { useTransformToOasisAddress } from '../app/hooks/useTransformToOasisAddress'
 import { useEffect, useState } from 'react'
 import { RpcUtils } from '../app/utils/rpc-utils'
 import { toChecksumAddress } from '@ethereumjs/util'
@@ -326,7 +330,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 ) => {
   const [rpcAccountBalance, setRpcAccountBalance] = useState<RuntimeSdkBalance | null>(null)
 
-  const oasisAddress = useTransformToOasisAddress(address)
+  const oasisAddress = getOasisAddressOrNull(address)
 
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
@@ -386,7 +390,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     HumanReadableErrorResponse | NotFoundErrorResponse
   > & { queryKey: QueryKey }
 
-  const runtimeAccount = query.data?.data as RuntimeAccount
+  const runtimeAccount = query.data?.data
 
   // TODO: Remove after account balances on Nexus are in sync with the node
   useEffect(() => {
@@ -419,7 +423,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     }
   }, [runtimeAccount])
 
-  const data: any =
+  const data =
     rpcAccountBalance !== null && runtimeAccount
       ? {
           ...runtimeAccount,
@@ -679,7 +683,7 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   address,
   options,
 ) => {
-  const oasisAddress = useTransformToOasisAddress(address)
+  const oasisAddress = getOasisAddressOrNull(address)
 
   return generated.useGetRuntimeEvmTokensAddress(network, runtime, oasisAddress!, {
     ...options,
