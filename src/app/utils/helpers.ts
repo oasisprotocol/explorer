@@ -42,9 +42,9 @@ function oasisAddressFromDataSync(
   )
 }
 
-export async function getEvmBech32Address(evmAddress: string) {
+export function getEvmBech32Address(evmAddress: string) {
   const ethAddrU8 = oasis.misc.fromHex(evmAddress.replace('0x', ''))
-  const addr = await oasis.address.fromData(
+  const addr = oasisAddressFromDataSync(
     oasisRT.address.V0_SECP256K1ETH_CONTEXT_IDENTIFIER,
     oasisRT.address.V0_SECP256K1ETH_CONTEXT_VERSION,
     ethAddrU8,
@@ -52,11 +52,11 @@ export async function getEvmBech32Address(evmAddress: string) {
   return oasis.staking.addressToBech32(addr)
 }
 
-export const getOasisAddress = async (address: string): Promise<string> => {
+export const getOasisAddress = (address: string): string => {
   if (isValidOasisAddress(address)) {
     return address
   } else if (isValidEthAddress(address)) {
-    return await getEvmBech32Address(address)
+    return getEvmBech32Address(address)
   } else {
     throw new Error('Invalid address')
   }
