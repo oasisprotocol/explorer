@@ -6,6 +6,7 @@ import * as oasisRT from '@oasisprotocol/client-rt'
 import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/generated/api'
 import BigNumber from 'bignumber.js'
 import { validateMnemonic } from 'bip39'
+import { sha512_256 } from 'js-sha512'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
 export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
@@ -25,6 +26,21 @@ export const isValidEthAddress = (hexAddress: string): boolean => {
 }
 
 export const isValidProposalId = (proposalId: string): boolean => /^[0-9]+$/.test(proposalId)
+
+/** oasis.address.fromData(...) but without being needlessly asynchronous */
+function oasisAddressFromDataSync(
+  contextIdentifier: string,
+  contextVersion: number,
+  data: Uint8Array,
+): Uint8Array {
+  const versionU8 = new Uint8Array([contextVersion])
+  return oasis.misc.concat(
+    versionU8,
+    new Uint8Array(
+      sha512_256.arrayBuffer(oasis.misc.concat(oasis.misc.fromString(contextIdentifier), versionU8, data)),
+    ).slice(0, 20),
+  )
+}
 
 export async function getEvmBech32Address(evmAddress: string) {
   const ethAddrU8 = oasis.misc.fromHex(evmAddress.replace('0x', ''))
