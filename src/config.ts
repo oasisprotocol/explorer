@@ -34,7 +34,6 @@ type LayerNetwork = {
 type LayerConfig = {
   mainnet: LayerNetwork
   testnet: LayerNetwork
-  local: LayerNetwork
   decimals: number
   type: RuntimeTypes
 }
@@ -60,12 +59,6 @@ const emeraldConfig: LayerConfig = {
     blockGasLimit: 30_000_000,
     runtimeId: '00000000000000000000000000000000000000000000000072c8215e60d5bca7',
   },
-  local: {
-    activeNodes: undefined,
-    address: undefined,
-    blockGasLimit: undefined,
-    runtimeId: undefined,
-  },
   decimals: 18,
   type: RuntimeTypes.Evm,
 }
@@ -82,12 +75,6 @@ const cipherConfig: LayerConfig = {
     address: 'oasis1qqdn25n5a2jtet2s5amc7gmchsqqgs4j0qcg5k0t',
     blockGasLimit: undefined, // TODO: provide gas limit
     runtimeId: '0000000000000000000000000000000000000000000000000000000000000000',
-  },
-  local: {
-    activeNodes: undefined,
-    address: undefined,
-    blockGasLimit: undefined,
-    runtimeId: undefined,
   },
   decimals: 9,
   type: RuntimeTypes.Oasis,
@@ -108,13 +95,6 @@ const sapphireConfig: LayerConfig = {
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
   },
-  local: {
-    activeNodes: undefined,
-    address: undefined,
-    blockGasLimit: undefined,
-    runtimeId: undefined,
-  },
-
   decimals: 18,
   type: RuntimeTypes.Evm,
 }
@@ -135,13 +115,6 @@ const pontusxConfig: LayerConfig = {
     tokens: [NativeToken.EUROe, NativeToken.TEST],
     fiatCurrency: 'eur',
   },
-  local: {
-    activeNodes: undefined,
-    address: undefined,
-    blockGasLimit: undefined,
-    runtimeId: undefined,
-  },
-
   decimals: 18,
   type: RuntimeTypes.Evm,
 }
