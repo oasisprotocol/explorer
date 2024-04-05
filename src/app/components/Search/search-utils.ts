@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import {
   isValidBlockHeight,
   isValidBlockHash,
@@ -7,9 +7,9 @@ import {
   isValidEthAddress,
   getEvmBech32Address,
 } from '../../utils/helpers'
-import { Network } from '../../../types/network'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
+import { useNetworkParam } from '../../hooks/useScopeParam'
 
 type LayerSuggestions = {
   suggestedBlock: string
@@ -94,12 +94,19 @@ export const validateAndNormalize = {
       return searchTerm.replace(/\s/g, '').toLowerCase()
     }
   },
-  evmAccount: (searchTerm: string) => {
+  evmAccount: (searchTerm: string): string | undefined => {
     if (isValidEthAddress(`0x${searchTerm}`)) {
       return `0x${searchTerm.toLowerCase()}`
     }
     if (isValidEthAddress(searchTerm)) {
       return searchTerm.toLowerCase()
+    }
+  },
+  evmBech32Account: (searchTerm: string): string | undefined => {
+    const evmAccount = validateAndNormalize.evmAccount(searchTerm)
+    if (evmAccount) {
+      // TODO: remove conversion when API supports querying by EVM address
+      return getEvmBech32Address(evmAccount)
     }
   },
   evmTokenNameFragment: (searchTerm: string) => {
@@ -121,27 +128,21 @@ export function isSearchValid(searchTerm: string) {
 export const getSearchTermFromRequest = (request: Request) =>
   new URL(request.url).searchParams.get('q')?.trim() ?? ''
 
-export const searchParamLoader = async ({ request, params }: LoaderFunctionArgs) => {
-  const { network } = params
-  if (!!network && !RouteUtils.getEnabledNetworks().includes(network as Network)) {
+export const useParamSearch = () => {
+  const network = useNetworkParam()
+
+  if (!!network && !RouteUtils.getEnabledNetworks().includes(network)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 
-  const searchTerm = getSearchTermFromRequest(request)
+  const searchTerm = useSearchParams()[0].get('q')?.trim() ?? ''
   const normalized = Object.fromEntries(
     Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(searchTerm)]),
   ) as { [Key in keyof typeof validateAndNormalize]: string | undefined }
   return {
     searchTerm,
     ...normalized,
-    // TODO: remove conversion when API supports querying by EVM address
-    // TODO: without async conversion, this won't need to even be a loader
-    evmBech32Account: normalized.evmAccount ? await getEvmBech32Address(normalized.evmAccount) : undefined,
   }
-}
-
-export const useParamSearch = () => {
-  return useLoaderData() as Awaited<ReturnType<typeof searchParamLoader>>
 }
 
 export type SearchParams = ReturnType<typeof useParamSearch>

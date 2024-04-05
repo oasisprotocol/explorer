@@ -24,7 +24,6 @@ import {
   fixedLayer,
   RouteUtils,
 } from './app/utils/route-utils'
-import { searchParamLoader } from './app/components/Search/search-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
@@ -104,7 +103,6 @@ export const routes: RouteObject[] = [
             {
               path: '/search', // Global search
               element: withDefaultTheme(<SearchResultsPage />),
-              loader: searchParamLoader,
             },
           ]),
       {
@@ -198,7 +196,6 @@ export const routes: RouteObject[] = [
           {
             path: 'search', // Search within this scope
             element: <SearchResultsPage />,
-            loader: searchParamLoader,
           },
 
           {
