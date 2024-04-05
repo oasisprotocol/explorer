@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { CopyToClipboard } from '../CopyToClipboard'
 import Tooltip from '@mui/material/Tooltip'
@@ -16,15 +16,16 @@ interface WrappedComponentBaseProps {
 }
 
 export const withAddressSwitch =
-  <T extends WrappedComponentBaseProps>(
-    Component: FunctionComponent<T>,
-  ): FunctionComponent<T & WithAddressSwitchProps> =>
-  (props: T & WithAddressSwitchProps) => {
-    const { addressSwitchOption, address, ethAddress, oasisAddress, ...restProps } = props
+  <T extends WrappedComponentBaseProps>(Component: FC<T>) =>
+  (props: Omit<T, 'address'> & WithAddressSwitchProps) => {
+    const { addressSwitchOption, ethAddress, oasisAddress, ...restProps } = props
 
-    const isOasisAddressFormat = addressSwitchOption === AddressSwitchOption.Oasis
-    const addressMatchingType = isOasisAddressFormat ? oasisAddress : ethAddress
-    const defaultAddress = addressMatchingType ?? address
+    const addressesByType = {
+      [AddressSwitchOption.Oasis]: oasisAddress,
+      [AddressSwitchOption.ETH]: ethAddress,
+    }
+    const hasAddressOfExpectedType = !!addressesByType[addressSwitchOption]
+    const displayedAddress = addressesByType[addressSwitchOption] ?? ethAddress ?? oasisAddress
 
     return (
       <>
@@ -35,8 +36,8 @@ export const withAddressSwitch =
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <InfoIcon />
               {/* TODO: Replace with translations, text to be decided?, should be probably an input to this generic withAddressSwitch */}
-              {addressMatchingType
-                ? isOasisAddressFormat
+              {hasAddressOfExpectedType
+                ? oasisAddress
                   ? 'Oasis address'
                   : 'Ethereum address'
                 : 'Address not available in the expected type'}
@@ -44,10 +45,10 @@ export const withAddressSwitch =
           }
         >
           <Box>
-            <Component {...(restProps as T & WithAddressSwitchProps)} address={defaultAddress} />
+            <Component {...(restProps as unknown as T)} address={displayedAddress} />
           </Box>
         </Tooltip>
-        {defaultAddress && <CopyToClipboard value={defaultAddress} />}
+        {displayedAddress && <CopyToClipboard value={displayedAddress} />}
       </>
     )
   }

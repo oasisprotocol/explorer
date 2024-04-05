@@ -205,7 +205,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.owner_eth ?? event.body.owner}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.owner_eth}
@@ -233,7 +232,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.from_eth ?? event.body.from}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.from_eth}
@@ -243,7 +241,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.to_eth ?? event.body.to}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.to_eth}
@@ -269,7 +266,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.from_eth ?? event.body.from}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.from_eth}
@@ -279,7 +275,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.to_eth ?? event.body.to}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.to_eth}
@@ -305,7 +300,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.from_eth ?? event.body.from}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.from_eth}
@@ -315,7 +309,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.to_eth ?? event.body.to}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.to_eth}
@@ -340,7 +333,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.from')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.from_eth ?? event.body.from}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.from_eth}
@@ -350,7 +342,6 @@ export const RuntimeEventDetails: FC<{
             <dt>{t('common.to')}</dt>
             <dd>
               <AccountLinkWithAddressSwitch
-                address={event.body.to_eth ?? event.body.to}
                 scope={scope}
                 addressSwitchOption={addressSwitchOption}
                 ethAddress={event.body.to_eth}

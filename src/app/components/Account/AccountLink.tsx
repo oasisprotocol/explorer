@@ -7,13 +7,13 @@ import { RouteUtils } from '../../utils/route-utils'
 import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
 
-interface AccountLinkProps {
+interface Props {
   scope: SearchScope
   address: string
   alwaysTrim?: boolean
 }
 
-export const AccountLink: FC<AccountLinkProps> = ({ scope, address, alwaysTrim }) => {
+export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
