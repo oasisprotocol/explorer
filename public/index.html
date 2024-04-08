@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <base href="/" />
-    <link rel="icon" href="$REACT_APP_META_FAVICON" />
+    <link rel="icon" href="$REACT_APP_META_FAVICON" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <link rel="apple-touch-icon" href="$REACT_APP_META_APPLE_ICON" />
@@ -20,7 +20,7 @@
     <div id="root"></div>
     <script>
       // Allow e2e tests to pre-define it in runtime
-      window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS ??= "$REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS"
+      window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS ??= '$REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS'
     </script>
     <script type="module" src="../src/index.tsx"></script>
   </body>
