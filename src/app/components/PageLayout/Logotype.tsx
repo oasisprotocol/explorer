@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
 import { useTheme } from '@mui/material/styles'
@@ -13,8 +14,15 @@ interface LogotypeProps {
 }
 
 export const HomePageLink: FC<LogotypeProps> = ({ color, showText }) => {
+  const { t } = useTranslation()
+
   return (
-    <Link to="/" component={RouterLink} sx={{ display: 'inline-flex', textDecoration: 'none' }}>
+    <Link
+      aria-label={t('home.link')}
+      to="/"
+      component={RouterLink}
+      sx={{ display: 'inline-flex', textDecoration: 'none' }}
+    >
       <Logotype color={color} showText={showText} />
     </Link>
   )
