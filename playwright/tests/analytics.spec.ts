@@ -35,7 +35,7 @@ test.describe('analytics', () => {
     await expect(page.getByRole('button', { name: 'Privacy Settings' })).toBeVisible()
     expect(getMatomoRequests()).toHaveLength(1) // Loaded library
 
-    await page.getByRole('link', { name: 'Oasis Explorer' }).click()
+    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
     await page.getByRole('button', { name: 'Decline' }).click()
     expect(getMatomoRequests()).toHaveLength(1)
 
@@ -56,7 +56,7 @@ test.describe('analytics', () => {
     await expect(page.getByText('tracking')).not.toBeVisible()
     await expect(page.getByRole('button', { name: 'Privacy Settings' })).toBeVisible()
     expect(getMatomoRequests()).toHaveLength(1) // Tried to load library
-    await page.getByRole('link', { name: 'Oasis Explorer' }).click()
+    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
     await page.getByRole('button', { name: 'Privacy Settings' }).click()
     await expect(page.getByText('tracking failed')).toBeVisible()
     expect(getMatomoRequests()).toHaveLength(1) // No new requests
@@ -68,7 +68,7 @@ test.describe('analytics', () => {
     await expect(page.getByText('tracking')).not.toBeVisible()
     await expect(page.getByRole('button', { name: 'Privacy Settings' })).not.toBeVisible()
     expect(getMatomoRequests()).toHaveLength(0)
-    await page.getByRole('link', { name: 'Oasis Explorer' }).click()
+    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
     expect(getMatomoRequests()).toHaveLength(0)
   })
 
@@ -88,7 +88,7 @@ test.describe('analytics', () => {
     await expect(page.getByText('tracking')).not.toBeVisible()
     await expect(page.getByRole('button', { name: 'Privacy Settings' })).not.toBeVisible()
     expect(getMatomoRequests()).toHaveLength(2) // No new requests
-    await page.getByRole('link', { name: 'Oasis Explorer' }).click()
+    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
     expect(getMatomoRequests()).toHaveLength(2) // No new requests
   })
 })
