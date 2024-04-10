@@ -113,9 +113,9 @@ declare module './generated/api' {
 export const isAccountEmpty = (account: RuntimeAccount) => {
   const { balances, evm_balances, stats } = account
   const { total_received, total_sent, num_txns } = stats
-  const result =
-    !balances?.length && !evm_balances?.length && total_received === '0' && total_sent === '0' && !num_txns
-  return result
+  const hasNoBalances = [...balances, ...evm_balances].every(b => b.balance === '0' || b.balance === '0.0')
+  const hasNoTransactions = total_received === '0' && total_sent === '0' && num_txns === 0
+  return hasNoBalances && hasNoTransactions
 }
 
 export const isAccountNonEmpty = (account: RuntimeAccount) => !isAccountEmpty(account)
