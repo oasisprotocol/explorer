@@ -396,6 +396,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   useEffect(() => {
     // Trigger only if the account has been fetched from Nexus and is not a contract and has eth address
     if (!runtimeAccount || !!runtimeAccount.evm_contract || !runtimeAccount.address_eth) {
+      setRpcAccountBalance(null)
       return
     }
 
