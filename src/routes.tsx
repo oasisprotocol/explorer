@@ -85,7 +85,11 @@ const RedirectToDashboard: FC = () => {
 
 export const routes: RouteObject[] = [
   {
-    errorElement: <RoutingErrorPage />,
+    errorElement: (
+      <AnalyticsConsentProvider>
+        <RoutingErrorPage />
+      </AnalyticsConsentProvider>
+    ),
     element: (
       <AnalyticsConsentProvider>
         <ScrollRestoration />
