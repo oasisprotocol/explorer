@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
-import { legalDocuments } from '../../utils/externalLinks'
 import { ThemeByNetwork } from '../ThemeByNetwork'
 import { Network } from '../../../types/network'
 import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
@@ -91,10 +90,20 @@ const StyledPrivacyButton = styled(Button)(() => ({
   textAlign: 'left',
   height: 'auto',
   fontSize: 'inherit',
+  fontWeight: 700,
 }))
 
+export const PrivacyPolicyFooterLink: FC = () => {
+  const { t } = useTranslation()
+  return (
+    <Link href={process.env.REACT_APP_PRIVACY_POLICY} target="_blank" color="inherit">
+      {t('analyticsConsent.privacyPolicy')}
+    </Link>
+  )
+}
+
 export const ReopenAnalyticsConsentButton = () => {
-  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <></>
+  if (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS !== 'true') return <PrivacyPolicyFooterLink />
 
   const { t } = useTranslation()
   const context = useContext(AnalyticsContext)
@@ -127,7 +136,7 @@ export const AnalyticsConsentView = (props: {
           components={{
             PrivacyPolicyLink: (
               <Link
-                href={legalDocuments.privacyPolicy}
+                href={process.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
                 sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />

@@ -2,7 +2,6 @@ import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
-import { legalDocuments } from '../../utils/externalLinks'
 import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -22,7 +21,7 @@ export const AnalyticsIsBlocked = (props: { isOpen: boolean; onReload: () => voi
           components={{
             PrivacyPolicyLink: (
               <Link
-                href={legalDocuments.privacyPolicy}
+                href={process.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
                 sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />

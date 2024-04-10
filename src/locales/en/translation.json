@@ -31,6 +31,7 @@
     "tooltip": "{{value, number}} accounts"
   },
   "analyticsConsent": {
+    "privacyPolicy": "Privacy Policy",
     "settings": "Privacy settings",
     "text": "At Oasis Foundation we believe in your privacy, so you can choose to browse our site without any tracking or by clicking “{{acceptButtonLabel}}”, you help us to improve our site and help us grow our ecosystem. View our <PrivacyPolicyLink>Privacy Policy</PrivacyPolicyLink> for more information.",
     "blockedText": "Our analytics tracking failed to load. Therefore, you will continue using the site with user tracking disabled. If you are willing to accept tracking please pause your adblocker and reload the page to accept tracking. View our <PrivacyPolicyLink>Privacy Policy</PrivacyPolicyLink> for more information.",
