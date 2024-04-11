@@ -35,18 +35,18 @@ The format is inspired by [Keep a Changelog].
 
 ### Internal Changes
 
-- Update dependencies
-  ([#1335](https://github.com/oasisprotocol/explorer/issues/1335),
-   [#1339](https://github.com/oasisprotocol/explorer/issues/1339),
-   [#1341](https://github.com/oasisprotocol/explorer/issues/1341),
-   [#1342](https://github.com/oasisprotocol/explorer/issues/1342),
-   [#1350](https://github.com/oasisprotocol/explorer/issues/1350))
-
 - Fix Storybook build
   ([#1362](https://github.com/oasisprotocol/explorer/issues/1362))
 
 - Simplify converting EVM addresses to oasis1
   ([#1365](https://github.com/oasisprotocol/explorer/issues/1365))
+
+- Update dependencies
+  ([#1335](https://github.com/oasisprotocol/explorer/issues/1335),
+  [#1339](https://github.com/oasisprotocol/explorer/issues/1339),
+  [#1341](https://github.com/oasisprotocol/explorer/issues/1341),
+  [#1342](https://github.com/oasisprotocol/explorer/issues/1342),
+  [#1350](https://github.com/oasisprotocol/explorer/issues/1350))
 
 ## 1.9.1 (2024-03-27)
 
