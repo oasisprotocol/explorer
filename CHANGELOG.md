@@ -12,6 +12,42 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.10.0 (2024-04-11)
+
+### Features
+
+- New Oasis branding
+  ([#1370](https://github.com/oasisprotocol/explorer/issues/1370))
+
+### Bug Fixes and Improvements
+
+- Display EVM addresses in events
+  ([#1364](https://github.com/oasisprotocol/explorer/issues/1364))
+
+- Fix root error element crashing because it's outside AnalyticsContext
+  ([#1366](https://github.com/oasisprotocol/explorer/issues/1366))
+
+- Fix isAccountEmpty to handle accounts with balances = 0
+  ([#1372](https://github.com/oasisprotocol/explorer/issues/1372))
+
+- Fix account search sometimes returning wrong data on repeated search
+  ([#1374](https://github.com/oasisprotocol/explorer/issues/1374))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1335](https://github.com/oasisprotocol/explorer/issues/1335),
+   [#1339](https://github.com/oasisprotocol/explorer/issues/1339),
+   [#1341](https://github.com/oasisprotocol/explorer/issues/1341),
+   [#1342](https://github.com/oasisprotocol/explorer/issues/1342),
+   [#1350](https://github.com/oasisprotocol/explorer/issues/1350))
+
+- Fix Storybook build
+  ([#1362](https://github.com/oasisprotocol/explorer/issues/1362))
+
+- Simplify converting EVM addresses to oasis1
+  ([#1365](https://github.com/oasisprotocol/explorer/issues/1365))
+
 ## 1.9.1 (2024-03-27)
 
 ### Bug Fixes and Improvements
