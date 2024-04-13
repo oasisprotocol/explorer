@@ -25,6 +25,7 @@ import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
 import { useEffect, useState } from 'react'
+import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 
 export * from './generated/api'
@@ -326,7 +327,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  const [rpcAccountBalance, setRpcAccountBalance] = useState<RuntimeSdkBalance | null>(null)
+  const [rpcAccountBalances, setRpcAccountBalances] = useState<RuntimeSdkBalance[] | null>(null)
 
   const oasisAddress = getOasisAddressOrNull(address)
 
@@ -392,26 +393,20 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 
   // TODO: Remove after account balances on Nexus are in sync with the node
   useEffect(() => {
-    // Trigger only if the account has been fetched from Nexus and has eth address
-    if (!runtimeAccount || !runtimeAccount.address_eth) {
-      setRpcAccountBalance(null)
+    if (!oasisAddress) {
+      setRpcAccountBalances(null)
       return
     }
 
     let shouldUpdate = true
 
     const fetchAccountBalance = async () => {
-      setRpcAccountBalance(null)
+      setRpcAccountBalances(null)
 
-      const balance = await RpcUtils.getAccountBalance(runtimeAccount.address_eth!, {
-        context: {
-          network: runtimeAccount.network,
-          layer: runtimeAccount.layer,
-        },
-      })
+      const grpcBalances = await getRPCAccountBalances(oasisAddress, { network: network, layer: runtime })
 
       if (shouldUpdate) {
-        setRpcAccountBalance(balance)
+        setRpcAccountBalances(grpcBalances)
       }
     }
 
@@ -420,9 +415,15 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     return () => {
       shouldUpdate = false
     }
-  }, [runtimeAccount])
+  }, [oasisAddress, network, runtime])
 
-  const data = runtimeAccount
+  const data =
+    rpcAccountBalances && runtimeAccount
+      ? {
+          ...runtimeAccount,
+          balances: rpcAccountBalances,
+        }
+      : runtimeAccount
 
   return {
     ...query,
