@@ -3,7 +3,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   EvmToken,
   EvmTokenType,
@@ -13,7 +13,6 @@ import {
   NotFoundErrorResponse,
   RuntimeAccount,
   RuntimeEventType,
-  RuntimeSdkBalance,
 } from './generated/api'
 import {
   fromBaseUnits,
@@ -24,7 +23,6 @@ import {
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
-import { useEffect, useState } from 'react'
 import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 
@@ -327,8 +325,6 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  const [rpcAccountBalances, setRpcAccountBalances] = useState<RuntimeSdkBalance[] | null>(null)
-
   const oasisAddress = getOasisAddressOrNull(address)
 
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
@@ -392,30 +388,14 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   const runtimeAccount = query.data?.data
 
   // TODO: Remove after account balances on Nexus are in sync with the node
-  useEffect(() => {
-    if (!oasisAddress) {
-      setRpcAccountBalances(null)
-      return
-    }
-
-    let shouldUpdate = true
-
-    const fetchAccountBalance = async () => {
-      setRpcAccountBalances(null)
-
-      const grpcBalances = await getRPCAccountBalances(oasisAddress, { network: network, layer: runtime })
-
-      if (shouldUpdate) {
-        setRpcAccountBalances(grpcBalances)
-      }
-    }
-
-    fetchAccountBalance()
-
-    return () => {
-      shouldUpdate = false
-    }
-  }, [oasisAddress, network, runtime])
+  const rpcAccountBalances = useQuery({
+    enabled: !!oasisAddress,
+    queryKey: [oasisAddress, network, runtime],
+    queryFn: async () => {
+      if (!oasisAddress) throw new Error('Needed to fix types - see `enabled`')
+      return await getRPCAccountBalances(oasisAddress, { network: network, layer: runtime })
+    },
+  }).data
 
   const data =
     rpcAccountBalances && runtimeAccount
