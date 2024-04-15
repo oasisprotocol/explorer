@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactElement, cloneElement } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -18,12 +18,14 @@ import { ConsensusTxMethod } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 
 type MethodIconProps = {
-  icon: ReactNode
-  label: string
-  color?: 'blue' | 'green' | 'gray'
+  border?: boolean
+  color?: 'blue' | 'green' | 'gray' | 'orange'
+  icon: ReactElement
+  label?: string
+  size?: number
 }
 
-const colorMap = {
+export const colorMap = {
   blue: {
     primary: COLORS.brandMedium,
     secondary: COLORS.brandLightBlue,
@@ -36,33 +38,44 @@ const colorMap = {
     primary: COLORS.grayMedium,
     secondary: COLORS.grayMediumLight,
   },
+  orange: {
+    primary: COLORS.warningColor,
+    secondary: COLORS.warningLight,
+  },
 }
 
-const MethodIcon: FC<MethodIconProps> = ({ icon, label, color = 'blue' }) => {
+const iconRatio = 0.75
+
+export const MethodIcon: FC<MethodIconProps> = ({
+  border = true,
+  color = 'blue',
+  icon,
+  label,
+  size = 40,
+}) => {
   const theme = colorMap[color]
   if (!theme) {
     throw new Error(`Invalid color: ${color}`)
   }
-
   return (
-    <Box gap={3} sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box gap={3} sx={{ display: 'inline-flex', alignItems: 'center' }}>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          width: '40px',
-          minWidth: '40px',
-          height: '40px',
-          borderRadius: '40px',
+          width: size,
+          minWidth: size,
+          height: size,
+          borderRadius: size,
           color: theme.primary,
-          border: `solid 2px ${theme.primary}`,
+          border: border ? `solid 2px ${theme.primary}` : 'none',
           backgroundColor: theme.secondary,
         }}
       >
-        {icon}
+        {cloneElement(icon, { sx: { fontSize: Math.ceil(size * iconRatio) } })}
       </Box>
-      <Typography sx={{ textTransform: 'capitalize' }}>{label}</Typography>
+      {label && <Typography sx={{ textTransform: 'capitalize' }}>{label}</Typography>}
     </Box>
   )
 }

@@ -80,7 +80,6 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
       ...(verbose
         ? [
             {
-              align: TableCellAlign.Center,
               content: <ConsensusTransactionMethod method={transaction.method} />,
               key: 'method',
             },

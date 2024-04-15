@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { StatusIcon } from '../StatusIcon'
-import { RuntimeTransactionIcon } from '../../components/RuntimeTransactionLabel'
+import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
@@ -125,7 +125,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
           ? [
               {
                 align: TableCellAlign.Center,
-                content: <RuntimeTransactionIcon method={transaction.method} />,
+                content: <RuntimeTransactionMethod method={transaction.method} />,
                 key: 'type',
               },
               {

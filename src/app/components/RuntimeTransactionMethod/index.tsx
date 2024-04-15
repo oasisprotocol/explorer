@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { UnknownIcon } from './../CustomIcons/Unknown'
-import { ContractCreationIcon } from './../CustomIcons/ContractCreation'
-import { ContractCallIcon } from './../CustomIcons/ContractCall'
-import { DepositIcon } from './../CustomIcons/Deposit'
-import { WithdrawIcon } from './../CustomIcons/Withdraw'
-import { TransferIcon } from './../CustomIcons/Transfer'
-import { DelegateIcon } from '../CustomIcons/Delegate'
-import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'
+import FileCopyIcon from '@mui/icons-material/FileCopy'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import LanIcon from '@mui/icons-material/Lan'
+import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
+import { MethodIcon } from '../ConsensusTransactionMethod'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -36,28 +37,24 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
   }
 }
 
-const iconStyles = { fontSize: '40px' }
 const getRuntimeTransactionIcon = (method: string | undefined) => {
   switch (method) {
-    case undefined:
-      // Method may be undefined if the transaction was malformed.
-      return <UnknownIcon sx={iconStyles} />
     case 'evm.Call':
-      return <ContractCallIcon sx={iconStyles} />
+      return <MethodIcon border={false} icon={<TextSnippetIcon />} />
     case 'evm.Create':
-      return <ContractCreationIcon sx={iconStyles} />
+      return <MethodIcon border={false} icon={<FileCopyIcon />} />
     case 'consensus.Deposit':
-      return <DepositIcon sx={iconStyles} />
+      return <MethodIcon border={false} color="green" icon={<ArrowDownwardIcon />} />
     case 'consensus.Withdraw':
-      return <WithdrawIcon sx={iconStyles} />
+      return <MethodIcon color="orange" border={false} icon={<ArrowUpwardIcon />} />
     case 'consensus.Delegate':
-      return <DelegateIcon sx={iconStyles} />
+      return <MethodIcon border={false} icon={<LanIcon />} />
     case 'consensus.Undelegate':
-      return <UndelegateStartIcon sx={iconStyles} />
+      return <MethodIcon border={false} icon={<LanOutlinedIcon />} />
     case 'accounts.Transfer':
-      return <TransferIcon sx={iconStyles} />
+      return <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} />
     default:
-      return <UnknownIcon sx={iconStyles} />
+      return <MethodIcon border={false} color="gray" icon={<QuestionMarkIcon />} />
   }
 }
 
@@ -86,7 +83,7 @@ export const RuntimeTransactionLabel: FC<RuntimeTransactionLabelProps> = ({ meth
   return <>{getRuntimeTransactionLabel(t, method)}</>
 }
 
-export const RuntimeTransactionIcon: FC<RuntimeTransactionLabelProps> = ({ method }) => {
+export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method }) => {
   const { t } = useTranslation()
 
   return (
