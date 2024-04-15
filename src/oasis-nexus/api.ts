@@ -25,9 +25,7 @@ import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
 import { useEffect, useState } from 'react'
-import { RpcUtils } from '../app/utils/rpc-utils'
 import { toChecksumAddress } from '@ethereumjs/util'
-import { ArrayUtils } from '../app/utils/array-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -424,17 +422,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     }
   }, [runtimeAccount])
 
-  const data =
-    rpcAccountBalance !== null && runtimeAccount
-      ? {
-          ...runtimeAccount,
-          balances: ArrayUtils.replaceOrAppend(
-            runtimeAccount.balances,
-            rpcAccountBalance,
-            (a, b) => a.token_symbol === b.token_symbol,
-          ),
-        }
-      : runtimeAccount
+  const data = runtimeAccount
 
   return {
     ...query,
