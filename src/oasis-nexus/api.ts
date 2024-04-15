@@ -394,8 +394,8 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
 
   // TODO: Remove after account balances on Nexus are in sync with the node
   useEffect(() => {
-    // Trigger only if the account has been fetched from Nexus and is not a contract and has eth address
-    if (!runtimeAccount || !!runtimeAccount.evm_contract || !runtimeAccount.address_eth) {
+    // Trigger only if the account has been fetched from Nexus and has eth address
+    if (!runtimeAccount || !runtimeAccount.address_eth) {
       setRpcAccountBalance(null)
       return
     }
