@@ -3,7 +3,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   EvmToken,
   EvmTokenType,
@@ -13,7 +13,6 @@ import {
   NotFoundErrorResponse,
   RuntimeAccount,
   RuntimeEventType,
-  RuntimeSdkBalance,
 } from './generated/api'
 import {
   fromBaseUnits,
@@ -24,10 +23,8 @@ import {
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
-import { useEffect, useState } from 'react'
-import { RpcUtils } from '../app/utils/rpc-utils'
+import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
-import { ArrayUtils } from '../app/utils/array-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -328,8 +325,6 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  const [rpcAccountBalance, setRpcAccountBalance] = useState<RuntimeSdkBalance | null>(null)
-
   const oasisAddress = getOasisAddressOrNull(address)
 
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
@@ -393,46 +388,20 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   const runtimeAccount = query.data?.data
 
   // TODO: Remove after account balances on Nexus are in sync with the node
-  useEffect(() => {
-    // Trigger only if the account has been fetched from Nexus and is not a contract and has eth address
-    if (!runtimeAccount || !!runtimeAccount.evm_contract || !runtimeAccount.address_eth) {
-      setRpcAccountBalance(null)
-      return
-    }
-
-    let shouldUpdate = true
-
-    const fetchAccountBalance = async () => {
-      setRpcAccountBalance(null)
-
-      const balance = await RpcUtils.getAccountBalance(runtimeAccount.address_eth!, {
-        context: {
-          network: runtimeAccount.network,
-          layer: runtimeAccount.layer,
-        },
-      })
-
-      if (shouldUpdate) {
-        setRpcAccountBalance(balance)
-      }
-    }
-
-    fetchAccountBalance()
-
-    return () => {
-      shouldUpdate = false
-    }
-  }, [runtimeAccount])
+  const rpcAccountBalances = useQuery({
+    enabled: !!oasisAddress,
+    queryKey: [oasisAddress, network, runtime],
+    queryFn: async () => {
+      if (!oasisAddress) throw new Error('Needed to fix types - see `enabled`')
+      return await getRPCAccountBalances(oasisAddress, { network: network, layer: runtime })
+    },
+  }).data
 
   const data =
-    rpcAccountBalance !== null && runtimeAccount
+    rpcAccountBalances && runtimeAccount
       ? {
           ...runtimeAccount,
-          balances: ArrayUtils.replaceOrAppend(
-            runtimeAccount.balances,
-            rpcAccountBalance,
-            (a, b) => a.token_symbol === b.token_symbol,
-          ),
+          balances: rpcAccountBalances,
         }
       : runtimeAccount
 
