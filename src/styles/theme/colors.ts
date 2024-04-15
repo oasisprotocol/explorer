@@ -49,6 +49,7 @@ export const COLORS = {
   black: '#000000',
   warningColor: '#ed6c02',
   warningBackground: '#faf5e8',
+  warningLight: '#fff0e4',
   iconBackground: '#d4d3f2',
   graphLabel: '#191932',
   graphLine: '#01F1E3',
