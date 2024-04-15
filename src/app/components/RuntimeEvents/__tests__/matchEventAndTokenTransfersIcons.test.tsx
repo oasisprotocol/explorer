@@ -14,5 +14,6 @@ test('Transfer, burn, and mint icons should match in EventTypeIcon and evm Token
 
   const burn = render(<EventTypeIcon eventType="accounts.burn" eventName="Tokens burnt" />).container
   const evmBurn = render(<TokenTransferIcon name="Burning" size={25} />).container
-  expect(burn.querySelector('svg')?.outerHTML).toEqual(evmBurn.querySelector('svg')?.outerHTML)
+  // compare using innerHTML as different dynamic css class is applied to svg element
+  expect(burn.querySelector('svg')?.innerHTML).toEqual(evmBurn.querySelector('svg')?.innerHTML)
 })

@@ -18,35 +18,50 @@ import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 import { TokenTransferIcon, TokenTransferLabel } from '../Tokens/TokenTransferIcon'
 import Box from '@mui/material/Box'
-import { TransferIcon } from '../CustomIcons/Transfer'
-import { DepositIcon } from '../CustomIcons/Deposit'
-import { WithdrawIcon } from '../CustomIcons/Withdraw'
-import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
-import { UndelegateStartIcon } from '../CustomIcons/UndelegateStart'
-import { UndelegateFinishIcon } from '../CustomIcons/UndelegateFinish'
-import { DelegateIcon } from '../CustomIcons/Delegate'
 import { MaybeEventErrorLine } from './EventError'
 import { AccountLinkWithAddressSwitch } from '../Account/AccountLinkWithAddressSwitch'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import LanIcon from '@mui/icons-material/Lan'
+import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
+import { MethodIcon } from '../ConsensusTransactionMethod'
+
+const eventIconSize = 25
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
   eventName: string
 }> = ({ eventType, eventName }) => {
   const eventTypeIcons: Record<RuntimeEventType, React.ReactNode> = {
-    [RuntimeEventType.accountstransfer]: <TransferIcon fontSize="inherit" />,
+    [RuntimeEventType.accountstransfer]: (
+      <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} size={eventIconSize} />
+    ),
     [RuntimeEventType.evmlog]: <></>,
     [RuntimeEventType.coregas_used]: <></>,
-    [RuntimeEventType.consensus_accountswithdraw]: <WithdrawIcon fontSize="inherit" />,
-    [RuntimeEventType.consensus_accountsdeposit]: <DepositIcon fontSize="inherit" />,
-    [RuntimeEventType.consensus_accountsdelegate]: <DelegateIcon fontSize="inherit" />,
-    [RuntimeEventType.consensus_accountsundelegate_start]: <UndelegateStartIcon fontSize="inherit" />,
-    [RuntimeEventType.consensus_accountsundelegate_done]: <UndelegateFinishIcon fontSize="inherit" />,
-    [RuntimeEventType.accountsmint]: <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />,
+    [RuntimeEventType.consensus_accountswithdraw]: (
+      <MethodIcon color="orange" border={false} icon={<ArrowUpwardIcon />} size={eventIconSize} />
+    ),
+    [RuntimeEventType.consensus_accountsdeposit]: (
+      <MethodIcon border={false} color="green" icon={<ArrowDownwardIcon />} size={eventIconSize} />
+    ),
+    [RuntimeEventType.consensus_accountsdelegate]: (
+      <MethodIcon border={false} icon={<LanIcon />} size={eventIconSize} />
+    ),
+    [RuntimeEventType.consensus_accountsundelegate_start]: (
+      <MethodIcon border={false} icon={<LanOutlinedIcon />} size={eventIconSize} />
+    ),
+    [RuntimeEventType.consensus_accountsundelegate_done]: (
+      <MethodIcon border={false} icon={<LanIcon />} size={eventIconSize} />
+    ),
+    [RuntimeEventType.accountsmint]: (
+      <MethodIcon color="green" border={false} icon={<StreamIcon />} size={eventIconSize} />
+    ),
     [RuntimeEventType.accountsburn]: (
-      <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
+      <MethodIcon color="orange" border={false} icon={<LocalFireDepartmentIcon />} size={eventIconSize} />
     ),
   }
 
@@ -54,9 +69,7 @@ export const EventTypeIcon: FC<{
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <b>{eventName}</b>
       &nbsp;
-      <Box component="span" sx={{ fontSize: 25, lineHeight: 0 }}>
-        {eventTypeIcons[eventType]}
-      </Box>
+      {eventTypeIcons[eventType]}
     </Box>
   )
 }
