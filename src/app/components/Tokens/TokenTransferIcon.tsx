@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { UnknownIcon } from './../CustomIcons/Unknown'
-import { TransferIcon } from './../CustomIcons/Transfer'
-import { COLORS } from '../../../styles/theme/colors'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import ApprovalIcon from '@mui/icons-material/Approval'
-import Box from '@mui/material/Box'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import { MethodIcon } from '../ConsensusTransactionMethod'
 
 const getTokenTransferLabel = (t: TFunction, name: string | undefined): string => {
   switch (name) {
@@ -28,21 +27,18 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
   }
 }
 
-const getTokenTransferIcon = (name: string | undefined) => {
+const getTokenTransferIcon = (name: string | undefined, size?: number) => {
   switch (name) {
-    case undefined:
-      // Method may be undefined if the transaction was malformed.
-      return <UnknownIcon fontSize="inherit" />
     case 'Transfer':
-      return <TransferIcon fontSize="inherit" />
+      return <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} size={size} />
     case 'Approval':
-      return <ApprovalIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
+      return <MethodIcon color="green" border={false} icon={<ApprovalIcon />} size={size} />
     case 'Minting':
-      return <StreamIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
+      return <MethodIcon color="green" border={false} icon={<StreamIcon />} size={size} />
     case 'Burning':
-      return <LocalFireDepartmentIcon fontSize="inherit" htmlColor={COLORS.eucalyptus} />
+      return <MethodIcon color="orange" border={false} icon={<LocalFireDepartmentIcon />} />
     default:
-      return <UnknownIcon fontSize="inherit" />
+      return <MethodIcon border={false} color="gray" icon={<QuestionMarkIcon />} size={size} />
   }
 }
 
@@ -60,7 +56,7 @@ export const TokenTransferLabel: FC<TokenTransferLabelProps> = ({ name }) => {
 }
 
 interface TokenTransferIconProps extends TokenTransferLabelProps {
-  size: number
+  size?: number
 }
 
 export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, size }) => {
@@ -74,9 +70,7 @@ export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, size }) =>
       enterDelay={tooltipDelay}
       enterNextDelay={tooltipDelay}
     >
-      <Box component="span" sx={{ fontSize: size, lineHeight: 0 }}>
-        {getTokenTransferIcon(name)}
-      </Box>
+      <span>{getTokenTransferIcon(name, size)}</span>
     </Tooltip>
   )
 }

@@ -157,7 +157,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         {
           key: 'type',
           align: TableCellAlign.Center,
-          content: <TokenTransferIcon name={parsedEvmLogName} size={40} />,
+          content: <TokenTransferIcon name={parsedEvmLogName} />,
         },
 
         {
