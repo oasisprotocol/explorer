@@ -160,14 +160,26 @@ export const RuntimeEventDetails: FC<{
       )
     case RuntimeEventType.evmlog: {
       const { parsedEvmLogName } = parseEvmEvent(event)
+      const emittingEthAddress = `0x${Buffer.from(event.body.address, 'base64').toString('hex')}`
+      const emittingOasisAddress = getOasisAddress(emittingEthAddress)
       if (!event.evm_log_name && !event.evm_log_params) {
         return (
           <div>
             <b>{eventName}</b>
             <br />
+            {t('runtimeEvent.fields.data')}:
             <LongDataDisplay
               data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
               fontWeight={400}
+            />
+            <br />
+            {t('runtimeEvent.fields.emittingContract')}:
+            <br />
+            <AccountLinkWithAddressSwitch
+              scope={scope}
+              addressSwitchOption={addressSwitchOption}
+              ethAddress={emittingEthAddress}
+              oasisAddress={emittingOasisAddress}
             />
           </div>
         )
