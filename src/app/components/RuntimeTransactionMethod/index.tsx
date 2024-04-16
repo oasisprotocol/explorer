@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
 import TextSnippetIcon from '@mui/icons-material/TextSnippet'
 import FileCopyIcon from '@mui/icons-material/FileCopy'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
@@ -86,9 +84,5 @@ export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ met
   const { t } = useTranslation()
   const label = getRuntimeTransactionLabel(t, method)
 
-  return (
-    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <span>{getRuntimeTransactionIcon(method, label)}</span>
-    </Tooltip>
-  )
+  return <>{getRuntimeTransactionIcon(method, label)}</>
 }

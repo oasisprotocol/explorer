@@ -14,6 +14,8 @@ import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices
 import PersonIcon from '@mui/icons-material/Person'
 import PriceChangeIcon from '@mui/icons-material/PriceChange'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import Tooltip from '@mui/material/Tooltip'
+import { tooltipDelay } from '../../../styles/theme'
 import { ConsensusTxMethod } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -47,7 +49,25 @@ export const colorMap = {
 
 const iconRatio = 0.75
 
-export const MethodIcon: FC<MethodIconProps> = ({
+export const MethodIcon: FC<MethodIconProps> = props => {
+  const { label, reverseLabel } = props
+  const showTooltip = label && !reverseLabel
+  // TODO: get requirement when we want to trim label
+  return (
+    <>
+      {showTooltip && (
+        <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
+          <span>
+            <MethodIconContent {...props} />
+          </span>
+        </Tooltip>
+      )}
+      {!showTooltip && <MethodIconContent {...props} />}
+    </>
+  )
+}
+
+const MethodIconContent: FC<MethodIconProps> = ({
   border = true,
   color = 'blue',
   icon,

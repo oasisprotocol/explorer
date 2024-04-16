@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import ApprovalIcon from '@mui/icons-material/Approval'
@@ -64,9 +62,5 @@ export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ method, reverseL
   const { t } = useTranslation()
   const label = getTokenTransferLabel(t, method)
 
-  return (
-    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <span>{getTokenTransferIcon(method, label, reverseLabel, size)}</span>
-    </Tooltip>
-  )
+  return <>{getTokenTransferIcon(method, label, reverseLabel, size)}</>
 }
