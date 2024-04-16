@@ -349,8 +349,7 @@
       "approval": "Approval",
       "minting": "Minting",
       "burning": "Burning",
-      "unavailable": "Unknown token transfer event",
-      "unknown": "Unknown: {{name}}"
+      "unavailable": "Unknown token transfer event"
     },
     "type": "Token Type"
   },
@@ -393,7 +392,6 @@
       "beaconPVSSReveal": "PVSSReveal",
       "beaconVRFProve": "VRFProve",
       "unavailable": "Malformed transaction, method unavailable",
-      "unknown": "Unknown: {{method}}",
       "accounts": {
         "transfer": "Transfer"
       },

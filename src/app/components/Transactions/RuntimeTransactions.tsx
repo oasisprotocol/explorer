@@ -77,7 +77,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
     { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
     ...(verbose
       ? [
-          { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
+          { key: 'type', content: t('common.type') },
           { key: 'from', content: t('common.from'), width: '150px' },
           { key: 'to', content: t('common.to'), width: '150px' },
           { key: 'txnFee', content: t('common.transactionFee'), align: TableCellAlign.Right, width: '250px' },
@@ -124,7 +124,6 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
         ...(verbose
           ? [
               {
-                align: TableCellAlign.Center,
                 content: <RuntimeTransactionMethod method={transaction.method} />,
                 key: 'type',
               },

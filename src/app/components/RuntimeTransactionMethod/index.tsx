@@ -33,28 +33,33 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
     case 'consensus.Undelegate':
       return t('transactions.method.consensus.undelegate')
     default:
-      return t('transactions.method.unknown', { method })
+      return method || t('common.unknown')
   }
 }
 
-const getRuntimeTransactionIcon = (method: string | undefined) => {
+const getRuntimeTransactionIcon = (method: string | undefined, label: string) => {
+  const props = {
+    border: false,
+    label,
+  }
+
   switch (method) {
     case 'evm.Call':
-      return <MethodIcon border={false} icon={<TextSnippetIcon />} />
+      return <MethodIcon icon={<TextSnippetIcon />} {...props} />
     case 'evm.Create':
-      return <MethodIcon border={false} icon={<FileCopyIcon />} />
+      return <MethodIcon icon={<FileCopyIcon />} {...props} />
     case 'consensus.Deposit':
-      return <MethodIcon border={false} color="green" icon={<ArrowDownwardIcon />} />
+      return <MethodIcon color="green" icon={<ArrowDownwardIcon />} {...props} />
     case 'consensus.Withdraw':
-      return <MethodIcon color="orange" border={false} icon={<ArrowUpwardIcon />} />
+      return <MethodIcon color="orange" icon={<ArrowUpwardIcon />} {...props} />
     case 'consensus.Delegate':
-      return <MethodIcon border={false} icon={<LanIcon />} />
+      return <MethodIcon icon={<LanIcon />} {...props} />
     case 'consensus.Undelegate':
-      return <MethodIcon border={false} icon={<LanOutlinedIcon />} />
+      return <MethodIcon icon={<LanOutlinedIcon />} {...props} />
     case 'accounts.Transfer':
-      return <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} />
+      return <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />
     default:
-      return <MethodIcon border={false} color="gray" icon={<QuestionMarkIcon />} />
+      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
   }
 }
 
@@ -77,24 +82,13 @@ type RuntimeTransactionLabelProps = {
   method?: string
 }
 
-export const RuntimeTransactionLabel: FC<RuntimeTransactionLabelProps> = ({ method }) => {
-  const { t } = useTranslation()
-
-  return <>{getRuntimeTransactionLabel(t, method)}</>
-}
-
 export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method }) => {
   const { t } = useTranslation()
+  const label = getRuntimeTransactionLabel(t, method)
 
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={getRuntimeTransactionLabel(t, method)}
-      enterDelay={tooltipDelay}
-      enterNextDelay={tooltipDelay}
-    >
-      <span>{getRuntimeTransactionIcon(method)}</span>
+    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
+      <span>{getRuntimeTransactionIcon(method, label)}</span>
     </Tooltip>
   )
 }

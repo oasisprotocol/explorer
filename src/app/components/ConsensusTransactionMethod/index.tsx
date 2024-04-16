@@ -22,6 +22,7 @@ type MethodIconProps = {
   color?: 'blue' | 'green' | 'gray' | 'orange'
   icon: ReactElement
   label?: string
+  reverseLabel?: boolean
   size?: number
 }
 
@@ -51,6 +52,7 @@ export const MethodIcon: FC<MethodIconProps> = ({
   color = 'blue',
   icon,
   label,
+  reverseLabel,
   size = 40,
 }) => {
   const theme = colorMap[color]
@@ -75,7 +77,11 @@ export const MethodIcon: FC<MethodIconProps> = ({
       >
         {cloneElement(icon, { sx: { fontSize: Math.ceil(size * iconRatio) } })}
       </Box>
-      {label && <Typography sx={{ textTransform: 'capitalize' }}>{label}</Typography>}
+      {label && (
+        <Typography sx={{ fontWeight: 'inherit', textTransform: 'capitalize', order: reverseLabel ? -1 : 0 }}>
+          {label}
+        </Typography>
+      )}
     </Box>
   )
 }

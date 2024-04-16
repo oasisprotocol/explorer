@@ -99,7 +99,7 @@ const EventsTemplate: StoryFn = () => {
           gap={4}
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}
         >
-          <EventTypeIcon eventType={method} eventName="" />
+          <EventTypeIcon eventType={method} />
           <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({method})</Typography>
         </Box>
       ))}

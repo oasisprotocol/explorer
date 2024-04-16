@@ -23,54 +23,50 @@ const getTokenTransferLabel = (t: TFunction, name: string | undefined): string =
     case 'Burning':
       return t('tokens.transferEventType.burning')
     default:
-      return t('tokens.transferEventType.unknown', { name })
+      return name || t('common.unknown')
   }
 }
 
-const getTokenTransferIcon = (name: string | undefined, size?: number) => {
+const getTokenTransferIcon = (
+  name: string | undefined,
+  label: string,
+  reverseLabel?: boolean,
+  size?: number,
+) => {
+  const props = {
+    border: false,
+    label,
+    reverseLabel,
+    size,
+  }
+
   switch (name) {
     case 'Transfer':
-      return <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} size={size} />
+      return <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />
     case 'Approval':
-      return <MethodIcon color="green" border={false} icon={<ApprovalIcon />} size={size} />
+      return <MethodIcon color="green" icon={<ApprovalIcon />} {...props} />
     case 'Minting':
-      return <MethodIcon color="green" border={false} icon={<StreamIcon />} size={size} />
+      return <MethodIcon color="green" icon={<StreamIcon />} {...props} />
     case 'Burning':
-      return <MethodIcon color="orange" border={false} icon={<LocalFireDepartmentIcon />} />
+      return <MethodIcon color="orange" icon={<LocalFireDepartmentIcon />} {...props} />
     default:
-      return <MethodIcon border={false} color="gray" icon={<QuestionMarkIcon />} size={size} />
+      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
   }
 }
 
-interface TokenTransferLabelProps {
-  /**
-   * The event name
-   */
+interface TokenTransferIconProps {
   name: string | undefined
-}
-
-export const TokenTransferLabel: FC<TokenTransferLabelProps> = ({ name }) => {
-  const { t } = useTranslation()
-
-  return <>{getTokenTransferLabel(t, name)}</>
-}
-
-interface TokenTransferIconProps extends TokenTransferLabelProps {
+  reverseLabel?: boolean
   size?: number
 }
 
-export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, size }) => {
+export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, reverseLabel, size }) => {
   const { t } = useTranslation()
+  const label = getTokenTransferLabel(t, name)
 
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={getTokenTransferLabel(t, name)}
-      enterDelay={tooltipDelay}
-      enterNextDelay={tooltipDelay}
-    >
-      <span>{getTokenTransferIcon(name, size)}</span>
+    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
+      <span>{getTokenTransferIcon(name, label, reverseLabel, size)}</span>
     </Tooltip>
   )
 }
