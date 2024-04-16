@@ -217,7 +217,7 @@ export const RuntimeEventDetails: FC<{
         <div>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <b>
-              <TokenTransferIcon reverseLabel name={parsedEvmLogName} size={25} />
+              <TokenTransferIcon reverseLabel method={parsedEvmLogName} size={25} />
             </b>
           </Box>
           <br />

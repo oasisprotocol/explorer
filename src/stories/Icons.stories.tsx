@@ -71,14 +71,14 @@ const storyTokensMethods = ['Transfer', 'Approval', 'Minting', 'Burning']
 const TokensTemplate: StoryFn = () => {
   return (
     <Box>
-      {storyTokensMethods.map(name => (
+      {storyTokensMethods.map(method => (
         <Box
-          key={name}
+          key={method}
           gap={4}
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}
         >
-          <TokenTransferIcon name={name} />
-          <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({name})</Typography>
+          <TokenTransferIcon method={method} />
+          <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({method})</Typography>
         </Box>
       ))}
     </Box>

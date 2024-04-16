@@ -55,18 +55,18 @@ const getTokenTransferIcon = (
 }
 
 interface TokenTransferIconProps {
-  name: string | undefined
+  method: string | undefined
   reverseLabel?: boolean
   size?: number
 }
 
-export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ name, reverseLabel, size }) => {
+export const TokenTransferIcon: FC<TokenTransferIconProps> = ({ method, reverseLabel, size }) => {
   const { t } = useTranslation()
-  const label = getTokenTransferLabel(t, name)
+  const label = getTokenTransferLabel(t, method)
 
   return (
     <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <span>{getTokenTransferIcon(name, label, reverseLabel, size)}</span>
+      <span>{getTokenTransferIcon(method, label, reverseLabel, size)}</span>
     </Tooltip>
   )
 }
