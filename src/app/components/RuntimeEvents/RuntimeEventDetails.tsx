@@ -29,6 +29,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
+import Typography from '@mui/material/Typography'
 
 const eventIconSize = 25
 
@@ -160,14 +161,44 @@ export const RuntimeEventDetails: FC<{
       )
     case RuntimeEventType.evmlog: {
       const { parsedEvmLogName } = parseEvmEvent(event)
+      const emittingEthAddress = `0x${Buffer.from(event.body.address, 'base64').toString('hex')}`
+      const emittingOasisAddress = getOasisAddress(emittingEthAddress)
       if (!event.evm_log_name && !event.evm_log_params) {
         return (
           <div>
             <b>{eventName}</b>
             <br />
+            {t('runtimeEvent.fields.topics')}:
+            <Typography
+              variant="mono"
+              fontWeight={400}
+              sx={{
+                display: 'block',
+                whiteSpace: 'pre-wrap',
+                overflowWrap: 'break-word',
+              }}
+            >
+              {event.body.topics
+                /* @ts-expect-error -- Event body is missing types */
+                .map((base64Topic, index) => {
+                  return `${index}: 0x${Buffer.from(base64Topic, 'base64').toString('hex')}`
+                })
+                .join('\n')}
+            </Typography>
+            <br />
+            {t('runtimeEvent.fields.data')}:
             <LongDataDisplay
               data={`0x${Buffer.from(event.body.data, 'base64').toString('hex')}`}
               fontWeight={400}
+            />
+            <br />
+            {t('runtimeEvent.fields.emittingContract')}:
+            <br />
+            <AccountLinkWithAddressSwitch
+              scope={scope}
+              addressSwitchOption={addressSwitchOption}
+              ethAddress={emittingEthAddress}
+              oasisAddress={emittingOasisAddress}
             />
           </div>
         )
@@ -205,6 +236,15 @@ export const RuntimeEventDetails: FC<{
               </TableBody>
             </Table>
           )}
+          <br />
+          Emitting contract:
+          <br />
+          <AccountLinkWithAddressSwitch
+            scope={scope}
+            addressSwitchOption={addressSwitchOption}
+            ethAddress={emittingEthAddress}
+            oasisAddress={emittingOasisAddress}
+          />
         </div>
       )
     }

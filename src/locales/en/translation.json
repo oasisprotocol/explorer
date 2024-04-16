@@ -447,6 +447,9 @@
     "gasUsed": "Gas used",
     "fields": {
       "amount": "Amount",
+      "data": "Data",
+      "emittingContract": "Emitting contract",
+      "topics": "Topics",
       "owner": "Owner",
       "activeShares": "Active Shares",
       "debondingShares": "Debonding Shares"
