@@ -80,7 +80,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
       ...(verbose
         ? [
             {
-              content: <ConsensusTransactionMethod method={transaction.method} />,
+              content: <ConsensusTransactionMethod method={transaction.method} truncate />,
               key: 'method',
             },
             {

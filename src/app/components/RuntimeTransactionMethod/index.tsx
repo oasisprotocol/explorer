@@ -35,10 +35,11 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
   }
 }
 
-const getRuntimeTransactionIcon = (method: string | undefined, label: string) => {
+const getRuntimeTransactionIcon = (method: string | undefined, label: string, truncate?: boolean) => {
   const props = {
     border: false,
     label,
+    truncate,
   }
 
   switch (method) {
@@ -78,11 +79,12 @@ type RuntimeTransactionLabelProps = {
    *   - "evm.Call"
    */
   method?: string
+  truncate?: boolean
 }
 
-export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method }) => {
+export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method, truncate }) => {
   const { t } = useTranslation()
   const label = getRuntimeTransactionLabel(t, method)
 
-  return <>{getRuntimeTransactionIcon(method, label)}</>
+  return <>{getRuntimeTransactionIcon(method, label, truncate)}</>
 }

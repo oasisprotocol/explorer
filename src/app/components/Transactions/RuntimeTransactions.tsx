@@ -124,7 +124,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
         ...(verbose
           ? [
               {
-                content: <RuntimeTransactionMethod method={transaction.method} />,
+                content: <RuntimeTransactionMethod method={transaction.method} truncate />,
                 key: 'type',
               },
               {
