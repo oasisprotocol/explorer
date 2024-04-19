@@ -1,5 +1,6 @@
 import { EvmAbiParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
 import { FC } from 'react'
+import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -16,8 +17,9 @@ import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
-import { TokenTransferIcon, TokenTransferLabel } from '../Tokens/TokenTransferIcon'
+import { TokenTransferIcon } from '../Tokens/TokenTransferIcon'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -29,48 +31,69 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
-import Typography from '@mui/material/Typography'
 
-const eventIconSize = 25
+const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
+  switch (method) {
+    case RuntimeEventType.accountstransfer:
+      return t('runtimeEvent.accountstransfer')
+    case RuntimeEventType.evmlog:
+      return t('runtimeEvent.evmLog')
+    case RuntimeEventType.coregas_used:
+      return t('runtimeEvent.gasUsed')
+    case RuntimeEventType.consensus_accountswithdraw:
+      return t('runtimeEvent.consensusWithdrawal')
+    case RuntimeEventType.consensus_accountsdeposit:
+      return t('runtimeEvent.consensusDeposit')
+    case RuntimeEventType.consensus_accountsdelegate:
+      return t('runtimeEvent.consensusDelegate')
+    case RuntimeEventType.consensus_accountsundelegate_start:
+      return t('runtimeEvent.consensusUndelegateStart')
+    case RuntimeEventType.consensus_accountsundelegate_done:
+      return t('runtimeEvent.consensusUndelegateDone')
+    case RuntimeEventType.accountsmint:
+      return t('runtimeEvent.accountsmint')
+    case RuntimeEventType.accountsburn:
+      return t('runtimeEvent.accountsburn')
+    default:
+      return method || t('common.unknown')
+  }
+}
 
 export const EventTypeIcon: FC<{
   eventType: RuntimeEventType
-  eventName: string
-}> = ({ eventType, eventName }) => {
+}> = ({ eventType }) => {
+  const { t } = useTranslation()
+  const label = getRuntimeEventMethodLabel(t, eventType)
+  const props = {
+    border: false,
+    label,
+    reverseLabel: true,
+    size: 25,
+  }
   const eventTypeIcons: Record<RuntimeEventType, React.ReactNode> = {
-    [RuntimeEventType.accountstransfer]: (
-      <MethodIcon border={false} color="green" icon={<ArrowForwardIcon />} size={eventIconSize} />
-    ),
+    [RuntimeEventType.accountstransfer]: <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />,
     [RuntimeEventType.evmlog]: <></>,
     [RuntimeEventType.coregas_used]: <></>,
     [RuntimeEventType.consensus_accountswithdraw]: (
-      <MethodIcon color="orange" border={false} icon={<ArrowUpwardIcon />} size={eventIconSize} />
+      <MethodIcon color="orange" icon={<ArrowUpwardIcon />} {...props} />
     ),
     [RuntimeEventType.consensus_accountsdeposit]: (
-      <MethodIcon border={false} color="green" icon={<ArrowDownwardIcon />} size={eventIconSize} />
+      <MethodIcon color="green" icon={<ArrowDownwardIcon />} {...props} />
     ),
-    [RuntimeEventType.consensus_accountsdelegate]: (
-      <MethodIcon border={false} icon={<LanIcon />} size={eventIconSize} />
-    ),
+    [RuntimeEventType.consensus_accountsdelegate]: <MethodIcon icon={<LanIcon />} {...props} />,
     [RuntimeEventType.consensus_accountsundelegate_start]: (
-      <MethodIcon border={false} icon={<LanOutlinedIcon />} size={eventIconSize} />
+      <MethodIcon icon={<LanOutlinedIcon />} {...props} />
     ),
-    [RuntimeEventType.consensus_accountsundelegate_done]: (
-      <MethodIcon border={false} icon={<LanIcon />} size={eventIconSize} />
-    ),
-    [RuntimeEventType.accountsmint]: (
-      <MethodIcon color="green" border={false} icon={<StreamIcon />} size={eventIconSize} />
-    ),
+    [RuntimeEventType.consensus_accountsundelegate_done]: <MethodIcon icon={<LanIcon />} {...props} />,
+    [RuntimeEventType.accountsmint]: <MethodIcon color="green" icon={<StreamIcon />} {...props} />,
     [RuntimeEventType.accountsburn]: (
-      <MethodIcon color="orange" border={false} icon={<LocalFireDepartmentIcon />} size={eventIconSize} />
+      <MethodIcon color="orange" icon={<LocalFireDepartmentIcon />} {...props} />
     ),
   }
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <b>{eventName}</b>
-      &nbsp;
-      {eventTypeIcons[eventType]}
+      <b>{eventTypeIcons[eventType]}</b>
     </Box>
   )
 }
@@ -138,20 +161,7 @@ export const RuntimeEventDetails: FC<{
 }> = ({ scope, event, addressSwitchOption }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
-  const eventTypeNames: Record<RuntimeEventType, string> = {
-    [RuntimeEventType.accountstransfer]: t('runtimeEvent.accountstransfer'),
-    [RuntimeEventType.evmlog]: t('runtimeEvent.evmLog'),
-    [RuntimeEventType.coregas_used]: t('runtimeEvent.gasUsed'),
-    [RuntimeEventType.consensus_accountswithdraw]: t('runtimeEvent.consensusWithdrawal'),
-    [RuntimeEventType.consensus_accountsdeposit]: t('runtimeEvent.consensusDeposit'),
-    [RuntimeEventType.consensus_accountsdelegate]: t('runtimeEvent.consensusDelegate'),
-    [RuntimeEventType.consensus_accountsundelegate_start]: t('runtimeEvent.consensusUndelegateStart'),
-    [RuntimeEventType.consensus_accountsundelegate_done]: t('runtimeEvent.consensusUndelegateDone'),
-    [RuntimeEventType.accountsmint]: t('runtimeEvent.accountsmint'),
-    [RuntimeEventType.accountsburn]: t('runtimeEvent.accountsburn'),
-  }
-
-  const eventName = eventTypeNames[event.type]
+  const eventName = getRuntimeEventMethodLabel(t, event.type)
   switch (event.type) {
     case RuntimeEventType.coregas_used:
       return (
@@ -206,12 +216,9 @@ export const RuntimeEventDetails: FC<{
       return (
         <div>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {eventName}: &nbsp;
             <b>
-              <TokenTransferLabel name={parsedEvmLogName} />
+              <TokenTransferIcon reverseLabel method={parsedEvmLogName} size={25} />
             </b>
-            &nbsp;
-            <TokenTransferIcon name={parsedEvmLogName} size={25} />
           </Box>
           <br />
           {event.evm_log_params && event.evm_log_params.length > 0 && (
@@ -253,7 +260,7 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.accountsmint:
       return (
         <div>
-          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
@@ -279,7 +286,7 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.consensus_accountswithdraw:
       return (
         <div>
-          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
@@ -313,7 +320,7 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.consensus_accountsdelegate:
       return (
         <div>
-          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
@@ -347,7 +354,7 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.consensus_accountsundelegate_start:
       return (
         <div>
-          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
@@ -380,7 +387,7 @@ export const RuntimeEventDetails: FC<{
     case RuntimeEventType.consensus_accountsundelegate_done:
       return (
         <div>
-          <EventTypeIcon eventType={event.type} eventName={eventName} />
+          <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
