@@ -1,13 +1,9 @@
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 import { runtimeStatusResponse, statusResponse } from './api'
 
 export const handlers = [
-  rest.get(process.env.REACT_APP_API!, (req, res, ctx) => res(ctx.json(statusResponse))),
-  rest.get(`${process.env.REACT_APP_API}sapphire/status`, (req, res, ctx) =>
-    res(ctx.json(runtimeStatusResponse)),
-  ),
+  http.get(process.env.REACT_APP_API!, () => HttpResponse.json(statusResponse)),
+  http.get(`${process.env.REACT_APP_API}sapphire/status`, () => HttpResponse.json(runtimeStatusResponse)),
 ]
 
-export const statusApiFailureHandler = [
-  rest.get(process.env.REACT_APP_API!, (req, res, ctx) => res(ctx.status(403))),
-]
+export const statusApiFailureHandler = [http.get(process.env.REACT_APP_API!, () => HttpResponse.error())]
