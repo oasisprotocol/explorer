@@ -303,7 +303,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const enabledLayers: Layer[] = useMemo(() => RouteUtils.getAllLayersForNetwork(network).enabled, [network])
 
   const onSelectLayer = (layer: Layer) => {
-    if (isMobile && isZoomedIn) {
+    if (isMobile && (isZoomedIn || layer === Layer.consensus)) {
       setSelectedLayer(layer)
       setActiveMobileGraphTooltip({ current: layer })
 
@@ -699,9 +699,16 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.consensus, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.consensus) && (
-            <text x="161" y="212" fill={graphTheme.text} fontSize="12px">
+            <GraphLayerStatus
+              iconX={201}
+              iconY={216}
+              textX={159}
+              textY={212}
+              fillText={graphTheme.text}
+              outOfDate={outOfDateMap.consensus}
+            >
               {t('common.consensus')}
-            </text>
+            </GraphLayerStatus>
           )}
           {!isMobile && hoveredLayer === Layer.consensus && !disabledMap[Layer.consensus] && (
             <text x="173" y="214" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">

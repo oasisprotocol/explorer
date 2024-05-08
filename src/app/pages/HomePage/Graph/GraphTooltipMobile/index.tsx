@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
-import { useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { getNetworkIcons } from '../../../../utils/content'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
@@ -148,6 +148,7 @@ const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo
 
   const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
   const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
+  const isConsensusOutOfDate = useConsensusFreshness(network).outOfDate
   return {
     [Layer.sapphire]: {
       disabled: !isSapphireEnabled,
@@ -189,9 +190,15 @@ const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo
       disabled: !isConsensusEnabled,
       body: {
         title: (t: TFunction) => t('common.consensus'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, Layer.consensus, isConsensusEnabled),
+        caption: (t: TFunction) =>
+          layerTooltipBodyCaption(t, Layer.consensus, isConsensusEnabled, isConsensusOutOfDate),
         body: (t: TFunction) => t('home.tooltip.consensusDesc'),
       },
+      ...(isConsensusEnabled
+        ? {
+            failing: isConsensusOutOfDate,
+          }
+        : {}),
     },
   }
 }
