@@ -159,7 +159,7 @@ const handleHover: (
   },
 })
 
-const GraphParaTimeStatus: FC<
+const GraphLayerStatus: FC<
   PropsWithChildren<{
     fillText: string
     iconX: number
@@ -565,7 +565,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.emerald, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.emerald) && (
-            <GraphParaTimeStatus
+            <GraphLayerStatus
               iconX={201}
               iconY={102}
               textX={174}
@@ -574,7 +574,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               outOfDate={outOfDateMap.emerald}
             >
               {t('common.emerald')}
-            </GraphParaTimeStatus>
+            </GraphLayerStatus>
           )}
 
           {!isMobile && hoveredLayer === Layer.emerald && !disabledMap[Layer.emerald] && (
@@ -622,7 +622,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.sapphire, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.sapphire) && (
-            <GraphParaTimeStatus
+            <GraphLayerStatus
               iconX={130}
               iconY={310}
               textX={100}
@@ -631,7 +631,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               outOfDate={outOfDateMap.sapphire}
             >
               {t('common.sapphire')}
-            </GraphParaTimeStatus>
+            </GraphLayerStatus>
           )}
           {!isMobile && hoveredLayer === Layer.sapphire && !disabledMap[Layer.sapphire] && (
             <text x="109.5" y="307" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
