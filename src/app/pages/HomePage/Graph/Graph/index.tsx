@@ -159,7 +159,7 @@ const handleHover: (
   },
 })
 
-const GraphParaTimeStatus: FC<
+const GraphLayerStatus: FC<
   PropsWithChildren<{
     fillText: string
     iconX: number
@@ -303,7 +303,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   const enabledLayers: Layer[] = useMemo(() => RouteUtils.getAllLayersForNetwork(network).enabled, [network])
 
   const onSelectLayer = (layer: Layer) => {
-    if (isMobile && isZoomedIn) {
+    if (isMobile && (isZoomedIn || layer === Layer.consensus)) {
       setSelectedLayer(layer)
       setActiveMobileGraphTooltip({ current: layer })
 
@@ -565,7 +565,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.emerald, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.emerald) && (
-            <GraphParaTimeStatus
+            <GraphLayerStatus
               iconX={201}
               iconY={102}
               textX={174}
@@ -574,7 +574,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               outOfDate={outOfDateMap.emerald}
             >
               {t('common.emerald')}
-            </GraphParaTimeStatus>
+            </GraphLayerStatus>
           )}
 
           {!isMobile && hoveredLayer === Layer.emerald && !disabledMap[Layer.emerald] && (
@@ -622,7 +622,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.sapphire, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.sapphire) && (
-            <GraphParaTimeStatus
+            <GraphLayerStatus
               iconX={130}
               iconY={310}
               textX={100}
@@ -631,7 +631,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
               outOfDate={outOfDateMap.sapphire}
             >
               {t('common.sapphire')}
-            </GraphParaTimeStatus>
+            </GraphLayerStatus>
           )}
           {!isMobile && hoveredLayer === Layer.sapphire && !disabledMap[Layer.sapphire] && (
             <text x="109.5" y="307" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
@@ -699,9 +699,16 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover(Layer.consensus, setHoveredLayer)}
         >
           {(isMobile || hoveredLayer !== Layer.consensus) && (
-            <text x="161" y="212" fill={graphTheme.text} fontSize="12px">
+            <GraphLayerStatus
+              iconX={201}
+              iconY={216}
+              textX={159}
+              textY={212}
+              fillText={graphTheme.text}
+              outOfDate={outOfDateMap.consensus}
+            >
               {t('common.consensus')}
-            </text>
+            </GraphLayerStatus>
           )}
           {!isMobile && hoveredLayer === Layer.consensus && !disabledMap[Layer.consensus] && (
             <text x="173" y="214" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
