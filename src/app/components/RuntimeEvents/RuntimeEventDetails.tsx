@@ -24,7 +24,10 @@ import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { MaybeEventErrorLine } from './EventError'
-import { AccountLinkWithAddressSwitch } from '../Account/AccountLinkWithAddressSwitch'
+import {
+  AccountLinkWithAddressSwitch,
+  WrappedAccountLinkWithAddressSwitch,
+} from '../Account/AccountLinkWithAddressSwitch'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
@@ -102,7 +105,8 @@ const EvmEventParamData: FC<{
   scope: SearchScope
   param: EvmAbiParam
   address?: string
-}> = ({ scope, param, address }) => {
+  alwaysTrimOnTable?: boolean
+}> = ({ scope, param, address, alwaysTrimOnTable }) => {
   /**
    * According to the API docs:
    *
@@ -114,7 +118,9 @@ const EvmEventParamData: FC<{
   switch (param.evm_type) {
     // TODO: handle more EVM types
     case 'address':
-      return address ? <AccountLink address={address} scope={scope} /> : null
+      return address ? (
+        <AccountLink address={address} scope={scope} alwaysTrimOnTable={alwaysTrimOnTable} />
+      ) : null
     case 'uint256':
       // TODO: format with BigNumber
       return <span>{param.value as string}</span>
@@ -145,7 +151,7 @@ const EvmLogRow: FC<{
       <TableCell>{param.name}</TableCell>
       <TableCell>{param.evm_type}</TableCell>
       <TableCell>
-        <EvmEventParamData scope={scope} param={param} address={address} />{' '}
+        <EvmEventParamData scope={scope} param={param} address={address} alwaysTrimOnTable />{' '}
       </TableCell>
       <TableCell>
         <CopyToClipboard value={getCopyToClipboardValue()} />
@@ -204,7 +210,7 @@ export const RuntimeEventDetails: FC<{
             <br />
             {t('runtimeEvent.fields.emittingContract')}:
             <br />
-            <AccountLinkWithAddressSwitch
+            <WrappedAccountLinkWithAddressSwitch
               scope={scope}
               addressSwitchOption={addressSwitchOption}
               ethAddress={emittingEthAddress}
@@ -246,7 +252,7 @@ export const RuntimeEventDetails: FC<{
           <br />
           {t('runtimeEvent.fields.emittingContract')}:
           <br />
-          <AccountLinkWithAddressSwitch
+          <WrappedAccountLinkWithAddressSwitch
             scope={scope}
             addressSwitchOption={addressSwitchOption}
             ethAddress={emittingEthAddress}

@@ -116,7 +116,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   ownAddress,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
@@ -139,7 +139,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           content: (
             <TransactionLink
               scope={transfer}
-              alwaysTrim={isMobile}
+              alwaysTrim={isTablet}
               hash={transfer.eth_tx_hash || transfer.tx_hash!}
             />
           ),
@@ -186,7 +186,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                     {trimLongString(fromAddress)}
                   </Typography>
                 ) : (
-                  <AccountLink scope={transfer} address={fromAddress} alwaysTrim={true} />
+                  <AccountLink scope={transfer} address={fromAddress} alwaysTrim />
                 )}
 
                 <StyledCircle>
@@ -210,7 +210,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
               {trimLongString(toAddress)}
             </Typography>
           ) : (
-            <AccountLink scope={transfer} address={toAddress} alwaysTrim={true} />
+            <AccountLink scope={transfer} address={toAddress} alwaysTrim />
           ),
         },
         ...(differentTokens
