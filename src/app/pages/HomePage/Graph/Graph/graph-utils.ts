@@ -38,7 +38,11 @@ export abstract class GraphUtils {
           y: 1.1 * height,
         }
       case Layer.consensus:
-        return initialValue
+        return {
+          scale: 2.4,
+          x: 0.65 * width,
+          y: 0.65 * height,
+        }
       default:
         exhaustedTypeWarning('Unexpected layer', layer)
         return initialValue
