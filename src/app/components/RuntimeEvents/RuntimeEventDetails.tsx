@@ -244,7 +244,7 @@ export const RuntimeEventDetails: FC<{
             </Table>
           )}
           <br />
-          Emitting contract:
+          {t('runtimeEvent.fields.emittingContract')}:
           <br />
           <AccountLinkWithAddressSwitch
             scope={scope}
