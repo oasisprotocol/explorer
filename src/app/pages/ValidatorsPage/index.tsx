@@ -4,9 +4,7 @@ import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { useGetConsensusValidators } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as PAGE_SIZE } from '../../config'
-import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
@@ -15,13 +13,13 @@ import { Validators } from '../../components/Validators'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
+import { useLoadedValidators } from './hooks'
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * PAGE_SIZE
+
   const scope = useRequiredScopeParam()
   const { network } = scope
 
@@ -31,13 +29,12 @@ export const ValidatorsPage: FC = () => {
     }
   }, [isMobile, setTableView])
 
-  const validatorsQuery = useGetConsensusValidators(network, {
-    limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
-    offset: tableView === TableLayout.Vertical ? 0 : offset,
-  })
-  const { isLoading, isFetched, data } = validatorsQuery
-  const validatorsData = data?.data
-  if (isFetched && offset && !validatorsData?.validators?.length) {
+  const { pagination, pageSize, isLoading, isFetched, validatorsData } = useLoadedValidators(
+    network,
+    tableView,
+  )
+
+  if (isFetched && pagination.selectedPage > 1 && !validatorsData?.validators?.length) {
     throw AppErrors.PageDoesNotExist
   }
 
@@ -63,22 +60,22 @@ export const ValidatorsPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <Validators
-            validators={validatorsQuery.data?.data.validators}
-            isLoading={validatorsQuery.isLoading}
-            limit={PAGE_SIZE}
+            validators={validatorsData?.validators}
+            isLoading={isLoading}
+            limit={pageSize}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
-              totalCount: data?.data.total_count,
-              isTotalCountClipped: data?.data.is_total_count_clipped,
-              rowsPerPage: PAGE_SIZE,
+              totalCount: validatorsData?.total_count,
+              isTotalCountClipped: validatorsData?.is_total_count_clipped,
+              rowsPerPage: pageSize,
             }}
           />
         )}
         {tableView === TableLayout.Vertical && (
           <VerticalList>
             {isLoading &&
-              [...Array(PAGE_SIZE).keys()].map(key => (
+              [...Array(pageSize).keys()].map(key => (
                 <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
               ))}
             {!isLoading &&
