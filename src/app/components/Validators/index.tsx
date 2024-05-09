@@ -35,13 +35,14 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
     { key: 'status', content: t('common.status') },
     { key: 'uptime', content: t('validator.uptime') },
   ]
+  const offset = typeof pagination === 'boolean' ? 0 : (pagination.selectedPage - 1) * pagination.rowsPerPage
   const tableRows = validators?.map((validator, index) => ({
     key: validator.entity_address,
     data: [
       {
         align: TableCellAlign.Center,
         // TODO: replace index when rank is implemented in the API
-        content: <div>{index + 1}</div>,
+        content: <div>{offset + index + 1}</div>,
         key: 'rank',
       },
       {
