@@ -16,7 +16,6 @@ import {
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
-import { SystemStyleObject } from '@mui/system'
 import { RoundedBalance } from '../RoundedBalance'
 
 type TokensProps = {
@@ -26,28 +25,26 @@ type TokensProps = {
   pagination: false | TablePaginationProps
 }
 
-export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SystemStyleObject }> = ({
+export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; fill?: boolean }> = ({
   tokenType,
-  sx = {},
+  fill = false,
 }) => {
   const { t } = useTranslation()
   return (
     <Box
-      sx={[
-        {
-          background: tokenBackgroundColor[tokenType ?? 'missing'],
-          border: `1px solid ${tokenBorderColor[tokenType ?? 'missing']}`,
-          display: 'inline-block',
-          borderRadius: 2,
-          py: 1,
-          px: 3,
-          fontSize: 12,
-          height: verificationIconBoxHeight,
-          verticalAlign: 'middle',
-          textAlign: 'center',
-        },
-        sx,
-      ]}
+      sx={{
+        background: tokenBackgroundColor[tokenType ?? 'missing'],
+        border: `1px solid ${tokenBorderColor[tokenType ?? 'missing']}`,
+        display: 'inline-block',
+        borderRadius: 2,
+        py: 1,
+        px: 3,
+        fontSize: 12,
+        height: verificationIconBoxHeight,
+        verticalAlign: 'middle',
+        textAlign: 'center',
+        width: fill ? '100%' : 'auto',
+      }}
     >
       <Typography component="span">{getTokenTypeDescription(t, tokenType)}</Typography>
       &nbsp;
@@ -102,7 +99,7 @@ export const TokenList = (props: TokensProps) => {
           key: 'type',
           content: (
             <Box sx={{ pr: 4 }}>
-              <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />
+              <TokenTypeTag tokenType={token.type} fill />
             </Box>
           ),
         },
