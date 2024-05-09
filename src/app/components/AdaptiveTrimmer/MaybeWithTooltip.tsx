@@ -5,13 +5,6 @@ import { SxProps } from '@mui/material/styles'
 
 type MaybeWithTooltipProps = {
   /**
-   * Do we want to show the tooltip?
-   *
-   * Default is true
-   */
-  tooltipWanted?: boolean
-
-  /**
    * What should be the content of the tooltip?
    *
    * Undefined means no tooltip
@@ -32,34 +25,27 @@ type MaybeWithTooltipProps = {
 /**
  * A component to display some content with or without a tooltip
  */
-export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({
-  tooltipWanted = true,
-  title,
-  children,
-  spanSx,
-}) =>
-  tooltipWanted && !!title ? (
-    <Tooltip
-      placement="top"
-      title={
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            overflowWrap: 'anywhere',
-          }}
-        >
-          {title}
-        </Box>
-      }
-    >
-      <Box component="span" sx={spanSx}>
-        {children}
+export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, spanSx }) => (
+  <Tooltip
+    placement="top"
+    title={
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          overflowWrap: 'anywhere',
+        }}
+      >
+        {title}
       </Box>
-    </Tooltip>
-  ) : (
+    }
+    disableFocusListener={!title}
+    disableHoverListener={!title}
+    disableTouchListener={!title}
+  >
     <Box component="span" sx={spanSx}>
       {children}
     </Box>
-  )
+  </Tooltip>
+)
