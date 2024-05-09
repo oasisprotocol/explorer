@@ -24,7 +24,10 @@ import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { MaybeEventErrorLine } from './EventError'
-import { AccountLinkWithAddressSwitch } from '../Account/AccountLinkWithAddressSwitch'
+import {
+  AccountLinkWithAddressSwitch,
+  WrappedAccountLinkWithAddressSwitch,
+} from '../Account/AccountLinkWithAddressSwitch'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
@@ -207,7 +210,7 @@ export const RuntimeEventDetails: FC<{
             <br />
             {t('runtimeEvent.fields.emittingContract')}:
             <br />
-            <AccountLinkWithAddressSwitch
+            <WrappedAccountLinkWithAddressSwitch
               scope={scope}
               addressSwitchOption={addressSwitchOption}
               ethAddress={emittingEthAddress}
@@ -249,7 +252,7 @@ export const RuntimeEventDetails: FC<{
           <br />
           {t('runtimeEvent.fields.emittingContract')}:
           <br />
-          <AccountLinkWithAddressSwitch
+          <WrappedAccountLinkWithAddressSwitch
             scope={scope}
             addressSwitchOption={addressSwitchOption}
             ethAddress={emittingEthAddress}
