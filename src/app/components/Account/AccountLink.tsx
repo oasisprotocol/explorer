@@ -50,6 +50,11 @@ interface Props {
   alwaysTrim?: boolean
 
   /**
+   * Should we always trim the text to a short line when on mobile or Tablet?
+   */
+  alwaysTrimOnTable?: boolean
+
+  /**
    * Any extra tooltips to display
    *
    * (Besides the content necessary because of potential shortening)
@@ -64,7 +69,14 @@ interface Props {
   labelOnly?: boolean
 }
 
-export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraTooltip, labelOnly }) => {
+export const AccountLink: FC<Props> = ({
+  scope,
+  address,
+  alwaysTrim,
+  alwaysTrimOnTable,
+  extraTooltip,
+  labelOnly,
+}) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getAccountRoute(scope, address)
 
@@ -75,8 +87,8 @@ export const AccountLink: FC<Props> = ({ scope, address, alwaysTrim, extraToolti
     </>
   ) : undefined
 
-  // Are we in a table?
-  if (alwaysTrim) {
+  // Are we in a situation when we should always trim?
+  if (alwaysTrim || (alwaysTrimOnTable && isTablet)) {
     // In a table, we only ever want a short line
 
     return (
