@@ -19,7 +19,7 @@ export const findTextMatch = (
   rawCorpus: string | null | undefined,
   search: (string | undefined)[],
   options: NormalizerOptions = {},
-): MatchInfo => {
+): MatchInfo | undefined => {
   const normalizedCorpus = normalizeTextForSearch(rawCorpus || '', options)
   const matches: MatchInfo[] = search
     .filter((s): s is string => !!s)
