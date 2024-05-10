@@ -32,7 +32,7 @@ export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
   const theme = useTheme()
   const { isMobile } = useScreenSize()
   const oasisLogoSize = isMobile ? 32 : 40
-  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 40, width: 210 }
+  const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 40, width: 214 }
 
   return (
     <Box
