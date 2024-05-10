@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import Tooltip from '@mui/material/Tooltip'
 import { trimLongString } from '../../utils/trimLongString'
 import { tooltipDelay } from '../../../styles/theme'
+import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
 
 type TrimLinkLabelProps = {
   label: string
@@ -20,10 +21,13 @@ export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
 
 type TrimEndLinkLabelProps = TrimLinkLabelProps & {
   trimStart: number
+  highlightedPart?: string
 }
 
-export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, trimStart }) => {
-  const trimmedLabel = trimLongString(label, trimStart, 0)
+export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, trimStart, highlightedPart }) => {
+  const trimmedLabel = (
+    <HighlightedTrimmedText text={label} pattern={highlightedPart} fragmentLength={trimStart} />
+  )
   if (!trimmedLabel) {
     return null
   }
@@ -31,7 +35,7 @@ export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, trimSta
 }
 
 type TrimLinkProps = TrimLinkLabelProps & {
-  trimmedLabel: string
+  trimmedLabel: ReactNode
 }
 
 const TrimLink: FC<TrimLinkProps> = ({ label, to, trimmedLabel }) => {
