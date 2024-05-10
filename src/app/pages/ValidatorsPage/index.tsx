@@ -7,13 +7,14 @@ import { SubPageCard } from '../../components/SubPageCard'
 
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
-import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Validators } from '../../components/Validators'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
-import { useLoadedValidators } from './hooks'
+import { useValidatorFiltering, useValidatorData } from './hooks'
+import Box from '@mui/material/Box'
+import { TableSearchBar } from '../../components/Search/TableSearchBar'
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -22,6 +23,7 @@ export const ValidatorsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const { network } = scope
+  const { nameSearchInput, setNameSearchInput, nameWarning, namePattern } = useValidatorFiltering()
 
   useEffect(() => {
     if (!isMobile) {
@@ -31,15 +33,16 @@ export const ValidatorsPage: FC = () => {
 
   const {
     isLoading,
-    isFetched,
-    paginatedResults,
-    // pagination, pageSize, isLoading, isFetched, validatorsData
-  } = useLoadedValidators(network, tableView)
+    tablePaginationProps,
+    data: validators,
+    extractedData,
+    hasNoResultsOnSelectedPage,
+  } = useValidatorData(network, tableView)
 
-  const { tablePaginationProps, data: validators } = paginatedResults
-  const { selectedPage, totalCount, isTotalCountClipped, rowsPerPage } = tablePaginationProps
+  const { rowsPerPage } = tablePaginationProps
+  const [totalCount, isTotalCountClipped] = extractedData ?? [0, false]
 
-  if (isFetched && selectedPage > 1 && !validators?.length) {
+  if (hasNoResultsOnSelectedPage) {
     throw AppErrors.PageDoesNotExist
   }
 
@@ -59,7 +62,17 @@ export const ValidatorsPage: FC = () => {
             isTotalCountClipped={isTotalCountClipped}
           />
         }
-        action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        action={
+          <Box sx={{ display: 'flex-inline' }}>
+            <TableSearchBar
+              value={nameSearchInput}
+              onChange={setNameSearchInput}
+              placeholder={t('validator.search')}
+              warning={nameWarning}
+            />
+            {isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+          </Box>
+        }
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
       >
@@ -69,6 +82,7 @@ export const ValidatorsPage: FC = () => {
             isLoading={isLoading}
             limit={rowsPerPage}
             pagination={tablePaginationProps}
+            highlightedPart={namePattern}
           />
         )}
         {tableView === TableLayout.Vertical && (

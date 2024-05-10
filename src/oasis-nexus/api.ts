@@ -89,6 +89,7 @@ declare module './generated/api' {
 
   export interface Validator {
     ticker: Ticker
+    rank: number
   }
 
   export interface Proposal {
@@ -965,10 +966,11 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.ValidatorList, headers, status): ExtendedValidatorList => {
           if (status !== 200) return data
-          const validators = data.validators.map((validator): generated.Validator => {
+          const validators = data.validators.map((validator, index): generated.Validator => {
             return {
               ...validator,
               escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+              rank: index + (params?.offset ?? 0), // TODO: remove this when rank is added to API
               ticker,
             }
           })
