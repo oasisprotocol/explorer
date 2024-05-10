@@ -1,13 +1,14 @@
 import { TableLayout } from '../../components/TableLayoutButton'
 import { useGetConsensusValidators, Validator, ValidatorList } from '../../../oasis-nexus/api'
-import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
+import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { Network } from '../../../types/network'
 
 export const useLoadedValidators = (network: Network, tableView: TableLayout) => {
-  const pagination = useComprehensiveSearchParamsPagination<Validator, ValidatorList>({
+  const pagination = useClientSidePagination<Validator, ValidatorList>({
     paramName: 'page',
-    pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    serverPageSize: 1000,
+    clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
   })
   const offset = pagination.offsetForQuery
   const validatorsQuery = useGetConsensusValidators(network, {
