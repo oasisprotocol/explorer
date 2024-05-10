@@ -29,20 +29,25 @@ export const ValidatorsPage: FC = () => {
     }
   }, [isMobile, setTableView])
 
-  const { pagination, pageSize, isLoading, isFetched, validatorsData } = useLoadedValidators(
-    network,
-    tableView,
-  )
+  const {
+    isLoading,
+    isFetched,
+    paginatedResults,
+    // pagination, pageSize, isLoading, isFetched, validatorsData
+  } = useLoadedValidators(network, tableView)
 
-  if (isFetched && pagination.selectedPage > 1 && !validatorsData?.validators?.length) {
+  const { tablePaginationProps, data: validators } = paginatedResults
+  const { selectedPage, totalCount, isTotalCountClipped, rowsPerPage } = tablePaginationProps
+
+  if (isFetched && selectedPage > 1 && !validators?.length) {
     throw AppErrors.PageDoesNotExist
   }
 
   return (
     <PageLayout
-      mobileFooterAction={
-        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
-      }
+    // mobileFooterAction={
+    //   tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
+    // }
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
@@ -50,8 +55,8 @@ export const ValidatorsPage: FC = () => {
           <CardHeaderWithCounter
             changeMobileColors
             label={t('validator.listTitle')}
-            totalCount={validatorsData?.total_count}
-            isTotalCountClipped={validatorsData?.is_total_count_clipped}
+            totalCount={totalCount}
+            isTotalCountClipped={isTotalCountClipped}
           />
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
@@ -60,26 +65,20 @@ export const ValidatorsPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <Validators
-            validators={validatorsData?.validators}
+            validators={validators}
             isLoading={isLoading}
-            limit={pageSize}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount: validatorsData?.total_count,
-              isTotalCountClipped: validatorsData?.is_total_count_clipped,
-              rowsPerPage: pageSize,
-            }}
+            limit={rowsPerPage}
+            pagination={tablePaginationProps}
           />
         )}
         {tableView === TableLayout.Vertical && (
           <VerticalList>
             {isLoading &&
-              [...Array(pageSize).keys()].map(key => (
+              [...Array(rowsPerPage).keys()].map(key => (
                 <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
               ))}
             {!isLoading &&
-              validatorsData?.validators.map(validator => (
+              validators?.map(validator => (
                 <ValidatorDetailsView key={validator.entity_address} validator={validator} standalone />
               ))}
           </VerticalList>

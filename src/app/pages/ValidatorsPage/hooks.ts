@@ -1,17 +1,24 @@
 import { TableLayout } from '../../components/TableLayoutButton'
-import { useGetConsensusValidators } from '../../../oasis-nexus/api'
-import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as pageSize } from '../../config'
+import { useGetConsensusValidators, Validator, ValidatorList } from '../../../oasis-nexus/api'
+import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { Network } from '../../../types/network'
 
 export const useLoadedValidators = (network: Network, tableView: TableLayout) => {
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * pageSize
+  const pagination = useComprehensiveSearchParamsPagination<Validator, ValidatorList>({
+    paramName: 'page',
+    pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+  })
+  const offset = pagination.offsetForQuery
   const validatorsQuery = useGetConsensusValidators(network, {
-    limit: tableView === TableLayout.Vertical ? offset + pageSize : pageSize,
+    limit: tableView === TableLayout.Vertical ? offset + pagination.limitForQuery : pagination.limitForQuery,
     offset: tableView === TableLayout.Vertical ? 0 : offset,
   })
   const { isLoading, isFetched, data } = validatorsQuery
-  const validatorsData = data?.data
-  return { pagination, pageSize, isLoading, isFetched, validatorsData }
+  const paginatedResults = pagination.getResults(data?.data)
+  return {
+    isLoading,
+    isFetched,
+    paginatedResults,
+  }
 }
