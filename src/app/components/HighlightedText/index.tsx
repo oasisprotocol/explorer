@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { findTextMatch, NormalizerOptions } from './text-matching'
+import { MatchInfo, findTextMatch, NO_MATCH, NormalizerOptions } from './text-matching'
 import { FC } from 'react'
 import { SxProps } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -47,6 +47,14 @@ interface HighlightedTextProps {
   pattern: string | undefined
 
   /**
+   * Instructions about which part to highlight.
+   *
+   * If not given, we will just search for the pattern.
+   * If given, this will be executed, and the pattern will not even be considered.
+   */
+  part?: MatchInfo
+
+  /**
    * Options for highlighting (case sensitivity, styling, etc.)
    *
    * (This is optional, sensible defaults are provided.)
@@ -57,19 +65,31 @@ interface HighlightedTextProps {
 /**
  * Display a text, with potential pattern matches highlighted with html MARKs
  */
-export const HighlightedText: FC<HighlightedTextProps> = ({ text, pattern, options = defaultHighlight }) => {
+export const HighlightedText: FC<HighlightedTextProps> = ({
+  text,
+  pattern,
+  part,
+  options = defaultHighlight,
+}) => {
   const { sx = defaultHighlightStyle, findOptions = {} } = options
-  const match = findTextMatch(text, [pattern], findOptions)
 
-  return text === undefined ? undefined : match ? (
+  // Have we been told what to highlight exactly? If not, look for the pattern
+  const task = part ?? findTextMatch(text, [pattern], findOptions)
+
+  if (text === undefined) return undefined // Nothing to display
+  if (task === NO_MATCH) return text // We don't have to highlight anything
+
+  const beginning = text.substring(0, task.startPos)
+  const focus = text.substring(task.startPos, task.endPos)
+  const end = text.substring(task.endPos)
+
+  return (
     <>
-      {text.substring(0, match.startPos)}
+      {beginning}
       <Box component="mark" sx={sx}>
-        {text.substring(match.startPos, match.startPos + match.searchText.length)}
+        {focus}
       </Box>
-      {text.substring(match.startPos + match.searchText.length)}
+      {end}
     </>
-  ) : (
-    text
   )
 }
