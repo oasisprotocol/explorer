@@ -1,13 +1,15 @@
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
-import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from './MaybeWithTooltip'
 
-type AdaptiveTrimmerProps = {
-  text: string | undefined
-  strategy: 'middle' | 'end'
-  extraTooltip?: ReactNode
+type AdaptiveDynamicTrimmerProps = {
+  getFullContent: () => {
+    content: ReactNode
+    length: number
+  }
+  getShortenedContent: (wantedLength: number) => ReactNode
+  extraTooltip: ReactNode
 }
 
 /**
@@ -15,14 +17,21 @@ type AdaptiveTrimmerProps = {
  *
  * This component will do automatic detection of available space,
  * and determine the best way to display content accordingly.
+ *
+ * The difference compared to AdaptiveTrimmer is that this component
+ * expects a function to provide a shortened version of the components.
  */
-export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({ text = '', strategy = 'end', extraTooltip }) => {
+export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
+  getFullContent,
+  getShortenedContent,
+  extraTooltip,
+}) => {
   // Initial setup
-  const fullLength = text.length
   const textRef = useRef<HTMLDivElement | null>(null)
+  const { content: fullContent, length: fullLength } = getFullContent()
 
   // Data about the currently rendered version
-  const [currentContent, setCurrentContent] = useState('')
+  const [currentContent, setCurrentContent] = useState<ReactNode>()
   const [currentLength, setCurrentLength] = useState(0)
 
   // Known good - this fits
@@ -34,29 +43,26 @@ export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({ text = '', strategy 
   // Are we exploring our possibilities now?
   const [inDiscovery, setInDiscovery] = useState(false)
 
-  const attemptContent = useCallback((content: string, length: number) => {
+  const attemptContent = useCallback((content: ReactNode, length: number) => {
     setCurrentContent(content)
     setCurrentLength(length)
   }, [])
 
   const attemptShortenedContent = useCallback(
     (length: number) => {
-      const content =
-        strategy === 'middle'
-          ? trimLongString(text, Math.floor(length / 2) - 1, Math.floor(length / 2) - 1)!
-          : trimLongString(text, length, 0)!
+      const content = getShortenedContent(length)
 
       attemptContent(content, length)
     },
-    [strategy, text, attemptContent],
+    [attemptContent, getShortenedContent],
   )
 
   const initDiscovery = useCallback(() => {
     setLargestKnownGood(0)
     setSmallestKnownBad(fullLength + 1)
-    attemptContent(text, fullLength)
+    attemptContent(fullContent, fullLength)
     setInDiscovery(true)
-  }, [text, fullLength, attemptContent])
+  }, [fullContent, fullLength, attemptContent])
 
   useEffect(() => {
     initDiscovery()
@@ -105,14 +111,21 @@ export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({ text = '', strategy 
         }
       }
     }
-  }, [inDiscovery, currentLength, largestKnownGood, smallestKnownBad, attemptShortenedContent, fullLength])
-
-  if (!text) return null
+  }, [
+    attemptShortenedContent,
+    currentLength,
+    fullContent,
+    fullLength,
+    inDiscovery,
+    initDiscovery,
+    largestKnownGood,
+    smallestKnownBad,
+  ])
 
   const title =
     currentLength !== fullLength ? (
       <Box>
-        <Box>{text}</Box>
+        <Box>{fullContent}</Box>
         {extraTooltip && (
           <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
             <InfoIcon />
