@@ -86,7 +86,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
   const tableRows = transactions?.map(transaction => {
     const targetAddress = transaction.to_eth || transaction.to
     return {
-      key: transaction.hash,
+      key: `${transaction.hash}${transaction.index}`,
       data: [
         {
           content: <StatusIcon success={transaction.success} error={transaction.error} />,
