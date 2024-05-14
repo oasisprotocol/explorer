@@ -3,7 +3,6 @@ import { Link as RouterLink } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 interface Props<T> {
@@ -13,16 +12,6 @@ interface Props<T> {
   link: (item: T) => string
   linkLabel: string
 }
-
-export const ViewResultButton = (() => {
-  const ViewResultButton = styled(Button)({})
-  ViewResultButton.defaultProps = {
-    variant: 'contained',
-    color: 'primary',
-  }
-  // Type cast is needed because styled type breaks `<ViewResultButton component={RouterLink}`
-  return ViewResultButton as typeof Button
-})()
 
 /**
  * Component for displaying search results of the same type, from the same network.
@@ -51,9 +40,9 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
         <div key={i}>
           {resultComponent(item)}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-            <ViewResultButton component={RouterLink} to={link(item)}>
+            <Button variant="contained" color="primary" component={RouterLink} to={link(item)}>
               {linkLabel}
-            </ViewResultButton>
+            </Button>
           </Box>
           {i < results.length - 1 && <Divider variant="card" />}
         </div>
