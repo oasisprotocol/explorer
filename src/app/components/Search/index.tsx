@@ -52,6 +52,9 @@ const SearchForm = styled('form', {
               display: 'none',
             },
             [`.${inputAdornmentClasses.positionEnd}`]: {
+              'button[type="button"]': {
+                display: 'none',
+              },
               marginLeft: 0,
             },
           },
