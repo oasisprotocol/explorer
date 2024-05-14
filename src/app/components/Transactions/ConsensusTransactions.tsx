@@ -57,7 +57,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
       : []),
   ]
   const tableRows = transactions?.map(transaction => ({
-    key: transaction.hash,
+    key: `${transaction.hash}${transaction.index}`,
     data: [
       {
         content: <StatusIcon success={transaction.success} error={transaction.error} />,
