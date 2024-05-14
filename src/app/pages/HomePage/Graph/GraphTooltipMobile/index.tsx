@@ -19,6 +19,7 @@ import Fade from '@mui/material/Fade'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { zIndexHomePage } from '../../index'
+import { SelectorLayer, UniverseLayer } from '../ParaTimeSelector'
 
 interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -116,7 +117,7 @@ const MobileGraphTooltip = styled(Box)(({ theme }) => ({
 
 interface GraphTooltipMobileProps {
   network: Network
-  layer: Layer
+  layer: SelectorLayer
   onClose: (e?: MouseEvent) => void
 }
 
@@ -140,7 +141,7 @@ const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, o
       : t('common.paraTimeOnline')
 }
 
-const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo>> => {
+const useLayerTooltipMap = (network: Network): Partial<Record<SelectorLayer, TooltipInfo>> => {
   const isSapphireEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.sapphire)
   const isEmeraldEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.emerald)
   const isCipherEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.cipher)
@@ -206,7 +207,7 @@ const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo
 interface GraphTooltipHeaderProps {
   disabled: boolean
   network: Network
-  layer: Layer
+  layer: SelectorLayer
 }
 
 const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, layer }) => {
@@ -285,7 +286,9 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
     if (disabled) {
       return
     }
-
+    if (layer === UniverseLayer) {
+      return
+    }
     navigate(RouteUtils.getDashboardRoute({ network, layer }))
   }
 

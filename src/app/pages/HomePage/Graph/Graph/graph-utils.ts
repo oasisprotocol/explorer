@@ -1,9 +1,13 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
 import { Layer } from '../../../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../../../types/errors'
+import { SelectorLayer, UniverseLayer } from '../ParaTimeSelector'
 
 export abstract class GraphUtils {
-  static getScaleTo(layer: Layer, { width, height }: { width?: number; height?: number }): ScaleToOptions {
+  static getScaleTo(
+    layer: SelectorLayer,
+    { width, height }: { width?: number; height?: number },
+  ): ScaleToOptions {
     const initialValue = {
       scale: 1,
       x: 0,
@@ -43,6 +47,8 @@ export abstract class GraphUtils {
           x: 0.65 * width,
           y: 0.65 * height,
         }
+      case UniverseLayer:
+        return initialValue
       default:
         exhaustedTypeWarning('Unexpected layer', layer)
         return initialValue

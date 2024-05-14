@@ -19,6 +19,7 @@ import { COLORS } from '../../../../../styles/theme/testnet/colors'
 import { useTranslation } from 'react-i18next'
 import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { SearchScope } from '../../../../../types/searchScope'
+import { SelectorLayer } from '../ParaTimeSelector'
 
 interface GraphBaseProps {
   disabled?: boolean
@@ -29,14 +30,14 @@ interface GraphProps extends GraphBaseProps {
   network: Network
   scale: number
   // TODO: Consider moving this to a state management solution
-  selectedLayer?: Layer
+  selectedLayer?: SelectorLayer
   setSelectedLayer: (value: Layer) => void
   setActiveMobileGraphTooltip: (layer: { current: Layer | null }) => void
   isZoomedIn: boolean
 }
 
 interface GraphStyledProps extends GraphBaseProps {
-  selectedLayer?: Layer
+  selectedLayer?: SelectorLayer
   hoveredLayer: Layer | null
 }
 

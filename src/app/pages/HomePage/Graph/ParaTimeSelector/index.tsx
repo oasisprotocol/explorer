@@ -152,6 +152,12 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
 
 const localStore = storage()
 
+// This is a special layer used to indicate that we should zoom out,
+// and see the whole universe.
+export const UniverseLayer = 'Universe'
+
+export type SelectorLayer = Layer | typeof UniverseLayer
+
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   disabled,
   step,
@@ -169,10 +175,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   const { network, setNetwork } = useSearchQueryNetworkParam()
 
   // Using object here to force side effect trigger when setting to the same layer
-  const [selectedLayer, setSelectedLayer] = useState<{ current: Layer }>()
-  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: Layer | null }>({
-    current: null,
-  })
+  const [selectedLayer, setSelectedLayer] = useState<{ current: SelectorLayer }>()
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: SelectorLayer | null }>(
+    {
+      current: null,
+    },
+  )
 
   const [scale, setScale] = useState<number>(1)
 
@@ -204,7 +212,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   }
 
   const onZoomOutClick = () => {
-    setSelectedLayer({ current: Layer.consensus })
+    setSelectedLayer({ current: UniverseLayer })
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
