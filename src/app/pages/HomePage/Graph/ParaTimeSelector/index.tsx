@@ -152,11 +152,16 @@ interface ParaTimeSelectorProps extends ParaTimeSelectorBaseProps {
 
 const localStore = storage()
 
-// This is a special layer used to indicate that we should zoom out,
+// This is a special area used to indicate that we should zoom out,
 // and see the whole universe.
-export const UniverseLayer = 'Universe'
+export const UniverseArea = 'Universe'
 
-export type SelectorLayer = Layer | typeof UniverseLayer
+export type SelectorArea =
+  | typeof UniverseArea
+  | typeof Layer.consensus
+  | typeof Layer.cipher
+  | typeof Layer.emerald
+  | typeof Layer.sapphire
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   disabled,
@@ -174,13 +179,11 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   const exploreBtnTextTranslated = t('home.exploreBtnText')
   const { network, setNetwork } = useSearchQueryNetworkParam()
 
-  // Using object here to force side effect trigger when setting to the same layer
-  const [selectedLayer, setSelectedLayer] = useState<{ current: SelectorLayer }>()
-  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: SelectorLayer | null }>(
-    {
-      current: null,
-    },
-  )
+  // Using object here to force side effect trigger when setting to the same area
+  const [selectedArea, setSelectedArea] = useState<{ current: SelectorArea }>()
+  const [activeMobileGraphTooltip, setActiveMobileGraphTooltip] = useState<{ current: SelectorArea | null }>({
+    current: null,
+  })
 
   const [scale, setScale] = useState<number>(1)
 
@@ -189,10 +192,10 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   })
 
   useEffect(() => {
-    if (selectedLayer) {
-      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedLayer.current, { width, height }))
+    if (selectedArea) {
+      quickPinchZoomRef.current?.scaleTo(GraphUtils.getScaleTo(selectedArea.current, { width, height }))
     }
-  }, [selectedLayer, width, height])
+  }, [selectedArea, width, height])
 
   useEffect(() => {
     // Switch from mobile -> desktop view while on help screen
@@ -212,7 +215,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   }
 
   const onZoomOutClick = () => {
-    setSelectedLayer({ current: UniverseLayer })
+    setSelectedArea({ current: UniverseArea })
   }
 
   const onPinchZoom = ({ x, y, scale }: UpdateAction) => {
@@ -225,9 +228,9 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
     quickPinchZoomInnerRef.current?.style.setProperty('transform', transformValue)
   }
 
-  const clearSelectedLayer = () => {
-    if (selectedLayer?.current) {
-      setSelectedLayer(undefined)
+  const clearSelectedArea = () => {
+    if (selectedArea?.current) {
+      setSelectedArea(undefined)
     }
   }
 
@@ -248,7 +251,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
               onUpdate={onPinchZoom}
               maxZoom={2.5}
               minZoom={0.5}
-              onDragEnd={clearSelectedLayer}
+              onDragEnd={clearSelectedArea}
             >
               <QuickPinchZoomInner ref={quickPinchZoomInnerRef}>
                 <Graph
@@ -256,8 +259,8 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
                   network={network}
                   disabled={disabled}
                   transparent={ParaTimeSelectorUtils.getIsGraphTransparent(step)}
-                  selectedLayer={selectedLayer?.current}
-                  setSelectedLayer={(layer: Layer) => setSelectedLayer({ current: layer })}
+                  selectedArea={selectedArea?.current}
+                  setSelectedArea={(area: SelectorArea) => setSelectedArea({ current: area })}
                   scale={scale}
                   setActiveMobileGraphTooltip={setActiveMobileGraphTooltip}
                   isZoomedIn={graphZoomedIn}
@@ -300,7 +303,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
       {activeMobileGraphTooltip.current && (
         <GraphTooltipMobile
           network={network}
-          layer={activeMobileGraphTooltip.current}
+          area={activeMobileGraphTooltip.current}
           onClose={() => {
             setActiveMobileGraphTooltip({ current: null })
           }}
