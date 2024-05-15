@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
+import CancelIcon from '@mui/icons-material/Cancel'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Layer, Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
@@ -19,6 +20,9 @@ import { AccountLink } from '../../components/Account/AccountLink'
 import { HighlightedText } from '../../components/HighlightedText'
 import { ProposalIdLoaderData } from '../../utils/route-utils'
 import { COLORS } from 'styles/theme/colors'
+import { ProposalVotesCard } from './ProposalVotesCard'
+import { useVoteStats } from './hooks'
+import Skeleton from '@mui/material/Skeleton'
 import { getTypeNameForProposal } from '../../../types/proposalType'
 
 export const ProposalDetailsPage: FC = () => {
@@ -29,6 +33,11 @@ export const ProposalDetailsPage: FC = () => {
   }
   const { proposalId, searchTerm } = useLoaderData() as ProposalIdLoaderData
 
+  const {
+    isLoading: areStatsLoading,
+    allVotesCount,
+    isComplete: areStatsComplete,
+  } = useVoteStats(scope.network, proposalId)
   const { isLoading, data } = useGetConsensusProposalsProposalId(scope.network, proposalId)
   if (!data?.data && !isLoading) {
     throw AppErrors.NotFoundProposalId
@@ -37,9 +46,26 @@ export const ProposalDetailsPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.proposal')} mainTitle>
-        <ProposalDetailView isLoading={isLoading} proposal={proposal} highlightedPart={searchTerm} />
+        <ProposalDetailView
+          isLoading={isLoading}
+          proposal={proposal}
+          totalVotesLoading={areStatsLoading}
+          totalVotesProblematic={!areStatsComplete && !areStatsLoading}
+          totalVotes={allVotesCount}
+          highlightedPart={searchTerm}
+        />
       </SubPageCard>
+      <ProposalVotesCard />
     </PageLayout>
+  )
+}
+
+const VoteLoadingProblemIndicator: FC = () => {
+  const { t } = useTranslation()
+  return (
+    <Tooltip title={t('networkProposal.failedToLoadAllVotes')}>
+      <CancelIcon color="error" fontSize="inherit" sx={{ ml: 2 }} />
+    </Tooltip>
   )
 }
 
@@ -47,9 +73,21 @@ export const ProposalDetailView: FC<{
   proposal: Proposal
   highlightedPart?: string
   isLoading?: boolean
+  totalVotesLoading?: boolean
+  totalVotesProblematic?: boolean
+  totalVotes?: number | undefined
   showLayer?: boolean
   standalone?: boolean
-}> = ({ proposal, highlightedPart, isLoading, showLayer = false, standalone = false }) => {
+}> = ({
+  proposal,
+  isLoading,
+  totalVotesLoading,
+  totalVotesProblematic,
+  totalVotes,
+  showLayer = false,
+  standalone = false,
+  highlightedPart,
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -83,9 +121,26 @@ export const ProposalDetailView: FC<{
         <AccountLink scope={proposal} address={proposal.submitter} />
       </dd>
 
-      {/*Not enough data*/}
-      {/*<dt>{t('common.totalVotes')}</dt>*/}
-      {/*<dd>{proposal.invalid_votes}</dd>*/}
+      {(totalVotes || totalVotesLoading || totalVotesProblematic) && (
+        <>
+          <dt>{t('common.totalVotes')}</dt>
+          <dd>
+            {totalVotesLoading ? (
+              <Skeleton variant="text" sx={{ width: '25%' }} />
+            ) : (
+              totalVotes?.toLocaleString()
+            )}
+            {totalVotesProblematic && <VoteLoadingProblemIndicator />}
+          </dd>
+        </>
+      )}
+
+      {proposal.invalid_votes !== '0' && (
+        <>
+          <dt>{t('common.invalidVotes')}</dt>
+          <dd>{proposal.invalid_votes}</dd>
+        </>
+      )}
 
       <dt>{t('common.status')}</dt>
       <dd>

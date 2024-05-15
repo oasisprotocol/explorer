@@ -22,6 +22,7 @@ export enum AppErrors {
   NotFoundTxHash = 'not_found_tx_hash',
   NotFoundProposalId = 'not_found_proposal_id',
   InvalidUrl = 'invalid_url',
+  InvalidVote = 'invalid_vote',
   Storage = 'storage',
 }
 

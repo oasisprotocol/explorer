@@ -89,6 +89,7 @@
     "hash": "Hash",
     "height": "Height",
     "hide": "Hide",
+    "invalidVotes": "Invalid votes",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "method": "Method",
@@ -141,6 +142,9 @@
     "valueInTokenWithLink": "{{value, number}} <TickerLink />",
     "view": "View",
     "viewAll": "View all",
+    "vote": "Vote",
+    "voter": "Voter",
+    "votes": "Votes",
     "paraTimeOnline": "ParaTime Online",
     "paraTimeOutOfDate": "ParaTime Out of date",
     "mainnet": "Mainnet",
@@ -183,6 +187,7 @@
     "create": "Created",
     "createTooltip": "Voting created on epoch shown.",
     "deposit": "Deposit",
+    "failedToLoadAllVotes": "Failed to load all the votes, number might be incomplete!",
     "handler": "Title",
     "id": "ID",
     "listTitle": "Network Change Proposals",
@@ -196,6 +201,12 @@
       "upgrade": "Upgrade",
       "parameterUpgrade": "Parameter upgrade",
       "cancellation": "Cancellation"
+    },
+    "vote": {
+      "yes": "Yes",
+      "no": "No",
+      "abstain": "Abstained",
+      "all": "All votes"
     }
   },
   "nft": {
@@ -240,6 +251,7 @@
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstPage": "Please check the URL or <FirstPageLink />.",
     "invalidUrl": "Invalid URL",
+    "invalidVote": "Invalid vote",
     "revertedWithoutMessage": "reverted without a message",
     "storage": "Access to browser storage denied"
   },

@@ -865,6 +865,10 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragment: s
   }
 }
 
+export type ExtendedValidatorList = generated.ValidatorList & {
+  map?: Map<string, generated.Validator>
+}
+
 export const useGetConsensusValidators: typeof generated.useGetConsensusValidators = (
   network,
   params?,
@@ -877,17 +881,21 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.ValidatorList, headers, status) => {
+        (data: generated.ValidatorList, headers, status): ExtendedValidatorList => {
           if (status !== 200) return data
+          const validators = data.validators.map((validator): generated.Validator => {
+            return {
+              ...validator,
+              escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+              ticker,
+            }
+          })
+          const map = new Map<string, generated.Validator>()
+          validators.forEach(validator => map.set(validator.entity_address, validator))
           return {
             ...data,
-            validators: data.validators.map(validator => {
-              return {
-                ...validator,
-                escrow: fromBaseUnits(validator.escrow, consensusDecimals),
-                ticker,
-              }
-            }),
+            validators,
+            map,
           }
         },
         ...arrayify(options?.request?.transformResponse),
