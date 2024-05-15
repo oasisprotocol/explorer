@@ -34,12 +34,6 @@ const SwiperBox = styled(Box)(() => ({
   height: '40%',
 }))
 
-export const GetStartedBtn = styled(Button)({})
-GetStartedBtn.defaultProps = {
-  variant: 'contained',
-  color: 'primary',
-}
-
 interface Step {
   icon: ReactElement
   label: string
@@ -135,7 +129,9 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
         />
       )}
       {activeStep > 1 && (
-        <GetStartedBtn onClick={onGetStartedClick}>{t('home.helpScreen.getStarted')}</GetStartedBtn>
+        <Button variant="contained" color="primary" onClick={onGetStartedClick}>
+          {t('home.helpScreen.getStarted')}
+        </Button>
       )}
     </HelpScreenContainer>
   )

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import { Trans, useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
 import WidgetsIcon from '@mui/icons-material/Widgets'
@@ -12,7 +12,7 @@ import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
 
-const PlainTextButton = styled(Button)({
+const StyledPlainTextButton = styled(Button)({
   fontSize: 'inherit',
   textTransform: 'none',
   paddingLeft: 0,
@@ -20,10 +20,10 @@ const PlainTextButton = styled(Button)({
   minWidth: 0,
   height: '1em',
 })
-PlainTextButton.defaultProps = {
-  variant: 'text',
-  color: 'inherit',
-}
+
+const PlainTextButton = (props: ButtonProps) => (
+  <StyledPlainTextButton variant="text" color="inherit" {...props} />
+)
 
 export const SuggestionButton = styled(PlainTextButton)({
   gap: '0.2ch', // Space after icon

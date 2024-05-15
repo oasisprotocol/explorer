@@ -97,10 +97,6 @@ export const ExploreBtn = styled(Button)(({ theme }) => ({
     paddingRight: theme.spacing(6),
   },
 }))
-ExploreBtn.defaultProps = {
-  color: 'secondary',
-  variant: 'contained',
-}
 
 export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   color: theme.palette.layout.graphZoomOutText,
@@ -118,11 +114,7 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
     backgroundColor: 'transparent',
   },
 }))
-ZoomOutBtn.defaultProps = {
-  color: 'primary',
-  variant: 'text',
-  startIcon: <ChevronLeftIcon />,
-}
+
 const ZoomOutBtnFade = styled(Fade)(() => ({
   transitionDelay: '500ms !important',
 }))
@@ -267,13 +259,21 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
           </QuickPinchZoomOuter>
           {!isMobile && (
             <ZoomOutBtnFade in={graphZoomedIn}>
-              <ZoomOutBtn onClick={onZoomOutClick} disabled={disabled}>
+              <ZoomOutBtn
+                color="primary"
+                variant="text"
+                startIcon={<ChevronLeftIcon />}
+                onClick={onZoomOutClick}
+                disabled={disabled}
+              >
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
             </ZoomOutBtnFade>
           )}
           {isMobile && ParaTimeSelectorUtils.showExploreBtn(step) && (
             <ExploreBtn
+              color="secondary"
+              variant="contained"
               onClick={onExploreClick}
               aria-label={exploreBtnTextTranslated}
               sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
