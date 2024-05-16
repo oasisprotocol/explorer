@@ -27,8 +27,8 @@ export interface HighlightOptions {
 
 const defaultHighlightStyle: SxProps = {
   background: '#FFFF5480',
-  padding: '4px',
-  margin: '-4px',
+  padding: '2px',
+  margin: '-2px',
 }
 
 const defaultHighlight: HighlightOptions = {
