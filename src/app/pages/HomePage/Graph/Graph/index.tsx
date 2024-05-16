@@ -19,6 +19,7 @@ import { COLORS } from '../../../../../styles/theme/testnet/colors'
 import { useTranslation } from 'react-i18next'
 import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { SearchScope } from '../../../../../types/searchScope'
+import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
 
 interface GraphBaseProps {
   disabled?: boolean
@@ -29,23 +30,23 @@ interface GraphProps extends GraphBaseProps {
   network: Network
   scale: number
   // TODO: Consider moving this to a state management solution
-  selectedLayer?: Layer
-  setSelectedLayer: (value: Layer) => void
-  setActiveMobileGraphTooltip: (layer: { current: Layer | null }) => void
+  selectedArea?: SelectorArea
+  setSelectedArea: (value: SelectorArea) => void
+  setActiveMobileGraphTooltip: (area: { current: SelectorArea | null }) => void
   isZoomedIn: boolean
 }
 
 interface GraphStyledProps extends GraphBaseProps {
-  selectedLayer?: Layer
+  selectedArea?: SelectorArea
   hoveredLayer: Layer | null
 }
 
 const GraphStyled = styled('svg', {
   shouldForwardProp: prop =>
-    !(['disabled', 'transparent', 'selectedLayer', 'hoveredLayer'] as (keyof GraphStyledProps)[]).includes(
+    !(['disabled', 'transparent', 'selectedArea', 'hoveredLayer'] as (keyof GraphStyledProps)[]).includes(
       prop as keyof GraphStyledProps,
     ),
-})<GraphStyledProps>(({ theme, disabled, transparent, selectedLayer, hoveredLayer }) => ({
+})<GraphStyledProps>(({ theme, disabled, transparent, selectedArea, hoveredLayer }) => ({
   position: 'absolute',
   left: '50%',
   top: '45%',
@@ -66,9 +67,9 @@ const GraphStyled = styled('svg', {
     cursor: 'pointer',
   },
   path: {
-    ...(selectedLayer && selectedLayer !== Layer.consensus
+    ...(selectedArea && selectedArea !== Layer.consensus && selectedArea !== UniverseArea
       ? {
-          [`&:not(.${selectedLayer})`]: {
+          [`&:not(.${selectedArea})`]: {
             opacity: 0.5,
           },
           '&.status-icon': {
@@ -84,9 +85,9 @@ const GraphStyled = styled('svg', {
     'ellipse:last-child': {
       display: 'none',
     },
-    ...(selectedLayer && selectedLayer !== Layer.consensus
+    ...(selectedArea && selectedArea !== Layer.consensus && selectedArea !== UniverseArea
       ? {
-          [`&:not([id=${selectedLayer}-circle])`]: {
+          [`&:not([id=${selectedArea}-circle])`]: {
             opacity: 0.5,
           },
         }
@@ -260,9 +261,9 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
   {
     disabled = false,
     transparent = false,
-    selectedLayer,
+    selectedArea,
     network,
-    setSelectedLayer,
+    setSelectedArea,
     scale,
     setActiveMobileGraphTooltip,
     isZoomedIn,
@@ -293,7 +294,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
     return !RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer)
   }
 
-  const disabledMap: Partial<Record<Layer, boolean>> = {
+  const disabledMap: Partial<Record<SelectorArea, boolean>> = {
     [Layer.emerald]: isLayerDisabled(Layer.emerald),
     [Layer.consensus]: isLayerDisabled(Layer.consensus),
     [Layer.cipher]: isLayerDisabled(Layer.cipher),
@@ -302,25 +303,26 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
 
   const enabledLayers: Layer[] = useMemo(() => RouteUtils.getAllLayersForNetwork(network).enabled, [network])
 
-  const onSelectLayer = (layer: Layer) => {
-    if (isMobile && (isZoomedIn || layer === Layer.consensus)) {
-      setSelectedLayer(layer)
-      setActiveMobileGraphTooltip({ current: layer })
+  const onSelectArea = (area: SelectorArea) => {
+    if (isMobile && (isZoomedIn || area === Layer.consensus)) {
+      setSelectedArea(area)
+      setActiveMobileGraphTooltip({ current: area })
 
       return
     }
 
     if (
-      ((!isMobile && !isZoomedIn) || layer === selectedLayer) &&
-      RouteUtils.getAllLayersForNetwork(network).enabled.includes(layer)
+      ((!isMobile && !isZoomedIn) || area === selectedArea) &&
+      area !== UniverseArea &&
+      RouteUtils.getAllLayersForNetwork(network).enabled.includes(area)
     ) {
-      navigate(RouteUtils.getDashboardRoute({ network, layer }))
+      navigate(RouteUtils.getDashboardRoute({ network, layer: area }))
 
       return
     }
 
-    if (!disabledMap[layer]) {
-      setSelectedLayer(layer)
+    if (!disabledMap[area]) {
+      setSelectedArea(area)
     }
   }
 
@@ -392,7 +394,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         preserveAspectRatio="xMidYMid slice"
         ref={ref}
         className={network}
-        selectedLayer={selectedLayer}
+        selectedArea={selectedArea}
         hoveredLayer={hoveredLayer}
       >
         <path
@@ -539,7 +541,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.emerald}-circle`}
           aria-disabled={disabledMap[Layer.emerald]}
-          onClick={() => onSelectLayer(Layer.emerald)}
+          onClick={() => onSelectArea(Layer.emerald)}
           filter={graphTheme.emeraldCircleFilter}
           {...preventDoubleClick}
           {...handleHover(Layer.emerald, setHoveredLayer)}
@@ -560,7 +562,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.emerald}-label`}
           aria-disabled={disabledMap[Layer.emerald]}
-          onClick={() => onSelectLayer(Layer.emerald)}
+          onClick={() => onSelectArea(Layer.emerald)}
           {...preventDoubleClick}
           {...handleHover(Layer.emerald, setHoveredLayer)}
         >
@@ -596,7 +598,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.sapphire}-circle`}
           aria-disabled={disabledMap[Layer.sapphire]}
-          onClick={() => onSelectLayer(Layer.sapphire)}
+          onClick={() => onSelectArea(Layer.sapphire)}
           filter={graphTheme.sapphireCircleFilter}
           {...preventDoubleClick}
           {...handleHover(Layer.sapphire, setHoveredLayer)}
@@ -617,7 +619,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.sapphire}-label`}
           aria-disabled={disabledMap[Layer.sapphire]}
-          onClick={() => onSelectLayer(Layer.sapphire)}
+          onClick={() => onSelectArea(Layer.sapphire)}
           {...preventDoubleClick}
           {...handleHover(Layer.sapphire, setHoveredLayer)}
         >
@@ -651,7 +653,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         </g>
         <g
           id={`${Layer.consensus}-circle`}
-          onClick={() => onSelectLayer(Layer.consensus)}
+          onClick={() => onSelectArea(Layer.consensus)}
           aria-disabled={disabledMap[Layer.consensus]}
           {...handleHover(Layer.consensus, setHoveredLayer)}
         >
@@ -694,7 +696,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.consensus}-label`}
           aria-disabled={disabledMap[Layer.consensus]}
-          onClick={() => onSelectLayer(Layer.consensus)}
+          onClick={() => onSelectArea(Layer.consensus)}
           {...preventDoubleClick}
           {...handleHover(Layer.consensus, setHoveredLayer)}
         >
@@ -729,7 +731,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           filter={graphTheme.cipherCircleFilter}
           aria-disabled={disabledMap[Layer.cipher]}
-          onClick={() => onSelectLayer(Layer.cipher)}
+          onClick={() => onSelectArea(Layer.cipher)}
           id={`${Layer.cipher}-circle`}
           {...preventDoubleClick}
           {...handleHover(Layer.cipher, setHoveredLayer)}
@@ -750,7 +752,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
         <g
           id={`${Layer.cipher}-label`}
           aria-disabled={disabledMap[Layer.cipher]}
-          onClick={() => onSelectLayer(Layer.cipher)}
+          onClick={() => onSelectArea(Layer.cipher)}
           {...preventDoubleClick}
           {...handleHover(Layer.cipher, setHoveredLayer)}
         >

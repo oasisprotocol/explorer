@@ -19,6 +19,7 @@ import Fade from '@mui/material/Fade'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { zIndexHomePage } from '../../index'
+import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
 
 interface GraphTooltipStyledProps {
   isMobile: boolean
@@ -116,7 +117,7 @@ const MobileGraphTooltip = styled(Box)(({ theme }) => ({
 
 interface GraphTooltipMobileProps {
   network: Network
-  layer: Layer
+  area: SelectorArea
   onClose: (e?: MouseEvent) => void
 }
 
@@ -140,7 +141,7 @@ const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, o
       : t('common.paraTimeOnline')
 }
 
-const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo>> => {
+const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, TooltipInfo>> => {
   const isSapphireEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.sapphire)
   const isEmeraldEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.emerald)
   const isCipherEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.cipher)
@@ -206,10 +207,10 @@ const useLayerTooltipMap = (network: Network): Partial<Record<Layer, TooltipInfo
 interface GraphTooltipHeaderProps {
   disabled: boolean
   network: Network
-  layer: Layer
+  area: SelectorArea
 }
 
-const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, layer }) => {
+const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, area }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const icons = getNetworkIcons({ size: 38 })
@@ -226,7 +227,7 @@ const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, la
             color={COLORS.white}
             sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
           >
-            {layer === Layer.consensus ? t('home.tooltip.openConsensus') : t('home.tooltip.openParatime')}
+            {area === Layer.consensus ? t('home.tooltip.openConsensus') : t('home.tooltip.openParatime')}
           </Typography>
         </>
       )}
@@ -273,11 +274,11 @@ const GraphTooltipBody: FC<GraphTooltipBodyProps> = ({ title, caption, body, dis
   )
 }
 
-export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer, onClose }) => {
+export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, area, onClose }) => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const tooltip = useLayerTooltipMap(network)[layer]
+  const tooltip = useAreaTooltipMap(network)[area]
   if (!tooltip) return
   const { body, disabled, failing } = tooltip
 
@@ -285,8 +286,10 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
     if (disabled) {
       return
     }
-
-    navigate(RouteUtils.getDashboardRoute({ network, layer }))
+    if (area === UniverseArea) {
+      return
+    }
+    navigate(RouteUtils.getDashboardRoute({ network, layer: area }))
   }
 
   return (
@@ -298,7 +301,7 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, layer
             <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
           </IconButton>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-            <GraphTooltipHeader disabled={disabled} network={network} layer={layer} />
+            <GraphTooltipHeader disabled={disabled} network={network} area={area} />
             <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
           </GraphTooltipStyled>
         </MobileGraphTooltip>

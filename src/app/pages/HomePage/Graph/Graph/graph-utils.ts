@@ -1,9 +1,13 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
 import { Layer } from '../../../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../../../types/errors'
+import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
 
 export abstract class GraphUtils {
-  static getScaleTo(layer: Layer, { width, height }: { width?: number; height?: number }): ScaleToOptions {
+  static getScaleTo(
+    area: SelectorArea,
+    { width, height }: { width?: number; height?: number },
+  ): ScaleToOptions {
     const initialValue = {
       scale: 1,
       x: 0,
@@ -14,7 +18,7 @@ export abstract class GraphUtils {
       return initialValue
     }
 
-    switch (layer) {
+    switch (area) {
       case Layer.emerald:
         return {
           scale: 2.4,
@@ -27,10 +31,6 @@ export abstract class GraphUtils {
           x: 1.2 * width,
           y: 0.7 * height,
         }
-      case Layer.pontusx:
-        // TODO: update this if/when we want to display this layer
-        // We meed this case here since this switch/case is declared to be exhaustive.
-        return initialValue
       case Layer.sapphire:
         return {
           scale: 2.4,
@@ -43,8 +43,10 @@ export abstract class GraphUtils {
           x: 0.65 * width,
           y: 0.65 * height,
         }
+      case UniverseArea:
+        return initialValue
       default:
-        exhaustedTypeWarning('Unexpected layer', layer)
+        exhaustedTypeWarning('Unexpected area', area)
         return initialValue
     }
   }
