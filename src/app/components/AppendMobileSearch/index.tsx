@@ -7,6 +7,7 @@ import { SearchScope } from '../../../types/searchScope'
 
 interface AppendMobileSearchProps {
   action?: ReactNode
+  enableMobileSearch?: boolean
 }
 
 interface AppendMobileSearchLayoutProps {
@@ -41,6 +42,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
   scope,
   children,
   action,
+  enableMobileSearch = true,
 }) => {
   const { isMobile } = useScreenSize()
 
@@ -50,7 +52,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
 
       {action}
 
-      {isMobile && (
+      {isMobile && enableMobileSearch && (
         <SearchWrapper>
           <Search scope={scope} variant="expandable" />
         </SearchWrapper>

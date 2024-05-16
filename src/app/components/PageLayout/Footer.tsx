@@ -12,11 +12,13 @@ import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
 
-const FooterBox = styled(Box)(({ theme }) => ({
+const FooterBox = styled(Box, {
+  shouldForwardProp: prop => prop !== 'enableMobileSearch',
+})<{ enableMobileSearch: boolean }>(({ theme, enableMobileSearch }) => ({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
-  padding: theme.spacing(5, 4),
+  padding: theme.spacing(5, enableMobileSearch ? 4 : 0),
   [theme.breakpoints.up('sm')]: {
     flex: '0 1 100%',
     padding: theme.spacing(5, 0),
@@ -44,9 +46,10 @@ const StyledTypography = styled(Typography)(() => ({
 interface FooterProps {
   scope?: SearchScope
   mobileSearchAction?: ReactNode
+  enableMobileSearch?: boolean
 }
 
-export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
+export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobileSearch = true }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
@@ -56,9 +59,13 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction }) => {
 
   return (
     <footer>
-      <FooterBox>
+      <FooterBox enableMobileSearch={enableMobileSearch}>
         {isTablet ? (
-          <AppendMobileSearch scope={scope} action={isMobile && mobileSearchAction}>
+          <AppendMobileSearch
+            scope={scope}
+            action={isMobile && mobileSearchAction}
+            enableMobileSearch={enableMobileSearch}
+          >
             <StyledTypography variant="footer">
               <Box sx={{ whiteSpace: 'nowrap' }}>{t('footer.mobileTitle')} |</Box>
               <Box sx={privacyPolicyLinkStyles}>
