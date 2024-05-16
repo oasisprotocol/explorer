@@ -85,13 +85,15 @@ export const ProposalVotesView: FC = () => {
   const proposalId = parseInt(useParams().proposalId!, 10)
 
   const { clearFilters } = useVoteFiltering()
+  const results = useVotes(network, proposalId)
   const {
-    results,
     isLoading,
+    tablePaginationProps,
+    data: votes,
     hasNoResultsOnSelectedPage,
-    hasNoResultsBecauseOfFilters,
     hasNoResultsWhatsoever,
-  } = useVotes(network, proposalId)
+    hasNoResultsBecauseOfFilters,
+  } = results
 
   if (hasNoResultsOnSelectedPage) throw AppErrors.PageDoesNotExist
 
@@ -106,9 +108,9 @@ export const ProposalVotesView: FC = () => {
   return (
     <ProposalVotes
       isLoading={isLoading}
-      votes={results.data}
-      rowsNumber={results.tablePaginationProps.rowsPerPage}
-      pagination={results.tablePaginationProps}
+      votes={votes}
+      rowsNumber={tablePaginationProps.rowsPerPage}
+      pagination={tablePaginationProps}
     />
   )
 }
