@@ -6,13 +6,16 @@ import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { useTranslation } from 'react-i18next'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
-import { PAGE_SIZE, useAllVotes, useDisplayedVotes, useWantedVoteType } from './hooks'
+import { useVotes, useVoteFiltering } from './hooks'
 import { ProposalVoteIndicator } from '../../components/Proposals/ProposalVoteIndicator'
 import { DeferredValidatorLink } from '../../components/Validators/DeferredValidatorLink'
 import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
 import { VoteTypeFilter } from '../../components/Proposals/VoteTypeFilter'
 import { AppErrors } from '../../../types/errors'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import Box from '@mui/material/Box'
+import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
+import { CardEmptyState } from '../../components/CardEmptyState'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -24,6 +27,8 @@ type ProposalVotesProps = {
 const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, pagination }) => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
+
+  const { wantedNamePattern } = useVoteFiltering()
 
   const tableColumns: TableColProps[] = [
     { key: 'index', content: <></>, width: '50px' },
@@ -46,6 +51,7 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, p
               address={vote.address}
               isError={vote.haveValidatorsFailed}
               validator={vote.validator}
+              highlightedPart={wantedNamePattern}
             />
           ),
         },
@@ -74,22 +80,35 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, p
 }
 
 export const ProposalVotesView: FC = () => {
+  const { t } = useTranslation()
   const { network } = useRequiredScopeParam()
   const proposalId = parseInt(useParams().proposalId!, 10)
 
-  const { isLoading } = useAllVotes(network, proposalId)
-  const displayedVotes = useDisplayedVotes(network, proposalId)
+  const { clearFilters } = useVoteFiltering()
+  const {
+    results,
+    isLoading,
+    hasNoResultsOnSelectedPage,
+    hasNoResultsBecauseOfFilters,
+    hasNoResultsWhatsoever,
+  } = useVotes(network, proposalId)
 
-  if (!isLoading && displayedVotes.tablePaginationProps.selectedPage > 1 && !displayedVotes.data?.length) {
-    throw AppErrors.PageDoesNotExist
+  if (hasNoResultsOnSelectedPage) throw AppErrors.PageDoesNotExist
+
+  if (hasNoResultsBecauseOfFilters) {
+    return <NoMatchingDataMaybeClearFilters clearFilters={clearFilters} />
+  }
+
+  if (hasNoResultsWhatsoever) {
+    return <CardEmptyState label={t('networkProposal.thereAreNoVotes')} />
   }
 
   return (
     <ProposalVotes
       isLoading={isLoading}
-      votes={displayedVotes.data}
-      rowsNumber={PAGE_SIZE}
-      pagination={displayedVotes.tablePaginationProps}
+      votes={results.data}
+      rowsNumber={results.tablePaginationProps.rowsPerPage}
+      pagination={results.tablePaginationProps}
     />
   )
 }
@@ -97,18 +116,30 @@ export const ProposalVotesView: FC = () => {
 export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
 
-  const [wantedVoteType, setWantedVoteType] = useWantedVoteType()
+  const { wantedType, setWantedType, wantedNameInput, setWantedNameInput, nameError } = useVoteFiltering()
 
   return (
     <SubPageCard>
       <CardHeaderWithResponsiveActions
-        action={<VoteTypeFilter onSelect={setWantedVoteType} value={wantedVoteType} />}
+        action={
+          <>
+            <TableSearchBar
+              value={wantedNameInput}
+              onChange={setWantedNameInput}
+              placeholder={t('networkProposal.searchForVoter')}
+              warning={nameError}
+            />
+            <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
+          </>
+        }
         disableTypography
         component="h3"
         title={t('common.votes')}
       />
       <ErrorBoundary light={true}>
-        <ProposalVotesView />
+        <Box sx={{ height: '704px' }}>
+          <ProposalVotesView />
+        </Box>
       </ErrorBoundary>
     </SubPageCard>
   )

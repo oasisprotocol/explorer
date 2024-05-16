@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -23,11 +23,22 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 type CardEmptyStateProps = {
   label: string
+  action?: ReactNode
 }
 
-export const CardEmptyState: FC<CardEmptyStateProps> = ({ label }) => (
+export const CardEmptyState: FC<CardEmptyStateProps> = ({ label, action }) => (
   <StyledBox>
     <ReportProblemIcon sx={{ color: COLORS.warningColor, fontSize: '60px' }} />
-    <Typography sx={{ color: COLORS.grayDark }}>{label}</Typography>
+    <Typography
+      sx={{
+        color: COLORS.grayDark,
+        display: 'block',
+        alignItems: 'center',
+        verticalAlign: 'middle',
+      }}
+    >
+      {label}
+      {action}
+    </Typography>
   </StyledBox>
 )

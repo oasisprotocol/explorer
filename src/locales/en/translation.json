@@ -188,6 +188,7 @@
     "createTooltip": "Voting created on epoch shown.",
     "deposit": "Deposit",
     "failedToLoadAllVotes": "Failed to load all the votes, number might be incomplete!",
+    "thereAreNoVotes": "No votes have been registered.",
     "handler": "Title",
     "id": "ID",
     "listTitle": "Network Change Proposals",
@@ -197,6 +198,7 @@
       "passed": "Passed",
       "rejected": "Rejected"
     },
+    "searchForVoter": "Search for voter",
     "type": {
       "upgrade": "Upgrade",
       "parameterUpgrade": "Parameter upgrade",
@@ -612,6 +614,13 @@
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
     "searchSuggestionsForNoResults": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>",
     "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
+  },
+  "tableSearch": {
+    "error": {
+      "tooShort": "Please enter at least 3 characters to perform a search."
+    },
+    "noMatchingResults": "There are no results matching your filters.",
+    "clearFilters": "Clear filters"
   },
   "validator": {
     "active": "Active",
