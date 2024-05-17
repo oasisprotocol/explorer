@@ -52,6 +52,9 @@ const SearchForm = styled('form', {
               display: 'none',
             },
             [`.${inputAdornmentClasses.positionEnd}`]: {
+              'button[type="button"]': {
+                display: 'none',
+              },
               marginLeft: 0,
             },
           },
@@ -139,7 +142,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
 
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    if (value) {
+    if (value && value !== valueInSearchParams) {
       navigate(RouteUtils.getSearchRoute(scope, valueWithoutPrefix))
     }
   }

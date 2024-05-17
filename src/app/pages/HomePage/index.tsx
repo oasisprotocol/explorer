@@ -183,7 +183,7 @@ export const HomePage: FC = () => {
         </Content>
 
         <FooterStyled>
-          <Footer />
+          <Footer enableMobileSearch={false} />
         </FooterStyled>
       </HomepageLayout>
     </>
