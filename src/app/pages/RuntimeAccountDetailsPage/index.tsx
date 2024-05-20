@@ -14,7 +14,7 @@ import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
-import { AccountDetailsCard } from './AccountDetailsCard'
+import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { AccountEventsCard } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
@@ -55,7 +55,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <AccountDetailsCard
+      <RuntimeAccountDetailsCard
         isLoading={isLoading}
         isError={isError}
         isContract={isContract}

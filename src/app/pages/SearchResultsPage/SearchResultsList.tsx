@@ -4,7 +4,7 @@ import { ResultsGroupByType } from './ResultsGroupByType'
 import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
-import { AccountDetailsView } from '../RuntimeAccountDetailsPage/AccountDetailsView'
+import { RuntimeAccountDetailsView } from '../RuntimeAccountDetailsPage/RuntimeAccountDetailsView'
 import {
   AccountResult,
   BlockResult,
@@ -82,7 +82,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item => (
-            <AccountDetailsView
+            <RuntimeAccountDetailsView
               isLoading={false}
               isError={false}
               account={item}
@@ -98,7 +98,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.contracts.title')}
           results={searchResults.filter((item): item is ContractResult => item.resultType === 'contract')}
           resultComponent={item => (
-            <AccountDetailsView
+            <RuntimeAccountDetailsView
               isLoading={false}
               isError={false}
               account={item}

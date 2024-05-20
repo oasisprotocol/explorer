@@ -24,7 +24,7 @@ import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
 import { getFiatCurrencyForScope, getTokensForScope, showFiatValues } from '../../../config'
 
-type AccountProps = {
+type RuntimeAccountDataProps = {
   account?: RuntimeAccount
   token?: EvmToken
   isLoading: boolean
@@ -32,7 +32,13 @@ type AccountProps = {
   showLayer?: boolean
 }
 
-export const Account: FC<AccountProps> = ({ account, token, isLoading, tokenPrices, showLayer }) => {
+export const RuntimeAccountData: FC<RuntimeAccountDataProps> = ({
+  account,
+  token,
+  isLoading,
+  tokenPrices,
+  showLayer,
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const address = account ? account.address_eth ?? account.address : undefined

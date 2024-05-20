@@ -2,10 +2,10 @@ import { FC } from 'react'
 import { SubPageCard } from '../../components/SubPageCard'
 import { useTranslation } from 'react-i18next'
 import { EvmToken, RuntimeAccount } from '../../../oasis-nexus/api'
-import { AccountDetailsView } from './AccountDetailsView'
+import { RuntimeAccountDetailsView } from './RuntimeAccountDetailsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 
-type AccountDetailsProps = {
+type RuntimeAccountDetailsProps = {
   isLoading: boolean
   isError: boolean
   isContract: boolean
@@ -14,7 +14,7 @@ type AccountDetailsProps = {
   tokenPrices: AllTokenPrices
 }
 
-export const AccountDetailsCard: FC<AccountDetailsProps> = ({
+export const RuntimeAccountDetailsCard: FC<RuntimeAccountDetailsProps> = ({
   isLoading,
   isError,
   isContract,
@@ -30,7 +30,7 @@ export const AccountDetailsCard: FC<AccountDetailsProps> = ({
       title={isContract ? t('contract.title') : t('account.title')}
       mainTitle
     >
-      <AccountDetailsView
+      <RuntimeAccountDetailsView
         isLoading={isLoading}
         isError={isError}
         account={account}
