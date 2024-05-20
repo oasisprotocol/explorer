@@ -5,6 +5,7 @@ import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { RuntimeAccountDetailsView } from '../RuntimeAccountDetailsPage/RuntimeAccountDetailsView'
+import { ConsensusAccountDetailsView } from '../ConsensusAccountDetailsPage/ConsensusAccountDetailsView'
 import {
   AccountResult,
   BlockResult,
@@ -21,6 +22,7 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
+import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
 
 /**
  * Component for displaying a list of search results
@@ -81,16 +83,25 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
-          resultComponent={item => (
-            <RuntimeAccountDetailsView
-              isLoading={false}
-              isError={false}
-              account={item}
-              tokenPrices={tokenPrices}
-              showLayer={true}
-            />
-          )}
-          link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
+          resultComponent={item =>
+            item.layer === Layer.consensus ? (
+              <ConsensusAccountDetailsView
+                isLoading={false}
+                isError={false}
+                account={item as Account}
+                showLayer={true}
+              />
+            ) : (
+              <RuntimeAccountDetailsView
+                isLoading={false}
+                isError={false}
+                account={item as RuntimeAccount}
+                tokenPrices={tokenPrices}
+                showLayer={true}
+              />
+            )
+          }
+          link={acc => RouteUtils.getAccountRoute(acc, (acc as RuntimeAccount).address_eth ?? acc.address)}
           linkLabel={t('search.results.accounts.viewLink')}
         />
 

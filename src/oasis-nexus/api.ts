@@ -5,6 +5,7 @@ import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config
 import * as generated from './generated/api'
 import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
+  Account,
   EvmToken,
   EvmTokenType,
   GetRuntimeAccountsAddress,
@@ -107,15 +108,30 @@ declare module './generated/api' {
   }
 }
 
-export const isAccountEmpty = (account: RuntimeAccount) => {
-  const { balances, evm_balances, stats } = account
-  const { total_received, total_sent, num_txns } = stats
-  const hasNoBalances = [...balances, ...evm_balances].every(b => b.balance === '0' || b.balance === '0.0')
-  const hasNoTransactions = total_received === '0' && total_sent === '0' && num_txns === 0
-  return hasNoBalances && hasNoTransactions
+export const isAccountEmpty = (account: RuntimeAccount | Account) => {
+  if (account.layer === Layer.consensus) {
+    const { available, size, nonce, debonding_delegations_balance, delegations_balance, escrow, total } =
+      account as Account
+    return (
+      available === '0' &&
+      debonding_delegations_balance === '0' &&
+      delegations_balance === '0' &&
+      escrow === '0' &&
+      total === '0' &&
+      nonce === 0 &&
+      size === 'XXS'
+    )
+    // TODO: we should also check the number of transactions, where it becomes available
+  } else {
+    const { balances, evm_balances, stats } = account as RuntimeAccount
+    const { total_received, total_sent, num_txns } = stats
+    const hasNoBalances = [...balances, ...evm_balances].every(b => b.balance === '0' || b.balance === '0.0')
+    const hasNoTransactions = total_received === '0' && total_sent === '0' && num_txns === 0
+    return hasNoBalances && hasNoTransactions
+  }
 }
 
-export const isAccountNonEmpty = (account: RuntimeAccount) => !isAccountEmpty(account)
+export const isAccountNonEmpty = (account: RuntimeAccount | Account) => !isAccountEmpty(account)
 
 export const groupAccountTokenBalances = (account: Omit<RuntimeAccount, 'tokenBalances'>): RuntimeAccount => {
   const tokenBalances: Partial<Record<generated.EvmTokenType, generated.RuntimeEvmBalance[]>> = {}

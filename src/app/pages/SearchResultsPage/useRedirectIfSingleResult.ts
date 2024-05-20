@@ -5,6 +5,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { RuntimeAccount } from '../../../oasis-nexus/api'
 
 /** If search only finds one result then redirect to it */
 export function useRedirectIfSingleResult(
@@ -33,7 +34,7 @@ export function useRedirectIfSingleResult(
         redirectTo = RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)
         break
       case 'account':
-        redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
+        redirectTo = RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
         break
       case 'contract':
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
