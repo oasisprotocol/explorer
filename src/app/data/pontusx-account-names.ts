@@ -87,8 +87,6 @@ export const useSearchForPontusXAccountsByName = (
           }),
         )
 
-  if (matches?.length) console.log('PontusX matches to load:', matches)
-
   const {
     isLoading: areAccountsLoading,
     isError: areAccountsError,

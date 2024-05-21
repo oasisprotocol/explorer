@@ -309,8 +309,8 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
   return generated.useGetConsensusAccountsAddress(network, address, {
     ...options,
     query: {
-      ...options?.query,
-      queryKey: [network, Layer.consensus, 'accounts', 'byAddress', address],
+      ...(options?.query ?? {}),
+      enabled: !!address && (options?.query?.enabled ?? true),
     },
     request: {
       ...options?.request,
@@ -357,7 +357,6 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
     query: {
       ...(options?.query ?? {}),
       enabled: !!oasisAddress && (options?.query?.enabled ?? true),
-      queryKey: [network, runtime, 'accounts', 'byAddress', address],
     },
     request: {
       ...options?.request,
@@ -470,8 +469,7 @@ export const useGetRuntimeAccountsAddresses = (
   )
   return {
     isLoading: !!targets?.length && queries.some(query => query.isLoading && query.fetchStatus !== 'idle'),
-    isError: queries.some(query => query.isError),
-    isFetched: !queries.some(query => !query.isFetched),
+    isError: queries.some(query => query.isError) || targets?.length > MAX_LOADED_ADDRESSES,
     data: queries.map(query => query.data?.data).filter(account => !!account) as RuntimeAccount[],
   }
 }
@@ -495,8 +493,7 @@ export const useGetConsensusAccountsAddresses = (
 
   return {
     isLoading: !!targets?.length && queries.some(query => query.isLoading && query.fetchStatus !== 'idle'),
-    isError: queries.some(query => query.isError),
-    isFetched: !queries.some(query => !query.isFetched),
+    isError: queries.some(query => query.isError) || targets?.length > MAX_LOADED_ADDRESSES,
     data: queries.map(query => query.data?.data).filter(account => !!account) as generated.Account[],
   }
 }
