@@ -17,7 +17,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
 }) => {
   const { t } = useTranslation()
 
-  if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
+  if (isError || (!isLoading && !account)) return <CardEmptyState label={t('account.cantLoadDetails')} />
 
   return (
     <ConsensusAccountData
