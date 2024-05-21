@@ -3,9 +3,9 @@ import { EvmToken, RuntimeAccount } from '../../../oasis-nexus/api'
 import { useTranslation } from 'react-i18next'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { Account } from '../../components/Account'
+import { RuntimeAccountData } from '../../components/Account'
 
-export const AccountDetailsView: FC<{
+export const RuntimeAccountDetailsView: FC<{
   isLoading: boolean
   isError: boolean
   account: RuntimeAccount | undefined
@@ -17,7 +17,7 @@ export const AccountDetailsView: FC<{
   return isError ? (
     <CardEmptyState label={t('account.cantLoadDetails')} />
   ) : (
-    <Account
+    <RuntimeAccountData
       account={account}
       token={token}
       isLoading={isLoading}

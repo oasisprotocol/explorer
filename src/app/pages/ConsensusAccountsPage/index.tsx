@@ -14,7 +14,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { VerticalList } from '../../components/VerticalList'
 import { AccountList } from 'app/components/AccountList'
-import { ConsensusAccountDetailsView } from '../ConsensusAccountDetailsPage'
+import { ConsensusAccountDetailsView } from '../ConsensusAccountDetailsPage/ConsensusAccountDetailsView'
 
 export const ConsensusAccountsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)

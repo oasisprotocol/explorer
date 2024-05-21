@@ -90,6 +90,7 @@
     "height": "Height",
     "hide": "Hide",
     "invalidVotes": "Invalid votes",
+    "layer": "Layer",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "method": "Method",
