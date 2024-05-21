@@ -23,26 +23,32 @@ import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
 import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
 import { getFiatCurrencyForScope, getTokensForScope, showFiatValues } from '../../../config'
+import { CardEmptyState } from '../CardEmptyState'
 
-type RuntimeAccountDataProps = {
+type RuntimeAccountDetailsViewProps = {
+  isLoading?: boolean
+  isError?: boolean
   account?: RuntimeAccount
   token?: EvmToken
-  isLoading: boolean
   tokenPrices: AllTokenPrices
   showLayer?: boolean
-  highlightedPartOfName: string | undefined
+  highlightedPartOfName?: string
 }
 
-export const RuntimeAccountData: FC<RuntimeAccountDataProps> = ({
+export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   account,
   token,
   isLoading,
+  isError,
   tokenPrices,
   showLayer,
   highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+
+  if (isError) return <CardEmptyState label={t('account.cantLoadDetails')} />
+
   const address = account ? account.address_eth ?? account.address : undefined
 
   const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { SubPageCard } from '../../components/SubPageCard'
 import { useTranslation } from 'react-i18next'
 import { EvmToken, RuntimeAccount } from '../../../oasis-nexus/api'
-import { RuntimeAccountDetailsView } from './RuntimeAccountDetailsView'
+import { RuntimeAccountDetailsView } from '../../components/Account/RuntimeAccountDetailsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 
 type RuntimeAccountDetailsProps = {
