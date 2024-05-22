@@ -1143,6 +1143,10 @@ export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 export interface ProposalVote {
   /** The staking address casting this vote. */
   address: string;
+  /** The block height at which this vote was recorded. */
+  height?: number;
+  /** The second-granular consensus time of the block in which this vote was cast. */
+  timestamp?: string;
   /** The vote cast. */
   vote: string;
 }
