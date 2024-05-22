@@ -1543,6 +1543,8 @@ export const ConsensusEventType = {
   roothashexecution_discrepancy: 'roothash.execution_discrepancy',
   roothashexecutor_committed: 'roothash.executor_committed',
   roothashfinalized: 'roothash.finalized',
+  roothashmessage: 'roothash.message',
+  roothashin_msg_processed: 'roothash.in_msg_processed',
   stakingallowance_change: 'staking.allowance_change',
   stakingburn: 'staking.burn',
   stakingescrowadd: 'staking.escrow.add',
