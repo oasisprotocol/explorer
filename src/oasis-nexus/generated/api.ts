@@ -1567,6 +1567,20 @@ This object will conform to one of the `*Event` types two levels down
 the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
  */
   body: ConsensusEventBody;
+  /** The runtime to which the event relates.
+Present only for events of type `roothash.*`.
+ */
+  roothash_runtime?: Runtime;
+  /** The ID of the runtime to which the event relates, encoded in hex.
+Present only for events of type `roothash.*`.
+ */
+  roothash_runtime_id?: string;
+  /** When applicable, the round in the runtime to which this event
+relates.
+Present only for events of type `roothash.*` except for
+`roothash.execution_discrepancy` before Eden.
+ */
+  roothash_runtime_round?: number;
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
