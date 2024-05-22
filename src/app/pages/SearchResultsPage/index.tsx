@@ -16,7 +16,7 @@ export const SearchResultsPage: FC = () => {
   return (
     <SearchResultsView
       wantedScope={scope}
-      searchTerm={searchParams.searchTerm}
+      searchParams={searchParams}
       searchResults={results}
       isLoading={isLoading}
       isPotentiallyIncomplete={hasErrors}

@@ -6,14 +6,17 @@ import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { RuntimeAccount } from '../../../oasis-nexus/api'
+import { SearchParams } from '../../components/Search/search-utils'
 
 /** If search only finds one result then redirect to it */
 export function useRedirectIfSingleResult(
   scope: SearchScope | undefined,
-  searchTerm: string,
+  searchParams: SearchParams,
   results: SearchResults,
 ) {
   const navigate = useNavigate()
+
+  const { searchTerm } = searchParams
 
   let shouldRedirect = results.length === 1
 

@@ -10,15 +10,16 @@ import { ScopedSearchResultsView } from './ScopedSearchResultsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { getFilterForLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { SearchParams } from '../../components/Search/search-utils'
 
 export const SearchResultsView: FC<{
   wantedScope?: SearchScope
-  searchTerm: string
+  searchParams: SearchParams
   searchResults: SearchResults
   isLoading: boolean
   isPotentiallyIncomplete: boolean
   tokenPrices: AllTokenPrices
-}> = ({ wantedScope, searchTerm, searchResults, isLoading, isPotentiallyIncomplete, tokenPrices }) => {
+}> = ({ wantedScope, searchParams, searchResults, isLoading, isPotentiallyIncomplete, tokenPrices }) => {
   const { isMobile } = useScreenSize()
   return (
     <PageLayout>
@@ -30,14 +31,14 @@ export const SearchResultsView: FC<{
       ) : wantedScope ? (
         <ScopedSearchResultsView
           wantedScope={wantedScope}
-          searchTerm={searchTerm}
+          searchParams={searchParams}
           searchResults={searchResults.filter(getFilterForLayer(wantedScope.layer))}
           isPotentiallyIncomplete={isPotentiallyIncomplete}
           tokenPrices={tokenPrices}
         />
       ) : (
         <GlobalSearchResultsView
-          searchTerm={searchTerm}
+          searchParams={searchParams}
           searchResults={searchResults}
           isPotentiallyIncomplete={isPotentiallyIncomplete}
           tokenPrices={tokenPrices}
