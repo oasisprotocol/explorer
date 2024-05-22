@@ -5,7 +5,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
-import { RuntimeAccount } from '../../../oasis-nexus/api'
+import { Account, RuntimeAccount } from '../../../oasis-nexus/api'
 import { SearchParams } from '../../components/Search/search-utils'
 
 /** If search only finds one result then redirect to it */
@@ -16,7 +16,7 @@ export function useRedirectIfSingleResult(
 ) {
   const navigate = useNavigate()
 
-  const { searchTerm } = searchParams
+  const { searchTerm, accountNameFragment, evmAccount, consensusAccount } = searchParams
 
   let shouldRedirect = results.length === 1
 
@@ -37,7 +37,17 @@ export function useRedirectIfSingleResult(
         redirectTo = RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)
         break
       case 'account':
-        redirectTo = `${RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)}?q=${searchTerm}`
+        redirectTo = RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
+        if (
+          accountNameFragment && // Is there anything to highlight?
+          !(
+            (!!evmAccount && (item as RuntimeAccount).address_eth === evmAccount) || // Did we find this searching for evm address
+            // Did we find this searching for oasis address
+            (!!consensusAccount && (item as Account | RuntimeAccount).address === consensusAccount)
+          ) // If we found this account based on address, then we don't want to highlight that.
+        ) {
+          redirectTo += `?q=${accountNameFragment}`
+        }
         break
       case 'contract':
         redirectTo = RouteUtils.getAccountRoute(item, item.address_eth ?? item.address)
