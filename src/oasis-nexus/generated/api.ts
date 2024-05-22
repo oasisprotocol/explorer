@@ -656,9 +656,9 @@ export interface TxVolumeList {
 export interface AccountStats {
   /** The total number of transactions this account was involved with. */
   num_txns: number;
-  /** The total number of tokens received, in base units. */
+  /** The total amount of native tokens received, in base units. */
   total_received: TextBigInt;
-  /** The total number of tokens sent, in base units. */
+  /** The total amount of native tokens sent, in base units. */
   total_sent: TextBigInt;
 }
 
@@ -713,6 +713,7 @@ Affects display only. Often equals 18, to match ETH.
   /** Whether the contract has been successfully verified by Sourcify.
 Additional information on verified contracts is available via
 the `/{runtime}/accounts/{address}` endpoint.
+DEPRECATED: This field will be removed in the future in favor of verification_level
  */
   is_verified: boolean;
   /** Name of the token, as provided by token contract's `name()` method. */
@@ -733,6 +734,7 @@ ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
 detected or is not supported, this field will be null/absent.
  */
   type: EvmTokenType;
+  verification_level?: VerificationLevel;
 }
 
 /**
@@ -938,6 +940,21 @@ Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi
  */
 export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
 
+/**
+ * The level of verification of a smart contract, as defined by Sourcify.
+An absence of this field means that the contract has not been verified.
+See also https://docs.sourcify.dev/docs/full-vs-partial-match/
+
+ */
+export type VerificationLevel = typeof VerificationLevel[keyof typeof VerificationLevel];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const VerificationLevel = {
+  partial: 'partial',
+  full: 'full',
+} as const;
+
 export interface RuntimeEvmContractVerification {
   /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
 Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
@@ -946,6 +963,7 @@ Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi
   /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
  */
   source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
+  verification_level?: VerificationLevel;
 }
 
 export interface RuntimeEvmContract {
@@ -1028,11 +1046,13 @@ export const RuntimeEventType = {
 } as const;
 
 /**
- * The decoded event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+ * The decoded event contents, possibly augmented with additional address info.
+This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
-OR `evm > Event`.
+OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
+will add a field specifying the corresponding Ethereum address, if known. Currently, 
+the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
 export type RuntimeEventBody = { [key: string]: any };
@@ -1041,11 +1061,13 @@ export type RuntimeEventBody = { [key: string]: any };
  * An event emitted by the runtime layer
  */
 export interface RuntimeEvent {
-  /** The decoded event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+  /** The decoded event contents, possibly augmented with additional address info.
+This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
-OR `evm > Event`.
+OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
+will add a field specifying the corresponding Ethereum address, if known. Currently, 
+the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
   /** Ethereum trasnsaction hash of this event's originating transaction.
@@ -1056,7 +1078,7 @@ Absent if the event did not originate from an EVM transaction.
 evm event, e.g. `Transfer`. 
 Absent if the event type is not `evm.log`.
  */
-  evm_log_name?: string | null;
+  evm_log_name?: string;
   /** The decoded `evm.log` event data.
 Absent if the event type is not `evm.log`.
  */
@@ -1070,7 +1092,7 @@ Absent if the event type is not `evm.log`.
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
-  tx_hash?: string | null;
+  tx_hash?: string;
   /** 0-based index of this event's originating transaction within its block.
 Absent if the event did not originate from a transaction.
  */
@@ -1121,6 +1143,10 @@ export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 export interface ProposalVote {
   /** The staking address casting this vote. */
   address: string;
+  /** The block height at which this vote was recorded. */
+  height?: number;
+  /** The second-granular consensus time of the block in which this vote was cast. */
+  timestamp?: string;
   /** The vote cast. */
   vote: string;
 }
@@ -1262,7 +1288,7 @@ For efficiency, this field is omitted when listing multiple-accounts.
   delegations_balance?: TextBigInt;
   /** The active escrow balance, in base units. */
   escrow: TextBigInt;
-  /** A nonce used to prevent replay. */
+  /** The expected nonce for the next transaction (= last used nonce + 1) */
   nonce: number;
 }
 
@@ -1361,7 +1387,7 @@ is the Ethereum address (in base64, not hex!).
  */
   context: AddressDerivationContext;
   /** Version of the `context`. */
-  context_version?: number | null;
+  context_version?: number;
 }
 
 /**
@@ -1525,6 +1551,8 @@ export const ConsensusEventType = {
   roothashexecution_discrepancy: 'roothash.execution_discrepancy',
   roothashexecutor_committed: 'roothash.executor_committed',
   roothashfinalized: 'roothash.finalized',
+  roothashmessage: 'roothash.message',
+  roothashin_msg_processed: 'roothash.in_msg_processed',
   stakingallowance_change: 'staking.allowance_change',
   stakingburn: 'staking.burn',
   stakingescrowadd: 'staking.escrow.add',
@@ -1547,14 +1575,28 @@ This object will conform to one of the `*Event` types two levels down
 the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
  */
   body: ConsensusEventBody;
+  /** The runtime to which the event relates.
+Present only for events of type `roothash.*`.
+ */
+  roothash_runtime?: Runtime;
+  /** The ID of the runtime to which the event relates, encoded in hex.
+Present only for events of type `roothash.*`.
+ */
+  roothash_runtime_id?: string;
+  /** When applicable, the round in the runtime to which this event
+relates.
+Present only for events of type `roothash.*` except for
+`roothash.execution_discrepancy` before Eden.
+ */
+  roothash_runtime_round?: number;
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
-  tx_hash?: string | null;
+  tx_hash?: string;
   /** 0-based index of this event's originating transaction within its block.
 Absent if the event did not originate from a transaction.
  */
-  tx_index?: number | null;
+  tx_index?: number;
   /** The type of the event. */
   type: ConsensusEventType;
 }
@@ -1585,6 +1627,11 @@ data origin is not tracked and error information can be faked.
  */
   revert_params?: EvmAbiParam[];
 }
+
+/**
+ * The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables).
+ */
+export type TransactionBody = { [key: string]: any };
 
 /**
  * A list of consensus transactions.
@@ -1624,8 +1671,8 @@ export const ConsensusTxMethod = {
 export interface Transaction {
   /** The block height at which this transaction was executed. */
   block: number;
-  /** The method call body. */
-  body: string;
+  /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
+  body: TransactionBody;
   /** Error details of a failed transaction. */
   error?: TxError;
   /** The fee that this transaction's sender committed
