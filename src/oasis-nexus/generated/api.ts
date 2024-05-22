@@ -112,7 +112,7 @@ offset?: number;
 /**
  * Only return NFT instances from the token contract at the given staking address.
  */
-token_address?: StakingAddress;
+token_address?: EthOrOasisAddress;
 };
 
 export type GetRuntimeEvmTokensAddressNftsParams = {
@@ -201,7 +201,7 @@ this account. For example, for a `accounts.Transfer` event, this will be
 the sender or the recipient of tokens.
 
  */
-rel?: string;
+rel?: EthOrOasisAddress;
 /**
  * A filter on the evm log signatures.
 Note: The filter will only match on parsed (verified) EVM events.
@@ -210,10 +210,10 @@ Note: The filter will only match on parsed (verified) EVM events.
 evm_log_signature?: string;
 /**
  * A filter on a smart contract. Every returned event will have been
-emitted by the contract at this Oasis address.
+emitted by the contract at this address.
 
  */
-contract_address?: string;
+contract_address?: EthOrOasisAddress;
 /**
  * A filter on NFT events. Every returned event will be specifically
 about this NFT instance ID. You must specify the contract_address
@@ -260,11 +260,9 @@ this account in a way. For example, for an `accounts.Transfer` tx, this will be
 the sender or the recipient of tokens.
 Nexus detects related accounts inside EVM transactions and events on a
 best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
-However, you must provide the Oasis-style derived address here, not the Eth address.
-See `AddressPreimage` for more info on Oasis-style vs Eth addresses.
 
  */
-rel?: StakingAddress;
+rel?: EthOrOasisAddress;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -1804,6 +1802,8 @@ export type CallFormat = string;
  * A base64-encoded ed25519 public key.
  */
 export type Ed25519PubKey = string;
+
+export type EthOrOasisAddress = string;
 
 /**
  * An Oasis-style (bech32) address.
@@ -3766,7 +3766,7 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof GetRunt
 export const GetRuntimeEvmTokensAddress = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>,signal?: AbortSignal
 ) => {
       
@@ -3780,14 +3780,14 @@ export const GetRuntimeEvmTokensAddress = (
 
 export const getGetRuntimeEvmTokensAddressQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,) => {
+    address: EthOrOasisAddress,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}`] as const;
     }
 
     
 export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3814,7 +3814,7 @@ export type GetRuntimeEvmTokensAddressQueryError = HumanReadableErrorResponse | 
 export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3838,7 +3838,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const GetRuntimeEvmTokensAddressHolders = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>,signal?: AbortSignal
 ) => {
@@ -3854,7 +3854,7 @@ export const GetRuntimeEvmTokensAddressHolders = (
 
 export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/holders`, ...(params ? [params]: [])] as const;
     }
@@ -3862,7 +3862,7 @@ export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' 
     
 export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
 ) => {
 
@@ -3892,7 +3892,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3917,7 +3917,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const GetRuntimeEvmTokensAddressNfts = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -3933,7 +3933,7 @@ export const GetRuntimeEvmTokensAddressNfts = (
 
 export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/nfts`, ...(params ? [params]: [])] as const;
     }
@@ -3941,7 +3941,7 @@ export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | '
     
 export const getGetRuntimeEvmTokensAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
 ) => {
 
@@ -3971,7 +3971,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3995,7 +3995,7 @@ export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typ
 export const GetRuntimeEvmTokensAddressNftsId = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>,signal?: AbortSignal
 ) => {
@@ -4010,7 +4010,7 @@ export const GetRuntimeEvmTokensAddressNftsId = (
 
 export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}/nfts/${id}`] as const;
     }
@@ -4018,7 +4018,7 @@ export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' |
     
 export const getGetRuntimeEvmTokensAddressNftsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
 ) => {
 
@@ -4047,7 +4047,7 @@ export type GetRuntimeEvmTokensAddressNftsIdQueryError = HumanReadableErrorRespo
 export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -4070,7 +4070,7 @@ export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<t
 export const GetRuntimeAccountsAddress = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
  options?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>,signal?: AbortSignal
 ) => {
       
@@ -4084,14 +4084,14 @@ export const GetRuntimeAccountsAddress = (
 
 export const getGetRuntimeAccountsAddressQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,) => {
+    address: EthOrOasisAddress,) => {
     return [`/${network}/${runtime}/accounts/${address}`] as const;
     }
 
     
 export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -4118,7 +4118,7 @@ export type GetRuntimeAccountsAddressQueryError = HumanReadableErrorResponse | N
 export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -4141,7 +4141,7 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof G
 export const GetRuntimeAccountsAddressNfts = (
     network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,
  options?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -4157,7 +4157,7 @@ export const GetRuntimeAccountsAddressNfts = (
 
 export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,) => {
     return [`/${network}/${runtime}/accounts/${address}/nfts`, ...(params ? [params]: [])] as const;
     }
@@ -4165,7 +4165,7 @@ export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 't
     
 export const getGetRuntimeAccountsAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
 ) => {
 
@@ -4194,7 +4194,7 @@ export type GetRuntimeAccountsAddressNftsQueryError = HumanReadableErrorResponse
 export const useGetRuntimeAccountsAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
