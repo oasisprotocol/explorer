@@ -12,6 +12,74 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.11.0 (2024-05-22)
+
+### Features
+
+- Support for named accounts
+  ([#1398](https://github.com/oasisprotocol/explorer/issues/1398))
+
+- Display the votes on the network proposal details page
+  ([#1356](https://github.com/oasisprotocol/explorer/issues/1356))
+
+- Extend functionality of method icons
+  ([#1363](https://github.com/oasisprotocol/explorer/issues/1363))
+
+  - bring back type description
+  - conditionally truncate descriptions in tables
+  - enable tooltip for truncated descriptions
+
+- Show emitting contract address in evm.log events
+  ([#1385](https://github.com/oasisprotocol/explorer/issues/1385))
+
+- Show array of topics in raw evm.log events
+  ([#1385](https://github.com/oasisprotocol/explorer/issues/1385),
+  [#1402](https://github.com/oasisprotocol/explorer/issues/1402))
+
+### Bug Fixes and Improvements
+
+- Fetch balances from Oasis gRPC instead of Web3 JSON-RPC
+  ([#1384](https://github.com/oasisprotocol/explorer/issues/1384))
+
+- Fix mobile search issues
+  ([#1411](https://github.com/oasisprotocol/explorer/issues/1411))
+
+- Fix React duplicated key warning in transactions list
+  ([#1412](https://github.com/oasisprotocol/explorer/issues/1412))
+
+- Fix the "zoom out" button
+  ([#1413](https://github.com/oasisprotocol/explorer/issues/1413))
+
+### Internal Changes
+
+- Replace custom icons with MethodIcon component
+  ([#1383](https://github.com/oasisprotocol/explorer/issues/1383))
+
+- Reduce the size of node_modules using `npx yarn-deduplicate yarn.lock`
+  ([#1388](https://github.com/oasisprotocol/explorer/issues/1388))
+
+- Remove usage of deprecated React API
+  ([#1414](https://github.com/oasisprotocol/explorer/issues/1414))
+
+- Update dependencies
+  ([#1323](https://github.com/oasisprotocol/explorer/issues/1323),
+  [#1349](https://github.com/oasisprotocol/explorer/issues/1349),
+  [#1352](https://github.com/oasisprotocol/explorer/issues/1352),
+  [#1353](https://github.com/oasisprotocol/explorer/issues/1353),
+  [#1377](https://github.com/oasisprotocol/explorer/issues/1377),
+  [#1378](https://github.com/oasisprotocol/explorer/issues/1378),
+  [#1379](https://github.com/oasisprotocol/explorer/issues/1379),
+  [#1380](https://github.com/oasisprotocol/explorer/issues/1380),
+  [#1381](https://github.com/oasisprotocol/explorer/issues/1381),
+  [#1382](https://github.com/oasisprotocol/explorer/issues/1382),
+  [#1389](https://github.com/oasisprotocol/explorer/issues/1389),
+  [#1390](https://github.com/oasisprotocol/explorer/issues/1390),
+  [#1391](https://github.com/oasisprotocol/explorer/issues/1391),
+  [#1394](https://github.com/oasisprotocol/explorer/issues/1394),
+  [#1395](https://github.com/oasisprotocol/explorer/issues/1395),
+  [#1408](https://github.com/oasisprotocol/explorer/issues/1408),
+  [#1409](https://github.com/oasisprotocol/explorer/issues/1409))
+
 ## 1.10.0 (2024-04-11)
 
 ### Features
