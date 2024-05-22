@@ -20,6 +20,7 @@ import GetConsensusBlocksHeightMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusTransactionsTxHashMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusEventsMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusRoothashMessagesMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusEntitiesMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusEntitiesEntityIdMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusEntitiesEntityIdNodesMutator from '../replaceNetworkWithBaseURL';
@@ -479,6 +480,23 @@ limit?: number;
 
  */
 offset?: number;
+};
+
+export type GetConsensusRoothashMessagesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+runtime: Runtime;
+round?: number;
+type?: RoothashMessageType;
+rel?: StakingAddress;
 };
 
 export type GetConsensusEventsParams = {
@@ -1514,6 +1532,89 @@ export type EntityListAllOf = {
 export type EntityList = List & EntityListAllOf;
 
 /**
+ * The "body" of a message is a structure within the
+`github.com/oasisprotocol/oasis-core/go/roothash/api/message`
+`Message` structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/roothash/api/message#Message).
+For example, if the type is `staking.withdraw`, the body is the Go
+`Message` structure's `.Staking.Withdraw` field, which is a
+`github.com/oasisprotocol/oasis-core/go/staking/api` `Withdraw`
+structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#Withdraw),
+with `from` and `amount` fields in JSON.
+
+ */
+export type RoothashMessageBody = { [key: string]: any };
+
+export interface RoothashMessage {
+  /** The "body" of a message is a structure within the
+`github.com/oasisprotocol/oasis-core/go/roothash/api/message`
+`Message` structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/roothash/api/message#Message).
+For example, if the type is `staking.withdraw`, the body is the Go
+`Message` structure's `.Staking.Withdraw` field, which is a
+`github.com/oasisprotocol/oasis-core/go/staking/api` `Withdraw`
+structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#Withdraw),
+with `from` and `amount` fields in JSON.
+ */
+  body?: RoothashMessageBody;
+  /** If executing this message resulted in an error, this is the
+error's code.
+ */
+  error_code?: number;
+  /** If executing this message resulted in an error, this is the
+error's module.
+ */
+  error_module?: string;
+  /** The 0-based index of this message in the block.
+ */
+  index: number;
+  /** A result value that consensus provided after executing this
+message. These aren't centrally registered anywhere, so look at
+the consensus apps' `ExecuteMessage`
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/cometbft/api#MessageSubscriber)
+implementations to see what they return. For example, a
+`staking.withdraw` type message gives a
+`github.com/oasisprotocol/oasis-core/go/staking/api`
+`WithdrawResult` structure as its result
+(`https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#WithdrawResult`)
+with `owner`, `beneficiary`, `allowance`, and `amount_change`
+fields.
+ */
+  result?: unknown;
+  /** The block round when the runtime sent this message.
+ */
+  round: number;
+  /** The runtime that sent this message.
+ */
+  runtime: string;
+  /** The type of thies message.
+ */
+  type?: RoothashMessageType;
+}
+
+export type RoothashMessageListAllOf = {
+  roothash_messages: RoothashMessage[];
+};
+
+export type RoothashMessageList = List & RoothashMessageListAllOf;
+
+export type RoothashMessageType = typeof RoothashMessageType[keyof typeof RoothashMessageType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RoothashMessageType = {
+  stakingtransfer: 'staking.transfer',
+  stakingwithdraw: 'staking.withdraw',
+  stakingadd_escrow: 'staking.add_escrow',
+  stakingreclaim_escrow: 'staking.reclaim_escrow',
+  registryupdate_runtime: 'registry.update_runtime',
+  governancecast_vote: 'governance.cast_vote',
+  governancesubmit_proposal: 'governance.submit_proposal',
+} as const;
+
+/**
  * The event contents. This spec does not encode the many possible types;
 instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/api/transaction/results#Event) of oasis-core.
 This object will conform to one of the `*Event` types two levels down
@@ -2234,6 +2335,67 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConse
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetConsensusEventsQueryOptions(network,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const GetConsensusRoothashMessages = (
+    network: 'mainnet' | 'testnet',
+    params: GetConsensusRoothashMessagesParams,
+ options?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetConsensusRoothashMessagesMutator<RoothashMessageList>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/roothash_messages`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusRoothashMessagesQueryKey = (network: 'mainnet' | 'testnet',
+    params: GetConsensusRoothashMessagesParams,) => {
+    return [`/${network}/consensus/roothash_messages`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetConsensusRoothashMessagesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusRoothashMessagesQueryKey(network,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>> = ({ signal }) => GetConsensusRoothashMessages(network,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetConsensusRoothashMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>>
+export type GetConsensusRoothashMessagesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet',
+    params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusRoothashMessagesQueryOptions(network,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
