@@ -16,6 +16,9 @@ The format is inspired by [Keep a Changelog].
 
 ### Features
 
+- Support for named accounts
+  ([#1398](https://github.com/oasisprotocol/explorer/issues/1398))
+
 - Display the votes on the network proposal details page
   ([#1356](https://github.com/oasisprotocol/explorer/issues/1356))
 
@@ -31,10 +34,7 @@ The format is inspired by [Keep a Changelog].
 
 - Show array of topics in raw evm.log events
   ([#1385](https://github.com/oasisprotocol/explorer/issues/1385),
-   [#1402](https://github.com/oasisprotocol/explorer/issues/1402))
-
-- Initial support for named accounts
-  ([#1398](https://github.com/oasisprotocol/explorer/issues/1398))
+  [#1402](https://github.com/oasisprotocol/explorer/issues/1402))
 
 ### Bug Fixes and Improvements
 
@@ -52,25 +52,6 @@ The format is inspired by [Keep a Changelog].
 
 ### Internal Changes
 
-- Update dependencies
-  ([#1323](https://github.com/oasisprotocol/explorer/issues/1323),
-   [#1349](https://github.com/oasisprotocol/explorer/issues/1349),
-   [#1352](https://github.com/oasisprotocol/explorer/issues/1352),
-   [#1353](https://github.com/oasisprotocol/explorer/issues/1353),
-   [#1377](https://github.com/oasisprotocol/explorer/issues/1377),
-   [#1378](https://github.com/oasisprotocol/explorer/issues/1378),
-   [#1379](https://github.com/oasisprotocol/explorer/issues/1379),
-   [#1380](https://github.com/oasisprotocol/explorer/issues/1380),
-   [#1381](https://github.com/oasisprotocol/explorer/issues/1381),
-   [#1382](https://github.com/oasisprotocol/explorer/issues/1382),
-   [#1389](https://github.com/oasisprotocol/explorer/issues/1389),
-   [#1390](https://github.com/oasisprotocol/explorer/issues/1390),
-   [#1391](https://github.com/oasisprotocol/explorer/issues/1391),
-   [#1394](https://github.com/oasisprotocol/explorer/issues/1394),
-   [#1395](https://github.com/oasisprotocol/explorer/issues/1395),
-   [#1408](https://github.com/oasisprotocol/explorer/issues/1408),
-   [#1409](https://github.com/oasisprotocol/explorer/issues/1409))
-
 - Replace custom icons with MethodIcon component
   ([#1383](https://github.com/oasisprotocol/explorer/issues/1383))
 
@@ -79,6 +60,25 @@ The format is inspired by [Keep a Changelog].
 
 - Remove usage of deprecated React API
   ([#1414](https://github.com/oasisprotocol/explorer/issues/1414))
+
+- Update dependencies
+  ([#1323](https://github.com/oasisprotocol/explorer/issues/1323),
+  [#1349](https://github.com/oasisprotocol/explorer/issues/1349),
+  [#1352](https://github.com/oasisprotocol/explorer/issues/1352),
+  [#1353](https://github.com/oasisprotocol/explorer/issues/1353),
+  [#1377](https://github.com/oasisprotocol/explorer/issues/1377),
+  [#1378](https://github.com/oasisprotocol/explorer/issues/1378),
+  [#1379](https://github.com/oasisprotocol/explorer/issues/1379),
+  [#1380](https://github.com/oasisprotocol/explorer/issues/1380),
+  [#1381](https://github.com/oasisprotocol/explorer/issues/1381),
+  [#1382](https://github.com/oasisprotocol/explorer/issues/1382),
+  [#1389](https://github.com/oasisprotocol/explorer/issues/1389),
+  [#1390](https://github.com/oasisprotocol/explorer/issues/1390),
+  [#1391](https://github.com/oasisprotocol/explorer/issues/1391),
+  [#1394](https://github.com/oasisprotocol/explorer/issues/1394),
+  [#1395](https://github.com/oasisprotocol/explorer/issues/1395),
+  [#1408](https://github.com/oasisprotocol/explorer/issues/1408),
+  [#1409](https://github.com/oasisprotocol/explorer/issues/1409))
 
 ## 1.10.0 (2024-04-11)
 
