@@ -1046,11 +1046,13 @@ export const RuntimeEventType = {
 } as const;
 
 /**
- * The decoded event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+ * The decoded event contents, possibly augmented with additional address info.
+This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
-OR `evm > Event`.
+OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
+will add a field specifying the corresponding Ethereum address, if known. Currently, 
+the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
 export type RuntimeEventBody = { [key: string]: any };
@@ -1059,11 +1061,13 @@ export type RuntimeEventBody = { [key: string]: any };
  * An event emitted by the runtime layer
  */
 export interface RuntimeEvent {
-  /** The decoded event contents. This spec does not encode the many possible types;
-instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
+  /** The decoded event contents, possibly augmented with additional address info.
+This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-sdk/client-sdk/go/modules).
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
-OR `evm > Event`.
+OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
+will add a field specifying the corresponding Ethereum address, if known. Currently, 
+the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
   /** Ethereum trasnsaction hash of this event's originating transaction.
