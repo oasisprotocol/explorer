@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Validator, useGetConsensusValidatorsEntityId } from '../../../oasis-nexus/api'
+import { Validator, useGetConsensusValidatorsAddress } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -36,9 +36,8 @@ export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
-  // TODO: currently API does not work with address query param. Wait for API update or switch to entity_id
   const { address } = useLoaderData() as AddressLoaderData
-  const validatorQuery = useGetConsensusValidatorsEntityId(scope.network, address)
+  const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading, data } = validatorQuery
   const validator = data?.data
   const transactionsLink = useHref('')
