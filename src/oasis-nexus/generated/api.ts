@@ -713,6 +713,7 @@ Affects display only. Often equals 18, to match ETH.
   /** Whether the contract has been successfully verified by Sourcify.
 Additional information on verified contracts is available via
 the `/{runtime}/accounts/{address}` endpoint.
+DEPRECATED: This field will be removed in the future in favor of verification_level
  */
   is_verified: boolean;
   /** Name of the token, as provided by token contract's `name()` method. */
@@ -733,6 +734,7 @@ ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
 detected or is not supported, this field will be null/absent.
  */
   type: EvmTokenType;
+  verification_level?: VerificationLevel;
 }
 
 /**
@@ -938,6 +940,21 @@ Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi
  */
 export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
 
+/**
+ * The level of verification of a smart contract, as defined by Sourcify.
+An absence of this field means that the contract has not been verified.
+See also https://docs.sourcify.dev/docs/full-vs-partial-match/
+
+ */
+export type VerificationLevel = typeof VerificationLevel[keyof typeof VerificationLevel];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const VerificationLevel = {
+  partial: 'partial',
+  full: 'full',
+} as const;
+
 export interface RuntimeEvmContractVerification {
   /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
 Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
@@ -946,6 +963,7 @@ Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi
   /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
  */
   source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
+  verification_level?: VerificationLevel;
 }
 
 export interface RuntimeEvmContract {
