@@ -1280,7 +1280,7 @@ For efficiency, this field is omitted when listing multiple-accounts.
   delegations_balance?: TextBigInt;
   /** The active escrow balance, in base units. */
   escrow: TextBigInt;
-  /** A nonce used to prevent replay. */
+  /** The expected nonce for the next transaction (= last used nonce + 1) */
   nonce: number;
 }
 
