@@ -33,6 +33,7 @@ type RuntimeAccountDataProps = {
   isLoading: boolean
   tokenPrices: AllTokenPrices
   showLayer?: boolean
+  highlightedPartOfName: string | undefined
 }
 
 export const RuntimeAccountData: FC<RuntimeAccountDataProps> = ({
@@ -41,6 +42,7 @@ export const RuntimeAccountData: FC<RuntimeAccountDataProps> = ({
   isLoading,
   tokenPrices,
   showLayer,
+  highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -76,7 +78,7 @@ export const RuntimeAccountData: FC<RuntimeAccountDataProps> = ({
             <AccountAvatar account={account} />
           </StyledListTitleWithAvatar>
           <dd>
-            <AccountLink scope={account} address={address!} />
+            <AccountLink scope={account} address={address!} highlightedPartOfName={highlightedPartOfName} />
             <CopyToClipboard value={address!} />
           </dd>
 
@@ -175,6 +177,7 @@ export type ConsensusAccountDataProps = {
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
+  highlightedPartOfName?: string | undefined
 }
 
 export const ConsensusAccountData: FC<ConsensusAccountDataProps> = ({
@@ -182,6 +185,7 @@ export const ConsensusAccountData: FC<ConsensusAccountDataProps> = ({
   isLoading,
   showLayer,
   standalone,
+  highlightedPartOfName,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -205,7 +209,11 @@ export const ConsensusAccountData: FC<ConsensusAccountDataProps> = ({
         </Box>
       </StyledListTitleWithAvatar>
       <dd>
-        <AccountLink scope={account} address={account.address} />
+        <AccountLink
+          scope={account}
+          address={account.address}
+          highlightedPartOfName={highlightedPartOfName}
+        />
         <CopyToClipboard value={account.address} />
       </dd>
       <dt>

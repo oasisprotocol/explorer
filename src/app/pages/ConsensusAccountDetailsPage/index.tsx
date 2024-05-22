@@ -18,7 +18,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const { network } = scope
-  const { address } = useLoaderData() as AddressLoaderData
+  const { address, searchTerm } = useLoaderData() as AddressLoaderData
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
@@ -27,7 +27,12 @@ export const ConsensusAccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
+      <ConsensusAccountDetailsCard
+        account={account}
+        isError={isError}
+        isLoading={isLoading}
+        highlightedPartOfName={searchTerm}
+      />
       <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
         <Grid item xs={12} md={6}>
           <BalanceDistribution account={account} isLoading={isLoading} />

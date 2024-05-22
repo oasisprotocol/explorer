@@ -10,6 +10,8 @@ import { Network } from '../../../../types/network'
 import { SearchResultsList } from '../SearchResultsList'
 import { Ticker } from '../../../../types/ticker'
 
+jest.mock('../../../hooks/useAccountMetadata')
+
 describe('SearchResultsView', () => {
   beforeEach(() => {
     jest.useFakeTimers()

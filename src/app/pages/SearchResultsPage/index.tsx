@@ -9,16 +9,17 @@ import { getFiatCurrencyForScope } from '../../../config'
 export const SearchResultsPage: FC = () => {
   const searchParams = useParamSearch()
   const scope = useScopeParam()
-  const { results, isLoading } = useSearch(scope, searchParams)
+  const { results, isLoading, hasErrors } = useSearch(scope, searchParams)
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   return (
     <SearchResultsView
       wantedScope={scope}
-      searchTerm={searchParams.searchTerm}
+      searchParams={searchParams}
       searchResults={results}
       isLoading={isLoading}
+      isPotentiallyIncomplete={hasErrors}
       tokenPrices={tokenPrices}
     />
   )

@@ -90,6 +90,7 @@ export const SearchResultsList: FC<{
                 isError={false}
                 account={item as Account}
                 showLayer={true}
+                highlightedPartOfName={searchTerm}
               />
             ) : (
               <RuntimeAccountDetailsView
@@ -98,6 +99,7 @@ export const SearchResultsList: FC<{
                 account={item as RuntimeAccount}
                 tokenPrices={tokenPrices}
                 showLayer={true}
+                highlightedPartOfName={searchTerm}
               />
             )
           }
@@ -115,6 +117,7 @@ export const SearchResultsList: FC<{
               account={item}
               tokenPrices={tokenPrices}
               showLayer={true}
+              highlightedPartOfName={searchTerm}
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}

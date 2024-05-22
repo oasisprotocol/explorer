@@ -21,12 +21,13 @@ import {
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
+import { useSearchForAccountsByName } from '../../hooks/useAccountMetadata'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
 }
 
-export type ConditionalResults<T> = { isLoading: boolean; results: T[] }
+export type ConditionalResults<T> = { isLoading: boolean; isError?: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
   resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal'
@@ -193,6 +194,7 @@ export function useRuntimeTokenConditionally(
 
   return {
     isLoading: queries.some(query => query.isInitialLoading),
+    isError: queries.some(query => query.isError),
     results: queries.map(query => query.data?.data).filter(isDefined),
   }
 }
@@ -206,6 +208,25 @@ export function useNetworkProposalsConditionally(
   )
   return {
     isLoading: queries.some(query => query.isInitialLoading),
+    isError: queries.some(query => query.isError),
+    results: queries
+      .map(query => query.results)
+      .filter(isDefined)
+      .flat(),
+  }
+}
+
+export function useNamedAccountConditionally(
+  currentScope: SearchScope | undefined,
+  nameFragment: string | undefined,
+): ConditionalResults<Account | RuntimeAccount> {
+  const queries = RouteUtils.getVisibleScopes(currentScope).map(scope =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useSearchForAccountsByName(scope, nameFragment),
+  )
+  return {
+    isLoading: queries.some(query => query.isLoading),
+    isError: queries.some(query => query.isError),
     results: queries
       .map(query => query.results)
       .filter(isDefined)
@@ -222,16 +243,19 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     // TODO: remove evmBech32Account and use evmAccount when API is ready
     evmBech32Account: useRuntimeAccountConditionally(currentScope, q.evmBech32Account),
+    accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
+  const hasErrors = Object.values(queries).some(query => query.isError)
   const blocks = [...queries.blockHeight.results, ...queries.blockHash.results]
   const transactions = queries.txHash.results || []
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),
     ...(queries.oasisRuntimeAccount.results || []),
     ...(queries.evmBech32Account.results || []),
+    ...(queries.accountsByName.results || []),
   ].filter(isAccountNonEmpty)
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
@@ -256,6 +280,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
       ]
   return {
     isLoading,
+    hasErrors,
     results,
   }
 }
