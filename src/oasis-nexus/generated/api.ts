@@ -1629,6 +1629,11 @@ data origin is not tracked and error information can be faked.
 }
 
 /**
+ * The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables).
+ */
+export type TransactionBody = { [key: string]: any };
+
+/**
  * A list of consensus transactions.
 
  */
@@ -1666,8 +1671,8 @@ export const ConsensusTxMethod = {
 export interface Transaction {
   /** The block height at which this transaction was executed. */
   block: number;
-  /** The method call body. */
-  body: string;
+  /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
+  body: TransactionBody;
   /** Error details of a failed transaction. */
   error?: TxError;
   /** The fee that this transaction's sender committed
