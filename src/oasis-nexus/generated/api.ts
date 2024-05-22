@@ -1056,7 +1056,7 @@ Absent if the event did not originate from an EVM transaction.
 evm event, e.g. `Transfer`. 
 Absent if the event type is not `evm.log`.
  */
-  evm_log_name?: string | null;
+  evm_log_name?: string;
   /** The decoded `evm.log` event data.
 Absent if the event type is not `evm.log`.
  */
@@ -1070,7 +1070,7 @@ Absent if the event type is not `evm.log`.
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
-  tx_hash?: string | null;
+  tx_hash?: string;
   /** 0-based index of this event's originating transaction within its block.
 Absent if the event did not originate from a transaction.
  */
@@ -1361,7 +1361,7 @@ is the Ethereum address (in base64, not hex!).
  */
   context: AddressDerivationContext;
   /** Version of the `context`. */
-  context_version?: number | null;
+  context_version?: number;
 }
 
 /**
@@ -1550,11 +1550,11 @@ the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
-  tx_hash?: string | null;
+  tx_hash?: string;
   /** 0-based index of this event's originating transaction within its block.
 Absent if the event did not originate from a transaction.
  */
-  tx_index?: number | null;
+  tx_index?: number;
   /** The type of the event. */
   type: ConsensusEventType;
 }
