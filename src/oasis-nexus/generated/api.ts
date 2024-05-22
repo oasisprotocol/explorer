@@ -654,9 +654,9 @@ export interface TxVolumeList {
 export interface AccountStats {
   /** The total number of transactions this account was involved with. */
   num_txns: number;
-  /** The total number of tokens received, in base units. */
+  /** The total amount of native tokens received, in base units. */
   total_received: TextBigInt;
-  /** The total number of tokens sent, in base units. */
+  /** The total amount of native tokens sent, in base units. */
   total_sent: TextBigInt;
 }
 
