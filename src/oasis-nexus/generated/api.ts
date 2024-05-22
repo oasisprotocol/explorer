@@ -22,11 +22,11 @@ import GetConsensusTransactionsTxHashMutator from '../replaceNetworkWithBaseURL'
 import GetConsensusEventsMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusRoothashMessagesMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusEntitiesMutator from '../replaceNetworkWithBaseURL';
-import GetConsensusEntitiesEntityIdMutator from '../replaceNetworkWithBaseURL';
-import GetConsensusEntitiesEntityIdNodesMutator from '../replaceNetworkWithBaseURL';
-import GetConsensusEntitiesEntityIdNodesNodeIdMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusEntitiesAddressMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusEntitiesAddressNodesMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusEntitiesAddressNodesNodeIdMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusValidatorsMutator from '../replaceNetworkWithBaseURL';
-import GetConsensusValidatorsEntityIdMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusValidatorsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsAddressDelegationsMutator from '../replaceNetworkWithBaseURL';
@@ -456,7 +456,7 @@ limit?: number;
 offset?: number;
 };
 
-export type GetConsensusEntitiesEntityIdNodesParams = {
+export type GetConsensusEntitiesAddressNodesParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -2477,58 +2477,58 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetCon
 /**
  * @summary Returns an entity registered at the consensus layer.
  */
-export const GetConsensusEntitiesEntityId = (
+export const GetConsensusEntitiesAddress = (
     network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
- options?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>,signal?: AbortSignal
+    address: StakingAddress,
+ options?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>,signal?: AbortSignal
 ) => {
       
       
-      return GetConsensusEntitiesEntityIdMutator<Entity>(
-      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}`, method: 'GET', signal
+      return GetConsensusEntitiesAddressMutator<Entity>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,) => {
-    return [`/${network}/consensus/entities/${entityId}`] as const;
+export const getGetConsensusEntitiesAddressQueryKey = (network: 'mainnet' | 'testnet',
+    address: StakingAddress,) => {
+    return [`/${network}/consensus/entities/${address}`] as const;
     }
 
     
-export const getGetConsensusEntitiesEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
+export const getGetConsensusEntitiesAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdQueryKey(network,entityId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressQueryKey(network,address);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>> = ({ signal }) => GetConsensusEntitiesEntityId(network,entityId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>> = ({ signal }) => GetConsensusEntitiesAddress(network,address, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(network && entityId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(network && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetConsensusEntitiesEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>>
-export type GetConsensusEntitiesEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>>
+export type GetConsensusEntitiesAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns an entity registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdQueryOptions(network,entityId,options)
+  const queryOptions = getGetConsensusEntitiesAddressQueryOptions(network,address,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2543,63 +2543,63 @@ export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeo
 /**
  * @summary Returns a list of nodes registered at the consensus layer.
  */
-export const GetConsensusEntitiesEntityIdNodes = (
+export const GetConsensusEntitiesAddressNodes = (
     network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams,
- options?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>,signal?: AbortSignal
+    address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams,
+ options?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>,signal?: AbortSignal
 ) => {
       
       
-      return GetConsensusEntitiesEntityIdNodesMutator<NodeList>(
-      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}/nodes`, method: 'GET',
+      return GetConsensusEntitiesAddressNodesMutator<NodeList>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(address))}/nodes`, method: 'GET',
         params, signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdNodesQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams,) => {
-    return [`/${network}/consensus/entities/${entityId}/nodes`, ...(params ? [params]: [])] as const;
+export const getGetConsensusEntitiesAddressNodesQueryKey = (network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams,) => {
+    return [`/${network}/consensus/entities/${address}/nodes`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusEntitiesEntityIdNodesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>}
+export const getGetConsensusEntitiesAddressNodesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesQueryKey(network,entityId,params);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressNodesQueryKey(network,address,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>> = ({ signal }) => GetConsensusEntitiesEntityIdNodes(network,entityId,params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>> = ({ signal }) => GetConsensusEntitiesAddressNodes(network,address,params, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(network && entityId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(network && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetConsensusEntitiesEntityIdNodesQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>>
-export type GetConsensusEntitiesEntityIdNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressNodesQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>>
+export type GetConsensusEntitiesAddressNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of nodes registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesMutator>}
+    address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdNodesQueryOptions(network,entityId,params,options)
+  const queryOptions = getGetConsensusEntitiesAddressNodesQueryOptions(network,address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2614,62 +2614,62 @@ export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<
 /**
  * @summary Returns a node registered at the consensus layer.
  */
-export const GetConsensusEntitiesEntityIdNodesNodeId = (
+export const GetConsensusEntitiesAddressNodesNodeId = (
     network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
+    address: StakingAddress,
     nodeId: Ed25519PubKey,
- options?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>,signal?: AbortSignal
+ options?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>,signal?: AbortSignal
 ) => {
       
       
-      return GetConsensusEntitiesEntityIdNodesNodeIdMutator<Node>(
-      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(entityId))}/nodes/${encodeURIComponent(String(nodeId))}`, method: 'GET', signal
+      return GetConsensusEntitiesAddressNodesNodeIdMutator<Node>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/entities/${encodeURIComponent(String(address))}/nodes/${encodeURIComponent(String(nodeId))}`, method: 'GET', signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryKey = (network: 'mainnet' | 'testnet',
+    address: StakingAddress,
     nodeId: Ed25519PubKey,) => {
-    return [`/${network}/consensus/entities/${entityId}/nodes/${nodeId}`] as const;
+    return [`/${network}/consensus/entities/${address}/nodes/${nodeId}`] as const;
     }
 
     
-export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey(network,entityId,nodeId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressNodesNodeIdQueryKey(network,address,nodeId);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>> = ({ signal }) => GetConsensusEntitiesEntityIdNodesNodeId(network,entityId,nodeId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>> = ({ signal }) => GetConsensusEntitiesAddressNodesNodeId(network,address,nodeId, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(network && entityId && nodeId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(network && address && nodeId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>>
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>>
+export type GetConsensusEntitiesAddressNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a node registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
-    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesEntityIdNodesNodeIdMutator>}
+    address: StakingAddress,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions(network,entityId,nodeId,options)
+  const queryOptions = getGetConsensusEntitiesAddressNodesNodeIdQueryOptions(network,address,nodeId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2751,58 +2751,58 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetC
 /**
  * @summary Returns a validator registered at the consensus layer.
  */
-export const GetConsensusValidatorsEntityId = (
+export const GetConsensusValidatorsAddress = (
     network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,
- options?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>,signal?: AbortSignal
+    address: StakingAddress,
+ options?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>,signal?: AbortSignal
 ) => {
       
       
-      return GetConsensusValidatorsEntityIdMutator<Validator>(
-      {url: `/${encodeURIComponent(String(network))}/consensus/validators/${encodeURIComponent(String(entityId))}`, method: 'GET', signal
+      return GetConsensusValidatorsAddressMutator<Validator>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/validators/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
     }
   
 
-export const getGetConsensusValidatorsEntityIdQueryKey = (network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey,) => {
-    return [`/${network}/consensus/validators/${entityId}`] as const;
+export const getGetConsensusValidatorsAddressQueryKey = (network: 'mainnet' | 'testnet',
+    address: StakingAddress,) => {
+    return [`/${network}/consensus/validators/${address}`] as const;
     }
 
     
-export const getGetConsensusValidatorsEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
+export const getGetConsensusValidatorsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsEntityIdQueryKey(network,entityId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsAddressQueryKey(network,address);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>> = ({ signal }) => GetConsensusValidatorsEntityId(network,entityId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>> = ({ signal }) => GetConsensusValidatorsAddress(network,address, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(network && entityId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(network && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetConsensusValidatorsEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>>
-export type GetConsensusValidatorsEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusValidatorsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>>
+export type GetConsensusValidatorsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a validator registered at the consensus layer.
  */
-export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
-    entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsEntityIdMutator>}
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusValidatorsEntityIdQueryOptions(network,entityId,options)
+  const queryOptions = getGetConsensusValidatorsAddressQueryOptions(network,address,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
