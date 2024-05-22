@@ -1,13 +1,8 @@
 import { FC } from 'react'
-import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Account } from '../../../oasis-nexus/api'
 import { SubPageCard } from '../../components/SubPageCard'
-import { ConsensusAccountDetailsView } from './ConsensusAccountDetailsView'
-
-export const StyledListTitle = styled('dt')(({ theme }) => ({
-  marginLeft: theme.spacing(4),
-}))
+import { ConsensusAccountDetailsView } from '../../components/Account/ConsensusAccountDetailsView'
 
 type ConsensusAccountDetailsCardProps = {
   account: Account | undefined
