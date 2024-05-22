@@ -1634,37 +1634,6 @@ data origin is not tracked and error information can be faked.
 export type TransactionBody = { [key: string]: any };
 
 /**
- * A list of consensus transactions.
-
- */
-export type TransactionListAllOf = {
-  transactions: Transaction[];
-};
-
-export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ConsensusTxMethod = {
-  stakingTransfer: 'staking.Transfer',
-  stakingAddEscrow: 'staking.AddEscrow',
-  stakingReclaimEscrow: 'staking.ReclaimEscrow',
-  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
-  stakingAllow: 'staking.Allow',
-  stakingWithdraw: 'staking.Withdraw',
-  roothashExecutorCommit: 'roothash.ExecutorCommit',
-  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
-  registryRegisterEntity: 'registry.RegisterEntity',
-  registryRegisterNode: 'registry.RegisterNode',
-  registryRegisterRuntime: 'registry.RegisterRuntime',
-  governanceCastVote: 'governance.CastVote',
-  governanceSubmitProposal: 'governance.SubmitProposal',
-  beaconPVSSCommit: 'beacon.PVSSCommit',
-  beaconPVSSReveal: 'beacon.PVSSReveal',
-  beaconVRFProve: 'beacon.VRFProve',
-} as const;
-
-/**
  * A consensus transaction.
 
  */
@@ -1698,6 +1667,39 @@ to pay to execute it.
 }
 
 /**
+ * A list of consensus transactions.
+
+ */
+export type TransactionListAllOf = {
+  transactions: Transaction[];
+};
+
+export type TransactionList = List & TransactionListAllOf;
+
+export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ConsensusTxMethod = {
+  stakingTransfer: 'staking.Transfer',
+  stakingAddEscrow: 'staking.AddEscrow',
+  stakingReclaimEscrow: 'staking.ReclaimEscrow',
+  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
+  stakingAllow: 'staking.Allow',
+  stakingWithdraw: 'staking.Withdraw',
+  roothashExecutorCommit: 'roothash.ExecutorCommit',
+  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
+  registryRegisterEntity: 'registry.RegisterEntity',
+  registryRegisterNode: 'registry.RegisterNode',
+  registryRegisterRuntime: 'registry.RegisterRuntime',
+  governanceCastVote: 'governance.CastVote',
+  governanceSubmitProposal: 'governance.SubmitProposal',
+  beaconPVSSCommit: 'beacon.PVSSCommit',
+  beaconPVSSReveal: 'beacon.PVSSReveal',
+  beaconVRFProve: 'beacon.VRFProve',
+} as const;
+
+/**
  * A debonding delegation.
 
  */
@@ -1721,6 +1723,8 @@ export interface DebondingDelegation {
 export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
 };
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A delegation.
@@ -1788,10 +1792,6 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
-export type TransactionList = List & TransactionListAllOf;
-
-export type DebondingDelegationList = List & DebondingDelegationListAllOf;
-
 /**
  * A list of consensus blocks.
 
@@ -1824,8 +1824,8 @@ export type Runtime = typeof Runtime[keyof typeof Runtime];
 export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  cipher: 'cipher',
   pontusx: 'pontusx',
+  cipher: 'cipher',
 } as const;
 
 export type Layer = typeof Layer[keyof typeof Layer];
@@ -1835,8 +1835,8 @@ export type Layer = typeof Layer[keyof typeof Layer];
 export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  cipher: 'cipher',
   pontusx: 'pontusx',
+  cipher: 'cipher',
   consensus: 'consensus',
 } as const;
 
