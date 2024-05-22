@@ -38,8 +38,8 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  if (!account || isLoading) return <TextSkeleton numberOfRows={7} />
-  if (isError || (!isLoading && !account)) return <CardEmptyState label={t('account.cantLoadDetails')} />
+  if (isLoading) return <TextSkeleton numberOfRows={7} />
+  if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>

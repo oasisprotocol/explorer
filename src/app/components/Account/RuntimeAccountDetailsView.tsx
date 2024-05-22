@@ -47,130 +47,124 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  if (isError) return <CardEmptyState label={t('account.cantLoadDetails')} />
+  if (isLoading) return <TextSkeleton numberOfRows={8} />
+  if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
 
-  const address = account ? account.address_eth ?? account.address : undefined
+  const address = account.address_eth ?? account.address
 
-  const transactionsLabel = account ? account.stats.num_txns.toLocaleString() : ''
-  const transactionsAnchor = account
-    ? `${RouteUtils.getAccountRoute(
-        account,
-        account.address_eth ?? account.address,
-      )}#${accountTransactionsContainerId}`
-    : undefined
+  const transactionsLabel = account.stats.num_txns.toLocaleString()
+  const transactionsAnchor = `${RouteUtils.getAccountRoute(
+    account,
+    account.address_eth ?? account.address,
+  )}#${accountTransactionsContainerId}`
 
-  const nativeTokens = getTokensForScope(account || { network: 'mainnet', layer: 'sapphire' })
+  const nativeTokens = getTokensForScope(account)
   const nativeTickerNames = nativeTokens.map(token => getNameForTicker(t, token.ticker))
   const contract = account?.evm_contract
   const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))
 
   return (
-    <>
-      {isLoading && <TextSkeleton numberOfRows={8} />}
-      {account && (
-        <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-          {showLayer && (
-            <>
-              <dt>{t('common.paratime')}</dt>
-              <dd>
-                <DashboardLink scope={account} />
-              </dd>
-            </>
-          )}
-          <StyledListTitleWithAvatar>
-            <AccountAvatar account={account} />
-          </StyledListTitleWithAvatar>
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+      {showLayer && (
+        <>
+          <dt>{t('common.paratime')}</dt>
           <dd>
-            <AccountLink scope={account} address={address!} highlightedPartOfName={highlightedPartOfName} />
-            <CopyToClipboard value={address!} />
+            <DashboardLink scope={account} />
           </dd>
-
-          {token && (
-            <>
-              <dt>{t('common.token')}</dt>
-              <dd>
-                <TokenLink
-                  scope={account}
-                  address={token.eth_contract_addr || token.contract_addr}
-                  name={token.name}
-                />
-              </dd>
-            </>
-          )}
-
-          {contract && (
-            <>
-              <dt>{t('contract.verification.title')}</dt>
-              <dd>
-                <ContractVerificationIcon account={account} />
-              </dd>
-            </>
-          )}
-
-          {contract && (
-            <>
-              <dt>{t('contract.creator')}</dt>
-              <dd>
-                <ContractCreatorInfo
-                  scope={account}
-                  creationTxHash={contract.eth_creation_tx || contract.creation_tx}
-                  alwaysTrim
-                />
-              </dd>
-            </>
-          )}
-
-          <dt>{t('common.balance')}</dt>
-          <dd>
-            <RuntimeBalanceDisplay balances={account.balances} />
-          </dd>
-
-          <dt>{t('common.tokens')}</dt>
-          <dd>
-            <TokenPills account={account} tokens={account.evm_balances} />
-          </dd>
-
-          {showFiatValues && !fiatValueInfo.loading && fiatValueInfo.hasValue && (
-            <>
-              <dt>{t('common.fiatValue')}</dt>
-              <dd>
-                <FiatMoneyAmount {...fiatValueInfo} />
-              </dd>
-            </>
-          )}
-
-          <dt>{t('common.transactions')}</dt>
-          <dd>
-            {account.stats.num_txns ? (
-              <Link component={RouterLink} to={transactionsAnchor!}>
-                {transactionsLabel}
-              </Link>
-            ) : (
-              transactionsLabel
-            )}
-          </dd>
-
-          {nativeTokens.length === 1 && (
-            <>
-              <dt>{t('account.totalReceived')}</dt>
-              <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.stats.total_received),
-                  ticker: nativeTickerNames[0],
-                })}
-              </dd>
-
-              <dt>{t('account.totalSent')}</dt>
-              <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.stats.total_sent),
-                  ticker: nativeTickerNames[0],
-                })}
-              </dd>
-            </>
-          )}
-        </StyledDescriptionList>
+        </>
       )}
-    </>
+      <StyledListTitleWithAvatar>
+        <AccountAvatar account={account} />
+      </StyledListTitleWithAvatar>
+      <dd>
+        <AccountLink scope={account} address={address!} highlightedPartOfName={highlightedPartOfName} />
+        <CopyToClipboard value={address!} />
+      </dd>
+
+      {token && (
+        <>
+          <dt>{t('common.token')}</dt>
+          <dd>
+            <TokenLink
+              scope={account}
+              address={token.eth_contract_addr || token.contract_addr}
+              name={token.name}
+            />
+          </dd>
+        </>
+      )}
+
+      {contract && (
+        <>
+          <dt>{t('contract.verification.title')}</dt>
+          <dd>
+            <ContractVerificationIcon account={account} />
+          </dd>
+        </>
+      )}
+
+      {contract && (
+        <>
+          <dt>{t('contract.creator')}</dt>
+          <dd>
+            <ContractCreatorInfo
+              scope={account}
+              creationTxHash={contract.eth_creation_tx || contract.creation_tx}
+              alwaysTrim
+            />
+          </dd>
+        </>
+      )}
+
+      <dt>{t('common.balance')}</dt>
+      <dd>
+        <RuntimeBalanceDisplay balances={account.balances} />
+      </dd>
+
+      <dt>{t('common.tokens')}</dt>
+      <dd>
+        <TokenPills account={account} tokens={account.evm_balances} />
+      </dd>
+
+      {showFiatValues && !fiatValueInfo.loading && fiatValueInfo.hasValue && (
+        <>
+          <dt>{t('common.fiatValue')}</dt>
+          <dd>
+            <FiatMoneyAmount {...fiatValueInfo} />
+          </dd>
+        </>
+      )}
+
+      <dt>{t('common.transactions')}</dt>
+      <dd>
+        {account.stats.num_txns ? (
+          <Link component={RouterLink} to={transactionsAnchor!}>
+            {transactionsLabel}
+          </Link>
+        ) : (
+          transactionsLabel
+        )}
+      </dd>
+
+      {nativeTokens.length === 1 && (
+        <>
+          <dt>{t('account.totalReceived')}</dt>
+          <dd>
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(account.stats.total_received),
+              ticker: nativeTickerNames[0],
+            })}
+          </dd>
+
+          <dt>{t('account.totalSent')}</dt>
+          <dd>
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(account.stats.total_sent),
+              ticker: nativeTickerNames[0],
+            })}
+          </dd>
+        </>
+      )}
+    </StyledDescriptionList>
   )
 }
