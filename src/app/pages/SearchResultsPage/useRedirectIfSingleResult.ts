@@ -5,7 +5,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
-import { Account, RuntimeAccount } from '../../../oasis-nexus/api'
+import { RuntimeAccount } from '../../../oasis-nexus/api'
 import { SearchParams } from '../../components/Search/search-utils'
 
 /** If search only finds one result then redirect to it */
@@ -41,9 +41,9 @@ export function useRedirectIfSingleResult(
         if (
           accountNameFragment && // Is there anything to highlight?
           !(
-            (!!evmAccount && (item as RuntimeAccount).address_eth === evmAccount) || // Did we find this searching for evm address
+            (!!evmAccount && (item as RuntimeAccount).address_eth?.toLowerCase() === evmAccount) || // Did we find this searching for evm address
             // Did we find this searching for oasis address
-            (!!consensusAccount && (item as Account | RuntimeAccount).address === consensusAccount)
+            (!!consensusAccount && item.address.toLowerCase() === consensusAccount)
           ) // If we found this account based on address, then we don't want to highlight that.
         ) {
           redirectTo += `?q=${accountNameFragment}`
