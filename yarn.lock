@@ -2260,30 +2260,30 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oasisprotocol/client-rt@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-1.0.0.tgz#7a0ee858251fdeb0d2e03af7c649a7e1b9ee3f66"
-  integrity sha512-ugfMdsG+Z+jdqYv+hDX6/VXXqW4Fax75359QKgyAWo6hCfVIU9X9PJBc93Ykk3+pQAZq6VWzkye7M4sxItNSFA==
+"@oasisprotocol/client-rt@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-1.1.0.tgz#e7e708584302ccca817264e971f5a8358384b15b"
+  integrity sha512-lC5KbAD+NLsZaNmEacM8HFJQ1w+C6ZGo2/zHhJJCnaGoaBoijq+LctkBe33Eq0ChuQDd6jD31FvTo8egGa1TQA==
   dependencies:
-    "@oasisprotocol/client" "^1.0.0"
+    "@oasisprotocol/client" "^1.1.0"
     "@oasisprotocol/deoxysii" "^0.0.5"
-    elliptic "^6.5.3"
-    js-sha512 "^0.8.0"
+    elliptic "^6.5.5"
+    js-sha512 "^0.9.0"
     randombytes "^2.0.1"
     sha3 "^2.1.4"
     tweetnacl "^1.0.3"
 
-"@oasisprotocol/client@1.0.0", "@oasisprotocol/client@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@oasisprotocol/client/-/client-1.0.0.tgz#a2f2cb3b42a881d541e59800e3eb521ba19ff824"
-  integrity sha512-mpRlji3LOtL6URZgeBm5zQkUIslGcbPrkG1YGbjVzkhh8mFm+mU3siw13nWV373fk2dFd94EBCm2G5cPFI+afg==
+"@oasisprotocol/client@1.1.0", "@oasisprotocol/client@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@oasisprotocol/client/-/client-1.1.0.tgz#2aaec2a05323911485243d029e8adfb14a4e28ff"
+  integrity sha512-8zHGXCOY66NPNM5rL7hP0WjZh0a6sSfF7YttGvXbl2uMljWzu1134veiOTye4GIuKzwnyoHEHUZcoteVCWdRNQ==
   dependencies:
     bech32 "^2.0.0"
     bip39 "^3.1.0"
     cborg "^2.0.3"
     grpc-web "^1.5.0"
-    js-sha512 "^0.8.0"
-    protobufjs "~7.2.5"
+    js-sha512 "^0.9.0"
+    protobufjs "~7.2.6"
     tweetnacl "^1.0.3"
 
 "@oasisprotocol/deoxysii@^0.0.5":
@@ -6693,10 +6693,10 @@ electron-to-chromium@^1.4.668:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.747.tgz#e37fa5b7b7e4c22607c5f59b5cf78f947266e77d"
   integrity sha512-+FnSWZIAvFHbsNVmUxhEqWiaOiPMcfum1GQzlWCg/wLigVtshOsjXHyEFfmt6cFK6+HkS3QOJBv6/3OPumbBfw==
 
-elliptic@^6.5.3:
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
-  integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
+elliptic@^6.5.5:
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.5.tgz#c715e09f78b6923977610d4c2346d6ce22e6dded"
+  integrity sha512-7EjbcmUm17NQFu4Pmgmq2olYMj8nwMnpcddByChSUjArp8F5DQWcIcpriwO4ZToLNAJig0yiyjswfyGNje/ixw==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -8960,10 +8960,10 @@ jest@29.7.0:
     import-local "^3.0.2"
     jest-cli "^29.7.0"
 
-js-sha512@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/js-sha512/-/js-sha512-0.8.0.tgz#dd22db8d02756faccf19f218e3ed61ec8249f7d4"
-  integrity sha512-PWsmefG6Jkodqt+ePTvBZCSMFgN7Clckjd0O7su3I0+BW2QWUTJNzjktHsztGLhncP2h8mcF9V9Y2Ha59pAViQ==
+js-sha512@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/js-sha512/-/js-sha512-0.9.0.tgz#ed569aa1e4bdaf0b83363c29db1ab87b1192d9ae"
+  integrity sha512-mirki9WS/SUahm+1TbAPkqvbCiCfOAAsyXeHxK1UkullnJVVqoJG2pL9ObvT05CN+tM7fxhfYm0NbXn+1hWoZg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -10473,10 +10473,10 @@ prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-protobufjs@~7.2.5:
-  version "7.2.5"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.5.tgz#45d5c57387a6d29a17aab6846dcc283f9b8e7f2d"
-  integrity sha512-gGXRSXvxQ7UiPgfw8gevrfRWcTlSbOFg+p/N+JVJEK5VhueL2miT6qTymqAmjr1Q5WbOCyJbyrk6JfWKwlFn6A==
+protobufjs@~7.2.6:
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.6.tgz#4a0ccd79eb292717aacf07530a07e0ed20278215"
+  integrity sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
