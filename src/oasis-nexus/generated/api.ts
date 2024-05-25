@@ -729,7 +729,7 @@ Affects display only. Often equals 18, to match ETH.
   /** Whether the contract has been successfully verified by Sourcify.
 Additional information on verified contracts is available via
 the `/{runtime}/accounts/{address}` endpoint.
-DEPRECATED: This field will be removed in the future in favor of verification_level
+@deprecated (modified by afterAllFilesWrite) This field will be removed in the future in favor of verification_level
  */
   is_verified: boolean;
   /** Name of the token, as provided by token contract's `name()` method. */
@@ -1904,19 +1904,22 @@ export type CallFormat = string;
  */
 export type Ed25519PubKey = string;
 
-export type EthOrOasisAddress = string;
+export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */
+export type OasisAddress = `oasis1${string}`; /* modified by afterAllFilesWrite */
+export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */
+
 
 /**
  * An Oasis-style (bech32) address.
  */
-export type Address = string;
+export type Address = OasisAddress; /* modified by afterAllFilesWrite */
 
 export type TextBigInt = string;
 
 /**
  * An Oasis-style (bech32) address.
  */
-export type StakingAddress = string;
+export type StakingAddress = OasisAddress; /* modified by afterAllFilesWrite */
 
 export type Runtime = typeof Runtime[keyof typeof Runtime];
 
