@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import prependNetworkPath from './prependNetworkPath.mjs'
 import removeNetworkFromName from './removeNetworkFromName.mjs'
 
@@ -28,6 +29,20 @@ const config = {
       override: {
         operationName: removeNetworkFromName,
         mutator: './replaceNetworkWithBaseURL.ts',
+      },
+    },
+    hooks: {
+      afterAllFilesWrite: async filesPaths => {
+        for (const filePath of filesPaths) {
+          const generatedApiFile = await fs.promises.readFile(filePath, 'utf-8')
+
+          const patchedApiFile = generatedApiFile.replaceAll(
+            '{ [key: string]: unknown };',
+            '{ [key: string]: any }; /* modified by afterAllFilesWrite */',
+          )
+
+          await fs.promises.writeFile(filePath, patchedApiFile, 'utf-8')
+        }
       },
     },
   },
