@@ -44,7 +44,7 @@ export abstract class RouteUtils {
       [Layer.sapphire]: true,
       [Layer.cipher]: false,
       [Layer.pontusx]: false,
-      // Disable WIP Consensus on production an staging
+      // Disable WIP Consensus on production and staging
       [Layer.consensus]: !isStableDeploy,
     },
     [Network.testnet]: {
@@ -52,7 +52,8 @@ export abstract class RouteUtils {
       [Layer.sapphire]: true,
       [Layer.cipher]: false,
       [Layer.pontusx]: true,
-      [Layer.consensus]: false,
+      // Disable WIP Consensus on production and staging
+      [Layer.consensus]: !isStableDeploy,
     },
   } satisfies Record<Network, Record<Layer, boolean>>
 
