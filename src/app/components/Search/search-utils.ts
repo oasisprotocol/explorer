@@ -33,6 +33,7 @@ export const searchSuggestionTerms = {
       suggestedTokenFragment: 'mock',
     },
     cipher: undefined,
+    pontusxdev: undefined,
     pontusx: undefined,
     consensus: undefined,
   },
@@ -50,11 +51,17 @@ export const searchSuggestionTerms = {
       suggestedTokenFragment: 'USD',
     },
     cipher: undefined,
-    pontusx: {
+    pontusxdev: {
       suggestedBlock: '390632',
       suggestedTransaction: '0x244f71bcc67a0359c0d1e417b302ec3b358193769399e71f0112c58135f0fc82',
       suggestedAccount: '0xC09c6A1d5538E7ed135d6146241c8da11e92130B',
       suggestedTokenFragment: 'Ocean',
+    },
+    pontusx: {
+      suggestedBlock: '390632', // TODO
+      suggestedTransaction: '0x244f71bcc67a0359c0d1e417b302ec3b358193769399e71f0112c58135f0fc82', // TODO
+      suggestedAccount: '0xC09c6A1d5538E7ed135d6146241c8da11e92130B', // TODO
+      suggestedTokenFragment: 'Ocean', // TODO
     },
     consensus: undefined,
   },

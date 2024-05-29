@@ -43,6 +43,7 @@ export abstract class RouteUtils {
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
       [Layer.cipher]: false,
+      [Layer.pontusxdev]: false,
       [Layer.pontusx]: false,
       // Disable WIP Consensus on production and staging
       [Layer.consensus]: !isStableDeploy,
@@ -51,6 +52,7 @@ export abstract class RouteUtils {
       [Layer.emerald]: true,
       [Layer.sapphire]: true,
       [Layer.cipher]: false,
+      [Layer.pontusxdev]: true,
       [Layer.pontusx]: true,
       // Disable WIP Consensus on production and staging
       [Layer.consensus]: !isStableDeploy,

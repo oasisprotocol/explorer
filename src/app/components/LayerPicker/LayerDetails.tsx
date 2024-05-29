@@ -68,11 +68,18 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '23295',
       docs: docs.sapphire,
     },
-    [Layer.pontusx]: {
-      description: t('layerPicker.testnet.pontusx'),
+    [Layer.pontusxdev]: {
+      description: t('layerPicker.testnet.pontusxdev'),
       rpcHttp: 'https://pontusx.not.si:443',
       chainHexId: '0x7ec8',
       chainDecimalId: '32456',
+      docs: docs.pontusx1,
+    },
+    [Layer.pontusx]: {
+      description: t('layerPicker.testnet.pontusxtest'),
+      rpcHttp: 'https://pontusx.not.si:443',
+      chainHexId: '0x7ec9',
+      chainDecimalId: '32457',
       docs: docs.pontusx1,
     },
   },

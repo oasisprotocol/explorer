@@ -106,7 +106,6 @@
     "paratime": "Paratime",
     "parentheses": "({{subject}})",
     "percentage": "Percentage",
-    "pontusx": "Pontus-X",
     "proposal": "Proposal",
     "proposer": "Proposer",
     "rank": "Rank",
@@ -295,7 +294,21 @@
       "header": "Add the {{ layer }} Testnet to Hardhat",
       "description": "Open up your hardhat.config.ts and drop in these lines."
     },
-    "pontusx": {
+    "pontusxdevnet": {
+      "1": {
+        "header": "What is the Pontus-X Network?",
+        "description": "The Pontus-X Network is our official confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
+      },
+      "2": {
+        "header": "Devnet Parameters",
+        "description": "The Devnet for Pontus-X may undergo frequent version upgrades."
+      },
+      "3": {
+        "header": "Adding the Pontus-X Devnet to Hardhat",
+        "description": "To integrate with Pontus-X devnet, open your hardhat.config.ts file and insert the following configurations."
+      }
+    },
+    "pontusxtestnet": {
       "1": {
         "header": "What is the Pontus-X Network?",
         "description": "The Pontus-X Network is our official confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
@@ -306,7 +319,7 @@
       },
       "3": {
         "header": "Adding the Pontus-X Testnet to Hardhat",
-        "description": "To integrate with Pontus-X, open your hardhat.config.ts file and insert the following configurations."
+        "description": "To integrate with Pontus-X testnet, open your hardhat.config.ts file and insert the following configurations."
       }
     },
     "token": {
@@ -516,7 +529,8 @@
     "testnet": {
       "emerald": "The Testnet of the EVM Compatible ParaTime providing a smart contract development environment.",
       "sapphire": "The Testnet of the official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility.",
-      "pontusx": "The Testnet of the official confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
+      "pontusxdev": "The Devnet of Pontus-X, a confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy.",
+      "pontusxtest": "The Testnet of Pontus-X, a confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
     }
   },
   "home": {
@@ -563,6 +577,10 @@
     "nodes": "Nodes:",
     "online": "Online",
     "outdated": "Out-of-date"
+  },
+  "pontusx": {
+    "devnet": "Pontus-X devnet",
+    "testnet": "Pontus-X testnet"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

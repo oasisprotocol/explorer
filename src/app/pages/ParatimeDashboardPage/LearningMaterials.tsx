@@ -62,6 +62,7 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
+      [Layer.pontusxdev]: undefined,
       [Layer.pontusx]: undefined,
     },
     [Network.testnet]: {
@@ -100,20 +101,37 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
-      [Layer.pontusx]: {
+      [Layer.pontusxdev]: {
         primary: {
-          description: t('learningMaterials.pontusx.1.description'),
-          header: t('learningMaterials.pontusx.1.header'),
+          description: t('learningMaterials.pontusxdevnet.1.description'),
+          header: t('learningMaterials.pontusxdevnet.1.header'),
           url: docs.pontusx1,
         },
         secondary: {
-          description: t('learningMaterials.pontusx.2.description'),
-          header: t('learningMaterials.pontusx.2.header'),
+          description: t('learningMaterials.pontusxdevnet.2.description'),
+          header: t('learningMaterials.pontusxdevnet.2.header'),
           url: docs.pontusx2,
         },
         tertiary: {
-          description: t('learningMaterials.pontusx.2.description'),
-          header: t('learningMaterials.pontusx.3.header'),
+          description: t('learningMaterials.pontusxdevnet.3.description'),
+          header: t('learningMaterials.pontusxdevnet.3.header'),
+          url: docs.pontusx3,
+        },
+      },
+      [Layer.pontusx]: {
+        primary: {
+          description: t('learningMaterials.pontusxtestnet.1.description'),
+          header: t('learningMaterials.pontusxtestnet.1.header'),
+          url: docs.pontusx1,
+        },
+        secondary: {
+          description: t('learningMaterials.pontusxtestnet.2.description'),
+          header: t('learningMaterials.pontusxtestnet.2.header'),
+          url: docs.pontusx2,
+        },
+        tertiary: {
+          description: t('learningMaterials.pontusxtestnet.3.description'),
+          header: t('learningMaterials.pontusxtestnet.3.header'),
           url: docs.pontusx3,
         },
       },

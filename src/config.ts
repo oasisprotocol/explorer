@@ -114,7 +114,27 @@ const sapphireConfig: LayerConfig = {
   type: RuntimeTypes.Evm,
 }
 
-const pontusxConfig: LayerConfig = {
+const pontusxDevConfig: LayerConfig = {
+  mainnet: {
+    activeNodes: undefined,
+    address: undefined,
+    blockGasLimit: undefined,
+    runtimeId: undefined,
+    tokens: [NativeToken.EUROe],
+  },
+  testnet: {
+    activeNodes: 3,
+    address: 'oasis1qr02702pr8ecjuff2z3es254pw9xl6z2yg9qcc6c',
+    blockGasLimit: 15_000_000,
+    runtimeId: '0000000000000000000000000000000000000000000000004febe52eb412b421',
+    tokens: [NativeToken.EUROe, NativeToken.TEST],
+    fiatCurrency: 'eur',
+  },
+  decimals: 18,
+  type: RuntimeTypes.Evm,
+}
+
+const pontusxTestConfig: LayerConfig = {
   mainnet: {
     activeNodes: undefined,
     address: undefined,
@@ -124,9 +144,9 @@ const pontusxConfig: LayerConfig = {
   },
   testnet: {
     activeNodes: 1,
-    address: 'oasis1qr02702pr8ecjuff2z3es254pw9xl6z2yg9qcc6c',
+    address: 'oasis1qrg6c89655pmdxeel08qkngs02jnrfll5v9c508v',
     blockGasLimit: 15_000_000,
-    runtimeId: '0000000000000000000000000000000000000000000000004febe52eb412b421',
+    runtimeId: '00000000000000000000000000000000000000000000000004a6f9071c007069',
     tokens: [NativeToken.EUROe, NativeToken.TEST],
     fiatCurrency: 'eur',
   },
@@ -142,7 +162,8 @@ export const paraTimesConfig = {
   [Layer.cipher]: cipherConfig,
   [Layer.emerald]: emeraldConfig,
   [Layer.sapphire]: sapphireConfig,
-  [Layer.pontusx]: pontusxConfig,
+  [Layer.pontusxdev]: pontusxDevConfig,
+  [Layer.pontusx]: pontusxTestConfig,
   [Layer.consensus]: null,
 } satisfies LayersConfig
 
