@@ -25,6 +25,7 @@ import {
   fixedNetwork,
   fixedLayer,
   RouteUtils,
+  skipGraph,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
@@ -72,7 +73,7 @@ const NetworkSpecificPart = () => (
 )
 
 /**
- * In case of being restricted to a specific layer, jump to a dashboard
+ * In case of being restricted to a specific layer or layers, jump to a dashboard
  *
  * This should be rendered on the landing page, since we don't want the opening graph.
  */
@@ -82,8 +83,11 @@ const RedirectToDashboard: FC = () => {
   useEffect(() =>
     navigate(
       RouteUtils.getDashboardRoute({
-        network: fixedNetwork ?? RouteUtils.getEnabledNetworksForLayer(fixedLayer!)[0]!,
-        layer: fixedLayer!,
+        network:
+          fixedNetwork ?? fixedLayer
+            ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
+            : RouteUtils.getEnabledScopes()[0].network,
+        layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
       }),
     ),
   )
@@ -106,7 +110,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: fixedLayer ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
+        element: skipGraph ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
       },
       ...(!!fixedNetwork && !!fixedLayer
         ? []
