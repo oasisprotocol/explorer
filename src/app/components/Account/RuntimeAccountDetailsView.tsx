@@ -148,21 +148,29 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
 
       {nativeTokens.length === 1 && (
         <>
-          <dt>{t('account.totalReceived')}</dt>
-          <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(account.stats.total_received),
-              ticker: nativeTickerNames[0],
-            })}
-          </dd>
+          {account.stats.total_received !== undefined && (
+            <>
+              <dt>{t('account.totalReceived')}</dt>
+              <dd>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(account.stats.total_received),
+                  ticker: nativeTickerNames[0],
+                })}
+              </dd>
+            </>
+          )}
 
-          <dt>{t('account.totalSent')}</dt>
-          <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(account.stats.total_sent),
-              ticker: nativeTickerNames[0],
-            })}
-          </dd>
+          {account.stats.total_sent !== undefined && (
+            <>
+              <dt>{t('account.totalSent')}</dt>
+              <dd>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(account.stats.total_sent),
+                  ticker: nativeTickerNames[0],
+                })}
+              </dd>
+            </>
+          )}
         </>
       )}
     </StyledDescriptionList>
