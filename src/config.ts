@@ -3,6 +3,7 @@
 import { Layer } from './oasis-nexus/generated/api'
 import { NativeToken, NativeTokenInfo } from './types/ticker'
 import { SearchScope } from './types/searchScope'
+import { Network } from './types/network'
 
 export const consensusDecimals = 9
 /**
@@ -202,3 +203,8 @@ export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
   (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'
 
 export const showFiatValues = process.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
+
+export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
+  [Network.mainnet]: {},
+  [Network.testnet]: {},
+}
