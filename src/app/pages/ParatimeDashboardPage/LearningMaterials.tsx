@@ -62,6 +62,7 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
+      [Layer.pontusxdev]: undefined,
       [Layer.pontusx]: undefined,
     },
     [Network.testnet]: {
@@ -100,6 +101,23 @@ const getContent = (t: TFunction) => {
         },
       },
       [Layer.cipher]: undefined,
+      [Layer.pontusxdev]: {
+        primary: {
+          description: t('learningMaterials.pontusx.1.description'),
+          header: t('learningMaterials.pontusx.1.header'),
+          url: docs.pontusx1,
+        },
+        secondary: {
+          description: t('learningMaterials.pontusx.2.description'),
+          header: t('learningMaterials.pontusx.2.header'),
+          url: docs.pontusx2,
+        },
+        tertiary: {
+          description: t('learningMaterials.pontusx.2.description'),
+          header: t('learningMaterials.pontusx.3.header'),
+          url: docs.pontusx3,
+        },
+      },
       [Layer.pontusx]: {
         primary: {
           description: t('learningMaterials.pontusx.1.description'),

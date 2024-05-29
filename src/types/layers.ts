@@ -16,7 +16,8 @@ const layerOrder: Record<Layer, number> = {
   [Layer.sapphire]: 2,
   [Layer.emerald]: 3,
   [Layer.cipher]: 4,
-  [Layer.pontusx]: 5,
+  [Layer.pontusxdev]: 5,
+  [Layer.pontusx]: 6,
 }
 
 const hiddenLayers: Layer[] = [Layer.pontusx]
