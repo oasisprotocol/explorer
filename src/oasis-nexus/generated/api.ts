@@ -1927,6 +1927,7 @@ export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
   pontusx: 'pontusx',
+  pontusxdev: 'pontusxdev',
   cipher: 'cipher',
 } as const;
 
@@ -1938,6 +1939,7 @@ export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
   pontusx: 'pontusx',
+  pontusxdev: 'pontusxdev',
   cipher: 'cipher',
   consensus: 'consensus',
 } as const;
