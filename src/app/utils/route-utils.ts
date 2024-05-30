@@ -65,38 +65,34 @@ export abstract class RouteUtils {
     },
   } satisfies Record<Network, Record<Layer, boolean>>
 
-  static getDashboardRoute = ({ network, layer }: SearchScope) => {
+  static getScopeRoute = ({ network, layer }: SearchScope) => {
     return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}`
   }
 
-  static getLatestTransactionsRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/tx`
+  static getDashboardRoute = (scope: SearchScope) => this.getScopeRoute(scope)
+
+  static getLatestTransactionsRoute = (scope: SearchScope) => {
+    return `${this.getScopeRoute(scope)}/tx`
   }
 
-  static getTopTokensRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token`
+  static getTopTokensRoute = (scope: SearchScope) => {
+    return `${this.getScopeRoute(scope)}/token`
   }
 
-  static getLatestBlocksRoute = ({ network, layer }: SearchScope) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block`
+  static getLatestBlocksRoute = (scope: SearchScope) => {
+    return `${this.getScopeRoute(scope)}/block`
   }
 
-  static getBlockRoute = ({ network, layer }: SearchScope, blockHeight: number) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/block/${encodeURIComponent(
-      blockHeight,
-    )}`
+  static getBlockRoute = (scope: SearchScope, blockHeight: number) => {
+    return `${this.getScopeRoute(scope)}/block/${encodeURIComponent(blockHeight)}`
   }
 
   static getTransactionRoute = (scope: SearchScope, txHash: string) => {
-    return `/${encodeURIComponent(scope.network)}/${encodeURIComponent(scope.layer)}/tx/${encodeURIComponent(
-      txHash,
-    )}`
+    return `${this.getScopeRoute(scope)}/tx/${encodeURIComponent(txHash)}`
   }
 
-  static getAccountRoute = ({ network, layer }: SearchScope, account: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/address/${encodeURIComponent(
-      account,
-    )}`
+  static getAccountRoute = (scope: SearchScope, accountAddress: string) => {
+    return `${this.getScopeRoute(scope)}/address/${encodeURIComponent(accountAddress)}`
   }
 
   static getAccountsRoute = (network: Network) => {
@@ -128,28 +124,20 @@ export abstract class RouteUtils {
 
   static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
     return scope
-      ? `/${encodeURIComponent(scope.network)}/${encodeURIComponent(scope.layer)}/search?q=${encodeURIComponent(searchTerm)}`
+      ? `${this.getScopeRoute(scope)}/search?q=${encodeURIComponent(searchTerm)}`
       : `/search?q=${encodeURIComponent(searchTerm)}`
   }
 
-  static getTokenRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
-      tokenAddress,
-    )}`
+  static getTokenRoute = (scope: SearchScope, tokenAddress: string) => {
+    return `${this.getScopeRoute(scope)}/token/${encodeURIComponent(tokenAddress)}`
   }
 
-  static getTokenHoldersRoute = ({ network, layer }: SearchScope, tokenAddress: string) => {
-    return `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
-      tokenAddress,
-    )}/holders`
+  static getTokenHoldersRoute = (scope: SearchScope, tokenAddress: string) => {
+    return `${this.getScopeRoute(scope)}/token/${encodeURIComponent(tokenAddress)}/holders`
   }
 
-  static getNFTInstanceRoute = (
-    { network, layer }: SearchScope,
-    contractAddress: string,
-    instanceId: string,
-  ): string =>
-    `/${encodeURIComponent(network)}/${encodeURIComponent(layer)}/token/${encodeURIComponent(
+  static getNFTInstanceRoute = (scope: SearchScope, contractAddress: string, instanceId: string): string =>
+    `${this.getScopeRoute(scope)}/token/${encodeURIComponent(
       contractAddress,
     )}/instance/${encodeURIComponent(instanceId)}`
 
