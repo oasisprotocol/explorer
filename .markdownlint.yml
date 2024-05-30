@@ -14,6 +14,8 @@ line-length:
   line_length: 80
   # Allow longer lines for code blocks.
   code_block_line_length: 100
+  # Ignore on tables
+  tables: false
 
 # Do not always require language specifiers with fenced code blocks since they
 # are not part of the Markdown spec.
