@@ -6,8 +6,8 @@ import { getTokensForScope, paraTimesConfig } from '../../config'
 import { fromBaseUnits } from './helpers'
 
 const grpcUrls: { [key in Network]: string } = {
-  [Network.mainnet]: 'https://grpc.oasis.dev',
-  [Network.testnet]: 'https://testnet.grpc.oasis.dev',
+  [Network.mainnet]: 'https://grpc.oasis.io',
+  [Network.testnet]: 'https://testnet.grpc.oasis.io',
 }
 
 export async function getRPCAccountBalances(

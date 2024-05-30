@@ -36,8 +36,8 @@ const getDetails = (t: TFunction): Details => ({
   [Network.mainnet]: {
     [Layer.emerald]: {
       description: t('layerPicker.mainnet.emerald'),
-      rpcHttp: 'https://emerald.oasis.dev',
-      rpcWebSockets: 'wss://emerald.oasis.dev/ws',
+      rpcHttp: 'https://emerald.oasis.io',
+      rpcWebSockets: 'wss://emerald.oasis.io/ws',
       chainHexId: '0xa516',
       chainDecimalId: '42262',
       docs: docs.emerald,
@@ -54,16 +54,16 @@ const getDetails = (t: TFunction): Details => ({
   [Network.testnet]: {
     [Layer.emerald]: {
       description: t('layerPicker.testnet.emerald'),
-      rpcHttp: 'https://testnet.emerald.oasis.dev',
-      rpcWebSockets: 'wss://testnet.emerald.oasis.dev/ws',
+      rpcHttp: 'https://testnet.emerald.oasis.io',
+      rpcWebSockets: 'wss://testnet.emerald.oasis.io/ws',
       chainHexId: '0xa515',
       chainDecimalId: '42261',
       docs: docs.emerald,
     },
     [Layer.sapphire]: {
       description: t('layerPicker.testnet.sapphire'),
-      rpcHttp: 'https://testnet.sapphire.oasis.dev',
-      rpcWebSockets: 'wss://testnet.sapphire.oasis.dev/ws',
+      rpcHttp: 'https://testnet.sapphire.oasis.io',
+      rpcWebSockets: 'wss://testnet.sapphire.oasis.io/ws',
       chainHexId: '0x5aff',
       chainDecimalId: '23295',
       docs: docs.sapphire,

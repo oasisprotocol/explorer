@@ -84,7 +84,7 @@ analysis:
   analyzers:
     - name: emerald_main_damask
       chain_id: oasis-3
-      rpc: grpc.oasis.dev:443
+      rpc: grpc.oasis.io:443
       chaincontext: b11b369e0da5bb230b220127f5e7b242d385ef8c6f54906243f30af63c815535
       # Use the latest round from oasisscan (easier than gRPC)
       # https://www.oasisscan.com/paratimes/000000000000000000000000000000000000000000000000e2eaa99fc008f87f/roundList
