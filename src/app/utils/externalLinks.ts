@@ -47,7 +47,7 @@ export const github = {
 }
 
 export const faucets = {
-  oasisTestnet: 'https://faucet.testnet.oasis.dev/',
+  oasisTestnet: 'https://faucet.testnet.oasis.io/',
 }
 
 export const dapps = {
