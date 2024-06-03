@@ -208,3 +208,8 @@ export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, st
   [Network.mainnet]: {},
   [Network.testnet]: {},
 }
+
+export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
+  [Network.mainnet]: {},
+  [Network.testnet]: {},
+}
