@@ -28,7 +28,7 @@ import {
   skipGraph,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
-import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
+import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { AccountEventsCard } from 'app/pages/RuntimeAccountDetailsPage/AccountEventsCard'
@@ -67,9 +67,9 @@ import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 
 const NetworkSpecificPart = () => (
-  <ThemeByNetwork isRootTheme={true} network={useRequiredScopeParam().network}>
+  <ThemeByScope isRootTheme={true} network={useRequiredScopeParam().network}>
     <Outlet />
-  </ThemeByNetwork>
+  </ThemeByScope>
 )
 
 /**

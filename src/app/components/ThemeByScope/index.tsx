@@ -5,7 +5,7 @@ import { getThemesForNetworks } from '../../../styles/theme'
 import CssBaseline from '@mui/material/CssBaseline'
 import { fixedNetwork } from '../../utils/route-utils'
 
-export const ThemeByNetwork: FC<{ network: Network; isRootTheme: boolean; children: React.ReactNode }> = ({
+export const ThemeByScope: FC<{ network: Network; isRootTheme: boolean; children: React.ReactNode }> = ({
   network,
   isRootTheme,
   children,
@@ -17,10 +17,10 @@ export const ThemeByNetwork: FC<{ network: Network; isRootTheme: boolean; childr
 )
 
 export const withDefaultTheme = (node: ReactNode, alwaysMainnet = false) => (
-  <ThemeByNetwork
+  <ThemeByScope
     isRootTheme={true}
     network={alwaysMainnet ? Network.mainnet : fixedNetwork ?? Network.mainnet}
   >
     {node}
-  </ThemeByNetwork>
+  </ThemeByScope>
 )
