@@ -7,7 +7,7 @@ import {
   getInverseFilterForScope,
   SearchScope,
 } from '../../../types/searchScope'
-import { getThemesForNetworks } from '../../../styles/theme'
+import { getThemeForNetwork } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
@@ -27,12 +27,13 @@ export const ScopedSearchResultsView: FC<{
   const { t } = useTranslation()
   const [othersOpen, setOthersOpen] = useState(false)
   const networkNames = getNetworkNames(t)
-  const themes = getThemesForNetworks()
   const isInWantedScope = getFilterForScope(wantedScope)
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
   const wantedResults = searchResults.filter(isInWantedScope)
   const otherResults = searchResults.filter(isNotInWantedScope)
-  const notificationTheme = themes[otherResults.some(isOnMainnet) ? Network.mainnet : Network.testnet]
+  const notificationTheme = getThemeForNetwork(
+    otherResults.some(isOnMainnet) ? Network.mainnet : Network.testnet,
+  )
 
   useRedirectIfSingleResult(wantedScope, searchParams, searchResults)
 

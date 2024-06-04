@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { Network } from '../../../types/network'
 import { ThemeProvider } from '@mui/material/styles'
-import { getThemesForNetworks } from '../../../styles/theme'
+import { getThemeForNetwork } from '../../../styles/theme'
 import CssBaseline from '@mui/material/CssBaseline'
 import { fixedNetwork } from '../../utils/route-utils'
 
@@ -10,7 +10,7 @@ export const ThemeByScope: FC<{ network: Network; isRootTheme: boolean; children
   isRootTheme,
   children,
 }) => (
-  <ThemeProvider theme={getThemesForNetworks()[network]}>
+  <ThemeProvider theme={getThemeForNetwork(network)}>
     {isRootTheme && <CssBaseline />}
     {children}
   </ThemeProvider>

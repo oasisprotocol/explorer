@@ -9,7 +9,11 @@ export { testnetTheme } from './testnet/theme'
 export const tooltipDelay = 500
 export const typingDelay = 1000
 
-export const getThemesForNetworks: () => Record<Network, Theme> = () => ({
-  [Network.mainnet]: defaultTheme,
-  [Network.testnet]: testnetTheme,
-})
+export const getThemeForNetwork = (network: Network): Theme => {
+  switch (network) {
+    case Network.mainnet:
+      return defaultTheme
+    case Network.testnet:
+      return testnetTheme
+  }
+}
