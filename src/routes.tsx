@@ -66,7 +66,7 @@ import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDe
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 
-const NetworkSpecificPart = () => (
+const ScopeSpecificPart = () => (
   <ThemeByScope isRootTheme={true} network={useRequiredScopeParam().network}>
     <Outlet />
   </ThemeByScope>
@@ -122,7 +122,7 @@ export const routes: RouteObject[] = [
           ]),
       {
         path: '/:_network/consensus',
-        element: <NetworkSpecificPart />,
+        element: <ScopeSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: Layer.consensus })
@@ -220,7 +220,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/:_network/:_layer',
-        element: <NetworkSpecificPart />,
+        element: <ScopeSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: params._layer })
