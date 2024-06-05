@@ -4,6 +4,7 @@ import { Layer } from './oasis-nexus/generated/api'
 import { NativeToken, NativeTokenInfo } from './types/ticker'
 import { SearchScope } from './types/searchScope'
 import { Network } from './types/network'
+import type { Theme } from '@mui/material/styles/createTheme'
 
 export const consensusDecimals = 9
 /**
@@ -210,6 +211,11 @@ export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, st
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
+  [Network.mainnet]: {},
+  [Network.testnet]: {},
+}
+
+export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
   [Network.mainnet]: {},
   [Network.testnet]: {},
 }
