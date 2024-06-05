@@ -15,7 +15,7 @@ import {
   Network,
 } from '../../../types/network'
 import { HideMoreResults, ShowMoreResults } from './notifications'
-import { getThemeForNetwork } from '../../../styles/theme'
+import { getThemeForScope } from '../../../styles/theme'
 import { orderByLayer } from '../../../types/layers'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -50,7 +50,7 @@ export const GlobalSearchResultsView: FC<{
   }
 
   const otherNetworks = RouteUtils.getEnabledNetworks().filter(isNotMainnet)
-  const notificationTheme = getThemeForNetwork(Network.testnet)
+  const notificationTheme = getThemeForScope(Network.testnet)
   const mainnetResults = searchResults.filter(isOnMainnet).sort(orderByLayer)
   const otherResults = searchResults.filter(isNotOnMainnet).sort(orderByLayer)
 

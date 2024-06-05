@@ -9,7 +9,7 @@ export { testnetTheme } from './testnet/theme'
 export const tooltipDelay = 500
 export const typingDelay = 1000
 
-export const getThemeForNetwork = (network: Network): Theme => {
+export const getThemeForScope = (network: Network): Theme => {
   switch (network) {
     case Network.mainnet:
       return defaultTheme

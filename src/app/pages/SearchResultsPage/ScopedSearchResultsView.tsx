@@ -7,7 +7,7 @@ import {
   getInverseFilterForScope,
   SearchScope,
 } from '../../../types/searchScope'
-import { getThemeForNetwork } from '../../../styles/theme'
+import { getThemeForScope } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
@@ -31,7 +31,7 @@ export const ScopedSearchResultsView: FC<{
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
   const wantedResults = searchResults.filter(isInWantedScope)
   const otherResults = searchResults.filter(isNotInWantedScope)
-  const notificationTheme = getThemeForNetwork(
+  const notificationTheme = getThemeForScope(
     otherResults.some(isOnMainnet) ? Network.mainnet : Network.testnet,
   )
 
