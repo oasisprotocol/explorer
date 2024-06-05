@@ -66,11 +66,14 @@ import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDe
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 
-const ScopeSpecificPart = () => (
-  <ThemeByScope isRootTheme={true} network={useRequiredScopeParam().network}>
-    <Outlet />
-  </ThemeByScope>
-)
+const ScopeSpecificPart = () => {
+  const { network, layer } = useRequiredScopeParam()
+  return (
+    <ThemeByScope isRootTheme={true} network={network} layer={layer}>
+      <Outlet />
+    </ThemeByScope>
+  )
+}
 
 /**
  * In case of being restricted to a specific layer or layers, jump to a dashboard

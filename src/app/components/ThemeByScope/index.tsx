@@ -4,13 +4,15 @@ import { ThemeProvider } from '@mui/material/styles'
 import { getThemeForScope } from '../../../styles/theme'
 import CssBaseline from '@mui/material/CssBaseline'
 import { fixedNetwork } from '../../utils/route-utils'
+import { Layer } from '../../../oasis-nexus/api'
 
-export const ThemeByScope: FC<{ network: Network; isRootTheme: boolean; children: React.ReactNode }> = ({
-  network,
-  isRootTheme,
-  children,
-}) => (
-  <ThemeProvider theme={getThemeForScope(network)}>
+export const ThemeByScope: FC<{
+  network: Network
+  layer?: Layer
+  isRootTheme: boolean
+  children: React.ReactNode
+}> = ({ network, layer, isRootTheme, children }) => (
+  <ThemeProvider theme={getThemeForScope(network, layer)}>
     {isRootTheme && <CssBaseline />}
     {children}
   </ThemeProvider>
