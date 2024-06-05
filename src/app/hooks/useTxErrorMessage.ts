@@ -3,7 +3,7 @@ import { TxError } from '../../oasis-nexus/api'
 
 export const useTxErrorMessage = (error: TxError | undefined): string | undefined => {
   const { t } = useTranslation()
-  if (!error) return undefined
+  if (!error || (!error.module && !error.code)) return undefined
   if (error.module === 'evm' && error.code === 8 && !error.message) {
     // EVM reverted, with missing error message
     return `${t('errors.revertedWithoutMessage')} (${t('errors.code')} ${error.code})`
