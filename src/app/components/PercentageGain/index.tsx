@@ -13,6 +13,9 @@ interface PercentageGainProps {
  * Negative percentage shows red box with down arrow.
  */
 export const PercentageGain: FC<PercentageGainProps> = ({ earliestValue, latestValue }) => {
+  // If the previous data was zero, we can't divide with it, it would just get us infinity or Nan...
+  if (earliestValue === 0) return
+
   const ratio = (latestValue - earliestValue) / earliestValue
 
   return (
