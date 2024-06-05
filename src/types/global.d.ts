@@ -28,6 +28,7 @@ declare global {
       REACT_APP_STAGING_URLS?: string
       REACT_APP_FIXED_NETWORK?: string
       REACT_APP_FIXED_LAYER?: string
+      REACT_APP_SKIP_GRAPH?: string
       REACT_APP_SHOW_FIAT_VALUES: 'true' | 'false'
     }
   }
