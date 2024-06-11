@@ -12,6 +12,33 @@ The official deployment of Oasis Explorer lives at <https://explorer.oasis.io>.
 
 Development deploy is available at <https://explorer.dev.oasis.io>.
 
+## Features
+
+- **Transaction History**: Allows you to view the complete transaction history
+  of a specific blockchain* address.
+- **Block Contents**: Enables you to examine the contents of individual blocks.
+  This includes information like the transactions in the block, the total block
+  size, and the block's hash data.
+- **Transaction Verification**: Lets you verify the status of a transaction. You
+  can confirm whether a transaction has been validated by the network and
+  included in a block.
+- **Blockchain Statistics**: Provides overall statistics regarding the
+  blockchain* such as the total number of transactions, and the number of blocks
+  already created.
+- **Address Balance**: Enables you to see the balance of any blockchain*
+  address.
+- **Network Nodes**: Provides information about the nodes in the blockchain*
+  network.
+- **Search engine**: Enables you to lookup tokens, addresses, names, blocks and
+  transactions;
+- **Non-Fungible Tokens (NFTs)**: Provides information about NFT ownership,
+  metadata, transactions history and minting information. (
+  See [more...](./docs/NFTs.md))
+- **Contract Reading and Writing** *(upcoming)*: Can read contract details and
+  record new contract interactions.
+
+*blockchain: ParaTime layer/s or Consensus
+
 ## Getting started
 
 ### Installing and running Oasis Explorer
@@ -58,7 +85,7 @@ A quick summary:
 - Use the present tense ("Add feature" not "Added feature").
 - Use the imperative mood ("Move component to..." not "Moves component to...").
 - Wrap the body at 80 characters.
-- Use the body to explain _what_ and _why_ vs. _how_.
+- Use the body to explain *what* and *why* vs. *how*.
 
 A detailed post on Git commit messages: [How To Write a Git Commit Message].
 
