@@ -7,7 +7,7 @@ import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
-import { isLayerHidden } from '../../types/layers'
+import type { HasLayer } from '../../types/layers'
 
 export const fixedNetwork = process.env.REACT_APP_FIXED_NETWORK as Network | undefined
 export const fixedLayer = process.env.REACT_APP_FIXED_LAYER as Layer | undefined
@@ -36,6 +36,12 @@ export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
 }
 
 export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, typeof Layer.consensus>
+
+export const hiddenLayers: Layer[] = [Layer.pontusxdev, Layer.pontusx]
+
+export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
+
+export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
