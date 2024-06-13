@@ -37,7 +37,7 @@ export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
 
 export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, typeof Layer.consensus>
 
-export const hiddenLayers: Layer[] = [Layer.pontusxdev, Layer.pontusx]
+export const hiddenLayers: Layer[] = [Layer.pontusxdev]
 
 export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
 
