@@ -20,7 +20,7 @@ const layerOrder: Record<Layer, number> = {
   [Layer.pontusx]: 6,
 }
 
-const hiddenLayers: Layer[] = [Layer.pontusxdev, Layer.pontusx]
+const hiddenLayers: Layer[] = [Layer.consensus, Layer.sapphire, Layer.emerald, Layer.cipher]
 
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]

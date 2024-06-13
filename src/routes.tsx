@@ -23,9 +23,10 @@ import {
   fixedNetwork,
   fixedLayer,
   RouteUtils,
+  skipGraph,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
-import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
+import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { ContractCodeCard } from './app/pages/RuntimeAccountDetailsPage/ContractCodeCard'
@@ -57,15 +58,19 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
+import { PontusxPrivacyPage } from './app/pages/PontusxPrivacyPage'
 
-const NetworkSpecificPart = () => (
-  <ThemeByNetwork isRootTheme={true} network={useRequiredScopeParam().network}>
-    <Outlet />
-  </ThemeByNetwork>
-)
+const ScopeSpecificPart = () => {
+  const { network, layer } = useRequiredScopeParam()
+  return (
+    <ThemeByScope isRootTheme={true} network={network} layer={layer}>
+      <Outlet />
+    </ThemeByScope>
+  )
+}
 
 /**
- * In case of being restricted to a specific layer, jump to a dashboard
+ * In case of being restricted to a specific layer or layers, jump to a dashboard
  *
  * This should be rendered on the landing page, since we don't want the opening graph.
  */
@@ -75,8 +80,11 @@ const RedirectToDashboard: FC = () => {
   useEffect(() =>
     navigate(
       RouteUtils.getDashboardRoute({
-        network: fixedNetwork ?? RouteUtils.getEnabledNetworksForLayer(fixedLayer!)[0]!,
-        layer: fixedLayer!,
+        network:
+          fixedNetwork ?? fixedLayer
+            ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
+            : RouteUtils.getEnabledScopes()[0].network,
+        layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
       }),
     ),
   )
@@ -99,7 +107,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: fixedLayer ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
+        element: skipGraph ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
       },
       ...(!!fixedNetwork && !!fixedLayer
         ? []
@@ -111,7 +119,7 @@ export const routes: RouteObject[] = [
           ]),
       {
         path: '/:_network/consensus',
-        element: <NetworkSpecificPart />,
+        element: <ScopeSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: Layer.consensus })
@@ -186,7 +194,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/:_network/:_layer',
-        element: <NetworkSpecificPart />,
+        element: <ScopeSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
           return assertEnabledScope({ network: params._network, layer: params._layer })
@@ -300,6 +308,10 @@ export const routes: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/privacy',
+        element: <PontusxPrivacyPage />,
       },
     ],
   },

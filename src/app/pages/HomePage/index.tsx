@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
 import { BuildBanner } from '../../components/BuildBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
-import { ThemeByNetwork } from '../../components/ThemeByNetwork'
+import { ThemeByScope } from '../../components/ThemeByScope'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
 
@@ -168,7 +168,7 @@ export const HomePage: FC = () => {
               </InfoScreenBtn>
             )}
           </SearchInputContainer>
-          <ThemeByNetwork isRootTheme={false} network={network}>
+          <ThemeByScope isRootTheme={false} network={network}>
             <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
               <ParaTimeSelector
                 step={step}
@@ -179,7 +179,7 @@ export const HomePage: FC = () => {
                 onGraphZoomedIn={setIsGraphZoomedIn}
               />
             </Box>
-          </ThemeByNetwork>
+          </ThemeByScope>
         </Content>
 
         <FooterStyled>

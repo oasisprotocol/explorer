@@ -2,6 +2,7 @@ import { getNetworkNames, Network } from './network'
 import { getLayerLabels } from '../app/utils/content'
 import { HasScope, Layer } from '../oasis-nexus/api'
 import { TFunction } from 'i18next'
+import { specialScopeNames } from '../config'
 
 export interface SearchScope {
   network: Network
@@ -14,6 +15,7 @@ export const MainnetEmerald: SearchScope = {
 }
 
 export const getNameForScope = (t: TFunction, scope: SearchScope) =>
+  specialScopeNames[scope.network]?.[scope.layer] ??
   `${getLayerLabels(t)[scope.layer]} ${getNetworkNames(t)[scope.network]}`
 
 export const getKeyForScope: (scope: SearchScope) => string = ({ network, layer }) => `${network}.${layer}`

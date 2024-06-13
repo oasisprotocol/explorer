@@ -15,7 +15,7 @@ import {
   TokenResult,
   TransactionResult,
 } from './hooks'
-import { getThemesForNetworks } from '../../../styles/theme'
+import { getThemeForScope } from '../../../styles/theme'
 import { Network } from '../../../types/network'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AllTokenPrices } from '../../../coin-gecko/api'
@@ -44,7 +44,7 @@ export const SearchResultsList: FC<{
   if (!numberOfResults) {
     return null
   }
-  const theme = getThemesForNetworks()[networkForTheme]
+  const theme = getThemeForScope(networkForTheme)
 
   return (
     <ResultListFrame theme={theme}>
