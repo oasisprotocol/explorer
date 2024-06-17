@@ -4,26 +4,26 @@ import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { useGetConsensusValidators } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as PAGE_SIZE } from '../../config'
-import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
-import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { Validators } from '../../components/Validators'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
+import { useValidatorFiltering, useValidatorData } from './hooks'
+import Box from '@mui/material/Box'
+import { TableSearchBar } from '../../components/Search/TableSearchBar'
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * PAGE_SIZE
+
   const scope = useRequiredScopeParam()
   const { network } = scope
+  const { nameSearchInput, setNameSearchInput, nameWarning, namePattern } = useValidatorFiltering()
 
   useEffect(() => {
     if (!isMobile) {
@@ -31,21 +31,26 @@ export const ValidatorsPage: FC = () => {
     }
   }, [isMobile, setTableView])
 
-  const validatorsQuery = useGetConsensusValidators(network, {
-    limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
-    offset: tableView === TableLayout.Vertical ? 0 : offset,
-  })
-  const { isLoading, isFetched, data } = validatorsQuery
-  const validatorsData = data?.data
-  if (isFetched && offset && !validatorsData?.validators?.length) {
+  const {
+    isLoading,
+    tablePaginationProps,
+    data: validators,
+    extractedData,
+    hasNoResultsOnSelectedPage,
+  } = useValidatorData(network, tableView)
+
+  const { rowsPerPage } = tablePaginationProps
+  const [totalCount, isTotalCountClipped] = extractedData ?? [0, false]
+
+  if (hasNoResultsOnSelectedPage) {
     throw AppErrors.PageDoesNotExist
   }
 
   return (
     <PageLayout
-      mobileFooterAction={
-        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
-      }
+    // mobileFooterAction={
+    //   tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
+    // }
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
@@ -53,36 +58,41 @@ export const ValidatorsPage: FC = () => {
           <CardHeaderWithCounter
             changeMobileColors
             label={t('validator.listTitle')}
-            totalCount={validatorsData?.total_count}
-            isTotalCountClipped={validatorsData?.is_total_count_clipped}
+            totalCount={totalCount}
+            isTotalCountClipped={isTotalCountClipped}
           />
         }
-        action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        action={
+          <Box sx={{ display: 'flex-inline' }}>
+            <TableSearchBar
+              value={nameSearchInput}
+              onChange={setNameSearchInput}
+              placeholder={t('validator.search')}
+              warning={nameWarning}
+            />
+            {isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+          </Box>
+        }
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
       >
         {tableView === TableLayout.Horizontal && (
           <Validators
-            validators={validatorsQuery.data?.data.validators}
-            isLoading={validatorsQuery.isLoading}
-            limit={PAGE_SIZE}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount: data?.data.total_count,
-              isTotalCountClipped: data?.data.is_total_count_clipped,
-              rowsPerPage: PAGE_SIZE,
-            }}
+            validators={validators}
+            isLoading={isLoading}
+            limit={rowsPerPage}
+            pagination={tablePaginationProps}
+            highlightedPart={namePattern}
           />
         )}
         {tableView === TableLayout.Vertical && (
           <VerticalList>
             {isLoading &&
-              [...Array(PAGE_SIZE).keys()].map(key => (
+              [...Array(rowsPerPage).keys()].map(key => (
                 <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
               ))}
             {!isLoading &&
-              validatorsData?.validators.map(validator => (
+              validators?.map(validator => (
                 <ValidatorDetailsView key={validator.entity_address} validator={validator} standalone />
               ))}
           </VerticalList>
