@@ -218,24 +218,24 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@orval/angular@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/angular/-/angular-6.24.0.tgz#2a23f6b36bc07b3a70e42f92dcad097059bac61a"
-  integrity sha512-ENnwxhbSdYo4d5J5eDspDqF9OrHnf1XYnWWouMGeIHs6l6NBq+AGb6uFEH5pzGPi7Erw5GvXIDbTWFv3W/0Vxw==
+"@orval/angular@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/angular/-/angular-6.30.2.tgz#279eba92eb07521b88a6bb2962df3d3455c4c06f"
+  integrity sha512-EzIhuCEDJQIjiaBePI9CA8aU27diKZOb2xp1htX/81TAM9fDu1kKhLKA40i9z3ZcABgfGupm9f+ILIrmk7LDEg==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
 
-"@orval/axios@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/axios/-/axios-6.24.0.tgz#7800943fe03f3918b10d843db9a2121699ca8e3d"
-  integrity sha512-VxQgwAo5Djxvpixs15BVY1gMjd49YmjqBfEeQB7PrrY1T1PvVyENgFkBr+hg2QoBdy2LmdMxXDfFig00FNoerQ==
+"@orval/axios@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/axios/-/axios-6.30.2.tgz#737442cb0b6dbab499858851f7f62f440b2a179a"
+  integrity sha512-BGwxqpZembRoM77vd47k/b4LC/prPprK//nEiEvxW2WMmfIdA81UkLHk9IM3EqBjcWD8w5kawwGB13aNlID3Bw==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
 
-"@orval/core@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/core/-/core-6.24.0.tgz#9983bcaa58601d90bcfa06f5a8d4f74b2e84fd53"
-  integrity sha512-8pfzviEPuP/hlxj0PGUKphKRjfIVYYKCkWamCiNqmUyVxrL+plQnIYvUf5I9Xol0d+oZ1lG2VNV2v4Gtt/zwXQ==
+"@orval/core@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/core/-/core-6.30.2.tgz#7c135009ccbd68151013341d3efb873232fbb5fb"
+  integrity sha512-+OipnBdCHAKLNvMUAGo8yOrfB1yhk0vsUI44pinL9SlChL+2K48oSl1VZy++O31xFnjXTbtUQWEDlj6pNi4gqg==
   dependencies:
     "@apidevtools/swagger-parser" "^10.1.0"
     "@ibm-cloud/openapi-ruleset" "^1.14.2"
@@ -255,40 +255,56 @@
     lodash.uniqby "^4.7.0"
     lodash.uniqwith "^4.5.0"
     micromatch "^4.0.5"
-    openapi3-ts "4.2.1"
+    openapi3-ts "4.2.2"
     swagger2openapi "^7.0.8"
 
-"@orval/mock@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/mock/-/mock-6.24.0.tgz#68eccab96fb5f198b739317fe60e78e6e86910ea"
-  integrity sha512-7U1Bpa2FmRqGdFZBIf6qAKJ+9z6aF/1LjxHabxkcdChP8jrPLVncCKK/mqwE0/8lntxA28/NR7q4l5NAE/GC8w==
+"@orval/fetch@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/fetch/-/fetch-6.30.2.tgz#0ba3c2f9f5134ee29e7bbe4dc7bc0e96d11b1b39"
+  integrity sha512-YO7L+SRR9AfLvfMkuA4WXWAvXNWecQ+mlQe7S5wvQjZpobxaFAmNwMUEQ51quP3FEHOzzK2Can0Qrb1yY4XxfA==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
+
+"@orval/hono@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/hono/-/hono-6.30.2.tgz#8b53144fc570481840c1cf35e13d27ee0ae28e1b"
+  integrity sha512-9exEMziYJcgB8l43zpI2R/S9+xBd2G3oc71dGHP8qUossfqWf0l5m7eEbF1Eyy5UrEB2YIwNfKRaUCTSYFlD9Q==
+  dependencies:
+    "@orval/core" "6.30.2"
+    "@orval/zod" "6.30.2"
+    lodash.uniq "^4.5.0"
+
+"@orval/mock@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/mock/-/mock-6.30.2.tgz#411316fa5d2892f37ad94de5dc36c899bcc91cfd"
+  integrity sha512-zWsoLTwNl2x5hto1yEUgdzweaFqpSJ/ZaLIYpkymt7k26oJzDW1UUnmxFAQSHOz26UzzsKFr9/+2bfJjLtQaHw==
+  dependencies:
+    "@orval/core" "6.30.2"
     lodash.get "^4.4.2"
     lodash.omit "^4.5.0"
-    openapi3-ts "^4.2.1"
+    openapi3-ts "^4.2.2"
 
-"@orval/query@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/query/-/query-6.24.0.tgz#94888446e7af2d3ae6ef008589cff36d35d18c42"
-  integrity sha512-I0NCXBdcro7+kgu4UyCM4m/PZPwTBZHHUPiIfhkxkUUzqY2gX0k3Au2sZcHULyEZBB8A2+s42YPEWPGg1yjP7Q==
+"@orval/query@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/query/-/query-6.30.2.tgz#cad83fd5ecaa0b44f6ceb548f16382be2ba23e7a"
+  integrity sha512-tOHAhVsgkxw2Hy/tFu/VREsnsg+r0IWq6txI4wQac7uJz3AK1SDUD71eNx7tW56noiHT6NnGjODFZdb5s2Cgqg==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
     lodash.omitby "^4.6.0"
 
-"@orval/swr@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/swr/-/swr-6.24.0.tgz#71ab09a783a446a394597c754cb95a67555e7c6f"
-  integrity sha512-13gGIiYE1hg7h/ps/z//ITUcZUQI6e6L7wFaE6+A0EoEuC6z2UXIx+4TV0t43G8S+E8Ow6ZUNjLzeR1GjiRmPA==
+"@orval/swr@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/swr/-/swr-6.30.2.tgz#d5f5485d96d2dff5baba695e51fba10d07675989"
+  integrity sha512-GFouUCSVerVIKMM+EilNqlHfUyBkq3RhhGQf6fQHlDvUPoVEYRp8PYTKNCQGxyM0Ae0KhZ+g9Uy3faBaXFCxfg==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
 
-"@orval/zod@6.24.0":
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/@orval/zod/-/zod-6.24.0.tgz#ec8a4408a07b995cb32cbb6bc28511dc1f99affe"
-  integrity sha512-EknDRi9Toh635CwDXtyzvwB4bGWw2NvbVHpw0ne7/y7nWsUW7N5+RRi+OAk39q/psFlCZtsI1EJtfyQ6Zr5MzQ==
+"@orval/zod@6.30.2":
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/@orval/zod/-/zod-6.30.2.tgz#86059ff63a83845d5ce393ce2b67d8bac9669668"
+  integrity sha512-nLDjEcuVwIMVfIo6Ku4OYzYmML8ECPPfY1fJ7HV30mp8MGFOnSCVyLZGrVZw5InSwepO1wvh04nHRlAZYoykoA==
   dependencies:
-    "@orval/core" "6.24.0"
+    "@orval/core" "6.30.2"
     lodash.uniq "^4.5.0"
 
 "@stoplight/better-ajv-errors@1.0.3":
@@ -682,10 +698,10 @@ chalk@^4.1.1, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chokidar@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
-  integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
+chokidar@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.6.0.tgz#197c6cc669ef2a8dc5e7b4d97ee4e092c3eb0d5b"
+  integrity sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==
   dependencies:
     anymatch "~3.1.2"
     braces "~3.0.2"
@@ -1568,36 +1584,45 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-openapi3-ts@4.2.1, openapi3-ts@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-4.2.1.tgz#ee9b3cdeec12c21b8dcc9cd66d83f1e126dfecca"
-  integrity sha512-KL1mKwkZii5ce+tb24KCUmQHyWB/oanG5fzUY35UB+wenWJv4Kr/IWBntpn5R8ODiJcxx13ZDophcpHnLGeIOw==
+openapi3-ts@4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-4.2.2.tgz#9460b6626c39f6334f876e43c8de08168d306fdb"
+  integrity sha512-+9g4actZKeb3czfi9gVQ4Br2Ju3KwhCAQJBNaKgye5KggqcBLIhFHH+nIkcm0BUX00TrAJl6dH4JWgM4G4JWrw==
   dependencies:
     yaml "^2.3.4"
 
-orval@^6.24.0:
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/orval/-/orval-6.24.0.tgz#86d5e8ab618543e83557c73b539949cc058a1d8b"
-  integrity sha512-UH7fyEdFyy7twSH0WR02TL4q2obFjIxv3Q1lQu9jfj+XHm06Hn60nMjd0Qgb4G+RhqqSWQtjTEXAhlFm8fiZlQ==
+openapi3-ts@^4.2.2:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-4.3.3.tgz#de43a2f2fab912939495c169b92d81fe78a4ec10"
+  integrity sha512-LKkzBGJcZ6wdvkKGMoSvpK+0cbN5Xc3XuYkJskO+vjEQWJgs1kgtyUk0pjf8KwPuysv323Er62F5P17XQl96Qg==
+  dependencies:
+    yaml "^2.4.5"
+
+orval@^6.30.2:
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/orval/-/orval-6.30.2.tgz#47ea98f1d2c78b7ce06ad85a3d20d562de05895e"
+  integrity sha512-bmMfFv9N2iPFAyHxKHVPz9VCJIG4nZI5JnandGCp+W8IqRdVE4M6+XxLS6XTQR0K6pRBhaZYnj/NmCO85qYdgQ==
   dependencies:
     "@apidevtools/swagger-parser" "^10.1.0"
-    "@orval/angular" "6.24.0"
-    "@orval/axios" "6.24.0"
-    "@orval/core" "6.24.0"
-    "@orval/mock" "6.24.0"
-    "@orval/query" "6.24.0"
-    "@orval/swr" "6.24.0"
-    "@orval/zod" "6.24.0"
+    "@orval/angular" "6.30.2"
+    "@orval/axios" "6.30.2"
+    "@orval/core" "6.30.2"
+    "@orval/fetch" "6.30.2"
+    "@orval/hono" "6.30.2"
+    "@orval/mock" "6.30.2"
+    "@orval/query" "6.30.2"
+    "@orval/swr" "6.30.2"
+    "@orval/zod" "6.30.2"
     ajv "^8.12.0"
     cac "^6.7.14"
     chalk "^4.1.2"
-    chokidar "^3.5.3"
+    chokidar "^3.6.0"
     enquirer "^2.4.1"
     execa "^5.1.1"
     find-up "5.0.0"
     fs-extra "^11.2.0"
     lodash.uniq "^4.5.0"
-    openapi3-ts "4.2.1"
+    openapi3-ts "4.2.2"
     string-argv "^0.3.2"
     tsconfck "^2.0.1"
 
@@ -2073,6 +2098,11 @@ yaml@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.3.4.tgz#53fc1d514be80aabf386dc6001eb29bf3b7523b2"
   integrity sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==
+
+yaml@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.4.5.tgz#60630b206dd6d84df97003d33fc1ddf6296cca5e"
+  integrity sha512-aBx2bnqDzVOyNKfsysjA2ms5ZlnjSAW2eG3/L5G/CSujfjLJTJsEw1bGw8kCf04KodQWk1pxlGnZ56CRxiawmg==
 
 yargs-parser@^21.1.1:
   version "21.1.1"
