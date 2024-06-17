@@ -29,6 +29,11 @@
     {
       "groupName": "CI github-actions",
       "matchManagers": ["github-actions"]
+    },
+    {
+      "groupName": "Ignore package.json > engines",
+      "packageNames": ["node"],
+      "enabled": false
     }
   ],
   "rangeStrategy": "bump"
