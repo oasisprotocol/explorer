@@ -5,7 +5,7 @@ import { uniq } from '../app/utils/helpers'
 // eslint-disable-next-line no-restricted-imports
 import { Layer } from '../oasis-nexus/generated/api'
 
-interface HasLayer {
+export interface HasLayer {
   layer: Layer
 }
 
@@ -20,8 +20,6 @@ const layerOrder: Record<Layer, number> = {
   [Layer.pontusx]: 6,
 }
 
-const hiddenLayers: Layer[] = [Layer.pontusxdev, Layer.pontusx]
-
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
   layerOrder[itemA.layer] - layerOrder[itemB.layer]
 
@@ -32,7 +30,3 @@ export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
 
 export const doesAnyOfTheseLayersSupportEncryptedTransactions = (layers: Layer[] | undefined): boolean =>
   uniq(layers).some(doesLayerSupportEncryptedTransactions)
-
-export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
-
-export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)

@@ -580,7 +580,7 @@
   },
   "pontusx": {
     "devnet": "Pontus-X devnet",
-    "testnet": "Pontus-X testnet"
+    "testnet": "Pontus-X"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
