@@ -108,7 +108,7 @@ export const ValidatorDetailsView: FC<{
             <ValidatorImage
               address={validator.entity_address}
               name={validator.media?.name}
-              logotype={validator.media?.logotype}
+              logotype={validator.media?.logoUrl}
             />
           </dt>
           <dd>{validator.media?.name}</dd>
@@ -160,7 +160,7 @@ export const ValidatorDetailsView: FC<{
             <ValidatorImage
               address={validator.entity_address}
               name={validator.media?.name}
-              logotype={validator.media?.logotype}
+              logotype={validator.media?.logoUrl}
             />
           </dd>
           <dt>{t('validator.cumulativeVoting')}</dt>

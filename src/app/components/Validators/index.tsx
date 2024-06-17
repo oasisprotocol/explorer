@@ -50,7 +50,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
             <ValidatorImage
               address={validator.entity_address}
               name={validator.media?.name}
-              logotype={validator.media?.logotype}
+              logotype={validator.media?.logoUrl}
             />
             <ValidatorLink
               address={validator.entity_address}

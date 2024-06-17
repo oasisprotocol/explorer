@@ -64,11 +64,11 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
           <ExternalLinkCard
             label={
               <Box gap={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                <StyledTypography>{getHostname(validator?.media?.website_link)}</StyledTypography>
+                <StyledTypography>{getHostname(validator?.media?.url)}</StyledTypography>
                 <OpenInNewIcon sx={{ fontSize: 20 }} />
               </Box>
             }
-            link={validator?.media?.website_link}
+            link={validator?.media?.url}
           />
         </StyledGrid>
       </Grid>

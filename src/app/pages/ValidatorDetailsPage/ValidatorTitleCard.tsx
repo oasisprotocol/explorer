@@ -44,7 +44,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                 <ValidatorImage
                   address={validator.entity_address}
                   name={validator.media?.name}
-                  logotype={validator.media?.logotype}
+                  logotype={validator.media?.logoUrl}
                 />
                 {validator?.media?.name}
               </Box>
