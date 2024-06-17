@@ -1067,7 +1067,7 @@ This spec does not encode the many possible types; instead, see [the Go API](htt
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
 OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
-will add a field specifying the corresponding Ethereum address, if known. Currently, 
+will add a field specifying the corresponding Ethereum address, if known. Currently,
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
@@ -1082,7 +1082,7 @@ This spec does not encode the many possible types; instead, see [the Go API](htt
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
 OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
-will add a field specifying the corresponding Ethereum address, if known. Currently, 
+will add a field specifying the corresponding Ethereum address, if known. Currently,
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
@@ -1090,8 +1090,8 @@ the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
-  /** If the event type is `evm.log`, this field describes the human-readable type of 
-evm event, e.g. `Transfer`. 
+  /** If the event type is `evm.log`, this field describes the human-readable type of
+evm event, e.g. `Transfer`.
 Absent if the event type is not `evm.log`.
  */
   evm_log_name?: string;
@@ -1455,18 +1455,18 @@ export type NodeListAllOf = {
 export type NodeList = List & NodeListAllOf;
 
 export interface ValidatorMedia {
-  /** An email address for the validator. */
-  email_address?: string;
-  /** A logo type. */
-  logotype?: string;
-  /** The human-readable name of this validator. */
+  /** An email address associated with the entity. */
+  email?: string;
+  /** Keybase handle. */
+  keybase?: string;
+  /** URL to a logo image for the entity. */
+  logoUrl?: string;
+  /** The human-readable name of this entity. */
   name?: string;
-  /** An Telegram handle. */
-  tg_chat?: string;
-  /** A Twitter handle. */
-  twitter_acc?: string;
+  /** Twitter handle. */
+  twitter?: string;
   /** An URL associated with the entity. */
-  website_link?: string;
+  url?: string;
 }
 
 export interface ValidatorCommissionBound {
@@ -1708,9 +1708,9 @@ export interface TxError {
 This field, like `code` and `module`, can represent an error that originated
 anywhere in the paratime, i.e. either inside or outside a smart contract.
 
-A common special case worth calling out: When the paratime is 
-EVM-compatible (e.g. Emerald or Sapphire) and the error originates 
-inside a smart contract (using `revert` in solidity), the following 
+A common special case worth calling out: When the paratime is
+EVM-compatible (e.g. Emerald or Sapphire) and the error originates
+inside a smart contract (using `revert` in solidity), the following
 will be true:
 - `module` will be "evm" and `code` will be 8; see [here](https://github.com/oasisprotocol/oasis-sdk/blob/runtime-sdk/v0.8.3/runtime-sdk/modules/evm/src/lib.rs#L128) for other possible errors in the `evm` module.
 - `message` will contain the best-effort human-readable revert reason.
@@ -1719,7 +1719,7 @@ will be true:
   /** The module of a failed transaction. */
   module?: string;
   /** The error parameters, as decoded using the contract abi. Present only when
-- the error originated from within a smart contract (e.g. via `revert` in Solidity), and 
+- the error originated from within a smart contract (e.g. via `revert` in Solidity), and
 - the contract is verified or the revert reason is a plain String.
 If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
 Note that users should be cautious when evaluating error data since the
@@ -1781,22 +1781,32 @@ export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusT
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ConsensusTxMethod = {
-  stakingTransfer: 'staking.Transfer',
-  stakingAddEscrow: 'staking.AddEscrow',
-  stakingReclaimEscrow: 'staking.ReclaimEscrow',
-  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
-  stakingAllow: 'staking.Allow',
-  stakingWithdraw: 'staking.Withdraw',
-  roothashExecutorCommit: 'roothash.ExecutorCommit',
-  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
-  registryRegisterEntity: 'registry.RegisterEntity',
-  registryRegisterNode: 'registry.RegisterNode',
-  registryRegisterRuntime: 'registry.RegisterRuntime',
-  governanceCastVote: 'governance.CastVote',
-  governanceSubmitProposal: 'governance.SubmitProposal',
   beaconPVSSCommit: 'beacon.PVSSCommit',
   beaconPVSSReveal: 'beacon.PVSSReveal',
   beaconVRFProve: 'beacon.VRFProve',
+  consensusMeta: 'consensus.Meta',
+  governanceCastVote: 'governance.CastVote',
+  governanceSubmitProposal: 'governance.SubmitProposal',
+  keymanagerPublishEphemeralSecret: 'keymanager.PublishEphemeralSecret',
+  keymanagerPublishMasterSecret: 'keymanager.PublishMasterSecret',
+  keymanagerUpdatePolicy: 'keymanager.UpdatePolicy',
+  registryDeregisterEntity: 'registry.DeregisterEntity',
+  registryProveFreshness: 'registry.ProveFreshness',
+  registryRegisterEntity: 'registry.RegisterEntity',
+  registryRegisterNode: 'registry.RegisterNode',
+  registryRegisterRuntime: 'registry.RegisterRuntime',
+  registryUnfreezeNode: 'registry.UnfreezeNode',
+  roothashEvidence: 'roothash.Evidence',
+  roothashExecutorCommit: 'roothash.ExecutorCommit',
+  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
+  roothashSubmitMsg: 'roothash.SubmitMsg',
+  stakingAddEscrow: 'staking.AddEscrow',
+  stakingAllow: 'staking.Allow',
+  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
+  stakingBurn: 'staking.Burn',
+  stakingReclaimEscrow: 'staking.ReclaimEscrow',
+  stakingTransfer: 'staking.Transfer',
+  stakingWithdraw: 'staking.Withdraw',
 } as const;
 
 /**
