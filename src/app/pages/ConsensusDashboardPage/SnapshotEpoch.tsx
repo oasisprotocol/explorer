@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
+import { useGetConsensusEpochs } from '../../../oasis-nexus/api'
 import { useGetStatus } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
@@ -14,13 +15,24 @@ const StyledBox = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(3),
 }))
 
+// We need to get the previous epoch to compute end_height for the current one
+// This may not be precise during abnormal network conditions, but such conditions never happened so far
+const epochsLimit = 2
+
 export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const statusQuery = useGetStatus(scope.network)
   const blockHeight = statusQuery?.data?.data.latest_block
-  // TODO: provide epoch number when API is ready
-  const epoch = undefined
-  const percentageValue = undefined
+  const epochsQuery = useGetConsensusEpochs(scope.network, { limit: epochsLimit })
+  const epochs = epochsQuery.data?.data.epochs
+  const epoch = epochs && epochs[0].id
+  let percentageValue = undefined
+
+  if (epochs && epochs[1]?.end_height && blockHeight) {
+    const epochDiffHeight = epochs[1]?.end_height - epochs[1]?.start_height
+    const completedBlocksInCurrentEpoch = blockHeight - epochs[0]?.start_height
+    percentageValue = completedBlocksInCurrentEpoch / epochDiffHeight
+  }
 
   return (
     <SnapshotTextCard
@@ -49,14 +61,24 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
         <>
           {percentageValue && (
             <StyledBox>
-              <BrandProgressBar value={percentageValue} variant="determinate" />
+              <BrandProgressBar value={percentageValue * 100} variant="determinate" />
             </StyledBox>
           )}
           <Box gap={3} sx={{ display: 'flex', alignItems: 'baseline' }}>
-            {/* TODO: remove casting when real types are available, validate percentageValue formatting  */}
-            {(epoch as number).toLocaleString()}
+            {epoch.toLocaleString()}
             {percentageValue && (
-              <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>({percentageValue})</Typography>
+              <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
+                (
+                {t('common.valuePair', {
+                  value: percentageValue,
+                  formatParams: {
+                    value: {
+                      style: 'percent',
+                    } satisfies Intl.NumberFormatOptions,
+                  },
+                })}
+                )
+              </Typography>
             )}
           </Box>
         </>
