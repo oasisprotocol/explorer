@@ -31,9 +31,11 @@
       "matchManagers": ["github-actions"]
     },
     {
-      "groupName": "Ignore package.json > engines",
+      "groupName": "Don't bump package.json > engines except for security",
+      "description": "https://github.com/renovatebot/renovate/discussions/13521",
       "packageNames": ["node"],
-      "enabled": false
+      "matchDepTypes": ["engines"],
+      "rangeStrategy": "auto"
     }
   ],
   "rangeStrategy": "bump"
