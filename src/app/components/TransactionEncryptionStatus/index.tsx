@@ -9,6 +9,7 @@ import { tooltipDelay } from '../../../styles/theme'
 
 type TransactionEncryptionStatusProps = {
   envelope?: RuntimeTransactionEncryptionEnvelope
+  withText?: boolean
 }
 
 export const TransactionEncrypted = () => {
@@ -41,5 +42,17 @@ export const TransactionNotEncrypted = () => {
   )
 }
 
-export const TransactionEncryptionStatus: FC<TransactionEncryptionStatusProps> = ({ envelope }) =>
-  envelope ? <TransactionEncrypted /> : <TransactionNotEncrypted />
+export const TransactionEncryptionStatus: FC<TransactionEncryptionStatusProps> = ({ envelope, withText }) => {
+  const { t } = useTranslation()
+  return envelope ? (
+    <>
+      {withText && <>{envelope.format} &nbsp;</>}
+      <TransactionEncrypted />
+    </>
+  ) : (
+    <>
+      {withText && <>{t('transactions.encryption.plain')} &nbsp;</>}
+      <TransactionNotEncrypted />
+    </>
+  )
+}
