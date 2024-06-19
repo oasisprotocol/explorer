@@ -29,7 +29,7 @@ import { getNameForTicker, Ticker } from '../../../types/ticker'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from './CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
-import { TransactionEncrypted, TransactionNotEncrypted } from '../../components/TransactionEncryptionStatus'
+import { TransactionEncryptionStatus } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -230,15 +230,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('transactions.encryption.format')}</dt>
           <dd>
-            {transaction.encryption_envelope ? (
-              <>
-                {transaction.encryption_envelope.format} &nbsp; <TransactionEncrypted />
-              </>
-            ) : (
-              <>
-                {t('transactions.encryption.plain')} &nbsp; <TransactionNotEncrypted />
-              </>
-            )}
+            <TransactionEncryptionStatus envelope={transaction.encryption_envelope} withText={true} />
           </dd>
 
           <dt>{t('common.timestamp')}</dt>
