@@ -52,6 +52,7 @@ const config: StorybookConfig = {
           ...config.resolve?.alias,
           'app/hooks': path.resolve(appSource, 'hooks'),
           'app/components': path.resolve(appSource, 'components'),
+          'app/utils': path.resolve(appSource, 'utils'),
         },
       },
       module: {
