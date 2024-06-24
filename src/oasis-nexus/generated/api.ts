@@ -571,18 +571,6 @@ sender?: StakingAddress;
  */
 rel?: string;
 /**
- * A filter on minimum transaction fee, inclusive.
- */
-minFee?: TextBigInt;
-/**
- * A filter on maximum transaction fee, inclusive.
- */
-maxFee?: TextBigInt;
-/**
- * A filter on transaction status code.
- */
-code?: number;
-/**
  * A filter on minimum transaction time, inclusive.
  */
 after?: string;
