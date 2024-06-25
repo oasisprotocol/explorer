@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios'
 import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
 import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
+import BigNumber from 'bignumber.js'
 import {
   Account,
   EvmToken,
@@ -1055,6 +1056,36 @@ export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetC
     })
   }
 
+export const useGetConsensusAccountsAddressDebondingDelegations: typeof generated.useGetConsensusAccountsAddressDebondingDelegations =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusAccountsAddressDebondingDelegations(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DebondingDelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              debonding_delegations: data.debonding_delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
 export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof generated.useGetConsensusAccountsAddressDebondingDelegationsTo =
   (network, address, params?, options?) => {
     const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
@@ -1114,3 +1145,71 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
       },
     })
   }
+
+type GroupedDelegation = Omit<generated.DebondingDelegation, 'amount' | 'shares' | 'debond_end'> & {
+  amount: BigNumber
+  shares: BigNumber
+  debondingEpochs: number[]
+}
+
+const groupAccountDebondingDelegationsByValidator = (debondingDelegations: generated.DebondingDelegation[]) =>
+  Object.values(
+    debondingDelegations.reduce<Record<string, GroupedDelegation>>(
+      (acc, { amount, debond_end, delegator, shares, validator, layer, network, ticker }) => {
+        if (!acc[validator]) {
+          acc[validator] = {
+            delegator,
+            validator,
+            amount: new BigNumber(0),
+            shares: new BigNumber(0),
+            debondingEpochs: [],
+            layer,
+            network,
+            ticker,
+          }
+        }
+        acc[validator].amount = BigNumber.sum(acc[validator].amount, new BigNumber(amount))
+        acc[validator].shares = BigNumber.sum(acc[validator].shares, new BigNumber(shares))
+        acc[validator].debondingEpochs.push(debond_end)
+        return acc
+      },
+      {},
+    ),
+  ).map(item => ({
+    ...item,
+    amount: item.amount.toFixed(),
+    shares: item.shares.toFixed(),
+  }))
+
+export const useGetCombinedDelegations = (network: Network, address: string) => {
+  const {
+    data: delegationsData,
+    isFetched: isFetchedDelegations,
+    isLoading: isLoadingDelegations,
+  } = useGetConsensusAccountsAddressDelegations(network, address)
+  const {
+    data: debondingDelegationsData,
+    isFetched: isFetchedDebonding,
+    isLoading: isLoadingDebonding,
+  } = useGetConsensusAccountsAddressDebondingDelegations(network, address)
+
+  if (!delegationsData || !debondingDelegationsData) return null
+
+  const debondingDelegations = groupAccountDebondingDelegationsByValidator(
+    debondingDelegationsData.data?.debonding_delegations,
+  )
+
+  // merge delegations and debondingDelegations data and group by validator
+
+  return {
+    data: {
+      //   delegations: mergedData,
+      //   is_total_count_clipped,
+      //   total_count,
+    },
+    isFetched: isFetchedDelegations || isFetchedDebonding,
+    isLoading: isLoadingDelegations || isLoadingDebonding,
+  }
+}
+
+export default useGetCombinedDelegations
