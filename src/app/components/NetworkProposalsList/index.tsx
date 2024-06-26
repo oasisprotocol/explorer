@@ -8,6 +8,7 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 import { ProposalLink } from '../Proposals/ProposalLink'
+import { getProposalName } from '../Proposals/helpers'
 
 type NetworkProposalsListProps = {
   proposals?: Proposal[]
@@ -45,7 +46,11 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       {
         align: TableCellAlign.Left,
         content: (
-          <ProposalLink network={proposal.network} proposalId={proposal.id} label={proposal.handler} />
+          <ProposalLink
+            network={proposal.network}
+            proposalId={proposal.id}
+            label={getProposalName(proposal)}
+          />
         ),
         key: 'handler',
       },
