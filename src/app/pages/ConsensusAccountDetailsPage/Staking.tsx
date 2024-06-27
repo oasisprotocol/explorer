@@ -1,42 +1,45 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
-import { COLORS } from '../../../styles/theme/colors'
 import { Account, useGetConsensusAccountsAddressDelegations } from '../../../oasis-nexus/api'
 import { useRequiredScopeParam } from '../../../app/hooks/useScopeParam'
 import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../..//components/Delegations'
-import { docs, wallet } from '../../utils/externalLinks'
+import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
+import { FilterButtons } from '../../components/FilterButtons'
 
 type StakingProps = {
   account: Account | undefined
   isLoading: boolean
 }
+type DelegationStatus = 'active' | 'debonding'
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
+  const [type, setType] = useState('active')
+  const options: { label: string; value: DelegationStatus }[] = [
+    {
+      label: t('account.active'),
+      value: 'active',
+    },
+    {
+      label: t('account.debonding'),
+      value: 'debonding',
+    },
+  ]
 
   return (
     <Card sx={{ height: '100%' }}>
       <CardHeader
-        action={
-          <Link
-            href={docs.consensusStaking}
-            rel="noopener noreferrer"
-            target="_blank"
-            sx={{ color: COLORS.brandDark }}
-          >
-            {t('validator.sharesDocs')}
-          </Link>
-        }
+        action={<FilterButtons options={options} value={type} onSelect={type => setType(type)} />}
         disableTypography
         component="h3"
         title={t('common.staking')}

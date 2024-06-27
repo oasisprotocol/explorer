@@ -1,5 +1,6 @@
 {
   "account": {
+    "active": "Active",
     "available": "Available",
     "balanceDistribution": "Balance Distribution",
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
@@ -672,8 +673,7 @@
     "signedBlocksDescription": "Last 100 blocks",
     "proposedBlocks": "Proposed Blocks",
     "snapshot": "Validator Snapshot",
-    "sharesDocs": "How shares are calculated",
-    "staked": "Staked",
+    "shares": "Shares",
     "stakingTrend": "Staking Trend",
     "startDate": "Start Date",
     "title": "Validator",
