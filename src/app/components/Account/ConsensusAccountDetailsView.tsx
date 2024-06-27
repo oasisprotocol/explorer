@@ -83,7 +83,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           ticker: account.ticker,
         })}
       </dd>
-      <StyledListTitle>{t('common.staking')}</StyledListTitle>
+      <StyledListTitle>{t('common.staked')}</StyledListTitle>
       <dd>
         {t('common.valueInToken', {
           ...getPreciseNumberFormat(account.delegations_balance!),

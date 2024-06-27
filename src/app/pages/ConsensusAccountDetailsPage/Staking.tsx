@@ -24,18 +24,18 @@ type StakingProps = {
   account: Account | undefined
   isLoading: boolean
 }
-type DelegationStatus = 'active' | 'debonding'
+type DelegationStatus = 'staked' | 'debonding'
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
-  const [type, setType] = useState('active')
+  const [type, setType] = useState('staked')
   const options: { label: string; value: DelegationStatus }[] = [
     {
-      label: t('account.active'),
-      value: 'active',
+      label: t('common.staked'),
+      value: 'staked',
     },
     {
-      label: t('account.debonding'),
+      label: t('common.debonding'),
       value: 'debonding',
     },
   ]
@@ -46,11 +46,11 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
         action={<FilterButtons options={options} value={type} onSelect={type => setType(type)} />}
         disableTypography
         component="h3"
-        title={t('common.staking')}
+        title={t('validator.delegations')}
       />
       <CardContent>
         {isLoading && <Skeleton variant="rectangular" height={300} />}
-        {account && type === 'active' && <ActiveDelegations address={account?.address} />}
+        {account && type === 'staked' && <ActiveDelegations address={account?.address} />}
         {account && type === 'debonding' && <DebondingDelegations address={account?.address} />}
       </CardContent>
     </Card>
