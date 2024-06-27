@@ -56,73 +56,83 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         ]
       : []),
   ]
-  const tableRows = transactions?.map(transaction => ({
-    key: `${transaction.hash}${transaction.index}`,
-    data: [
-      {
-        content: <StatusIcon success={transaction.success} error={transaction.error} />,
-        key: 'success',
-      },
-      {
-        content: <TransactionLink scope={transaction} alwaysTrim hash={transaction.hash} />,
-        key: 'hash',
-      },
-      {
-        content: <BlockLink scope={transaction} height={transaction.block} />,
-        key: 'round',
-      },
-      {
-        content: <Age sinceTimestamp={transaction.timestamp} />,
-        key: 'timestamp',
-      },
-      ...(verbose
-        ? [
-            {
-              content: <ConsensusTransactionMethod method={transaction.method} truncate />,
-              key: 'method',
-            },
-            {
-              align: TableCellAlign.Right,
-              content: (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    position: 'relative',
-                    pr: 3,
-                  }}
-                >
+
+  const tableRows = transactions?.map(transaction => {
+    const targetAddress = transaction.body.to || transaction.body.account
+    return {
+      key: `${transaction.hash}${transaction.index}`,
+      data: [
+        {
+          content: <StatusIcon success={transaction.success} error={transaction.error} />,
+          key: 'success',
+        },
+        {
+          content: <TransactionLink scope={transaction} alwaysTrim hash={transaction.hash} />,
+          key: 'hash',
+        },
+        {
+          content: <BlockLink scope={transaction} height={transaction.block} />,
+          key: 'round',
+        },
+        {
+          content: <Age sinceTimestamp={transaction.timestamp} />,
+          key: 'timestamp',
+        },
+        ...(verbose
+          ? [
+              {
+                content: <ConsensusTransactionMethod method={transaction.method} truncate />,
+                key: 'method',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      position: 'relative',
+                      pr: 3,
+                    }}
+                  >
+                    <AccountLink
+                      labelOnly={transaction.sender === ownAddress}
+                      scope={transaction}
+                      address={transaction.sender}
+                      alwaysTrim
+                    />
+                  </Box>
+                ),
+                key: 'from',
+              },
+              {
+                content: targetAddress ? (
                   <AccountLink
-                    labelOnly={!!ownAddress && transaction.sender === ownAddress}
+                    labelOnly={targetAddress === ownAddress}
                     scope={transaction}
-                    address={transaction.sender}
+                    address={targetAddress}
                     alwaysTrim
                   />
-                </Box>
-              ),
-              key: 'from',
-            },
-            {
-              // TODO: show recipients address when props is added to API
-              content: <>-</>,
-              key: 'to',
-            },
-            {
-              align: TableCellAlign.Right,
-              content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
-              key: 'fee_amount',
-            },
-            {
-              align: TableCellAlign.Right,
-              // TODO: show RoundedBalance when API returns amount prop
-              content: <>-</>,
-              key: 'value',
-            },
-          ]
-        : []),
-    ],
-    highlight: transaction.markAsNew,
-  }))
+                ) : null,
+                key: 'to',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
+                key: 'fee_amount',
+              },
+              {
+                align: TableCellAlign.Right,
+                // TODO: show RoundedBalance when API returns amount prop
+                content: <>-</>,
+                key: 'value',
+              },
+            ]
+          : []),
+      ],
+      highlight: transaction.markAsNew,
+    }
+  })
 
   return (
     <Table
