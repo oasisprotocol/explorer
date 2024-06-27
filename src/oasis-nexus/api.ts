@@ -180,6 +180,10 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 network,
                 layer: Layer.consensus,
                 ticker,
+                body: {
+                  ...tx.body,
+                  amount: tx.body.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                },
               }
             }),
           }

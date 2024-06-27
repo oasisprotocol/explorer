@@ -123,8 +123,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
               },
               {
                 align: TableCellAlign.Right,
-                // TODO: show RoundedBalance when API returns amount prop
-                content: <>-</>,
+                content: <RoundedBalance value={transaction.body.amount} ticker={transaction.ticker} />,
                 key: 'value',
               },
             ]
