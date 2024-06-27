@@ -27,7 +27,7 @@ export const Delegations: FC<DelegationsProps> = ({
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
-    { key: 'delegator', content: t('common.address') },
+    { key: 'delegator', content: linkType === 'validator' ? t('validator.title') : t('common.address') },
     { key: 'amount', content: t('validator.amount'), align: TableCellAlign.Right },
     { key: 'shares', content: t('common.shares'), align: TableCellAlign.Right },
     ...(debonding
