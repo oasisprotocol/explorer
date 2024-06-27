@@ -46,22 +46,26 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
       />
       <CardContent>
         {isLoading && <Skeleton variant="rectangular" height={300} />}
-        {account && <StakingContent address={account?.address} />}
+        {account && type === 'active' && <ActiveDelegations address={account?.address} />}
+        {account && type === 'debonding' && <DebondingDelegations address={account?.address} />}
       </CardContent>
     </Card>
   )
 }
 
-type StakingContentProps = {
+type DelegationCardProps = {
   address: string
 }
 
-const StakingContent: FC<StakingContentProps> = ({ address }) => {
-  const pagination = useSearchParamsPagination('page')
+const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
+  const pagination = useSearchParamsPagination('activeDelegations')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
   const { network } = scope
-  const delegationsQuery = useGetConsensusAccountsAddressDelegations(network, address)
+  const delegationsQuery = useGetConsensusAccountsAddressDelegations(network, address, {
+    limit: PAGE_SIZE,
+    offset,
+  })
   const { isLoading, isFetched, data } = delegationsQuery
   if (isFetched && offset && !delegationsQuery.data?.data?.delegations?.length) {
     throw AppErrors.PageDoesNotExist
@@ -96,4 +100,8 @@ const StakingContent: FC<StakingContentProps> = ({ address }) => {
       )}
     </>
   )
+}
+
+const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
+  return null
 }
