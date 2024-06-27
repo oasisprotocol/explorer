@@ -1,5 +1,6 @@
 {
   "account": {
+    "active": "Active",
     "available": "Available",
     "balanceDistribution": "Balance Distribution",
     "birth": "Birth",
@@ -671,7 +672,6 @@
     "proposedBlocks": "Proposed Blocks",
     "snapshot": "Validator Snapshot",
     "shares": "Shares",
-    "sharesDocs": "How shares are calculated",
     "staked": "Staked",
     "stakingTrend": "Staking Trend",
     "startDate": "Start Date",
