@@ -35,7 +35,10 @@ export const Delegations: FC<DelegationsProps> = ({
       : []),
   ]
   const tableRows = delegations?.map(delegation => ({
-    key: linkType === 'validator' ? delegation.validator : delegation.delegator,
+    key:
+      linkType === 'validator'
+        ? `${delegation.validator}${'debond_end' in delegation && delegation.debond_end}`
+        : delegation.delegator,
     data: [
       {
         content:
