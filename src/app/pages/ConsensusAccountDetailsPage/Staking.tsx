@@ -5,7 +5,11 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
-import { Account, useGetConsensusAccountsAddressDelegations } from '../../../oasis-nexus/api'
+import {
+  Account,
+  useGetConsensusAccountsAddressDebondingDelegations,
+  useGetConsensusAccountsAddressDelegations,
+} from '../../../oasis-nexus/api'
 import { useRequiredScopeParam } from '../../../app/hooks/useScopeParam'
 import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../config'
@@ -103,5 +107,41 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
 }
 
 const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
-  return null
+  const pagination = useSearchParamsPagination('debondingDelegations')
+  const offset = (pagination.selectedPage - 1) * PAGE_SIZE
+  const scope = useRequiredScopeParam()
+  const { network } = scope
+  const delegationsQuery = useGetConsensusAccountsAddressDebondingDelegations(network, address, {
+    limit: PAGE_SIZE,
+    offset,
+  })
+  const { isLoading, isFetched, data } = delegationsQuery
+  if (isFetched && offset && !delegationsQuery.data?.data?.debonding_delegations?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  if (isFetched && !delegationsQuery.data?.data.debonding_delegations.length) {
+    return <ConsensusAccountCardEmptyState label={t('account.notDebonding')} />
+  }
+
+  return (
+    <>
+      {isFetched && (
+        <Delegations
+          debonding
+          delegations={delegationsQuery.data?.data.debonding_delegations}
+          isLoading={isLoading}
+          limit={PAGE_SIZE}
+          linkType="validator"
+          pagination={{
+            selectedPage: pagination.selectedPage,
+            linkToPage: pagination.linkToPage,
+            totalCount: data?.data.total_count,
+            isTotalCountClipped: data?.data.is_total_count_clipped,
+            rowsPerPage: PAGE_SIZE,
+          }}
+        />
+      )}
+    </>
+  )
 }

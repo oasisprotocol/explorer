@@ -36,7 +36,7 @@ export const ConsensusAccountCardEmptyState: FC<ConsensusAccountCardEmptyStatePr
         sx={{
           color: COLORS.grayMedium,
           fontWeight: 700,
-          maxWidth: '170px',
+          maxWidth: '190px',
           textAlign: 'center',
           opacity: 0.5,
         }}
