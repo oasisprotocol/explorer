@@ -51,7 +51,7 @@ export const Delegations: FC<DelegationsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={delegation.amount} />,
+        content: <RoundedBalance value={delegation.amount} ticker={delegation.ticker} />,
         key: 'amount',
       },
       {
