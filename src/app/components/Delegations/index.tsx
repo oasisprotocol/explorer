@@ -56,12 +56,11 @@ export const Delegations: FC<DelegationsProps> = ({
         content: <RoundedBalance compactLargeNumbers value={delegation.shares} />,
         key: 'shares',
       },
-      ...(debonding
+      ...(debonding && 'debond_end' in delegation
         ? [
             {
               align: TableCellAlign.Right,
-              // TODO: Add when API returns correct value and provides current epoch
-              content: <>-</>,
+              content: <>{delegation.debond_end}</>,
               key: 'debondingEnd',
             },
           ]
