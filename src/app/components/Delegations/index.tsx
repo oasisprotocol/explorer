@@ -27,7 +27,7 @@ export const Delegations: FC<DelegationsProps> = ({
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
-    { key: 'delegator', content: t('common.address') },
+    { key: 'delegator', content: linkType === 'validator' ? t('validator.title') : t('common.address') },
     { key: 'amount', content: t('validator.amount'), align: TableCellAlign.Right },
     { key: 'shares', content: t('validator.shares'), align: TableCellAlign.Right },
     ...(debonding
@@ -35,7 +35,10 @@ export const Delegations: FC<DelegationsProps> = ({
       : []),
   ]
   const tableRows = delegations?.map(delegation => ({
-    key: linkType === 'validator' ? delegation.validator : delegation.delegator,
+    key:
+      linkType === 'validator'
+        ? `${delegation.validator}${'debond_end' in delegation && delegation.debond_end}`
+        : delegation.delegator,
     data: [
       {
         content:
@@ -48,7 +51,7 @@ export const Delegations: FC<DelegationsProps> = ({
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={delegation.amount} />,
+        content: <RoundedBalance value={delegation.amount} ticker={delegation.ticker} />,
         key: 'amount',
       },
       {
@@ -56,12 +59,11 @@ export const Delegations: FC<DelegationsProps> = ({
         content: <RoundedBalance compactLargeNumbers value={delegation.shares} />,
         key: 'shares',
       },
-      ...(debonding
+      ...(debonding && 'debond_end' in delegation
         ? [
             {
               align: TableCellAlign.Right,
-              // TODO: Add when API returns correct value and provides current epoch
-              content: <>-</>,
+              content: <>{delegation.debond_end}</>,
               key: 'debondingEnd',
             },
           ]
