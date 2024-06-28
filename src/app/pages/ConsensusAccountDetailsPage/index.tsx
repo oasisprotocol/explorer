@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
-import { useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
+import { useGetConsensusAccountsAddress, useGetConsensusValidatorsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { AddressLoaderData } from '../../utils/route-utils'
@@ -22,6 +22,8 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
+  const { data: validatorData } = useGetConsensusValidatorsAddress(network, address)
+  const validator = validatorData?.data
   const transactionsLink = useHref('')
   const context: ConsensusAccountDetailsContext = { scope, address }
 
@@ -29,6 +31,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
     <PageLayout>
       <ConsensusAccountDetailsCard
         account={account}
+        validator={validator}
         isError={isError}
         isLoading={isLoading}
         highlightedPartOfName={searchTerm}
