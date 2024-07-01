@@ -937,8 +937,15 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragment: s
   const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
   const textMatcher = nameFragment
-    ? (proposal: generated.Proposal): boolean =>
-        !!proposal.handler && proposal.handler?.includes(nameFragment)
+    ? (proposal: generated.Proposal): boolean => {
+        if (proposal.handler && proposal.handler.includes(nameFragment)) {
+          return true
+        }
+        return (
+          !!proposal.parameters_change &&
+          Object.keys(proposal.parameters_change).some(item => item.includes(nameFragment))
+        )
+      }
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {
