@@ -1215,10 +1215,8 @@ cancelling an existing proposal.
   /** The number of invalid votes for this proposal, after tallying.
  */
   invalid_votes: TextBigInt;
-  /** The base64 encoded raw cbor representing the updated parameters
-which are to be changed by this 'parameters_change' proposal.
- */
-  parameters_change?: string;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
   /** The name of the module whose parameters are to be changed
 by this 'parameters_change' proposal.
  */
@@ -1795,6 +1793,13 @@ export const ConsensusTxMethod = {
   stakingReclaimEscrow: 'staking.ReclaimEscrow',
   stakingTransfer: 'staking.Transfer',
   stakingWithdraw: 'staking.Withdraw',
+  'keymanager/churpApply': 'keymanager/churp.Apply',
+  'keymanager/churpConfirm': 'keymanager/churp.Confirm',
+  'keymanager/churpCreate': 'keymanager/churp.Create',
+  'keymanager/churpUpdate': 'keymanager/churp.Update',
+  vaultAuthorizeAction: 'vault.AuthorizeAction',
+  vaultCancelAction: 'vault.CancelAction',
+  vaultCreate: 'vault.Create',
 } as const;
 
 /**
@@ -1932,7 +1937,7 @@ export type Runtime = typeof Runtime[keyof typeof Runtime];
 export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
   pontusxdev: 'pontusxdev',
   cipher: 'cipher',
 } as const;
@@ -1944,7 +1949,7 @@ export type Layer = typeof Layer[keyof typeof Layer];
 export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
   pontusxdev: 'pontusxdev',
   cipher: 'cipher',
   consensus: 'consensus',
