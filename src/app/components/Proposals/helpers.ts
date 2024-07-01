@@ -1,4 +1,11 @@
 import { Proposal } from 'oasis-nexus/api'
 
-export const getProposalName = (proposal: Proposal) =>
-  proposal.handler || (proposal.parameters_change && Object.keys(proposal.parameters_change).join(', '))
+export const getProposalName = (proposal: Proposal): string => {
+  if (proposal.handler) {
+    return proposal.handler
+  } else if (proposal.parameters_change) {
+    return Object.keys(proposal.parameters_change).join(', ')
+  } else {
+    return ''
+  }
+}

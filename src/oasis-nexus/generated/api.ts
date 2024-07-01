@@ -1215,10 +1215,8 @@ cancelling an existing proposal.
   /** The number of invalid votes for this proposal, after tallying.
  */
   invalid_votes: TextBigInt;
-  /** The base64 encoded raw cbor representing the updated parameters
-which are to be changed by this 'parameters_change' proposal.
- */
-  parameters_change?: string;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
   /** The name of the module whose parameters are to be changed
 by this 'parameters_change' proposal.
  */
