@@ -19,7 +19,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { EventsCard } from './EventsCard'
-import { NextBlockButton, PrevBlockButton } from '../../components/BlockNavigationButtons'
+import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
 
 export const RuntimeBlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -92,8 +92,14 @@ export const RuntimeBlockDetailView: FC<{
         <CopyToClipboard value={block.round.toString()} />
         {enableBlockNavigation && (
           <>
-            <PrevBlockButton scope={block} currentRound={block.round} />
-            <NextBlockButton scope={block} currentRound={block.round} />
+            <RuntimePrevBlockButton
+              scope={{ network: block.network, layer: block.layer }}
+              currentRound={block.round}
+            />
+            <RuntimeNextBlockButton
+              scope={{ network: block.network, layer: block.layer }}
+              currentRound={block.round}
+            />
           </>
         )}
       </dd>
