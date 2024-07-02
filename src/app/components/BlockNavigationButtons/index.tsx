@@ -6,13 +6,10 @@ import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
-import { useRuntimeFreshness } from '../OfflineBanner/hook'
+import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RouteUtils } from '../../utils/route-utils'
 
-export const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({
-  scope,
-  currentRound,
-}) => {
+const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ scope, currentRound }) => {
   const { t } = useTranslation()
   const disabled = currentRound === 0
   return (
@@ -34,16 +31,16 @@ export const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> =
   )
 }
 
-export const NextBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({
-  scope,
+export { PrevBlockButton as RuntimePrevBlockButton }
+export { PrevBlockButton as ConsensusPrevBlockButton }
+
+const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound: number }> = ({
   currentRound,
+  disabled,
+  scope,
 }) => {
-  const { latestBlock } = useRuntimeFreshness(scope)
   const { t } = useTranslation()
-  const disabled = !!latestBlock && currentRound >= latestBlock
-  // If the next button is disabled, we want to poll the freshness info, because it will probably be enabled in a few secs
-  /** This changes the value of {@link latestBlock}. */
-  useRuntimeFreshness(scope, { polling: disabled })
+
   return (
     <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')} placement="top">
       <Box>
@@ -57,4 +54,25 @@ export const NextBlockButton: FC<{ scope: SearchScope; currentRound: number }> =
       </Box>
     </Tooltip>
   )
+}
+
+type NextBlockButtonProps = {
+  scope: SearchScope
+  currentRound: number
+}
+
+export const ConsensusNextBlockButton: FC<NextBlockButtonProps> = ({ currentRound, scope }) => {
+  const { latestBlock } = useConsensusFreshness(scope.network)
+  const disabled = !!latestBlock && currentRound >= latestBlock
+  useConsensusFreshness(scope.network, { polling: disabled })
+
+  return <NextBlockButton currentRound={currentRound} disabled={disabled} scope={scope} />
+}
+
+export const RuntimeNextBlockButton: FC<NextBlockButtonProps> = ({ currentRound, scope }) => {
+  const { latestBlock } = useRuntimeFreshness(scope)
+  const disabled = !!latestBlock && currentRound >= latestBlock
+  useRuntimeFreshness(scope, { polling: disabled })
+
+  return <NextBlockButton currentRound={currentRound} disabled={disabled} scope={scope} />
 }

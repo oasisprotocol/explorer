@@ -49,6 +49,7 @@ import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
+import { ConsensusBlockDetailPage } from './app/pages/ConsensusBlockDetailPage'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
@@ -172,6 +173,11 @@ export const routes: RouteObject[] = [
           {
             path: `block`,
             element: <ConsensusBlocksPage />,
+          },
+          {
+            path: `block/:blockHeight`,
+            element: <ConsensusBlockDetailPage />,
+            loader: blockHeightParamLoader,
           },
           {
             path: 'tx',

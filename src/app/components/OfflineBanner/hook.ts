@@ -75,8 +75,13 @@ const useFreshness = (
   }
 }
 
-export const useConsensusFreshness = (network: Network): FreshnessInfo => {
-  const query = useGetStatus(network)
+export const useConsensusFreshness = (
+  network: Network,
+  queryParams: { polling?: boolean } = {},
+): FreshnessInfo => {
+  const query = useGetStatus(network, {
+    query: { refetchInterval: queryParams.polling ? 8000 : undefined },
+  })
 
   return useFreshness(network, query)
 }
