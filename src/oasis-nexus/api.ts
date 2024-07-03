@@ -16,17 +16,13 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import {
-  fromBaseUnits,
-  getEthAddressForAccount,
-  getAccountSize,
-  getOasisAddressOrNull,
-} from '../app/utils/helpers'
+import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
 import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
+import { fromBaseUnits } from '../app/utils/number-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'

@@ -3,7 +3,7 @@ import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 import { Network } from '../../types/network'
 import { getTokensForScope, paraTimesConfig } from '../../config'
-import { fromBaseUnits } from './helpers'
+import { fromBaseUnits } from './number-utils'
 
 const grpcUrls: { [key in Network]: string } = {
   [Network.mainnet]: 'https://grpc.oasis.io',
