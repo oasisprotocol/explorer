@@ -36,7 +36,7 @@ import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
-import { formatGwei, getGasPrice } from '../../utils/number-utils'
+import { convertToNano, getGasPrice } from '../../utils/number-utils'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -319,18 +319,9 @@ export const RuntimeTransactionDetailView: FC<{
               <dt>{t('common.gasPrice')}</dt>
               <dd>
                 {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(formatGwei(gasPrice)),
-                  ticker: 'Gwei',
+                  ...getPreciseNumberFormat(convertToNano(gasPrice)),
+                  ticker: `n${tickerName}`,
                 })}
-                &nbsp;
-                <Typography sx={{ opacity: 0.5 }}>
-                  (
-                  {t('common.valueInToken', {
-                    ...getPreciseNumberFormat(gasPrice),
-                    ticker: tickerName,
-                  })}
-                  )
-                </Typography>
               </dd>
             </>
           )}

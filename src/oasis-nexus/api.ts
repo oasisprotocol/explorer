@@ -215,8 +215,11 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,

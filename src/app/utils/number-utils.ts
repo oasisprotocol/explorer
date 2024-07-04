@@ -16,4 +16,4 @@ export const getGasPrice = ({ fee = '', gasUsed = '' }): string | null => {
   return BigNumber(fee).div(BigNumber(gasUsed)).toFixed()
 }
 
-export const formatGwei = (wei: string): string => fromBaseUnits(wei, -9)
+export const convertToNano = (value: string): string => fromBaseUnits(value, -9)
