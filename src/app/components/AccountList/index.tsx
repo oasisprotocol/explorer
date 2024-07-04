@@ -21,7 +21,6 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
   const tableColumns: TableColProps[] = [
     { align: TableCellAlign.Center, key: 'size', content: t('common.size') },
     { key: 'address', content: t('common.address') },
-    ...(verbose ? [{ key: 'creationDate', content: t('account.birth') }] : []),
     { align: TableCellAlign.Right, key: 'available', content: t('account.available') },
     { align: TableCellAlign.Right, key: 'staked', content: t('common.staked') },
     { align: TableCellAlign.Right, key: 'debonding', content: t('account.debonding') },
@@ -42,15 +41,6 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
         content: <AccountLink scope={account} address={account.address} alwaysTrim />,
         key: 'address',
       },
-      ...(verbose
-        ? [
-            {
-              // TODO: provide date when it is implemented in the API
-              content: <>-</>,
-              key: 'creationDate',
-            },
-          ]
-        : []),
       {
         align: TableCellAlign.Right,
         content: <RoundedBalance value={account.available} ticker={account.ticker} />,
