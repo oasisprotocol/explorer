@@ -99,11 +99,6 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       </dd>
       <dt>{t('account.lastNonce')}</dt>
       <dd>{account.nonce}</dd>
-      <dt>{t('account.birth')}</dt>
-      <dd>
-        {/* TODO: provide date when it is implemented in the API */}
-        <>-</>
-      </dd>
     </StyledDescriptionList>
   )
 }
