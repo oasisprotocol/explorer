@@ -4,7 +4,6 @@ import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
 import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/generated/api'
-import BigNumber from 'bignumber.js'
 import { validateMnemonic } from 'bip39'
 import { sha512_256 } from 'js-sha512'
 
@@ -108,14 +107,6 @@ export function getEthAddressForAccount(
 
 export function uniq<T>(input: T[] | undefined): T[] {
   return input === undefined ? [] : [...new Set(input)]
-}
-
-export function fromBaseUnits(valueInBaseUnits: string, decimals: number): string {
-  const value = new BigNumber(valueInBaseUnits).shiftedBy(-decimals) // / 10 ** decimals
-  if (value.isNaN()) {
-    throw new Error(`Not a number in fromBaseUnits(${valueInBaseUnits})`)
-  }
-  return value.toFixed()
 }
 
 export const isValidMnemonic = (candidate: string): boolean => validateMnemonic(candidate)

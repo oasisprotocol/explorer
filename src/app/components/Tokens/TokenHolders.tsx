@@ -5,9 +5,9 @@ import { Table, TableCellAlign, TableColProps } from '../Table'
 import { BareTokenHolder } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
-import { fromBaseUnits } from '../../utils/helpers'
 import { RoundedBalance } from '../RoundedBalance'
 import { ProgressBar } from '../ProgressBar'
+import { fromBaseUnits } from '../../utils/number-utils'
 
 type TableTokenHolder = BareTokenHolder & {
   markAsNew?: boolean

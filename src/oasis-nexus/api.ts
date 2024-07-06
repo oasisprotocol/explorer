@@ -16,17 +16,13 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import {
-  fromBaseUnits,
-  getEthAddressForAccount,
-  getAccountSize,
-  getOasisAddressOrNull,
-} from '../app/utils/helpers'
+import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
 import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
+import { fromBaseUnits } from '../app/utils/number-utils'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -219,8 +215,11 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,

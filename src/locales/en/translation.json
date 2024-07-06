@@ -85,6 +85,7 @@
     "from": "From",
     "gasUsed": "Gas Used",
     "gasLimit": "Gas Limit",
+    "gasPrice": "Gas Price",
     "hash": "Hash",
     "height": "Height",
     "hide": "Hide",

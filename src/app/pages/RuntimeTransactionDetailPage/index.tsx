@@ -36,6 +36,7 @@ import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
+import { convertToNano, getGasPrice } from '../../utils/number-utils'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -171,6 +172,8 @@ export const RuntimeTransactionDetailView: FC<{
   const ticker = transaction?.ticker || Ticker.ROSE
   const tickerName = getNameForTicker(t, ticker)
   const tokenPriceInfo = tokenPrices[ticker]
+
+  const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
 
   return (
     <>
@@ -310,6 +313,18 @@ export const RuntimeTransactionDetailView: FC<{
               ticker: tickerName,
             })}
           </dd>
+
+          {gasPrice && (
+            <>
+              <dt>{t('common.gasPrice')}</dt>
+              <dd>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(convertToNano(gasPrice)),
+                  ticker: `n${tickerName}`,
+                })}
+              </dd>
+            </>
+          )}
 
           <dt>{t('common.gasUsed')}</dt>
           <dd>{transaction.gas_used.toLocaleString()}</dd>
