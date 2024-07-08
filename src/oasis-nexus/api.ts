@@ -17,6 +17,7 @@ import {
   RuntimeEventType,
 } from './generated/api'
 import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
+import { getCancelTitle, getParameterChangeTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
@@ -959,8 +960,22 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragment: s
   const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
   const textMatcher = nameFragment
-    ? (proposal: generated.Proposal): boolean =>
-        !!proposal.handler && proposal.handler?.includes(nameFragment)
+    ? (proposal: generated.Proposal): boolean => {
+        if (proposal.handler?.includes(nameFragment)) {
+          return true
+        }
+
+        if (getCancelTitle(proposal.cancels).includes(nameFragment)) {
+          return true
+        }
+
+        return (
+          !!proposal.parameters_change &&
+          getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change).includes(
+            nameFragment,
+          )
+        )
+      }
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {
