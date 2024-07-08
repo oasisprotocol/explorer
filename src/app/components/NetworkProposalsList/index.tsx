@@ -7,6 +7,7 @@ import { Proposal } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { RoundedBalance } from '../RoundedBalance'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
+import { getProposalTitle } from '../../utils/proposals'
 import { ProposalLink } from '../Proposals/ProposalLink'
 
 type NetworkProposalsListProps = {
@@ -45,7 +46,11 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       {
         align: TableCellAlign.Left,
         content: (
-          <ProposalLink network={proposal.network} proposalId={proposal.id} label={proposal.handler} />
+          <ProposalLink
+            network={proposal.network}
+            proposalId={proposal.id}
+            label={getProposalTitle(proposal)}
+          />
         ),
         key: 'handler',
       },
