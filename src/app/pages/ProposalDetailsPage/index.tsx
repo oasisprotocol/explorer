@@ -24,6 +24,7 @@ import { ProposalVotesCard } from './ProposalVotesCard'
 import { useVoteStats } from './hooks'
 import Skeleton from '@mui/material/Skeleton'
 import { getTypeNameForProposal } from '../../../types/proposalType'
+import { getProposalTitle } from '../../utils/proposals'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -110,7 +111,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.title')}</dt>
       <dd>
-        <HighlightedText text={proposal.handler} pattern={highlightedPart} />
+        <HighlightedText text={getProposalTitle(proposal)} pattern={highlightedPart} />
       </dd>
 
       <dt>{t('common.type')}</dt>

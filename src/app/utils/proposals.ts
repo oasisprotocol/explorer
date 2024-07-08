@@ -4,7 +4,7 @@ import { exhaustedTypeWarning } from 'types/errors'
 
 export const getCancelTitle = (cancelId: Proposal['cancels']) => `cancel-upgrade-${cancelId}`
 
-const parameterChangePrefix = 'parameter-change'
+const parameterChangePrefix = 'change-parameter'
 export const getParameterChangeTitle = (
   module: Proposal['parameters_change_module'],
   parameter: Proposal['parameters_change'],
