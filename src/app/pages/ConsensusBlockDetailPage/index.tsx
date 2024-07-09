@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import Typography from '@mui/material/Typography'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Block, Layer, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
@@ -13,6 +14,7 @@ import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { ConsensusNextBlockButton, ConsensusPrevBlockButton } from '../../components/BlockNavigationButtons'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
+import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimmer'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 
 export type BlockDetailConsensusBlock = Block & {
@@ -48,7 +50,7 @@ export const ConsensusBlockDetailView: FC<{
   enableBlockNavigation?: boolean
 }> = ({ enableBlockNavigation, isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(block?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -93,6 +95,22 @@ export const ConsensusBlockDetailView: FC<{
         <CopyToClipboard value={block.hash.toString()} />
       </dd>
 
+      {block.state_root && (
+        <>
+          <dt>{t('common.stateRoot')}</dt>
+          <dd>
+            {isTablet ? (
+              <Typography variant="mono" sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
+                <AdaptiveTrimmer text={block.state_root} strategy="middle" />
+              </Typography>
+            ) : (
+              <Typography variant="mono">{block.state_root}</Typography>
+            )}
+            <CopyToClipboard value={block.state_root} />
+          </dd>
+        </>
+      )}
+
       <dt>{t('common.timestamp')}</dt>
       <dd>{formattedTime}</dd>
 
@@ -104,6 +122,24 @@ export const ConsensusBlockDetailView: FC<{
         {transactionLabel}
         {/*)}*/}
       </dd>
+
+      {block.epoch && (
+        <>
+          <dt>{t('common.epoch')}</dt>
+          <dd>{block.epoch}</dd>
+        </>
+      )}
+
+      {block.gas_limit && (
+        <>
+          <dt>{t('common.gasLimit')}</dt>
+          <dd>
+            {t('common.valuePair', {
+              value: block.gas_limit,
+            })}
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }
