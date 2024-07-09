@@ -12,7 +12,7 @@ export const ExternalLinkCard: FC<ExternalLinkCardProps> = ({ label, link }) => 
 
   return (
     <SnapshotCardExternalLink
-      description={t('validator.externalLinkDescriotion')}
+      description={t('validator.externalLinkDescription')}
       label={label || link}
       title={t('validator.externalLink')}
       url={link}
