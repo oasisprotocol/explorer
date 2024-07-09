@@ -21,8 +21,6 @@
     "title": "Account",
     "transactionsListTitle": "Account Transactions",
     "totalBalance": "Total Balance",
-    "totalReceived": "Total Received",
-    "totalSent": "Total Sent",
     "totalValue": "Total {{value}}"
   },
   "activeAccounts": {
