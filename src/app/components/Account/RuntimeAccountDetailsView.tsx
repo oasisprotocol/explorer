@@ -12,17 +12,15 @@ import { RouteUtils } from '../../utils/route-utils'
 import { accountTransactionsContainerId } from '../../pages/RuntimeAccountDetailsPage/AccountTransactionsCard'
 import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import { getNameForTicker } from '../../../types/ticker'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { ContractVerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
 import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
-import { getFiatCurrencyForScope, getTokensForScope, showFiatValues } from '../../../config'
+import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { CardEmptyState } from '../CardEmptyState'
 
 type RuntimeAccountDetailsViewProps = {
@@ -58,8 +56,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
     account.address_eth ?? account.address,
   )}#${accountTransactionsContainerId}`
 
-  const nativeTokens = getTokensForScope(account)
-  const nativeTickerNames = nativeTokens.map(token => getNameForTicker(t, token.ticker))
   const contract = account?.evm_contract
   const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))
 
@@ -145,34 +141,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
           transactionsLabel
         )}
       </dd>
-
-      {nativeTokens.length === 1 && (
-        <>
-          {account.stats.total_received !== undefined && (
-            <>
-              <dt>{t('account.totalReceived')}</dt>
-              <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.stats.total_received),
-                  ticker: nativeTickerNames[0],
-                })}
-              </dd>
-            </>
-          )}
-
-          {account.stats.total_sent !== undefined && (
-            <>
-              <dt>{t('account.totalSent')}</dt>
-              <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.stats.total_sent),
-                  ticker: nativeTickerNames[0],
-                })}
-              </dd>
-            </>
-          )}
-        </>
-      )}
     </StyledDescriptionList>
   )
 }
