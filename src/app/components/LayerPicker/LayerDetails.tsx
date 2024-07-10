@@ -70,14 +70,16 @@ const getDetails = (t: TFunction): Details => ({
     },
     [Layer.pontusxdev]: {
       description: t('layerPicker.testnet.pontusxdev'),
-      rpcHttp: 'https://pontusx.not.si:443',
+      // See https://docs.pontus-x.eu/docs/Pontus-X%20Testnet/quick_start#setup-metamask
+      rpcHttp: 'https://rpc.dev.pontus-x.eu',
       chainHexId: '0x7ec8',
       chainDecimalId: '32456',
       docs: docs.pontusx1,
     },
     [Layer.pontusx]: {
       description: t('layerPicker.testnet.pontusxtest'),
-      rpcHttp: 'https://pontusx.not.si:443',
+      // See https://docs.pontus-x.eu/docs/Pontus-X%20Testnet/quick_start#setup-metamask
+      rpcHttp: 'https://rpc.test.pontus-x.eu',
       chainHexId: '0x7ec9',
       chainDecimalId: '32457',
       docs: docs.pontusx1,
