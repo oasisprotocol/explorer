@@ -46,7 +46,8 @@
     "viewPrevious": "View previous block"
   },
   "block": {
-    "gasUsed": "{{value, number}} | {{percentage, number}}"
+    "gasUsed": "{{value, number}} | {{percentage, number}}",
+    "unlimited": "(unlimited)"
   },
   "banner": {
     "buildStaging": "Please note this is an internal launch meant to gather your feedback.",

@@ -137,6 +137,7 @@ export const ConsensusBlockDetailView: FC<{
             {t('common.valuePair', {
               value: block.gas_limit,
             })}
+            {block.gas_limit === '0' && ` ${t('block.unlimited')}`}
           </dd>
         </>
       )}
