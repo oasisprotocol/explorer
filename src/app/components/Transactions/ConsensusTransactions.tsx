@@ -1,12 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Transaction } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { TablePaginationProps } from '../Table/TablePagination'
-import { BlockLink } from '../Blocks/BlockLink'
-import { AccountLink } from '../Account/AccountLink'
 import { StatusIcon } from '../StatusIcon'
 import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
@@ -44,21 +41,13 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'status', content: t('common.status') },
     { key: 'hash', content: t('common.hash') },
-    { key: 'block', content: t('common.block') },
     { key: 'age', content: t('common.age') },
-    ...(verbose
-      ? [
-          { key: 'method', content: t('common.method') },
-          { key: 'from', content: t('common.from'), width: '150px' },
-          { key: 'to', content: t('common.to'), width: '150px' },
-          { key: 'txnFee', content: t('common.transactionFee'), align: TableCellAlign.Right, width: '250px' },
-          { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
-        ]
-      : []),
+    { key: 'type', content: t('common.type') },
+    ...(verbose ? [{ key: 'details', content: t('common.details') }] : []),
+    { align: TableCellAlign.Right, key: 'value', content: t('common.amount') },
   ]
 
   const tableRows = transactions?.map(transaction => {
-    const targetAddress = transaction.body.to || transaction.body.account
     return {
       key: `${transaction.hash}${transaction.index}`,
       data: [
@@ -71,63 +60,26 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
           key: 'hash',
         },
         {
-          content: <BlockLink scope={transaction} height={transaction.block} />,
-          key: 'round',
-        },
-        {
           content: <Age sinceTimestamp={transaction.timestamp} />,
           key: 'timestamp',
+        },
+        {
+          content: <ConsensusTransactionMethod method={transaction.method} truncate />,
+          key: 'method',
         },
         ...(verbose
           ? [
               {
-                content: <ConsensusTransactionMethod method={transaction.method} truncate />,
-                key: 'method',
-              },
-              {
-                align: TableCellAlign.Right,
-                content: (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      position: 'relative',
-                      pr: 3,
-                    }}
-                  >
-                    <AccountLink
-                      labelOnly={transaction.sender === ownAddress}
-                      scope={transaction}
-                      address={transaction.sender}
-                      alwaysTrim
-                    />
-                  </Box>
-                ),
-                key: 'from',
-              },
-              {
-                content: targetAddress ? (
-                  <AccountLink
-                    labelOnly={targetAddress === ownAddress}
-                    scope={transaction}
-                    address={targetAddress}
-                    alwaysTrim
-                  />
-                ) : null,
-                key: 'to',
-              },
-              {
-                align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
-                key: 'fee_amount',
-              },
-              {
-                align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.body.amount} ticker={transaction.ticker} />,
-                key: 'value',
+                content: <></>,
+                key: 'details',
               },
             ]
           : []),
+        {
+          align: TableCellAlign.Right,
+          content: <RoundedBalance value={transaction.body.amount} ticker={transaction.ticker} />,
+          key: 'amount',
+        },
       ],
       highlight: transaction.markAsNew,
     }

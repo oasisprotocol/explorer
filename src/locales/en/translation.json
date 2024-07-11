@@ -63,6 +63,7 @@
   "common": {
     "address": "Address",
     "age": "Age",
+    "amount": "Amount",
     "balance": "Balance",
     "block": "Block",
     "blockSizeLimit": "Block size limit",
@@ -74,6 +75,7 @@
     "copy": "Copy",
     "data": "Data",
     "debonding": "Debonding",
+    "details": "Details",
     "emerald": "Emerald",
     "epoch": "Epoch",
     "cipher": "Cipher",
@@ -97,7 +99,6 @@
     "layer": "Layer",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
-    "method": "Method",
     "missing": "n/a",
     "name": "Name",
     "network": "Network",
