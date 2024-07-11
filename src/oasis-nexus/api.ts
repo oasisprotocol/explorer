@@ -1010,10 +1010,19 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
               // or sum proper fields when they are available. Currently API does not return correct fields in accounts list endpoint
               // https://github.com/oasisprotocol/explorer/pull/1160#discussion_r1459577303
               const total = BigInt(account.available)
+
+              // TODO: remove defaults when API is updated and after re-index
+              const { delegations_balance = 0, debonding_delegations_balance = 0 } = account
+
               return {
                 ...account,
                 available: fromBaseUnits(account.available, consensusDecimals),
                 total: fromBaseUnits(total.toString(), consensusDecimals),
+                delegations_balance: fromBaseUnits(delegations_balance.toString(), consensusDecimals),
+                debonding_delegations_balance: fromBaseUnits(
+                  debonding_delegations_balance.toString(),
+                  consensusDecimals,
+                ),
                 layer: Layer.consensus,
                 network,
                 size: getAccountSize(total),

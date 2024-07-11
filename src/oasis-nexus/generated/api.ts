@@ -409,38 +409,6 @@ limit?: number;
 
  */
 offset?: number;
-/**
- * A filter on the minimum available account balance.
- */
-minAvailable?: TextBigInt;
-/**
- * A filter on the maximum available account balance.
- */
-maxAvailable?: TextBigInt;
-/**
- * A filter on the minimum active escrow account balance.
- */
-minEscrow?: TextBigInt;
-/**
- * A filter on the maximum active escrow account balance.
- */
-maxEscrow?: TextBigInt;
-/**
- * A filter on the minimum debonding account balance.
- */
-minDebonding?: TextBigInt;
-/**
- * A filter on the maximum debonding account balance.
- */
-maxDebonding?: TextBigInt;
-/**
- * A filter on the minimum total account balance.
- */
-minTotalBalance?: TextBigInt;
-/**
- * A filter on the maximum total account balance.
- */
-maxTotalBalance?: TextBigInt;
 };
 
 export type GetConsensusValidatorsParams = {
@@ -1276,20 +1244,18 @@ export interface Allowance {
 export interface Account {
   /** The staking address for this account. */
   address: string;
-  /** The allowances made by this account. */
+  /** The allowances made by this account.
+This field is omitted when listing multiple accounts.
+ */
   allowances: Allowance[];
   /** The available balance, in base units. */
   available: TextBigInt;
   /** The debonding escrow balance, in base units. */
   debonding: TextBigInt;
-  /** The debonding delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  debonding_delegations_balance?: TextBigInt;
-  /** The delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  delegations_balance?: TextBigInt;
+  /** The balance of this accounts' (outgoing) debonding delegations, in base units. */
+  debonding_delegations_balance: TextBigInt;
+  /** The balance of this accounts' (outgoing) delegations, in base units. */
+  delegations_balance: TextBigInt;
   /** The active escrow balance, in base units. */
   escrow: TextBigInt;
   /** The expected nonce for the next transaction (= last used nonce + 1) */
