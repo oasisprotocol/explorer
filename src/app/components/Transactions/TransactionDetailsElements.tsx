@@ -24,6 +24,10 @@ type FromProps = {
 export const From: FC<FromProps> = ({ address, ownAddress, scope }) => {
   const { t } = useTranslation()
 
+  if (!address) {
+    return null
+  }
+
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{t('common.from')}</Label>
@@ -41,6 +45,10 @@ type ToProps = {
 export const To: FC<ToProps> = ({ address, label, scope }) => {
   const { t } = useTranslation()
 
+  if (!address) {
+    return null
+  }
+
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{label || t('common.to')}</Label>
@@ -55,6 +63,10 @@ type SharesProps = {
 
 export const Shares: FC<SharesProps> = ({ value }) => {
   const { t } = useTranslation()
+
+  if (!value) {
+    return null
+  }
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
