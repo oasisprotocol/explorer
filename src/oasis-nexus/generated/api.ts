@@ -1854,12 +1854,24 @@ export type DelegationList = List & DelegationListAllOf;
 
  */
 export interface Block {
+  /** The epoch number of the epoch in which the block was produced. */
+  epoch: number;
+  /** The gas limit for the block. A gas limit 0 means that the max block gas was unlimited.
+Blocks from Cobalt, Damask, and early Eden had no gas limit as their sizes were only
+restricted by byte size until an upgrade during Eden introduced a gas limit.
+ */
+  gas_limit: TextBigInt;
   /** The block header hash. */
   hash: string;
   /** The block height. */
   height: number;
   /** Number of transactions in the block. */
   num_transactions: number;
+  /** The size limit for the block in bytes.
+ */
+  size_limit?: TextBigInt;
+  /** The Merkle root of the state tree after applying the block. */
+  state_root: string;
   /** The second-granular consensus time. */
   timestamp: string;
 }

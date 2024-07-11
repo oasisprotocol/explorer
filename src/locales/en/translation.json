@@ -46,7 +46,8 @@
     "viewPrevious": "View previous block"
   },
   "block": {
-    "gasUsed": "{{value, number}} | {{percentage, number}}"
+    "gasUsed": "{{value, number}} | {{percentage, number}}",
+    "unlimited": "(unlimited)"
   },
   "banner": {
     "buildStaging": "Please note this is an internal launch meant to gather your feedback.",
@@ -62,6 +63,7 @@
     "age": "Age",
     "balance": "Balance",
     "block": "Block",
+    "blockSizeLimit": "Block size limit",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
     "collection": "Collection",
@@ -70,6 +72,7 @@
     "copy": "Copy",
     "data": "Data",
     "emerald": "Emerald",
+    "epoch": "Epoch",
     "cipher": "Cipher",
     "consensus": "Consensus",
     "eth": "ETH",
@@ -114,6 +117,7 @@
     "smartContract": "Smart Contract",
     "smartContract_short": "Contract",
     "staked": "Staked",
+    "stateRoot": "StateRoot",
     "staking": "Staking",
     "submitter": "Submitter",
     "success": "Success",
