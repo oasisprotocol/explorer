@@ -63,6 +63,7 @@
     "age": "Age",
     "balance": "Balance",
     "block": "Block",
+    "blockSizeLimit": "Block size limit",
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
     "collection": "Collection",

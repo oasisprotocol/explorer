@@ -1867,6 +1867,9 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   height: number;
   /** Number of transactions in the block. */
   num_transactions: number;
+  /** The size limit for the block in bytes.
+ */
+  size_limit?: TextBigInt;
   /** The Merkle root of the state tree after applying the block. */
   state_root: string;
   /** The second-granular consensus time. */

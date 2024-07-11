@@ -141,6 +141,24 @@ export const ConsensusBlockDetailView: FC<{
           </dd>
         </>
       )}
+
+      {block.size_limit && (
+        <>
+          <dt>{t('common.blockSizeLimit')}</dt>
+          <dd>
+            {t('common.bytes', {
+              value: block.size_limit,
+              formatParams: {
+                value: {
+                  style: 'unit',
+                  unit: 'byte',
+                  unitDisplay: 'long',
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })}
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }
