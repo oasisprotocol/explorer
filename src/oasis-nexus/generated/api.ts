@@ -1763,6 +1763,13 @@ export const ConsensusTxMethod = {
   stakingReclaimEscrow: 'staking.ReclaimEscrow',
   stakingTransfer: 'staking.Transfer',
   stakingWithdraw: 'staking.Withdraw',
+  'keymanager/churpApply': 'keymanager/churp.Apply',
+  'keymanager/churpConfirm': 'keymanager/churp.Confirm',
+  'keymanager/churpCreate': 'keymanager/churp.Create',
+  'keymanager/churpUpdate': 'keymanager/churp.Update',
+  vaultAuthorizeAction: 'vault.AuthorizeAction',
+  vaultCancelAction: 'vault.CancelAction',
+  vaultCreate: 'vault.Create',
 } as const;
 
 /**
