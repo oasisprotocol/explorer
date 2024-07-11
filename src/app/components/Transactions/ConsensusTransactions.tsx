@@ -8,6 +8,7 @@ import { StatusIcon } from '../StatusIcon'
 import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
 import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
+import { ConsensusTransactionDetails } from './ConsensusTransactionDetails'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -70,14 +71,19 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         ...(verbose
           ? [
               {
-                content: <></>,
+                content: <ConsensusTransactionDetails ownAddress={ownAddress} transaction={transaction} />,
                 key: 'details',
               },
             ]
           : []),
         {
           align: TableCellAlign.Right,
-          content: <RoundedBalance value={transaction.body.amount} ticker={transaction.ticker} />,
+          content: (
+            <RoundedBalance
+              value={transaction.body?.amount || transaction.body?.amount_change}
+              ticker={transaction.ticker}
+            />
+          ),
           key: 'amount',
         },
       ],

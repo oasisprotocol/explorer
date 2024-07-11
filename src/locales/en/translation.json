@@ -154,6 +154,7 @@
     "votes": "Votes",
     "paraTimeOnline": "ParaTime Online",
     "paraTimeOutOfDate": "ParaTime Out of date",
+    "recipient": "Recipient",
     "mainnet": "Mainnet",
     "testnet": "Testnet",
     "valuePair": "{{value, number}}"
@@ -414,7 +415,7 @@
       "stakingAddEscrow": "Start delegate",
       "stakingReclaimEscrow": "Start undelegate",
       "stakingAmendCommissionSchedule": "Amend commission schedule",
-      "stakingAllow": "Set delegate allowance",
+      "stakingAllow": "Allowance Change",
       "stakingWithdraw": "Continued delegate",
       "roothashExecutorCommit": "Executor commit",
       "roothashExecutorProposerTimeout": "Executor proposer timeout",

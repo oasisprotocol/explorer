@@ -182,6 +182,9 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                  amount_change: tx.body?.amount_change
+                    ? fromBaseUnits(tx.body.amount_change, consensusDecimals)
+                    : undefined,
                 },
               }
             }),
