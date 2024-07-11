@@ -1469,7 +1469,7 @@ export interface ValidatorCommissionBound {
 
  */
 export interface Validator {
-  /** Whether the entity is part of validator set (top <scheduler.params.max_validators> by stake). */
+  /** Whether the entity has a node that is registered for being a validator, node is up to date, and has successfully registered itself. It may or may not be part of validator set. */
   active: boolean;
   current_commission_bound: ValidatorCommissionBound;
   /** Commission rate. */
@@ -1480,6 +1480,8 @@ export interface Validator {
   entity_id: string;
   /** The amount staked. */
   escrow: TextBigInt;
+  /** Whether the entity is part of the validator set (active and top <scheduler.params.max_validators> by stake among active entities). */
+  in_validator_set: boolean;
   media?: ValidatorMedia;
   /** The public key identifying this Validator's node. */
   node_id: string;
