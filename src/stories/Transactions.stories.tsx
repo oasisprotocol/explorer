@@ -106,6 +106,43 @@ const mockedTransactions = [
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
+
+    block: 19969802,
+    body: {
+      commits: [
+        {
+          header: {
+            header: {
+              in_msgs_hash: 'c672b8d1ef56ed28ab87c3622c5114069bdd3ad7b8f9737498d0c01ecef0967a',
+              io_root: '6a134a3102e3ea9f4871ece1c5824ce06f4dc06571e0e5dd04e7e282a6348991',
+              messages_hash: 'c672b8d1ef56ed28ab87c3622c5114069bdd3ad7b8f9737498d0c01ecef0967a',
+              previous_hash: 'ebb7743594d53594f95585de30b563042724f3d48ac9c7c37b292c299d7b8ddd',
+              round: 4419548,
+              state_root: '77824195a9191c802cd83af14a2bdbb974eb16919e5a333cf03f81dc1dc1d688',
+            },
+            rak_sig:
+              'OyaCvwnekOqKv+3ymvXJzoQulhb7KVun6g8F2kWabeUXShPxGnFt9JR8J7JEV7Fgs7vlAdjkduSDN2n2GZdJDw==',
+            scheduler_id: 'drsZxbpqG5h+4tq/JKWqmoVGXmQUirVCjD8GLBuNj9M=',
+          },
+          node_id: 'UCKrtVNlmCaCdKpMMDT8AQxqVs/JP1/zQUH4yxUY4mM=',
+          sig: 'DGs5KVnCg2EqArJ4yqFufta0ujGiSFzVQlpi0E8LgOIGztiSpnhhk6ktwB7s/Xe5dYSugPeKpCAxwgtgKpoLBw==',
+        },
+      ],
+      id: '000000000000000000000000000000000000000000000000f80306c9858e7279',
+    },
+    fee: '0',
+    hash: '11c58dc52abba9cf838b87bf9aa691dac5aef96c84428aa608a67a2b3a206f46',
+    index: 0,
+    method: ConsensusTxMethod.roothashExecutorCommit,
+    nonce: 942923,
+    sender: 'oasis1qrxvr94pgj6kt36fkwn4al3uttj2veh5ey8jvapv',
+    success: true,
+    timestamp: '2024-07-03T10:12:47Z',
+  },
+  {
+    network: Network.mainnet,
+    layer: Layer.consensus,
+    ticker: Ticker.ROSE,
     sender: 'oasis1qzyw98s2qrvf3t78nf0guu98laykw6lzkga5zlzy',
     success: true,
     timestamp: '2024-07-03T09:23:32Z',

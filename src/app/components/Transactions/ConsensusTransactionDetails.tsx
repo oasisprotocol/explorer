@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
 import { ConsensusTxMethod, Transaction } from '../../../oasis-nexus/api'
-import { From, Shares, To } from './TransactionDetailsElements'
+import { From, LabelValue, Shares, To } from './TransactionDetailsElements'
 import { useTranslation } from 'react-i18next'
 
 type ConsensusTransactionDetailsProps = {
@@ -17,13 +17,20 @@ export const ConsensusTransactionDetails: FC<ConsensusTransactionDetailsProps> =
   const { t } = useTranslation()
   const details = getConsensusTransactionDetails(t, transaction, ownAddress)
 
-  return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>{details}</Box>
+  return <Box sx={{ display: 'flex', flexWrap: 'no-wrap', gap: '20px' }}>{details}</Box>
 }
 
 const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, ownAddress?: string) => {
   const scope = { layer: transaction.layer, network: transaction.network }
 
   switch (transaction.method) {
+    case ConsensusTxMethod.roothashExecutorCommit:
+      return (
+        <>
+          <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
+          <LabelValue label={t('common.id')} value={transaction.body?.id} trimMobile />
+        </>
+      )
     case ConsensusTxMethod.stakingAddEscrow:
       return (
         <>

@@ -26,7 +26,6 @@ type ConsensusTransactionsProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
-  verbose?: boolean
 }
 
 export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
@@ -35,7 +34,6 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
   pagination,
   transactions,
   ownAddress,
-  verbose = true,
 }) => {
   const { t } = useTranslation()
 
@@ -44,7 +42,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
     { key: 'hash', content: t('common.hash') },
     { key: 'age', content: t('common.age') },
     { key: 'type', content: t('common.type') },
-    ...(verbose ? [{ key: 'details', content: t('common.details') }] : []),
+    { key: 'details', content: t('common.details') },
     { align: TableCellAlign.Right, key: 'value', content: t('common.amount') },
   ]
 
@@ -68,14 +66,11 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
           content: <ConsensusTransactionMethod method={transaction.method} truncate />,
           key: 'method',
         },
-        ...(verbose
-          ? [
-              {
-                content: <ConsensusTransactionDetails ownAddress={ownAddress} transaction={transaction} />,
-                key: 'details',
-              },
-            ]
-          : []),
+
+        {
+          content: <ConsensusTransactionDetails ownAddress={ownAddress} transaction={transaction} />,
+          key: 'details',
+        },
         {
           align: TableCellAlign.Right,
           content: (

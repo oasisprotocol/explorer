@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { RoundedBalance } from '../../components/RoundedBalance'
+import { trimLongString } from '../../utils/trimLongString'
+import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../Account/AccountLink'
 
 const Label: FC<PropsWithChildren> = ({ children }) => {
@@ -74,6 +76,25 @@ export const Shares: FC<SharesProps> = ({ value }) => {
       <Typography fontWeight={700}>
         <RoundedBalance compactLargeNumbers value={value} />
       </Typography>
+    </Box>
+  )
+}
+
+type LabelValueProps = {
+  label?: string
+  trimMobile?: boolean
+  value: string
+}
+
+export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) => {
+  const { t } = useTranslation()
+  const { isTablet } = useScreenSize()
+  const trimEnabled = trimMobile && isTablet
+
+  return (
+    <Box sx={{ display: 'inline-flex' }}>
+      <Label>{label || t('common.value')}</Label>
+      <Typography variant="mono">{trimEnabled ? trimLongString(value, 2, 18) : value}</Typography>
     </Box>
   )
 }
