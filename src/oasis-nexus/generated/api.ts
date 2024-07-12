@@ -1704,6 +1704,9 @@ export interface Transaction {
 to pay to execute it.
  */
   fee: TextBigInt;
+  /** The maximum gas that a transaction can use.
+ */
+  gas_limit: TextBigInt;
   /** The cryptographic hash of this transaction's encoding. */
   hash: string;
   /** 0-based index of this transaction in its block */
