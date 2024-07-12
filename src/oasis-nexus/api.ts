@@ -178,7 +178,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 ticker,
                 body: {
                   ...tx.body,
-                  amount: tx.body.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                  amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
                 },
               }
             }),
