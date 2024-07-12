@@ -248,7 +248,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.TransactionList, headers, status) => {
+        (data: generated.Transaction, headers, status) => {
           if (status !== 200) return data
           return {
             ...data,
