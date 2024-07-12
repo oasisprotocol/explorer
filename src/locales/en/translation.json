@@ -10,7 +10,6 @@
     "failedToLookUpTickers": "We don't have the price for: {{tickers}}",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
-    "lastNonce": "Last Nonce",
     "listTitle": "Accounts",
     "noTokens": "This account holds no tokens",
     "noBalances": "This account currently has no balances.",

@@ -97,7 +97,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           ticker: account.ticker,
         })}
       </dd>
-      <dt>{t('account.lastNonce')}</dt>
+      <dt>{t('common.nonce')}</dt>
       <dd>{account.nonce}</dd>
     </StyledDescriptionList>
   )
