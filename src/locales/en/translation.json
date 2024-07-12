@@ -660,7 +660,7 @@
     "emptyDelegationsList": "No one is delegating to this validator.",
     "entityId": "Entity ID",
     "externalLink": "External Link",
-    "externalLinkDescriotion": "Oasis is not responsible for any content on external pages.",
+    "externalLinkDescription": "Oasis is not responsible for any content on external pages.",
     "groupStatus": "{{status}} validators",
     "inactive": "Inactive",
     "listTitle": "Validators",
