@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { Transaction, useGetConsensusTransactionsTxHash } from '../../../oasis-nexus/api'
+import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../../utils/transaction'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -18,6 +19,10 @@ import { ConsensusTransactionMethod } from 'app/components/ConsensusTransactionM
 import { useFormattedTimestampStringWithDistance } from 'app/hooks/useFormattedTimestamp'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { AccountLink } from 'app/components/Account/AccountLink'
+import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
+import { CurrentFiatValue } from '../RuntimeTransactionDetailPage/CurrentFiatValue'
+import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
+import { getFiatCurrencyForScope } from '../../../config'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -28,6 +33,7 @@ export const ConsensusTransactionDetailPage: FC = () => {
   const scope = useRequiredScopeParam()
   const hash = useParams().hash!
   const { isLoading, data } = useGetConsensusTransactionsTxHash(scope.network, hash)
+  const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
   const transaction = data?.data
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
@@ -36,7 +42,12 @@ export const ConsensusTransactionDetailPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('transaction.header')}>
-        <ConsensusTransactionDetailView isLoading={isLoading} transaction={transaction} detailsPage />
+        <ConsensusTransactionDetailView
+          detailsPage
+          isLoading={isLoading}
+          tokenPrices={tokenPrices}
+          transaction={transaction}
+        />
       </SubPageCard>
     </PageLayout>
   )
@@ -50,13 +61,18 @@ export const ConsensusTransactionDetailView: FC<{
   isLoading?: boolean
   transaction: TransactionDetailConsensusBlock | undefined
   detailsPage?: boolean
-}> = ({ detailsPage, isLoading, transaction }) => {
+  tokenPrices?: AllTokenPrices
+}> = ({ detailsPage, isLoading, transaction, tokenPrices }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 13 : 7} />
   if (!transaction) return <></>
+
+  const to = getConsensusTransactionToAddress(transaction)
+  const amount = getConsensusTransactionAmount(transaction)
+  const tokenPriceInfo = tokenPrices?.[transaction.ticker]
 
   return (
     <StyledDescriptionList
@@ -86,33 +102,57 @@ export const ConsensusTransactionDetailView: FC<{
       <dt>{t('common.from')}</dt>
       <dd>
         <AccountLink scope={transaction} address={transaction.sender} />
+        <CopyToClipboard value={transaction.sender} />
       </dd>
-      <dt>{t('common.to')}</dt>
-      <dd>
-        {/* TODO: show recipients address when props is added to API */}
-        <>-</>
-      </dd>
-      <dt>{t('common.value')}</dt>
-      <dd>
-        {/* TODO: getPreciseNumberFormat when API returns amount prop */}
-        <>-</>
-      </dd>
+      {to && (
+        <>
+          <dt>{t('common.to')}</dt>
+          <dd>
+            <AccountLink scope={{ layer: transaction.layer, network: transaction.network }} address={to} />
+            <CopyToClipboard value={to} />
+          </dd>
+        </>
+      )}
+      {amount && (
+        <>
+          <dt>{t('common.value')}</dt>
+          <dd>
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(amount),
+              ticker: transaction.ticker,
+            })}
+          </dd>
+        </>
+      )}
       {detailsPage && (
         <>
-          <dt>{t('currentFiatValue.title')}</dt>
-          <dd>
-            {/* TODO: show CurrentFiatValue when API returns amount prop */}
-            <>-</>
-          </dd>
+          {amount &&
+            !!tokenPriceInfo &&
+            !tokenPriceInfo.isLoading &&
+            !tokenPriceInfo.isFree &&
+            tokenPriceInfo.price !== undefined && (
+              <>
+                <dt>{t('currentFiatValue.title')}</dt>
+                <dd>
+                  <CurrentFiatValue amount={amount} {...tokenPriceInfo} />
+                </dd>
+              </>
+            )}
+          {transaction.body?.shares && (
+            <>
+              <dt>{t('common.shares')}</dt>
+              <dd>
+                <RoundedBalance compactLargeNumbers value={transaction.body?.shares} />
+              </dd>
+            </>
+          )}
           <dt>{t('common.transactionFee')}</dt>
           <dd>
             <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
           </dd>
-          <dt>{t('common.gasUsed')}</dt>
-          <dd>
-            {/* TODO: show when API returns gas_used prop */}
-            <>-</>
-          </dd>
+
+          {/* TODO: gasUsed field will be available for Nexus with the next oasis-core release  */}
+
           {transaction.gas_limit && (
             <>
               <dt>{t('common.gasLimit')}</dt>

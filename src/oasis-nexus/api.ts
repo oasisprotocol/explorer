@@ -248,10 +248,19 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.Transaction, headers, status) => {
-          if (status !== 200) return data
+        (transaction: generated.Transaction, headers, status) => {
+          if (status !== 200) return transaction
           return {
-            ...data,
+            ...transaction,
+            body: {
+              ...transaction.body,
+              amount: transaction.body?.amount
+                ? fromBaseUnits(transaction.body.amount, consensusDecimals)
+                : undefined,
+              amount_change: transaction.body?.amount_change
+                ? fromBaseUnits(transaction.body.amount_change, consensusDecimals)
+                : undefined,
+            },
             layer: Layer.consensus,
             network,
             ticker,
