@@ -23,7 +23,12 @@ export const BalanceDistribution: FC<BalanceDistributionProps> = ({ account, isL
 
   return (
     <Card sx={{ height: '100%' }}>
-      <CardHeader disableTypography component="h3" title={t('account.balanceDistribution')} />
+      <CardHeader
+        disableTypography
+        component="h3"
+        title={t('account.balanceDistribution')}
+        sx={{ paddingBottom: 0 }}
+      />
       <CardContent>
         {isLoading && <Skeleton variant="rectangular" height={300} />}
         {account && <BalanceDistributionContent account={account} />}
@@ -70,16 +75,16 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
           fontSize: isMobile ? '14px' : '24px',
           fontWeight: isMobile ? 500 : 700,
           color: COLORS.brandDark,
-          mb: 3,
+          mb: 4,
         }}
       >
         {t('account.totalValue', {
           value: totalValue,
         })}
       </Typography>
-      <Box sx={{ height: '250px' }}>
+      <Box sx={{ height: isMobile ? '100px' : '250px' }}>
         <PieChart
-          compact={false}
+          compact={isMobile}
           data={data}
           dataKey="value"
           formatters={{

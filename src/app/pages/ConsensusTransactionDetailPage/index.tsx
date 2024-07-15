@@ -36,7 +36,7 @@ export const ConsensusTransactionDetailPage: FC = () => {
   return (
     <PageLayout>
       <SubPageCard featured title={t('transaction.header')}>
-        <ConsensusTransactionDetailView isLoading={isLoading} transaction={transaction} />
+        <ConsensusTransactionDetailView isLoading={isLoading} transaction={transaction} detailsPage />
       </SubPageCard>
     </PageLayout>
   )
@@ -113,6 +113,16 @@ export const ConsensusTransactionDetailView: FC<{
             {/* TODO: show when API returns gas_used prop */}
             <>-</>
           </dd>
+          {transaction.gas_limit && (
+            <>
+              <dt>{t('common.gasLimit')}</dt>
+              <dd>
+                {t('common.valuePair', {
+                  value: transaction.gas_limit,
+                })}
+              </dd>
+            </>
+          )}
           <dt>{t('common.nonce')}</dt>
           <dd>
             <>{transaction.nonce.toLocaleString()}</>

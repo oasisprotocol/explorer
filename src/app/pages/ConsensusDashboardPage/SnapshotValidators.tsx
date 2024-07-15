@@ -12,12 +12,12 @@ type ValidatorsStats = {
   value: number
 }
 
-// TODO: remove if backend will provide validators stats
 function countValidatorsState(t: TFunction, validators: Validator[] | undefined): ValidatorsStats[] {
   if (!validators) return []
 
   return [
-    { label: t('validator.active'), value: validators.filter(v => v.active).length },
+    { label: t('validator.active'), value: validators.filter(v => v.in_validator_set).length },
+    { label: t('validator.waiting'), value: validators.filter(v => !v.in_validator_set && v.active).length },
     { label: t('validator.inactive'), value: validators.filter(v => !v.active).length },
   ]
 }

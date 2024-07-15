@@ -409,38 +409,6 @@ limit?: number;
 
  */
 offset?: number;
-/**
- * A filter on the minimum available account balance.
- */
-minAvailable?: TextBigInt;
-/**
- * A filter on the maximum available account balance.
- */
-maxAvailable?: TextBigInt;
-/**
- * A filter on the minimum active escrow account balance.
- */
-minEscrow?: TextBigInt;
-/**
- * A filter on the maximum active escrow account balance.
- */
-maxEscrow?: TextBigInt;
-/**
- * A filter on the minimum debonding account balance.
- */
-minDebonding?: TextBigInt;
-/**
- * A filter on the maximum debonding account balance.
- */
-maxDebonding?: TextBigInt;
-/**
- * A filter on the minimum total account balance.
- */
-minTotalBalance?: TextBigInt;
-/**
- * A filter on the maximum total account balance.
- */
-maxTotalBalance?: TextBigInt;
 };
 
 export type GetConsensusValidatorsParams = {
@@ -1276,20 +1244,18 @@ export interface Allowance {
 export interface Account {
   /** The staking address for this account. */
   address: string;
-  /** The allowances made by this account. */
+  /** The allowances made by this account.
+This field is omitted when listing multiple accounts.
+ */
   allowances: Allowance[];
   /** The available balance, in base units. */
   available: TextBigInt;
   /** The debonding escrow balance, in base units. */
   debonding: TextBigInt;
-  /** The debonding delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  debonding_delegations_balance?: TextBigInt;
-  /** The delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
- */
-  delegations_balance?: TextBigInt;
+  /** The balance of this accounts' (outgoing) debonding delegations, in base units. */
+  debonding_delegations_balance: TextBigInt;
+  /** The balance of this accounts' (outgoing) delegations, in base units. */
+  delegations_balance: TextBigInt;
   /** The active escrow balance, in base units. */
   escrow: TextBigInt;
   /** The expected nonce for the next transaction (= last used nonce + 1) */
@@ -1469,7 +1435,7 @@ export interface ValidatorCommissionBound {
 
  */
 export interface Validator {
-  /** Whether the entity is part of validator set (top <scheduler.params.max_validators> by stake). */
+  /** Whether the entity has a node that is registered for being a validator, node is up to date, and has successfully registered itself. It may or may not be part of validator set. */
   active: boolean;
   current_commission_bound: ValidatorCommissionBound;
   /** Commission rate. */
@@ -1480,6 +1446,8 @@ export interface Validator {
   entity_id: string;
   /** The amount staked. */
   escrow: TextBigInt;
+  /** Whether the entity is part of the validator set (active and top <scheduler.params.max_validators> by stake among active entities). */
+  in_validator_set: boolean;
   media?: ValidatorMedia;
   /** The public key identifying this Validator's node. */
   node_id: string;
@@ -1736,6 +1704,9 @@ export interface Transaction {
 to pay to execute it.
  */
   fee: TextBigInt;
+  /** The maximum gas that a transaction can use.
+ */
+  gas_limit: TextBigInt;
   /** The cryptographic hash of this transaction's encoding. */
   hash: string;
   /** 0-based index of this transaction in its block */
@@ -1795,6 +1766,13 @@ export const ConsensusTxMethod = {
   stakingReclaimEscrow: 'staking.ReclaimEscrow',
   stakingTransfer: 'staking.Transfer',
   stakingWithdraw: 'staking.Withdraw',
+  'keymanager/churpApply': 'keymanager/churp.Apply',
+  'keymanager/churpConfirm': 'keymanager/churp.Confirm',
+  'keymanager/churpCreate': 'keymanager/churp.Create',
+  'keymanager/churpUpdate': 'keymanager/churp.Update',
+  vaultAuthorizeAction: 'vault.AuthorizeAction',
+  vaultCancelAction: 'vault.CancelAction',
+  vaultCreate: 'vault.Create',
 } as const;
 
 /**
