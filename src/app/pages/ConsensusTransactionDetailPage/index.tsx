@@ -20,7 +20,7 @@ import { useFormattedTimestampStringWithDistance } from 'app/hooks/useFormattedT
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
-import { CurrentFiatValue } from '../RuntimeTransactionDetailPage/CurrentFiatValue'
+import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
 import { getFiatCurrencyForScope } from '../../../config'
 

@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react'
-import { CurrentFiatValue } from '../CurrentFiatValue'
+import { CurrentFiatValue } from '..'
 
 describe('CurrentFiatValue', () => {
   it('should display formatted values', () => {
