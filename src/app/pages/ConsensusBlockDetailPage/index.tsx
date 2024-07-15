@@ -16,6 +16,7 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimmer'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { TransactionsCard } from './TransactionsCard'
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean
@@ -38,6 +39,7 @@ export const ConsensusBlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')}>
         <ConsensusBlockDetailView enableBlockNavigation isLoading={isLoading} block={block} />
       </SubPageCard>
+      {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
     </PageLayout>
   )
 }
