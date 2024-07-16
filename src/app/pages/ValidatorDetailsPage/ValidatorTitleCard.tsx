@@ -8,6 +8,7 @@ import { ValidatorImage } from 'app/components/Validators/ValidatorImage'
 import { TitleCard } from 'app/components/PageLayout/TitleCard'
 import { Network } from '../../../types/network'
 import { ValidatorLink } from 'app/components/Validators/ValidatorLink'
+import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 
 type ValidatorTitleCardProps = {
   isLoading: boolean
@@ -21,9 +22,9 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
       details={
         <>
           {validator && (
-            <>
-              {/* TODO: create validators status icon or refactor StatusIcon. */}
-              <Box sx={{ paddingLeft: 2 }}>
+            <Box sx={{ display: 'flex' }}>
+              <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
+              <Box sx={{ paddingLeft: 4 }}>
                 <ValidatorLink
                   address={validator.entity_address}
                   name={validator.entity_address}
@@ -31,7 +32,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                 />
               </Box>
               <CopyToClipboard value={validator.entity_address} />
-            </>
+            </Box>
           )}
         </>
       }
@@ -57,8 +58,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                   fontWeight: 400,
                 }}
               >
-                {/* TODO: add rank when API is ready */}
-                (-)
+                ({validator.rank})
               </Typography>
             </>
           )}
