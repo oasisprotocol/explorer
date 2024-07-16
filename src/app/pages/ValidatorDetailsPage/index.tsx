@@ -181,7 +181,7 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('common.status')}</dt>
           <dd>
-            <StatusIcon success={validator.status} error={undefined} />
+            <StatusIcon success={validator.active} error={undefined} />
           </dd>
           <dt>{t('validator.uptime')}</dt>
           <dd>-</dd>

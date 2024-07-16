@@ -75,7 +75,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={validator.escrow} ticker={validator.ticker} />,
+        content: <RoundedBalance value={validator.escrow?.active_balance} ticker={validator.ticker} />,
         key: 'staked',
       },
       {
@@ -98,7 +98,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         content: (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <StatusIcon success={validator.status} error={undefined} />
+            <StatusIcon success={validator.active} error={undefined} />
           </Box>
         ),
         key: 'status',
