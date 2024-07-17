@@ -51,6 +51,7 @@ export enum TableCellAlign {
 type TableCellProps = {
   align?: TableCellAlign
   content: ReactNode
+  hide?: boolean
   key: string
 }
 
@@ -61,9 +62,10 @@ export type TableRowProps = {
 }
 
 export type TableColProps = {
-  key: string
-  content: ReactNode
   align?: TableCellAlign
+  content: ReactNode
+  hide?: boolean
+  key: string
   width?: string
 }
 type TableProps = {
@@ -112,18 +114,23 @@ export const Table: FC<TableProps> = ({
         <MuiTable aria-label={name}>
           <TableHead>
             <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  key={column.key}
-                  align={column.align}
-                  sx={{
-                    width: column.width || 'auto',
-                    ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
-                  }}
-                >
-                  {column.content}
-                </TableCell>
-              ))}
+              {columns.map((column, index) => {
+                if (column.hide) {
+                  return null
+                }
+                return (
+                  <TableCell
+                    key={column.key}
+                    align={column.align}
+                    sx={{
+                      width: column.width || 'auto',
+                      ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
+                    }}
+                  >
+                    {column.content}
+                  </TableCell>
+                )
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,18 +139,23 @@ export const Table: FC<TableProps> = ({
             )}
             {rows?.map(row => (
               <StyledTableRow key={row.key} highlight={row.highlight}>
-                {row.data.map((cell, index) => (
-                  <TableCell
-                    key={cell.key}
-                    align={cell.align}
-                    sx={{
-                      ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
-                      ...(extraHorizontalSpaceOnMobile && isMobile ? extraHorizontalPaddingStyles : {}),
-                    }}
-                  >
-                    {cell.content}
-                  </TableCell>
-                ))}
+                {row.data.map((cell, index) => {
+                  if (cell.hide) {
+                    return null
+                  }
+                  return (
+                    <TableCell
+                      key={cell.key}
+                      align={cell.align}
+                      sx={{
+                        ...(stickyColumn && !index && isMobile ? stickyColumnStyles : {}),
+                        ...(extraHorizontalSpaceOnMobile && isMobile ? extraHorizontalPaddingStyles : {}),
+                      }}
+                    >
+                      {cell.content}
+                    </TableCell>
+                  )
+                })}
               </StyledTableRow>
             ))}
           </TableBody>
