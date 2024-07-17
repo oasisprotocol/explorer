@@ -39,7 +39,7 @@ export const From: FC<FromProps> = ({ address, ownAddress, scope }) => {
 }
 
 type ToProps = {
-  address: string
+  address: string | undefined
   label?: string
   scope: SearchScope
 }

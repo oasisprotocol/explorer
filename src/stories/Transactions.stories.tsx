@@ -31,6 +31,8 @@ export const ConsensusList: StoryObj = {
 
 const mockedTransactions = [
   {
+    amount: '100',
+    to: 'oasis1qp0xuvw2a93w4yp8jwthfz93gxy87u7hes9eu2ev',
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
@@ -40,6 +42,7 @@ const mockedTransactions = [
       amount: '100',
     },
     fee: '0',
+    gas_limit: '0',
     hash: 'd46e9223c45bd52d885673dd574f008b5e377ad879adb08f52af53c292151984',
     index: 26,
     method: ConsensusTxMethod.stakingAddEscrow,
@@ -49,6 +52,8 @@ const mockedTransactions = [
     timestamp: '2024-06-25T06:52:19Z',
   },
   {
+    amount: '10',
+    to: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
@@ -58,6 +63,7 @@ const mockedTransactions = [
       beneficiary: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     },
     fee: '0',
+    gas_limit: '0',
     hash: '2c849b3b9aaf63d73c35502af5b3bbf5881439288ebe3153966c6b78891d1978',
     index: 26,
     method: ConsensusTxMethod.stakingAllow,
@@ -67,6 +73,8 @@ const mockedTransactions = [
     timestamp: '2024-04-15T07:09:52Z',
   },
   {
+    amount: undefined,
+    to: 'oasis1qq0xmq7r0z9sdv02t5j9zs7en3n6574gtg8v9fyt',
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
@@ -76,6 +84,7 @@ const mockedTransactions = [
       shares: '30027579719',
     },
     fee: '0',
+    gas_limit: '0',
     hash: 'e8ca2ea8f664d668603178687bc335c6ebb79dce716ce4e54f33d14a57f9fa5e',
     index: 25,
     method: ConsensusTxMethod.stakingReclaimEscrow,
@@ -85,6 +94,8 @@ const mockedTransactions = [
     timestamp: '2024-06-25T06:53:53Z',
   },
   {
+    amount: '100',
+    to: 'oasis1qzca4c3gch3ymy3w7e5ffzf9l6alpazpf5ffyytn',
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
@@ -94,6 +105,7 @@ const mockedTransactions = [
       to: 'oasis1qzca4c3gch3ymy3w7e5ffzf9l6alpazpf5ffyytn',
     },
     fee: '0',
+    gas_limit: '0',
     hash: 'a06aa6c1535727a1f578638b3754e8feff34293f26449b76cf80d94f216d22ff',
     index: 25,
     method: ConsensusTxMethod.stakingTransfer,
@@ -103,10 +115,11 @@ const mockedTransactions = [
     timestamp: '2024-07-03T09:23:32Z',
   },
   {
+    amount: undefined,
+    to: undefined,
     network: Network.mainnet,
     layer: Layer.consensus,
     ticker: Ticker.ROSE,
-
     block: 19969802,
     body: {
       commits: [
@@ -131,6 +144,7 @@ const mockedTransactions = [
       id: '000000000000000000000000000000000000000000000000f80306c9858e7279',
     },
     fee: '0',
+    gas_limit: '0',
     hash: '11c58dc52abba9cf838b87bf9aa691dac5aef96c84428aa608a67a2b3a206f46',
     index: 0,
     method: ConsensusTxMethod.roothashExecutorCommit,
@@ -140,8 +154,11 @@ const mockedTransactions = [
     timestamp: '2024-07-03T10:12:47Z',
   },
   {
+    amount: undefined,
+    to: undefined,
     network: Network.mainnet,
     layer: Layer.consensus,
+    hash: '11c58dc52abba9cf838b87bf9aa691dac5aef96c84428aa608a67a2b3a206f46',
     ticker: Ticker.ROSE,
     sender: 'oasis1qzyw98s2qrvf3t78nf0guu98laykw6lzkga5zlzy',
     success: true,
