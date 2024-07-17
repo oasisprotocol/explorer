@@ -29,7 +29,7 @@ export const Delegations: FC<DelegationsProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'delegator', content: t('common.address') },
     { key: 'amount', content: t('validator.amount'), align: TableCellAlign.Right },
-    { key: 'shares', content: t('validator.shares'), align: TableCellAlign.Right },
+    { key: 'shares', content: t('common.shares'), align: TableCellAlign.Right },
     ...(debonding
       ? [{ key: 'debondingEnd', content: t('validator.debondingEnd'), align: TableCellAlign.Right }]
       : []),

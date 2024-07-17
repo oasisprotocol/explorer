@@ -23,6 +23,7 @@ import { Ticker } from '../types/ticker'
 import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
+import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -31,6 +32,8 @@ export type HasScope = SearchScope
 
 declare module './generated/api' {
   export interface Transaction {
+    amount: string | undefined
+    to: string | undefined
     network: Network
     layer: Layer
     ticker: Ticker
@@ -248,10 +251,23 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.TransactionList, headers, status) => {
-          if (status !== 200) return data
+        (transaction: generated.Transaction, headers, status) => {
+          if (status !== 200) return transaction
+          const amount = getConsensusTransactionAmount(transaction)
+          const to = getConsensusTransactionToAddress(transaction)
           return {
-            ...data,
+            ...transaction,
+            amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
+            to,
+            body: {
+              ...transaction.body,
+              amount: transaction.body?.amount
+                ? fromBaseUnits(transaction.body.amount, consensusDecimals)
+                : undefined,
+              amount_change: transaction.body?.amount_change
+                ? fromBaseUnits(transaction.body.amount_change, consensusDecimals)
+                : undefined,
+            },
             layer: Layer.consensus,
             network,
             ticker,
