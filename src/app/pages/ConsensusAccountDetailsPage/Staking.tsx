@@ -1,64 +1,75 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
-import { COLORS } from '../../../styles/theme/colors'
-import { Account, useGetConsensusAccountsAddressDelegations } from '../../../oasis-nexus/api'
+import {
+  Account,
+  useGetConsensusAccountsAddressDebondingDelegations,
+  useGetConsensusAccountsAddressDelegations,
+} from '../../../oasis-nexus/api'
 import { useRequiredScopeParam } from '../../../app/hooks/useScopeParam'
 import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../..//components/Delegations'
-import { docs, wallet } from '../../utils/externalLinks'
+import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
+import { FilterButtons } from '../../components/FilterButtons'
 
 type StakingProps = {
   account: Account | undefined
   isLoading: boolean
 }
+type DelegationStatus = 'staked' | 'debonding'
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
+  const [type, setType] = useState<DelegationStatus>('staked')
+  const options: { label: string; value: DelegationStatus }[] = [
+    {
+      label: t('common.staked'),
+      value: 'staked',
+    },
+    {
+      label: t('common.debonding'),
+      value: 'debonding',
+    },
+  ]
 
   return (
     <Card sx={{ height: '100%' }}>
       <CardHeader
-        action={
-          <Link
-            href={docs.consensusStaking}
-            rel="noopener noreferrer"
-            target="_blank"
-            sx={{ color: COLORS.brandDark }}
-          >
-            {t('validator.sharesDocs')}
-          </Link>
-        }
+        action={<FilterButtons options={options} value={type} onSelect={type => setType(type)} />}
         disableTypography
         component="h3"
-        title={t('common.staking')}
+        title={t('validator.delegations')}
       />
       <CardContent>
         {isLoading && <Skeleton variant="rectangular" height={300} />}
-        {account && <StakingContent address={account?.address} />}
+        {account && type === 'staked' && <ActiveDelegations address={account?.address} />}
+        {account && type === 'debonding' && <DebondingDelegations address={account?.address} />}
       </CardContent>
     </Card>
   )
 }
 
-type StakingContentProps = {
+type DelegationCardProps = {
   address: string
 }
 
-const StakingContent: FC<StakingContentProps> = ({ address }) => {
-  const pagination = useSearchParamsPagination('page')
+const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
+  const pagination = useSearchParamsPagination('activeDelegations')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
   const { network } = scope
-  const delegationsQuery = useGetConsensusAccountsAddressDelegations(network, address)
+  const delegationsQuery = useGetConsensusAccountsAddressDelegations(network, address, {
+    limit: PAGE_SIZE,
+    offset,
+  })
   const { isLoading, isFetched, data } = delegationsQuery
   if (isFetched && offset && !delegationsQuery.data?.data?.delegations?.length) {
     throw AppErrors.PageDoesNotExist
@@ -79,6 +90,46 @@ const StakingContent: FC<StakingContentProps> = ({ address }) => {
       {isFetched && (
         <Delegations
           delegations={delegationsQuery.data?.data.delegations}
+          isLoading={isLoading}
+          limit={PAGE_SIZE}
+          linkType="validator"
+          pagination={{
+            selectedPage: pagination.selectedPage,
+            linkToPage: pagination.linkToPage,
+            totalCount: data?.data.total_count,
+            isTotalCountClipped: data?.data.is_total_count_clipped,
+            rowsPerPage: PAGE_SIZE,
+          }}
+        />
+      )}
+    </>
+  )
+}
+
+const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
+  const pagination = useSearchParamsPagination('debondingDelegations')
+  const offset = (pagination.selectedPage - 1) * PAGE_SIZE
+  const scope = useRequiredScopeParam()
+  const { network } = scope
+  const delegationsQuery = useGetConsensusAccountsAddressDebondingDelegations(network, address, {
+    limit: PAGE_SIZE,
+    offset,
+  })
+  const { isLoading, isFetched, data } = delegationsQuery
+  if (isFetched && offset && !delegationsQuery.data?.data?.debonding_delegations?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  if (isFetched && !delegationsQuery.data?.data.debonding_delegations.length) {
+    return <ConsensusAccountCardEmptyState label={t('account.notDebonding')} />
+  }
+
+  return (
+    <>
+      {isFetched && (
+        <Delegations
+          debonding
+          delegations={delegationsQuery.data?.data.debonding_delegations}
           isLoading={isLoading}
           limit={PAGE_SIZE}
           linkType="validator"

@@ -27,7 +27,8 @@ export const Delegations: FC<DelegationsProps> = ({
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
-    { key: 'delegator', content: t('common.address') },
+    { key: 'delegator', content: t('common.address'), hide: linkType === 'validator' },
+    { key: 'validator', content: t('validator.title'), hide: linkType !== 'validator' },
     { key: 'amount', content: t('validator.amount'), align: TableCellAlign.Right },
     { key: 'shares', content: t('common.shares'), align: TableCellAlign.Right },
     ...(debonding
@@ -35,20 +36,21 @@ export const Delegations: FC<DelegationsProps> = ({
       : []),
   ]
   const tableRows = delegations?.map(delegation => ({
-    key: linkType === 'validator' ? delegation.validator : delegation.delegator,
+    key: `${delegation.delegator}${delegation.validator}${debonding ? 'debond_end' in delegation && delegation.debond_end : ''}`,
     data: [
       {
-        content:
-          linkType === 'validator' ? (
-            <ValidatorLink address={delegation.validator} alwaysTrim network={delegation.network} />
-          ) : (
-            <AccountLink scope={delegation} address={delegation.delegator} />
-          ),
+        content: <AccountLink scope={delegation} address={delegation.delegator} />,
+        hide: linkType === 'validator',
         key: 'delegator',
       },
       {
+        content: <ValidatorLink address={delegation.validator} alwaysTrim network={delegation.network} />,
+        hide: linkType !== 'validator',
+        key: 'validator',
+      },
+      {
         align: TableCellAlign.Right,
-        content: <RoundedBalance value={delegation.amount} />,
+        content: <RoundedBalance value={delegation.amount} ticker={delegation.ticker} />,
         key: 'amount',
       },
       {
@@ -56,12 +58,11 @@ export const Delegations: FC<DelegationsProps> = ({
         content: <RoundedBalance compactLargeNumbers value={delegation.shares} />,
         key: 'shares',
       },
-      ...(debonding
+      ...(debonding && 'debond_end' in delegation
         ? [
             {
               align: TableCellAlign.Right,
-              // TODO: Add when API returns correct value and provides current epoch
-              content: <>-</>,
+              content: <>{delegation.debond_end}</>,
               key: 'debondingEnd',
             },
           ]
