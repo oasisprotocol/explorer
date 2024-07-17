@@ -28,7 +28,7 @@ type DelegationStatus = 'staked' | 'debonding'
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
-  const [type, setType] = useState('staked')
+  const [type, setType] = useState<DelegationStatus>('staked')
   const options: { label: string; value: DelegationStatus }[] = [
     {
       label: t('common.staked'),

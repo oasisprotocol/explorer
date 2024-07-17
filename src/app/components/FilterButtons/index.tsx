@@ -6,7 +6,7 @@ import { COLORS } from '../../../styles/theme/colors'
 type FilterButtonsProps<T extends string> = {
   options: { label: string; value: T }[]
   onSelect: (value: T) => void
-  value?: T
+  value?: NoInfer<T>
 }
 
 export const FilterButtons = <T extends string>({ options, onSelect, value }: FilterButtonsProps<T>) => {
