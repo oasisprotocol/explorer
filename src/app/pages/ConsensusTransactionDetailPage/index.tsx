@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import { Transaction, useGetConsensusTransactionsTxHash } from '../../../oasis-nexus/api'
-import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../../utils/transaction'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -70,8 +69,6 @@ export const ConsensusTransactionDetailView: FC<{
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 13 : 7} />
   if (!transaction) return <></>
 
-  const to = getConsensusTransactionToAddress(transaction)
-  const amount = getConsensusTransactionAmount(transaction)
   const tokenPriceInfo = tokenPrices?.[transaction.ticker]
 
   return (
@@ -104,21 +101,24 @@ export const ConsensusTransactionDetailView: FC<{
         <AccountLink scope={transaction} address={transaction.sender} />
         <CopyToClipboard value={transaction.sender} />
       </dd>
-      {to && (
+      {transaction.to && (
         <>
           <dt>{t('common.to')}</dt>
           <dd>
-            <AccountLink scope={{ layer: transaction.layer, network: transaction.network }} address={to} />
-            <CopyToClipboard value={to} />
+            <AccountLink
+              scope={{ layer: transaction.layer, network: transaction.network }}
+              address={transaction.to}
+            />
+            <CopyToClipboard value={transaction.to} />
           </dd>
         </>
       )}
-      {amount && (
+      {transaction.amount && (
         <>
           <dt>{t('common.value')}</dt>
           <dd>
             {t('common.valueInToken', {
-              ...getPreciseNumberFormat(amount),
+              ...getPreciseNumberFormat(transaction.amount),
               ticker: transaction.ticker,
             })}
           </dd>
@@ -126,7 +126,7 @@ export const ConsensusTransactionDetailView: FC<{
       )}
       {detailsPage && (
         <>
-          {amount &&
+          {transaction.amount &&
             !!tokenPriceInfo &&
             !tokenPriceInfo.isLoading &&
             !tokenPriceInfo.isFree &&
@@ -134,7 +134,7 @@ export const ConsensusTransactionDetailView: FC<{
               <>
                 <dt>{t('currentFiatValue.title')}</dt>
                 <dd>
-                  <CurrentFiatValue amount={amount} {...tokenPriceInfo} />
+                  <CurrentFiatValue amount={transaction.amount} {...tokenPriceInfo} />
                 </dd>
               </>
             )}
