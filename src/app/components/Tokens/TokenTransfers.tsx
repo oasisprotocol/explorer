@@ -14,7 +14,6 @@ import { TransactionLink } from '../Transactions/TransactionLink'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { getEthAccountAddressFromBase64 } from '../../utils/helpers'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
@@ -117,7 +116,6 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   ownAddress,
 }) => {
   const { t } = useTranslation()
-  const { isTablet } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
@@ -138,11 +136,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
       data: [
         {
           content: (
-            <TransactionLink
-              scope={transfer}
-              alwaysTrim={isTablet}
-              hash={transfer.eth_tx_hash || transfer.tx_hash!}
-            />
+            <TransactionLink scope={transfer} alwaysTrim hash={transfer.eth_tx_hash || transfer.tx_hash!} />
           ),
           key: 'hash',
         },
