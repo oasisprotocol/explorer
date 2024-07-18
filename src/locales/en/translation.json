@@ -688,6 +688,7 @@
     "uptime": "Uptime",
     "voting": "Voting %",
     "votingPower": "Voting Power",
+    "votingPowerOverall": "in % of overall network",
     "waiting": "Waiting"
   }
 }

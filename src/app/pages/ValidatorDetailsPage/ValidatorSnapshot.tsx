@@ -55,7 +55,7 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
           <BalanceDistributionCard validator={validator} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
-          <VotingPowerCard />
+          <VotingPowerCard validator={validator} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
           <UptimeCard />
