@@ -22,9 +22,11 @@ import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
 
-export const StyledCard = styled(Card)(() => ({
+export const StyledCard = styled(Card)(({ theme }) => ({
+  flex: 1,
   '&': {
-    padding: '0 24px',
+    padding: `0 ${theme.spacing(4)}`,
+    marginBottom: 0,
   },
 }))
 
@@ -38,14 +40,14 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const [tab, setTabValue] = useState(0)
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Tabs value={tab} onChange={(event, tab) => setTabValue(tab)} aria-label={t('validator.delegations')}>
         <Tab label={t('common.staked')} />
         <Tab label={t('common.debonding')} />
       </Tabs>
       <StyledCard>
-        <CardContent sx={{ padding: 0 }}>
-          {isLoading && <Skeleton variant="rectangular" height={300} />}
+        <CardContent>
+          {isLoading && <Skeleton variant="rectangular" height={300} sx={{ marginTop: 5 }} />}
           {account && tab === 0 && <ActiveDelegations address={account?.address} />}
           {account && tab === 1 && <DebondingDelegations address={account?.address} />}
         </CardContent>
@@ -91,6 +93,7 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
+            compact: true,
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,
@@ -131,6 +134,7 @@ const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
+            compact: true,
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,

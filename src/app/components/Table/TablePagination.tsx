@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, To } from 'react-router-dom'
 
 export type TablePaginationProps = {
+  compact?: boolean
   linkToPage: (page: number) => To
   rowsPerPage: number
   selectedPage: number
@@ -13,6 +14,7 @@ export type TablePaginationProps = {
 }
 
 export const TablePagination: FC<TablePaginationProps> = ({
+  compact,
   selectedPage,
   linkToPage,
   rowsPerPage,
@@ -51,7 +53,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
       showFirstButton
       showLastButton
       size="small"
-      sx={{ marginTop: 5 }}
+      sx={{ marginTop: compact ? 2 : 5 }}
     />
   )
 }
