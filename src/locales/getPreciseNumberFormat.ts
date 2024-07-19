@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 
 const isPreciseIntlSupported =
   new Intl.NumberFormat('en-US', { maximumFractionDigits: 20 })
-    // @ts-expect-error Missing types for NumberFormat v3
     .format('111222333444555666777888999.111222333444555666')
     // Chrome 115 and Firefox 116 return '111,222,333,444,555,666,777,888,999.111222333444555666'
     // Firefox 115 and Safari 16.5 return '111,222,333,444,555,670,000,000,000'
