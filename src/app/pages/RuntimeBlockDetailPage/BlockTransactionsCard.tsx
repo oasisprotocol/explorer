@@ -52,7 +52,10 @@ const TransactionList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scop
   )
 }
 
-export const TransactionsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
+export const BlockTransactionsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({
+  scope,
+  blockHeight,
+}) => {
   const { t } = useTranslation()
   return (
     <ScrollingCard id={transactionsContainerId}>

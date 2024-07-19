@@ -52,7 +52,7 @@ const EventsList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, bl
   )
 }
 
-export const EventsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
+export const BlockEventsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
   return (
     <ScrollingCard id={eventsContainerId}>

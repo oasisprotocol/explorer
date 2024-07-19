@@ -10,16 +10,17 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { TransactionsCard } from './TransactionsCard'
+import { BlockTransactionsCard } from './BlockTransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
-import { transactionsContainerId } from './TransactionsCard'
+import { transactionsContainerId } from './BlockTransactionsCard'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { EventsCard } from './EventsCard'
+import { BlockEventsCard, BlockEventsCard } from './BlockEventsCard'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
+import { TransactionsCard } from '../ConsensusBlockDetailPage/TransactionsCard'
 
 export const RuntimeBlockDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -44,8 +45,8 @@ export const RuntimeBlockDetailPage: FC = () => {
       <SubPageCard featured title={t('common.block')} mainTitle>
         <RuntimeBlockDetailView enableBlockNavigation={true} isLoading={isLoading} block={block} />
       </SubPageCard>
-      {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
-      <EventsCard scope={scope} blockHeight={blockHeight} />
+      {!!block?.num_transactions && <BlockTransactionsCard scope={scope} blockHeight={blockHeight} />}
+      <BlockEventsCard scope={scope} blockHeight={blockHeight} />
     </PageLayout>
   )
 }
