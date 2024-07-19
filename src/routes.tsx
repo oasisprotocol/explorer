@@ -30,6 +30,7 @@ import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
+import { AccountEventsCard } from 'app/pages/RuntimeAccountDetailsPage/AccountEventsCard'
 import { ContractCodeCard } from './app/pages/RuntimeAccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/RuntimeAccountDetailsPage/AccountTokenTransfersCard'
@@ -237,6 +238,10 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <AccountEventsCard {...useRuntimeAccountDetailsProps()} />,
               },
               {
                 path: 'token-transfers',
