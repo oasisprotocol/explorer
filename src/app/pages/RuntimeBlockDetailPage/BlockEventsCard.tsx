@@ -1,20 +1,20 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollingCard } from '../../components/PageLayout/ScrollingCard'
+import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-
 import { Layer, useGetRuntimeEvents } from '../../../oasis-nexus/api'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
-import { SearchScope } from '../../../types/searchScope'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
 import { AddressSwitchOption } from '../../components/AddressSwitch'
 import { EmptyState } from '../../components/EmptyState'
+import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
+import { RuntimeBlockDetailsContext } from '.'
 
 export const eventsContainerId = 'events'
 
-const EventsList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
+const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
   if (scope.layer === Layer.consensus) {
     // Loading events for consensus blocks is not yet supported.
@@ -52,16 +52,23 @@ const EventsList: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, bl
   )
 }
 
-export const BlockEventsCard: FC<{ scope: SearchScope; blockHeight: number }> = ({ scope, blockHeight }) => {
+export const BlockEventsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
+
+  if (!blockHeight) {
+    return null
+  }
+
   return (
-    <ScrollingCard id={eventsContainerId}>
-      <CardHeader disableTypography component="h3" title={t('common.events')} />
+    <Card>
+      <LinkableDiv id={eventsContainerId}>
+        <CardHeader disableTypography component="h3" title={t('common.events')} />
+      </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>
           <EventsList scope={scope} blockHeight={blockHeight} />
         </ErrorBoundary>
       </CardContent>
-    </ScrollingCard>
+    </Card>
   )
 }

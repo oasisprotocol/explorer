@@ -4,7 +4,9 @@ import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
 import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
-import { RuntimeBlockDetailPage } from './app/pages/RuntimeBlockDetailPage'
+import { RuntimeBlockDetailPage, useRuntimeBlockDetailsProps } from './app/pages/RuntimeBlockDetailPage'
+import { BlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/BlockTransactionsCard'
+import { BlockEventsCard } from './app/pages/RuntimeBlockDetailPage/BlockEventsCard'
 import {
   RuntimeAccountDetailsPage,
   useRuntimeAccountDetailsProps,
@@ -216,6 +218,16 @@ export const routes: RouteObject[] = [
             path: `block/:blockHeight`,
             element: <RuntimeBlockDetailPage />,
             loader: blockHeightParamLoader,
+            children: [
+              {
+                path: '',
+                Component: () => <BlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <BlockEventsCard {...useRuntimeBlockDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `address/:address`,
