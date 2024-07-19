@@ -9,6 +9,7 @@
     "emptyTransactionList": "There are no transactions on record for this account.",
     "emptyTokenTransferList": "There are no token transfers on record for this account.",
     "failedToLookUpTickers": "We don't have the price for: {{tickers}}",
+    "firstActivity": "First activity",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
     "listTitle": "Accounts",

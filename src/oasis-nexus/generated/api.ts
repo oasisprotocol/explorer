@@ -1258,6 +1258,10 @@ This field is omitted when listing multiple accounts.
   delegations_balance: TextBigInt;
   /** The active escrow balance, in base units. */
   escrow: TextBigInt;
+  /** The second-granular consensus time of the block in which this account was first active.
+Dates before Cobalt (2021-04-28) are approximate.
+ */
+  first_activity?: string;
   /** The expected nonce for the next transaction (= last used nonce + 1) */
   nonce: number;
   stats: AccountStats;
