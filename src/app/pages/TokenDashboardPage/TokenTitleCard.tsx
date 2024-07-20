@@ -24,7 +24,12 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string; searchTer
         <>
           {token && (
             <>
-              <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
+              <VerificationIcon
+                address_eth={token.eth_contract_addr}
+                scope={token}
+                verified={token.is_verified}
+                noLink
+              />
               <AccountLink
                 scope={token}
                 address={token.eth_contract_addr || token.contract_addr}

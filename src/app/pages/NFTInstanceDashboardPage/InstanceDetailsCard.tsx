@@ -85,7 +85,11 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             </dd>
             <dt>{t('contract.verification.title')}</dt>
             <dd>
-              <VerificationIcon address_eth={token?.eth_contract_addr!} verified={!!token?.is_verified} />
+              <VerificationIcon
+                address_eth={token?.eth_contract_addr!}
+                scope={token!}
+                verified={!!token?.is_verified}
+              />
             </dd>
           </StyledDescriptionList>
         )}

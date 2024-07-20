@@ -127,7 +127,12 @@ export const TokenList = (props: TokensProps) => {
                 width: '100%',
               }}
             >
-              <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
+              <VerificationIcon
+                address_eth={token.eth_contract_addr}
+                scope={token}
+                verified={token.is_verified}
+                noLink
+              />
             </Box>
           ),
         },
