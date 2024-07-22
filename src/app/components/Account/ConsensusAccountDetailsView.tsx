@@ -8,6 +8,7 @@ import { StyledDescriptionList, StyledListTitleWithAvatar } from '../StyledDescr
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { AccountAvatar } from '../AccountAvatar'
 import { AccountSizeBadge } from '../AccountSizeBadge'
 import { AccountLink } from './AccountLink'
@@ -37,6 +38,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const formattedFirstActivity = useFormattedTimestampStringWithDistance(account?.first_activity)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
@@ -99,6 +101,10 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       </dd>
       <dt>{t('common.nonce')}</dt>
       <dd>{account.nonce}</dd>
+      <dt>{t('account.firstActivity')}</dt>
+      <dd>
+        <>{formattedFirstActivity || t('common.missing')}</>
+      </dd>
     </StyledDescriptionList>
   )
 }
