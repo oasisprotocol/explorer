@@ -17,9 +17,16 @@ type ValidatorsProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  highlightedPart?: string
 }
 
-export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators }) => {
+export const Validators: FC<ValidatorsProps> = ({
+  isLoading,
+  limit,
+  pagination,
+  validators,
+  highlightedPart,
+}) => {
   const { t } = useTranslation()
   const { network } = useRequiredScopeParam()
 
@@ -35,13 +42,12 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
     { key: 'status', content: t('common.status') },
     { key: 'uptime', content: t('validator.uptime') },
   ]
-  const tableRows = validators?.map((validator, index) => ({
+  const tableRows = validators?.map(validator => ({
     key: validator.entity_address,
     data: [
       {
         align: TableCellAlign.Center,
-        // TODO: replace index when rank is implemented in the API
-        content: <div>{index + 1}</div>,
+        content: <div>{validator.rank + 1}</div>,
         key: 'rank',
       },
       {
@@ -56,6 +62,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
               address={validator.entity_address}
               name={validator.media?.name}
               network={network}
+              highlightedPart={highlightedPart}
             />
           </Box>
         ),

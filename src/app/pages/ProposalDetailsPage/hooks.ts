@@ -17,6 +17,7 @@ import { useSearchParams } from 'react-router-dom'
 export type AllVotesData = List & {
   isLoading: boolean
   isError: boolean
+  isFetched: boolean
   loadedVotes: ExtendedVote[]
 }
 
@@ -48,7 +49,7 @@ export const useAllVotes = (network: Network, proposalId: number): AllVotesData 
     isLoading: areValidatorsLoading,
     isError: haveValidatorsFailed,
   } = useValidatorMap(network)
-  const { isLoading, isError, data } = query
+  const { isLoading, isFetched, isError, data } = query
 
   const extendedVotes = (data?.data.votes || []).map(
     (vote, index): ExtendedVote => ({
@@ -62,6 +63,7 @@ export const useAllVotes = (network: Network, proposalId: number): AllVotesData 
 
   return {
     isLoading,
+    isFetched,
     isError,
     loadedVotes: DEBUG_MODE
       ? extendedVotes.map(v => ({ ...v, vote: getRandomVoteFor(v.address) })) || []
@@ -149,7 +151,7 @@ export const useVoteFiltering = () => {
 }
 
 export const useVotes = (network: Network, proposalId: number) => {
-  const { hasFilters, wantedType, wantedNamePattern } = useVoteFiltering()
+  const { wantedType, wantedNamePattern } = useVoteFiltering()
   const typeFilter = getFilterForVoteType(wantedType)
   const nameFilter = getFilterForVoterNameFragment(wantedNamePattern)
 
@@ -157,28 +159,13 @@ export const useVotes = (network: Network, proposalId: number) => {
     paramName: 'page',
     clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     serverPageSize: 1000,
-    filter: (vote: ExtendedVote) => typeFilter(vote) && nameFilter(vote),
+    filters: [typeFilter, nameFilter],
   })
 
   // Get all the votes
   const allVotes = useAllVotes(network, proposalId)
+  const { isLoading, isFetched } = allVotes
 
   // Get the section of the votes that we should display in the table
-  const results = pagination.getResults(allVotes)
-
-  const { isLoading } = allVotes
-  const isOnFirstPage = results.tablePaginationProps.selectedPage === 1
-  const hasData = !!results.data?.length
-  const hasNoResultsOnSelectedPage = !isLoading && !isOnFirstPage && !hasData
-  const hasNoResultsWhatsoever = !isLoading && !allVotes.total_count
-  const hasNoResultsBecauseOfFilters =
-    !isLoading && !hasData && isOnFirstPage && hasFilters && !hasNoResultsWhatsoever
-
-  return {
-    results,
-    isLoading,
-    hasNoResultsOnSelectedPage,
-    hasNoResultsBecauseOfFilters,
-    hasNoResultsWhatsoever,
-  }
+  return pagination.getResults(isLoading, isFetched, allVotes)
 }
