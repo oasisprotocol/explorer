@@ -1,10 +1,13 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import { styled } from '@mui/material/styles'
 import {
   Account,
   useGetConsensusAccountsAddressDebondingDelegations,
@@ -18,42 +21,38 @@ import { Delegations } from '../..//components/Delegations'
 import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
-import { FilterButtons } from '../../components/FilterButtons'
+
+export const StyledCard = styled(Card)(({ theme }) => ({
+  flex: 1,
+  '&': {
+    padding: `0 ${theme.spacing(4)}`,
+    marginBottom: 0,
+  },
+}))
 
 type StakingProps = {
   account: Account | undefined
   isLoading: boolean
 }
-type DelegationStatus = 'staked' | 'debonding'
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
-  const [type, setType] = useState<DelegationStatus>('staked')
-  const options: { label: string; value: DelegationStatus }[] = [
-    {
-      label: t('common.staked'),
-      value: 'staked',
-    },
-    {
-      label: t('common.debonding'),
-      value: 'debonding',
-    },
-  ]
+  const [tab, setTabValue] = useState(0)
 
   return (
-    <Card sx={{ height: '100%' }}>
-      <CardHeader
-        action={<FilterButtons options={options} value={type} onSelect={type => setType(type)} />}
-        disableTypography
-        component="h3"
-        title={t('validator.delegations')}
-      />
-      <CardContent>
-        {isLoading && <Skeleton variant="rectangular" height={300} />}
-        {account && type === 'staked' && <ActiveDelegations address={account?.address} />}
-        {account && type === 'debonding' && <DebondingDelegations address={account?.address} />}
-      </CardContent>
-    </Card>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Tabs value={tab} onChange={(event, tab) => setTabValue(tab)} aria-label={t('validator.delegations')}>
+        <Tab label={t('common.staked')} />
+        <Tab label={t('common.debonding')} />
+      </Tabs>
+      <StyledCard>
+        <CardContent>
+          {isLoading && <Skeleton variant="rectangular" height={300} sx={{ marginTop: 5 }} />}
+          {account && tab === 0 && <ActiveDelegations address={account?.address} />}
+          {account && tab === 1 && <DebondingDelegations address={account?.address} />}
+        </CardContent>
+      </StyledCard>
+    </Box>
   )
 }
 
@@ -94,6 +93,7 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
+            compact: true,
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,
@@ -134,6 +134,7 @@ const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
+            compact: true,
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,
