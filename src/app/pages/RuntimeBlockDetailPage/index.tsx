@@ -1,29 +1,39 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useHref, useOutletContext, useParams } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
 import { Layer, RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-nexus/api'
+import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { TransactionsCard } from './TransactionsCard'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
-import { transactionsContainerId } from './TransactionsCard'
+import { transactionsContainerId } from './BlockTransactionsCard'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { EventsCard } from './EventsCard'
+import { eventsContainerId } from './BlockEventsCard'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
+import { SearchScope } from 'types/searchScope'
+
+export type RuntimeBlockDetailsContext = {
+  scope: SearchScope
+  blockHeight?: number
+}
+
+export const useRuntimeBlockDetailsProps = () => useOutletContext<RuntimeBlockDetailsContext>()
 
 export const RuntimeBlockDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
+  const txLink = useHref('')
+  const eventsLink = useHref(`events#${eventsContainerId}`)
   if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // We should use useGetConsensusBlocksHeight()
@@ -38,14 +48,20 @@ export const RuntimeBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
+  const context: RuntimeBlockDetailsContext = { scope, blockHeight }
 
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.block')} mainTitle>
         <RuntimeBlockDetailView enableBlockNavigation={true} isLoading={isLoading} block={block} />
       </SubPageCard>
-      {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
-      <EventsCard scope={scope} blockHeight={blockHeight} />
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: txLink },
+          { label: t('common.events'), to: eventsLink },
+        ]}
+        context={context}
+      />
     </PageLayout>
   )
 }

@@ -4,10 +4,9 @@ import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
-
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { accountTokenContainerId } from './AccountTokensCard'
-import { useAccount, useAccountEvents } from './hook'
+import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
@@ -15,7 +14,7 @@ import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
-import { AccountEventsCard } from './AccountEventsCard'
+import { eventsContainerId } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
@@ -39,8 +38,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
-  const { isLoading: areEventsLoading, isError: isEventsError, events } = useAccountEvents(scope, address)
-
+  const eventsLink = useHref(`events#${eventsContainerId}`)
   const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
   const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
   const erc721Link = useHref(`tokens/erc-721#${accountTokenContainerId}`)
@@ -68,6 +66,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
+          { label: t('common.events'), to: eventsLink },
           { label: t('common.transfers'), to: tokenTransfersLink },
           {
             label: getTokenTypePluralName(t, EvmTokenType.ERC20),
@@ -81,7 +80,6 @@ export const RuntimeAccountDetailsPage: FC = () => {
         ]}
         context={context}
       />
-      <AccountEventsCard scope={scope} isLoading={areEventsLoading} isError={isEventsError} events={events} />
     </PageLayout>
   )
 }

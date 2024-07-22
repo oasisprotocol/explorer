@@ -109,7 +109,9 @@ async function setup(page: Page) {
     })
   })
 
-  await page.goto('http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000')
+  await page.goto(
+    'http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/events',
+  )
 }
 
 test.describe('Account details page', () => {

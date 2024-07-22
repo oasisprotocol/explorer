@@ -4,7 +4,9 @@ import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
 import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
-import { RuntimeBlockDetailPage } from './app/pages/RuntimeBlockDetailPage'
+import { RuntimeBlockDetailPage, useRuntimeBlockDetailsProps } from './app/pages/RuntimeBlockDetailPage'
+import { BlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/BlockTransactionsCard'
+import { BlockEventsCard } from './app/pages/RuntimeBlockDetailPage/BlockEventsCard'
 import {
   RuntimeAccountDetailsPage,
   useRuntimeAccountDetailsProps,
@@ -28,6 +30,7 @@ import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByNetwork, withDefaultTheme } from './app/components/ThemeByNetwork'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
+import { AccountEventsCard } from 'app/pages/RuntimeAccountDetailsPage/AccountEventsCard'
 import { ContractCodeCard } from './app/pages/RuntimeAccountDetailsPage/ContractCodeCard'
 import { TokenDashboardPage, useTokenDashboardProps } from './app/pages/TokenDashboardPage'
 import { AccountTokenTransfersCard } from './app/pages/RuntimeAccountDetailsPage/AccountTokenTransfersCard'
@@ -216,6 +219,16 @@ export const routes: RouteObject[] = [
             path: `block/:blockHeight`,
             element: <RuntimeBlockDetailPage />,
             loader: blockHeightParamLoader,
+            children: [
+              {
+                path: '',
+                Component: () => <BlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <BlockEventsCard {...useRuntimeBlockDetailsProps()} />,
+              },
+            ],
           },
           {
             path: `address/:address`,
@@ -225,6 +238,10 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <AccountEventsCard {...useRuntimeAccountDetailsProps()} />,
               },
               {
                 path: 'token-transfers',
