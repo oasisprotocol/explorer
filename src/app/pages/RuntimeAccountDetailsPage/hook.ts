@@ -6,7 +6,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
 import { getOasisAddressOrNull } from '../../utils/helpers'
 
@@ -27,7 +27,7 @@ export const useAccount = (scope: SearchScope, address: string) => {
 export const useAccountTransactions = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+  const offset = (pagination.selectedPage - 1) * limit
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading transactions on the consensus layer is not supported yet.
@@ -39,7 +39,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     network,
     layer, // This is OK since consensus has been handled separately
     {
-      limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+      limit,
       offset: offset,
       rel: oasisAddress!,
     },
@@ -71,6 +71,8 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
 
 export const useAccountEvents = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
+  const pagination = useSearchParamsPagination('page')
+  const offset = (pagination.selectedPage - 1) * limit
   if (layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading events on the consensus layer is not supported yet.
@@ -82,6 +84,8 @@ export const useAccountEvents = (scope: SearchScope, address: string) => {
     network,
     layer,
     {
+      limit,
+      offset: offset,
       rel: oasisAddress!,
       // TODO: implement filtering for non-transactional events
     },
@@ -93,5 +97,13 @@ export const useAccountEvents = (scope: SearchScope, address: string) => {
   )
   const { isFetched, isLoading, isError, data } = query
   const events = data?.data.events
-  return { isFetched, isLoading, isError, events }
+
+  if (isFetched && pagination.selectedPage > 1 && !events?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  const totalCount = data?.data.total_count
+  const isTotalCountClipped = data?.data.is_total_count_clipped
+
+  return { isFetched, isLoading, isError, events, pagination, totalCount, isTotalCountClipped }
 }

@@ -46,68 +46,71 @@ async function setup(page: Page) {
       } satisfies Partial<RuntimeAccount>),
     })
   })
-  await page.route('**/v1/sapphire/events?rel=oasis1qq2v39p9fqk997vk6742axrzqyu9v2ncyuqt8uek', route => {
-    route.fulfill({
-      body: JSON.stringify({
-        is_total_count_clipped: false,
-        total_count: 3,
-        events: [
-          {
-            body: {
-              amount: {
-                Amount: '100000000000000000000',
-                Denomination: '',
+  await page.route(
+    '**/v1/sapphire/events?limit=10&offset=0&rel=oasis1qq2v39p9fqk997vk6742axrzqyu9v2ncyuqt8uek',
+    route => {
+      route.fulfill({
+        body: JSON.stringify({
+          is_total_count_clipped: false,
+          total_count: 3,
+          events: [
+            {
+              body: {
+                amount: {
+                  Amount: '100000000000000000000',
+                  Denomination: '',
+                },
+                from: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
+                nonce: 29,
+                to: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
               },
-              from: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
-              nonce: 29,
-              to: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
+              evm_log_name: '',
+              round: 3038913,
+              timestamp: '2023-10-16T13:13:47Z',
+              tx_hash: null,
+              type: 'consensus_accounts.delegate',
+              layer: 'sapphire',
+              network: 'testnet',
             },
-            evm_log_name: '',
-            round: 3038913,
-            timestamp: '2023-10-16T13:13:47Z',
-            tx_hash: null,
-            type: 'consensus_accounts.delegate',
-            layer: 'sapphire',
-            network: 'testnet',
-          },
-          {
-            body: {
-              debond_end_time: 30013,
-              from: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
-              nonce: 30,
-              shares: '100',
-              to: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
-            },
-            evm_log_name: '',
-            round: 3038944,
-            timestamp: '2023-10-16T13:18:23Z',
-            tx_hash: null,
-            type: 'consensus_accounts.undelegate_start',
-            layer: 'sapphire',
-            network: 'testnet',
-          },
-          {
-            body: {
-              amount: {
-                Amount: '100000281888000000000',
-                Denomination: '',
+            {
+              body: {
+                debond_end_time: 30013,
+                from: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
+                nonce: 30,
+                shares: '100',
+                to: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
               },
-              from: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
-              shares: '100000281888',
-              to: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
+              evm_log_name: '',
+              round: 3038944,
+              timestamp: '2023-10-16T13:18:23Z',
+              tx_hash: null,
+              type: 'consensus_accounts.undelegate_start',
+              layer: 'sapphire',
+              network: 'testnet',
             },
-            evm_log_name: '',
-            round: 3216917,
-            timestamp: '2023-10-29T09:06:05Z',
-            tx_hash: null,
-            type: 'consensus_accounts.undelegate_done',
-            layer: 'sapphire',
-            network: 'testnet',
-          },
-        ],
-      } satisfies Partial<RuntimeEventList>),
-    })
-  })
+            {
+              body: {
+                amount: {
+                  Amount: '100000281888000000000',
+                  Denomination: '',
+                },
+                from: 'oasis1qrwncs459lauc77zw23efdn9dmfcp23cxv095l5z',
+                shares: '100000281888',
+                to: 'oasis1qq235lqj77855qcemcr5w2qm372s4amqcc4v3ztc',
+              },
+              evm_log_name: '',
+              round: 3216917,
+              timestamp: '2023-10-29T09:06:05Z',
+              tx_hash: null,
+              type: 'consensus_accounts.undelegate_done',
+              layer: 'sapphire',
+              network: 'testnet',
+            },
+          ],
+        } satisfies Partial<RuntimeEventList>),
+      })
+    },
+  )
 
   await page.goto(
     'http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/events',
