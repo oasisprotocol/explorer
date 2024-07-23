@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeEvent } from '../../../oasis-nexus/api'
+import { TablePagination, TablePaginationProps } from '../Table/TablePagination'
 import { AddressSwitchOption } from '../AddressSwitch'
 import { useTranslation } from 'react-i18next'
 import { CardEmptyState } from '../CardEmptyState'
 import { TextSkeleton } from '../Skeleton'
 import { RuntimeEventDetails } from './RuntimeEventDetails'
+import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
 const RuntimeEventDetailsWithSeparator: FC<{
@@ -28,7 +30,8 @@ export const RuntimeEventsDetailedList: FC<{
   isLoading: boolean
   isError: boolean
   addressSwitchOption: AddressSwitchOption
-}> = ({ scope, events, isLoading, isError, addressSwitchOption }) => {
+  pagination: false | TablePaginationProps
+}> = ({ scope, events, isLoading, isError, addressSwitchOption, pagination }) => {
   const { t } = useTranslation()
   return (
     <>
@@ -44,6 +47,11 @@ export const RuntimeEventsDetailedList: FC<{
             addressSwitchOption={addressSwitchOption}
           />
         ))}
+      {pagination && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <TablePagination {...pagination} />
+        </Box>
+      )}
     </>
   )
 }
