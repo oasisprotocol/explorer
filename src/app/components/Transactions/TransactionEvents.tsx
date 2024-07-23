@@ -21,11 +21,16 @@ export const TransactionEvents: FC<{
     limit,
     offset,
   })
-  const { isLoading, data, isError } = eventsQuery
+  const { isFetched, isLoading, data, isError } = eventsQuery
+  const events = data?.data.events
+  if (isFetched && pagination.selectedPage > 1 && !events?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
+
   return (
     <RuntimeEventsDetailedList
       scope={transaction}
-      events={data?.data?.events}
+      events={events}
       isLoading={isLoading}
       isError={isError}
       addressSwitchOption={addressSwitchOption}
