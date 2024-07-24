@@ -671,12 +671,14 @@
     "listTitle": "Validators",
     "missed": "Missed",
     "nodeId": "Node ID",
+    "others": "Others",
     "participationRate": "Participation Rate",
     "signed": "Signed",
     "signedBlocks": "Signed Blocks",
     "signedBlocksDescription": "Last 100 blocks",
     "proposedBlocks": "Proposed Blocks",
     "snapshot": "Validator Snapshot",
+    "self": "Self",
     "shares": "Shares",
     "stakingTrend": "Staking Trend",
     "startDate": "Start Date",
@@ -686,6 +688,7 @@
     "uptime": "Uptime",
     "voting": "Voting %",
     "votingPower": "Voting Power",
+    "votingPowerOverall": "in % of overall network",
     "waiting": "Waiting"
   }
 }

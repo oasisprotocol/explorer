@@ -81,12 +81,18 @@ type SnapshotTextCardProps = {
   children: ReactNode
   label?: ReactNode
   title: ReactNode
+  withContentPadding?: boolean
 }
 
-export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({ children, label, title }) => {
+export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
+  children,
+  label,
+  title,
+  withContentPadding,
+}) => {
   return (
-    <SnapshotCard title={title} label={label}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+    <SnapshotCard title={title} label={label} withContentPadding={withContentPadding}>
+      <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', height: '100%' }}>
         <Typography
           component="span"
           sx={{

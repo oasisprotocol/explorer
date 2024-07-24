@@ -6,8 +6,9 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { Validator, useGetConsensusValidatorsAddress } from '../../../oasis-nexus/api'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -25,6 +26,7 @@ import { StakingTrend } from './StakingTrend'
 import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 import { debondingContainerId, delegatorsContainerId } from './tabAnchors'
+import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -95,7 +97,7 @@ export const ValidatorDetailsView: FC<{
 }> = ({ detailsPage, isLoading, validator, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-
+  const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!validator) return null
 
@@ -111,21 +113,47 @@ export const ValidatorDetailsView: FC<{
               logotype={validator.media?.logoUrl}
             />
           </dt>
-          <dd>{validator.media?.name}</dd>
+          <dd>
+            <b>{validator.media?.name}</b>
+          </dd>
           <dt>{t('common.rank')}</dt>
-          <dd>-</dd>
+          <dd>{validator.rank}</dd>
           <dt>{t('common.address')}</dt>
           <dd>{validator.entity_address}</dd>
           <dt>{t('validator.delegators')}</dt>
-          <dd>-</dd>
+          <dd>{validator.escrow?.num_delegators?.toLocaleString()}</dd>
           <dt>{t('common.status')}</dt>
-          <dd>-</dd>
-          <dt>{t('validator.startDate')}</dt>
-          <dd>-</dd>
-          <dt>{t('validator.votingPower')}</dt>
-          <dd>-</dd>
-          <dt>{t('validator.totalShare')}</dt>
-          <dd>-</dd>
+          <dd>
+            <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
+          </dd>
+          {formattedTime && (
+            <>
+              <dt>{t('validator.startDate')}</dt>
+              <dd>{formattedTime}</dd>
+            </>
+          )}
+          {validator.voting_power && (
+            <>
+              <dt>{t('validator.votingPower')}</dt>
+              <dd>{validator.voting_power.toLocaleString()}</dd>
+            </>
+          )}
+          {validator.voting_power && validator.voting_power_total && (
+            <>
+              <dt>{t('validator.totalShare')}</dt>
+              <dd>
+                {t('common.valuePair', {
+                  value: validator.voting_power / validator.voting_power_total,
+                  formatParams: {
+                    value: {
+                      style: 'percent',
+                      maximumFractionDigits: 2,
+                    } satisfies Intl.NumberFormatOptions,
+                  },
+                })}
+              </dd>
+            </>
+          )}
           <dt>{t('validator.participationRate')}</dt>
           <dd>-</dd>
           <dt>{t('validator.commissionRates')}</dt>
@@ -152,9 +180,8 @@ export const ValidatorDetailsView: FC<{
       )}
       {!detailsPage && (
         <>
-          {/* TODO: provide missing props when API is ready */}
           <dt>{t('common.rank')}</dt>
-          <dd>-</dd>
+          <dd>{validator.rank}</dd>
           <dt>{t('validator.title')}</dt>
           <dd>
             <ValidatorImage
@@ -174,14 +201,14 @@ export const ValidatorDetailsView: FC<{
           <dt>{t('validator.change')}</dt>
           <dd>-</dd>
           <dt>{t('validator.delegators')}</dt>
-          <dd>-</dd>
+          <dd>{validator.escrow?.num_delegators?.toLocaleString()}</dd>
           <dt>{t('validator.commission')}</dt>
           <dd>
             <ValidatorCommission commission={validator.current_rate} />
           </dd>
           <dt>{t('common.status')}</dt>
           <dd>
-            <StatusIcon success={validator.status} error={undefined} />
+            <StatusIcon success={validator.active} error={undefined} />
           </dd>
           <dt>{t('validator.uptime')}</dt>
           <dd>-</dd>

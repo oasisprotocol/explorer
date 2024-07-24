@@ -987,7 +987,18 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
           const validators = data.validators.map((validator): generated.Validator => {
             return {
               ...validator,
-              escrow: fromBaseUnits(validator.escrow, consensusDecimals),
+              escrow: {
+                ...validator.escrow,
+                active_balance: validator.escrow?.active_balance
+                  ? fromBaseUnits(validator.escrow.active_balance, consensusDecimals)
+                  : undefined,
+                debonding_balance: validator.escrow?.debonding_balance
+                  ? fromBaseUnits(validator.escrow.debonding_balance, consensusDecimals)
+                  : undefined,
+                self_delegation_balance: validator.escrow?.self_delegation_balance
+                  ? fromBaseUnits(validator.escrow.self_delegation_balance, consensusDecimals)
+                  : undefined,
+              },
               ticker,
             }
           })

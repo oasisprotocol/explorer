@@ -435,6 +435,12 @@ limit?: number;
 
  */
 offset?: number;
+/**
+ * A filter on the validator name. Every returned validator will have
+a name that is a superstring of the input param.
+
+ */
+name?: string;
 };
 
 export type GetConsensusEntitiesParams = {
@@ -1412,6 +1418,23 @@ export type NodeListAllOf = {
 
 export type NodeList = List & NodeListAllOf;
 
+export interface Escrow {
+  /** The amount of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
+  active_balance?: TextBigInt;
+  /** The shares of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
+  active_shares?: TextBigInt;
+  /** The amount of tokens that are delegated to this validator account, but are also in the process of debonding (i.e. they will be unstaked within ~2 weeks). */
+  debonding_balance?: TextBigInt;
+  /** The shares of tokens that are delegated to this validator account, but are also in the process of debonding (i.e. they will be unstaked within ~2 weeks). */
+  debonding_shares?: TextBigInt;
+  /** The number of accounts that have delegated token to this account. */
+  num_delegators?: number;
+  /** The amount of token this validator has delegated to itself, and are NOT in the process of debonding. */
+  self_delegation_balance?: TextBigInt;
+  /** The shares of tokens this validator has delegated to itself, and are NOT in the process of debonding. */
+  self_delegation_shares?: TextBigInt;
+}
+
 export interface ValidatorMedia {
   /** An email address associated with the entity. */
   email?: string;
@@ -1448,15 +1471,21 @@ export interface Validator {
   entity_address: string;
   /** The public key identifying this Validator. */
   entity_id: string;
-  /** The amount staked. */
-  escrow: TextBigInt;
-  /** Whether the entity is part of the validator set (active and top <scheduler.params.max_validators> by stake among active entities). */
+  /** The escrow account data for this validator. */
+  escrow: Escrow;
+  /** Whether the entity is part of the validator set (top <scheduler.params.max_validators> by stake among active entities). */
   in_validator_set: boolean;
   media?: ValidatorMedia;
   /** The public key identifying this Validator's node. */
-  node_id: string;
-  /** Whether the entity has a node that is registered for being a validator, node is up to date, and has successfully registered itself. It may or may not be part of validator set. */
-  status: boolean;
+  node_id?: string;
+  /** The rank of the Validator, determined by voting power. */
+  rank: number;
+  /** The second-granular consensus time. */
+  start_date: string;
+  /** The voting power of this Validator. */
+  voting_power: number;
+  /** The total voting power across all Validators. */
+  voting_power_total: number;
 }
 
 /**
