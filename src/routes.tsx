@@ -171,6 +171,10 @@ export const routes: RouteObject[] = [
                 Component: () => <ConsensusAccountTransactionsCard {...useValidatorDetailsProps()} />,
               },
               {
+                path: 'events',
+                Component: () => <ConsensusAccountEventsCard {...useValidatorDetailsProps()} />,
+              },
+              {
                 path: 'delegators',
                 Component: () => <DelegatorsCard {...useValidatorDetailsProps()} />,
               },
