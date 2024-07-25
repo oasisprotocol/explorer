@@ -2,8 +2,7 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
-// eslint-disable-next-line no-restricted-imports
-import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/generated/api'
+import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/api'
 import { validateMnemonic } from 'bip39'
 import { sha512_256 } from 'js-sha512'
 

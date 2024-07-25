@@ -33,7 +33,7 @@ type LayerNetwork = {
   fiatCurrency?: string
 }
 
-type LayerConfig = {
+export type LayerConfig = {
   mainnet: LayerNetwork
   testnet: LayerNetwork
   decimals: number

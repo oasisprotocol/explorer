@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { SearchScope } from '../../../types/searchScope'
+import { getNameForScopeByRuntimeId, SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { tooltipDelay } from '../../../styles/theme'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -110,5 +110,20 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
         <Typography variant="mono">{value}</Typography>
       )}
     </Box>
+  )
+}
+
+type RuntimeNameByIdProps = {
+  scope: SearchScope
+  runtimeId: string
+}
+
+export const RuntimeNameById: FC<RuntimeNameByIdProps> = ({ scope, runtimeId }) => {
+  const { t } = useTranslation()
+  return (
+    <LabelValue
+      label={t('common.to')}
+      value={getNameForScopeByRuntimeId(t, runtimeId, scope.network) ?? runtimeId}
+    />
   )
 }
