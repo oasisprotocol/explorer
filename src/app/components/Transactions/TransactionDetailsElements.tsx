@@ -20,28 +20,7 @@ const Label: FC<PropsWithChildren> = ({ children }) => {
   )
 }
 
-type FromProps = {
-  address: string
-  ownAddress?: string
-  scope: SearchScope
-}
-
-export const From: FC<FromProps> = ({ address, ownAddress, scope }) => {
-  const { t } = useTranslation()
-
-  if (!address) {
-    return null
-  }
-
-  return (
-    <Box sx={{ display: 'inline-flex' }}>
-      <Label>{t('common.from')}</Label>
-      <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
-    </Box>
-  )
-}
-
-type ToProps = {
+type LinkToAddressProps = {
   address: string | undefined
   label?: string
   ownAddress?: string
@@ -49,22 +28,34 @@ type ToProps = {
   type?: 'account' | 'validator'
 }
 
-export const To: FC<ToProps> = ({ address, label, ownAddress, scope, type = 'account' }) => {
-  const { t } = useTranslation()
-
+const LinkToAddress: FC<LinkToAddressProps> = ({ address, label, ownAddress, scope, type = 'account' }) => {
   if (!address) {
     return null
   }
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
-      <Label>{label || t('common.to')}</Label>
+      <Label>{label}</Label>
       {type === 'account' && (
         <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
       )}
       {type === 'validator' && <ValidatorLink network={scope.network} address={address} alwaysTrim />}
     </Box>
   )
+}
+
+export const From: FC<LinkToAddressProps> = props => {
+  const { t } = useTranslation()
+  const label = props.label || props.type === 'validator' ? t('common.fromValidator') : t('common.from')
+
+  return <LinkToAddress label={label} {...props} />
+}
+
+export const To: FC<LinkToAddressProps> = props => {
+  const { t } = useTranslation()
+  const label = props.label || props.type === 'validator' ? t('common.toValidator') : t('common.to')
+
+  return <LinkToAddress label={label} {...props} />
 }
 
 type SharesProps = {

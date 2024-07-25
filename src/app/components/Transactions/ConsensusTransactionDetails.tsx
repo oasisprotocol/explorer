@@ -35,33 +35,26 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To
-            address={transaction.to}
-            label={t('validator.title')}
-            ownAddress={ownAddress}
-            scope={scope}
-            type="validator"
-          />
+          <To address={transaction.to} ownAddress={ownAddress} scope={scope} type="validator" />
         </>
       )
     case ConsensusTxMethod.stakingAllow:
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To address={transaction.to} label={t('common.recipient')} ownAddress={ownAddress} scope={scope} />
+          <To
+            address={transaction.to}
+            label={t('common.beneficiary')}
+            ownAddress={ownAddress}
+            scope={scope}
+          />
         </>
       )
     case ConsensusTxMethod.stakingReclaimEscrow:
       return (
         <>
-          <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To
-            address={transaction.to}
-            label={t('validator.title')}
-            scope={scope}
-            ownAddress={ownAddress}
-            type="validator"
-          />
+          <From address={transaction.to!} ownAddress={ownAddress} scope={scope} type="validator" />
+          <To address={transaction.sender} scope={scope} ownAddress={ownAddress} />
           <Shares value={transaction.body.shares} />
         </>
       )

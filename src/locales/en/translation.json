@@ -65,6 +65,7 @@
     "age": "Age",
     "amount": "Amount",
     "balance": "Balance",
+    "beneficiary": "Beneficiary",
     "block": "Block",
     "blockSizeLimit": "Block size limit",
     "bytes": "{{value, number}}",
@@ -89,6 +90,7 @@
     "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
     "formattedDateTime": "{{timestamp, dateTime}}",
     "from": "From",
+    "fromValidator": "From validator",
     "gasUsed": "Gas Used",
     "gasLimit": "Gas Limit",
     "gasPrice": "Gas Price",
@@ -158,6 +160,7 @@
     "recipient": "Recipient",
     "mainnet": "Mainnet",
     "testnet": "Testnet",
+    "toValidator": "To validator",
     "valuePair": "{{value, number}}"
   },
   "contract": {
