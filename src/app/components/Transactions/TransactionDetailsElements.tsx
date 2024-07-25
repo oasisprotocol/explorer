@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { SearchScope } from '../../../types/searchScope'
+import { getNameForScopeByRuntimeId, SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { tooltipDelay } from '../../../styles/theme'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -91,13 +91,17 @@ export const Shares: FC<SharesProps> = ({ value }) => {
 type LabelValueProps = {
   label?: string
   trimMobile?: boolean
-  value: string
+  value?: string
 }
 
 export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) => {
   const { t } = useTranslation()
   const { isTablet } = useScreenSize()
   const trimEnabled = trimMobile && isTablet
+
+  if (!value) {
+    return null
+  }
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
@@ -111,4 +115,14 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
       )}
     </Box>
   )
+}
+
+type RuntimeNameByIdProps = {
+  scope: SearchScope
+  value: string
+}
+
+export const RuntimeNameById: FC<RuntimeNameByIdProps> = ({ scope, value }) => {
+  const { t } = useTranslation()
+  return <LabelValue label={t('common.to')} value={getNameForScopeByRuntimeId(t, value, scope.network)} />
 }

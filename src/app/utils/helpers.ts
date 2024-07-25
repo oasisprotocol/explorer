@@ -3,9 +3,10 @@ import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
-import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/generated/api'
+import { AddressPreimage, Layer, RuntimeAccount } from '../../oasis-nexus/generated/api'
 import { validateMnemonic } from 'bip39'
 import { sha512_256 } from 'js-sha512'
+import { paraTimesConfig } from '../../config'
 
 export const isValidBlockHeight = (blockHeight: string): boolean => /^[0-9]+$/.test(blockHeight)
 export const isValidBlockHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
@@ -127,4 +128,12 @@ export const getAccountSize = (value: bigint) => {
   } else {
     return 'XXS'
   }
+}
+
+export const getLayerByRuntimeId = (runtimeId: string) => {
+  return (Object.keys(paraTimesConfig) as Layer[]).find(
+    layer =>
+      paraTimesConfig[layer]?.mainnet.runtimeId === runtimeId ||
+      paraTimesConfig[layer]?.testnet.runtimeId === runtimeId,
+  )
 }
