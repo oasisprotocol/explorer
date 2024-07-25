@@ -43,10 +43,11 @@ export const From: FC<FromProps> = ({ address, ownAddress, scope }) => {
 type ToProps = {
   address: string | undefined
   label?: string
+  ownAddress?: string
   scope: SearchScope
 }
 
-export const To: FC<ToProps> = ({ address, label, scope }) => {
+export const To: FC<ToProps> = ({ address, label, ownAddress, scope }) => {
   const { t } = useTranslation()
 
   if (!address) {
@@ -56,7 +57,7 @@ export const To: FC<ToProps> = ({ address, label, scope }) => {
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{label || t('common.to')}</Label>
-      <AccountLink scope={scope} address={address} alwaysTrim />
+      <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
     </Box>
   )
 }
