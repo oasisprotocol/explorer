@@ -1,12 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useHref, useOutletContext, useParams } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Block, Layer, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
+import { SearchScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { RouterTabs } from '../..//components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -16,15 +18,24 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimmer'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { TransactionsCard } from './TransactionsCard'
+import { eventsContainerId } from './ConsensusBlockEventsCard'
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean
 }
 
+export type ConsensusBlockDetailsContext = {
+  scope: SearchScope
+  blockHeight?: number
+}
+
+export const useConsensusBlockDetailsProps = () => useOutletContext<ConsensusBlockDetailsContext>()
+
 export const ConsensusBlockDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
+  const txLink = useHref('')
+  const eventsLink = useHref(`events#${eventsContainerId}`)
   if (scope.layer !== Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
@@ -34,12 +45,20 @@ export const ConsensusBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
+  const context: ConsensusBlockDetailsContext = { scope, blockHeight }
+
   return (
     <PageLayout>
       <SubPageCard featured title={t('common.block')}>
         <ConsensusBlockDetailView enableBlockNavigation isLoading={isLoading} block={block} />
       </SubPageCard>
-      {!!block?.num_transactions && <TransactionsCard scope={scope} blockHeight={blockHeight} />}
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: txLink },
+          { label: t('common.events'), to: eventsLink },
+        ]}
+        context={context}
+      />
     </PageLayout>
   )
 }
