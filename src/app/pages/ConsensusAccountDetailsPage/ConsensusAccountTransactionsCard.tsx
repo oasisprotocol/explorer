@@ -1,16 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { ConsensusTransactions } from '../../components/Transactions'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusAccountDetailsContext } from './hooks'
+import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 const consensusAccountTransactionsContainerId = 'transactions'
 
@@ -18,16 +14,12 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <LinkableDiv id={consensusAccountTransactionsContainerId}>
-        <CardHeader disableTypography component="h3" title={t('common.transactions')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <ConsensusAccountTransactions scope={scope} address={address} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout
+      containerId={consensusAccountTransactionsContainerId}
+      title={t('common.transactions')}
+    >
+      <ConsensusAccountTransactions scope={scope} address={address} />
+    </LinkableCardLayout>
   )
 }
 
