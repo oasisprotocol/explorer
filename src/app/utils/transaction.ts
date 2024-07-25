@@ -3,7 +3,7 @@ import { ConsensusTxMethod, Transaction } from '../../oasis-nexus/api'
 export const getConsensusTransactionToAddress = (transaction: Transaction) => {
   switch (transaction.method) {
     case ConsensusTxMethod.stakingAddEscrow:
-      return transaction.body?.address
+      return transaction.body?.account
     case ConsensusTxMethod.stakingAllow:
       return transaction.body?.beneficiary
     case ConsensusTxMethod.stakingReclaimEscrow:

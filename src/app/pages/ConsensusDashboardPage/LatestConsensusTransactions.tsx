@@ -10,10 +10,8 @@ import { SearchScope } from '../../../types/searchScope'
 import { ConsensusTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as limit } from '../../config'
 import { RouteUtils } from '../../utils/route-utils'
-import { useScreenSize } from '../../hooks/useScreensize'
 
 export const LatestConsensusTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
-  const { isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network } = scope
 
@@ -45,7 +43,6 @@ export const LatestConsensusTransactions: FC<{ scope: SearchScope }> = ({ scope 
           isLoading={transactionsQuery.isLoading}
           limit={limit}
           pagination={false}
-          verbose={!isTablet}
         />
       </CardContent>
     </Card>
