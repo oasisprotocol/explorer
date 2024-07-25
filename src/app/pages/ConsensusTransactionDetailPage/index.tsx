@@ -20,6 +20,7 @@ import { RoundedBalance } from 'app/components/RoundedBalance'
 import { AccountLink } from 'app/components/Account/AccountLink'
 import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
+import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
 import { getFiatCurrencyForScope } from '../../../config'
 
@@ -48,6 +49,11 @@ export const ConsensusTransactionDetailPage: FC = () => {
           transaction={transaction}
         />
       </SubPageCard>
+      {transaction && (
+        <SubPageCard title={t('common.events')}>
+          <ConsensusTransactionEvents transaction={transaction} />
+        </SubPageCard>
+      )}
     </PageLayout>
   )
 }
