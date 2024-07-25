@@ -52,7 +52,7 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight })
   )
 }
 
-export const BlockTransactionsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
 
   if (!blockHeight) {

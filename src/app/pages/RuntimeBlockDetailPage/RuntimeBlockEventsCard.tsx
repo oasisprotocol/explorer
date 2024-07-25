@@ -64,7 +64,7 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   )
 }
 
-export const BlockEventsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
 
   if (!blockHeight) {
