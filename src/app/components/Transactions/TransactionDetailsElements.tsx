@@ -10,6 +10,7 @@ import { RoundedBalance } from '../../components/RoundedBalance'
 import { trimLongString } from '../../utils/trimLongString'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../Account/AccountLink'
+import { ValidatorLink } from '../Validators/ValidatorLink'
 
 const Label: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -45,9 +46,10 @@ type ToProps = {
   label?: string
   ownAddress?: string
   scope: SearchScope
+  type?: 'account' | 'validator'
 }
 
-export const To: FC<ToProps> = ({ address, label, ownAddress, scope }) => {
+export const To: FC<ToProps> = ({ address, label, ownAddress, scope, type = 'account' }) => {
   const { t } = useTranslation()
 
   if (!address) {
@@ -57,7 +59,10 @@ export const To: FC<ToProps> = ({ address, label, ownAddress, scope }) => {
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{label || t('common.to')}</Label>
-      <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
+      {type === 'account' && (
+        <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
+      )}
+      {type === 'validator' && <ValidatorLink network={scope.network} address={address} alwaysTrim />}
     </Box>
   )
 }

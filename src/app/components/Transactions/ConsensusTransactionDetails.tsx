@@ -35,7 +35,13 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To address={transaction.to} label={t('validator.title')} ownAddress={ownAddress} scope={scope} />
+          <To
+            address={transaction.to}
+            label={t('validator.title')}
+            ownAddress={ownAddress}
+            scope={scope}
+            type="validator"
+          />
         </>
       )
     case ConsensusTxMethod.stakingAllow:
@@ -49,7 +55,13 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To address={transaction.to} scope={scope} ownAddress={ownAddress} />
+          <To
+            address={transaction.to}
+            label={t('validator.title')}
+            scope={scope}
+            ownAddress={ownAddress}
+            type="validator"
+          />
           <Shares value={transaction.body.shares} />
         </>
       )
