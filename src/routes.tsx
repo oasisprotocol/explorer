@@ -59,6 +59,7 @@ import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
 import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
+import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
@@ -140,6 +141,10 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <ConsensusAccountTransactionsCard {...useConsensusAccountDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <ConsensusAccountEventsCard {...useConsensusAccountDetailsProps()} />,
               },
             ],
           },
