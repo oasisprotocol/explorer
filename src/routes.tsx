@@ -5,8 +5,8 @@ import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
 import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { RuntimeBlockDetailPage, useRuntimeBlockDetailsProps } from './app/pages/RuntimeBlockDetailPage'
-import { BlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/BlockTransactionsCard'
-import { BlockEventsCard } from './app/pages/RuntimeBlockDetailPage/BlockEventsCard'
+import { RuntimeBlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/RuntimeBlockTransactionsCard'
+import { RuntimeBlockEventsCard } from './app/pages/RuntimeBlockDetailPage/RuntimeBlockEventsCard'
 import {
   RuntimeAccountDetailsPage,
   useRuntimeAccountDetailsProps,
@@ -222,11 +222,11 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                Component: () => <BlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
+                Component: () => <RuntimeBlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
               },
               {
                 path: 'events',
-                Component: () => <BlockEventsCard {...useRuntimeBlockDetailsProps()} />,
+                Component: () => <RuntimeBlockEventsCard {...useRuntimeBlockDetailsProps()} />,
               },
             ],
           },
