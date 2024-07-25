@@ -1,18 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { Delegation, useGetConsensusAccountsAddressDelegationsTo } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
 import { delegatorsContainerId } from './tabAnchors'
 import { SimplePaginationEngine } from 'app/components/Table/PaginationEngine'
+import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 export const DelegatorsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -27,25 +23,18 @@ export const DelegatorsCard: FC<ValidatorDetailsContext> = ({ scope, address }) 
   const delegations = data?.data.delegations
 
   return (
-    <Card>
-      <LinkableDiv id={delegatorsContainerId}>
-        <CardHeader disableTypography component="h3" title={t('validator.delegators')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <DelegatorsCardView
-            delegations={delegations}
-            isFetched={isFetched}
-            isLoading={isLoading}
-            pagination={{
-              ...pagination,
-              isTotalCountClipped: data?.data.is_total_count_clipped,
-              totalCount: data?.data.total_count,
-            }}
-          />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={delegatorsContainerId} title={t('validator.delegators')}>
+      <DelegatorsCardView
+        delegations={delegations}
+        isFetched={isFetched}
+        isLoading={isLoading}
+        pagination={{
+          ...pagination,
+          isTotalCountClipped: data?.data.is_total_count_clipped,
+          totalCount: data?.data.total_count,
+        }}
+      />
+    </LinkableCardLayout>
   )
 }
 

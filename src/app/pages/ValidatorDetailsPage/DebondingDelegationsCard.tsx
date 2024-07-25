@@ -1,21 +1,17 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import {
   DebondingDelegation,
   useGetConsensusAccountsAddressDebondingDelegationsTo,
 } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
 import { debondingContainerId } from './tabAnchors'
 import { SimplePaginationEngine } from 'app/components/Table/PaginationEngine'
+import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 export const DebondingDelegationsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -30,25 +26,18 @@ export const DebondingDelegationsCard: FC<ValidatorDetailsContext> = ({ scope, a
   const debondingDelegations = data?.data.debonding_delegations
 
   return (
-    <Card>
-      <LinkableDiv id={debondingContainerId}>
-        <CardHeader disableTypography component="h3" title={t('validator.undelegations')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <DebondingDelegationsView
-            debondingDelegations={debondingDelegations}
-            isFetched={isFetched}
-            isLoading={isLoading}
-            pagination={{
-              ...pagination,
-              isTotalCountClipped: data?.data.is_total_count_clipped,
-              totalCount: data?.data.total_count,
-            }}
-          />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={debondingContainerId} title={t('validator.undelegations')}>
+      <DebondingDelegationsView
+        debondingDelegations={debondingDelegations}
+        isFetched={isFetched}
+        isLoading={isLoading}
+        pagination={{
+          ...pagination,
+          isTotalCountClipped: data?.data.is_total_count_clipped,
+          totalCount: data?.data.total_count,
+        }}
+      />
+    </LinkableCardLayout>
   )
 }
 

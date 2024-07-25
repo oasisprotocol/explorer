@@ -1,17 +1,13 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusTransactions } from '../../components/Transactions'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { ConsensusBlockDetailsContext } from '.'
+import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 export const transactionsContainerId = 'transactions'
 
@@ -54,15 +50,8 @@ export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = 
   }
 
   return (
-    <Card>
-      <LinkableDiv id={transactionsContainerId}>
-        <CardHeader disableTypography component="h3" title={t('common.transactions')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <TransactionList scope={scope} blockHeight={blockHeight} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={transactionsContainerId} title={t('common.transactions')}>
+      <TransactionList scope={scope} blockHeight={blockHeight} />
+    </LinkableCardLayout>
   )
 }
