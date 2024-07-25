@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Account } from '../../../oasis-nexus/api'
+import { Account, Validator } from '../../../oasis-nexus/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { ConsensusAccountDetailsView } from '../../components/Account/ConsensusAccountDetailsView'
 
 type ConsensusAccountDetailsCardProps = {
   account: Account | undefined
+  validator: Validator | undefined
   isError: boolean
   isLoading: boolean
   highlightedPartOfName?: string | undefined
@@ -13,6 +14,7 @@ type ConsensusAccountDetailsCardProps = {
 
 export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({
   account,
+  validator,
   isError,
   isLoading,
   highlightedPartOfName,
@@ -25,6 +27,7 @@ export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> =
         isError={isError}
         isLoading={isLoading}
         account={account}
+        validator={validator}
         highlightedPartOfName={highlightedPartOfName}
       />
     </SubPageCard>
