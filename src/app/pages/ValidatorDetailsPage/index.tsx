@@ -27,6 +27,7 @@ import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 import { debondingContainerId, delegatorsContainerId } from './tabAnchors'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
+import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -43,6 +44,7 @@ export const ValidatorDetailsPage: FC = () => {
   const { isLoading, data } = validatorQuery
   const validator = data?.data
   const transactionsLink = useHref('')
+  const eventsLink = useHref(`events#${eventsContainerId}`)
   const delegatorsLink = useHref(`delegators#${delegatorsContainerId}`)
   const debondingDelegationsLink = useHref(`debonding-delegations#${debondingContainerId}`)
   const context: ValidatorDetailsContext = { scope, address }
@@ -65,6 +67,7 @@ export const ValidatorDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: transactionsLink },
+          { label: t('common.events'), to: eventsLink },
           { label: t('validator.delegators'), to: delegatorsLink },
           { label: t('validator.undelegations'), to: debondingDelegationsLink },
         ]}
