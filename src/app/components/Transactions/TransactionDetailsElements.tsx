@@ -115,12 +115,15 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
 
 type RuntimeNameByIdProps = {
   scope: SearchScope
-  value: string
+  runtimeId: string
 }
 
-export const RuntimeNameById: FC<RuntimeNameByIdProps> = ({ scope, value }) => {
+export const RuntimeNameById: FC<RuntimeNameByIdProps> = ({ scope, runtimeId }) => {
   const { t } = useTranslation()
   return (
-    <LabelValue label={t('common.to')} value={getNameForScopeByRuntimeId(t, value, scope.network) ?? value} />
+    <LabelValue
+      label={t('common.to')}
+      value={getNameForScopeByRuntimeId(t, runtimeId, scope.network) ?? runtimeId}
+    />
   )
 }

@@ -28,7 +28,7 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <RuntimeNameById scope={scope} value={transaction.body?.id} />
+          <RuntimeNameById scope={scope} runtimeId={transaction.body?.id} />
         </>
       )
     case ConsensusTxMethod.stakingAddEscrow:
