@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { TFunction } from 'i18next'
 import Box from '@mui/material/Box'
 import { ConsensusTxMethod, Transaction } from '../../../oasis-nexus/api'
-import { From, LabelValue, Shares, To } from './TransactionDetailsElements'
+import { From, RuntimeNameById, Shares, To } from './TransactionDetailsElements'
 import { useTranslation } from 'react-i18next'
 
 type ConsensusTransactionDetailsProps = {
@@ -28,7 +28,7 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <LabelValue label={t('common.id')} value={transaction.body?.id} trimMobile />
+          <RuntimeNameById scope={scope} runtimeId={transaction.body?.id} />
         </>
       )
     case ConsensusTxMethod.stakingAddEscrow:
@@ -37,7 +37,7 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
           <To
             address={transaction.to}
-            label={t('validator.title')}
+            label={t('common.toValidator')}
             ownAddress={ownAddress}
             scope={scope}
             type="validator"
@@ -48,7 +48,12 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
       return (
         <>
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
-          <To address={transaction.to} label={t('common.recipient')} ownAddress={ownAddress} scope={scope} />
+          <To
+            address={transaction.to}
+            label={t('common.beneficiary')}
+            ownAddress={ownAddress}
+            scope={scope}
+          />
         </>
       )
     case ConsensusTxMethod.stakingReclaimEscrow:
@@ -57,7 +62,7 @@ const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, 
           <From address={transaction.sender} ownAddress={ownAddress} scope={scope} />
           <To
             address={transaction.to}
-            label={t('validator.title')}
+            label={t('common.toValidator')}
             scope={scope}
             ownAddress={ownAddress}
             type="validator"

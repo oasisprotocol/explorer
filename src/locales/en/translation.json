@@ -65,6 +65,7 @@
     "age": "Age",
     "amount": "Amount",
     "balance": "Balance",
+    "beneficiary": "Beneficiary",
     "block": "Block",
     "blockSizeLimit": "Block size limit",
     "bytes": "{{value, number}}",
@@ -158,6 +159,7 @@
     "recipient": "Recipient",
     "mainnet": "Mainnet",
     "testnet": "Testnet",
+    "toValidator": "To validator",
     "valuePair": "{{value, number}}"
   },
   "contract": {
