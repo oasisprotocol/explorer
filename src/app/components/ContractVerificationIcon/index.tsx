@@ -11,6 +11,7 @@ import Skeleton from '@mui/material/Skeleton'
 import { Layer, RuntimeAccount } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
+import * as externalLinks from '../../utils/externalLinks'
 
 type VerificationStatus = 'verified' | 'unverified'
 
@@ -91,7 +92,7 @@ export const VerificationIcon: FC<{
     unverified: t('contract.verification.isNotVerified'),
   }
   const sourcifyLinkProps = {
-    href: `https://sourcify.dev/#/lookup/${address_eth}`,
+    href: `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
     target: '_blank',
     sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
