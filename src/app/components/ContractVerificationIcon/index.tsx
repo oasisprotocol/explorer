@@ -135,15 +135,17 @@ export const VerificationIcon: FC<{
                 SourcifyLink: <Link {...sourcifyLinkProps} />,
               }}
             />
-            {' | '}
             {abiPlaygroundLinkProps.href && (
-              <Trans
-                t={t}
-                i18nKey={'contract.verification.openInAbiPlayground'}
-                components={{
-                  AbiPlaygroundLink: <Link {...abiPlaygroundLinkProps} />,
-                }}
-              />
+              <span>
+                {' | '}
+                <Trans
+                  t={t}
+                  i18nKey={'contract.verification.openInAbiPlayground'}
+                  components={{
+                    AbiPlaygroundLink: <Link {...abiPlaygroundLinkProps} />,
+                  }}
+                />
+              </span>
             )}
           </Typography>
         ) : (
