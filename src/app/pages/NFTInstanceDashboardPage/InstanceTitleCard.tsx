@@ -65,7 +65,12 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
                 alignItems: 'center',
               }}
             >
-              <VerificationIcon address_eth={token.eth_contract_addr} verified={token.is_verified} noLink />
+              <VerificationIcon
+                address_eth={token.eth_contract_addr}
+                scope={token}
+                verified={token.is_verified}
+                noLink
+              />
               <AccountLink scope={scope} address={displayAddress!} alwaysTrim />
               <CopyToClipboard value={displayAddress!} />
             </Box>
