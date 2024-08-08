@@ -34,16 +34,20 @@ const getPontusXAccountsMetadata = async () => {
   }
 }
 
-export const usePontusXAccountsMetadata = (queryOptions: { enabled: boolean }) => {
+export const usePontusXAccountsMetadata = (queryOptions: {
+  enabled: boolean
+  useErrorBoundary?: boolean
+}) => {
   return useQuery(['pontusXNames'], getPontusXAccountsMetadata, {
     enabled: queryOptions.enabled,
     staleTime: Infinity,
+    useErrorBoundary: queryOptions.useErrorBoundary,
   })
 }
 
 export const usePontusXAccountMetadata = (
   address: string,
-  queryOptions: { enabled: boolean },
+  queryOptions: { enabled: boolean; useErrorBoundary?: boolean },
 ): AccountMetadataInfo => {
   const { isLoading, isError, error, data: allData } = usePontusXAccountsMetadata(queryOptions)
   if (isError) {
@@ -66,7 +70,7 @@ export const useSearchForPontusXAccountsByName = (
     isError: isMetadataError,
     error: metadataError,
     data: namedAccounts,
-  } = usePontusXAccountsMetadata(queryOptions)
+  } = usePontusXAccountsMetadata({ ...queryOptions, useErrorBoundary: false })
   if (isMetadataError) {
     console.log('Failed to load Pontus-X account names', metadataError)
   }
