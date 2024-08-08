@@ -14,6 +14,11 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retry: false,
+      useErrorBoundary: (error: any) => {
+        // Automatically throw on 5xx errors. Components that want to handle
+        // errors should set `useErrorBoundary: false` in their queries.
+        return error.response?.status >= 500
+      },
     },
   },
 })
