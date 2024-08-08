@@ -33,7 +33,7 @@ export const docs = {
   sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
   sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
   pontusx1: 'https://docs.pontus-x.eu/',
-  pontusx2: 'https://docs.pontus-x.eu/docs/Development/quick_start',
+  pontusx2: 'https://docs.pontus-x.eu/docs/getting-started/quick-start',
   pontusx3: 'https://github.com/deltaDAO/mvg-portal/blob/main/chains.config.js',
 }
 
