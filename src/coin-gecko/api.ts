@@ -43,6 +43,7 @@ export function useGetTokenPricesFromGecko(tokenIds: string[], fiatCurrency: str
         }),
     {
       staleTime,
+      useErrorBoundary: false,
     },
   )
 }
