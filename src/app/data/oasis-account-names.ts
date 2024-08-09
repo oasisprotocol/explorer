@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import {
   Layer,
   useGetConsensusAccountsAddresses,
@@ -65,12 +65,11 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
 export const useOasisAccountsMetadata = (
   network: Network,
   layer: Layer,
-  queryOptions: { enabled: boolean; useErrorBoundary?: boolean },
+  queryOptions: UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ) => {
   return useQuery(['oasisAccounts', network, layer], () => getOasisAccountsMetadata(network, layer), {
-    enabled: queryOptions.enabled,
     staleTime: Infinity,
-    useErrorBoundary: queryOptions.useErrorBoundary,
+    ...queryOptions,
   })
 }
 
@@ -78,7 +77,7 @@ export const useOasisAccountMetadata = (
   network: Network,
   layer: Layer,
   address: string,
-  queryOptions: { enabled: boolean; useErrorBoundary?: boolean },
+  queryOptions: UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ): AccountMetadataInfo => {
   const { isLoading, isError, error, data: allData } = useOasisAccountsMetadata(network, layer, queryOptions)
   if (isError) {
@@ -95,14 +94,14 @@ export const useSearchForOasisAccountsByName = (
   network: Network,
   layer: Layer,
   nameFragment: string,
-  queryOptions: { enabled: boolean },
+  queryOptions: { enabled: boolean } & UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ): AccountNameSearchResults => {
   const {
     isLoading: isMetadataLoading,
     isError: isMetadataError,
     error: metadataError,
     data: namedAccounts,
-  } = useOasisAccountsMetadata(network, layer, { ...queryOptions, useErrorBoundary: false })
+  } = useOasisAccountsMetadata(network, layer, { useErrorBoundary: false, ...queryOptions })
   if (isMetadataError) {
     console.log('Failed to load Oasis account metadata', metadataError)
   }
