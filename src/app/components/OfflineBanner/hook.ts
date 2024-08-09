@@ -15,7 +15,7 @@ import { UseQueryResult } from '@tanstack/react-query'
 export const useIsApiReachable = (
   network: Network,
 ): { reachable: true } | { reachable: false; reason: 'userOffline' | 'apiOffline' } => {
-  const query = useGetStatus(network)
+  const query = useGetStatus(network, { query: { useErrorBoundary: false } })
   if (query.isPaused) return { reachable: false, reason: 'userOffline' }
   if (query.isFetched && !query.isSuccess) return { reachable: false, reason: 'apiOffline' }
   return { reachable: true }
@@ -80,7 +80,7 @@ export const useConsensusFreshness = (
   queryParams: { polling?: boolean } = {},
 ): FreshnessInfo => {
   const query = useGetStatus(network, {
-    query: { refetchInterval: queryParams.polling ? 8000 : undefined },
+    query: { refetchInterval: queryParams.polling ? 8000 : undefined, useErrorBoundary: false },
   })
 
   return useFreshness(network, query)
@@ -95,7 +95,7 @@ export const useRuntimeFreshness = (
   }
 
   const query = useGetRuntimeStatus(scope.network, scope.layer, {
-    query: { refetchInterval: queryParams.polling ? 8000 : undefined },
+    query: { refetchInterval: queryParams.polling ? 8000 : undefined, useErrorBoundary: false },
   })
 
   return useFreshness(scope.network, query)

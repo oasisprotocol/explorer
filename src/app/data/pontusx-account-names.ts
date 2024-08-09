@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import {
   AccountMetadata,
   AccountMap,
@@ -14,7 +14,12 @@ import { getOasisAddress } from '../utils/helpers'
 
 const DATA_SOURCE_URL = 'https://raw.githubusercontent.com/deltaDAO/mvg-portal/main/pontusxAddresses.json'
 
-const getPontusXAccountsMetadata = async () => {
+type PontusXAccountsMetadata = {
+  map: AccountMap
+  list: AccountMetadata[]
+}
+
+const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> => {
   const response = await axios.get(DATA_SOURCE_URL)
   if (response.status !== 200) throw new Error("Couldn't load names")
   if (!response.data) throw new Error("Couldn't load names")
@@ -34,16 +39,18 @@ const getPontusXAccountsMetadata = async () => {
   }
 }
 
-export const usePontusXAccountsMetadata = (queryOptions: { enabled: boolean }) => {
+export const usePontusXAccountsMetadata = (
+  queryOptions: UseQueryOptions<PontusXAccountsMetadata, unknown, PontusXAccountsMetadata, string[]>,
+) => {
   return useQuery(['pontusXNames'], getPontusXAccountsMetadata, {
-    enabled: queryOptions.enabled,
     staleTime: Infinity,
+    ...queryOptions,
   })
 }
 
 export const usePontusXAccountMetadata = (
   address: string,
-  queryOptions: { enabled: boolean },
+  queryOptions: UseQueryOptions<PontusXAccountsMetadata, unknown, PontusXAccountsMetadata, string[]>,
 ): AccountMetadataInfo => {
   const { isLoading, isError, error, data: allData } = usePontusXAccountsMetadata(queryOptions)
   if (isError) {
@@ -59,14 +66,19 @@ export const usePontusXAccountMetadata = (
 export const useSearchForPontusXAccountsByName = (
   network: Network,
   nameFragment: string,
-  queryOptions: { enabled: boolean },
+  queryOptions: { enabled: boolean } & UseQueryOptions<
+    PontusXAccountsMetadata,
+    unknown,
+    PontusXAccountsMetadata,
+    string[]
+  >,
 ): AccountNameSearchRuntimeResults => {
   const {
     isLoading: isMetadataLoading,
     isError: isMetadataError,
     error: metadataError,
     data: namedAccounts,
-  } = usePontusXAccountsMetadata(queryOptions)
+  } = usePontusXAccountsMetadata({ useErrorBoundary: false, ...queryOptions })
   if (isMetadataError) {
     console.log('Failed to load Pontus-X account names', metadataError)
   }
