@@ -43,9 +43,12 @@ jobs:
         run: |
           echo "VERSION=$(echo "$REF_NAME" | sed 's/^v//')" >> "$GITHUB_OUTPUT"
       - name: Create zip file
+        env:
+          # Need to escape again
+          VERSION: ${{ steps.vars.outputs.VERSION }}
         run: |
           cd build/
-          zip -r ../oasis-explorer-${{ steps.vars.outputs.VERSION }}.zip .
+          zip -r ../oasis-explorer-$VERSION.zip .
       - name: Parse CHANGELOG.md file and extract changes for the given version
         uses: buberdds/extract-changelog-action@v1
         id: changelog
