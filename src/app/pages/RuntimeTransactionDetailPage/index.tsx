@@ -22,7 +22,7 @@ import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
-import { TransactionEvents } from '../../components/Transactions/TransactionEvents'
+import { RuntimeTransactionEvents } from '../../components/Transactions/RuntimeTransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { getNameForTicker, Ticker } from '../../../types/ticker'
@@ -133,7 +133,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
       <DappBanner scope={scope} ethAddress={transaction?.to_eth} />
       {transaction && (
         <SubPageCard title={t('common.events')}>
-          <TransactionEvents transaction={transaction} addressSwitchOption={addressSwitchOption} />
+          <RuntimeTransactionEvents transaction={transaction} addressSwitchOption={addressSwitchOption} />
         </SubPageCard>
       )}
     </PageLayout>

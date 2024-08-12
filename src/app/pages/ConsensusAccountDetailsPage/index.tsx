@@ -12,6 +12,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
 import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
+import { eventsContainerId } from './ConsensusAccountEventsCard'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -23,6 +24,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
   const transactionsLink = useHref('')
+  const eventsLink = useHref(`events#${eventsContainerId}`)
   const context: ConsensusAccountDetailsContext = { scope, address }
 
   return (
@@ -41,7 +43,13 @@ export const ConsensusAccountDetailsPage: FC = () => {
           <Staking account={account} isLoading={isLoading} />
         </Grid>
       </Grid>
-      <RouterTabs tabs={[{ label: t('common.transactions'), to: transactionsLink }]} context={context} />
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: transactionsLink },
+          { label: t('common.events'), to: eventsLink },
+        ]}
+        context={context}
+      />
     </PageLayout>
   )
 }

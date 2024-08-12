@@ -5,8 +5,8 @@ import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
 import { RuntimeTransactionDetailPage } from './app/pages/RuntimeTransactionDetailPage'
 import { ParatimeDashboardPage } from './app/pages/ParatimeDashboardPage'
 import { RuntimeBlockDetailPage, useRuntimeBlockDetailsProps } from './app/pages/RuntimeBlockDetailPage'
-import { BlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/BlockTransactionsCard'
-import { BlockEventsCard } from './app/pages/RuntimeBlockDetailPage/BlockEventsCard'
+import { RuntimeBlockTransactionsCard } from './app/pages/RuntimeBlockDetailPage/RuntimeBlockTransactionsCard'
+import { RuntimeBlockEventsCard } from './app/pages/RuntimeBlockDetailPage/RuntimeBlockEventsCard'
 import {
   RuntimeAccountDetailsPage,
   useRuntimeAccountDetailsProps,
@@ -52,11 +52,14 @@ import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
-import { ConsensusBlockDetailPage } from './app/pages/ConsensusBlockDetailPage'
+import { ConsensusBlockDetailPage, useConsensusBlockDetailsProps } from './app/pages/ConsensusBlockDetailPage'
+import { ConsensusBlockTransactionsCard } from './app/pages/ConsensusBlockDetailPage/ConsensusBlockTransactionsCard'
+import { ConsensusBlockEventsCard } from './app/pages/ConsensusBlockDetailPage/ConsensusBlockEventsCard'
 import { ConsensusAccountsPage } from './app/pages/ConsensusAccountsPage'
 import { ConsensusTransactionsPage } from './app/pages/ConsensusTransactionsPage'
 import { ConsensusTransactionDetailPage } from './app/pages/ConsensusTransactionDetailPage'
 import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetailsPage'
+import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
@@ -139,6 +142,10 @@ export const routes: RouteObject[] = [
                 path: '',
                 Component: () => <ConsensusAccountTransactionsCard {...useConsensusAccountDetailsProps()} />,
               },
+              {
+                path: 'events',
+                Component: () => <ConsensusAccountEventsCard {...useConsensusAccountDetailsProps()} />,
+              },
             ],
           },
           {
@@ -164,6 +171,10 @@ export const routes: RouteObject[] = [
                 Component: () => <ConsensusAccountTransactionsCard {...useValidatorDetailsProps()} />,
               },
               {
+                path: 'events',
+                Component: () => <ConsensusAccountEventsCard {...useValidatorDetailsProps()} />,
+              },
+              {
                 path: 'delegators',
                 Component: () => <DelegatorsCard {...useValidatorDetailsProps()} />,
               },
@@ -181,6 +192,16 @@ export const routes: RouteObject[] = [
             path: `block/:blockHeight`,
             element: <ConsensusBlockDetailPage />,
             loader: blockHeightParamLoader,
+            children: [
+              {
+                path: '',
+                Component: () => <ConsensusBlockTransactionsCard {...useConsensusBlockDetailsProps()} />,
+              },
+              {
+                path: 'events',
+                Component: () => <ConsensusBlockEventsCard {...useConsensusBlockDetailsProps()} />,
+              },
+            ],
           },
           {
             path: 'tx',
@@ -222,11 +243,11 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                Component: () => <BlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
+                Component: () => <RuntimeBlockTransactionsCard {...useRuntimeBlockDetailsProps()} />,
               },
               {
                 path: 'events',
-                Component: () => <BlockEventsCard {...useRuntimeBlockDetailsProps()} />,
+                Component: () => <RuntimeBlockEventsCard {...useRuntimeBlockDetailsProps()} />,
               },
             ],
           },
