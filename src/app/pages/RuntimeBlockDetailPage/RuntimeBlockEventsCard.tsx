@@ -1,17 +1,13 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { Layer, useGetRuntimeEvents } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
 import { AddressSwitchOption } from '../../components/AddressSwitch'
 import { EmptyState } from '../../components/EmptyState'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { RuntimeBlockDetailsContext } from '.'
 
 export const eventsContainerId = 'events'
@@ -72,15 +68,8 @@ export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = ({ scope, 
   }
 
   return (
-    <Card>
-      <LinkableDiv id={eventsContainerId}>
-        <CardHeader disableTypography component="h3" title={t('common.events')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <EventsList scope={scope} blockHeight={blockHeight} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
+      <EventsList scope={scope} blockHeight={blockHeight} />
+    </LinkableCardLayout>
   )
 }
