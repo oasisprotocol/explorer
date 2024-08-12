@@ -3,6 +3,10 @@
  * Do not edit manually.
  * Oasis Nexus API V1
  * An API for accessing indexed data from the Oasis Network.
+
+<!-- Acts as a separator after search in sidebar -->
+# Endpoints
+
  * OpenAPI spec version: 0.1.0
  */
 import {
@@ -27,6 +31,7 @@ import GetConsensusEntitiesAddressNodesMutator from '../replaceNetworkWithBaseUR
 import GetConsensusEntitiesAddressNodesNodeIdMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusValidatorsMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusValidatorsAddressMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusValidatorsAddressHistoryMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusAccountsAddressDelegationsMutator from '../replaceNetworkWithBaseURL';
@@ -411,7 +416,7 @@ limit?: number;
 offset?: number;
 };
 
-export type GetConsensusValidatorsParams = {
+export type GetConsensusValidatorsAddressHistoryParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -422,9 +427,17 @@ limit?: number;
 
  */
 offset?: number;
+/**
+ * A filter on minimum epoch number, inclusive.
+ */
+from?: number;
+/**
+ * A filter on maximum epoch number, inclusive.
+ */
+to?: number;
 };
 
-export type GetConsensusEntitiesAddressNodesParams = {
+export type GetConsensusValidatorsParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -441,6 +454,19 @@ a name that is a superstring of the input param.
 
  */
 name?: string;
+};
+
+export type GetConsensusEntitiesAddressNodesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetConsensusEntitiesParams = {
@@ -634,10 +660,72 @@ export interface TxVolumeList {
 export interface AccountStats {
   /** The total number of transactions this account was involved with. */
   num_txns: number;
-  /** The total amount of native tokens received, in base units. */
+  /**
+   * The total amount of native tokens received, in base units.
+DEPRECATED: This field might be inaccurate. Nexus is currently not able to track
+certain actions which subtract/add tokens.
+
+   * @deprecated
+   */
   total_received?: TextBigInt;
-  /** The total amount of native tokens sent, in base units. */
+  /**
+   * The total amount of native tokens sent, in base units.
+DEPRECATED: This field might be inaccurate. Nexus is currently not able to track
+certain actions which subtract/add tokens.
+
+   * @deprecated
+   */
   total_sent?: TextBigInt;
+}
+
+/**
+ * A list of NFT instances.
+ */
+export type EvmNftListAllOf = {
+  /** A list of L2 EVM NFT (ERC-721, ...) instances. */
+  evm_nfts: EvmNft[];
+};
+
+export type EvmNftList = List & EvmNftListAllOf;
+
+export interface EvmToken {
+  /** The Oasis address of this token's contract. */
+  contract_addr: string;
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** The Ethereum address of this token's contract. */
+  eth_contract_addr: string;
+  /**
+   * Whether the contract has been successfully verified by Sourcify.
+Additional information on verified contracts is available via
+the `/{runtime}/accounts/{address}` endpoint.
+DEPRECATED: This field will be removed in the future in favor of verification_level
+
+   * @deprecated
+   */
+  is_verified: boolean;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** The number of addresses that have a nonzero balance of this token.
+ */
+  num_holders: number;
+  /** The total number of transfers of this token.
+ */
+  num_transfers?: number;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The total number of base units available. */
+  total_supply?: TextBigInt;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+  verification_level?: VerificationLevel;
 }
 
 export interface EvmNft {
@@ -666,53 +754,6 @@ Currently only ERC-721 is supported, where the document is an Asset Metadata fro
   /** The Ethereum address of this NFT instance's owner. */
   owner_eth?: string;
   token: EvmToken;
-}
-
-/**
- * A list of NFT instances.
- */
-export type EvmNftListAllOf = {
-  /** A list of L2 EVM NFT (ERC-721, ...) instances. */
-  evm_nfts: EvmNft[];
-};
-
-export type EvmNftList = List & EvmNftListAllOf;
-
-export interface EvmToken {
-  /** The Oasis address of this token's contract. */
-  contract_addr: string;
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** The Ethereum address of this token's contract. */
-  eth_contract_addr: string;
-  /** Whether the contract has been successfully verified by Sourcify.
-Additional information on verified contracts is available via
-the `/{runtime}/accounts/{address}` endpoint.
-DEPRECATED: This field will be removed in the future in favor of verification_level
- */
-  is_verified: boolean;
-  /** Name of the token, as provided by token contract's `name()` method. */
-  name?: string;
-  /** The number of addresses that have a nonzero balance of this token.
- */
-  num_holders: number;
-  /** The total number of transfers of this token.
- */
-  num_transfers?: number;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  /** The total number of base units available. */
-  total_supply?: TextBigInt;
-  /** The heuristically determined interface that the token contract implements.
-A less specialized variant of the token might be detected; for example, an
-ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
-detected or is not supported, this field will be null/absent.
- */
-  type: EvmTokenType;
-  verification_level?: VerificationLevel;
 }
 
 /**
@@ -800,6 +841,9 @@ applicable. The meaning varies based on the transaction method.
 Usually in native denomination, ParaTime units. As a string.
  */
   amount?: string;
+  /** The denomination of the "amount" associated with this transaction, if applicable.
+ */
+  amount_symbol?: string;
   /** The method call body. May be null if the transaction was malformed. */
   body?: RuntimeTransactionBody;
   /** The fee that was charged for the transaction execution (total, native denomination,
@@ -829,9 +873,18 @@ Only present for `evm.log` transaction calls to contracts that have been verifie
  */
   evm_fn_params?: EvmAbiParam[];
   /** The fee that this transaction's sender committed to pay to execute
-it (total, native denomination, ParaTime base units, as a string).
+it (total ParaTime base units, as a string).
  */
   fee: string;
+  /** the base64-encoded id of the fee proxy.
+ */
+  fee_proxy_id?: string;
+  /** The module of the fee proxy.
+ */
+  fee_proxy_module?: string;
+  /** The denomination of the fee.
+ */
+  fee_symbol: string;
   /** The maximum gas that this transaction's sender committed to use to
 execute it.
  */
@@ -1140,8 +1193,6 @@ export type ProposalVotesAllOf = {
   votes: ProposalVote[];
 };
 
-export type ProposalVotes = List & ProposalVotesAllOf;
-
 /**
  * The state of the proposal.
  */
@@ -1163,44 +1214,6 @@ export interface ProposalTarget {
   consensus_protocol?: string;
   runtime_committee_protocol?: string;
   runtime_host_protocol?: string;
-}
-
-/**
- * A governance proposal.
-
- */
-export interface Proposal {
-  /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal.
- */
-  cancels?: number;
-  /** The epoch at which voting for this proposal will close. */
-  closes_at: number;
-  /** The epoch at which this proposal was created. */
-  created_at: number;
-  /** The deposit attached to this proposal. */
-  deposit: TextBigInt;
-  /** The epoch at which the proposed upgrade will happen. */
-  epoch?: number;
-  /** The name of the upgrade handler. */
-  handler?: string;
-  /** The unique identifier of the proposal. */
-  id: number;
-  /** The number of invalid votes for this proposal, after tallying.
- */
-  invalid_votes: TextBigInt;
-  /** The base64 encoded raw cbor representing the updated parameters
-which are to be changed by this 'parameters_change' proposal.
- */
-  parameters_change?: string;
-  /** The name of the module whose parameters are to be changed
-by this 'parameters_change' proposal.
- */
-  parameters_change_module?: string;
-  state: ProposalState;
-  /** The staking address of the proposal submitter. */
-  submitter: string;
-  target?: ProposalTarget;
 }
 
 /**
@@ -1239,7 +1252,9 @@ export type EpochList = List & EpochListAllOf;
 export interface Allowance {
   /** The allowed account. */
   address: string;
-  /** The amount allowed for the allowed account. */
+  /** The amount allowed for the allowed account.
+This field is omitted when listing multiple accounts.
+ */
   amount: TextBigInt;
 }
 
@@ -1418,9 +1433,47 @@ export type NodeListAllOf = {
 
 export type NodeList = List & NodeListAllOf;
 
+export interface ValidatorHistoryPoint {
+  /** The amount of tokens that were delegated to this validator account, 
+at the start of this epoch, and are NOT in the process of debonding.
+ */
+  active_balance?: TextBigInt;
+  /** The shares of tokens that were delegated to this validator account, 
+at the start of this epoch, and are NOT in the process of debonding.
+ */
+  active_shares?: TextBigInt;
+  /** The amount of tokens that were delegated to this validator account
+at the start of this epoch, but are also in the process of debonding 
+(i.e. they will be unstaked within ~2 weeks).
+ */
+  debonding_balance?: TextBigInt;
+  /** The shares of tokens that were delegated to this validator account
+at the start of this epoch, but are also in the process of debonding 
+(i.e. they will be unstaked within ~2 weeks).
+ */
+  debonding_shares?: TextBigInt;
+  /** The epoch number. */
+  epoch: number;
+  /** The number of accounts that have delegated token to this account. */
+  num_delegators?: number;
+}
+
+/**
+ * Historical escrow balance data for a single address.
+ */
+export type ValidatorHistoryAllOf = {
+  /** The staking address of the validator. */
+  address?: string;
+  history: ValidatorHistoryPoint[];
+};
+
+export type ValidatorHistory = List & ValidatorHistoryAllOf;
+
 export interface Escrow {
   /** The amount of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
   active_balance?: TextBigInt;
+  /** The active_balance of this validator account 24 hours ago. */
+  active_balance_24?: TextBigInt;
   /** The shares of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
   active_shares?: TextBigInt;
   /** The amount of tokens that are delegated to this validator account, but are also in the process of debonding (i.e. they will be unstaked within ~2 weeks). */
@@ -1467,24 +1520,24 @@ export interface Validator {
   current_commission_bound: ValidatorCommissionBound;
   /** Commission rate. */
   current_rate: number;
-  /** The staking address identifying this Validator. */
+  /** The staking address identifying this validator. */
   entity_address: string;
-  /** The public key identifying this Validator. */
+  /** The public key identifying this validator. */
   entity_id: string;
   /** The escrow account data for this validator. */
   escrow: Escrow;
   /** Whether the entity is part of the validator set (top <scheduler.params.max_validators> by stake among active entities). */
   in_validator_set: boolean;
   media?: ValidatorMedia;
-  /** The public key identifying this Validator's node. */
+  /** The public key identifying this validator's node. */
   node_id?: string;
-  /** The rank of the Validator, determined by voting power. */
+  /** The rank of the validator, determined by voting power. */
   rank: number;
   /** The second-granular consensus time. */
   start_date: string;
-  /** The voting power of this Validator. */
+  /** The voting power of this validator. */
   voting_power: number;
-  /** The total voting power across all Validators. */
+  /** The total voting power across all validators. */
   voting_power_total: number;
 }
 
@@ -1913,6 +1966,8 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
+export type ProposalVotes = List & ProposalVotesAllOf;
+
 /**
  * A list of consensus blocks.
 
@@ -1941,6 +1996,46 @@ export type Address = string;
  * @pattern ^-?[0-9]+$
  */
 export type TextBigInt = string;
+
+/**
+ * A governance proposal.
+
+ */
+export interface Proposal {
+  /** The proposal to cancel, if this proposal proposes
+cancelling an existing proposal.
+ */
+  cancels?: number;
+  /** The epoch at which voting for this proposal will close. */
+  closes_at: number;
+  /** The epoch at which this proposal was created. */
+  created_at: number;
+  /** The deposit attached to this proposal. */
+  deposit: TextBigInt;
+  /** The (optional) description of the proposal. */
+  description?: string;
+  /** The epoch at which the proposed upgrade will happen. */
+  epoch?: number;
+  /** The name of the upgrade handler. */
+  handler?: string;
+  /** The unique identifier of the proposal. */
+  id: number;
+  /** The number of invalid votes for this proposal, after tallying.
+ */
+  invalid_votes: TextBigInt;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
+  state: ProposalState;
+  /** The staking address of the proposal submitter. */
+  submitter: string;
+  target?: ProposalTarget;
+  /** The (optional) title of the proposal. */
+  title?: string;
+}
 
 /**
  * An Oasis-style (bech32) address.
@@ -2714,7 +2809,7 @@ export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<Return
 
 
 /**
- * @summary Returns a list of validators registered at the consensus layer.
+ * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const GetConsensusValidators = (
     network: 'mainnet' | 'testnet',
@@ -2760,7 +2855,7 @@ export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<t
 export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of validators registered at the consensus layer.
+ * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
@@ -2847,7 +2942,82 @@ export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<type
 
 
 /**
+ * @summary Returns historical information for a single validator.
+ */
+export const GetConsensusValidatorsAddressHistory = (
+    network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams,
+ options?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetConsensusValidatorsAddressHistoryMutator<ValidatorHistory>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/validators/${encodeURIComponent(String(address))}/history`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusValidatorsAddressHistoryQueryKey = (network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams,) => {
+    return [`/${network}/consensus/validators/${address}/history`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetConsensusValidatorsAddressHistoryQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsAddressHistoryQueryKey(network,address,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>> = ({ signal }) => GetConsensusValidatorsAddressHistory(network,address,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetConsensusValidatorsAddressHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>>
+export type GetConsensusValidatorsAddressHistoryQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns historical information for a single validator.
+ */
+export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet',
+    address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusValidatorsAddressHistoryQueryOptions(network,address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
  * @summary Returns a list of consensus layer accounts.
+Note that for performance reasons, the info returned by this endpoint
+may be slightly stale (<2 minutes). For the most up-to-date account state,
+query the single-account endpoint.
+
  */
 export const GetConsensusAccounts = (
     network: 'mainnet' | 'testnet',
@@ -2894,6 +3064,10 @@ export type GetConsensusAccountsQueryError = HumanReadableErrorResponse | NotFou
 
 /**
  * @summary Returns a list of consensus layer accounts.
+Note that for performance reasons, the info returned by this endpoint
+may be slightly stale (<2 minutes). For the most up-to-date account state,
+query the single-account endpoint.
+
  */
 export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
