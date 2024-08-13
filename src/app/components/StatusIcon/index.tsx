@@ -92,7 +92,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) =>
           &nbsp;
           {statusIcon[status]}
         </StyledBox>
-        {error && <ErrorBox>{errorMessage}</ErrorBox>}
+        {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
       </>
     )
   } else {
