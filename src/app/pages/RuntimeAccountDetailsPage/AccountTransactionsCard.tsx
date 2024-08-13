@@ -1,12 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useAccountTransactions } from './hook'
 import { RuntimeAccountDetailsContext } from './index'
@@ -17,16 +13,12 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = ({ scop
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <LinkableDiv id={accountTransactionsContainerId}>
-        <CardHeader disableTypography component="h3" title={t('account.transactionsListTitle')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <AccountTransactions scope={scope} address={address} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout
+      containerId={accountTransactionsContainerId}
+      title={t('account.transactionsListTitle')}
+    >
+      <AccountTransactions scope={scope} address={address} />
+    </LinkableCardLayout>
   )
 }
 

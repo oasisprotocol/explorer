@@ -1,11 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useTokenHolders, useTokenInfo } from './hook'
 import { TokenHolders } from '../../components/Tokens/TokenHolders'
@@ -17,16 +13,9 @@ export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) 
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <LinkableDiv id={tokenHoldersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('tokens.holders')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <TokenHoldersView scope={scope} address={address} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={tokenHoldersContainerId} title={t('tokens.holders')}>
+      <TokenHoldersView scope={scope} address={address} />
+    </LinkableCardLayout>
   )
 }
 

@@ -1,14 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from './index'
 import { RouteUtils } from '../../utils/route-utils'
@@ -28,32 +24,24 @@ export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }
   const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
 
   return (
-    <Card>
-      <LinkableDiv id={tokenInventoryContainerId}>
-        <CardHeader
-          disableTypography
-          component="h3"
-          title={
-            <CardHeaderWithCounter
-              label={t('tokens.inventory')}
-              totalCount={totalCount}
-              isTotalCountClipped={pagination.isTotalCountClipped}
-            />
-          }
+    <LinkableCardLayout
+      containerId={tokenInventoryContainerId}
+      title={
+        <CardHeaderWithCounter
+          label={t('tokens.inventory')}
+          totalCount={totalCount}
+          isTotalCountClipped={pagination.isTotalCountClipped}
         />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <TokenInventoryView
-            inventory={inventory}
-            isFetched={isFetched}
-            pagination={pagination}
-            scope={scope}
-            totalCount={totalCount}
-          />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+      }
+    >
+      <TokenInventoryView
+        inventory={inventory}
+        isFetched={isFetched}
+        pagination={pagination}
+        scope={scope}
+        totalCount={totalCount}
+      />
+    </LinkableCardLayout>
   )
 }
 

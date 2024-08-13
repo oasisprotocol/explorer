@@ -8,7 +8,7 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 type LinkableCardLayoutProps = {
   children: ReactNode
   containerId: string
-  title: string
+  title: ReactNode
 }
 export const LinkableCardLayout: FC<LinkableCardLayoutProps> = ({ children, containerId, title }) => {
   return (

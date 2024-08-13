@@ -2,9 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
@@ -12,6 +9,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -120,29 +118,24 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
   }))
 
   return (
-    <Card>
-      <LinkableDiv id={accountTokenContainerId}>
-        <CardHeader disableTypography component="h3" title={tokenListLabel} />
-        <CardContent>
-          {!!account && !account?.tokenBalances[type]?.length && (
-            <CardEmptyState
-              label={t('account.emptyTokenList', {
-                spec: getTokenTypeStrictName(t, type),
-                description: getTokenTypePluralDescription(t, type),
-              })}
-            />
-          )}
+    <LinkableCardLayout containerId={accountTokenContainerId} title={tokenListLabel}>
+      {!!account && !account?.tokenBalances[type]?.length && (
+        <CardEmptyState
+          label={t('account.emptyTokenList', {
+            spec: getTokenTypeStrictName(t, type),
+            description: getTokenTypePluralDescription(t, type),
+          })}
+        />
+      )}
 
-          <Table
-            columns={tableColumns}
-            rows={tableRows}
-            rowsNumber={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
-            name={tokenListLabel}
-            isLoading={!account}
-            pagination={false}
-          />
-        </CardContent>
-      </LinkableDiv>
-    </Card>
+      <Table
+        columns={tableColumns}
+        rows={tableRows}
+        rowsNumber={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
+        name={tokenListLabel}
+        isLoading={!account}
+        pagination={false}
+      />
+    </LinkableCardLayout>
   )
 }

@@ -1,12 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { NftDashboardContext } from './'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useNFTInstanceTransfers } from '../TokenDashboardPage/hook'
@@ -17,16 +13,9 @@ export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <LinkableDiv id={nftTokenTransfersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('common.transfers')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <NFTTokenTransfersView {...props} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={nftTokenTransfersContainerId} title={t('common.transfers')}>
+      <NFTTokenTransfersView {...props} />
+    </LinkableCardLayout>
   )
 }
 

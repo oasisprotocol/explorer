@@ -1,11 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
-import { ErrorBoundary } from '../../components/ErrorBoundary'
-import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
+import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
@@ -16,16 +12,9 @@ export const accountTokenTransfersContainerId = 'transfers'
 export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
   return (
-    <Card>
-      <LinkableDiv id={accountTokenTransfersContainerId}>
-        <CardHeader disableTypography component="h3" title={t('common.transfers')} />
-      </LinkableDiv>
-      <CardContent>
-        <ErrorBoundary light={true}>
-          <AccountTokenTransfers scope={scope} address={address} account={account} />
-        </ErrorBoundary>
-      </CardContent>
-    </Card>
+    <LinkableCardLayout containerId={accountTokenTransfersContainerId} title={t('common.transfers')}>
+      <AccountTokenTransfers scope={scope} address={address} account={account} />
+    </LinkableCardLayout>
   )
 }
 
