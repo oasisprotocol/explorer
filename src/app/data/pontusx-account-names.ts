@@ -94,7 +94,7 @@ export const useSearchForPontusXAccountsByName = (
       : namedAccounts?.list.filter(textMatcher).map(
           (account): AccountNameSearchRuntimeMatch => ({
             network,
-            layer: Layer.pontusx,
+            layer: Layer.pontusxtest,
             address: account.address,
           }),
         )

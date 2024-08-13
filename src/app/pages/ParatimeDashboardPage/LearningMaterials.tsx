@@ -63,7 +63,7 @@ const getContent = (t: TFunction) => {
       },
       [Layer.cipher]: undefined,
       [Layer.pontusxdev]: undefined,
-      [Layer.pontusx]: undefined,
+      [Layer.pontusxtest]: undefined,
     },
     [Network.testnet]: {
       [Layer.emerald]: {
@@ -118,7 +118,7 @@ const getContent = (t: TFunction) => {
           url: docs.pontusx3,
         },
       },
-      [Layer.pontusx]: {
+      [Layer.pontusxtest]: {
         primary: {
           description: t('learningMaterials.pontusxtestnet.1.description'),
           header: t('learningMaterials.pontusxtestnet.1.header'),

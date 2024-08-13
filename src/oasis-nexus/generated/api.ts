@@ -2050,7 +2050,7 @@ export type Runtime = typeof Runtime[keyof typeof Runtime];
 export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
   pontusxdev: 'pontusxdev',
   cipher: 'cipher',
 } as const;
@@ -2062,7 +2062,7 @@ export type Layer = typeof Layer[keyof typeof Layer];
 export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
   pontusxdev: 'pontusxdev',
   cipher: 'cipher',
   consensus: 'consensus',

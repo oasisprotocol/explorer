@@ -165,7 +165,7 @@ export const paraTimesConfig = {
   [Layer.emerald]: emeraldConfig,
   [Layer.sapphire]: sapphireConfig,
   [Layer.pontusxdev]: pontusxDevConfig,
-  [Layer.pontusx]: pontusxTestConfig,
+  [Layer.pontusxtest]: pontusxTestConfig,
   [Layer.consensus]: null,
 } satisfies LayersConfig
 
