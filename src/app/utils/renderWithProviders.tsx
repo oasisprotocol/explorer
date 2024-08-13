@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router-dom'
 import { render } from '@testing-library/react'
-import { withDefaultTheme } from '../components/ThemeByNetwork'
+import { withDefaultTheme } from '../components/ThemeByScope'
 import React from 'react'
 import { useIsApiReachable, useRuntimeFreshness } from '../components/OfflineBanner/hook'
 

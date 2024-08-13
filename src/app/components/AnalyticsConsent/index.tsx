@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
-import { ThemeByNetwork } from '../ThemeByNetwork'
+import { ThemeByScope } from '../ThemeByScope'
 import { Network } from '../../../types/network'
 import { AnalyticsIsBlocked } from './AnalyticsIsBlocked'
 import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'
@@ -63,7 +63,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
     >
       {props.children}
       {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
-      <ThemeByNetwork isRootTheme={false} network={Network.mainnet}>
+      <ThemeByScope isRootTheme={false} network={Network.mainnet}>
         <AnalyticsConsentView
           isOpen={hasAccepted === 'not-chosen'}
           onAccept={async () => {
@@ -80,7 +80,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
           onReload={() => window.location.reload()}
           onClose={() => setHasAccepted('timed_out_matomo_not_loaded')}
         />
-      </ThemeByNetwork>
+      </ThemeByScope>
     </AnalyticsContext.Provider>
   )
 }
