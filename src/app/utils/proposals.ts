@@ -19,6 +19,11 @@ export const getParameterChangeTitle = (
 }
 
 export const getProposalTitle = (proposal: Proposal): string | undefined => {
+  // Oasis Core v24.0 introduced new, optional metadata like "title" for each proposal
+  if (proposal.title) {
+    return proposal.title
+  }
+
   const type = detectProposalType(proposal)
 
   switch (type) {
