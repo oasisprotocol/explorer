@@ -10,7 +10,7 @@ export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
   [Layer.sapphire]: t('common.sapphire'),
   [Layer.cipher]: t('common.cipher'),
   [Layer.pontusxdev]: t('pontusx.devnet'),
-  [Layer.pontusx]: t('pontusx.testnet'),
+  [Layer.pontusxtest]: t('pontusx.testnet'),
   [Layer.consensus]: t('common.consensus'),
 })
 

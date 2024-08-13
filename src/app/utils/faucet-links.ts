@@ -12,7 +12,7 @@ const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<
     [Layer.pontusxdev]: {
       [Ticker.EUROe]: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Devnet')}`,
     },
-    [Layer.pontusx]: {
+    [Layer.pontusxtest]: {
       [Ticker.EUROe]: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Testnet')}`,
     },
   },

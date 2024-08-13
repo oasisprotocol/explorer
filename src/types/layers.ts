@@ -17,7 +17,7 @@ const layerOrder: Record<Layer, number> = {
   [Layer.emerald]: 3,
   [Layer.cipher]: 4,
   [Layer.pontusxdev]: 5,
-  [Layer.pontusx]: 6,
+  [Layer.pontusxtest]: 6,
 }
 
 export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>

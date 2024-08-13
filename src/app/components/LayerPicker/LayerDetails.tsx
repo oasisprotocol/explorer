@@ -76,7 +76,7 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '32456',
       docs: docs.pontusx1,
     },
-    [Layer.pontusx]: {
+    [Layer.pontusxtest]: {
       description: t('layerPicker.testnet.pontusxtest'),
       // See https://docs.pontus-x.eu/docs/Pontus-X%20Testnet/quick_start#setup-metamask
       rpcHttp: 'https://rpc.test.pontus-x.eu',
