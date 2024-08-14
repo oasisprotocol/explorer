@@ -135,13 +135,13 @@ export const ValidatorDetailsView: FC<{
               <dd>{formattedTime}</dd>
             </>
           )}
-          {validator.voting_power && (
+          {typeof validator.voting_power === 'number' && (
             <>
               <dt>{t('validator.votingPower')}</dt>
               <dd>{validator.voting_power.toLocaleString()}</dd>
             </>
           )}
-          {validator.voting_power && validator.voting_power_total && (
+          {typeof validator.voting_power === 'number' && validator.voting_power_total > 0 && (
             <>
               <dt>{t('validator.totalShare')}</dt>
               <dd>
