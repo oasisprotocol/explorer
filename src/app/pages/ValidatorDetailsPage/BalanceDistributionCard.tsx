@@ -24,10 +24,6 @@ function chartData(t: TFunction, validator: Validator | undefined) {
 
   return [
     {
-      label: t('validator.active'),
-      value: activeShares,
-    },
-    {
       label: t('validator.self'),
       value: selfDelegationShares,
     },
