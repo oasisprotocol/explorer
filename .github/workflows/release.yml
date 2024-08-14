@@ -48,7 +48,7 @@ jobs:
           VERSION: ${{ steps.vars.outputs.VERSION }}
         run: |
           cd build/
-          zip -r ../oasis-explorer-$VERSION.zip .
+          zip -r "../oasis-explorer-$VERSION.zip" .
       - name: Parse CHANGELOG.md file and extract changes for the given version
         uses: buberdds/extract-changelog-action@v1
         id: changelog
