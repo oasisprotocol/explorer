@@ -50,8 +50,8 @@ jobs:
         # is able to compare the current branch with the base branch.
         # Source: https://github.com/actions/checkout/#fetch-all-branches.
         run: |
-          git fetch --no-tags origin +refs/heads/${BASE_BRANCH}:refs/remotes/origin/${BASE_BRANCH}
-          towncrier check --compare-with origin/${BASE_BRANCH}
+          git fetch --no-tags origin "+refs/heads/${BASE_BRANCH}:refs/remotes/origin/${BASE_BRANCH}"
+          towncrier check --compare-with "origin/${BASE_BRANCH}"
         env:
           BASE_BRANCH: ${{ github.base_ref }}
         if: github.event_name == 'pull_request'
