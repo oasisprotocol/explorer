@@ -35,6 +35,7 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
       <CardContent sx={{ height: 250 }}>
         {history && filteredHistory && (
           <LineChart
+            alignDomainToDataPoints
             tooltipActiveDotRadius={9}
             cartesianGrid
             strokeWidth={3}
@@ -43,6 +44,7 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
             margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
             tickMargin={16}
             withLabels
+            maximumFractionDigits={2}
             formatters={{
               data: value =>
                 t('common.valueInToken', {
