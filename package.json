@@ -129,7 +129,7 @@
     "storybook-addon-react-router-v6": "2.0.15",
     "stream-browserify": "3.0.0",
     "ts-jest": "29.2.4",
-    "typescript": "5.5.3"
+    "typescript": "5.5.4"
   },
   "msw": {
     "workerDirectory": ".storybook/public"
