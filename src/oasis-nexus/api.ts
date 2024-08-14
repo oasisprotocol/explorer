@@ -107,6 +107,12 @@ declare module './generated/api' {
     network: Network
     ticker: Ticker
   }
+
+  export interface ValidatorHistoryPoint {
+    layer: typeof Layer.consensus
+    network: Network
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
@@ -1047,6 +1053,37 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
   })
 }
 
+export const useGetConsensusValidatorsAddressHistory: typeof generated.useGetConsensusValidatorsAddressHistory =
+  (network, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    return generated.useGetConsensusValidatorsAddressHistory(network, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.ValidatorHistory, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              history: data.history.map(history => {
+                return {
+                  ...history,
+                  active_balance: history.active_balance
+                    ? fromBaseUnits(history.active_balance, consensusDecimals)
+                    : undefined,
+                  layer: Layer.consensus,
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
 export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts = (
   network,
   params?,
