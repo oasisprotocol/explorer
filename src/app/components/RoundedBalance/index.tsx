@@ -10,23 +10,27 @@ import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
 type RoundedBalanceProps = {
+  compactAllNumbers?: boolean
   ticker?: string
   value?: string
   scope?: SearchScope
   tokenAddress?: string
   tickerAsLink?: boolean | undefined
   compactLargeNumbers?: boolean
+  showSign?: boolean
 }
 
 const numberOfDecimals = 5
 
 export const RoundedBalance: FC<RoundedBalanceProps> = ({
-  ticker,
-  value,
-  scope,
-  tokenAddress,
-  tickerAsLink,
+  compactAllNumbers,
   compactLargeNumbers,
+  scope,
+  showSign,
+  ticker,
+  tickerAsLink,
+  tokenAddress,
+  value,
 }) => {
   const { t } = useTranslation()
 
@@ -46,7 +50,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <PlaceholderLabel label={tickerName} />
     )
 
-  if (number.isGreaterThan(100_000) && compactLargeNumbers) {
+  if (compactAllNumbers || (number.isGreaterThan(100_000) && compactLargeNumbers)) {
     return (
       <Tooltip
         arrow
@@ -61,6 +65,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             formatParams: {
               value: {
                 notation: 'compact',
+                signDisplay: showSign ? 'exceptZero' : 'auto',
               } satisfies Intl.NumberFormatOptions,
             },
           })}

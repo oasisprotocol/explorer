@@ -999,6 +999,9 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
                 active_balance: validator.escrow?.active_balance
                   ? fromBaseUnits(validator.escrow.active_balance, consensusDecimals)
                   : undefined,
+                active_balance_24: validator.escrow?.active_balance_24
+                  ? fromBaseUnits(validator.escrow.active_balance_24, consensusDecimals)
+                  : undefined,
                 debonding_balance: validator.escrow?.debonding_balance
                   ? fromBaseUnits(validator.escrow.debonding_balance, consensusDecimals)
                   : undefined,
