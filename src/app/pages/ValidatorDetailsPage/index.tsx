@@ -108,7 +108,6 @@ export const ValidatorDetailsView: FC<{
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>
       {detailsPage && (
         <>
-          {/* TODO: provide missing props when API is ready */}
           <dt>
             <ValidatorImage
               address={validator.entity_address}
@@ -157,8 +156,6 @@ export const ValidatorDetailsView: FC<{
               </dd>
             </>
           )}
-          <dt>{t('validator.participationRate')}</dt>
-          <dd>-</dd>
           <dt>{t('validator.commissionRates')}</dt>
           <dd>
             <ValidatorCommission commission={validator.current_rate} />
