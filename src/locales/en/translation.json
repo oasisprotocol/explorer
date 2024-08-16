@@ -388,6 +388,8 @@
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders Count",
     "inventory": "Inventory",
+    "marketCap": "On-chain market cap",
+    "marketCapTooltip": "Calculated by multiplying token's total supply with the current market price per token. The token needs to be whitelisted on one of the active DEXs on {{ layer }} for the On-chain Market Cap to be reported.",
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }} {{ticker}}",
     "transferEventType": {

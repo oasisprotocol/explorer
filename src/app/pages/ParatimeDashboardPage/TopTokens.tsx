@@ -47,6 +47,7 @@ export const TopTokens: FC<{ scope: SearchScope }> = ({ scope }) => {
           isLoading={tokensQuery.isLoading}
           limit={limit}
           pagination={false}
+          scope={scope}
         />
       </CardContent>
     </Card>

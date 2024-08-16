@@ -13,17 +13,22 @@ import {
   tokenBackgroundColor,
   tokenBorderColor,
 } from '../../../types/tokens'
+import { SearchScope } from '../../../types/searchScope'
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
+import { getLayerLabels } from '../../utils/content'
 
 type TokensProps = {
   tokens?: EvmToken[]
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  scope: SearchScope
 }
 
 export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProps }> = ({
@@ -59,19 +64,31 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProp
 export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
+  const labels = getLayerLabels(t)
   const tableColumns: TableColProps[] = [
-    { key: 'index', content: '' },
+    { key: 'index', content: '#' },
     { key: 'name', content: t('common.name') },
     { key: 'type', content: t('common.type') },
     { key: 'contract', content: t('common.smartContract') },
     { key: 'verification', content: t('contract.verification.title') },
+    {
+      align: TableCellAlign.Right,
+      key: 'marketCap',
+      content: (
+        <Box sx={{ display: 'inline-flex', gap: 2 }}>
+          <Box>{t('tokens.marketCap')}</Box>
+          <Tooltip title={t('tokens.marketCapTooltip', { layer: labels[props.scope.layer] })} placement="top">
+            <InfoIcon htmlColor={COLORS.brandDark} />
+          </Tooltip>
+        </Box>
+      ),
+    },
     {
       key: 'holders',
       content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
-    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -138,19 +155,26 @@ export const TokenList = (props: TokensProps) => {
           ),
         },
         {
+          content: t('common.fiatValueInUSD', {
+            value: '123123123.12', // TODO
+            formatParams: {
+              value: {
+                currency: 'USD',
+              } satisfies Intl.NumberFormatOptions,
+            },
+          }),
+          key: 'marketCap',
+          align: TableCellAlign.Right,
+        },
+        {
           content: token.num_holders.toLocaleString(),
           key: 'holdersCount',
           align: TableCellAlign.Right,
         },
         {
-          content: <RoundedBalance compactLargeNumbers value={token.total_supply} />,
+          content: <RoundedBalance compactLargeNumbers value={token.total_supply} ticker={token.symbol} />,
           key: 'supply',
           align: TableCellAlign.Right,
-        },
-        {
-          content: token.symbol,
-          key: 'ticker',
-          align: TableCellAlign.Left,
         },
       ],
     }
