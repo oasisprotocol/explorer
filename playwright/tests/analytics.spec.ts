@@ -2,9 +2,12 @@ import '../../src/types/global.d.ts'
 import { Page, expect, test } from '@playwright/test'
 
 async function setup(page: Page, mode: 'allow-matomo-lib' | 'block-matomo-lib') {
-  await page.route('**/v1/', route => {
-    // Don't respond
-  })
+  await page.route(
+    url => url.href.includes('.oasis.io/v1/'),
+    route => {
+      // Don't respond
+    },
+  )
   await page.route('https://matomo.oasis.io/matomo.php?**', route => {
     // Don't send tracked events
   })

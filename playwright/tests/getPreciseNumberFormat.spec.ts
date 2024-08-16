@@ -8,12 +8,12 @@ async function setup(page: Page, balance: string, decimals: number) {
       // Don't respond
     },
   )
-  await page.route('**/v1/', route => {
-    // Don't respond
-  })
-  await page.route('**/v1/sapphire/status', route => {
-    // Don't respond
-  })
+  await page.route(
+    url => url.href.includes('.oasis.io/v1/'),
+    route => {
+      // Don't respond
+    },
+  )
 
   await page.route('**/v1/sapphire/accounts/oasis1qq2v39p9fqk997vk6742axrzqyu9v2ncyuqt8uek', route => {
     route.fulfill({
