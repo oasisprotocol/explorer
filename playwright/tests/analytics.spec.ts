@@ -2,9 +2,12 @@ import '../../src/types/global.d.ts'
 import { Page, expect, test } from '@playwright/test'
 
 async function setup(page: Page, mode: 'allow-matomo-lib' | 'block-matomo-lib') {
-  await page.route('**/v1/', route => {
-    // Don't respond
-  })
+  await page.route(
+    url => url.href.includes('.oasis.io/v1/'),
+    route => {
+      // Don't respond
+    },
+  )
   await page.route('https://matomo.oasis.io/matomo.php?**', route => {
     // Don't send tracked events
   })
@@ -41,12 +44,12 @@ test.describe('analytics', () => {
 
     await page.getByRole('button', { name: 'Privacy Settings' }).click()
     await page.getByRole('button', { name: 'Accept' }).click()
-    await page.waitForTimeout(1)
+    await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(2) // Tracked
 
     await page.getByRole('link', { name: 'Blocks' }).first().click()
     await page.waitForRequest('https://matomo.oasis.io/matomo.php?**') // Debounced
-    await page.waitForTimeout(1)
+    await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(3) // Tracked
   })
 
@@ -78,7 +81,7 @@ test.describe('analytics', () => {
     await test.step('consent', async () => {
       expect(getMatomoRequests()).toHaveLength(1) // Loaded library
       await page.getByRole('button', { name: 'Accept' }).click()
-      await page.waitForTimeout(1)
+      await page.waitForTimeout(100)
       expect(getMatomoRequests()).toHaveLength(2) // Tracked
     })
 
