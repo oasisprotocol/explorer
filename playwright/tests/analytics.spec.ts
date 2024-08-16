@@ -41,12 +41,12 @@ test.describe('analytics', () => {
 
     await page.getByRole('button', { name: 'Privacy Settings' }).click()
     await page.getByRole('button', { name: 'Accept' }).click()
-    await page.waitForTimeout(1)
+    await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(2) // Tracked
 
     await page.getByRole('link', { name: 'Blocks' }).first().click()
     await page.waitForRequest('https://matomo.oasis.io/matomo.php?**') // Debounced
-    await page.waitForTimeout(1)
+    await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(3) // Tracked
   })
 
@@ -78,7 +78,7 @@ test.describe('analytics', () => {
     await test.step('consent', async () => {
       expect(getMatomoRequests()).toHaveLength(1) // Loaded library
       await page.getByRole('button', { name: 'Accept' }).click()
-      await page.waitForTimeout(1)
+      await page.waitForTimeout(100)
       expect(getMatomoRequests()).toHaveLength(2) // Tracked
     })
 
