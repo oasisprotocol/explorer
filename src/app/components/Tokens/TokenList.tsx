@@ -7,12 +7,8 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
-import {
-  getTokenTypeDescription,
-  getTokenTypeStrictName,
-  tokenBackgroundColor,
-  tokenBorderColor,
-} from '../../../types/tokens'
+import { tokenBackgroundColor, tokenBorderColor } from '../../../types/tokens'
+import { getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
