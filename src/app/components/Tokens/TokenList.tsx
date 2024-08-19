@@ -22,6 +22,9 @@ import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
 import { getLayerLabels } from '../../utils/content'
+import { getTokenMarketCap } from '../../utils/tokens'
+import { useTokenPrice } from '../../../coin-gecko/api'
+import { Ticker } from '../../../types/ticker'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -65,6 +68,7 @@ export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
   const labels = getLayerLabels(t)
+  const priceQuery = useTokenPrice(Ticker.ROSE, 'usd')
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '#' },
     { key: 'name', content: t('common.name') },
@@ -156,7 +160,7 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           content: t('common.fiatValueInUSD', {
-            value: '123123123.12', // TODO
+            value: getTokenMarketCap(8.01909111301725e22, priceQuery.price), // provide relative_total_value
             formatParams: {
               value: {
                 currency: 'USD',
