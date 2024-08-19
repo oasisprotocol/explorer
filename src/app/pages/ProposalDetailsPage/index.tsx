@@ -110,7 +110,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.title')}</dt>
       <dd>
-        <HighlightedText text={proposal.handler} pattern={highlightedPart} />
+        <HighlightedText text={proposal.title} pattern={highlightedPart} />
       </dd>
 
       <dt>{t('common.type')}</dt>

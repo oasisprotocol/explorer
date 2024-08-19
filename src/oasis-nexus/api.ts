@@ -17,6 +17,7 @@ import {
   RuntimeEventType,
 } from './generated/api'
 import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
+import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
@@ -919,6 +920,7 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
                 network,
                 layer: Layer.consensus,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
+                title: getProposalTitle(proposal),
               }
             }),
           }
@@ -947,6 +949,7 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
             network,
             layer: Layer.consensus,
             deposit: fromBaseUnits(data.deposit, consensusDecimals),
+            title: getProposalTitle(data),
           }
         },
         ...arrayify(options?.request?.transformResponse),
@@ -959,8 +962,26 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragment: s
   const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
   const textMatcher = nameFragment
-    ? (proposal: generated.Proposal): boolean =>
-        !!proposal.handler && proposal.handler?.includes(nameFragment)
+    ? (proposal: generated.Proposal): boolean => {
+        if (proposal.title?.includes(nameFragment)) {
+          return true
+        }
+
+        if (proposal.handler?.includes(nameFragment)) {
+          return true
+        }
+
+        if (getCancelTitle(proposal.cancels).includes(nameFragment)) {
+          return true
+        }
+
+        return (
+          !!proposal.parameters_change &&
+          getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change).includes(
+            nameFragment,
+          )
+        )
+      }
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {

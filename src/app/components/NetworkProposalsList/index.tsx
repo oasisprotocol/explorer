@@ -44,9 +44,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       },
       {
         align: TableCellAlign.Left,
-        content: (
-          <ProposalLink network={proposal.network} proposalId={proposal.id} label={proposal.handler} />
-        ),
+        content: <ProposalLink network={proposal.network} proposalId={proposal.id} label={proposal.title} />,
         key: 'handler',
       },
       ...(verbose
