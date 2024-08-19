@@ -17,7 +17,7 @@ import {
   RuntimeEventType,
 } from './generated/api'
 import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
-import { getCancelTitle, getParameterChangeTitle } from '../app/utils/proposals'
+import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
@@ -920,6 +920,7 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
                 network,
                 layer: Layer.consensus,
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
+                title: getProposalTitle(proposal),
               }
             }),
           }
@@ -948,6 +949,7 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
             network,
             layer: Layer.consensus,
             deposit: fromBaseUnits(data.deposit, consensusDecimals),
+            title: getProposalTitle(data),
           }
         },
         ...arrayify(options?.request?.transformResponse),
