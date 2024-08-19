@@ -6,7 +6,7 @@ import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
 import Skeleton from '@mui/material/Skeleton'
-import { getTokenTypeDescription, getTokenTypeStrictName } from '../../../types/tokens'
+import { getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tokens'
 import { SearchScope } from '../../../types/searchScope'
 
 export const TokenTypeCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {

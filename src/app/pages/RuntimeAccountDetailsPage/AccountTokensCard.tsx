@@ -17,7 +17,7 @@ import {
   getTokenTypePluralDescription,
   getTokenTypePluralName,
   getTokenTypeStrictName,
-} from '../../../types/tokens'
+} from '../../utils/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsContext } from './index'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
