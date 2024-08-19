@@ -12,10 +12,13 @@ import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { paraTimesConfig } from '../../../config'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
+
+  const { hideTokensFromDashboard } = paraTimesConfig[scope.layer]!
 
   return (
     <PageLayout>
@@ -35,7 +38,7 @@ export const ParatimeDashboardPage: FC = () => {
           </Grid>
         )}
       </Grid>
-      {!isMobile && <TopTokens scope={scope} />}
+      {!hideTokensFromDashboard && !isMobile && <TopTokens scope={scope} />}
       <TransactionsStats scope={scope} />
       <TotalTransactions scope={scope} />
       <Social />
