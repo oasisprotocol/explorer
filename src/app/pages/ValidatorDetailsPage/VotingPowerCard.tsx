@@ -18,7 +18,7 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator }) => {
     <SnapshotTextCard
       title={t('validator.votingPower')}
       label={
-        validator?.voting_power && (
+        typeof validator?.voting_power === 'number' && (
           <Typography sx={{ fontSize: 18, color: COLORS.grayMedium }}>
             ({validator?.voting_power.toLocaleString()})
           </Typography>
@@ -26,7 +26,7 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator }) => {
       }
       withContentPadding={false}
     >
-      {validator?.voting_power && validator?.voting_power_total && (
+      {typeof validator?.voting_power === 'number' && validator?.voting_power_total > 0 && (
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography sx={{ fontSize: 12, color: COLORS.grayMedium, textAlign: 'left', paddingBottom: 3 }}>

@@ -11,6 +11,7 @@ import { ValidatorCommission } from './ValidatorCommission'
 import { ValidatorCumulativeVoting } from './ValidatorCumulativeVoting'
 import { ValidatorLink } from './ValidatorLink'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { BalancesDiff } from '../BalancesDiff'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -40,8 +41,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
     data: [
       {
         align: TableCellAlign.Center,
-        // TODO: replace index when rank is implemented in the API
-        content: <div>{index + 1}</div>,
+        content: validator.rank,
         key: 'rank',
       },
       {
@@ -69,8 +69,22 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        // TODO: provide voting when it is implemented in the API
-        content: <>-</>,
+        content: (
+          <>
+            {typeof validator?.voting_power === 'number' && validator?.voting_power_total > 0
+              ? t('common.valuePair', {
+                  value: validator.voting_power / validator.voting_power_total,
+                  formatParams: {
+                    value: {
+                      style: 'percent',
+                      maximumFractionDigits: 2,
+                    } satisfies Intl.NumberFormatOptions,
+                  },
+                })
+              : t('common.missing')}
+          </>
+        ),
+
         key: 'voting',
       },
       {
@@ -80,14 +94,24 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        // TODO: provide change value when it is implemented in the API
-        content: <>-</>,
+        content: (
+          <BalancesDiff
+            before={validator.escrow.active_balance}
+            after={validator.escrow.active_balance_24}
+            ticker={validator.ticker}
+          />
+        ),
         key: 'change',
       },
       {
         align: TableCellAlign.Right,
-        // TODO: provide delegators when it is implemented in the API
-        content: <>-</>,
+        content: (
+          <>
+            {typeof validator.escrow.num_delegators === 'number'
+              ? validator.escrow.num_delegators.toLocaleString()
+              : t('common.missing')}
+          </>
+        ),
         key: 'delegators',
       },
       {

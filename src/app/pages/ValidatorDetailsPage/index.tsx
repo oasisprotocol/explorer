@@ -108,7 +108,6 @@ export const ValidatorDetailsView: FC<{
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>
       {detailsPage && (
         <>
-          {/* TODO: provide missing props when API is ready */}
           <dt>
             <ValidatorImage
               address={validator.entity_address}
@@ -135,13 +134,13 @@ export const ValidatorDetailsView: FC<{
               <dd>{formattedTime}</dd>
             </>
           )}
-          {validator.voting_power && (
+          {typeof validator.voting_power === 'number' && (
             <>
               <dt>{t('validator.votingPower')}</dt>
               <dd>{validator.voting_power.toLocaleString()}</dd>
             </>
           )}
-          {validator.voting_power && validator.voting_power_total && (
+          {typeof validator.voting_power === 'number' && validator.voting_power_total > 0 && (
             <>
               <dt>{t('validator.totalShare')}</dt>
               <dd>
@@ -157,15 +156,12 @@ export const ValidatorDetailsView: FC<{
               </dd>
             </>
           )}
-          <dt>{t('validator.participationRate')}</dt>
-          <dd>-</dd>
           <dt>{t('validator.commissionRates')}</dt>
           <dd>
             <ValidatorCommission commission={validator.current_rate} />
           </dd>
           <dt>{t('validator.commissionBounds')}</dt>
           <dd>
-            {/* TODO: check with backend how no bounds is represented */}
             {validator.current_commission_bound && validator.current_commission_bound.epoch_start ? (
               <>
                 <ValidatorCommission commission={validator.current_commission_bound.lower} />~
