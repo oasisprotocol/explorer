@@ -96,8 +96,8 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
         align: TableCellAlign.Right,
         content: (
           <BalancesDiff
-            before={validator.escrow.active_balance}
-            after={validator.escrow.active_balance_24}
+            before={validator.escrow.active_balance_24}
+            after={validator.escrow.active_balance}
             ticker={validator.ticker}
           />
         ),

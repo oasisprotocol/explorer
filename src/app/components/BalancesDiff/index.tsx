@@ -18,7 +18,7 @@ export const BalancesDiff: FC<BalancesDiffProps> = ({ before, after, ticker }) =
     return t('common.missing')
   }
 
-  const result = new BigNumber(before).minus(new BigNumber(after))
+  const result = new BigNumber(after).minus(new BigNumber(before))
   const isNegative = result.isNegative()
 
   return (
