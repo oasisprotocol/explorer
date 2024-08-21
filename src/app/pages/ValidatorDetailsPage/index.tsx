@@ -57,7 +57,7 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
-          <StakingTrend scope={scope} />
+          <StakingTrend address={address} scope={scope} />
         </StyledGrid>
         <StyledGrid item xs={12} md={6}>
           <SignedBlocks />

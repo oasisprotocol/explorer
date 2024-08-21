@@ -21,6 +21,8 @@ interface LineChartProps<T extends object> extends Formatters {
   tickMargin?: number
   tooltipActiveDotRadius?: number
   withLabels?: boolean
+  maximumFractionDigits?: number
+  alignDomainToDataPoints?: boolean
 }
 
 const LineChartCmp = <T extends object>({
@@ -33,6 +35,8 @@ const LineChartCmp = <T extends object>({
   tickMargin = 0,
   tooltipActiveDotRadius = 5,
   withLabels,
+  maximumFractionDigits = 0,
+  alignDomainToDataPoints,
 }: LineChartProps<T>): ReactElement => {
   const { t } = useTranslation()
 
@@ -54,7 +58,7 @@ const LineChartCmp = <T extends object>({
           }}
         />
         <YAxis
-          domain={withLabels ? [0, 'auto'] : ['dataMin', 'dataMax']}
+          domain={!alignDomainToDataPoints && withLabels ? [0, 'auto'] : ['dataMin', 'dataMax']}
           axisLine={false}
           interval={0}
           tickLine={false}
@@ -68,6 +72,7 @@ const LineChartCmp = <T extends object>({
               formatParams: {
                 value: {
                   notation: 'compact',
+                  maximumFractionDigits,
                 } satisfies Intl.NumberFormatOptions,
               },
             })

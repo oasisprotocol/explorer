@@ -3,36 +3,55 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { useGetConsensusValidatorsAddressHistory } from '../../../oasis-nexus/api'
+import { SearchScope } from '../../../types/searchScope'
 import { LineChart } from '../../components/charts/LineChart'
-import { SearchScope } from 'types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 
-export const StakingTrend: FC<{ scope: SearchScope }> = ({ scope }) => {
+const epochsInMonth = 720
+
+type StakingTrendProps = {
+  address: string
+  scope: SearchScope
+}
+
+export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  // TODO: provide data from the API is ready and sync dataKey value
-  const windows = undefined
+  const historyQuery = useGetConsensusValidatorsAddressHistory(scope.network, address, {
+    limit: epochsInMonth,
+  })
+  const history = historyQuery.data?.data?.history
+  const filteredHistory = history
+    ?.map(item => ({
+      active_balance: item.active_balance,
+      epoch: item.epoch,
+    }))
+    .reverse()
 
   return (
     <Card sx={{ flex: 1 }}>
       <CardHeader disableTypography component="h3" title={t('validator.stakingTrend')} />
       <CardContent sx={{ height: 250 }}>
-        {windows && (
+        {history && filteredHistory && (
           <LineChart
+            alignDomainToDataPoints
             tooltipActiveDotRadius={9}
             cartesianGrid
             strokeWidth={3}
-            dataKey={'volume'}
-            data={windows}
+            dataKey="active_balance"
+            data={filteredHistory}
             margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
             tickMargin={16}
             withLabels
+            maximumFractionDigits={2}
             formatters={{
-              data: (value: number) => value.toLocaleString(),
-              label: (value: string) =>
-                t('common.formattedDateTime', {
-                  timestamp: new Date(value),
+              data: value =>
+                t('common.valueInToken', {
+                  value,
+                  ticker: history[0].ticker,
                 }),
+              label: (value: string) => `${t('common.epoch')}: ${value}`,
             }}
           />
         )}
