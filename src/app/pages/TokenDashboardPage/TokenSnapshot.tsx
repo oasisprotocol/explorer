@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { TokenSupplyCard } from './TokenSupplyCard'
 import { TokenHoldersCountCard } from './TokenHoldersCountCard'
-import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 import { SearchScope } from '../../../types/searchScope'
 import { StyledGrid } from '../../components/Snapshots/Snapshot'
@@ -43,10 +42,7 @@ export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ sco
         <StyledGrid item xs={22} md={5}>
           <TokenHoldersCountCard scope={scope} address={address} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
-          <TokenTypeCard scope={scope} address={address} />
-          {/*<TokenGasUsedCard /> TODO: use this when gas used becomes available */}
-        </StyledGrid>
+        <StyledGrid item xs={22} md={6}></StyledGrid>
       </Grid>
     </>
   )
