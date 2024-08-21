@@ -82,6 +82,7 @@ type SnapshotTextCardProps = {
   label?: ReactNode
   title: ReactNode
   withContentPadding?: boolean
+  withConstantHeight?: boolean
 }
 
 export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
@@ -89,10 +90,16 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
   label,
   title,
   withContentPadding,
+  withConstantHeight,
 }) => {
   return (
-    <SnapshotCard title={title} label={label} withContentPadding={withContentPadding}>
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', height: '100%' }}>
+    <SnapshotCard
+      title={title}
+      label={label}
+      withContentPadding={withContentPadding}
+      withConstantHeight={withConstantHeight}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         <Typography
           component="span"
           sx={{
