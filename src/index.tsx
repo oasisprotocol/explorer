@@ -17,7 +17,14 @@ const queryClient = new QueryClient({
       useErrorBoundary: (error: any) => {
         // Automatically throw on 5xx errors. Components that want to handle
         // errors should set `useErrorBoundary: false` in their queries.
-        return error.response?.status >= 500
+        if (error.response?.status >= 500) return true
+
+        // https://nexus.oasis.io/v1/sapphire/events?offset=0&limit=10&type=evm.log&evm_log_signature=ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&rel=oasis1qpdgv5nv2dhxp4q897cgag6kgnm9qs0dccwnckuu
+        // threw 524 error after 100 seconds but didn't return status code to javascript. It's because Nexus didn't
+        // respond quickly enough, so Cloudflare canceled with timeout, but Cloudflare doesn't add Nexus' CORS headers.
+        if (!error.response && error.code === 'ERR_NETWORK') return true
+
+        return false
       },
     },
   },
