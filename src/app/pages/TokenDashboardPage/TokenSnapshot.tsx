@@ -56,7 +56,11 @@ export const TokenSnapshot: FC<TokenSnapshotProps> = ({
           <TokenHoldersCountCard scope={scope} address={address} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
-          <TokenMarketCapCard isLoading={isRosePriceInUsdLoading} rosePriceInUsd={rosePriceInUsd} />
+          <TokenMarketCapCard
+            isLoading={isRosePriceInUsdLoading}
+            rosePriceInUsd={rosePriceInUsd}
+            scope={scope}
+          />
         </StyledGrid>
       </Grid>
     </>

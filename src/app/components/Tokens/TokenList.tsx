@@ -12,15 +12,13 @@ import { getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tok
 import { SearchScope } from '../../../types/searchScope'
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
-import Tooltip from '@mui/material/Tooltip'
-import InfoIcon from '@mui/icons-material/Info'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
-import { getLayerLabels } from '../../utils/content'
 import { getTokenMarketCap } from '../../utils/tokens'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
+import { MarketCapTitle } from './MarketCapTitle'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -63,7 +61,6 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProp
 export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
-  const labels = getLayerLabels(t)
   const priceQuery = useTokenPrice(Ticker.ROSE, 'usd')
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '#' },
@@ -76,10 +73,7 @@ export const TokenList = (props: TokensProps) => {
       key: 'marketCap',
       content: (
         <Box sx={{ display: 'inline-flex', gap: 2 }}>
-          <Box>{t('tokens.marketCap')}</Box>
-          <Tooltip title={t('tokens.marketCapTooltip', { layer: labels[props.scope.layer] })} placement="top">
-            <InfoIcon htmlColor={COLORS.brandDark} />
-          </Tooltip>
+          <MarketCapTitle scope={props.scope} />
         </Box>
       ),
     },
