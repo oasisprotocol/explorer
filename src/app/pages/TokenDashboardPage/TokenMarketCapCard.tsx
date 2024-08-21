@@ -1,38 +1,35 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
-import { COLORS } from '../../../styles/theme/colors'
-import { useAccount } from '../RuntimeAccountDetailsPage/hook'
-import { SearchScope } from '../../../types/searchScope'
+import Skeleton from '@mui/material/Skeleton'
+import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
+import { getTokenMarketCap } from '../../utils/tokens'
 
-export const TokenGasUsedCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+type TokenMarketCapCardProps = {
+  isLoading: boolean
+  rosePriceInUsd: number | undefined
+}
+
+export const TokenMarketCapCard: FC<TokenMarketCapCardProps> = ({ isLoading, rosePriceInUsd }) => {
   const { t } = useTranslation()
 
-  const { account, isFetched } = useAccount(scope, address)
-
   return (
-    <SnapshotCard title={t('common.gasUsed')} alignWithCardsWithActions>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && (
+    <SnapshotTextCard title={t('tokens.marketCap')} alignWithCardsWithActions>
+      {isLoading ? (
+        <Skeleton variant="text" />
+      ) : (
+        rosePriceInUsd && (
           <>
-            <Typography
-              component="span"
-              sx={{
-                fontSize: '48px',
-                fontWeight: 700,
-                color: COLORS.brandDark,
-              }}
-            >
-              {
-                // TODO: return "gas used" here, when it becomes available
-                account?.stats.num_txns
-              }
-            </Typography>
+            {t('common.fiatValueInUSD', {
+              value: getTokenMarketCap(8.01909111301725e22, rosePriceInUsd), // provide relative_total_value
+              formatParams: {
+                value: {
+                  currency: 'USD',
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })}
           </>
-        )}
-      </Box>
-    </SnapshotCard>
+        )
+      )}
+    </SnapshotTextCard>
   )
 }

@@ -8,6 +8,8 @@ import { TokenDetailsCard } from './TokenDetailsCard'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { useTokenInfo } from './hook'
+import { useTokenPrice } from '../../../coin-gecko/api'
+import { Ticker } from '../../../types/ticker'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +32,7 @@ export const TokenDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
-
+  const priceQuery = useTokenPrice(Ticker.ROSE, 'usd')
   const { token, isError } = useTokenInfo(scope, address)
 
   if (isError) {
@@ -51,7 +53,12 @@ export const TokenDashboardPage: FC = () => {
     <PageLayout>
       <TokenTitleCard scope={scope} address={address} searchTerm={searchTerm} />
       <DappBanner scope={scope} ethAddress={token?.eth_contract_addr} />
-      <TokenSnapshot scope={scope} address={address} />
+      <TokenSnapshot
+        scope={scope}
+        address={address}
+        isRosePriceInUsdLoading={priceQuery.isLoading}
+        rosePriceInUsd={priceQuery.price}
+      />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <TokenDetailsCard scope={scope} address={address} searchTerm={searchTerm} />
       <RouterTabs
