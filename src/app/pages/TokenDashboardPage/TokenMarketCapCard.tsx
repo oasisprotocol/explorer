@@ -1,19 +1,22 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Skeleton from '@mui/material/Skeleton'
+import { SearchScope } from '../../../types/searchScope'
+import { MarketCapTitle } from '../../components/Tokens/MarketCapTitle'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { getTokenMarketCap } from '../../utils/tokens'
 
 type TokenMarketCapCardProps = {
   isLoading: boolean
   rosePriceInUsd: number | undefined
+  scope: SearchScope
 }
 
-export const TokenMarketCapCard: FC<TokenMarketCapCardProps> = ({ isLoading, rosePriceInUsd }) => {
+export const TokenMarketCapCard: FC<TokenMarketCapCardProps> = ({ isLoading, rosePriceInUsd, scope }) => {
   const { t } = useTranslation()
 
   return (
-    <SnapshotTextCard title={t('tokens.marketCap')} alignWithCardsWithActions>
+    <SnapshotTextCard title={<MarketCapTitle scope={scope} />} alignWithCardsWithActions>
       {isLoading ? (
         <Skeleton variant="text" />
       ) : (
