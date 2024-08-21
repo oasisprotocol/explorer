@@ -78,8 +78,8 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
           { key: 'type', content: t('common.type') },
           { key: 'from', content: t('common.from'), width: '150px' },
           { key: 'to', content: t('common.to'), width: '150px' },
+          { key: 'value', align: TableCellAlign.Right, content: t('common.amount'), width: '250px' },
           { key: 'txnFee', content: t('common.transactionFee'), align: TableCellAlign.Right, width: '250px' },
-          { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
         ]
       : []),
   ]

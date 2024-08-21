@@ -282,7 +282,7 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          <dt>{t('common.value')}</dt>
+          <dt>{t('common.amount')}</dt>
           <dd>
             {transaction.amount != null
               ? t('common.valueInToken', {

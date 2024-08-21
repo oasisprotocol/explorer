@@ -121,7 +121,7 @@ export const ConsensusTransactionDetailView: FC<{
       )}
       {transaction.amount && (
         <>
-          <dt>{t('common.value')}</dt>
+          <dt>{t('common.amount')}</dt>
           <dd>
             {t('common.valueInToken', {
               ...getPreciseNumberFormat(transaction.amount),
