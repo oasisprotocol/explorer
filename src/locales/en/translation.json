@@ -143,7 +143,6 @@
     "type": "Type",
     "quantity": "Quantity",
     "unknown": "Unknown",
-    "value": "Value",
     "valueLong": "{{value, number}}",
     "valueInToken": "{{value, number}} {{ticker}}",
     "roundedValueInToken": "{{value, number}}… <TickerLink />",

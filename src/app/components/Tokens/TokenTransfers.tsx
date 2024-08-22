@@ -126,7 +126,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
     ...(differentTokens
       ? [{ key: 'tokenType', content: t('tokens.type'), align: TableCellAlign.Center }]
       : []),
-    { key: 'value', align: TableCellAlign.Right, content: t('common.value'), width: '250px' },
+    { key: 'value', align: TableCellAlign.Right, content: t('common.amount'), width: '250px' },
   ]
   const tableRows = transfers?.map((transfer, index) => {
     const { fromAddress, toAddress, isMinting, parsedEvmLogName } = parseEvmEvent(transfer)

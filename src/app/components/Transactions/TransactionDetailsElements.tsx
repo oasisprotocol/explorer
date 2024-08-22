@@ -101,7 +101,7 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
 
   return (
     <Box sx={{ display: 'inline-flex' }}>
-      <Label>{label || t('common.value')}</Label>
+      <Label>{label || t('common.amount')}</Label>
       {trimEnabled ? (
         <Tooltip arrow placement="top" title={value} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
           <Typography variant="mono">{trimLongString(value, 2, 18)}</Typography>
