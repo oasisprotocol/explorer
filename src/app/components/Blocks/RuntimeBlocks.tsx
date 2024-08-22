@@ -92,7 +92,7 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
         ...(type === BlocksTableType.Desktop
           ? [
               {
-                content: <BlockHashLink scope={block} hash={block.hash} height={block.round} />,
+                content: <BlockHashLink scope={block} hash={block.hash} height={block.round} alwaysTrim />,
                 key: 'hash',
               },
             ]
