@@ -226,7 +226,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.type')}</dt>
           <dd>
-            <RuntimeTransactionMethod method={transaction.method} />
+            <RuntimeTransactionMethod transaction={transaction} />
           </dd>
 
           <dt>{t('transactions.encryption.format')}</dt>
