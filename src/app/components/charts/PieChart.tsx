@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { FC, memo, ReactNode, useState } from 'react'
 import { Legend, ResponsiveContainer, Tooltip, PieChart as RechartsPieChart, Pie, Cell } from 'recharts'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -20,6 +20,45 @@ interface PieChartProps<T extends object> extends Formatters {
 
 const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testnet, COLORS.grayMedium2]
 
+type LegendListItemProps = {
+  children: ReactNode
+  compact: boolean
+  isActive: boolean
+  color?: string
+}
+
+const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, color }) => {
+  return (
+    <ListItem sx={{ padding: 0 }}>
+      <Box
+        sx={{
+          width: compact ? 32 : 48,
+          height: compact ? 32 : 48,
+          display: 'flex',
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '50%',
+          backgroundColor: isActive ? `${color}40` : 'transparent',
+        }}
+      >
+        <CircleIcon sx={{ color: color, fontSize: compact ? 12 : 18 }} />
+      </Box>
+      <Typography
+        component="span"
+        sx={{
+          color: isActive ? color : COLORS.grayMedium,
+          fontSize: compact ? 12 : 18,
+          ml: 2,
+          fontWeight: isActive ? 700 : 400,
+        }}
+      >
+        {children}
+      </Typography>
+    </ListItem>
+  )
+}
+
 type CustomLegendProps = Props & {
   activeLabel?: string
   compact: boolean
@@ -40,43 +79,19 @@ const CustomLegend = (props: CustomLegendProps) => {
         const label = payload.name
         const isActive = activeLabel === label
         return (
-          <ListItem key={label} sx={{ padding: 0 }}>
-            <Box
-              sx={{
-                width: compact ? 32 : 48,
-                height: compact ? 32 : 48,
-                display: 'flex',
-                position: 'relative',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '50%',
-                backgroundColor: isActive ? `${item.color}40` : 'transparent',
-              }}
-            >
-              <CircleIcon sx={{ color: item.color, fontSize: compact ? 12 : 18 }} />
-            </Box>
-            <Typography
-              component="span"
-              sx={{
-                color: isActive ? item.color : COLORS.grayMedium,
-                fontSize: compact ? 12 : 18,
-                ml: 2,
-                fontWeight: isActive ? 700 : 400,
-              }}
-            >
-              {label} (
-              {t('common.valuePair', {
-                value: payload.percent,
-                formatParams: {
-                  value: {
-                    style: 'percent',
-                    maximumFractionDigits: 2,
-                  } satisfies Intl.NumberFormatOptions,
-                },
-              })}
-              )
-            </Typography>
-          </ListItem>
+          <LegendListItem key={label} color={item.color} compact={compact} isActive={isActive}>
+            {label} (
+            {t('common.valuePair', {
+              value: payload.percent,
+              formatParams: {
+                value: {
+                  style: 'percent',
+                  maximumFractionDigits: 2,
+                } satisfies Intl.NumberFormatOptions,
+              },
+            })}
+            )
+          </LegendListItem>
         )
       })}
     </List>
