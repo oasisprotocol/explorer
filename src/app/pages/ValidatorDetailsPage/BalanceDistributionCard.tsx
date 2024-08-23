@@ -1,10 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
+import Typography from '@mui/material/Typography'
 import { Validator } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { PieChart } from '../../components/charts/PieChart'
+import { RoundedBalance } from '../../components/RoundedBalance'
 
 type BalanceDistributionCardProps = {
   validator?: Validator
@@ -39,18 +41,36 @@ export const BalanceDistributionCard: FC<BalanceDistributionCardProps> = ({ vali
 
   return (
     <SnapshotCard title={t('validator.balanceDistribution')}>
-      <PieChart
-        compact
-        data={chartData(t, validator)}
-        dataKey="value"
-        formatters={{
-          data: (value: number) =>
-            t('common.valueLong', {
-              ...getPreciseNumberFormat(value.toString()),
-            }),
-          label: (label: string) => label,
-        }}
-      />
+      {validator?.escrow.active_balance && (
+        <PieChart
+          compact
+          prependLegendList={
+            <>
+              {t('validator.totalEscrow')}
+              <Typography sx={{ fontSize: 10 }}>
+                {t('common.valueInToken', {
+                  ...getPreciseNumberFormat(validator.escrow.active_balance),
+                  ticker: validator.ticker,
+                })}
+              </Typography>
+              <RoundedBalance
+                compactLargeNumbers
+                value={validator?.escrow.active_shares}
+                ticker={t('common.shares')}
+              />
+            </>
+          }
+          data={chartData(t, validator)}
+          dataKey="value"
+          formatters={{
+            data: (value: number) =>
+              t('common.valueLong', {
+                ...getPreciseNumberFormat(value.toString()),
+              }),
+            label: (label: string) => label,
+          }}
+        />
+      )}
     </SnapshotCard>
   )
 }
