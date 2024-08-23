@@ -16,6 +16,7 @@ interface PieChartProps<T extends object> extends Formatters {
   compact: boolean
   data: T[]
   dataKey: Extract<keyof T, string>
+  prependLegendList?: ReactNode
 }
 
 const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testnet, COLORS.grayMedium2]
@@ -23,7 +24,7 @@ const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testn
 type LegendListItemProps = {
   children: ReactNode
   compact: boolean
-  isActive: boolean
+  isActive?: boolean
   color?: string
 }
 
@@ -39,15 +40,15 @@ const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, 
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: '50%',
-          backgroundColor: isActive ? `${color}40` : 'transparent',
+          backgroundColor: isActive && color ? `${color}40` : 'transparent',
         }}
       >
-        <CircleIcon sx={{ color: color, fontSize: compact ? 12 : 18 }} />
+        <CircleIcon sx={{ color: color || COLORS.grayMedium, fontSize: compact ? 12 : 18 }} />
       </Box>
       <Typography
         component="span"
         sx={{
-          color: isActive ? color : COLORS.grayMedium,
+          color: isActive && color ? color : COLORS.grayMedium,
           fontSize: compact ? 12 : 18,
           ml: 2,
           fontWeight: isActive ? 700 : 400,
@@ -62,14 +63,16 @@ const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, 
 type CustomLegendProps = Props & {
   activeLabel?: string
   compact: boolean
+  prependLegendList?: ReactNode
 }
 
 const CustomLegend = (props: CustomLegendProps) => {
-  const { activeLabel, compact, payload } = props
+  const { activeLabel, compact, payload, prependLegendList } = props
   const { t } = useTranslation()
 
   return (
     <List sx={{ listStyleType: 'none' }}>
+      {prependLegendList && <LegendListItem compact={compact}>{prependLegendList}</LegendListItem>}
       {payload?.map(item => {
         if (!item.payload) {
           return null
@@ -98,7 +101,13 @@ const CustomLegend = (props: CustomLegendProps) => {
   )
 }
 
-const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: PieChartProps<T>) => {
+const PieChartCmp = <T extends object>({
+  compact,
+  data,
+  dataKey,
+  formatters,
+  prependLegendList,
+}: PieChartProps<T>) => {
   const [activeLabel, setActiveLabel] = useState<string>()
   if (!data.length) {
     return null
@@ -122,7 +131,12 @@ const PieChartCmp = <T extends object>({ compact, data, dataKey, formatters }: P
           align="left"
           verticalAlign="middle"
           content={props => (
-            <CustomLegend activeLabel={activeLabel} compact={compact} payload={props.payload} />
+            <CustomLegend
+              activeLabel={activeLabel}
+              compact={compact}
+              prependLegendList={prependLegendList}
+              payload={props.payload}
+            />
           )}
         />
         <Pie
