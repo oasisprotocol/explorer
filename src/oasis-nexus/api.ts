@@ -113,6 +113,10 @@ declare module './generated/api' {
     network: Network
     ticker: Ticker
   }
+
+  export interface Validator {
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
@@ -1084,6 +1088,47 @@ export const useGetConsensusValidatorsAddressHistory: typeof generated.useGetCon
       },
     })
   }
+
+export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusValidatorsAddress = (
+  network,
+  address,
+  options?,
+) => {
+  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  return generated.useGetConsensusValidatorsAddress(network, address, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (validator: generated.Validator, headers, status) => {
+          if (status !== 200) return validator
+          return {
+            ...validator,
+            escrow: {
+              ...validator.escrow,
+              active_balance: validator.escrow.active_balance
+                ? fromBaseUnits(validator.escrow.active_balance, consensusDecimals)
+                : undefined,
+              active_balance_24: validator.escrow?.active_balance_24
+                ? fromBaseUnits(validator.escrow.active_balance_24, consensusDecimals)
+                : undefined,
+              debonding_balance: validator.escrow?.debonding_balance
+                ? fromBaseUnits(validator.escrow.debonding_balance, consensusDecimals)
+                : undefined,
+              self_delegation_balance: validator.escrow?.self_delegation_balance
+                ? fromBaseUnits(validator.escrow.self_delegation_balance, consensusDecimals)
+                : undefined,
+            },
+            ticker,
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
 export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts = (
   network,
   params?,
