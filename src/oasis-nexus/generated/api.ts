@@ -1193,6 +1193,8 @@ export type ProposalVotesAllOf = {
   votes: ProposalVote[];
 };
 
+export type ProposalVotes = List & ProposalVotesAllOf;
+
 /**
  * The state of the proposal.
  */
@@ -1537,19 +1539,35 @@ export interface Validator {
   start_date: string;
   /** The voting power of this validator. */
   voting_power: number;
+}
+
+export interface ValidatorAggStats {
+  /** The total number of delegators in the network. */
+  total_delegators: number;
+  /** The total amount of token staked to validators. */
+  total_staked_balance: TextBigInt;
   /** The total voting power across all validators. */
-  voting_power_total: number;
+  total_voting_power: number;
 }
 
 /**
- * A list of validators registered at the consensus layer.
+ * A list of validators registered at the consensus layer, plus summary
+statistics across all consensus validators.
 
  */
 export type ValidatorListAllOf = {
+  /** Summary statistics across all consensus validators. */
+  stats: ValidatorAggStats;
   validators: Validator[];
 };
 
 export type ValidatorList = List & ValidatorListAllOf;
+
+export interface ValidatorsResponse {
+  /** Summary statistics across all consensus validators. */
+  stats: ValidatorAggStats;
+  validator_list: ValidatorList;
+}
 
 /**
  * An entity registered at the consensus layer.
@@ -1965,8 +1983,6 @@ the query would return with limit=infinity.
  */
   total_count: number;
 }
-
-export type ProposalVotes = List & ProposalVotesAllOf;
 
 /**
  * A list of consensus blocks.
@@ -2885,7 +2901,7 @@ export const GetConsensusValidatorsAddress = (
 ) => {
       
       
-      return GetConsensusValidatorsAddressMutator<Validator>(
+      return GetConsensusValidatorsAddressMutator<ValidatorList>(
       {url: `/${encodeURIComponent(String(network))}/consensus/validators/${encodeURIComponent(String(address))}`, method: 'GET', signal
     },
       options);
