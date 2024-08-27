@@ -47,6 +47,7 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
       <CardContent>
         <Validators
           validators={validatorsQuery.data?.data.validators}
+          stats={validatorsQuery.data?.data.stats}
           isLoading={validatorsQuery.isLoading}
           limit={limit}
           pagination={false}

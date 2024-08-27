@@ -6,7 +6,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
-import { Validator, useGetConsensusValidatorsAddress } from '../../../oasis-nexus/api'
+import { Validator, ValidatorAggStats, useGetConsensusValidatorsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -42,7 +42,8 @@ export const ValidatorDetailsPage: FC = () => {
   const { address } = useLoaderData() as AddressLoaderData
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading, data } = validatorQuery
-  const validator = data?.data
+  const validator = data?.data.validators[0]
+  const stats = data?.data.stats
   const transactionsLink = useHref('')
   const eventsLink = useHref(`events#${eventsContainerId}`)
   const delegatorsLink = useHref(`delegators#${delegatorsContainerId}`)
@@ -52,9 +53,9 @@ export const ValidatorDetailsPage: FC = () => {
   return (
     <PageLayout>
       <ValidatorTitleCard isLoading={isLoading} network={scope.network} validator={validator} />
-      <ValidatorSnapshot scope={scope} validator={validator} />
+      <ValidatorSnapshot scope={scope} validator={validator} stats={stats} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <ValidatorDetailsCard isLoading={isLoading} validator={validator} />
+      <ValidatorDetailsCard isLoading={isLoading} validator={validator} stats={stats} />
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
           <StakingTrend address={address} scope={scope} />
@@ -80,13 +81,14 @@ export const ValidatorDetailsPage: FC = () => {
 type ValidatorDetailsCardProps = {
   isLoading: boolean
   validator: Validator | undefined
+  stats: ValidatorAggStats | undefined
 }
 
-const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({ isLoading, validator }) => {
+const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({ isLoading, validator, stats }) => {
   return (
     <Card>
       <CardContent>
-        <ValidatorDetailsView detailsPage isLoading={isLoading} validator={validator} />
+        <ValidatorDetailsView detailsPage isLoading={isLoading} validator={validator} stats={stats} />
       </CardContent>
     </Card>
   )
@@ -97,7 +99,8 @@ export const ValidatorDetailsView: FC<{
   isLoading?: boolean
   validator: Validator | undefined
   standalone?: boolean
-}> = ({ detailsPage, isLoading, validator, standalone = false }) => {
+  stats: ValidatorAggStats | undefined
+}> = ({ detailsPage, isLoading, validator, standalone = false, stats }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
@@ -140,12 +143,12 @@ export const ValidatorDetailsView: FC<{
               <dd>{validator.voting_power.toLocaleString()}</dd>
             </>
           )}
-          {typeof validator.voting_power === 'number' && validator.voting_power_total > 0 && (
+          {typeof validator.voting_power === 'number' && stats?.total_voting_power && (
             <>
               <dt>{t('validator.totalShare')}</dt>
               <dd>
                 {t('common.valuePair', {
-                  value: validator.voting_power / validator.voting_power_total,
+                  value: validator.voting_power / stats.total_voting_power,
                   formatParams: {
                     value: {
                       style: 'percent',
