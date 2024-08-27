@@ -3,13 +3,18 @@ import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
+import { Ticker } from '../../../types/ticker'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 
-export const SnapshotStaked: FC = () => {
+type SnapshotStakedProps = {
+  ticker: Ticker | undefined
+  totalStaked: string | undefined
+}
+
+export const SnapshotStaked: FC<SnapshotStakedProps> = ({ totalStaked, ticker }) => {
   const { t } = useTranslation()
-  //  TODO: provide label and staked values when API is ready, validate percentageValue formatting
-  const staked = undefined
+  //  TODO: provide totalCirculation
   const percentageValue = undefined
 
   return (
@@ -43,9 +48,9 @@ export const SnapshotStaked: FC = () => {
         )
       }
     >
-      {staked && (
+      {totalStaked && (
         <Box sx={{ wordBreak: 'break-all', lineHeight: 1 }}>
-          <RoundedBalance value={staked} />
+          <RoundedBalance value={totalStaked} ticker={ticker} compactLargeNumbers />
         </Box>
       )}
     </SnapshotTextCard>

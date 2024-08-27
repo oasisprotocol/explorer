@@ -117,6 +117,10 @@ declare module './generated/api' {
   export interface Validator {
     ticker: Ticker
   }
+
+  export interface ValidatorAggStats {
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
@@ -1047,6 +1051,11 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
           validators.forEach(validator => map.set(validator.entity_address, validator))
           return {
             ...data,
+            stats: {
+              ...data.stats,
+              total_staked_balance: fromBaseUnits(data.stats.total_staked_balance, consensusDecimals),
+              ticker,
+            },
             validators,
             map,
           }
@@ -1126,6 +1135,11 @@ export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusV
           return {
             ...data,
             validators,
+            stats: {
+              ...data.stats,
+              total_staked_balance: fromBaseUnits(data.stats.total_staked_balance, consensusDecimals),
+              ticker,
+            },
           }
         },
         ...arrayify(options?.request?.transformResponse),
