@@ -13,7 +13,6 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkProposalsList } from '../../components/NetworkProposalsList'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
-import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
 import { ProposalDetailView } from '../ProposalDetailsPage'
 
@@ -81,7 +80,7 @@ export const ProposalsPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
+                <ProposalDetailView key={key} isLoading={true} proposal={undefined} standalone />
               ))}
             {!isLoading &&
               proposalsData?.proposals.map(proposal => (

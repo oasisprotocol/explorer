@@ -70,7 +70,7 @@ const VoteLoadingProblemIndicator: FC = () => {
 }
 
 export const ProposalDetailView: FC<{
-  proposal: Proposal
+  proposal: Proposal | undefined
   highlightedPart?: string
   isLoading?: boolean
   totalVotesLoading?: boolean
@@ -91,6 +91,7 @@ export const ProposalDetailView: FC<{
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={7} />
+  if (!proposal) return null
 
   const proposalType = getTypeNameForProposal(t, proposal)
 
