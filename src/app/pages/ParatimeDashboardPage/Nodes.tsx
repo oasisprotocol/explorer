@@ -10,7 +10,6 @@ import { Layer, useGetRuntimeStatus } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { paraTimesConfig } from '../../../config'
 import { SearchScope } from '../../../types/searchScope'
 
 export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
@@ -18,10 +17,8 @@ export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
   if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
   }
-  const runtimeStatusQuery = useGetRuntimeStatus(scope.network, scope.layer)
-  const activeNodes = runtimeStatusQuery.data?.data?.active_nodes
-  const hasActiveNodes = true // temporary workaround for BE bug
-  // const hasActiveNodes = activeNodes !== 0 // This includes undefined while loading
+  const { data, isFetched } = useGetRuntimeStatus(scope.network, scope.layer)
+  const activeNodes = data?.data.active_nodes
   const title = (
     <Box
       sx={{
@@ -36,7 +33,7 @@ export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
       <Tooltip
         arrow
         placement="top"
-        title={hasActiveNodes ? t('nodes.tooltip') : t('nodes.unknown')}
+        title={t('nodes.tooltip')}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -48,7 +45,7 @@ export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
   return (
     <SnapshotCard title={title}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {runtimeStatusQuery.isFetched && (
+        {isFetched && activeNodes && (
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
             <Typography
@@ -56,14 +53,10 @@ export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
               sx={{
                 fontSize: '48px',
                 fontWeight: 700,
-                color: hasActiveNodes ? COLORS.brandDark : COLORS.grayMedium,
+                color: COLORS.brandDark,
               }}
             >
-              {hasActiveNodes
-                ? t('nodes.value', {
-                    value: activeNodes || paraTimesConfig[scope.layer][scope.network].activeNodes,
-                  })
-                : '-'}
+              {t('nodes.value', { value: activeNodes })}
             </Typography>
           </>
         )}

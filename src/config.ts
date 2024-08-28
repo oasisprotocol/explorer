@@ -15,7 +15,6 @@ export const consensusDecimals = 9
 export const outOfDateThreshold = 2 * 60 * 1000
 
 type LayerNetwork = {
-  activeNodes: number | undefined
   address: string | undefined
   blockGasLimit: number | undefined
   runtimeId: string | undefined
@@ -58,7 +57,6 @@ export const consensusConfig = {
 
 const emeraldConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 65,
     address: 'oasis1qzvlg0grjxwgjj58tx2xvmv26era6t2csqn22pte',
     // Match max_batch_gas https://github.com/oasisprotocol/emerald-paratime/blob/5a36a646b989e510fadc0029178fe96a24cad101/src/lib.rs#L112-L112
     blockGasLimit: 10_000_000,
@@ -66,7 +64,6 @@ const emeraldConfig: LayerConfig = {
     tokens: [NativeToken.ROSE],
   },
   testnet: {
-    activeNodes: 32,
     address: 'oasis1qr629x0tg9gm5fyhedgs9lw5eh3d8ycdnsxf0run',
     blockGasLimit: 30_000_000,
     runtimeId: '00000000000000000000000000000000000000000000000072c8215e60d5bca7',
@@ -78,14 +75,12 @@ const emeraldConfig: LayerConfig = {
 
 const cipherConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 34,
     address: 'oasis1qrnu9yhwzap7rqh6tdcdcpz0zf86hwhycchkhvt8',
     blockGasLimit: undefined, // TODO: provide gas limit
     runtimeId: '000000000000000000000000000000000000000000000000e199119c992377cb',
     tokens: [NativeToken.ROSE],
   },
   testnet: {
-    activeNodes: 15,
     address: 'oasis1qqdn25n5a2jtet2s5amc7gmchsqqgs4j0qcg5k0t',
     blockGasLimit: undefined, // TODO: provide gas limit
     runtimeId: '0000000000000000000000000000000000000000000000000000000000000000',
@@ -97,7 +92,6 @@ const cipherConfig: LayerConfig = {
 
 const sapphireConfig: LayerConfig = {
   mainnet: {
-    activeNodes: 41,
     address: 'oasis1qrd3mnzhhgst26hsp96uf45yhq6zlax0cuzdgcfc',
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
     blockGasLimit: 15_000_000,
@@ -105,7 +99,6 @@ const sapphireConfig: LayerConfig = {
     tokens: [NativeToken.ROSE],
   },
   testnet: {
-    activeNodes: 21,
     address: 'oasis1qqczuf3x6glkgjuf0xgtcpjjw95r3crf7y2323xd',
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
     blockGasLimit: 15_000_000,
@@ -118,14 +111,12 @@ const sapphireConfig: LayerConfig = {
 
 const pontusxDevConfig: LayerConfig = {
   mainnet: {
-    activeNodes: undefined,
     address: undefined,
     blockGasLimit: undefined,
     runtimeId: undefined,
     tokens: [NativeToken.EUROe],
   },
   testnet: {
-    activeNodes: 3,
     address: 'oasis1qr02702pr8ecjuff2z3es254pw9xl6z2yg9qcc6c',
     blockGasLimit: 15_000_000,
     runtimeId: '0000000000000000000000000000000000000000000000004febe52eb412b421',
@@ -138,14 +129,12 @@ const pontusxDevConfig: LayerConfig = {
 
 const pontusxTestConfig: LayerConfig = {
   mainnet: {
-    activeNodes: undefined,
     address: undefined,
     blockGasLimit: undefined,
     runtimeId: undefined,
     tokens: [NativeToken.EUROe],
   },
   testnet: {
-    activeNodes: 1,
     address: 'oasis1qrg6c89655pmdxeel08qkngs02jnrfll5v9c508v',
     blockGasLimit: 15_000_000,
     runtimeId: '00000000000000000000000000000000000000000000000004a6f9071c007069',
