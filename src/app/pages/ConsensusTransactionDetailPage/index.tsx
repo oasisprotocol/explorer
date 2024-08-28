@@ -152,7 +152,7 @@ export const ConsensusTransactionDetailView: FC<{
               </dd>
             </>
           )}
-          <dt>{t('common.transactionFee')}</dt>
+          <dt>{t('common.fee')}</dt>
           <dd>
             <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
           </dd>

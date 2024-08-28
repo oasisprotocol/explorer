@@ -138,7 +138,7 @@
     "totalVotes": "Total votes",
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
-    "transactionFee": "Transaction Fee",
+    "fee": "Fee",
     "transfers": "Transfers",
     "type": "Type",
     "quantity": "Quantity",
