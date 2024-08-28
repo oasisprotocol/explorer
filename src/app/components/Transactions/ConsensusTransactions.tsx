@@ -64,15 +64,15 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
     { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'type', content: t('common.type') },
+    { key: 'from', content: t('common.from'), width: '150px' },
     ...(verbose
       ? [
-          { key: 'type', content: t('common.type') },
-          { key: 'from', content: t('common.from'), width: '150px' },
           { key: 'to', content: t('common.to'), width: '150px' },
           { key: 'value', align: TableCellAlign.Right, content: t('common.amount'), width: '250px' },
-          { key: 'txnFee', content: t('common.fee'), align: TableCellAlign.Right, width: '250px' },
         ]
       : []),
+    { key: 'txnFee', content: t('common.fee'), align: TableCellAlign.Right, width: '250px' },
   ]
 
   const tableRows = transactions?.map(transaction => {
@@ -96,38 +96,38 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
           content: <Age sinceTimestamp={transaction.timestamp} />,
           key: 'timestamp',
         },
+        {
+          content: <ConsensusTransactionMethod method={transaction.method} truncate />,
+          key: 'type',
+        },
+        {
+          align: TableCellAlign.Right,
+          content: (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                position: 'relative',
+                pr: 3,
+              }}
+            >
+              <AccountLink
+                labelOnly={!!ownAddress && transaction.sender === ownAddress}
+                scope={transaction}
+                address={transaction.sender}
+                alwaysTrim
+              />
+              {verbose && transaction.to && (
+                <StyledCircle>
+                  <ArrowForwardIcon fontSize="inherit" />
+                </StyledCircle>
+              )}
+            </Box>
+          ),
+          key: 'from',
+        },
         ...(verbose
           ? [
-              {
-                content: <ConsensusTransactionMethod method={transaction.method} truncate />,
-                key: 'type',
-              },
-              {
-                align: TableCellAlign.Right,
-                content: (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      position: 'relative',
-                      pr: 3,
-                    }}
-                  >
-                    <AccountLink
-                      labelOnly={!!ownAddress && transaction.sender === ownAddress}
-                      scope={transaction}
-                      address={transaction.sender}
-                      alwaysTrim
-                    />
-                    {transaction.to && (
-                      <StyledCircle>
-                        <ArrowForwardIcon fontSize="inherit" />
-                      </StyledCircle>
-                    )}
-                  </Box>
-                ),
-                key: 'from',
-              },
               {
                 content: transaction.to ? (
                   <AccountLink
@@ -144,13 +144,13 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
                 content: <ConsensusAmount transaction={transaction} />,
                 key: 'value',
               },
-              {
-                align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
-                key: 'fee_amount',
-              },
             ]
           : []),
+        {
+          align: TableCellAlign.Right,
+          content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
+          key: 'fee_amount',
+        },
       ],
       highlight: transaction.markAsNew,
     }
