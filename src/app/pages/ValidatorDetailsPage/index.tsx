@@ -187,7 +187,11 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.cumulativeVoting')}</dt>
           <dd>
-            <ValidatorCumulativeVoting containerMarginThemeSpacing={4} value={0} />
+            <ValidatorCumulativeVoting
+              containerMarginThemeSpacing={5}
+              value={validator.voting_power_cumulative}
+              total={stats?.total_voting_power}
+            />
           </dd>
           <dt>{t('validator.voting')}</dt>
           <dd>-</dd>

@@ -2,10 +2,11 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
+import { PercentageValue } from '../PercentageValue'
 
 const StyledBox = styled(Box, {
   shouldForwardProp: prop => prop !== 'value' && prop !== 'containerMarginThemeSpacing',
-})<ValidatorCumulativeVotingProps>(({ containerMarginThemeSpacing, value, theme }) => ({
+})<Omit<ValidatorCumulativeVotingProps, 'total'>>(({ containerMarginThemeSpacing, value, theme }) => ({
   position: 'relative',
   textAlign: 'center',
   '&::before': {
@@ -22,18 +23,24 @@ const StyledBox = styled(Box, {
 
 type ValidatorCumulativeVotingProps = {
   containerMarginThemeSpacing: number
-  value: number
+  value: number | undefined
+  total: number | undefined
 }
 
 export const ValidatorCumulativeVoting: FC<ValidatorCumulativeVotingProps> = ({
   containerMarginThemeSpacing,
   value,
+  total,
 }) => {
+  if (typeof value !== 'number' || typeof total !== 'number' || total <= 0) {
+    return null
+  }
+
   return (
     <Box sx={{ flex: 1 }}>
-      <StyledBox value={value} containerMarginThemeSpacing={containerMarginThemeSpacing}>
+      <StyledBox value={(value / total) * 100} containerMarginThemeSpacing={containerMarginThemeSpacing}>
         <Typography component="span" sx={{ position: 'relative', zIndex: 2 }}>
-          {value ? value : '-'}
+          <PercentageValue value={value} total={total} />
         </Typography>
       </StyledBox>
     </Box>
