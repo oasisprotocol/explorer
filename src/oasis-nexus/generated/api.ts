@@ -1539,6 +1539,8 @@ export interface Validator {
   start_date: string;
   /** The voting power of this validator. */
   voting_power: number;
+  /** The cumulative voting power of this validator and all other validators ranked higher than itself. */
+  voting_power_cumulative?: number;
 }
 
 export interface ValidatorAggStats {
