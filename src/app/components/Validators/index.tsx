@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
-import { Validator } from '../../../oasis-nexus/api'
+import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'
 import { RoundedBalance } from '../RoundedBalance'
@@ -18,9 +18,10 @@ type ValidatorsProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  stats: ValidatorAggStats | undefined
 }
 
-export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators }) => {
+export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, validators, stats }) => {
   const { t } = useTranslation()
   const { network } = useRequiredScopeParam()
 
@@ -71,9 +72,9 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
         align: TableCellAlign.Right,
         content: (
           <>
-            {typeof validator?.voting_power === 'number' && validator?.voting_power_total > 0
+            {typeof validator?.voting_power === 'number' && stats?.total_voting_power
               ? t('common.valuePair', {
-                  value: validator.voting_power / validator.voting_power_total,
+                  value: validator.voting_power / stats.total_voting_power,
                   formatParams: {
                     value: {
                       style: 'percent',

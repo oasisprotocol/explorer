@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import { useGetConsensusValidators, Validator } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
+import { Validator } from '../../../oasis-nexus/api'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { PieChart } from '../../components/charts/PieChart'
-import { API_MAX_TOTAL_COUNT } from '../../config'
 
 type ValidatorsStats = {
   label: string
@@ -22,12 +20,12 @@ function countValidatorsState(t: TFunction, validators: Validator[] | undefined)
   ]
 }
 
-export const SnapshotValidators: FC<{ scope: SearchScope }> = ({ scope }) => {
-  const { t } = useTranslation()
-  const { network } = scope
+type SnapshotValidatorsProps = {
+  validators: Validator[] | undefined
+}
 
-  const validatorsQuery = useGetConsensusValidators(network, { limit: API_MAX_TOTAL_COUNT })
-  const validators = validatorsQuery.data?.data.validators
+export const SnapshotValidators: FC<SnapshotValidatorsProps> = ({ validators }) => {
+  const { t } = useTranslation()
 
   return (
     <SnapshotCard title={t('validator.listTitle')}>

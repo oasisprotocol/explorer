@@ -117,6 +117,10 @@ declare module './generated/api' {
   export interface Validator {
     ticker: Ticker
   }
+
+  export interface ValidatorAggStats {
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
@@ -1047,6 +1051,11 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
           validators.forEach(validator => map.set(validator.entity_address, validator))
           return {
             ...data,
+            stats: {
+              ...data.stats,
+              total_staked_balance: fromBaseUnits(data.stats.total_staked_balance, consensusDecimals),
+              ticker,
+            },
             validators,
             map,
           }
@@ -1088,7 +1097,6 @@ export const useGetConsensusValidatorsAddressHistory: typeof generated.useGetCon
       },
     })
   }
-
 export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusValidatorsAddress = (
   network,
   address,
@@ -1101,26 +1109,37 @@ export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusV
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (validator: generated.Validator, headers, status) => {
-          if (status !== 200) return validator
+        (data: generated.ValidatorList, headers, status): ExtendedValidatorList => {
+          if (status !== 200) return data
+          const validators = data.validators.map((validator): generated.Validator => {
+            return {
+              ...validator,
+              escrow: {
+                ...validator.escrow,
+                active_balance: validator.escrow?.active_balance
+                  ? fromBaseUnits(validator.escrow.active_balance, consensusDecimals)
+                  : undefined,
+                active_balance_24: validator.escrow?.active_balance_24
+                  ? fromBaseUnits(validator.escrow.active_balance_24, consensusDecimals)
+                  : undefined,
+                debonding_balance: validator.escrow?.debonding_balance
+                  ? fromBaseUnits(validator.escrow.debonding_balance, consensusDecimals)
+                  : undefined,
+                self_delegation_balance: validator.escrow?.self_delegation_balance
+                  ? fromBaseUnits(validator.escrow.self_delegation_balance, consensusDecimals)
+                  : undefined,
+              },
+              ticker,
+            }
+          })
           return {
-            ...validator,
-            escrow: {
-              ...validator.escrow,
-              active_balance: validator.escrow.active_balance
-                ? fromBaseUnits(validator.escrow.active_balance, consensusDecimals)
-                : undefined,
-              active_balance_24: validator.escrow?.active_balance_24
-                ? fromBaseUnits(validator.escrow.active_balance_24, consensusDecimals)
-                : undefined,
-              debonding_balance: validator.escrow?.debonding_balance
-                ? fromBaseUnits(validator.escrow.debonding_balance, consensusDecimals)
-                : undefined,
-              self_delegation_balance: validator.escrow?.self_delegation_balance
-                ? fromBaseUnits(validator.escrow.self_delegation_balance, consensusDecimals)
-                : undefined,
+            ...data,
+            validators,
+            stats: {
+              ...data.stats,
+              total_staked_balance: fromBaseUnits(data.stats.total_staked_balance, consensusDecimals),
+              ticker,
             },
-            ticker,
           }
         },
         ...arrayify(options?.request?.transformResponse),

@@ -63,6 +63,7 @@ export const ValidatorsPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <Validators
+            stats={validatorsQuery.data?.data.stats}
             validators={validatorsQuery.data?.data.validators}
             isLoading={validatorsQuery.isLoading}
             limit={PAGE_SIZE}
@@ -79,11 +80,22 @@ export const ValidatorsPage: FC = () => {
           <VerticalList>
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
-                <ValidatorDetailsView key={key} isLoading={true} validator={undefined} standalone />
+                <ValidatorDetailsView
+                  key={key}
+                  isLoading={true}
+                  validator={undefined}
+                  stats={undefined}
+                  standalone
+                />
               ))}
             {!isLoading &&
               validatorsData?.validators.map(validator => (
-                <ValidatorDetailsView key={validator.entity_address} validator={validator} standalone />
+                <ValidatorDetailsView
+                  key={validator.entity_address}
+                  validator={validator}
+                  stats={validatorsQuery.data?.data.stats}
+                  standalone
+                />
               ))}
           </VerticalList>
         )}

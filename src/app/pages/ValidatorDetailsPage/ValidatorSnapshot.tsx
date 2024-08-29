@@ -11,15 +11,16 @@ import { SearchScope } from '../../../types/searchScope'
 import { UptimeCard } from './UptimeCard'
 import { VotingPowerCard } from './VotingPowerCard'
 import { BalanceDistributionCard } from './BalanceDistributionCard'
-import { Validator } from '../../../oasis-nexus/api'
+import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
 type ValidatorSnapshotProps = {
   scope: SearchScope
-  validator?: Validator
+  validator: Validator | undefined
+  stats: ValidatorAggStats | undefined
 }
 
-export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator }) => {
+export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator, stats }) => {
   const { t } = useTranslation()
 
   const theme = useTheme()
@@ -44,7 +45,7 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
           <BalanceDistributionCard validator={validator} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
-          <VotingPowerCard validator={validator} />
+          <VotingPowerCard validator={validator} stats={stats} />
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
           <UptimeCard />
