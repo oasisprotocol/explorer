@@ -12,6 +12,101 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.12.0 (2024-08-29)
+
+### Features
+
+- Support for Pontus-X devnet and testnet
+  ([#1435](https://github.com/oasisprotocol/explorer/issues/1435))
+
+- Link to ABI playground from verified contracts
+  ([#1492](https://github.com/oasisprotocol/explorer/issues/1492))
+
+### Bug Fixes and Improvements
+
+- Tweak events card layout
+  ([#1488](https://github.com/oasisprotocol/explorer/issues/1488))
+
+- Enable pagination in Events lists
+  ([#1489](https://github.com/oasisprotocol/explorer/issues/1489))
+
+- Support searching for Consensus accounts clean-up
+  ([#1423](https://github.com/oasisprotocol/explorer/issues/1423))
+
+- Remove total_received and total_sent from account
+  ([#1475](https://github.com/oasisprotocol/explorer/issues/1475))
+
+- Automatically throw on 5xx error responses
+  ([#1493](https://github.com/oasisprotocol/explorer/issues/1493),
+  [#1513](https://github.com/oasisprotocol/explorer/issues/1513))
+
+- Fix validator balance change
+  ([#1509](https://github.com/oasisprotocol/explorer/issues/1509))
+
+### Internal Changes
+
+- Enable Consensus testnet on dev deploys
+  ([#1432](https://github.com/oasisprotocol/explorer/issues/1432))
+
+- Add consensus account num_txns
+  ([#1433](https://github.com/oasisprotocol/explorer/issues/1433))
+
+- Add NFTs documentation
+  ([#1436](https://github.com/oasisprotocol/explorer/issues/1436))
+
+- Migrate from grpc.oasis.dev to grpc.oasis.io
+  ([#1437](https://github.com/oasisprotocol/explorer/issues/1437))
+
+- Add more configuration options for ParaTimes
+  ([#1441](https://github.com/oasisprotocol/explorer/issues/1441))
+
+- Remove redundancy, simplify tx encryption status
+  ([#1453](https://github.com/oasisprotocol/explorer/issues/1453))
+
+- Harden github workflow against injection
+  ([#1495](https://github.com/oasisprotocol/explorer/issues/1495))
+
+- Sync PontusX with API changes
+  ([#1497](https://github.com/oasisprotocol/explorer/issues/1497))
+
+- Revert hardcoding number of active nodes
+  ([#1521](https://github.com/oasisprotocol/explorer/issues/1521))
+
+- Update API bindings
+  ([#1446](https://github.com/oasisprotocol/explorer/issues/1446),
+  [#1457](https://github.com/oasisprotocol/explorer/issues/1457),
+  [#1467](https://github.com/oasisprotocol/explorer/issues/1467),
+  [#1425](https://github.com/oasisprotocol/explorer/issues/1425))
+
+- Update dependencies
+  ([#1273](https://github.com/oasisprotocol/explorer/issues/1273),
+  [#1393](https://github.com/oasisprotocol/explorer/issues/1393),
+  [#1407](https://github.com/oasisprotocol/explorer/issues/1407),
+  [#1416](https://github.com/oasisprotocol/explorer/issues/1416),
+  [#1417](https://github.com/oasisprotocol/explorer/issues/1417),
+  [#1419](https://github.com/oasisprotocol/explorer/issues/1419),
+  [#1421](https://github.com/oasisprotocol/explorer/issues/1421),
+  [#1429](https://github.com/oasisprotocol/explorer/issues/1429),
+  [#1430](https://github.com/oasisprotocol/explorer/issues/1430),
+  [#1431](https://github.com/oasisprotocol/explorer/issues/1431),
+  [#1438](https://github.com/oasisprotocol/explorer/issues/1438),
+  [#1439](https://github.com/oasisprotocol/explorer/issues/1439),
+  [#1440](https://github.com/oasisprotocol/explorer/issues/1440),
+  [#1448](https://github.com/oasisprotocol/explorer/issues/1448),
+  [#1449](https://github.com/oasisprotocol/explorer/issues/1449),
+  [#1450](https://github.com/oasisprotocol/explorer/issues/1450),
+  [#1455](https://github.com/oasisprotocol/explorer/issues/1455),
+  [#1458](https://github.com/oasisprotocol/explorer/issues/1458),
+  [#1463](https://github.com/oasisprotocol/explorer/issues/1463),
+  [#1464](https://github.com/oasisprotocol/explorer/issues/1464),
+  [#1473](https://github.com/oasisprotocol/explorer/issues/1473),
+  [#1485](https://github.com/oasisprotocol/explorer/issues/1485),
+  [#1487](https://github.com/oasisprotocol/explorer/issues/1487),
+  [#1499](https://github.com/oasisprotocol/explorer/issues/1499),
+  [#1500](https://github.com/oasisprotocol/explorer/issues/1500),
+  [#1504](https://github.com/oasisprotocol/explorer/issues/1504),
+  [#1505](https://github.com/oasisprotocol/explorer/issues/1505))
+
 ## 1.11.0 (2024-05-22)
 
 ### Features
