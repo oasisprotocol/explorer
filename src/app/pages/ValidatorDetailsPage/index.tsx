@@ -28,6 +28,7 @@ import { ValidatorDetailsContext } from './hooks'
 import { debondingContainerId, delegatorsContainerId } from './tabAnchors'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
+import { PercentageValue } from '../../components/PercentageValue'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -147,15 +148,7 @@ export const ValidatorDetailsView: FC<{
             <>
               <dt>{t('validator.totalShare')}</dt>
               <dd>
-                {t('common.valuePair', {
-                  value: validator.voting_power / stats.total_voting_power,
-                  formatParams: {
-                    value: {
-                      style: 'percent',
-                      maximumFractionDigits: 2,
-                    } satisfies Intl.NumberFormatOptions,
-                  },
-                })}
+                <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
               </dd>
             </>
           )}
