@@ -2,11 +2,12 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 type PercentageValueProps = {
+  adaptMaximumFractionDigits?: boolean
   total: number | undefined
   value: number | undefined
 }
 
-export const PercentageValue: FC<PercentageValueProps> = ({ value, total }) => {
+export const PercentageValue: FC<PercentageValueProps> = ({ adaptMaximumFractionDigits, value, total }) => {
   const { t } = useTranslation()
 
   if (typeof value !== 'number' || typeof total !== 'number' || total <= 0) {
@@ -22,7 +23,7 @@ export const PercentageValue: FC<PercentageValueProps> = ({ value, total }) => {
         formatParams: {
           value: {
             style: 'percent',
-            maximumFractionDigits: 2,
+            maximumFractionDigits: adaptMaximumFractionDigits && percentageValue < 0.001 ? 3 : 2,
           } satisfies Intl.NumberFormatOptions,
         },
       })}
