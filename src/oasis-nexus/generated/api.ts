@@ -692,6 +692,63 @@ export type EvmNftListAllOf = {
 
 export type EvmNftList = List & EvmNftListAllOf;
 
+export interface EvmRefToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+}
+
+export interface EvmTokenSwap {
+  /** The round when this swap pair was created.
+ */
+  create_round?: number;
+  /** The Oasis address of the swap factory contract.
+ */
+  factory_address?: string;
+  /** The Ethereum-compatible address of the swap factory contract.
+ */
+  factory_address_eth?: string;
+  /** The round when this swap pair last updated its reserves.
+ */
+  last_sync_round?: number;
+  /** The Oasis address of the swap pair contract.
+ */
+  pair_address: string;
+  /** The Ethereum-compatible address of the swap pair contract.
+ */
+  pair_address_eth?: string;
+  /** The swap's liquidity pool of the first token, in that token's base units.
+ */
+  reserve0?: TextBigInt;
+  /** The swap's liquidity pool of the second token, in that token's base units.
+ */
+  reserve1?: TextBigInt;
+  /** The Oasis address of the first token in this swap.
+ */
+  token0_address?: string;
+  /** The Ethereum-compatible address of the first token in this swap
+ */
+  token0_address_eth?: string;
+  /** The Oasis address of the second token in this swap.
+ */
+  token1_address?: string;
+  /** The Ethereum-compatible address of the second token in this swap.
+ */
+  token1_address_eth?: string;
+}
+
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
   contract_addr: string;
@@ -719,6 +776,28 @@ DEPRECATED: This field will be removed in the future in favor of verification_le
   /** The total number of transfers of this token.
  */
   num_transfers?: number;
+  /** Information about a swap contract between this token and a
+reference token. The relative price and relative total value of
+this token are estimated based on this swap contract.
+ */
+  ref_swap?: EvmTokenSwap;
+  /** Information about the reference token. The relative price and
+relative total value are exprsesed in this reference token's base
+unit.
+ */
+  ref_token?: EvmRefToken;
+  /** The relative price of one base unit of this token is this many of
+the relative token's base unit.
+ */
+  relative_price?: number;
+  /** The relative price and relative total value are expressed in this
+reference token's base unit.
+ */
+  relative_token_address?: string;
+  /** The relative price of this token multiplied by this token's total
+supply, in the relative token's base unit.
+ */
+  relative_total_value?: number;
   /** Symbol of the token, as provided by token contract's `symbol()` method. */
   symbol?: string;
   /** The total number of base units available. */
