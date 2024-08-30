@@ -18,6 +18,7 @@ import { RoundedBalance } from '../RoundedBalance'
 import { getTokenMarketCap } from '../../utils/tokens'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
+import { FiatValue } from '../FiatValue'
 import { MarketCapTitle } from './MarketCapTitle'
 
 type TokensProps = {
@@ -86,6 +87,8 @@ export const TokenList = (props: TokensProps) => {
   ]
 
   const tableRows = tokens?.map((token, index) => {
+    const marketCapValue = getTokenMarketCap(token?.relative_total_value, priceQuery.price)
+
     return {
       key: token.contract_addr,
       data: [
@@ -149,14 +152,7 @@ export const TokenList = (props: TokensProps) => {
           ),
         },
         {
-          content: t('common.fiatValueInUSD', {
-            value: getTokenMarketCap(8.01909111301725e22, priceQuery.price), // provide relative_total_value
-            formatParams: {
-              value: {
-                currency: 'USD',
-              } satisfies Intl.NumberFormatOptions,
-            },
-          }),
+          content: <FiatValue isLoading={priceQuery.isLoading} value={marketCapValue} />,
           key: 'marketCap',
           align: TableCellAlign.Right,
         },
