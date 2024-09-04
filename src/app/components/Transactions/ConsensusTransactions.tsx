@@ -1,10 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Transaction } from '../../../oasis-nexus/api'
-import { COLORS } from '../../../styles/theme/colors'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -15,20 +12,7 @@ import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
 import { ConsensusAmount } from './ConsensusAmount'
-
-const iconSize = '28px'
-const StyledCircle = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: iconSize,
-  height: iconSize,
-  color: COLORS.eucalyptus,
-  backgroundColor: COLORS.lightGreen,
-  borderRadius: iconSize,
-  marginLeft: theme.spacing(3),
-  marginRight: `-${theme.spacing(4)}`,
-}))
+import { TransferIcon } from '../TransferIcon'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -117,11 +101,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
                 address={transaction.sender}
                 alwaysTrim
               />
-              {verbose && transaction.to && (
-                <StyledCircle>
-                  <ArrowForwardIcon fontSize="inherit" />
-                </StyledCircle>
-              )}
+              {verbose && transaction.to && <TransferIcon />}
             </Box>
           ),
           key: 'from',
