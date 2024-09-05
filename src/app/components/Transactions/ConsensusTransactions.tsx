@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import { Transaction } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -8,7 +9,10 @@ import { StatusIcon } from '../StatusIcon'
 import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
 import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
-import { ConsensusTransactionDetails } from './ConsensusTransactionDetails'
+import { BlockLink } from '../Blocks/BlockLink'
+import { AccountLink } from '../Account/AccountLink'
+import { ConsensusAmount } from './ConsensusAmount'
+import { TransferIcon } from '../TransferIcon'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -26,6 +30,7 @@ type ConsensusTransactionsProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  verbose?: boolean
 }
 
 export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
@@ -34,16 +39,24 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
   pagination,
   transactions,
   ownAddress,
+  verbose = true,
 }) => {
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
     { key: 'status', content: t('common.status') },
     { key: 'hash', content: t('common.hash') },
-    { key: 'age', content: t('common.age') },
+    { key: 'block', content: t('common.block') },
+    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
     { key: 'type', content: t('common.type') },
-    { key: 'details', content: t('common.details') },
-    { align: TableCellAlign.Right, key: 'value', content: t('common.amount') },
+    { key: 'from', content: t('common.from'), width: '150px' },
+    ...(verbose
+      ? [
+          { key: 'to', content: t('common.to'), width: '150px' },
+          { key: 'value', align: TableCellAlign.Right, content: t('common.amount'), width: '250px' },
+        ]
+      : []),
+    { key: 'txnFee', content: t('common.fee'), align: TableCellAlign.Right, width: '250px' },
   ]
 
   const tableRows = transactions?.map(transaction => {
@@ -59,27 +72,64 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
           key: 'hash',
         },
         {
+          content: <BlockLink scope={transaction} height={transaction.block} />,
+          key: 'round',
+        },
+        {
+          align: TableCellAlign.Right,
           content: <Age sinceTimestamp={transaction.timestamp} />,
           key: 'timestamp',
         },
         {
           content: <ConsensusTransactionMethod method={transaction.method} truncate />,
-          key: 'method',
-        },
-
-        {
-          content: <ConsensusTransactionDetails ownAddress={ownAddress} transaction={transaction} />,
-          key: 'details',
+          key: 'type',
         },
         {
           align: TableCellAlign.Right,
           content: (
-            <RoundedBalance
-              value={transaction.body?.amount || transaction.body?.amount_change}
-              ticker={transaction.ticker}
-            />
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                position: 'relative',
+                pr: 3,
+              }}
+            >
+              <AccountLink
+                labelOnly={!!ownAddress && transaction.sender === ownAddress}
+                scope={transaction}
+                address={transaction.sender}
+                alwaysTrim
+              />
+              {verbose && transaction.to && <TransferIcon />}
+            </Box>
           ),
-          key: 'amount',
+          key: 'from',
+        },
+        ...(verbose
+          ? [
+              {
+                content: transaction.to ? (
+                  <AccountLink
+                    labelOnly={!!ownAddress && transaction.to === ownAddress}
+                    scope={transaction}
+                    address={transaction.to}
+                    alwaysTrim
+                  />
+                ) : null,
+                key: 'to',
+              },
+              {
+                align: TableCellAlign.Right,
+                content: <ConsensusAmount transaction={transaction} />,
+                key: 'value',
+              },
+            ]
+          : []),
+        {
+          align: TableCellAlign.Right,
+          content: <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />,
+          key: 'fee_amount',
         },
       ],
       highlight: transaction.markAsNew,

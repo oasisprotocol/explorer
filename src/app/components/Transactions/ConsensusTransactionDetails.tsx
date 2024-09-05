@@ -20,6 +20,7 @@ export const ConsensusTransactionDetails: FC<ConsensusTransactionDetailsProps> =
   return <Box sx={{ display: 'flex', flexWrap: 'no-wrap', gap: '20px' }}>{details}</Box>
 }
 
+// TODO: validate when new designs are ready and use in details column
 const getConsensusTransactionDetails = (t: TFunction, transaction: Transaction, ownAddress?: string) => {
   const scope = { layer: transaction.layer, network: transaction.network }
 

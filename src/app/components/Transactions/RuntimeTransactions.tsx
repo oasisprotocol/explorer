@@ -1,8 +1,6 @@
 import { FC } from 'react'
-import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { StatusIcon } from '../StatusIcon'
@@ -17,20 +15,7 @@ import { TransactionLink } from './TransactionLink'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
 import { Age } from '../Age'
-
-const iconSize = '28px'
-const StyledCircle = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: iconSize,
-  height: iconSize,
-  color: COLORS.eucalyptus,
-  backgroundColor: COLORS.lightGreen,
-  borderRadius: iconSize,
-  marginLeft: theme.spacing(3),
-  marginRight: `-${theme.spacing(4)}`,
-}))
+import { TransferIcon } from '../TransferIcon'
 
 type TableRuntimeTransaction = RuntimeTransaction & {
   markAsNew?: boolean
@@ -141,11 +126,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                       address={transaction.sender_0_eth || transaction.sender_0}
                       alwaysTrim
                     />
-                    {targetAddress && (
-                      <StyledCircle>
-                        <ArrowForwardIcon fontSize="inherit" />
-                      </StyledCircle>
-                    )}
+                    {targetAddress && <TransferIcon />}
                   </Box>
                 ),
                 key: 'from',

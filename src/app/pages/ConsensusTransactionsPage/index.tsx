@@ -92,6 +92,7 @@ export const ConsensusTransactionsPage: FC = () => {
               isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: limit,
             }}
+            verbose={false}
           />
         )}
 

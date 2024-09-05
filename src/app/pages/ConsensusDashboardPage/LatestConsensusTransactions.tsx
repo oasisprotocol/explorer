@@ -43,6 +43,7 @@ export const LatestConsensusTransactions: FC<{ scope: SearchScope }> = ({ scope 
           isLoading={transactionsQuery.isLoading}
           limit={limit}
           pagination={false}
+          verbose={false}
         />
       </CardContent>
     </Card>
