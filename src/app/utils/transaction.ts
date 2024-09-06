@@ -18,7 +18,9 @@ export const getConsensusTransactionToAddress = (transaction: Transaction) => {
 export const getConsensusTransactionAmount = (transaction: Transaction) => {
   switch (transaction.method) {
     case ConsensusTxMethod.stakingAllow:
-      return transaction.body?.amount_change
+      return transaction.body?.negative
+        ? `-${transaction.body?.amount_change}`
+        : transaction.body?.amount_change
     case ConsensusTxMethod.stakingAddEscrow:
     case ConsensusTxMethod.stakingTransfer:
       return transaction.body?.amount
