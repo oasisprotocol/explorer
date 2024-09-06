@@ -23,6 +23,7 @@ import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
 import { getFiatCurrencyForScope } from '../../../config'
+import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -41,6 +42,7 @@ export const ConsensusTransactionDetailPage: FC = () => {
 
   return (
     <PageLayout>
+      <MultipleTransactionsWarning enable={false} />
       <SubPageCard featured title={t('transaction.header')}>
         <ConsensusTransactionDetailView
           detailsPage

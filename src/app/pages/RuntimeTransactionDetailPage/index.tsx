@@ -13,10 +13,8 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { StatusIcon } from '../../components/StatusIcon'
 import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { styled } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../../components/Account/AccountLink'
-import Alert from '@mui/material/Alert'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -36,6 +34,7 @@ import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
+import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -68,10 +67,6 @@ function useWantedTransaction(
     }
   }
 }
-
-const StyledAlert = styled(Alert)(() => ({
-  marginBottom: '1em',
-}))
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -107,9 +102,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
   }
   return (
     <PageLayout>
-      {warningMultipleTransactionsSameHash && (
-        <StyledAlert severity="error">{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
-      )}
+      <MultipleTransactionsWarning enable={warningMultipleTransactionsSameHash} />
       <SubPageCard
         featured
         title={t('transaction.header')}
