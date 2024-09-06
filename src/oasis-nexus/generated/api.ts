@@ -2359,7 +2359,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const GetConsensusTransactionsTxHash = (
     network: 'mainnet' | 'testnet',
@@ -2368,7 +2368,7 @@ export const GetConsensusTransactionsTxHash = (
 ) => {
       
       
-      return GetConsensusTransactionsTxHashMutator<Transaction>(
+      return GetConsensusTransactionsTxHashMutator<TransactionList>(
       {url: `/${encodeURIComponent(String(network))}/consensus/transactions/${encodeURIComponent(String(txHash))}`, method: 'GET', signal
     },
       options);
@@ -2404,7 +2404,7 @@ export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<Retu
 export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',

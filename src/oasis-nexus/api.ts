@@ -279,26 +279,30 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (transaction: generated.Transaction, headers, status) => {
-          if (status !== 200) return transaction
-          const amount = getConsensusTransactionAmount(transaction)
-          const to = getConsensusTransactionToAddress(transaction)
+        (data: generated.TransactionList, headers, status) => {
+          if (status !== 200) return data
           return {
-            ...transaction,
-            amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
-            to,
-            body: {
-              ...transaction.body,
-              amount: transaction.body?.amount
-                ? fromBaseUnits(transaction.body.amount, consensusDecimals)
-                : undefined,
-              amount_change: transaction.body?.amount_change
-                ? fromBaseUnits(transaction.body.amount_change, consensusDecimals)
-                : undefined,
-            },
-            layer: Layer.consensus,
-            network,
-            ticker,
+            ...data,
+            transactions: data.transactions.map(tx => {
+              const amount = getConsensusTransactionAmount(tx)
+              const to = getConsensusTransactionToAddress(tx)
+
+              return {
+                ...tx,
+                amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
+                to,
+                body: {
+                  ...tx.body,
+                  amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                  amount_change: tx.body?.amount_change
+                    ? fromBaseUnits(tx.body.amount_change, consensusDecimals)
+                    : undefined,
+                },
+                layer: Layer.consensus,
+                network,
+                ticker,
+              }
+            }),
           }
         },
         ...arrayify(options?.request?.transformResponse),
