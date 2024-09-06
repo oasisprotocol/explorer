@@ -1,12 +1,7 @@
 import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import {
-  Layer,
-  RuntimeTransaction,
-  RuntimeTransactionList,
-  useGetRuntimeTransactionsTxHash,
-} from '../../../oasis-nexus/api'
+import { Layer, RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -34,39 +29,8 @@ import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
+import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
-
-type TransactionSelectionResult = {
-  wantedTransaction?: RuntimeTransaction
-  warningMultipleTransactionsSameHash?: boolean
-}
-
-/**
- * Find the wanted transaction, in case there are more.
- *
- * Normally we want the successful one. If there is none, then the latest.
- */
-function useWantedTransaction(
-  transactionsList: RuntimeTransactionList | undefined,
-): TransactionSelectionResult {
-  const transactions = transactionsList?.transactions ?? []
-
-  if (!transactions.length) {
-    // Loading or error
-    return {}
-  } else if (transactions.length === 1) {
-    return {
-      wantedTransaction: transactions[0],
-    }
-  } else {
-    const successfulOne = transactions.find(transaction => transaction.success)
-    const latestOne = transactions.sort((a, b) => b.round - a.round)[0]
-    return {
-      warningMultipleTransactionsSameHash: true,
-      wantedTransaction: successfulOne ?? latestOne,
-    }
-  }
-}
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
