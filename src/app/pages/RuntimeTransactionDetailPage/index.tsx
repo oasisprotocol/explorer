@@ -37,6 +37,8 @@ import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
+import Tooltip from '@mui/material/Tooltip'
+import HelpIcon from '@mui/icons-material/Help'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -322,6 +324,10 @@ export const RuntimeTransactionDetailView: FC<{
                   ...getPreciseNumberFormat(convertToNano(gasPrice)),
                   ticker: `n${tickerName}`,
                 })}
+                &nbsp;
+                <Tooltip title={t('transaction.tooltips.gasPriceExplanation')}>
+                  <HelpIcon />
+                </Tooltip>
               </dd>
             </>
           )}

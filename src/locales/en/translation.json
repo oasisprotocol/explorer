@@ -459,7 +459,8 @@
       "txEncrypted": "This transaction is encrypted.",
       "txNotEncrypted": "This transaction is <strong>not</strong> encrypted.",
       "senderTooltipUnavailable": "Sender not available in selected address format",
-      "recipientTooltipUnavailable": "Recipient not available in selected address format"
+      "recipientTooltipUnavailable": "Recipient not available in selected address format",
+      "gasPriceExplanation": "For each transaction, you're charged a certain amount for the gas you use and is measured in nano ROSE(Gwei)."
     }
   },
   "runtimeEvent": {
