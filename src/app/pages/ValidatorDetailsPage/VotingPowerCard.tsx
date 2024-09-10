@@ -6,6 +6,7 @@ import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from 'styles/theme/colors'
 import { VerticalProgressBar } from 'app/components/ProgressBar'
+import { PercentageValue } from '../../components/PercentageValue'
 
 type VotingPowerCardProps = {
   validator: Validator | undefined
@@ -33,15 +34,7 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
             <Typography sx={{ fontSize: 12, color: COLORS.grayMedium, textAlign: 'left', paddingBottom: 3 }}>
               {t('validator.votingPowerOverall')}
             </Typography>
-            {t('common.valuePair', {
-              value: validator.voting_power / stats.total_voting_power,
-              formatParams: {
-                value: {
-                  style: 'percent',
-                  maximumFractionDigits: 2,
-                } satisfies Intl.NumberFormatOptions,
-              },
-            })}
+            <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
           </Box>
           <Box sx={{ paddingTop: 4 }}>
             <VerticalProgressBar

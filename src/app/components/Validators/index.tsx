@@ -12,6 +12,7 @@ import { ValidatorCumulativeVoting } from './ValidatorCumulativeVoting'
 import { ValidatorLink } from './ValidatorLink'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { BalancesDiff } from '../BalancesDiff'
+import { PercentageValue } from '../PercentageValue'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -64,26 +65,23 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         align: TableCellAlign.Right,
-        // TODO: provide cumulative voting when it is implemented in the API
-        content: <ValidatorCumulativeVoting containerMarginThemeSpacing={5} value={0} />,
+        content: (
+          <ValidatorCumulativeVoting
+            containerMarginThemeSpacing={5}
+            value={validator.voting_power_cumulative}
+            total={stats?.total_voting_power}
+          />
+        ),
         key: 'cumulativeVoting',
       },
       {
         align: TableCellAlign.Right,
         content: (
-          <>
-            {typeof validator?.voting_power === 'number' && stats?.total_voting_power
-              ? t('common.valuePair', {
-                  value: validator.voting_power / stats.total_voting_power,
-                  formatParams: {
-                    value: {
-                      style: 'percent',
-                      maximumFractionDigits: 2,
-                    } satisfies Intl.NumberFormatOptions,
-                  },
-                })
-              : t('common.missing')}
-          </>
+          <PercentageValue
+            value={validator.voting_power}
+            total={stats?.total_voting_power}
+            adaptMaximumFractionDigits
+          />
         ),
 
         key: 'voting',
