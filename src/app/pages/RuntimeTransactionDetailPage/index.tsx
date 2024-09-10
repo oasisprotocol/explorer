@@ -25,7 +25,7 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { RuntimeTransactionEvents } from '../../components/Transactions/RuntimeTransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { getNameForTicker, Ticker } from '../../../types/ticker'
+import { Ticker } from '../../../types/ticker'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
@@ -170,7 +170,6 @@ export const RuntimeTransactionDetailView: FC<{
   const to = isOasisAddressFormat ? transaction?.to : transaction?.to_eth
 
   const ticker = transaction?.ticker || Ticker.ROSE
-  const tickerName = getNameForTicker(t, ticker)
   const tokenPriceInfo = tokenPrices[ticker]
 
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
@@ -287,7 +286,7 @@ export const RuntimeTransactionDetailView: FC<{
             {transaction.amount != null
               ? t('common.valueInToken', {
                   ...getPreciseNumberFormat(transaction.amount),
-                  ticker: tickerName,
+                  ticker: ticker,
                 })
               : t('common.missing')}
           </dd>
@@ -310,7 +309,7 @@ export const RuntimeTransactionDetailView: FC<{
           <dd>
             {t('common.valueInToken', {
               ...getPreciseNumberFormat(transaction.charged_fee),
-              ticker: tickerName,
+              ticker: ticker,
             })}
           </dd>
 
@@ -320,7 +319,7 @@ export const RuntimeTransactionDetailView: FC<{
               <dd>
                 {t('common.valueInToken', {
                   ...getPreciseNumberFormat(convertToNano(gasPrice)),
-                  ticker: `n${tickerName}`,
+                  ticker: `n${ticker}`,
                 })}
               </dd>
             </>

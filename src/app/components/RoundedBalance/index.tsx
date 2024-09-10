@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { getNameForTicker } from '../../../types/ticker'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../Tokens/TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
@@ -27,7 +26,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
   compactLargeNumbers,
   scope,
   showSign,
-  ticker,
+  ticker = '',
   tickerAsLink,
   tokenAddress,
   value,
@@ -41,13 +40,11 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
   const number = new BigNumber(value)
   const truncatedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_DOWN)
 
-  const tickerName = ticker ? getNameForTicker(t, ticker) : ''
-
   const tickerLink =
     tickerAsLink && !!scope && !!tokenAddress ? (
-      <TokenLink scope={scope} address={tokenAddress} name={tickerName} />
+      <TokenLink scope={scope} address={tokenAddress} name={ticker} />
     ) : (
-      <PlaceholderLabel label={tickerName} />
+      <PlaceholderLabel label={ticker} />
     )
 
   if (compactAllNumbers || (number.isGreaterThan(100_000) && compactLargeNumbers)) {
@@ -55,7 +52,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: tickerName })}
+        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: ticker })}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -70,7 +67,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             },
           })}
           &nbsp;
-          {tickerName}
+          {ticker}
         </span>
       </Tooltip>
     )
@@ -94,7 +91,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: tickerName })}
+        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: ticker })}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
