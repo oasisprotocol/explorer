@@ -160,6 +160,8 @@ const EvmLogRow: FC<{
   )
 }
 
+const feeEventStyle = { opacity: 0.5 }
+
 export const RuntimeEventDetails: FC<{
   scope: SearchScope
   event: RuntimeEvent
@@ -171,7 +173,7 @@ export const RuntimeEventDetails: FC<{
   switch (event.type) {
     case RuntimeEventType.coregas_used:
       return (
-        <span>
+        <span style={feeEventStyle}>
           {eventName}: {event.body.amount.toLocaleString()}
         </span>
       )
@@ -289,9 +291,11 @@ export const RuntimeEventDetails: FC<{
       )
     case RuntimeEventType.accountstransfer:
     case RuntimeEventType.consensus_accountsdeposit:
-    case RuntimeEventType.consensus_accountswithdraw:
+    case RuntimeEventType.consensus_accountswithdraw: {
+      const feeAccumulatorAddress = 'oasis1qp3r8hgsnphajmfzfuaa8fhjag7e0yt35cjxq0u4'
+      const isFeeEvent = event.type === 'accounts.transfer' && event.body.to === feeAccumulatorAddress
       return (
-        <div>
+        <div style={isFeeEvent ? feeEventStyle : {}}>
           <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
@@ -323,6 +327,7 @@ export const RuntimeEventDetails: FC<{
           </StyledDescriptionList>
         </div>
       )
+    }
     case RuntimeEventType.consensus_accountsdelegate:
       return (
         <div>
