@@ -28,7 +28,7 @@ const config = {
         ],
         patterns: [
           {
-            group: ['@mui/system'],
+            group: ['@mui/system', '@emotion/styled'],
             message: "Use '@mui/material/styles' instead.",
           },
           {
