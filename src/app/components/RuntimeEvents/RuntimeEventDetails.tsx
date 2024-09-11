@@ -208,14 +208,8 @@ export const RuntimeEventDetails: FC<{
               fontWeight={400}
             />
             <br />
-            {t('runtimeEvent.fields.emittingContract')}:
-            <br />
-            <WrappedAccountLinkWithAddressSwitch
-              scope={scope}
-              addressSwitchOption={addressSwitchOption}
-              ethAddress={emittingEthAddress}
-              oasisAddress={emittingOasisAddress}
-            />
+            {t('runtimeEvent.fields.emittingContract')}:{' '}
+            <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
           </div>
         )
       }
@@ -250,14 +244,8 @@ export const RuntimeEventDetails: FC<{
             </Table>
           )}
           <br />
-          {t('runtimeEvent.fields.emittingContract')}:
-          <br />
-          <WrappedAccountLinkWithAddressSwitch
-            scope={scope}
-            addressSwitchOption={addressSwitchOption}
-            ethAddress={emittingEthAddress}
-            oasisAddress={emittingOasisAddress}
-          />
+          {t('runtimeEvent.fields.emittingContract')}:{' '}
+          <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
         </div>
       )
     }
