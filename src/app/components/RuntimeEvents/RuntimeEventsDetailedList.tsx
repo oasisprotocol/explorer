@@ -9,6 +9,7 @@ import { TextSkeleton } from '../Skeleton'
 import { RuntimeEventDetails } from './RuntimeEventDetails'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import { isGasFeeEvent } from './isGasFeeEvent'
 
 export const RuntimeEventsDetailedList: FC<{
   scope: SearchScope
@@ -25,7 +26,7 @@ export const RuntimeEventsDetailedList: FC<{
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (
-          <div key={`event-${index}`}>
+          <div key={`event-${index}`} style={isGasFeeEvent(event) ? { opacity: 0.5 } : {}}>
             {index > 0 && <Divider variant="card" />}
             <RuntimeEventDetails scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
           </div>
