@@ -7,8 +7,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import Skeleton from '@mui/material/Skeleton'
-import { Layer, RuntimeAccount } from '../../../oasis-nexus/api'
+import { Layer } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import * as externalLinks from '../../utils/externalLinks'
@@ -53,29 +52,6 @@ const StyledPill = styled(Box, {
     },
   }
 })
-
-type ContractVerificationIconProps = {
-  account: Pick<RuntimeAccount, 'address_eth' | 'evm_contract' | 'network' | 'layer'> | undefined
-  noLink?: boolean
-}
-
-const Waiting: FC = () => (
-  <Skeleton
-    variant="text"
-    sx={{ display: 'inline-block', width: '100%', height: verificationIconBoxHeight }}
-  />
-)
-
-export const ContractVerificationIcon: FC<ContractVerificationIconProps> = ({ account, noLink = false }) => {
-  if (!account) {
-    return <Waiting />
-  }
-
-  const verified = !!account.evm_contract?.verification
-  const address_eth = account.address_eth!
-
-  return <VerificationIcon address_eth={address_eth} scope={account} verified={verified} noLink={noLink} />
-}
 
 export const VerificationIcon: FC<{
   address_eth: string

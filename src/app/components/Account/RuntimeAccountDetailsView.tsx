@@ -14,7 +14,7 @@ import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
-import { ContractVerificationIcon } from '../ContractVerificationIcon'
+import { VerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
 import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
@@ -94,7 +94,11 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <>
           <dt>{t('contract.verification.title')}</dt>
           <dd>
-            <ContractVerificationIcon account={account} />
+            <VerificationIcon
+              address_eth={account.address_eth!}
+              scope={account}
+              verified={!!account.evm_contract?.verification}
+            />
           </dd>
         </>
       )}
