@@ -17,7 +17,8 @@ export const RuntimeEventsDetailedList: FC<{
   isError: boolean
   addressSwitchOption: AddressSwitchOption
   pagination: false | TablePaginationProps
-}> = ({ scope, events, isLoading, isError, addressSwitchOption, pagination }) => {
+  showTxHash: boolean
+}> = ({ scope, events, isLoading, isError, addressSwitchOption, pagination, showTxHash }) => {
   const { t } = useTranslation()
   return (
     <>
@@ -27,7 +28,12 @@ export const RuntimeEventsDetailedList: FC<{
         events.map((event, index) => (
           <div key={`event-${index}`}>
             {index > 0 && <Divider variant="card" />}
-            <RuntimeEventDetails scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
+            <RuntimeEventDetails
+              scope={scope}
+              event={event}
+              addressSwitchOption={addressSwitchOption}
+              showTxHash={showTxHash}
+            />
           </div>
         ))}
       {pagination && (

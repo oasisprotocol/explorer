@@ -34,6 +34,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
+import { TransactionLink } from '../Transactions/TransactionLink'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -160,7 +161,7 @@ const EvmLogRow: FC<{
   )
 }
 
-export const RuntimeEventDetails: FC<{
+const RuntimeEventDetailsInner: FC<{
   scope: SearchScope
   event: RuntimeEvent
   addressSwitchOption: AddressSwitchOption
@@ -428,4 +429,24 @@ export const RuntimeEventDetails: FC<{
         </div>
       )
   }
+}
+
+export const RuntimeEventDetails: FC<{
+  scope: SearchScope
+  event: RuntimeEvent
+  addressSwitchOption: AddressSwitchOption
+  showTxHash: boolean
+}> = ({ scope, event, addressSwitchOption, showTxHash }) => {
+  const { t } = useTranslation()
+  return (
+    <div>
+      <RuntimeEventDetailsInner scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
+      {showTxHash && event.tx_hash && (
+        <p>
+          {t('runtimeEvent.fields.emittingTransaction')}:{' '}
+          <TransactionLink scope={event} alwaysTrim hash={event.eth_tx_hash || event.tx_hash} />
+        </p>
+      )}
+    </div>
+  )
 }
