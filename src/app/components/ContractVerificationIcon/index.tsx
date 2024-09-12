@@ -7,10 +7,9 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import { Layer } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
-import { Network } from '../../../types/network'
 import * as externalLinks from '../../utils/externalLinks'
+import { AbiPlaygroundLink } from './AbiPlaygroundLink'
 
 type VerificationStatus = 'verified' | 'unverified'
 
@@ -77,23 +76,6 @@ export const VerificationIcon: FC<{
   const Component = noLink ? Box : Link
   const componentProps = noLink ? {} : sourcifyLinkProps
 
-  const scopeToPlaygroundURL: Record<Network, Partial<Record<Layer, string>>> = {
-    [Network.mainnet]: {
-      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42262&contractAddress=${address_eth}`,
-      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23294&contractAddress=${address_eth}`,
-    },
-    [Network.testnet]: {
-      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42261&contractAddress=${address_eth}`,
-      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23295&contractAddress=${address_eth}`,
-    },
-  }
-  const abiPlaygroundLinkProps = {
-    href: scopeToPlaygroundURL[scope.network]?.[scope.layer],
-    rel: 'noopener noreferrer',
-    target: '_blank',
-    sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
-  }
-
   return (
     <>
       <StyledPill component={Component} verified={verified} address_eth={address_eth} {...componentProps}>
@@ -112,18 +94,7 @@ export const VerificationIcon: FC<{
                 SourcifyLink: <Link {...sourcifyLinkProps} />,
               }}
             />
-            {abiPlaygroundLinkProps.href && (
-              <span>
-                {' | '}
-                <Trans
-                  t={t}
-                  i18nKey={'contract.verification.openInAbiPlayground'}
-                  components={{
-                    AbiPlaygroundLink: <Link {...abiPlaygroundLinkProps} />,
-                  }}
-                />
-              </span>
-            )}
+            <AbiPlaygroundLink address_eth={address_eth} scope={scope} />
           </Typography>
         ) : (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
