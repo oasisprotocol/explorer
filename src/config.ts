@@ -178,15 +178,9 @@ export const isStableDeploy = stableDeploys.some(url => window.location.origin =
 export const getAppTitle = () => process.env.REACT_APP_META_TITLE
 
 export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {
-  if (!scope) {
-    return []
-  }
-
-  if (scope.layer !== Layer.consensus) {
-    return paraTimesConfig[scope.layer][scope.network].tokens
-  } else {
-    return consensusConfig[scope.network].tokens
-  }
+  if (!scope) return []
+  if (scope.layer === Layer.consensus) return consensusConfig[scope.network].tokens
+  return paraTimesConfig[scope.layer][scope.network].tokens
 }
 
 export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
