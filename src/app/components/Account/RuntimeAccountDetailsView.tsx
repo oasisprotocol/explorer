@@ -22,6 +22,7 @@ import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { CardEmptyState } from '../CardEmptyState'
+import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -99,6 +100,15 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
               scope={account}
               verified={!!account.evm_contract?.verification}
             />
+          </dd>
+        </>
+      )}
+
+      {extractMinimalProxyERC1167(account) && (
+        <>
+          <dt>{t('contract.verification.proxyERC1167')}</dt>
+          <dd>
+            <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
           </dd>
         </>
       )}

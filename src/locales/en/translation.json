@@ -175,7 +175,8 @@
       "openInAbiPlayground": "Interact in <AbiPlaygroundLink>ABI Playground</AbiPlaygroundLink>",
       "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>",
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>",
-      "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here."
+      "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here.",
+      "proxyERC1167": "ERC-1167 proxy to"
     }
   },
   "consensusSnapshot": {
