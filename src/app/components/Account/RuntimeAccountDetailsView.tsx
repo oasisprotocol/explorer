@@ -23,6 +23,8 @@ import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { CardEmptyState } from '../CardEmptyState'
 import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
+import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
+import Box from '@mui/material/Box'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -108,7 +110,10 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <>
           <dt>{t('contract.verification.proxyERC1167')}</dt>
           <dd>
-            <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
+            <Box>
+              <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
+              <AbiPlaygroundLink scope={account} address_eth={account.address_eth!} />
+            </Box>
           </dd>
         </>
       )}
