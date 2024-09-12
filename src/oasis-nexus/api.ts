@@ -845,20 +845,13 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                   eth_tx_hash: adjustedHash,
                   body: {
                     ...event.body,
-                    amount:
+                    amount: {
                       // If there's no denomination then use runtime's native. Otherwise unknown (would have to get by token name?).
-                      event.body.amount.Denomination === ''
-                        ? {
-                            ...event.body.amount,
-                            Amount: fromBaseUnits(
-                              event.body.amount.Amount,
-                              paraTimesConfig[runtime].decimals,
-                            ),
-                            Denomination:
-                              event.body?.Denomination ??
-                              getTokensForScope({ network, layer: runtime })[0].ticker,
-                          }
-                        : event.body.amount,
+                      ...event.body.amount,
+                      Amount: fromBaseUnits(event.body.amount.Amount, paraTimesConfig[runtime].decimals),
+                      Denomination:
+                        event.body?.Denomination ?? getTokensForScope({ network, layer: runtime })[0].ticker,
+                    },
                   },
                   layer: runtime,
                   network,
