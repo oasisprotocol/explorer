@@ -36,8 +36,15 @@ export const ParatimeDashboardPage: FC = () => {
         )}
       </Grid>
       {!isMobile && <TopTokens scope={scope} />}
-      <TransactionsStats scope={scope} />
-      <TotalTransactions scope={scope} />
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} lg={6}>
+          <TransactionsStats scope={scope} />
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <TotalTransactions scope={scope} />
+        </Grid>
+      </Grid>
       <Social />
     </PageLayout>
   )
