@@ -215,6 +215,11 @@ const adjustRuntimeTransactionMethod = (
   isLikelyNativeTokenTransfer: boolean | undefined,
 ) => (isLikelyNativeTokenTransfer ? 'accounts.Transfer' : method)
 
+function normalizeSymbol(rawSymbol: string | undefined, scope: SearchScope) {
+  const symbol = rawSymbol || getTokensForScope(scope)[0].ticker
+  return symbol
+}
+
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
   network,
   runtime,
@@ -235,12 +240,14 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
+                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but tx itself
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but amount_symbol
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
+                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
                 layer: runtime,
                 network,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
@@ -316,9 +323,14 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
               return {
                 ...tx,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
+                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but amount_symbol
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
+                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
                 layer: runtime,
                 network,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
