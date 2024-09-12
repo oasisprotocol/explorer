@@ -21,6 +21,7 @@ import { tokenHoldersContainerId } from '../../pages/TokenDashboardPage/TokenHol
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { HighlightedText } from '../../components/HighlightedText'
 import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
+import { extractMinimalProxyERC1167 } from '../../components/ContractVerificationIcon/extractMinimalProxyERC1167'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
   scope,
@@ -65,6 +66,15 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
                 verified={token.is_verified}
               />
             </dd>
+
+            {extractMinimalProxyERC1167(account) && (
+              <>
+                <dt>{t('contract.verification.proxyERC1167')}</dt>
+                <dd>
+                  <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
+                </dd>
+              </>
+            )}
 
             <dt>{t('common.type')} </dt>
             <dd>

@@ -14,7 +14,7 @@ import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
-import { ContractVerificationIcon } from '../ContractVerificationIcon'
+import { VerificationIcon } from '../ContractVerificationIcon'
 import { TokenLink } from '../Tokens/TokenLink'
 import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
@@ -22,6 +22,7 @@ import { calculateFiatValue } from '../Balance/hooks'
 import { FiatMoneyAmount } from '../Balance/FiatMoneyAmount'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { CardEmptyState } from '../CardEmptyState'
+import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -94,7 +95,20 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <>
           <dt>{t('contract.verification.title')}</dt>
           <dd>
-            <ContractVerificationIcon account={account} />
+            <VerificationIcon
+              address_eth={account.address_eth!}
+              scope={account}
+              verified={!!account.evm_contract?.verification}
+            />
+          </dd>
+        </>
+      )}
+
+      {extractMinimalProxyERC1167(account) && (
+        <>
+          <dt>{t('contract.verification.proxyERC1167')}</dt>
+          <dd>
+            <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
           </dd>
         </>
       )}
