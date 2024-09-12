@@ -43,7 +43,6 @@ declare module './generated/api' {
   export interface RuntimeTransaction {
     network: Network
     layer: Layer
-    ticker: Ticker
   }
 
   export interface Block {
@@ -244,8 +243,6 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
-                ticker:
-                  tx.body?.amount?.Denomination || getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
@@ -324,8 +321,6 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
                 amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
                 layer: runtime,
                 network,
-                ticker:
-                  tx.body?.amount?.Denomination || getTokensForScope({ network, layer: runtime })[0].ticker,
                 method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
