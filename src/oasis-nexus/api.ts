@@ -87,10 +87,6 @@ declare module './generated/api' {
     rank: number
   }
 
-  export interface Validator {
-    ticker: Ticker
-  }
-
   export interface Proposal {
     network: Network
     layer: typeof Layer.consensus
