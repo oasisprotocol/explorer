@@ -485,6 +485,7 @@
       "amount": "Amount",
       "data": "Data",
       "emittingContract": "Emitting contract",
+      "emittingTransaction": "Transaction",
       "topics": "Topics",
       "owner": "Owner",
       "activeShares": "Active Shares",

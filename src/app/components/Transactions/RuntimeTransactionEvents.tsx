@@ -41,6 +41,7 @@ export const RuntimeTransactionEvents: FC<{
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: limit,
       }}
+      showTxHash={false}
     />
   )
 }

@@ -31,6 +31,7 @@ export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, add
           isTotalCountClipped,
           rowsPerPage: limit,
         }}
+        showTxHash
       />
     </LinkableCardLayout>
   )

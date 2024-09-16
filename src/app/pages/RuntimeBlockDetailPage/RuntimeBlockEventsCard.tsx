@@ -56,6 +56,7 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: limit,
       }}
+      showTxHash
     />
   )
 }
