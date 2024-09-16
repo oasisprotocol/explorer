@@ -25,7 +25,6 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { RuntimeTransactionEvents } from '../../components/Transactions/RuntimeTransactionEvents'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { Ticker } from '../../../types/ticker'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
@@ -169,8 +168,8 @@ export const RuntimeTransactionDetailView: FC<{
   const from = isOasisAddressFormat ? transaction?.sender_0 : transaction?.sender_0_eth
   const to = isOasisAddressFormat ? transaction?.to : transaction?.to_eth
 
-  const ticker = transaction?.ticker || Ticker.ROSE
-  const tokenPriceInfo = tokenPrices[ticker]
+  // @ts-expect-error Ignore index type error
+  const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
 
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
 
@@ -286,21 +285,21 @@ export const RuntimeTransactionDetailView: FC<{
             {transaction.amount != null
               ? t('common.valueInToken', {
                   ...getPreciseNumberFormat(transaction.amount),
-                  ticker: ticker,
+                  ticker: transaction.amount_symbol,
                 })
               : t('common.missing')}
           </dd>
 
           {showFiatValues &&
             transaction.amount !== undefined &&
-            !!tokenPriceInfo &&
-            !tokenPriceInfo.isLoading &&
-            !tokenPriceInfo.isFree &&
-            tokenPriceInfo.price !== undefined && (
+            !!amountSymbolPriceInfo &&
+            !amountSymbolPriceInfo.isLoading &&
+            !amountSymbolPriceInfo.isFree &&
+            amountSymbolPriceInfo.price !== undefined && (
               <>
                 <dt>{t('currentFiatValue.title')}</dt>
                 <dd>
-                  <CurrentFiatValue amount={transaction.amount} {...tokenPriceInfo} />
+                  <CurrentFiatValue amount={transaction.amount} {...amountSymbolPriceInfo} />
                 </dd>
               </>
             )}
@@ -309,7 +308,7 @@ export const RuntimeTransactionDetailView: FC<{
           <dd>
             {t('common.valueInToken', {
               ...getPreciseNumberFormat(transaction.charged_fee),
-              ticker: ticker,
+              ticker: transaction.fee_symbol,
             })}
           </dd>
 
@@ -319,7 +318,7 @@ export const RuntimeTransactionDetailView: FC<{
               <dd>
                 {t('common.valueInToken', {
                   ...getPreciseNumberFormat(convertToNano(gasPrice)),
-                  ticker: `n${ticker}`,
+                  ticker: `n${transaction.fee_symbol}`,
                 })}
               </dd>
             </>

@@ -146,12 +146,12 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
               },
               {
                 align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.ticker} />,
+                content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.fee_symbol} />,
                 key: 'fee_amount',
               },
               {
                 align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />,
+                content: <RoundedBalance value={transaction.amount} ticker={transaction.amount_symbol} />,
                 key: 'value',
               },
             ]
