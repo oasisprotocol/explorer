@@ -43,11 +43,6 @@ export const useRuntimeListBeforeDate = (scope: SearchScope, offset: number) => 
 
 export const useConsensusListBeforeDate = (scope: SearchScope, offset: number) => {
   const [offsetAssociatedWithDate, setOffsetAssociatedWithDate] = useState<number | undefined>(offset)
-
-  if (scope.layer === Layer.consensus) {
-    throw new AppError(AppErrors.UnsupportedLayer)
-  }
-
   const { data } = useGetStatus(scope.network, {
     query: {
       queryKey: ['consensusStatus', scope.network, offsetAssociatedWithDate],

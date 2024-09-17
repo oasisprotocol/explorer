@@ -18,6 +18,7 @@ import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButt
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { ConsensusBlocks, TableConsensusBlockList } from '../../components/Blocks/ConsensusBlocks'
+import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -35,6 +36,8 @@ export const ConsensusBlocksPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
+  const enablePolling = offset === 0
+  const { beforeDate, setBeforeDateFromCollection } = useConsensusListBeforeDate(scope, offset)
 
   useEffect(() => {
     if (!isMobile) {
@@ -47,25 +50,29 @@ export const ConsensusBlocksPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
+      before: enablePolling ? undefined : beforeDate,
     },
     {
       query: {
-        refetchInterval: REFETCH_INTERVAL,
-        structuralSharing: (previousState, nextState) => {
-          const oldBlockIds = new Set(previousState?.data.blocks.map(block => block.height))
-          return {
-            ...nextState,
-            data: {
-              ...nextState.data,
-              blocks: nextState.data.blocks.map(block => {
-                return {
-                  ...block,
-                  markAsNew: previousState ? !oldBlockIds.has(block.height) : false,
-                }
-              }),
-            },
-          }
-        },
+        enabled: enablePolling || !!beforeDate,
+        refetchInterval: enablePolling ? REFETCH_INTERVAL : undefined,
+        structuralSharing: enablePolling
+          ? (previousState, nextState) => {
+              const oldBlockIds = new Set(previousState?.data.blocks.map(block => block.height))
+              return {
+                ...nextState,
+                data: {
+                  ...nextState.data,
+                  blocks: nextState.data.blocks.map(block => {
+                    return {
+                      ...block,
+                      markAsNew: previousState ? !oldBlockIds.has(block.height) : false,
+                    }
+                  }),
+                },
+              }
+            }
+          : undefined,
         // Keep showing data while loading more
         keepPreviousData: tableView === TableLayout.Vertical,
       },
@@ -74,6 +81,7 @@ export const ConsensusBlocksPage: FC = () => {
 
   const { isLoading, isFetched, data } = blocksQuery
   const blocks = data?.data.blocks
+  setBeforeDateFromCollection(data?.data.blocks[0].timestamp)
 
   if (isFetched && offset && !blocks?.length) {
     throw AppErrors.PageDoesNotExist
