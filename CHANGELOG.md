@@ -12,6 +12,31 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.13.0 (2024-09-18)
+
+### Features
+
+- Detect ERC-1167 Minimal Proxy contracts
+  ([#1538](https://github.com/oasisprotocol/explorer/issues/1538),
+  [#1540](https://github.com/oasisprotocol/explorer/issues/1540))
+
+- Show emitting transaction address in events
+  ([#1544](https://github.com/oasisprotocol/explorer/issues/1544))
+
+### Bug Fixes and Improvements
+
+- Fix displaying negative allowance changes
+  ([#1529](https://github.com/oasisprotocol/explorer/issues/1529))
+
+- Fix non-native event denominations
+  ([#1539](https://github.com/oasisprotocol/explorer/issues/1539))
+
+- Differentiate transaction amount and fee tickers
+  ([#1543](https://github.com/oasisprotocol/explorer/issues/1543))
+
+- Swap Fee and Value labels in columns in list of transactions
+  ([#1547](https://github.com/oasisprotocol/explorer/issues/1547))
+
 ## 1.12.0 (2024-08-29)
 
 ### Features
