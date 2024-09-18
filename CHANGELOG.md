@@ -18,7 +18,7 @@ The format is inspired by [Keep a Changelog].
 
 - Detect ERC-1167 Minimal Proxy contracts
   ([#1538](https://github.com/oasisprotocol/explorer/issues/1538),
-   [#1540](https://github.com/oasisprotocol/explorer/issues/1540))
+  [#1540](https://github.com/oasisprotocol/explorer/issues/1540))
 
 - Show emitting transaction address in events
   ([#1544](https://github.com/oasisprotocol/explorer/issues/1544))
@@ -35,7 +35,7 @@ The format is inspired by [Keep a Changelog].
   ([#1543](https://github.com/oasisprotocol/explorer/issues/1543))
 
 - Swap Fee and Value labels in columns in list of transactions
-  ([#1548](https://github.com/oasisprotocol/explorer/issues/1548))
+  ([#1547](https://github.com/oasisprotocol/explorer/issues/1547))
 
 ## 1.12.0 (2024-08-29)
 
