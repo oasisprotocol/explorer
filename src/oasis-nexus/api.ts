@@ -75,6 +75,10 @@ declare module './generated/api' {
     layer: Layer
   }
 
+  export interface ConsensusEvent {
+    network: Network // TODO add in API layer
+  }
+
   export interface EvmToken {
     network: Network
     layer: Layer

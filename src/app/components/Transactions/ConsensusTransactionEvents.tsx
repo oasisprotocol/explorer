@@ -5,5 +5,6 @@ import { ConsensusEventsList } from '../ConsensusEvents/ConsensusEventsList'
 export const ConsensusTransactionEvents: FC<{
   transaction: Transaction
 }> = () => {
+  // TODO
   return <ConsensusEventsList />
 }

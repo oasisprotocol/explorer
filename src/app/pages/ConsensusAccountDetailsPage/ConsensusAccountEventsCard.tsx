@@ -11,6 +11,7 @@ export const ConsensusAccountEventsCard: FC<ConsensusAccountDetailsContext> = ()
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
+      {/* TODO */}
       <ConsensusEventsList />
     </LinkableCardLayout>
   )

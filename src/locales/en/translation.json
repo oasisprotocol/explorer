@@ -463,10 +463,15 @@
       "recipientTooltipUnavailable": "Recipient not available in selected address format"
     }
   },
-  "runtimeEvent": {
+  "event": {
     "cantLoadEvents": "Unfortunately we couldn't load the list of events. Please try again later.",
-    "noEvents": "No events",
     "cantFindMatchingEvents": "We can't find any matching events.",
+    "noEvents": "No events",
+    "fields": {
+      "emittingTransaction": "Transaction"
+    }
+  },
+  "runtimeEvent": {
     "accountsburn": "Tokens burnt",
     "accountsmint": "Tokens minted",
     "accountstransfer": "Transfer",
@@ -485,7 +490,6 @@
       "amount": "Amount",
       "data": "Data",
       "emittingContract": "Emitting contract",
-      "emittingTransaction": "Transaction",
       "topics": "Topics",
       "owner": "Owner",
       "activeShares": "Active Shares",

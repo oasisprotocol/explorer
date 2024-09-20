@@ -440,7 +440,7 @@ export const RuntimeEventDetails: FC<{
       <RuntimeEventDetailsInner scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
       {showTxHash && event.tx_hash && (
         <p>
-          {t('runtimeEvent.fields.emittingTransaction')}:{' '}
+          {t('event.fields.emittingTransaction')}:{' '}
           <TransactionLink scope={event} alwaysTrim hash={event.eth_tx_hash || event.tx_hash} />
         </p>
       )}
