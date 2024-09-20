@@ -60,7 +60,7 @@
   "dependencies": {
     "@emotion/react": "11.13.3",
     "@emotion/styled": "11.13.0",
-    "@ethereumjs/util": "9.0.3",
+    "@ethereumjs/util": "9.1.0",
     "@fontsource-variable/figtree": "^5.0.19",
     "@fontsource-variable/roboto-mono": "^5.0.17",
     "@metamask/jazzicon": "2.0.0",
