@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGetConsensusEvents } from '../../../oasis-nexus/api'
+import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -19,39 +20,40 @@ const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blo
     limit,
     offset,
   })
-  const { isLoading, isError, data } = eventsQuery
+  const { isFetched, isLoading, data, isError } = eventsQuery
   const events = data?.data.events
+  if (isFetched && pagination.selectedPage > 1 && !events?.length) {
+    throw AppErrors.PageDoesNotExist
+  }
 
-  if (!events?.length && !isLoading) {
+  if (!events?.length && isFetched) {
     return (
       <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
     )
   }
 
   return (
-    <ConsensusEventsList
-      scope={scope}
-      events={events}
-      isLoading={isLoading}
-      isError={isError}
-      pagination={{
-        selectedPage: pagination.selectedPage,
-        linkToPage: pagination.linkToPage,
-        totalCount: data?.data.total_count,
-        isTotalCountClipped: data?.data.is_total_count_clipped,
-        rowsPerPage: limit,
-      }}
-      showTxHash
-    />
+    <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
+      <ConsensusEventsList
+        scope={scope}
+        events={events}
+        isLoading={isLoading}
+        isError={isError}
+        pagination={{
+          selectedPage: pagination.selectedPage,
+          linkToPage: pagination.linkToPage,
+          totalCount: data?.data.total_count,
+          isTotalCountClipped: data?.data.is_total_count_clipped,
+          rowsPerPage: limit,
+        }}
+        showTxHash
+      />
+    </LinkableCardLayout>
   )
 }
 
 export const ConsensusBlockEventsCard: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
-
-  if (!blockHeight) {
-    return null
-  }
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
