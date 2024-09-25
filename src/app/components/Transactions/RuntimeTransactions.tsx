@@ -63,8 +63,8 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
           { key: 'type', content: t('common.type') },
           { key: 'from', content: t('common.from'), width: '150px' },
           { key: 'to', content: t('common.to'), width: '150px' },
-          { key: 'txnFee', content: t('common.fee'), align: TableCellAlign.Right, width: '250px' },
           { key: 'value', align: TableCellAlign.Right, content: t('common.amount'), width: '250px' },
+          { key: 'txnFee', content: t('common.fee'), align: TableCellAlign.Right, width: '250px' },
         ]
       : []),
   ]
@@ -146,13 +146,13 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
               },
               {
                 align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.fee_symbol} />,
-                key: 'fee_amount',
+                content: <RoundedBalance value={transaction.amount} ticker={transaction.amount_symbol} />,
+                key: 'value',
               },
               {
                 align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.amount} ticker={transaction.amount_symbol} />,
-                key: 'value',
+                content: <RoundedBalance value={transaction.charged_fee} ticker={transaction.fee_symbol} />,
+                key: 'fee_amount',
               },
             ]
           : []),
