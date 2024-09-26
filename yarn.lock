@@ -4038,10 +4038,10 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.0.tgz#7d8dacb7fdef0e4387caf7396cbd77f179867d06"
   integrity sha512-Zwq5OCzuwJC2jwqmpEQt7Ds1DTi6BWSwoGkbb1n9pO3hzb35BoJELx7c0T23iDkBGkh2e7tvOtjF3tr3OaQHDQ==
 
-"@plasmohq/parcel-transformer-inject-env@^0.2.11":
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/@plasmohq/parcel-transformer-inject-env/-/parcel-transformer-inject-env-0.2.11.tgz#311d7a019f9b754452e72d33a9744725a292f65d"
-  integrity sha512-eGwwoaDbPPwrRcEgOi/BpLVGe5ttrBhs91NBcKMpE/D5gktfbJPD1zHG8MPtQdE4Iq23aG3JUbiT5clmdwtUhQ==
+"@plasmohq/parcel-transformer-inject-env@^0.2.12":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@plasmohq/parcel-transformer-inject-env/-/parcel-transformer-inject-env-0.2.12.tgz#da6d031111ac58d5ca8105b6596947951166b55d"
+  integrity sha512-QhM5Je0LyuAAJMAXeBEu4YvDirIPXuO2SoxHkwTMIwCMXpstPinnKiElrIoolqZjcxLmDCfsXerXZfbN6NhSlA==
   dependencies:
     "@parcel/core" "2.9.3"
     "@parcel/plugin" "2.9.3"
