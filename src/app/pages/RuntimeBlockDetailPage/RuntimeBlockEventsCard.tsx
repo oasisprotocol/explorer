@@ -34,11 +34,7 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
 
   if (!events?.length && !isLoading) {
     return (
-      <EmptyState
-        description={t('runtimeEvent.cantFindMatchingEvents')}
-        title={t('runtimeEvent.noEvents')}
-        light={true}
-      />
+      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
     )
   }
 

@@ -75,6 +75,10 @@ declare module './generated/api' {
     layer: Layer
   }
 
+  export interface ConsensusEvent {
+    network: Network
+  }
+
   export interface EvmToken {
     network: Network
     layer: Layer
@@ -866,6 +870,44 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                 evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                 eth_tx_hash: adjustedHash,
                 layer: runtime,
+                network,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetConsensusEvents: typeof generated.useGetConsensusEvents = (network, params, options) => {
+  return generated.useGetConsensusEvents(network, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.ConsensusEventList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            events: data.events.map(event => {
+              return {
+                ...event,
+                body: {
+                  ...event.body,
+                  // staking.transfer, staking.escrow.take, staking.escrow.reclaim, staking.escrow.debonding_start, staking.escrow.add
+                  amount: event.body.amount ? fromBaseUnits(event.body.amount, consensusDecimals) : undefined,
+                  // staking.allowance_change
+                  allowance: event.body.allowance
+                    ? fromBaseUnits(event.body.allowance, consensusDecimals)
+                    : undefined,
+                  // staking.allowance_change
+                  amount_change: event.body.amount_change
+                    ? fromBaseUnits(event.body.amount_change, consensusDecimals)
+                    : undefined,
+                },
                 network,
               }
             }),
