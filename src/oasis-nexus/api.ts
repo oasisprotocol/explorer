@@ -219,9 +219,11 @@ const adjustRuntimeTransactionMethod = (
   isLikelyNativeTokenTransfer: boolean | undefined,
 ) => (isLikelyNativeTokenTransfer ? 'accounts.Transfer' : method)
 
-function normalizeSymbol(rawSymbol: string | undefined, scope: SearchScope) {
+/** Replace "" with native denomination, and prohibit unknown denominations */
+function normalizeSymbol(rawSymbol: string | '' | undefined, scope: SearchScope) {
   const symbol = rawSymbol || getTokensForScope(scope)[0].ticker
-  return symbol
+  const whitelistedTickers = getTokensForScope(scope).map(a => a.ticker)
+  return whitelistedTickers.includes(symbol as Ticker) ? symbol : 'n/a'
 }
 
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
