@@ -42,7 +42,7 @@ export const ValidatorDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { address } = useLoaderData() as AddressLoaderData
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
-  const { isLoading, data } = validatorQuery
+  const { isLoading, isFetched, data } = validatorQuery
   const validator = data?.data.validators[0]
   const stats = data?.data.stats
   const transactionsLink = useHref('')
@@ -62,7 +62,7 @@ export const ValidatorDetailsPage: FC = () => {
           <StakingTrend address={address} scope={scope} />
         </StyledGrid>
         <StyledGrid item xs={12} md={6}>
-          <SignedBlocks />
+          <SignedBlocks isLoading={isLoading} isFetched={isFetched} signedBlocks={validator?.signed_blocks} />
         </StyledGrid>
       </Grid>
       <ProposedBlocks scope={scope} validator={validator} />
