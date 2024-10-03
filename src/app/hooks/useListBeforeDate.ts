@@ -3,6 +3,15 @@ import { Layer, useGetRuntimeStatus, useGetStatus } from '../../oasis-nexus/api'
 import { AppError, AppErrors } from 'types/errors'
 import { SearchScope } from 'types/searchScope'
 
+function addOneSecond(timestamp: string | undefined) {
+  if (!timestamp) {
+    return undefined
+  }
+  const date = new Date(timestamp)
+  date.setSeconds(date.getSeconds() + 1)
+  return date.toISOString()
+}
+
 const useListBeforeDate = (
   latestBlockTime: string | undefined,
   offset: number,
@@ -10,14 +19,16 @@ const useListBeforeDate = (
 ) => {
   const [beforeDate, setBeforeDate] = useState<string | undefined>(undefined)
   const setBeforeDateFromCollection = (newDate: string | undefined) => {
-    if (offset === 0 && beforeDate !== newDate) {
-      setBeforeDate(newDate)
+    const adjustedDate = addOneSecond(newDate)
+    // workaround around "before" filter exclusive maximum transaction time.
+    if (offset === 0 && beforeDate !== adjustedDate) {
+      setBeforeDate(adjustedDate)
     }
   }
 
   useEffect(() => {
     if (!beforeDate) {
-      setBeforeDate(latestBlockTime)
+      setBeforeDate(addOneSecond(latestBlockTime))
       setOffsetAssociatedWithDate(offset)
     }
   }, [latestBlockTime, beforeDate, offset, setOffsetAssociatedWithDate])
