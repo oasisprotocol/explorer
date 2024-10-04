@@ -26,7 +26,7 @@ const AccountTransactions: FC<RuntimeAccountDetailsContext> = ({ scope, address 
   const { t } = useTranslation()
 
   const { isLoading, isFetched, transactions, pagination, totalCount, isTotalCountClipped } =
-    useAccountTransactions(scope, address.oasis)
+    useAccountTransactions(scope, address)
   return (
     <>
       {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}

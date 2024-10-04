@@ -24,7 +24,7 @@ export const useAccount = (scope: SearchScope, address: { oasis: string; eth?: s
   return { account, isLoading, isError, isFetched }
 }
 
-export const useAccountTransactions = (scope: SearchScope, address: string) => {
+export const useAccountTransactions = (scope: SearchScope, address: { oasis: string; eth?: string }) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -34,18 +34,17 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusTransactions()
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       limit,
       offset: offset,
-      rel: oasisAddress!,
+      rel: address,
     },
     {
       query: {
-        enabled: !!oasisAddress,
+        enabled: !!address,
       },
     },
   )

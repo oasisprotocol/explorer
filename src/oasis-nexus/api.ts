@@ -16,7 +16,12 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
+import {
+  getAccountSize,
+  getEthAddressForAccount,
+  getOasisAddressOrNull,
+  isValidEthAddress,
+} from '../app/utils/helpers'
 import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
@@ -232,7 +237,12 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
   params?,
   options?,
 ) => {
-  return generated.useGetRuntimeTransactions(network, runtime, params, {
+  const queryParams = {
+    ...params,
+    rel: params?.rel?.oasis,
+  }
+
+  return generated.useGetRuntimeTransactions(network, runtime, queryParams, {
     ...options,
     request: {
       ...options?.request,
@@ -245,6 +255,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                to_eth: !tx.to_eth && tx.to === params?.rel?.oasis ? params?.rel?.eth : tx.to_eth,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
