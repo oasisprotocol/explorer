@@ -33,7 +33,7 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
   const { t } = useTranslation()
   const { address: contractAddress } = useLoaderData() as AddressLoaderData
   const { inventory, isFetched, isLoading, isTotalCountClipped, pagination, totalCount } =
-    useAccountTokenInventory(scope, address, contractAddress)
+    useAccountTokenInventory(scope, address.oasis, contractAddress)
   const firstToken = inventory?.length ? inventory?.[0].token : undefined
 
   return (
