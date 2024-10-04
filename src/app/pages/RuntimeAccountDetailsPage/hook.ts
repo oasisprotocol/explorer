@@ -10,7 +10,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
 import { getOasisAddressOrNull } from '../../utils/helpers'
 
-export const useAccount = (scope: SearchScope, address: string) => {
+export const useAccount = (scope: SearchScope, address: { oasis: string; eth?: string }) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus

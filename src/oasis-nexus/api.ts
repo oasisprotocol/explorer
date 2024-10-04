@@ -400,7 +400,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   options,
 ) => {
   // console.log('Should we get', runtime, '/', address, '?', options?.query?.enabled)
-  const oasisAddress = getOasisAddressOrNull(address)
+  const oasisAddress = address.oasis
 
   const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
     ...options,
@@ -416,7 +416,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return groupAccountTokenBalances({
             ...data,
-            address_eth: getEthAddressForAccount(data, address),
+            address_eth: address.eth ?? getEthAddressForAccount(data, address.oasis),
             evm_contract: data.evm_contract && {
               ...data.evm_contract,
               eth_creation_tx: data.evm_contract.eth_creation_tx

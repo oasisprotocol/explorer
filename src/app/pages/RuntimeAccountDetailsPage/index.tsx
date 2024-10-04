@@ -35,7 +35,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const { address, searchTerm } = useLoaderData() as RuntimeAddressLoaderData
-  const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address.oasis)
+  const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address.oasis, isContract)
 
