@@ -202,7 +202,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
 }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
@@ -233,7 +233,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           <StyledButton variant="text" onClick={handleConfirm}>
             {getNameForScope(t, { network, layer: selectedLayer })}
           </StyledButton>
-          <LayerStatus isOutOfDate={isOutOfDate} withLabel={!isMobile && selectedLayer !== Layer.consensus} />
+          <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
         </Box>
         {children}
         <Link

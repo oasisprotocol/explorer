@@ -17,7 +17,7 @@ const getStatuses = (t: TFunction) => ({
     backgroundColor: COLORS.honeydew,
     icon: CheckCircleIcon,
     iconColor: COLORS.eucalyptus,
-    label: t('paratimes.online'),
+    label: t('common.online'),
   },
   outdated: {
     backgroundColor: TESTNET_COLORS.testnetLight,

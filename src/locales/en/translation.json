@@ -70,8 +70,6 @@
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
     "collection": "Collection",
-    "consensusOnline": "Consensus Online",
-    "consensusOutOfDate": "Consensus out of date",
     "copy": "Copy",
     "data": "Data",
     "debonding": "Debonding",
@@ -152,8 +150,8 @@
     "vote": "Vote",
     "voter": "Voter",
     "votes": "Votes",
-    "paraTimeOnline": "ParaTime Online",
-    "paraTimeOutOfDate": "ParaTime Out of date",
+    "online": "Online",
+    "outOfDate": "Indexing out of date",
     "recipient": "Recipient",
     "mainnet": "Mainnet",
     "testnet": "Testnet",
@@ -559,7 +557,6 @@
     "link": "Oasis Explorer Home",
     "txns": "Txns",
     "zoomOutBtnText": "Zoom out",
-    "online": "Online",
     "offline": "Offline",
     "helpScreen": {
       "navigate": "Navigate using your finger",
@@ -590,7 +587,6 @@
     "listTitle": "ParaTimes",
     "noData": "No data available",
     "nodes": "Nodes:",
-    "online": "Online",
     "outdated": "Out-of-date"
   },
   "pontusx": {

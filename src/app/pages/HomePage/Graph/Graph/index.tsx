@@ -186,7 +186,7 @@ const GraphLayerStatus: FC<
         {children}
         {!outOfDate && (
           <tspan dx="-40" dy="12" fontSize="7px">
-            {t('home.online')}
+            {t('common.online')}
           </tspan>
         )}
         {outOfDate && (

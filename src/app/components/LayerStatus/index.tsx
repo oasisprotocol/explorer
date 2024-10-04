@@ -3,43 +3,41 @@ import { useTranslation } from 'react-i18next'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
 import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
 
 type LayerStatusProps = {
   isOutOfDate?: boolean
-  withLabel?: boolean
+  withTooltip?: boolean
 }
 
-type OutOfDateLayerStatusIconProps = {
+type LayerStatusIconProps = {
   tooltip?: boolean
 }
 
-const OutOfDateLayerStatusIcon: FC<OutOfDateLayerStatusIconProps> = ({ tooltip }) => {
+const OutOfDateLayerStatusIcon: FC<LayerStatusIconProps> = ({ tooltip }) => {
   const { t } = useTranslation()
-  const errorIcon = <ErrorIcon sx={{ marginLeft: 2 }} color="error" fontSize="small" />
+  const errorIcon = <ErrorIcon color="error" fontSize="small" />
 
-  return tooltip ? <Tooltip title={t('common.paraTimeOutOfDate')}>{errorIcon}</Tooltip> : errorIcon
+  return tooltip ? <Tooltip title={t('common.outOfDate')}>{errorIcon}</Tooltip> : errorIcon
 }
 
-export const LayerStatus: FC<LayerStatusProps> = ({ isOutOfDate, withLabel = false }) => {
+const LayerStatusIcon: FC<LayerStatusIconProps> = ({ tooltip }) => {
   const { t } = useTranslation()
+  const successIcon = <CheckCircleIcon color="success" fontSize="small" />
 
+  return tooltip ? <Tooltip title={t('common.online')}>{successIcon}</Tooltip> : successIcon
+}
+
+export const LayerStatus: FC<LayerStatusProps> = ({ isOutOfDate, withTooltip = false }) => {
   if (typeof isOutOfDate === 'undefined') {
     return null
   }
 
   return (
     <>
-      {withLabel && (
-        <Typography sx={{ fontSize: 10, color: COLORS.paraTimeStatus, mr: 3 }} component="span">
-          {isOutOfDate ? t('common.paraTimeOutOfDate') : t('common.paraTimeOnline')}
-        </Typography>
-      )}
       {isOutOfDate ? (
-        <OutOfDateLayerStatusIcon tooltip={!withLabel} />
+        <OutOfDateLayerStatusIcon tooltip={withTooltip} />
       ) : (
-        <CheckCircleIcon sx={{ marginLeft: 2 }} color="success" fontSize="small" />
+        <LayerStatusIcon tooltip={withTooltip} />
       )}
     </>
   )
