@@ -127,18 +127,12 @@ type TooltipInfo = {
   body: GraphTooltipBodyProps
 }
 
-const layerTooltipBodyCaption = (t: TFunction, layer: Layer, enabled: boolean, outOfDate = false) => {
+const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate = false) => {
   if (!enabled) {
     return t('home.tooltip.coming')
   }
 
-  return layer === Layer.consensus
-    ? outOfDate
-      ? t('common.consensusOutOfDate')
-      : t('common.consensusOnline')
-    : outOfDate
-      ? t('common.paraTimeOutOfDate')
-      : t('common.paraTimeOnline')
+  return outOfDate ? t('common.outOfDate') : t('common.online')
 }
 
 const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, TooltipInfo>> => {
@@ -155,8 +149,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
       disabled: !isSapphireEnabled,
       body: {
         title: (t: TFunction) => t('common.sapphire'),
-        caption: (t: TFunction) =>
-          layerTooltipBodyCaption(t, Layer.sapphire, isSapphireEnabled, isSapphireOutOfDate),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isSapphireEnabled, isSapphireOutOfDate),
         body: (t: TFunction) => t('home.tooltip.sapphireParaTimeDesc'),
       },
       ...(isSapphireEnabled
@@ -169,8 +162,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
       disabled: !isEmeraldEnabled,
       body: {
         title: (t: TFunction) => t('common.emerald'),
-        caption: (t: TFunction) =>
-          layerTooltipBodyCaption(t, Layer.emerald, isEmeraldEnabled, isEmeraldOutOfDate),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isEmeraldEnabled, isEmeraldOutOfDate),
         body: (t: TFunction) => t('home.tooltip.emeraldParaTimeDesc'),
       },
       ...(isEmeraldEnabled
@@ -183,7 +175,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
       disabled: !isCipherEnabled,
       body: {
         title: (t: TFunction) => t('common.cipher'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, Layer.cipher, isCipherEnabled),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isCipherEnabled),
         body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },
@@ -191,8 +183,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
       disabled: !isConsensusEnabled,
       body: {
         title: (t: TFunction) => t('common.consensus'),
-        caption: (t: TFunction) =>
-          layerTooltipBodyCaption(t, Layer.consensus, isConsensusEnabled, isConsensusOutOfDate),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isConsensusEnabled, isConsensusOutOfDate),
         body: (t: TFunction) => t('home.tooltip.consensusDesc'),
       },
       ...(isConsensusEnabled
