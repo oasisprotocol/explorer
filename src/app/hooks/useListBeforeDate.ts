@@ -3,6 +3,7 @@ import { Layer, useGetRuntimeStatus, useGetStatus } from '../../oasis-nexus/api'
 import { AppError, AppErrors } from 'types/errors'
 import { SearchScope } from 'types/searchScope'
 
+// Workaround around "before" filter exclusive maximum transaction time
 function addOneSecond(timestamp: string | undefined) {
   if (!timestamp) {
     return undefined
@@ -20,7 +21,7 @@ const useListBeforeDate = (
   const [beforeDate, setBeforeDate] = useState<string | undefined>(undefined)
   const setBeforeDateFromCollection = (newDate: string | undefined) => {
     const adjustedDate = addOneSecond(newDate)
-    // workaround around "before" filter exclusive maximum transaction time.
+    // Prevents infinite loop re-renders
     if (offset === 0 && beforeDate !== adjustedDate) {
       setBeforeDate(adjustedDate)
     }
@@ -28,6 +29,8 @@ const useListBeforeDate = (
 
   useEffect(() => {
     if (!beforeDate) {
+      // When view is init on page other than 1, we don't know the first tx timestamp in collection.
+      // We rely on status endpoint "latest_block_time" prop
       setBeforeDate(addOneSecond(latestBlockTime))
       setOffsetAssociatedWithDate(offset)
     }
