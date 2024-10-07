@@ -2,6 +2,7 @@ import path from 'path'
 import type { StorybookConfig } from '@storybook/react-webpack5'
 
 const appSource = path.resolve(__dirname, '../src/app')
+const srcFolder = path.resolve(__dirname, '../src')
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -53,6 +54,7 @@ const config: StorybookConfig = {
           'app/hooks': path.resolve(appSource, 'hooks'),
           'app/components': path.resolve(appSource, 'components'),
           'app/utils': path.resolve(appSource, 'utils'),
+          'types/errors': path.resolve(srcFolder, 'types/errors'),
         },
       },
       module: {
