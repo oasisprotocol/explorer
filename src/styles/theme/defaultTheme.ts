@@ -644,7 +644,7 @@ export const defaultTheme = createTheme({
         head: {
           border: 0,
           color: COLORS.grayDark,
-          fontWeight: 400,
+          fontWeight: 700,
         },
       },
     },
