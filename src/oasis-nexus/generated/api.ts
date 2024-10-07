@@ -688,6 +688,45 @@ export type EvmNftListAllOf = {
 
 export type EvmNftList = List & EvmNftListAllOf;
 
+export interface EvmTokenSwap {
+  /** The round when this swap pair was created.
+ */
+  create_round?: number;
+  /** The Oasis address of the swap factory contract.
+ */
+  factory_address?: string;
+  /** The Ethereum-compatible address of the swap factory contract.
+ */
+  factory_address_eth?: string;
+  /** The round when this swap pair last updated its reserves.
+ */
+  last_sync_round?: number;
+  /** The Oasis address of the swap pair contract.
+ */
+  pair_address: string;
+  /** The Ethereum-compatible address of the swap pair contract.
+ */
+  pair_address_eth?: string;
+  /** The swap's liquidity pool of the first token, in that token's base units.
+ */
+  reserve0?: TextBigInt;
+  /** The swap's liquidity pool of the second token, in that token's base units.
+ */
+  reserve1?: TextBigInt;
+  /** The Oasis address of the first token in this swap.
+ */
+  token0_address?: string;
+  /** The Ethereum-compatible address of the first token in this swap
+ */
+  token0_address_eth?: string;
+  /** The Oasis address of the second token in this swap.
+ */
+  token1_address?: string;
+  /** The Ethereum-compatible address of the second token in this swap.
+ */
+  token1_address_eth?: string;
+}
+
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
   contract_addr: string;
@@ -715,6 +754,28 @@ DEPRECATED: This field will be removed in the future in favor of verification_le
   /** The total number of transfers of this token.
  */
   num_transfers?: number;
+  /** Information about a swap contract between this token and a
+reference token. The relative price and relative total value of
+this token are estimated based on this swap contract.
+ */
+  ref_swap?: EvmTokenSwap;
+  /** Information about the reference token. The relative price and
+relative total value are expressed in this reference token's base
+unit.
+ */
+  ref_token?: EvmRefToken;
+  /** The relative price of one base unit of this token is this many of
+the relative token's base unit.
+ */
+  relative_price?: number;
+  /** The relative price and relative total value are expressed in this
+reference token's base unit.
+ */
+  relative_token_address?: string;
+  /** The relative price of this token multiplied by this token's total
+supply, in the relative token's base unit.
+ */
+  relative_total_value?: number;
   /** Symbol of the token, as provided by token contract's `symbol()` method. */
   symbol?: string;
   /** The total number of base units available. */
@@ -778,6 +839,24 @@ export const EvmTokenType = {
   ERC20: 'ERC20',
   ERC721: 'ERC721',
 } as const;
+
+export interface EvmRefToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+}
 
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
@@ -852,10 +931,10 @@ For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_pr
 For other transactions this equals to `fee`.
  */
   charged_fee: string;
-  /** The data relevant to the encrypted transaction. Only present for encrypted
+  /** The data relevant to the EVM encrypted transaction. Only present for encrypted
 transactions in confidential EVM runtimes like Sapphire.
 Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
  */
   encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** Error details of a failed transaction. */
@@ -917,6 +996,11 @@ May be null if the transaction was malformed or encrypted.
   method?: string;
   /** The nonce used with this transaction's 0th signer, to prevent replay. */
   nonce_0: number;
+  /** The data relevant to the Oasis-style encrypted transaction.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** The block round at which this transaction was executed. */
   round: number;
   /** The Oasis address of this transaction's 0th signer.
@@ -1101,7 +1185,7 @@ will add a field specifying the corresponding Ethereum address, if known. Curren
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
-  /** Ethereum trasnsaction hash of this event's originating transaction.
+  /** Ethereum transaction hash of this event's originating transaction.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
@@ -1210,7 +1294,7 @@ export const ProposalState = {
 } as const;
 
 /**
- * The target propotocol versions for this upgrade proposal.
+ * The target protocol versions for this upgrade proposal.
  */
 export interface ProposalTarget {
   consensus_protocol?: string;
@@ -1365,7 +1449,7 @@ this links the Oasis address and the Ethereum address.
 Oasis addresses are derived from a piece of data, such as an ed25519
 public key or an Ethereum address. For example, [this](https://github.com/oasisprotocol/oasis-sdk/blob/b37e6da699df331f5a2ac62793f8be099c68469c/client-sdk/go/helpers/address.go#L90-L91)
 is how an Ethereum is converted to an Oasis address. The type of underlying data usually also
-determines how the signatuers for this address are verified.
+determines how the signatures for this address are verified.
 
 Consensus supports only "staking addresses" (`context="oasis-core/address: staking"`
 below; always ed25519-backed).
@@ -1436,21 +1520,21 @@ export type NodeListAllOf = {
 export type NodeList = List & NodeListAllOf;
 
 export interface ValidatorHistoryPoint {
-  /** The amount of tokens that were delegated to this validator account, 
+  /** The amount of tokens that were delegated to this validator account,
 at the start of this epoch, and are NOT in the process of debonding.
  */
   active_balance?: TextBigInt;
-  /** The shares of tokens that were delegated to this validator account, 
+  /** The shares of tokens that were delegated to this validator account,
 at the start of this epoch, and are NOT in the process of debonding.
  */
   active_shares?: TextBigInt;
   /** The amount of tokens that were delegated to this validator account
-at the start of this epoch, but are also in the process of debonding 
+at the start of this epoch, but are also in the process of debonding
 (i.e. they will be unstaked within ~2 weeks).
  */
   debonding_balance?: TextBigInt;
   /** The shares of tokens that were delegated to this validator account
-at the start of this epoch, but are also in the process of debonding 
+at the start of this epoch, but are also in the process of debonding
 (i.e. they will be unstaked within ~2 weeks).
  */
   debonding_shares?: TextBigInt;
@@ -1652,7 +1736,7 @@ fields.
   /** The runtime that sent this message.
  */
   runtime: string;
-  /** The type of thies message.
+  /** The type of this message.
  */
   type?: RoothashMessageType;
 }
@@ -1783,7 +1867,7 @@ will be true:
   /** The error parameters, as decoded using the contract abi. Present only when
 - the error originated from within a smart contract (e.g. via `revert` in Solidity), and
 - the contract is verified or the revert reason is a plain String.
-If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
+If this field is present, `message` will include the name of the error, e.g. 'InsufficientBalance'.
 Note that users should be cautious when evaluating error data since the
 data origin is not tracked and error information can be faked.
  */
@@ -1838,8 +1922,6 @@ to pay to execute it.
 export type TransactionListAllOf = {
   transactions: Transaction[];
 };
-
-export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -1906,8 +1988,6 @@ export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
 };
 
-export type DebondingDelegationList = List & DebondingDelegationListAllOf;
-
 /**
  * A delegation.
 
@@ -1934,6 +2014,29 @@ export type DelegationListAllOf = {
 export type DelegationList = List & DelegationListAllOf;
 
 /**
+ * Light-weight entity information, containing only its ID, address and registry metadata.
+ */
+export interface EntityInfo {
+  /** Address of the entity owning the node, in Bech32 format (`oasis1...`). */
+  entity_address?: string;
+  /** The ID of the entity owning the node; this corresponds to the entity's public key in base64. */
+  entity_id?: string;
+  /** Metadata about an entity, if available. See [the metadata registry](https://github.com/oasisprotocol/metadata-registry) for details.
+
+When available, it is an object with some subset of the following fields:
+
+- `v`: The version of the metadata structure (always present).
+- `serial`: The serial number of the metadata statement (always present).
+- `name`: The name of the entity.
+- `url`: The URL associated with the entity.
+- `email`: The email address associated with the entity.
+- `keybase`: Tne entity's keybase.io handle.
+- `twitter`: The twitter handle associated with the entity.
+ */
+  entity_metadata?: unknown;
+}
+
+/**
  * A consensus block.
 
  */
@@ -1951,6 +2054,10 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   height: number;
   /** Number of transactions in the block. */
   num_transactions: number;
+  /** The entity that proposed this block. */
+  proposer?: EntityInfo;
+  /** A list of the entities that signed the block. */
+  signers?: EntityInfo[];
   /** The size limit for the block in bytes.
  */
   size_limit?: TextBigInt;
@@ -1985,6 +2092,10 @@ the query would return with limit=infinity.
  */
   total_count: number;
 }
+
+export type TransactionList = List & TransactionListAllOf;
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A list of consensus blocks.
@@ -2359,7 +2470,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const GetConsensusTransactionsTxHash = (
     network: 'mainnet' | 'testnet',
@@ -2368,7 +2479,7 @@ export const GetConsensusTransactionsTxHash = (
 ) => {
       
       
-      return GetConsensusTransactionsTxHashMutator<Transaction>(
+      return GetConsensusTransactionsTxHashMutator<TransactionList>(
       {url: `/${encodeURIComponent(String(network))}/consensus/transactions/${encodeURIComponent(String(txHash))}`, method: 'GET', signal
     },
       options);
@@ -2404,7 +2515,7 @@ export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<Retu
 export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
