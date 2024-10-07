@@ -17,6 +17,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
 import { getFiatCurrencyForScope } from '../../../config'
+import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -27,7 +28,8 @@ export const RuntimeTransactionsPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()
-
+  const enablePolling = offset === 0
+  const { beforeDate, setBeforeDateFromCollection } = useRuntimeListBeforeDate(scope, offset)
   // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
   if (scope.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
@@ -49,25 +51,29 @@ export const RuntimeTransactionsPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
+      before: enablePolling ? undefined : beforeDate,
     },
     {
       query: {
-        refetchInterval: REFETCH_INTERVAL,
-        structuralSharing: (previousState, nextState) => {
-          const oldTxHashes = new Set(previousState?.data.transactions.map(tx => tx.hash))
-          return {
-            ...nextState,
-            data: {
-              ...nextState.data,
-              transactions: nextState.data.transactions.map(tx => {
-                return {
-                  ...tx,
-                  markAsNew: previousState ? !oldTxHashes.has(tx.hash) : false,
-                }
-              }),
-            },
-          }
-        },
+        enabled: enablePolling || !!beforeDate,
+        refetchInterval: enablePolling ? REFETCH_INTERVAL : undefined,
+        structuralSharing: enablePolling
+          ? (previousState, nextState) => {
+              const oldTxHashes = new Set(previousState?.data.transactions.map(tx => tx.hash))
+              return {
+                ...nextState,
+                data: {
+                  ...nextState.data,
+                  transactions: nextState.data.transactions.map(tx => {
+                    return {
+                      ...tx,
+                      markAsNew: previousState ? !oldTxHashes.has(tx.hash) : false,
+                    }
+                  }),
+                },
+              }
+            }
+          : undefined,
         // Keep showing data while loading more
         keepPreviousData: tableView === TableLayout.Vertical,
       },
@@ -77,6 +83,7 @@ export const RuntimeTransactionsPage: FC = () => {
   const { isLoading, isFetched, data } = transactionsQuery
 
   const transactions = data?.data.transactions
+  setBeforeDateFromCollection(data?.data.transactions[0].timestamp)
 
   if (isFetched && pagination.selectedPage > 1 && !transactions?.length) {
     throw AppErrors.PageDoesNotExist
