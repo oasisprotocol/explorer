@@ -10,6 +10,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
+import { RuntimeTransaction } from '../../../oasis-nexus/api'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -35,6 +36,21 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
   }
 }
 
+/**
+ * The method call body. Defined by the runtime.
+ *
+ * May be undefined if the transaction was malformed.
+ *
+ * In theory, this could be any string as the runtimes evolve.
+ * In practice, the nexus currently expects only the following methods:
+ *   - "accounts.Transfer"
+ *   - "consensus.Deposit"
+ *   - "consensus.Withdraw"
+ *   - "consensus.Delegate"
+ *   - "consensus.Undelegate"
+ *   - "evm.Create"
+ *   - "evm.Call"
+ */
 const getRuntimeTransactionIcon = (method: string | undefined, label: string, truncate?: boolean) => {
   const props = {
     border: false,
@@ -63,28 +79,20 @@ const getRuntimeTransactionIcon = (method: string | undefined, label: string, tr
 }
 
 type RuntimeTransactionLabelProps = {
-  /**
-   * The method call body. Defined by the runtime.
-   *
-   * May be undefined if the transaction was malformed.
-   *
-   * In theory, this could be any string as the runtimes evolve.
-   * In practice, the nexus currently expects only the following methods:
-   *   - "accounts.Transfer"
-   *   - "consensus.Deposit"
-   *   - "consensus.Withdraw"
-   *   - "consensus.Delegate"
-   *   - "consensus.Undelegate"
-   *   - "evm.Create"
-   *   - "evm.Call"
-   */
-  method?: string
+  transaction: RuntimeTransaction
   truncate?: boolean
 }
 
-export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ method, truncate }) => {
+export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ transaction, truncate }) => {
   const { t } = useTranslation()
-  const label = getRuntimeTransactionLabel(t, method)
+  let label = getRuntimeTransactionLabel(t, transaction.method)
+  if (transaction.evm_fn_name) {
+    if (truncate) {
+      label = `${transaction.evm_fn_name}`
+    } else {
+      label += `: ${transaction.evm_fn_name}`
+    }
+  }
 
-  return <>{getRuntimeTransactionIcon(method, label, truncate)}</>
+  return <>{getRuntimeTransactionIcon(transaction.method, label, truncate)}</>
 }
