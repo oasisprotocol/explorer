@@ -90,7 +90,7 @@ export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ tra
     if (truncate) {
       label = `${transaction.evm_fn_name}`
     } else {
-      label += `: ${transaction.evm_fn_name}`
+      label += `: ${transaction.evm_fn_name}(${transaction.evm_fn_params?.map(a => JSON.stringify(a.value)).join(', ')})`
     }
   }
 
