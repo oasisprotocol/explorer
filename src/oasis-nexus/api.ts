@@ -281,6 +281,16 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.TransactionList, headers, status) => {
           if (status !== 200) return data
+
+          // Temporary workaround for old Nexus instances
+          if (!('transactions' in data)) {
+            data = {
+              is_total_count_clipped: false,
+              total_count: 1,
+              transactions: [data],
+            }
+          }
+
           return {
             ...data,
             transactions: data.transactions.map(tx => {
