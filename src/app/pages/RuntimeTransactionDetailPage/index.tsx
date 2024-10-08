@@ -1,22 +1,15 @@
 import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import {
-  Layer,
-  RuntimeTransaction,
-  RuntimeTransactionList,
-  useGetRuntimeTransactionsTxHash,
-} from '../../../oasis-nexus/api'
+import { Layer, RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { StatusIcon } from '../../components/StatusIcon'
 import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { styled } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AccountLink } from '../../components/Account/AccountLink'
-import Alert from '@mui/material/Alert'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { AppErrors } from '../../../types/errors'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -36,42 +29,8 @@ import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
-
-type TransactionSelectionResult = {
-  wantedTransaction?: RuntimeTransaction
-  warningMultipleTransactionsSameHash?: boolean
-}
-
-/**
- * Find the wanted transaction, in case there are more.
- *
- * Normally we want the successful one. If there is none, then the latest.
- */
-function useWantedTransaction(
-  transactionsList: RuntimeTransactionList | undefined,
-): TransactionSelectionResult {
-  const transactions = transactionsList?.transactions ?? []
-
-  if (!transactions.length) {
-    // Loading or error
-    return {}
-  } else if (transactions.length === 1) {
-    return {
-      wantedTransaction: transactions[0],
-    }
-  } else {
-    const successfulOne = transactions.find(transaction => transaction.success)
-    const latestOne = transactions.sort((a, b) => b.round - a.round)[0]
-    return {
-      warningMultipleTransactionsSameHash: true,
-      wantedTransaction: successfulOne ?? latestOne,
-    }
-  }
-}
-
-const StyledAlert = styled(Alert)(() => ({
-  marginBottom: '1em',
-}))
+import { useWantedTransaction } from '../../hooks/useWantedTransaction'
+import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -107,9 +66,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
   }
   return (
     <PageLayout>
-      {warningMultipleTransactionsSameHash && (
-        <StyledAlert severity="error">{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
-      )}
+      <MultipleTransactionsWarning enable={warningMultipleTransactionsSameHash} />
       <SubPageCard
         featured
         title={t('transaction.header')}

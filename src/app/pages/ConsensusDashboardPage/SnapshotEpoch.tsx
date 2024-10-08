@@ -25,7 +25,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
   const blockHeight = statusQuery?.data?.data.latest_block
   const epochsQuery = useGetConsensusEpochs(scope.network, { limit: epochsLimit })
   const epochs = epochsQuery.data?.data.epochs
-  const epoch = epochs && epochs[0].id
+  const epoch = epochs?.length && epochs[0].id
   let percentageValue = undefined
 
   if (epochs && epochs[1]?.end_height && blockHeight) {

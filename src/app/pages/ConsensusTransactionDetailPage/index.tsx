@@ -23,6 +23,8 @@ import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
 import { getFiatCurrencyForScope } from '../../../config'
+import { useWantedTransaction } from '../../hooks/useWantedTransaction'
+import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -34,13 +36,16 @@ export const ConsensusTransactionDetailPage: FC = () => {
   const hash = useParams().hash!
   const { isLoading, data } = useGetConsensusTransactionsTxHash(scope.network, hash)
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
-  const transaction = data?.data
+  const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(
+    data?.data,
+  )
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
   }
 
   return (
     <PageLayout>
+      <MultipleTransactionsWarning enable={warningMultipleTransactionsSameHash} />
       <SubPageCard featured title={t('transaction.header')}>
         <ConsensusTransactionDetailView
           detailsPage
