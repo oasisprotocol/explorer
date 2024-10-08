@@ -85,7 +85,14 @@ type RuntimeTransactionLabelProps = {
 
 export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ transaction, truncate }) => {
   const { t } = useTranslation()
-  const label = getRuntimeTransactionLabel(t, transaction.method)
+  let label = getRuntimeTransactionLabel(t, transaction.method)
+  if (transaction.evm_fn_name) {
+    if (truncate) {
+      label = `${transaction.evm_fn_name}`
+    } else {
+      label += `: ${transaction.evm_fn_name}`
+    }
+  }
 
   return <>{getRuntimeTransactionIcon(transaction.method, label, truncate)}</>
 }
