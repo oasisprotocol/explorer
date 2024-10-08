@@ -11,7 +11,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { StatusIcon } from '../../components/StatusIcon'
-import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
+import { RuntimeTransactionEVMParams, RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { styled } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -30,12 +30,13 @@ import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import { TransactionEncryptionStatus } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
-import { LongDataDisplay } from '../../components/LongDataDisplay'
+import { LongDataDisplay, LongElementDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
+import Box from '@mui/material/Box'
 
 type TransactionSelectionResult = {
   wantedTransaction?: RuntimeTransaction
@@ -226,8 +227,14 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.type')}</dt>
           <dd>
-            <RuntimeTransactionMethod method={transaction.method} />
+            <LongElementDisplay>
+              <Box alignItems={'start'}>
+                <RuntimeTransactionMethod transaction={transaction} />
+              </Box>
+            </LongElementDisplay>
           </dd>
+
+          <RuntimeTransactionEVMParams transaction={transaction} />
 
           <dt>{t('transactions.encryption.format')}</dt>
           <dd>

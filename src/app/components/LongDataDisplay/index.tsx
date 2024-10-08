@@ -1,9 +1,10 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import Box from '@mui/material/Box'
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -31,16 +32,29 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
   fontWeight = 700,
   collapsedLinesNumber = 2,
 }) => {
+  return (
+    <LongElementDisplay collapsedLinesNumber={collapsedLinesNumber}>
+      <Typography variant="mono" sx={{ fontWeight }}>
+        {data}
+      </Typography>
+    </LongElementDisplay>
+  )
+}
+
+export const LongElementDisplay: FC<{ children: React.ReactNode; collapsedLinesNumber?: number }> = ({
+  children,
+  collapsedLinesNumber = 2,
+}) => {
   const { t } = useTranslation()
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverflowing, setIsOverflowing] = useState(false)
-  const textRef = useRef<HTMLDivElement | null>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   const collapsedContainerMaxHeight = collapsedLinesNumber * lineHeight
 
   useEffect(() => {
     const checkOverflow = () => {
-      if (textRef.current) {
-        const isOverflow = textRef.current.scrollHeight > textRef.current.clientHeight
+      if (ref.current) {
+        const isOverflow = ref.current.scrollHeight > ref.current.clientHeight
         setIsOverflowing(isOverflow)
       }
     }
@@ -52,15 +66,13 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
 
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [data])
+  }, [children])
 
   return (
     <div>
-      <Typography
-        variant="mono"
-        ref={textRef}
+      <Box
+        ref={ref}
         sx={{
-          fontWeight,
           maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
           overflow: 'hidden',
           lineHeight: `${lineHeight}px`,
@@ -70,8 +82,8 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
           WebkitBoxOrient: 'vertical',
         }}
       >
-        {data}
-      </Typography>
+        {children}
+      </Box>
       {(isOverflowing || isExpanded) && (
         <StyledButton onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? t('common.hide') : t('common.show')}
