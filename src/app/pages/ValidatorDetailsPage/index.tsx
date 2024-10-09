@@ -65,7 +65,7 @@ export const ValidatorDetailsPage: FC = () => {
           <SignedBlocks />
         </StyledGrid>
       </Grid>
-      <ProposedBlocks scope={scope} />
+      <ProposedBlocks scope={scope} validator={validator} />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: transactionsLink },
