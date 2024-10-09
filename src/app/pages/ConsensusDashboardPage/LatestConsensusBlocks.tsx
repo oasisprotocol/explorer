@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { useGetConsensusBlocks } from '../../../oasis-nexus/api'
-import { ConsensusBlocks, BlocksTableType } from '../../components/Blocks'
+import { ConsensusBlocks } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
@@ -51,7 +51,7 @@ export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => 
           blocks={blocksQuery.data?.data.blocks}
           limit={limit}
           pagination={false}
-          type={isMobile ? BlocksTableType.Mobile : BlocksTableType.DesktopLite}
+          showHash={!isMobile}
         />
       </CardContent>
     </Card>

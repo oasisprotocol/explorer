@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { useGetConsensusBlocks } from '../../../oasis-nexus/api'
-import { BlocksTableType } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusBlockDetailView } from '../ConsensusBlockDetailPage'
@@ -105,7 +104,6 @@ export const ConsensusBlocksPage: FC = () => {
             isLoading={isLoading}
             blocks={blocks}
             limit={PAGE_SIZE}
-            type={BlocksTableType.Desktop}
             pagination={{
               selectedPage: pagination.selectedPage,
               linkToPage: pagination.linkToPage,
