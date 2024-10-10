@@ -671,6 +671,7 @@
     "signed": "Signed",
     "signedBlocks": "Signed Blocks",
     "signedBlocksDescription": "Last 100 blocks",
+    "signedBlocksPercentage": "Percentage of blocks signed in the past 24h",
     "proposedBlocks": "Proposed Blocks",
     "snapshot": "Validator Snapshot",
     "self": "Self",
