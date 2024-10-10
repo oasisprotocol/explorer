@@ -13,7 +13,7 @@ export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, add
   const { t } = useTranslation()
   const { isLoading, isError, events, pagination, totalCount, isTotalCountClipped } = useAccountEvents(
     scope,
-    address,
+    address.oasis,
   )
 
   return (

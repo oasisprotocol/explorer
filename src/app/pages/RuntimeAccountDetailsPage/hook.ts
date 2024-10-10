@@ -10,7 +10,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
 import { getOasisAddressOrNull } from '../../utils/helpers'
 
-export const useAccount = (scope: SearchScope, address: string) => {
+export const useAccount = (scope: SearchScope, address: { oasis: string; eth?: string }) => {
   const { network, layer } = scope
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
@@ -24,7 +24,7 @@ export const useAccount = (scope: SearchScope, address: string) => {
   return { account, isLoading, isError, isFetched }
 }
 
-export const useAccountTransactions = (scope: SearchScope, address: string) => {
+export const useAccountTransactions = (scope: SearchScope, address: { oasis: string; eth?: string }) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -34,18 +34,17 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusTransactions()
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       limit,
       offset: offset,
-      rel: oasisAddress!,
+      rel: address,
     },
     {
       query: {
-        enabled: !!oasisAddress,
+        enabled: !!address,
       },
     },
   )

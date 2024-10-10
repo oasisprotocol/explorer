@@ -16,12 +16,15 @@ import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { eventsContainerId } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
-import { AddressLoaderData } from '../../utils/route-utils'
+import { RuntimeAddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
 
 export type RuntimeAccountDetailsContext = {
   scope: SearchScope
-  address: string
+  address: {
+    oasis: string
+    eth?: string
+  }
   account?: RuntimeAccount
 }
 
@@ -31,10 +34,10 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRequiredScopeParam()
-  const { address, searchTerm } = useLoaderData() as AddressLoaderData
+  const { address, searchTerm } = useLoaderData() as RuntimeAddressLoaderData
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
-  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
+  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address.oasis, isContract)
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 

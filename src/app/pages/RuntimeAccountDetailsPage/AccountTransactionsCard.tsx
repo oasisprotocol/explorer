@@ -32,7 +32,7 @@ const AccountTransactions: FC<RuntimeAccountDetailsContext> = ({ scope, address 
       {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
       <RuntimeTransactions
         transactions={transactions}
-        ownAddress={address}
+        ownAddress={address.oasis}
         isLoading={isLoading}
         limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
         pagination={{

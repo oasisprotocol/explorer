@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { isValidProposalId, isValidTxHash, isValidTxOasisHash } from './helpers'
+import { getEvmBech32Address, isValidProposalId, isValidTxHash, isValidTxOasisHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
@@ -294,6 +294,14 @@ export type AddressLoaderData = {
   searchTerm: string
 }
 
+export type RuntimeAddressLoaderData = {
+  address: {
+    oasis: string
+    eth?: string
+  }
+  searchTerm: string
+}
+
 const validateProposalIdParam = (proposalId: string) => {
   const isValid = isValidProposalId(proposalId)
   if (!isValid) {
@@ -315,10 +323,16 @@ export const consensusAddressParamLoader =
 
 export const runtimeAddressParamLoader =
   (queryParam: string = 'address') =>
-  ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
-    validateRuntimeAddressParam(params[queryParam]!)
+  ({ params, request }: LoaderFunctionArgs): RuntimeAddressLoaderData => {
+    const addressParam = params[queryParam]!
+    validateRuntimeAddressParam(addressParam)
+    const oasisAddress = isValidOasisAddress(addressParam) ? addressParam : getEvmBech32Address(addressParam)
+
     return {
-      address: params[queryParam]!,
+      address: {
+        oasis: oasisAddress,
+        eth: isValidEthAddress(addressParam) ? addressParam : undefined,
+      },
       searchTerm: getSearchTermFromRequest(request),
     }
   }
