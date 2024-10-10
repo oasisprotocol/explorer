@@ -33,22 +33,20 @@ const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blo
   }
 
   return (
-    <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
-      <ConsensusEventsList
-        scope={scope}
-        events={events}
-        isLoading={isLoading}
-        isError={isError}
-        pagination={{
-          selectedPage: pagination.selectedPage,
-          linkToPage: pagination.linkToPage,
-          totalCount: data?.data.total_count,
-          isTotalCountClipped: data?.data.is_total_count_clipped,
-          rowsPerPage: limit,
-        }}
-        showTxHash
-      />
-    </LinkableCardLayout>
+    <ConsensusEventsList
+      scope={scope}
+      events={events}
+      isLoading={isLoading}
+      isError={isError}
+      pagination={{
+        selectedPage: pagination.selectedPage,
+        linkToPage: pagination.linkToPage,
+        totalCount: data?.data.total_count,
+        isTotalCountClipped: data?.data.is_total_count_clipped,
+        rowsPerPage: limit,
+      }}
+      showTxHash
+    />
   )
 }
 
