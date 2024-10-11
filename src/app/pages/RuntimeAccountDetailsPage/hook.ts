@@ -34,19 +34,13 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusTransactions()
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       limit,
       offset: offset,
-      rel: oasisAddress!,
-    },
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
+      rel: address,
     },
   )
   const { isFetched, isLoading, data } = query

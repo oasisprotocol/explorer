@@ -248,8 +248,14 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
           return {
             ...data,
             transactions: data.transactions.map(tx => {
+              const oasisAddress =
+                params?.rel && isValidEthAddress(params?.rel)
+                  ? getOasisAddressOrNull(params.rel)
+                  : params?.rel
+
               return {
                 ...tx,
+                to_eth: !tx.to_eth && tx.to === oasisAddress ? params?.rel : tx.to_eth,
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
