@@ -861,6 +861,10 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
           return {
             ...data,
             events: data.events.map(event => {
+              const oasisAddress =
+                params?.rel && isValidEthAddress(params?.rel)
+                  ? getOasisAddressOrNull(params.rel)
+                  : params?.rel
               const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
               if (
                 event.type === RuntimeEventType.accountstransfer ||
@@ -885,6 +889,11 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                         event.body.amount.Denomination ||
                         getTokensForScope({ network, layer: runtime })[0].ticker,
                     },
+                    owner:
+                      event.body?.owner && event.body.owner === oasisAddress ? params?.rel : event.body.owner,
+                    from:
+                      event.body?.from && event.body.from === oasisAddress ? params?.rel : event.body.from,
+                    to: event.body?.to && event.body.to === oasisAddress ? params?.rel : event.body.to,
                   },
                   layer: runtime,
                   network,
