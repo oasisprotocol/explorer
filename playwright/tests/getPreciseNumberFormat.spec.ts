@@ -15,7 +15,7 @@ async function setup(page: Page, balance: string, decimals: number) {
     },
   )
 
-  await page.route('**/v1/sapphire/accounts/oasis1qq2v39p9fqk997vk6742axrzqyu9v2ncyuqt8uek', route => {
+  await page.route('**/v1/sapphire/accounts/0x0000000000000000000000000000000000000000', route => {
     route.fulfill({
       body: JSON.stringify({
         address: 'oasis1qq2v39p9fqk997vk6742axrzqyu9v2ncyuqt8uek',
