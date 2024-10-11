@@ -16,7 +16,12 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
+import {
+  getAccountSize,
+  getEthAddressForAccount,
+  getOasisAddressOrNull,
+  isValidEthAddress,
+} from '../app/utils/helpers'
 import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
@@ -374,7 +379,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!address && (options?.query?.enabled ?? true),
+      enabled: options?.query?.enabled ?? true,
     },
     request: {
       ...options?.request,
@@ -413,14 +418,11 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  // console.log('Should we get', runtime, '/', address, '?', options?.query?.enabled)
-  const oasisAddress = getOasisAddressOrNull(address)
-
-  const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
+  const query = generated.useGetRuntimeAccountsAddress(network, runtime, address, {
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+      enabled: !!address && (options?.query?.enabled ?? true),
     },
     request: {
       ...options?.request,
@@ -477,6 +479,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   const runtimeAccount = query.data?.data
 
   // TODO: Remove after account balances on Nexus are in sync with the node
+  const oasisAddress = getOasisAddressOrNull(address)
   const rpcAccountBalances = useQuery({
     enabled: !!oasisAddress,
     queryKey: [oasisAddress, network, runtime],

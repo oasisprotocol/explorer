@@ -99,8 +99,7 @@ export function getEthAddressForAccount(
   possibleEthAddress?: string,
 ): string | undefined {
   // In case of an empty account
-  if (account.stats.num_txns <= 0 && possibleEthAddress && isValidEthAddress(possibleEthAddress))
-    return possibleEthAddress
+  if (possibleEthAddress && isValidEthAddress(possibleEthAddress)) return possibleEthAddress
 
   return getEthAccountAddressFromPreimage(account.address_preimage)
 }
