@@ -5,7 +5,7 @@ import { ConsensusTransactionMethod } from '../app/components/ConsensusTransacti
 import { RuntimeTransactionMethod } from '../app/components/RuntimeTransactionMethod'
 import { TokenTransferIcon } from '../app/components/Tokens/TokenTransferIcon'
 import { EventTypeIcon } from '../app/components/RuntimeEvents/RuntimeEventDetails'
-import { ConsensusTxMethod, RuntimeEventType } from '../oasis-nexus/api'
+import { ConsensusTxMethod, RuntimeEventType, RuntimeTransaction } from '../oasis-nexus/api'
 import { COLORS } from '../styles/theme/colors'
 
 export default {
@@ -53,7 +53,7 @@ const RuntimeTemplate: StoryFn = () => {
           gap={4}
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}
         >
-          <RuntimeTransactionMethod method={method} />
+          <RuntimeTransactionMethod transaction={{ method } as RuntimeTransaction} />
           <Typography sx={{ color: COLORS.grayMedium, fontSize: '12px' }}>({method})</Typography>
         </Box>
       ))}
