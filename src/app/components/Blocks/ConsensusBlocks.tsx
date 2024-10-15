@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { Block } from '../../../oasis-nexus/api'
+import { Block, EntityMetadata } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC } from 'react'
 import { Age } from '../Age'
+import { ValidatorLink } from '../Validators/ValidatorLink'
 
 export type TableConsensusBlock = Block & {
   markAsNew?: boolean
@@ -24,6 +25,7 @@ type ConsensusBlocksProps = {
   pagination: false | TablePaginationProps
   showEpoch?: boolean
   showHash?: boolean
+  showProposer?: boolean
 }
 
 export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
@@ -33,6 +35,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
   limit,
   showEpoch = false,
   showHash = true,
+  showProposer = false,
 }) => {
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
@@ -45,8 +48,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
       content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
       align: TableCellAlign.Right,
     },
-
-    // { key: 'proposer', content: t('common.proposer'), align: TableCellAlign.Left },
+    ...(showProposer ? [{ key: 'proposer', content: t('common.proposer') }] : []),
     { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
   ]
 
@@ -80,12 +82,27 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
           content: block.num_transactions.toLocaleString(),
           key: 'txs',
         },
-
-        // {
-        //   key: 'proposer',
-        //   content:
-        //     'The Validator Who Has Mined This Block Who Might Actually Have A Really Really Annoyingly Long Name',
-        // },
+        ...(showProposer
+          ? [
+              {
+                content: (
+                  <>
+                    {block.proposer?.entity_address ? (
+                      <ValidatorLink
+                        name={(block.proposer?.entity_metadata as EntityMetadata)?.name}
+                        address={block.proposer?.entity_address}
+                        alwaysTrim
+                        network={block.network}
+                      />
+                    ) : (
+                      t('common.missing')
+                    )}
+                  </>
+                ),
+                key: 'proposer',
+              },
+            ]
+          : []),
         {
           align: TableCellAlign.Right,
           content: <Age sinceTimestamp={block.timestamp} />,
