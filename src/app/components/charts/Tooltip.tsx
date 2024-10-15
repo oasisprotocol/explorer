@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { TooltipProps } from 'recharts'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -17,8 +18,8 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export type Formatters = {
   formatters?: {
-    data?: (value: number) => string
-    label?: (value: string) => string
+    data?: (value: number) => ReactNode
+    label?: (value: string) => ReactNode
   }
 }
 
