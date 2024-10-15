@@ -1938,6 +1938,29 @@ export type DelegationListAllOf = {
 export type DelegationList = List & DelegationListAllOf;
 
 /**
+ * Light-weight entity information, containing only its ID, address and registry metadata.
+ */
+export interface EntityInfo {
+  /** Address of the entity owning the node, in Bech32 format (`oasis1...`). */
+  entity_address?: string;
+  /** The ID of the entity owning the node; this corresponds to the entity's public key in base64. */
+  entity_id?: string;
+  /** Metadata about an entity, if available. See [the metadata registry](https://github.com/oasisprotocol/metadata-registry) for details.
+
+When available, it is an object with some subset of the following fields:
+
+- `v`: The version of the metadata structure (always present).
+- `serial`: The serial number of the metadata statement (always present).
+- `name`: The name of the entity.
+- `url`: The URL associated with the entity.
+- `email`: The email address associated with the entity.
+- `keybase`: Tne entity's keybase.io handle.
+- `twitter`: The twitter handle associated with the entity.
+ */
+  entity_metadata?: unknown;
+}
+
+/**
  * A consensus block.
 
  */
@@ -1957,6 +1980,10 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   num_transactions: number;
   /** The size limit for the block in bytes.
  */
+  /** The entity that proposed this block. */
+  proposer?: EntityInfo;
+  /** A list of the entities that signed the block. */
+  signers?: EntityInfo[];
   size_limit?: TextBigInt;
   /** The Merkle root of the state tree after applying the block. */
   state_root: string;
