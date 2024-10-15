@@ -14,24 +14,20 @@ type BalanceDistributionCardProps = {
 
 function chartData(t: TFunction, validator: Validator | undefined) {
   if (
-    validator?.escrow?.active_shares === undefined ||
-    validator?.escrow?.self_delegation_shares === undefined
+    validator?.escrow?.otherBalance === undefined ||
+    validator?.escrow?.self_delegation_balance === undefined
   ) {
     return []
   }
 
-  const activeShares = Number(validator.escrow.active_shares)
-  const selfDelegationShares = Number(validator.escrow.self_delegation_shares)
-  const otherShares = activeShares - selfDelegationShares
-
   return [
     {
       label: t('validator.self'),
-      value: selfDelegationShares,
+      value: Number(validator.escrow.self_delegation_balance),
     },
     {
       label: t('validator.others'),
-      value: otherShares,
+      value: Number(validator.escrow.otherBalance),
     },
   ]
 }
@@ -64,8 +60,9 @@ export const BalanceDistributionCard: FC<BalanceDistributionCardProps> = ({ vali
           dataKey="value"
           formatters={{
             data: (value: number) =>
-              t('common.valueLong', {
+              t('common.valueInToken', {
                 ...getPreciseNumberFormat(value.toString()),
+                ticker: validator.ticker,
               }),
             label: (label: string) => label,
           }}
