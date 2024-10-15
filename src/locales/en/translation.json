@@ -448,17 +448,8 @@
     "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
     "rawData": "Raw Data",
     "tooltips": {
-      "txTooltipEth": "Ethereum hash for the transaction",
-      "senderTooltipEth": "Ethereum address for the sender",
-      "recipientTooltipEth": "Ethereum address for the recipient",
-      "txTooltipOasis": "Oasis hash for the transaction",
-      "senderTooltipOasis": "Oasis address for the sender",
-      "recipientTooltipOasis": "Oasis address for the recipient",
-      "txTooltipHashUnavailable": "Hash not available in selected address format",
       "txEncrypted": "This transaction is encrypted.",
-      "txNotEncrypted": "This transaction is <strong>not</strong> encrypted.",
-      "senderTooltipUnavailable": "Sender not available in selected address format",
-      "recipientTooltipUnavailable": "Recipient not available in selected address format"
+      "txNotEncrypted": "This transaction is <strong>not</strong> encrypted."
     }
   },
   "event": {

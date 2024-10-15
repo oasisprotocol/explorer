@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeEvent } from '../../../oasis-nexus/api'
 import { TablePagination, TablePaginationProps } from '../Table/TablePagination'
-import { AddressSwitchOption } from '../AddressSwitch'
 import { useTranslation } from 'react-i18next'
 import { CardEmptyState } from '../CardEmptyState'
 import { TextSkeleton } from '../Skeleton'
@@ -15,10 +14,9 @@ export const RuntimeEventsDetailedList: FC<{
   events: RuntimeEvent[] | undefined
   isLoading: boolean
   isError: boolean
-  addressSwitchOption: AddressSwitchOption
   pagination: false | TablePaginationProps
   showTxHash: boolean
-}> = ({ scope, events, isLoading, isError, addressSwitchOption, pagination, showTxHash }) => {
+}> = ({ scope, events, isLoading, isError, pagination, showTxHash }) => {
   const { t } = useTranslation()
   return (
     <>
@@ -28,12 +26,7 @@ export const RuntimeEventsDetailedList: FC<{
         events.map((event, index) => (
           <div key={`event-${index}`}>
             {index > 0 && <Divider variant="card" />}
-            <RuntimeEventDetails
-              scope={scope}
-              event={event}
-              addressSwitchOption={addressSwitchOption}
-              showTxHash={showTxHash}
-            />
+            <RuntimeEventDetails scope={scope} event={event} showTxHash={showTxHash} />
           </div>
         ))}
       {pagination && (

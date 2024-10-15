@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Layer, RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
@@ -20,7 +20,6 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
-import { AddressSwitch, AddressSwitchOption } from '../../components/AddressSwitch'
 import { TransactionEncryptionStatus } from '../../components/TransactionEncryptionStatus'
 import Typography from '@mui/material/Typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
@@ -45,10 +44,6 @@ export const RuntimeTransactionDetailPage: FC = () => {
 
   const hash = useParams().hash!
 
-  const [addressSwitchOption, setAddressSwitchOption] = useState<
-    AddressSwitchOption.Oasis | AddressSwitchOption.ETH
-  >(AddressSwitchOption.ETH)
-
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
     scope.network,
     scope.layer, // This is OK since consensus has been handled separately
@@ -67,29 +62,18 @@ export const RuntimeTransactionDetailPage: FC = () => {
   return (
     <PageLayout>
       <MultipleTransactionsWarning enable={warningMultipleTransactionsSameHash} />
-      <SubPageCard
-        featured
-        title={t('transaction.header')}
-        action={
-          <AddressSwitch
-            selected={addressSwitchOption}
-            onSelectionChange={addressSwitch => setAddressSwitchOption(addressSwitch)}
-          />
-        }
-        mainTitle
-      >
+      <SubPageCard featured title={t('transaction.header')} mainTitle>
         <RuntimeTransactionDetailView
           isLoading={isLoading}
           transaction={transaction}
           tokenPrices={tokenPrices}
-          addressSwitchOption={addressSwitchOption}
         />
       </SubPageCard>
       <DappBanner scope={scope} ethAddress={transaction?.sender_0_eth} />
       <DappBanner scope={scope} ethAddress={transaction?.to_eth} />
       {transaction && (
         <SubPageCard title={t('common.events')}>
-          <RuntimeTransactionEvents transaction={transaction} addressSwitchOption={addressSwitchOption} />
+          <RuntimeTransactionEvents transaction={transaction} />
         </SubPageCard>
       )}
     </PageLayout>
@@ -106,28 +90,12 @@ export const RuntimeTransactionDetailView: FC<{
   showLayer?: boolean
   standalone?: boolean
   tokenPrices: AllTokenPrices
-  addressSwitchOption?: AddressSwitchOption
-}> = ({
-  isLoading,
-  transaction,
-  showLayer,
-  standalone = false,
-  tokenPrices,
-  addressSwitchOption = AddressSwitchOption.ETH,
-}) => {
+}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
-
-  const isOasisAddressFormat = addressSwitchOption === AddressSwitchOption.Oasis
-  const hash = isOasisAddressFormat ? transaction?.hash : transaction?.eth_hash
-  const from = isOasisAddressFormat ? transaction?.sender_0 : transaction?.sender_0_eth
-  const to = isOasisAddressFormat ? transaction?.to : transaction?.to_eth
-
   // @ts-expect-error Ignore index type error
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
-
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
 
   return (
@@ -154,19 +122,9 @@ export const RuntimeTransactionDetailView: FC<{
               <dd>
                 <TransactionLink
                   scope={transaction}
-                  hash={
-                    hash || ((isOasisAddressFormat ? transaction?.eth_hash : transaction?.hash) as string)
-                  }
-                  extraTooltip={
-                    hash
-                      ? isOasisAddressFormat
-                        ? t('transaction.tooltips.txTooltipOasis')
-                        : t('transaction.tooltips.txTooltipEth')
-                      : t('transaction.tooltips.txTooltipHashUnavailable')
-                  }
+                  hash={(transaction?.eth_hash || transaction?.hash) as string}
                 />
-
-                {hash && <CopyToClipboard value={hash} />}
+                <CopyToClipboard value={transaction?.eth_hash || transaction?.hash} />
               </dd>
             </>
           )}
@@ -200,19 +158,9 @@ export const RuntimeTransactionDetailView: FC<{
               <dd>
                 <AccountLink
                   scope={transaction}
-                  address={
-                    from ||
-                    ((isOasisAddressFormat ? transaction?.sender_0_eth : transaction?.sender_0) as string)
-                  }
-                  extraTooltip={
-                    from
-                      ? isOasisAddressFormat
-                        ? t('transaction.tooltips.senderTooltipOasis')
-                        : t('transaction.tooltips.senderTooltipEth')
-                      : t('transaction.tooltips.senderTooltipUnavailable')
-                  }
+                  address={(transaction?.sender_0_eth ?? transaction?.sender_0) as string}
                 />
-                {from && <CopyToClipboard value={from} />}
+                <CopyToClipboard value={transaction?.sender_0_eth ?? transaction?.sender_0} />
               </dd>
             </>
           )}
@@ -223,16 +171,9 @@ export const RuntimeTransactionDetailView: FC<{
               <dd>
                 <AccountLink
                   scope={transaction}
-                  address={to || ((isOasisAddressFormat ? transaction?.to_eth : transaction?.to) as string)}
-                  extraTooltip={
-                    to
-                      ? isOasisAddressFormat
-                        ? t('transaction.tooltips.recipientTooltipOasis')
-                        : t('transaction.tooltips.recipientTooltipEth')
-                      : t('transaction.tooltips.recipientTooltipUnavailable')
-                  }
+                  address={(transaction?.to_eth || transaction?.to) as string}
                 />
-                {to && <CopyToClipboard value={to} />}
+                <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
               </dd>
             </>
           )}

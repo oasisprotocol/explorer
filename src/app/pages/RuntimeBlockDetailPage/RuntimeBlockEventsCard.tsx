@@ -6,7 +6,6 @@ import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
-import { AddressSwitchOption } from '../../components/AddressSwitch'
 import { EmptyState } from '../../components/EmptyState'
 import { RuntimeBlockDetailsContext } from '.'
 
@@ -44,7 +43,6 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
       events={events}
       isLoading={isLoading}
       isError={isError}
-      addressSwitchOption={AddressSwitchOption.ETH}
       pagination={{
         selectedPage: pagination.selectedPage,
         linkToPage: pagination.linkToPage,

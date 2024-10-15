@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
-import { AddressSwitchOption } from '../../components/AddressSwitch'
 import { useAccountEvents } from './hook'
 import { RuntimeAccountDetailsContext } from '.'
 
@@ -23,7 +22,6 @@ export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, add
         events={events}
         isLoading={isLoading}
         isError={isError}
-        addressSwitchOption={AddressSwitchOption.ETH} // TODO
         pagination={{
           selectedPage: pagination.selectedPage,
           linkToPage: pagination.linkToPage,

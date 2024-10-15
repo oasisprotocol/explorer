@@ -12,7 +12,6 @@ import TableBody from '@mui/material/TableBody'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { SearchScope } from '../../../types/searchScope'
-import { AddressSwitchOption } from '../AddressSwitch'
 import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
@@ -24,7 +23,6 @@ import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { MaybeEventErrorLine } from './EventError'
-import { AccountLinkWithAddressSwitch } from '../Account/AccountLinkWithAddressSwitch'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
@@ -130,11 +128,10 @@ const EvmEventParamData: FC<{
 const EvmLogRow: FC<{
   scope: SearchScope
   param: EvmAbiParam
-  addressSwitchOption: AddressSwitchOption
-}> = ({ scope, param, addressSwitchOption }) => {
+}> = ({ scope, param }) => {
   const evmAddress = param.evm_type === 'address' ? (param.value as string) : undefined
   const oasisAddress = evmAddress ? getOasisAddress(evmAddress) : undefined
-  const address = addressSwitchOption === AddressSwitchOption.Oasis ? oasisAddress : evmAddress
+  const address = evmAddress || oasisAddress
 
   const getCopyToClipboardValue = () => {
     if (address) {
@@ -161,8 +158,7 @@ const EvmLogRow: FC<{
 const RuntimeEventDetailsInner: FC<{
   scope: SearchScope
   event: RuntimeEvent
-  addressSwitchOption: AddressSwitchOption
-}> = ({ scope, event, addressSwitchOption }) => {
+}> = ({ scope, event }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const eventName = getRuntimeEventMethodLabel(t, event.type)
@@ -231,12 +227,7 @@ const RuntimeEventDetailsInner: FC<{
               </TableHead>
               <TableBody>
                 {event.evm_log_params.map((param, index) => (
-                  <EvmLogRow
-                    scope={scope}
-                    key={`param-${index}`}
-                    param={param}
-                    addressSwitchOption={addressSwitchOption}
-                  />
+                  <EvmLogRow scope={scope} key={`param-${index}`} param={param} />
                 ))}
               </TableBody>
             </Table>
@@ -256,12 +247,7 @@ const RuntimeEventDetailsInner: FC<{
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.owner_eth}
-                oasisAddress={event.body.owner}
-              />
+              <AccountLink scope={scope} address={event.body.owner_eth || event.body.owner} />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -283,21 +269,11 @@ const RuntimeEventDetailsInner: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.from_eth}
-                oasisAddress={event.body.from}
-              />
+              <AccountLink scope={scope} address={event.body.from_eth || event.body.from} />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.to_eth}
-                oasisAddress={event.body.to}
-              />
+              <AccountLink scope={scope} address={event.body.to_eth || event.body.to} />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -317,21 +293,11 @@ const RuntimeEventDetailsInner: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.from_eth}
-                oasisAddress={event.body.from}
-              />
+              <AccountLink scope={scope} address={event.body.from_eth || event.body.from} />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.to_eth}
-                oasisAddress={event.body.to}
-              />
+              <AccountLink scope={scope} address={event.body.to_eth || event.body.to} />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -351,21 +317,11 @@ const RuntimeEventDetailsInner: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.from_eth}
-                oasisAddress={event.body.from}
-              />
+              <AccountLink scope={scope} address={event.body.from_eth || event.body.from} />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.to_eth}
-                oasisAddress={event.body.to}
-              />
+              <AccountLink scope={scope} address={event.body.to_eth || event.body.to} />
             </dd>
             <dt>{t('runtimeEvent.fields.activeShares')}</dt>
             <dd>
@@ -384,21 +340,11 @@ const RuntimeEventDetailsInner: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.from_eth}
-                oasisAddress={event.body.from}
-              />
+              <AccountLink scope={scope} address={event.body.from_eth || event.body.from} />
             </dd>
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLinkWithAddressSwitch
-                scope={scope}
-                addressSwitchOption={addressSwitchOption}
-                ethAddress={event.body.to_eth}
-                oasisAddress={event.body.to}
-              />
+              <AccountLink scope={scope} address={event.body.to_eth || event.body.to} />
             </dd>
             <dt>{t('runtimeEvent.fields.amount')}</dt>
             <dd>
@@ -431,13 +377,12 @@ const RuntimeEventDetailsInner: FC<{
 export const RuntimeEventDetails: FC<{
   scope: SearchScope
   event: RuntimeEvent
-  addressSwitchOption: AddressSwitchOption
   showTxHash: boolean
-}> = ({ scope, event, addressSwitchOption, showTxHash }) => {
+}> = ({ scope, event, showTxHash }) => {
   const { t } = useTranslation()
   return (
     <div>
-      <RuntimeEventDetailsInner scope={scope} event={event} addressSwitchOption={addressSwitchOption} />
+      <RuntimeEventDetailsInner scope={scope} event={event} />
       {showTxHash && event.tx_hash && (
         <p>
           {t('event.fields.emittingTransaction')}:{' '}

@@ -31,6 +31,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ value, label }) => {
   const timeout = useRef<number | undefined>(undefined)
   const ariaLabel = t('clipboard.label')
   const [isCopied, setIsCopied] = useState(false)
+
   const handleCopyToClipboard = useCallback(() => {
     if (isCopied) {
       return
