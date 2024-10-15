@@ -3,13 +3,11 @@ import { Layer, RuntimeTransaction, useGetRuntimeEvents } from '../../../oasis-n
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
-import { AddressSwitchOption } from '../AddressSwitch'
 import { RuntimeEventsDetailedList } from '../RuntimeEvents/RuntimeEventsDetailedList'
 
 export const RuntimeTransactionEvents: FC<{
   transaction: RuntimeTransaction
-  addressSwitchOption: AddressSwitchOption
-}> = ({ transaction, addressSwitchOption }) => {
+}> = ({ transaction }) => {
   const { network, layer } = transaction
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -33,7 +31,6 @@ export const RuntimeTransactionEvents: FC<{
       events={events}
       isLoading={isLoading}
       isError={isError}
-      addressSwitchOption={addressSwitchOption}
       pagination={{
         selectedPage: pagination.selectedPage,
         linkToPage: pagination.linkToPage,
