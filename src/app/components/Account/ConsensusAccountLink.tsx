@@ -6,15 +6,21 @@ import { AccountLink } from './AccountLink'
 
 type ConsensusAccountLinkProps = {
   address: string
+  alwaysTrim?: boolean
   labelOnly?: boolean
   network: Network
 }
 
-export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({ address, labelOnly, network }) => {
+export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
+  address,
+  alwaysTrim = true,
+  labelOnly,
+  network,
+}) => {
   const { data } = useGetConsensusValidatorsAddressNameMap(network)
 
   if (data?.data?.[address]) {
-    return <ValidatorLink address={address} network={network} alwaysTrim />
+    return <ValidatorLink address={address} network={network} alwaysTrim={alwaysTrim} />
   }
 
   return (
@@ -22,7 +28,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({ address, l
       labelOnly={labelOnly}
       scope={{ network, layer: Layer.consensus }}
       address={address}
-      alwaysTrim
+      alwaysTrim={alwaysTrim}
     />
   )
 }
