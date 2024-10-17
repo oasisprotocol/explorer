@@ -17,7 +17,7 @@ import { BlockLink } from 'app/components/Blocks/BlockLink'
 import { ConsensusTransactionMethod } from 'app/components/ConsensusTransactionMethod'
 import { useFormattedTimestampStringWithDistance } from 'app/hooks/useFormattedTimestamp'
 import { RoundedBalance } from 'app/components/RoundedBalance'
-import { AccountLink } from 'app/components/Account/AccountLink'
+import { ConsensusAccountLink } from 'app/components/Account/ConsensusAccountLink'
 import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
@@ -109,17 +109,14 @@ export const ConsensusTransactionDetailView: FC<{
       </dd>
       <dt>{t('common.from')}</dt>
       <dd>
-        <AccountLink scope={transaction} address={transaction.sender} />
+        <ConsensusAccountLink network={transaction.network} address={transaction.sender} alwaysTrim={false} />
         <CopyToClipboard value={transaction.sender} />
       </dd>
       {transaction.to && (
         <>
           <dt>{t('common.to')}</dt>
           <dd>
-            <AccountLink
-              scope={{ layer: transaction.layer, network: transaction.network }}
-              address={transaction.to}
-            />
+            <ConsensusAccountLink network={transaction.network} address={transaction.to} alwaysTrim={false} />
             <CopyToClipboard value={transaction.to} />
           </dd>
         </>
