@@ -14,17 +14,18 @@ The format is inspired by [Keep a Changelog].
 
 ## 1.14.0 (2024-10-17)
 
-### Process Changes
-
-- Cloudflare stable preview URLs
-  ([#1537](https://github.com/oasisprotocol/explorer/issues/1537))
-
 ### Features
 
 - Display EVM function name in verified contract calls
   ([#1565](https://github.com/oasisprotocol/explorer/issues/1565))
 
 ### Bug Fixes and Improvements
+
+- Remove eth/oasis address toggle
+  ([#1571](https://github.com/oasisprotocol/explorer/issues/1571))
+
+- Retain ETH address in details page for accounts with no EVM transactions
+  ([#1564](https://github.com/oasisprotocol/explorer/issues/1564))
 
 - Make lists with polling and pagination more stable
   ([#1534](https://github.com/oasisprotocol/explorer/issues/1534))
@@ -38,14 +39,13 @@ The format is inspired by [Keep a Changelog].
 - Unify layer status labels and icons
   ([#1561](https://github.com/oasisprotocol/explorer/issues/1561))
 
-- Retain ETH address in details page for accounts with no EVM transactions
-  ([#1564](https://github.com/oasisprotocol/explorer/issues/1564))
-
 - Fix duplicated events cards headers
   ([#1570](https://github.com/oasisprotocol/explorer/issues/1570))
 
-- Remove eth/oasis address toggle
-  ([#1571](https://github.com/oasisprotocol/explorer/issues/1571))
+### Process Changes
+
+- Cloudflare stable preview URLs
+  ([#1537](https://github.com/oasisprotocol/explorer/issues/1537))
 
 ### Internal Changes
 
