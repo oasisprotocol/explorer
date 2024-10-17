@@ -16,7 +16,12 @@ import {
   RuntimeAccount,
   RuntimeEventType,
 } from './generated/api'
-import { getAccountSize, getEthAddressForAccount, getOasisAddressOrNull } from '../app/utils/helpers'
+import {
+  getAccountSize,
+  getEthAccountAddressFromPreimage,
+  getOasisAddressOrNull,
+  isValidEthAddress,
+} from '../app/utils/helpers'
 import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../app/utils/proposals'
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
@@ -226,6 +231,21 @@ function normalizeSymbol(rawSymbol: string | '' | undefined, scope: SearchScope)
   return whitelistedTickers.includes(symbol as Ticker) ? symbol : 'n/a'
 }
 
+/** Returns checksummed maybeMatchingEthAddr if it matches oasisAddress when converted */
+function fallbackEthAddress(
+  oasisAddress: generated.Address | undefined,
+  maybeMatchingEthAddr: generated.EthOrOasisAddress | undefined,
+): `0x${string}` | undefined {
+  if (
+    oasisAddress &&
+    maybeMatchingEthAddr &&
+    isValidEthAddress(maybeMatchingEthAddr) &&
+    getOasisAddressOrNull(maybeMatchingEthAddr) === oasisAddress
+  ) {
+    return toChecksumAddress(maybeMatchingEthAddr)
+  }
+}
+
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
   network,
   runtime,
@@ -245,6 +265,7 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                to_eth: tx.to_eth || fallbackEthAddress(tx.to, params?.rel),
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
@@ -374,7 +395,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!address && (options?.query?.enabled ?? true),
+      enabled: options?.query?.enabled ?? true,
     },
     request: {
       ...options?.request,
@@ -413,14 +434,11 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  // console.log('Should we get', runtime, '/', address, '?', options?.query?.enabled)
-  const oasisAddress = getOasisAddressOrNull(address)
-
-  const query = generated.useGetRuntimeAccountsAddress(network, runtime, oasisAddress!, {
+  const query = generated.useGetRuntimeAccountsAddress(network, runtime, address, {
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+      enabled: !!address && (options?.query?.enabled ?? true),
     },
     request: {
       ...options?.request,
@@ -430,7 +448,9 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return groupAccountTokenBalances({
             ...data,
-            address_eth: getEthAddressForAccount(data, address),
+            address_eth:
+              getEthAccountAddressFromPreimage(data.address_preimage) ||
+              fallbackEthAddress(data.address, address),
             evm_contract: data.evm_contract && {
               ...data.evm_contract,
               eth_creation_tx: data.evm_contract.eth_creation_tx
@@ -477,6 +497,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   const runtimeAccount = query.data?.data
 
   // TODO: Remove after account balances on Nexus are in sync with the node
+  const oasisAddress = getOasisAddressOrNull(address)
   const rpcAccountBalances = useQuery({
     enabled: !!oasisAddress,
     queryKey: [oasisAddress, network, runtime],
@@ -798,13 +819,11 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   address,
   options,
 ) => {
-  const oasisAddress = getOasisAddressOrNull(address)
-
-  return generated.useGetRuntimeEvmTokensAddress(network, runtime, oasisAddress!, {
+  return generated.useGetRuntimeEvmTokensAddress(network, runtime, address, {
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+      enabled: options?.query?.enabled ?? true,
     },
     request: {
       ...options?.request,
@@ -851,44 +870,48 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
           if (status !== 200) return data
           return {
             ...data,
-            events: data.events.map(event => {
-              const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
-              if (
-                event.type === RuntimeEventType.accountstransfer ||
-                event.type === RuntimeEventType.accountsmint ||
-                event.type === RuntimeEventType.accountsburn ||
-                event.type === RuntimeEventType.consensus_accountsdeposit ||
-                event.type === RuntimeEventType.consensus_accountswithdraw ||
-                event.type === RuntimeEventType.consensus_accountsdelegate ||
-                event.type === RuntimeEventType.consensus_accountsundelegate_done
-              ) {
+            events: data.events
+              .map((event): generated.RuntimeEvent => {
                 return {
                   ...event,
-                  evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
-                  eth_tx_hash: adjustedHash,
                   body: {
                     ...event.body,
-                    amount: {
-                      // If denomination="" or missing then use runtime's native. Otherwise unknown (would have to get by token name?).
-                      ...event.body.amount,
-                      Amount: fromBaseUnits(event.body.amount.Amount, paraTimesConfig[runtime].decimals),
-                      Denomination:
-                        event.body.amount.Denomination ||
-                        getTokensForScope({ network, layer: runtime })[0].ticker,
-                    },
+                    owner_eth: event.body?.owner_eth || fallbackEthAddress(event.body.owner, params?.rel),
+                    from_eth: event.body?.from_eth || fallbackEthAddress(event.body.from, params?.rel),
+                    to_eth: event.body?.to_eth || fallbackEthAddress(event.body.to, params?.rel),
                   },
+                  evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
+                  eth_tx_hash: event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined,
                   layer: runtime,
                   network,
                 }
-              }
-              return {
-                ...event,
-                evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
-                eth_tx_hash: adjustedHash,
-                layer: runtime,
-                network,
-              }
-            }),
+              })
+              .map((event): generated.RuntimeEvent => {
+                if (
+                  event.type === RuntimeEventType.accountstransfer ||
+                  event.type === RuntimeEventType.accountsmint ||
+                  event.type === RuntimeEventType.accountsburn ||
+                  event.type === RuntimeEventType.consensus_accountsdeposit ||
+                  event.type === RuntimeEventType.consensus_accountswithdraw ||
+                  event.type === RuntimeEventType.consensus_accountsdelegate ||
+                  event.type === RuntimeEventType.consensus_accountsundelegate_done
+                  // consensus_accountsundelegate_start doesn't contain amount
+                ) {
+                  return {
+                    ...event,
+                    body: {
+                      ...event.body,
+                      amount: {
+                        // If denomination="" or missing then use runtime's native. Otherwise unknown (would have to get by token name?).
+                        ...event.body.amount,
+                        Amount: fromBaseUnits(event.body.amount.Amount, paraTimesConfig[runtime].decimals),
+                        Denomination: event.body.amount.Denomination || getTokensForScope(event)[0].ticker,
+                      },
+                    },
+                  }
+                }
+                return event
+              }),
           }
         },
         ...arrayify(options?.request?.transformResponse),

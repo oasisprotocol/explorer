@@ -8,7 +8,6 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
-import { getOasisAddressOrNull } from '../../utils/helpers'
 
 export const useAccount = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
@@ -34,19 +33,13 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusTransactions()
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
     {
       limit,
       offset: offset,
-      rel: oasisAddress!,
-    },
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
+      rel: address,
     },
   )
   const { isFetched, isLoading, data } = query
@@ -79,22 +72,12 @@ export const useAccountEvents = (scope: SearchScope, address: string) => {
     // We should use useGetConsensusEvents()
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
-  const query = useGetRuntimeEvents(
-    network,
-    layer,
-    {
-      limit,
-      offset: offset,
-      rel: oasisAddress!,
-      // TODO: implement filtering for non-transactional events
-    },
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
-    },
-  )
+  const query = useGetRuntimeEvents(network, layer, {
+    limit,
+    offset: offset,
+    rel: address,
+    // TODO: implement filtering for non-transactional events
+  })
   const { isFetched, isLoading, isError, data } = query
   const events = data?.data.events
 

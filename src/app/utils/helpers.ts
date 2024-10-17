@@ -3,7 +3,7 @@ import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
 // eslint-disable-next-line no-restricted-imports
-import { AddressPreimage, RuntimeAccount } from '../../oasis-nexus/generated/api'
+import { AddressPreimage } from '../../oasis-nexus/generated/api'
 import { validateMnemonic } from 'bip39'
 import { sha512_256 } from 'js-sha512'
 
@@ -92,17 +92,6 @@ export function getEthAccountAddressFromPreimage(preimage: AddressPreimage | und
   }
   // We need to convert from base64 to hex, add the prefix, and convert to checksum address
   return getEthAccountAddressFromBase64(preimage.address_data)
-}
-
-export function getEthAddressForAccount(
-  account: RuntimeAccount,
-  possibleEthAddress?: string,
-): string | undefined {
-  // In case of an empty account
-  if (account.stats.num_txns <= 0 && possibleEthAddress && isValidEthAddress(possibleEthAddress))
-    return possibleEthAddress
-
-  return getEthAccountAddressFromPreimage(account.address_preimage)
 }
 
 export function uniq<T>(input: T[] | undefined): T[] {
