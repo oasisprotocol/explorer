@@ -11,15 +11,7 @@ type ConsensusAccountLinkProps = {
 }
 
 export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({ address, labelOnly, network }) => {
-  const { data } = useGetConsensusValidatorsAddressNameMap(
-    network,
-    {},
-    {
-      query: {
-        staleTime: 5 * 60 * 1000, // Set cache time to 5 minutes
-      },
-    },
-  )
+  const { data } = useGetConsensusValidatorsAddressNameMap(network)
 
   if (data?.data?.[address]) {
     return <ValidatorLink address={address} network={network} alwaysTrim />
