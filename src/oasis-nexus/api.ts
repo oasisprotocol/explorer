@@ -807,13 +807,11 @@ export const useGetRuntimeEvmTokensAddress: typeof generated.useGetRuntimeEvmTok
   address,
   options,
 ) => {
-  const oasisAddress = getOasisAddressOrNull(address)
-
-  return generated.useGetRuntimeEvmTokensAddress(network, runtime, oasisAddress!, {
+  return generated.useGetRuntimeEvmTokensAddress(network, runtime, address, {
     ...options,
     query: {
       ...(options?.query ?? {}),
-      enabled: !!oasisAddress && (options?.query?.enabled ?? true),
+      enabled: options?.query?.enabled ?? true,
     },
     request: {
       ...options?.request,

@@ -16,7 +16,6 @@ import { SearchScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
-import { getOasisAddressOrNull } from '../../utils/helpers'
 
 export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
   const { network, layer } = scope
@@ -24,7 +23,7 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const query = useGetRuntimeEvmTokensAddress(network, layer, address!, {
+  const query = useGetRuntimeEvmTokensAddress(network, layer, address, {
     query: { enabled },
   })
   const token = query.data?.data
@@ -38,19 +37,14 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
 }
 
 export const useTokenTransfers = (scope: SearchScope, params: { address: string }) => {
-  const oasisAddress = getOasisAddressOrNull(params.address)
-  return _useTokenTransfers(scope, oasisAddress ? { rel: oasisAddress } : undefined)
+  return _useTokenTransfers(scope, { rel: params.address })
 }
 
 export const useNFTInstanceTransfers = (
   scope: SearchScope,
   params: { nft_id: string; contract_address: string },
 ) => {
-  const oasisAddress = getOasisAddressOrNull(params.contract_address)
-  return _useTokenTransfers(
-    scope,
-    oasisAddress ? { nft_id: params.nft_id, contract_address: oasisAddress } : undefined,
-  )
+  return _useTokenTransfers(scope, { nft_id: params.nft_id, contract_address: params.contract_address })
 }
 
 export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRuntimeEventsParams) => {
@@ -109,21 +103,10 @@ export const useTokenHolders = (scope: SearchScope, address: string) => {
     // There are no token holders on the consensus layer.
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
-  const query = useGetRuntimeEvmTokensAddressHolders(
-    network,
-    layer,
-    oasisAddress!,
-    {
-      limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
-      offset: offset,
-    },
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
-    },
-  )
+  const query = useGetRuntimeEvmTokensAddressHolders(network, layer, address, {
+    limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
+    offset: offset,
+  })
 
   const { isFetched, isLoading, data } = query
 
@@ -157,21 +140,10 @@ export const useTokenInventory = (scope: SearchScope, address: string) => {
     throw AppErrors.UnsupportedLayer
     // There are no tokens on the consensus layer.
   }
-  const oasisAddress = getOasisAddressOrNull(address)
-  const query = useGetRuntimeEvmTokensAddressNfts(
-    network,
-    layer,
-    oasisAddress!,
-    {
-      limit: NUMBER_OF_INVENTORY_ITEMS,
-      offset: offset,
-    },
-    {
-      query: {
-        enabled: !!oasisAddress,
-      },
-    },
-  )
+  const query = useGetRuntimeEvmTokensAddressNfts(network, layer, address, {
+    limit: NUMBER_OF_INVENTORY_ITEMS,
+    offset: offset,
+  })
   const { isFetched, isLoading, data } = query
   const inventory = data?.data.evm_nfts
 
@@ -204,23 +176,11 @@ export const useAccountTokenInventory = (scope: SearchScope, address: string, to
     // There are no tokens on the consensus layer.
   }
 
-  const oasisAddress = getOasisAddressOrNull(address)
-  const oasisTokenAddress = getOasisAddressOrNull(tokenAddress)
-  const query = useGetRuntimeAccountsAddressNfts(
-    network,
-    layer,
-    oasisAddress!,
-    {
-      limit: NUMBER_OF_INVENTORY_ITEMS,
-      offset: offset,
-      token_address: oasisTokenAddress!,
-    },
-    {
-      query: {
-        enabled: !!oasisAddress && !!oasisTokenAddress,
-      },
-    },
-  )
+  const query = useGetRuntimeAccountsAddressNfts(network, layer, address, {
+    limit: NUMBER_OF_INVENTORY_ITEMS,
+    offset: offset,
+    token_address: tokenAddress,
+  })
   const { isFetched, isLoading, data } = query
   const inventory = data?.data.evm_nfts
 
@@ -250,12 +210,7 @@ export const useNFTInstance = (scope: SearchScope, address: string, id: string) 
     throw AppErrors.UnsupportedLayer
     // There are no tokens on the consensus layer.
   }
-  const oasisAddress = getOasisAddressOrNull(address)
-  const query = useGetRuntimeEvmTokensAddressNftsId(network, layer, oasisAddress!, id, {
-    query: {
-      enabled: !!oasisAddress,
-    },
-  })
+  const query = useGetRuntimeEvmTokensAddressNftsId(network, layer, address, id)
 
   const { data, isError, isFetched, isLoading } = query
   if (isError) {
