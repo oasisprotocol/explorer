@@ -10,9 +10,9 @@ import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
 import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
 import { BlockLink } from '../Blocks/BlockLink'
-import { AccountLink } from '../Account/AccountLink'
 import { ConsensusAmount } from './ConsensusAmount'
 import { TransferIcon } from '../TransferIcon'
+import { ConsensusAccountLink } from '../Account/ConsensusAccountLink'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -95,11 +95,10 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
                 pr: 3,
               }}
             >
-              <AccountLink
+              <ConsensusAccountLink
                 labelOnly={!!ownAddress && transaction.sender === ownAddress}
-                scope={transaction}
+                network={transaction.network}
                 address={transaction.sender}
-                alwaysTrim
               />
               {verbose && transaction.to && <TransferIcon />}
             </Box>
@@ -110,11 +109,10 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
           ? [
               {
                 content: transaction.to ? (
-                  <AccountLink
+                  <ConsensusAccountLink
                     labelOnly={!!ownAddress && transaction.to === ownAddress}
-                    scope={transaction}
+                    network={transaction.network}
                     address={transaction.to}
-                    alwaysTrim
                   />
                 ) : null,
                 key: 'to',
