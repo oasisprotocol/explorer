@@ -121,7 +121,7 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
               </Link>
             </dd>
 
-            {token.num_transfers && (
+            {!!token.num_transfers && (
               <>
                 <dt>{t('common.transfers')}</dt>
                 <dd>

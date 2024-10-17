@@ -21,7 +21,7 @@ export const SnapshotStaked: FC<SnapshotStakedProps> = ({ totalStaked, ticker })
     <SnapshotTextCard
       title={t('common.staked')}
       label={
-        percentageValue && (
+        percentageValue !== undefined && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
             <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
               <Trans

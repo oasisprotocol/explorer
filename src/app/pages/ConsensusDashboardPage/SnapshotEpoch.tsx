@@ -38,7 +38,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
     <SnapshotTextCard
       title={t('currentEpoch')}
       label={
-        blockHeight && (
+        blockHeight !== undefined && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
             <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
               <Trans
@@ -57,16 +57,16 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
         )
       }
     >
-      {epoch && (
+      {epoch !== undefined && (
         <>
-          {percentageValue && (
+          {percentageValue !== undefined && (
             <StyledBox>
               <BrandProgressBar value={percentageValue * 100} variant="determinate" />
             </StyledBox>
           )}
           <Box gap={3} sx={{ display: 'flex', alignItems: 'baseline' }}>
             {epoch.toLocaleString()}
-            {percentageValue && (
+            {percentageValue !== undefined && (
               <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
                 (
                 {t('common.valuePair', {
