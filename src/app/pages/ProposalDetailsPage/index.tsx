@@ -16,7 +16,7 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 import { TextSkeleton } from '../../components/Skeleton'
-import { AccountLink } from '../../components/Account/AccountLink'
+import { ConsensusAccountLink } from '../../components/Account/ConsensusAccountLink'
 import { HighlightedText } from '../../components/HighlightedText'
 import { ProposalIdLoaderData } from '../../utils/route-utils'
 import { COLORS } from 'styles/theme/colors'
@@ -119,7 +119,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.submitter')}</dt>
       <dd>
-        <AccountLink scope={proposal} address={proposal.submitter} />
+        <ConsensusAccountLink network={proposal.network} address={proposal.submitter} alwaysTrim={false} />
       </dd>
 
       {(totalVotes || totalVotesLoading || totalVotesProblematic) && (
