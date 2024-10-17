@@ -1105,6 +1105,31 @@ export type ExtendedValidatorList = generated.ValidatorList & {
   map?: Map<string, generated.Validator>
 }
 
+export type ValidatorAddressNameMap = { [oasisAddress: string]: string | undefined }
+
+export const useGetConsensusValidatorsAddressNameMap: typeof generated.useGetConsensusValidators<
+  AxiosResponse<ValidatorAddressNameMap>
+> = (network, params?, options?) => {
+  return generated.useGetConsensusValidators(network, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.ValidatorList, headers, status) => {
+          if (status !== 200) return data
+          const validators: ValidatorAddressNameMap = {}
+          data.validators.forEach(validator => {
+            validators[validator.entity_address] = validator.media?.name
+          })
+          return validators
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
 export const useGetConsensusValidators: typeof generated.useGetConsensusValidators = (
   network,
   params?,
