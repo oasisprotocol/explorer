@@ -877,11 +877,15 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                   ...event,
                   body: {
                     ...event.body,
-                    owner:
-                      event.body?.owner && event.body.owner === oasisAddress ? params?.rel : event.body.owner,
-                    from:
-                      event.body?.from && event.body.from === oasisAddress ? params?.rel : event.body.from,
-                    to: event.body?.to && event.body.to === oasisAddress ? params?.rel : event.body.to,
+                    owner_eth:
+                      event.body?.owner_eth ||
+                      (event.body?.owner && event.body.owner === oasisAddress ? params?.rel : undefined),
+                    from_eth:
+                      event.body?.from_eth ||
+                      (event.body?.from && event.body.from === oasisAddress ? params?.rel : undefined),
+                    to_eth:
+                      event.body?.to_eth ||
+                      (event.body?.to && event.body.to === oasisAddress ? params?.rel : undefined),
                   },
                   evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                   eth_tx_hash: adjustedHash,
