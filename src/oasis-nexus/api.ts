@@ -231,14 +231,19 @@ function normalizeSymbol(rawSymbol: string | '' | undefined, scope: SearchScope)
   return whitelistedTickers.includes(symbol as Ticker) ? symbol : 'n/a'
 }
 
-function getEthAddressMap(rel: string | undefined): { [oasis1Address: string]: `0x${string}` } {
-  if (rel && isValidEthAddress(rel)) {
-    const oasisAddr = getOasisAddressOrNull(rel)
-    if (oasisAddr) {
-      return { [oasisAddr]: toChecksumAddress(rel) }
-    }
+/** Returns checksummed maybeMatchingEthAddr if it matches oasisAddress when converted */
+function fallbackEthAddress(
+  oasisAddress: generated.Address | undefined,
+  maybeMatchingEthAddr: generated.EthOrOasisAddress | undefined,
+): `0x${string}` | undefined {
+  if (
+    oasisAddress &&
+    maybeMatchingEthAddr &&
+    isValidEthAddress(maybeMatchingEthAddr) &&
+    getOasisAddressOrNull(maybeMatchingEthAddr) === oasisAddress
+  ) {
+    return toChecksumAddress(maybeMatchingEthAddr)
   }
-  return {}
 }
 
 export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactions = (
@@ -258,11 +263,9 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
           return {
             ...data,
             transactions: data.transactions.map(tx => {
-              const ethAddressMap = getEthAddressMap(params?.rel)
-
               return {
                 ...tx,
-                to_eth: tx.to_eth || (tx.to ? ethAddressMap[tx.to] : undefined),
+                to_eth: tx.to_eth || fallbackEthAddress(tx.to, params?.rel),
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
@@ -867,28 +870,16 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
             ...data,
             events: data.events
               .map((event): generated.RuntimeEvent => {
-                const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
-                const oasisAddress =
-                  params?.rel && isValidEthAddress(params?.rel)
-                    ? getOasisAddressOrNull(params.rel)
-                    : params?.rel
-
                 return {
                   ...event,
                   body: {
                     ...event.body,
-                    owner_eth:
-                      event.body?.owner_eth ||
-                      (event.body?.owner && event.body.owner === oasisAddress ? params?.rel : undefined),
-                    from_eth:
-                      event.body?.from_eth ||
-                      (event.body?.from && event.body.from === oasisAddress ? params?.rel : undefined),
-                    to_eth:
-                      event.body?.to_eth ||
-                      (event.body?.to && event.body.to === oasisAddress ? params?.rel : undefined),
+                    owner_eth: event.body?.owner_eth || fallbackEthAddress(event.body.owner, params?.rel),
+                    from_eth: event.body?.from_eth || fallbackEthAddress(event.body.from, params?.rel),
+                    to_eth: event.body?.to_eth || fallbackEthAddress(event.body.to, params?.rel),
                   },
                   evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
-                  eth_tx_hash: adjustedHash,
+                  eth_tx_hash: event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined,
                   layer: runtime,
                   network,
                 }
