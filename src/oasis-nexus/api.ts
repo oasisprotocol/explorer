@@ -18,7 +18,7 @@ import {
 } from './generated/api'
 import {
   getAccountSize,
-  getEthAddressForAccount,
+  getEthAccountAddressFromPreimage,
   getOasisAddressOrNull,
   isValidEthAddress,
 } from '../app/utils/helpers'
@@ -448,7 +448,9 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
           if (status !== 200) return data
           return groupAccountTokenBalances({
             ...data,
-            address_eth: getEthAddressForAccount(data, address),
+            address_eth:
+              getEthAccountAddressFromPreimage(data.address_preimage) ||
+              fallbackEthAddress(data.address, address),
             evm_contract: data.evm_contract && {
               ...data.evm_contract,
               eth_creation_tx: data.evm_contract.eth_creation_tx
