@@ -65,7 +65,7 @@ function invertSpecialScopePaths() {
 
 invertSpecialScopePaths()
 
-export const hiddenLayers: Layer[] = [Layer.pontusxdev]
+export const hiddenLayers: Layer[] = [Layer.pontusxdev, Layer.pontusxtest]
 
 export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
 
