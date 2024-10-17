@@ -12,6 +12,53 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.14.0 (2024-10-17)
+
+### Process Changes
+
+- Cloudflare stable preview URLs
+  ([#1537](https://github.com/oasisprotocol/explorer/issues/1537))
+
+### Features
+
+- Display EVM function name in verified contract calls
+  ([#1565](https://github.com/oasisprotocol/explorer/issues/1565))
+
+### Bug Fixes and Improvements
+
+- Make lists with polling and pagination more stable
+  ([#1534](https://github.com/oasisprotocol/explorer/issues/1534))
+
+- Prohibit unknown denominations
+  ([#1546](https://github.com/oasisprotocol/explorer/issues/1546))
+
+- Swap fee and amount columns in txs tables
+  ([#1554](https://github.com/oasisprotocol/explorer/issues/1554))
+
+- Unify layer status labels and icons
+  ([#1561](https://github.com/oasisprotocol/explorer/issues/1561))
+
+- Retain ETH address in details page for accounts with no EVM transactions
+  ([#1564](https://github.com/oasisprotocol/explorer/issues/1564))
+
+- Fix duplicated events cards headers
+  ([#1570](https://github.com/oasisprotocol/explorer/issues/1570))
+
+- Remove eth/oasis address toggle
+  ([#1571](https://github.com/oasisprotocol/explorer/issues/1571))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1507](https://github.com/oasisprotocol/explorer/issues/1507),
+   [#1508](https://github.com/oasisprotocol/explorer/issues/1508),
+   [#1549](https://github.com/oasisprotocol/explorer/issues/1549),
+   [#1550](https://github.com/oasisprotocol/explorer/issues/1550),
+   [#1551](https://github.com/oasisprotocol/explorer/issues/1551),
+   [#1557](https://github.com/oasisprotocol/explorer/issues/1557),
+   [#1560](https://github.com/oasisprotocol/explorer/issues/1560),
+   [#1562](https://github.com/oasisprotocol/explorer/issues/1562))
+
 ## 1.13.0 (2024-09-18)
 
 ### Features
