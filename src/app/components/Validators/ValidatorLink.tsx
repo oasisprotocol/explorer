@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { HighlightedText } from '../HighlightedText'
+import { useValidatorName } from '../../hooks/useValidatorName'
 
 type ValidatorLinkProps = {
   address: string
@@ -26,15 +27,22 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
 }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getValidatorRoute(network, address)
+  const validatorName = useValidatorName(network, address)
+
   return (
     <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
       {isTablet ? (
-        <TabletValidatorLink address={address} name={name} to={to} highlightedPart={highlightedPart} />
+        <TabletValidatorLink
+          address={address}
+          name={name || validatorName}
+          to={to}
+          highlightedPart={highlightedPart}
+        />
       ) : (
         <DesktopValidatorLink
           address={address}
           alwaysTrim={alwaysTrim}
-          name={name}
+          name={name || validatorName}
           to={to}
           highlightedPart={highlightedPart}
         />
@@ -79,7 +87,11 @@ const DesktopValidatorLink: FC<DesktopValidatorLinkProps> = ({
   highlightedPart,
 }) => {
   if (alwaysTrim) {
-    return <TrimLinkLabel label={address} to={to} />
+    return name ? (
+      <TrimValidatorEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
+    ) : (
+      <TrimLinkLabel label={address} to={to} />
+    )
   }
   return (
     <Link component={RouterLink} to={to}>
