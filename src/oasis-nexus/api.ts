@@ -868,8 +868,21 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
             events: data.events
               .map((event): generated.RuntimeEvent => {
                 const adjustedHash = event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined
+                const oasisAddress =
+                  params?.rel && isValidEthAddress(params?.rel)
+                    ? getOasisAddressOrNull(params.rel)
+                    : params?.rel
+
                 return {
                   ...event,
+                  body: {
+                    ...event.body,
+                    owner:
+                      event.body?.owner && event.body.owner === oasisAddress ? params?.rel : event.body.owner,
+                    from:
+                      event.body?.from && event.body.from === oasisAddress ? params?.rel : event.body.from,
+                    to: event.body?.to && event.body.to === oasisAddress ? params?.rel : event.body.to,
+                  },
                   evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                   eth_tx_hash: adjustedHash,
                   layer: runtime,
@@ -877,10 +890,6 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                 }
               })
               .map((event): generated.RuntimeEvent => {
-                const oasisAddress =
-                  params?.rel && isValidEthAddress(params?.rel)
-                    ? getOasisAddressOrNull(params.rel)
-                    : params?.rel
                 if (
                   event.type === RuntimeEventType.accountstransfer ||
                   event.type === RuntimeEventType.accountsmint ||
@@ -901,13 +910,6 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                         Amount: fromBaseUnits(event.body.amount.Amount, paraTimesConfig[runtime].decimals),
                         Denomination: event.body.amount.Denomination || getTokensForScope(event)[0].ticker,
                       },
-                      owner:
-                        event.body?.owner && event.body.owner === oasisAddress
-                          ? params?.rel
-                          : event.body.owner,
-                      from:
-                        event.body?.from && event.body.from === oasisAddress ? params?.rel : event.body.from,
-                      to: event.body?.to && event.body.to === oasisAddress ? params?.rel : event.body.to,
                     },
                   }
                 }
