@@ -118,6 +118,10 @@ declare module './generated/api' {
     ticker: Ticker
   }
 
+  export interface Escrow {
+    otherBalance: TextBigInt | undefined
+  }
+
   export interface Validator {
     ticker: Ticker
   }
@@ -1190,6 +1194,11 @@ export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusV
         (data: generated.ValidatorList, headers, status): ExtendedValidatorList => {
           if (status !== 200) return data
           const validators = data.validators.map((validator): generated.Validator => {
+            const otherBalance =
+              validator.escrow.active_balance && validator.escrow.self_delegation_balance
+                ? BigInt(validator.escrow.active_balance) - BigInt(validator.escrow.self_delegation_balance)
+                : undefined
+
             return {
               ...validator,
               escrow: {
@@ -1205,6 +1214,9 @@ export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusV
                   : undefined,
                 self_delegation_balance: validator.escrow?.self_delegation_balance
                   ? fromBaseUnits(validator.escrow.self_delegation_balance, consensusDecimals)
+                  : undefined,
+                otherBalance: otherBalance
+                  ? fromBaseUnits(otherBalance.toString(), consensusDecimals)
                   : undefined,
               },
               ticker,
