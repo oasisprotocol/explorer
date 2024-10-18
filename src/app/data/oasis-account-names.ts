@@ -40,25 +40,39 @@ const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
 const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise<AccountData> => {
   const url = dataSources[network][layer]
   if (!url) throw new Error('No data available for this layer')
-  const response = await axios.get(url)
-  if (response.status !== 200) throw new Error("Couldn't load names")
-  if (!response.data) throw new Error("Couldn't load names")
-  // console.log('Response data is', response.data)
-  const map: AccountMap = new Map()
-  const list: AccountMetadata[] = []
-  Array.from(response.data).forEach((entry: any) => {
-    const metadata: AccountMetadata = {
-      address: entry.Address,
-      name: entry.Name,
-      description: entry.Description,
+
+  try {
+    const response = await axios.get(url)
+    if (response.status !== 200) throw new Error("Couldn't load names")
+    if (!response.data) throw new Error("Couldn't load names")
+    const map: AccountMap = new Map()
+    const list: AccountMetadata[] = []
+    Array.from(response.data).forEach((entry: any) => {
+      const metadata: AccountMetadata = {
+        address: entry.Address,
+        name: entry.Name,
+        description: entry.Description,
+      }
+      // Register the metadata in its native form
+      list.push(metadata)
+      map.set(metadata.address, metadata)
+    })
+    return {
+      map,
+      list,
     }
-    // Register the metadata in its native form
-    list.push(metadata)
-    map.set(metadata.address, metadata)
-  })
-  return {
-    map,
-    list,
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ERR_NETWORK') {
+        throw new Error(
+          `A network error occurred. Please check your connection or try again later. ${error.message}`,
+        )
+      } else {
+        throw new Error(`An unexpected error occurred. Please try again. ${error.message}`)
+      }
+    } else {
+      throw new Error('An error occurred while fetching the data.')
+    }
   }
 }
 
