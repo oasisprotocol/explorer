@@ -241,8 +241,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     txHash: useTransactionsConditionally(currentScope, q.txHash),
     oasisConsensusAccount: useConsensusAccountConditionally(q.consensusAccount),
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
-    // TODO: remove evmBech32Account and use evmAccount when API is ready
-    evmBech32Account: useRuntimeAccountConditionally(currentScope, q.evmBech32Account),
+    evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
@@ -254,7 +253,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),
     ...(queries.oasisRuntimeAccount.results || []),
-    ...(queries.evmBech32Account.results || []),
+    ...(queries.evmAccount.results || []),
     ...(queries.accountsByName.results || []),
   ].filter(isAccountNonEmpty)
   const tokens = queries.tokens.results
