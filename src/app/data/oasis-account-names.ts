@@ -62,7 +62,7 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
   }
 }
 
-export const useOasisAccountsMetadata = (
+const useOasisAccountsMetadata = (
   network: Network,
   layer: Layer,
   queryOptions: UseQueryOptions<AccountData, unknown, AccountData, string[]>,
@@ -101,7 +101,7 @@ export const useSearchForOasisAccountsByName = (
     isError: isMetadataError,
     error: metadataError,
     data: namedAccounts,
-  } = useOasisAccountsMetadata(network, layer, { useErrorBoundary: false, ...queryOptions })
+  } = useOasisAccountsMetadata(network, layer, queryOptions)
   if (isMetadataError) {
     console.log('Failed to load Oasis account metadata', metadataError)
   }
