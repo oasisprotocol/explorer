@@ -13,6 +13,7 @@ import { ValidatorLink } from './ValidatorLink'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { BalancesDiff } from '../BalancesDiff'
 import { PercentageValue } from '../PercentageValue'
+import { UptimeStatus } from '../UptimeStatus'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -129,7 +130,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         // TODO: provide uptime when it is implemented in the API
         align: TableCellAlign.Right,
-        content: <>-</>,
+        content: <UptimeStatus small percentage={94} status={[100, 100, 100, 50]} />,
         key: 'uptime',
       },
     ],

@@ -3,11 +3,15 @@ import { useTranslation } from 'react-i18next'
 
 type PercentageValueProps = {
   adaptMaximumFractionDigits?: boolean
-  total: number | undefined
+  total?: number
   value: number | undefined
 }
 
-export const PercentageValue: FC<PercentageValueProps> = ({ adaptMaximumFractionDigits, value, total }) => {
+export const PercentageValue: FC<PercentageValueProps> = ({
+  adaptMaximumFractionDigits,
+  value,
+  total = 100,
+}) => {
   const { t } = useTranslation()
 
   if (typeof value !== 'number' || typeof total !== 'number' || total <= 0) {
