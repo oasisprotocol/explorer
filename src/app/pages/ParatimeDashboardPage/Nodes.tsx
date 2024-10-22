@@ -45,7 +45,7 @@ export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
   return (
     <SnapshotCard title={title}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        {isFetched && activeNodes && (
+        {isFetched && activeNodes !== undefined && (
           <>
             <OfflineBoltIcon fontSize="large" sx={{ color: COLORS.eucalyptus, mr: 3 }} />
             <Typography
