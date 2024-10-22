@@ -32,14 +32,7 @@ const StyledBox = styled(Box)<UptimeItem>(({ small, value }) => ({
 }))
 
 export const ensureTwelveElements = (inputArray: number[] = []) => {
-  const truncatedArray = inputArray.slice(0, 12)
-  const undefinedCount = 12 - truncatedArray.length
-
-  if (undefinedCount > 0) {
-    const undefinedArray = new Array(undefinedCount).fill(undefined)
-    return truncatedArray.concat(undefinedArray)
-  }
-  return truncatedArray
+  return [...inputArray, ...new Array(12).fill(undefined)].slice(0, 12)
 }
 
 type UptimeStatusProps = {
