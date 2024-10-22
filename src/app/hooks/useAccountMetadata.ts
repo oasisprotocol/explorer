@@ -15,6 +15,7 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
   const pontusXData = usePontusXAccountMetadata(address, { enabled: isPontusX })
   const oasisData = useOasisAccountMetadata(scope.network, scope.layer, getOasisAddress(address), {
+    useErrorBoundary: false,
     enabled: !isPontusX,
   })
   return isPontusX ? pontusXData : oasisData
