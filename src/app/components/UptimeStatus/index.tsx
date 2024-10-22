@@ -31,7 +31,7 @@ const StyledBox = styled(Box)<UptimeItem>(({ small, value }) => ({
   marginRight: small ? 1 : 2,
 }))
 
-const ensureTwelveElements = (inputArray: number[] = []) => {
+export const ensureTwelveElements = (inputArray: number[] = []) => {
   const truncatedArray = inputArray.slice(0, 12)
   const undefinedCount = 12 - truncatedArray.length
 
