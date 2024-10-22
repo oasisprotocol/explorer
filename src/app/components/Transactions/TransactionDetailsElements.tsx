@@ -36,7 +36,12 @@ export const From: FC<FromProps> = ({ address, ownAddress, scope }) => {
   return (
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{t('common.from')}</Label>
-      <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
+      <AccountLink
+        labelOnly={address.toLowerCase() === ownAddress?.toLowerCase()}
+        scope={scope}
+        address={address}
+        alwaysTrim
+      />
     </Box>
   )
 }
@@ -60,7 +65,12 @@ export const To: FC<ToProps> = ({ address, label, ownAddress, scope, type = 'acc
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{label || t('common.to')}</Label>
       {type === 'account' && (
-        <AccountLink labelOnly={address === ownAddress} scope={scope} address={address} alwaysTrim />
+        <AccountLink
+          labelOnly={address.toLowerCase() === ownAddress?.toLowerCase()}
+          scope={scope}
+          address={address}
+          alwaysTrim
+        />
       )}
       {type === 'validator' && <ValidatorLink network={scope.network} address={address} alwaysTrim />}
     </Box>

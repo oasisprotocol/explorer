@@ -120,7 +120,8 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                     <AccountLink
                       labelOnly={
                         !!ownAddress &&
-                        (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress)
+                        (transaction.sender_0_eth?.toLowerCase() === ownAddress.toLowerCase() ||
+                          transaction.sender_0.toLowerCase() === ownAddress.toLowerCase())
                       }
                       scope={transaction}
                       address={transaction.sender_0_eth || transaction.sender_0}
@@ -135,7 +136,9 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                 content: targetAddress ? (
                   <AccountLink
                     labelOnly={
-                      !!ownAddress && (transaction.to_eth === ownAddress || transaction.to === ownAddress)
+                      !!ownAddress &&
+                      (transaction.to_eth?.toLowerCase() === ownAddress.toLowerCase() ||
+                        transaction.to?.toLowerCase() === ownAddress.toLowerCase())
                     }
                     scope={transaction}
                     address={targetAddress}

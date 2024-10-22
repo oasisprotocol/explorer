@@ -96,7 +96,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
               }}
             >
               <AccountLink
-                labelOnly={!!ownAddress && transaction.sender === ownAddress}
+                labelOnly={!!ownAddress && transaction.sender.toLowerCase() === ownAddress.toLowerCase()}
                 scope={transaction}
                 address={transaction.sender}
                 alwaysTrim
@@ -111,7 +111,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
               {
                 content: transaction.to ? (
                   <AccountLink
-                    labelOnly={!!ownAddress && transaction.to === ownAddress}
+                    labelOnly={!!ownAddress && transaction.to.toLowerCase() === ownAddress.toLowerCase()}
                     scope={transaction}
                     address={transaction.to}
                     alwaysTrim
