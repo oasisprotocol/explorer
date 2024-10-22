@@ -4,15 +4,15 @@ import { exhaustedTypeWarning } from './errors'
 import { COLORS } from '../styles/theme/colors'
 
 export const getTokenTypeDescription = (t: TFunction, tokenType: EvmTokenType | undefined): string => {
-  switch (tokenType ?? 'missing') {
-    case 'missing':
+  switch (tokenType) {
+    case undefined:
       return t('common.missing')
     case 'ERC20':
       return t('common.token')
     case 'ERC721':
       return t('common.nft')
     default:
-      exhaustedTypeWarning('Unknown token type', tokenType as any)
+      exhaustedTypeWarning('Unknown token type', tokenType)
       return '???'
   }
 }
