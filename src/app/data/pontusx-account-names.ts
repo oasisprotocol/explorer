@@ -78,7 +78,7 @@ export const useSearchForPontusXAccountsByName = (
     isError: isMetadataError,
     error: metadataError,
     data: namedAccounts,
-  } = usePontusXAccountsMetadata({ useErrorBoundary: false, ...queryOptions })
+  } = usePontusXAccountsMetadata(queryOptions)
   if (isMetadataError) {
     console.log('Failed to load Pontus-X account names', metadataError)
   }
