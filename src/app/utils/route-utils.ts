@@ -8,6 +8,7 @@ import { SearchScope } from '../../types/searchScope'
 import { isStableDeploy, specialScopePaths } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
 import type { HasLayer } from '../../types/layers'
+import { toChecksumAddress } from '@ethereumjs/util'
 
 export const fixedNetwork = process.env.REACT_APP_FIXED_NETWORK as Network | undefined
 export const fixedLayer = process.env.REACT_APP_FIXED_LAYER as Layer | undefined
@@ -316,9 +317,10 @@ export const consensusAddressParamLoader =
 export const runtimeAddressParamLoader =
   (queryParam: string = 'address') =>
   ({ params, request }: LoaderFunctionArgs): AddressLoaderData => {
-    validateRuntimeAddressParam(params[queryParam]!)
+    const rawAddress = params[queryParam]!
+    validateRuntimeAddressParam(rawAddress)
     return {
-      address: params[queryParam]!,
+      address: isValidEthAddress(rawAddress) ? toChecksumAddress(rawAddress) : rawAddress,
       searchTerm: getSearchTermFromRequest(request),
     }
   }

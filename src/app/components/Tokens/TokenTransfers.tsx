@@ -154,7 +154,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                   pr: 3,
                 }}
               >
-                {!!ownAddress && fromAddress.toLowerCase() === ownAddress.toLowerCase() ? (
+                {!!ownAddress && fromAddress === ownAddress ? (
                   <Typography
                     variant="mono"
                     component="span"
@@ -176,7 +176,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           key: 'to',
           content: !toAddress ? (
             ''
-          ) : !!ownAddress && toAddress.toLowerCase() === ownAddress.toLowerCase() ? (
+          ) : !!ownAddress && toAddress === ownAddress ? (
             <Typography
               variant="mono"
               component="span"

@@ -41,9 +41,11 @@ export function useRedirectIfSingleResult(
         if (
           accountNameFragment && // Is there anything to highlight?
           !(
-            (!!evmAccount && (item as RuntimeAccount).address_eth?.toLowerCase() === evmAccount) || // Did we find this searching for evm address
+            (!!evmAccount &&
+              // Did we find this searching for evm address
+              (item as RuntimeAccount).address_eth?.toLowerCase() === evmAccount.toLowerCase()) ||
             // Did we find this searching for oasis address
-            (!!consensusAccount && item.address.toLowerCase() === consensusAccount)
+            (!!consensusAccount && item.address.toLowerCase() === consensusAccount.toLowerCase())
           ) // If we found this account based on address, then we don't want to highlight that.
         ) {
           redirectTo += `?q=${accountNameFragment}`
