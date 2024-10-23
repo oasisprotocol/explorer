@@ -588,7 +588,7 @@
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
       "tooShort": "Please enter either at least 3 characters or a number in order to perform a search.",
-      "privacy": "It seems like you might accidentally entered a keyphrase for a wallet. Please note that your mnemonic is a secret key that should never be shared, even not with our {{ appName }}.\nExecuting this search is highly unlikely to return any results. If you want to proceed nonetheless, please add “{{ wordsOfPower }}” in front of your search query to perform the search at your own risk."
+      "privacy": "It seems like you might accidentally entered a keyphrase for a wallet. Please note that your mnemonic is a secret key that should never be shared, even not with our {{ appName }}.\nExecuting this search is highly unlikely to return any results."
     },
     "mobilePlaceholder": "Search Address, Block, Txn, Token, etc",
     "noResults": {
@@ -633,8 +633,7 @@
     },
     "searchBtnText": "Search",
     "searchSuggestions": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
-    "searchSuggestionsForNoResults": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>",
-    "wordsOfPower": "I COMMAND THEE TO SEARCH FOR"
+    "searchSuggestionsForNoResults": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>"
   },
   "tableSearch": {
     "error": {
