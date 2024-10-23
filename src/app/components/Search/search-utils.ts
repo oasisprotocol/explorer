@@ -5,7 +5,6 @@ import {
   isValidTxHash,
   isValidOasisAddress,
   isValidEthAddress,
-  getEvmBech32Address,
 } from '../../utils/helpers'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -107,13 +106,6 @@ export const validateAndNormalize = {
     }
     if (isValidEthAddress(searchTerm)) {
       return searchTerm.toLowerCase()
-    }
-  },
-  evmBech32Account: (searchTerm: string): string | undefined => {
-    const evmAccount = validateAndNormalize.evmAccount(searchTerm)
-    if (evmAccount) {
-      // TODO: remove conversion when API supports querying by EVM address
-      return getEvmBech32Address(evmAccount)
     }
   },
   evmTokenNameFragment: (searchTerm: string) => {
