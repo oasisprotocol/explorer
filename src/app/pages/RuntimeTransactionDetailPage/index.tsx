@@ -228,6 +228,11 @@ export const RuntimeTransactionDetailView: FC<{
           <dt>{t('common.gasLimit')}</dt>
           <dd>{transaction.gas_limit.toLocaleString()}</dd>
 
+          <dt>{t('common.nonce')}</dt>
+          <dd>
+            <>{transaction.nonce_0.toLocaleString()}</>
+          </dd>
+
           {!!transaction.body?.data && (
             <>
               <dt>{t('transaction.rawData')}</dt>
