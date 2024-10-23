@@ -1494,6 +1494,17 @@ export interface Escrow {
   self_delegation_shares?: TextBigInt;
 }
 
+/**
+ * Information whether a block was signed by the validator.
+
+ */
+export interface ValidatorSignedBlock {
+  /** The block height. */
+  height: number;
+  /** Whether the validator signed the block. */
+  signed: boolean;
+}
+
 export interface ValidatorMedia {
   /** An email address associated with the entity. */
   email?: string;
@@ -1539,6 +1550,8 @@ export interface Validator {
   node_id?: string;
   /** The rank of the validator, determined by voting power. */
   rank: number;
+  /** An array containing details of the last 100 consensus blocks, indicating whether each block was signed by the validator. Only available when querying a single validator. */
+  signed_blocks?: ValidatorSignedBlock[];
   /** The second-granular consensus time. */
   start_date: string;
   /** The voting power of this validator. */
