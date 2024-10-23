@@ -67,7 +67,7 @@ export const searchSuggestionTerms = {
   },
 } satisfies SpecifiedPerEnabledLayer<LayerSuggestions>
 
-export const textSearchMininumLength = 3
+export const textSearchMinimumLength = 3
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
@@ -117,17 +117,17 @@ export const validateAndNormalize = {
     }
   },
   evmTokenNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
   networkProposalNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
   accountNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },

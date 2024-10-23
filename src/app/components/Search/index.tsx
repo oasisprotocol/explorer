@@ -18,7 +18,7 @@ import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { SearchScope } from '../../../types/searchScope'
-import { textSearchMininumLength } from './search-utils'
+import { textSearchMinimumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
 import { typingDelay } from '../../../styles/theme'
@@ -122,7 +122,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
     : value.trim()
 
   const isTooShort =
-    !!value && valueWithoutPrefix.length < textSearchMininumLength && !isValidBlockHeight(valueWithoutPrefix)
+    !!value && valueWithoutPrefix.length < textSearchMinimumLength && !isValidBlockHeight(valueWithoutPrefix)
 
   const hasPrivacyProblem = !hasWordsOfPower && isValidMnemonic(valueWithoutPrefix)
 
