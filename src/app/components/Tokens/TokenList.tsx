@@ -7,23 +7,26 @@ import { TokenLink } from './TokenLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
-import {
-  getTokenTypeDescription,
-  getTokenTypeStrictName,
-  tokenBackgroundColor,
-  tokenBorderColor,
-} from '../../../types/tokens'
+import { tokenBackgroundColor, tokenBorderColor } from '../../../types/tokens'
+import { getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tokens'
+import { SearchScope } from '../../../types/searchScope'
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
+import { getTokenMarketCap } from '../../utils/tokens'
+import { useTokenPrice } from '../../../coin-gecko/api'
+import { Ticker } from '../../../types/ticker'
+import { FiatValue } from '../FiatValue'
+import { MarketCapTitle } from './MarketCapTitle'
 
 type TokensProps = {
   tokens?: EvmToken[]
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  scope: SearchScope
 }
 
 export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProps }> = ({
@@ -59,22 +62,33 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProp
 export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
+  const priceQuery = useTokenPrice(Ticker.ROSE, 'usd')
   const tableColumns: TableColProps[] = [
-    { key: 'index', content: '' },
+    { key: 'index', content: '#' },
     { key: 'name', content: t('common.name') },
     { key: 'type', content: t('common.type') },
     { key: 'contract', content: t('common.smartContract') },
     { key: 'verification', content: t('contract.verification.title') },
+    {
+      align: TableCellAlign.Right,
+      key: 'marketCap',
+      content: (
+        <Box sx={{ display: 'inline-flex', gap: 2 }}>
+          <MarketCapTitle scope={props.scope} />
+        </Box>
+      ),
+    },
     {
       key: 'holders',
       content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
     { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
-    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
   ]
 
   const tableRows = tokens?.map((token, index) => {
+    const marketCapValue = getTokenMarketCap(token?.relative_total_value, priceQuery.price)
+
     return {
       key: token.contract_addr,
       data: [
@@ -137,19 +151,19 @@ export const TokenList = (props: TokensProps) => {
           ),
         },
         {
+          content: <FiatValue isLoading={priceQuery.isLoading} value={marketCapValue} />,
+          key: 'marketCap',
+          align: TableCellAlign.Right,
+        },
+        {
           content: token.num_holders.toLocaleString(),
           key: 'holdersCount',
           align: TableCellAlign.Right,
         },
         {
-          content: <RoundedBalance compactLargeNumbers value={token.total_supply} />,
+          content: <RoundedBalance compactLargeNumbers value={token.total_supply} ticker={token.symbol} />,
           key: 'supply',
           align: TableCellAlign.Right,
-        },
-        {
-          content: token.symbol,
-          key: 'ticker',
-          align: TableCellAlign.Left,
         },
       ],
     }
