@@ -18,7 +18,7 @@ import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 import { formHelperTextClasses } from '@mui/material/FormHelperText'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { SearchScope } from '../../../types/searchScope'
-import { textSearchMininumLength } from './search-utils'
+import { textSearchMinimumLength } from './search-utils'
 import Typography from '@mui/material/Typography'
 import { isValidBlockHeight } from '../../utils/helpers'
 import { typingDelay } from '../../../styles/theme'
@@ -115,20 +115,13 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
   const [isProblemFresh, setIsProblemFresh] = useState(false)
 
-  const wordsOfPower = t('search.wordsOfPower')
-  const hasWordsOfPower = value.trim().toLowerCase().startsWith(wordsOfPower.toLowerCase())
-  const valueWithoutPrefix = hasWordsOfPower
-    ? value.trim().substring(wordsOfPower.length).trim()
-    : value.trim()
+  const trimmedValue = value.trim()
 
   const isTooShort =
-    !!value && valueWithoutPrefix.length < textSearchMininumLength && !isValidBlockHeight(valueWithoutPrefix)
-
-  const hasPrivacyProblem = !hasWordsOfPower && isValidMnemonic(valueWithoutPrefix)
+    !!value && trimmedValue.length < textSearchMinimumLength && !isValidBlockHeight(trimmedValue)
 
   useEffect(() => {
-    setValue(hasWordsOfPower ? `${wordsOfPower} ${valueInSearchParams}` : valueInSearchParams)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setValue(valueInSearchParams)
   }, [valueInSearchParams]) // We only want to update the value from code when the URL changes
 
   const onChange = (newValue: string) => {
@@ -143,7 +136,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const onFormSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     if (value && value !== valueInSearchParams) {
-      navigate(RouteUtils.getSearchRoute(scope, valueWithoutPrefix))
+      navigate(RouteUtils.getSearchRoute(scope, trimmedValue))
     }
   }
 
@@ -166,8 +159,8 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
   const errorMessage = isTooShort ? t('search.error.tooShort') : undefined
   const hasError = !!errorMessage
 
-  const warningMessage = hasPrivacyProblem
-    ? t('search.error.privacy', { appName: getAppTitle(), wordsOfPower })
+  const warningMessage = isValidMnemonic(trimmedValue)
+    ? t('search.error.privacy', { appName: getAppTitle() })
     : undefined
   const hasWarning = !!warningMessage
 

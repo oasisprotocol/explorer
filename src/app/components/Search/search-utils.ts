@@ -5,7 +5,6 @@ import {
   isValidTxHash,
   isValidOasisAddress,
   isValidEthAddress,
-  getEvmBech32Address,
 } from '../../utils/helpers'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -67,7 +66,7 @@ export const searchSuggestionTerms = {
   },
 } satisfies SpecifiedPerEnabledLayer<LayerSuggestions>
 
-export const textSearchMininumLength = 3
+export const textSearchMinimumLength = 3
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
@@ -109,25 +108,18 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
-  evmBech32Account: (searchTerm: string): string | undefined => {
-    const evmAccount = validateAndNormalize.evmAccount(searchTerm)
-    if (evmAccount) {
-      // TODO: remove conversion when API supports querying by EVM address
-      return getEvmBech32Address(evmAccount)
-    }
-  },
   evmTokenNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
   networkProposalNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
   accountNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMininumLength) {
+    if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
