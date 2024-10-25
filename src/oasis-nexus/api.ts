@@ -36,6 +36,17 @@ export type { RuntimeEvmBalance as Token } from './generated/api'
 
 export type HasScope = SearchScope
 
+// TODO: Remove when API is updated
+export interface EntityMetadata {
+  v: number
+  serial: number
+  name?: string
+  url?: string
+  email?: string
+  keybase?: string
+  twitter?: string
+}
+
 declare module './generated/api' {
   export interface Transaction {
     amount: string | undefined
