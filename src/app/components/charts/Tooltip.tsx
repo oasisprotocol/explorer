@@ -17,7 +17,7 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export type Formatters = {
   formatters?: {
-    data?: (value: number) => string
+    data?: (value: number, payload?: { [key: string]: string | number }) => string
     label?: (value: string) => string
   }
 }
@@ -36,7 +36,6 @@ export const TooltipContent = ({
   if (!active || !payload || !payload.length) {
     return null
   }
-
   const { [payload[0].dataKey!]: value, ...rest } = payload[0].payload
   const labelKey = dataLabelKey || Object.keys(rest)[0]
 
@@ -46,7 +45,7 @@ export const TooltipContent = ({
         {formatters?.label ? formatters.label(payload[0].payload[labelKey]) : payload[0].payload[labelKey]}
       </Typography>
       <Typography paragraph={false} sx={{ fontSize: 12, fontWeight: 600 }}>
-        {formatters?.data ? formatters.data(payload[0].value!) : payload[0].value}
+        {formatters?.data ? formatters.data(payload[0].value!, payload[0].payload.payload) : payload[0].value}
       </Typography>
     </StyledPaper>
   )

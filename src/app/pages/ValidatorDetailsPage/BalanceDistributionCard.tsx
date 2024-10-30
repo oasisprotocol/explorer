@@ -20,13 +20,16 @@ function chartData(t: TFunction, validator: Validator | undefined) {
     return []
   }
 
+  // value props have rounding issues. Avoid displaying in text, but they are fine for visualization
   return [
     {
       label: t('validator.self'),
+      preciseValue: validator.escrow.self_delegation_balance,
       value: Number(validator.escrow.self_delegation_balance),
     },
     {
       label: t('validator.others'),
+      preciseValue: validator.escrow.self_delegation_balance,
       value: Number(validator.escrow.otherBalance),
     },
   ]
@@ -59,9 +62,9 @@ export const BalanceDistributionCard: FC<BalanceDistributionCardProps> = ({ vali
           data={chartData(t, validator)}
           dataKey="value"
           formatters={{
-            data: (value: number) =>
+            data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(value.toString()),
+                ...getPreciseNumberFormat(String(payload!.preciseValue)),
                 ticker: validator.ticker,
               }),
             label: (label: string) => label,
