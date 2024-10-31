@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
@@ -29,6 +30,9 @@ import { debondingContainerId, delegatorsContainerId } from './tabAnchors'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { PercentageValue } from '../../components/PercentageValue'
+import { UptimeStatus } from '../../components/UptimeStatus'
+import { BalancesDiff } from '../../components/BalancesDiff'
+import { RoundedBalance } from '../../components/RoundedBalance'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -179,11 +183,14 @@ export const ValidatorDetailsView: FC<{
           <dd>{validator.rank}</dd>
           <dt>{t('validator.title')}</dt>
           <dd>
-            <ValidatorImage
-              address={validator.entity_address}
-              name={validator.media?.name}
-              logotype={validator.media?.logoUrl}
-            />
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <ValidatorImage
+                address={validator.entity_address}
+                name={validator.media?.name}
+                logotype={validator.media?.logoUrl}
+              />
+              <b>{validator.media?.name}</b>
+            </Box>
           </dd>
           <dt>{t('validator.cumulativeVoting')}</dt>
           <dd>
@@ -194,11 +201,25 @@ export const ValidatorDetailsView: FC<{
             />
           </dd>
           <dt>{t('validator.voting')}</dt>
-          <dd>-</dd>
+          <dd>
+            <PercentageValue
+              value={validator.voting_power}
+              total={stats?.total_voting_power}
+              adaptMaximumFractionDigits
+            />
+          </dd>
           <dt>{t('common.staked')}</dt>
-          <dd>-</dd>
+          <dd>
+            <RoundedBalance value={validator.escrow?.active_balance} ticker={validator.ticker} />
+          </dd>
           <dt>{t('validator.change')}</dt>
-          <dd>-</dd>
+          <dd>
+            <BalancesDiff
+              before={validator.escrow.active_balance_24}
+              after={validator.escrow.active_balance}
+              ticker={validator.ticker}
+            />
+          </dd>
           <dt>{t('validator.delegators')}</dt>
           <dd>{validator.escrow?.num_delegators?.toLocaleString()}</dd>
           <dt>{t('validator.commission')}</dt>
@@ -210,7 +231,9 @@ export const ValidatorDetailsView: FC<{
             <StatusIcon success={validator.active} error={undefined} />
           </dd>
           <dt>{t('validator.uptime')}</dt>
-          <dd>-</dd>
+          <dd>
+            <UptimeStatus small percentage={94} status={[100, 100, 100, 50]} />
+          </dd>
         </>
       )}
     </StyledDescriptionList>
