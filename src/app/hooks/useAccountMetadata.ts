@@ -15,7 +15,7 @@ import { getOasisAddress } from '../utils/helpers'
  */
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
-  const pontusXData = usePontusXAccountMetadata(address, {
+  const pontusXData = usePontusXAccountMetadata(address.toLowerCase(), {
     enabled: isPontusX,
     useErrorBoundary: false,
   })
