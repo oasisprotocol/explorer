@@ -10,16 +10,20 @@ import { getOasisAddress } from '../utils/helpers'
  *
  * This is the entry point that should be used by the application,
  * since this function also includes caching.
+ *
+ * Doesn't throw if it fails.
  */
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
-  const pontusXData = usePontusXAccountMetadata(address, { enabled: isPontusX })
+  const pontusXData = usePontusXAccountMetadata(address.toLowerCase(), { enabled: isPontusX })
   const oasisData = useOasisAccountMetadata(scope.network, scope.layer, getOasisAddress(address), {
     enabled: !isPontusX,
+    useErrorBoundary: false,
   })
   return isPontusX ? pontusXData : oasisData
 }
 
+/** Doesn't throw if it fails. */
 export const useSearchForAccountsByName = (
   scope: SearchScope,
   nameFragment = '',
@@ -28,10 +32,12 @@ export const useSearchForAccountsByName = (
   const isValidPontusXSearch = isPontusX && !!nameFragment
   const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragment, {
     enabled: isValidPontusXSearch,
+    useErrorBoundary: false,
   })
   const isValidOasisSearch = !isPontusX && !!nameFragment
   const oasisResults = useSearchForOasisAccountsByName(scope.network, scope.layer, nameFragment, {
     enabled: isValidOasisSearch,
+    useErrorBoundary: false,
   })
   return {
     isLoading:

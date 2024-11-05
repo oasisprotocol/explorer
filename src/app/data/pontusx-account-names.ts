@@ -30,7 +30,7 @@ const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> =>
       address: getOasisAddress(evmAddress),
       name: name as string,
     }
-    map.set(evmAddress, account)
+    map.set(evmAddress.toLowerCase(), account)
     list.push(account)
   })
   return {
