@@ -53,17 +53,21 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
     return <ConsensusAccountCardEmptyState label={t('account.noBalances')} />
   }
 
+  // value props have rounding issues. Avoid displaying in text, but they are fine for visualization
   const data = [
     {
       label: t('account.available'),
+      preciseValue: account.available,
       value: Number(account.available),
     },
     {
       label: t('common.staked'),
+      preciseValue: account.delegations_balance,
       value: Number(account.delegations_balance),
     },
     {
       label: t('account.debonding'),
+      preciseValue: account.debonding_delegations_balance,
       value: Number(account.debonding_delegations_balance),
     },
   ]
@@ -88,9 +92,9 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
           data={data}
           dataKey="value"
           formatters={{
-            data: (value: number) =>
+            data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(value.toString()),
+                ...getPreciseNumberFormat(String(payload!.preciseValue)),
                 ticker: account.ticker,
               }),
             label: (label: string) => label,
