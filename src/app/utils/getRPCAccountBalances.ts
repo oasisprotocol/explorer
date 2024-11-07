@@ -8,6 +8,7 @@ import { fromBaseUnits } from './number-utils'
 const grpcUrls: { [key in Network]: string } = {
   [Network.mainnet]: 'https://grpc.oasis.io',
   [Network.testnet]: 'https://testnet.grpc.oasis.io',
+  [Network.localnet]: 'http://localhost:8544.',
 }
 
 export async function getRPCAccountBalances(
@@ -18,7 +19,7 @@ export async function getRPCAccountBalances(
   },
 ): Promise<RuntimeSdkBalance[]> {
   const paratimeConfig = paraTimesConfig[scope.layer][scope.network]
-  if (!paratimeConfig.runtimeId) throw new Error('Paratime is not configured')
+  if (!paratimeConfig?.runtimeId) throw new Error('Paratime is not configured')
 
   const nic = new oasis.client.NodeInternal(grpcUrls[scope.network])
   const accountsWrapper = new oasisRT.accounts.Wrapper(oasis.misc.fromHex(paratimeConfig.runtimeId))

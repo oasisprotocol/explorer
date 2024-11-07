@@ -96,6 +96,7 @@
     "id": "ID",
     "invalidVotes": "Invalid votes",
     "layer": "Layer",
+    "localnet": "Localnet",
     "loadMore": "Load more",
     "lessThanAmount": "&lt; {{value, number}} <TickerLink />",
     "missing": "n/a",

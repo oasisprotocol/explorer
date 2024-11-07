@@ -92,6 +92,14 @@ export abstract class RouteUtils {
       // Disable WIP Consensus on production and staging
       [Layer.consensus]: !isStableDeploy,
     },
+    [Network.localnet]: {
+      [Layer.emerald]: false,
+      [Layer.sapphire]: false,
+      [Layer.cipher]: false,
+      [Layer.pontusxdev]: false,
+      [Layer.pontusxtest]: false,
+      [Layer.consensus]: true,
+    },
   } satisfies Record<Network, Record<Layer, boolean>>
 
   static getScopeRoute = ({ network, layer }: SearchScope) => {
@@ -391,3 +399,5 @@ export const isScopeSelectorNeeded = (sourceScope: SearchScope) => {
       return false
   }
 }
+
+export const isLocalnet = (network: Network) => network === 'localnet'

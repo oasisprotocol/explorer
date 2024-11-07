@@ -35,6 +35,11 @@ const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
     [Layer.sapphire]:
       'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/testnet_paratime.json',
   },
+  [Network.localnet]: {
+    [Layer.consensus]: undefined,
+    [Layer.emerald]: undefined,
+    [Layer.sapphire]: undefined,
+  },
 }
 
 const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise<AccountData> => {
