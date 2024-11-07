@@ -2228,7 +2228,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * @summary Returns the status of indexing.
  */
 export const getStatus = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
  options?: SecondParameter<typeof getStatusMutator>,signal?: AbortSignal
 ) => {
       
@@ -2240,12 +2240,12 @@ export const getStatus = (
     }
   
 
-export const getGetStatusQueryKey = (network: 'mainnet' | 'testnet',) => {
+export const getGetStatusQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',) => {
     return [`/${network}/`] as const;
     }
 
     
-export const getGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof getStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
+export const getGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof getStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -2270,7 +2270,7 @@ export type GetStatusQueryError = HumanReadableErrorResponse | NotFoundErrorResp
  * @summary Returns the status of indexing.
  */
 export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
+ network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2291,7 +2291,7 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const GetConsensusBlocks = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusBlocksParams,
  options?: SecondParameter<typeof GetConsensusBlocksMutator>,signal?: AbortSignal
 ) => {
@@ -2305,13 +2305,13 @@ export const GetConsensusBlocks = (
     }
   
 
-export const getGetConsensusBlocksQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusBlocksQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusBlocksParams,) => {
     return [`/${network}/consensus/blocks`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusBlocksQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusBlocksQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusBlocks>>, TError, TData>, request?: SecondParameter<typeof GetConsensusBlocksMutator>}
 ) => {
 
@@ -2338,7 +2338,7 @@ export type GetConsensusBlocksQueryError = HumanReadableErrorResponse | NotFound
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusBlocks>>, TError, TData>, request?: SecondParameter<typeof GetConsensusBlocksMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2360,7 +2360,7 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConse
  * @summary Returns a consensus block.
  */
 export const GetConsensusBlocksHeight = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     height: number,
  options?: SecondParameter<typeof GetConsensusBlocksHeightMutator>,signal?: AbortSignal
 ) => {
@@ -2373,13 +2373,13 @@ export const GetConsensusBlocksHeight = (
     }
   
 
-export const getGetConsensusBlocksHeightQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusBlocksHeightQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     height: number,) => {
     return [`/${network}/consensus/blocks/${height}`] as const;
     }
 
     
-export const getGetConsensusBlocksHeightQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusBlocksHeightQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError, TData>, request?: SecondParameter<typeof GetConsensusBlocksHeightMutator>}
 ) => {
 
@@ -2406,7 +2406,7 @@ export type GetConsensusBlocksHeightQueryError = HumanReadableErrorResponse | No
  * @summary Returns a consensus block.
  */
 export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError, TData>, request?: SecondParameter<typeof GetConsensusBlocksHeightMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2428,7 +2428,7 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof Ge
  * @summary Returns a list of consensus transactions.
  */
 export const GetConsensusTransactions = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusTransactionsParams,
  options?: SecondParameter<typeof GetConsensusTransactionsMutator>,signal?: AbortSignal
 ) => {
@@ -2442,13 +2442,13 @@ export const GetConsensusTransactions = (
     }
   
 
-export const getGetConsensusTransactionsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusTransactionsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusTransactionsParams,) => {
     return [`/${network}/consensus/transactions`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTransactions>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTransactionsMutator>}
 ) => {
 
@@ -2475,7 +2475,7 @@ export type GetConsensusTransactionsQueryError = HumanReadableErrorResponse | No
  * @summary Returns a list of consensus transactions.
  */
 export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof GetConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTransactions>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTransactionsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2497,7 +2497,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof Ge
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const GetConsensusTransactionsTxHash = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     txHash: string,
  options?: SecondParameter<typeof GetConsensusTransactionsTxHashMutator>,signal?: AbortSignal
 ) => {
@@ -2510,13 +2510,13 @@ export const GetConsensusTransactionsTxHash = (
     }
   
 
-export const getGetConsensusTransactionsTxHashQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusTransactionsTxHashQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     txHash: string,) => {
     return [`/${network}/consensus/transactions/${txHash}`] as const;
     }
 
     
-export const getGetConsensusTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTransactionsTxHashMutator>}
 ) => {
 
@@ -2543,7 +2543,7 @@ export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorRespons
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTransactionsTxHashMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2565,7 +2565,7 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
  * @summary Returns a list of consensus events.
  */
 export const GetConsensusEvents = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEventsParams,
  options?: SecondParameter<typeof GetConsensusEventsMutator>,signal?: AbortSignal
 ) => {
@@ -2579,13 +2579,13 @@ export const GetConsensusEvents = (
     }
   
 
-export const getGetConsensusEventsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEventsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEventsParams,) => {
     return [`/${network}/consensus/events`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusEventsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEventsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEvents>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEventsMutator>}
 ) => {
 
@@ -2612,7 +2612,7 @@ export type GetConsensusEventsQueryError = HumanReadableErrorResponse | NotFound
  * @summary Returns a list of consensus events.
  */
 export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEvents>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEventsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2633,7 +2633,7 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConse
  * @deprecated
  */
 export const GetConsensusRoothashMessages = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams,
  options?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>,signal?: AbortSignal
 ) => {
@@ -2647,13 +2647,13 @@ export const GetConsensusRoothashMessages = (
     }
   
 
-export const getGetConsensusRoothashMessagesQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusRoothashMessagesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams,) => {
     return [`/${network}/consensus/roothash_messages`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusRoothashMessagesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusRoothashMessagesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
 ) => {
 
@@ -2679,7 +2679,7 @@ export type GetConsensusRoothashMessagesQueryError = HumanReadableErrorResponse 
  * @deprecated
  */
 export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2701,7 +2701,7 @@ export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeo
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const GetConsensusEntities = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEntitiesParams,
  options?: SecondParameter<typeof GetConsensusEntitiesMutator>,signal?: AbortSignal
 ) => {
@@ -2715,13 +2715,13 @@ export const GetConsensusEntities = (
     }
   
 
-export const getGetConsensusEntitiesQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEntitiesParams,) => {
     return [`/${network}/consensus/entities`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusEntitiesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntities>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesMutator>}
 ) => {
 
@@ -2748,7 +2748,7 @@ export type GetConsensusEntitiesQueryError = HumanReadableErrorResponse | NotFou
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntities>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2770,7 +2770,7 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetCon
  * @summary Returns an entity registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddress = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
  options?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>,signal?: AbortSignal
 ) => {
@@ -2783,13 +2783,13 @@ export const GetConsensusEntitiesAddress = (
     }
   
 
-export const getGetConsensusEntitiesAddressQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,) => {
     return [`/${network}/consensus/entities/${address}`] as const;
     }
 
     
-export const getGetConsensusEntitiesAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>}
 ) => {
 
@@ -2816,7 +2816,7 @@ export type GetConsensusEntitiesAddressQueryError = HumanReadableErrorResponse |
  * @summary Returns an entity registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -2838,7 +2838,7 @@ export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodes = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusEntitiesAddressNodesParams,
  options?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>,signal?: AbortSignal
@@ -2853,14 +2853,14 @@ export const GetConsensusEntitiesAddressNodes = (
     }
   
 
-export const getGetConsensusEntitiesAddressNodesQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressNodesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusEntitiesAddressNodesParams,) => {
     return [`/${network}/consensus/entities/${address}/nodes`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusEntitiesAddressNodesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressNodesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>}
 ) => {
@@ -2888,7 +2888,7 @@ export type GetConsensusEntitiesAddressNodesQueryError = HumanReadableErrorRespo
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesMutator>}
 
@@ -2911,7 +2911,7 @@ export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<t
  * @summary Returns a node registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodesNodeId = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     nodeId: Ed25519PubKey,
  options?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>,signal?: AbortSignal
@@ -2925,14 +2925,14 @@ export const GetConsensusEntitiesAddressNodesNodeId = (
     }
   
 
-export const getGetConsensusEntitiesAddressNodesNodeIdQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     nodeId: Ed25519PubKey,) => {
     return [`/${network}/consensus/entities/${address}/nodes/${nodeId}`] as const;
     }
 
     
-export const getGetConsensusEntitiesAddressNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>}
 ) => {
@@ -2960,7 +2960,7 @@ export type GetConsensusEntitiesAddressNodesNodeIdQueryError = HumanReadableErro
  * @summary Returns a node registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEntitiesAddressNodesNodeIdMutator>}
 
@@ -2983,7 +2983,7 @@ export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<Return
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const GetConsensusValidators = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusValidatorsParams,
  options?: SecondParameter<typeof GetConsensusValidatorsMutator>,signal?: AbortSignal
 ) => {
@@ -2997,13 +2997,13 @@ export const GetConsensusValidators = (
     }
   
 
-export const getGetConsensusValidatorsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusValidatorsParams,) => {
     return [`/${network}/consensus/validators`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusValidatorsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidators>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsMutator>}
 ) => {
 
@@ -3030,7 +3030,7 @@ export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotF
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidators>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3052,7 +3052,7 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetC
  * @summary Returns a validator registered at the consensus layer.
  */
 export const GetConsensusValidatorsAddress = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
  options?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>,signal?: AbortSignal
 ) => {
@@ -3065,13 +3065,13 @@ export const GetConsensusValidatorsAddress = (
     }
   
 
-export const getGetConsensusValidatorsAddressQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,) => {
     return [`/${network}/consensus/validators/${address}`] as const;
     }
 
     
-export const getGetConsensusValidatorsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>}
 ) => {
 
@@ -3098,7 +3098,7 @@ export type GetConsensusValidatorsAddressQueryError = HumanReadableErrorResponse
  * @summary Returns a validator registered at the consensus layer.
  */
 export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3120,7 +3120,7 @@ export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<type
  * @summary Returns historical information for a single validator.
  */
 export const GetConsensusValidatorsAddressHistory = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusValidatorsAddressHistoryParams,
  options?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>,signal?: AbortSignal
@@ -3135,14 +3135,14 @@ export const GetConsensusValidatorsAddressHistory = (
     }
   
 
-export const getGetConsensusValidatorsAddressHistoryQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsAddressHistoryQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusValidatorsAddressHistoryParams,) => {
     return [`/${network}/consensus/validators/${address}/history`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusValidatorsAddressHistoryQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusValidatorsAddressHistoryQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>}
 ) => {
@@ -3170,7 +3170,7 @@ export type GetConsensusValidatorsAddressHistoryQueryError = HumanReadableErrorR
  * @summary Returns historical information for a single validator.
  */
 export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof GetConsensusValidatorsAddressHistoryMutator>}
 
@@ -3197,7 +3197,7 @@ query the single-account endpoint.
 
  */
 export const GetConsensusAccounts = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusAccountsParams,
  options?: SecondParameter<typeof GetConsensusAccountsMutator>,signal?: AbortSignal
 ) => {
@@ -3211,13 +3211,13 @@ export const GetConsensusAccounts = (
     }
   
 
-export const getGetConsensusAccountsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusAccountsParams,) => {
     return [`/${network}/consensus/accounts`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusAccountsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccounts>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsMutator>}
 ) => {
 
@@ -3248,7 +3248,7 @@ query the single-account endpoint.
 
  */
 export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccounts>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3270,7 +3270,7 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetCon
  * @summary Returns a consensus layer account.
  */
 export const GetConsensusAccountsAddress = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
  options?: SecondParameter<typeof GetConsensusAccountsAddressMutator>,signal?: AbortSignal
 ) => {
@@ -3283,13 +3283,13 @@ export const GetConsensusAccountsAddress = (
     }
   
 
-export const getGetConsensusAccountsAddressQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,) => {
     return [`/${network}/consensus/accounts/${address}`] as const;
     }
 
     
-export const getGetConsensusAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
 ) => {
 
@@ -3316,7 +3316,7 @@ export type GetConsensusAccountsAddressQueryError = HumanReadableErrorResponse |
  * @summary Returns a consensus layer account.
  */
 export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3338,7 +3338,7 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
  * @summary Returns an account's delegations.
  */
 export const GetConsensusAccountsAddressDelegations = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>,signal?: AbortSignal
@@ -3353,14 +3353,14 @@ export const GetConsensusAccountsAddressDelegations = (
     }
   
 
-export const getGetConsensusAccountsAddressDelegationsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDelegationsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams,) => {
     return [`/${network}/consensus/accounts/${address}/delegations`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>}
 ) => {
@@ -3388,7 +3388,7 @@ export type GetConsensusAccountsAddressDelegationsQueryError = HumanReadableErro
  * @summary Returns an account's delegations.
  */
 export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsMutator>}
 
@@ -3411,7 +3411,7 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
  * @summary Returns a list of delegations to an account.
  */
 export const GetConsensusAccountsAddressDelegationsTo = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>,signal?: AbortSignal
@@ -3426,14 +3426,14 @@ export const GetConsensusAccountsAddressDelegationsTo = (
     }
   
 
-export const getGetConsensusAccountsAddressDelegationsToQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDelegationsToQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams,) => {
     return [`/${network}/consensus/accounts/${address}/delegations_to`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>}
 ) => {
@@ -3461,7 +3461,7 @@ export type GetConsensusAccountsAddressDelegationsToQueryError = HumanReadableEr
  * @summary Returns a list of delegations to an account.
  */
 export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDelegationsToMutator>}
 
@@ -3484,7 +3484,7 @@ export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<Retu
  * @summary Returns an account's debonding delegations.
  */
 export const GetConsensusAccountsAddressDebondingDelegations = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>,signal?: AbortSignal
@@ -3499,14 +3499,14 @@ export const GetConsensusAccountsAddressDebondingDelegations = (
     }
   
 
-export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams,) => {
     return [`/${network}/consensus/accounts/${address}/debonding_delegations`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>}
 ) => {
@@ -3534,7 +3534,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsQueryError = HumanRea
  * @summary Returns an account's debonding delegations.
  */
 export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsMutator>}
 
@@ -3557,7 +3557,7 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
  * @summary Returns a list of debonding delegations to an account.
  */
 export const GetConsensusAccountsAddressDebondingDelegationsTo = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams,
  options?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>,signal?: AbortSignal
@@ -3572,14 +3572,14 @@ export const GetConsensusAccountsAddressDebondingDelegationsTo = (
     }
   
 
-export const getGetConsensusAccountsAddressDebondingDelegationsToQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDebondingDelegationsToQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams,) => {
     return [`/${network}/consensus/accounts/${address}/debonding_delegations_to`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>}
 ) => {
@@ -3607,7 +3607,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = HumanR
  * @summary Returns a list of debonding delegations to an account.
  */
 export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     address: StakingAddress,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof GetConsensusAccountsAddressDebondingDelegationsToMutator>}
 
@@ -3630,7 +3630,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awa
  * @summary Returns a list of consensus epochs.
  */
 export const GetConsensusEpochs = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEpochsParams,
  options?: SecondParameter<typeof GetConsensusEpochsMutator>,signal?: AbortSignal
 ) => {
@@ -3644,13 +3644,13 @@ export const GetConsensusEpochs = (
     }
   
 
-export const getGetConsensusEpochsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEpochsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEpochsParams,) => {
     return [`/${network}/consensus/epochs`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusEpochsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEpochsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEpochs>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEpochsMutator>}
 ) => {
 
@@ -3677,7 +3677,7 @@ export type GetConsensusEpochsQueryError = HumanReadableErrorResponse | NotFound
  * @summary Returns a list of consensus epochs.
  */
 export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEpochs>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEpochsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3699,7 +3699,7 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConse
  * @summary Returns a consensus epoch.
  */
 export const GetConsensusEpochsEpoch = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     epoch: number,
  options?: SecondParameter<typeof GetConsensusEpochsEpochMutator>,signal?: AbortSignal
 ) => {
@@ -3712,13 +3712,13 @@ export const GetConsensusEpochsEpoch = (
     }
   
 
-export const getGetConsensusEpochsEpochQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusEpochsEpochQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     epoch: number,) => {
     return [`/${network}/consensus/epochs/${epoch}`] as const;
     }
 
     
-export const getGetConsensusEpochsEpochQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusEpochsEpochQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEpochsEpochMutator>}
 ) => {
 
@@ -3745,7 +3745,7 @@ export type GetConsensusEpochsEpochQueryError = HumanReadableErrorResponse | Not
  * @summary Returns a consensus epoch.
  */
 export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError, TData>, request?: SecondParameter<typeof GetConsensusEpochsEpochMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3767,7 +3767,7 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof Get
  * @summary Returns a list of governance proposals.
  */
 export const GetConsensusProposals = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusProposalsParams,
  options?: SecondParameter<typeof GetConsensusProposalsMutator>,signal?: AbortSignal
 ) => {
@@ -3781,13 +3781,13 @@ export const GetConsensusProposals = (
     }
   
 
-export const getGetConsensusProposalsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusProposalsParams,) => {
     return [`/${network}/consensus/proposals`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusProposalsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposals>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsMutator>}
 ) => {
 
@@ -3814,7 +3814,7 @@ export type GetConsensusProposalsQueryError = HumanReadableErrorResponse | NotFo
  * @summary Returns a list of governance proposals.
  */
 export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposals>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3836,7 +3836,7 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetCo
  * @summary Returns a governance proposal.
  */
 export const GetConsensusProposalsProposalId = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,
  options?: SecondParameter<typeof GetConsensusProposalsProposalIdMutator>,signal?: AbortSignal
 ) => {
@@ -3849,13 +3849,13 @@ export const GetConsensusProposalsProposalId = (
     }
   
 
-export const getGetConsensusProposalsProposalIdQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsProposalIdQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,) => {
     return [`/${network}/consensus/proposals/${proposalId}`] as const;
     }
 
     
-export const getGetConsensusProposalsProposalIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsProposalIdQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsProposalIdMutator>}
 ) => {
 
@@ -3882,7 +3882,7 @@ export type GetConsensusProposalsProposalIdQueryError = HumanReadableErrorRespon
  * @summary Returns a governance proposal.
  */
 export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsProposalIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3904,7 +3904,7 @@ export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<ty
  * @summary Returns a list of votes for a governance proposal.
  */
 export const GetConsensusProposalsProposalIdVotes = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams,
  options?: SecondParameter<typeof GetConsensusProposalsProposalIdVotesMutator>,signal?: AbortSignal
@@ -3919,14 +3919,14 @@ export const GetConsensusProposalsProposalIdVotes = (
     }
   
 
-export const getGetConsensusProposalsProposalIdVotesQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsProposalIdVotesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams,) => {
     return [`/${network}/consensus/proposals/${proposalId}/votes`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetConsensusProposalsProposalIdVotesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetConsensusProposalsProposalIdVotesQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsProposalIdVotesMutator>}
 ) => {
@@ -3954,7 +3954,7 @@ export type GetConsensusProposalsProposalIdVotesQueryError = HumanReadableErrorR
  * @summary Returns a list of votes for a governance proposal.
  */
 export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError, TData>, request?: SecondParameter<typeof GetConsensusProposalsProposalIdVotesMutator>}
 
@@ -3976,7 +3976,7 @@ export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnTy
  * @summary Returns a list of Runtime blocks.
  */
 export const GetRuntimeBlocks = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeBlocksParams,
  options?: SecondParameter<typeof GetRuntimeBlocksMutator>,signal?: AbortSignal
@@ -3991,14 +3991,14 @@ export const GetRuntimeBlocks = (
     }
   
 
-export const getGetRuntimeBlocksQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeBlocksQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeBlocksParams,) => {
     return [`/${network}/${runtime}/blocks`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetRuntimeBlocksQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeBlocksQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeBlocksMutator>}
 ) => {
@@ -4025,7 +4025,7 @@ export type GetRuntimeBlocksQueryError = HumanReadableErrorResponse | NotFoundEr
  * @summary Returns a list of Runtime blocks.
  */
 export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeBlocks>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeBlocksMutator>}
 
@@ -4047,7 +4047,7 @@ export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof GetRuntime
  * @summary Returns a list of Runtime transactions.
  */
 export const GetRuntimeTransactions = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeTransactionsParams,
  options?: SecondParameter<typeof GetRuntimeTransactionsMutator>,signal?: AbortSignal
@@ -4062,14 +4062,14 @@ export const GetRuntimeTransactions = (
     }
   
 
-export const getGetRuntimeTransactionsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeTransactionsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeTransactionsParams,) => {
     return [`/${network}/${runtime}/transactions`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetRuntimeTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeTransactionsMutator>}
 ) => {
@@ -4096,7 +4096,7 @@ export type GetRuntimeTransactionsQueryError = HumanReadableErrorResponse | NotF
  * @summary Returns a list of Runtime transactions.
  */
 export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeTransactionsMutator>}
 
@@ -4118,7 +4118,7 @@ export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof GetR
  * @summary Returns runtime transactions with the given transaction hash.
  */
 export const GetRuntimeTransactionsTxHash = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     txHash: string,
  options?: SecondParameter<typeof GetRuntimeTransactionsTxHashMutator>,signal?: AbortSignal
@@ -4132,14 +4132,14 @@ export const GetRuntimeTransactionsTxHash = (
     }
   
 
-export const getGetRuntimeTransactionsTxHashQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeTransactionsTxHashQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     txHash: string,) => {
     return [`/${network}/${runtime}/transactions/${txHash}`] as const;
     }
 
     
-export const getGetRuntimeTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeTransactionsTxHashMutator>}
 ) => {
@@ -4166,7 +4166,7 @@ export type GetRuntimeTransactionsTxHashQueryError = HumanReadableErrorResponse 
  * @summary Returns runtime transactions with the given transaction hash.
  */
 export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetRuntimeTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeTransactionsTxHashMutator>}
 
@@ -4188,7 +4188,7 @@ export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeo
  * @summary Returns a list of runtime events.
  */
 export const GetRuntimeEvents = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEventsParams,
  options?: SecondParameter<typeof GetRuntimeEventsMutator>,signal?: AbortSignal
@@ -4203,14 +4203,14 @@ export const GetRuntimeEvents = (
     }
   
 
-export const getGetRuntimeEventsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEventsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEventsParams,) => {
     return [`/${network}/${runtime}/events`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetRuntimeEventsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEventsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvents>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEventsMutator>}
 ) => {
@@ -4237,7 +4237,7 @@ export type GetRuntimeEventsQueryError = HumanReadableErrorResponse | NotFoundEr
  * @summary Returns a list of runtime events.
  */
 export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof GetRuntimeEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvents>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEventsMutator>}
 
@@ -4259,7 +4259,7 @@ export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof GetRuntime
  * @summary Returns a list of EVM (ERC-20, ...) tokens on the runtime.
  */
 export const GetRuntimeEvmTokens = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEvmTokensParams,
  options?: SecondParameter<typeof GetRuntimeEvmTokensMutator>,signal?: AbortSignal
@@ -4274,14 +4274,14 @@ export const GetRuntimeEvmTokens = (
     }
   
 
-export const getGetRuntimeEvmTokensQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEvmTokensParams,) => {
     return [`/${network}/${runtime}/evm_tokens`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetRuntimeEvmTokensQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokens>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensMutator>}
 ) => {
@@ -4308,7 +4308,7 @@ export type GetRuntimeEvmTokensQueryError = HumanReadableErrorResponse | NotFoun
  * @summary Returns a list of EVM (ERC-20, ...) tokens on the runtime.
  */
 export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokens>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensMutator>}
 
@@ -4330,7 +4330,7 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof GetRunt
  * @summary Returns info on an EVM (ERC-20, ...) token on the runtime.
  */
 export const GetRuntimeEvmTokensAddress = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
  options?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>,signal?: AbortSignal
@@ -4344,14 +4344,14 @@ export const GetRuntimeEvmTokensAddress = (
     }
   
 
-export const getGetRuntimeEvmTokensAddressQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,) => {
     return [`/${network}/${runtime}/evm_tokens/${address}`] as const;
     }
 
     
-export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 ) => {
@@ -4378,7 +4378,7 @@ export type GetRuntimeEvmTokensAddressQueryError = HumanReadableErrorResponse | 
  * @summary Returns info on an EVM (ERC-20, ...) token on the runtime.
  */
 export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressMutator>}
 
@@ -4402,7 +4402,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 
  */
 export const GetRuntimeEvmTokensAddressHolders = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,
@@ -4418,7 +4418,7 @@ export const GetRuntimeEvmTokensAddressHolders = (
     }
   
 
-export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,) => {
@@ -4426,7 +4426,7 @@ export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (network: 'mainnet' 
     }
 
     
-export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
@@ -4456,7 +4456,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 
  */
 export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressHoldersMutator>}
@@ -4481,7 +4481,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 
  */
 export const GetRuntimeEvmTokensAddressNfts = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,
@@ -4497,7 +4497,7 @@ export const GetRuntimeEvmTokensAddressNfts = (
     }
   
 
-export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,) => {
@@ -4505,7 +4505,7 @@ export const getGetRuntimeEvmTokensAddressNftsQueryKey = (network: 'mainnet' | '
     }
 
     
-export const getGetRuntimeEvmTokensAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
@@ -4535,7 +4535,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
 
  */
 export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsMutator>}
@@ -4559,7 +4559,7 @@ export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typ
 
  */
 export const GetRuntimeEvmTokensAddressNftsId = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     id: TextBigInt,
@@ -4574,7 +4574,7 @@ export const GetRuntimeEvmTokensAddressNftsId = (
     }
   
 
-export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     id: TextBigInt,) => {
@@ -4582,7 +4582,7 @@ export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (network: 'mainnet' |
     }
 
     
-export const getGetRuntimeEvmTokensAddressNftsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeEvmTokensAddressNftsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
@@ -4611,7 +4611,7 @@ export type GetRuntimeEvmTokensAddressNftsIdQueryError = HumanReadableErrorRespo
 
  */
 export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeEvmTokensAddressNftsIdMutator>}
@@ -4634,7 +4634,7 @@ export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<t
  * @summary Returns a runtime account.
  */
 export const GetRuntimeAccountsAddress = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
  options?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>,signal?: AbortSignal
@@ -4648,14 +4648,14 @@ export const GetRuntimeAccountsAddress = (
     }
   
 
-export const getGetRuntimeAccountsAddressQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeAccountsAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,) => {
     return [`/${network}/${runtime}/accounts/${address}`] as const;
     }
 
     
-export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 ) => {
@@ -4682,7 +4682,7 @@ export type GetRuntimeAccountsAddressQueryError = HumanReadableErrorResponse | N
  * @summary Returns a runtime account.
  */
 export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressMutator>}
 
@@ -4705,7 +4705,7 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof G
 
  */
 export const GetRuntimeAccountsAddressNfts = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,
@@ -4721,7 +4721,7 @@ export const GetRuntimeAccountsAddressNfts = (
     }
   
 
-export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,) => {
@@ -4729,7 +4729,7 @@ export const getGetRuntimeAccountsAddressNftsQueryKey = (network: 'mainnet' | 't
     }
 
     
-export const getGetRuntimeAccountsAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeAccountsAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
@@ -4758,7 +4758,7 @@ export type GetRuntimeAccountsAddressNftsQueryError = HumanReadableErrorResponse
 
  */
 export const useGetRuntimeAccountsAddressNfts = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
     address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressNftsMutator>}
@@ -4781,7 +4781,7 @@ export const useGetRuntimeAccountsAddressNfts = <TData = Awaited<ReturnType<type
  * @summary Returns the runtime status.
  */
 export const GetRuntimeStatus = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,
  options?: SecondParameter<typeof GetRuntimeStatusMutator>,signal?: AbortSignal
 ) => {
@@ -4794,13 +4794,13 @@ export const GetRuntimeStatus = (
     }
   
 
-export const getGetRuntimeStatusQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetRuntimeStatusQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime,) => {
     return [`/${network}/${runtime}/status`] as const;
     }
 
     
-export const getGetRuntimeStatusQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetRuntimeStatusQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeStatus>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeStatusMutator>}
 ) => {
 
@@ -4826,7 +4826,7 @@ export type GetRuntimeStatusQueryError = HumanReadableErrorResponse | NotFoundEr
  * @summary Returns the runtime status.
  */
 export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof GetRuntimeStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeStatus>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeStatusMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -4849,7 +4849,7 @@ for either consensus or one of the paratimes.
 
  */
 export const GetLayerStatsTxVolume = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsTxVolumeParams,
  options?: SecondParameter<typeof GetLayerStatsTxVolumeMutator>,signal?: AbortSignal
@@ -4864,14 +4864,14 @@ export const GetLayerStatsTxVolume = (
     }
   
 
-export const getGetLayerStatsTxVolumeQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetLayerStatsTxVolumeQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsTxVolumeParams,) => {
     return [`/${network}/${layer}/stats/tx_volume`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetLayerStatsTxVolumeQueryOptions = <TData = Awaited<ReturnType<typeof GetLayerStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetLayerStatsTxVolumeQueryOptions = <TData = Awaited<ReturnType<typeof GetLayerStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetLayerStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof GetLayerStatsTxVolumeMutator>}
 ) => {
@@ -4900,7 +4900,7 @@ for either consensus or one of the paratimes.
 
  */
 export const useGetLayerStatsTxVolume = <TData = Awaited<ReturnType<typeof GetLayerStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetLayerStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof GetLayerStatsTxVolumeMutator>}
 
@@ -4924,7 +4924,7 @@ either consensus or one of the paratimes.
 
  */
 export const GetLayerStatsActiveAccounts = (
-    network: 'mainnet' | 'testnet',
+    network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsActiveAccountsParams,
  options?: SecondParameter<typeof GetLayerStatsActiveAccountsMutator>,signal?: AbortSignal
@@ -4939,14 +4939,14 @@ export const GetLayerStatsActiveAccounts = (
     }
   
 
-export const getGetLayerStatsActiveAccountsQueryKey = (network: 'mainnet' | 'testnet',
+export const getGetLayerStatsActiveAccountsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsActiveAccountsParams,) => {
     return [`/${network}/${layer}/stats/active_accounts`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetLayerStatsActiveAccountsQueryOptions = <TData = Awaited<ReturnType<typeof GetLayerStatsActiveAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet',
+export const getGetLayerStatsActiveAccountsQueryOptions = <TData = Awaited<ReturnType<typeof GetLayerStatsActiveAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetLayerStatsActiveAccounts>>, TError, TData>, request?: SecondParameter<typeof GetLayerStatsActiveAccountsMutator>}
 ) => {
@@ -4975,7 +4975,7 @@ either consensus or one of the paratimes.
 
  */
 export const useGetLayerStatsActiveAccounts = <TData = Awaited<ReturnType<typeof GetLayerStatsActiveAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- network: 'mainnet' | 'testnet',
+ network: 'mainnet' | 'testnet' | 'localnet',
     layer: Layer,
     params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetLayerStatsActiveAccounts>>, TError, TData>, request?: SecondParameter<typeof GetLayerStatsActiveAccountsMutator>}
 
