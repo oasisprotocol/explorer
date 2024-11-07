@@ -93,12 +93,12 @@ export abstract class RouteUtils {
       [Layer.consensus]: !isStableDeploy,
     },
     [Network.localnet]: {
-      [Layer.emerald]: false,
-      [Layer.sapphire]: true,
+      [Layer.emerald]: process.env.REACT_APP_LOCALNET_EMERALD === 'true',
+      [Layer.sapphire]: process.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
       [Layer.cipher]: false,
       [Layer.pontusxdev]: false,
       [Layer.pontusxtest]: false,
-      [Layer.consensus]: true,
+      [Layer.consensus]: process.env.REACT_APP_LOCALNET_CONSENSUS === 'true',
     },
   } satisfies Record<Network, Record<Layer, boolean>>
 
