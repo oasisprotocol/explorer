@@ -16,6 +16,7 @@ import { useScreenSize } from '../../../../hooks/useScreensize'
 import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { COLORS } from '../../../../../styles/theme/testnet/colors'
+import { COLORS as LOCALNET_COLORS } from '../../../../../styles/theme/localnet/colors'
 import { useTranslation } from 'react-i18next'
 import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { SearchScope } from '../../../../../types/searchScope'
@@ -358,6 +359,23 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
       textBackground: COLORS.testnetLight,
       textBorder: COLORS.testnet,
       circleBorder: COLORS.testnet,
+      hoverBackground: COLORS.brandExtraDark,
+      hoverText: COLORS.white,
+    },
+    localnet: {
+      cipherCircle: LOCALNET_COLORS.localnet,
+      cipherCircleFilter: 'url(#filter2_di_6093_290291)',
+      cipherCircleFill: LOCALNET_COLORS.localnet,
+      emeraldCircle: LOCALNET_COLORS.localnet,
+      emeraldCircleFilter: 'url(#filter0_di_6093_290291)',
+      sapphireCircle: LOCALNET_COLORS.localnet,
+      sapphireCircleFilter: 'url(#filter1_di_6093_290291)',
+      consensusCircle: LOCALNET_COLORS.localnetLight,
+      line: LOCALNET_COLORS.localnet,
+      text: COLORS.brandExtraDark,
+      textBackground: LOCALNET_COLORS.localnetLight,
+      textBorder: LOCALNET_COLORS.localnet,
+      circleBorder: LOCALNET_COLORS.localnet,
       hoverBackground: COLORS.brandExtraDark,
       hoverText: COLORS.white,
     },
