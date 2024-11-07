@@ -339,6 +339,14 @@
       "header": "Testnet parameters",
       "description": "The Testnet may be subject to frequent version upgrades."
     },
+    "localnet": {
+      "header": "Localnet",
+      "description": "Convenient development and testing of your dApps."
+    },
+    "tools": {
+      "header": "Tools & Services",
+      "description": "Oasis integrates with a number of services and provides tooling support for developers."
+    },
     "transfer": {
       "header": "How to Transfer ROSE into a ParaTime?",
       "description": "Rose is the currency powering the {{layer}} network."
@@ -536,6 +544,10 @@
       "sapphire": "The Testnet of the official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility.",
       "pontusxdev": "The Devnet of Pontus-X, a confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy.",
       "pontusxtest": "The Testnet of Pontus-X, a confidential EVM Compatible ParaTime offering a smart contract development environment that is compatible with the Ethereum Virtual Machine (EVM) focused on building a Federated Data Economy."
+    },
+    "localnet": {
+      "emerald": "The Localnet of the EVM Compatible ParaTime providing a smart contract development environment.",
+      "sapphire": "The Localnet of the official confidential EVM Compatible ParaTime providing a smart contract development environment with EVM compatibility."
     }
   },
   "home": {

@@ -175,6 +175,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
               <LayerDetails
                 handleConfirm={handleConfirm}
                 selectedLayer={selectedLayer}
+                selectedNetwork={selectedNetwork}
                 network={selectedNetwork}
                 isOutOfDate={isOutOfDate}
               />

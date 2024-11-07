@@ -124,6 +124,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({
     <MenuList>
       {options.map((option, index) => {
         if (!option.enabled) {
+          if (selectedNetwork === 'localnet') return null
           return (
             <DisabledLayerMenuItem
               divider={index !== options.length - 1}

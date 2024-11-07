@@ -9,6 +9,7 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
 import * as externalLinks from '../../utils/externalLinks'
+import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
 
 type VerificationStatus = 'verified' | 'unverified'
@@ -60,7 +61,9 @@ export const VerificationIcon: FC<{
 }> = ({ address_eth, scope, verified, noLink = false }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
-
+  if (isLocalnet(scope.network)) {
+    return null
+  }
   const status: VerificationStatus = verified ? 'verified' : 'unverified'
   const statusLabel: Record<VerificationStatus, string> = {
     verified: t('contract.verification.isVerified'),

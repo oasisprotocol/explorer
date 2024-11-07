@@ -23,11 +23,11 @@ import { useScreenSize } from '../../hooks/useScreensize'
 
 type LayerDetailsContent = {
   description: string
-  rpcHttp: string
+  rpcHttp?: string
   rpcWebSockets?: string
   chainHexId: string
   chainDecimalId: string
-  docs: string
+  docs?: string
 }
 
 type NetworkDetails = Partial<Record<Layer, LayerDetailsContent>>
@@ -85,6 +85,18 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.pontusx1,
     },
   },
+  [Network.localnet]: {
+    [Layer.sapphire]: {
+      chainHexId: '0x5afd',
+      chainDecimalId: '23293',
+      description: t('layerPicker.localnet.sapphire'),
+    },
+    [Layer.emerald]: {
+      chainHexId: '0xa514',
+      chainDecimalId: '42260',
+      description: t('layerPicker.localnet.emerald'),
+    },
+  },
 })
 
 export const StyledButton = styled(Button)(({ theme }) => ({
@@ -105,6 +117,7 @@ type LayerDetailsProps = {
   handleConfirm: () => void
   network: Network
   selectedLayer: Layer
+  selectedNetwork: Network
   isOutOfDate: boolean | undefined
 }
 
@@ -114,17 +127,19 @@ const contentMinHeight = '270px'
 export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
   props.selectedLayer === Layer.consensus ? <ConsensusDetails {...props} /> : <RuntimeDetails {...props} />
 
-const ConsensusDetails: FC<LayerDetailsProps> = props => {
+const ConsensusDetails: FC<LayerDetailsProps & { selectedNetwork: Network }> = props => {
   const { t } = useTranslation()
-  const { handleConfirm, network, selectedLayer } = props
+  const { handleConfirm, network, selectedLayer, selectedNetwork } = props
   const isOutOfDate = useConsensusFreshness(network).outOfDate
+  const isLocal = selectedNetwork === 'localnet'
 
   return (
     <LayerDetailsSection
-      docsUrl={docs.consensus}
+      docsUrl={isLocal ? undefined : docs.consensus}
       handleConfirm={handleConfirm}
       isOutOfDate={isOutOfDate}
       selectedLayer={selectedLayer}
+      selectedNetwork={selectedNetwork}
       network={network}
     >
       <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
@@ -136,52 +151,56 @@ const ConsensusDetails: FC<LayerDetailsProps> = props => {
 
 const RuntimeDetails: FC<LayerDetailsProps> = props => {
   const { t } = useTranslation()
-  const { handleConfirm, network, selectedLayer } = props
+  const { handleConfirm, network, selectedLayer, selectedNetwork } = props
   const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
-  const details = getDetails(t)[network][selectedLayer]
-  if (!details) {
-    return null
-  }
+  const details = getDetails(t)[network]?.[selectedLayer]
 
   return (
     <LayerDetailsSection
-      docsUrl={details.docs}
+      docsUrl={details?.docs}
       handleConfirm={handleConfirm}
       isOutOfDate={isOutOfDate}
       selectedLayer={selectedLayer}
+      selectedNetwork={selectedNetwork}
       network={network}
     >
-      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-        {details.description}
-      </Typography>
+      {details?.description && (
+        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+          {details.description}
+        </Typography>
+      )}
       <TextList>
-        <TextListItem>
-          {t('layerPicker.rpcHttp', {
-            endpoint: details.rpcHttp,
-          })}
-        </TextListItem>
-        {details.rpcWebSockets && (
+        {details?.rpcHttp && (
+          <TextListItem>
+            {t('layerPicker.rpcHttp', {
+              endpoint: details.rpcHttp,
+            })}
+          </TextListItem>
+        )}
+        {details?.rpcWebSockets && (
           <TextListItem>
             {t('layerPicker.rpcWebSockets', {
               endpoint: details.rpcWebSockets,
             })}
           </TextListItem>
         )}
-        <TextListItem>
-          {t('layerPicker.chainId')}
-          <TextList>
-            <TextListItem>
-              {t('layerPicker.hex', {
-                id: details.chainHexId,
-              })}
-            </TextListItem>
-            <TextListItem>
-              {t('layerPicker.decimal', {
-                id: details.chainDecimalId,
-              })}
-            </TextListItem>
-          </TextList>
-        </TextListItem>
+        {details?.chainHexId && details?.chainDecimalId && (
+          <TextListItem>
+            {t('layerPicker.chainId')}
+            <TextList>
+              <TextListItem>
+                {t('layerPicker.hex', {
+                  id: details.chainHexId,
+                })}
+              </TextListItem>
+              <TextListItem>
+                {t('layerPicker.decimal', {
+                  id: details.chainDecimalId,
+                })}
+              </TextListItem>
+            </TextList>
+          </TextListItem>
+        )}
       </TextList>
     </LayerDetailsSection>
   )
@@ -189,7 +208,7 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
 
 type LayerDetailsSectionProps = LayerDetailsProps & {
   children: React.ReactNode
-  docsUrl: string
+  docsUrl?: string
 }
 
 export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
@@ -236,25 +255,27 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
         </Box>
         {children}
-        <Link
-          component={RouterLink}
-          to={docsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            fontSize: '14px',
-            fontWeight: 400,
-          }}
-        >
-          {t('layerPicker.readMore', {
-            layer: layerLabels[selectedLayer],
-            network: labels[network],
-          })}
-          <OpenInNewIcon sx={{ fontSize: '16px' }} />
-        </Link>
+        {docsUrl && (
+          <Link
+            component={RouterLink}
+            to={docsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              fontSize: '14px',
+              fontWeight: 400,
+            }}
+          >
+            {t('layerPicker.readMore', {
+              layer: layerLabels[selectedLayer],
+              network: labels[network],
+            })}
+            <OpenInNewIcon sx={{ fontSize: '16px' }} />
+          </Link>
+        )}
       </Box>
     </Box>
   )

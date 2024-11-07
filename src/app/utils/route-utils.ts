@@ -94,7 +94,7 @@ export abstract class RouteUtils {
     },
     [Network.localnet]: {
       [Layer.emerald]: false,
-      [Layer.sapphire]: false,
+      [Layer.sapphire]: true,
       [Layer.cipher]: false,
       [Layer.pontusxdev]: false,
       [Layer.pontusxtest]: false,

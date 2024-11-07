@@ -2,6 +2,7 @@ import { FC } from 'react'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { isLocalnet } from '../../utils/route-utils'
 import { Social } from '../../components/Social'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestRuntimeBlocks } from './LatestRuntimeBlocks'
@@ -16,10 +17,11 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
+  const isLocal = isLocalnet(scope.network)
 
   return (
     <PageLayout>
-      <ParaTimeSnapshot scope={scope} />
+      {!isLocal && <ParaTimeSnapshot scope={scope} />}
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <LatestRuntimeTransactions scope={scope} />
       <Grid container spacing={4}>
@@ -36,16 +38,19 @@ export const ParatimeDashboardPage: FC = () => {
         )}
       </Grid>
       {!isMobile && <TopTokens scope={scope} />}
-
-      <Grid container spacing={4}>
-        <Grid item xs={12} lg={6}>
-          <TransactionsStats scope={scope} />
-        </Grid>
-        <Grid item xs={12} lg={6}>
-          <TotalTransactions scope={scope} />
-        </Grid>
-      </Grid>
-      <Social />
+      {!isLocal && (
+        <>
+          <Grid container spacing={4}>
+            <Grid item xs={12} lg={6}>
+              <TransactionsStats scope={scope} />
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <TotalTransactions scope={scope} />
+            </Grid>
+          </Grid>
+          <Social />
+        </>
+      )}
     </PageLayout>
   )
 }
