@@ -682,56 +682,6 @@ certain actions which subtract/add tokens.
   total_sent?: TextBigInt;
 }
 
-/**
- * A list of NFT instances.
- */
-export type EvmNftListAllOf = {
-  /** A list of L2 EVM NFT (ERC-721, ...) instances. */
-  evm_nfts: EvmNft[];
-};
-
-export type EvmNftList = List & EvmNftListAllOf;
-
-export interface EvmToken {
-  /** The Oasis address of this token's contract. */
-  contract_addr: string;
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** The Ethereum address of this token's contract. */
-  eth_contract_addr: string;
-  /**
-   * Whether the contract has been successfully verified by Sourcify.
-Additional information on verified contracts is available via
-the `/{runtime}/accounts/{address}` endpoint.
-DEPRECATED: This field will be removed in the future in favor of verification_level
-
-   * @deprecated
-   */
-  is_verified: boolean;
-  /** Name of the token, as provided by token contract's `name()` method. */
-  name?: string;
-  /** The number of addresses that have a nonzero balance of this token.
- */
-  num_holders: number;
-  /** The total number of transfers of this token.
- */
-  num_transfers?: number;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  /** The total number of base units available. */
-  total_supply?: TextBigInt;
-  /** The heuristically determined interface that the token contract implements.
-A less specialized variant of the token might be detected; for example, an
-ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
-detected or is not supported, this field will be null/absent.
- */
-  type: EvmTokenType;
-  verification_level?: VerificationLevel;
-}
-
 export interface EvmNft {
   /** Describes the asset which this NFT represents */
   description?: string;
@@ -761,6 +711,117 @@ Currently only ERC-721 is supported, where the document is an Asset Metadata fro
 }
 
 /**
+ * A list of NFT instances.
+ */
+export type EvmNftListAllOf = {
+  /** A list of L2 EVM NFT (ERC-721, ...) instances. */
+  evm_nfts: EvmNft[];
+};
+
+export type EvmNftList = List & EvmNftListAllOf;
+
+export interface EvmTokenSwap {
+  /** The round when this swap pair was created.
+ */
+  create_round?: number;
+  /** The Oasis address of the swap factory contract.
+ */
+  factory_address?: string;
+  /** The Ethereum-compatible address of the swap factory contract.
+ */
+  factory_address_eth?: string;
+  /** The round when this swap pair last updated its reserves.
+ */
+  last_sync_round?: number;
+  /** The Oasis address of the swap pair contract.
+ */
+  pair_address: string;
+  /** The Ethereum-compatible address of the swap pair contract.
+ */
+  pair_address_eth?: string;
+  /** The swap's liquidity pool of the first token, in that token's base units.
+ */
+  reserve0?: TextBigInt;
+  /** The swap's liquidity pool of the second token, in that token's base units.
+ */
+  reserve1?: TextBigInt;
+  /** The Oasis address of the first token in this swap.
+ */
+  token0_address?: string;
+  /** The Ethereum-compatible address of the first token in this swap
+ */
+  token0_address_eth?: string;
+  /** The Oasis address of the second token in this swap.
+ */
+  token1_address?: string;
+  /** The Ethereum-compatible address of the second token in this swap.
+ */
+  token1_address_eth?: string;
+}
+
+export interface EvmToken {
+  /** The Oasis address of this token's contract. */
+  contract_addr: string;
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** The Ethereum address of this token's contract. */
+  eth_contract_addr: string;
+  /**
+   * Whether the contract has been successfully verified by Sourcify.
+Additional information on verified contracts is available via
+the `/{runtime}/accounts/{address}` endpoint.
+DEPRECATED: This field will be removed in the future in favor of verification_level
+
+   * @deprecated
+   */
+  is_verified: boolean;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** The number of addresses that have a nonzero balance of this token.
+ */
+  num_holders: number;
+  /** The total number of transfers of this token.
+ */
+  num_transfers?: number;
+  /** Information about a swap contract between this token and a
+reference token. The relative price and relative total value of
+this token are estimated based on this swap contract.
+ */
+  ref_swap?: EvmTokenSwap;
+  /** Information about the reference token. The relative price and
+relative total value are expressed in this reference token's base
+unit.
+ */
+  ref_token?: EvmRefToken;
+  /** The relative price of one base unit of this token is this many of
+the relative token's base unit.
+ */
+  relative_price?: number;
+  /** The relative price and relative total value are expressed in this
+reference token's base unit.
+ */
+  relative_token_address?: string;
+  /** The relative price of this token multiplied by this token's total
+supply, in the relative token's base unit.
+ */
+  relative_total_value?: number;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The total number of base units available. */
+  total_supply?: TextBigInt;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+  verification_level?: VerificationLevel;
+}
+
+/**
  * A list of tokens in a runtime.
  */
 export type EvmTokenListAllOf = {
@@ -782,6 +843,24 @@ export const EvmTokenType = {
   ERC20: 'ERC20',
   ERC721: 'ERC721',
 } as const;
+
+export interface EvmRefToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+}
 
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
@@ -856,10 +935,10 @@ For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_pr
 For other transactions this equals to `fee`.
  */
   charged_fee: string;
-  /** The data relevant to the encrypted transaction. Only present for encrypted
+  /** The data relevant to the EVM encrypted transaction. Only present for encrypted
 transactions in confidential EVM runtimes like Sapphire.
 Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
  */
   encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** Error details of a failed transaction. */
@@ -921,6 +1000,11 @@ May be null if the transaction was malformed or encrypted.
   method?: string;
   /** The nonce used with this transaction's 0th signer, to prevent replay. */
   nonce_0: number;
+  /** The data relevant to the Oasis-style encrypted transaction.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** The block round at which this transaction was executed. */
   round: number;
   /** The Oasis address of this transaction's 0th signer.
@@ -1105,7 +1189,7 @@ will add a field specifying the corresponding Ethereum address, if known. Curren
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
-  /** Ethereum trasnsaction hash of this event's originating transaction.
+  /** Ethereum transaction hash of this event's originating transaction.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
@@ -1214,7 +1298,7 @@ export const ProposalState = {
 } as const;
 
 /**
- * The target propotocol versions for this upgrade proposal.
+ * The target protocol versions for this upgrade proposal.
  */
 export interface ProposalTarget {
   consensus_protocol?: string;
@@ -1369,7 +1453,7 @@ this links the Oasis address and the Ethereum address.
 Oasis addresses are derived from a piece of data, such as an ed25519
 public key or an Ethereum address. For example, [this](https://github.com/oasisprotocol/oasis-sdk/blob/b37e6da699df331f5a2ac62793f8be099c68469c/client-sdk/go/helpers/address.go#L90-L91)
 is how an Ethereum is converted to an Oasis address. The type of underlying data usually also
-determines how the signatuers for this address are verified.
+determines how the signatures for this address are verified.
 
 Consensus supports only "staking addresses" (`context="oasis-core/address: staking"`
 below; always ed25519-backed).
@@ -1440,21 +1524,21 @@ export type NodeListAllOf = {
 export type NodeList = List & NodeListAllOf;
 
 export interface ValidatorHistoryPoint {
-  /** The amount of tokens that were delegated to this validator account, 
+  /** The amount of tokens that were delegated to this validator account,
 at the start of this epoch, and are NOT in the process of debonding.
  */
   active_balance?: TextBigInt;
-  /** The shares of tokens that were delegated to this validator account, 
+  /** The shares of tokens that were delegated to this validator account,
 at the start of this epoch, and are NOT in the process of debonding.
  */
   active_shares?: TextBigInt;
   /** The amount of tokens that were delegated to this validator account
-at the start of this epoch, but are also in the process of debonding 
+at the start of this epoch, but are also in the process of debonding
 (i.e. they will be unstaked within ~2 weeks).
  */
   debonding_balance?: TextBigInt;
   /** The shares of tokens that were delegated to this validator account
-at the start of this epoch, but are also in the process of debonding 
+at the start of this epoch, but are also in the process of debonding
 (i.e. they will be unstaked within ~2 weeks).
  */
   debonding_shares?: TextBigInt;
@@ -1669,7 +1753,7 @@ fields.
   /** The runtime that sent this message.
  */
   runtime: string;
-  /** The type of thies message.
+  /** The type of this message.
  */
   type?: RoothashMessageType;
 }
@@ -1800,7 +1884,7 @@ will be true:
   /** The error parameters, as decoded using the contract abi. Present only when
 - the error originated from within a smart contract (e.g. via `revert` in Solidity), and
 - the contract is verified or the revert reason is a plain String.
-If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
+If this field is present, `message` will include the name of the error, e.g. 'InsufficientBalance'.
 Note that users should be cautious when evaluating error data since the
 data origin is not tracked and error information can be faked.
  */
@@ -1855,8 +1939,6 @@ to pay to execute it.
 export type TransactionListAllOf = {
   transactions: Transaction[];
 };
-
-export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -1922,8 +2004,6 @@ export interface DebondingDelegation {
 export type DebondingDelegationListAllOf = {
   debonding_delegations: DebondingDelegation[];
 };
-
-export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A delegation.
@@ -1991,12 +2071,12 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   height: number;
   /** Number of transactions in the block. */
   num_transactions: number;
-  /** The size limit for the block in bytes.
- */
   /** The entity that proposed this block. */
   proposer?: EntityInfo;
   /** A list of the entities that signed the block. */
   signers?: EntityInfo[];
+  /** The size limit for the block in bytes.
+ */
   size_limit?: TextBigInt;
   /** The Merkle root of the state tree after applying the block. */
   state_root: string;
@@ -2029,6 +2109,10 @@ the query would return with limit=infinity.
  */
   total_count: number;
 }
+
+export type TransactionList = List & TransactionListAllOf;
+
+export type DebondingDelegationList = List & DebondingDelegationListAllOf;
 
 /**
  * A list of consensus blocks.
@@ -2203,6 +2287,7 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
 
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const GetConsensusBlocks = (
@@ -2249,6 +2334,7 @@ export type GetConsensusBlocksQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2270,6 +2356,7 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConse
 
 
 /**
+ * @deprecated
  * @summary Returns a consensus block.
  */
 export const GetConsensusBlocksHeight = (
@@ -2315,6 +2402,7 @@ export type GetConsensusBlocksHeightQueryResult = NonNullable<Awaited<ReturnType
 export type GetConsensusBlocksHeightQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a consensus block.
  */
 export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2336,6 +2424,7 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus transactions.
  */
 export const GetConsensusTransactions = (
@@ -2382,6 +2471,7 @@ export type GetConsensusTransactionsQueryResult = NonNullable<Awaited<ReturnType
 export type GetConsensusTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus transactions.
  */
 export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof GetConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2403,6 +2493,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
+ * @deprecated
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const GetConsensusTransactionsTxHash = (
@@ -2448,6 +2539,7 @@ export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<Retu
 export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2469,6 +2561,7 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
 
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus events.
  */
 export const GetConsensusEvents = (
@@ -2515,6 +2608,7 @@ export type GetConsensusEventsQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusEventsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus events.
  */
 export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2535,6 +2629,9 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConse
 
 
 
+/**
+ * @deprecated
+ */
 export const GetConsensusRoothashMessages = (
     network: 'mainnet' | 'testnet',
     params: GetConsensusRoothashMessagesParams,
@@ -2578,6 +2675,9 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetConsensusRoothashMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>>
 export type GetConsensusRoothashMessagesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
+/**
+ * @deprecated
+ */
 export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet',
     params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
@@ -2597,6 +2697,7 @@ export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeo
 
 
 /**
+ * @deprecated
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const GetConsensusEntities = (
@@ -2643,6 +2744,7 @@ export type GetConsensusEntitiesQueryResult = NonNullable<Awaited<ReturnType<typ
 export type GetConsensusEntitiesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2664,6 +2766,7 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetCon
 
 
 /**
+ * @deprecated
  * @summary Returns an entity registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddress = (
@@ -2709,6 +2812,7 @@ export type GetConsensusEntitiesAddressQueryResult = NonNullable<Awaited<ReturnT
 export type GetConsensusEntitiesAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns an entity registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2730,6 +2834,7 @@ export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof
 
 
 /**
+ * @deprecated
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodes = (
@@ -2779,6 +2884,7 @@ export type GetConsensusEntitiesAddressNodesQueryResult = NonNullable<Awaited<Re
 export type GetConsensusEntitiesAddressNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2801,6 +2907,7 @@ export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<t
 
 
 /**
+ * @deprecated
  * @summary Returns a node registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodesNodeId = (
@@ -2849,6 +2956,7 @@ export type GetConsensusEntitiesAddressNodesNodeIdQueryResult = NonNullable<Awai
 export type GetConsensusEntitiesAddressNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a node registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2871,6 +2979,7 @@ export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<Return
 
 
 /**
+ * @deprecated
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const GetConsensusValidators = (
@@ -2917,6 +3026,7 @@ export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<t
 export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2938,6 +3048,7 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetC
 
 
 /**
+ * @deprecated
  * @summary Returns a validator registered at the consensus layer.
  */
 export const GetConsensusValidatorsAddress = (
@@ -2983,6 +3094,7 @@ export type GetConsensusValidatorsAddressQueryResult = NonNullable<Awaited<Retur
 export type GetConsensusValidatorsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a validator registered at the consensus layer.
  */
 export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3004,6 +3116,7 @@ export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<type
 
 
 /**
+ * @deprecated
  * @summary Returns historical information for a single validator.
  */
 export const GetConsensusValidatorsAddressHistory = (
@@ -3053,6 +3166,7 @@ export type GetConsensusValidatorsAddressHistoryQueryResult = NonNullable<Awaite
 export type GetConsensusValidatorsAddressHistoryQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns historical information for a single validator.
  */
 export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3075,6 +3189,7 @@ export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnTy
 
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus layer accounts.
 Note that for performance reasons, the info returned by this endpoint
 may be slightly stale (<2 minutes). For the most up-to-date account state,
@@ -3125,6 +3240,7 @@ export type GetConsensusAccountsQueryResult = NonNullable<Awaited<ReturnType<typ
 export type GetConsensusAccountsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus layer accounts.
 Note that for performance reasons, the info returned by this endpoint
 may be slightly stale (<2 minutes). For the most up-to-date account state,
@@ -3150,6 +3266,7 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetCon
 
 
 /**
+ * @deprecated
  * @summary Returns a consensus layer account.
  */
 export const GetConsensusAccountsAddress = (
@@ -3195,6 +3312,7 @@ export type GetConsensusAccountsAddressQueryResult = NonNullable<Awaited<ReturnT
 export type GetConsensusAccountsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a consensus layer account.
  */
 export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3216,6 +3334,7 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
 
 
 /**
+ * @deprecated
  * @summary Returns an account's delegations.
  */
 export const GetConsensusAccountsAddressDelegations = (
@@ -3265,6 +3384,7 @@ export type GetConsensusAccountsAddressDelegationsQueryResult = NonNullable<Awai
 export type GetConsensusAccountsAddressDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns an account's delegations.
  */
 export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3287,6 +3407,7 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
 
 
 /**
+ * @deprecated
  * @summary Returns a list of delegations to an account.
  */
 export const GetConsensusAccountsAddressDelegationsTo = (
@@ -3336,6 +3457,7 @@ export type GetConsensusAccountsAddressDelegationsToQueryResult = NonNullable<Aw
 export type GetConsensusAccountsAddressDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of delegations to an account.
  */
 export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3358,6 +3480,7 @@ export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<Retu
 
 
 /**
+ * @deprecated
  * @summary Returns an account's debonding delegations.
  */
 export const GetConsensusAccountsAddressDebondingDelegations = (
@@ -3407,6 +3530,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsQueryResult = NonNull
 export type GetConsensusAccountsAddressDebondingDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns an account's debonding delegations.
  */
 export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3429,6 +3553,7 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
 
 
 /**
+ * @deprecated
  * @summary Returns a list of debonding delegations to an account.
  */
 export const GetConsensusAccountsAddressDebondingDelegationsTo = (
@@ -3478,6 +3603,7 @@ export type GetConsensusAccountsAddressDebondingDelegationsToQueryResult = NonNu
 export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of debonding delegations to an account.
  */
 export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3500,6 +3626,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awa
 
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus epochs.
  */
 export const GetConsensusEpochs = (
@@ -3546,6 +3673,7 @@ export type GetConsensusEpochsQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusEpochsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of consensus epochs.
  */
 export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3567,6 +3695,7 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConse
 
 
 /**
+ * @deprecated
  * @summary Returns a consensus epoch.
  */
 export const GetConsensusEpochsEpoch = (
@@ -3612,6 +3741,7 @@ export type GetConsensusEpochsEpochQueryResult = NonNullable<Awaited<ReturnType<
 export type GetConsensusEpochsEpochQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a consensus epoch.
  */
 export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3633,6 +3763,7 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof Get
 
 
 /**
+ * @deprecated
  * @summary Returns a list of governance proposals.
  */
 export const GetConsensusProposals = (
@@ -3679,6 +3810,7 @@ export type GetConsensusProposalsQueryResult = NonNullable<Awaited<ReturnType<ty
 export type GetConsensusProposalsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of governance proposals.
  */
 export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3700,6 +3832,7 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetCo
 
 
 /**
+ * @deprecated
  * @summary Returns a governance proposal.
  */
 export const GetConsensusProposalsProposalId = (
@@ -3745,6 +3878,7 @@ export type GetConsensusProposalsProposalIdQueryResult = NonNullable<Awaited<Ret
 export type GetConsensusProposalsProposalIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a governance proposal.
  */
 export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3766,6 +3900,7 @@ export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<ty
 
 
 /**
+ * @deprecated
  * @summary Returns a list of votes for a governance proposal.
  */
 export const GetConsensusProposalsProposalIdVotes = (
@@ -3815,6 +3950,7 @@ export type GetConsensusProposalsProposalIdVotesQueryResult = NonNullable<Awaite
 export type GetConsensusProposalsProposalIdVotesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
+ * @deprecated
  * @summary Returns a list of votes for a governance proposal.
  */
 export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
