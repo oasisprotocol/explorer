@@ -582,7 +582,9 @@
     },
     "selectedNetwork": "Selected network",
     "coming": "Coming",
-    "soon": "soon"
+    "soon": "soon",
+    "not": "Not",
+    "enabled": "enabled"
   },
   "paratimes": {
     "activeNodes": "{{nodes}} active",

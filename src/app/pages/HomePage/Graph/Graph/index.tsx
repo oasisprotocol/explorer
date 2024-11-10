@@ -11,7 +11,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { RouteUtils } from '../../../../utils/route-utils'
+import { RouteUtils, isLocalnet } from '../../../../utils/route-utils'
 import { useScreenSize } from '../../../../hooks/useScreensize'
 import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
@@ -40,6 +40,22 @@ interface GraphProps extends GraphBaseProps {
 interface GraphStyledProps extends GraphBaseProps {
   selectedArea?: SelectorArea
   hoveredLayer: Layer | null
+}
+
+const LayerNotEnabledLabel = ({ network }: { network: Network }) => {
+  const { t } = useTranslation()
+  const isLocal = isLocalnet(network)
+
+  return (
+    <>
+      <tspan dx="-4" dy="-5">
+        {isLocal ? t('home.not') : t('home.coming')}
+      </tspan>
+      <tspan dx="-35" dy="12">
+        {isLocal ? t('home.enabled') : t('home.soon')}
+      </tspan>
+    </>
+  )
 }
 
 const GraphStyled = styled('svg', {
@@ -604,12 +620,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           )}
           {!isMobile && hoveredLayer === Layer.emerald && disabledMap[Layer.emerald] && (
             <text x="177.4" y="97" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
-              <tspan dx="-4" dy="-5">
-                {t('home.coming')}
-              </tspan>
-              <tspan dx="-35" dy="12">
-                {t('home.soon')}
-              </tspan>
+              <LayerNotEnabledLabel network={network} />
             </text>
           )}
         </g>
@@ -660,12 +671,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           )}
           {!isMobile && hoveredLayer === Layer.sapphire && disabledMap[Layer.sapphire] && (
             <text x="106" y="305" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
-              <tspan dx="-4" dy="-5">
-                {t('home.coming')}
-              </tspan>
-              <tspan dx="-35" dy="12">
-                {t('home.soon')}
-              </tspan>
+              <LayerNotEnabledLabel network={network} />
             </text>
           )}
         </g>
@@ -737,12 +743,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           )}
           {!isMobile && hoveredLayer === Layer.consensus && disabledMap[Layer.consensus] && (
             <text x="170" y="212" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
-              <tspan dx="-4" dy="-5">
-                {t('home.coming')}
-              </tspan>
-              <tspan dx="-35" dy="12">
-                {t('home.soon')}
-              </tspan>
+              <LayerNotEnabledLabel network={network} />
             </text>
           )}
         </g>
@@ -786,12 +787,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           )}
           {!isMobile && hoveredLayer === Layer.cipher && disabledMap[Layer.cipher] && (
             <text x="290" y="205" fill={graphTheme.hoverText} fontSize="12px" fontWeight="700">
-              <tspan dx="-4" dy="-5">
-                {t('home.coming')}
-              </tspan>
-              <tspan dx="-35" dy="12">
-                {t('home.soon')}
-              </tspan>
+              <LayerNotEnabledLabel network={network} />
             </text>
           )}
         </g>
