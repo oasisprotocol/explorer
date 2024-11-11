@@ -136,6 +136,45 @@ const getContent = (t: TFunction) => {
         },
       },
     },
+    [Network.localnet]: {
+      [Layer.emerald]: {
+        primary: {
+          description: t('learningMaterials.emerald.description'),
+          header: t('learningMaterials.emerald.header'),
+          url: docs.emeraldTestnet,
+        },
+        secondary: {
+          description: t('learningMaterials.localnet.description'),
+          header: t('learningMaterials.localnet.header'),
+          url: docs.emeraldTestnetNode,
+        },
+        tertiary: {
+          description: t('learningMaterials.emerald.gatewayDescription'),
+          header: t('learningMaterials.emerald.gateway'),
+          url: docs.emeraldGateway,
+        },
+      },
+      [Layer.sapphire]: {
+        primary: {
+          description: t('learningMaterials.sapphire.description'),
+          header: t('learningMaterials.sapphire.header'),
+          url: docs.sapphireTestnet,
+        },
+        secondary: {
+          description: t('learningMaterials.localnet.description'),
+          header: t('learningMaterials.localnet.header'),
+          url: docs.localnet,
+        },
+        tertiary: {
+          description: t('learningMaterials.tools.description'),
+          header: t('learningMaterials.tools.header', { layer: labels['sapphire'] }),
+          url: docs.tools,
+        },
+      },
+      [Layer.cipher]: undefined,
+      [Layer.pontusxdev]: undefined,
+      [Layer.pontusxtest]: undefined,
+    },
   } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }
 

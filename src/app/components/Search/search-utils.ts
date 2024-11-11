@@ -64,6 +64,29 @@ export const searchSuggestionTerms = {
     },
     consensus: undefined,
   },
+  localnet: {
+    emerald: {
+      suggestedBlock: '',
+      suggestedTransaction: '',
+      suggestedAccount: '',
+      suggestedTokenFragment: '',
+    },
+    sapphire: {
+      suggestedBlock: '',
+      suggestedTransaction: '',
+      suggestedAccount: '',
+      suggestedTokenFragment: '',
+    },
+    cipher: undefined,
+    pontusxdev: undefined,
+    pontusxtest: undefined,
+    consensus: {
+      suggestedBlock: '',
+      suggestedTransaction: '',
+      suggestedAccount: '',
+      suggestedTokenFragment: '',
+    },
+  },
 } satisfies SpecifiedPerEnabledLayer<LayerSuggestions>
 
 export const textSearchMinimumLength = 3

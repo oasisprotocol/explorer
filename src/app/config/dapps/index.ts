@@ -22,6 +22,9 @@ const dappsForToken: Record<Network, Partial<Record<Layer, Record<string, DappRe
       [wRose.mainnetAddress]: wRose.app,
     },
   },
+  [Network.localnet]: {
+    [Layer.sapphire]: undefined,
+  },
 }
 
 /**

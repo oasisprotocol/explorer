@@ -4,6 +4,7 @@ import { usePontusXAccountMetadata, useSearchForPontusXAccountsByName } from '..
 import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-accounts'
 import { useOasisAccountMetadata, useSearchForOasisAccountsByName } from '../data/oasis-account-names'
 import { getOasisAddress } from '../utils/helpers'
+import { isLocalnet } from '../utils/route-utils'
 
 /**
  * Find out the metadata for an account
@@ -20,7 +21,7 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     useErrorBoundary: false,
   })
   const oasisData = useOasisAccountMetadata(scope.network, scope.layer, getOasisAddress(address), {
-    enabled: !isPontusX,
+    enabled: !isPontusX && !isLocalnet(scope.network),
     useErrorBoundary: false,
   })
   return isPontusX ? pontusXData : oasisData

@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
+import { isLocalnet } from '../../utils/route-utils'
 import { PageLayout } from '../../components/PageLayout'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { TotalTransactions } from '../../components/TotalTransactions'
@@ -15,31 +16,46 @@ import { LatestConsensusBlocks } from './LatestConsensusBlocks'
 import { AccountsCard } from './AccountsCard'
 import { LatestConsensusTransactions } from './LatestConsensusTransactions'
 import { ParaTimesCard } from './ParaTimesCard'
+import { SearchScope } from 'types/searchScope'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
+  const isLocal = isLocalnet(scope.network)
 
   return (
     <PageLayout>
-      <ConsensusSnapshot scope={scope} />
+      {!isLocal && <ConsensusSnapshot scope={scope} />}
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
-          <TotalTransactions chartContainerHeight={350} scope={scope} />
+      {!isLocal && (
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+            <TotalTransactions chartContainerHeight={350} scope={scope} />
+          </Grid>
+          <LatestBlocksGrid scope={scope} />
         </Grid>
-        <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
-          <LatestConsensusBlocks scope={scope} />
-        </Grid>
-      </Grid>
+      )}
+      {isLocal && <LatestBlocksGrid scope={scope} />}
       <ValidatorsCard scope={scope} />
-      <ParaTimesCard scope={scope} />
+      {!isLocal && <ParaTimesCard scope={scope} />}
       <AccountsCard scope={scope} />
       <LatestConsensusTransactions scope={scope} />
-      <NetworkProposalsCard scope={scope} />
-      <TransactionsStats scope={scope} />
+      {!isLocal && (
+        <>
+          <NetworkProposalsCard scope={scope} />
+          <TransactionsStats scope={scope} />
+        </>
+      )}
       <LearningMaterials />
-      <Social />
+      {!isLocal && <Social />}
     </PageLayout>
+  )
+}
+
+const LatestBlocksGrid = ({ scope }: { scope: SearchScope }) => {
+  return (
+    <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+      <LatestConsensusBlocks scope={scope} />
+    </Grid>
   )
 }

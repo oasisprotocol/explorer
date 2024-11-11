@@ -8,6 +8,8 @@ export const replaceNetworkWithBaseURL = <T>(
     config.url = config.url.replace('/mainnet/', process.env.REACT_APP_API!)
   } else if (config.url?.startsWith('/testnet/')) {
     config.url = config.url.replace('/testnet/', process.env.REACT_APP_TESTNET_API!)
+  } else if (config.url?.startsWith('/localnet/')) {
+    config.url = config.url.replace('/localnet/', process.env.REACT_APP_LOCALNET_API!)
   } else {
     throw new Error(`Expected URL to be prefixed with network: ${config.url}`)
   }

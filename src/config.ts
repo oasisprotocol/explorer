@@ -35,6 +35,7 @@ type LayerNetwork = {
 type LayerConfig = {
   mainnet: LayerNetwork
   testnet: LayerNetwork
+  localnet?: LayerNetwork
   decimals: number
   type: RuntimeTypes
 }
@@ -52,6 +53,9 @@ export const consensusConfig = {
   testnet: {
     tokens: [NativeToken.TEST],
   },
+  localnet: {
+    tokens: [NativeToken.TEST],
+  },
   decimals: consensusDecimals,
 }
 
@@ -67,6 +71,12 @@ const emeraldConfig: LayerConfig = {
     address: 'oasis1qr629x0tg9gm5fyhedgs9lw5eh3d8ycdnsxf0run',
     blockGasLimit: 30_000_000,
     runtimeId: '00000000000000000000000000000000000000000000000072c8215e60d5bca7',
+    tokens: [NativeToken.TEST],
+  },
+  localnet: {
+    address: '',
+    blockGasLimit: 30_000_000,
+    runtimeId: '',
     tokens: [NativeToken.TEST],
   },
   decimals: 18,
@@ -103,6 +113,12 @@ const sapphireConfig: LayerConfig = {
     // See max_batch_gas https://github.com/oasisprotocol/sapphire-paratime/blob/main/runtime/src/lib.rs#L166
     blockGasLimit: 15_000_000,
     runtimeId: '000000000000000000000000000000000000000000000000a6d1e3ebf60dff6c',
+    tokens: [NativeToken.TEST],
+  },
+  localnet: {
+    address: '',
+    blockGasLimit: 15_000_000,
+    runtimeId: '',
     tokens: [NativeToken.TEST],
   },
   decimals: 18,
@@ -180,7 +196,7 @@ export const getAppTitle = () => process.env.REACT_APP_META_TITLE
 export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {
   if (!scope) return []
   if (scope.layer === Layer.consensus) return consensusConfig[scope.network].tokens
-  return paraTimesConfig[scope.layer][scope.network].tokens
+  return paraTimesConfig?.[scope.layer]?.[scope.network]?.tokens!
 }
 
 export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>

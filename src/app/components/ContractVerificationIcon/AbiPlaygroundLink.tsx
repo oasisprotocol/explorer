@@ -21,6 +21,10 @@ export const AbiPlaygroundLink: FC<{
       [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42261&contractAddress=${address_eth}`,
       [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23295&contractAddress=${address_eth}`,
     },
+    [Network.localnet]: {
+      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42260&contractAddress=${address_eth}`,
+      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23293&contractAddress=${address_eth}`,
+    },
   }
   const abiPlaygroundLinkProps = {
     href: scopeToPlaygroundURL[scope.network]?.[scope.layer],

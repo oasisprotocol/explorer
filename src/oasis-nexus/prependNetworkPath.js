@@ -23,7 +23,7 @@ module.exports = inputSchema => ({
                 required: true,
                 schema: {
                   type: 'string',
-                  enum: ['mainnet', 'testnet'],
+                  enum: ['mainnet', 'testnet', 'localnet'],
                 },
               },
             ],
