@@ -14,7 +14,7 @@ export const TokenLink: FC<{
 }> = ({ scope, address, name, highlightedPart }) => {
   return (
     <Link component={RouterLink} to={RouteUtils.getTokenRoute(scope, address)}>
-      {<HighlightedText text={name} pattern={highlightedPart} /> ?? address}
+      {name ? <HighlightedText text={name} pattern={highlightedPart} /> : address}
     </Link>
   )
 }
