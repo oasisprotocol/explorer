@@ -56,7 +56,11 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
-              <AccountLink scope={account} address={account.address_eth || account.address} />
+              <AccountLink
+                showAddressAsName
+                scope={account}
+                address={account.address_eth || account.address}
+              />
               <CopyToClipboard value={account.address_eth || account.address} />
             </dd>
 

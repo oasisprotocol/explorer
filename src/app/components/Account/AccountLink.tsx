@@ -45,6 +45,7 @@ const WithTypographyAndLink: FC<{
 }
 
 interface Props {
+  showAddressAsName?: boolean
   scope: SearchScope
   address: string
 
@@ -79,6 +80,7 @@ interface Props {
 }
 
 export const AccountLink: FC<Props> = ({
+  showAddressAsName,
   scope,
   address,
   alwaysTrim,
@@ -93,7 +95,7 @@ export const AccountLink: FC<Props> = ({
     // isError, // Use this to indicate that we have failed to load the name for this account
   } = useAccountMetadata(scope, address)
   const accountName = accountMetadata?.name // TODO: we should also use the description
-
+  const showAccountName = !showAddressAsName && accountName
   const to = RouteUtils.getAccountRoute(scope, address)
 
   const extraTooltipWithIcon = extraTooltip ? (
@@ -119,13 +121,13 @@ export const AccountLink: FC<Props> = ({
         <MaybeWithTooltip
           title={
             <div>
-              {accountName && <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>}
+              {showAccountName && <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>}
               <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
               {extraTooltipWithIcon}
             </div>
           }
         >
-          {accountName ? trimLongString(accountName, 12, 0) : trimLongString(address, 6, 6)}
+          {showAccountName ? trimLongString(accountName, 12, 0) : trimLongString(address, 6, 6)}
         </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
@@ -138,7 +140,7 @@ export const AccountLink: FC<Props> = ({
     return (
       <WithTypographyAndLink to={to} labelOnly={labelOnly}>
         <MaybeWithTooltip title={extraTooltipWithIcon}>
-          {accountName ? (
+          {showAccountName ? (
             <span>
               <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
             </span>
@@ -157,7 +159,7 @@ export const AccountLink: FC<Props> = ({
     <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
       <>
         <AdaptiveHighlightedText
-          text={accountName}
+          text={showAccountName ? accountName : ''}
           pattern={highlightedPartOfName}
           extraTooltip={extraTooltip}
         />
