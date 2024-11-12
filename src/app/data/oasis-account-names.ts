@@ -21,19 +21,19 @@ import { hasTextMatch } from '../components/HighlightedText/text-matching'
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
     [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/mainnet_consensus.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_consensus.json',
     [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/mainnet_paratime.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_emerald.json',
     [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/mainnet_paratime.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_sapphire.json',
   },
   [Network.testnet]: {
     [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/testnet_consensus.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_consensus.json',
     [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/testnet_paratime.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
     [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/account-names/testnet_paratime.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
   },
   [Network.localnet]: {
     [Layer.consensus]: undefined,
