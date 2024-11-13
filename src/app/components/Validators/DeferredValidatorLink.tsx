@@ -22,7 +22,7 @@ export const DeferredValidatorLink: FC<{
       address={address}
       network={scope.network}
       name={validator?.media?.name}
-      highlightedPart={highlightedPart}
+      highlightedPartOfName={highlightedPart}
     />
   )
 }

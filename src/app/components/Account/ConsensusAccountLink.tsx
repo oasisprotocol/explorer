@@ -9,6 +9,7 @@ type ConsensusAccountLinkProps = {
   alwaysTrim?: boolean
   labelOnly?: boolean
   network: Network
+  highlightedPartOfName?: string | undefined
 }
 
 export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
@@ -16,11 +17,19 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
   alwaysTrim = true,
   labelOnly,
   network,
+  highlightedPartOfName,
 }) => {
   const { data } = useGetConsensusValidatorsAddressNameMap(network)
 
   if (data?.data?.[address]) {
-    return <ValidatorLink address={address} network={network} alwaysTrim={alwaysTrim} />
+    return (
+      <ValidatorLink
+        address={address}
+        network={network}
+        alwaysTrim={alwaysTrim}
+        highlightedPartOfName={highlightedPartOfName}
+      />
+    )
   }
 
   return (
@@ -29,6 +38,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
       scope={{ network, layer: Layer.consensus }}
       address={address}
       alwaysTrim={alwaysTrim}
+      highlightedPartOfName={highlightedPartOfName}
     />
   )
 }
