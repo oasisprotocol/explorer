@@ -146,6 +146,11 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
+  validatorNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length >= textSearchMinimumLength) {
+      return searchTerm.toLowerCase()
+    }
+  },
 } satisfies { [name: string]: (searchTerm: string) => string | undefined }
 
 export function isSearchValid(searchTerm: string) {

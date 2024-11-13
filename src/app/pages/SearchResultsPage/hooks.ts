@@ -22,6 +22,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchForAccountsByName } from '../../hooks/useAccountMetadata'
+import { useSearchForValidatorsByName } from '../../hooks/useSearchForValidatorsByName'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -234,6 +235,21 @@ export function useNamedAccountConditionally(
   }
 }
 
+export function useNamedValidatorConditionally(nameFragment: string | undefined) {
+  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useSearchForValidatorsByName(network, nameFragment),
+  )
+  return {
+    isLoading: queries.some(query => query.isLoading),
+    isError: queries.some(query => query.isError),
+    results: queries
+      .map(query => query.results)
+      .filter(isDefined)
+      .flat(),
+  }
+}
+
 export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
     blockHeight: useBlocksByHeightConditionally(currentScope, q.blockHeight),
@@ -243,6 +259,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
+    validatorByName: useNamedValidatorConditionally(q.validatorNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
   }
@@ -255,6 +272,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...(queries.oasisRuntimeAccount.results || []),
     ...(queries.evmAccount.results || []),
     ...(queries.accountsByName.results || []),
+    ...(queries.validatorByName.results || []),
   ].filter(isAccountNonEmpty)
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
