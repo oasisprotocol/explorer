@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardEmptyState } from '../CardEmptyState'
-import { Account } from '../../../oasis-nexus/api'
+import { Account, Validator } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../StyledDescriptionList'
@@ -14,6 +14,7 @@ import { AccountSizeBadge } from '../AccountSizeBadge'
 import { AccountLink } from './AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { ValidatorLink } from '../Validators/ValidatorLink'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -21,6 +22,7 @@ export const StyledListTitle = styled('dt')(({ theme }) => ({
 
 type ConsensusAccountDetailsViewProps = {
   account?: Account
+  validator?: Validator
   isError?: boolean
   isLoading?: boolean
   showLayer?: boolean
@@ -30,6 +32,7 @@ type ConsensusAccountDetailsViewProps = {
 
 export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> = ({
   account,
+  validator,
   isError,
   isLoading,
   showLayer,
@@ -59,14 +62,37 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           <AccountSizeBadge size={account.size} />
         </Box>
       </StyledListTitleWithAvatar>
-      <dd>
-        <AccountLink
-          scope={account}
-          address={account.address}
-          highlightedPartOfName={highlightedPartOfName}
-        />
-        <CopyToClipboard value={account.address} />
-      </dd>
+      {validator ? (
+        <>
+          <dd>
+            <strong>{validator.media?.name}</strong>
+            &nbsp;
+            <ValidatorLink
+              address={account.address}
+              network={account.network}
+              name={t('validator.viewProfile')}
+            />
+          </dd>
+          <dt>{t('common.address')}</dt>
+          <dd>
+            <AccountLink
+              scope={account}
+              address={account.address}
+              highlightedPartOfName={highlightedPartOfName}
+            />
+            <CopyToClipboard value={account.address} />
+          </dd>
+        </>
+      ) : (
+        <dd>
+          <AccountLink
+            scope={account}
+            address={account.address}
+            highlightedPartOfName={highlightedPartOfName}
+          />
+          <CopyToClipboard value={account.address} />
+        </dd>
+      )}
       <dt>
         <strong>{t('account.totalBalance')}</strong>
       </dt>
