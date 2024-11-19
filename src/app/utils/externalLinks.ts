@@ -30,7 +30,7 @@ export const docs = {
   sapphire: `https://docs.oasis.io/dapp/sapphire/`,
   token: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution`,
   tools: 'https://docs.oasis.io/dapp/tools/',
-  paraTimeTransfer: `https://docs.oasis.io/general/manage-tokens/how-to-transfer-rose-into-paratime`,
+  paraTimeTransfer: `https://docs.oasis.io/general/manage-tokens/oasis-wallets/web#paratimes`,
   sapphireTestnetNode: `https://docs.oasis.io/node/testnet/#sapphire`,
   sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
   sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
