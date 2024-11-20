@@ -15,7 +15,7 @@ type ValidatorLinkProps = {
   name?: string
   network: Network
   alwaysTrim?: boolean
-  highlightedPart?: string
+  highlightedPartOfName?: string
 }
 
 export const ValidatorLink: FC<ValidatorLinkProps> = ({
@@ -23,7 +23,7 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
   name,
   network,
   alwaysTrim,
-  highlightedPart,
+  highlightedPartOfName,
 }) => {
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getValidatorRoute(network, address)
@@ -36,7 +36,7 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
           address={address}
           name={name || validatorName}
           to={to}
-          highlightedPart={highlightedPart}
+          highlightedPart={highlightedPartOfName}
         />
       ) : (
         <DesktopValidatorLink
@@ -44,7 +44,7 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
           alwaysTrim={alwaysTrim}
           name={name || validatorName}
           to={to}
-          highlightedPart={highlightedPart}
+          highlightedPart={highlightedPartOfName}
         />
       )}
     </Typography>

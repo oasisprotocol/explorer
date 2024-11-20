@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { AccountAvatar } from '../AccountAvatar'
 import { AccountSizeBadge } from '../AccountSizeBadge'
-import { AccountLink } from './AccountLink'
+import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 
@@ -60,8 +60,9 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
         </Box>
       </StyledListTitleWithAvatar>
       <dd>
-        <AccountLink
-          scope={account}
+        <ConsensusAccountLink
+          alwaysTrim={false}
+          network={account.network}
           address={account.address}
           highlightedPartOfName={highlightedPartOfName}
         />
