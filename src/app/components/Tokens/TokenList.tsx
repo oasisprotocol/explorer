@@ -8,18 +8,18 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
 import { tokenBackgroundColor, tokenBorderColor } from '../../../types/tokens'
-import { getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tokens'
+import { getTokenMarketCap, getTokenTypeDescription, getTokenTypeStrictName } from '../../utils/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
-import { getTokenMarketCap } from '../../utils/tokens'
 import { useTokenPrice } from '../../../coin-gecko/api'
 import { Ticker } from '../../../types/ticker'
 import { FiatValue } from '../FiatValue'
 import { MarketCapTitle } from './MarketCapTitle'
+import { Network } from 'types/network'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -60,7 +60,7 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProp
 }
 
 export const TokenList = (props: TokensProps) => {
-  const { isLoading, tokens, pagination, limit } = props
+  const { isLoading, tokens, pagination, limit, scope } = props
   const { t } = useTranslation()
   const priceQuery = useTokenPrice(Ticker.ROSE, 'usd')
   const tableColumns: TableColProps[] = [
@@ -69,15 +69,19 @@ export const TokenList = (props: TokensProps) => {
     { key: 'type', content: t('common.type') },
     { key: 'contract', content: t('common.smartContract') },
     { key: 'verification', content: t('contract.verification.title') },
-    {
-      align: TableCellAlign.Right,
-      key: 'marketCap',
-      content: (
-        <Box sx={{ display: 'inline-flex', gap: 2 }}>
-          <MarketCapTitle scope={props.scope} />
-        </Box>
-      ),
-    },
+    ...(scope.network === Network.mainnet
+      ? [
+          {
+            align: TableCellAlign.Right,
+            key: 'marketCap',
+            content: (
+              <Box sx={{ display: 'inline-flex', gap: 2 }}>
+                <MarketCapTitle scope={props.scope} />
+              </Box>
+            ),
+          },
+        ]
+      : []),
     {
       key: 'holders',
       content: t('tokens.holders'),
@@ -87,8 +91,6 @@ export const TokenList = (props: TokensProps) => {
   ]
 
   const tableRows = tokens?.map((token, index) => {
-    const marketCapValue = getTokenMarketCap(token?.relative_total_value, priceQuery.price)
-
     return {
       key: token.contract_addr,
       data: [
@@ -151,11 +153,20 @@ export const TokenList = (props: TokensProps) => {
             </Box>
           ),
         },
-        {
-          content: <FiatValue isLoading={priceQuery.isLoading} value={marketCapValue} />,
-          key: 'marketCap',
-          align: TableCellAlign.Right,
-        },
+        ...(scope.network === Network.mainnet
+          ? [
+              {
+                content: (
+                  <FiatValue
+                    isLoading={priceQuery.isLoading}
+                    value={getTokenMarketCap(token?.relative_total_value, priceQuery.price)}
+                  />
+                ),
+                key: 'marketCap',
+                align: TableCellAlign.Right,
+              },
+            ]
+          : []),
         {
           content: token.num_holders.toLocaleString(),
           key: 'holdersCount',
