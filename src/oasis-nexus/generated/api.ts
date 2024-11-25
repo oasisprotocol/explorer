@@ -614,7 +614,7 @@ hash?: string;
 /**
  * A filter on the proposer of the block.
  */
-proposed_by?: string;
+proposed_by?: StakingAddress;
 };
 
 /**
