@@ -30,7 +30,6 @@ import { debondingContainerId, delegatorsContainerId } from './tabAnchors'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { PercentageValue } from '../../components/PercentageValue'
-import { UptimeStatus } from '../../components/UptimeStatus'
 import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
 
@@ -229,10 +228,6 @@ export const ValidatorDetailsView: FC<{
           <dt>{t('common.status')}</dt>
           <dd>
             <StatusIcon success={validator.active} error={undefined} />
-          </dd>
-          <dt>{t('validator.uptime')}</dt>
-          <dd>
-            <UptimeStatus small percentage={94} status={[100, 100, 100, 50]} />
           </dd>
         </>
       )}
