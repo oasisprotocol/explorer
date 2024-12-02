@@ -20,7 +20,7 @@ export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = ({ sc
 
 const AccountTokenTransfers: FC<RuntimeAccountDetailsContext> = ({ scope, address, account }) => {
   const { t } = useTranslation()
-  const { isLoading, isFetched, results } = useTokenTransfers(scope, { address })
+  const { isLoading, isFetched, results } = useTokenTransfers(scope, { rel: address })
 
   const transfers = results.data
 
