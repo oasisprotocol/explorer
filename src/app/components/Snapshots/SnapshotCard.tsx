@@ -33,7 +33,7 @@ type SnapshotCardProps = PropsWithChildren & {
   label?: ReactNode
   title: ReactNode
   withContentPadding?: boolean
-  withConstantHeight?: boolean
+  alignWithCardsWithActions?: boolean
 }
 
 export const SnapshotCard: FC<SnapshotCardProps> = ({
@@ -42,13 +42,13 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
   title,
   label,
   withContentPadding = true,
-  withConstantHeight = false,
+  alignWithCardsWithActions = false,
 }) => {
   return (
     <StyledCard>
       <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
       <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
-      {(badge || label || withConstantHeight) && (
+      {(badge || label || alignWithCardsWithActions) && (
         <CardActions sx={{ minHeight: 60 }}>
           <Box
             sx={{
@@ -82,6 +82,7 @@ type SnapshotTextCardProps = {
   label?: ReactNode
   title: ReactNode
   withContentPadding?: boolean
+  alignWithCardsWithActions?: boolean
 }
 
 export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
@@ -89,10 +90,16 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
   label,
   title,
   withContentPadding,
+  alignWithCardsWithActions,
 }) => {
   return (
-    <SnapshotCard title={title} label={label} withContentPadding={withContentPadding}>
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', height: '100%' }}>
+    <SnapshotCard
+      title={title}
+      label={label}
+      withContentPadding={withContentPadding}
+      alignWithCardsWithActions={alignWithCardsWithActions}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         <Typography
           component="span"
           sx={{
