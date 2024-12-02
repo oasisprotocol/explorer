@@ -15,7 +15,7 @@ export const TokenTypeCard: FC<{ scope: SearchScope; address: string }> = ({ sco
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotCard title={t('common.type')} withConstantHeight>
+    <SnapshotCard title={t('common.type')} alignWithCardsWithActions>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isLoading ? (
           <Skeleton variant="text" sx={{ width: '50%' }} />

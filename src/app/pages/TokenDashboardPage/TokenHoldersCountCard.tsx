@@ -12,7 +12,7 @@ export const TokenHoldersCountCard: FC<{ scope: SearchScope; address: string }> 
 
   const title = t('tokens.holders')
   return (
-    <SnapshotTextCard title={title} withConstantHeight>
+    <SnapshotTextCard title={title} alignWithCardsWithActions>
       {isLoading ? (
         <Skeleton variant="text" />
       ) : (

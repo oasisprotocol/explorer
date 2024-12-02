@@ -13,7 +13,7 @@ export const TokenTotalTransactionsCard: FC<{ scope: SearchScope; address: strin
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)
 
   return (
-    <SnapshotTextCard title={t('common.transfers')} withConstantHeight>
+    <SnapshotTextCard title={t('common.transfers')} alignWithCardsWithActions>
       {isLoading ? (
         <Skeleton variant="text" />
       ) : (

@@ -47,7 +47,7 @@ export const SnapshotStaked: FC<SnapshotStakedProps> = ({ totalStaked, ticker })
           </Box>
         )
       }
-      withConstantHeight
+      alignWithCardsWithActions
     >
       {totalStaked && (
         <Box sx={{ wordBreak: 'break-all', lineHeight: 1 }}>

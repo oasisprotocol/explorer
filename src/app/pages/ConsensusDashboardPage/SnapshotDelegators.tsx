@@ -10,7 +10,7 @@ export const SnapshotDelegators: FC<SnapshotDelegatorsProps> = ({ totalDelegator
   const { t } = useTranslation()
 
   return (
-    <SnapshotTextCard title={t('validator.delegators')} withConstantHeight>
+    <SnapshotTextCard title={t('validator.delegators')} alignWithCardsWithActions>
       {typeof totalDelegators === 'number' && totalDelegators.toLocaleString()}
     </SnapshotTextCard>
   )
