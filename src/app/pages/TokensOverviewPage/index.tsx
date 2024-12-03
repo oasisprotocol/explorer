@@ -5,7 +5,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
@@ -46,7 +46,6 @@ export const TokensPage: FC = () => {
     },
     {
       query: {
-        refetchInterval: REFETCH_INTERVAL,
         // Keep showing data while loading more
         keepPreviousData: tableView === TableLayout.Vertical,
       },
