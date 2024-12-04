@@ -108,6 +108,7 @@ export const TokenList = (props: TokensProps) => {
           content: (
             <span>
               <AccountLink
+                addressAsName
                 scope={token}
                 address={token.eth_contract_addr ?? token.contract_addr}
                 alwaysTrim
