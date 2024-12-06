@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { RuntimeEvent } from '../../../oasis-nexus/api'
-import { ErrorBox, StyledBox } from '../StatusIcon'
+import { StatusDetails, StyledBox } from '../StatusIcon'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { RuntimeEventType } from '../../../oasis-nexus/api'
@@ -38,7 +38,7 @@ export const EventError: FC<EventErrorProps> = ({ event }) => {
         &nbsp;
         <CancelIcon color="error" fontSize="inherit" />
       </StyledBox>
-      <ErrorBox>{errorMessage}</ErrorBox>
+      <StatusDetails error>{errorMessage}</StatusDetails>
     </>
   )
 }

@@ -58,14 +58,16 @@ export const StyledBox = styled(Box, {
   }
 })
 
-export const ErrorBox = styled(Box)(() => ({
+export const StatusDetails = styled(Box, {
+  shouldForwardProp: prop => prop !== 'error',
+})(({ error }: { error?: boolean }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   minHeight: '28px',
   fontSize: '12px',
   backgroundColor: COLORS.grayLight,
-  color: COLORS.errorIndicatorBackground,
+  color: error ? COLORS.errorIndicatorBackground : COLORS.warningColor,
   borderRadius: 10,
   paddingLeft: 12,
   paddingRight: 12,
@@ -94,7 +96,10 @@ const pendingMethodLabels = {
   'consensus.Undelegate': 'transaction.undelegate',
 } as const
 
-const getPendingLabel = (t: TFunction, method: string | undefined) => {
+const getPendingLabel = (t: TFunction, method: string | undefined, withText?: boolean) => {
+  if (withText) {
+    return t('transaction.started')
+  }
   const translationKey = pendingMethodLabels[method as keyof typeof pendingMethodLabels]
   const translatedMethod = translationKey ? t(translationKey) : method
   return t('transaction.startedDescription', { method: translatedMethod })
@@ -114,7 +119,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
     unknown: t('common.unknown'),
     success: t('common.success'),
     failure: t('common.failed'),
-    pending: getPendingLabel(t, method),
+    pending: getPendingLabel(t, method, withText),
   }
   const errorMessage = useTxErrorMessage(error)
 
@@ -126,7 +131,8 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
           &nbsp;
           {statusIcon[status]}
         </StyledBox>
-        {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
+        {errorMessage && <StatusDetails error>{errorMessage}</StatusDetails>}
+        {!errorMessage && status === 'pending' && <StatusDetails>{getPendingLabel(t, method)}</StatusDetails>}
       </>
     )
   } else {
