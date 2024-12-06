@@ -33,7 +33,7 @@ export const EventError: FC<EventErrorProps> = ({ event }) => {
   const errorMessage = `${t('errors.code')} ${error.code}, ${t('errors.module')}: ${error.module}`
   return (
     <>
-      <StyledBox success={false} error={undefined} withText={true}>
+      <StyledBox status="failure" withText>
         {t('common.failed')}
         &nbsp;
         <CancelIcon color="error" fontSize="inherit" />
