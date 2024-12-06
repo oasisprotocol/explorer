@@ -61,6 +61,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
   }
+
   return (
     <PageLayout>
       <MultipleTransactionsWarning enable={warningMultipleTransactionsSameHash} />
@@ -133,7 +134,12 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.status')}</dt>
           <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
-            <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
+            <StatusIcon
+              success={transaction.success}
+              error={transaction.error}
+              withText={true}
+              method={transaction.method}
+            />
           </dd>
 
           <dt>{t('common.block')}</dt>
