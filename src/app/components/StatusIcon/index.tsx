@@ -9,32 +9,39 @@ import HelpIcon from '@mui/icons-material/Help'
 import { TxError } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
+import { TFunction } from 'i18next'
 
-type TxStatus = 'unknown' | 'success' | 'failure'
+type TxStatus = 'unknown' | 'success' | 'failure' | 'pending'
 
 const statusBgColor: Record<TxStatus, string> = {
   unknown: COLORS.grayMediumLight,
   success: COLORS.honeydew,
   failure: COLORS.linen,
+  pending: COLORS.warningLight,
 }
 
 const statusFgColor: Record<TxStatus, string> = {
   unknown: COLORS.grayMedium,
   success: COLORS.eucalyptus,
   failure: COLORS.errorIndicatorBackground,
+  pending: COLORS.warningColor,
 }
 
 export const statusIcon: Record<TxStatus, ReactNode> = {
   unknown: <HelpIcon color="inherit" fontSize="inherit" />,
   success: <CheckCircleIcon color="success" fontSize="inherit" />,
   failure: <CancelIcon color="error" fontSize="inherit" />,
+  pending: <HelpIcon color="inherit" fontSize="inherit" />,
+}
+
+type StyledBoxProps = {
+  status: TxStatus
+  withText?: boolean
 }
 
 export const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'success' && prop !== 'withText',
-})(({ success, withText }: StatusIconProps) => {
-  const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
-
+  shouldForwardProp: prop => prop !== 'status' && prop !== 'withText',
+})(({ status, withText }: StyledBoxProps) => {
   return {
     display: 'flex',
     justifyContent: 'center',
@@ -72,22 +79,49 @@ type StatusIconProps = {
   success: undefined | boolean
   error: undefined | TxError
   withText?: boolean
+  method?: string
 }
 
-export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) => {
+const isRuntimeConsensusTxMethod = (method?: string) => {
+  const methods = ['consensus.Deposit', 'consensus.Withdraw', 'consensus.Delegate', 'consensus.Undelegate']
+  return method && methods.includes(method)
+}
+
+const pendingMethodLabels = {
+  'consensus.Deposit': 'transaction.deposit',
+  'consensus.Withdraw': 'transaction.withdraw',
+  'consensus.Delegate': 'transaction.delegate',
+  'consensus.Undelegate': 'transaction.undelegate',
+} as const
+
+const getPendingLabel = (t: TFunction, method: string | undefined) => {
+  const translationKey = pendingMethodLabels[method as keyof typeof pendingMethodLabels]
+  const translatedMethod = translationKey ? t(translationKey) : method
+  return t('transaction.startedDescription', { method: translatedMethod })
+}
+
+export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, method }) => {
   const { t } = useTranslation()
-  const status: TxStatus = success === undefined ? 'unknown' : success ? 'success' : 'failure'
+  const status: TxStatus =
+    success === undefined
+      ? isRuntimeConsensusTxMethod(method)
+        ? 'pending'
+        : 'unknown'
+      : success
+        ? 'success'
+        : 'failure'
   const statusLabel: Record<TxStatus, string> = {
     unknown: t('common.unknown'),
     success: t('common.success'),
     failure: t('common.failed'),
+    pending: getPendingLabel(t, method),
   }
   const errorMessage = useTxErrorMessage(error)
 
   if (withText) {
     return (
       <>
-        <StyledBox success={success} error={error} withText={withText}>
+        <StyledBox status={status} withText={withText}>
           {statusLabel[status]}
           &nbsp;
           {statusIcon[status]}
@@ -102,7 +136,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText }) =>
         placement="top"
         title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
       >
-        <StyledBox success={success} error={error} withText={withText}>
+        <StyledBox status={status} withText={withText}>
           {statusIcon[status]}
         </StyledBox>
       </Tooltip>

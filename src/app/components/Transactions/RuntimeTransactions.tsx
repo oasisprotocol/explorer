@@ -74,7 +74,9 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
       key: `${transaction.hash}${transaction.index}`,
       data: [
         {
-          content: <StatusIcon success={transaction.success} error={transaction.error} />,
+          content: (
+            <StatusIcon success={transaction.success} error={transaction.error} method={transaction.method} />
+          ),
           key: 'success',
         },
         ...(verbose && canHaveEncryption
