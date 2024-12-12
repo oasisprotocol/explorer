@@ -59,7 +59,11 @@ export const TokenDetails: FC<{
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>
         <span>
-          <AccountLink scope={token} address={token.eth_contract_addr ?? token.contract_addr} />
+          <AccountLink
+            showAddressAsName
+            scope={token}
+            address={token.eth_contract_addr ?? token.contract_addr}
+          />
           <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
         </span>
       </dd>

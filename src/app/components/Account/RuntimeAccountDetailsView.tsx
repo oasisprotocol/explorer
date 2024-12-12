@@ -76,7 +76,12 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <AccountAvatar account={account} />
       </StyledListTitleWithAvatar>
       <dd>
-        <AccountLink scope={account} address={address!} highlightedPartOfName={highlightedPartOfName} />
+        <AccountLink
+          showAddressAsName
+          scope={account}
+          address={address!}
+          highlightedPartOfName={highlightedPartOfName}
+        />
         <CopyToClipboard value={address!} />
       </dd>
 
