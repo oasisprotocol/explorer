@@ -5,7 +5,6 @@ name: cloudflare-pages
 on:
   # A push occurs to one of the matched branches.
   push:
-    branches: [master]
   # Or when a pull request event occurs for a pull request against one of the
   # matched branches.
   pull_request:
