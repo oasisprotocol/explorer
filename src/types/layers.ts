@@ -20,8 +20,13 @@ const layerOrder: Record<Layer, number> = {
   [Layer.pontusxtest]: 6,
 }
 
-export const orderByLayer = (itemA: HasLayer, itemB: HasLayer): number =>
-  layerOrder[itemA.layer] - layerOrder[itemB.layer]
+export function orderByLayer(itemA: Layer, itemB: Layer): number
+export function orderByLayer(itemA: HasLayer, itemB: HasLayer): number
+export function orderByLayer(itemA: Layer | HasLayer, itemB: Layer | HasLayer): number {
+  const layerA = typeof itemA === 'string' ? itemA : itemA.layer
+  const layerB = typeof itemB === 'string' ? itemB : itemB.layer
+  return layerOrder[layerA] - layerOrder[layerB]
+}
 
 const layersWithEncryptedTransactions: Layer[] = [Layer.sapphire, Layer.cipher]
 

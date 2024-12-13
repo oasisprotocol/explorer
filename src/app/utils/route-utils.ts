@@ -9,6 +9,7 @@ import { isStableDeploy, specialScopePaths } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
 import type { HasLayer } from '../../types/layers'
 import { toChecksumAddress } from '@ethereumjs/util'
+import { orderByLayer } from '../../types/layers'
 
 export const fixedNetwork = process.env.REACT_APP_FIXED_NETWORK as Network | undefined
 export const fixedLayer = process.env.REACT_APP_FIXED_LAYER as Layer | undefined
@@ -185,14 +186,15 @@ export abstract class RouteUtils {
   static getAllLayersForNetwork(network: Network): { enabled: Layer[]; disabled: Layer[] } {
     const enabled: Layer[] = []
     const disabled: Layer[] = []
-
-    Object.values(Layer).forEach(layer => {
-      if ((!fixedLayer || layer === fixedLayer) && RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer]) {
-        enabled.push(layer)
-      } else {
-        disabled.push(layer)
-      }
-    })
+    Object.values(Layer)
+      .sort(orderByLayer)
+      .forEach(layer => {
+        if ((!fixedLayer || layer === fixedLayer) && RouteUtils.ENABLED_LAYERS_FOR_NETWORK[network][layer]) {
+          enabled.push(layer)
+        } else {
+          disabled.push(layer)
+        }
+      })
 
     return {
       enabled,
