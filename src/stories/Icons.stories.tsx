@@ -14,7 +14,7 @@ export default {
 
 const Template: StoryFn = () => {
   return (
-    <Box>
+    <Box sx={{ background: COLORS.white, p: 5 }}>
       {Object.values(ConsensusTxMethod).map(method => (
         <Box
           key={method}
@@ -42,11 +42,15 @@ const storyRuntimeMethods = [
   'consensus.Undelegate',
   'evm.Create',
   'evm.Call',
+  'rofl.Register',
+  'rofl.Create',
+  'rofl.Update',
+  'rofl.Remove',
 ]
 
 const RuntimeTemplate: StoryFn = () => {
   return (
-    <Box>
+    <Box sx={{ background: COLORS.white, p: 5 }}>
       {storyRuntimeMethods.map(method => (
         <Box
           key={method}
@@ -70,7 +74,7 @@ const storyTokensMethods = ['Transfer', 'Approval', 'Minting', 'Burning']
 
 const TokensTemplate: StoryFn = () => {
   return (
-    <Box>
+    <Box sx={{ background: COLORS.white, p: 5 }}>
       {storyTokensMethods.map(method => (
         <Box
           key={method}
@@ -92,7 +96,7 @@ export const TokenTransactionIcons: StoryObj = {
 
 const EventsTemplate: StoryFn = () => {
   return (
-    <Box>
+    <Box sx={{ background: COLORS.white, p: 5 }}>
       {Object.values(RuntimeEventType).map(method => (
         <Box
           key={method}

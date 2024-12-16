@@ -449,6 +449,12 @@
       "evm": {
         "call": "Contract Call",
         "create": "Contract Creation"
+      },
+      "rofl": {
+        "create": "ROFL Create",
+        "register": "ROFL Register",
+        "remove": "ROFL Remove",
+        "update": "ROFL Update"
       }
     }
   },
