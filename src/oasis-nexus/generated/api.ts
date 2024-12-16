@@ -269,6 +269,10 @@ best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
 
  */
 rel?: EthOrOasisAddress;
+/**
+ * A filter on the runtime transaction method.
+ */
+method?: string;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -614,7 +618,7 @@ hash?: string;
 /**
  * A filter on the proposer of the block.
  */
-proposed_by?: string;
+proposed_by?: StakingAddress;
 };
 
 /**
@@ -995,6 +999,10 @@ In practice, Nexus currently expects only the following methods:
   - "consensus.Undelegate"
   - "evm.Create"
   - "evm.Call"
+  - "rofl.Create"
+  - "rofl.Update"
+  - "rofl.Remove"
+  - "rofl.Register"
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
@@ -1162,6 +1170,9 @@ export const RuntimeEventType = {
   consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
+  roflapp_created: 'rofl.app_created',
+  roflapp_updated: 'rofl.app_updated',
+  roflapp_removed: 'rofl.app_removed',
 } as const;
 
 /**
@@ -1852,6 +1863,9 @@ Present only for events of type `roothash.*` except for
 `roothash.execution_discrepancy` before Eden.
  */
   roothash_runtime_round?: number;
+  /** The second-granular consensus time of this event's block.
+ */
+  timestamp?: string;
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
