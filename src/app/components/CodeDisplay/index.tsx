@@ -77,6 +77,7 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, extraTopP
 
 const StyledPre = styled('pre')({
   margin: 0,
+  whiteSpace: 'break-spaces',
 })
 
 type JsonCodeDisplayProps = {
