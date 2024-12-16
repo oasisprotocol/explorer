@@ -372,6 +372,19 @@ const RuntimeEventDetailsInner: FC<{
           </StyledDescriptionList>
         </div>
       )
+    case RuntimeEventType.roflapp_created:
+    case RuntimeEventType.roflapp_removed:
+    case RuntimeEventType.roflapp_updated:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('common.id')}</dt>
+            <dd>{event.body.id}</dd>
+          </StyledDescriptionList>
+        </div>
+      )
     default:
       exhaustedTypeWarning('Unexpected event type', event.type)
       return (
