@@ -11,11 +11,18 @@ import { base64ToHex } from '../../utils/helpers'
 type CodeDisplayProps = {
   code: ReactNode
   copyToClipboardValue: string
-  label: string
+  label?: string
   extraTopPadding?: boolean
+  withCopyButton?: boolean
 }
 
-const CodeDisplay: FC<CodeDisplayProps> = ({ code, copyToClipboardValue, label, extraTopPadding }) => {
+const CodeDisplay: FC<CodeDisplayProps> = ({
+  code,
+  copyToClipboardValue,
+  label,
+  extraTopPadding,
+  withCopyButton = true,
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -34,13 +41,17 @@ const CodeDisplay: FC<CodeDisplayProps> = ({ code, copyToClipboardValue, label, 
           pt: extraTopPadding ? 4 : 0,
         }}
       >
-        <Typography variant="h4" component="h4">
-          {label}
-        </Typography>
-        <CopyToClipboard
-          value={copyToClipboardValue}
-          label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
-        />
+        {label && (
+          <Typography variant="h4" component="h4">
+            {label}
+          </Typography>
+        )}
+        {withCopyButton && (
+          <CopyToClipboard
+            value={copyToClipboardValue}
+            label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
+          />
+        )}
       </Box>
 
       <ScrollableDataDisplay data={code} />
@@ -70,10 +81,11 @@ const StyledPre = styled('pre')({
 
 type JsonCodeDisplayProps = {
   data: Record<string, any>
-  label: string
+  label?: string
+  withCopyButton?: boolean
 }
 
-export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label }) => {
+export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, withCopyButton = true }) => {
   const formattedJson = JSON.stringify(data, null, 2)
 
   return (
@@ -81,6 +93,7 @@ export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label }) => {
       code={<StyledPre>{formattedJson}</StyledPre>}
       copyToClipboardValue={formattedJson}
       label={label}
+      withCopyButton={withCopyButton}
     />
   )
 }

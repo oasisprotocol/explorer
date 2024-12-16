@@ -28,3 +28,7 @@ export const getConsensusTransactionAmount = (transaction: Transaction) => {
       return undefined
   }
 }
+export const isRoflTransaction = (method: string | undefined): boolean => {
+  const roflMethods = ['rofl.Create', 'rofl.Update', 'rofl.Remove', 'rofl.Register']
+  return method ? roflMethods.includes(method) : false
+}
