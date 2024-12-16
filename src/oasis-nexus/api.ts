@@ -418,17 +418,17 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.Account, headers, status) => {
           if (status !== 200) return data
-          // TODO: remove defaults when API is updated
-          const { available, delegations_balance = 0, debonding_delegations_balance = 0 } = data
           const total =
-            BigInt(data.available) + BigInt(delegations_balance) + BigInt(debonding_delegations_balance)
+            BigInt(data.available) +
+            BigInt(data.delegations_balance) +
+            BigInt(data.debonding_delegations_balance)
           return {
             ...data,
-            available: fromBaseUnits(available, consensusDecimals),
+            available: fromBaseUnits(data.available, consensusDecimals),
             total: fromBaseUnits(total.toString(), consensusDecimals),
-            delegations_balance: fromBaseUnits(delegations_balance.toString(), consensusDecimals),
+            delegations_balance: fromBaseUnits(data.delegations_balance.toString(), consensusDecimals),
             debonding_delegations_balance: fromBaseUnits(
-              debonding_delegations_balance.toString(),
+              data.debonding_delegations_balance.toString(),
               consensusDecimals,
             ),
             layer: Layer.consensus,
@@ -1295,21 +1295,18 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
           return {
             ...data,
             accounts: data.accounts.map(account => {
-              // TODO: remove when API returns total value, looking at query filters we store that data in Nexus
-              // or sum proper fields when they are available. Currently API does not return correct fields in accounts list endpoint
-              // https://github.com/oasisprotocol/explorer/pull/1160#discussion_r1459577303
-              const total = BigInt(account.available)
-
-              // TODO: remove defaults when API is updated and after re-index
-              const { delegations_balance = 0, debonding_delegations_balance = 0 } = account
+              const total =
+                BigInt(account.available) +
+                BigInt(account.delegations_balance) +
+                BigInt(account.debonding_delegations_balance)
 
               return {
                 ...account,
                 available: fromBaseUnits(account.available, consensusDecimals),
                 total: fromBaseUnits(total.toString(), consensusDecimals),
-                delegations_balance: fromBaseUnits(delegations_balance.toString(), consensusDecimals),
+                delegations_balance: fromBaseUnits(account.delegations_balance.toString(), consensusDecimals),
                 debonding_delegations_balance: fromBaseUnits(
-                  debonding_delegations_balance.toString(),
+                  account.debonding_delegations_balance.toString(),
                   consensusDecimals,
                 ),
                 layer: Layer.consensus,
