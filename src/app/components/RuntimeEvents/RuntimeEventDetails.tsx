@@ -26,6 +26,7 @@ import { MaybeEventErrorLine } from './EventError'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import MemoryIcon from '@mui/icons-material/Memory'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
@@ -53,6 +54,12 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) =>
       return t('runtimeEvent.accountsmint')
     case RuntimeEventType.accountsburn:
       return t('runtimeEvent.accountsburn')
+    case RuntimeEventType.roflapp_created:
+      return t('runtimeEvent.roflAppCreated')
+    case RuntimeEventType.roflapp_updated:
+      return t('runtimeEvent.roflAppUpdated')
+    case RuntimeEventType.roflapp_removed:
+      return t('runtimeEvent.roflAppRemoved')
     default:
       return method || t('common.unknown')
   }
@@ -88,6 +95,9 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.accountsburn]: (
       <MethodIcon color="orange" icon={<LocalFireDepartmentIcon />} {...props} />
     ),
+    [RuntimeEventType.roflapp_created]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
   }
 
   return (
