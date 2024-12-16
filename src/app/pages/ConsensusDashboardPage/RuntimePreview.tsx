@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -42,6 +42,7 @@ const StyledBox = styled(Box)(() => ({
   borderRadius: '12px',
   height: '180px',
   display: 'flex',
+  flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
   boxShadow: '0px 34px 24px -9px #324DAB1F',
@@ -58,12 +59,39 @@ const StyledTypography = styled(Typography)(() => ({
   alignItems: 'center',
 }))
 
+const StyledDisabledRuntime = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: 3,
+  paddingTop: theme.spacing(3),
+  flexDirection: 'row',
+  alignItems: 'center',
+  [theme.breakpoints.between('md', 'xl')]: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+}))
+
+const StyledEnabledRuntime = styled(Box)(({ theme }) => ({
+  height: '100%',
+  paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(3),
+  [theme.breakpoints.down('md')]: {
+    paddingBottom: theme.spacing(5),
+    borderBottom: `1px solid ${COLORS.grayMediumLight}`,
+  },
+  [theme.breakpoints.up('md')]: {
+    paddingRight: theme.spacing(5),
+    borderRight: `1px solid ${COLORS.grayMediumLight}`,
+  },
+}))
+
 type RuntimeProps = {
+  prominentItem?: boolean
   network: Network
   runtime: Runtime
 }
 
-export const EnabledRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) => {
+export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
   const query = useGetRuntimeStatus(network, runtime)
   const { outOfDate } = useRuntimeFreshness({
     network,
@@ -73,6 +101,7 @@ export const EnabledRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) =>
 
   return (
     <RuntimePreview
+      prominentItem={prominentItem}
       network={network}
       runtime={runtime}
       status={{
@@ -84,8 +113,23 @@ export const EnabledRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) =>
   )
 }
 
-export const InactiveRuntimePreview: FC<RuntimeProps> = ({ network, runtime }) => {
-  return <RuntimePreview network={network} runtime={runtime} />
+type DisabledRuntimePreviewProps = {
+  runtime: Runtime
+}
+
+export const DisabledRuntimePreview: FC<DisabledRuntimePreviewProps> = ({ runtime }) => {
+  const { t } = useTranslation()
+  const layerLabels = getLayerLabels(t)
+  const runtimeLabel = layerLabels[runtime]
+
+  return (
+    <StyledDisabledRuntime>
+      <StyledTypography>{runtimeLabel}</StyledTypography>
+      <Box>
+        <RuntimeStatusIcon status="inactive" />
+      </Box>
+    </StyledDisabledRuntime>
+  )
 }
 
 type RuntimePreviewProps = RuntimeProps & {
@@ -98,7 +142,7 @@ type RuntimePreviewProps = RuntimeProps & {
 
 type Panels = 'transactions' | 'accounts'
 
-const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) => {
+const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runtime, status }) => {
   const { t } = useTranslation()
   const [panel, setPanel] = useState<Panels>('transactions')
   const layerLabels = getLayerLabels(t)
@@ -106,7 +150,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
   const dashboardLink = RouteUtils.getDashboardRoute({ network, layer: runtime })
   const runtimeStatus = status ? (status.outOfDate ? 'outdated' : 'stable') : 'inactive'
   return (
-    <Box sx={{ flex: 1, paddingY: 3 }}>
+    <StyledEnabledRuntime>
       <Box sx={{ marginBottom: 4 }}>
         <StyledTypography>
           {status ? (
@@ -145,57 +189,60 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ network, runtime, status }) =
         <dt>{t('paratimes.nodes')} </dt>
         <dd>{status?.activeNodes ? t('paratimes.activeNodes', { nodes: status?.activeNodes }) : '-'} </dd>
       </StyledList>
-      <StyledBox>
-        <Box gap={3} sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {status && (
-            <Box sx={{ width: '100%' }}>
-              {panel === 'transactions' && (
-                <TransactionsChartCard
-                  scope={{
-                    layer: runtime,
-                    network,
-                  }}
-                  chartDuration={ChartDuration.TODAY}
-                />
-              )}
-              {panel === 'accounts' && (
-                <ActiveAccounts
-                  scope={{
-                    layer: runtime,
-                    network,
-                  }}
-                  chartDuration={ChartDuration.TODAY}
-                />
-              )}
-            </Box>
+      <Box sx={{ display: 'flex', gap: 3 }}>
+        <ChartsContainer status={status}>
+          {panel === 'transactions' && (
+            <TransactionsChartCard
+              scope={{
+                layer: runtime,
+                network,
+              }}
+              chartDuration={ChartDuration.TODAY}
+            />
           )}
-          {!status && (
+          {panel === 'accounts' && (
+            <ActiveAccounts
+              scope={{
+                layer: runtime,
+                network,
+              }}
+              chartDuration={ChartDuration.TODAY}
+            />
+          )}
+        </ChartsContainer>
+        {prominentItem && (
+          <ChartsContainer status={status}>
+            <ActiveAccounts
+              scope={{
+                layer: runtime,
+                network,
+              }}
+              chartDuration={ChartDuration.TODAY}
+            />
+          </ChartsContainer>
+        )}
+      </Box>
+      {!prominentItem && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 3 }}>
+          {status && (
             <>
-              <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
-              {t('paratimes.noData')}
+              <PanelButton
+                activePanel={panel}
+                ariaLabel={t('common.transactions')}
+                panel="transactions"
+                setPanel={setPanel}
+              />
+              <PanelButton
+                activePanel={panel}
+                ariaLabel={t('account.listTitle')}
+                panel="accounts"
+                setPanel={setPanel}
+              />
             </>
           )}
         </Box>
-      </StyledBox>
-      <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 3 }}>
-        {status && (
-          <>
-            <PanelButton
-              activePanel={panel}
-              ariaLabel={t('common.transactions')}
-              panel="transactions"
-              setPanel={setPanel}
-            />
-            <PanelButton
-              activePanel={panel}
-              ariaLabel={t('account.listTitle')}
-              panel="accounts"
-              setPanel={setPanel}
-            />
-          </>
-        )}
-      </Box>
-    </Box>
+      )}
+    </StyledEnabledRuntime>
   )
 }
 
@@ -217,5 +264,32 @@ const PanelButton: FC<PanelButtonProps> = ({ activePanel, ariaLabel, panel, setP
         )}
       </IconButton>
     </>
+  )
+}
+
+type ChartsContainerProps = {
+  children: ReactNode
+  status?: {
+    activeNodes: number | undefined
+    latestBlock: number | undefined
+    outOfDate: boolean | undefined
+  }
+}
+
+const ChartsContainer: FC<ChartsContainerProps> = ({ children, status }) => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledBox>
+      <Box gap={3} sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {status && <Box sx={{ width: '100%' }}>{children}</Box>}
+        {!status && (
+          <>
+            <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
+            {t('paratimes.noData')}
+          </>
+        )}
+      </Box>
+    </StyledBox>
   )
 }
