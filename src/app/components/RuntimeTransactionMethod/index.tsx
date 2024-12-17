@@ -6,6 +6,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import MemoryIcon from '@mui/icons-material/Memory'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
@@ -31,6 +32,14 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
       return t('transactions.method.consensus.delegate')
     case 'consensus.Undelegate':
       return t('transactions.method.consensus.undelegate')
+    case 'rofl.Create':
+      return t('transactions.method.rofl.create')
+    case 'rofl.Register':
+      return t('transactions.method.rofl.register')
+    case 'rofl.Remove':
+      return t('transactions.method.rofl.remove')
+    case 'rofl.Update':
+      return t('transactions.method.rofl.update')
     default:
       return method || t('common.unknown')
   }
@@ -50,6 +59,10 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
  *   - "consensus.Undelegate"
  *   - "evm.Create"
  *   - "evm.Call"
+ *   - "rofl.Create"
+ *   - "rofl.Update"
+ *   - "rofl.Remove"
+ *   - "rofl.Register"
  */
 const getRuntimeTransactionIcon = (method: string | undefined, label: string, truncate?: boolean) => {
   const props = {
@@ -73,6 +86,14 @@ const getRuntimeTransactionIcon = (method: string | undefined, label: string, tr
       return <MethodIcon icon={<LanOutlinedIcon />} {...props} />
     case 'accounts.Transfer':
       return <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />
+    case 'rofl.Create':
+      return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
+    case 'rofl.Register':
+      return <MethodIcon icon={<MemoryIcon />} {...props} />
+    case 'rofl.Remove':
+      return <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />
+    case 'rofl.Update':
+      return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
     default:
       return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
   }

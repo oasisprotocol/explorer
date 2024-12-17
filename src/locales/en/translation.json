@@ -449,6 +449,12 @@
       "evm": {
         "call": "Contract Call",
         "create": "Contract Creation"
+      },
+      "rofl": {
+        "create": "ROFL Create",
+        "register": "ROFL Register",
+        "remove": "ROFL Remove",
+        "update": "ROFL Update"
       }
     }
   },
@@ -478,6 +484,9 @@
     "consensusDelegate": "Delegate to consensus",
     "consensusUndelegateStart": "Start to undelegate from consensus",
     "consensusUndelegateDone": "Undelegate from consensus finished",
+    "roflAppCreated": "ROFL App Created",
+    "roflAppUpdated": "ROFL App Updated",
+    "roflAppRemoved": "ROFL App Removed",
     "evmLog": "EVM log message",
     "filter": {
       "all": "All events",

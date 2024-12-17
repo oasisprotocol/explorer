@@ -995,6 +995,10 @@ In practice, Nexus currently expects only the following methods:
   - "consensus.Undelegate"
   - "evm.Create"
   - "evm.Call"
+  - "rofl.Create"
+  - "rofl.Update"
+  - "rofl.Remove"
+  - "rofl.Register"
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
@@ -1162,6 +1166,9 @@ export const RuntimeEventType = {
   consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
+  roflapp_created: 'rofl.app_created',
+  roflapp_updated: 'rofl.app_updated',
+  roflapp_removed: 'rofl.app_removed',
 } as const;
 
 /**
