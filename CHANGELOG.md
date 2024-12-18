@@ -16,20 +16,20 @@ The format is inspired by [Keep a Changelog].
 
 ### Features
 
+- Enable Consensus layer
+  ([#1663](https://github.com/oasisprotocol/explorer/issues/1663))
+
 - Localnet support
   ([#1628](https://github.com/oasisprotocol/explorer/issues/1628))
-
-- Extend named accounts with ERC-20 and ERC-721 tokens
-  ([#1632](https://github.com/oasisprotocol/explorer/issues/1632))
 
 - Support ROFL transactions
   ([#1659](https://github.com/oasisprotocol/explorer/issues/1659))
 
+- Extend named accounts with ERC-20 and ERC-721 tokens
+  ([#1632](https://github.com/oasisprotocol/explorer/issues/1632))
+
 - Enable search engine for Consensus transactions and blocks
   ([#1662](https://github.com/oasisprotocol/explorer/issues/1662))
-
-- Enable Consensus layer
-  ([#1663](https://github.com/oasisprotocol/explorer/issues/1663))
 
 ### Bug Fixes and Improvements
 
@@ -51,7 +51,7 @@ The format is inspired by [Keep a Changelog].
 - Use correct query param in token Transfers card
   ([#1638](https://github.com/oasisprotocol/explorer/issues/1638))
 
-- Handle runtime consensus transactions status
+- Handle runtime Consensus transactions status
   ([#1647](https://github.com/oasisprotocol/explorer/issues/1647))
 
 - Increase visibility of Sapphire in ParaTimes section
@@ -61,6 +61,9 @@ The format is inspired by [Keep a Changelog].
   ([#1655](https://github.com/oasisprotocol/explorer/issues/1655))
 
 ### Internal Changes
+
+- Update API bindings
+  ([#1526](https://github.com/oasisprotocol/explorer/issues/1526))
 
 - Update dependencies
   ([#1454](https://github.com/oasisprotocol/explorer/issues/1454),
@@ -74,9 +77,6 @@ The format is inspired by [Keep a Changelog].
    [#1629](https://github.com/oasisprotocol/explorer/issues/1629),
    [#1631](https://github.com/oasisprotocol/explorer/issues/1631),
    [#1653](https://github.com/oasisprotocol/explorer/issues/1653))
-
-- Update API bindings
-  ([#1526](https://github.com/oasisprotocol/explorer/issues/1526))
 
 ## 1.14.0 (2024-10-17)
 
