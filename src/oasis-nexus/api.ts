@@ -639,8 +639,18 @@ export function useGetConsensusBlockByHash(
       request: {
         transformResponse: [
           ...arrayify(axios.defaults.transformResponse),
-          (block: generated.Block, headers, status) => {
-            if (status !== 200) return block
+          function (data: generated.BlockList, headers, status) {
+            if (status !== 200) return data
+            const block = data.blocks[0]
+            if (!block || block.hash !== blockHash) {
+              throw new axios.AxiosError('not found', 'ERR_BAD_REQUEST', this, null, {
+                status: 404,
+                statusText: 'not found',
+                config: this,
+                data: 'not found',
+                headers: {},
+              })
+            }
             return {
               ...block,
               layer: Layer.consensus,

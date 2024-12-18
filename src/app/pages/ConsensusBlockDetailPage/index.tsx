@@ -144,7 +144,7 @@ export const ConsensusBlockDetailView: FC<{
         {/*)}*/}
       </dd>
 
-      {block.epoch && (
+      {!!block.epoch && (
         <>
           <dt>{t('common.epoch')}</dt>
           <dd>{block.epoch}</dd>

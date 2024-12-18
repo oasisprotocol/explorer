@@ -17,6 +17,9 @@ import {
   useGetConsensusProposalsByName,
   Account,
   useGetConsensusAccountsAddress,
+  Block,
+  useGetConsensusBlockByHeight,
+  useGetConsensusBlockByHash,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -34,7 +37,7 @@ type SearchResultItemCore = HasScope & {
   resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal'
 }
 
-export type BlockResult = SearchResultItemCore & RuntimeBlock & { resultType: 'block' }
+export type BlockResult = SearchResultItemCore & (RuntimeBlock | Block) & { resultType: 'block' }
 
 export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { resultType: 'transaction' }
 
@@ -56,7 +59,13 @@ export type SearchResultItem =
 
 export type SearchResults = SearchResultItem[]
 
-export function useBlocksByHeightConditionally(
+export function isConsensusBlock(
+  block: BlockResult,
+): block is SearchResultItemCore & Block & { resultType: 'block' } {
+  return block.layer === Layer.consensus
+}
+
+export function useRuntimeBlocksByHeightConditionally(
   currentScope: SearchScope | undefined,
   blockHeight: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
@@ -83,7 +92,34 @@ export function useBlocksByHeightConditionally(
   }
 }
 
-export function useBlocksByHashConditionally(
+export function useConsensusBlocksByHeightConditionally(
+  currentScope: SearchScope | undefined,
+  blockHeight: string | undefined,
+): ConditionalResults<Block> {
+  const queries = RouteUtils.getVisibleScopes(currentScope)
+    .filter(scope => scope.layer === Layer.consensus)
+    .map(scope =>
+      /**
+       * Normally, calling React hooks from callbacks and other conditional code
+       * is not a good idea, but in this case, we can be sure that the number of
+       * enabled combinations will never change during runtime
+       * (since it's hard-coded in route-utils.ts), so we can just ignore
+       * the lint warning about abusing the rules of hooks.
+       */
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetConsensusBlockByHeight(scope.network, parseInt(blockHeight!), {
+        query: {
+          enabled: !!blockHeight,
+        },
+      }),
+    )
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
+export function useRuntimeBlocksByHashConditionally(
   currentScope: SearchScope | undefined,
   blockHash: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
@@ -109,6 +145,34 @@ export function useBlocksByHashConditionally(
     results: queries.map(query => query.data?.data).filter(isDefined),
   }
 }
+
+export function useConsensusBlocksByHashConditionally(
+  currentScope: SearchScope | undefined,
+  blockHash: string | undefined,
+): ConditionalResults<Block> {
+  const queries = RouteUtils.getVisibleScopes(currentScope)
+    .filter(scope => scope.layer === Layer.consensus)
+    .map(scope =>
+      /**
+       * Normally, calling React hooks from callbacks and other conditional code
+       * is not a good idea, but in this case, we can be sure that the number of
+       * enabled combinations will never change during runtime
+       * (since it's hard-coded in route-utils.ts), so we can just ignore
+       * the lint warning about abusing the rules of hooks.
+       */
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetConsensusBlockByHash(scope.network, blockHash || '', {
+        query: {
+          enabled: !!blockHash,
+        },
+      }),
+    )
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
 export function useTransactionsConditionally(
   currentScope: SearchScope | undefined,
   txHash: string | undefined,
@@ -252,8 +316,10 @@ export function useNamedValidatorConditionally(nameFragment: string | undefined)
 
 export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
-    blockHeight: useBlocksByHeightConditionally(currentScope, q.blockHeight),
-    blockHash: useBlocksByHashConditionally(currentScope, q.blockHash),
+    runtimeBlockHeight: useRuntimeBlocksByHeightConditionally(currentScope, q.blockHeight),
+    runtimeBlockHash: useRuntimeBlocksByHashConditionally(currentScope, q.blockHash),
+    consensusBlockHeight: useConsensusBlocksByHeightConditionally(currentScope, q.blockHeight),
+    consensusBlockHash: useConsensusBlocksByHashConditionally(currentScope, q.blockHash),
     txHash: useTransactionsConditionally(currentScope, q.txHash),
     oasisConsensusAccount: useConsensusAccountConditionally(q.consensusAccount),
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
@@ -265,7 +331,12 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   }
   const isLoading = Object.values(queries).some(query => query.isLoading)
   const hasErrors = Object.values(queries).some(query => query.isError)
-  const blocks = [...queries.blockHeight.results, ...queries.blockHash.results]
+  const blocks = [
+    ...queries.consensusBlockHeight.results,
+    ...queries.consensusBlockHash.results,
+    ...queries.runtimeBlockHeight.results,
+    ...queries.runtimeBlockHash.results,
+  ]
   const transactions = queries.txHash.results || []
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),

@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ResultsGroupByType } from './ResultsGroupByType'
 import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
+import { ConsensusBlockDetailView } from '../ConsensusBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
 import { RuntimeAccountDetailsView } from '../../components/Account/RuntimeAccountDetailsView'
@@ -14,6 +15,7 @@ import {
   SearchResults,
   TokenResult,
   TransactionResult,
+  isConsensusBlock,
 } from './hooks'
 import { getThemeForScope } from '../../../styles/theme'
 import { Network } from '../../../types/network'
@@ -58,8 +60,16 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.blocks.title')}
           results={searchResults.filter((item): item is BlockResult => item.resultType === 'block')}
-          resultComponent={item => <RuntimeBlockDetailView isLoading={false} block={item} showLayer={true} />}
-          link={block => RouteUtils.getBlockRoute(block, block.round)}
+          resultComponent={(item: BlockResult) =>
+            isConsensusBlock(item) ? (
+              <ConsensusBlockDetailView isLoading={false} block={item} showLayer={true} />
+            ) : (
+              <RuntimeBlockDetailView isLoading={false} block={item} showLayer={true} />
+            )
+          }
+          link={(block: BlockResult) =>
+            RouteUtils.getBlockRoute(block, isConsensusBlock(block) ? block.height : block.round)
+          }
           linkLabel={t('search.results.blocks.viewLink')}
         />
 
