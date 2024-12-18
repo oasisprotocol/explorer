@@ -5,7 +5,6 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { useGetConsensusValidators } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as PAGE_SIZE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
@@ -15,6 +14,8 @@ import { Validators } from '../../components/Validators'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { ValidatorDetailsView } from '../ValidatorDetailsPage'
 import { VerticalList } from '../../components/VerticalList'
+
+const PAGE_SIZE = 100
 
 export const ValidatorsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
