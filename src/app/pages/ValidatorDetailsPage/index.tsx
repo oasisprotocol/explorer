@@ -161,7 +161,7 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.commissionBounds')}</dt>
           <dd>
-            {validator.current_commission_bound && validator.current_commission_bound.epoch_start ? (
+            {validator.current_commission_bound ? (
               <>
                 <ValidatorCommission commission={validator.current_commission_bound.lower} />~
                 <ValidatorCommission commission={validator.current_commission_bound.upper} />
