@@ -72,6 +72,7 @@ const StyledDisabledRuntime = styled(Box)(({ theme }) => ({
 }))
 
 const StyledEnabledRuntime = styled(Box)(({ theme }) => ({
+  flex: 1,
   height: '100%',
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
