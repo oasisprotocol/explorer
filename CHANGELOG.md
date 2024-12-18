@@ -12,6 +12,72 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.15.0 (2024-12-18)
+
+### Features
+
+- Localnet support
+  ([#1628](https://github.com/oasisprotocol/explorer/issues/1628))
+
+- Extend named accounts with ERC-20 and ERC-721 tokens
+  ([#1632](https://github.com/oasisprotocol/explorer/issues/1632))
+
+- Support ROFL transactions
+  ([#1659](https://github.com/oasisprotocol/explorer/issues/1659))
+
+- Enable search engine for Consensus transactions and blocks
+  ([#1662](https://github.com/oasisprotocol/explorer/issues/1662))
+
+- Enable Consensus layer
+  ([#1663](https://github.com/oasisprotocol/explorer/issues/1663))
+
+### Bug Fixes and Improvements
+
+- Prevent crash when network error occur while fetching account names
+  ([#1578](https://github.com/oasisprotocol/explorer/issues/1578))
+
+- Don't print "0" when viewing epoch snapshot on first block in an epoch
+  ([#1581](https://github.com/oasisprotocol/explorer/issues/1581))
+
+- Retain ETH address through search for accounts with no EVM transactions
+  ([#1582](https://github.com/oasisprotocol/explorer/issues/1582))
+
+- Ignore all account name fetching errors at the same level
+  ([#1585](https://github.com/oasisprotocol/explorer/issues/1585))
+
+- Show precise balance in chart tooltip
+  ([#1600](https://github.com/oasisprotocol/explorer/issues/1600))
+
+- Use correct query param in token Transfers card
+  ([#1638](https://github.com/oasisprotocol/explorer/issues/1638))
+
+- Handle runtime consensus transactions status
+  ([#1647](https://github.com/oasisprotocol/explorer/issues/1647))
+
+- Increase visibility of Sapphire in ParaTimes section
+  ([#1651](https://github.com/oasisprotocol/explorer/issues/1651))
+
+- Fix wrong total balance amount in Consensus accounts list
+  ([#1655](https://github.com/oasisprotocol/explorer/issues/1655))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1454](https://github.com/oasisprotocol/explorer/issues/1454),
+   [#1501](https://github.com/oasisprotocol/explorer/issues/1501),
+   [#1512](https://github.com/oasisprotocol/explorer/issues/1512),
+   [#1563](https://github.com/oasisprotocol/explorer/issues/1563),
+   [#1579](https://github.com/oasisprotocol/explorer/issues/1579),
+   [#1603](https://github.com/oasisprotocol/explorer/issues/1603),
+   [#1604](https://github.com/oasisprotocol/explorer/issues/1604),
+   [#1605](https://github.com/oasisprotocol/explorer/issues/1605),
+   [#1629](https://github.com/oasisprotocol/explorer/issues/1629),
+   [#1631](https://github.com/oasisprotocol/explorer/issues/1631),
+   [#1653](https://github.com/oasisprotocol/explorer/issues/1653))
+
+- Update API bindings
+  ([#1526](https://github.com/oasisprotocol/explorer/issues/1526))
+
 ## 1.14.0 (2024-10-17)
 
 ### Features
