@@ -47,10 +47,11 @@ export const BalanceDistributionCard: FC<BalanceDistributionCardProps> = ({ vali
             <>
               {t('validator.totalEscrow')}
               <Typography sx={{ fontSize: 10 }}>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(validator.escrow.active_balance),
-                  ticker: validator.ticker,
-                })}
+                <RoundedBalance
+                  compactLargeNumbers
+                  value={validator.escrow.active_balance}
+                  ticker={validator.ticker}
+                />
               </Typography>
               <RoundedBalance
                 compactLargeNumbers
