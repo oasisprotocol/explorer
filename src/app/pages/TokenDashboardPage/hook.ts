@@ -36,18 +36,14 @@ export const useTokenInfo = (scope: SearchScope, address: string, enabled = true
   }
 }
 
-export const useTokenTransfers = (scope: SearchScope, params: { address: string }) => {
-  return _useTokenTransfers(scope, { rel: params.address })
-}
-
 export const useNFTInstanceTransfers = (
   scope: SearchScope,
   params: { nft_id: string; contract_address: string },
 ) => {
-  return _useTokenTransfers(scope, { nft_id: params.nft_id, contract_address: params.contract_address })
+  return useTokenTransfers(scope, { nft_id: params.nft_id, contract_address: params.contract_address })
 }
 
-export const _useTokenTransfers = (scope: SearchScope, params: undefined | GetRuntimeEventsParams) => {
+export const useTokenTransfers = (scope: SearchScope, params: undefined | GetRuntimeEventsParams) => {
   if (params && Object.values(params).some(value => value === undefined || value === null)) {
     throw new Error('Must set params=undefined while some values are unavailable')
   }
