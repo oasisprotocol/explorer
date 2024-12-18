@@ -12,6 +12,19 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.15.1 (2024-12-18)
+
+### Bug Fixes and Improvements
+
+- Consensus pre-release fixes
+  ([#1670](https://github.com/oasisprotocol/explorer/issues/1670))
+
+  - Improve Consensus ParaTime cards for testnet
+  - Adjust validator commission bounds check
+  - Show rounded value in balance distribution card
+  - Improve useRedirectIfSingleResult to handle validators
+  - Increase number of validators rendered in a list
+
 ## 1.15.0 (2024-12-18)
 
 ### Features
