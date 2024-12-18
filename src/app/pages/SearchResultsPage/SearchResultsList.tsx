@@ -5,6 +5,7 @@ import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { ConsensusBlockDetailView } from '../ConsensusBlockDetailPage'
 import { RouteUtils } from '../../utils/route-utils'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
+import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { RuntimeAccountDetailsView } from '../../components/Account/RuntimeAccountDetailsView'
 import { ConsensusAccountDetailsView } from '../../components/Account/ConsensusAccountDetailsView'
 import {
@@ -16,6 +17,7 @@ import {
   TokenResult,
   TransactionResult,
   isConsensusBlock,
+  isConsensusTransaction,
 } from './hooks'
 import { getThemeForScope } from '../../../styles/theme'
 import { Network } from '../../../types/network'
@@ -78,15 +80,26 @@ export const SearchResultsList: FC<{
           results={searchResults.filter(
             (item): item is TransactionResult => item.resultType === 'transaction',
           )}
-          resultComponent={item => (
-            <RuntimeTransactionDetailView
-              isLoading={false}
-              transaction={item}
-              tokenPrices={tokenPrices}
-              showLayer={true}
-            />
-          )}
-          link={tx => RouteUtils.getTransactionRoute(tx, tx.eth_hash || tx.hash)}
+          resultComponent={item =>
+            isConsensusTransaction(item) ? (
+              <ConsensusTransactionDetailView
+                isLoading={false}
+                transaction={item}
+                tokenPrices={tokenPrices}
+                showLayer={true}
+              />
+            ) : (
+              <RuntimeTransactionDetailView
+                isLoading={false}
+                transaction={item}
+                tokenPrices={tokenPrices}
+                showLayer={true}
+              />
+            )
+          }
+          link={tx =>
+            RouteUtils.getTransactionRoute(tx, isConsensusTransaction(tx) ? tx.hash : tx.eth_hash || tx.hash)
+          }
           linkLabel={t('search.results.transactions.viewLink')}
         />
 

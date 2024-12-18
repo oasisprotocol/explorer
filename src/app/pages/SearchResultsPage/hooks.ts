@@ -20,6 +20,8 @@ import {
   Block,
   useGetConsensusBlockByHeight,
   useGetConsensusBlockByHash,
+  Transaction,
+  useGetConsensusTransactionsTxHash,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -39,7 +41,8 @@ type SearchResultItemCore = HasScope & {
 
 export type BlockResult = SearchResultItemCore & (RuntimeBlock | Block) & { resultType: 'block' }
 
-export type TransactionResult = SearchResultItemCore & RuntimeTransaction & { resultType: 'transaction' }
+export type TransactionResult = SearchResultItemCore &
+  (RuntimeTransaction | Transaction) & { resultType: 'transaction' }
 
 export type AccountResult = SearchResultItemCore & (RuntimeAccount | Account) & { resultType: 'account' }
 
@@ -63,6 +66,12 @@ export function isConsensusBlock(
   block: BlockResult,
 ): block is SearchResultItemCore & Block & { resultType: 'block' } {
   return block.layer === Layer.consensus
+}
+
+export function isConsensusTransaction(
+  transaction: TransactionResult,
+): transaction is SearchResultItemCore & Transaction & { resultType: 'transaction' } {
+  return transaction.layer === Layer.consensus
 }
 
 export function useRuntimeBlocksByHeightConditionally(
@@ -173,7 +182,7 @@ export function useConsensusBlocksByHashConditionally(
   }
 }
 
-export function useTransactionsConditionally(
+export function useRuntimeTransactionsConditionally(
   currentScope: SearchScope | undefined,
   txHash: string | undefined,
 ): ConditionalResults<RuntimeTransaction> {
@@ -183,6 +192,27 @@ export function useTransactionsConditionally(
       // See explanation above
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useGetRuntimeTransactionsTxHash(scope.network, scope.layer as Runtime, txHash!, {
+        query: {
+          enabled: !!txHash,
+        },
+      }),
+    )
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.flatMap(query => query.data?.data.transactions).filter(isDefined),
+  }
+}
+
+export function useConsensusTransactionsConditionally(
+  currentScope: SearchScope | undefined,
+  txHash: string | undefined,
+): ConditionalResults<Transaction> {
+  const queries = RouteUtils.getVisibleScopes(currentScope)
+    .filter(scope => scope.layer === Layer.consensus)
+    .map(scope =>
+      // See explanation above
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useGetConsensusTransactionsTxHash(scope.network, txHash!, {
         query: {
           enabled: !!txHash,
         },
@@ -320,7 +350,8 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     runtimeBlockHash: useRuntimeBlocksByHashConditionally(currentScope, q.blockHash),
     consensusBlockHeight: useConsensusBlocksByHeightConditionally(currentScope, q.blockHeight),
     consensusBlockHash: useConsensusBlocksByHashConditionally(currentScope, q.blockHash),
-    txHash: useTransactionsConditionally(currentScope, q.txHash),
+    runtimeTxHash: useRuntimeTransactionsConditionally(currentScope, q.txHash),
+    consensusTxHash: useConsensusTransactionsConditionally(currentScope, q.txHash),
     oasisConsensusAccount: useConsensusAccountConditionally(q.consensusAccount),
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
@@ -337,7 +368,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...queries.runtimeBlockHeight.results,
     ...queries.runtimeBlockHash.results,
   ]
-  const transactions = queries.txHash.results || []
+  const transactions = [...(queries.runtimeTxHash.results || []), ...(queries.consensusTxHash.results || [])]
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),
     ...(queries.oasisRuntimeAccount.results || []),

@@ -25,6 +25,7 @@ import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
 import { getFiatCurrencyForScope } from '../../../config'
 import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
+import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -72,7 +73,8 @@ export const ConsensusTransactionDetailView: FC<{
   transaction: TransactionDetailConsensusBlock | undefined
   detailsPage?: boolean
   tokenPrices?: AllTokenPrices
-}> = ({ detailsPage, isLoading, transaction, tokenPrices }) => {
+  showLayer?: boolean
+}> = ({ detailsPage, isLoading, showLayer, transaction, tokenPrices }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
@@ -88,6 +90,14 @@ export const ConsensusTransactionDetailView: FC<{
       standalone={!detailsPage}
       highlight={transaction.markAsNew}
     >
+      {showLayer && (
+        <>
+          <dt>{t('common.paratime')}</dt>
+          <dd>
+            <DashboardLink scope={transaction} />
+          </dd>
+        </>
+      )}
       <dt>{t('common.hash')}</dt>
       <dd>
         <TransactionLink scope={transaction} hash={transaction.hash} />
