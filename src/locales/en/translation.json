@@ -459,13 +459,19 @@
     }
   },
   "transaction": {
+    "delegate": "Delegate",
+    "deposit": "Deposit",
     "header": "Transaction",
-    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
     "rawData": "Raw Data",
+    "started": "Started",
+    "startedDescription": "{{ method }} has started, final result will be known in the next block",
     "tooltips": {
       "txEncrypted": "This transaction is encrypted.",
       "txNotEncrypted": "This transaction is <strong>not</strong> encrypted."
-    }
+    },
+    "undelegate": "Undelegate",
+    "warningMultipleTransactionsSameHash": "Please make sure you're looking at the right transaction. There is more than one transaction with this hash, which is extremely rare. We are showing the most recent successful one.",
+    "withdraw": "Withdraw"
   },
   "event": {
     "cantLoadEvents": "Unfortunately we couldn't load the list of events. Please try again later.",
