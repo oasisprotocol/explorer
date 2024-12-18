@@ -188,9 +188,6 @@ export const deploys = {
   localhost: 'http://localhost:1234',
 }
 
-const stableDeploys = [...deploys.production, ...deploys.staging]
-export const isStableDeploy = stableDeploys.some(url => window.location.origin === url)
-
 export const getAppTitle = () => process.env.REACT_APP_META_TITLE
 
 export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {

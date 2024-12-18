@@ -5,7 +5,7 @@ import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
-import { isStableDeploy, specialScopePaths } from '../../config'
+import { specialScopePaths } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
 import type { HasLayer } from '../../types/layers'
 import { toChecksumAddress } from '@ethereumjs/util'
@@ -81,8 +81,7 @@ export abstract class RouteUtils {
       [Layer.cipher]: false,
       [Layer.pontusxdev]: false,
       [Layer.pontusxtest]: false,
-      // Disable WIP Consensus on production and staging
-      [Layer.consensus]: !isStableDeploy,
+      [Layer.consensus]: true,
     },
     [Network.testnet]: {
       [Layer.emerald]: true,
@@ -90,8 +89,7 @@ export abstract class RouteUtils {
       [Layer.cipher]: false,
       [Layer.pontusxdev]: true,
       [Layer.pontusxtest]: true,
-      // Disable WIP Consensus on production and staging
-      [Layer.consensus]: !isStableDeploy,
+      [Layer.consensus]: true,
     },
     [Network.localnet]: {
       [Layer.emerald]: process.env.REACT_APP_LOCALNET_EMERALD === 'true',
