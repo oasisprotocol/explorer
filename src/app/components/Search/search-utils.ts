@@ -34,7 +34,12 @@ export const searchSuggestionTerms = {
     cipher: undefined,
     pontusxdev: undefined,
     pontusxtest: undefined,
-    consensus: undefined,
+    consensus: {
+      suggestedBlock: '22420882',
+      suggestedTransaction: 'b6770d61a2810896942f2dde54ac23a414672c3465e123abb29bdb7367dcb482',
+      suggestedAccount: 'oasis1qrmufhkkyyf79s5za2r8yga9gnk4t446dcy3a5zm',
+      suggestedTokenFragment: '',
+    },
   },
   testnet: {
     emerald: {
@@ -62,7 +67,12 @@ export const searchSuggestionTerms = {
       suggestedAccount: '0xC09c6A1d5538E7ed135d6146241c8da11e92130B', // TODO
       suggestedTokenFragment: 'Ocean', // TODO
     },
-    consensus: undefined,
+    consensus: {
+      suggestedBlock: '22420882',
+      suggestedTransaction: 'a5bb1ffedee431372d63a41774028e86203b2337d3aa408f2f7c707ec92071e5',
+      suggestedAccount: 'oasis1qrmufhkkyyf79s5za2r8yga9gnk4t446dcy3a5zm',
+      suggestedTokenFragment: '',
+    },
   },
   localnet: {
     emerald: {
