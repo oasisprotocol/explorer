@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SearchResults } from './hooks'
+import { isConsensusBlock, isConsensusTransaction, SearchResults } from './hooks'
 import { RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
@@ -31,10 +31,13 @@ export function useRedirectIfSingleResult(
     const item = results[0]
     switch (item.resultType) {
       case 'block':
-        redirectTo = RouteUtils.getBlockRoute(item, item.round)
+        redirectTo = RouteUtils.getBlockRoute(item, isConsensusBlock(item) ? item.height : item.round)
         break
       case 'transaction':
-        redirectTo = RouteUtils.getTransactionRoute(item, item.eth_hash || item.hash)
+        redirectTo = RouteUtils.getTransactionRoute(
+          item,
+          isConsensusTransaction(item) ? item.hash : item.eth_hash || item.hash,
+        )
         break
       case 'account':
         redirectTo = RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
