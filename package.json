@@ -47,7 +47,7 @@
     "node": ">=20"
   },
   "resolutions": {
-    "**/@emotion/styled": "11.13.0",
+    "**/@emotion/styled": "11.14.0",
     "@typescript-eslint/eslint-plugin": "7.14.1",
     "@typescript-eslint/parser": "7.14.1",
     "react-refresh": "0.16.0",
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.13.0",
+    "@emotion/styled": "11.14.0",
     "@ethereumjs/util": "9.1.0",
     "@fontsource-variable/figtree": "^5.0.19",
     "@fontsource-variable/roboto-mono": "^5.0.17",
