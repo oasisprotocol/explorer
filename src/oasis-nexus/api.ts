@@ -30,6 +30,7 @@ import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
+import { API_MAX_TOTAL_COUNT } from '../app/config'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1120,28 +1121,32 @@ export type ValidatorAddressNameMap = { [oasisAddress: string]: string | undefin
 export const useGetConsensusValidatorsAddressNameMap: typeof generated.useGetConsensusValidators<
   AxiosResponse<ValidatorAddressNameMap>
 > = (network, params?, options?) => {
-  return generated.useGetConsensusValidators(network, params, {
-    ...options,
-    query: {
-      staleTime: options?.query?.staleTime ?? 5 * 60 * 1000, // Defaults to 5 minutes
-      ...options?.query,
+  return generated.useGetConsensusValidators(
+    network,
+    { limit: API_MAX_TOTAL_COUNT, ...params },
+    {
+      ...options,
+      query: {
+        staleTime: options?.query?.staleTime ?? 5 * 60 * 1000, // Defaults to 5 minutes
+        ...options?.query,
+      },
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.ValidatorList, headers, status) => {
+            if (status !== 200) return data
+            const validators: ValidatorAddressNameMap = {}
+            data.validators.forEach(validator => {
+              validators[validator.entity_address] = validator.media?.name
+            })
+            return validators
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
     },
-    request: {
-      ...options?.request,
-      transformResponse: [
-        ...arrayify(axios.defaults.transformResponse),
-        (data: generated.ValidatorList, headers, status) => {
-          if (status !== 200) return data
-          const validators: ValidatorAddressNameMap = {}
-          data.validators.forEach(validator => {
-            validators[validator.entity_address] = validator.media?.name
-          })
-          return validators
-        },
-        ...arrayify(options?.request?.transformResponse),
-      ],
-    },
-  })
+  )
 }
 
 export const useGetConsensusValidators: typeof generated.useGetConsensusValidators = (
