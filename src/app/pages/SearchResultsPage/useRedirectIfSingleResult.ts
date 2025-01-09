@@ -15,7 +15,7 @@ export function useRedirectIfSingleResult(
   results: SearchResults,
 ) {
   const navigate = useNavigate()
-  const { data: validatorsData } = useGetConsensusValidatorsAddressNameMap(results[0].network)
+  const { data: validatorsData } = useGetConsensusValidatorsAddressNameMap(results[0]?.network)
   const { searchTerm, accountNameFragment, evmAccount, consensusAccount } = searchParams
 
   let shouldRedirect = results.length === 1
