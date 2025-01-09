@@ -38,7 +38,9 @@ const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scop
 
   return (
     <>
-      {isFetched && !transactions?.length && <CardEmptyState label={t('account.emptyTransactionList')} />}
+      {isFetched && !transactions?.length && (
+        <CardEmptyState label={t('account.emptyAccountTransactionList')} />
+      )}
       <ConsensusTransactions
         transactions={transactions}
         ownAddress={address}

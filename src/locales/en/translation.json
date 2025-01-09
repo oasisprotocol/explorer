@@ -6,7 +6,8 @@
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "debonding": "Debonding",
     "emptyTokenList": "This account holds no {{spec}} {{description}}.",
-    "emptyTransactionList": "There are no transactions on record for this account.",
+    "emptyAccountTransactionList": "There are no transactions on record for this account.",
+    "emptyTransactionList": "No transactions found.",
     "emptyTokenTransferList": "There are no token transfers on record for this account.",
     "failedToLookUpTickers": "We don't have the price for: {{tickers}}",
     "firstActivity": "First activity",
@@ -418,6 +419,7 @@
       "publicKey": "Public Key",
       "resultNonce": "Result Nonce"
     },
+    "filterByType": "Filter by type",
     "latest": "Latest Transactions",
     "method": {
       "stakingTransfer": "Transfer",

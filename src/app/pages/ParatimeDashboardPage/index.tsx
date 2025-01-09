@@ -13,17 +13,19 @@ import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const isLocal = isLocalnet(scope.network)
+  const [method, setMethod] = useTypedSearchParam('tx_method', 'any')
 
   return (
     <PageLayout>
       {!isLocal && <ParaTimeSnapshot scope={scope} />}
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <LatestRuntimeTransactions scope={scope} />
+      <LatestRuntimeTransactions scope={scope} method={method} setMethod={setMethod} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
           <LearningMaterials scope={scope} />

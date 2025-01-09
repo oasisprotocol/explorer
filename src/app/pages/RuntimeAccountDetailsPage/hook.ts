@@ -8,6 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { SearchScope } from '../../../types/searchScope'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 
 export const useAccount = (scope: SearchScope, address: string) => {
   const { network, layer } = scope
@@ -23,7 +24,7 @@ export const useAccount = (scope: SearchScope, address: string) => {
   return { account, isLoading, isError, isFetched }
 }
 
-export const useAccountTransactions = (scope: SearchScope, address: string) => {
+export const useAccountTransactions = (scope: SearchScope, address: string, method: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -40,6 +41,7 @@ export const useAccountTransactions = (scope: SearchScope, address: string) => {
       limit,
       offset: offset,
       rel: address,
+      ...getRuntimeTransactionMethodFilteringParam(method),
     },
   )
   const { isFetched, isLoading, data } = query

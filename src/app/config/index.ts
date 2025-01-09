@@ -1,4 +1,5 @@
 export const NUMBER_OF_ITEMS_ON_DASHBOARD = 5
+export const FILTERING_ON_DASHBOARD = true
 export const NUMBER_OF_ITEMS_ON_SEPARATE_PAGE = 10
 export const REFETCH_INTERVAL = 5000
 export const API_MAX_TOTAL_COUNT = 1000

@@ -7,10 +7,14 @@ import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeBlockDetailsContext } from '.'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import Box from '@mui/material/Box'
 
 export const transactionsContainerId = 'transactions'
 
-const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, method }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
   if (scope.layer === Layer.consensus) {
@@ -22,6 +26,7 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight })
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     offset: txsOffset,
+    ...getRuntimeTransactionMethodFilteringParam(method),
   })
 
   const { isLoading, isFetched, data } = transactionsQuery
@@ -44,20 +49,38 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight })
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
+      filtered={method !== 'any'}
     />
   )
 }
 
-export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = props => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
+  const { blockHeight, method, setMethod } = props
 
   if (!blockHeight) {
     return null
   }
 
   return (
-    <LinkableCardLayout containerId={transactionsContainerId} title={t('common.transactions')}>
-      <TransactionList scope={scope} blockHeight={blockHeight} />
+    <LinkableCardLayout
+      containerId={transactionsContainerId}
+      title={
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
+          {t('common.transactions')}
+          {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
+        </Box>
+      }
+    >
+      {isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand />}
+      <TransactionList {...props} />
     </LinkableCardLayout>
   )
 }

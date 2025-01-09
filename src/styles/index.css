@@ -19,3 +19,10 @@ html {
 svg.recharts-surface {
   overflow: visible;
 }
+
+.expand {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}

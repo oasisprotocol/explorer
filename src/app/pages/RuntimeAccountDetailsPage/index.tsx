@@ -18,11 +18,14 @@ import { eventsContainerId } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeAccountDetailsContext = {
   scope: SearchScope
   address: string
   account?: RuntimeAccount
+  method: string
+  setMethod: (value: string) => void
 }
 
 export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
@@ -32,6 +35,9 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
+  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+    deleteParams: ['page'],
+  })
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
@@ -49,7 +55,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const isLoading = isAccountLoading || isTokenLoading
 
-  const context: RuntimeAccountDetailsContext = { scope, address, account }
+  const context: RuntimeAccountDetailsContext = { scope, address, account, method, setMethod }
 
   return (
     <PageLayout>
