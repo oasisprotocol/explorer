@@ -170,6 +170,69 @@ const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
   )
 }
 
+const getConsensusTransactionLabel = (t: TFunction, method: ConsensusTxMethod | undefined): string => {
+  /**
+   * TODO: Missing values:
+   *
+   *  consensusMeta
+   *  keymanagerPublishEphemeralSecret
+   *  keymanagerPublishMasterSecret
+   *  keymanagerUpdatePolicy
+   *  registryDeregisterEntity
+   *  registryProveFreshness
+   *  registryUnfreezeNode
+   *  roothashEvidence
+   *  roothashSubmitMsg
+   *  stakingBurn
+   *  keymanager/churpApply
+   *  keymanager/churpConfirm
+   *  keymanager/churpCreate
+   *  keymanager/churpUpdate
+   *  vaultAuthorizeAction
+   *  vaultCancelAction
+   *  vaultCreate
+   */
+
+  // Please note: when updating this, keep it in sync
+  // with the knownConsensusTxMethods array below!
+  switch (method) {
+    case ConsensusTxMethod.stakingTransfer:
+      return t('transactions.method.stakingTransfer')
+    case ConsensusTxMethod.stakingAddEscrow:
+      return t('transactions.method.stakingAddEscrow')
+    case ConsensusTxMethod.stakingReclaimEscrow:
+      return t('transactions.method.stakingReclaimEscrow')
+    case ConsensusTxMethod.stakingAmendCommissionSchedule:
+      return t('transactions.method.stakingAmendCommissionSchedule')
+    case ConsensusTxMethod.stakingAllow:
+      return t('transactions.method.stakingAllow')
+    case ConsensusTxMethod.stakingWithdraw:
+      return t('transactions.method.stakingWithdraw')
+    case ConsensusTxMethod.roothashExecutorCommit:
+      return t('transactions.method.roothashExecutorCommit')
+    case ConsensusTxMethod.roothashExecutorProposerTimeout:
+      return t('transactions.method.roothashExecutorProposerTimeout')
+    case ConsensusTxMethod.registryRegisterEntity:
+      return t('transactions.method.registryRegisterEntity')
+    case ConsensusTxMethod.registryRegisterNode:
+      return t('transactions.method.registryRegisterNode')
+    case ConsensusTxMethod.registryRegisterRuntime:
+      return t('transactions.method.registryRegisterRuntime')
+    case ConsensusTxMethod.governanceCastVote:
+      return t('transactions.method.governanceCastVote')
+    case ConsensusTxMethod.governanceSubmitProposal:
+      return t('transactions.method.governanceSubmitProposal')
+    case ConsensusTxMethod.beaconPVSSCommit:
+      return t('transactions.method.beaconPVSSCommit')
+    case ConsensusTxMethod.beaconPVSSReveal:
+      return t('transactions.method.beaconPVSSReveal')
+    case ConsensusTxMethod.beaconVRFProve:
+      return t('transactions.method.beaconVRFProve')
+    default:
+      return method || t('common.unknown')
+  }
+}
+
 const getConsensusTransactionMethod = (
   t: TFunction,
   method: ConsensusTxMethod | undefined,
@@ -178,135 +241,42 @@ const getConsensusTransactionMethod = (
   const props = {
     truncate,
   }
+  const label = getConsensusTransactionLabel(t, method)
   switch (method) {
     case ConsensusTxMethod.stakingTransfer:
-      return (
-        <MethodIcon
-          color="green"
-          icon={<ArrowForwardIcon />}
-          label={t('transactions.method.stakingTransfer')}
-          {...props}
-        />
-      )
+      return <MethodIcon color="green" icon={<ArrowForwardIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingAddEscrow:
-      return (
-        <MethodIcon
-          color="green"
-          icon={<ExitToAppIcon />}
-          label={t('transactions.method.stakingAddEscrow')}
-          {...props}
-        />
-      )
+      return <MethodIcon color="green" icon={<ExitToAppIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingReclaimEscrow:
-      return (
-        <MethodIcon
-          icon={<ExitToAppIcon />}
-          label={t('transactions.method.stakingReclaimEscrow')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<ExitToAppIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingAmendCommissionSchedule:
-      return (
-        <MethodIcon
-          icon={<PriceChangeIcon />}
-          label={t('transactions.method.stakingAmendCommissionSchedule')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<PriceChangeIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingAllow:
-      return (
-        <MethodIcon icon={<LibraryAddCheckIcon />} label={t('transactions.method.stakingAllow')} {...props} />
-      )
+      return <MethodIcon icon={<LibraryAddCheckIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingWithdraw:
-      return (
-        <MethodIcon
-          color="green"
-          icon={<ArrowDownwardIcon />}
-          label={t('transactions.method.stakingWithdraw')}
-          {...props}
-        />
-      )
+      return <MethodIcon color="green" icon={<ArrowDownwardIcon />} label={label} {...props} />
     case ConsensusTxMethod.roothashExecutorCommit:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.roothashExecutorCommit')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     case ConsensusTxMethod.roothashExecutorProposerTimeout:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.roothashExecutorProposerTimeout')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterEntity:
-      return (
-        <MethodIcon
-          icon={<PersonIcon />}
-          label={t('transactions.method.registryRegisterEntity')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<PersonIcon />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterNode:
-      return (
-        <MethodIcon icon={<DnsIcon />} label={t('transactions.method.registryRegisterNode')} {...props} />
-      )
+      return <MethodIcon icon={<DnsIcon />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterRuntime:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.registryRegisterRuntime')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     case ConsensusTxMethod.governanceCastVote:
-      return (
-        <MethodIcon icon={<HowToVoteIcon />} label={t('transactions.method.governanceCastVote')} {...props} />
-      )
+      return <MethodIcon icon={<HowToVoteIcon />} label={label} {...props} />
     case ConsensusTxMethod.governanceSubmitProposal:
-      return (
-        <MethodIcon
-          icon={<AccountBalanceIcon />}
-          label={t('transactions.method.governanceSubmitProposal')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<AccountBalanceIcon />} label={label} {...props} />
     case ConsensusTxMethod.beaconPVSSCommit:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.beaconPVSSCommit')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     case ConsensusTxMethod.beaconPVSSReveal:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.beaconPVSSReveal')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     case ConsensusTxMethod.beaconVRFProve:
-      return (
-        <MethodIcon
-          icon={<MiscellaneousServicesIcon />}
-          label={t('transactions.method.beaconVRFProve')}
-          {...props}
-        />
-      )
+      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
     default:
-      return (
-        <MethodIcon
-          color="gray"
-          icon={<QuestionMarkIcon />}
-          label={method || t('common.unknown')}
-          {...props}
-        />
-      )
+      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} label={label} {...props} />
   }
 }
 
