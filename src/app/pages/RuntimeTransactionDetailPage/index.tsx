@@ -254,7 +254,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
-                <JsonCodeDisplay data={transaction.body} withCopyButton={false} />
+                <JsonCodeDisplay data={transaction.body} floatingCopyButton />
               </dd>
             </>
           )}
