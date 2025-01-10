@@ -422,14 +422,20 @@
     "filterByType": "Filter by type",
     "latest": "Latest Transactions",
     "method": {
+      "stakingBurn": "Burn",
       "stakingTransfer": "Transfer",
       "stakingAddEscrow": "Start Delegate",
       "stakingReclaimEscrow": "Start Undelegate",
       "stakingAmendCommissionSchedule": "Amend Commission Schedule",
       "stakingAllow": "Allowance Change",
       "stakingWithdraw": "Continued Delegate",
+      "registryDeregisterEntity": "Deregister Entity",
+      "registryUnfreezeNode": "Registry: Unfreeze Node",
       "roothashExecutorCommit": "Executor Commit",
+      "roothashEvidence": "RootHash Evidence",
+      "roothashSubmitMessage": "RootHash: Submit Message",
       "roothashExecutorProposerTimeout": "Executor Proposer Timeout",
+      "registryProveFreshness": "Registry: Prove Freshness",
       "registryRegisterEntity": "Register Entity",
       "registryRegisterNode": "Register Node",
       "registryRegisterRuntime": "Register Runtime",
@@ -445,6 +451,7 @@
       "consensus": {
         "deposit": "Consensus Deposit",
         "delegate": "Consensus Delegate",
+        "meta": "Consensus Meta",
         "undelegate": "Consensus Undelegate",
         "withdraw": "Consensus Withdraw"
       },
@@ -452,11 +459,27 @@
         "call": "Contract Call",
         "create": "Contract Creation"
       },
+      "keyManager": {
+        "churp": {
+          "apply": "Key Manager: Churp Apply",
+          "confirm": "Key Manager: Churp Confirm",
+          "create": "Key Manager: Churp Create",
+          "update": "Key Manager: Churp Update"
+        },
+        "publishEphemeralSecret": "Key Manager: Publish Ephemeral Secret",
+        "publishMasterSecret": "Key Manager: Publish Master Secret",
+        "updatePolicy": "Key Manager: Update Policy"
+      },
       "rofl": {
         "create": "ROFL Create",
         "register": "ROFL Register",
         "remove": "ROFL Remove",
         "update": "ROFL Update"
+      },
+      "vault": {
+        "authorizeAction": "Vault: Authorize Action",
+        "cancelAction": "Vault: Cancel Action",
+        "create": "Vault: Create"
       }
     }
   },
