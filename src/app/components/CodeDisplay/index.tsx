@@ -1,10 +1,10 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
-import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
 
@@ -13,7 +13,7 @@ type CodeDisplayProps = {
   copyToClipboardValue: string
   label?: string
   extraTopPadding?: boolean
-  withCopyButton?: boolean
+  floatingCopyButton?: boolean
 }
 
 const CodeDisplay: FC<CodeDisplayProps> = ({
@@ -21,23 +21,28 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
   copyToClipboardValue,
   label,
   extraTopPadding,
-  withCopyButton = true,
+  floatingCopyButton = false,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const [isHovering, setIsHovering] = useState(false)
 
   if (!code) {
     return null
   }
 
   return (
-    <>
+    <Box
+      sx={{ flex: 1, position: 'relative' }}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          my: 3,
+          my: floatingCopyButton ? 0 : 3,
           pt: extraTopPadding ? 4 : 0,
         }}
       >
@@ -46,16 +51,17 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
             {label}
           </Typography>
         )}
-        {withCopyButton && (
+        {floatingCopyButton ? (
+          <FloatingCopyToClipboard isVisible={isHovering} value={copyToClipboardValue} />
+        ) : (
           <CopyToClipboard
             value={copyToClipboardValue}
             label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
           />
         )}
       </Box>
-
       <ScrollableDataDisplay data={code} />
-    </>
+    </Box>
   )
 }
 
@@ -83,10 +89,10 @@ const StyledPre = styled('pre')({
 type JsonCodeDisplayProps = {
   data: Record<string, any>
   label?: string
-  withCopyButton?: boolean
+  floatingCopyButton?: boolean
 }
 
-export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, withCopyButton = true }) => {
+export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, floatingCopyButton }) => {
   const formattedJson = JSON.stringify(data, null, 2)
 
   return (
@@ -94,7 +100,7 @@ export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, withCop
       code={<StyledPre>{formattedJson}</StyledPre>}
       copyToClipboardValue={formattedJson}
       label={label}
-      withCopyButton={withCopyButton}
+      floatingCopyButton={floatingCopyButton}
     />
   )
 }
