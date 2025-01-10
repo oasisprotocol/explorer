@@ -16,7 +16,7 @@ import PriceChangeIcon from '@mui/icons-material/PriceChange'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { ConsensusTxMethod } from '../../../oasis-nexus/api'
+import { ConsensusTxMethod, GetConsensusTransactionsParams } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { SelectOptionBase } from '../Select'
 import { exhaustedTypeWarning } from '../../../types/errors'
@@ -378,3 +378,9 @@ export const ConsensusTransactionMethod: FC<ConsensusTransactionMethodProps> = (
 
   return <>{getConsensusTransactionMethod(t, method, truncate)}</>
 }
+
+export type ConsensusTxMethodFilterOption = ConsensusTxMethod | 'any'
+
+export const getConsensusTransactionMethodFilteringParam = (
+  method: ConsensusTxMethodFilterOption,
+): Partial<GetConsensusTransactionsParams> => (method === 'any' ? {} : { method })

@@ -31,6 +31,7 @@ type ConsensusTransactionsProps = {
   limit: number
   pagination: false | TablePaginationProps
   verbose?: boolean
+  filtered: boolean
 }
 
 export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
@@ -40,6 +41,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
   transactions,
   ownAddress,
   verbose = true,
+  filtered,
 }) => {
   const { t } = useTranslation()
 
@@ -142,6 +144,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
       name={t('transactions.latest')}
       isLoading={isLoading}
       pagination={pagination}
+      emptyMessage={filtered ? t('tableSearch.noMatchingResults') : t('account.emptyTransactionList')}
     />
   )
 }

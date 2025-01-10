@@ -19,6 +19,7 @@ const ConsensusListStory: StoryFn = () => {
         limit={100}
         pagination={false}
         transactions={mockedTransactions}
+        filtered={false}
       />
     </Box>
   )
