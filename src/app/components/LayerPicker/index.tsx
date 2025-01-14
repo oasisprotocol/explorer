@@ -13,7 +13,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
-import { scopeFreedom, RouteUtils } from '../../utils/route-utils'
+import { scopeFreedom, RouteUtils, mergeNetworksInLayerSelector } from '../../utils/route-utils'
 import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -109,7 +109,9 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
           <div>
             {
               // Do we need a "back to networks" button ?
-              ((scopeFreedom === 'network-layer' && tabletStep === LayerPickerTabletStep.Layer) || // Stepping back from layers
+              ((scopeFreedom === 'network-layer' &&
+                !mergeNetworksInLayerSelector &&
+                tabletStep === LayerPickerTabletStep.Layer) || // Stepping back from layers
                 (scopeFreedom === 'network' && tabletStep === LayerPickerTabletStep.LayerDetails)) && ( // Stepping back from details, skipping layers
                 <TabletBackButton
                   variant="text"
@@ -146,7 +148,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
       <Divider />
       <StyledContent>
         <Grid container>
-          {scopeFreedom !== 'layer' &&
+          {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
               <Grid xs={12} md={3}>
                 <NetworkMenu

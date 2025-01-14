@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
-import { isScopeHidden, RouteUtils } from '../../utils/route-utils'
+import { isScopeHidden, mergeNetworksInLayerSelector, RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { orderByLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -124,7 +124,9 @@ const getOptionsForNetwork = (network: Network, activeScope?: SearchScope | unde
 export const LayerMenu: FC<LayerMenuProps> = ({ selectedNetwork, selectedScope, setSelectedScope }) => {
   const activeScope = useScopeParam()!
   const [hoveredScope, setHoveredScope] = useState<undefined | SearchScope>()
-  const options = getOptionsForNetwork(selectedNetwork ?? activeScope.network)
+  const options = mergeNetworksInLayerSelector
+    ? RouteUtils.getVisibleScopes(activeScope).map(scope => ({ scope, enabled: true }))
+    : getOptionsForNetwork(selectedNetwork ?? activeScope.network, activeScope)
 
   return (
     <MenuList>

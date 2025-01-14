@@ -20,6 +20,7 @@ import { getNameForScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { mergeNetworksInLayerSelector } from '../../utils/route-utils'
 
 type LayerDetailsContent = {
   description: string
@@ -154,6 +155,7 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
   const { handleConfirm, selectedScope } = props
   const isOutOfDate = useRuntimeFreshness(selectedScope).outOfDate
   const details = getDetails(t)[selectedScope.network]?.[selectedScope.layer]
+  const networkNames = getNetworkNames(t)
 
   return (
     <LayerDetailsSection
@@ -162,6 +164,13 @@ const RuntimeDetails: FC<LayerDetailsProps> = props => {
       isOutOfDate={isOutOfDate}
       selectedScope={selectedScope}
     >
+      {mergeNetworksInLayerSelector && (
+        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+          {t('layerPicker.hostedOn', {
+            network: networkNames[selectedScope.network],
+          })}
+        </Typography>
+      )}
       {details?.description && (
         <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
           {details.description}
