@@ -77,7 +77,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
       </StyledListTitleWithAvatar>
       <dd>
         <AccountLink
-          showAddressAsName
+          showOnlyAddress
           scope={account}
           address={address!}
           highlightedPartOfName={highlightedPartOfName}

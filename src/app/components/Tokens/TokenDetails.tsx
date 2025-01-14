@@ -60,7 +60,7 @@ export const TokenDetails: FC<{
       <dd>
         <span>
           <AccountLink
-            showAddressAsName
+            showOnlyAddress
             scope={token}
             address={token.eth_contract_addr ?? token.contract_addr}
           />

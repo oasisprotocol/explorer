@@ -45,7 +45,12 @@ const WithTypographyAndLink: FC<{
 }
 
 interface Props {
-  showAddressAsName?: boolean
+  /**
+   * Should only show the address, never a name
+   *
+   * (Use this in situations when the name is already on the screen for some reason.)
+   */
+  showOnlyAddress?: boolean
   scope: SearchScope
   address: string
 
@@ -80,7 +85,7 @@ interface Props {
 }
 
 export const AccountLink: FC<Props> = ({
-  showAddressAsName,
+  showOnlyAddress,
   scope,
   address,
   alwaysTrim,
@@ -95,7 +100,7 @@ export const AccountLink: FC<Props> = ({
     // isError, // Use this to indicate that we have failed to load the name for this account
   } = useAccountMetadata(scope, address)
   const accountName = accountMetadata?.name // TODO: we should also use the description
-  const showAccountName = !showAddressAsName && accountName
+  const showAccountName = !showOnlyAddress && !!accountName
   const to = RouteUtils.getAccountRoute(scope, address)
 
   const extraTooltipWithIcon = extraTooltip ? (
