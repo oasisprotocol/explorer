@@ -19,6 +19,8 @@ type PontusXAccountsMetadata = {
   list: AccountMetadata[]
 }
 
+export const pontusXLayers: Layer[] = [Layer.pontusxtest, Layer.pontusxdev, Layer.sapphire]
+
 const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> => {
   const response = await axios.get(DATA_SOURCE_URL)
   if (response.status !== 200) throw new Error("Couldn't load names")
