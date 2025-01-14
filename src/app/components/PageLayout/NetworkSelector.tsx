@@ -10,8 +10,9 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { LayerPicker } from './../LayerPicker'
-import { fixedLayer, RouteUtils } from '../../utils/route-utils'
+import { fixedLayer, fixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
+import { SearchScope } from '../../../types/searchScope'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   marginLeft: `-${theme.spacing(1)}`,
@@ -75,16 +76,16 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
       <LayerPicker
         open={openDrawer}
         onClose={handleDrawerClose}
-        onConfirm={(network: Network, layer: Layer) => {
+        onConfirm={(scope: SearchScope) => {
           handleDrawerClose()
-          navigate(RouteUtils.getDashboardRoute({ network, layer }))
+          navigate(RouteUtils.getDashboardRoute(scope))
         }}
         isOutOfDate={isOutOfDate}
       />
       {!isMobile && (
         <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
-      {!fixedLayer && !isTablet && network !== Network.mainnet && (
+      {!fixedNetwork && !fixedLayer && !isTablet && network !== Network.mainnet && (
         <StyledBox>
           <Typography
             component="span"

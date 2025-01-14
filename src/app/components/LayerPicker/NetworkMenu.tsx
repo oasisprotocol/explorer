@@ -29,7 +29,8 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
   const { t } = useTranslation()
   const labels = getNetworkNames(t)
   const icons = getNetworkIcons()
-  const activeNetworkSelection = network === selectedNetwork
+  const isSelected = network === selectedNetwork
+  const isActive = network === activeNetwork
 
   return (
     <MenuItem
@@ -40,8 +41,8 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       onMouseLeave={() => {
         setHoveredNetwork(undefined)
       }}
-      selected={activeNetworkSelection}
-      tabIndex={activeNetworkSelection ? 0 : -1}
+      selected={isSelected}
+      tabIndex={isSelected ? 0 : -1}
       onClick={() => {
         setSelectedNetwork(network)
       }}
@@ -49,12 +50,12 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       <ListItemIcon>{icons[network]}</ListItemIcon>
       <ListItemText>
         {labels[network]}
-        {activeNetwork === network && (
+        {isActive && (
           <Typography
             component="span"
             sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
           >
-            {t('layerPicker.selected')}
+            {t('layerPicker.active')}
           </Typography>
         )}
       </ListItemText>

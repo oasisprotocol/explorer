@@ -8,7 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
-import { Layer } from '../../../oasis-nexus/api'
+import { SearchScope } from '../../../types/searchScope'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
@@ -21,7 +21,7 @@ import { MobileNetworkButton } from '../PageLayout/NetworkButton'
 
 type LayerPickerProps = {
   onClose: () => void
-  onConfirm: (network: Network, layer: Layer) => void
+  onConfirm: (scope: SearchScope) => void
   open: boolean
   isOutOfDate: boolean | undefined
 }
@@ -84,17 +84,20 @@ enum LayerPickerTabletStep {
 const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose, onConfirm }) => {
   const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
-  const { network, layer } = useRequiredScopeParam()
-  const [selectedLayer, setSelectedLayer] = useState<Layer>(layer)
-  const [selectedNetwork, setSelectedNetwork] = useState<Network>(network)
+  const activeScope = useRequiredScopeParam()
+  const [selectedScope, setSelectedScope] = useState<SearchScope>(activeScope)
+  const [selectedNetwork, setSelectedNetwork] = useState<Network>(activeScope.network)
   const [tabletStep, setTabletStep] = useState<LayerPickerTabletStep>(LayerPickerTabletStep.LayerDetails)
   const selectNetwork = (newNetwork: Network) => {
     const enabledLayers = RouteUtils.getAllLayersForNetwork(newNetwork).enabled
-    const targetLayer = enabledLayers.includes(selectedLayer) ? selectedLayer : enabledLayers[0]
+    const targetScope = {
+      network: newNetwork,
+      layer: enabledLayers.includes(selectedScope.layer) ? selectedScope.layer : enabledLayers[0],
+    }
     setSelectedNetwork(newNetwork)
-    setSelectedLayer(targetLayer)
+    setSelectedScope(targetScope)
   }
-  const handleConfirm = () => onConfirm(selectedNetwork, selectedLayer)
+  const handleConfirm = () => onConfirm(selectedScope)
 
   return (
     <StyledLayerPickerContent>
@@ -132,7 +135,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 </TabletBackButton>
               )}
           </div>
-          <MobileNetworkButton isOutOfDate={isOutOfDate} network={network} layer={layer} onClick={onClose} />
+          <MobileNetworkButton
+            isOutOfDate={isOutOfDate}
+            network={activeScope.network}
+            layer={activeScope.layer}
+            onClick={onClose}
+          />
         </TabletActionBar>
       )}
       <Divider />
@@ -142,7 +150,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
               <Grid xs={12} md={3}>
                 <NetworkMenu
-                  activeNetwork={network}
+                  activeNetwork={activeScope.network}
                   selectedNetwork={selectedNetwork}
                   setSelectedNetwork={network => {
                     selectNetwork(network)
@@ -159,12 +167,10 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
               <Grid xs={12} md={3}>
                 <LayerMenu
-                  activeLayer={layer}
-                  network={network}
-                  selectedLayer={selectedLayer}
                   selectedNetwork={selectedNetwork}
-                  setSelectedLayer={layer => {
-                    setSelectedLayer(layer)
+                  selectedScope={selectedScope}
+                  setSelectedScope={scope => {
+                    setSelectedScope(scope)
                     setTabletStep(LayerPickerTabletStep.LayerDetails)
                   }}
                 />
@@ -174,9 +180,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             <Grid xs={12} md={6}>
               <LayerDetails
                 handleConfirm={handleConfirm}
-                selectedLayer={selectedLayer}
-                selectedNetwork={selectedNetwork}
-                network={selectedNetwork}
+                selectedScope={selectedScope}
                 isOutOfDate={isOutOfDate}
               />
             </Grid>
@@ -189,7 +193,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
           </Button>
 
           <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
-            {selectedNetwork === network && selectedLayer === layer
+            {selectedScope.network === activeScope.network && selectedScope.layer === activeScope.layer
               ? t('layerPicker.goToDashboard')
               : t('common.select')}
           </Button>
