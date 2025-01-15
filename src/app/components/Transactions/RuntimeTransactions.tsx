@@ -82,7 +82,11 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
         ...(verbose && canHaveEncryption
           ? [
               {
-                content: <TransactionEncryptionStatus envelope={transaction.encryption_envelope} />,
+                content: (
+                  <TransactionEncryptionStatus
+                    envelope={transaction.encryption_envelope ?? transaction.oasis_encryption_envelope}
+                  />
+                ),
                 key: 'encrypted',
               },
             ]

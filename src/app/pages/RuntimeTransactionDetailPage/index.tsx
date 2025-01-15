@@ -100,6 +100,7 @@ export const RuntimeTransactionDetailView: FC<{
   // @ts-expect-error Ignore index type error
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
+  const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
 
   return (
     <>
@@ -154,7 +155,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('transactions.encryption.format')}</dt>
           <dd>
-            <TransactionEncryptionStatus envelope={transaction.encryption_envelope} withText={true} />
+            <TransactionEncryptionStatus envelope={envelope} withText={true} />
           </dd>
 
           <dt>{t('common.timestamp')}</dt>
@@ -259,7 +260,7 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          {!transaction.encryption_envelope && transaction.body?.init_code && (
+          {!envelope && transaction.body?.init_code && (
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
@@ -268,55 +269,55 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          {transaction.encryption_envelope && (
+          {envelope && (
             <>
-              {transaction.encryption_envelope.public_key !== undefined && (
+              {envelope.public_key !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.publicKey')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {transaction.encryption_envelope.public_key}
+                      {envelope.public_key}
                     </Typography>
                   </dd>
                 </>
               )}
 
-              {transaction.encryption_envelope.data_nonce !== undefined && (
+              {envelope.data_nonce !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.dataNonce')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {transaction.encryption_envelope.data_nonce}
+                      {envelope.data_nonce}
                     </Typography>
                   </dd>
                 </>
               )}
 
-              {transaction.encryption_envelope.data !== undefined && (
+              {envelope.data !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.encryptedData')}</dt>
                   <dd>
-                    <LongDataDisplay data={transaction.encryption_envelope.data} />
+                    <LongDataDisplay data={envelope.data} />
                   </dd>
                 </>
               )}
 
-              {transaction.encryption_envelope.result_nonce !== undefined && (
+              {envelope.result_nonce !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.resultNonce')}</dt>
                   <dd>
                     <Typography variant="mono" sx={{ fontWeight: 400 }}>
-                      {transaction.encryption_envelope.result_nonce}
+                      {envelope.result_nonce}
                     </Typography>
                   </dd>
                 </>
               )}
 
-              {transaction.encryption_envelope.result !== undefined && (
+              {envelope.result !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.encryptedResult')}</dt>
                   <dd>
-                    <LongDataDisplay data={transaction.encryption_envelope.result} fontWeight={400} />
+                    <LongDataDisplay data={envelope.result} fontWeight={400} />
                   </dd>
                 </>
               )}
