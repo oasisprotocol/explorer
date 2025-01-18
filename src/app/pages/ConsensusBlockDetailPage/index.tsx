@@ -4,7 +4,7 @@ import { useHref, useOutletContext, useParams } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Block, Layer, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
+import { Block, EntityMetadata, Layer, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -19,6 +19,7 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimmer'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { eventsContainerId } from './ConsensusBlockEventsCard'
+import { ValidatorLink } from '../../components/Validators/ValidatorLink'
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean
@@ -132,6 +133,19 @@ export const ConsensusBlockDetailView: FC<{
         </>
       )}
 
+      {!!block.proposer?.entity_address && (
+        <>
+          <dt>{t('common.proposer')}</dt>
+          <dd>
+            <ValidatorLink
+              name={(block.proposer?.entity_metadata as EntityMetadata)?.name}
+              address={block.proposer?.entity_address}
+              alwaysTrim
+              network={block.network}
+            />
+          </dd>
+        </>
+      )}
       <dt>{t('common.timestamp')}</dt>
       <dd>{formattedTime}</dd>
 
