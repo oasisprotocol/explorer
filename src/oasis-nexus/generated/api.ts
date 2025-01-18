@@ -147,6 +147,15 @@ limit?: number;
 offset?: number;
 };
 
+export type GetRuntimeEvmTokensSortBy = typeof GetRuntimeEvmTokensSortBy[keyof typeof GetRuntimeEvmTokensSortBy];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetRuntimeEvmTokensSortBy = {
+  total_holders: 'total_holders',
+  market_cap: 'market_cap',
+} as const;
+
 export type GetRuntimeEvmTokensParams = {
 /**
  * The maximum numbers of items to return.
@@ -162,6 +171,12 @@ offset?: number;
  * A filter on the name, the name or symbol must contain this value as a substring.
  */
 name?: string;
+/**
+ * The field to sort the tokens by.
+If unset, the tokens will be sorted by number of holders.
+
+ */
+sort_by?: GetRuntimeEvmTokensSortBy;
 };
 
 export type GetRuntimeEventsParams = {
@@ -269,6 +284,10 @@ best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
 
  */
 rel?: EthOrOasisAddress;
+/**
+ * A filter on the runtime transaction method.
+ */
+method?: string;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -614,7 +633,7 @@ hash?: string;
 /**
  * A filter on the proposer of the block.
  */
-proposed_by?: string;
+proposed_by?: StakingAddress;
 };
 
 /**
@@ -1314,6 +1333,46 @@ export interface ProposalTarget {
 }
 
 /**
+ * A governance proposal.
+
+ */
+export interface Proposal {
+  /** The proposal to cancel, if this proposal proposes
+cancelling an existing proposal.
+ */
+  cancels?: number;
+  /** The epoch at which voting for this proposal will close. */
+  closes_at: number;
+  /** The epoch at which this proposal was created. */
+  created_at: number;
+  /** The deposit attached to this proposal. */
+  deposit: TextBigInt;
+  /** The (optional) description of the proposal. */
+  description?: string;
+  /** The epoch at which the proposed upgrade will happen. */
+  epoch?: number;
+  /** The name of the upgrade handler. */
+  handler?: string;
+  /** The unique identifier of the proposal. */
+  id: number;
+  /** The number of invalid votes for this proposal, after tallying.
+ */
+  invalid_votes: TextBigInt;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
+  state: ProposalState;
+  /** The staking address of the proposal submitter. */
+  submitter: string;
+  target?: ProposalTarget;
+  /** The (optional) title of the proposal. */
+  title?: string;
+}
+
+/**
  * A list of governance proposals.
 
  */
@@ -1859,6 +1918,9 @@ Present only for events of type `roothash.*` except for
 `roothash.execution_discrepancy` before Eden.
  */
   roothash_runtime_round?: number;
+  /** The second-granular consensus time of this event's block.
+ */
+  timestamp?: string;
   /** Hash of this event's originating transaction.
 Absent if the event did not originate from a transaction.
  */
@@ -2149,46 +2211,6 @@ export type Address = string;
  * @pattern ^-?[0-9]+$
  */
 export type TextBigInt = string;
-
-/**
- * A governance proposal.
-
- */
-export interface Proposal {
-  /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal.
- */
-  cancels?: number;
-  /** The epoch at which voting for this proposal will close. */
-  closes_at: number;
-  /** The epoch at which this proposal was created. */
-  created_at: number;
-  /** The deposit attached to this proposal. */
-  deposit: TextBigInt;
-  /** The (optional) description of the proposal. */
-  description?: string;
-  /** The epoch at which the proposed upgrade will happen. */
-  epoch?: number;
-  /** The name of the upgrade handler. */
-  handler?: string;
-  /** The unique identifier of the proposal. */
-  id: number;
-  /** The number of invalid votes for this proposal, after tallying.
- */
-  invalid_votes: TextBigInt;
-  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
-  parameters_change?: unknown;
-  /** The name of the module whose parameters are to be changed
-by this 'parameters_change' proposal.
- */
-  parameters_change_module?: string;
-  state: ProposalState;
-  /** The staking address of the proposal submitter. */
-  submitter: string;
-  target?: ProposalTarget;
-  /** The (optional) title of the proposal. */
-  title?: string;
-}
 
 /**
  * An Oasis-style (bech32) address.
