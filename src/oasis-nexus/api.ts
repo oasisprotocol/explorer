@@ -281,6 +281,11 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                // TODO: this workaround can be removed as soon as all deployed Nexus instances
+                // have been updated to at least v0.5.3
+                signers: tx.signers ?? [
+                  { address: tx.sender_0, address_eth: tx.sender_0_eth, nonce: tx.nonce_0 },
+                ],
                 to_eth: tx.to_eth || fallbackEthAddress(tx.to, params?.rel),
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
@@ -379,6 +384,11 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
             transactions: data.transactions.map(tx => {
               return {
                 ...tx,
+                // TODO: this workaround can be removed as soon as all deployed Nexus instances
+                // have been updated to at least v0.5.3
+                signers: tx.signers ?? [
+                  { address: tx.sender_0, address_eth: tx.sender_0_eth, nonce: tx.nonce_0 },
+                ],
                 eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
                 // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
                 fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
