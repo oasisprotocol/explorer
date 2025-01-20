@@ -286,6 +286,13 @@ best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
 rel?: EthOrOasisAddress;
 /**
  * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
  */
 method?: string;
 };
@@ -2124,7 +2131,7 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   /** Number of transactions in the block. */
   num_transactions: number;
   /** The entity that proposed this block. */
-  proposer?: EntityInfo;
+  proposer: EntityInfo;
   /** A list of the entities that signed the block. */
   signers?: EntityInfo[];
   /** The size limit for the block in bytes.
