@@ -913,6 +913,17 @@ that represent a smart contract on EVM.
   stats: AccountStats;
 }
 
+export interface RuntimeTransactionSigner {
+  /** The Oasis address of the transaction signer.
+ */
+  address: Address;
+  /** The Ethereum address of this transaction signer.
+ */
+  address_eth?: string;
+  /** The transaction signer nonce. */
+  nonce: number;
+}
+
 export interface RuntimeTransactionEncryptionEnvelope {
   /** The base64-encoded encrypted transaction data. */
   data?: string;
@@ -1021,7 +1032,12 @@ In practice, Nexus currently expects only the following methods:
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
-  /** The nonce used with this transaction's 0th signer, to prevent replay. */
+  /**
+   * The nonce used with this transaction's 0th signer, to prevent replay.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
   nonce_0: number;
   /** The data relevant to the Oasis-style encrypted transaction.
 Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
@@ -1030,15 +1046,24 @@ which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hyb
   oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
   /** The block round at which this transaction was executed. */
   round: number;
-  /** The Oasis address of this transaction's 0th signer.
+  /**
+   * The Oasis address of this transaction's 0th signer.
 Unlike Ethereum, Oasis natively supports multiple-signature transactions.
 However, the great majority of transactions only have a single signer in practice.
-Retrieving the other signers is currently not supported by this API.
- */
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
   sender_0: Address;
-  /** The Ethereum address of this transaction's 0th signer.
- */
+  /**
+   * The Ethereum address of this transaction's 0th signer.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
   sender_0_eth?: string;
+  /** The signers of this transaction. */
+  signers: RuntimeTransactionSigner[];
   /** The total byte size of the transaction. */
   size: number;
   /** Whether this transaction successfully executed.
@@ -1307,8 +1332,6 @@ export type ProposalVotesAllOf = {
   votes: ProposalVote[];
 };
 
-export type ProposalVotes = List & ProposalVotesAllOf;
-
 /**
  * The state of the proposal.
  */
@@ -1330,46 +1353,6 @@ export interface ProposalTarget {
   consensus_protocol?: string;
   runtime_committee_protocol?: string;
   runtime_host_protocol?: string;
-}
-
-/**
- * A governance proposal.
-
- */
-export interface Proposal {
-  /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal.
- */
-  cancels?: number;
-  /** The epoch at which voting for this proposal will close. */
-  closes_at: number;
-  /** The epoch at which this proposal was created. */
-  created_at: number;
-  /** The deposit attached to this proposal. */
-  deposit: TextBigInt;
-  /** The (optional) description of the proposal. */
-  description?: string;
-  /** The epoch at which the proposed upgrade will happen. */
-  epoch?: number;
-  /** The name of the upgrade handler. */
-  handler?: string;
-  /** The unique identifier of the proposal. */
-  id: number;
-  /** The number of invalid votes for this proposal, after tallying.
- */
-  invalid_votes: TextBigInt;
-  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
-  parameters_change?: unknown;
-  /** The name of the module whose parameters are to be changed
-by this 'parameters_change' proposal.
- */
-  parameters_change_module?: string;
-  state: ProposalState;
-  /** The staking address of the proposal submitter. */
-  submitter: string;
-  target?: ProposalTarget;
-  /** The (optional) title of the proposal. */
-  title?: string;
 }
 
 /**
@@ -2179,6 +2162,8 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
+export type ProposalVotes = List & ProposalVotesAllOf;
+
 export type TransactionList = List & TransactionListAllOf;
 
 export type DebondingDelegationList = List & DebondingDelegationListAllOf;
@@ -2211,6 +2196,46 @@ export type Address = string;
  * @pattern ^-?[0-9]+$
  */
 export type TextBigInt = string;
+
+/**
+ * A governance proposal.
+
+ */
+export interface Proposal {
+  /** The proposal to cancel, if this proposal proposes
+cancelling an existing proposal.
+ */
+  cancels?: number;
+  /** The epoch at which voting for this proposal will close. */
+  closes_at: number;
+  /** The epoch at which this proposal was created. */
+  created_at: number;
+  /** The deposit attached to this proposal. */
+  deposit: TextBigInt;
+  /** The (optional) description of the proposal. */
+  description?: string;
+  /** The epoch at which the proposed upgrade will happen. */
+  epoch?: number;
+  /** The name of the upgrade handler. */
+  handler?: string;
+  /** The unique identifier of the proposal. */
+  id: number;
+  /** The number of invalid votes for this proposal, after tallying.
+ */
+  invalid_votes: TextBigInt;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
+  state: ProposalState;
+  /** The staking address of the proposal submitter. */
+  submitter: string;
+  target?: ProposalTarget;
+  /** The (optional) title of the proposal. */
+  title?: string;
+}
 
 /**
  * An Oasis-style (bech32) address.
