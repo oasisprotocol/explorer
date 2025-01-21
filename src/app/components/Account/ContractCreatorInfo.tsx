@@ -25,7 +25,7 @@ const TxSender: FC<{ scope: SearchScope; txHash: string; alwaysTrim?: boolean }>
   }
   const query = useGetRuntimeTransactionsTxHash(scope.network, scope.layer, txHash)
   const tx = query.data?.data.transactions[0]
-  const senderAddress = tx?.sender_0_eth || tx?.sender_0
+  const senderAddress = tx?.signers[0].address_eth ?? tx?.signers[0].address
 
   return query.isLoading ? (
     <Skeleton

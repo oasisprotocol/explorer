@@ -72,7 +72,9 @@ export const RuntimeTransactionDetailPage: FC = () => {
           tokenPrices={tokenPrices}
         />
       </SubPageCard>
-      <DappBanner scope={scope} ethAddress={transaction?.sender_0_eth} />
+      {(transaction?.signers ?? []).map((signer, index) => (
+        <DappBanner key={`signer-${index}`} scope={scope} ethAddress={signer.address_eth} />
+      ))}
       <DappBanner scope={scope} ethAddress={transaction?.to_eth} />
       {transaction && (
         <SubPageCard title={t('common.events')}>
@@ -161,15 +163,25 @@ export const RuntimeTransactionDetailView: FC<{
           <dt>{t('common.timestamp')}</dt>
           <dd>{formattedTimestamp}</dd>
 
-          {(transaction?.sender_0 || transaction?.sender_0_eth) && (
+          {!!transaction?.signers.length && (
             <>
               <dt>{t('common.from')}</dt>
-              <dd>
-                <AccountLink
-                  scope={transaction}
-                  address={(transaction?.sender_0_eth ?? transaction?.sender_0) as string}
-                />
-                <CopyToClipboard value={transaction?.sender_0_eth ?? transaction?.sender_0} />
+              <dd
+                style={{
+                  display: 'block',
+                }}
+              >
+                {(transaction?.signers ?? []).map((signer, index) => (
+                  <>
+                    <AccountLink
+                      key={`signer-${index}`}
+                      scope={transaction}
+                      address={(signer.address_eth ?? signer.address) as string}
+                    />
+                    <CopyToClipboard value={signer.address_eth ?? signer.address} />
+                    <br />
+                  </>
+                ))}
               </dd>
             </>
           )}
@@ -239,7 +251,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.nonce')}</dt>
           <dd>
-            <>{transaction.nonce_0.toLocaleString()}</>
+            <>{transaction.signers[0].nonce.toLocaleString()}</>
           </dd>
 
           {!!transaction.body?.data && (

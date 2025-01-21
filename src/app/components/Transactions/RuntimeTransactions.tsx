@@ -126,10 +126,11 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                     <AccountLink
                       labelOnly={
                         !!ownAddress &&
-                        (transaction.sender_0_eth === ownAddress || transaction.sender_0 === ownAddress)
+                        (transaction.signers[0].address_eth === ownAddress ||
+                          transaction.signers[0].address === ownAddress)
                       }
                       scope={transaction}
-                      address={transaction.sender_0_eth || transaction.sender_0}
+                      address={transaction.signers[0].address_eth ?? transaction.signers[0].address}
                       alwaysTrim
                     />
                     {targetAddress && <TransferIcon />}
