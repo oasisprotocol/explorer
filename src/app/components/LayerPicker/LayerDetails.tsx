@@ -16,10 +16,11 @@ import { Link as RouterLink } from 'react-router-dom'
 import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
-import { getNameForScope } from '../../../types/searchScope'
+import { getNameForScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { mergeNetworksInLayerSelector } from '../../utils/route-utils'
 
 type LayerDetailsContent = {
   description: string
@@ -115,9 +116,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 
 type LayerDetailsProps = {
   handleConfirm: () => void
-  network: Network
-  selectedLayer: Layer
-  selectedNetwork: Network
+  selectedScope: SearchScope
   isOutOfDate: boolean | undefined
 }
 
@@ -125,22 +124,24 @@ type LayerDetailsProps = {
 const contentMinHeight = '270px'
 
 export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
-  props.selectedLayer === Layer.consensus ? <ConsensusDetails {...props} /> : <RuntimeDetails {...props} />
+  props.selectedScope.layer === Layer.consensus ? (
+    <ConsensusDetails {...props} />
+  ) : (
+    <RuntimeDetails {...props} />
+  )
 
-const ConsensusDetails: FC<LayerDetailsProps & { selectedNetwork: Network }> = props => {
+const ConsensusDetails: FC<LayerDetailsProps> = props => {
   const { t } = useTranslation()
-  const { handleConfirm, network, selectedLayer, selectedNetwork } = props
-  const isOutOfDate = useConsensusFreshness(network).outOfDate
-  const isLocal = selectedNetwork === 'localnet'
+  const { handleConfirm, selectedScope } = props
+  const isOutOfDate = useConsensusFreshness(selectedScope.network).outOfDate
+  const isLocal = selectedScope.network === 'localnet'
 
   return (
     <LayerDetailsSection
       docsUrl={isLocal ? undefined : docs.consensus}
       handleConfirm={handleConfirm}
       isOutOfDate={isOutOfDate}
-      selectedLayer={selectedLayer}
-      selectedNetwork={selectedNetwork}
-      network={network}
+      selectedScope={selectedScope}
     >
       <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
         {t('layerPicker.consensus')}
@@ -151,19 +152,25 @@ const ConsensusDetails: FC<LayerDetailsProps & { selectedNetwork: Network }> = p
 
 const RuntimeDetails: FC<LayerDetailsProps> = props => {
   const { t } = useTranslation()
-  const { handleConfirm, network, selectedLayer, selectedNetwork } = props
-  const isOutOfDate = useRuntimeFreshness({ network, layer: selectedLayer }).outOfDate
-  const details = getDetails(t)[network]?.[selectedLayer]
+  const { handleConfirm, selectedScope } = props
+  const isOutOfDate = useRuntimeFreshness(selectedScope).outOfDate
+  const details = getDetails(t)[selectedScope.network]?.[selectedScope.layer]
+  const networkNames = getNetworkNames(t)
 
   return (
     <LayerDetailsSection
       docsUrl={details?.docs}
       handleConfirm={handleConfirm}
       isOutOfDate={isOutOfDate}
-      selectedLayer={selectedLayer}
-      selectedNetwork={selectedNetwork}
-      network={network}
+      selectedScope={selectedScope}
     >
+      {mergeNetworksInLayerSelector && (
+        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+          {t('layerPicker.hostedOn', {
+            network: networkNames[selectedScope.network],
+          })}
+        </Typography>
+      )}
       {details?.description && (
         <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
           {details.description}
@@ -216,13 +223,12 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
   docsUrl,
   handleConfirm,
   isOutOfDate,
-  network,
-  selectedLayer,
+  selectedScope,
 }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const { isTablet } = useScreenSize()
-  const labels = getNetworkNames(t)
+  const networkNames = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
 
@@ -238,7 +244,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
             borderStyle: 'solid',
           }}
         >
-          {icons[network]}
+          {icons[selectedScope.network]}
         </Circle>
       </Box>
       <Box>
@@ -250,7 +256,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           }}
         >
           <StyledButton variant="text" onClick={handleConfirm}>
-            {getNameForScope(t, { network, layer: selectedLayer })}
+            {getNameForScope(t, selectedScope)}
           </StyledButton>
           <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
         </Box>
@@ -270,8 +276,8 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
             }}
           >
             {t('layerPicker.readMore', {
-              layer: layerLabels[selectedLayer],
-              network: labels[network],
+              layer: layerLabels[selectedScope.layer],
+              network: networkNames[selectedScope.network],
             })}
             <OpenInNewIcon sx={{ fontSize: '16px' }} />
           </Link>

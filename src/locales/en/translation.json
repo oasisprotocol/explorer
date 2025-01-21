@@ -544,10 +544,11 @@
     "consensus": "The consensus layer is a scalable, high-throughput, secure, proof-of-stake consensus run by a decentralized set of validator nodes.",
     "goToDashboard": "Go to dashboard",
     "hex": "Hex: {{ id }}",
+    "hostedOn": "Hosted on {{ network }}",
     "readMore": "Read more about {{ layer }} on {{ network }} in Oasis Docs",
     "rpcHttp": "RPC HTTP endpoint: {{ endpoint }}",
     "rpcWebSockets": "RPC WebSockets endpoint: {{ endpoint }}",
-    "selected": "(active)",
+    "active": "(active)",
     "viewNetworks": "View Networks",
     "viewLayers": "View layers",
     "mainnet": {

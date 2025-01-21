@@ -72,6 +72,8 @@ export const hiddenScopes: SearchScope[] = [
   // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
 ]
 
+export const mergeNetworksInLayerSelector = false
+
 export const isScopeHidden = (scope: SearchScope): boolean =>
   !!hiddenScopes.find(s => s.network === scope.network && s.layer === scope.layer)
 
