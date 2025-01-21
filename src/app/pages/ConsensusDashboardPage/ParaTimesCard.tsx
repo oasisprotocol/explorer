@@ -8,12 +8,13 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { styled } from '@mui/material/styles'
 import { Layer, Runtime } from '../../../oasis-nexus/api'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
-import { isNotOnHiddenLayer, RouteUtils } from '../../utils/route-utils'
+import { isNotInHiddenScope, RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { EnabledRuntimePreview, DisabledRuntimePreview } from './RuntimePreview'
+import { Network } from '../../../types/network'
 
-function shouldIncludeLayer(layer: Layer) {
-  return layer !== Layer.consensus && isNotOnHiddenLayer({ layer })
+function shouldIncludeLayer(network: Network, layer: Layer) {
+  return layer !== Layer.consensus && isNotInHiddenScope({ network, layer })
 }
 
 const StyledInnerGrid = styled(Grid)(({ theme }) => ({
@@ -40,8 +41,8 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
   const { enabled, disabled } = RouteUtils.getAllLayersForNetwork(network)
-  const enabledRuntimes = enabled.filter(shouldIncludeLayer) as Runtime[]
-  const disabledRuntimes = disabled.filter(shouldIncludeLayer) as Runtime[]
+  const enabledRuntimes = enabled.filter(layer => shouldIncludeLayer(network, layer)) as Runtime[]
+  const disabledRuntimes = disabled.filter(layer => shouldIncludeLayer(network, layer)) as Runtime[]
   const runtimesNumber = enabledRuntimes.length + disabledRuntimes.length
   const [firstEnabledRuntime, ...restEnabledRuntimes] = enabledRuntimes
   const spaceForSecondaryParaTimes = enabledRuntimes.length > 2

@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
-import { isLayerHidden, RouteUtils } from '../../utils/route-utils'
+import { isScopeHidden, RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { orderByLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -113,7 +113,11 @@ export const LayerMenu: FC<LayerMenuProps> = ({
   const [hoveredLayer, setHoveredLayer] = useState<undefined | Layer>()
   const options = Object.values(Layer)
     // Don't show hidden layers, unless we are already viewing them.
-    .filter(layer => !isLayerHidden(layer) || layer === currentScope?.layer)
+    .filter(
+      layer =>
+        !isScopeHidden({ network: selectedNetwork, layer }) ||
+        (layer === currentScope?.layer && selectedNetwork === currentScope?.network),
+    )
     .map(layer => ({
       layer,
       enabled: RouteUtils.getAllLayersForNetwork(selectedNetwork || network).enabled.includes(layer),

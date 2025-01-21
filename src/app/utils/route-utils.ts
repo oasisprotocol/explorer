@@ -2,12 +2,11 @@ import { LoaderFunctionArgs } from 'react-router-dom'
 import { isValidProposalId, isValidTxHash, isValidTxOasisHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
-import { EvmTokenType, Layer } from '../../oasis-nexus/api'
+import { EvmTokenType, HasScope, Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { SearchScope } from '../../types/searchScope'
 import { specialScopePaths } from '../../config'
 import { getSearchTermFromRequest } from '../components/Search/search-utils'
-import type { HasLayer } from '../../types/layers'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { orderByLayer } from '../../types/layers'
 
@@ -67,11 +66,16 @@ function invertSpecialScopePaths() {
 
 invertSpecialScopePaths()
 
-export const hiddenLayers: Layer[] = [Layer.pontusxdev]
+export const hiddenScopes: SearchScope[] = [
+  { network: Network.testnet, layer: Layer.pontusxdev },
+  { network: Network.mainnet, layer: Layer.pontusxdev },
+  // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
+]
 
-export const isLayerHidden = (layer: Layer): boolean => hiddenLayers.includes(layer)
+export const isScopeHidden = (scope: SearchScope): boolean =>
+  !!hiddenScopes.find(s => s.network === scope.network && s.layer === scope.layer)
 
-export const isNotOnHiddenLayer = (item: HasLayer) => !isLayerHidden(item.layer)
+export const isNotInHiddenScope = (item: HasScope) => !isScopeHidden(item)
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
@@ -202,7 +206,7 @@ export abstract class RouteUtils {
 
   static getVisibleLayersForNetwork(network: Network, currentScope: SearchScope | undefined): Layer[] {
     return this.getAllLayersForNetwork(network).enabled.filter(
-      layer => !isLayerHidden(layer) || layer === currentScope?.layer,
+      layer => !isScopeHidden({ network, layer }) || layer === currentScope?.layer,
     )
   }
 
@@ -222,7 +226,7 @@ export abstract class RouteUtils {
 
   static getVisibleScopes(currentScope: SearchScope | undefined): SearchScope[] {
     return RouteUtils.getEnabledScopes().filter(
-      ({ network, layer }) => !isLayerHidden(layer) || layer === currentScope?.layer,
+      scope => !isScopeHidden(scope) || scope.layer === currentScope?.layer,
     )
   }
 
