@@ -9,11 +9,11 @@ import { RuntimeAccountDetailsContext } from './index'
 
 export const accountTokenTransfersContainerId = 'transfers'
 
-export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = ({ scope, address, account }) => {
+export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = context => {
   const { t } = useTranslation()
   return (
     <LinkableCardLayout containerId={accountTokenTransfersContainerId} title={t('common.transfers')}>
-      <AccountTokenTransfers scope={scope} address={address} account={account} />
+      <AccountTokenTransfers {...context} />
     </LinkableCardLayout>
   )
 }

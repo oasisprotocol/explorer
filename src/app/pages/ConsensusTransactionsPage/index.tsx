@@ -16,12 +16,22 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import {
+  getConsensusTransactionMethodFilteringParam,
+  ConsensusTxMethodFilterOption,
+} from '../../components/ConsensusTransactionMethod'
+import Box from '@mui/material/Box'
 
 export const ConsensusTransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
+  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
+    deleteParams: ['date'],
+  })
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()
   const enablePolling = offset === 0
@@ -39,6 +49,7 @@ export const ConsensusTransactionsPage: FC = () => {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
       before: enablePolling ? undefined : beforeDate,
+      ...getConsensusTransactionMethodFilteringParam(method),
     },
     {
       query: {
@@ -69,7 +80,7 @@ export const ConsensusTransactionsPage: FC = () => {
   const { isLoading, isFetched, data } = transactionsQuery
 
   const transactions = data?.data.transactions
-  setBeforeDateFromCollection(data?.data.transactions[0].timestamp)
+  setBeforeDateFromCollection(transactions?.[0]?.timestamp)
 
   if (isFetched && pagination.selectedPage > 1 && !transactions?.length) {
     throw AppErrors.PageDoesNotExist
@@ -83,7 +94,21 @@ export const ConsensusTransactionsPage: FC = () => {
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
-        title={t('transactions.latest')}
+        title={
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 6,
+              alignItems: 'center',
+            }}
+          >
+            {t('transactions.latest')}
+            {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
+          </Box>
+        }
+        title2={
+          isMobile ? <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand /> : undefined
+        }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
@@ -101,6 +126,7 @@ export const ConsensusTransactionsPage: FC = () => {
               rowsPerPage: limit,
             }}
             verbose={false}
+            filtered={method !== 'any'}
           />
         )}
 

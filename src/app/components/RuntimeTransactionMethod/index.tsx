@@ -11,13 +11,17 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
-import { RuntimeTransaction } from '../../../oasis-nexus/api'
+import { GetRuntimeTransactionsParams, RuntimeTransaction } from '../../../oasis-nexus/api'
+import { SelectOptionBase } from '../Select'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
+  // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
   switch (method) {
     case undefined:
       // Method may be undefined if the transaction was malformed.
       return t('transactions.method.unavailable')
+    case 'accounts.Transfer':
+      return t('transactions.method.accounts.transfer')
     case 'evm.Call':
       return t('transactions.method.evm.call')
     case 'evm.Create':
@@ -26,8 +30,6 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
       return t('transactions.method.consensus.deposit')
     case 'consensus.Withdraw':
       return t('transactions.method.consensus.withdraw')
-    case 'accounts.Transfer':
-      return t('transactions.method.accounts.transfer')
     case 'consensus.Delegate':
       return t('transactions.method.consensus.delegate')
     case 'consensus.Undelegate':
@@ -44,6 +46,28 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
       return method || t('common.unknown')
   }
 }
+
+const knownRuntimeTxMethods: string[] = [
+  'accounts.Transfer',
+  'evm.Call',
+  'evm.Create',
+  'consensus.Deposit',
+  'consensus.Withdraw',
+  'consensus.Delegate',
+  'consensus.Undelegate',
+  'rofl.Create',
+  'rofl.Register',
+  'rofl.Remove',
+  'rofl.Update',
+]
+
+export const getRuntimeTxMethodOptions = (t: TFunction): SelectOptionBase[] =>
+  knownRuntimeTxMethods.map(
+    (method): SelectOptionBase => ({
+      value: method,
+      label: getRuntimeTransactionLabel(t, method),
+    }),
+  )
 
 /**
  * The method call body. Defined by the runtime.
@@ -116,4 +140,40 @@ export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ tra
   }
 
   return <>{getRuntimeTransactionIcon(transaction.method, label, truncate)}</>
+}
+
+export const getRuntimeTransactionMethodFilteringParam = (
+  method: string,
+): Partial<GetRuntimeTransactionsParams> => {
+  switch (method) {
+    case 'any':
+      return {}
+    case 'accounts.Transfer':
+      // Searching for transfers is tricky, because there are some
+      // transactions which are in fact evm.Calls, but are still
+      // considered to be transfers based on some heuristics.
+      // The Nexus API provides a special value in order to allow searching
+      // for them. Their documentation says:
+      //
+      // 'native_transfers': Returns transactions "likely to be native transfers".
+      // These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+      //
+      // For more details, see the API spec at
+      // https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
+      return { method: 'native_transfers' }
+    case 'evm.Call':
+      // Searching for contract calls is tricky, because some of them
+      // should be classified as transfers. (See above.)
+      // The Nexus API provides a special value for excluding these
+      // from the search. Their documentation says:
+      //
+      // 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+      //
+      // For more details, see the API spec at
+      // https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
+      return { method: 'evm.Call_no_native' }
+    default:
+      // For other (normal) methods, we can simply pass on the wanted method name.
+      return { method }
+  }
 }

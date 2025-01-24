@@ -21,10 +21,13 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { eventsContainerId } from './RuntimeBlockEventsCard'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
 import { SearchScope } from 'types/searchScope'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeBlockDetailsContext = {
   scope: SearchScope
   blockHeight?: number
+  method: string
+  setMethod: (method: string) => void
 }
 
 export const useRuntimeBlockDetailsProps = () => useOutletContext<RuntimeBlockDetailsContext>()
@@ -48,7 +51,10 @@ export const RuntimeBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
-  const context: RuntimeBlockDetailsContext = { scope, blockHeight }
+  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+    deleteParams: ['page'],
+  })
+  const context: RuntimeBlockDetailsContext = { scope, blockHeight, method, setMethod }
 
   return (
     <PageLayout>

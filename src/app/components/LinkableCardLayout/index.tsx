@@ -9,12 +9,13 @@ type LinkableCardLayoutProps = {
   children: ReactNode
   containerId: string
   title: ReactNode
+  action?: ReactNode | undefined
 }
-export const LinkableCardLayout: FC<LinkableCardLayoutProps> = ({ children, containerId, title }) => {
+export const LinkableCardLayout: FC<LinkableCardLayoutProps> = ({ children, containerId, title, action }) => {
   return (
     <Card>
       <LinkableDiv id={containerId}>
-        <CardHeader disableTypography component="h3" title={title} />
+        <CardHeader disableTypography component="h3" title={title} action={action} />
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>{children}</ErrorBoundary>

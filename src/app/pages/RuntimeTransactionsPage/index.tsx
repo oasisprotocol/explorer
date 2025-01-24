@@ -18,6 +18,10 @@ import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
 import { getFiatCurrencyForScope } from '../../../config'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import Box from '@mui/material/Box'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -26,6 +30,9 @@ export const RuntimeTransactionsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
+  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+    deleteParams: ['page'],
+  })
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()
   const enablePolling = offset === 0
@@ -52,6 +59,7 @@ export const RuntimeTransactionsPage: FC = () => {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
       before: enablePolling ? undefined : beforeDate,
+      ...getRuntimeTransactionMethodFilteringParam(method),
     },
     {
       query: {
@@ -83,7 +91,7 @@ export const RuntimeTransactionsPage: FC = () => {
   const { isLoading, isFetched, data } = transactionsQuery
 
   const transactions = data?.data.transactions
-  setBeforeDateFromCollection(data?.data.transactions[0].timestamp)
+  setBeforeDateFromCollection(transactions?.[0]?.timestamp)
 
   if (isFetched && pagination.selectedPage > 1 && !transactions?.length) {
     throw AppErrors.PageDoesNotExist
@@ -97,7 +105,21 @@ export const RuntimeTransactionsPage: FC = () => {
     >
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
-        title={t('transactions.latest')}
+        title={
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            {t('transactions.latest')}
+            {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
+          </Box>
+        }
+        title2={
+          isMobile ? <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand /> : undefined
+        }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
@@ -114,6 +136,7 @@ export const RuntimeTransactionsPage: FC = () => {
               isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: limit,
             }}
+            filtered={method !== 'any'}
           />
         )}
 

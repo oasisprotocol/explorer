@@ -31,6 +31,7 @@ type TransactionsProps = {
   transactions?: TableRuntimeTransaction[]
   ownAddress?: string
   isLoading: boolean
+  filtered: boolean
   limit: number
   pagination: false | TablePaginationProps
   verbose?: boolean
@@ -43,6 +44,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
   transactions,
   ownAddress,
   verbose = true,
+  filtered,
 }) => {
   const { t } = useTranslation()
   // We only want to show encryption status of we are listing transactions
@@ -176,6 +178,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
       name={t('transactions.latest')}
       isLoading={isLoading}
       pagination={pagination}
+      emptyMessage={filtered ? t('tableSearch.noMatchingResults') : t('account.emptyTransactionList')}
     />
   )
 }

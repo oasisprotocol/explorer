@@ -2,7 +2,7 @@ import { Select as SelectUnstyled, SelectProps, selectClasses, SelectRootSlotPro
 import { Option, optionClasses } from '@mui/base/Option'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import {
+import React, {
   ForwardedRef,
   forwardRef,
   memo,
@@ -24,21 +24,44 @@ import { useTranslation } from 'react-i18next'
 import { WithOptionalOwnerState } from '@mui/base/utils'
 import { SelectPopupSlotProps, SelectSlots } from '@mui/base/Select/Select.types'
 import { PopupProps } from '@mui/base/Unstable_Popup'
+import { ButtonTypeMap } from '@mui/material/Button/Button'
+import { ExtendButtonBase } from '@mui/material/ButtonBase'
+import { Theme } from '@mui/material/styles/createTheme'
 
-export const StyledSelectButton = styled(Button)(({ theme }) => ({
+// Props that are not supposed to be passed to the DOM
+const forbiddenProps = ['light', 'ownerState']
+
+// Utility function for filtering out stuff that is now supposed to go to the DOM
+const swallowReactProps = {
+  shouldForwardProp: (prop: string) => !forbiddenProps.includes(prop),
+}
+
+export const StyledSelectButton = styled<ExtendButtonBase<ButtonTypeMap<{ light?: boolean }>>>(
+  Button,
+  swallowReactProps,
+)(({ theme, light }) => ({
   height: '36px',
   minWidth: '135px',
   padding: `0 ${theme.spacing(4)}`,
   borderRadius: '36px',
-  color: COLORS.white,
+  border: light ? '1px solid' : undefined,
+  borderColor: light ? COLORS.grayMediumLight : undefined,
+  color: light ? COLORS.grayDark : COLORS.white,
+  backgroundColor: light ? `${COLORS.white} !important` : undefined,
   textTransform: 'none',
   justifyContent: 'space-between',
   [`&.${selectClasses.focusVisible}`]: {
-    backgroundColor: COLORS.brandExtraDark,
+    backgroundColor: light ? COLORS.white : COLORS.brandExtraDark,
+  },
+  span: {
+    color: light ? COLORS.grayDark : undefined,
   },
 }))
 
-export const StyledSelectListbox = styled('ul')(({ theme }) => ({
+export const StyledSelectListbox = styled(
+  'ul',
+  swallowReactProps,
+)(({ theme, light }: { theme: Theme; light?: boolean }) => ({
   boxSizing: 'border-box',
   padding: theme.spacing(0),
   margin: theme.spacing(3, 0),
@@ -46,11 +69,15 @@ export const StyledSelectListbox = styled('ul')(({ theme }) => ({
   borderRadius: '12px',
   overflow: 'auto',
   outline: 0,
-  background: theme.palette.tertiary.main,
+  background: light ? COLORS.white : theme.palette.tertiary.main,
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+  maxHeight: '50vh',
 }))
 
-export const StyledSelectOption = styled(Option)(({ theme }) => ({
+export const StyledSelectOption = styled(
+  Option,
+  swallowReactProps,
+)(({ theme, light }: { theme: Theme; light?: boolean }) => ({
   display: 'flex',
   alignItems: 'center',
   boxSizing: 'border-box',
@@ -58,13 +85,14 @@ export const StyledSelectOption = styled(Option)(({ theme }) => ({
   height: '36px',
   padding: `0 ${theme.spacing(4)}`,
   cursor: 'default',
-  color: COLORS.white,
+  color: light ? COLORS.grayDark : COLORS.white,
   [`&:hover:not(.${optionClasses.disabled})`]: {
     cursor: 'pointer',
+    backgroundColor: light ? COLORS.grayMediumLight : undefined,
   },
   [`&:hover:not(.${optionClasses.disabled}),
   &.${optionClasses.highlighted}`]: {
-    backgroundColor: COLORS.brandExtraDark,
+    backgroundColor: light ? COLORS.grayMediumLight : COLORS.brandExtraDark,
   },
   [`&.${optionClasses.disabled}`]: {
     backgroundColor: COLORS.lavenderGray,
@@ -74,6 +102,9 @@ export const StyledSelectOption = styled(Option)(({ theme }) => ({
     backgroundColor: 'transparent',
   },
   transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  span: {
+    color: light ? COLORS.grayDark : undefined,
+  },
 }))
 
 const StyledPopup = styled('div')`
@@ -82,13 +113,13 @@ const StyledPopup = styled('div')`
 
 const TertiaryButton = forwardRef(
   (
-    { children, ownerState, ...restProps }: SelectRootSlotProps<object, false>,
+    { children, ownerState, light, ...restProps }: SelectRootSlotProps<object, false> & { light: boolean },
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
     const { t } = useTranslation()
 
     return (
-      <StyledSelectButton {...restProps} ref={ref} color="tertiary">
+      <StyledSelectButton {...restProps} ref={ref} color="tertiary" light={light}>
         <Typography variant="select">{children ? children : t('select.placeholder')}</Typography>
         {ownerState.open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </StyledSelectButton>
@@ -106,6 +137,7 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
   }: SelectProps<TValue, false> & SelectSlots & Partial<SelectPopupSlotProps<TValue, false>>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
+  const { slotProps = {} } = restProps
   const slots: SelectProps<TValue, false>['slots'] = {
     root,
     listbox,
@@ -119,6 +151,7 @@ const CustomSelect = forwardRef(function CustomSelect<TValue extends string | nu
       ref={ref}
       slots={slots}
       slotProps={{
+        ...slotProps,
         popup: {
           placement,
         },
@@ -137,8 +170,12 @@ export interface SelectOptionBase {
   value: string | number
 }
 
-const SelectOption = <T extends SelectOptionBase>({ value, label }: T): ReactElement => (
-  <StyledSelectOption key={value} value={value}>
+const SelectOption = <T extends SelectOptionBase>({
+  value,
+  label,
+  light,
+}: T & { light: boolean }): ReactElement => (
+  <StyledSelectOption key={value} value={value} light={light}>
     <Typography variant="select">{label}</Typography>
   </StyledSelectOption>
 )
@@ -151,6 +188,7 @@ interface SelectCmpProps<T extends SelectOptionBase> {
   placement?: PopupProps['placement']
   className?: string
   root?: React.ElementType
+  light?: boolean | undefined
   Option?: typeof SelectOption<T> | undefined
   listbox?: React.ElementType
   popup?: React.ComponentType<WithOptionalOwnerState<SelectPopupSlotProps<T['value'], false>>>
@@ -163,6 +201,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   handleChange,
   placement = 'bottom-start',
   className,
+  light = false,
   root = TertiaryButton,
   listbox = StyledSelectListbox,
   popup = StyledPopup,
@@ -177,6 +216,8 @@ const SelectCmp = <T extends SelectOptionBase>({
     [handleChange],
   )
 
+  const withLight = { light }
+
   return (
     <Box className={className}>
       {label && <label htmlFor={selectId}>{label}</label>}
@@ -188,9 +229,13 @@ const SelectCmp = <T extends SelectOptionBase>({
         listbox={listbox}
         popup={popup}
         placement={placement}
+        slotProps={{
+          root: withLight,
+          listbox: withLight,
+        }}
       >
         {options.map((props: T) => (
-          <Option key={props.value.toString()} {...props} />
+          <Option key={props.value.toString()} {...props} light={light} />
         ))}
       </CustomSelect>
     </Box>

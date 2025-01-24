@@ -32,6 +32,8 @@ import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/Con
 import { PercentageValue } from '../../components/PercentageValue'
 import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
+import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -43,6 +45,10 @@ export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
+  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
+    deleteParams: ['page'],
+  })
+
   const { address } = useLoaderData() as AddressLoaderData
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading, isFetched, data } = validatorQuery
@@ -52,7 +58,7 @@ export const ValidatorDetailsPage: FC = () => {
   const eventsLink = useHref(`events#${eventsContainerId}`)
   const delegatorsLink = useHref(`delegators#${delegatorsContainerId}`)
   const debondingDelegationsLink = useHref(`debonding-delegations#${debondingContainerId}`)
-  const context: ValidatorDetailsContext = { scope, address }
+  const context: ValidatorDetailsContext = { scope, address, method, setMethod }
 
   return (
     <PageLayout>

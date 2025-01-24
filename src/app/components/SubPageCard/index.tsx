@@ -14,6 +14,10 @@ type StyledComponentProps = {
   title?: ReactNode
   subheader?: string
   action?: ReactNode
+  /**
+   * An optional second title which will be displayed under title / subheader / action
+   */
+  title2?: ReactNode
   noPadding?: boolean
   mainTitle?: boolean
 }
@@ -69,6 +73,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   title,
   subheader,
   action,
+  title2,
   noPadding = false,
   mainTitle = false,
 }) => {
@@ -95,6 +100,17 @@ export const SubPageCard: FC<SubPageCardProps> = ({
             {subheader}
           </Typography>
           {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
+        </Box>
+      )}
+      {title2 && (
+        <Box
+          sx={{
+            color: theme.palette.layout.titleOnBackground,
+            mb: 4,
+            mx: 4,
+          }}
+        >
+          {title2}
         </Box>
       )}
       <StyledCard featured={featured} noPadding={noPadding}>

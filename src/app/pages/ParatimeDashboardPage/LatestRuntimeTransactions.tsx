@@ -7,17 +7,25 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
-import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
+import { FILTERING_ON_DASHBOARD, NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
+import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import Box from '@mui/material/Box'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
+const shouldFilter = FILTERING_ON_DASHBOARD
 
-export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope }) => {
-  const { isTablet } = useScreenSize()
+export const LatestRuntimeTransactions: FC<{
+  scope: SearchScope
+  method: string
+  setMethod: (value: string) => void
+}> = ({ scope, method, setMethod }) => {
+  const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = scope
   if (layer === Layer.consensus) {
@@ -25,10 +33,14 @@ export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope })
     // Listing the latest consensus transactions is not yet supported.
     // We should use useGetConsensusTransactions()
   }
+
   const transactionsQuery = useGetRuntimeTransactions(
     network,
     layer,
-    { limit },
+    {
+      ...getRuntimeTransactionMethodFilteringParam(method),
+      limit,
+    },
     {
       query: {
         cacheTime: 0,
@@ -41,7 +53,20 @@ export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope })
       <CardHeader
         disableTypography
         component="h3"
-        title={t('transactions.latest')}
+        title={
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 6,
+              alignItems: 'center',
+            }}
+          >
+            {t('transactions.latest')}
+            {shouldFilter && !isMobile && (
+              <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />
+            )}
+          </Box>
+        }
         action={
           <Link
             component={RouterLink}
@@ -52,6 +77,9 @@ export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope })
           </Link>
         }
       />
+      {shouldFilter && isMobile && (
+        <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand />
+      )}
       <CardContent>
         <RuntimeTransactions
           transactions={transactionsQuery.data?.data.transactions}
@@ -59,6 +87,7 @@ export const LatestRuntimeTransactions: FC<{ scope: SearchScope }> = ({ scope })
           limit={limit}
           pagination={false}
           verbose={!isTablet}
+          filtered={method !== 'any'}
         />
       </CardContent>
     </Card>

@@ -13,6 +13,8 @@ import { BalanceDistribution } from './BalanceDistribution'
 import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 import { eventsContainerId } from './ConsensusAccountEventsCard'
+import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -20,12 +22,15 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
+  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
+    deleteParams: ['page'],
+  })
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
   const transactionsLink = useHref('')
   const eventsLink = useHref(`events#${eventsContainerId}`)
-  const context: ConsensusAccountDetailsContext = { scope, address }
+  const context: ConsensusAccountDetailsContext = { scope, address, method, setMethod }
 
   return (
     <PageLayout>

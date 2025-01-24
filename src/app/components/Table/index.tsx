@@ -12,6 +12,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { COLORS } from '../../../styles/theme/colors'
 import { TablePagination, TablePaginationProps } from './TablePagination'
 import { backgroundColorAnimation } from '../../../styles/theme/animations'
+import { CardEmptyState } from '../CardEmptyState'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -78,6 +79,13 @@ type TableProps = {
   stickyColumn?: boolean
   extraHorizontalSpaceOnMobile?: boolean | undefined
   alwaysWaitWhileLoading?: boolean | undefined
+  /**
+   * Optional message to display when there are zero entries, instead of the table.
+   *
+   * This will only be displayed when loading finishes and there are no records.
+   * If not given, the table will simply be hidden without any trace.
+   */
+  emptyMessage?: string | undefined
 }
 
 const stickyColumnStyles = {
@@ -101,14 +109,15 @@ export const Table: FC<TableProps> = ({
   stickyColumn = false,
   extraHorizontalSpaceOnMobile = false,
   alwaysWaitWhileLoading = false,
+  emptyMessage = undefined,
 }) => {
   const { isMobile } = useScreenSize()
 
-  if (!isLoading && !rows?.length) {
-    return null
-  }
-
-  return (
+  return !isLoading && !rows?.length ? ( // This is known to be empty
+    emptyMessage ? ( // If we have a message, show it
+      <CardEmptyState label={emptyMessage} />
+    ) : null // otherwise just show nothing
+  ) : (
     <>
       <TableContainer>
         <MuiTable aria-label={name}>

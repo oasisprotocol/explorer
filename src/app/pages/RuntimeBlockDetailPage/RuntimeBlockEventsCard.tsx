@@ -55,16 +55,16 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   )
 }
 
-export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = props => {
   const { t } = useTranslation()
 
-  if (!blockHeight) {
+  if (!props.blockHeight) {
     return null
   }
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
-      <EventsList scope={scope} blockHeight={blockHeight} />
+      <EventsList {...props} />
     </LinkableCardLayout>
   )
 }
