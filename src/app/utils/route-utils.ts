@@ -69,6 +69,7 @@ invertSpecialScopePaths()
 export const hiddenScopes: SearchScope[] = [
   { network: Network.testnet, layer: Layer.pontusxdev },
   { network: Network.mainnet, layer: Layer.pontusxdev },
+  { network: Network.mainnet, layer: Layer.pontusxtest },
   // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
 ]
 
