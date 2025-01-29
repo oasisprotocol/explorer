@@ -22,10 +22,11 @@ import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
-import { getFiatCurrencyForScope } from '../../../config'
+import { consensusDecimals, getFiatCurrencyForScope } from '../../../config'
 import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { fromBaseUnits } from '../../utils/number-utils'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -166,7 +167,10 @@ export const ConsensusTransactionDetailView: FC<{
           )}
           <dt>{t('common.fee')}</dt>
           <dd>
-            <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
+            {t('common.valueInToken', {
+              ...getPreciseNumberFormat(fromBaseUnits(transaction.fee, consensusDecimals)),
+              ticker: transaction.ticker,
+            })}
           </dd>
 
           {/* TODO: gasUsed field will be available for Nexus with the next oasis-core release  */}
