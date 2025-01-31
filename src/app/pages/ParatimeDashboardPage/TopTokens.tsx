@@ -23,7 +23,7 @@ export const TopTokens: FC<{ scope: SearchScope }> = ({ scope }) => {
     // Listing the latest consensus transactions is not yet supported.
     // We should use useGetConsensusTransactions()
   }
-  const tokensQuery = useGetRuntimeEvmTokens(network, layer, { limit })
+  const tokensQuery = useGetRuntimeEvmTokens(network, layer, { limit, sort_by: 'market_cap' })
 
   return (
     <Card>
