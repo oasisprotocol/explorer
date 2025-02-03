@@ -2348,7 +2348,6 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
 
 
 /**
- * @deprecated
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const GetConsensusBlocks = (
@@ -2395,7 +2394,6 @@ export type GetConsensusBlocksQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2417,7 +2415,6 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof GetConse
 
 
 /**
- * @deprecated
  * @summary Returns a consensus block.
  */
 export const GetConsensusBlocksHeight = (
@@ -2463,7 +2460,6 @@ export type GetConsensusBlocksHeightQueryResult = NonNullable<Awaited<ReturnType
 export type GetConsensusBlocksHeightQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a consensus block.
  */
 export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof GetConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2485,7 +2481,6 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
- * @deprecated
  * @summary Returns a list of consensus transactions.
  */
 export const GetConsensusTransactions = (
@@ -2532,7 +2527,6 @@ export type GetConsensusTransactionsQueryResult = NonNullable<Awaited<ReturnType
 export type GetConsensusTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of consensus transactions.
  */
 export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof GetConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2554,7 +2548,6 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof Ge
 
 
 /**
- * @deprecated
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const GetConsensusTransactionsTxHash = (
@@ -2600,7 +2593,6 @@ export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<Retu
 export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof GetConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2622,7 +2614,6 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
 
 
 /**
- * @deprecated
  * @summary Returns a list of consensus events.
  */
 export const GetConsensusEvents = (
@@ -2669,7 +2660,6 @@ export type GetConsensusEventsQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusEventsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of consensus events.
  */
 export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2690,9 +2680,6 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof GetConse
 
 
 
-/**
- * @deprecated
- */
 export const GetConsensusRoothashMessages = (
     network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams,
@@ -2736,9 +2723,6 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetConsensusRoothashMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>>
 export type GetConsensusRoothashMessagesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
-/**
- * @deprecated
- */
 export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet' | 'localnet',
     params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof GetConsensusRoothashMessagesMutator>}
@@ -2758,7 +2742,6 @@ export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeo
 
 
 /**
- * @deprecated
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const GetConsensusEntities = (
@@ -2805,7 +2788,6 @@ export type GetConsensusEntitiesQueryResult = NonNullable<Awaited<ReturnType<typ
 export type GetConsensusEntitiesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2827,7 +2809,6 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof GetCon
 
 
 /**
- * @deprecated
  * @summary Returns an entity registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddress = (
@@ -2873,7 +2854,6 @@ export type GetConsensusEntitiesAddressQueryResult = NonNullable<Awaited<ReturnT
 export type GetConsensusEntitiesAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns an entity registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2895,7 +2875,6 @@ export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof
 
 
 /**
- * @deprecated
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodes = (
@@ -2945,7 +2924,6 @@ export type GetConsensusEntitiesAddressNodesQueryResult = NonNullable<Awaited<Re
 export type GetConsensusEntitiesAddressNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of nodes registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -2968,7 +2946,6 @@ export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<t
 
 
 /**
- * @deprecated
  * @summary Returns a node registered at the consensus layer.
  */
 export const GetConsensusEntitiesAddressNodesNodeId = (
@@ -3017,7 +2994,6 @@ export type GetConsensusEntitiesAddressNodesNodeIdQueryResult = NonNullable<Awai
 export type GetConsensusEntitiesAddressNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a node registered at the consensus layer.
  */
 export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<ReturnType<typeof GetConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3040,7 +3016,6 @@ export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<Return
 
 
 /**
- * @deprecated
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const GetConsensusValidators = (
@@ -3087,7 +3062,6 @@ export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<t
 export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3109,7 +3083,6 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof GetC
 
 
 /**
- * @deprecated
  * @summary Returns a validator registered at the consensus layer.
  */
 export const GetConsensusValidatorsAddress = (
@@ -3155,7 +3128,6 @@ export type GetConsensusValidatorsAddressQueryResult = NonNullable<Awaited<Retur
 export type GetConsensusValidatorsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a validator registered at the consensus layer.
  */
 export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3177,7 +3149,6 @@ export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<type
 
 
 /**
- * @deprecated
  * @summary Returns historical information for a single validator.
  */
 export const GetConsensusValidatorsAddressHistory = (
@@ -3227,7 +3198,6 @@ export type GetConsensusValidatorsAddressHistoryQueryResult = NonNullable<Awaite
 export type GetConsensusValidatorsAddressHistoryQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns historical information for a single validator.
  */
 export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnType<typeof GetConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3250,7 +3220,6 @@ export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnTy
 
 
 /**
- * @deprecated
  * @summary Returns a list of consensus layer accounts.
 Note that for performance reasons, the info returned by this endpoint
 may be slightly stale (<2 minutes). For the most up-to-date account state,
@@ -3301,7 +3270,6 @@ export type GetConsensusAccountsQueryResult = NonNullable<Awaited<ReturnType<typ
 export type GetConsensusAccountsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of consensus layer accounts.
 Note that for performance reasons, the info returned by this endpoint
 may be slightly stale (<2 minutes). For the most up-to-date account state,
@@ -3327,7 +3295,6 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof GetCon
 
 
 /**
- * @deprecated
  * @summary Returns a consensus layer account.
  */
 export const GetConsensusAccountsAddress = (
@@ -3373,7 +3340,6 @@ export type GetConsensusAccountsAddressQueryResult = NonNullable<Awaited<ReturnT
 export type GetConsensusAccountsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a consensus layer account.
  */
 export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3395,7 +3361,6 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
 
 
 /**
- * @deprecated
  * @summary Returns an account's delegations.
  */
 export const GetConsensusAccountsAddressDelegations = (
@@ -3445,7 +3410,6 @@ export type GetConsensusAccountsAddressDelegationsQueryResult = NonNullable<Awai
 export type GetConsensusAccountsAddressDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns an account's delegations.
  */
 export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3468,7 +3432,6 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
 
 
 /**
- * @deprecated
  * @summary Returns a list of delegations to an account.
  */
 export const GetConsensusAccountsAddressDelegationsTo = (
@@ -3518,7 +3481,6 @@ export type GetConsensusAccountsAddressDelegationsToQueryResult = NonNullable<Aw
 export type GetConsensusAccountsAddressDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of delegations to an account.
  */
 export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3541,7 +3503,6 @@ export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<Retu
 
 
 /**
- * @deprecated
  * @summary Returns an account's debonding delegations.
  */
 export const GetConsensusAccountsAddressDebondingDelegations = (
@@ -3591,7 +3552,6 @@ export type GetConsensusAccountsAddressDebondingDelegationsQueryResult = NonNull
 export type GetConsensusAccountsAddressDebondingDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns an account's debonding delegations.
  */
 export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3614,7 +3574,6 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
 
 
 /**
- * @deprecated
  * @summary Returns a list of debonding delegations to an account.
  */
 export const GetConsensusAccountsAddressDebondingDelegationsTo = (
@@ -3664,7 +3623,6 @@ export type GetConsensusAccountsAddressDebondingDelegationsToQueryResult = NonNu
 export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of debonding delegations to an account.
  */
 export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof GetConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3687,7 +3645,6 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awa
 
 
 /**
- * @deprecated
  * @summary Returns a list of consensus epochs.
  */
 export const GetConsensusEpochs = (
@@ -3734,7 +3691,6 @@ export type GetConsensusEpochsQueryResult = NonNullable<Awaited<ReturnType<typeo
 export type GetConsensusEpochsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of consensus epochs.
  */
 export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3756,7 +3712,6 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof GetConse
 
 
 /**
- * @deprecated
  * @summary Returns a consensus epoch.
  */
 export const GetConsensusEpochsEpoch = (
@@ -3802,7 +3757,6 @@ export type GetConsensusEpochsEpochQueryResult = NonNullable<Awaited<ReturnType<
 export type GetConsensusEpochsEpochQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a consensus epoch.
  */
 export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof GetConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3824,7 +3778,6 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof Get
 
 
 /**
- * @deprecated
  * @summary Returns a list of governance proposals.
  */
 export const GetConsensusProposals = (
@@ -3871,7 +3824,6 @@ export type GetConsensusProposalsQueryResult = NonNullable<Awaited<ReturnType<ty
 export type GetConsensusProposalsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of governance proposals.
  */
 export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3893,7 +3845,6 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof GetCo
 
 
 /**
- * @deprecated
  * @summary Returns a governance proposal.
  */
 export const GetConsensusProposalsProposalId = (
@@ -3939,7 +3890,6 @@ export type GetConsensusProposalsProposalIdQueryResult = NonNullable<Awaited<Ret
 export type GetConsensusProposalsProposalIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a governance proposal.
  */
 export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
@@ -3961,7 +3911,6 @@ export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<ty
 
 
 /**
- * @deprecated
  * @summary Returns a list of votes for a governance proposal.
  */
 export const GetConsensusProposalsProposalIdVotes = (
@@ -4011,7 +3960,6 @@ export type GetConsensusProposalsProposalIdVotesQueryResult = NonNullable<Awaite
 export type GetConsensusProposalsProposalIdVotesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @deprecated
  * @summary Returns a list of votes for a governance proposal.
  */
 export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof GetConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
