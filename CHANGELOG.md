@@ -12,6 +12,46 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.16.0 (2025-02-03)
+
+### Features
+
+- Add support for filtering transactions by method type
+  ([#1679](https://github.com/oasisprotocol/explorer/issues/1679))
+
+- Add support for displaying multiple signers of runtime transactions
+  ([#1705](https://github.com/oasisprotocol/explorer/issues/1705))
+
+### Bug Fixes and Improvements
+
+- Set API limit when fetching data for named validators
+  ([#1673](https://github.com/oasisprotocol/explorer/issues/1673))
+
+- Fix regression on global search 404 page
+  ([#1678](https://github.com/oasisprotocol/explorer/issues/1678))
+
+- Add optional floating copy to clipboard button to JSON code preview
+  ([#1683](https://github.com/oasisprotocol/explorer/issues/1683))
+
+- Fix case sensitivity in Pontus-X account name resolution
+  ([#1685](https://github.com/oasisprotocol/explorer/issues/1685))
+
+- Correctly display encryption data for oasis-style encrypted transactions
+  ([#1695](https://github.com/oasisprotocol/explorer/issues/1695))
+
+- Update some broken links
+  ([#1704](https://github.com/oasisprotocol/explorer/issues/1704))
+
+- Fix display of consensus transaction fee
+  ([#1716](https://github.com/oasisprotocol/explorer/issues/1716))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1559](https://github.com/oasisprotocol/explorer/issues/1559),
+   [#1657](https://github.com/oasisprotocol/explorer/issues/1657),
+   [#1658](https://github.com/oasisprotocol/explorer/issues/1658))
+
 ## 1.15.1 (2024-12-18)
 
 ### Bug Fixes and Improvements
