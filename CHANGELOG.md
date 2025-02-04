@@ -12,6 +12,15 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.16.1 (2025-02-04)
+
+### Bug Fixes and Improvements
+
+- Use custom query key for validators map
+  ([#1727](https://github.com/oasisprotocol/explorer/issues/1727))
+
+  - Avoid throwing t.normalize is not a function error
+
 ## 1.16.0 (2025-02-03)
 
 ### Features
