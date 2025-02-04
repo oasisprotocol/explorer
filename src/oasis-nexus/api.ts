@@ -1137,6 +1137,7 @@ export const useGetConsensusValidatorsAddressNameMap: typeof generated.useGetCon
     {
       ...options,
       query: {
+        queryKey: ['consensusValidatorsAddressNameMap', network, params],
         staleTime: options?.query?.staleTime ?? 5 * 60 * 1000, // Defaults to 5 minutes
         ...options?.query,
       },
