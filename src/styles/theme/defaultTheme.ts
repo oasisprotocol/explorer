@@ -160,9 +160,9 @@ export const defaultTheme = createTheme({
       lineHeight: '22px',
     },
     h5: {
-      fontSize: '16px',
+      fontSize: '18px',
       fontWeight: 700,
-      lineHeight: '24px',
+      lineHeight: '27px',
       color: COLORS.brandExtraDark,
     },
     caption: {
