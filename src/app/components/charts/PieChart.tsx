@@ -19,7 +19,12 @@ interface PieChartProps<T extends object> extends Formatters {
   prependLegendList?: ReactNode
 }
 
-const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testnet, COLORS.grayMedium2]
+const colorPalette = [
+  'url(#brandDarkGradient)',
+  COLORS.brandMedium,
+  TESTNET_COLORS.testnet,
+  COLORS.grayMedium2,
+]
 
 type LegendListItemProps = {
   children: ReactNode
@@ -119,6 +124,12 @@ const PieChartCmp = <T extends object>({
   return (
     <ResponsiveContainer width="100%">
       <RechartsPieChart width={100} height={100}>
+        <defs>
+          <linearGradient id="brandDarkGradient" x1="1" y1="1" x2="0" y2="0">
+            <stop offset="40%" stopColor={COLORS.brandDark} />
+            <stop offset="100%" stopColor="#9747FF" />
+          </linearGradient>
+        </defs>
         <Tooltip
           cursor={false}
           wrapperStyle={{ outline: 'none' }}
