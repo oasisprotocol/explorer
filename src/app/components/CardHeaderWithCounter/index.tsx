@@ -20,7 +20,7 @@ export const CardHeaderWithCounter: FC<CardHeaderWithCounterProps> = ({
   const { isMobile } = useScreenSize()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={2}>
+    <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={'0.8ex'}>
       <Typography
         fontWeight={700}
         component="span"
