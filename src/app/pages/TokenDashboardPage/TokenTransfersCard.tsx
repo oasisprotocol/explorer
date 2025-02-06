@@ -10,10 +10,8 @@ import { TokenDashboardContext } from './index'
 import { tokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
-  const { t } = useTranslation()
-
   return (
-    <LinkableCardLayout containerId={tokenTransfersContainerId} title={t('common.transfers')}>
+    <LinkableCardLayout containerId={tokenTransfersContainerId} title="">
       <TokenTransfersView scope={scope} address={address} />
     </LinkableCardLayout>
   )

@@ -50,10 +50,8 @@ const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blo
 }
 
 export const ConsensusBlockEventsCard: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
-  const { t } = useTranslation()
-
   return (
-    <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
+    <LinkableCardLayout containerId={eventsContainerId} title="">
       <ConsensusBlockEventsList scope={scope} blockHeight={blockHeight} />
     </LinkableCardLayout>
   )

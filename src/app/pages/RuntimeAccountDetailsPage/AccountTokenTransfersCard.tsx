@@ -9,9 +9,8 @@ import { RuntimeAccountDetailsContext } from './index'
 import { transfersContainerId } from '../../utils/tabAnchors'
 
 export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = context => {
-  const { t } = useTranslation()
   return (
-    <LinkableCardLayout containerId={transfersContainerId} title={t('common.transfers')}>
+    <LinkableCardLayout containerId={transfersContainerId} title="">
       <AccountTokenTransfers {...context} />
     </LinkableCardLayout>
   )
