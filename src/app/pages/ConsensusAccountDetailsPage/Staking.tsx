@@ -21,12 +21,16 @@ import { Delegations } from '../..//components/Delegations'
 import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
+import { tableCellClasses } from '@mui/material/TableCell'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   flex: 1,
   '&': {
     padding: `0 ${theme.spacing(4)}`,
     marginBottom: 0,
+  },
+  [`.${tableCellClasses.head}`]: {
+    fontWeight: 'normal',
   },
 }))
 
