@@ -76,7 +76,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
     <>
       <Typography
         sx={{
-          fontSize: isMobile ? '14px' : '24px',
+          fontSize: isMobile ? '14px' : '18px',
           fontWeight: isMobile ? 500 : 700,
           color: COLORS.brandDark,
           mb: 4,

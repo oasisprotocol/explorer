@@ -413,11 +413,11 @@ export const defaultTheme = createTheme({
     MuiBreadcrumbs: {
       styleOverrides: {
         li: {
-          fontSize: '24px',
+          fontSize: '18px',
         },
         separator: {
           color: COLORS.brandDark,
-          fontSize: '24px',
+          fontSize: '18px',
           paddingRight: 3,
           paddingLeft: 3,
         },
