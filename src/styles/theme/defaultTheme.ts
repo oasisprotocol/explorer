@@ -427,7 +427,6 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
-          fontSize: '24px',
           margin: 0,
           paddingBottom: theme.spacing(4),
           paddingLeft: 0,

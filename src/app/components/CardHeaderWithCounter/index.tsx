@@ -25,17 +25,18 @@ export const CardHeaderWithCounter: FC<CardHeaderWithCounterProps> = ({
         fontWeight={700}
         component="span"
         color={isMobile && changeMobileColors ? COLORS.white : COLORS.brandExtraDark}
-        fontSize={24}
+        fontSize="inherit"
       >
         {label}
       </Typography>
       {!!totalCount && (
         <Typography
-          fontWeight={700}
+          fontWeight="normal"
           component="span"
           color={isMobile && changeMobileColors ? COLORS.white : COLORS.grayMedium}
+          fontSize="inherit"
         >
-          ({`${isTotalCountClipped ? ' > ' : ''}${totalCount}`})
+          ({`${isTotalCountClipped ? '>' : ''}${totalCount}`})
         </Typography>
       )}
     </Box>
