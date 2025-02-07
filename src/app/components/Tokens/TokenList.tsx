@@ -20,6 +20,7 @@ import { Ticker } from '../../../types/ticker'
 import { FiatValue } from '../FiatValue'
 import { MarketCapTitle } from './MarketCapTitle'
 import { Network } from 'types/network'
+import { TokenOriginLabel } from './TokenOriginLabel'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -104,11 +105,14 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           content: (
-            <TokenLink
-              scope={token}
-              address={token.eth_contract_addr ?? token.contract_addr}
-              name={token.name}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <TokenLink
+                scope={token}
+                address={token.eth_contract_addr ?? token.contract_addr}
+                name={token.name}
+              />
+              <TokenOriginLabel label="Placeholder" />
+            </Box>
           ),
           key: 'name',
         },
