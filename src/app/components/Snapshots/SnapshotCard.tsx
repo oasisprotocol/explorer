@@ -46,7 +46,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
 }) => {
   return (
     <StyledCard>
-      <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: 4 }} />
+      <CardHeader component="h5" title={title} sx={{ pb: 0, pl: 4, pt: '10px' }} />
       <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
       {(badge || label || alignWithCardsWithActions) && (
         <CardActions sx={{ minHeight: 60 }}>

@@ -160,9 +160,9 @@ export const defaultTheme = createTheme({
       lineHeight: '22px',
     },
     h5: {
-      fontSize: '16px',
+      fontSize: '18px',
       fontWeight: 700,
-      lineHeight: '24px',
+      lineHeight: '27px',
       color: COLORS.brandExtraDark,
     },
     caption: {
@@ -413,11 +413,11 @@ export const defaultTheme = createTheme({
     MuiBreadcrumbs: {
       styleOverrides: {
         li: {
-          fontSize: '24px',
+          fontSize: '18px',
         },
         separator: {
           color: COLORS.brandDark,
-          fontSize: '24px',
+          fontSize: '18px',
           paddingRight: 3,
           paddingLeft: 3,
         },
@@ -427,7 +427,6 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
-          fontSize: '24px',
           margin: 0,
           paddingBottom: theme.spacing(4),
           paddingLeft: 0,

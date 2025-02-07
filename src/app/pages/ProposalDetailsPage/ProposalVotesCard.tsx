@@ -133,7 +133,7 @@ export const ProposalVotesCard: FC = () => {
           </>
         }
         disableTypography
-        component="h3"
+        component="h2"
         title={t('common.votes')}
       />
       <ErrorBoundary light={true}>

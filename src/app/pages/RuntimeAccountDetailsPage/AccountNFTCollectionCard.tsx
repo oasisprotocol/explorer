@@ -50,10 +50,11 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
             )
           }
           disableTypography
+          component="h3"
           title={
             <Box sx={{ display: 'flex' }} gap={4}>
               <Breadcrumbs separator="›" aria-label="breadcrumb">
-                <Typography fontSize={24}>
+                <Typography fontSize={18}>
                   <Link
                     preventScrollReset={true}
                     component={RouterLink}

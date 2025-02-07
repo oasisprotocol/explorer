@@ -20,22 +20,23 @@ export const CardHeaderWithCounter: FC<CardHeaderWithCounterProps> = ({
   const { isMobile } = useScreenSize()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={2}>
+    <Box sx={{ display: 'flex', alignItems: 'baseline' }} gap={'0.8ex'}>
       <Typography
         fontWeight={700}
         component="span"
         color={isMobile && changeMobileColors ? COLORS.white : COLORS.brandExtraDark}
-        fontSize={24}
+        fontSize="inherit"
       >
         {label}
       </Typography>
       {!!totalCount && (
         <Typography
-          fontWeight={700}
+          fontWeight="normal"
           component="span"
           color={isMobile && changeMobileColors ? COLORS.white : COLORS.grayMedium}
+          fontSize="inherit"
         >
-          ({`${isTotalCountClipped ? ' > ' : ''}${totalCount}`})
+          ({`${isTotalCountClipped ? '>' : ''}${totalCount}`})
         </Typography>
       )}
     </Box>
