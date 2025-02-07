@@ -17,10 +17,10 @@ export const MarketCapTitle: FC<MarketCapTitlePros> = ({ scope }) => {
 
   return (
     <Box sx={{ display: 'flex', gap: 2 }}>
-      {t('tokens.marketCap')}
       <Tooltip title={t('tokens.marketCapTooltip', { layer: labels[scope.layer] })} placement="top">
         <InfoIcon htmlColor={COLORS.brandDark} />
       </Tooltip>
+      {t('tokens.marketCap')}
     </Box>
   )
 }
