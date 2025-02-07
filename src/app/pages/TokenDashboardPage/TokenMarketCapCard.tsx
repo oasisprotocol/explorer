@@ -25,7 +25,7 @@ export const TokenMarketCapCard: FC<TokenMarketCapCardProps> = ({
 
   return (
     <SnapshotTextCard title={<MarketCapTitle scope={scope} />} alignWithCardsWithActions>
-      {isLoading && isPriceLoading ? (
+      {isLoading || isPriceLoading ? (
         <Skeleton variant="text" />
       ) : (
         <FiatValue isLoading={isPriceLoading} value={marketCapValue} />
