@@ -117,6 +117,7 @@ export const ConsensusTransactionDetailView: FC<{
       <dt>{t('common.height')}</dt>
       <dd>
         <BlockLink scope={transaction} height={transaction.block} />
+        <CopyToClipboard value={transaction.block.toString()} />
       </dd>
       <dt>{t('common.from')}</dt>
       <dd>

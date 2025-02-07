@@ -148,6 +148,7 @@ export const RuntimeTransactionDetailView: FC<{
           <dt>{t('common.block')}</dt>
           <dd>
             <BlockLink scope={transaction} height={transaction.round} />
+            <CopyToClipboard value={transaction.round.toString()} />
           </dd>
 
           <dt>{t('common.type')}</dt>
