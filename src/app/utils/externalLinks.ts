@@ -13,30 +13,33 @@ export const socialMedia = {
   home: process.env.REACT_APP_SOCIAL_HOME,
 }
 
+export const marketingPage = {
+  tokenomics: `https://oasisprotocol.org/rose-and-tokenomics`,
+  validators: `https://oasisprotocol.org/node-operators`,
+}
+
 export const docs = {
-  home: 'https://docs.oasis.io/',
-  consensus: 'https://docs.oasis.io/core/consensus/',
-  consensusTransactions: `https://docs.oasis.io/core/consensus/transactions/`,
-  consensusServices: `https://docs.oasis.io/core/consensus/services/`,
-  consensusGenesis: `https://docs.oasis.io/core/consensus/genesis/`,
-  consensusVectors: `https://docs.oasis.io/core/consensus/test-vectors/`,
-  consensusComet: `https://docs.oasis.io/core/consensus/#cometbft`,
-  cipher: `https://docs.oasis.io/dapp/cipher/`,
+  cipher: `https://docs.oasis.io/dapp/cipher`,
+  consensus: 'https://docs.oasis.io/core/consensus',
+  delegation: `https://docs.oasis.io/general/manage-tokens/staking-and-delegating`,
   emerald: `https://docs.oasis.io/dapp/emerald/`,
+  emeraldGateway: `https://docs.oasis.io/dapp/emerald/#web3-gateway`,
   emeraldTestnet: `https://docs.oasis.io/dapp/emerald/#testnet`,
   emeraldTestnetNode: `https://docs.oasis.io/node/testnet/#emerald`,
-  emeraldGateway: `https://docs.oasis.io/dapp/emerald/#web3-gateway`,
+  home: 'https://docs.oasis.io/',
   localnet: 'https://docs.oasis.io/build/tools/localnet',
-  sapphire: `https://docs.oasis.io/dapp/sapphire/`,
-  token: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution`,
-  tools: 'https://docs.oasis.io/build/tools/',
+  manageTokens: `https://docs.oasis.io/general/manage-tokens`,
+  node: `https://docs.oasis.io/get-involved/run-node/validator-node`,
   paraTimeTransfer: `https://docs.oasis.io/general/manage-tokens/oasis-wallets/web#paratimes`,
-  sapphireTestnetNode: `https://docs.oasis.io/node/testnet/#sapphire`,
-  sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
-  sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
   pontusx1: 'https://docs.pontus-x.eu/',
   pontusx2: 'https://docs.pontus-x.eu/docs/getting-started/quick-start',
   pontusx3: 'https://github.com/deltaDAO/mvg-portal/blob/main/chains.config.js',
+  sapphire: `https://docs.oasis.io/dapp/sapphire/`,
+  sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
+  sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
+  sapphireTestnetNode: `https://docs.oasis.io/node/testnet/#sapphire`,
+  token: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution`,
+  tools: 'https://docs.oasis.io/build/tools',
 }
 
 export const referrals = { coinGecko: 'https://www.coingecko.com' }
