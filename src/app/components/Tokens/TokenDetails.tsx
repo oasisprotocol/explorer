@@ -14,6 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
 import { RoundedBalance } from '../RoundedBalance'
 import { HighlightedText } from '../HighlightedText'
+import { TokenOriginLabel } from './TokenOriginLabel'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -40,14 +41,17 @@ export const TokenDetails: FC<{
       )}
       <dt>{t('common.name')}</dt>
       <dd>
-        <TokenLink
-          scope={token}
-          address={token.eth_contract_addr ?? token.contract_addr}
-          name={token.name}
-          highlightedPart={highlightedPartOfName}
-        />
-        <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
-          <HighlightedText text={token.symbol} pattern={highlightedPartOfName} />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <TokenLink
+            scope={token}
+            address={token.eth_contract_addr ?? token.contract_addr}
+            name={token.name}
+            highlightedPart={highlightedPartOfName}
+          />
+          <Box sx={{ fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
+            <HighlightedText text={token.symbol} pattern={highlightedPartOfName} />
+          </Box>
+          <TokenOriginLabel label="Placeholder" />
         </Box>
       </dd>
 

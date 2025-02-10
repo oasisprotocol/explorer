@@ -8,12 +8,24 @@ import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { TokenSupplyCard } from './TokenSupplyCard'
 import { TokenHoldersCountCard } from './TokenHoldersCountCard'
-import { TokenTypeCard } from './TokenTypeCard'
+import { TokenMarketCapCard } from './TokenMarketCapCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 import { SearchScope } from '../../../types/searchScope'
 import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
-export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+type TokenSnapshotProps = {
+  scope: SearchScope
+  address: string
+  rosePriceInUsd: number | undefined
+  isRosePriceInUsdLoading: boolean
+}
+
+export const TokenSnapshot: FC<TokenSnapshotProps> = ({
+  scope,
+  address,
+  rosePriceInUsd,
+  isRosePriceInUsdLoading,
+}) => {
   const { t } = useTranslation()
 
   const theme = useTheme()
@@ -44,8 +56,12 @@ export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ sco
           <TokenHoldersCountCard scope={scope} address={address} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
-          <TokenTypeCard scope={scope} address={address} />
-          {/*<TokenGasUsedCard /> TODO: use this when gas used becomes available */}
+          <TokenMarketCapCard
+            address={address}
+            isPriceLoading={isRosePriceInUsdLoading}
+            rosePriceInUsd={rosePriceInUsd}
+            scope={scope}
+          />
         </StyledGrid>
       </Grid>
     </>

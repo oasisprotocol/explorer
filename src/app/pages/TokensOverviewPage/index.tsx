@@ -43,6 +43,7 @@ export const TokensPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
+      sort_by: 'market_cap',
     },
     {
       query: {
@@ -83,6 +84,7 @@ export const TokensPage: FC = () => {
               isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
             }}
+            scope={scope}
           />
         )}
         {tableView === TableLayout.Vertical && (
