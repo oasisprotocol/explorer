@@ -6,7 +6,7 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { ValidatorDetailsContext } from './hooks'
-import { delegatorsContainerId } from './tabAnchors'
+import { delegatorsContainerId } from '../../utils/tabAnchors'
 import { SimplePaginationEngine } from 'app/components/Table/PaginationEngine'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
