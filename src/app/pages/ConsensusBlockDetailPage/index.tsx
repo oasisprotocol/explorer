@@ -18,8 +18,8 @@ import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimmer'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { eventsContainerId } from './ConsensusBlockEventsCard'
 import { ValidatorLink } from '../../components/Validators/ValidatorLink'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean

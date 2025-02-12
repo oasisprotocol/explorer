@@ -7,8 +7,7 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { NftDashboardContext } from '../NFTInstanceDashboardPage'
 import { JsonCodeDisplay } from '../../components/CodeDisplay'
 import { useNFTInstance } from '../TokenDashboardPage/hook'
-
-export const nftMetadataId = 'metadata'
+import { metadataContainerId } from '../../utils/tabAnchors'
 
 export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, instanceId }) => {
   const { t } = useTranslation()
@@ -21,7 +20,7 @@ export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, insta
       <>
         {metadata && (
           <CardContent>
-            <LinkableDiv id={nftMetadataId}>
+            <LinkableDiv id={metadataContainerId}>
               <JsonCodeDisplay data={metadata} label={t('nft.metadata')} />
             </LinkableDiv>
           </CardContent>

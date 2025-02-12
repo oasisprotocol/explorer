@@ -16,8 +16,7 @@ import {
   ConsensusTxMethodFilterOption,
 } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
-
-export const transactionsContainerId = 'transactions'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<{
   scope: SearchScope

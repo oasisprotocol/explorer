@@ -16,14 +16,13 @@ import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
 import { RouteUtils } from '../../utils/route-utils'
-import { tokenTransfersContainerId } from '../../pages/TokenDashboardPage/TokenTransfersCard'
-import { tokenHoldersContainerId } from '../../pages/TokenDashboardPage/TokenHoldersCard'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { HighlightedText } from '../../components/HighlightedText'
 import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
 import { extractMinimalProxyERC1167 } from '../../components/ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../../components/ContractVerificationIcon/AbiPlaygroundLink'
 import Box from '@mui/material/Box'
+import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
   scope,
@@ -115,7 +114,7 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
                 to={`${RouteUtils.getTokenHoldersRoute(
                   scope,
                   token.eth_contract_addr,
-                )}#${tokenHoldersContainerId}`}
+                )}#${holdersContainerId}`}
               >
                 {t('tokens.holdersValue', { value: token?.num_holders })}
               </Link>

@@ -8,10 +8,9 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../..//components/Table/useSearchParamsPagination'
 import { EmptyState } from '../../components/EmptyState'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
-export const eventsContainerId = 'events'
-
-export const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope, address }) => {
+const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit

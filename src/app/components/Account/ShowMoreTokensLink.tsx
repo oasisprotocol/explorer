@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
-import { accountTokenContainerId } from '../../pages/RuntimeAccountDetailsPage/AccountTokensCard'
+import { tokenContainerId } from '../../utils/tabAnchors'
 
 export const StyledLink = styled(RouterLink)(({ theme }) => ({
   color: COLORS.brandDark,
@@ -27,13 +27,13 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
     account,
     account.address_eth ?? account.address,
     EvmTokenType.ERC20,
-    accountTokenContainerId,
+    tokenContainerId,
   )
   const erc721Link = RouteUtils.getAccountTokensRoute(
     account,
     account.address_eth ?? account.address,
     EvmTokenType.ERC721,
-    accountTokenContainerId,
+    tokenContainerId,
   )
 
   const additionalTokensCounter = tokens.length - pills.length

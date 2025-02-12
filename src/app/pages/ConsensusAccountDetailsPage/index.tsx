@@ -12,9 +12,9 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
 import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
-import { eventsContainerId } from './ConsensusAccountEventsCard'
 import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()

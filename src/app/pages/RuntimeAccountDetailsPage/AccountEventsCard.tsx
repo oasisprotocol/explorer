@@ -5,8 +5,7 @@ import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
 import { useAccountEvents } from './hook'
 import { RuntimeAccountDetailsContext } from '.'
-
-export const eventsContainerId = 'events'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()

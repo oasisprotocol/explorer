@@ -11,8 +11,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import Box from '@mui/material/Box'
-
-export const transactionsContainerId = 'transactions'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, method }) => {
   const txsPagination = useSearchParamsPagination('page')

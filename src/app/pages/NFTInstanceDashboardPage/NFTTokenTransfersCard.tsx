@@ -6,8 +6,7 @@ import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { NftDashboardContext } from './'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useNFTInstanceTransfers } from '../TokenDashboardPage/hook'
-
-export const nftTokenTransfersContainerId = 'nftTokenTransfers'
+import { nftTokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
   const { t } = useTranslation()

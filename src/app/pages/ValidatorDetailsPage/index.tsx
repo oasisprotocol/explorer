@@ -28,12 +28,12 @@ import { ProposedBlocks } from './ProposedBlocks'
 import { ValidatorDetailsContext } from './hooks'
 import { debondingContainerId, delegatorsContainerId } from '../../utils/tabAnchors'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
-import { eventsContainerId } from './../../pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { PercentageValue } from '../../components/PercentageValue'
 import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {

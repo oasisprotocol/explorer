@@ -26,8 +26,7 @@ import { EvmNft } from 'oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
 import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
-
-export const accountNFTCollectionContainerId = 'nftCollection'
+import { nftCollectionContainerId } from '../../utils/tabAnchors'
 
 export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -38,7 +37,7 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
 
   return (
     <Card>
-      <LinkableDiv id={accountNFTCollectionContainerId}>
+      <LinkableDiv id={nftCollectionContainerId}>
         <CardHeader
           action={
             isFetched &&

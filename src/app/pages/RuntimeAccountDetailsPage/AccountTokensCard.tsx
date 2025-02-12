@@ -21,12 +21,11 @@ import {
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsContext } from './index'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { tokenContainerId } from '../../utils/tabAnchors'
 
 type AccountTokensCardProps = RuntimeAccountDetailsContext & {
   type: EvmTokenType
 }
-
-export const accountTokenContainerId = 'tokens'
 
 export const ContractLink: FC<{ scope: SearchScope; address: string; alwaysTrim?: boolean }> = ({
   scope,
@@ -118,7 +117,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
   }))
 
   return (
-    <LinkableCardLayout containerId={accountTokenContainerId} title={tokenListLabel}>
+    <LinkableCardLayout containerId={tokenContainerId} title={tokenListLabel}>
       {!!account && !account?.tokenBalances[type]?.length && (
         <CardEmptyState
           label={t('account.emptyTokenList', {

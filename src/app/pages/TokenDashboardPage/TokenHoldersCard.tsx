@@ -6,14 +6,13 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useTokenHolders, useTokenInfo } from './hook'
 import { TokenHolders } from '../../components/Tokens/TokenHolders'
 import { TokenDashboardContext } from './index'
-
-export const tokenHoldersContainerId = 'holders'
+import { holdersContainerId } from '../../utils/tabAnchors'
 
 export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   return (
-    <LinkableCardLayout containerId={tokenHoldersContainerId} title={t('tokens.holders')}>
+    <LinkableCardLayout containerId={holdersContainerId} title={t('tokens.holders')}>
       <TokenHoldersView scope={scope} address={address} />
     </LinkableCardLayout>
   )
