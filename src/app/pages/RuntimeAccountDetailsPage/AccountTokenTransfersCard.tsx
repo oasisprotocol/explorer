@@ -6,13 +6,12 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { RuntimeAccountDetailsContext } from './index'
-
-export const accountTokenTransfersContainerId = 'transfers'
+import { transfersContainerId } from '../../utils/tabAnchors'
 
 export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = context => {
   const { t } = useTranslation()
   return (
-    <LinkableCardLayout containerId={accountTokenTransfersContainerId} title={t('common.transfers')}>
+    <LinkableCardLayout containerId={transfersContainerId} title={t('common.transfers')}>
       <AccountTokenTransfers {...context} />
     </LinkableCardLayout>
   )

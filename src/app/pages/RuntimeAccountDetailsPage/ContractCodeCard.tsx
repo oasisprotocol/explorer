@@ -7,8 +7,7 @@ import { useAccount } from './hook'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from '../TokenDashboardPage'
 import { RawDataDisplay } from '../../components/CodeDisplay'
-
-export const contractCodeContainerId = 'code'
+import { codeContainerId } from '../../utils/tabAnchors'
 
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -21,7 +20,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
       {noCode && <CardEmptyState label={t('contract.noCode')} />}
       {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
         <CardContent>
-          <LinkableDiv id={contractCodeContainerId}>
+          <LinkableDiv id={codeContainerId}>
             <RawDataDisplay data={contract.creation_bytecode} label={t('contract.creationByteCode')} />
             <RawDataDisplay
               data={contract.runtime_bytecode}

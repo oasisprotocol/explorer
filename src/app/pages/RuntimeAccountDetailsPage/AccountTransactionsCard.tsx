@@ -8,8 +8,7 @@ import { RuntimeAccountDetailsContext } from './index'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
 import Box from '@mui/material/Box'
-
-export const accountTransactionsContainerId = 'transactions'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context => {
   const { method, setMethod } = context
@@ -19,7 +18,7 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context
 
   return (
     <LinkableCardLayout
-      containerId={accountTransactionsContainerId}
+      containerId={transactionsContainerId}
       title={
         <Box
           sx={{

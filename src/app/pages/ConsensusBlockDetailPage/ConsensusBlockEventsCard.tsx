@@ -8,8 +8,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { EmptyState } from '../../components/EmptyState'
 import { ConsensusBlockDetailsContext } from '.'
 import { ConsensusEventsList } from '../../components/ConsensusEvents/ConsensusEventsList'
-
-export const eventsContainerId = 'events'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()

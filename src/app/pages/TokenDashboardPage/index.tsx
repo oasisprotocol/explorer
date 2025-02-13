@@ -11,12 +11,10 @@ import { useTokenInfo } from './hook'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
-import { contractCodeContainerId } from '../RuntimeAccountDetailsPage/ContractCodeCard'
-import { tokenHoldersContainerId } from './TokenHoldersCard'
 import { SearchScope } from '../../../types/searchScope'
-import { tokenInventoryContainerId } from './TokenInventoryCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
+import { codeContainerId, holdersContainerId, inventoryContainerId } from '../../utils/tabAnchors'
 
 export type TokenDashboardContext = {
   scope: SearchScope
@@ -38,9 +36,9 @@ export const TokenDashboardPage: FC = () => {
   }
 
   const tokenTransfersLink = useHref(``)
-  const tokenHoldersLink = useHref(`holders#${tokenHoldersContainerId}`)
-  const codeLink = useHref(`code#${contractCodeContainerId}`)
-  const inventoryLink = useHref(`inventory#${tokenInventoryContainerId}`)
+  const tokenHoldersLink = useHref(`holders#${holdersContainerId}`)
+  const codeLink = useHref(`code#${codeContainerId}`)
+  const inventoryLink = useHref(`inventory#${inventoryContainerId}`)
 
   const context: TokenDashboardContext = {
     scope,

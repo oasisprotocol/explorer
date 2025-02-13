@@ -8,8 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
 import { EmptyState } from '../../components/EmptyState'
 import { RuntimeBlockDetailsContext } from '.'
-
-export const eventsContainerId = 'events'
+import { eventsContainerId } from '../../utils/tabAnchors'
 
 const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()

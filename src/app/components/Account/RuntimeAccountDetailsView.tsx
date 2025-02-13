@@ -9,7 +9,6 @@ import { EvmToken, type RuntimeAccount } from '../../../oasis-nexus/api'
 import { TokenPills } from './TokenPills'
 import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
-import { accountTransactionsContainerId } from '../../pages/RuntimeAccountDetailsPage/AccountTransactionsCard'
 import Link from '@mui/material/Link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices } from '../../../coin-gecko/api'
@@ -25,6 +24,7 @@ import { CardEmptyState } from '../CardEmptyState'
 import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
 import Box from '@mui/material/Box'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -57,7 +57,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   const transactionsAnchor = `${RouteUtils.getAccountRoute(
     account,
     account.address_eth ?? account.address,
-  )}#${accountTransactionsContainerId}`
+  )}#${transactionsContainerId}`
 
   const contract = account?.evm_contract
   const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))

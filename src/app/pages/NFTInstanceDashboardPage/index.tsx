@@ -10,7 +10,7 @@ import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from 'app/components/RouterTabs'
 import { SearchScope } from '../../../types/searchScope'
 import { useNFTInstance } from '../TokenDashboardPage/hook'
-import { nftMetadataId } from './NFTMetadataCard'
+import { metadataContainerId } from '../../utils/tabAnchors'
 
 export type NftDashboardContext = {
   scope: SearchScope
@@ -30,7 +30,7 @@ export const NFTInstanceDashboardPage: FC = () => {
   const { isFetched, isLoading, nft } = useNFTInstance(scope, address, instanceId)
 
   const tokenTransfersLink = useHref('')
-  const metadataLink = useHref(`metadata#${nftMetadataId}`)
+  const metadataLink = useHref(`metadata#${metadataContainerId}`)
   const context: NftDashboardContext = {
     scope,
     address,

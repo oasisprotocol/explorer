@@ -5,20 +5,22 @@ import { PageLayout } from '../../components/PageLayout'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
-import { accountTokenContainerId } from './AccountTokensCard'
 import { useAccount } from './hook'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { contractCodeContainerId } from './ContractCodeCard'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
-import { accountTokenTransfersContainerId } from './AccountTokenTransfersCard'
 import { getTokenTypePluralName } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
-import { eventsContainerId } from './AccountEventsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import {
+  codeContainerId,
+  eventsContainerId,
+  tokenContainerId,
+  transfersContainerId,
+} from '../../utils/tabAnchors'
 
 export type RuntimeAccountDetailsContext = {
   scope: SearchScope
@@ -45,13 +47,13 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 
   const eventsLink = useHref(`events#${eventsContainerId}`)
-  const tokenTransfersLink = useHref(`token-transfers#${accountTokenTransfersContainerId}`)
-  const erc20Link = useHref(`tokens/erc-20#${accountTokenContainerId}`)
-  const erc721Link = useHref(`tokens/erc-721#${accountTokenContainerId}`)
+  const tokenTransfersLink = useHref(`token-transfers#${transfersContainerId}`)
+  const erc20Link = useHref(`tokens/erc-20#${tokenContainerId}`)
+  const erc721Link = useHref(`tokens/erc-721#${tokenContainerId}`)
 
   const txLink = useHref('')
   const showCode = isContract
-  const codeLink = useHref(`code#${contractCodeContainerId}`)
+  const codeLink = useHref(`code#${codeContainerId}`)
 
   const isLoading = isAccountLoading || isTokenLoading
 

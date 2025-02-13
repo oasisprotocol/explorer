@@ -16,8 +16,7 @@ import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 import { EvmNft } from 'oasis-nexus/api'
 import { To } from 'react-router-dom'
 import { SearchScope } from 'types/searchScope'
-
-export const tokenInventoryContainerId = 'inventory'
+import { inventoryContainerId } from '../../utils/tabAnchors'
 
 export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -25,7 +24,7 @@ export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }
 
   return (
     <LinkableCardLayout
-      containerId={tokenInventoryContainerId}
+      containerId={inventoryContainerId}
       title={
         <CardHeaderWithCounter
           label={t('tokens.inventory')}

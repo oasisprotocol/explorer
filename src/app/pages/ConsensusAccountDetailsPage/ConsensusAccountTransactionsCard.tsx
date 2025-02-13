@@ -9,8 +9,7 @@ import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
 import Box from '@mui/material/Box'
-
-const consensusAccountTransactionsContainerId = 'transactions'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext> = context => {
   const { t } = useTranslation()
@@ -19,7 +18,7 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
 
   return (
     <LinkableCardLayout
-      containerId={consensusAccountTransactionsContainerId}
+      containerId={transactionsContainerId}
       title={
         <Box
           sx={{

@@ -13,15 +13,14 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
-import { transactionsContainerId } from './RuntimeBlockTransactionsCard'
 import { BlockLink, BlockHashLink } from '../../components/Blocks/BlockLink'
 import { RouteUtils } from '../../utils/route-utils'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { eventsContainerId } from './RuntimeBlockEventsCard'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
 import { SearchScope } from 'types/searchScope'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { eventsContainerId, transactionsContainerId } from '../../utils/tabAnchors'
 
 export type RuntimeBlockDetailsContext = {
   scope: SearchScope

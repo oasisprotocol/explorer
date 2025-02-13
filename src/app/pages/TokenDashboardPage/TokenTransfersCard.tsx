@@ -7,8 +7,7 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { useTokenInfo, useTokenTransfers } from './hook'
 import { TokenDashboardContext } from './index'
-
-export const tokenTransfersContainerId = 'tokenTransfers'
+import { tokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
