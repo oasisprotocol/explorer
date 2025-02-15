@@ -12,27 +12,16 @@ import { TablePagination } from '../../components/Table/TablePagination'
 import { useTokenInventory } from './hook'
 import { ImageListItemImage } from './ImageListItemImage'
 import { NFTInstanceLink, NFTOwnerLink } from './NFTLinks'
-import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 import { EvmNft } from 'oasis-nexus/api'
 import { To } from 'react-router-dom'
 import { SearchScope } from 'types/searchScope'
 import { inventoryContainerId } from '../../utils/tabAnchors'
 
 export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }) => {
-  const { t } = useTranslation()
   const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
 
   return (
-    <LinkableCardLayout
-      containerId={inventoryContainerId}
-      title={
-        <CardHeaderWithCounter
-          label={t('tokens.inventory')}
-          totalCount={totalCount}
-          isTotalCountClipped={pagination.isTotalCountClipped}
-        />
-      }
-    >
+    <LinkableCardLayout containerId={inventoryContainerId} title="">
       <TokenInventoryView
         inventory={inventory}
         isFetched={isFetched}

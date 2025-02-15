@@ -14,7 +14,6 @@ import { SimplePaginationEngine } from 'app/components/Table/PaginationEngine'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 export const DebondingDelegationsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
-  const { t } = useTranslation()
   const { network } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -26,7 +25,7 @@ export const DebondingDelegationsCard: FC<ValidatorDetailsContext> = ({ scope, a
   const debondingDelegations = data?.data.debonding_delegations
 
   return (
-    <LinkableCardLayout containerId={debondingContainerId} title={t('validator.undelegations')}>
+    <LinkableCardLayout containerId={debondingContainerId} title="">
       <DebondingDelegationsView
         debondingDelegations={debondingDelegations}
         isFetched={isFetched}

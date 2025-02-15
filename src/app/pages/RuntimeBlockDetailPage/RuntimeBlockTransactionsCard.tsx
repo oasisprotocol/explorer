@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
@@ -54,7 +53,6 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, m
 }
 
 export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = props => {
-  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { blockHeight, method, setMethod } = props
 
@@ -69,11 +67,9 @@ export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = prop
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
-            gap: 6,
+            justifyContent: 'end',
           }}
         >
-          {t('common.transactions')}
           {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
         </Box>
       }

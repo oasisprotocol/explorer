@@ -50,10 +50,8 @@ const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope,
 }
 
 export const ConsensusAccountEventsCard: FC<ConsensusAccountDetailsContext> = context => {
-  const { t } = useTranslation()
-
   return (
-    <LinkableCardLayout containerId={eventsContainerId} title={t('common.events')}>
+    <LinkableCardLayout containerId={eventsContainerId} title="">
       <ConsensusAccountEventsList {...context} />
     </LinkableCardLayout>
   )

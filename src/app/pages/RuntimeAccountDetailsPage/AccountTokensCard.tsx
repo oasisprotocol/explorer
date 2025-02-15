@@ -117,7 +117,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
   }))
 
   return (
-    <LinkableCardLayout containerId={tokenContainerId} title={tokenListLabel}>
+    <LinkableCardLayout containerId={tokenContainerId} title="">
       {!!account && !account?.tokenBalances[type]?.length && (
         <CardEmptyState
           label={t('account.emptyTokenList', {

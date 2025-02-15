@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -56,7 +55,6 @@ const TransactionList: FC<{
 }
 
 export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
-  const { t } = useTranslation()
   const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
     deleteParams: ['page'],
   })
@@ -73,11 +71,9 @@ export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = 
         <Box
           sx={{
             display: 'flex',
-            gap: 6,
-            alignItems: 'center',
+            justifyContent: 'end',
           }}
         >
-          {t('common.transactions')}
           {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
         </Box>
       }

@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { ConsensusTransactions } from '../../components/Transactions'
@@ -12,7 +11,6 @@ import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext> = context => {
-  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { method, setMethod } = context
 
@@ -23,11 +21,9 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
         <Box
           sx={{
             display: 'flex',
-            gap: 6,
-            alignItems: 'center',
+            justifyContent: 'end',
           }}
         >
-          {t('common.transactions')}
           {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
         </Box>
       }

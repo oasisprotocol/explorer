@@ -9,10 +9,8 @@ import { TokenDashboardContext } from './index'
 import { holdersContainerId } from '../../utils/tabAnchors'
 
 export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) => {
-  const { t } = useTranslation()
-
   return (
-    <LinkableCardLayout containerId={holdersContainerId} title={t('tokens.holders')}>
+    <LinkableCardLayout containerId={holdersContainerId} title="">
       <TokenHoldersView scope={scope} address={address} />
     </LinkableCardLayout>
   )

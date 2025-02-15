@@ -11,7 +11,6 @@ import { SimplePaginationEngine } from 'app/components/Table/PaginationEngine'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 
 export const DelegatorsCard: FC<ValidatorDetailsContext> = ({ scope, address }) => {
-  const { t } = useTranslation()
   const { network } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -23,7 +22,7 @@ export const DelegatorsCard: FC<ValidatorDetailsContext> = ({ scope, address }) 
   const delegations = data?.data.delegations
 
   return (
-    <LinkableCardLayout containerId={delegatorsContainerId} title={t('validator.delegators')}>
+    <LinkableCardLayout containerId={delegatorsContainerId} title="">
       <DelegatorsCardView
         delegations={delegations}
         isFetched={isFetched}

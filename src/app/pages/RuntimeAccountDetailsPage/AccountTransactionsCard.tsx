@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
@@ -13,7 +12,6 @@ import { transactionsContainerId } from '../../utils/tabAnchors'
 export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context => {
   const { method, setMethod } = context
 
-  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
   return (
@@ -23,11 +21,9 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
-            gap: 6,
+            justifyContent: 'end',
           }}
         >
-          {t('account.transactionsListTitle')}
           {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
         </Box>
       }
