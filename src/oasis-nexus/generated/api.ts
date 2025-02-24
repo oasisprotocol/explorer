@@ -19,6 +19,8 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import getStatusMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusTotalSupplyRawMutator from '../replaceNetworkWithBaseURL';
+import GetConsensusCirculatingSupplyRawMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusBlocksMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusBlocksHeightMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusTransactionsMutator from '../replaceNetworkWithBaseURL';
@@ -2336,6 +2338,130 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetStatusQueryOptions(network,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns the total supply of the consensus layer token.
+ */
+export const GetConsensusTotalSupplyRaw = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+ options?: SecondParameter<typeof GetConsensusTotalSupplyRawMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetConsensusTotalSupplyRawMutator<string>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/total_supply_raw`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusTotalSupplyRawQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',) => {
+    return [`/${network}/consensus/total_supply_raw`] as const;
+    }
+
+    
+export const getGetConsensusTotalSupplyRawQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError = unknown>(network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTotalSupplyRawMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusTotalSupplyRawQueryKey(network);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>> = ({ signal }) => GetConsensusTotalSupplyRaw(network, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetConsensusTotalSupplyRawQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>>
+export type GetConsensusTotalSupplyRawQueryError = unknown
+
+/**
+ * @summary Returns the total supply of the consensus layer token.
+ */
+export const useGetConsensusTotalSupplyRaw = <TData = Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError = unknown>(
+ network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTotalSupplyRawMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusTotalSupplyRawQueryOptions(network,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns the circulating supply of the consensus layer token.
+ */
+export const GetConsensusCirculatingSupplyRaw = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+ options?: SecondParameter<typeof GetConsensusCirculatingSupplyRawMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetConsensusCirculatingSupplyRawMutator<string>(
+      {url: `/${encodeURIComponent(String(network))}/consensus/circulating_supply_raw`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusCirculatingSupplyRawQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',) => {
+    return [`/${network}/consensus/circulating_supply_raw`] as const;
+    }
+
+    
+export const getGetConsensusCirculatingSupplyRawQueryOptions = <TData = Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError = unknown>(network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusCirculatingSupplyRawMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusCirculatingSupplyRawQueryKey(network);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>> = ({ signal }) => GetConsensusCirculatingSupplyRaw(network, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetConsensusCirculatingSupplyRawQueryResult = NonNullable<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>>
+export type GetConsensusCirculatingSupplyRawQueryError = unknown
+
+/**
+ * @summary Returns the circulating supply of the consensus layer token.
+ */
+export const useGetConsensusCirculatingSupplyRaw = <TData = Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError = unknown>(
+ network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusCirculatingSupplyRawMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusCirculatingSupplyRawQueryOptions(network,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
