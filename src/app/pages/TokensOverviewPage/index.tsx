@@ -16,12 +16,15 @@ import { TokenList } from '../../components/Tokens/TokenList'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { VerticalList } from '../../components/VerticalList'
 import { TokenTypeFilter } from '../../components/Tokens/TokenTypeFilter'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const TokensPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
-  const [type, setType] = useState(EvmTokenType.ERC20)
+  const [type, setType] = useTypedSearchParam<EvmTokenType>('type', EvmTokenType.ERC20, {
+    deleteParams: ['page'],
+  })
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
@@ -46,6 +49,8 @@ export const TokensPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
+      // @ts-expect-error Object literal may only specify known properties
+      type,
     },
     {
       query: {
