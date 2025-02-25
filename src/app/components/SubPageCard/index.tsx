@@ -12,7 +12,7 @@ type StyledComponentProps = {
   featured?: boolean
   isLoadingTitle?: boolean
   title?: ReactNode
-  subheader?: string
+  subheader?: ReactNode
   action?: ReactNode
   /**
    * An optional second title which will be displayed under title / subheader / action
