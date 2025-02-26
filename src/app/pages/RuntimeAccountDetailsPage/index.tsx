@@ -42,7 +42,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
   })
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
-  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, isContract)
+  const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, { enabled: isContract })
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 

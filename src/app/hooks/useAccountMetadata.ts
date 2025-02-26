@@ -29,7 +29,11 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
   const registryData = isPontusX ? pontusXData : oasisData
 
   // Also look up self-professed metadata (for tokens)
-  const { token, isLoading: isTokenLoading, isError: isTokenError } = useTokenInfo(scope, address)
+  const {
+    token,
+    isLoading: isTokenLoading,
+    isError: isTokenError,
+  } = useTokenInfo(scope, address, { enabled: !registryData?.metadata, useCaching: true })
   const tokenData: AccountMetadataInfo = {
     metadata: token ? { address: token.contract_addr, name: token.name, source: 'SelfProfessed' } : undefined,
     isLoading: isTokenLoading,

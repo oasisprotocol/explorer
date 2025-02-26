@@ -17,20 +17,29 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 
-export const useTokenInfo = (scope: SearchScope, address: string, enabled = true) => {
+interface UseTokenInfoParams {
+  enabled?: boolean
+  useCaching?: boolean
+}
+
+export const useTokenInfo = (scope: SearchScope, address: string, params: UseTokenInfoParams = {}) => {
   const { network, layer } = scope
+  const { enabled, useCaching } = params
   if (layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
   const query = useGetRuntimeEvmTokensAddress(network, layer, address, {
-    query: { enabled },
+    query: {
+      enabled,
+      staleTime: useCaching ? 3600000 : undefined,
+    },
   })
   const token = query.data?.data
   const { isLoading, isError, isFetched } = query
   return {
     token,
-    isLoading: isLoading && enabled, // By default, we get true for isLoading on disabled queries. We don't want that.
+    isLoading: isLoading && !!enabled, // By default, we get true for isLoading on disabled queries. We don't want that.
     isError,
     isFetched,
   }
