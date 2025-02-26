@@ -5,6 +5,7 @@ import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-acc
 import { useOasisAccountMetadata, useSearchForOasisAccountsByName } from '../data/oasis-account-names'
 import { getOasisAddress } from '../utils/helpers'
 import { isLocalnet } from '../utils/route-utils'
+import { useTokenInfo } from '../pages/TokenDashboardPage/hook'
 
 /**
  * Find out the metadata for an account
@@ -15,6 +16,7 @@ import { isLocalnet } from '../utils/route-utils'
  * Doesn't throw if it fails.
  */
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
+  // Look up metadata specified by us
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
   const pontusXData = usePontusXAccountMetadata(address, {
     enabled: isPontusX,
@@ -24,7 +26,21 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     enabled: !isPontusX && !isLocalnet(scope.network),
     useErrorBoundary: false,
   })
-  return isPontusX ? pontusXData : oasisData
+  const registryData = isPontusX ? pontusXData : oasisData
+
+  // Also look up self-professed metadata (for tokens)
+  const {
+    token,
+    isLoading: isTokenLoading,
+    isError: isTokenError,
+  } = useTokenInfo(scope, address, { enabled: !registryData?.metadata, useCaching: true })
+  const tokenData: AccountMetadataInfo = {
+    metadata: token ? { address: token.contract_addr, name: token.name, source: 'SelfProfessed' } : undefined,
+    isLoading: isTokenLoading,
+    isError: isTokenError,
+  }
+
+  return registryData?.metadata ? registryData : tokenData
 }
 
 /** Doesn't throw if it fails. */

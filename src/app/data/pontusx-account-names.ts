@@ -27,6 +27,7 @@ const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> =>
   const list: AccountMetadata[] = []
   Object.entries(response.data).forEach(([evmAddress, name]) => {
     const account: AccountMetadata = {
+      source: 'Registry',
       address: getOasisAddress(evmAddress),
       name: name as string,
     }

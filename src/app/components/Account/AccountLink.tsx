@@ -13,6 +13,7 @@ import Box from '@mui/material/Box'
 import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
+import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
 
 const WithTypographyAndLink: FC<{
   to: string
@@ -117,22 +118,35 @@ export const AccountLink: FC<Props> = ({
     </Box>
   ) : undefined
 
+  const tooltipTitle = (
+    <div>
+      {showAccountName && (
+        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>
+          <span>-</span>
+          <AccountMetadataSourceIndicator source={accountMetadata!.source} withText />
+        </Box>
+      )}
+      <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+      {extraTooltipWithIcon}
+    </div>
+  )
+
   // Are we in a situation when we should always trim?
   if (alwaysTrim || (alwaysTrimOnTablet && isTablet)) {
     // In a table, we only ever want a short line
 
     return (
       <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip
-          title={
-            <div>
-              {showAccountName && <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>}
-              <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
-              {extraTooltipWithIcon}
-            </div>
-          }
-        >
-          {showAccountName ? trimLongString(accountName, 12, 0) : trimLongString(address, 6, 6)}
+        <MaybeWithTooltip title={tooltipTitle}>
+          {showAccountName ? (
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+              <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
+              {trimLongString(accountName, 12, 0)}
+            </Box>
+          ) : (
+            trimLongString(address, 6, 6)
+          )}
         </MaybeWithTooltip>
       </WithTypographyAndLink>
     )
@@ -144,11 +158,12 @@ export const AccountLink: FC<Props> = ({
 
     return (
       <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={extraTooltipWithIcon}>
+        <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
-            <span>
+            <Box sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
+              <AccountMetadataSourceIndicator source={accountMetadata!.source} />
               <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
-            </span>
+            </Box>
           ) : (
             address
           )}
@@ -163,12 +178,15 @@ export const AccountLink: FC<Props> = ({
   return (
     <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
       <>
-        <AdaptiveHighlightedText
-          text={showAccountName ? accountName : ''}
-          pattern={highlightedPartOfName}
-          extraTooltip={extraTooltip}
-        />
-        <AdaptiveTrimmer text={address} strategy="middle" extraTooltip={extraTooltip} />
+        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
+          <AdaptiveHighlightedText
+            text={showAccountName ? accountName : ''}
+            pattern={highlightedPartOfName}
+            extraTooltip={tooltipTitle}
+          />
+        </Box>
+        <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
       </>
     </WithTypographyAndLink>
   )

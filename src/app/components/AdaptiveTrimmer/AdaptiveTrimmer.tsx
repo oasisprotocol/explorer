@@ -5,7 +5,16 @@ import { trimLongString } from 'app/utils/trimLongString'
 type AdaptiveTrimmerProps = {
   text: string | undefined
   strategy: 'middle' | 'end'
+
+  /**
+   * Normally, the tooltip will be the text. Do you want to add something extra?
+   */
   extraTooltip?: ReactNode
+
+  /**
+   * Normally, the tooltip will be the text. Do you want to replace it with something else?
+   */
+  tooltipOverride?: ReactNode
 }
 
 /**
@@ -17,7 +26,12 @@ type AdaptiveTrimmerProps = {
  * The implementation is based on AdaptiveDynamicTrimmer,
  * supplying it with a generator function which simply trims the given text to the wanted length.
  */
-export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({ text = '', strategy = 'end', extraTooltip }) => (
+export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({
+  text = '',
+  strategy = 'end',
+  extraTooltip,
+  tooltipOverride,
+}) => (
   <AdaptiveDynamicTrimmer
     getFullContent={() => ({ content: text, length: text.length })}
     getShortenedContent={length =>
@@ -25,6 +39,7 @@ export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({ text = '', strategy 
         ? trimLongString(text, Math.floor(length / 2) - 1, Math.floor(length / 2) - 1)!
         : trimLongString(text, length, 0)!
     }
+    tooltipOverride={tooltipOverride}
     extraTooltip={extraTooltip}
   />
 )

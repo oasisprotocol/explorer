@@ -14,6 +14,8 @@
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
     "listTitle": "Accounts",
+    "namedByOasis": "Name appointed by Oasis",
+    "namedBySelf": "Name self-acclaimed",
     "noTokens": "This account holds no tokens",
     "noBalances": "This account currently has no balances.",
     "notStaking": "There are currently no active delegations.",

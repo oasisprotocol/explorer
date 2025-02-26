@@ -32,6 +32,7 @@ import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
+import Box from '@mui/material/Box'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -173,15 +174,14 @@ export const RuntimeTransactionDetailView: FC<{
                 }}
               >
                 {(transaction?.signers ?? []).map((signer, index) => (
-                  <>
+                  <Box key={`signer-${index}-link`} sx={{ display: 'inline-flex', alignItems: 'center' }}>
                     <AccountLink
-                      key={`signer-${index}`}
                       scope={transaction}
                       address={(signer.address_eth ?? signer.address) as string}
                     />
                     <CopyToClipboard value={signer.address_eth ?? signer.address} />
                     <br />
-                  </>
+                  </Box>
                 ))}
               </dd>
             </>
