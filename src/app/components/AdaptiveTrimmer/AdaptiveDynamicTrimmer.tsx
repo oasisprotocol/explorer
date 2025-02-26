@@ -9,7 +9,16 @@ type AdaptiveDynamicTrimmerProps = {
     length: number
   }
   getShortenedContent: (wantedLength: number) => ReactNode
+
+  /**
+   * Normally, the tooltip will be the full content. Do you want to add something?
+   */
   extraTooltip: ReactNode
+
+  /**
+   * Normally, the tooltip will be the full content. Do you want to replace it with something else?
+   */
+  tooltipOverride?: ReactNode
 }
 
 /**
@@ -25,6 +34,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   getFullContent,
   getShortenedContent,
   extraTooltip,
+  tooltipOverride,
 }) => {
   // Initial setup
   const textRef = useRef<HTMLDivElement | null>(null)
@@ -125,7 +135,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   const title =
     currentLength !== fullLength ? (
       <Box>
-        <Box>{fullContent}</Box>
+        <Box>{tooltipOverride ?? fullContent}</Box>
         {extraTooltip && (
           <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
             <InfoIcon />
