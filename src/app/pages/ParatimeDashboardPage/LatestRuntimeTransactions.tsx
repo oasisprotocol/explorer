@@ -17,7 +17,7 @@ import { RuntimeTransactionTypeFilter } from '../../components/Transactions/Runt
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 
-const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
+const limit = 15 // NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
 
 export const LatestRuntimeTransactions: FC<{
