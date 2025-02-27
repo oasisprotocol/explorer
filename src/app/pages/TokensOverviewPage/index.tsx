@@ -49,7 +49,6 @@ export const TokensPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
-      // @ts-expect-error Object literal may only specify known properties
       type,
     },
     {
