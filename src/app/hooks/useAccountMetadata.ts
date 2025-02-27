@@ -33,7 +33,10 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     token,
     isLoading: isTokenLoading,
     isError: isTokenError,
-  } = useTokenInfo(scope, address, { enabled: !registryData?.metadata, useCaching: true })
+  } = useTokenInfo(scope, address, {
+    enabled: !registryData?.metadata && scope.layer !== Layer.consensus,
+    useCaching: true,
+  })
   const tokenData: AccountMetadataInfo = {
     metadata: token ? { address: token.contract_addr, name: token.name, source: 'SelfProfessed' } : undefined,
     isLoading: isTokenLoading,

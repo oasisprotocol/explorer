@@ -10,6 +10,7 @@ import {
   useGetRuntimeEvmTokensAddressNftsId,
   RuntimeEventType,
   GetRuntimeEventsParams,
+  Runtime,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
@@ -25,11 +26,11 @@ interface UseTokenInfoParams {
 export const useTokenInfo = (scope: SearchScope, address: string, params: UseTokenInfoParams = {}) => {
   const { network, layer } = scope
   const { enabled, useCaching } = params
-  if (layer === Layer.consensus) {
+  if (enabled && layer === Layer.consensus) {
     // There can be no ERC-20 or ERC-721 tokens on consensus
     throw AppErrors.UnsupportedLayer
   }
-  const query = useGetRuntimeEvmTokensAddress(network, layer, address, {
+  const query = useGetRuntimeEvmTokensAddress(network, layer as Runtime, address, {
     query: {
       enabled,
       staleTime: useCaching ? 3600000 : undefined,
