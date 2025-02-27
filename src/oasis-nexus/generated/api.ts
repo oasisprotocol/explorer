@@ -179,6 +179,11 @@ If unset, the tokens will be sorted by number of holders.
 
  */
 sort_by?: GetRuntimeEvmTokensSortBy;
+/**
+ * The type of tokens to return.
+
+ */
+type?: EvmTokenType;
 };
 
 export type GetRuntimeEventsParams = {
@@ -1024,7 +1029,7 @@ The current heuristic sets this to `true` for:
  - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
 Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
  */
-  is_likely_native_token_transfer?: boolean;
+  is_likely_native_token_transfer: boolean;
   /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
 In practice, Nexus currently expects only the following methods:
   - "accounts.Transfer"
