@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
+import { EvmTokenType, Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
@@ -14,11 +15,16 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { TokenList } from '../../components/Tokens/TokenList'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { VerticalList } from '../../components/VerticalList'
+import { TokenTypeFilter } from '../../components/Tokens/TokenTypeFilter'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
 export const TokensPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
+  const [type, setType] = useTypedSearchParam<EvmTokenType>('type', EvmTokenType.ERC20, {
+    deleteParams: ['page'],
+  })
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
@@ -43,6 +49,7 @@ export const TokensPage: FC = () => {
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
+      type,
     },
     {
       query: {
@@ -70,6 +77,11 @@ export const TokensPage: FC = () => {
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
+        subheader={
+          <Box sx={{ display: 'inline-flex', ml: 4, fontStyle: 'normal' }}>
+            <TokenTypeFilter onSelect={setType} value={type} />
+          </Box>
+        }
       >
         {tableView === TableLayout.Horizontal && (
           <TokenList
