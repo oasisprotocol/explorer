@@ -57,6 +57,10 @@ import GetRuntimeEvmTokensAddressNftsIdMutator from '../replaceNetworkWithBaseUR
 import GetRuntimeAccountsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeAccountsAddressNftsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdTransactionsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdInstancesMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
 export type GetLayerStatsActiveAccountsParams = {
@@ -104,6 +108,56 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 
  */
 window_step_seconds?: number;
+};
+
+export type GetRuntimeRoflAppsIdInstancesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflAppsIdTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string[];
+};
+
+export type GetRuntimeRoflAppsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetRuntimeAccountsAddressNftsParams = {
@@ -660,6 +714,79 @@ export type HumanReadableErrorResponse = {
   msg: string;
 };
 
+export interface RoflInstance {
+  /** The optional identifier of the endorsing entity. */
+  endorsing_entity_id?: string;
+  /** The identifier of the endorsing node. */
+  endorsing_node_id: string;
+  /** The epoch at which the instance expires. */
+  expiration_epoch: number;
+  /** The extra endorsed public keys. Extra keys can be Ed25519, Secp256k1, or Sr25519. And
+are stored as json with included type information.
+ */
+  extra_keys: string[];
+  /** The runtime attestation public key (Ed25519). */
+  rak: string;
+  /** The runtime encryption public key (x25519). */
+  rek: string;
+}
+
+export type RoflAppInstanceListAllOf = {
+  instances: RoflInstance[];
+};
+
+export type RoflAppInstanceList = List & RoflAppInstanceListAllOf;
+
+/**
+ * Arbitrary SEK-encrypted key-value pairs.
+ */
+export type RoflAppSecrets = { [key: string]: any };
+
+/**
+ * The application authentication policy.
+ */
+export type RoflAppPolicy = { [key: string]: any };
+
+/**
+ * Arbitrary key-value pairs.
+ */
+export type RoflAppMetadata = { [key: string]: any };
+
+export interface RoflApp {
+  /** Registered application instances. Only active instances are returned.
+Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
+ */
+  active_instances: RoflInstance[];
+  /** The application administrator address. */
+  admin: string;
+  /** The date and time when the application was created. */
+  date_created: string;
+  /** The identifier of the ROFL application. */
+  id: string;
+  /** Arbitrary key-value pairs. */
+  metadata: RoflAppMetadata;
+  /** The number of currently active instances of the application. */
+  num_active_instances: number;
+  /** The application authentication policy. */
+  policy: RoflAppPolicy;
+  /** Whether the application has been removed. */
+  removed: boolean;
+  /** Arbitrary SEK-encrypted key-value pairs. */
+  secrets: RoflAppSecrets;
+  /** The secrets encryption public key. */
+  sek: string;
+}
+
+/**
+ * A list of ROFL apps.
+
+ */
+export type RoflAppListAllOf = {
+  rofl_apps: RoflApp[];
+};
+
+export type RoflAppList = List & RoflAppListAllOf;
+
 export interface ActiveAccounts {
   /** The number of active accounts for the 24hour window ending at window_end. */
   active_accounts: number;
@@ -752,6 +879,24 @@ export type EvmNftListAllOf = {
 };
 
 export type EvmNftList = List & EvmNftListAllOf;
+
+export interface EvmRefToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+}
 
 export interface EvmTokenSwap {
   /** The round when this swap pair was created.
@@ -876,24 +1021,6 @@ export const EvmTokenType = {
   ERC20: 'ERC20',
   ERC721: 'ERC721',
 } as const;
-
-export interface EvmRefToken {
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** Name of the token, as provided by token contract's `name()` method. */
-  name?: string;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  /** The heuristically determined interface that the token contract implements.
-A less specialized variant of the token might be detected; for example, an
-ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
-detected or is not supported, this field will be null/absent.
- */
-  type: EvmTokenType;
-}
 
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
@@ -1349,6 +1476,8 @@ export type ProposalVotesAllOf = {
   votes: ProposalVote[];
 };
 
+export type ProposalVotes = List & ProposalVotesAllOf;
+
 /**
  * The state of the proposal.
  */
@@ -1370,6 +1499,46 @@ export interface ProposalTarget {
   consensus_protocol?: string;
   runtime_committee_protocol?: string;
   runtime_host_protocol?: string;
+}
+
+/**
+ * A governance proposal.
+
+ */
+export interface Proposal {
+  /** The proposal to cancel, if this proposal proposes
+cancelling an existing proposal.
+ */
+  cancels?: number;
+  /** The epoch at which voting for this proposal will close. */
+  closes_at: number;
+  /** The epoch at which this proposal was created. */
+  created_at: number;
+  /** The deposit attached to this proposal. */
+  deposit: TextBigInt;
+  /** The (optional) description of the proposal. */
+  description?: string;
+  /** The epoch at which the proposed upgrade will happen. */
+  epoch?: number;
+  /** The name of the upgrade handler. */
+  handler?: string;
+  /** The unique identifier of the proposal. */
+  id: number;
+  /** The number of invalid votes for this proposal, after tallying.
+ */
+  invalid_votes: TextBigInt;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
+  state: ProposalState;
+  /** The staking address of the proposal submitter. */
+  submitter: string;
+  target?: ProposalTarget;
+  /** The (optional) title of the proposal. */
+  title?: string;
 }
 
 /**
@@ -2179,8 +2348,6 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
-export type ProposalVotes = List & ProposalVotesAllOf;
-
 export type TransactionList = List & TransactionListAllOf;
 
 export type DebondingDelegationList = List & DebondingDelegationListAllOf;
@@ -2213,46 +2380,6 @@ export type Address = string;
  * @pattern ^-?[0-9]+$
  */
 export type TextBigInt = string;
-
-/**
- * A governance proposal.
-
- */
-export interface Proposal {
-  /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal.
- */
-  cancels?: number;
-  /** The epoch at which voting for this proposal will close. */
-  closes_at: number;
-  /** The epoch at which this proposal was created. */
-  created_at: number;
-  /** The deposit attached to this proposal. */
-  deposit: TextBigInt;
-  /** The (optional) description of the proposal. */
-  description?: string;
-  /** The epoch at which the proposed upgrade will happen. */
-  epoch?: number;
-  /** The name of the upgrade handler. */
-  handler?: string;
-  /** The unique identifier of the proposal. */
-  id: number;
-  /** The number of invalid votes for this proposal, after tallying.
- */
-  invalid_votes: TextBigInt;
-  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
-  parameters_change?: unknown;
-  /** The name of the module whose parameters are to be changed
-by this 'parameters_change' proposal.
- */
-  parameters_change_module?: string;
-  state: ProposalState;
-  /** The staking address of the proposal submitter. */
-  submitter: string;
-  target?: ProposalTarget;
-  /** The (optional) title of the proposal. */
-  title?: string;
-}
 
 /**
  * An Oasis-style (bech32) address.
@@ -4975,6 +5102,297 @@ export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof GetRuntime
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeStatusQueryOptions(network,runtime,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const GetRuntimeRoflApps = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsMutator<RoflAppList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,) => {
+    return [`/${network}/${runtime}/rofl_apps`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsQueryKey(network,runtime,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflApps>>> = ({ signal }) => GetRuntimeRoflApps(network,runtime,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflApps>>>
+export type GetRuntimeRoflAppsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const useGetRuntimeRoflApps = <TData = Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsQueryOptions(network,runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a ROFL app on the runtime.
+ */
+export const GetRuntimeRoflAppsId = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdMutator<RoflApp>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}`] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdQueryKey(network,runtime,id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>> = ({ signal }) => GetRuntimeRoflAppsId(network,runtime,id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>>
+export type GetRuntimeRoflAppsIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a ROFL app on the runtime.
+ */
+export const useGetRuntimeRoflAppsId = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdQueryOptions(network,runtime,id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of transactions for a given ROFL app.
+ */
+export const GetRuntimeRoflAppsIdTransactions = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdTransactionsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}/transactions`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdTransactionsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}/transactions`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdTransactionsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdTransactionsQueryKey(network,runtime,id,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>> = ({ signal }) => GetRuntimeRoflAppsIdTransactions(network,runtime,id,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>>
+export type GetRuntimeRoflAppsIdTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of transactions for a given ROFL app.
+ */
+export const useGetRuntimeRoflAppsIdTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdTransactionsQueryOptions(network,runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL app instances for a given ROFL app.
+ */
+export const GetRuntimeRoflAppsIdInstances = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdInstancesMutator<RoflAppInstanceList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}/instances`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}/instances`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdInstancesQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError = unknown>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesQueryKey(network,runtime,id,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>> = ({ signal }) => GetRuntimeRoflAppsIdInstances(network,runtime,id,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdInstancesQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>>
+export type GetRuntimeRoflAppsIdInstancesQueryError = unknown
+
+/**
+ * @summary Returns a list of ROFL app instances for a given ROFL app.
+ */
+export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError = unknown>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesQueryOptions(network,runtime,id,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
