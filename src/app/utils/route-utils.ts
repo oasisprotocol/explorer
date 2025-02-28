@@ -287,6 +287,17 @@ const validateConsensusAddressParam = (address: string) => {
   return isValid
 }
 
+const validateRoflAppIdParam = (id: string) => {
+  // TOOD: Use real validation once added to client SDK
+  const isValid = id.startsWith('rofl1')
+
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidAddress)
+  }
+
+  return isValid
+}
+
 const validateRuntimeAddressParam = (address: string) => {
   const isValid = isValidOasisAddress(address) || isValidEthAddress(address)
   if (!isValid) {
@@ -326,6 +337,11 @@ export type AddressLoaderData = {
   searchTerm: string
 }
 
+export type RoflAppLoaderData = {
+  id: string
+  searchTerm: string
+}
+
 const validateProposalIdParam = (proposalId: string) => {
   const isValid = isValidProposalId(proposalId)
   if (!isValid) {
@@ -352,6 +368,16 @@ export const runtimeAddressParamLoader =
     validateRuntimeAddressParam(rawAddress)
     return {
       address: isValidEthAddress(rawAddress) ? toChecksumAddress(rawAddress) : rawAddress,
+      searchTerm: getSearchTermFromRequest(request),
+    }
+  }
+
+export const roflAppParamLoader =
+  (queryParam: string = 'id') =>
+  ({ params, request }: LoaderFunctionArgs): RoflAppLoaderData => {
+    validateRoflAppIdParam(params[queryParam]!)
+    return {
+      id: params[queryParam]!,
       searchTerm: getSearchTermFromRequest(request),
     }
   }
