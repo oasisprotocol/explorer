@@ -57,6 +57,8 @@ import GetRuntimeEvmTokensAddressNftsIdMutator from '../replaceNetworkWithBaseUR
 import GetRuntimeAccountsAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeAccountsAddressNftsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
 export type GetLayerStatsActiveAccountsParams = {
@@ -104,6 +106,19 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 
  */
 window_step_seconds?: number;
+};
+
+export type GetRuntimeRoflAppsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetRuntimeAccountsAddressNftsParams = {
@@ -655,6 +670,63 @@ export type HumanReadableErrorResponse = {
   msg: string;
 };
 
+export interface RoflInstance {
+  /** The optional identifier of the endorsing entity. */
+  endorsing_entity_id: string;
+  /** The identifier of the endorsing node. */
+  endorsing_node_id: string;
+  /** The epoch at which the instance expires. */
+  expiration_epoch: number;
+  /** The extra endorsed public keys. */
+  extra_keys: string[];
+  /** The runtime attestation public key. */
+  rak: string;
+  /** The runtime encryption public key. */
+  rek: string;
+}
+
+/**
+ * Arbitrary SEK-encrypted key-value pairs.
+ */
+export type RoflAppSecrets = { [key: string]: any };
+
+/**
+ * The application authentication policy.
+ */
+export type RoflAppPolicy = { [key: string]: any };
+
+/**
+ * Arbitrary key-value pairs.
+ */
+export type RoflAppMetadata = { [key: string]: any };
+
+export interface RoflApp {
+  /** The application administrator address. */
+  admin: string;
+  /** The identifier of the ROFL application. */
+  id: string;
+  /** Registered application instances. */
+  instances: RoflInstance[];
+  /** Arbitrary key-value pairs. */
+  metadata: RoflAppMetadata;
+  /** The application authentication policy. */
+  policy: RoflAppPolicy;
+  /** Arbitrary SEK-encrypted key-value pairs. */
+  secrets: RoflAppSecrets;
+  /** The secrets encryption public key. */
+  sek: string;
+}
+
+/**
+ * A list of ROFL apps.
+
+ */
+export type RoflAppListAllOf = {
+  rofl_apps: RoflApp[];
+};
+
+export type RoflAppList = List & RoflAppListAllOf;
+
 export interface ActiveAccounts {
   /** The number of active accounts for the 24hour window ending at window_end. */
   active_accounts: number;
@@ -747,6 +819,24 @@ export type EvmNftListAllOf = {
 };
 
 export type EvmNftList = List & EvmNftListAllOf;
+
+export interface EvmRefToken {
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+}
 
 export interface EvmTokenSwap {
   /** The round when this swap pair was created.
@@ -872,24 +962,6 @@ export const EvmTokenType = {
   ERC721: 'ERC721',
 } as const;
 
-export interface EvmRefToken {
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** Name of the token, as provided by token contract's `name()` method. */
-  name?: string;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  /** The heuristically determined interface that the token contract implements.
-A less specialized variant of the token might be detected; for example, an
-ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
-detected or is not supported, this field will be null/absent.
- */
-  type: EvmTokenType;
-}
-
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
   active_nodes: number;
@@ -952,150 +1024,6 @@ export interface RuntimeTransactionEncryptionEnvelope {
  * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
-
-/**
- * A runtime transaction.
-
- */
-export interface RuntimeTransaction {
-  /** A reasonable "amount" associated with this transaction, if
-applicable. The meaning varies based on the transaction method.
-Usually in native denomination, ParaTime units. As a string.
- */
-  amount?: string;
-  /** The denomination of the "amount" associated with this transaction, if applicable.
- */
-  amount_symbol?: string;
-  /** The method call body. May be null if the transaction was malformed. */
-  body?: RuntimeTransactionBody;
-  /** The fee that was charged for the transaction execution (total, native denomination,
-ParaTime base units, as a string).
-For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
-For other transactions this equals to `fee`.
- */
-  charged_fee: string;
-  /** The data relevant to the EVM encrypted transaction. Only present for encrypted
-transactions in confidential EVM runtimes like Sapphire.
-Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
- */
-  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
-  /** Error details of a failed transaction. */
-  error?: TxError;
-  /** The Ethereum cryptographic hash of this transaction's encoding.
-Absent for non-Ethereum-format transactions.
- */
-  eth_hash?: string;
-  /** The name of the smart contract function called by the transaction.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_name?: string;
-  /** The decoded parameters with which the smart contract function was called.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_params?: EvmAbiParam[];
-  /** The fee that this transaction's sender committed to pay to execute
-it (total ParaTime base units, as a string).
- */
-  fee: string;
-  /** the base64-encoded id of the fee proxy.
- */
-  fee_proxy_id?: string;
-  /** The module of the fee proxy.
- */
-  fee_proxy_module?: string;
-  /** The denomination of the fee.
- */
-  fee_symbol: string;
-  /** The maximum gas that this transaction's sender committed to use to
-execute it.
- */
-  gas_limit: number;
-  /** The total gas used by the transaction. */
-  gas_used: number;
-  /** The Oasis cryptographic hash of this transaction's encoding. */
-  hash: string;
-  /** The 0-based index of this transaction in the block. */
-  index: number;
-  /** Whether this transaction likely represents a native token transfer.
-This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
-The current heuristic sets this to `true` for:
- - Transactions with method "accounts.Transfer". Those are always native token transfers.
- - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
-Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
- */
-  is_likely_native_token_transfer?: boolean;
-  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
-In practice, Nexus currently expects only the following methods:
-  - "accounts.Transfer"
-  - "consensus.Deposit"
-  - "consensus.Withdraw"
-  - "consensus.Delegate"
-  - "consensus.Undelegate"
-  - "evm.Create"
-  - "evm.Call"
-  - "rofl.Create"
-  - "rofl.Update"
-  - "rofl.Remove"
-  - "rofl.Register"
-May be null if the transaction was malformed or encrypted.
- */
-  method?: string;
-  /**
-   * The nonce used with this transaction's 0th signer, to prevent replay.
-DEPRECATED: This field will be removed in the future in favor of the signers field.
-
-   * @deprecated
-   */
-  nonce_0: number;
-  /** The data relevant to the Oasis-style encrypted transaction.
-Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
- */
-  oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
-  /** The block round at which this transaction was executed. */
-  round: number;
-  /**
-   * The Oasis address of this transaction's 0th signer.
-Unlike Ethereum, Oasis natively supports multiple-signature transactions.
-However, the great majority of transactions only have a single signer in practice.
-DEPRECATED: This field will be removed in the future in favor of the signers field.
-
-   * @deprecated
-   */
-  sender_0: Address;
-  /**
-   * The Ethereum address of this transaction's 0th signer.
-DEPRECATED: This field will be removed in the future in favor of the signers field.
-
-   * @deprecated
-   */
-  sender_0_eth?: string;
-  /** The signers of this transaction. */
-  signers: RuntimeTransactionSigner[];
-  /** The total byte size of the transaction. */
-  size: number;
-  /** Whether this transaction successfully executed.
-Can be absent (meaning "unknown") for confidential runtimes.
- */
-  success?: boolean;
-  /** The second-granular consensus time when this tx's block was proposed. */
-  timestamp: string;
-  /** A reasonable "to" Oasis address associated with this transaction,
-if applicable. The meaning varies based on the transaction method. Some notable examples:
-  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
-  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
-  - For `method = "evm.Call"`, this is the address of the called smart contract
- */
-  to?: Address;
-  /** A reasonable "to" Ethereum address associated with this transaction,
- */
-  to_eth?: string;
-}
 
 /**
  * A list of runtime transactions.
@@ -1204,6 +1132,150 @@ export interface EvmAbiParam {
   value: unknown;
 }
 
+/**
+ * A runtime transaction.
+
+ */
+export interface RuntimeTransaction {
+  /** A reasonable "amount" associated with this transaction, if
+applicable. The meaning varies based on the transaction method.
+Usually in native denomination, ParaTime units. As a string.
+ */
+  amount?: string;
+  /** The denomination of the "amount" associated with this transaction, if applicable.
+ */
+  amount_symbol?: string;
+  /** The method call body. May be null if the transaction was malformed. */
+  body?: RuntimeTransactionBody;
+  /** The fee that was charged for the transaction execution (total, native denomination,
+ParaTime base units, as a string).
+For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
+For other transactions this equals to `fee`.
+ */
+  charged_fee: string;
+  /** The data relevant to the EVM encrypted transaction. Only present for encrypted
+transactions in confidential EVM runtimes like Sapphire.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
+  /** Error details of a failed transaction. */
+  error?: TxError;
+  /** The Ethereum cryptographic hash of this transaction's encoding.
+Absent for non-Ethereum-format transactions.
+ */
+  eth_hash?: string;
+  /** The name of the smart contract function called by the transaction.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_name?: string;
+  /** The decoded parameters with which the smart contract function was called.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_params?: EvmAbiParam[];
+  /** The fee that this transaction's sender committed to pay to execute
+it (total ParaTime base units, as a string).
+ */
+  fee: string;
+  /** the base64-encoded id of the fee proxy.
+ */
+  fee_proxy_id?: string;
+  /** The module of the fee proxy.
+ */
+  fee_proxy_module?: string;
+  /** The denomination of the fee.
+ */
+  fee_symbol: string;
+  /** The maximum gas that this transaction's sender committed to use to
+execute it.
+ */
+  gas_limit: number;
+  /** The total gas used by the transaction. */
+  gas_used: number;
+  /** The Oasis cryptographic hash of this transaction's encoding. */
+  hash: string;
+  /** The 0-based index of this transaction in the block. */
+  index: number;
+  /** Whether this transaction likely represents a native token transfer.
+This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
+The current heuristic sets this to `true` for:
+ - Transactions with method "accounts.Transfer". Those are always native token transfers.
+ - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
+Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
+ */
+  is_likely_native_token_transfer: boolean;
+  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
+In practice, Nexus currently expects only the following methods:
+  - "accounts.Transfer"
+  - "consensus.Deposit"
+  - "consensus.Withdraw"
+  - "consensus.Delegate"
+  - "consensus.Undelegate"
+  - "evm.Create"
+  - "evm.Call"
+  - "rofl.Create"
+  - "rofl.Update"
+  - "rofl.Remove"
+  - "rofl.Register"
+May be null if the transaction was malformed or encrypted.
+ */
+  method?: string;
+  /**
+   * The nonce used with this transaction's 0th signer, to prevent replay.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  nonce_0: number;
+  /** The data relevant to the Oasis-style encrypted transaction.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
+  /** The block round at which this transaction was executed. */
+  round: number;
+  /**
+   * The Oasis address of this transaction's 0th signer.
+Unlike Ethereum, Oasis natively supports multiple-signature transactions.
+However, the great majority of transactions only have a single signer in practice.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  sender_0: Address;
+  /**
+   * The Ethereum address of this transaction's 0th signer.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  sender_0_eth?: string;
+  /** The signers of this transaction. */
+  signers: RuntimeTransactionSigner[];
+  /** The total byte size of the transaction. */
+  size: number;
+  /** Whether this transaction successfully executed.
+Can be absent (meaning "unknown") for confidential runtimes.
+ */
+  success?: boolean;
+  /** The second-granular consensus time when this tx's block was proposed. */
+  timestamp: string;
+  /** A reasonable "to" Oasis address associated with this transaction,
+if applicable. The meaning varies based on the transaction method. Some notable examples:
+  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
+  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
+  - For `method = "evm.Call"`, this is the address of the called smart contract
+ */
+  to?: Address;
+  /** A reasonable "to" Ethereum address associated with this transaction,
+ */
+  to_eth?: string;
+}
+
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
 
 
@@ -1222,6 +1294,7 @@ export const RuntimeEventType = {
   roflapp_created: 'rofl.app_created',
   roflapp_updated: 'rofl.app_updated',
   roflapp_removed: 'rofl.app_removed',
+  roflinstance_registered: 'rofl.instance_registered',
 } as const;
 
 /**
@@ -1317,8 +1390,6 @@ export type RuntimeBlockListAllOf = {
   blocks: RuntimeBlock[];
 };
 
-export type RuntimeBlockList = List & RuntimeBlockListAllOf;
-
 export interface ProposalVote {
   /** The staking address casting this vote. */
   address: string;
@@ -1341,6 +1412,8 @@ export type ProposalVotesAllOf = {
   votes: ProposalVote[];
 };
 
+export type ProposalVotes = List & ProposalVotesAllOf;
+
 /**
  * The state of the proposal.
  */
@@ -1362,6 +1435,46 @@ export interface ProposalTarget {
   consensus_protocol?: string;
   runtime_committee_protocol?: string;
   runtime_host_protocol?: string;
+}
+
+/**
+ * A governance proposal.
+
+ */
+export interface Proposal {
+  /** The proposal to cancel, if this proposal proposes
+cancelling an existing proposal.
+ */
+  cancels?: number;
+  /** The epoch at which voting for this proposal will close. */
+  closes_at: number;
+  /** The epoch at which this proposal was created. */
+  created_at: number;
+  /** The deposit attached to this proposal. */
+  deposit: TextBigInt;
+  /** The (optional) description of the proposal. */
+  description?: string;
+  /** The epoch at which the proposed upgrade will happen. */
+  epoch?: number;
+  /** The name of the upgrade handler. */
+  handler?: string;
+  /** The unique identifier of the proposal. */
+  id: number;
+  /** The number of invalid votes for this proposal, after tallying.
+ */
+  invalid_votes: TextBigInt;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
+  /** The name of the module whose parameters are to be changed
+by this 'parameters_change' proposal.
+ */
+  parameters_change_module?: string;
+  state: ProposalState;
+  /** The staking address of the proposal submitter. */
+  submitter: string;
+  target?: ProposalTarget;
+  /** The (optional) title of the proposal. */
+  title?: string;
 }
 
 /**
@@ -2171,7 +2284,7 @@ the query would return with limit=infinity.
   total_count: number;
 }
 
-export type ProposalVotes = List & ProposalVotesAllOf;
+export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 export type TransactionList = List & TransactionListAllOf;
 
@@ -2205,46 +2318,6 @@ export type Address = string;
  * @pattern ^-?[0-9]+$
  */
 export type TextBigInt = string;
-
-/**
- * A governance proposal.
-
- */
-export interface Proposal {
-  /** The proposal to cancel, if this proposal proposes
-cancelling an existing proposal.
- */
-  cancels?: number;
-  /** The epoch at which voting for this proposal will close. */
-  closes_at: number;
-  /** The epoch at which this proposal was created. */
-  created_at: number;
-  /** The deposit attached to this proposal. */
-  deposit: TextBigInt;
-  /** The (optional) description of the proposal. */
-  description?: string;
-  /** The epoch at which the proposed upgrade will happen. */
-  epoch?: number;
-  /** The name of the upgrade handler. */
-  handler?: string;
-  /** The unique identifier of the proposal. */
-  id: number;
-  /** The number of invalid votes for this proposal, after tallying.
- */
-  invalid_votes: TextBigInt;
-  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
-  parameters_change?: unknown;
-  /** The name of the module whose parameters are to be changed
-by this 'parameters_change' proposal.
- */
-  parameters_change_module?: string;
-  state: ProposalState;
-  /** The staking address of the proposal submitter. */
-  submitter: string;
-  target?: ProposalTarget;
-  /** The (optional) title of the proposal. */
-  title?: string;
-}
 
 /**
  * An Oasis-style (bech32) address.
@@ -4967,6 +5040,147 @@ export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof GetRuntime
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeStatusQueryOptions(network,runtime,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const GetRuntimeRoflApps = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsMutator<RoflAppList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,) => {
+    return [`/${network}/${runtime}/rofl_apps`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsQueryKey(network,runtime,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflApps>>> = ({ signal }) => GetRuntimeRoflApps(network,runtime,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflApps>>>
+export type GetRuntimeRoflAppsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const useGetRuntimeRoflApps = <TData = Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsQueryOptions(network,runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a ROFL app on the runtime.
+ */
+export const GetRuntimeRoflAppsId = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdMutator<RoflApp>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}`] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdQueryKey(network,runtime,id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>> = ({ signal }) => GetRuntimeRoflAppsId(network,runtime,id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>>
+export type GetRuntimeRoflAppsIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a ROFL app on the runtime.
+ */
+export const useGetRuntimeRoflAppsId = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdQueryOptions(network,runtime,id,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
