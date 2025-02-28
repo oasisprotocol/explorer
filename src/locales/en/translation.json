@@ -641,6 +641,13 @@
     "devnet": "Pontus-X devnet",
     "testnet": "Pontus-X"
   },
+  "rofl": {
+    "appId": "App ID",
+    "emptyRoflAppsList": "No ROFL apps found.",
+    "instances": "Instances",
+    "listTitle": "ROFL Apps",
+    "tee": "TEE"
+  },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
