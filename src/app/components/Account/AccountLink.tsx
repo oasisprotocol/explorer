@@ -14,6 +14,38 @@ import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
+import { useHighlighting } from '../HighlightingContext'
+import { COLORS } from '../../../styles/theme/colors'
+
+const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({ children, address }) => {
+  const { address: highlightAddress, setAddress: setHighlightAddress } = useHighlighting()
+  const highlighted = !!highlightAddress && highlightAddress.toLowerCase() === address.toLowerCase()
+  return (
+    <Box
+      onMouseEnter={() => {
+        // console.log('Mouse entered to', address)
+        setHighlightAddress(address)
+      }}
+      onMouseLeave={() => {
+        // console.log('Mouse left', address)
+        setHighlightAddress(undefined)
+      }}
+      sx={
+        highlighted
+          ? {
+              background: COLORS.warningLight,
+              border: `1px dashed ${COLORS.warningColor}`,
+              borderRadius: '6px',
+            }
+          : {
+              margin: '1px',
+            }
+      }
+    >
+      {children}
+    </Box>
+  )
+}
 
 const WithTypographyAndLink: FC<{
   to: string
@@ -137,18 +169,20 @@ export const AccountLink: FC<Props> = ({
     // In a table, we only ever want a short line
 
     return (
-      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={tooltipTitle}>
-          {showAccountName ? (
-            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-              <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
-              {trimLongString(accountName, 12, 0)}
-            </Box>
-          ) : (
-            trimLongString(address, 6, 6)
-          )}
-        </MaybeWithTooltip>
-      </WithTypographyAndLink>
+      <WithHighlighting address={address}>
+        <WithTypographyAndLink to={to} labelOnly={labelOnly}>
+          <MaybeWithTooltip title={tooltipTitle}>
+            {showAccountName ? (
+              <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+                <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
+                {trimLongString(accountName, 12, 0)}
+              </Box>
+            ) : (
+              trimLongString(address, 6, 6)
+            )}
+          </MaybeWithTooltip>
+        </WithTypographyAndLink>
+      </WithHighlighting>
     )
   }
 
@@ -157,18 +191,20 @@ export const AccountLink: FC<Props> = ({
     // We want one long line, with name and address.
 
     return (
-      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={tooltipTitle}>
-          {showAccountName ? (
-            <Box sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
-              <AccountMetadataSourceIndicator source={accountMetadata!.source} />
-              <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
-            </Box>
-          ) : (
-            address
-          )}
-        </MaybeWithTooltip>
-      </WithTypographyAndLink>
+      <WithHighlighting address={address}>
+        <WithTypographyAndLink to={to} labelOnly={labelOnly}>
+          <MaybeWithTooltip title={tooltipTitle}>
+            {showAccountName ? (
+              <Box sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
+                <AccountMetadataSourceIndicator source={accountMetadata!.source} />
+                <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
+              </Box>
+            ) : (
+              address
+            )}
+          </MaybeWithTooltip>
+        </WithTypographyAndLink>
+      </WithHighlighting>
     )
   }
 
@@ -176,18 +212,20 @@ export const AccountLink: FC<Props> = ({
   // We want two lines, one for name (if available), one for address
   // Both lines adaptively shortened to fill available space
   return (
-    <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
-      <>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-          {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
-          <AdaptiveHighlightedText
-            text={showAccountName ? accountName : ''}
-            pattern={highlightedPartOfName}
-            extraTooltip={tooltipTitle}
-          />
-        </Box>
-        <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
-      </>
-    </WithTypographyAndLink>
+    <WithHighlighting address={address}>
+      <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
+        <>
+          <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+            {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
+            <AdaptiveHighlightedText
+              text={showAccountName ? accountName : ''}
+              pattern={highlightedPartOfName}
+              extraTooltip={tooltipTitle}
+            />
+          </Box>
+          <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
+        </>
+      </WithTypographyAndLink>
+    </WithHighlighting>
   )
 }
