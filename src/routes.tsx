@@ -63,6 +63,7 @@ import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetails
 import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
+import { RoflAppsPage } from './app/pages/RoflAppsPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
@@ -294,6 +295,10 @@ export const routes: RouteObject[] = [
               { path: 'inventory', Component: () => <TokenInventoryCard {...useTokenDashboardProps()} /> },
               { path: 'code', Component: () => <ContractCodeCard {...useTokenDashboardProps()} /> },
             ],
+          },
+          {
+            path: `rofl/app`,
+            element: <RoflAppsPage />,
           },
         ],
       },
