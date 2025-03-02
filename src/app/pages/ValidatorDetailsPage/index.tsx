@@ -31,8 +31,7 @@ import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { PercentageValue } from '../../components/PercentageValue'
 import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
-import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
@@ -45,10 +44,7 @@ export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
-    deleteParams: ['page'],
-  })
-
+  const { method, setMethod } = useConsensusTxMethodParam()
   const { address } = useLoaderData() as AddressLoaderData
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading, isFetched, data } = validatorQuery

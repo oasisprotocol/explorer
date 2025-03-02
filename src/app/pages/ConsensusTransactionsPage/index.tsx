@@ -16,12 +16,9 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
-import {
-  getConsensusTransactionMethodFilteringParam,
-  ConsensusTxMethodFilterOption,
-} from '../../components/ConsensusTransactionMethod'
+import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
 
 export const ConsensusTransactionsPage: FC = () => {
@@ -29,9 +26,7 @@ export const ConsensusTransactionsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
-    deleteParams: ['date'],
-  })
+  const { method, setMethod } = useConsensusTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()
   const enablePolling = offset === 0

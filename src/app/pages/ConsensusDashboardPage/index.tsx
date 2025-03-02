@@ -17,14 +17,13 @@ import { AccountsCard } from './AccountsCard'
 import { LatestConsensusTransactions } from './LatestConsensusTransactions'
 import { ParaTimesCard } from './ParaTimesCard'
 import { SearchScope } from 'types/searchScope'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
-import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
+import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const isLocal = isLocalnet(scope.network)
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('tx_method', 'any')
+  const { method, setMethod } = useConsensusTxMethodParam()
 
   return (
     <PageLayout>

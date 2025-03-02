@@ -14,7 +14,7 @@ import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import {
   codeContainerId,
   eventsContainerId,
@@ -37,9 +37,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const scope = useRequiredScopeParam()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
-  const [method, setMethod] = useTypedSearchParam('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { method, setMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, { enabled: isContract })
