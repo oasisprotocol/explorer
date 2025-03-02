@@ -36,7 +36,7 @@ export const RuntimeTransactionTypeFilter: FC<{
       light={true}
       label={<FilterLabel />}
       options={[{ value: 'any', label: 'Any' }, ...getRuntimeTxMethodOptions(t, layer)]}
-      defaultValue={value}
+      value={value}
       handleChange={setValue as any}
     />
   )
