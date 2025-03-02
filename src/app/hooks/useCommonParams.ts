@@ -1,18 +1,22 @@
 import { useTypedSearchParam } from './useTypedSearchParam'
 import { ConsensusTxMethodFilterOption } from '../components/ConsensusTransactionMethod'
 
+export const METHOD_QUERY_ARG_NAME = 'tx_method'
+
 export const useConsensusTxMethodParam = () => {
-  const paramName = 'tx_method'
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>(paramName, 'any', {
-    deleteParams: ['page', 'date'],
-  })
-  return { paramName, method, setMethod }
+  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>(
+    METHOD_QUERY_ARG_NAME,
+    'any',
+    {
+      deleteParams: ['page', 'date'],
+    },
+  )
+  return { method, setMethod }
 }
 
 export const useRuntimeTxMethodParam = () => {
-  const paramName = 'tx_method'
-  const [method, setMethod] = useTypedSearchParam(paramName, 'any', {
+  const [method, setMethod] = useTypedSearchParam(METHOD_QUERY_ARG_NAME, 'any', {
     deleteParams: ['page', 'date'],
   })
-  return { paramName, method, setMethod }
+  return { method, setMethod }
 }
