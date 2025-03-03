@@ -145,6 +145,7 @@ declare module './generated/api' {
   export interface RoflApp {
     network: Network
     layer: Layer
+    ticker: Ticker
   }
 }
 
