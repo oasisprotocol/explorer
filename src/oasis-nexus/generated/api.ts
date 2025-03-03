@@ -715,6 +715,14 @@ export interface RoflApp {
   secrets: RoflAppSecrets;
   /** The secrets encryption public key. */
   sek: string;
+  /** Temp frontend, expected to be added */
+  timestamp: string;
+  first_activity: string;
+  active: boolean;
+  version: string;
+  tee: string
+  kind: string
+  amount: string
 }
 
 /**

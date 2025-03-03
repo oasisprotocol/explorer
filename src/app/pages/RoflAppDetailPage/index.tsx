@@ -1,15 +1,20 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { RoflApp, Runtime, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
-import { StyledDescriptionList } from '../../components/StyledDescriptionList'
-import { PageLayout } from '../../components/PageLayout'
-import { SubPageCard } from '../../components/SubPageCard'
-import { useScreenSize } from '../../hooks/useScreensize'
-import { AppErrors } from '../../../types/errors'
-import { TextSkeleton } from '../../components/Skeleton'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import Typography from '@mui/material/Typography'
+import { RoflApp, Runtime, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
+import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { AppErrors } from '../../../types/errors'
+import { CopyToClipboard } from '../../components/CopyToClipboard'
+import { TextSkeleton } from '../../components/Skeleton'
+import { PageLayout } from '../../components/PageLayout'
+import { StyledDescriptionList } from '../../components/StyledDescriptionList'
+import { SubPageCard } from '../../components/SubPageCard'
+import { AppStatus } from '../../components/Rofl/AppStatus'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 export const RoflAppDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -35,33 +40,119 @@ export const RoflAppDetailView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
   detailsPage?: boolean
-  showLayer?: boolean
-}> = ({ app, detailsPage, isLoading, showLayer }) => {
+}> = ({ app, detailsPage, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const formattedActivity = useFormattedTimestampStringWithDistance(app?.timestamp)
+  const formattedPolicyUpdate = useFormattedTimestampStringWithDistance(app?.policy?.update)
 
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 15 : 10} />
   if (!app) return <></>
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={!detailsPage}>
-      {showLayer && (
-        <>
-          <dt>{t('common.paratime')}</dt>
-          <dd>
-            <DashboardLink scope={app} />
-          </dd>
-        </>
-      )}
-      <dt>TODO</dt>
-      <dd>TODO</dd>
+      <dt>{t('common.name')}</dt>
+      <dd>{app.metadata?.name || t('common.missing')}</dd>
 
-      {detailsPage && (
-        <>
-          <dt>TODO</dt>
-          <dd>TODO</dd>
-        </>
-      )}
+      <dt>{t('rofl.version')}</dt>
+      <dd>{app.version || t('common.missing')}</dd>
+
+      <dt>{t('rofl.tee')}</dt>
+      <dd>{app.tee || t('common.missing')}</dd>
+
+      <dt>{t('rofl.appId')}</dt>
+      <dd>
+        {app.id} <CopyToClipboard value={app.id} />
+      </dd>
+
+      <dt>{t('rofl.enclaveId')}</dt>
+      <dd>
+        {app.policy?.enclaves ? (
+          <table>
+            {app.policy.enclaves.map(enclave => (
+              <tr key={enclave}>
+                <td>
+                  <Typography variant="mono" component="span">
+                    {enclave}
+                  </Typography>
+                </td>
+                <td>
+                  <CopyToClipboard value={enclave} />
+                </td>
+              </tr>
+            ))}
+          </table>
+        ) : (
+          t('common.missing')
+        )}
+      </dd>
+
+      <dt>{t('rofl.kind')}</dt>
+      <dd>{app.kind || t('common.missing')}</dd>
+
+      <dt>{t('rofl.sekPublicKey')}</dt>
+      <dd>
+        {app.sek} <CopyToClipboard value={app.sek} />
+      </dd>
+
+      <dt>{t('rofl.adminAccount')}</dt>
+      <dd>
+        <AccountLink scope={{ network: app.network, layer: app.layer }} address={app.admin} />
+        <CopyToClipboard value={app.admin} />
+      </dd>
+
+      <dt>{t('rofl.stakedAmount')}</dt>
+      <dd>
+        {t('common.valueInToken', {
+          ...getPreciseNumberFormat(app.amount),
+          ticker: app.ticker,
+        })}
+      </dd>
+
+      <dt>{t('common.status')}</dt>
+      <dd>
+        <AppStatus status={app.status} />
+      </dd>
+
+      <dt>{t('rofl.lastPolicyUpdate')}</dt>
+      <dd>{formattedPolicyUpdate || t('common.missing')}</dd>
+
+      <dt>{t('rofl.activity')}</dt>
+      <dd>{formattedActivity || t('common.missing')}</dd>
+
+      <dt>{t('rofl.instances')}</dt>
+      <dd>{app.instances?.length?.toLocaleString() || 0}</dd>
+
+      <dt>{t('rofl.endorsement')}</dt>
+      {/* TODO: find out what we can expect here */}
+      <dd>{t('common.missing')}</dd>
+
+      <dt>{t('rofl.Secrets')}</dt>
+      <dd>
+        {app.secrets ? (
+          <table>
+            {Object.keys(app.secrets).map(key => (
+              <tr key={key}>
+                <td>
+                  <Typography
+                    variant="mono"
+                    component="span"
+                    sx={{
+                      wordWrap: 'break-word',
+                      pr: 3,
+                    }}
+                  >
+                    {key}:
+                  </Typography>
+                </td>
+                <td>{app.secrets[key]}</td>
+              </tr>
+            ))}
+          </table>
+        ) : (
+          t('common.missing')
+        )}
+      </dd>
     </StyledDescriptionList>
   )
 }
