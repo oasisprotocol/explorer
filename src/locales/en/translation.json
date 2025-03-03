@@ -679,7 +679,10 @@
     "sekPublicKey": "Sek Public Key",
     "stakedAmount": "Staked amount",
     "tee": "Tee",
-    "version": "Version"
+    "version": "Version",
+    "metadata": "Meta data",
+    "noData": "No data available",
+    "policy": "Policy"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

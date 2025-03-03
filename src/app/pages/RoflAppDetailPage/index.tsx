@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { styled } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { RoflApp, Runtime, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
@@ -15,12 +17,20 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { SubPageCard } from '../../components/SubPageCard'
 import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { MetaDataCard } from './MetaDataCard'
+import { PolicyCard } from './PolicyCard'
+
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+  },
+}))
 
 export const RoflAppDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const id = useParams().id!
-  const { isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer as Runtime, id)
+  const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer as Runtime, id)
   const roflApp = data?.data
 
   if (!roflApp && !isLoading) {
@@ -32,6 +42,14 @@ export const RoflAppDetailPage: FC = () => {
       <SubPageCard featured title={t('rofl.header')}>
         <RoflAppDetailView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
+      <Grid container spacing={4}>
+        <StyledGrid item xs={12} md={6}>
+          <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
+        </StyledGrid>
+        <StyledGrid item xs={12} md={6}>
+          <PolicyCard isFetched={isFetched} policy={roflApp?.policy} />
+        </StyledGrid>
+      </Grid>
     </PageLayout>
   )
 }
