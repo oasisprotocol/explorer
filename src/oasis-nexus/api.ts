@@ -147,18 +147,17 @@ export const isAccountEmpty = (account: RuntimeAccount | Account) => {
   if (account.layer === Layer.consensus) {
     // TODO: find a sane way to recognize an important consensus account.
     // The heuristics below is clearly insufficient, because it would indicate even named accounts like "Governance Escrow" to be empty.
-    return false
-    // const { available, size, nonce, debonding_delegations_balance, delegations_balance, escrow, total } =
-    //   account as Account
-    // return (
-    //   available === '0' &&
-    //   debonding_delegations_balance === '0' &&
-    //   delegations_balance === '0' &&
-    //   escrow === '0' &&
-    //   total === '0' &&
-    //   nonce === 0 &&
-    //   size === 'XXS'
-    // )
+    const { available, size, nonce, debonding_delegations_balance, delegations_balance, escrow, total } =
+      account as Account
+    return (
+      available === '0' &&
+      debonding_delegations_balance === '0' &&
+      delegations_balance === '0' &&
+      escrow === '0' &&
+      total === '0' &&
+      nonce === 0 &&
+      size === 'XXS'
+    )
     // TODO: we should also check the number of transactions, where it becomes available
   } else {
     const { balances, evm_balances, stats } = account as RuntimeAccount
