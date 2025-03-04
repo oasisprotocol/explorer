@@ -339,6 +339,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
                 ...tx,
                 amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
                 to,
+                fee: fromBaseUnits(tx.fee, consensusDecimals),
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
