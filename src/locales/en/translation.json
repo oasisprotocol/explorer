@@ -682,7 +682,17 @@
     "version": "Version",
     "metadata": "Meta data",
     "noData": "No data available",
-    "policy": "Policy"
+    "policy": "Policy",
+    "roflName": "ROFL name",
+    "description": "Description",
+    "author": "Author",
+    "license": "License",
+    "gitrev": "Git rev",
+    "validity": "Validity period",
+    "evaluation": "TCB data evaluation",
+    "feePolicy": "Fee policy",
+    "update": "Update",
+    "repositoryUrl": "Repository URL"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
