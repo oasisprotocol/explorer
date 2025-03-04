@@ -70,6 +70,7 @@ import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
+import { InstancesCard } from 'app/pages/RoflAppDetailPage/InstancesCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -310,6 +311,10 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+              {
+                path: 'instances',
+                Component: () => <InstancesCard />,
               },
             ],
           },
