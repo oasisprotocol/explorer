@@ -218,6 +218,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 network,
                 layer: Layer.consensus,
                 ticker,
+                fee: fromBaseUnits(tx.fee, consensusDecimals),
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
