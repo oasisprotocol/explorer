@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import { withDefaultTheme } from '../components/ThemeByScope'
 import React from 'react'
 import { useIsApiReachable, useRuntimeFreshness } from '../components/OfflineBanner/hook'
+import { TableConfigContextProvider } from '../providers/TableConfigProvider'
 
 jest.mock('../components/OfflineBanner/hook')
 
@@ -13,6 +14,11 @@ export function renderWithProviders(component: React.ReactElement) {
 
   // And then we can run code
   return render(component, {
-    wrapper: ({ children }) => withDefaultTheme(<MemoryRouter>{children}</MemoryRouter>),
+    wrapper: ({ children }) =>
+      withDefaultTheme(
+        <TableConfigContextProvider>
+          <MemoryRouter>{children}</MemoryRouter>
+        </TableConfigContextProvider>,
+      ),
   })
 }
