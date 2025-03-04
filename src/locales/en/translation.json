@@ -692,7 +692,8 @@
     "evaluation": "TCB data evaluation",
     "feePolicy": "Fee policy",
     "update": "Update",
-    "repositoryUrl": "Repository URL"
+    "repositoryUrl": "Repository URL",
+    "totalTransactions": "Total transactions"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

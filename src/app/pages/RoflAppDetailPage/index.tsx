@@ -19,6 +19,8 @@ import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
+import { TotalTransactionsCard } from './TotalTransactionsCard'
+import { InstancesCard } from './Instances'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -43,6 +45,12 @@ export const RoflAppDetailPage: FC = () => {
         <RoflAppDetailView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
+        <StyledGrid item xs={12} md={6}>
+          <TotalTransactionsCard />
+        </StyledGrid>
+        <StyledGrid item xs={12} md={6}>
+          <InstancesCard />
+        </StyledGrid>
         <StyledGrid item xs={12} md={6}>
           <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
         </StyledGrid>
