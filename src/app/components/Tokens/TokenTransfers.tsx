@@ -16,9 +16,10 @@ import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { TokenTypeTag } from './TokenList'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
-import { Age } from '../Age'
 import { fromBaseUnits } from '../../utils/number-utils'
 import { TransferIcon } from '../TransferIcon'
+import { TableCellAge } from '../TableCellAge'
+import { TableHeaderAge } from '../TableHeaderAge'
 
 type TableRuntimeEvent = RuntimeEvent & {
   markAsNew?: boolean
@@ -103,7 +104,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
-    { key: 'timestamp', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'timestamp', content: <TableHeaderAge />, align: TableCellAlign.Right },
     { key: 'type', content: t('common.type'), align: TableCellAlign.Center },
     { key: 'from', content: t('common.from'), width: '150px' },
     { key: 'to', content: t('common.to'), width: '150px' },
@@ -130,7 +131,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: <Age sinceTimestamp={transfer.timestamp} />,
+          content: <TableCellAge sinceTimestamp={transfer.timestamp} />,
           key: 'timestamp',
         },
         {
