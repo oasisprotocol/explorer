@@ -68,6 +68,7 @@ import { RoflAppsPage } from './app/pages/RoflAppsPage'
 import { RoflAppDetailPage } from 'app/pages/RoflAppDetailPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
+import { InstancesCard } from 'app/pages/RoflAppDetailPage/InstancesCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -365,6 +366,10 @@ export const routes: RouteObject[] = [
               {
                 path: '',
                 Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+              {
+                path: 'instances',
+                Component: () => <InstancesCard />,
               },
             ],
           },

@@ -10,6 +10,7 @@ import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { instancesContainerId } from '../../utils/tabAnchors'
 import { AppErrors } from '../../../types/errors'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -36,6 +37,7 @@ export const RoflAppDetailPage: FC = () => {
   const scope = useRequiredScopeParam()
   const id = useParams().id!
   const txLink = useHref('')
+  const instancesLink = useHref(`instances#${instancesContainerId}`)
   const [method, setMethod] = useTypedSearchParam('method', 'any', {
     deleteParams: ['page'],
   })
@@ -66,7 +68,16 @@ export const RoflAppDetailPage: FC = () => {
           <PolicyCard isFetched={isFetched} policy={roflApp?.policy} />
         </StyledGrid>
       </Grid>
-      <RouterTabs tabs={[{ label: t('common.transactions'), to: txLink }]} context={context} />
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: txLink },
+          {
+            label: t('rofl.instances'),
+            to: instancesLink,
+          },
+        ]}
+        context={context}
+      />
     </PageLayout>
   )
 }
