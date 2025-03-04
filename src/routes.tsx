@@ -306,6 +306,12 @@ export const routes: RouteObject[] = [
             path: `rofl/app/:id`,
             element: <RoflAppDetailPage />,
             loader: roflAppParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+            ],
           },
         ],
       },

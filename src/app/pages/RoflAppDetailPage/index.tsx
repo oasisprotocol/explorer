@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
@@ -9,6 +9,7 @@ import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormatte
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { AppErrors } from '../../../types/errors'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -17,10 +18,12 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { SubPageCard } from '../../components/SubPageCard'
 import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { TotalTransactionsCard } from './TotalTransactionsCard'
+import { RouterTabs } from '../../components/RouterTabs'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
-import { TotalTransactionsCard } from './TotalTransactionsCard'
 import { InstancesCard } from './Instances'
+import { RuntimeAccountDetailsContext } from '../RuntimeAccountDetailsPage'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -32,6 +35,11 @@ export const RoflAppDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const id = useParams().id!
+  const txLink = useHref('')
+  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+    deleteParams: ['page'],
+  })
+  const context: RuntimeAccountDetailsContext = { scope, id, undefined, method, setMethod }
   const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer as Runtime, id)
   const roflApp = data?.data
 
@@ -58,6 +66,7 @@ export const RoflAppDetailPage: FC = () => {
           <PolicyCard isFetched={isFetched} policy={roflApp?.policy} />
         </StyledGrid>
       </Grid>
+      <RouterTabs tabs={[{ label: t('common.transactions'), to: txLink }]} context={context} />
     </PageLayout>
   )
 }
