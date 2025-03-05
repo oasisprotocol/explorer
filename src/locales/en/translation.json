@@ -644,6 +644,7 @@
   "rofl": {
     "active": "Active",
     "inactive": "Inactive",
+    "removed": "Removed",
     "activity": "Last activity",
     "adminAccount": "Admin account",
     "appId": "App ID",
