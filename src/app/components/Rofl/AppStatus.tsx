@@ -6,16 +6,18 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { COLORS } from '../../../styles/theme/colors'
 
-type RoflAppStatusTypes = 'active' | 'inactive'
+type RoflAppStatusTypes = 'active' | 'inactive' | 'removed'
 
 const statusBgColor: Record<RoflAppStatusTypes, string> = {
   active: COLORS.honeydew,
-  inactive: COLORS.linen,
+  inactive: COLORS.warningBackground,
+  removed: COLORS.linen,
 }
 
 export const statusIcon: Record<RoflAppStatusTypes, ReactNode> = {
   active: <CheckCircleIcon color="success" fontSize="small" />,
-  inactive: <CancelIcon color="error" fontSize="small" />,
+  inactive: <CheckCircleIcon color="warning" fontSize="small" />,
+  removed: <CancelIcon color="error" fontSize="small" />,
 }
 
 const StyledBadge = styled(Box, {
@@ -46,6 +48,7 @@ export const AppStatus: FC<AppStatusProps> = ({ status }) => {
   const statusLabel: Record<RoflAppStatusTypes, string> = {
     active: t('rofl.active'),
     inactive: t('rofl.inactive'),
+    removed: t('rofl.removed'),
   }
 
   return (
