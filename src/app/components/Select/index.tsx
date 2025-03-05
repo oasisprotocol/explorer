@@ -183,7 +183,15 @@ const SelectOption = <T extends SelectOptionBase>({
 interface SelectCmpProps<T extends SelectOptionBase> {
   label?: ReactNode
   options: T[]
+  /**
+   * If you want to use this component in uncontrolled mode, you can provide the detauls / initial value here.
+   */
   defaultValue?: T['value']
+
+  /**
+   * You can provide a value if you want to use this component in controlled mode
+   */
+  value?: T['value'] | null
   handleChange?: (selectedOption: T['value'] | null) => void
   placement?: PopupProps['placement']
   className?: string
@@ -198,6 +206,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   label,
   options,
   defaultValue,
+  value,
   handleChange,
   placement = 'bottom-start',
   className,
@@ -224,6 +233,7 @@ const SelectCmp = <T extends SelectOptionBase>({
       <CustomSelect<T['value']>
         id={selectId}
         defaultValue={defaultValue}
+        {...(value === undefined || value === null ? {} : { value })}
         onChange={onChange}
         root={root}
         listbox={listbox}

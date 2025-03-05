@@ -80,6 +80,17 @@ export const isScopeHidden = (scope: SearchScope): boolean =>
 
 export const isNotInHiddenScope = (item: HasScope) => !isScopeHidden(item)
 
+const formatPreservedParams = (searchParams: URLSearchParams | undefined, paramsToKeep: string[]): string => {
+  if (!searchParams) return ''
+  const toDelete: string[] = []
+  searchParams.forEach((_, key) => {
+    if (!paramsToKeep.includes(key)) toDelete.push(key)
+  })
+  toDelete.forEach(key => searchParams.delete(key))
+  const formatted = searchParams.toString()
+  return formatted.length ? `?${formatted}` : ''
+}
+
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
     [Network.mainnet]: {
@@ -130,8 +141,13 @@ export abstract class RouteUtils {
     return `${this.getScopeRoute(scope)}/block`
   }
 
-  static getBlockRoute = (scope: SearchScope, blockHeight: number) => {
-    return `${this.getScopeRoute(scope)}/block/${encodeURIComponent(blockHeight)}`
+  static getBlockRoute = (
+    scope: SearchScope,
+    blockHeight: number,
+    searchParams?: URLSearchParams,
+    preserveParams: string[] = [],
+  ) => {
+    return `${this.getScopeRoute(scope)}/block/${encodeURIComponent(blockHeight)}${formatPreservedParams(searchParams, preserveParams)}`
   }
 
   static getTransactionRoute = (scope: SearchScope, txHash: string) => {

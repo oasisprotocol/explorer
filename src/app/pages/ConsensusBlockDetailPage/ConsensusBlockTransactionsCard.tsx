@@ -7,7 +7,7 @@ import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
 import { ConsensusBlockDetailsContext } from '.'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
 import {
@@ -55,9 +55,7 @@ const TransactionList: FC<{
 }
 
 export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { method, setMethod } = useConsensusTxMethodParam()
   const { isMobile } = useScreenSize()
 
   if (!blockHeight) {

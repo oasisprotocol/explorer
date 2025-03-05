@@ -19,7 +19,7 @@ import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
 import { SearchScope } from 'types/searchScope'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId, transactionsContainerId } from '../../utils/tabAnchors'
 
 export type RuntimeBlockDetailsContext = {
@@ -50,9 +50,7 @@ export const RuntimeBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
-  const [method, setMethod] = useTypedSearchParam('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { method, setMethod } = useRuntimeTxMethodParam()
   const context: RuntimeBlockDetailsContext = { scope, blockHeight, method, setMethod }
 
   return (

@@ -34,7 +34,7 @@ export const ConsensusTransactionTypeFilter: FC<{
       light={true}
       label={<FilterLabel />}
       options={[{ value: 'any', label: 'Any' }, ...getConsensusTxMethodOptions(t)]}
-      defaultValue={value}
+      value={value}
       handleChange={setValue as any}
     />
   )

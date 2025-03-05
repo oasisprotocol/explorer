@@ -18,7 +18,7 @@ import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
 import { getFiatCurrencyForScope } from '../../../config'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import Box from '@mui/material/Box'
@@ -30,9 +30,7 @@ export const RuntimeTransactionsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
-  const [method, setMethod] = useTypedSearchParam('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { method, setMethod } = useRuntimeTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRequiredScopeParam()
   const enablePolling = offset === 0

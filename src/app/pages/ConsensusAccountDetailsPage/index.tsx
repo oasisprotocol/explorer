@@ -12,8 +12,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
 import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
-import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountDetailsPage: FC = () => {
@@ -22,9 +21,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
-  const [method, setMethod] = useTypedSearchParam<ConsensusTxMethodFilterOption>('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { method, setMethod } = useConsensusTxMethodParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
