@@ -63,7 +63,7 @@ export const LatestRuntimeTransactions: FC<{
           >
             {t('transactions.latest')}
             {shouldFilter && !isMobile && (
-              <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />
+              <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} />
             )}
           </Box>
         }
@@ -78,7 +78,7 @@ export const LatestRuntimeTransactions: FC<{
         }
       />
       {shouldFilter && isMobile && (
-        <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand />
+        <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} expand />
       )}
       <CardContent>
         <RuntimeTransactions

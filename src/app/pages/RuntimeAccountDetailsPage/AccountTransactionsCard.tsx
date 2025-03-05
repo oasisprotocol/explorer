@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context => {
-  const { method, setMethod } = context
+  const { method, setMethod, scope } = context
 
   const { isMobile } = useScreenSize()
 
@@ -24,11 +24,15 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
+          {!isMobile && (
+            <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} />
+          )}
         </Box>
       }
     >
-      {isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand />}
+      {isMobile && (
+        <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} expand />
+      )}
       <AccountTransactions {...context} />
     </LinkableCardLayout>
   )

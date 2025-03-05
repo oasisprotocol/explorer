@@ -38,6 +38,7 @@ type LayerConfig = {
   localnet?: LayerNetwork
   decimals: number
   type: RuntimeTypes
+  offerRoflTxTypes?: boolean
 }
 
 export enum RuntimeTypes {
@@ -123,6 +124,7 @@ const sapphireConfig: LayerConfig = {
   },
   decimals: 18,
   type: RuntimeTypes.Evm,
+  offerRoflTxTypes: true,
 }
 
 const pontusxDevConfig: LayerConfig = {
