@@ -11,8 +11,9 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
-import { GetRuntimeTransactionsParams, RuntimeTransaction } from '../../../oasis-nexus/api'
+import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
 import { SelectOptionBase } from '../Select'
+import { paraTimesConfig } from '../../../config'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
@@ -61,13 +62,17 @@ const knownRuntimeTxMethods: string[] = [
   'rofl.Update',
 ]
 
-export const getRuntimeTxMethodOptions = (t: TFunction): SelectOptionBase[] =>
-  knownRuntimeTxMethods.map(
-    (method): SelectOptionBase => ({
-      value: method,
-      label: getRuntimeTransactionLabel(t, method),
-    }),
-  )
+export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOptionBase[] => {
+  const hasRofl = !!paraTimesConfig[layer]?.offerRoflTxTypes
+  return knownRuntimeTxMethods
+    .filter(method => !method.startsWith('rofl') || hasRofl)
+    .map(
+      (method): SelectOptionBase => ({
+        value: method,
+        label: getRuntimeTransactionLabel(t, method),
+      }),
+    )
+}
 
 /**
  * The method call body. Defined by the runtime.

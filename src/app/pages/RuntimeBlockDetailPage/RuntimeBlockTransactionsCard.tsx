@@ -54,7 +54,7 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, m
 
 export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = props => {
   const { isMobile } = useScreenSize()
-  const { blockHeight, method, setMethod } = props
+  const { blockHeight, method, setMethod, scope } = props
 
   if (!blockHeight) {
     return null
@@ -70,11 +70,15 @@ export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = prop
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
+          {!isMobile && (
+            <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} />
+          )}
         </Box>
       }
     >
-      {isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand />}
+      {isMobile && (
+        <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} expand />
+      )}
       <TransactionList {...props} />
     </LinkableCardLayout>
   )

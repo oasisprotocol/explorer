@@ -3,6 +3,7 @@ import { getRuntimeTxMethodOptions } from '../RuntimeTransactionMethod'
 import { useTranslation } from 'react-i18next'
 import { Select } from '../Select'
 import Typography from '@mui/material/Typography'
+import { Layer } from '../../../oasis-nexus/api'
 
 const FilterLabel: FC = () => {
   const { t } = useTranslation()
@@ -23,17 +24,18 @@ const FilterLabel: FC = () => {
 }
 
 export const RuntimeTransactionTypeFilter: FC<{
+  layer: Layer
   value: string
   setValue: (value: string) => void
   expand?: boolean
-}> = ({ value, setValue, expand }) => {
+}> = ({ layer, value, setValue, expand }) => {
   const { t } = useTranslation()
   return (
     <Select
       className={expand ? 'expand' : undefined}
       light={true}
       label={<FilterLabel />}
-      options={[{ value: 'any', label: 'Any' }, ...getRuntimeTxMethodOptions(t)]}
+      options={[{ value: 'any', label: 'Any' }, ...getRuntimeTxMethodOptions(t, layer)]}
       defaultValue={value}
       handleChange={setValue as any}
     />

@@ -114,11 +114,15 @@ export const RuntimeTransactionsPage: FC = () => {
             }}
           >
             {t('transactions.latest')}
-            {!isMobile && <RuntimeTransactionTypeFilter value={method} setValue={setMethod} />}
+            {!isMobile && (
+              <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} />
+            )}
           </Box>
         }
         title2={
-          isMobile ? <RuntimeTransactionTypeFilter value={method} setValue={setMethod} expand /> : undefined
+          isMobile ? (
+            <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} expand />
+          ) : undefined
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
