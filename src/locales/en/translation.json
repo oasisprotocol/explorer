@@ -676,7 +676,11 @@
     "feePolicy": "Fee policy",
     "update": "Update",
     "repositoryUrl": "Repository URL",
-    "totalTransactions": "Total transactions"
+    "totalTransactions": "Total transactions",
+    "emptyInstancesList": "There are no instances on record for this ROFL app.",
+    "rak": "RAK",
+    "node": "Node ID",
+    "expiration": "Expiration (ETA)"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
