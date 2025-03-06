@@ -334,11 +334,14 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
             transactions: data.transactions.map(tx => {
               const amount = getConsensusTransactionAmount(tx)
               const to = getConsensusTransactionToAddress(tx)
-
               return {
                 ...tx,
                 amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
                 to,
+                network,
+                layer: Layer.consensus,
+                ticker,
+                fee: fromBaseUnits(tx.fee, consensusDecimals),
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
@@ -346,9 +349,6 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
                     ? fromBaseUnits(tx.body.amount_change, consensusDecimals)
                     : undefined,
                 },
-                layer: Layer.consensus,
-                network,
-                ticker,
               }
             }),
           }
