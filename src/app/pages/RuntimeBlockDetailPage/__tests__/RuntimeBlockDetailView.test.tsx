@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 import { RuntimeBlock } from '../../../../oasis-nexus/api'
-import { renderWithProviders } from '../../../utils/renderWithProviders'
+import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
 import { RuntimeBlockDetailView } from '../'
 import { suggestedParsedBlock } from '../../../utils/test-fixtures'
 

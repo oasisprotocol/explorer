@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '../../../utils/renderWithProviders'
+import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
 import { TableCellAge } from '../'
 import { useTableConfig } from '../../../hooks/useTableConfig'
 import { TableAgeType } from '../../../../types/table-age-type'
