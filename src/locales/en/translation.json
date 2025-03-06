@@ -373,6 +373,17 @@
     "docs": "Documentation",
     "home": "Home"
   },
+  "table": {
+    "headers": {
+      "dateTime": {
+        "title": "Date/Time",
+        "tooltipTitle": "Show in Age format"
+      },
+      "age": {
+        "tooltipTitle": "Show in Date Time format"
+      }
+    }
+  },
   "tableLayoutButton": {
     "changeView": "Change view"
   },

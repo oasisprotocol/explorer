@@ -8,6 +8,7 @@ import { routes } from './routes'
 import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
+import { TableConfigContextProvider } from './app/providers/TableConfigProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,8 +40,10 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <TableConfigContextProvider>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </TableConfigContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 )

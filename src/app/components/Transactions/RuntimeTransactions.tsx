@@ -14,8 +14,9 @@ import { AccountLink } from '../Account/AccountLink'
 import { TransactionLink } from './TransactionLink'
 import { doesAnyOfTheseLayersSupportEncryptedTransactions } from '../../../types/layers'
 import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
-import { Age } from '../Age'
 import { TransferIcon } from '../TransferIcon'
+import { TableHeaderAge } from '../TableHeaderAge'
+import { TableCellAge } from '../TableCellAge'
 
 type TableRuntimeTransaction = RuntimeTransaction & {
   markAsNew?: boolean
@@ -59,7 +60,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
       : []),
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
-    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
     ...(verbose
       ? [
           { key: 'type', content: t('common.type') },
@@ -105,7 +106,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: <Age sinceTimestamp={transaction.timestamp} />,
+          content: <TableCellAge sinceTimestamp={transaction.timestamp} />,
           key: 'timestamp',
         },
         ...(verbose

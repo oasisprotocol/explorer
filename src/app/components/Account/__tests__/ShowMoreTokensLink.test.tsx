@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '../../../utils/renderWithProviders'
+import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
 import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
 import { Layer, EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-nexus/api'
 import { Network } from '../../../../types/network'

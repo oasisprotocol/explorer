@@ -8,7 +8,8 @@ import { BlockHashLink, BlockLink } from './BlockLink'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC } from 'react'
 import { BlocksTableType } from './index'
-import { Age } from '../Age'
+import { TableHeaderAge } from '../TableHeaderAge'
+import { TableCellAge } from '../TableCellAge'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -40,7 +41,7 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'fill', content: t('common.fill') },
     { key: 'height', content: t('common.height'), align: TableCellAlign.Right },
-    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
     ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
       ? [
           {
@@ -77,7 +78,7 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: <Age sinceTimestamp={block.timestamp} />,
+          content: <TableCellAge sinceTimestamp={block.timestamp} />,
           key: 'timestamp',
         },
         ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite

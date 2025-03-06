@@ -5,8 +5,9 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { FC } from 'react'
-import { Age } from '../Age'
 import { ValidatorLink } from '../Validators/ValidatorLink'
+import { TableHeaderAge } from '../TableHeaderAge'
+import { TableCellAge } from '../TableCellAge'
 
 export type TableConsensusBlock = Block & {
   markAsNew?: boolean
@@ -49,7 +50,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
       align: TableCellAlign.Right,
     },
     ...(showProposer ? [{ key: 'proposer', content: t('common.proposer') }] : []),
-    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
   ]
 
   const tableRows = blocks?.map(block => {
@@ -105,7 +106,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
           : []),
         {
           align: TableCellAlign.Right,
-          content: <Age sinceTimestamp={block.timestamp} />,
+          content: <TableCellAge sinceTimestamp={block.timestamp} />,
           key: 'timestamp',
         },
       ],

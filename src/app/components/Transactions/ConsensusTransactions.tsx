@@ -6,13 +6,14 @@ import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'
-import { Age } from '../Age'
 import { TransactionLink } from './TransactionLink'
 import { ConsensusTransactionMethod } from '../ConsensusTransactionMethod'
 import { BlockLink } from '../Blocks/BlockLink'
 import { ConsensusAmount } from './ConsensusAmount'
 import { TransferIcon } from '../TransferIcon'
 import { ConsensusAccountLink } from '../Account/ConsensusAccountLink'
+import { TableHeaderAge } from '../TableHeaderAge'
+import { TableCellAge } from '../TableCellAge'
 
 type TableConsensusTransaction = Transaction & {
   markAsNew?: boolean
@@ -49,7 +50,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
     { key: 'status', content: t('common.status') },
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
-    { key: 'age', content: t('common.age'), align: TableCellAlign.Right },
+    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
     { key: 'type', content: t('common.type') },
     { key: 'from', content: t('common.from'), width: '150px' },
     ...(verbose
@@ -79,7 +80,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         },
         {
           align: TableCellAlign.Right,
-          content: <Age sinceTimestamp={transaction.timestamp} />,
+          content: <TableCellAge sinceTimestamp={transaction.timestamp} />,
           key: 'timestamp',
         },
         {
