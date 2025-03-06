@@ -19,6 +19,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { SubPageCard } from '../../components/SubPageCard'
 import { AppStatus } from '../../components/Rofl/AppStatus'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { RoflAppLink } from '../..//components/Rofl/RoflAppLink'
 import { TotalTransactionsCard } from './TotalTransactionsCard'
 import { RouterTabs } from '../../components/RouterTabs'
 import { MetaDataCard } from './MetaDataCard'
@@ -98,7 +99,13 @@ export const RoflAppDetailView: FC<{
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={!detailsPage}>
       <dt>{t('common.name')}</dt>
-      <dd>{app.metadata?.name || t('common.missing')}</dd>
+      <dd>
+        {app.metadata?.name ? (
+          <RoflAppLink id={app.id} name={app.metadata?.name} network={app.network} />
+        ) : (
+          t('common.missing')
+        )}
+      </dd>
 
       <dt>{t('rofl.version')}</dt>
       <dd>{app.version || t('common.missing')}</dd>
@@ -108,7 +115,7 @@ export const RoflAppDetailView: FC<{
 
       <dt>{t('rofl.appId')}</dt>
       <dd>
-        {app.id} <CopyToClipboard value={app.id} />
+        <RoflAppLink id={app.id} network={app.network} /> <CopyToClipboard value={app.id} />
       </dd>
 
       <dt>{t('rofl.enclaveId')}</dt>

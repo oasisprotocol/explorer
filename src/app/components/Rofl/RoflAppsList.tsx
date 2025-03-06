@@ -5,6 +5,7 @@ import { RoflApp } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { Age } from '../Age'
 import { AppStatus } from './AppStatus'
+import { RoflAppLink } from './RoflAppLink'
 
 type TableRoflApps = RoflApp & {
   markAsNew?: boolean
@@ -43,7 +44,11 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'order',
         },
         {
-          content: app.metadata?.name || t('common.missing'),
+          content: app.metadata?.name ? (
+            <RoflAppLink id={app.id} name={app.metadata?.name} network={app.network} />
+          ) : (
+            t('common.missing')
+          ),
           key: 'name',
         },
         {
@@ -51,7 +56,7 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'status',
         },
         {
-          content: app.id,
+          content: <RoflAppLink id={app.id} network={app.network} />,
           key: 'id',
         },
         {
