@@ -6,8 +6,6 @@ import { EvmTokenType, RuntimeEvent } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
-import { trimLongString } from '../../utils/trimLongString'
-import Typography from '@mui/material/Typography'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
@@ -155,20 +153,12 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                   pr: 3,
                 }}
               >
-                {!!ownAddress && fromAddress === ownAddress ? (
-                  <Typography
-                    variant="mono"
-                    component="span"
-                    sx={{
-                      fontWeight: 700,
-                    }}
-                  >
-                    {trimLongString(fromAddress)}
-                  </Typography>
-                ) : (
-                  <AccountLink scope={transfer} address={fromAddress} alwaysTrim />
-                )}
-
+                <AccountLink
+                  scope={transfer}
+                  address={fromAddress}
+                  alwaysTrim
+                  labelOnly={!!ownAddress && fromAddress === ownAddress}
+                />
                 <TransferIcon />
               </Box>
             ),
@@ -177,18 +167,13 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
           key: 'to',
           content: !toAddress ? (
             ''
-          ) : !!ownAddress && toAddress === ownAddress ? (
-            <Typography
-              variant="mono"
-              component="span"
-              sx={{
-                fontWeight: 700,
-              }}
-            >
-              {trimLongString(toAddress)}
-            </Typography>
           ) : (
-            <AccountLink scope={transfer} address={toAddress} alwaysTrim />
+            <AccountLink
+              scope={transfer}
+              address={toAddress}
+              alwaysTrim
+              labelOnly={!!ownAddress && toAddress === ownAddress}
+            />
           ),
         },
         ...(differentTokens
