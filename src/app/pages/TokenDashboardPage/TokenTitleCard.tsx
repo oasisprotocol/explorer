@@ -33,6 +33,7 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string; searchTer
               <AccountLink
                 scope={token}
                 address={token.eth_contract_addr || token.contract_addr}
+                showOnlyAddress
                 alwaysTrim
               />
               <CopyToClipboard value={token.eth_contract_addr || token.contract_addr} />
