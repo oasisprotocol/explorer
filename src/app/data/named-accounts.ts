@@ -1,7 +1,7 @@
 import { Network } from '../../types/network'
 import { Account, Layer, Runtime, RuntimeAccount } from '../../oasis-nexus/api'
 
-export type AccountMetadataSource = 'Registry' | 'SelfProfessed'
+export type AccountMetadataSource = 'OasisRegistry' | 'DeltaDaoRegistry' | 'SelfProfessed'
 
 export type AccountMetadata = {
   address: string
