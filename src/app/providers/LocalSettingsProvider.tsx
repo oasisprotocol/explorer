@@ -1,22 +1,22 @@
 import { FC, PropsWithChildren, useState } from 'react'
 import {
-  TableConfigContext,
-  TableConfigProviderContext,
-  TableConfigProviderState,
-} from './TableConfigContext'
+  LocalSettingsContext,
+  LocalSettingsProviderContext,
+  LocalSettingsProviderState,
+} from './LocalSettingsContext'
 import { storage } from '../utils/storage'
 import { StorageKeys } from '../../types/storage'
 import { TableAgeType } from '../../types/table-age-type'
 
 const localStorage = storage()
 
-const tableConfigProviderInitialState: TableConfigProviderState = {
+const localSettingsProviderInitialState: LocalSettingsProviderState = {
   ageHeaderType: localStorage.get(StorageKeys.TableAgeType) ?? TableAgeType.Distance,
 }
 
-export const TableConfigContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [state, setState] = useState<TableConfigProviderState>({
-    ...tableConfigProviderInitialState,
+export const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [state, setState] = useState<LocalSettingsProviderState>({
+    ...localSettingsProviderInitialState,
   })
 
   const setAgeHeaderType = (ageHeaderType: TableAgeType) => {
@@ -28,10 +28,10 @@ export const TableConfigContextProvider: FC<PropsWithChildren> = ({ children }) 
     localStorage.set(StorageKeys.TableAgeType, ageHeaderType)
   }
 
-  const providerState: TableConfigProviderContext = {
+  const providerState: LocalSettingsProviderContext = {
     state,
     setAgeHeaderType,
   }
 
-  return <TableConfigContext.Provider value={providerState}>{children}</TableConfigContext.Provider>
+  return <LocalSettingsContext.Provider value={providerState}>{children}</LocalSettingsContext.Provider>
 }

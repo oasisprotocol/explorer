@@ -5,13 +5,13 @@ import Box from '@mui/material/Box'
 import { useFormattedTimestamp } from '../../hooks/useFormattedTimestamp'
 import { tooltipDelay } from '../../../styles/theme'
 import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
-import { useTableConfig } from '../../hooks/useTableConfig'
+import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { TableAgeType } from '../../../types/table-age-type'
 
 export const TableCellAge: FC<{ sinceTimestamp: string }> = ({ sinceTimestamp }) => {
   const {
     state: { ageHeaderType },
-  } = useTableConfig()
+  } = useLocalSettings()
 
   const date = new Date(sinceTimestamp)
   const defaultFormatted = useFormattedTimestamp(date)

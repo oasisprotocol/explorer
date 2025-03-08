@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { TableAgeType } from '../../../types/table-age-type'
-import { useTableConfig } from '../../hooks/useTableConfig'
+import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { tooltipDelay } from '../../../styles/theme'
 import { getTimeZone } from '../../hooks/useFormattedTimestamp'
 
@@ -13,7 +13,7 @@ export const TableHeaderAge: FC = () => {
   const {
     state: { ageHeaderType },
     setAgeHeaderType,
-  } = useTableConfig()
+  } = useLocalSettings()
 
   switch (ageHeaderType) {
     case TableAgeType.DateTime: {
