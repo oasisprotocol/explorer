@@ -34,6 +34,10 @@ const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
       'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
     [Layer.sapphire]:
       'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
+    [Layer.pontusxdev]:
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxdev.json',
+    [Layer.pontusxtest]:
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxtest.json',
   },
   [Network.localnet]: {
     [Layer.consensus]: undefined,
