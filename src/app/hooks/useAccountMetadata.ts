@@ -27,7 +27,7 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     useErrorBoundary: false,
   })
   const oasisData = useOasisAccountMetadata(scope.network, scope.layer, getOasisAddress(address), {
-    enabled: !isPontusX && !isLocalnet(scope.network),
+    enabled: !isLocalnet(scope.network),
     useErrorBoundary: false,
   })
   const registryData = isPontusX ? (pontusXData?.metadata ? pontusXData : oasisData) : oasisData
