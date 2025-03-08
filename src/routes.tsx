@@ -65,6 +65,9 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
+import { useLocalConfig } from './app/hooks/useLocalConfig'
+import { HighlightingContextProvider } from './app/components/HighlightingContext'
+import { PontusxPrivacyPage } from './app/pages/PontusxPrivacyPage'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -82,18 +85,26 @@ const ScopeSpecificPart = () => {
  */
 const RedirectToDashboard: FC = () => {
   const navigate = useNavigate()
+  const {
+    state: { preferredScope },
+  } = useLocalConfig()
 
-  useEffect(() =>
-    navigate(
-      RouteUtils.getDashboardRoute({
-        network:
-          fixedNetwork ?? fixedLayer
-            ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
-            : RouteUtils.getEnabledScopes()[0].network,
-        layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
-      }),
-    ),
-  )
+  const getPreferredScope = () =>
+    !preferredScope
+      ? undefined
+      : RouteUtils.getEnabledScopes().find(
+          scope => scope.network === preferredScope.network && scope.layer === preferredScope.layer,
+        )
+
+  const getDefaultScope = (): SearchScope => ({
+    network:
+      fixedNetwork ?? fixedLayer
+        ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
+        : RouteUtils.getEnabledScopes()[0].network,
+    layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
+  })
+
+  useEffect(() => navigate(RouteUtils.getDashboardRoute(getPreferredScope() ?? getDefaultScope())))
   return null
 }
 
@@ -107,7 +118,9 @@ export const routes: RouteObject[] = [
     element: (
       <AnalyticsConsentProvider>
         <ScrollRestoration />
-        <Outlet />
+        <HighlightingContextProvider>
+          <Outlet />
+        </HighlightingContextProvider>
       </AnalyticsConsentProvider>
     ),
     children: [
@@ -351,6 +364,10 @@ export const routes: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/privacy',
+        element: <PontusxPrivacyPage />,
       },
     ],
   },

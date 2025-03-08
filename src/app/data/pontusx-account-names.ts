@@ -19,6 +19,8 @@ type PontusXAccountsMetadata = {
   list: AccountMetadata[]
 }
 
+export const pontusXLayers: Layer[] = [Layer.pontusxtest, Layer.pontusxdev, Layer.sapphire]
+
 const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> => {
   const response = await axios.get(DATA_SOURCE_URL)
   if (response.status !== 200) throw new Error("Couldn't load names")
@@ -27,7 +29,7 @@ const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> =>
   const list: AccountMetadata[] = []
   Object.entries(response.data).forEach(([evmAddress, name]) => {
     const account: AccountMetadata = {
-      source: 'Registry',
+      source: 'DeltaDaoRegistry',
       address: getOasisAddress(evmAddress),
       name: name as string,
     }

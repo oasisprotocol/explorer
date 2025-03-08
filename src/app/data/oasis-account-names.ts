@@ -34,6 +34,16 @@ const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
       'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
     [Layer.sapphire]:
       'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
+    [Layer.pontusxdev]:
+      // TODO: remove the sapphire workaround and uncomment the real URL
+      //  when https://github.com/oasisprotocol/nexus/pull/925 is merged
+      // 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxdev',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
+    [Layer.pontusxtest]:
+      // TODO: remove the sapphire workaround and uncomment the real URL
+      //  when https://github.com/oasisprotocol/nexus/pull/925 is merged
+      // 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxtest',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
   },
   [Network.localnet]: {
     [Layer.consensus]: undefined,
@@ -53,7 +63,7 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
   const list: AccountMetadata[] = []
   Array.from(response.data).forEach((entry: any) => {
     const metadata: AccountMetadata = {
-      source: 'Registry',
+      source: 'OasisRegistry',
       address: entry.Address,
       name: entry.Name,
       description: entry.Description,

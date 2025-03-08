@@ -1,6 +1,10 @@
 import { SearchScope } from '../../types/searchScope'
 import { Layer } from '../../oasis-nexus/api'
-import { usePontusXAccountMetadata, useSearchForPontusXAccountsByName } from '../data/pontusx-account-names'
+import {
+  pontusXLayers,
+  usePontusXAccountMetadata,
+  useSearchForPontusXAccountsByName,
+} from '../data/pontusx-account-names'
 import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-accounts'
 import { useOasisAccountMetadata, useSearchForOasisAccountsByName } from '../data/oasis-account-names'
 import { getOasisAddress } from '../utils/helpers'
@@ -17,16 +21,16 @@ import { useTokenInfo } from '../pages/TokenDashboardPage/hook'
  */
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
   // Look up metadata specified by us
-  const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
+  const isPontusX = pontusXLayers.includes(scope.layer)
   const pontusXData = usePontusXAccountMetadata(address, {
     enabled: isPontusX,
     useErrorBoundary: false,
   })
   const oasisData = useOasisAccountMetadata(scope.network, scope.layer, getOasisAddress(address), {
-    enabled: !isPontusX && !isLocalnet(scope.network),
+    enabled: !isLocalnet(scope.network),
     useErrorBoundary: false,
   })
-  const registryData = isPontusX ? pontusXData : oasisData
+  const registryData = isPontusX ? (pontusXData?.metadata ? pontusXData : oasisData) : oasisData
 
   // Also look up self-professed metadata (for tokens)
   const {
@@ -51,13 +55,14 @@ export const useSearchForAccountsByName = (
   scope: SearchScope,
   nameFragment = '',
 ): AccountNameSearchResults => {
-  const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
+  const isPontusX = pontusXLayers.includes(scope.layer)
   const isValidPontusXSearch = isPontusX && !!nameFragment
   const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragment, {
     enabled: isValidPontusXSearch,
     useErrorBoundary: false,
   })
-  const isValidOasisSearch = !isPontusX && !!nameFragment
+  const isValidOasisSearch =
+    !(scope.layer === Layer.pontusxdev || scope.layer === Layer.pontusxtest) && !!nameFragment
   const oasisResults = useSearchForOasisAccountsByName(scope.network, scope.layer, nameFragment, {
     enabled: isValidOasisSearch,
     useErrorBoundary: false,

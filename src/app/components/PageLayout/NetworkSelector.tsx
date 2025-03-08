@@ -13,6 +13,8 @@ import { LayerPicker } from './../LayerPicker'
 import { fixedLayer, fixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { SearchScope } from '../../../types/searchScope'
+import { hideNetworkRibbon } from '../../../config'
+import { useLocalConfig } from '../../hooks/useLocalConfig'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   marginLeft: `-${theme.spacing(1)}`,
@@ -62,6 +64,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
   const { isMobile, isTablet } = useScreenSize()
   const labels = getNetworkNames(t)
   const [openDrawer, setOpenDrawer] = useState(false)
+  const { setPreferredScope } = useLocalConfig()
   const handleDrawerClose = () => setOpenDrawer(false)
   const handleDrawerOpen = () => setOpenDrawer(true)
 
@@ -78,6 +81,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
         onClose={handleDrawerClose}
         onConfirm={(scope: SearchScope) => {
           handleDrawerClose()
+          setPreferredScope(scope)
           navigate(RouteUtils.getDashboardRoute(scope))
         }}
         isOutOfDate={isOutOfDate}
@@ -85,7 +89,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
       {!isMobile && (
         <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
-      {!fixedNetwork && !fixedLayer && !isTablet && network !== Network.mainnet && (
+      {!hideNetworkRibbon && !fixedNetwork && !fixedLayer && !isTablet && network !== Network.mainnet && (
         <StyledBox>
           <Typography
             component="span"

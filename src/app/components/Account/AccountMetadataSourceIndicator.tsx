@@ -62,8 +62,10 @@ export const AccountMetadataSourceIndicator: FC<AccountMetadataSourceIndicatorPr
     )
 
   switch (source) {
-    case 'Registry':
+    case 'OasisRegistry':
       return renderWithOrWithoutLabel(t('account.namedByOasis'), !!withText, <OasisNameIndicator />)
+    case 'DeltaDaoRegistry':
+      return renderWithOrWithoutLabel(t('account.namedByDeltaDao'), !!withText, <OasisNameIndicator />)
     case 'SelfProfessed':
       return renderWithOrWithoutLabel(t('account.namedBySelf'), !!withText, <SelfAcclaimedNameIndicator />)
     default:

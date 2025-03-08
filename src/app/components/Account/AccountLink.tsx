@@ -14,34 +14,72 @@ import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
+import { useHighlighting } from '../HighlightingContext'
+import { COLORS } from '../../../styles/theme/colors'
+
+const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({ children, address }) => {
+  const { address: highlightAddress, setAddress: setHighlightAddress } = useHighlighting()
+  const highlighted = !!highlightAddress && highlightAddress.toLowerCase() === address.toLowerCase()
+  return (
+    <Box
+      onMouseEnter={() => {
+        setHighlightAddress(address)
+      }}
+      onMouseLeave={() => {
+        setHighlightAddress(undefined)
+      }}
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        verticalAlign: 'middle',
+        padding: '4px 4px 2px 4px',
+        ...(highlighted
+          ? {
+              background: COLORS.warningLight,
+              border: `1px dashed ${COLORS.warningColor}`,
+              borderRadius: '6px',
+            }
+          : {
+              margin: '1px',
+            }),
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
 
 const WithTypographyAndLink: FC<{
-  to: string
+  scope: SearchScope
+  address: string
   mobile?: boolean
   children: ReactNode
   labelOnly?: boolean
-}> = ({ children, to, mobile, labelOnly }) => {
+}> = ({ scope, address, children, mobile, labelOnly }) => {
+  const to = RouteUtils.getAccountRoute(scope, address)
   return (
-    <Typography
-      variant="mono"
-      component="span"
-      sx={{
-        ...(mobile
-          ? {
-              maxWidth: '100%',
-              overflow: 'hidden',
-            }
-          : {}),
-      }}
-    >
-      {labelOnly ? (
-        children
-      ) : (
-        <Link component={RouterLink} to={to}>
-          {children}
-        </Link>
-      )}
-    </Typography>
+    <WithHighlighting address={address}>
+      <Typography
+        variant="mono"
+        component="span"
+        sx={{
+          ...(mobile
+            ? {
+                maxWidth: '100%',
+                overflow: 'hidden',
+              }
+            : {}),
+        }}
+      >
+        {labelOnly ? (
+          children
+        ) : (
+          <Link component={RouterLink} to={to}>
+            {children}
+          </Link>
+        )}
+      </Typography>
+    </WithHighlighting>
   )
 }
 
@@ -102,7 +140,6 @@ export const AccountLink: FC<Props> = ({
   } = useAccountMetadata(scope, address)
   const accountName = accountMetadata?.name // TODO: we should also use the description
   const showAccountName = !showOnlyAddress && !!accountName
-  const to = RouteUtils.getAccountRoute(scope, address)
 
   const extraTooltipWithIcon = extraTooltip ? (
     <Box
@@ -137,7 +174,7 @@ export const AccountLink: FC<Props> = ({
     // In a table, we only ever want a short line
 
     return (
-      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
+      <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
         <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
             <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
@@ -157,7 +194,7 @@ export const AccountLink: FC<Props> = ({
     // We want one long line, with name and address.
 
     return (
-      <WithTypographyAndLink to={to} labelOnly={labelOnly}>
+      <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
         <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
             <Box sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
@@ -176,7 +213,7 @@ export const AccountLink: FC<Props> = ({
   // We want two lines, one for name (if available), one for address
   // Both lines adaptively shortened to fill available space
   return (
-    <WithTypographyAndLink to={to} mobile labelOnly={labelOnly}>
+    <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
       <>
         <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
           {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
