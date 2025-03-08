@@ -66,6 +66,7 @@ import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDe
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
+import { useLocalSettings } from './app/hooks/useLocalSettings'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -83,18 +84,26 @@ const ScopeSpecificPart = () => {
  */
 const RedirectToDashboard: FC = () => {
   const navigate = useNavigate()
+  const {
+    settings: { preferredScope },
+  } = useLocalSettings()
 
-  useEffect(() =>
-    navigate(
-      RouteUtils.getDashboardRoute({
-        network:
-          (fixedNetwork ?? fixedLayer)
-            ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
-            : RouteUtils.getEnabledScopes()[0].network,
-        layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
-      }),
-    ),
-  )
+  const getPreferredScope = () =>
+    !preferredScope
+      ? undefined
+      : RouteUtils.getEnabledScopes().find(
+          scope => scope.network === preferredScope.network && scope.layer === preferredScope.layer,
+        )
+
+  const getDefaultScope = (): SearchScope => ({
+    network:
+      (fixedNetwork ?? fixedLayer)
+        ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
+        : RouteUtils.getEnabledScopes()[0].network,
+    layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
+  })
+
+  useEffect(() => navigate(RouteUtils.getDashboardRoute(getPreferredScope() ?? getDefaultScope())))
   return null
 }
 
