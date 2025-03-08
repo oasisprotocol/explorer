@@ -1,10 +1,12 @@
 import { AppError, AppErrors } from '../../types/errors'
 import { StorageKeys } from '../../types/storage'
 import { TableAgeType } from '../../types/table-age-type'
+import { SearchScope } from '../../types/searchScope'
 
 interface StorageType {
   [StorageKeys.MobileHelpScreenShown]: boolean
   [StorageKeys.TableAgeType]: TableAgeType
+  [StorageKeys.PreferredScope]: SearchScope
 }
 
 export const storage = (storage = localStorage) => {
