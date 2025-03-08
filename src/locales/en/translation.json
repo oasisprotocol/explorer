@@ -15,6 +15,7 @@
     "ERC721": "ERC-721",
     "listTitle": "Accounts",
     "namedByOasis": "Name appointed by Oasis",
+    "namedByDeltaDao": "Identified by deltaDAO",
     "namedBySelf": "Name self-acclaimed",
     "noTokens": "This account holds no tokens",
     "noBalances": "This account currently has no balances.",
