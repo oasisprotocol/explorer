@@ -57,7 +57,7 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
   const list: AccountMetadata[] = []
   Array.from(response.data).forEach((entry: any) => {
     const metadata: AccountMetadata = {
-      source: 'Registry',
+      source: 'OasisRegistry',
       address: entry.Address,
       name: entry.Name,
       description: entry.Description,
