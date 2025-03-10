@@ -20,7 +20,13 @@ const InstancesView: FC = () => {
   // TODO: waits for API, add pagination
   const isLoading = false
   const isFetched = true
-  const instances = []
+  const instances = [
+    {
+      rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
+      node: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
+      timestamp: '2025-03-13T12:16:38Z',
+    },
+  ]
 
   return (
     <>

@@ -33,7 +33,7 @@ export const InstancesList: FC<InstancesListProps> = ({ isLoading, limit, pagina
         {
           key: 'expiration',
           content: t('common.formattedDateTime', {
-            value: instance.timestamp,
+            timestamp: new Date(instance.timestamp),
             formatParams: {
               timestamp: {
                 year: 'numeric',
