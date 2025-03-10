@@ -179,6 +179,11 @@ If unset, the tokens will be sorted by number of holders.
 
  */
 sort_by?: GetRuntimeEvmTokensSortBy;
+/**
+ * The type of tokens to return.
+
+ */
+type?: EvmTokenType;
 };
 
 export type GetRuntimeEventsParams = {
@@ -296,7 +301,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string;
+method?: string[];
 };
 
 export type GetRuntimeBlocksParams = {
@@ -589,7 +594,7 @@ block?: number;
 /**
  * A filter on transaction method.
  */
-method?: ConsensusTxMethod;
+method?: ConsensusTxMethod[];
 /**
  * A filter on transaction sender.
  */
@@ -1024,7 +1029,7 @@ The current heuristic sets this to `true` for:
  - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
 Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
  */
-  is_likely_native_token_transfer?: boolean;
+  is_likely_native_token_transfer: boolean;
   /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
 In practice, Nexus currently expects only the following methods:
   - "accounts.Transfer"
@@ -1076,6 +1081,8 @@ DEPRECATED: This field will be removed in the future in favor of the signers fie
   /** The total byte size of the transaction. */
   size: number;
   /** Whether this transaction successfully executed.
+Is absent in multi-step runtime transactions (`consensus.Deposit`, `consensus.Withdraw`,
+`consensus.Delegate`, and `consensus.Undelegate`) until the second step is completed.
 Can be absent (meaning "unknown") for confidential runtimes.
  */
   success?: boolean;
@@ -1222,6 +1229,7 @@ export const RuntimeEventType = {
   roflapp_created: 'rofl.app_created',
   roflapp_updated: 'rofl.app_updated',
   roflapp_removed: 'rofl.app_removed',
+  roflinstance_registered: 'rofl.instance_registered',
 } as const;
 
 /**
