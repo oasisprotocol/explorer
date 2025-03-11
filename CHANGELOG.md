@@ -27,9 +27,6 @@ The format is inspired by [Keep a Changelog].
 - Emphasize end user focused articles in Learning materials
   ([#1738](https://github.com/oasisprotocol/explorer/issues/1738))
 
-- Fix HMR in React components
-  ([#1741](https://github.com/oasisprotocol/explorer/issues/1741))
-
 - Rely on validator address presence not name in ConsensusAccountLink
   ([#1768](https://github.com/oasisprotocol/explorer/issues/1768))
 
@@ -49,6 +46,9 @@ The format is inspired by [Keep a Changelog].
   ([#1795](https://github.com/oasisprotocol/explorer/issues/1795))
 
 ### Internal Changes
+
+- Fix HMR in React components
+  ([#1741](https://github.com/oasisprotocol/explorer/issues/1741))
 
 - Update dependencies
   ([#1675](https://github.com/oasisprotocol/explorer/issues/1675),
