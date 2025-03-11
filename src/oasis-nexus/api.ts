@@ -141,6 +141,12 @@ declare module './generated/api' {
   export interface ValidatorAggStats {
     ticker: Ticker
   }
+
+  export interface RoflApp {
+    network: Network
+    layer: Layer
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {

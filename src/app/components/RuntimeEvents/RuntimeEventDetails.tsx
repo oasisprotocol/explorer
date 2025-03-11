@@ -98,6 +98,7 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.roflapp_created]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
   }
 
   return (
@@ -375,6 +376,7 @@ const RuntimeEventDetailsInner: FC<{
     case RuntimeEventType.roflapp_created:
     case RuntimeEventType.roflapp_removed:
     case RuntimeEventType.roflapp_updated:
+    case RuntimeEventType.roflinstance_registered:
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
