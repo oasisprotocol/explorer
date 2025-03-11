@@ -12,6 +12,56 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.17.0 (2025-03-11)
+
+### Features
+
+- Display token name in TXs to/from smart contracts
+  ([#1773](https://github.com/oasisprotocol/explorer/issues/1773))
+
+- Toggle between 'age' and 'date' for table views
+  ([#1782](https://github.com/oasisprotocol/explorer/issues/1782))
+
+### Bug Fixes and Improvements
+
+- Emphasize end user focused articles in Learning materials
+  ([#1738](https://github.com/oasisprotocol/explorer/issues/1738))
+
+- Rely on validator address presence not name in ConsensusAccountLink
+  ([#1768](https://github.com/oasisprotocol/explorer/issues/1768))
+
+- Don't attempt to get tokens on consensus
+  ([#1773](https://github.com/oasisprotocol/explorer/issues/1773))
+
+- Preserve tx_method query arg on block prev/next button
+  ([#1780](https://github.com/oasisprotocol/explorer/issues/1780))
+
+- Fix consensus list view fees
+  ([#1783](https://github.com/oasisprotocol/explorer/issues/1783))
+
+- Offer ROFL tx types only for selected layers
+  ([#1786](https://github.com/oasisprotocol/explorer/issues/1786))
+
+- Enable Oasis account name lookup on pontus-x runtimes
+  ([#1795](https://github.com/oasisprotocol/explorer/issues/1795))
+
+### Internal Changes
+
+- Fix HMR in React components
+  ([#1741](https://github.com/oasisprotocol/explorer/issues/1741))
+
+- Update dependencies
+  ([#1675](https://github.com/oasisprotocol/explorer/issues/1675),
+   [#1676](https://github.com/oasisprotocol/explorer/issues/1676),
+   [#1736](https://github.com/oasisprotocol/explorer/issues/1736),
+   [#1737](https://github.com/oasisprotocol/explorer/issues/1737),
+   [#1771](https://github.com/oasisprotocol/explorer/issues/1771),
+   [#1787](https://github.com/oasisprotocol/explorer/issues/1787),
+   [#1789](https://github.com/oasisprotocol/explorer/issues/1789))
+
+- Update API bindings
+  ([#1747](https://github.com/oasisprotocol/explorer/issues/1747))
+
 ## 1.16.1 (2025-02-04)
 
 ### Bug Fixes and Improvements
