@@ -21,7 +21,7 @@ export const ThemeByScope: FC<{
 export const withDefaultTheme = (node: ReactNode, alwaysMainnet = false) => (
   <ThemeByScope
     isRootTheme={true}
-    network={alwaysMainnet ? Network.mainnet : fixedNetwork ?? Network.mainnet}
+    network={alwaysMainnet ? Network.mainnet : (fixedNetwork ?? Network.mainnet)}
   >
     {node}
   </ThemeByScope>

@@ -88,7 +88,7 @@ const RedirectToDashboard: FC = () => {
     navigate(
       RouteUtils.getDashboardRoute({
         network:
-          fixedNetwork ?? fixedLayer
+          (fixedNetwork ?? fixedLayer)
             ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
             : RouteUtils.getEnabledScopes()[0].network,
         layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
@@ -114,10 +114,7 @@ export const routes: RouteObject[] = [
       </AnalyticsConsentProvider>
     ),
     children: [
-      {
-        path: '/',
-        element: skipGraph ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true),
-      },
+      { path: '/', element: skipGraph ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true) },
       ...(!!fixedNetwork && !!fixedLayer
         ? []
         : [
@@ -135,14 +132,8 @@ export const routes: RouteObject[] = [
         },
         id: 'consensusScope',
         children: [
-          {
-            path: '',
-            element: <ConsensusDashboardPage />,
-          },
-          {
-            path: `address`,
-            element: <ConsensusAccountsPage />,
-          },
+          { path: '', element: <ConsensusDashboardPage /> },
+          { path: `address`, element: <ConsensusAccountsPage /> },
           {
             path: `address/:address`,
             element: <ConsensusAccountDetailsPage />,
@@ -158,19 +149,9 @@ export const routes: RouteObject[] = [
               },
             ],
           },
-          {
-            path: `proposal`,
-            element: <ProposalsPage />,
-          },
-          {
-            path: `proposal/:proposalId`,
-            element: <ProposalDetailsPage />,
-            loader: proposalIdParamLoader,
-          },
-          {
-            path: `validators`,
-            element: <ValidatorsPage />,
-          },
+          { path: `proposal`, element: <ProposalsPage /> },
+          { path: `proposal/:proposalId`, element: <ProposalDetailsPage />, loader: proposalIdParamLoader },
+          { path: `validators`, element: <ValidatorsPage /> },
           {
             path: `validators/:address`,
             element: <ValidatorDetailsPage />,
@@ -184,20 +165,14 @@ export const routes: RouteObject[] = [
                 path: 'events',
                 Component: () => <ConsensusAccountEventsCard {...useValidatorDetailsProps()} />,
               },
-              {
-                path: 'delegators',
-                Component: () => <DelegatorsCard {...useValidatorDetailsProps()} />,
-              },
+              { path: 'delegators', Component: () => <DelegatorsCard {...useValidatorDetailsProps()} /> },
               {
                 path: 'debonding-delegations',
                 Component: () => <DebondingDelegationsCard {...useValidatorDetailsProps()} />,
               },
             ],
           },
-          {
-            path: `block`,
-            element: <ConsensusBlocksPage />,
-          },
+          { path: `block`, element: <ConsensusBlocksPage /> },
           {
             path: `block/:blockHeight`,
             element: <ConsensusBlockDetailPage />,
@@ -213,10 +188,7 @@ export const routes: RouteObject[] = [
               },
             ],
           },
-          {
-            path: 'tx',
-            element: <ConsensusTransactionsPage />,
-          },
+          { path: 'tx', element: <ConsensusTransactionsPage /> },
           {
             path: `tx/:hash`,
             element: <ConsensusTransactionDetailPage />,
@@ -233,19 +205,13 @@ export const routes: RouteObject[] = [
         },
         id: 'runtimeScope',
         children: [
-          {
-            path: '',
-            element: <ParatimeDashboardPage />,
-          },
+          { path: '', element: <ParatimeDashboardPage /> },
           {
             path: 'search', // Search within this scope
             element: <SearchResultsPage />,
           },
 
-          {
-            path: `block`,
-            element: <RuntimeBlocksPage />,
-          },
+          { path: `block`, element: <RuntimeBlocksPage /> },
           {
             path: `block/:blockHeight`,
             element: <RuntimeBlockDetailPage />,
@@ -266,14 +232,8 @@ export const routes: RouteObject[] = [
             element: <RuntimeAccountDetailsPage />,
             loader: runtimeAddressParamLoader(),
             children: [
-              {
-                path: '',
-                Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
-              },
-              {
-                path: 'events',
-                Component: () => <AccountEventsCard {...useRuntimeAccountDetailsProps()} />,
-              },
+              { path: '', Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} /> },
+              { path: 'events', Component: () => <AccountEventsCard {...useRuntimeAccountDetailsProps()} /> },
               {
                 path: 'token-transfers',
                 Component: () => <AccountTokenTransfersCard {...useRuntimeAccountDetailsProps()} />,
@@ -296,38 +256,23 @@ export const routes: RouteObject[] = [
                   },
                 ],
               },
-              {
-                path: 'code',
-                Component: () => <ContractCodeCard {...useRuntimeAccountDetailsProps()} />,
-              },
+              { path: 'code', Component: () => <ContractCodeCard {...useRuntimeAccountDetailsProps()} /> },
             ],
           },
-          {
-            path: `tx`,
-            element: <RuntimeTransactionsPage />,
-          },
+          { path: `tx`, element: <RuntimeTransactionsPage /> },
           {
             path: `tx/:hash`,
             element: <RuntimeTransactionDetailPage />,
             loader: runtimeTransactionParamLoader,
           },
-          {
-            path: `token`,
-            element: <TokensPage />,
-          },
+          { path: `token`, element: <TokensPage /> },
           {
             path: 'token/:address/instance/:instanceId',
             element: <NFTInstanceDashboardPage />,
             loader: runtimeAddressParamLoader(),
             children: [
-              {
-                path: '',
-                Component: () => <NFTTokenTransfersCard {...useNftDetailsProps()} />,
-              },
-              {
-                path: 'metadata',
-                Component: () => <NFTMetadataCard {...useNftDetailsProps()} />,
-              },
+              { path: '', Component: () => <NFTTokenTransfersCard {...useNftDetailsProps()} /> },
+              { path: 'metadata', Component: () => <NFTMetadataCard {...useNftDetailsProps()} /> },
             ],
           },
           {
@@ -335,22 +280,10 @@ export const routes: RouteObject[] = [
             element: <TokenDashboardPage />,
             loader: runtimeAddressParamLoader(),
             children: [
-              {
-                path: '',
-                Component: () => <TokenTransfersCard {...useTokenDashboardProps()} />,
-              },
-              {
-                path: 'holders',
-                Component: () => <TokenHoldersCard {...useTokenDashboardProps()} />,
-              },
-              {
-                path: 'inventory',
-                Component: () => <TokenInventoryCard {...useTokenDashboardProps()} />,
-              },
-              {
-                path: 'code',
-                Component: () => <ContractCodeCard {...useTokenDashboardProps()} />,
-              },
+              { path: '', Component: () => <TokenTransfersCard {...useTokenDashboardProps()} /> },
+              { path: 'holders', Component: () => <TokenHoldersCard {...useTokenDashboardProps()} /> },
+              { path: 'inventory', Component: () => <TokenInventoryCard {...useTokenDashboardProps()} /> },
+              { path: 'code', Component: () => <ContractCodeCard {...useTokenDashboardProps()} /> },
             ],
           },
         ],
