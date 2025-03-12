@@ -10,7 +10,7 @@ import { TableAgeType } from '../../../types/table-age-type'
 
 export const TableCellAge: FC<{ sinceTimestamp: string }> = ({ sinceTimestamp }) => {
   const {
-    state: { ageHeaderType },
+    settings: { ageHeaderType },
   } = useLocalSettings()
 
   const date = new Date(sinceTimestamp)

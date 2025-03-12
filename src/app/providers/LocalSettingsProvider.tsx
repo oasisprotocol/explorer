@@ -1,36 +1,36 @@
 import { FC, PropsWithChildren, useState } from 'react'
-import {
-  LocalSettingsContext,
-  LocalSettingsProviderContext,
-  LocalSettingsProviderState,
-} from './LocalSettingsContext'
+import { LocalSettingsContext, LocalSettingsProviderContext } from './LocalSettingsContext'
 import { storage } from '../utils/storage'
 import { StorageKeys } from '../../types/storage'
-import { TableAgeType } from '../../types/table-age-type'
+import { defaultLocalSettings, LocalSettings } from '../../types/local-settings'
 
 const localStorage = storage()
 
-const localSettingsProviderInitialState: LocalSettingsProviderState = {
-  ageHeaderType: localStorage.get(StorageKeys.TableAgeType) ?? TableAgeType.Distance,
+const localSettingsInitialState: LocalSettings = {
+  ...defaultLocalSettings,
+  ...(localStorage.get(StorageKeys.LocalSettings) ?? {}),
 }
 
-export const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [state, setState] = useState<LocalSettingsProviderState>({
-    ...localSettingsProviderInitialState,
-  })
+console.log('initial local settings initialized', localSettingsInitialState)
 
-  const setAgeHeaderType = (ageHeaderType: TableAgeType) => {
-    setState(prevState => ({
+export const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [settings, setSettings] = useState<LocalSettings>(localSettingsInitialState)
+
+  const changeSetting = (key: keyof LocalSettings, value: any) => {
+    setSettings(prevState => ({
       ...prevState,
-      ageHeaderType,
+      [key]: value,
     }))
 
-    localStorage.set(StorageKeys.TableAgeType, ageHeaderType)
+    localStorage.set(StorageKeys.LocalSettings, {
+      ...settings,
+      [key]: value,
+    })
   }
 
   const providerState: LocalSettingsProviderContext = {
-    state,
-    setAgeHeaderType,
+    settings,
+    changeSetting,
   }
 
   return <LocalSettingsContext.Provider value={providerState}>{children}</LocalSettingsContext.Provider>

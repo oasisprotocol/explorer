@@ -11,8 +11,8 @@ import { getTimeZone } from '../../hooks/useFormattedTimestamp'
 export const TableHeaderAge: FC = () => {
   const { t } = useTranslation()
   const {
-    state: { ageHeaderType },
-    setAgeHeaderType,
+    settings: { ageHeaderType },
+    changeSetting,
   } = useLocalSettings()
 
   switch (ageHeaderType) {
@@ -26,7 +26,7 @@ export const TableHeaderAge: FC = () => {
           leaveDelay={0}
           placement={'top'}
         >
-          <Button variant="text" onClick={() => setAgeHeaderType(TableAgeType.Distance)}>
+          <Button variant="text" onClick={() => changeSetting('ageHeaderType', TableAgeType.Distance)}>
             <Typography
               sx={{
                 fontWeight: 700,
@@ -47,7 +47,7 @@ export const TableHeaderAge: FC = () => {
           leaveDelay={0}
           placement={'top'}
         >
-          <Button variant="text" onClick={() => setAgeHeaderType(TableAgeType.DateTime)}>
+          <Button variant="text" onClick={() => changeSetting('ageHeaderType', TableAgeType.DateTime)}>
             <Typography
               sx={{
                 fontWeight: 700,

@@ -1,16 +1,9 @@
 import { createContext } from 'react'
-import { TableAgeType } from '../../types/table-age-type'
-
-/**
- * This is where we store local state
- */
-export interface LocalSettingsProviderState {
-  ageHeaderType: TableAgeType
-}
+import { LocalSettings } from '../../types/local-settings'
 
 export interface LocalSettingsProviderContext {
-  readonly state: LocalSettingsProviderState
-  setAgeHeaderType: (ageHeaderType: TableAgeType) => void
+  readonly settings: LocalSettings
+  changeSetting: (key: keyof LocalSettings, value: any) => void
 }
 
 export const LocalSettingsContext = createContext<LocalSettingsProviderContext>(
