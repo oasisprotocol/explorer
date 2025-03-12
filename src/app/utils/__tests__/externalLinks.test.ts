@@ -35,7 +35,6 @@ onlyRunOnCI('externalLinks', () => {
         if (url.startsWith(externalLinksModule.github.commit)) continue // We store only partial url in constants
         if (url.startsWith(externalLinksModule.github.releaseTag)) continue // We store only partial url in constants
         if (url.startsWith(externalLinksModule.ipfs.proxyPrefix)) continue // We store only partial url in constants
-        if (url.startsWith(externalLinksModule.faucets.oasisTestnet)) continue // Has an interactive challenge
         if (url.startsWith('mailto')) continue // We can't test email addresses
 
         it.concurrent(`${linksGroupName} ${linkName} ${url}`, async () => {
