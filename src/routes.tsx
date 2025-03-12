@@ -65,6 +65,7 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
+import { HighlightingContextProvider } from './app/components/HighlightingContext'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -107,7 +108,9 @@ export const routes: RouteObject[] = [
     element: (
       <AnalyticsConsentProvider>
         <ScrollRestoration />
-        <Outlet />
+        <HighlightingContextProvider>
+          <Outlet />
+        </HighlightingContextProvider>
       </AnalyticsConsentProvider>
     ),
     children: [
