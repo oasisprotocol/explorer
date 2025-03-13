@@ -34,8 +34,9 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
   const validatorName = useValidatorName(network, address)
 
   const displayName = name ?? validatorName
+  const hasName = displayName?.toLowerCase() !== address.toLowerCase()
 
-  const tooltipTitle = (
+  const tooltipTitle = hasName ? (
     <div>
       {displayName && (
         <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
@@ -46,12 +47,12 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
       )}
       <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
     </div>
-  )
+  ) : undefined
 
   return (
     <MaybeWithTooltip title={tooltipTitle}>
       <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-        <AccountMetadataSourceIndicator source={'SelfProfessed'} />{' '}
+        {hasName && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
         <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
           {isTablet ? (
             <TabletValidatorLink
