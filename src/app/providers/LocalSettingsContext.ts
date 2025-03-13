@@ -3,7 +3,7 @@ import { LocalSettings } from '../../types/local-settings'
 
 export interface LocalSettingsProviderContext {
   readonly settings: LocalSettings
-  changeSetting: (key: keyof LocalSettings, value: any) => void
+  changeSetting<T extends keyof LocalSettings>(key: T, value: LocalSettings[T]): void
 }
 
 export const LocalSettingsContext = createContext<LocalSettingsProviderContext>(
