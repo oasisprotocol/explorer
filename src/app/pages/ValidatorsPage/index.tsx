@@ -85,6 +85,7 @@ export const ValidatorsPage: FC = () => {
                   key={key}
                   isLoading={true}
                   validator={undefined}
+                  account={undefined}
                   stats={undefined}
                   standalone
                 />
@@ -94,6 +95,7 @@ export const ValidatorsPage: FC = () => {
                 <ValidatorDetailsView
                   key={validator.entity_address}
                   validator={validator}
+                  account={undefined}
                   stats={validatorsQuery.data?.data.stats}
                   standalone
                 />
