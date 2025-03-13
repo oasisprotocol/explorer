@@ -11,7 +11,8 @@ import { HighlightedText } from '../HighlightedText'
 import { useValidatorName } from '../../hooks/useValidatorName'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
-import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
+import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
 
 type ValidatorLinkProps = {
   address: string
@@ -110,15 +111,21 @@ const DesktopValidatorLink: FC<DesktopValidatorLinkProps> = ({
   highlightedPart,
 }) => {
   if (alwaysTrim) {
-    return name ? (
-      <TrimValidatorEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
-    ) : (
-      <TrimLinkLabel label={address} to={to} />
+    return (
+      <WithHighlighting address={address}>
+        {name ? (
+          <TrimValidatorEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
+        ) : (
+          <TrimLinkLabel label={address} to={to} />
+        )}
+      </WithHighlighting>
     )
   }
   return (
-    <Link component={RouterLink} to={to}>
-      {name ? <HighlightedText text={name} pattern={highlightedPart} /> : address}
-    </Link>
+    <WithHighlighting address={address}>
+      <Link component={RouterLink} to={to}>
+        {name ? <HighlightedText text={name} pattern={highlightedPart} /> : address}
+      </Link>
+    </WithHighlighting>
   )
 }

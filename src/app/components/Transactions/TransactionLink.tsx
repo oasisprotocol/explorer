@@ -7,7 +7,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
-import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { trimLongString } from '../../utils/trimLongString'
 import Box from '@mui/material/Box'
 

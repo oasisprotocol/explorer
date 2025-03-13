@@ -1,7 +1,7 @@
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
-import { MaybeWithTooltip } from './MaybeWithTooltip'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
 type AdaptiveDynamicTrimmerProps = {
   getFullContent: () => {
