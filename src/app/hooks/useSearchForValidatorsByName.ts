@@ -12,7 +12,7 @@ function findAddressesWithMatch(addressMap: ValidatorAddressNameMap, nameFragmen
   const matchedAddresses: AccountNameSearchConsensusMatch[] = []
 
   for (const [address, name] of Object.entries(addressMap)) {
-    if (hasTextMatch(name, [nameFragment])) {
+    if (hasTextMatch(name, [nameFragment]) || hasTextMatch(address, [nameFragment])) {
       matchedAddresses.push({ address, layer: Layer.consensus, network })
     }
   }
