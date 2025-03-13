@@ -2,13 +2,13 @@ import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { Validator } from '../../../oasis-nexus/api'
+import { Layer, Validator } from '../../../oasis-nexus/api'
 import { COLORS } from 'styles/theme/colors'
 import { ValidatorImage } from 'app/components/Validators/ValidatorImage'
 import { TitleCard } from 'app/components/PageLayout/TitleCard'
 import { Network } from '../../../types/network'
-import { ValidatorLink } from 'app/components/Validators/ValidatorLink'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 type ValidatorTitleCardProps = {
   isLoading: boolean
@@ -25,10 +25,10 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
             <Box sx={{ display: 'flex' }}>
               <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
               <Box sx={{ paddingLeft: 4 }}>
-                <ValidatorLink
+                <AccountLink
+                  scope={{ network, layer: Layer.consensus }}
                   address={validator.entity_address}
-                  name={validator.entity_address}
-                  network={network}
+                  showOnlyAddress
                 />
               </Box>
               <CopyToClipboard value={validator.entity_address} />
