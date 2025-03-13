@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
 import { TableCellAge } from '../'
-import { useTableConfig } from '../../../hooks/useTableConfig'
+import { useLocalSettings } from '../../../hooks/useLocalSettings'
 import { TableAgeType } from '../../../../types/table-age-type'
 
-jest.mock('../../../hooks/useTableConfig', () => ({
-  useTableConfig: jest.fn(),
+jest.mock('../../../hooks/useLocalSettings', () => ({
+  useLocalSettings: jest.fn(),
 }))
 
 describe('TableCellAge', () => {
@@ -28,8 +28,8 @@ describe('TableCellAge', () => {
   })
 
   it('should display relative time by default', () => {
-    ;(useTableConfig as jest.Mock).mockReturnValue({
-      state: { ageHeaderType: TableAgeType.Distance },
+    ;(useLocalSettings as jest.Mock).mockReturnValue({
+      settings: { ageHeaderType: TableAgeType.Distance },
     })
 
     renderWithProviders(<TableCellAge sinceTimestamp="2024-02-05T10:14:40.000Z" />)
@@ -38,8 +38,8 @@ describe('TableCellAge', () => {
   })
 
   it('should display formatted date when ageHeaderType is DateTime', () => {
-    ;(useTableConfig as jest.Mock).mockReturnValue({
-      state: { ageHeaderType: TableAgeType.DateTime },
+    ;(useLocalSettings as jest.Mock).mockReturnValue({
+      settings: { ageHeaderType: TableAgeType.DateTime },
     })
 
     renderWithProviders(<TableCellAge sinceTimestamp="2024-02-05T10:14:40.000Z" />)
@@ -48,8 +48,8 @@ describe('TableCellAge', () => {
   })
 
   it('should handle invalid timestamp gracefully', () => {
-    ;(useTableConfig as jest.Mock).mockReturnValue({
-      state: { ageHeaderType: TableAgeType.Distance },
+    ;(useLocalSettings as jest.Mock).mockReturnValue({
+      settings: { ageHeaderType: TableAgeType.Distance },
     })
 
     renderWithProviders(<TableCellAge sinceTimestamp="invalid-timestamp" />)
