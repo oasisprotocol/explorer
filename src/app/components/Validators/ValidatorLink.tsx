@@ -11,7 +11,7 @@ import { HighlightedText } from '../HighlightedText'
 import { useValidatorName } from '../../hooks/useValidatorName'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
-import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
 type ValidatorLinkProps = {
   address: string
