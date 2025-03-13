@@ -376,6 +376,14 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...(queries.accountsByName.results || []), // Don't filter, keep empty accounts too
     ...(queries.validatorByName.results || []), // Don't filter, keep empty validators too
   ]
+    .reduce((uniq, account) => {
+      const key = [account.network, account.layer, account.address].join(',')
+      // Deduplicate accounts found by address and name
+      if (!uniq.has(key)) uniq.set(key, account)
+      return uniq
+    }, new Map<string, RuntimeAccount | Account>())
+    .values()
+
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
     .flat()
