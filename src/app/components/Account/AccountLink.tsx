@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
@@ -14,37 +14,7 @@ import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
-import { useAddressHighlighting } from '../HighlightingContext'
-import { COLORS } from '../../../styles/theme/colors'
-
-const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({ children, address }) => {
-  const { highlightedAddress, highlightAddress, releaseAddress } = useAddressHighlighting()
-  useEffect(() => () => releaseAddress(address)) // Release address on umount
-  const isHighlighted = !!highlightedAddress && highlightedAddress.toLowerCase() === address.toLowerCase()
-  return (
-    <Box
-      onMouseEnter={() => highlightAddress(address)}
-      onMouseLeave={() => releaseAddress(address)}
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        verticalAlign: 'middle',
-        padding: '4px 4px 2px 4px',
-        ...(isHighlighted
-          ? {
-              background: COLORS.warningLight,
-              border: `1px dashed ${COLORS.warningColor}`,
-              borderRadius: '6px',
-            }
-          : {
-              border: `1px dashed transparent`,
-            }),
-      }}
-    >
-      {children}
-    </Box>
-  )
-}
+import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
 
 const WithTypographyAndLink: FC<{
   scope: SearchScope
