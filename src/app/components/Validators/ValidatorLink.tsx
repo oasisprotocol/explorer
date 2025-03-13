@@ -9,6 +9,9 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { HighlightedText } from '../HighlightedText'
 import { useValidatorName } from '../../hooks/useValidatorName'
+import Box from '@mui/material/Box'
+import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
+import { MaybeWithTooltip } from '../AdaptiveTrimmer/MaybeWithTooltip'
 
 type ValidatorLinkProps = {
   address: string
@@ -29,25 +32,45 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
   const to = RouteUtils.getValidatorRoute(network, address)
   const validatorName = useValidatorName(network, address)
 
-  return (
-    <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
-      {isTablet ? (
-        <TabletValidatorLink
-          address={address}
-          name={name || validatorName}
-          to={to}
-          highlightedPart={highlightedPartOfName}
-        />
-      ) : (
-        <DesktopValidatorLink
-          address={address}
-          alwaysTrim={alwaysTrim}
-          name={name || validatorName}
-          to={to}
-          highlightedPart={highlightedPartOfName}
-        />
+  const displayName = name ?? validatorName
+
+  const tooltipTitle = (
+    <div>
+      {displayName && (
+        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <Box sx={{ fontWeight: 'bold' }}>{displayName}</Box>
+          <span>-</span>
+          <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+        </Box>
       )}
-    </Typography>
+      <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+    </div>
+  )
+
+  return (
+    <MaybeWithTooltip title={tooltipTitle}>
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+        <AccountMetadataSourceIndicator source={'SelfProfessed'} />{' '}
+        <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+          {isTablet ? (
+            <TabletValidatorLink
+              address={address}
+              name={displayName}
+              to={to}
+              highlightedPart={highlightedPartOfName}
+            />
+          ) : (
+            <DesktopValidatorLink
+              address={address}
+              alwaysTrim={alwaysTrim}
+              name={displayName}
+              to={to}
+              highlightedPart={highlightedPartOfName}
+            />
+          )}
+        </Typography>
+      </Box>
+    </MaybeWithTooltip>
   )
 }
 
