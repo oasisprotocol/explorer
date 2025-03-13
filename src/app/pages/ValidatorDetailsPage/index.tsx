@@ -40,6 +40,7 @@ import { RoundedBalance } from '../../components/RoundedBalance'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -153,7 +154,13 @@ export const ValidatorDetailsView: FC<{
           <dt>{t('common.rank')}</dt>
           <dd>{validator.rank}</dd>
           <dt>{t('common.address')}</dt>
-          <dd>{validator.entity_address}</dd>
+          <dd>
+            <AccountLink
+              scope={{ network: 'mainnet', layer: 'consensus' }} // This will only be a label, not a real link, so this doesn't matter
+              address={validator.entity_address}
+              labelOnly
+            />
+          </dd>
           <dt>
             <strong>{t('account.totalBalance')}</strong>
           </dt>
