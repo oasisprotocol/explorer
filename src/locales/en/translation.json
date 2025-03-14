@@ -723,7 +723,6 @@
   "validator": {
     "active": "Active",
     "amount": "Amount",
-    "balanceDistribution": "Balance Distribution",
     "blockWithHeight": "Block {{height}}",
     "boundsNotSet": "No bounds set (0% - 100%)",
     "change": "Change (24h)",
@@ -737,6 +736,7 @@
     "emptyDebondingList": "No one is debonding delegations from this validator.",
     "emptyDelegationsList": "No one is delegating to this validator.",
     "entityId": "Entity ID",
+    "escrowDistribution": "Escrow Distribution",
     "externalLink": "External Link",
     "externalLinkDescription": "Oasis is not responsible for any content on external pages.",
     "groupStatus": "{{status}} validators",

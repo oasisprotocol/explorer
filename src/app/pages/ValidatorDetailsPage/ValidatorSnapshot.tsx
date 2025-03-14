@@ -10,7 +10,7 @@ import { ExternalLinkCard } from './ExternalLinkCard'
 import { SearchScope } from '../../../types/searchScope'
 import { UptimeCard } from './UptimeCard'
 import { VotingPowerCard } from './VotingPowerCard'
-import { BalanceDistributionCard } from './BalanceDistributionCard'
+import { EscrowDistributionCard } from './EscrowDistributionCard'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
@@ -42,7 +42,7 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
 
       <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
         <StyledGrid item xs={22} md={6}>
-          <BalanceDistributionCard validator={validator} />
+          <EscrowDistributionCard validator={validator} />
         </StyledGrid>
         <StyledGrid item xs={22} md={6}>
           <VotingPowerCard validator={validator} stats={stats} />
