@@ -41,6 +41,7 @@ import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { Network } from '../../../types/network'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -77,7 +78,13 @@ export const ValidatorDetailsPage: FC = () => {
       <ValidatorTitleCard isLoading={isLoading} network={scope.network} validator={validator} />
       <ValidatorSnapshot scope={scope} validator={validator} stats={stats} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <ValidatorDetailsCard isLoading={isLoading} validator={validator} account={account} stats={stats} />
+      <ValidatorDetailsCard
+        network={scope.network}
+        isLoading={isLoading}
+        validator={validator}
+        account={account}
+        stats={stats}
+      />
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
           <StakingTrend address={address} scope={scope} />
@@ -101,17 +108,25 @@ export const ValidatorDetailsPage: FC = () => {
 }
 
 type ValidatorDetailsCardProps = {
+  network: Network
   isLoading: boolean
   validator: Validator | undefined
   account: Account | undefined
   stats: ValidatorAggStats | undefined
 }
 
-const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({ isLoading, validator, account, stats }) => {
+const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
+  network,
+  isLoading,
+  validator,
+  account,
+  stats,
+}) => {
   return (
     <Card>
       <CardContent>
         <ValidatorDetailsView
+          network={network}
           detailsPage
           isLoading={isLoading}
           validator={validator}
@@ -124,13 +139,14 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({ isLoading, valida
 }
 
 export const ValidatorDetailsView: FC<{
+  network: Network
   detailsPage?: boolean
   isLoading?: boolean
   validator: Validator | undefined
   account: Account | undefined
   standalone?: boolean
   stats: ValidatorAggStats | undefined
-}> = ({ detailsPage, isLoading, validator, account, standalone = false, stats }) => {
+}> = ({ network, detailsPage, isLoading, validator, account, standalone = false, stats }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
@@ -155,11 +171,7 @@ export const ValidatorDetailsView: FC<{
           <dd>{validator.rank}</dd>
           <dt>{t('common.address')}</dt>
           <dd>
-            <AccountLink
-              scope={{ network: 'mainnet', layer: 'consensus' }} // This will only be a label, not a real link, so this doesn't matter
-              address={validator.entity_address}
-              labelOnly
-            />
+            <AccountLink scope={{ network, layer: 'consensus' }} address={validator.entity_address} />
           </dd>
           <dt>
             <strong>{t('account.totalBalance')}</strong>
