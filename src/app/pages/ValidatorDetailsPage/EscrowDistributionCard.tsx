@@ -35,11 +35,11 @@ function chartData(t: TFunction, validator: Validator | undefined) {
   ]
 }
 
-export const BalanceDistributionCard: FC<BalanceDistributionCardProps> = ({ validator }) => {
+export const EscrowDistributionCard: FC<BalanceDistributionCardProps> = ({ validator }) => {
   const { t } = useTranslation()
 
   return (
-    <SnapshotCard title={t('validator.balanceDistribution')}>
+    <SnapshotCard title={t('validator.escrowDistribution')}>
       {validator?.escrow.active_balance && (
         <PieChart
           compact
