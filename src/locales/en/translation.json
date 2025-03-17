@@ -531,6 +531,7 @@
     "roflAppCreated": "ROFL App Created",
     "roflAppUpdated": "ROFL App Updated",
     "roflAppRemoved": "ROFL App Removed",
+    "instanceRegistered": "ROFL Instance Registered",
     "evmLog": "EVM log message",
     "filter": {
       "all": "All events",
@@ -656,6 +657,7 @@
   "rofl": {
     "active": "Active",
     "inactive": "Inactive",
+    "rak": "RAK",
     "removed": "Removed"
   },
   "search": {

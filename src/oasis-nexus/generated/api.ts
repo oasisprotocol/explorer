@@ -1222,6 +1222,7 @@ export const RuntimeEventType = {
   roflapp_created: 'rofl.app_created',
   roflapp_updated: 'rofl.app_updated',
   roflapp_removed: 'rofl.app_removed',
+  roflinstance_registered: 'rofl.instance_registered',
 } as const;
 
 /**
