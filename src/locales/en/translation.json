@@ -653,6 +653,11 @@
     "devnet": "Pontus-X devnet",
     "testnet": "Pontus-X"
   },
+  "rofl": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "removed": "Removed"
+  },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
     "error": {
