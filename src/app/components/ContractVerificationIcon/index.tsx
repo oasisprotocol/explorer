@@ -1,9 +1,6 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CancelIcon from '@mui/icons-material/Cancel'
-import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -11,47 +8,23 @@ import { SearchScope } from '../../../types/searchScope'
 import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
-
-type VerificationStatus = 'verified' | 'unverified'
-
-const statusBgColor: Record<VerificationStatus, string> = {
-  verified: COLORS.honeydew,
-  unverified: COLORS.linen,
-}
-
-const statusFgColor: Record<VerificationStatus, string> = {
-  verified: COLORS.brandExtraDark,
-  unverified: COLORS.brandExtraDark,
-}
-
-const statusIcon: Record<VerificationStatus, ReactNode> = {
-  verified: <CheckCircleIcon color="success" fontSize="small" />,
-  unverified: <CancelIcon color="error" fontSize="small" />,
-}
+import { StatusBadge } from '../common/StatusBadge'
 
 export const verificationIconBoxHeight = 28
 
-const StyledPill = styled(Box, {
-  shouldForwardProp: prop => prop !== 'verified' && prop !== 'address_eth',
-})(({ verified }: { verified: boolean; address_eth: string }) => {
-  const status: VerificationStatus = verified ? 'verified' : 'unverified'
-  return {
-    display: 'flex',
-    flexShrink: 0,
-    justifyContent: 'center',
-    height: verificationIconBoxHeight,
-    fontSize: '12px',
-    backgroundColor: statusBgColor[status],
-    color: statusFgColor[status],
-    borderRadius: 10,
-    padding: 4,
-    paddingLeft: 10,
-    paddingRight: 5,
-    '&&': {
-      textDecoration: 'none',
-    },
-  }
-})
+type ContractStatusProps = {
+  verified: boolean
+}
+
+export const ContractStatus = ({ verified }: ContractStatusProps) => {
+  const { t } = useTranslation()
+  const statusLabel = verified
+    ? t('contract.verification.isVerified')
+    : t('contract.verification.isNotVerified')
+  const statusVariant = verified ? 'success' : 'danger'
+
+  return <StatusBadge label={statusLabel} variant={statusVariant} />
+}
 
 export const VerificationIcon: FC<{
   address_eth: string
@@ -64,11 +37,6 @@ export const VerificationIcon: FC<{
   if (isLocalnet(scope.network)) {
     return null
   }
-  const status: VerificationStatus = verified ? 'verified' : 'unverified'
-  const statusLabel: Record<VerificationStatus, string> = {
-    verified: t('contract.verification.isVerified'),
-    unverified: t('contract.verification.isNotVerified'),
-  }
   const sourcifyLinkProps = {
     href: `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
@@ -76,16 +44,14 @@ export const VerificationIcon: FC<{
     sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
     onClick: verified ? undefined : () => setExplainDelay(true),
   }
-  const Component = noLink ? Box : Link
+  const Component = noLink ? Box : (Link as React.ElementType)
   const componentProps = noLink ? {} : sourcifyLinkProps
 
   return (
     <>
-      <StyledPill component={Component} verified={verified} address_eth={address_eth} {...componentProps}>
-        {statusLabel[status]}
-        &nbsp; &nbsp;
-        {statusIcon[status]}
-      </StyledPill>
+      <Component {...componentProps}>
+        <ContractStatus verified={verified} />
+      </Component>
       &nbsp; &nbsp;
       {!noLink &&
         (verified ? (

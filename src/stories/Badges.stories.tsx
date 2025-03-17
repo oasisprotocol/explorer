@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import { StatusBadge } from '../app/components/common/StatusBadge'
 import { AppStatus } from '../app/components/Rofl/AppStatus'
 import { ValidatorStatusBadge } from '../app/pages/ValidatorDetailsPage/ValidatorStatusBadge'
+import { ContractStatus } from 'app/components/ContractVerificationIcon'
 
 export default {
   title: 'Example/Badges',
@@ -19,7 +20,7 @@ const DefaultBadges: StoryFn = () => {
   )
 }
 
-export const StatusBadgesList: StoryObj = {
+export const StatusBadges: StoryObj = {
   render: DefaultBadges,
   args: {},
 }
@@ -34,7 +35,7 @@ const RoflAppStatusStory: StoryFn = () => {
   )
 }
 
-export const RoflStatusesList: StoryObj = {
+export const RoflStatuses: StoryObj = {
   render: RoflAppStatusStory,
   args: {},
 }
@@ -49,7 +50,21 @@ const ValidatorStatusStory: StoryFn = () => {
   )
 }
 
-export const ValidatorStatusesList: StoryObj = {
+export const ValidatorStatuses: StoryObj = {
   render: ValidatorStatusStory,
+  args: {},
+}
+
+const ContractStatusStory: StoryFn = () => {
+  return (
+    <Box>
+      <ContractStatus verified={true} />
+      <ContractStatus verified={false} />
+    </Box>
+  )
+}
+
+export const ContractStatuses: StoryObj = {
+  render: ContractStatusStory,
   args: {},
 }
