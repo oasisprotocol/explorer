@@ -383,4 +383,5 @@ export type ConsensusTxMethodFilterOption = ConsensusTxMethod | 'any'
 
 export const getConsensusTransactionMethodFilteringParam = (
   method: ConsensusTxMethodFilterOption,
-): Partial<GetConsensusTransactionsParams> => (method === 'any' ? {} : { method })
+): Partial<GetConsensusTransactionsParams> =>
+  method === 'any' ? {} : { method: method as unknown as ConsensusTxMethod[] }

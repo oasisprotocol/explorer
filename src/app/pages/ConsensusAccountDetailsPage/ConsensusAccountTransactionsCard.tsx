@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
+import { ConsensusTxMethod, useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { ConsensusTransactions } from '../../components/Transactions'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -42,7 +42,7 @@ const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scop
     limit,
     offset,
     rel: address,
-    method: method === 'any' ? undefined : method,
+    method: method === 'any' ? undefined : (method as unknown as ConsensusTxMethod[]),
   })
   const { isLoading, data } = transactionsQuery
   const transactions = data?.data.transactions

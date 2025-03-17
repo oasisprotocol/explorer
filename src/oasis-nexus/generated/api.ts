@@ -301,7 +301,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string;
+method?: string[];
 };
 
 export type GetRuntimeBlocksParams = {
@@ -594,7 +594,7 @@ block?: number;
 /**
  * A filter on transaction method.
  */
-method?: ConsensusTxMethod;
+method?: ConsensusTxMethod[];
 /**
  * A filter on transaction sender.
  */
@@ -1081,6 +1081,8 @@ DEPRECATED: This field will be removed in the future in favor of the signers fie
   /** The total byte size of the transaction. */
   size: number;
   /** Whether this transaction successfully executed.
+Is absent in multi-step runtime transactions (`consensus.Deposit`, `consensus.Withdraw`,
+`consensus.Delegate`, and `consensus.Undelegate`) until the second step is completed.
 Can be absent (meaning "unknown") for confidential runtimes.
  */
   success?: boolean;
