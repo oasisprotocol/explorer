@@ -60,6 +60,8 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) =>
       return t('runtimeEvent.roflAppUpdated')
     case RuntimeEventType.roflapp_removed:
       return t('runtimeEvent.roflAppRemoved')
+    case RuntimeEventType.roflinstance_registered:
+      return t('runtimeEvent.instanceRegistered')
     default:
       return method || t('common.unknown')
   }
@@ -98,6 +100,7 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.roflapp_created]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
   }
 
   return (
@@ -382,6 +385,23 @@ const RuntimeEventDetailsInner: FC<{
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.id')}</dt>
             <dd>{event.body.id}</dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.roflinstance_registered:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('common.id')}</dt>
+            <dd>{event.body.app_id}</dd>
+            {event.body?.rak?.PublicKey && (
+              <>
+                <dt>{t('rofl.rak')}</dt>
+                <dd>{event.body.rak.PublicKey}</dd>
+              </>
+            )}
           </StyledDescriptionList>
         </div>
       )
