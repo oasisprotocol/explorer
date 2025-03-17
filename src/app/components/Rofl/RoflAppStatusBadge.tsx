@@ -15,11 +15,11 @@ const statusIcon: Partial<Record<RoflAppStatusTypes, ReactNode>> = {
   inactive: <CheckCircleIcon color="warning" fontSize="small" />,
 }
 
-type AppStatusProps = {
+type RoflAppStatusBadgeProps = {
   status: RoflAppStatusTypes
 }
 
-export const AppStatus = ({ status }: AppStatusProps) => {
+export const RoflAppStatusBadge = ({ status }: RoflAppStatusBadgeProps) => {
   const { t } = useTranslation()
   const statusLabel: Record<RoflAppStatusTypes, string> = {
     active: t('rofl.active'),

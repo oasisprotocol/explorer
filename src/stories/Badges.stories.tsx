@@ -1,7 +1,7 @@
 import { Meta, StoryFn, StoryObj } from '@storybook/react'
 import Box from '@mui/material/Box'
 import { StatusBadge } from '../app/components/common/StatusBadge'
-import { AppStatus } from '../app/components/Rofl/AppStatus'
+import { RoflAppStatusBadge } from '../app/components/Rofl/RoflAppStatusBadge'
 import { ValidatorStatusBadge } from '../app/pages/ValidatorDetailsPage/ValidatorStatusBadge'
 import { ContractStatus } from 'app/components/ContractVerificationIcon'
 
@@ -20,7 +20,7 @@ const DefaultBadges: StoryFn = () => {
   )
 }
 
-export const StatusBadges: StoryObj = {
+export const Default: StoryObj = {
   render: DefaultBadges,
   args: {},
 }
@@ -28,14 +28,14 @@ export const StatusBadges: StoryObj = {
 const RoflAppStatusStory: StoryFn = () => {
   return (
     <Box>
-      <AppStatus status="active" />
-      <AppStatus status="inactive" />
-      <AppStatus status="removed" />
+      <RoflAppStatusBadge status="active" />
+      <RoflAppStatusBadge status="inactive" />
+      <RoflAppStatusBadge status="removed" />
     </Box>
   )
 }
 
-export const RoflStatuses: StoryObj = {
+export const RoflAppStatuses: StoryObj = {
   render: RoflAppStatusStory,
   args: {},
 }
