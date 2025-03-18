@@ -94,4 +94,49 @@ test.describe('analytics', () => {
     await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
     expect(getMatomoRequests()).toHaveLength(2) // No new requests
   })
+
+  test('track referrer (urlref)', async ({ page }) => {
+    await page.addInitScript(() => (window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS = 'true'))
+    const { getMatomoRequests } = await setup(page, 'allow-matomo-lib')
+    await expect(page.getByText('tracking')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Privacy Settings' })).toBeVisible()
+    expect(getMatomoRequests()).toHaveLength(1) // Loaded library
+
+    await page.getByRole('button', { name: 'Accept' }).click()
+    await page.waitForTimeout(100)
+    expect(getMatomoRequests()).toHaveLength(2) // Tracked
+
+    // Override referrer-policy because strict-origin-when-cross-origin doesn't send referrer when going from https:// to http://.
+    await page.route('https://wallet.oasis.io/', async route => {
+      const response = await route.fetch()
+      expect(response.headers()['referrer-policy']).toEqual('strict-origin-when-cross-origin')
+      await route.fulfill({
+        response,
+        headers: {
+          ...response.headers(),
+          'referrer-policy': 'origin-when-cross-origin',
+        },
+      })
+    })
+
+    await page.goto('https://wallet.oasis.io/')
+    await page.evaluate(() => {
+      const link = document.createElement('a')
+      link.href = 'http://localhost:1234/mainnet/sapphire/block'
+      link.textContent = 'link-to-local-explorer'
+      document.body.appendChild(link)
+    })
+    await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
+    await expect(page.getByText('Latest Blocks')).toBeVisible()
+    await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
+    await page.waitForTimeout(100)
+    expect(getMatomoRequests().length).toBeGreaterThanOrEqual(3) // Tracked, possibly twice due to React StrictMode
+    expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=https://wallet.oasis.io/&')
+
+    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
+    expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=/mainnet/sapphire/block&')
+
+    await page.goBack()
+    expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=/&')
+  })
 })
