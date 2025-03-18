@@ -47,8 +47,10 @@ test.describe('analytics', () => {
     await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(2) // Tracked
 
-    await page.getByRole('link', { name: 'Blocks' }).first().click()
-    await page.waitForRequest('https://matomo.oasis.io/matomo.php?**') // Debounced
+    await Promise.all([
+      page.getByRole('link', { name: 'Blocks' }).first().click(),
+      page.waitForRequest('https://matomo.oasis.io/matomo.php?**'), // Debounced https://github.com/matomo-org/matomo/blob/f51b30f8/js/piwik.js#L7192-L7201
+    ])
     await page.waitForTimeout(100)
     expect(getMatomoRequests()).toHaveLength(3) // Tracked
   })
@@ -133,10 +135,18 @@ test.describe('analytics', () => {
     expect(getMatomoRequests().length).toBeGreaterThanOrEqual(3) // Tracked, possibly twice due to React StrictMode
     expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=https://wallet.oasis.io/&')
 
-    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
+    await Promise.all([
+      page.getByRole('link', { name: 'Oasis Explorer Home' }).click(),
+      page.waitForRequest('https://matomo.oasis.io/matomo.php?**'), // Debounced https://github.com/matomo-org/matomo/blob/f51b30f8/js/piwik.js#L7192-L7201
+    ])
+    await page.waitForTimeout(100)
     expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=/mainnet/sapphire/block&')
 
-    await page.goBack()
+    await Promise.all([
+      page.goBack(),
+      page.waitForRequest('https://matomo.oasis.io/matomo.php?**'), // Debounced https://github.com/matomo-org/matomo/blob/f51b30f8/js/piwik.js#L7192-L7201
+    ])
+    await page.waitForTimeout(100)
     expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=/&')
   })
 })
