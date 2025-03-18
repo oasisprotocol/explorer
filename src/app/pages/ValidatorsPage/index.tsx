@@ -82,9 +82,11 @@ export const ValidatorsPage: FC = () => {
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <ValidatorDetailsView
+                  network={network}
                   key={key}
                   isLoading={true}
                   validator={undefined}
+                  account={undefined}
                   stats={undefined}
                   standalone
                 />
@@ -92,8 +94,10 @@ export const ValidatorsPage: FC = () => {
             {!isLoading &&
               validatorsData?.validators.map(validator => (
                 <ValidatorDetailsView
+                  network={network}
                   key={validator.entity_address}
                   validator={validator}
+                  account={undefined}
                   stats={validatorsQuery.data?.data.stats}
                   standalone
                 />
