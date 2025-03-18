@@ -20,9 +20,7 @@
     "changelog": "node ./internals/scripts/changelog.js",
     "release-tag": "node ./internals/scripts/release-tag.js",
     "prettify": "prettier src internals --write",
-    "test": "jest",
-    "start-storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "jest"
   },
   "targets": {
     "web": {
@@ -118,9 +116,6 @@
     "stream-browserify": "3.0.0",
     "ts-jest": "29.2.4",
     "typescript": "5.6.3"
-  },
-  "msw": {
-    "workerDirectory": ".storybook/public"
   },
   "packageManager": "yarn@1.22.19+sha512.ff4579ab459bb25aa7c0ff75b62acebe576f6084b36aa842971cf250a5d8c6cd3bc9420b22ce63c7f93a0857bc6ef29291db39c3e7a23aab5adfd5a4dd6c5d71"
 }

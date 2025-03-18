@@ -23,10 +23,6 @@
       "matchPackagePatterns": ["@types/"]
     },
     {
-      "groupName": "storybook dependencies",
-      "matchPackagePatterns": ["storybook"]
-    },
-    {
       "groupName": "CI github-actions",
       "matchManagers": ["github-actions"]
     },
