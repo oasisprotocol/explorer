@@ -215,8 +215,10 @@ const RuntimeEventDetailsInner: FC<{
               fontWeight={400}
             />
             <br />
-            {t('runtimeEvent.fields.emittingContract')}:{' '}
-            <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+            <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
+              {t('runtimeEvent.fields.emittingContract')}:{' '}
+              <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+            </Box>
           </div>
         )
       }
@@ -246,8 +248,10 @@ const RuntimeEventDetailsInner: FC<{
             </Table>
           )}
           <br />
-          {t('runtimeEvent.fields.emittingContract')}:{' '}
-          <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+          <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
+            {t('runtimeEvent.fields.emittingContract')}:{' '}
+            <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+          </Box>
         </div>
       )
     }
