@@ -12,7 +12,7 @@ import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
   <Typography variant="mono">
     <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>
-      {height.toLocaleString()}
+      {height?.toLocaleString()}
     </Link>
   </Typography>
 )
