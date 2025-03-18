@@ -6,6 +6,8 @@ import { withDefaultTheme } from '../src/app/components/ThemeByScope'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { handlers } from '../internals/mocks/msw-handlers'
+import { LocalSettingsContextProvider } from '../src/app/providers/LocalSettingsProvider'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,7 +22,11 @@ initialize({
 
 const preview: Preview = {
   decorators: [
-    Story => <QueryClientProvider client={queryClient}>{Story()}</QueryClientProvider>,
+    Story => (
+      <LocalSettingsContextProvider>
+        <QueryClientProvider client={queryClient}>{Story()}</QueryClientProvider>
+      </LocalSettingsContextProvider>
+    ),
     Story => withDefaultTheme(<Story />),
   ],
   loaders: [mswLoader],
