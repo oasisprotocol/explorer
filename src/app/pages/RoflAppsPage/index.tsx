@@ -14,6 +14,86 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { VerticalList } from '../../components/VerticalList'
+import { RoflAppDetailView } from '../RoflAppDetailPage'
+
+const mockedApps = [
+  {
+    status: 'active',
+    first_activity: '2021-04-28T16:00:00Z',
+    timestamp: '2025-03-10T15:16:38Z',
+    version: '0.1.0',
+    tee: 'SGX',
+    kind: 'container',
+    network: 'mainnet',
+    amount: '1206.283143168',
+    admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
+    id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9zz',
+    instances: [
+      {
+        endorsing_entity_id: '',
+        endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
+        expiration_epoch: 42244,
+        extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
+        rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
+        rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
+      },
+    ],
+    metadata: { name: 'Foo' },
+    policy: {
+      enclaves: [
+        'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+        'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+      ],
+      endorsements: [{ any: {} }],
+      fees: 2,
+      max_expiration: 3,
+      quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
+    },
+    secrets: {
+      foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
+      API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
+    },
+    sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
+  },
+  {
+    status: 'inactive',
+    first_activity: '2021-04-28T16:00:00Z',
+    timestamp: '2025-03-10T15:16:38Z',
+    version: '0.1.0',
+    tee: 'SGX',
+    kind: 'container',
+    network: 'mainnet',
+    amount: '1206.283143168',
+    admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
+    id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9uw',
+    instances: [
+      {
+        endorsing_entity_id: '',
+        endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
+        expiration_epoch: 42244,
+        extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
+        rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
+        rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
+      },
+    ],
+    metadata: { name: 'Bar' },
+    policy: {
+      enclaves: [
+        'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+        'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+      ],
+      endorsements: [{ any: {} }],
+      fees: 2,
+      max_expiration: 3,
+      quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
+    },
+    secrets: {
+      foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
+      API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
+    },
+    sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
+  },
+]
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -62,84 +142,7 @@ export const RoflAppsPage: FC = () => {
       >
         {tableView === TableLayout.Horizontal && (
           <RoflAppsList
-            apps={[
-              {
-                status: 'active',
-                first_activity: '2021-04-28T16:00:00Z',
-                timestamp: '2025-03-10T15:16:38Z',
-                version: '0.1.0',
-                tee: 'SGX',
-                kind: 'container',
-                network: 'mainnet',
-                amount: '1206.283143168',
-                admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
-                id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9uw',
-                instances: [
-                  {
-                    endorsing_entity_id: '',
-                    endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
-                    expiration_epoch: 42244,
-                    extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
-                    rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
-                    rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
-                  },
-                ],
-                metadata: { name: 'Foo' },
-                policy: {
-                  enclaves: [
-                    'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-                    'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-                  ],
-                  endorsements: [{ any: {} }],
-                  fees: 2,
-                  max_expiration: 3,
-                  quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
-                },
-                secrets: {
-                  foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
-                  API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
-                },
-                sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
-              },
-              {
-                status: 'inactive',
-                first_activity: '2021-04-28T16:00:00Z',
-                timestamp: '2025-03-10T15:16:38Z',
-                version: '0.1.0',
-                tee: 'SGX',
-                kind: 'container',
-                network: 'mainnet',
-                amount: '1206.283143168',
-                admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
-                id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9uw',
-                instances: [
-                  {
-                    endorsing_entity_id: '',
-                    endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
-                    expiration_epoch: 42244,
-                    extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
-                    rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
-                    rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
-                  },
-                ],
-                metadata: { name: 'Bar' },
-                policy: {
-                  enclaves: [
-                    'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-                    'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-                  ],
-                  endorsements: [{ any: {} }],
-                  fees: 2,
-                  max_expiration: 3,
-                  quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
-                },
-                secrets: {
-                  foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
-                  API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
-                },
-                sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
-              },
-            ]}
+            apps={mockedApps}
             isLoading={isLoading}
             limit={limit}
             pagination={{
@@ -154,8 +157,11 @@ export const RoflAppsPage: FC = () => {
 
         {tableView === TableLayout.Vertical && (
           <VerticalList>
-            {isLoading && [...Array(limit).keys()].map(key => <>TODO</>)}
-            {!isLoading && data?.data.rofl_apps.map(tx => <>TODO</>)}
+            {!isLoading &&
+              [...Array(limit).keys()].map(key => (
+                <RoflAppDetailView key={key} isLoading={true} app={undefined} />
+              ))}
+            {isLoading && mockedApps.map(app => <RoflAppDetailView key={app.id} app={app} />)}
           </VerticalList>
         )}
       </SubPageCard>

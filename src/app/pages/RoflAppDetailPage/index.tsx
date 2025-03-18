@@ -150,35 +150,50 @@ export const RoflAppDetailView: FC<{
         {app.id} <CopyToClipboard value={app.id} />
       </dd>
 
-      <dt>{t('rofl.enclaveId')}</dt>
-      <dd>
-        {app.policy?.enclaves ? (
-          <table>
-            {app.policy.enclaves.map(enclave => (
-              <tr key={enclave}>
-                <td>
-                  <Typography variant="mono" component="span">
-                    {enclave}
-                  </Typography>
-                </td>
-                <td>
-                  <CopyToClipboard value={enclave} />
-                </td>
-              </tr>
-            ))}
-          </table>
-        ) : (
-          t('common.missing')
-        )}
-      </dd>
+      {detailsPage && (
+        <>
+          <dt>{t('rofl.enclaveId')}</dt>
+          <dd>
+            {app.policy?.enclaves ? (
+              <table>
+                {app.policy.enclaves.map(enclave => (
+                  <tr key={enclave}>
+                    <td>
+                      <Typography variant="mono" component="span">
+                        {enclave}
+                      </Typography>
+                    </td>
+                    <td>
+                      <CopyToClipboard value={enclave} />
+                    </td>
+                  </tr>
+                ))}
+              </table>
+            ) : (
+              t('common.missing')
+            )}
+          </dd>
+        </>
+      )}
 
-      <dt>{t('rofl.kind')}</dt>
-      <dd>{app.kind || t('common.missing')}</dd>
+      {!detailsPage && (
+        <>
+          <dt>Latest Enclave ID:</dt>
+          <dd>TODO</dd>
+        </>
+      )}
 
-      <dt>{t('rofl.sekPublicKey')}</dt>
-      <dd>
-        {app.sek} <CopyToClipboard value={app.sek} />
-      </dd>
+      {detailsPage && (
+        <>
+          <dt>{t('rofl.kind')}</dt>
+          <dd>{app.kind || t('common.missing')}</dd>
+
+          <dt>{t('rofl.sekPublicKey')}</dt>
+          <dd>
+            {app.sek} <CopyToClipboard value={app.sek} />
+          </dd>
+        </>
+      )}
 
       <dt>{t('rofl.adminAccount')}</dt>
       <dd>
@@ -205,39 +220,43 @@ export const RoflAppDetailView: FC<{
       <dt>{t('rofl.activity')}</dt>
       <dd>{formattedActivity || t('common.missing')}</dd>
 
-      <dt>{t('rofl.instances')}</dt>
-      <dd>{app.instances?.length?.toLocaleString() || 0}</dd>
+      {detailsPage && (
+        <>
+          <dt>{t('rofl.instances')}</dt>
+          <dd>{app.instances?.length?.toLocaleString() || 0}</dd>
 
-      <dt>{t('rofl.endorsement')}</dt>
-      {/* TODO: find out what we can expect here */}
-      <dd>{t('common.missing')}</dd>
+          <dt>{t('rofl.endorsement')}</dt>
+          {/* TODO: find out what we can expect here */}
+          <dd>{t('common.missing')}</dd>
 
-      <dt>{t('rofl.Secrets')}</dt>
-      <dd>
-        {app.secrets ? (
-          <table>
-            {Object.keys(app.secrets).map(key => (
-              <tr key={key}>
-                <td>
-                  <Typography
-                    variant="mono"
-                    component="span"
-                    sx={{
-                      wordWrap: 'break-word',
-                      pr: 3,
-                    }}
-                  >
-                    {key}:
-                  </Typography>
-                </td>
-                <td>{app.secrets[key]}</td>
-              </tr>
-            ))}
-          </table>
-        ) : (
-          t('common.missing')
-        )}
-      </dd>
+          <dt>{t('rofl.Secrets')}</dt>
+          <dd>
+            {app.secrets ? (
+              <table>
+                {Object.keys(app.secrets).map(key => (
+                  <tr key={key}>
+                    <td>
+                      <Typography
+                        variant="mono"
+                        component="span"
+                        sx={{
+                          wordWrap: 'break-word',
+                          pr: 3,
+                        }}
+                      >
+                        {key}:
+                      </Typography>
+                    </td>
+                    <td>{app.secrets[key]}</td>
+                  </tr>
+                ))}
+              </table>
+            ) : (
+              t('common.missing')
+            )}
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }
