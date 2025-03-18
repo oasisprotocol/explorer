@@ -144,7 +144,7 @@ export const AccountLink: FC<Props> = ({
       <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
         <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
-            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
               {trimLongString(accountName, 12, 0)}
             </Box>
@@ -164,7 +164,7 @@ export const AccountLink: FC<Props> = ({
       <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
         <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
-            <Box sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
+            <Box component="span" sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
               <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
             </Box>
@@ -182,7 +182,7 @@ export const AccountLink: FC<Props> = ({
   return (
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
       <>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
           {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
           <AdaptiveHighlightedText
             text={showAccountName ? accountName : ''}
