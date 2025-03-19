@@ -9,7 +9,6 @@ import { AccountLink } from '../Account/AccountLink'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import { TokenTransferIcon } from './TokenTransferIcon'
 import { RoundedBalance } from '../RoundedBalance'
-import { getEthAccountAddressFromBase64 } from '../../utils/helpers'
 import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { TokenTypeTag } from './TokenList'
@@ -32,8 +31,7 @@ export const EventBalance: FC<{
 }> = ({ event, tickerAsLink }) => {
   const { t } = useTranslation()
 
-  const base64address = event.body.address
-  const tokenEthAddress = getEthAccountAddressFromBase64(base64address)
+  const tokenEthAddress = event.body.address
   const tokenType = event.evm_token?.type
   const tokenDecimals = event.evm_token?.decimals
   const ticker = event.evm_token?.symbol

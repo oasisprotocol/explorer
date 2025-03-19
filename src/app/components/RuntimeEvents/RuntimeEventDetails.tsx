@@ -184,7 +184,7 @@ const RuntimeEventDetailsInner: FC<{
       )
     case RuntimeEventType.evmlog: {
       const { parsedEvmLogName } = parseEvmEvent(event)
-      const emittingEthAddress = getEthAccountAddressFromBase64(event.body.address)
+      const emittingEthAddress = event.body.address
       const emittingOasisAddress = getOasisAddress(emittingEthAddress)
       if (!event.evm_log_name && !event.evm_log_params) {
         return (

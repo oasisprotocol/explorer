@@ -18,6 +18,7 @@ import {
 } from './generated/api'
 import {
   getAccountSize,
+  getEthAccountAddressFromBase64,
   getEthAccountAddressFromPreimage,
   getOasisAddressOrNull,
   isValidEthAddress,
@@ -911,6 +912,10 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                     owner_eth: event.body?.owner_eth || fallbackEthAddress(event.body.owner, params?.rel),
                     from_eth: event.body?.from_eth || fallbackEthAddress(event.body.from, params?.rel),
                     to_eth: event.body?.to_eth || fallbackEthAddress(event.body.to, params?.rel),
+                    address:
+                      event.type === RuntimeEventType.evmlog
+                        ? getEthAccountAddressFromBase64(event.body.address)
+                        : event.body.address,
                   },
                   evm_log_params: event.evm_log_params?.map(fixChecksumAddressInEvmEventParam),
                   eth_tx_hash: event.eth_tx_hash ? `0x${event.eth_tx_hash}` : undefined,
