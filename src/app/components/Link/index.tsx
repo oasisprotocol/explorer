@@ -17,29 +17,38 @@ type LinkProps = {
   alwaysTrim?: boolean
   highlightedPartOfName?: string
   to: string
+  withSourceIndicator?: boolean
 }
 
-export const Link: FC<LinkProps> = ({ address, name, alwaysTrim, highlightedPartOfName, to }) => {
+export const Link: FC<LinkProps> = ({
+  address,
+  name,
+  alwaysTrim,
+  highlightedPartOfName,
+  to,
+  withSourceIndicator = true,
+}) => {
   const { isTablet } = useScreenSize()
   const hasName = name?.toLowerCase() !== address.toLowerCase()
 
-  const tooltipTitle = hasName ? (
-    <div>
-      {name && (
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-          <Box sx={{ fontWeight: 'bold' }}>{name}</Box>
-          <span>-</span>
-          <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
-        </Box>
-      )}
-      <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
-    </div>
-  ) : undefined
+  const tooltipTitle =
+    hasName && withSourceIndicator ? (
+      <div>
+        {name && (
+          <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+            <Box sx={{ fontWeight: 'bold' }}>{name}</Box>
+            <span>-</span>
+            <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+          </Box>
+        )}
+        <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+      </div>
+    ) : undefined
 
   return (
     <MaybeWithTooltip title={tooltipTitle}>
       <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-        {hasName && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
+        {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
         <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
           {isTablet ? (
             <TabletLink address={address} name={name} to={to} highlightedPart={highlightedPartOfName} />
