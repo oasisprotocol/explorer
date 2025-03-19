@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
 import { createContext, FC, useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useBlocker, useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
@@ -35,6 +35,10 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
 
   const location = useLocation()
   const [previousURL, setPreviousURL] = useState(document.referrer)
+  useBlocker(({ currentLocation, nextLocation }) => {
+    setPreviousURL(currentLocation.pathname + currentLocation.search + currentLocation.hash)
+    return false // Not actually using this to block navigation
+  })
   useEffect(() => {
     const newURL = location.pathname + location.search + location.hash
     if (hasAccepted === 'opted-in') {
@@ -45,8 +49,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
       window._paq.push(['trackPageView'])
       window._paq.push(['enableLinkTracking'])
     }
-    setPreviousURL(newURL)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger when URL changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Trigger on init, when URL changes, or opt-in clicked
   }, [location.key, hasAccepted])
 
   return (
