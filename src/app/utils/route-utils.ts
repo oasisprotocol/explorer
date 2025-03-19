@@ -170,6 +170,14 @@ export abstract class RouteUtils {
     return `/${encodeURIComponent(network)}/consensus/validators/${encodeURIComponent(address)}`
   }
 
+  static getRoflAppsRoute = (network: Network) => {
+    return `/${encodeURIComponent(network)}/sapphire/rofl/app`
+  }
+
+  static getRoflAppRoute = (network: Network, id: string) => {
+    return `/${encodeURIComponent(network)}/sapphire/rofl/app/${encodeURIComponent(id)}`
+  }
+
   static getAccountTokensRoute = (
     scope: SearchScope,
     account: string,
