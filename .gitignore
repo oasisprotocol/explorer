@@ -3,7 +3,6 @@
 coverage/
 build/
 build-dev/
-storybook-static/
 node_modules/
 .vscode/
 .idea/
