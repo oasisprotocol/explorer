@@ -8,7 +8,11 @@ import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { tooltipDelay } from '../../../styles/theme'
 import { getTimeZone } from '../../hooks/useFormattedTimestamp'
 
-export const TableHeaderAge: FC = () => {
+type TableHeaderAgeProps = {
+  label?: string
+}
+
+export const TableHeaderAge: FC<TableHeaderAgeProps> = ({ label }) => {
   const { t } = useTranslation()
   const {
     settings: { ageHeaderType },
@@ -53,7 +57,7 @@ export const TableHeaderAge: FC = () => {
                 fontWeight: 700,
               }}
             >
-              {t('common.age')}
+              {label || t('common.age')}
             </Typography>
           </Button>
         </Tooltip>
