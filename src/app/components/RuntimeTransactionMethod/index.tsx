@@ -165,7 +165,7 @@ export const getRuntimeTransactionMethodFilteringParam = (
       //
       // For more details, see the API spec at
       // https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
-      return { method: 'native_transfers' }
+      return { method: 'native_transfers' as unknown as string[] }
     case 'evm.Call':
       // Searching for contract calls is tricky, because some of them
       // should be classified as transfers. (See above.)
@@ -176,9 +176,9 @@ export const getRuntimeTransactionMethodFilteringParam = (
       //
       // For more details, see the API spec at
       // https://github.com/oasisprotocol/nexus/blob/main/api/spec/v1.yaml
-      return { method: 'evm.Call_no_native' }
+      return { method: 'evm.Call_no_native' as unknown as string[] }
     default:
       // For other (normal) methods, we can simply pass on the wanted method name.
-      return { method }
+      return { method: method as unknown as string[] }
   }
 }
