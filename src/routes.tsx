@@ -26,6 +26,7 @@ import {
   fixedLayer,
   RouteUtils,
   skipGraph,
+  roflAppParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
@@ -63,10 +64,13 @@ import { ConsensusAccountDetailsPage } from './app/pages/ConsensusAccountDetails
 import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountEventsCard'
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
+import { RoflAppsPage } from './app/pages/RoflAppsPage'
+import { RoflAppDetailPage } from 'app/pages/RoflAppDetailPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
+import { InstancesCard } from 'app/pages/RoflAppDetailPage/InstancesCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -293,6 +297,25 @@ export const routes: RouteObject[] = [
               { path: 'holders', Component: () => <TokenHoldersCard {...useTokenDashboardProps()} /> },
               { path: 'inventory', Component: () => <TokenInventoryCard {...useTokenDashboardProps()} /> },
               { path: 'code', Component: () => <ContractCodeCard {...useTokenDashboardProps()} /> },
+            ],
+          },
+          {
+            path: `rofl/app`,
+            element: <RoflAppsPage />,
+          },
+          {
+            path: `rofl/app/:id`,
+            element: <RoflAppDetailPage />,
+            loader: roflAppParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+              },
+              {
+                path: 'instances',
+                Component: () => <InstancesCard />,
+              },
             ],
           },
         ],
