@@ -182,14 +182,16 @@ export const AccountLink: FC<Props> = ({
   return (
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
       <>
-        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-          {accountMetadata && <AccountMetadataSourceIndicator source={accountMetadata.source} />}
-          <AdaptiveHighlightedText
-            text={showAccountName ? accountName : ''}
-            pattern={highlightedPartOfName}
-            extraTooltip={tooltipTitle}
-          />
-        </Box>
+        {showAccountName && (
+          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+            <AccountMetadataSourceIndicator source={accountMetadata.source} />
+            <AdaptiveHighlightedText
+              text={accountName}
+              pattern={highlightedPartOfName}
+              extraTooltip={tooltipTitle}
+            />
+          </Box>
+        )}
         <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
       </>
     </WithTypographyAndLink>
