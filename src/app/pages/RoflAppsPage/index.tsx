@@ -13,6 +13,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { VerticalList } from '../../components/VerticalList'
+import { RoflAppDetailsView } from '../RoflAppDetailsPage'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -73,7 +74,15 @@ export const RoflAppsPage: FC = () => {
           />
         )}
 
-        {tableView === TableLayout.Vertical && <VerticalList></VerticalList>}
+        {tableView === TableLayout.Vertical && (
+          <VerticalList>
+            {isLoading &&
+              [...Array(limit).keys()].map(key => (
+                <RoflAppDetailsView key={key} isLoading={true} app={undefined} />
+              ))}
+            {!isLoading && roflApps?.map(app => <RoflAppDetailsView key={app.id} app={app} />)}
+          </VerticalList>
+        )}
       </SubPageCard>
     </PageLayout>
   )
