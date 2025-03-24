@@ -6,4 +6,4 @@ const removeNetworkFromName = (operation, route, verb) => {
   return getOperationId(operation, route.replace('/${network}', ''), verb)
 }
 
-module.exports = removeNetworkFromName
+export default removeNetworkFromName

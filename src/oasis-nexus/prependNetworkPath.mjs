@@ -5,7 +5,7 @@
  * @param {import('openapi3-ts').OpenAPIObject} inputSchema
  * @return {import('openapi3-ts').OpenAPIObject}
  */
-module.exports = inputSchema => ({
+const prependNetworkPath = inputSchema => ({
   ...inputSchema,
   paths: Object.entries(inputSchema.paths).reduce(
     (acc, [path, pathItem]) => ({
@@ -35,3 +35,5 @@ module.exports = inputSchema => ({
     {},
   ),
 })
+
+export default prependNetworkPath
