@@ -142,6 +142,12 @@ declare module './generated/api' {
   export interface ValidatorAggStats {
     ticker: Ticker
   }
+
+  export interface RoflApp {
+    layer: typeof Layer.sapphire
+    network: Network
+    ticker: Ticker
+  }
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
@@ -1469,3 +1475,36 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
       },
     })
   }
+
+export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
+  network,
+  layer,
+  params?,
+  options?,
+) => {
+  const ticker = getTokensForScope({ network, layer: Layer.sapphire })[0].ticker
+  return generated.useGetRuntimeRoflApps(network, layer, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RoflAppList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            rofl_apps: data.rofl_apps.map(app => {
+              return {
+                ...app,
+                network,
+                layer: Layer.sapphire,
+                ticker,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
