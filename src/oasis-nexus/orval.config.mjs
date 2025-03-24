@@ -1,5 +1,5 @@
-import prependNetworkPath from './prependNetworkPath.js'
-import removeNetworkFromName from './removeNetworkFromName.js'
+import prependNetworkPath from './prependNetworkPath.mjs'
+import removeNetworkFromName from './removeNetworkFromName.mjs'
 
 /** @type {import('@orval/core').Config} */
 const config = {
@@ -32,4 +32,4 @@ const config = {
   },
 }
 
-module.exports = config
+export default config
