@@ -658,7 +658,14 @@
     "active": "Active",
     "inactive": "Inactive",
     "rak": "RAK",
-    "removed": "Removed"
+    "removed": "Removed",
+    "lastActvity": "Last activity",
+    "appId": "App ID",
+    "emptyRoflAppsList": "No ROFL apps found.",
+    "created": "Date created",
+    "instances": "Instances",
+    "listTitle": "ROFL Apps",
+    "nameNotProvided": "Name not provided"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

@@ -5,6 +5,11 @@ import { StatusBadge, StatusVariant } from '../common/StatusBadge'
 
 type RoflAppStatusTypes = 'active' | 'inactive' | 'removed'
 
+function getRoflAppStatus(hasActiveInstances: boolean, removed: boolean): RoflAppStatusTypes {
+  if (removed) return 'removed'
+  return hasActiveInstances ? 'active' : 'inactive'
+}
+
 const statusVariant: Record<RoflAppStatusTypes, StatusVariant> = {
   active: 'success',
   inactive: 'warning',
@@ -16,11 +21,13 @@ const statusIcon: Partial<Record<RoflAppStatusTypes, ReactNode>> = {
 }
 
 type RoflAppStatusBadgeProps = {
-  status: RoflAppStatusTypes
+  hasActiveInstances: boolean
+  removed: boolean
 }
 
-export const RoflAppStatusBadge = ({ status }: RoflAppStatusBadgeProps) => {
+export const RoflAppStatusBadge = ({ hasActiveInstances, removed }: RoflAppStatusBadgeProps) => {
   const { t } = useTranslation()
+  const status = getRoflAppStatus(hasActiveInstances, removed)
   const statusLabel: Record<RoflAppStatusTypes, string> = {
     active: t('rofl.active'),
     inactive: t('rofl.inactive'),
