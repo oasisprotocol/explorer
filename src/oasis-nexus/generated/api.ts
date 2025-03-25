@@ -60,7 +60,9 @@ import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdTransactionsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdInstanceTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstancesMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdInstancesRakTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
 export type GetLayerStatsActiveAccountsParams = {
@@ -110,6 +112,30 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 window_step_seconds?: number;
 };
 
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string[];
+};
+
 export type GetRuntimeRoflAppsIdInstancesParams = {
 /**
  * The maximum numbers of items to return.
@@ -121,6 +147,30 @@ limit?: number;
 
  */
 offset?: number;
+};
+
+export type GetRuntimeRoflAppsIdInstanceTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string[];
 };
 
 export type GetRuntimeRoflAppsIdTransactionsParams = {
@@ -752,31 +802,6 @@ export type RoflAppPolicy = { [key: string]: any };
  */
 export type RoflAppMetadata = { [key: string]: any };
 
-export interface RoflApp {
-  /** Registered application instances. Only active instances are returned.
-Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
- */
-  active_instances: RoflInstance[];
-  /** The application administrator address. */
-  admin: string;
-  /** The date and time when the application was created. */
-  date_created: string;
-  /** The identifier of the ROFL application. */
-  id: string;
-  /** Arbitrary key-value pairs. */
-  metadata: RoflAppMetadata;
-  /** The number of currently active instances of the application. */
-  num_active_instances: number;
-  /** The application authentication policy. */
-  policy: RoflAppPolicy;
-  /** Whether the application has been removed. */
-  removed: boolean;
-  /** Arbitrary SEK-encrypted key-value pairs. */
-  secrets: RoflAppSecrets;
-  /** The secrets encryption public key. */
-  sek: string;
-}
-
 /**
  * A list of ROFL apps.
 
@@ -1229,6 +1254,37 @@ if applicable. The meaning varies based on the transaction method. Some notable 
   /** A reasonable "to" Ethereum address associated with this transaction,
  */
   to_eth?: string;
+}
+
+export interface RoflApp {
+  /** Registered application instances. Only active instances are returned.
+Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
+ */
+  active_instances: RoflInstance[];
+  /** The application administrator address. */
+  admin: string;
+  /** The date and time when the application was created. */
+  date_created: string;
+  /** The identifier of the ROFL application. */
+  id: string;
+  /** The date and time when the application was last active. */
+  last_activity?: string;
+  /** The most recent transaction associated with this ROFL app.
+This field is only present when querying a single ROFL app.
+ */
+  last_activity_tx?: RuntimeTransaction;
+  /** Arbitrary key-value pairs. */
+  metadata: RoflAppMetadata;
+  /** The number of currently active instances of the application. */
+  num_active_instances: number;
+  /** The application authentication policy. */
+  policy: RoflAppPolicy;
+  /** Whether the application has been removed. */
+  removed: boolean;
+  /** Arbitrary SEK-encrypted key-value pairs. */
+  secrets: RoflAppSecrets;
+  /** The secrets encryption public key. */
+  sek: string;
 }
 
 /**
@@ -5330,6 +5386,81 @@ export const useGetRuntimeRoflAppsIdTransactions = <TData = Awaited<ReturnType<t
 
 
 /**
+ * @summary Returns a list of transactions submitted by ROFL instances for a given ROFL app.
+ */
+export const GetRuntimeRoflAppsIdInstanceTransactions = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdInstanceTransactionsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdInstanceTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}/instance_transactions`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstanceTransactionsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}/instance_transactions`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdInstanceTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstanceTransactionsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstanceTransactionsQueryKey(network,runtime,id,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>> = ({ signal }) => GetRuntimeRoflAppsIdInstanceTransactions(network,runtime,id,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdInstanceTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>>
+export type GetRuntimeRoflAppsIdInstanceTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of transactions submitted by ROFL instances for a given ROFL app.
+ */
+export const useGetRuntimeRoflAppsIdInstanceTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstanceTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstanceTransactionsQueryOptions(network,runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
  * @summary Returns a list of ROFL app instances for a given ROFL app.
  */
 export const GetRuntimeRoflAppsIdInstances = (
@@ -5393,6 +5524,85 @@ export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<type
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeRoflAppsIdInstancesQueryOptions(network,runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of transactions submitted by a given ROFL instance.
+ */
+export const GetRuntimeRoflAppsIdInstancesRakTransactions = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakTransactionsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdInstancesRakTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}/instances/${encodeURIComponent(String(rak))}/transactions`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}/instances/${rak}/transactions`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakTransactionsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryKey(network,runtime,id,rak,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>> = ({ signal }) => GetRuntimeRoflAppsIdInstancesRakTransactions(network,runtime,id,rak,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id && rak), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>>
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of transactions submitted by a given ROFL instance.
+ */
+export const useGetRuntimeRoflAppsIdInstancesRakTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryOptions(network,runtime,id,rak,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
