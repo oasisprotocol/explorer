@@ -51,7 +51,13 @@ const mockedApp: RoflApp = {
       rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
     },
   ],
-  metadata: { name: 'Foo' },
+  metadata: {
+    'net.oasis.rofl.name': 'Sample ROFL App',
+    'net.oasis.rofl.description': 'A sample ROFL application',
+    'net.oasis.rofl.author': 'Oasis Protocol Foundation',
+    'net.oasis.rofl.license': 'Apache-2.0',
+    'net.oasis.rofl.repository': 'https://github.com/oasisprotocol/sample-rofl-app',
+  },
   policy: {
     enclaves: [
       'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
