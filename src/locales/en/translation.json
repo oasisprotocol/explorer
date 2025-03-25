@@ -657,7 +657,7 @@
   "rofl": {
     "active": "Active",
     "inactive": "Inactive",
-    "rak": "RAK",
+    "rak": "Runtime Attestation Key",
     "removed": "Removed",
     "lastActvity": "Last activity",
     "appId": "App ID",
