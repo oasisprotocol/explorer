@@ -15,7 +15,7 @@ type InstancesListProps = {
 export const InstancesList: FC<InstancesListProps> = ({ isLoading, limit, pagination, instances }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
-    { key: 'rak', content: t('rofl.rak') },
+    { key: 'rak', content: t('rofl.rakAbbreviation') },
     { key: 'node', content: t('rofl.nodeId') },
     { key: 'expiration', content: t('rofl.expirationEpoch'), align: TableCellAlign.Right },
   ]

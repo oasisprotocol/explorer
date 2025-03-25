@@ -657,6 +657,7 @@
   "rofl": {
     "active": "Active",
     "inactive": "Inactive",
+    "rakAbbreviation": "RAK",
     "rak": "Runtime Attestation Key",
     "removed": "Removed",
     "lastActvity": "Last activity",
