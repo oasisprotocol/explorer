@@ -71,6 +71,7 @@ import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
 import { InstancesCard } from './app/pages/RoflAppDetailPage/InstancesCard'
+import { useRoflAppDetailsProps } from 'app/pages/RoflAppDetailPage/hooks'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -310,11 +311,11 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
-                Component: () => <AccountTransactionsCard {...useRuntimeAccountDetailsProps()} />,
+                Component: () => <AccountTransactionsCard {...useRoflAppDetailsProps()} />,
               },
               {
                 path: 'instances',
-                Component: () => <InstancesCard />,
+                Component: () => <InstancesCard {...useRoflAppDetailsProps()} />,
               },
             ],
           },

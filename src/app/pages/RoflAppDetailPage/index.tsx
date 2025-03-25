@@ -32,6 +32,43 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
   },
 }))
 
+const mockedApp: RoflApp = {
+  layer: 'sapphire',
+  network: 'mainnet',
+  ticker: 'ROSE',
+  removed: false,
+  num_active_instances: 3,
+  date_created: '2021-04-28T16:00:00Z',
+  admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
+  id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9zz',
+  active_instances: [
+    {
+      endorsing_entity_id: '',
+      endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
+      expiration_epoch: 1,
+      extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
+      rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
+      rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
+    },
+  ],
+  metadata: { name: 'Foo' },
+  policy: {
+    enclaves: [
+      'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+      'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+    ],
+    endorsements: [{ any: {} }],
+    fees: 2,
+    max_expiration: 3,
+    quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
+  },
+  secrets: {
+    foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
+    API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
+  },
+  sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
+}
+
 export const RoflAppDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
@@ -43,7 +80,7 @@ export const RoflAppDetailPage: FC = () => {
   })
   const context: RuntimeAccountDetailsContext = { scope, id, undefined, method, setMethod }
   const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer as Runtime, id)
-  const roflApp = data?.data
+  const roflApp = mockedApp
 
   if (!roflApp && !isLoading) {
     throw AppErrors.NotFoundTxHash
@@ -149,10 +186,11 @@ export const RoflAppDetailView: FC<{
 
       <dt>{t('rofl.stakedAmount')}</dt>
       <dd>
-        {t('common.valueInToken', {
+        {t('common.missing')}
+        {/* {t('common.valueInToken', {
           ...getPreciseNumberFormat(app.amount),
           ticker: app.ticker,
-        })}
+        })} */}
       </dd>
 
       <dt>{t('common.status')}</dt>

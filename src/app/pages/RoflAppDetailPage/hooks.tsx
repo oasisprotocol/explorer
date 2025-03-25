@@ -1,3 +1,4 @@
+import { useOutletContext } from 'react-router-dom'
 import { SearchScope } from '../../../types/searchScope'
 
 export type RoflAppDetailsContext = {
@@ -5,4 +6,4 @@ export type RoflAppDetailsContext = {
   id: string
 }
 
-// TOOD: Placeholder file for a hook used within a router. Add when details page is ready
+export const useRoflAppDetailsProps = () => useOutletContext<RoflAppDetailsContext>()
