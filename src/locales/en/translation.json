@@ -665,7 +665,9 @@
     "created": "Date created",
     "instances": "Instances",
     "listTitle": "ROFL Apps",
-    "nameNotProvided": "Name not provided"
+    "nameNotProvided": "Name not provided",
+    "nodeId": "Node ID",
+    "expirationEpoch": "Expiration epoch"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
