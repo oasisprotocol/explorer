@@ -370,12 +370,20 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   ]
   const transactions = [...(queries.runtimeTxHash.results || []), ...(queries.consensusTxHash.results || [])]
   const accounts = [
-    ...(queries.oasisConsensusAccount.results || []),
-    ...(queries.oasisRuntimeAccount.results || []),
-    ...(queries.evmAccount.results || []),
-    ...(queries.accountsByName.results || []),
-    ...(queries.validatorByName.results || []),
-  ].filter(isAccountNonEmpty)
+    ...(queries.oasisConsensusAccount.results || []).filter(isAccountNonEmpty),
+    ...(queries.oasisRuntimeAccount.results || []).filter(isAccountNonEmpty),
+    ...(queries.evmAccount.results || []).filter(isAccountNonEmpty),
+    ...(queries.accountsByName.results || []), // Don't filter, keep empty accounts too
+    ...(queries.validatorByName.results || []), // Don't filter, keep empty validators too
+  ]
+    .reduce((uniq, account) => {
+      const key = [account.network, account.layer, account.address].join(',')
+      // Deduplicate accounts found by address and name
+      if (!uniq.has(key)) uniq.set(key, account)
+      return uniq
+    }, new Map<string, RuntimeAccount | Account>())
+    .values()
+
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
     .flat()
