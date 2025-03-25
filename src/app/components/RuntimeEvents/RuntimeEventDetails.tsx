@@ -403,7 +403,9 @@ const RuntimeEventDetailsInner: FC<{
             {event.body?.rak?.PublicKey && (
               <>
                 <dt>{t('rofl.rak')}</dt>
-                <dd>{event.body.rak.PublicKey}</dd>
+                <dd>
+                  <Typography variant="mono">{event.body.rak.PublicKey}</Typography>
+                </dd>
               </>
             )}
           </StyledDescriptionList>
