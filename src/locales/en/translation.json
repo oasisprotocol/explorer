@@ -669,7 +669,8 @@
     "nameNotProvided": "Name not provided",
     "nodeId": "Node ID",
     "expirationEpoch": "Expiration epoch",
-    "emptyInstancesList": "No ROFL app instances found."
+    "emptyInstancesList": "No ROFL app instances found.",
+    "noData": "No data available"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
