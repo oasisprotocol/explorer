@@ -670,7 +670,15 @@
     "nodeId": "Node ID",
     "expirationEpoch": "Expiration epoch",
     "emptyInstancesList": "No ROFL app instances found.",
-    "noData": "No data available"
+    "noData": "No data available",
+    "metadata": "Meta data",
+    "metadataInfo": "This info provided by deployer, Oasis does not verify this information.",
+    "roflName": "ROFL name",
+    "description": "Description",
+    "author": "Author",
+    "license": "License",
+    "repositoryUrl": "Repository URL",
+    "verifyCommand": "Run <Command /> to verify."
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
