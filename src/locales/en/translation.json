@@ -678,7 +678,16 @@
     "author": "Author",
     "license": "License",
     "repositoryUrl": "Repository URL",
-    "verifyCommand": "Run <Command /> to verify."
+    "verifyCommand": "Run <Command /> to verify.",
+    "policy": "Policy",
+    "instancePays": "Instance pays",
+    "endorsingNodePays": "Endorsing node pays",
+    "validity": "Validity period",
+    "evaluation": "TCB data evaluation",
+    "feePolicy": "Fee policy",
+    "validityPeriodDays": "{{value}} days",
+    "min": "(minimum)",
+    "update": "Update"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
