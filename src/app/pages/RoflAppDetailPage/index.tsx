@@ -25,6 +25,9 @@ import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
 import { InstancesCard } from './Instances'
 import { RuntimeAccountDetailsContext } from '../RuntimeAccountDetailsPage'
+import { TransactionLink } from 'app/components/Transactions/TransactionLink'
+import { formatDistanceStrict } from 'date-fns'
+import Box from '@mui/material/Box'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -52,6 +55,7 @@ const mockedApp: RoflApp = {
     },
   ],
   metadata: {
+    'net.oasis.rofl.version': '0.0.1',
     'net.oasis.rofl.name': 'Sample ROFL App',
     'net.oasis.rofl.description': 'A sample ROFL application',
     'net.oasis.rofl.author': 'Oasis Protocol Foundation',
@@ -67,6 +71,48 @@ const mockedApp: RoflApp = {
     fees: 2,
     max_expiration: 3,
     quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
+  },
+  last_activity_tx: {
+    amount: '0',
+    body: {
+      address: 'PILoIUG7R8N/8ZnLU7XLRYUv93A=',
+      data: 'omRib2R5pGJwa1gg9Bb4L5sipO+WuxmmdikcWUR4Lh8T2ba6krza72bsS0VkZGF0YVh8mZzkEqA2pHBTu6UWGlXmbQoa6z0DTtXsTZi2skEhv9zcOODa5XgUWWGvHb5Yg+o0qo4ydxaWGp76PQP8y14wjzeM3PaKQqrkdNOoayk2xFhkt/URZiLxo0m1knZFRk+nzRbbtojw/Lzm5m7HEUYQuD1JbdTJps1wu8HkrGVlcG9jaBmbT2Vub25jZU/rWz5FKgmBdYX7VyxDlkpmZm9ybWF0AQ==',
+      value: '',
+    },
+    charged_fee: '3114200000000000',
+    encryption_envelope: {
+      data: 'mZzkEqA2pHBTu6UWGlXmbQoa6z0DTtXsTZi2skEhv9zcOODa5XgUWWGvHb5Yg+o0qo4ydxaWGp76PQP8y14wjzeM3PaKQqrkdNOoayk2xFhkt/URZiLxo0m1knZFRk+nzRbbtojw/Lzm5m7HEUYQuD1JbdTJps1wu8HkrA==',
+      data_nonce: '61s+RSoJgXWF+1csQ5ZK',
+      format: 'encrypted/x25519-deoxysii',
+      public_key: '9Bb4L5sipO+WuxmmdikcWUR4Lh8T2ba6krza72bsS0U=',
+      result: '/jNdA8a/ks4B9A9Vw5zldRHd0Ce3',
+      result_nonce: 'AAAAAAB8r+4AAAAAAAAA',
+    },
+    eth_hash: 'bf1545be0254f163c9c3f6af4985986fc8f21a19301f0a44629191eee9c7e05c',
+    fee: '202905400000000000',
+    fee_symbol: 'ROSE',
+    gas_limit: 2029054,
+    gas_used: 31142,
+    hash: 'f09e4c7bd9a99c0877fc0339da7729d6722690948c4e86c16b570bbf3a831236',
+    index: 0,
+    is_likely_native_token_transfer: false,
+    method: 'evm.Call',
+    nonce_0: 277443,
+    round: 8171503,
+    sender_0: 'oasis1qr5j2pugnh4u5hz4qsex6s7v80vhpjmkhcupmc2n',
+    sender_0_eth: '0x5d6D0A8fF8355Eb766B8d9Cec37d8e4313166564',
+    signers: [
+      {
+        address: 'oasis1qr5j2pugnh4u5hz4qsex6s7v80vhpjmkhcupmc2n',
+        address_eth: '0x5d6D0A8fF8355Eb766B8d9Cec37d8e4313166564',
+        nonce: 277443,
+      },
+    ],
+    size: 353,
+    success: true,
+    timestamp: '2025-03-26T16:16:18Z',
+    to: 'oasis1qqvq0zzkjj537hm47rj7lren9lma3ncumspss73n',
+    to_eth: '0x3C82e82141BB47C37fF199cB53B5CB45852Ff770',
   },
   secrets: {
     foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
@@ -94,7 +140,7 @@ export const RoflAppDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={t('rofl.header')}>
+      <SubPageCard featured title={roflApp.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
         <RoflAppDetailView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
@@ -132,7 +178,6 @@ export const RoflAppDetailView: FC<{
 }> = ({ app, detailsPage, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const formattedActivity = useFormattedTimestampStringWithDistance(app?.timestamp)
   const formattedPolicyUpdate = useFormattedTimestampStringWithDistance(app?.policy?.update)
 
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 15 : 10} />
@@ -141,17 +186,20 @@ export const RoflAppDetailView: FC<{
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={!detailsPage}>
       <dt>{t('common.name')}</dt>
-      <dd>{app.metadata?.name || t('common.missing')}</dd>
+      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
 
       <dt>{t('rofl.version')}</dt>
-      <dd>{app.version || t('common.missing')}</dd>
+      <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
 
       <dt>{t('rofl.tee')}</dt>
       <dd>{app.tee || t('common.missing')}</dd>
 
       <dt>{t('rofl.appId')}</dt>
       <dd>
-        {app.id} <CopyToClipboard value={app.id} />
+        <Typography variant="mono" component="span">
+          {app.id}
+        </Typography>
+        <CopyToClipboard value={app.id} />
       </dd>
 
       <dt>{t('rofl.enclaveId')}</dt>
@@ -181,7 +229,7 @@ export const RoflAppDetailView: FC<{
 
       <dt>{t('rofl.sekPublicKey')}</dt>
       <dd>
-        {app.sek} <CopyToClipboard value={app.sek} />
+        <Typography variant="mono">{app.sek}</Typography> <CopyToClipboard value={app.sek} />
       </dd>
 
       <dt>{t('rofl.adminAccount')}</dt>
@@ -201,17 +249,33 @@ export const RoflAppDetailView: FC<{
 
       <dt>{t('common.status')}</dt>
       <dd>
-        <RoflAppStatusBadge status={app.status} />
+        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
       </dd>
 
       <dt>{t('rofl.lastPolicyUpdate')}</dt>
       <dd>{formattedPolicyUpdate || t('common.missing')}</dd>
 
-      <dt>{t('rofl.activity')}</dt>
-      <dd>{formattedActivity || t('common.missing')}</dd>
+      <dt>{t('rofl.lastActvity')}</dt>
+      <dd>
+        {app.last_activity_tx ? (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <TransactionLink
+              scope={app.last_activity_tx}
+              hash={app.last_activity_tx.eth_hash || app.last_activity_tx.hash}
+            />
+            (
+            {formatDistanceStrict(app.last_activity_tx.timestamp, new Date(), {
+              addSuffix: true,
+            })}
+            )
+          </Box>
+        ) : (
+          t('common.missing')
+        )}
+      </dd>
 
       <dt>{t('rofl.instances')}</dt>
-      <dd>{app.instances?.length?.toLocaleString() || 0}</dd>
+      <dd>{app.num_active_instances.toLocaleString()}</dd>
 
       <dt>{t('rofl.endorsement')}</dt>
       {/* TODO: find out what we can expect here */}
@@ -229,13 +293,15 @@ export const RoflAppDetailView: FC<{
                     component="span"
                     sx={{
                       wordWrap: 'break-word',
-                      pr: 3,
+                      pr: 5,
                     }}
                   >
                     {key}:
                   </Typography>
                 </td>
-                <td>{app.secrets[key]}</td>
+                <td>
+                  <Typography variant="mono">{app.secrets[key]}</Typography>
+                </td>
               </tr>
             ))}
           </table>
