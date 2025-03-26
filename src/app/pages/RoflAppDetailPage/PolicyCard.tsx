@@ -5,12 +5,15 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { RoflAppPolicy } from '../../../oasis-nexus/api'
+import { Layer, RoflAppPolicy, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
+import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
 
 type PolicyCardProps = {
+  id: string
   isFetched: boolean
+  network: any
   policy: RoflAppPolicy | undefined
 }
 
@@ -20,8 +23,13 @@ type PolicyCardProps = {
 // feePolicy can be 1 for InstancePays and 2 for EndorsingNodePays
 // https://github.com/oasisprotocol/oasis-sdk/blob/41480106d585debd33391cb0dfcad32d2f3cdc9d/runtime-sdk/src/modules/rofl/policy.rs#L48 */}
 
-export const PolicyCard: FC<PolicyCardProps> = ({ isFetched, policy }) => {
+export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, policy }) => {
   const { t } = useTranslation()
+  const { data } = useGetRuntimeRoflAppsIdTransactions(network, Layer.sapphire, id, {
+    limit: 1,
+    method: 'rofl.Update' as unknown as string[],
+  })
+  const transaction = data?.data.transactions[0]
   const feePolicy =
     policy?.fees === 1 ? t('rofl.instancePays') : policy?.fees === 2 ? t('rofl.endorsingNodePays') : undefined
 
@@ -49,8 +57,28 @@ export const PolicyCard: FC<PolicyCardProps> = ({ isFetched, policy }) => {
                 ) : undefined}
               </GridRow>
               <GridRow label={t('rofl.feePolicy')}>{feePolicy}</GridRow>
-              {/* TODO: /{runtime}/rofl_apps/{id}/transactions?method=rofl.Update&limit=1 */}
-              <GridRow label={t('rofl.update')}>{policy.update}</GridRow>
+              <GridRow label={t('rofl.update')}>
+                {transaction ? (
+                  <>
+                    {t('common.formattedDateTime', {
+                      value: transaction.timestamp,
+                      formatParams: {
+                        timestamp: {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        } satisfies Intl.DateTimeFormatOptions,
+                      },
+                    })}
+                    <br />
+                    <TransactionLink
+                      scope={transaction}
+                      alwaysTrim
+                      hash={transaction.eth_hash || transaction.hash}
+                    />
+                  </>
+                ) : undefined}
+              </GridRow>
             </Grid>
           </>
         )}

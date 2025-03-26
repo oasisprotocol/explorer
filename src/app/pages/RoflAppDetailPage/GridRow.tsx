@@ -28,12 +28,10 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
     <>
       <StyledGrid item xs={12} md={5}>
         {label}:
-        {tooltip ? (
+        {tooltip && (
           <Tooltip title={tooltip} placement="top">
             <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
           </Tooltip>
-        ) : (
-          label
         )}
       </StyledGrid>
       <StyledGrid item xs={12} md={7}>
