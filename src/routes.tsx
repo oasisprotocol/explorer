@@ -70,6 +70,9 @@ import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
+import { InstancesCard } from './app/pages/RoflAppDetailsPage/InstancesCard'
+import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
+import { RoflAppTransactionsCard } from './app/pages/RoflAppDetailsPage/RoflAppTransactionsCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -306,6 +309,16 @@ export const routes: RouteObject[] = [
             path: `rofl/app/:id`,
             element: <RoflAppDetailsPage />,
             loader: roflAppParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <RoflAppTransactionsCard {...useRoflAppDetailsProps()} />,
+              },
+              {
+                path: 'instances',
+                Component: () => <InstancesCard {...useRoflAppDetailsProps()} />,
+              },
+            ],
           },
         ],
       },
