@@ -1285,6 +1285,8 @@ This field is only present when querying a single ROFL app.
   secrets: RoflAppSecrets;
   /** The secrets encryption public key. */
   sek: string;
+  /** The amount of stake in escrow by the administrator. */
+  stake: TextBigInt;
 }
 
 /**
@@ -5241,7 +5243,7 @@ export const useGetRuntimeRoflApps = <TData = Awaited<ReturnType<typeof GetRunti
 
 
 /**
- * @summary Returns a ROFL app on the runtime.
+ * @summary Returns a specific ROFL app.
  */
 export const GetRuntimeRoflAppsId = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -5289,7 +5291,7 @@ export type GetRuntimeRoflAppsIdQueryResult = NonNullable<Awaited<ReturnType<typ
 export type GetRuntimeRoflAppsIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a ROFL app on the runtime.
+ * @summary Returns a specific ROFL app.
  */
 export const useGetRuntimeRoflAppsId = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet' | 'localnet',
@@ -5311,7 +5313,10 @@ export const useGetRuntimeRoflAppsId = <TData = Awaited<ReturnType<typeof GetRun
 
 
 /**
- * @summary Returns a list of transactions for a given ROFL app.
+ * @summary Returns a list of "managing" transactions of the ROFL app.
+This does not return transaction submitted by ROFL app instances, for that see
+the `/rofl_apps/{id}/instance_transactions` endpoint.
+
  */
 export const GetRuntimeRoflAppsIdTransactions = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -5363,7 +5368,10 @@ export type GetRuntimeRoflAppsIdTransactionsQueryResult = NonNullable<Awaited<Re
 export type GetRuntimeRoflAppsIdTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of transactions for a given ROFL app.
+ * @summary Returns a list of "managing" transactions of the ROFL app.
+This does not return transaction submitted by ROFL app instances, for that see
+the `/rofl_apps/{id}/instance_transactions` endpoint.
+
  */
 export const useGetRuntimeRoflAppsIdTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet' | 'localnet',
@@ -5386,7 +5394,7 @@ export const useGetRuntimeRoflAppsIdTransactions = <TData = Awaited<ReturnType<t
 
 
 /**
- * @summary Returns a list of transactions submitted by ROFL instances for a given ROFL app.
+ * @summary Returns a list of transactions submitted by instances of the ROFL app.
  */
 export const GetRuntimeRoflAppsIdInstanceTransactions = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -5438,7 +5446,7 @@ export type GetRuntimeRoflAppsIdInstanceTransactionsQueryResult = NonNullable<Aw
 export type GetRuntimeRoflAppsIdInstanceTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of transactions submitted by ROFL instances for a given ROFL app.
+ * @summary Returns a list of transactions submitted by instances of the ROFL app.
  */
 export const useGetRuntimeRoflAppsIdInstanceTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstanceTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet' | 'localnet',
@@ -5461,7 +5469,7 @@ export const useGetRuntimeRoflAppsIdInstanceTransactions = <TData = Awaited<Retu
 
 
 /**
- * @summary Returns a list of ROFL app instances for a given ROFL app.
+ * @summary Returns a list of instances of the given ROFL app.
  */
 export const GetRuntimeRoflAppsIdInstances = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -5513,7 +5521,7 @@ export type GetRuntimeRoflAppsIdInstancesQueryResult = NonNullable<Awaited<Retur
 export type GetRuntimeRoflAppsIdInstancesQueryError = unknown
 
 /**
- * @summary Returns a list of ROFL app instances for a given ROFL app.
+ * @summary Returns a list of instances of the given ROFL app.
  */
 export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstances>>, TError = unknown>(
  network: 'mainnet' | 'testnet' | 'localnet',
@@ -5536,7 +5544,7 @@ export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<type
 
 
 /**
- * @summary Returns a list of transactions submitted by a given ROFL instance.
+ * @summary Returns a list of transactions submitted by the given ROFL instance.
  */
 export const GetRuntimeRoflAppsIdInstancesRakTransactions = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -5591,7 +5599,7 @@ export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryResult = NonNullabl
 export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of transactions submitted by a given ROFL instance.
+ * @summary Returns a list of transactions submitted by the given ROFL instance.
  */
 export const useGetRuntimeRoflAppsIdInstancesRakTransactions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRakTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  network: 'mainnet' | 'testnet' | 'localnet',
