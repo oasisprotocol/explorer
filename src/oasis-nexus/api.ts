@@ -910,6 +910,14 @@ const addTokenToParams = (event: generated.RuntimeEvent) => {
       }
     }
   }
+  if (event.evm_token?.type === 'ERC721') {
+    if (event.evm_log_name === 'Transfer' || event.evm_log_name === 'Approval') {
+      const tokenParam = event.evm_log_params?.[2]
+      if (tokenParam?.evm_type === 'uint256' && typeof tokenParam.value === 'string') {
+        tokenParam.evm_token = event.evm_token
+      }
+    }
+  }
   return event
 }
 

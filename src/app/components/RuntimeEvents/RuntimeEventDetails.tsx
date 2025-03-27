@@ -1,7 +1,7 @@
 import { EvmAbiParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
 import { FC } from 'react'
 import { TFunction } from 'i18next'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Table from '@mui/material/Table'
@@ -33,6 +33,7 @@ import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -134,7 +135,7 @@ const EvmEventParamData: FC<{
         <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256':
-      if (param.evm_token) {
+      if (param.evm_token?.type === 'ERC20') {
         return (
           <Tooltip
             arrow
@@ -150,6 +151,18 @@ const EvmEventParamData: FC<{
               })}
             </span>
           </Tooltip>
+        )
+      }
+      if (param.evm_token?.type === 'ERC721') {
+        return (
+          <Trans
+            t={t}
+            i18nKey="common.tokenInstance"
+            components={{
+              InstanceLink: <PlaceholderLabel label={param.value as string} />,
+              TickerLink: <PlaceholderLabel label={param.evm_token.symbol ?? t('common.missing')} />,
+            }}
+          />
         )
       }
       return (
