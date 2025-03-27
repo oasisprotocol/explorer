@@ -700,7 +700,12 @@
     "verifyCommand": "Run <Command /> to verify.",
     "adminAccount": "Admin account",
     "tdx": "TDX",
-    "sgx": "SGX"
+    "sgx": "SGX",
+    "any": "Any",
+    "roleCompute": "Role compute",
+    "roleObserver": "Role observer",
+    "entity": "Entity",
+    "node": "Node"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

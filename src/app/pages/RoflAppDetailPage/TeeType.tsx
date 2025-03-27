@@ -11,6 +11,10 @@ export const TeeType: FC<TeeTypeProps> = ({ policy }) => {
   const usesTdx = policy.quotes?.pcs?.tdx
   const usesSgx = policy.quotes?.pcs?.sgx
 
+  if (!usesTdx && !usesSgx) {
+    return <>{t('common.missing')}</>
+  }
+
   if (usesTdx) {
     return <>{t('rofl.tdx')}</>
   }
@@ -18,6 +22,4 @@ export const TeeType: FC<TeeTypeProps> = ({ policy }) => {
   if (usesSgx) {
     return <>{t('rofl.sgx')}</>
   }
-
-  return <>{t('common.missing')}</>
 }

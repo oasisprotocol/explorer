@@ -2,11 +2,11 @@ import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { RoflApp, Runtime, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
@@ -27,8 +27,8 @@ import { InstancesCard } from './Instances'
 import { RuntimeAccountDetailsContext } from '../RuntimeAccountDetailsPage'
 import { TransactionLink } from 'app/components/Transactions/TransactionLink'
 import { formatDistanceStrict } from 'date-fns'
-import Box from '@mui/material/Box'
 import { TeeType } from './TeeType'
+import { Endorsement } from './Endorsement'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -278,8 +278,9 @@ export const RoflAppDetailView: FC<{
       <dd>{app.num_active_instances.toLocaleString()}</dd>
 
       <dt>{t('rofl.endorsement')}</dt>
-      {/* TODO: find out what we can expect here */}
-      <dd>{t('common.missing')}</dd>
+      <dd>
+        <Endorsement policy={app.policy} />
+      </dd>
 
       <dt>{t('rofl.Secrets')}</dt>
       <dd>
