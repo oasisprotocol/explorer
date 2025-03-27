@@ -25,6 +25,7 @@ const mockedApps: RoflApp[] = [
     removed: false,
     num_active_instances: 3,
     date_created: '2021-04-28T16:00:00Z',
+    last_activity: '2025-03-26T16:00:00Z',
     admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
     id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9zz',
     active_instances: [
