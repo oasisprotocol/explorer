@@ -131,8 +131,13 @@ const EvmEventParamData: FC<{
         <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256':
-      // TODO: format with BigNumber
-      return <span>{param.value as string}</span>
+      return (
+        <span>
+          {t('common.valueLong', {
+            ...getPreciseNumberFormat(param.value as string),
+          })}
+        </span>
+      )
     default:
       return <span>{JSON.stringify(param.value, null, '  ')}</span>
   }
