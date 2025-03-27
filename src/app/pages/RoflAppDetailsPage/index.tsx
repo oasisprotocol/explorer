@@ -18,6 +18,7 @@ import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TeeType } from './TeeType'
 import { Endorsement } from './Endorsement'
 import { Enclaves } from './Enclaves'
+import { Secrets } from './Secrets'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -147,31 +148,7 @@ export const RoflAppDetailsView: FC<{
 
           <dt>{t('rofl.secrets')}</dt>
           <dd>
-            {app.secrets ? (
-              <table>
-                {Object.keys(app.secrets).map(key => (
-                  <tr key={key}>
-                    <td>
-                      <Typography
-                        variant="mono"
-                        component="span"
-                        sx={{
-                          wordWrap: 'break-word',
-                          pr: 5,
-                        }}
-                      >
-                        {key}:
-                      </Typography>
-                    </td>
-                    <td>
-                      <Typography variant="mono">{app.secrets[key]}</Typography>
-                    </td>
-                  </tr>
-                ))}
-              </table>
-            ) : (
-              t('common.missing')
-            )}
+            <Secrets secrets={app.secrets} />
           </dd>
         </>
       )}
