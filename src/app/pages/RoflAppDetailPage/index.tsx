@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { RoflApp, Runtime, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
+import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -120,6 +121,7 @@ const mockedApp: RoflApp = {
     API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
   },
   sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
+  stake: '123.456789123',
 }
 
 export const RoflAppDetailPage: FC = () => {
@@ -240,11 +242,12 @@ export const RoflAppDetailView: FC<{
 
       <dt>{t('rofl.stakedAmount')}</dt>
       <dd>
-        {t('common.missing')}
-        {/* {t('common.valueInToken', {
-          ...getPreciseNumberFormat(app.amount),
-          ticker: app.ticker,
-        })} */}
+        {app.stake
+          ? t('common.valueInToken', {
+              ...getPreciseNumberFormat(app.stake),
+              ticker: app.ticker,
+            })
+          : t('common.missing')}
       </dd>
 
       <dt>{t('common.status')}</dt>
