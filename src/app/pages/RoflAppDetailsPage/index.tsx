@@ -51,7 +51,7 @@ export const RoflAppDetailsView: FC<{
           },
         })}
       </dd>
-      <dt>{t('rofl.lastActvity')}</dt>
+      <dt>{t('rofl.lastActivity')}</dt>
       <dd>{t('common.missing')}</dd>
     </StyledDescriptionList>
   )

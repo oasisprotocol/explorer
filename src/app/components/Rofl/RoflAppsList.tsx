@@ -4,6 +4,7 @@ import { RoflApp } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '..//Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { TableHeaderAge } from '../TableHeaderAge'
+import { TableCellAge } from '../TableCellAge'
 import { RoflAppStatusBadge } from './RoflAppStatusBadge'
 import { RoflAppLink } from './RoflAppLink'
 
@@ -24,8 +25,8 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
     { key: 'instances', content: t('rofl.instances'), align: TableCellAlign.Right },
     { key: 'created', content: t('rofl.created'), align: TableCellAlign.Right },
     {
-      key: 'lastActvity',
-      content: <TableHeaderAge label={t('rofl.lastActvity')} />,
+      key: 'lastActivity',
+      content: <TableHeaderAge label={t('rofl.lastActivity')} />,
       align: TableCellAlign.Right,
     },
   ]
@@ -73,13 +74,16 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
               } satisfies Intl.DateTimeFormatOptions,
             },
           }),
-          key: 'firstActivity',
+          key: 'created',
         },
         {
           align: TableCellAlign.Right,
-          // TODO: Replace with last activity when available
-          content: t('common.missing'),
-          key: 'timestamp',
+          content: app.last_activity ? (
+            <TableCellAge sinceTimestamp={app.last_activity} />
+          ) : (
+            t('common.missing')
+          ),
+          key: 'lastActivity',
         },
       ],
     }
