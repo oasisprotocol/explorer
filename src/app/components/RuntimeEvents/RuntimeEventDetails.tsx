@@ -31,6 +31,8 @@ import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
+import Tooltip from '@mui/material/Tooltip'
+import { tooltipDelay } from '../../../styles/theme'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -116,6 +118,7 @@ const EvmEventParamData: FC<{
   address?: string
   alwaysTrimOnTable?: boolean
 }> = ({ scope, param, address, alwaysTrimOnTable }) => {
+  const { t } = useTranslation()
   /**
    * According to the API docs:
    *
@@ -131,6 +134,24 @@ const EvmEventParamData: FC<{
         <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256':
+      if (param.evm_token) {
+        return (
+          <Tooltip
+            arrow
+            placement="top"
+            title={param.value_raw}
+            enterDelay={tooltipDelay}
+            enterNextDelay={tooltipDelay}
+          >
+            <span>
+              {t('common.valueInToken', {
+                ...getPreciseNumberFormat(param.value as string),
+                ticker: param.evm_token.symbol,
+              })}
+            </span>
+          </Tooltip>
+        )
+      }
       return (
         <span>
           {t('common.valueLong', {
