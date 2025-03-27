@@ -28,6 +28,7 @@ import { RuntimeAccountDetailsContext } from '../RuntimeAccountDetailsPage'
 import { TransactionLink } from 'app/components/Transactions/TransactionLink'
 import { formatDistanceStrict } from 'date-fns'
 import Box from '@mui/material/Box'
+import { TeeType } from './TeeType'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -192,7 +193,9 @@ export const RoflAppDetailView: FC<{
       <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
 
       <dt>{t('rofl.tee')}</dt>
-      <dd>{app.tee || t('common.missing')}</dd>
+      <dd>
+        <TeeType policy={app.policy} />
+      </dd>
 
       <dt>{t('rofl.appId')}</dt>
       <dd>
@@ -223,9 +226,6 @@ export const RoflAppDetailView: FC<{
           t('common.missing')
         )}
       </dd>
-
-      <dt>{t('rofl.kind')}</dt>
-      <dd>{app.kind || t('common.missing')}</dd>
 
       <dt>{t('rofl.sekPublicKey')}</dt>
       <dd>

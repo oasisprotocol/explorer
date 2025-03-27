@@ -662,7 +662,6 @@
     "removed": "Removed",
     "lastActvity": "Last activity",
     "appId": "App ID",
-    "kind": "Kind",
     "enclaveId": "Enclave ID",
     "endorsement": "Endorsement",
     "emptyRoflAppsList": "No ROFL apps found.",
@@ -699,7 +698,9 @@
     "instancePays": "Instance pays",
     "endorsingNodePays": "Endorsing node pays",
     "verifyCommand": "Run <Command /> to verify.",
-    "adminAccount": "Admin account"
+    "adminAccount": "Admin account",
+    "tdx": "TDX",
+    "sgx": "SGX"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
