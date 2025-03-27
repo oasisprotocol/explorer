@@ -1496,11 +1496,41 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
             rofl_apps: data.rofl_apps.map(app => {
               return {
                 ...app,
+                stake: app.stake ? fromBaseUnits(app.stake, paraTimesConfig.sapphire.decimals) : undefined,
                 network,
                 layer: Layer.sapphire,
                 ticker,
               }
             }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeRoflAppsId: typeof generated.useGetRuntimeRoflAppsId = (
+  network,
+  layer,
+  id,
+  options?,
+) => {
+  const ticker = getTokensForScope({ network, layer: Layer.sapphire })[0].ticker
+  return generated.useGetRuntimeRoflAppsId(network, layer, id, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RoflApp, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            stake: data.stake ? fromBaseUnits(data.stake, paraTimesConfig.sapphire.decimals) : undefined,
+            network,
+            layer: Layer.sapphire,
+            ticker,
           }
         },
         ...arrayify(options?.request?.transformResponse),
