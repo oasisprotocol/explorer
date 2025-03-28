@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { formatDistanceStrict } from 'date-fns'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { Layer, RoflApp, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
@@ -48,7 +49,12 @@ export const RoflAppDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={roflApp?.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
+      <SubPageCard
+        featured
+        title={
+          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+        }
+      >
         <RoflAppDetailsView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>

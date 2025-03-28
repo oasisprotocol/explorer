@@ -704,8 +704,7 @@
     "adminAccount": "Admin account",
     "stakedAmount": "Staked amount",
     "endorsement": "Endorsement",
-    "secrets": "Secrets",
-    "header": "ROFL App"
+    "secrets": "Secrets"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
