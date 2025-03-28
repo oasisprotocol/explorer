@@ -3,6 +3,7 @@ import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
 import { Layer, RoflApp, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -37,7 +38,12 @@ export const RoflAppDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={roflApp?.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
+      <SubPageCard
+        featured
+        title={
+          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+        }
+      >
         <RoflAppDetailsView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
