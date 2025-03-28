@@ -24,6 +24,15 @@ export const isValidEthAddress = (hexAddress: string): boolean => {
   return /^0x[0-9a-fA-F]{40}$/.test(hexAddress)
 }
 
+export const isValidRoflAppId = (id: string): boolean => {
+  try {
+    oasis.address.fromBech32('rofl', id)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 export const isValidProposalId = (proposalId: string): boolean => /^[0-9]+$/.test(proposalId)
 
 /** oasis.address.fromData(...) but without being needlessly asynchronous */

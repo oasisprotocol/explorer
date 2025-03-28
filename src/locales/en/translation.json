@@ -254,6 +254,7 @@
     "unsupportedLayer": "Unsupported layer",
     "unsupportedNetwork": "Unsupported network",
     "invalidAddress": "Invalid address",
+    "invalidRoflAppId": "Invalid ROFL app ID",
     "invalidBlockHeight": "Invalid block height",
     "invalidPageNumber": "Invalid page number",
     "invalidProposalId": "Invalid proposal ID",

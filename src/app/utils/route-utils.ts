@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
-import { isValidProposalId, isValidTxHash, isValidTxOasisHash } from './helpers'
+import { isValidProposalId, isValidRoflAppId, isValidTxHash, isValidTxOasisHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'
 import { EvmTokenType, HasScope, Layer } from '../../oasis-nexus/api'
@@ -295,6 +295,21 @@ const validateConsensusAddressParam = (address: string) => {
   return isValid
 }
 
+const validateRoflAppIdParam = (id: string) => {
+  const isValid = isValidRoflAppId(id)
+
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidRoflAppId)
+  }
+
+  return isValid
+}
+
+export type RoflAppLoaderData = {
+  id: string
+  searchTerm: string
+}
+
 const validateRuntimeAddressParam = (address: string) => {
   const isValid = isValidOasisAddress(address) || isValidEthAddress(address)
   if (!isValid) {
@@ -360,6 +375,16 @@ export const runtimeAddressParamLoader =
     validateRuntimeAddressParam(rawAddress)
     return {
       address: isValidEthAddress(rawAddress) ? toChecksumAddress(rawAddress) : rawAddress,
+      searchTerm: getSearchTermFromRequest(request),
+    }
+  }
+
+export const roflAppParamLoader =
+  (queryParam: string = 'id') =>
+  ({ params, request }: LoaderFunctionArgs): RoflAppLoaderData => {
+    validateRoflAppIdParam(params[queryParam]!)
+    return {
+      id: params[queryParam]!,
       searchTerm: getSearchTermFromRequest(request),
     }
   }

@@ -13,6 +13,7 @@ export enum AppErrors {
   UnsupportedNetwork = 'unsupported_network',
   UnsupportedLayer = 'unsupported_layer',
   InvalidAddress = 'invalid_address',
+  InvalidRoflAppId = 'invalid_rofl_app_id',
   InvalidBlockHeight = 'invalid_block_height',
   InvalidTxHash = 'invalid_tx_hash',
   InvalidProposalId = 'invalid_proposal_id',
