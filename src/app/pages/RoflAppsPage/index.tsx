@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import { Layer, useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
+import { Layer, RoflApp, useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useScreenSize } from '../../hooks/useScreensize'

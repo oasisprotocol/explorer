@@ -26,8 +26,18 @@ const InstancesView: FC<RoflAppDetailsContext> = ({ scope, id }) => {
     limit,
     offset,
   })
-  const { isFetched, isLoading, data } = instancesQuery
-  const instances = data?.data.instances
+  // const { isFetched, isLoading, data } = instancesQuery
+  // const instances = data?.data.instances
+
+  const isLoading = false
+  const isFetched = true
+  const instances = [
+    {
+      rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
+      endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
+      expiration_epoch: 12231,
+    },
+  ]
 
   return (
     <>
@@ -39,8 +49,8 @@ const InstancesView: FC<RoflAppDetailsContext> = ({ scope, id }) => {
         pagination={{
           selectedPage: pagination.selectedPage,
           linkToPage: pagination.linkToPage,
-          totalCount: data?.data.total_count,
-          isTotalCountClipped: data?.data.is_total_count_clipped,
+          totalCount: 1,
+          isTotalCountClipped: false,
           rowsPerPage: limit,
         }}
       />

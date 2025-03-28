@@ -26,6 +26,7 @@ import {
   fixedLayer,
   RouteUtils,
   skipGraph,
+  roflAppParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
@@ -64,10 +65,14 @@ import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsP
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { RoflAppsPage } from './app/pages/RoflAppsPage'
+import { RoflAppDetailPage } from 'app/pages/RoflAppDetailPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
+import { InstancesCard } from './app/pages/RoflAppDetailPage/InstancesCard'
+import { useRoflAppDetailsProps } from 'app/pages/RoflAppDetailPage/hooks'
+import { RoflAppTransactionsCard } from 'app/pages/RoflAppDetailPage/RoflAppTransactionsCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -299,6 +304,21 @@ export const routes: RouteObject[] = [
           {
             path: `rofl/app`,
             element: <RoflAppsPage />,
+          },
+          {
+            path: `rofl/app/:id`,
+            element: <RoflAppDetailPage />,
+            loader: roflAppParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <RoflAppTransactionsCard {...useRoflAppDetailsProps()} />,
+              },
+              {
+                path: 'instances',
+                Component: () => <InstancesCard {...useRoflAppDetailsProps()} />,
+              },
+            ],
           },
         ],
       },

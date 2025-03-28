@@ -32,6 +32,7 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../app/config'
+import { runtime } from '@oasisprotocol/client'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1496,9 +1497,78 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
             rofl_apps: data.rofl_apps.map(app => {
               return {
                 ...app,
+                stake: app.stake ? fromBaseUnits(app.stake, paraTimesConfig.sapphire.decimals) : undefined,
                 network,
                 layer: Layer.sapphire,
                 ticker,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeRoflAppsId: typeof generated.useGetRuntimeRoflAppsId = (
+  network,
+  layer,
+  id,
+  options?,
+) => {
+  const ticker = getTokensForScope({ network, layer: Layer.sapphire })[0].ticker
+  return generated.useGetRuntimeRoflAppsId(network, layer, id, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RoflApp, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            stake: data.stake ? fromBaseUnits(data.stake, paraTimesConfig.sapphire.decimals) : undefined,
+            network,
+            layer: Layer.sapphire,
+            ticker,
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRuntimeRoflAppsIdTransactions: typeof generated.useGetRuntimeRoflAppsIdTransactions = (
+  network,
+  runtime,
+  id,
+  params?,
+  options?,
+) => {
+  return generated.useGetRuntimeRoflAppsIdTransactions(network, runtime, id, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeTransactionList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            transactions: data.transactions.map(tx => {
+              return {
+                ...tx,
+                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+                fee: fromBaseUnits(tx.fee, paraTimesConfig.sapphire.decimals),
+                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
+                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig.sapphire.decimals),
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.sapphire.decimals) : undefined,
+                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
+                layer: runtime,
+                network,
+                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
               }
             }),
           }
