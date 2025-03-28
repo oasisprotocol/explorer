@@ -260,6 +260,7 @@
     "invalidTxHash": "Invalid transaction hash",
     "notFoundBlockHeight": "Block not found",
     "notFoundTx": "Transaction not found",
+    "notFoundRoflApp": "ROFL app not found",
     "notFoundProposal": "Proposal not found",
     "pageDoesNotExist": "The page you are looking for does not exist.",
     "validateURL": "Please validate provided URL",

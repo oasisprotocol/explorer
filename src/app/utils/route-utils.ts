@@ -295,6 +295,22 @@ const validateConsensusAddressParam = (address: string) => {
   return isValid
 }
 
+const validateRoflAppIdParam = (id: string) => {
+  // Oasis client SDK does not provide a way to validate ROFL app id
+  const isValid = id.startsWith('rofl1')
+
+  if (!isValid) {
+    throw new AppError(AppErrors.InvalidAddress)
+  }
+
+  return isValid
+}
+
+export type RoflAppLoaderData = {
+  id: string
+  searchTerm: string
+}
+
 const validateRuntimeAddressParam = (address: string) => {
   const isValid = isValidOasisAddress(address) || isValidEthAddress(address)
   if (!isValid) {
@@ -360,6 +376,16 @@ export const runtimeAddressParamLoader =
     validateRuntimeAddressParam(rawAddress)
     return {
       address: isValidEthAddress(rawAddress) ? toChecksumAddress(rawAddress) : rawAddress,
+      searchTerm: getSearchTermFromRequest(request),
+    }
+  }
+
+export const roflAppParamLoader =
+  (queryParam: string = 'id') =>
+  ({ params, request }: LoaderFunctionArgs): RoflAppLoaderData => {
+    validateRoflAppIdParam(params[queryParam]!)
+    return {
+      id: params[queryParam]!,
       searchTerm: getSearchTermFromRequest(request),
     }
   }
