@@ -13,7 +13,6 @@ import { TokenLink } from './TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { TokenTypeTag } from './TokenList'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
-import { fromBaseUnits } from '../../utils/number-utils'
 import { TransferIcon } from '../TransferIcon'
 import { TableCellAge } from '../TableCellAge'
 import { TableHeaderAge } from '../TableHeaderAge'
@@ -33,14 +32,10 @@ export const EventBalance: FC<{
 
   const tokenEthAddress = event.body.address
   const tokenType = event.evm_token?.type
-  const tokenDecimals = event.evm_token?.decimals
   const ticker = event.evm_token?.symbol
 
   if (tokenType === EvmTokenType.ERC20) {
-    // We are calling it 'raw' since it's not yet normalized according to decimals.
-    const rawValue = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
-    const value = rawValue === undefined ? undefined : fromBaseUnits(rawValue, tokenDecimals || 0)
-
+    const value = event.evm_log_params?.find(param => param.name === 'value')?.value as string | undefined
     return (
       <RoundedBalance
         value={value}

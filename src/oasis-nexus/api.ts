@@ -93,6 +93,12 @@ declare module './generated/api' {
     layer: Layer
   }
 
+  export interface EvmAbiParam {
+    /** Added to fields that are likely an amount in tokens */
+    evm_token?: EvmEventToken
+    value_raw?: string
+  }
+
   export interface ConsensusEvent {
     network: Network
   }
@@ -893,6 +899,28 @@ const fixChecksumAddressInEvmEventParam = (param: generated.EvmAbiParam): genera
       }
     : param
 
+const addTokenToParams = (event: generated.RuntimeEvent) => {
+  if (event.evm_token?.type === 'ERC20') {
+    if (event.evm_log_name === 'Transfer' || event.evm_log_name === 'Approval') {
+      const valueParam = event.evm_log_params?.[2]
+      if (valueParam?.evm_type === 'uint256' && typeof valueParam.value === 'string') {
+        valueParam.evm_token = event.evm_token
+        valueParam.value_raw = valueParam.value
+        valueParam.value = fromBaseUnits(valueParam.value, event.evm_token.decimals ?? 0)
+      }
+    }
+  }
+  if (event.evm_token?.type === 'ERC721') {
+    if (event.evm_log_name === 'Transfer' || event.evm_log_name === 'Approval') {
+      const tokenParam = event.evm_log_params?.[2]
+      if (tokenParam?.evm_type === 'uint256' && typeof tokenParam.value === 'string') {
+        tokenParam.evm_token = event.evm_token
+      }
+    }
+  }
+  return event
+}
+
 export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
   network,
   runtime,
@@ -928,6 +956,9 @@ export const useGetRuntimeEvents: typeof generated.useGetRuntimeEvents = (
                   layer: runtime,
                   network,
                 }
+              })
+              .map(event => {
+                return addTokenToParams(event)
               })
               .map((event): generated.RuntimeEvent => {
                 if (
