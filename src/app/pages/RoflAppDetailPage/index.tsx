@@ -37,93 +37,6 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
   },
 }))
 
-const mockedApp: RoflApp = {
-  layer: 'sapphire',
-  network: 'mainnet',
-  ticker: 'ROSE',
-  removed: false,
-  num_active_instances: 3,
-  date_created: '2021-04-28T16:00:00Z',
-  admin: 'oasis1qpwaggvmhwq5uk40clase3knt655nn2tdy39nz2f',
-  id: 'rofl1qp55evqls4qg6cjw5fnlv4al9ptc0fsakvxvd9zz',
-  active_instances: [
-    {
-      endorsing_entity_id: '',
-      endorsing_node_id: '7zI/cYuiUTPz61PL9M7f1Q/7b43nG0xk1w6yGde+msQ=',
-      expiration_epoch: 1,
-      extra_keys: ['A/Mag19KKuAQp2tDIxHvWIPcMzRGnhnyXWxKAbrsbWF6'],
-      rak: 'nzZocZ7VWvjE1N4Z4Y/6hocqL6wW1XhLvnEruEzkq5o=',
-      rek: 'ecyl1l93+l2zJ7K2oxqNtNSv8hg+pw1lKVAOfEGjzio=',
-    },
-  ],
-  metadata: {
-    'net.oasis.rofl.version': '0.0.1',
-    'net.oasis.rofl.name': 'Sample ROFL App',
-    'net.oasis.rofl.description': 'A sample ROFL application',
-    'net.oasis.rofl.author': 'Oasis Protocol Foundation',
-    'net.oasis.rofl.license': 'Apache-2.0',
-    'net.oasis.rofl.repository': 'https://github.com/oasisprotocol/sample-rofl-app',
-  },
-  policy: {
-    enclaves: [
-      'vKzu7QwiG1MfNk3FWLFTf/9d3nzNqCB/0BQFM/knsN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-      'oF3eJV3947jsy6hKpwdqxS6cy3/xEnIVm6cWIkdrCb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
-    ],
-    endorsements: [{ any: {} }],
-    fees: 2,
-    max_expiration: 3,
-    quotes: { pcs: { min_tcb_evaluation_data_number: 17, tcb_validity_period: 30, tdx: {} } },
-  },
-  last_activity_tx: {
-    amount: '0',
-    body: {
-      address: 'PILoIUG7R8N/8ZnLU7XLRYUv93A=',
-      data: 'omRib2R5pGJwa1gg9Bb4L5sipO+WuxmmdikcWUR4Lh8T2ba6krza72bsS0VkZGF0YVh8mZzkEqA2pHBTu6UWGlXmbQoa6z0DTtXsTZi2skEhv9zcOODa5XgUWWGvHb5Yg+o0qo4ydxaWGp76PQP8y14wjzeM3PaKQqrkdNOoayk2xFhkt/URZiLxo0m1knZFRk+nzRbbtojw/Lzm5m7HEUYQuD1JbdTJps1wu8HkrGVlcG9jaBmbT2Vub25jZU/rWz5FKgmBdYX7VyxDlkpmZm9ybWF0AQ==',
-      value: '',
-    },
-    charged_fee: '3114200000000000',
-    encryption_envelope: {
-      data: 'mZzkEqA2pHBTu6UWGlXmbQoa6z0DTtXsTZi2skEhv9zcOODa5XgUWWGvHb5Yg+o0qo4ydxaWGp76PQP8y14wjzeM3PaKQqrkdNOoayk2xFhkt/URZiLxo0m1knZFRk+nzRbbtojw/Lzm5m7HEUYQuD1JbdTJps1wu8HkrA==',
-      data_nonce: '61s+RSoJgXWF+1csQ5ZK',
-      format: 'encrypted/x25519-deoxysii',
-      public_key: '9Bb4L5sipO+WuxmmdikcWUR4Lh8T2ba6krza72bsS0U=',
-      result: '/jNdA8a/ks4B9A9Vw5zldRHd0Ce3',
-      result_nonce: 'AAAAAAB8r+4AAAAAAAAA',
-    },
-    eth_hash: 'bf1545be0254f163c9c3f6af4985986fc8f21a19301f0a44629191eee9c7e05c',
-    fee: '202905400000000000',
-    fee_symbol: 'ROSE',
-    gas_limit: 2029054,
-    gas_used: 31142,
-    hash: 'f09e4c7bd9a99c0877fc0339da7729d6722690948c4e86c16b570bbf3a831236',
-    index: 0,
-    is_likely_native_token_transfer: false,
-    method: 'evm.Call',
-    nonce_0: 277443,
-    round: 8171503,
-    sender_0: 'oasis1qr5j2pugnh4u5hz4qsex6s7v80vhpjmkhcupmc2n',
-    sender_0_eth: '0x5d6D0A8fF8355Eb766B8d9Cec37d8e4313166564',
-    signers: [
-      {
-        address: 'oasis1qr5j2pugnh4u5hz4qsex6s7v80vhpjmkhcupmc2n',
-        address_eth: '0x5d6D0A8fF8355Eb766B8d9Cec37d8e4313166564',
-        nonce: 277443,
-      },
-    ],
-    size: 353,
-    success: true,
-    timestamp: '2025-03-26T16:16:18Z',
-    to: 'oasis1qqvq0zzkjj537hm47rj7lren9lma3ncumspss73n',
-    to_eth: '0x3C82e82141BB47C37fF199cB53B5CB45852Ff770',
-  },
-  secrets: {
-    foo: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2zBxzZS4buSPZWbQV8l+ZW5vbmNlTypzdpiaAo45zHiAqMst5mV2YWx1ZVTFJjKzfthesm/P4tuLPG3AsVkiIA==',
-    API_KEY: 'pGJwa1ggL8WH1uN4duUVQbrxegApzlW4yXd+96ygfpYG8Qdy/DFkbmFtZVNl0HYM2z',
-  },
-  sek: '438B4/HJ6nmyzg0v50UxvRiBLn9ZJRa8uzDjpsD18Dw=',
-  stake: '123.456789123',
-}
-
 export const RoflAppDetailPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
@@ -135,15 +48,15 @@ export const RoflAppDetailPage: FC = () => {
   })
   const context: RuntimeAccountDetailsContext = { scope, id, undefined, method, setMethod }
   const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer as Runtime, id)
-  const roflApp = mockedApp
+  const roflApp = data?.data
 
-  if (!roflApp && !isLoading) {
+  if (!roflApp && isFetched) {
     throw AppErrors.NotFoundTxHash
   }
 
   return (
     <PageLayout>
-      <SubPageCard featured title={roflApp.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
+      <SubPageCard featured title={roflApp?.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
         <RoflAppDetailView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
