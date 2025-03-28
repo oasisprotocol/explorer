@@ -71,6 +71,7 @@ export const StatusDetails = styled(Box, {
   borderRadius: 10,
   paddingLeft: 12,
   paddingRight: 12,
+  wordBreak: 'break-all',
 }))
 
 type StatusIconProps = {
