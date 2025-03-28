@@ -176,7 +176,7 @@ export const RoflAppDetailView: FC<{
         {app.last_activity_tx ? (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
             <TransactionLink
-              scope={app.last_activity_tx}
+              scope={{ network: app.network, layer: app.layer }}
               hash={app.last_activity_tx.eth_hash || app.last_activity_tx.hash}
             />
             (
