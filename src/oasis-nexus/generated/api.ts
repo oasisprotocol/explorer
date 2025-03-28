@@ -2171,10 +2171,14 @@ inside a smart contract (using `revert` in solidity), the following
 will be true:
 - `module` will be "evm" and `code` will be 8; see [here](https://github.com/oasisprotocol/oasis-sdk/blob/runtime-sdk/v0.8.3/runtime-sdk/modules/evm/src/lib.rs#L128) for other possible errors in the `evm` module.
 - `message` will contain the best-effort human-readable revert reason.
+- `raw_message` will contain the raw revert reason. This is useful for cases where the `message` parsing fails
  */
   message?: string;
   /** The module of a failed transaction. */
   module?: string;
+  /** The unparsed transaction error message.
+ */
+  raw_message?: string;
   /** The error parameters, as decoded using the contract abi. Present only when
 - the error originated from within a smart contract (e.g. via `revert` in Solidity), and
 - the contract is verified or the revert reason is a plain String.
