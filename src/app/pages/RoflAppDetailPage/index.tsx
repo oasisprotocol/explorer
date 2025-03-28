@@ -30,6 +30,7 @@ import { TransactionLink } from 'app/components/Transactions/TransactionLink'
 import { formatDistanceStrict } from 'date-fns'
 import { TeeType } from './TeeType'
 import { Endorsement } from './Endorsement'
+import Skeleton from '@mui/material/Skeleton'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -56,7 +57,12 @@ export const RoflAppDetailPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={roflApp?.metadata['net.oasis.rofl.name'] || t('rofl.header')}>
+      <SubPageCard
+        featured
+        title={
+          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+        }
+      >
         <RoflAppDetailView detailsPage isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
