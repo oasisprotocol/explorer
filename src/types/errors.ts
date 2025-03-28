@@ -21,6 +21,7 @@ export enum AppErrors {
   PageDoesNotExist = 'page_does_not_exist',
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
+  NotFoundRoflApp = 'not_found_rofl_app',
   NotFoundProposalId = 'not_found_proposal_id',
   InvalidUrl = 'invalid_url',
   InvalidVote = 'invalid_vote',
