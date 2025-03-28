@@ -59,6 +59,12 @@ const config = {
               'export type Address = string;',
               'export type Address = OasisAddress; /* modified by afterAllFilesWrite */',
             )
+            .replace(
+              /const queryFn.*/g,
+              `$&
+              // Change function name to include first Component in the stack, so Console > Network > Initiator shows a query config sources (at least one of them).
+              Object.defineProperty(queryFn, 'name', {value: 'queryFn <' + new Error().stack?.match(/ at (?!Object\\.)([A-Z][^ ]+)/)?.[1] + '>,…'}); /* modified by afterAllFilesWrite */`,
+            )
 
           await fs.promises.writeFile(filePath, patchedApiFile, 'utf-8')
         }
