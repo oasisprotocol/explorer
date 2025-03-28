@@ -260,6 +260,7 @@
     "invalidTxHash": "Invalid transaction hash",
     "notFoundBlockHeight": "Block not found",
     "notFoundTx": "Transaction not found",
+    "notFoundRoflApp": "ROFL app not found",
     "notFoundProposal": "Proposal not found",
     "pageDoesNotExist": "The page you are looking for does not exist.",
     "validateURL": "Please validate provided URL",
@@ -669,7 +670,8 @@
     "nameNotProvided": "Name not provided",
     "nodeId": "Node ID",
     "expirationEpoch": "Expiration epoch",
-    "emptyInstancesList": "No ROFL app instances found."
+    "emptyInstancesList": "No ROFL app instances found.",
+    "header": "ROFL App"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

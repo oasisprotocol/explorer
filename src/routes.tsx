@@ -26,6 +26,7 @@ import {
   fixedLayer,
   RouteUtils,
   skipGraph,
+  roflAppParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
 import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
@@ -64,6 +65,7 @@ import { ConsensusAccountEventsCard } from './app/pages/ConsensusAccountDetailsP
 import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDetailsPage/hooks'
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { RoflAppsPage } from './app/pages/RoflAppsPage'
+import { RoflAppDetailsPage } from 'app/pages/RoflAppDetailsPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HighlightingContextProvider } from './app/components/HighlightingContext'
@@ -299,6 +301,11 @@ export const routes: RouteObject[] = [
           {
             path: `rofl/app`,
             element: <RoflAppsPage />,
+          },
+          {
+            path: `rofl/app/:id`,
+            element: <RoflAppDetailsPage />,
+            loader: roflAppParamLoader(),
           },
         ],
       },
