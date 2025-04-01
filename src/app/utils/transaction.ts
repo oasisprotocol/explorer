@@ -20,7 +20,7 @@ export const getConsensusTransactionAmount = (transaction: Transaction) => {
     case ConsensusTxMethod.stakingAllow:
       return transaction.body?.negative
         ? `-${transaction.body?.amount_change}`
-        : transaction.body?.amount_change
+        : `+${transaction.body?.amount_change}` // "+" sign is kept in getPreciseNumberFormat
     case ConsensusTxMethod.stakingAddEscrow:
     case ConsensusTxMethod.stakingTransfer:
       return transaction.body?.amount
