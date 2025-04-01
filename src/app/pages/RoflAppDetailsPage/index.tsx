@@ -112,14 +112,14 @@ export const RoflAppDetailsView: FC<{
               },
             })}
           </dd>
-          <dt>{t('rofl.lastActvity')}</dt>
+          <dt>{t('rofl.lastActivity')}</dt>
           <dd>{t('common.missing')}</dd>
         </>
       )}
 
       {detailsPage && (
         <>
-          <dt>{t('rofl.lastActvity')}</dt>
+          <dt>{t('rofl.lastActivity')}</dt>
           <dd>
             {app.last_activity_tx ? (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
