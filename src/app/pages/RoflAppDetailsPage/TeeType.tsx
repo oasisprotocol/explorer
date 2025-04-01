@@ -8,18 +8,18 @@ type TeeTypeProps = {
 
 export const TeeType: FC<TeeTypeProps> = ({ policy }) => {
   const { t } = useTranslation()
-  const usesTdx = policy.quotes?.pcs?.tdx
-  const usesSgx = policy.quotes?.pcs?.sgx
+  const usesTdx = !!policy.quotes?.pcs?.tdx
+  const usesSgx = !!policy.quotes?.pcs?.sgx
 
   if (!usesTdx && !usesSgx) {
     return <>{t('common.missing')}</>
   }
 
-  if (usesTdx) {
-    return <>{t('rofl.tdx')}</>
-  }
-
-  if (usesSgx) {
-    return <>{t('rofl.sgx')}</>
-  }
+  return (
+    <>
+      {usesSgx && t('rofl.sgx')}
+      {usesSgx && usesTdx && ', '}
+      {usesTdx && t('rofl.tdx')}
+    </>
+  )
 }
