@@ -68,6 +68,9 @@ export function useRedirectIfSingleResult(
       case 'proposal':
         redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${searchTerm}`
         break
+      case 'roflApp':
+        redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${searchTerm}`
+        break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
     }

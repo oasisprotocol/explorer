@@ -22,12 +22,15 @@ import {
   useGetConsensusBlockByHash,
   Transaction,
   useGetConsensusTransactionsTxHash,
+  useGetRuntimeRoflAppsId,
+  RoflApp,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchForAccountsByName } from '../../hooks/useAccountMetadata'
 import { useSearchForValidatorsByName } from '../../hooks/useSearchForValidatorsByName'
+import { address } from '@oasisprotocol/client'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -48,6 +51,8 @@ export type AccountResult = SearchResultItemCore & (RuntimeAccount | Account) & 
 
 export type ContractResult = SearchResultItemCore & RuntimeAccount & { resultType: 'contract' }
 
+export type RoflAppResult = SearchResultItemCore & RoflApp & { resultType: 'roflApp' }
+
 export type TokenResult = SearchResultItemCore & EvmToken & { resultType: 'token' }
 
 export type ProposalResult = SearchResultItemCore & Proposal & { resultType: 'proposal' }
@@ -57,6 +62,7 @@ export type SearchResultItem =
   | TransactionResult
   | AccountResult
   | ContractResult
+  | RoflAppResult
   | TokenResult
   | ProposalResult
 
@@ -344,6 +350,23 @@ export function useNamedValidatorConditionally(nameFragment: string | undefined)
   }
 }
 
+export function useRoflAppConditionally(id: string | undefined): ConditionalResults<RoflApp> {
+  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
+    // See explanation above
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetRuntimeRoflAppsId(network, Layer.sapphire, id!, {
+      query: {
+        enabled: !!id,
+      },
+    }),
+  )
+
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.map(query => query.data?.data).filter(isDefined),
+  }
+}
+
 export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
     runtimeBlockHeight: useRuntimeBlocksByHeightConditionally(currentScope, q.blockHeight),
@@ -355,6 +378,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisConsensusAccount: useConsensusAccountConditionally(q.consensusAccount),
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
+    roflApp: useRoflAppConditionally(q.roflApp),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     validatorByName: useNamedValidatorConditionally(q.validatorNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
@@ -376,6 +400,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...(queries.accountsByName.results || []),
     ...(queries.validatorByName.results || []),
   ].filter(isAccountNonEmpty)
+  const roflApps = queries.roflApp.results
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
     .flat()
@@ -394,6 +419,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
           .filter((account): account is RuntimeAccount => account.layer !== Layer.consensus)
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
+        ...roflApps.map((roflApp): RoflAppResult => ({ ...roflApp, resultType: 'roflApp' })),
         ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
         ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
       ]
