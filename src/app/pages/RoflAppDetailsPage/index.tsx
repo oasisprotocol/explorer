@@ -1,13 +1,20 @@
 import { FC } from 'react'
+import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { formatDistanceStrict } from 'date-fns'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import { RoflApp } from '../../../oasis-nexus/api'
+import { Layer, RoflApp, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { AppErrors } from '../../../types/errors'
+import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { PageLayout } from '../../components/PageLayout'
+import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
@@ -19,6 +26,67 @@ import { TeeType } from './TeeType'
 import { Endorsement } from './Endorsement'
 import { Enclaves } from './Enclaves'
 import { Secrets } from './Secrets'
+import { RouterTabs } from '../../components/RouterTabs'
+import { instancesContainerId } from '../../utils/tabAnchors'
+import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
+import { MetaDataCard } from './MetaDataCard'
+import { PolicyCard } from './PolicyCard'
+
+export const RoflAppDetailsPage: FC = () => {
+  const { t } = useTranslation()
+  const scope = useRequiredScopeParam()
+  const id = useParams().id!
+  const txLink = useHref('')
+  const instancesLink = useHref(`instances#${instancesContainerId}`)
+  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+    deleteParams: ['page'],
+  })
+  const context: RoflAppDetailsContext = { scope, id, method, setMethod }
+  const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, Layer.sapphire, id)
+  const roflApp = data?.data
+
+  if (!roflApp && isFetched) {
+    throw AppErrors.NotFoundRoflApp
+  }
+
+  return (
+    <PageLayout>
+      <SubPageCard
+        featured
+        title={
+          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+        }
+      >
+        <RoflAppDetailsView detailsPage isLoading={isLoading} app={roflApp} />
+      </SubPageCard>
+      <Grid container spacing={4}>
+        <StyledGrid item xs={12} md={6}>
+          <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
+        </StyledGrid>
+        <StyledGrid item xs={12} md={6}>
+          {roflApp && (
+            <PolicyCard
+              id={roflApp?.id}
+              network={roflApp?.network}
+              isFetched={isFetched}
+              policy={roflApp?.policy}
+            />
+          )}
+        </StyledGrid>
+      </Grid>
+      <RouterTabs
+        tabs={[
+          { label: t('common.transactions'), to: txLink },
+          {
+            label: t('rofl.instances'),
+            to: instancesLink,
+          },
+        ]}
+        context={context}
+      />
+    </PageLayout>
+  )
+}
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {

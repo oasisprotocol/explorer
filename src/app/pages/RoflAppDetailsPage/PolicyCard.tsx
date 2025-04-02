@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { Layer, RoflAppPolicy, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
+import { Network } from '../../../types/network'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
@@ -13,7 +14,7 @@ import { GridRow } from './GridRow'
 type PolicyCardProps = {
   id: string
   isFetched: boolean
-  network: any
+  network: Network
   policy: RoflAppPolicy | undefined
 }
 
