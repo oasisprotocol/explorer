@@ -13,6 +13,7 @@ import {
   BlockResult,
   ContractResult,
   ProposalResult,
+  RoflAppResult,
   SearchResults,
   TokenResult,
   TransactionResult,
@@ -27,6 +28,7 @@ import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
 import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
+import { RoflAppDetailsView } from '../RoflAppDetailsPage'
 
 /**
  * Component for displaying a list of search results
@@ -145,6 +147,14 @@ export const SearchResultsList: FC<{
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
           linkLabel={t('search.results.contracts.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.roflApps.title')}
+          results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
+          resultComponent={item => <RoflAppDetailsView isLoading={false} app={item} />}
+          link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
+          linkLabel={t('search.results.roflApps.viewLink')}
         />
 
         <ResultsGroupByType

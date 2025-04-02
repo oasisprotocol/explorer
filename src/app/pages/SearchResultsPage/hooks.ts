@@ -30,7 +30,6 @@ import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchForAccountsByName } from '../../hooks/useAccountMetadata'
 import { useSearchForValidatorsByName } from '../../hooks/useSearchForValidatorsByName'
-import { address } from '@oasisprotocol/client'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -39,7 +38,7 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; isError?: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal'
+  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal' | 'roflApp'
 }
 
 export type BlockResult = SearchResultItemCore & (RuntimeBlock | Block) & { resultType: 'block' }
