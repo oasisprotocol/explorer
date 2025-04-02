@@ -225,7 +225,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
               const to = getConsensusTransactionToAddress(tx)
               return {
                 ...tx,
-                amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
+                amount,
                 to,
                 network,
                 layer: Layer.consensus,
@@ -348,7 +348,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
               const to = getConsensusTransactionToAddress(tx)
               return {
                 ...tx,
-                amount: amount ? fromBaseUnits(amount, consensusDecimals) : undefined,
+                amount,
                 to,
                 network,
                 layer: Layer.consensus,

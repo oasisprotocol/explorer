@@ -28,6 +28,10 @@ export function getPreciseNumberFormat(value: string) {
         // throws an error, i18n silences it, and displays unformatted original string
         maximumFractionDigits:
           (isPreciseIntlSupported || isFloatPrecise) && decimalPlaces <= 20 ? 20 : Infinity,
+
+        // Display "+" prefix for amount_change to indicate relative change.
+        // Hopefully negative numbers have "-" prefix in all languages.
+        signDisplay: value.startsWith('+') ? 'always' : 'auto',
       } satisfies Intl.NumberFormatOptions,
     },
   }
