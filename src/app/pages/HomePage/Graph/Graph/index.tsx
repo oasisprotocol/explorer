@@ -467,21 +467,31 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire blocks connector */}
         <path
           className={Layer.sapphire}
-          d="M121.083 308.697L87.666 342.253"
+          d="M119.797 314.743L106.953 360.325"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire transactions connector */}
         <path
           className={Layer.sapphire}
-          d="M127.501 299.77L163.137 333.266"
+          d="M127.499 301.83L163.135 335.325"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire ROFL connector */}
         <path
           className={Layer.sapphire}
-          d="M112.336 295.148L69.5934 271.379"
+          d="M112.787 294.07L79.1411 258.575"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        {/* Sapphire tokens connector */}
+        <path
+          className={Layer.sapphire}
+          d="M106.873 307.197L59.0528 317.448"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
