@@ -148,6 +148,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   position: 'relative',
+                  justifyContent: 'space-between',
                   pr: 3,
                 }}
               >

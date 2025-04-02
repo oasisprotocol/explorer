@@ -123,6 +123,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                       display: 'flex',
                       alignItems: 'center',
                       position: 'relative',
+                      justifyContent: 'space-between',
                       pr: 3,
                     }}
                   >
