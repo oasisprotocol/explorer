@@ -46,7 +46,6 @@ const RoflAppTransactions: FC<RoflAppDetailsContext> = ({ scope, id, method }) =
   return (
     <RuntimeTransactions
       transactions={transactions}
-      ownAddress={id}
       isLoading={isLoading}
       limit={NUMBER_OF_ITEMS_ON_SEPARATE_PAGE}
       pagination={{
