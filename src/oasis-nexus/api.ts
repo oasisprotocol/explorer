@@ -1538,3 +1538,42 @@ export const useGetRuntimeRoflAppsId: typeof generated.useGetRuntimeRoflAppsId =
     },
   })
 }
+
+export const useGetRuntimeRoflAppsIdTransactions: typeof generated.useGetRuntimeRoflAppsIdTransactions = (
+  network,
+  runtime,
+  id,
+  params?,
+  options?,
+) => {
+  return generated.useGetRuntimeRoflAppsIdTransactions(network, runtime, id, params, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RuntimeTransactionList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            transactions: data.transactions.map(tx => {
+              return {
+                ...tx,
+                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+                fee: fromBaseUnits(tx.fee, paraTimesConfig.sapphire.decimals),
+                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
+                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig.sapphire.decimals),
+                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.sapphire.decimals) : undefined,
+                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
+                layer: runtime,
+                network,
+                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
