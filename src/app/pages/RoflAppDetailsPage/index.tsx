@@ -29,6 +29,8 @@ import { Secrets } from './Secrets'
 import { RouterTabs } from '../../components/RouterTabs'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
+import { MetaDataCard } from './MetaDataCard'
+import { PolicyCard } from './PolicyCard'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -59,12 +61,17 @@ export const RoflAppDetailsPage: FC = () => {
       </SubPageCard>
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
-          {/* TODO: uncomment when other PRs are merged */}
-          {/* <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} /> */}
+          <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
         </StyledGrid>
         <StyledGrid item xs={12} md={6}>
-          {/* TODO: uncomment when other PRs are merged */}
-          {/* <PolicyCard isFetched={isFetched} policy={roflApp?.policy} /> */}
+          {roflApp && (
+            <PolicyCard
+              id={roflApp?.id}
+              network={roflApp?.network}
+              isFetched={isFetched}
+              policy={roflApp?.policy}
+            />
+          )}
         </StyledGrid>
       </Grid>
       <RouterTabs
