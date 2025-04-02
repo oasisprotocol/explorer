@@ -1,7 +1,7 @@
 import { EvmAbiParam, RuntimeEvent, RuntimeEventType } from '../../../oasis-nexus/api'
 import { FC } from 'react'
 import { TFunction } from 'i18next'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
 import Table from '@mui/material/Table'
@@ -31,6 +31,9 @@ import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
+import Tooltip from '@mui/material/Tooltip'
+import { tooltipDelay } from '../../../styles/theme'
+import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
   switch (method) {
@@ -116,6 +119,7 @@ const EvmEventParamData: FC<{
   address?: string
   alwaysTrimOnTable?: boolean
 }> = ({ scope, param, address, alwaysTrimOnTable }) => {
+  const { t } = useTranslation()
   /**
    * According to the API docs:
    *
@@ -131,8 +135,43 @@ const EvmEventParamData: FC<{
         <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256':
-      // TODO: format with BigNumber
-      return <span>{param.value as string}</span>
+      if (param.evm_token?.type === 'ERC20') {
+        return (
+          <Tooltip
+            arrow
+            placement="top"
+            title={param.value_raw}
+            enterDelay={tooltipDelay}
+            enterNextDelay={tooltipDelay}
+          >
+            <span>
+              {t('common.valueInToken', {
+                ...getPreciseNumberFormat(param.value as string),
+                ticker: param.evm_token.symbol,
+              })}
+            </span>
+          </Tooltip>
+        )
+      }
+      if (param.evm_token?.type === 'ERC721') {
+        return (
+          <Trans
+            t={t}
+            i18nKey="common.tokenInstance"
+            components={{
+              InstanceLink: <PlaceholderLabel label={param.value as string} />,
+              TickerLink: <PlaceholderLabel label={param.evm_token.symbol ?? t('common.missing')} />,
+            }}
+          />
+        )
+      }
+      return (
+        <span>
+          {t('common.valueLong', {
+            ...getPreciseNumberFormat(param.value as string),
+          })}
+        </span>
+      )
     default:
       return <span>{JSON.stringify(param.value, null, '  ')}</span>
   }
