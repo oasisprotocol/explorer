@@ -209,7 +209,7 @@ export const RoflAppDetailsView: FC<{
             )}
           </dd>
 
-          <dt>{t('rofl.instances')}</dt>
+          <dt>{t('rofl.activeInstances')}</dt>
           <dd>{app.num_active_instances.toLocaleString()}</dd>
 
           <dt>{t('rofl.endorsement')}</dt>
