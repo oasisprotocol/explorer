@@ -658,6 +658,7 @@
   },
   "rofl": {
     "active": "Active",
+    "activeInstances": "Active instances",
     "inactive": "Inactive",
     "rakAbbreviation": "RAK",
     "rak": "Runtime Attestation Key",

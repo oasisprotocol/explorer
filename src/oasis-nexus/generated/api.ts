@@ -1263,12 +1263,14 @@ Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
   active_instances: RoflInstance[];
   /** The application administrator address. */
   admin: string;
+  /** The Ethereum address of the application administrator (only provided if known). */
+  admin_eth?: string;
   /** The date and time when the application was created. */
   date_created: string;
   /** The identifier of the ROFL application. */
   id: string;
   /** The date and time when the application was last active. */
-  last_activity?: string;
+  last_activity: string;
   /** The most recent transaction associated with this ROFL app.
 This field is only present when querying a single ROFL app.
  */

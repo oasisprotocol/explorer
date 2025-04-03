@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { formatDistanceStrict } from 'date-fns'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
@@ -21,16 +19,17 @@ import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
 import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TeeType } from './TeeType'
 import { Endorsement } from './Endorsement'
 import { Enclaves } from './Enclaves'
 import { Secrets } from './Secrets'
 import { RouterTabs } from '../../components/RouterTabs'
+import { TableCellAge } from '../../components/TableCellAge'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
+import { LastActivity } from './LastActivity'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -140,8 +139,12 @@ export const RoflAppDetailsView: FC<{
 
           <dt>{t('rofl.adminAccount')}</dt>
           <dd>
-            <AccountLink scope={{ network: app.network, layer: app.layer }} address={app.admin} />
-            <CopyToClipboard value={app.admin} />
+            <AccountLink
+              scope={{ network: app.network, layer: app.layer }}
+              address={app.admin_eth ?? app.admin}
+              alwaysTrimOnTablet
+            />
+            <CopyToClipboard value={app.admin_eth ?? app.admin} />
           </dd>
 
           <dt>{t('rofl.stakedAmount')}</dt>
@@ -167,6 +170,8 @@ export const RoflAppDetailsView: FC<{
           <dd>
             <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
           </dd>
+          <dt>{t('rofl.instances')}</dt>
+          <dd>{app.num_active_instances.toLocaleString()}</dd>
           <dt>{t('rofl.created')}</dt>
           <dd>
             {t('common.formattedDateTime', {
@@ -181,7 +186,7 @@ export const RoflAppDetailsView: FC<{
             })}
           </dd>
           <dt>{t('rofl.lastActivity')}</dt>
-          <dd>{t('common.missing')}</dd>
+          <dd>{<TableCellAge sinceTimestamp={app.last_activity} />}</dd>
         </>
       )}
 
@@ -189,24 +194,13 @@ export const RoflAppDetailsView: FC<{
         <>
           <dt>{t('rofl.lastActivity')}</dt>
           <dd>
-            {app.last_activity_tx ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                <TransactionLink
-                  scope={{ network: app.network, layer: app.layer }}
-                  hash={app.last_activity_tx.eth_hash || app.last_activity_tx.hash}
-                />
-                (
-                {formatDistanceStrict(app.last_activity_tx.timestamp, new Date(), {
-                  addSuffix: true,
-                })}
-                )
-              </Box>
-            ) : (
-              t('common.missing')
-            )}
+            <LastActivity
+              scope={{ network: app.network, layer: app.layer }}
+              transaction={app.last_activity_tx}
+            />
           </dd>
 
-          <dt>{t('rofl.instances')}</dt>
+          <dt>{t('rofl.activeInstances')}</dt>
           <dd>{app.num_active_instances.toLocaleString()}</dd>
 
           <dt>{t('rofl.endorsement')}</dt>
