@@ -12,6 +12,72 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.18.0 (2025-04-03)
+
+### Features
+
+- Introduce highlighting matching addresses
+  ([#1776](https://github.com/oasisprotocol/explorer/issues/1776))
+
+### Bug Fixes and Improvements
+
+- Filter tokens list by a type
+  ([#1772](https://github.com/oasisprotocol/explorer/issues/1772))
+
+- Use new API fields to detect empty accounts in Consensus search
+  ([#1785](https://github.com/oasisprotocol/explorer/issues/1785))
+
+- Fix transaction Storybook errors
+  ([#1823](https://github.com/oasisprotocol/explorer/issues/1823))
+
+- Fix tracking referrer in matomo analytics
+  ([#1824](https://github.com/oasisprotocol/explorer/issues/1824))
+
+- Format token amounts in events
+  ([#1845](https://github.com/oasisprotocol/explorer/issues/1845))
+
+- Fix detecting burning events
+  ([#1846](https://github.com/oasisprotocol/explorer/issues/1846))
+
+- Handle transaction error raw message
+  ([#1849](https://github.com/oasisprotocol/explorer/issues/1849))
+
+- Prefix amount_change with "+" in allowance transactions
+  ([#1855](https://github.com/oasisprotocol/explorer/issues/1855))
+
+- Fix from label alignment in transaction table
+  ([#1860](https://github.com/oasisprotocol/explorer/issues/1860))
+
+- Prepare views for incoming ROFL apps feature
+  ([#1819](https://github.com/oasisprotocol/explorer/issues/1819),
+   [#1820](https://github.com/oasisprotocol/explorer/issues/1820),
+   [#1827](https://github.com/oasisprotocol/explorer/issues/1827),
+   [#1834](https://github.com/oasisprotocol/explorer/issues/1834),
+   [#1837](https://github.com/oasisprotocol/explorer/issues/1837),
+   [#1840](https://github.com/oasisprotocol/explorer/issues/1840),
+   [#1841](https://github.com/oasisprotocol/explorer/issues/1841),
+   [#1848](https://github.com/oasisprotocol/explorer/issues/1848),
+   [#1851](https://github.com/oasisprotocol/explorer/issues/1851))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1654](https://github.com/oasisprotocol/explorer/issues/1654),
+   [#1674](https://github.com/oasisprotocol/explorer/issues/1674),
+   [#1788](https://github.com/oasisprotocol/explorer/issues/1788),
+   [#1792](https://github.com/oasisprotocol/explorer/issues/1792),
+   [#1799](https://github.com/oasisprotocol/explorer/issues/1799),
+   [#1854](https://github.com/oasisprotocol/explorer/issues/1854))
+
+- Update API bindings
+  ([#1781](https://github.com/oasisprotocol/explorer/issues/1781))
+
+- Generalize TableConfig as LocalSettings
+  ([#1793](https://github.com/oasisprotocol/explorer/issues/1793))
+
+- Remove Storybook
+  ([#1826](https://github.com/oasisprotocol/explorer/issues/1826))
+
 ## 1.17.0 (2025-03-11)
 
 ### Features
