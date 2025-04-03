@@ -27,32 +27,11 @@ The format is inspired by [Keep a Changelog].
 - Use new API fields to detect empty accounts in Consensus search
   ([#1785](https://github.com/oasisprotocol/explorer/issues/1785))
 
-- Create ROFL status badges component
-  ([#1819](https://github.com/oasisprotocol/explorer/issues/1819))
-
-- Handle new ROFL instance event
-  ([#1820](https://github.com/oasisprotocol/explorer/issues/1820))
-
 - Fix transaction Storybook errors
   ([#1823](https://github.com/oasisprotocol/explorer/issues/1823))
 
 - Fix tracking referrer in matomo analytics
   ([#1824](https://github.com/oasisprotocol/explorer/issues/1824))
-
-- Create RoflAppLink component
-  ([#1827](https://github.com/oasisprotocol/explorer/issues/1827))
-
-- Create ROFL apps list page
-  ([#1834](https://github.com/oasisprotocol/explorer/issues/1834))
-
-- Create ROFL app instances card
-  ([#1837](https://github.com/oasisprotocol/explorer/issues/1837))
-
-- Create ROFL app metadata and policy cards
-  ([#1840](https://github.com/oasisprotocol/explorer/issues/1840))
-
-- Create ROFL app details card content
-  ([#1841](https://github.com/oasisprotocol/explorer/issues/1841))
 
 - Format token amounts in events
   ([#1845](https://github.com/oasisprotocol/explorer/issues/1845))
@@ -60,20 +39,25 @@ The format is inspired by [Keep a Changelog].
 - Fix detecting burning events
   ([#1846](https://github.com/oasisprotocol/explorer/issues/1846))
 
-- Enable ROFL app details page
-  ([#1848](https://github.com/oasisprotocol/explorer/issues/1848))
-
 - Handle transaction error raw message
   ([#1849](https://github.com/oasisprotocol/explorer/issues/1849))
-
-- Setup ROFL app transactions card
-  ([#1851](https://github.com/oasisprotocol/explorer/issues/1851))
 
 - Prefix amount_change with "+" in allowance transactions
   ([#1855](https://github.com/oasisprotocol/explorer/issues/1855))
 
 - Fix from label alignment in transaction table
   ([#1860](https://github.com/oasisprotocol/explorer/issues/1860))
+
+- Prepare views for incoming ROFL apps feature
+  ([#1819](https://github.com/oasisprotocol/explorer/issues/1819),
+   [#1820](https://github.com/oasisprotocol/explorer/issues/1820),
+   [#1827](https://github.com/oasisprotocol/explorer/issues/1827),
+   [#1834](https://github.com/oasisprotocol/explorer/issues/1834),
+   [#1837](https://github.com/oasisprotocol/explorer/issues/1837),
+   [#1840](https://github.com/oasisprotocol/explorer/issues/1840),
+   [#1841](https://github.com/oasisprotocol/explorer/issues/1841),
+   [#1848](https://github.com/oasisprotocol/explorer/issues/1848),
+   [#1851](https://github.com/oasisprotocol/explorer/issues/1851))
 
 ### Internal Changes
 
