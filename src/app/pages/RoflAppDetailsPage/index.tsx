@@ -140,8 +140,11 @@ export const RoflAppDetailsView: FC<{
 
           <dt>{t('rofl.adminAccount')}</dt>
           <dd>
-            <AccountLink scope={{ network: app.network, layer: app.layer }} address={app.admin} />
-            <CopyToClipboard value={app.admin} />
+            <AccountLink
+              scope={{ network: app.network, layer: app.layer }}
+              address={app.admin_eth ?? app.admin}
+            />
+            <CopyToClipboard value={app.admin_eth ?? app.admin} />
           </dd>
 
           <dt>{t('rofl.stakedAmount')}</dt>
