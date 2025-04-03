@@ -24,6 +24,7 @@ import { Endorsement } from './Endorsement'
 import { Enclaves } from './Enclaves'
 import { Secrets } from './Secrets'
 import { RouterTabs } from '../../components/RouterTabs'
+import { TableCellAge } from '../../components/TableCellAge'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
 import { MetaDataCard } from './MetaDataCard'
@@ -169,6 +170,8 @@ export const RoflAppDetailsView: FC<{
           <dd>
             <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
           </dd>
+          <dt>{t('rofl.instances')}</dt>
+          <dd>{app.num_active_instances.toLocaleString()}</dd>
           <dt>{t('rofl.created')}</dt>
           <dd>
             {t('common.formattedDateTime', {
@@ -183,7 +186,7 @@ export const RoflAppDetailsView: FC<{
             })}
           </dd>
           <dt>{t('rofl.lastActivity')}</dt>
-          <dd>{t('common.missing')}</dd>
+          <dd>{<TableCellAge sinceTimestamp={app.last_activity} />}</dd>
         </>
       )}
 
