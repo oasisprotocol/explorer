@@ -26,7 +26,7 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
 
   return (
     <>
-      <StyledGrid item xs={12} md={5}>
+      <StyledGrid item xs={4} md={5}>
         {label}:
         {tooltip && (
           <Tooltip title={tooltip} placement="top">
@@ -34,7 +34,7 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
           </Tooltip>
         )}
       </StyledGrid>
-      <StyledGrid item xs={12} md={7}>
+      <StyledGrid item xs={8} md={7}>
         {children ? <strong>{children}</strong> : t('common.missing')}
       </StyledGrid>
     </>
