@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { formatDistanceStrict } from 'date-fns'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
@@ -21,7 +19,6 @@ import { RoflAppStatusBadge } from '../../components/Rofl/RoflAppStatusBadge'
 import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { TeeType } from './TeeType'
 import { Endorsement } from './Endorsement'
 import { Enclaves } from './Enclaves'
@@ -31,6 +28,7 @@ import { instancesContainerId } from '../../utils/tabAnchors'
 import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
+import { LastActivity } from './LastActivity'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -193,21 +191,10 @@ export const RoflAppDetailsView: FC<{
         <>
           <dt>{t('rofl.lastActivity')}</dt>
           <dd>
-            {app.last_activity_tx ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                <TransactionLink
-                  scope={{ network: app.network, layer: app.layer }}
-                  hash={app.last_activity_tx.eth_hash || app.last_activity_tx.hash}
-                />
-                (
-                {formatDistanceStrict(app.last_activity_tx.timestamp, new Date(), {
-                  addSuffix: true,
-                })}
-                )
-              </Box>
-            ) : (
-              t('common.missing')
-            )}
+            <LastActivity
+              scope={{ network: app.network, layer: app.layer }}
+              transaction={app.last_activity_tx}
+            />
           </dd>
 
           <dt>{t('rofl.activeInstances')}</dt>
