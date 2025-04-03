@@ -143,6 +143,7 @@ export const RoflAppDetailsView: FC<{
             <AccountLink
               scope={{ network: app.network, layer: app.layer }}
               address={app.admin_eth ?? app.admin}
+              alwaysTrimOnTablet
             />
             <CopyToClipboard value={app.admin_eth ?? app.admin} />
           </dd>
