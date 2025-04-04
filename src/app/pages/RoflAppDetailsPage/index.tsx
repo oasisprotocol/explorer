@@ -57,7 +57,7 @@ export const RoflAppDetailsPage: FC = () => {
           isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
         }
       >
-        <RoflAppDetailsView detailsPage isLoading={isLoading} app={roflApp} />
+        <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
@@ -97,134 +97,185 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 export const RoflAppDetailsView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-  detailsPage?: boolean
-  showLayer?: boolean
-}> = ({ app, detailsPage, isLoading, showLayer }) => {
+}> = ({ app, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 15 : 10} />
+  if (isLoading) return <TextSkeleton numberOfRows={15} />
   if (!app) return <></>
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={!detailsPage}>
-      {showLayer && (
-        <>
-          <dt>{t('common.paratime')}</dt>
-          <dd>
-            <DashboardLink scope={{ network: app.network, layer: app.layer }} />
-          </dd>
-        </>
-      )}
-
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
       <dt>{t('common.name')}</dt>
       <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
-
-      {detailsPage && (
-        <>
-          <dt>{t('rofl.version')}</dt>
-          <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
-
-          <dt>{t('rofl.tee')}</dt>
-          <dd>
-            <TeeType policy={app.policy} />
-          </dd>
-
-          <dt>{t('rofl.appId')}</dt>
-          <dd>
-            <Typography variant="mono" component="span">
-              {app.id}
-            </Typography>
-            <CopyToClipboard value={app.id} />
-          </dd>
-
-          <dt>{t('rofl.enclaveId')}</dt>
-          <dd>
-            <Enclaves policy={app.policy} />
-          </dd>
-
-          <dt>{t('rofl.sekPublicKey')}</dt>
-          <dd>
-            <Typography variant="mono">{app.sek}</Typography> <CopyToClipboard value={app.sek} />
-          </dd>
-
-          <dt>{t('rofl.adminAccount')}</dt>
-          <dd>
-            <AccountLink
-              scope={{ network: app.network, layer: app.layer }}
-              address={app.admin_eth ?? app.admin}
-              alwaysTrimOnTablet
-            />
-            <CopyToClipboard value={app.admin_eth ?? app.admin} />
-          </dd>
-
-          <dt>{t('rofl.stakedAmount')}</dt>
-          <dd>
-            {app.stake
-              ? t('common.valueInToken', {
-                  ...getPreciseNumberFormat(app.stake),
-                  ticker: app.ticker,
-                })
-              : t('common.missing')}
-          </dd>
-        </>
-      )}
-
+      <dt>{t('rofl.version')}</dt>
+      <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
+      <dt>{t('rofl.tee')}</dt>
+      <dd>
+        <TeeType policy={app.policy} />
+      </dd>
+      <dt>{t('rofl.appId')}</dt>
+      <dd>
+        <Typography variant="mono" component="span">
+          {app.id}
+        </Typography>
+        <CopyToClipboard value={app.id} />
+      </dd>
+      <dt>{t('rofl.enclaveId')}</dt>
+      <dd>
+        <Enclaves policy={app.policy} />
+      </dd>
+      <dt>{t('rofl.sekPublicKey')}</dt>
+      <dd>
+        <Typography variant="mono">{app.sek}</Typography> <CopyToClipboard value={app.sek} />
+      </dd>
+      <dt>{t('rofl.adminAccount')}</dt>
+      <dd>
+        <AccountLink
+          scope={{ network: app.network, layer: app.layer }}
+          address={app.admin_eth ?? app.admin}
+          alwaysTrimOnTablet
+        />
+        <CopyToClipboard value={app.admin_eth ?? app.admin} />
+      </dd>
+      <dt>{t('rofl.stakedAmount')}</dt>
+      <dd>
+        {app.stake
+          ? t('common.valueInToken', {
+              ...getPreciseNumberFormat(app.stake),
+              ticker: app.ticker,
+            })
+          : t('common.missing')}
+      </dd>
       <dt>{t('common.status')}</dt>
       <dd>
         <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
       </dd>
+      <dt>{t('rofl.activeInstances')}</dt>
+      <dd>{app.num_active_instances.toLocaleString()}</dd>
+      <dt>{t('rofl.lastActivity')}</dt>
+      <dd>
+        <LastActivity scope={{ network: app.network, layer: app.layer }} transaction={app.last_activity_tx} />
+      </dd>
+      <dt>{t('rofl.endorsement')}</dt>
+      <dd>
+        <Endorsement policy={app.policy} />
+      </dd>
+      <dt>{t('rofl.secrets')}</dt>
+      <dd>
+        <Secrets secrets={app.secrets} />
+      </dd>
+    </StyledDescriptionList>
+  )
+}
 
-      {!detailsPage && (
-        <>
-          <dt>{t('rofl.appId')}</dt>
-          <dd>
-            <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
-          </dd>
-          <dt>{t('rofl.instances')}</dt>
-          <dd>{app.num_active_instances.toLocaleString()}</dd>
-          <dt>{t('rofl.created')}</dt>
-          <dd>
-            {t('common.formattedDateTime', {
-              value: app.date_created,
-              formatParams: {
-                timestamp: {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                } satisfies Intl.DateTimeFormatOptions,
-              },
-            })}
-          </dd>
-          <dt>{t('rofl.lastActivity')}</dt>
-          <dd>{<TableCellAge sinceTimestamp={app.last_activity} />}</dd>
-        </>
-      )}
+export const RoflAppDetailsViewSearchResult: FC<{
+  isLoading?: boolean
+  app: RoflApp | undefined
+  highlightedPartOfName?: string
+}> = ({ app, isLoading, highlightedPartOfName }) => {
+  const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
 
-      {detailsPage && (
-        <>
-          <dt>{t('rofl.lastActivity')}</dt>
-          <dd>
-            <LastActivity
-              scope={{ network: app.network, layer: app.layer }}
-              transaction={app.last_activity_tx}
-            />
-          </dd>
+  if (isLoading) return <TextSkeleton numberOfRows={10} />
+  if (!app) return <></>
 
-          <dt>{t('rofl.activeInstances')}</dt>
-          <dd>{app.num_active_instances.toLocaleString()}</dd>
+  return (
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+      <dt>{t('common.paratime')}</dt>
+      <dd>
+        <DashboardLink scope={{ network: app.network, layer: app.layer }} />
+      </dd>
+      <dt>{t('common.name')}</dt>
+      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
+      <dt>{t('rofl.version')}</dt>
+      <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
+      <dt>{t('rofl.tee')}</dt>
+      <dd>
+        <TeeType policy={app.policy} />
+      </dd>
+      <dt>{t('rofl.appId')}</dt>
+      <dd>
+        <RoflAppLink
+          id={app.id}
+          name={app.id}
+          network={app.network}
+          highlightedPartOfName={highlightedPartOfName}
+          withSourceIndicator={false}
+        />
+        <CopyToClipboard value={app.id} />
+      </dd>
+      <dt>{t('rofl.adminAccount')}</dt>
+      <dd>
+        <AccountLink
+          scope={{ network: app.network, layer: app.layer }}
+          address={app.admin_eth ?? app.admin}
+          alwaysTrimOnTablet
+        />
+        <CopyToClipboard value={app.admin_eth ?? app.admin} />
+      </dd>
+      <dt>{t('rofl.stakedAmount')}</dt>
+      <dd>
+        {app.stake
+          ? t('common.valueInToken', {
+              ...getPreciseNumberFormat(app.stake),
+              ticker: app.ticker,
+            })
+          : t('common.missing')}
+      </dd>
+      <dt>{t('common.status')}</dt>
+      <dd>
+        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+      </dd>
+      <dt>{t('rofl.activeInstances')}</dt>
+      <dd>{app.num_active_instances.toLocaleString()}</dd>
+      <dt>{t('rofl.lastActivity')}</dt>
+      <dd>
+        <LastActivity scope={{ network: app.network, layer: app.layer }} transaction={app.last_activity_tx} />
+      </dd>
+    </StyledDescriptionList>
+  )
+}
 
-          <dt>{t('rofl.endorsement')}</dt>
-          <dd>
-            <Endorsement policy={app.policy} />
-          </dd>
+export const RoflAppDetailsVerticalListView: FC<{
+  isLoading?: boolean
+  app: RoflApp | undefined
+}> = ({ app, isLoading }) => {
+  const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
 
-          <dt>{t('rofl.secrets')}</dt>
-          <dd>
-            <Secrets secrets={app.secrets} />
-          </dd>
-        </>
-      )}
+  if (isLoading) return <TextSkeleton numberOfRows={5} />
+  if (!app) return <></>
+
+  return (
+    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone>
+      <dt>{t('common.name')}</dt>
+      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
+      <dt>{t('common.status')}</dt>
+      <dd>
+        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+      </dd>
+      <dt>{t('rofl.appId')}</dt>
+      <dd>
+        <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
+      </dd>
+      <dt>{t('rofl.instances')}</dt>
+      <dd>{app.num_active_instances.toLocaleString()}</dd>
+      <dt>{t('rofl.created')}</dt>
+      <dd>
+        {t('common.formattedDateTime', {
+          value: app.date_created,
+          formatParams: {
+            timestamp: {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            } satisfies Intl.DateTimeFormatOptions,
+          },
+        })}
+      </dd>
+      <dt>{t('rofl.lastActivity')}</dt>
+      <dd>{<TableCellAge sinceTimestamp={app.last_activity} />}</dd>
     </StyledDescriptionList>
   )
 }

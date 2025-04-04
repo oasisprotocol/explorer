@@ -28,7 +28,7 @@ import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
 import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
-import { RoflAppDetailsView } from '../RoflAppDetailsPage'
+import { RoflAppDetailsViewSearchResult } from '../RoflAppDetailsPage'
 
 /**
  * Component for displaying a list of search results
@@ -152,7 +152,9 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.roflApps.title')}
           results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
-          resultComponent={item => <RoflAppDetailsView isLoading={false} app={item} />}
+          resultComponent={item => (
+            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightedPartOfName={searchTerm} />
+          )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
         />
