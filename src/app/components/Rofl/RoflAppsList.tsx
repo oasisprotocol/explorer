@@ -46,8 +46,8 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'order',
         },
         {
-          content: app.metadata?.name ? (
-            <RoflAppLink id={app.id} name={app.metadata?.name} network={app.network} />
+          content: app?.metadata['net.oasis.rofl.name'] ? (
+            <RoflAppLink id={app.id} name={app?.metadata['net.oasis.rofl.name']} network={app.network} />
           ) : (
             t('rofl.nameNotProvided')
           ),
