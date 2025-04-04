@@ -64,7 +64,6 @@ export const useRoflAppInstanceTransactions = (scope: SearchScope, id: string, m
   const query = useGetRuntimeRoflAppsIdInstanceTransactions(network, Layer.sapphire, id, {
     limit,
     offset: offset,
-    rel: id,
     ...getRuntimeTransactionMethodFilteringParam(method),
   })
   const { isFetched, isLoading, data } = query
