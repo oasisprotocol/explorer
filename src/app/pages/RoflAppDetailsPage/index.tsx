@@ -30,6 +30,7 @@ import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
 import { LastActivity } from './LastActivity'
+import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -97,7 +98,8 @@ export const RoflAppDetailsView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
   detailsPage?: boolean
-}> = ({ app, detailsPage, isLoading }) => {
+  showLayer?: boolean
+}> = ({ app, detailsPage, isLoading, showLayer }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -106,6 +108,15 @@ export const RoflAppDetailsView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={!detailsPage}>
+      {showLayer && (
+        <>
+          <dt>{t('common.paratime')}</dt>
+          <dd>
+            <DashboardLink scope={{ network: app.network, layer: app.layer }} />
+          </dd>
+        </>
+      )}
+
       <dt>{t('common.name')}</dt>
       <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
 
