@@ -44,7 +44,7 @@ export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const id = useParams().id!
-  const txLink = useHref('')
+  const updatesLink = useHref('')
   const instancesLink = useHref(`instances#${instancesContainerId}`)
   const [method, setMethod] = useTypedSearchParam('method', 'any', {
     deleteParams: ['page'],
@@ -84,7 +84,7 @@ export const RoflAppDetailsPage: FC = () => {
       </Grid>
       <RouterTabs
         tabs={[
-          { label: t('common.transactions'), to: txLink },
+          { label: t('rofl.updates'), to: updatesLink },
           {
             label: t('rofl.instances'),
             to: instancesLink,
