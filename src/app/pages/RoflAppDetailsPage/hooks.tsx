@@ -15,7 +15,7 @@ export type RoflAppDetailsContext = {
 
 export const useRoflAppDetailsProps = () => useOutletContext<RoflAppDetailsContext>()
 
-export const useRoflAppTransactions = (scope: SearchScope, id: string, method: string) => {
+export const useRoflAppUpdates = (scope: SearchScope, id: string, method: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
