@@ -707,7 +707,8 @@
     "stakedAmount": "Staked amount",
     "endorsement": "Endorsement",
     "secrets": "Secrets",
-    "updates": "Updates"
+    "updates": "Updates",
+    "secretLength": "[{{value}} bytes]"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
