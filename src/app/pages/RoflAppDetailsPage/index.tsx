@@ -1,11 +1,17 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import { Layer, RoflApp, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
+import {
+  Layer,
+  RoflApp,
+  RoflAppPolicy,
+  RuntimeTransaction,
+  useGetRuntimeRoflAppsId,
+} from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -31,6 +37,8 @@ import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
 import { LastActivity } from './LastActivity'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import { SearchScope } from 'types/searchScope'
+import { Ticker } from 'types/ticker'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -106,65 +114,38 @@ export const RoflAppDetailsView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-      <dt>{t('common.name')}</dt>
-      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
-      <dt>{t('rofl.version')}</dt>
-      <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
-      <dt>{t('rofl.tee')}</dt>
-      <dd>
-        <TeeType policy={app.policy} />
-      </dd>
-      <dt>{t('rofl.appId')}</dt>
-      <dd>
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <VersionRow version={app.metadata['net.oasis.rofl.version']} />
+      <TeeRow policy={app.policy} />
+      <DetailsRow title={t('rofl.appId')}>
         <Typography variant="mono" component="span">
           {app.id}
         </Typography>
         <CopyToClipboard value={app.id} />
-      </dd>
-      <dt>{t('rofl.enclaveId')}</dt>
-      <dd>
+      </DetailsRow>
+      <DetailsRow title={t('rofl.enclaveId')}>
         <Enclaves policy={app.policy} />
-      </dd>
-      <dt>{t('rofl.sekPublicKey')}</dt>
-      <dd>
+      </DetailsRow>
+      <DetailsRow title={t('rofl.sekPublicKey')}>
         <Typography variant="mono">{app.sek}</Typography> <CopyToClipboard value={app.sek} />
-      </dd>
-      <dt>{t('rofl.adminAccount')}</dt>
-      <dd>
-        <AccountLink
-          scope={{ network: app.network, layer: app.layer }}
-          address={app.admin_eth ?? app.admin}
-          alwaysTrimOnTablet
-        />
-        <CopyToClipboard value={app.admin_eth ?? app.admin} />
-      </dd>
-      <dt>{t('rofl.stakedAmount')}</dt>
-      <dd>
-        {app.stake
-          ? t('common.valueInToken', {
-              ...getPreciseNumberFormat(app.stake),
-              ticker: app.ticker,
-            })
-          : t('common.missing')}
-      </dd>
-      <dt>{t('common.status')}</dt>
-      <dd>
-        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
-      </dd>
-      <dt>{t('rofl.activeInstances')}</dt>
-      <dd>{app.num_active_instances.toLocaleString()}</dd>
-      <dt>{t('rofl.lastActivity')}</dt>
-      <dd>
-        <LastActivity scope={{ network: app.network, layer: app.layer }} transaction={app.last_activity_tx} />
-      </dd>
-      <dt>{t('rofl.endorsement')}</dt>
-      <dd>
+      </DetailsRow>
+      <AdminAccountRow
+        address={app.admin_eth ?? app.admin}
+        scope={{ network: app.network, layer: app.layer }}
+      />
+      <StakedAmountRow stake={app.stake} ticker={app.ticker} />
+      <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+      <ActiveInstancesNumberRow number={app.num_active_instances} />
+      <LastActivityRow
+        scope={{ network: app.network, layer: app.layer }}
+        transaction={app.last_activity_tx}
+      />
+      <DetailsRow title={t('rofl.endorsement')}>
         <Endorsement policy={app.policy} />
-      </dd>
-      <dt>{t('rofl.secrets')}</dt>
-      <dd>
+      </DetailsRow>
+      <DetailsRow title={t('rofl.secrets')}>
         <Secrets secrets={app.secrets} />
-      </dd>
+      </DetailsRow>
     </StyledDescriptionList>
   )
 }
@@ -182,20 +163,13 @@ export const RoflAppDetailsViewSearchResult: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-      <dt>{t('common.paratime')}</dt>
-      <dd>
+      <DetailsRow title={t('common.paratime')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
-      </dd>
-      <dt>{t('common.name')}</dt>
-      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
-      <dt>{t('rofl.version')}</dt>
-      <dd>{app.metadata['net.oasis.rofl.version'] || t('common.missing')}</dd>
-      <dt>{t('rofl.tee')}</dt>
-      <dd>
-        <TeeType policy={app.policy} />
-      </dd>
-      <dt>{t('rofl.appId')}</dt>
-      <dd>
+      </DetailsRow>
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <VersionRow version={app.metadata['net.oasis.rofl.version']} />
+      <TeeRow policy={app.policy} />
+      <DetailsRow title={t('rofl.appId')}>
         <RoflAppLink
           id={app.id}
           name={app.id}
@@ -204,35 +178,18 @@ export const RoflAppDetailsViewSearchResult: FC<{
           withSourceIndicator={false}
         />
         <CopyToClipboard value={app.id} />
-      </dd>
-      <dt>{t('rofl.adminAccount')}</dt>
-      <dd>
-        <AccountLink
-          scope={{ network: app.network, layer: app.layer }}
-          address={app.admin_eth ?? app.admin}
-          alwaysTrimOnTablet
-        />
-        <CopyToClipboard value={app.admin_eth ?? app.admin} />
-      </dd>
-      <dt>{t('rofl.stakedAmount')}</dt>
-      <dd>
-        {app.stake
-          ? t('common.valueInToken', {
-              ...getPreciseNumberFormat(app.stake),
-              ticker: app.ticker,
-            })
-          : t('common.missing')}
-      </dd>
-      <dt>{t('common.status')}</dt>
-      <dd>
-        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
-      </dd>
-      <dt>{t('rofl.activeInstances')}</dt>
-      <dd>{app.num_active_instances.toLocaleString()}</dd>
-      <dt>{t('rofl.lastActivity')}</dt>
-      <dd>
-        <LastActivity scope={{ network: app.network, layer: app.layer }} transaction={app.last_activity_tx} />
-      </dd>
+      </DetailsRow>
+      <AdminAccountRow
+        address={app.admin_eth ?? app.admin}
+        scope={{ network: app.network, layer: app.layer }}
+      />
+      <StakedAmountRow stake={app.stake} ticker={app.ticker} />
+      <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+      <ActiveInstancesNumberRow number={app.num_active_instances} />
+      <LastActivityRow
+        scope={{ network: app.network, layer: app.layer }}
+        transaction={app.last_activity_tx}
+      />
     </StyledDescriptionList>
   )
 }
@@ -249,20 +206,13 @@ export const RoflAppDetailsVerticalListView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone>
-      <dt>{t('common.name')}</dt>
-      <dd>{app.metadata['net.oasis.rofl.name'] || t('common.missing')}</dd>
-      <dt>{t('common.status')}</dt>
-      <dd>
-        <RoflAppStatusBadge hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
-      </dd>
-      <dt>{t('rofl.appId')}</dt>
-      <dd>
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+      <DetailsRow title={t('rofl.appId')}>
         <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
-      </dd>
-      <dt>{t('rofl.instances')}</dt>
-      <dd>{app.num_active_instances.toLocaleString()}</dd>
-      <dt>{t('rofl.created')}</dt>
-      <dd>
+      </DetailsRow>
+      <ActiveInstancesNumberRow number={app.num_active_instances} />
+      <DetailsRow title={t('rofl.created')}>
         {t('common.formattedDateTime', {
           value: app.date_created,
           formatParams: {
@@ -273,9 +223,106 @@ export const RoflAppDetailsVerticalListView: FC<{
             } satisfies Intl.DateTimeFormatOptions,
           },
         })}
-      </dd>
-      <dt>{t('rofl.lastActivity')}</dt>
-      <dd>{<TableCellAge sinceTimestamp={app.last_activity} />}</dd>
+      </DetailsRow>
+      <DetailsRow title={t('rofl.lastActivity')}>
+        <TableCellAge sinceTimestamp={app.last_activity} />
+      </DetailsRow>
     </StyledDescriptionList>
+  )
+}
+
+const NameRow: FC<{
+  name?: string
+}> = ({ name }) => {
+  const { t } = useTranslation()
+  return <DetailsRow title={t('common.name')}>{name || t('common.missing')}</DetailsRow>
+}
+
+const StatusBadgeRow: FC<{
+  hasActiveInstances: boolean
+  removed: boolean
+}> = ({ hasActiveInstances, removed }) => {
+  const { t } = useTranslation()
+  return (
+    <DetailsRow title={t('common.status')}>
+      <RoflAppStatusBadge hasActiveInstances={hasActiveInstances} removed={removed} />
+    </DetailsRow>
+  )
+}
+
+const ActiveInstancesNumberRow: FC<{
+  number: number
+}> = ({ number }) => {
+  const { t } = useTranslation()
+  return <DetailsRow title={t('rofl.activeInstances')}>{number.toLocaleString()}</DetailsRow>
+}
+
+const VersionRow: FC<{
+  version: string
+}> = ({ version }) => {
+  const { t } = useTranslation()
+  return <DetailsRow title={t('rofl.version')}>{version || t('common.missing')}</DetailsRow>
+}
+
+const TeeRow: FC<{
+  policy: RoflAppPolicy
+}> = ({ policy }) => {
+  const { t } = useTranslation()
+  return (
+    <DetailsRow title={t('rofl.tee')}>
+      <TeeType policy={policy} />
+    </DetailsRow>
+  )
+}
+
+const AdminAccountRow: FC<{
+  address: string
+  scope: SearchScope
+}> = ({ address, scope }) => {
+  const { t } = useTranslation()
+  return (
+    <DetailsRow title={t('rofl.adminAccount')}>
+      <AccountLink scope={scope} address={address} alwaysTrimOnTablet />
+      <CopyToClipboard value={address} />
+    </DetailsRow>
+  )
+}
+
+const StakedAmountRow: FC<{
+  stake: string
+  ticker: Ticker
+}> = ({ stake, ticker }) => {
+  const { t } = useTranslation()
+  return (
+    <DetailsRow title={t('rofl.stakedAmount')}>
+      {t('common.valueInToken', {
+        ...getPreciseNumberFormat(stake),
+        ticker: ticker,
+      })}
+    </DetailsRow>
+  )
+}
+
+const LastActivityRow: FC<{
+  scope: SearchScope
+  transaction: RuntimeTransaction | undefined
+}> = ({ transaction, scope }) => {
+  const { t } = useTranslation()
+  return (
+    <DetailsRow title={t('rofl.lastActivity')}>
+      {transaction ? <LastActivity scope={scope} transaction={transaction} /> : t('common.missing')}
+    </DetailsRow>
+  )
+}
+
+const DetailsRow: FC<{
+  children: ReactNode
+  title: string
+}> = ({ children, title }) => {
+  return (
+    <>
+      <dt>{title}</dt>
+      <dd>{children}</dd>
+    </>
   )
 }
