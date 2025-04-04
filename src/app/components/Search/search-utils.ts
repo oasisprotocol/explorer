@@ -5,6 +5,7 @@ import {
   isValidTxHash,
   isValidOasisAddress,
   isValidEthAddress,
+  isValidRoflAppId,
 } from '../../utils/helpers'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -130,6 +131,11 @@ export const validateAndNormalize = {
 
   consensusAccount: (searchTerm: string) => {
     if (isValidOasisAddress(searchTerm.replace(/\s/g, '').toLowerCase())) {
+      return searchTerm.replace(/\s/g, '').toLowerCase()
+    }
+  },
+  roflApp: (searchTerm: string) => {
+    if (isValidRoflAppId(searchTerm.replace(/\s/g, '').toLowerCase())) {
       return searchTerm.replace(/\s/g, '').toLowerCase()
     }
   },

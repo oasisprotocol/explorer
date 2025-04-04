@@ -745,6 +745,10 @@
         "title": "Transactions",
         "viewLink": "View Transaction"
       },
+      "roflApps": {
+        "title": "ROFL",
+        "viewLink": "View ROFL App"
+      },
       "proposals": {
         "title": "Proposals",
         "viewLink": "View Proposal"

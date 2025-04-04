@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RoflApp } from '../../../oasis-nexus/api'
-import { Table, TableCellAlign, TableColProps } from '..//Table'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { Table, TableCellAlign, TableColProps } from '../Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
@@ -17,12 +18,18 @@ type RoflAppsListProps = {
 
 export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, pagination, apps }) => {
   const { t } = useTranslation()
+  const { isTablet } = useScreenSize()
+
   const tableColumns: TableColProps[] = [
     { key: 'order', content: '' },
     { key: 'name', content: t('common.name') },
     { key: 'status', content: t('common.status') },
     { key: 'id', content: t('rofl.appId') },
-    { key: 'instances', content: t('rofl.instances'), align: TableCellAlign.Right },
+    {
+      key: 'instances',
+      content: isTablet ? t('rofl.instances') : t('rofl.activeInstances'),
+      align: TableCellAlign.Right,
+    },
     { key: 'created', content: t('rofl.created'), align: TableCellAlign.Right },
     {
       key: 'lastActivity',
@@ -39,8 +46,8 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'order',
         },
         {
-          content: app.metadata?.name ? (
-            <RoflAppLink id={app.id} name={app.metadata?.name} network={app.network} />
+          content: app?.metadata['net.oasis.rofl.name'] ? (
+            <RoflAppLink id={app.id} name={app?.metadata['net.oasis.rofl.name']} network={app.network} />
           ) : (
             t('rofl.nameNotProvided')
           ),
