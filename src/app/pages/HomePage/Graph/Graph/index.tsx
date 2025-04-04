@@ -467,21 +467,31 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire blocks connector */}
         <path
           className={Layer.sapphire}
-          d="M121.083 308.697L87.666 342.253"
+          d="M119.797 314.743L106.953 360.325"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire transactions connector */}
         <path
           className={Layer.sapphire}
-          d="M127.501 299.77L163.137 333.266"
+          d="M127.499 301.83L163.135 335.325"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
+        {/* Sapphire ROFL connector */}
         <path
           className={Layer.sapphire}
-          d="M112.336 295.148L69.5934 271.379"
+          d="M112.787 294.07L79.1411 258.575"
+          stroke={graphTheme.line}
+          strokeWidth="2"
+        />
+        {/* Sapphire tokens connector */}
+        <path
+          className={Layer.sapphire}
+          d="M106.873 307.197L59.0528 317.448"
           stroke={graphTheme.line}
           strokeWidth="2"
         />
@@ -536,11 +546,11 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           <Link to={RouteUtils.getLatestBlocksRoute({ network, layer: Layer.sapphire })}>
             <path
               className={Layer.sapphire}
-              d="M78.8395 331.333C90.7145 331.333 100.341 340.959 100.341 352.833C100.341 364.707 90.7145 374.333 78.8395 374.333C66.9644 374.333 57.3379 364.707 57.3379 352.833C57.3379 340.959 66.9644 331.333 78.8395 331.333Z"
+              d="M106.838 341.892C118.713 341.892 128.339 351.518 128.339 363.392C128.339 375.267 118.713 384.892 106.838 384.892C94.9625 384.892 85.3359 375.267 85.3359 363.392C85.3359 351.518 94.9625 341.892 106.838 341.892Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
             />
-            <text x="64.872" y="355.83" fill={graphTheme.text} fontSize="10px">
+            <text x="92.5" y="366.5" fill={graphTheme.text} fontSize="10px">
               {t('home.blocks')}
             </text>
           </Link>
@@ -549,11 +559,11 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           <Link to={RouteUtils.getLatestTransactionsRoute({ network, layer: Layer.sapphire })}>
             <path
               className={Layer.sapphire}
-              d="M176.839 323.333C188.715 323.333 198.341 332.959 198.341 344.833C198.341 356.707 188.715 366.333 176.839 366.333C164.964 366.333 155.338 356.707 155.338 344.833C155.338 332.959 164.964 323.333 176.839 323.333Z"
+              d="M176.838 325.392C188.713 325.392 198.339 335.018 198.339 346.892C198.339 358.767 188.713 368.392 176.838 368.392C164.962 368.392 155.336 358.767 155.336 346.892C155.336 335.018 164.962 325.392 176.838 325.392Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
             />
-            <text x="167" y="347.83" fill={graphTheme.text} fontSize="10px">
+            <text x="167" y="350" fill={graphTheme.text} fontSize="10px">
               {t('home.txns')}
             </text>
           </Link>
@@ -562,12 +572,25 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           <Link to={RouteUtils.getTopTokensRoute({ network, layer: Layer.sapphire })}>
             <path
               className={Layer.sapphire}
-              d="M65.8395 245.333C77.7145 245.333 87.3411 254.959 87.3411 266.833C87.3411 278.707 77.7145 288.333 65.8395 288.333C53.9644 288.333 44.3379 278.707 44.3379 266.833C44.3379 254.959 53.9644 245.333 65.8395 245.333Z"
+              d="M50.8375 297.392C62.7126 297.392 72.3391 307.018 72.3391 318.892C72.3391 330.767 62.7126 340.392 50.8375 340.392C38.9625 340.392 29.3359 330.767 29.3359 318.892C29.3359 307.018 38.9625 297.392 50.8375 297.392Z"
               fill={graphTheme.circleBorder}
               stroke={graphTheme.line}
             />
-            <text x="51.60" y="269.833" fill={graphTheme.text} fontSize="10px">
+            <text x="36" y="322" fill={graphTheme.text} fontSize="10px">
               {t('common.tokens')}
+            </text>
+          </Link>
+        </g>
+        <g style={{ pointerEvents: !disabledMap.sapphire ? 'auto' : 'none' }} className="highlight">
+          <Link to={RouteUtils.getRoflAppsRoute(network)}>
+            <path
+              className={Layer.sapphire}
+              d="M75.8375 233.392C87.7126 233.392 97.3391 243.018 97.3391 254.892C97.3391 266.767 87.7126 276.392 75.8375 276.392C63.9625 276.392 54.3359 266.767 54.3359 254.892C54.3359 243.018 63.9625 233.392 75.8375 233.392Z"
+              fill={graphTheme.circleBorder}
+              stroke={graphTheme.line}
+            />
+            <text x="64" y="258" fill={graphTheme.text} fontSize="10px">
+              {t('common.rofl')}
             </text>
           </Link>
         </g>
