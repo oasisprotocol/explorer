@@ -73,6 +73,7 @@ import { useLocalSettings } from './app/hooks/useLocalSettings'
 import { InstancesCard } from './app/pages/RoflAppDetailsPage/InstancesCard'
 import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
 import { RoflAppUpdatesCard } from './app/pages/RoflAppDetailsPage/RoflAppUpdatesCard'
+import { RoflAppInstanceTransactionsCard } from 'app/pages/RoflAppDetailsPage/RoflAppInstanceTransactionsCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -312,6 +313,10 @@ export const routes: RouteObject[] = [
             children: [
               {
                 path: '',
+                Component: () => <RoflAppInstanceTransactionsCard {...useRoflAppDetailsProps()} />,
+              },
+              {
+                path: 'updates',
                 Component: () => <RoflAppUpdatesCard {...useRoflAppDetailsProps()} />,
               },
               {
