@@ -12,12 +12,12 @@ type SecretsProps = {
 export const Secrets: FC<SecretsProps> = ({ secrets }) => {
   const { t } = useTranslation()
 
-  if (!secrets || secrets.length === 0) {
+  if (!secrets || Object.keys(secrets).length === 0) {
     return <>{t('common.missing')}</>
   }
 
   return (
-    <>
+    <Box>
       {Object.keys(secrets).map(key => (
         <Box key={key}>
           <Typography
@@ -35,6 +35,6 @@ export const Secrets: FC<SecretsProps> = ({ secrets }) => {
           </Typography>
         </Box>
       ))}
-    </>
+    </Box>
   )
 }
