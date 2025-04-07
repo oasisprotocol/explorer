@@ -708,7 +708,8 @@
     "endorsement": "Endorsement",
     "secrets": "Secrets",
     "updates": "Updates",
-    "secretLength": "[{{value}} bytes]"
+    "secretLength": "[{{value}} bytes]",
+    "expired": "Expired"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
