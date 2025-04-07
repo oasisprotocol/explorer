@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import { RoflInstance } from '../../../oasis-nexus/api'
+import { COLORS } from '../../../styles/theme/colors'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { RoflAppInstanceStatusBadge } from 'app/components/Rofl/RoflAppInstanceStatusBadge'
@@ -32,8 +33,11 @@ export const InstancesList: FC<InstancesListProps> = ({
   const tableRows =
     currentEpoch !== undefined && instances
       ? instances?.map(instance => {
+          const isActive = instance.expiration_epoch > currentEpoch
+
           return {
             key: instance.rak,
+            backgroundColor: isActive ? 'transparent' : COLORS.grayLight,
             data: [
               {
                 key: 'rak',
@@ -50,7 +54,7 @@ export const InstancesList: FC<InstancesListProps> = ({
               },
               {
                 key: 'expirationStatus',
-                content: <RoflAppInstanceStatusBadge isActive={instance.expiration_epoch > currentEpoch} />,
+                content: <RoflAppInstanceStatusBadge isActive={isActive} />,
                 align: TableCellAlign.Right,
               },
             ],
