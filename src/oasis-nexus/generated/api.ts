@@ -1195,6 +1195,13 @@ In practice, Nexus currently expects only the following methods:
   - "rofl.Update"
   - "rofl.Remove"
   - "rofl.Register"
+  - "roflmarket.ProviderCreate"
+  - "roflmarket.ProviderUpdate"
+  - "roflmarket.ProviderRemove"
+  - "roflmarket.InstanceCreate"
+  - "roflmarket.InstanceTopUp"
+  - "roflmarket.InstanceCancel"
+  - "roflmarket.InstanceExecuteCmds"
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
@@ -1417,6 +1424,15 @@ export const RuntimeEventType = {
   roflapp_updated: 'rofl.app_updated',
   roflapp_removed: 'rofl.app_removed',
   roflinstance_registered: 'rofl.instance_registered',
+  roflmarketprovider_created: 'roflmarket.provider_created',
+  roflmarketprovider_updated: 'roflmarket.provider_updated',
+  roflmarketprovider_removed: 'roflmarket.provider_removed',
+  roflmarketinstance_created: 'roflmarket.instance_created',
+  roflmarketinstance_updated: 'roflmarket.instance_updated',
+  roflmarketinstance_accepted: 'roflmarket.instance_accepted',
+  roflmarketinstance_cancelled: 'roflmarket.instance_cancelled',
+  roflmarketinstance_removed: 'roflmarket.instance_removed',
+  roflmarketinstance_command_queued: 'roflmarket.instance_command_queued',
 } as const;
 
 /**
@@ -1656,13 +1672,13 @@ This field is omitted when listing multiple accounts.
   allowances: Allowance[];
   /** The available balance, in base units. */
   available: TextBigInt;
-  /** The debonding escrow balance, in base units. */
+  /** Amount debonding from this validator, in base units. */
   debonding: TextBigInt;
   /** The balance of this accounts' (outgoing) debonding delegations, in base units. */
   debonding_delegations_balance: TextBigInt;
   /** The balance of this accounts' (outgoing) delegations, in base units. */
   delegations_balance: TextBigInt;
-  /** The active escrow balance, in base units. */
+  /** Amount delegated to this validator, in base units. */
   escrow: TextBigInt;
   /** The second-granular consensus time of the block in which this account was first active.
 Dates before Cobalt (2021-04-28) are approximate.
