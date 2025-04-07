@@ -31,7 +31,7 @@ import { Enclaves } from './Enclaves'
 import { Secrets } from './Secrets'
 import { RouterTabs } from '../../components/RouterTabs'
 import { TableCellAge } from '../../components/TableCellAge'
-import { instancesContainerId } from '../../utils/tabAnchors'
+import { instancesContainerId, updatesContainerId } from '../../utils/tabAnchors'
 import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
@@ -45,6 +45,7 @@ export const RoflAppDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const id = useParams().id!
   const txLink = useHref('')
+  const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)
   const [method, setMethod] = useTypedSearchParam('method', 'any', {
     deleteParams: ['page'],
@@ -85,6 +86,7 @@ export const RoflAppDetailsPage: FC = () => {
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
+          { label: t('rofl.updates'), to: updatesLink },
           {
             label: t('rofl.instances'),
             to: instancesLink,

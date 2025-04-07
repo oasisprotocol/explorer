@@ -293,30 +293,8 @@ export const useGetRuntimeTransactions: typeof generated.useGetRuntimeTransactio
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeTransactionList, headers, status) => {
-          if (status !== 200) return data
-          return {
-            ...data,
-            transactions: data.transactions.map(tx => {
-              return {
-                ...tx,
-                to_eth: tx.to_eth || fallbackEthAddress(tx.to, params?.rel),
-                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
-                fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
-                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
-                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but amount_symbol
-                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
-                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
-                layer: runtime,
-                network,
-                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
-              }
-            }),
-          }
-        },
+        (data: generated.RuntimeTransactionList, headers, status) =>
+          transformRuntimeTransactionList(data, network, runtime, status, params?.rel),
         ...arrayify(options?.request?.transformResponse),
       ],
     },
@@ -391,29 +369,8 @@ export const useGetRuntimeTransactionsTxHash: typeof generated.useGetRuntimeTran
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeTransactionList, headers, status) => {
-          if (status !== 200) return data
-          return {
-            ...data,
-            transactions: data.transactions.map(tx => {
-              return {
-                ...tx,
-                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
-                fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
-                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
-                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
-                // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but amount_symbol
-                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
-                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
-                layer: runtime,
-                network,
-                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
-              }
-            }),
-          }
-        },
+        (data: generated.RuntimeTransactionList, headers, status) =>
+          transformRuntimeTransactionList(data, network, runtime, status),
         ...arrayify(options?.request?.transformResponse),
       ],
     },
@@ -1583,28 +1540,57 @@ export const useGetRuntimeRoflAppsIdTransactions: typeof generated.useGetRuntime
       ...options?.request,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
-        (data: generated.RuntimeTransactionList, headers, status) => {
-          if (status !== 200) return data
-          return {
-            ...data,
-            transactions: data.transactions.map(tx => {
-              return {
-                ...tx,
-                eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
-                fee: fromBaseUnits(tx.fee, paraTimesConfig.sapphire.decimals),
-                fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
-                charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig.sapphire.decimals),
-                amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig.sapphire.decimals) : undefined,
-                amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
-                layer: runtime,
-                network,
-                method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
-              }
-            }),
-          }
-        },
+        (data: generated.RuntimeTransactionList, headers, status) =>
+          transformRuntimeTransactionList(data, network, runtime, status),
         ...arrayify(options?.request?.transformResponse),
       ],
     },
   })
+}
+
+export const useGetRuntimeRoflAppsIdInstanceTransactions: typeof generated.useGetRuntimeRoflAppsIdInstanceTransactions =
+  (network, runtime, id, params?, options?) => {
+    return generated.useGetRuntimeRoflAppsIdInstanceTransactions(network, runtime, id, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.RuntimeTransactionList, headers, status) =>
+            transformRuntimeTransactionList(data, network, runtime, status),
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
+function transformRuntimeTransactionList(
+  data: generated.RuntimeTransactionList,
+  network: Network,
+  runtime: Runtime,
+  status: number | undefined,
+  relAddress?: generated.EthOrOasisAddress,
+): generated.RuntimeTransactionList {
+  if (status !== 200) return data
+  return {
+    ...data,
+    transactions: data.transactions.map(tx => {
+      return {
+        ...tx,
+        to_eth: tx.to_eth || fallbackEthAddress(tx.to, relAddress),
+        eth_hash: tx.eth_hash ? `0x${tx.eth_hash}` : undefined,
+        // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
+        fee: fromBaseUnits(tx.fee, paraTimesConfig[runtime].decimals),
+        fee_symbol: normalizeSymbol(tx.fee_symbol, { network, layer: runtime }),
+        // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but fee_symbol
+        charged_fee: fromBaseUnits(tx.charged_fee, paraTimesConfig[runtime].decimals),
+        // TODO: Decimals may not be correct, should not depend on ParaTime decimals, but amount_symbol
+        amount: tx.amount ? fromBaseUnits(tx.amount, paraTimesConfig[runtime].decimals) : undefined,
+        amount_symbol: normalizeSymbol(tx.amount_symbol, { network, layer: runtime }),
+        layer: runtime,
+        network,
+        method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
+      }
+    }),
+  }
 }
