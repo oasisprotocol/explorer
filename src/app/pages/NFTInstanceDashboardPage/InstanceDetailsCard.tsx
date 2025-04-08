@@ -53,6 +53,12 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
                 <dd>{nft.name}</dd>
               </>
             )}
+            {nft.description && (
+              <>
+                <dt>{t('common.description')}</dt>
+                <dd>{nft.description}</dd>
+              </>
+            )}
             <dt>{t('nft.instanceTokenId')}</dt>
             <dd>{nft.id}</dd>
             <dt>{t('common.collection')} </dt>
