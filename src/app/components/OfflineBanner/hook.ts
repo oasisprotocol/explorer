@@ -24,7 +24,7 @@ export const useIsApiReachable = (
 export type FreshnessInfo = {
   unavailable?: boolean
   outOfDate?: boolean
-  outOfDateReason?: false | 'indexer' | 'blocks'
+  outOfDateReason?: false | 'indexer' | 'blocks' | 'node'
   lastUpdate?: string
   latestBlock?: number
 }
@@ -96,7 +96,12 @@ export const useConsensusFreshness = (
 
   const blockInterval = 6 * 1000
   const blocksAreBehindNode = data.latest_node_block > data.latest_block + outOfDateThreshold / blockInterval
-  const outOfDateReason = blocksAreBehindNode ? 'blocks' : freshness.outOfDateReason
+  const nodeIsOutOfDate = freshness.outOfDate && data.latest_node_block === data.latest_block
+  const outOfDateReason = blocksAreBehindNode
+    ? 'blocks'
+    : nodeIsOutOfDate
+      ? 'node'
+      : freshness.outOfDateReason
   return {
     ...freshness,
     outOfDate: outOfDateReason === undefined ? undefined : !!outOfDateReason,

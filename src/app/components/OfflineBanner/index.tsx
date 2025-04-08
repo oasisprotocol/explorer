@@ -55,6 +55,9 @@ export const OfflineBanner: FC<OfflineBannerProps> = props => {
     // Don't display lastUpdate. It's updating, but still many blocks behind.
     return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
   }
+  if (outOfDateReason === 'node') {
+    return <StickyAlert severity="warning">{t('home.nodeOutOfDateSince', { scope, lastUpdate })}</StickyAlert>
+  }
   exhaustedTypeWarning('Unexpected outOfDateReason', outOfDateReason)
   return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
 }
