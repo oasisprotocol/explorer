@@ -35,7 +35,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 
-const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) => {
+const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | undefined) => {
   switch (method) {
     case RuntimeEventType.accountstransfer:
       return t('runtimeEvent.accountstransfer')
@@ -65,7 +65,10 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: string | undefined) =>
       return t('runtimeEvent.roflAppRemoved')
     case RuntimeEventType.roflinstance_registered:
       return t('runtimeEvent.instanceRegistered')
+    case undefined:
+      return t('common.unknown')
     default:
+      exhaustedTypeWarning('Unexpected event type', method)
       return method || t('common.unknown')
   }
 }
