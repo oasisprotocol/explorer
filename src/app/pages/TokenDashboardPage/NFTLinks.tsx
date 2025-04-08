@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { EvmNft } from 'oasis-nexus/api'
+import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -66,20 +67,14 @@ export const NFTInstanceLink: FC<NFTLinkProps> = ({ scope, instance }) => {
 type NFTOwnerLinkProps = {
   scope: SearchScope
   owner: string
-  alwaysTrim?: boolean
 }
-export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner, alwaysTrim }) => {
+export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
   const { t } = useTranslation()
 
   return (
-    <StyledTypography>
-      <Trans
-        i18nKey="nft.ownerLink"
-        t={t}
-        components={{
-          OwnerLink: <AccountLink scope={scope} address={owner} alwaysTrim={alwaysTrim} />,
-        }}
-      />
-    </StyledTypography>
+    <Typography sx={{ display: 'flex', whiteSpace: 'initial' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>{t('nft.owner')}:</Box>
+      <AccountLink scope={scope} address={owner} alwaysTrim />
+    </Typography>
   )
 }

@@ -238,7 +238,6 @@
     "openInFullscreen": "Open in fullscreen",
     "openInNewTab": "Open in a new tab",
     "owner": "Owner",
-    "ownerLink": "Owner: <OwnerLink />",
     "switchBackgroundColor": "Switch between dark and light background"
   },
   "nodes": {
