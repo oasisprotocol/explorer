@@ -12,6 +12,27 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.19.0 (2025-04-09)
+
+### Features
+
+- ROFL apps support
+  ([#1777](https://github.com/oasisprotocol/explorer/issues/1777))
+
+### Bug Fixes and Improvements
+
+- Add ROFL to home page graph
+  ([#1853](https://github.com/oasisprotocol/explorer/issues/1853))
+
+- Include ROFL apps in search results
+  ([#1859](https://github.com/oasisprotocol/explorer/issues/1859))
+
+- ROFL app instance transactions tab
+  ([#1863](https://github.com/oasisprotocol/explorer/issues/1863))
+
+- Fix labels in NFT inventory tab
+  ([#1869](https://github.com/oasisprotocol/explorer/issues/1869))
+
 ## 1.18.0 (2025-04-03)
 
 ### Features
