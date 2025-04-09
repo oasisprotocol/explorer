@@ -866,6 +866,31 @@ const addTokenToParams = (event: generated.RuntimeEvent) => {
         valueParam.value = fromBaseUnits(valueParam.value, event.evm_token.decimals ?? 0)
       }
     }
+    if (event.evm_log_name === 'Deposit') {
+      // wROSE
+      const valueParam = event.evm_log_params?.[1]
+      if (valueParam?.evm_type === 'uint256' && typeof valueParam.value === 'string') {
+        const nativeSymbol = getTokensForScope({ network: event.network, layer: event.layer })[0].ticker
+        const nativeDecimals = paraTimesConfig[event.layer]!.decimals
+        valueParam.evm_token = {
+          type: event.evm_token.type,
+          // These could be incorrect if function isn't payable, so add parentheses
+          symbol: `(${nativeSymbol})`,
+          decimals: nativeDecimals,
+        }
+        valueParam.value_raw = valueParam.value
+        valueParam.value = fromBaseUnits(valueParam.value, nativeDecimals)
+      }
+    }
+    if (event.evm_log_name === 'Withdrawal') {
+      // wROSE
+      const valueParam = event.evm_log_params?.[1]
+      if (valueParam?.evm_type === 'uint256' && typeof valueParam.value === 'string') {
+        valueParam.evm_token = event.evm_token
+        valueParam.value_raw = valueParam.value
+        valueParam.value = fromBaseUnits(valueParam.value, event.evm_token.decimals ?? 0)
+      }
+    }
   }
   if (event.evm_token?.type === 'ERC721') {
     if (event.evm_log_name === 'Transfer' || event.evm_log_name === 'Approval') {
