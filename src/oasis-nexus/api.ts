@@ -106,6 +106,7 @@ declare module './generated/api' {
   export interface EvmToken {
     network: Network
     layer: Layer
+    verification_level?: 'full' | 'partial'
   }
 
   export interface BareTokenHolder {

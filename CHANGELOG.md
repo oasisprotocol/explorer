@@ -62,24 +62,24 @@ The format is inspired by [Keep a Changelog].
 
 - Prepare views for incoming ROFL apps feature
   ([#1819](https://github.com/oasisprotocol/explorer/issues/1819),
-   [#1820](https://github.com/oasisprotocol/explorer/issues/1820),
-   [#1827](https://github.com/oasisprotocol/explorer/issues/1827),
-   [#1834](https://github.com/oasisprotocol/explorer/issues/1834),
-   [#1837](https://github.com/oasisprotocol/explorer/issues/1837),
-   [#1840](https://github.com/oasisprotocol/explorer/issues/1840),
-   [#1841](https://github.com/oasisprotocol/explorer/issues/1841),
-   [#1848](https://github.com/oasisprotocol/explorer/issues/1848),
-   [#1851](https://github.com/oasisprotocol/explorer/issues/1851))
+  [#1820](https://github.com/oasisprotocol/explorer/issues/1820),
+  [#1827](https://github.com/oasisprotocol/explorer/issues/1827),
+  [#1834](https://github.com/oasisprotocol/explorer/issues/1834),
+  [#1837](https://github.com/oasisprotocol/explorer/issues/1837),
+  [#1840](https://github.com/oasisprotocol/explorer/issues/1840),
+  [#1841](https://github.com/oasisprotocol/explorer/issues/1841),
+  [#1848](https://github.com/oasisprotocol/explorer/issues/1848),
+  [#1851](https://github.com/oasisprotocol/explorer/issues/1851))
 
 ### Internal Changes
 
 - Update dependencies
   ([#1654](https://github.com/oasisprotocol/explorer/issues/1654),
-   [#1674](https://github.com/oasisprotocol/explorer/issues/1674),
-   [#1788](https://github.com/oasisprotocol/explorer/issues/1788),
-   [#1792](https://github.com/oasisprotocol/explorer/issues/1792),
-   [#1799](https://github.com/oasisprotocol/explorer/issues/1799),
-   [#1854](https://github.com/oasisprotocol/explorer/issues/1854))
+  [#1674](https://github.com/oasisprotocol/explorer/issues/1674),
+  [#1788](https://github.com/oasisprotocol/explorer/issues/1788),
+  [#1792](https://github.com/oasisprotocol/explorer/issues/1792),
+  [#1799](https://github.com/oasisprotocol/explorer/issues/1799),
+  [#1854](https://github.com/oasisprotocol/explorer/issues/1854))
 
 - Update API bindings
   ([#1781](https://github.com/oasisprotocol/explorer/issues/1781))
@@ -130,12 +130,12 @@ The format is inspired by [Keep a Changelog].
 
 - Update dependencies
   ([#1675](https://github.com/oasisprotocol/explorer/issues/1675),
-   [#1676](https://github.com/oasisprotocol/explorer/issues/1676),
-   [#1736](https://github.com/oasisprotocol/explorer/issues/1736),
-   [#1737](https://github.com/oasisprotocol/explorer/issues/1737),
-   [#1771](https://github.com/oasisprotocol/explorer/issues/1771),
-   [#1787](https://github.com/oasisprotocol/explorer/issues/1787),
-   [#1789](https://github.com/oasisprotocol/explorer/issues/1789))
+  [#1676](https://github.com/oasisprotocol/explorer/issues/1676),
+  [#1736](https://github.com/oasisprotocol/explorer/issues/1736),
+  [#1737](https://github.com/oasisprotocol/explorer/issues/1737),
+  [#1771](https://github.com/oasisprotocol/explorer/issues/1771),
+  [#1787](https://github.com/oasisprotocol/explorer/issues/1787),
+  [#1789](https://github.com/oasisprotocol/explorer/issues/1789))
 
 - Update API bindings
   ([#1747](https://github.com/oasisprotocol/explorer/issues/1747))
@@ -186,8 +186,8 @@ The format is inspired by [Keep a Changelog].
 
 - Update dependencies
   ([#1559](https://github.com/oasisprotocol/explorer/issues/1559),
-   [#1657](https://github.com/oasisprotocol/explorer/issues/1657),
-   [#1658](https://github.com/oasisprotocol/explorer/issues/1658))
+  [#1657](https://github.com/oasisprotocol/explorer/issues/1657),
+  [#1658](https://github.com/oasisprotocol/explorer/issues/1658))
 
 ## 1.15.1 (2024-12-18)
 
@@ -257,16 +257,16 @@ The format is inspired by [Keep a Changelog].
 
 - Update dependencies
   ([#1454](https://github.com/oasisprotocol/explorer/issues/1454),
-   [#1501](https://github.com/oasisprotocol/explorer/issues/1501),
-   [#1512](https://github.com/oasisprotocol/explorer/issues/1512),
-   [#1563](https://github.com/oasisprotocol/explorer/issues/1563),
-   [#1579](https://github.com/oasisprotocol/explorer/issues/1579),
-   [#1603](https://github.com/oasisprotocol/explorer/issues/1603),
-   [#1604](https://github.com/oasisprotocol/explorer/issues/1604),
-   [#1605](https://github.com/oasisprotocol/explorer/issues/1605),
-   [#1629](https://github.com/oasisprotocol/explorer/issues/1629),
-   [#1631](https://github.com/oasisprotocol/explorer/issues/1631),
-   [#1653](https://github.com/oasisprotocol/explorer/issues/1653))
+  [#1501](https://github.com/oasisprotocol/explorer/issues/1501),
+  [#1512](https://github.com/oasisprotocol/explorer/issues/1512),
+  [#1563](https://github.com/oasisprotocol/explorer/issues/1563),
+  [#1579](https://github.com/oasisprotocol/explorer/issues/1579),
+  [#1603](https://github.com/oasisprotocol/explorer/issues/1603),
+  [#1604](https://github.com/oasisprotocol/explorer/issues/1604),
+  [#1605](https://github.com/oasisprotocol/explorer/issues/1605),
+  [#1629](https://github.com/oasisprotocol/explorer/issues/1629),
+  [#1631](https://github.com/oasisprotocol/explorer/issues/1631),
+  [#1653](https://github.com/oasisprotocol/explorer/issues/1653))
 
 ## 1.14.0 (2024-10-17)
 
@@ -307,13 +307,13 @@ The format is inspired by [Keep a Changelog].
 
 - Update dependencies
   ([#1507](https://github.com/oasisprotocol/explorer/issues/1507),
-   [#1508](https://github.com/oasisprotocol/explorer/issues/1508),
-   [#1549](https://github.com/oasisprotocol/explorer/issues/1549),
-   [#1550](https://github.com/oasisprotocol/explorer/issues/1550),
-   [#1551](https://github.com/oasisprotocol/explorer/issues/1551),
-   [#1557](https://github.com/oasisprotocol/explorer/issues/1557),
-   [#1560](https://github.com/oasisprotocol/explorer/issues/1560),
-   [#1562](https://github.com/oasisprotocol/explorer/issues/1562))
+  [#1508](https://github.com/oasisprotocol/explorer/issues/1508),
+  [#1549](https://github.com/oasisprotocol/explorer/issues/1549),
+  [#1550](https://github.com/oasisprotocol/explorer/issues/1550),
+  [#1551](https://github.com/oasisprotocol/explorer/issues/1551),
+  [#1557](https://github.com/oasisprotocol/explorer/issues/1557),
+  [#1560](https://github.com/oasisprotocol/explorer/issues/1560),
+  [#1562](https://github.com/oasisprotocol/explorer/issues/1562))
 
 ## 1.13.0 (2024-09-18)
 
