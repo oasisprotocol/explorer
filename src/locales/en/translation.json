@@ -176,6 +176,7 @@
       "title": "Verification",
       "isVerified": "Verified",
       "isNotVerified": "Unverified",
+      "isPartiallyVerified": "Partially Verified",
       "openInAbiPlayground": "Interact in <AbiPlaygroundLink>ABI Playground</AbiPlaygroundLink>",
       "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>",
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>",
