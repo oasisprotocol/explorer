@@ -7,10 +7,13 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import InfoIcon from '@mui/icons-material/Info'
 import ErrorIcon from '@mui/icons-material/Error'
 
-export type StatusVariant = 'success' | 'warning' | 'danger' | 'info'
+export type StatusVariant = 'success' | 'partialsuccess' | 'warning' | 'danger' | 'info'
 
 const variantStyles: Record<StatusVariant, { bgColor: string }> = {
   success: {
+    bgColor: COLORS.eucalyptus,
+  },
+  partialsuccess: {
     bgColor: COLORS.honeydew,
   },
   warning: {
@@ -25,7 +28,8 @@ const variantStyles: Record<StatusVariant, { bgColor: string }> = {
 }
 
 const variantIcon: Record<StatusVariant, ReactNode> = {
-  success: <CheckCircleIcon color="success" fontSize="small" />,
+  success: <CheckCircleIcon sx={{ color: COLORS.honeydew }} fontSize="small" />,
+  partialsuccess: <CheckCircleIcon color="success" fontSize="small" />,
   warning: <ErrorIcon color="warning" fontSize="small" />,
   danger: <CancelIcon color="error" fontSize="small" />,
   info: <InfoIcon color="info" fontSize="small" />,

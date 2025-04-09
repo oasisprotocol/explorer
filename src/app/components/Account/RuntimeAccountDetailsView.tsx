@@ -105,7 +105,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
             <VerificationIcon
               address_eth={account.address_eth!}
               scope={account}
-              verified={!!account.evm_contract?.verification}
+              verificationLevel={account.evm_contract?.verification?.verification_level}
             />
           </dd>
         </>

@@ -11,25 +11,28 @@ import Tooltip from '@mui/material/Tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
 
-type TxStatus = 'unknown' | 'success' | 'failure' | 'pending'
+type TxStatus = 'unknown' | 'success' | 'partialsuccess' | 'failure' | 'pending'
 
 const statusBgColor: Record<TxStatus, string> = {
   unknown: COLORS.grayMediumLight,
-  success: COLORS.honeydew,
+  success: COLORS.eucalyptus,
+  partialsuccess: COLORS.honeydew,
   failure: COLORS.linen,
   pending: COLORS.warningLight,
 }
 
 const statusFgColor: Record<TxStatus, string> = {
   unknown: COLORS.grayMedium,
-  success: COLORS.eucalyptus,
+  success: COLORS.honeydew,
+  partialsuccess: COLORS.eucalyptus,
   failure: COLORS.errorIndicatorBackground,
   pending: COLORS.warningColor,
 }
 
 export const statusIcon: Record<TxStatus, ReactNode> = {
   unknown: <HelpIcon color="inherit" fontSize="inherit" />,
-  success: <CheckCircleIcon color="success" fontSize="inherit" />,
+  success: <CheckCircleIcon color="inherit" fontSize="inherit" />,
+  partialsuccess: <CheckCircleIcon color="success" fontSize="inherit" />,
   failure: <CancelIcon color="error" fontSize="inherit" />,
   pending: <HelpIcon color="inherit" fontSize="inherit" />,
 }
@@ -119,6 +122,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
   const statusLabel: Record<TxStatus, string> = {
     unknown: t('common.unknown'),
     success: t('common.success'),
+    partialsuccess: t('common.partial_success'),
     failure: t('common.failed'),
     pending: getPendingLabel(t, method, withText),
   }
