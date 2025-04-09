@@ -74,6 +74,17 @@ export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOpt
     )
 }
 
+export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBase[] => {
+  const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update']
+
+  return options.map(
+    (method): SelectOptionBase => ({
+      value: method,
+      label: getRuntimeTransactionLabel(t, method),
+    }),
+  )
+}
+
 /**
  * The method call body. Defined by the runtime.
  *

@@ -35,12 +35,14 @@ const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumb
 
 type StyledTableRowProps = MuiTableRowProps & {
   highlight?: boolean
+  backgroundColor?: string
 }
 
 const StyledTableRow = styled(TableRow, {
-  shouldForwardProp: prop => prop !== 'highlight',
-})<StyledTableRowProps>(({ highlight }) => ({
+  shouldForwardProp: prop => prop !== 'highlight' && prop !== 'backgroundColor',
+})<StyledTableRowProps>(({ backgroundColor, highlight }) => ({
   ...(highlight && backgroundColorAnimation),
+  ...(backgroundColor && { backgroundColor }),
 }))
 
 export enum TableCellAlign {
@@ -60,6 +62,7 @@ export type TableRowProps = {
   key: string
   data: TableCellProps[]
   highlight?: boolean
+  backgroundColor?: string
 }
 
 export type TableColProps = {
@@ -147,7 +150,7 @@ export const Table: FC<TableProps> = ({
               <SkeletonTableRows rowsNumber={rowsNumber} columnsNumber={columns.length} />
             )}
             {rows?.map(row => (
-              <StyledTableRow key={row.key} highlight={row.highlight}>
+              <StyledTableRow key={row.key} highlight={row.highlight} backgroundColor={row.backgroundColor}>
                 {row.data.map((cell, index) => {
                   if (cell.hide) {
                     return null

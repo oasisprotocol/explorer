@@ -17,18 +17,20 @@ export const Enclaves: FC<EnclavesProps> = ({ policy }) => {
 
   return (
     <table>
-      {policy.enclaves.map((enclave: string) => (
-        <tr key={enclave}>
-          <td>
-            <Typography variant="mono" component="span">
-              {enclave}
-            </Typography>
-          </td>
-          <td>
-            <CopyToClipboard value={enclave} />
-          </td>
-        </tr>
-      ))}
+      <tbody>
+        {policy.enclaves.map((enclave: string) => (
+          <tr key={enclave}>
+            <td>
+              <Typography variant="mono" component="span">
+                {enclave}
+              </Typography>
+            </td>
+            <td>
+              <CopyToClipboard value={enclave} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }

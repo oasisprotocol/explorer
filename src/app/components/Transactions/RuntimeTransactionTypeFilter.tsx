@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { getRuntimeTxMethodOptions } from '../RuntimeTransactionMethod'
 import { useTranslation } from 'react-i18next'
-import { Select } from '../Select'
+import { Select, SelectOptionBase } from '../Select'
 import Typography from '@mui/material/Typography'
 import { Layer } from '../../../oasis-nexus/api'
 
@@ -28,14 +28,20 @@ export const RuntimeTransactionTypeFilter: FC<{
   value: string
   setValue: (value: string) => void
   expand?: boolean
-}> = ({ layer, value, setValue, expand }) => {
+  customOptions?: SelectOptionBase[]
+}> = ({ layer, value, setValue, expand, customOptions }) => {
   const { t } = useTranslation()
+  const defaultOptions = [{ value: 'any', label: 'Any' }]
+  const options = customOptions
+    ? [...defaultOptions, ...customOptions]
+    : [...defaultOptions, ...getRuntimeTxMethodOptions(t, layer)]
+
   return (
     <Select
       className={expand ? 'expand' : undefined}
       light={true}
       label={<FilterLabel />}
-      options={[{ value: 'any', label: 'Any' }, ...getRuntimeTxMethodOptions(t, layer)]}
+      options={options}
       value={value}
       handleChange={setValue as any}
     />
