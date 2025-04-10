@@ -4,17 +4,17 @@
   "name": "Official explorer for the Oasis Network.",
   "icons": [
     {
-      "src": "./favicon.svg",
+      "src": "https://assets.oasis.io/logotypes/favicon.svg",
       "sizes": "any",
       "type": "image/x-icon"
     },
     {
-      "src": "./Icon Blue 192.png",
+      "src": "https://assets.oasis.io/logotypes/Icon Blue 192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./Icon Blue 512.png",
+      "src": "https://assets.oasis.io/logotypes/Icon Blue 512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
