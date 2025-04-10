@@ -8,6 +8,7 @@ import { TrimLinkLabel } from '../TrimLinkLabel'
 import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
 export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
   <Typography variant="mono">
@@ -30,7 +31,9 @@ export const BlockHashLink: FC<{
     // Table view
     return (
       <Typography variant="mono">
-        <TrimLinkLabel label={hash} to={to} />
+        <MaybeWithTooltip title={hash}>
+          <TrimLinkLabel label={hash} to={to} />
+        </MaybeWithTooltip>
       </Typography>
     )
   }

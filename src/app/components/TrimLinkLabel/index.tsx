@@ -1,9 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import Tooltip from '@mui/material/Tooltip'
 import { trimLongString } from '../../utils/trimLongString'
-import { tooltipDelay } from '../../../styles/theme'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
 
 type TrimLinkLabelProps = {
@@ -38,12 +36,10 @@ type TrimLinkProps = TrimLinkLabelProps & {
   trimmedLabel: ReactNode
 }
 
-const TrimLink: FC<TrimLinkProps> = ({ label, to, trimmedLabel }) => {
+const TrimLink: FC<TrimLinkProps> = ({ label, to }) => {
   return (
-    <Tooltip arrow placement="top" title={label} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
-      <Link component={RouterLink} to={to}>
-        {trimmedLabel}
-      </Link>
-    </Tooltip>
+    <Link component={RouterLink} to={to}>
+      {label}
+    </Link>
   )
 }
