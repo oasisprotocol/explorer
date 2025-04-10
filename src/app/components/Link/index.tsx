@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
-import { TrimEndLinkLabel } from '../TrimLinkLabel'
+import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
 
 type LinkProps = {
   address: string
@@ -74,9 +74,13 @@ type CustomTrimEndLinkLabelProps = {
   highlightedPart?: string
 }
 
-const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, highlightedPart }) => (
-  <TrimEndLinkLabel label={name} to={to} trimStart={14} highlightedPart={highlightedPart} />
-)
+const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, highlightedPart }) => {
+  return (
+    <MuiLink component={RouterLink} to={to}>
+      <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+    </MuiLink>
+  )
+}
 
 type TabletLinkProps = {
   address: string
