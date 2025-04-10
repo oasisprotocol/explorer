@@ -14,8 +14,9 @@ import { MethodIcon } from '../ConsensusTransactionMethod'
 import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
 import { SelectOptionBase } from '../Select'
 import { paraTimesConfig } from '../../../config'
+import { exhaustedTypeWarning } from '../../../types/errors'
 
-const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) => {
+const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod | undefined) => {
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
   switch (method) {
     case undefined:
@@ -44,11 +45,12 @@ const getRuntimeTransactionLabel = (t: TFunction, method: string | undefined) =>
     case 'rofl.Update':
       return t('transactions.method.rofl.update')
     default:
+      exhaustedTypeWarning('Unknown runtime tx method', method)
       return method || t('common.unknown')
   }
 }
 
-const knownRuntimeTxMethods: string[] = [
+const knownRuntimeTxMethods = [
   'accounts.Transfer',
   'evm.Call',
   'evm.Create',
@@ -60,7 +62,8 @@ const knownRuntimeTxMethods: string[] = [
   'rofl.Register',
   'rofl.Remove',
   'rofl.Update',
-]
+] as const
+type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
 export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOptionBase[] => {
   const hasRofl = !!paraTimesConfig[layer]?.offerRoflTxTypes
@@ -75,7 +78,7 @@ export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOpt
 }
 
 export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBase[] => {
-  const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update']
+  const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update'] as const
 
   return options.map(
     (method): SelectOptionBase => ({
@@ -104,7 +107,11 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBa
  *   - "rofl.Remove"
  *   - "rofl.Register"
  */
-const getRuntimeTransactionIcon = (method: string | undefined, label: string, truncate?: boolean) => {
+const getRuntimeTransactionIcon = (
+  method: KnownRuntimeTxMethod | undefined,
+  label: string,
+  truncate?: boolean,
+) => {
   const props = {
     border: false,
     label,
@@ -134,7 +141,10 @@ const getRuntimeTransactionIcon = (method: string | undefined, label: string, tr
       return <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />
     case 'rofl.Update':
       return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
+    case undefined:
+      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
     default:
+      exhaustedTypeWarning('Unknown runtime tx method', method)
       return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
   }
 }
@@ -146,7 +156,7 @@ type RuntimeTransactionLabelProps = {
 
 export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ transaction, truncate }) => {
   const { t } = useTranslation()
-  let label = getRuntimeTransactionLabel(t, transaction.method)
+  let label = getRuntimeTransactionLabel(t, transaction.method as KnownRuntimeTxMethod | undefined)
   if (transaction.evm_fn_name) {
     if (truncate) {
       label = `${transaction.evm_fn_name}`
@@ -155,7 +165,9 @@ export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ tra
     }
   }
 
-  return <>{getRuntimeTransactionIcon(transaction.method, label, truncate)}</>
+  return (
+    <>{getRuntimeTransactionIcon(transaction.method as KnownRuntimeTxMethod | undefined, label, truncate)}</>
+  )
 }
 
 export const getRuntimeTransactionMethodFilteringParam = (
