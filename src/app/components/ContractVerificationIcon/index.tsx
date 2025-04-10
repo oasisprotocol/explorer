@@ -23,7 +23,7 @@ export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
       : t('contract.verification.isPartiallyVerified')
     : t('contract.verification.isNotVerified')
   const statusVariant =
-    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'warning' : 'danger'
+    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
   return <StatusBadge label={statusLabel} variant={statusVariant} />
 }
