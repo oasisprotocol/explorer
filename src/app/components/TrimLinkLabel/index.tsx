@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { trimLongString } from '../../utils/trimLongString'
@@ -14,7 +14,11 @@ export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
   if (!trimmedLabel) {
     return null
   }
-  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} />
+  return (
+    <Link component={RouterLink} to={to}>
+      {trimmedLabel}
+    </Link>
+  )
 }
 
 type TrimEndLinkLabelProps = TrimLinkLabelProps & {
@@ -29,17 +33,9 @@ export const TrimEndLinkLabel: FC<TrimEndLinkLabelProps> = ({ label, to, trimSta
   if (!trimmedLabel) {
     return null
   }
-  return <TrimLink label={label} to={to} trimmedLabel={trimmedLabel} />
-}
-
-type TrimLinkProps = TrimLinkLabelProps & {
-  trimmedLabel: ReactNode
-}
-
-const TrimLink: FC<TrimLinkProps> = ({ label, to }) => {
   return (
     <Link component={RouterLink} to={to}>
-      {label}
+      {trimmedLabel}
     </Link>
   )
 }
