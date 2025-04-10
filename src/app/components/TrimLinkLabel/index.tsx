@@ -1,27 +1,11 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import { trimLongString } from '../../utils/trimLongString'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
 
-type TrimLinkLabelProps = {
+type TrimEndLinkLabelProps = {
   label: string
   to: string
-}
-
-export const TrimLinkLabel: FC<TrimLinkLabelProps> = ({ label, to }) => {
-  const trimmedLabel = trimLongString(label)
-  if (!trimmedLabel) {
-    return null
-  }
-  return (
-    <Link component={RouterLink} to={to}>
-      {trimmedLabel}
-    </Link>
-  )
-}
-
-type TrimEndLinkLabelProps = TrimLinkLabelProps & {
   trimStart: number
   highlightedPart?: string
 }

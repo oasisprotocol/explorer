@@ -2,9 +2,8 @@ import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-
 import { RouteUtils } from '../../utils/route-utils'
-import { TrimLinkLabel } from '../TrimLinkLabel'
+import { trimLongString } from '../../utils/trimLongString'
 import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
@@ -32,7 +31,9 @@ export const BlockHashLink: FC<{
     return (
       <Typography variant="mono">
         <MaybeWithTooltip title={hash}>
-          <TrimLinkLabel label={hash} to={to} />
+          <Link component={RouterLink} to={to}>
+            {trimLongString(hash)}
+          </Link>
         </MaybeWithTooltip>
       </Typography>
     )
