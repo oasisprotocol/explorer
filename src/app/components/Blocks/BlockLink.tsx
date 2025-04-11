@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-
 import { RouteUtils } from '../../utils/route-utils'
-import { TrimLinkLabel } from '../TrimLinkLabel'
+import { trimLongString } from '../../utils/trimLongString'
 import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
+import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
 export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
   <Typography variant="mono">
@@ -30,7 +30,11 @@ export const BlockHashLink: FC<{
     // Table view
     return (
       <Typography variant="mono">
-        <TrimLinkLabel label={hash} to={to} />
+        <MaybeWithTooltip title={hash}>
+          <Link component={RouterLink} to={to}>
+            {trimLongString(hash)}
+          </Link>
+        </MaybeWithTooltip>
       </Typography>
     )
   }

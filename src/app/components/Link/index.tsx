@@ -2,14 +2,15 @@ import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import MuiLink from '@mui/material/Link'
-import { TrimLinkLabel, TrimEndLinkLabel } from '../TrimLinkLabel'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
+import { trimLongString } from '../..//utils/trimLongString'
 import { HighlightedText } from '../HighlightedText'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
+import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
 
 type LinkProps = {
   address: string
@@ -73,9 +74,13 @@ type CustomTrimEndLinkLabelProps = {
   highlightedPart?: string
 }
 
-const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, highlightedPart }) => (
-  <TrimEndLinkLabel label={name} to={to} trimStart={14} highlightedPart={highlightedPart} />
-)
+const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, highlightedPart }) => {
+  return (
+    <MuiLink component={RouterLink} to={to}>
+      <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+    </MuiLink>
+  )
+}
 
 type TabletLinkProps = {
   address: string
@@ -88,7 +93,11 @@ const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart })
   if (name) {
     return <CustomTrimEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
   }
-  return <TrimLinkLabel label={address} to={to} />
+  return (
+    <MuiLink component={RouterLink} to={to}>
+      {trimLongString(address)}
+    </MuiLink>
+  )
 }
 
 type DesktopLinkProps = TabletLinkProps & {
@@ -102,7 +111,9 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, high
         {name ? (
           <CustomTrimEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
         ) : (
-          <TrimLinkLabel label={address} to={to} />
+          <MuiLink component={RouterLink} to={to}>
+            {trimLongString(address)}
+          </MuiLink>
         )}
       </WithHighlighting>
     )
