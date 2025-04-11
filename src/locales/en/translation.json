@@ -165,6 +165,7 @@
   },
   "contract": {
     "code": "Code",
+    "contractMetadata": "Contract Metadata",
     "copyButton": "Copy {{subject}}",
     "creationByteCode": "Creation ByteCode",
     "creator": "Creator",

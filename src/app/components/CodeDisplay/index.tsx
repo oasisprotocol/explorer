@@ -60,7 +60,7 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           />
         )}
       </Box>
-      <ScrollableDataDisplay data={code} />
+      <ScrollableDataDisplay data={<StyledPre>{code}</StyledPre>} />
     </Box>
   )
 }
@@ -71,13 +71,22 @@ type RawDataDisplayProps = {
   extraTopPadding?: boolean
 }
 
-export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, extraTopPadding }) => {
-  const code = data === undefined ? undefined : base64ToHex(data)
-  if (!code) {
-    return null
-  }
+export const RawDataDisplay: FC<RawDataDisplayProps & { decodeBase64?: boolean }> = ({
+  data,
+  label,
+  decodeBase64 = false,
+}) => {
+  if (!data) return null
+
+  const code = decodeBase64 ? base64ToHex(data) : data
+
   return (
-    <CodeDisplay code={code} copyToClipboardValue={code} label={label} extraTopPadding={extraTopPadding} />
+    <CodeDisplay
+      code={<StyledPre>{code}</StyledPre>}
+      copyToClipboardValue={code}
+      label={label}
+      extraTopPadding={true}
+    />
   )
 }
 
