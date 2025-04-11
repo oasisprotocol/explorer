@@ -216,7 +216,7 @@ export const RoflAppDetailsVerticalListView: FC<{
       <ActiveInstancesNumberRow number={app.num_active_instances} />
       <DetailsRow title={t('rofl.created')}>
         {t('common.formattedDateTime', {
-          value: app.date_created,
+          timestamp: new Date(app.date_created),
           formatParams: {
             timestamp: {
               year: 'numeric',

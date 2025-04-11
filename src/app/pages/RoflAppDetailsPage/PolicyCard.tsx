@@ -62,7 +62,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, policy
                 {transaction ? (
                   <>
                     {t('common.formattedDateTime', {
-                      value: transaction.timestamp,
+                      timestamp: new Date(transaction.timestamp),
                       formatParams: {
                         timestamp: {
                           year: 'numeric',
