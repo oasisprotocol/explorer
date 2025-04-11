@@ -33,6 +33,7 @@ import { MultipleTransactionsWarning } from '../../components/Transactions/Multi
 import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
+import { RoundedBalance } from 'app/components/RoundedBalance'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -200,14 +201,13 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          <dt>{t('common.amount')}</dt>
+          <dt>{t('common.shares')}</dt>
           <dd>
-            {transaction.amount != null
-              ? t('common.valueInToken', {
-                  ...getPreciseNumberFormat(transaction.amount),
-                  ticker: transaction.amount_symbol,
-                })
-              : t('common.missing')}
+            <RoundedBalance
+              compactLargeNumbers
+              value={transaction?.body?.shares}
+              ticker={t('common.shares')}
+            />
           </dd>
 
           {showFiatValues &&
