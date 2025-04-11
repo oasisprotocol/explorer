@@ -157,7 +157,13 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
               },
               {
                 align: TableCellAlign.Right,
-                content: <RoundedBalance value={transaction.amount} ticker={transaction.amount_symbol} />,
+                content: (
+                  <RoundedBalance
+                    compactLargeNumbers
+                    value={transaction?.body?.shares}
+                    ticker={t('common.shares')}
+                  />
+                ),
                 key: 'value',
               },
               {
