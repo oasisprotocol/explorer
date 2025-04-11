@@ -72,7 +72,7 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
         {
           align: TableCellAlign.Right,
           content: t('common.formattedDateTime', {
-            value: app.date_created,
+            timestamp: new Date(app.date_created),
             formatParams: {
               timestamp: {
                 year: 'numeric',
