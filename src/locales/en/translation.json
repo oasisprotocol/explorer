@@ -718,7 +718,12 @@
     "secrets": "Secrets",
     "updates": "Updates",
     "secretLength": "[{{value}} bytes]",
-    "expired": "Expired"
+    "expired": "Expired",
+    "instanceDetails": "Instance details",
+    "rekAbbreviation": "REK",
+    "roflAppId": "ROFL App ID",
+    "endorsingNodeId": "Endorsing node ID",
+    "extraKeys": "Extra keys"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",
