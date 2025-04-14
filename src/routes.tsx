@@ -75,6 +75,8 @@ import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
 import { RoflAppUpdatesCard } from './app/pages/RoflAppDetailsPage/RoflAppUpdatesCard'
 import { RoflAppInstanceTransactionsCard } from 'app/pages/RoflAppDetailsPage/RoflAppInstanceTransactionsCard'
 import { RoflAppInstanceDetailsPage } from 'app/pages/RoflAppInstanceDetailsPage'
+import { useRoflAppInstanceDetailsProps } from 'app/pages/RoflAppInstanceDetailsPage/hooks'
+import { RoflAppInstanceRakTransactionsCard } from 'app/pages/RoflAppInstanceDetailsPage/RoflAppInstanceRakTransactionsCard'
 
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
@@ -330,6 +332,12 @@ export const routes: RouteObject[] = [
             path: `rofl/app/:id/instance/:rak`,
             element: <RoflAppInstanceDetailsPage />,
             loader: roflAppParamLoader(),
+            children: [
+              {
+                path: '',
+                Component: () => <RoflAppInstanceRakTransactionsCard {...useRoflAppInstanceDetailsProps()} />,
+              },
+            ],
           },
         ],
       },
