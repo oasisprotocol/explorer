@@ -85,8 +85,9 @@ const knownRuntimeTxMethods = [
   'roflmarket.InstanceTopUp',
   'roflmarket.InstanceCancel',
   'roflmarket.InstanceExecuteCmds',
+  '',
 ] as const
-type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number] | ''
+type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
 export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOptionBase[] => {
   const hasRofl = !!paraTimesConfig[layer]?.offerRoflTxTypes
