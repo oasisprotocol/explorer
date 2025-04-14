@@ -22,6 +22,7 @@ export enum AppErrors {
   NotFoundBlockHeight = 'not_found_block_height',
   NotFoundTxHash = 'not_found_tx_hash',
   NotFoundRoflApp = 'not_found_rofl_app',
+  NotFoundRoflAppInstance = 'not_found_rofl_app_instance',
   NotFoundProposalId = 'not_found_proposal_id',
   InvalidUrl = 'invalid_url',
   InvalidVote = 'invalid_vote',
