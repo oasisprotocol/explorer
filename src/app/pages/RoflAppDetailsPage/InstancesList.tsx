@@ -6,6 +6,10 @@ import { COLORS } from '../../../styles/theme/colors'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { RoflAppInstanceStatusBadge } from 'app/components/Rofl/RoflAppInstanceStatusBadge'
+import { RouteUtils } from 'app/utils/route-utils'
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@mui/material/Link'
+import { SearchScope } from '../../../types/searchScope'
 
 type InstancesListProps = {
   currentEpoch: number | undefined
@@ -13,6 +17,8 @@ type InstancesListProps = {
   isLoading: boolean
   limit: number
   pagination: false | TablePaginationProps
+  appId: string
+  scope: SearchScope
 }
 
 export const InstancesList: FC<InstancesListProps> = ({
@@ -21,6 +27,8 @@ export const InstancesList: FC<InstancesListProps> = ({
   pagination,
   instances,
   currentEpoch,
+  appId,
+  scope,
 }) => {
   const { t } = useTranslation()
   const tableColumns: TableColProps[] = [
@@ -34,6 +42,7 @@ export const InstancesList: FC<InstancesListProps> = ({
     currentEpoch !== undefined && instances
       ? instances?.map(instance => {
           const isActive = instance.expiration_epoch > currentEpoch
+          const to = RouteUtils.getRoflAppInstanceRoute(scope.network, appId, instance.rak)
 
           return {
             key: instance.rak,
@@ -41,7 +50,13 @@ export const InstancesList: FC<InstancesListProps> = ({
             data: [
               {
                 key: 'rak',
-                content: <Typography variant="mono">{instance.rak}</Typography>,
+                content: (
+                  <Typography variant="mono">
+                    <Link component={RouterLink} to={to}>
+                      {instance.rak}
+                    </Link>
+                  </Typography>
+                ),
               },
               {
                 key: 'node',
