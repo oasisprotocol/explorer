@@ -23,6 +23,10 @@ export const LatestRoflApps: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isLoading, data } = roflAppsQuery
   const roflApps = data?.data.rofl_apps
 
+  if (!roflApps?.length) {
+    return null
+  }
+
   return (
     <Card>
       <CardHeader
