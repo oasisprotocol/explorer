@@ -22,8 +22,8 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
   switch (method) {
     case '':
-      // Method may be undefined if the transaction was malformed.
-      return t('transactions.method.unavailable')
+      // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
+      return t('common.unknown')
     case 'accounts.Transfer':
       return t('transactions.method.accounts.transfer')
     case 'evm.Call':
