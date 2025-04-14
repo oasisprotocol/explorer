@@ -13,7 +13,7 @@ type RoflAppsListProps = {
   apps?: RoflApp[]
   isLoading: boolean
   limit: number
-  pagination: TablePaginationProps
+  pagination: TablePaginationProps | false
 }
 
 export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, pagination, apps }) => {
@@ -42,7 +42,10 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
       key: app.id,
       data: [
         {
-          content: index + 1 + (pagination.selectedPage - 1) * pagination.rowsPerPage,
+          content: pagination
+            ? index + 1 + (pagination.selectedPage - 1) * pagination.rowsPerPage
+            : // views without pagination enabled
+              index + 1,
           key: 'order',
         },
         {
