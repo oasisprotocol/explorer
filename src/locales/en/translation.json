@@ -492,6 +492,15 @@
         "remove": "ROFL Remove",
         "update": "ROFL Update"
       },
+      "roflmarket": {
+        "providerCreate": "ROFL Market Provider Create",
+        "providerUpdate": "ROFL Market Provider Update",
+        "providerRemove": "ROFL Market Provider Remove",
+        "instanceCreate": "ROFL Market Instance Create",
+        "instanceTopUp": "ROFL Market Instance Top Up",
+        "instanceCancel": "ROFL Market Instance Cancel",
+        "instanceExecuteCmds": "ROFL Market Instance Execute Commands"
+      },
       "vault": {
         "authorizeAction": "Vault: Authorize Action",
         "cancelAction": "Vault: Cancel Action",
