@@ -18,12 +18,12 @@ import { SelectOptionBase } from '../Select'
 import { paraTimesConfig } from '../../../config'
 import { exhaustedTypeWarning } from '../../../types/errors'
 
-const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod | undefined) => {
+const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) => {
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
   switch (method) {
-    case undefined:
-      // Method may be undefined if the transaction was malformed.
-      return t('transactions.method.unavailable')
+    case '':
+      // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
+      return t('common.unknown')
     case 'accounts.Transfer':
       return t('transactions.method.accounts.transfer')
     case 'evm.Call':
@@ -85,6 +85,7 @@ const knownRuntimeTxMethods = [
   'roflmarket.InstanceTopUp',
   'roflmarket.InstanceCancel',
   'roflmarket.InstanceExecuteCmds',
+  '',
 ] as const
 type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
@@ -137,11 +138,7 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBa
  *   - "roflmarket.InstanceCancel"
  *   - "roflmarket.InstanceExecuteCmds"
  */
-const getRuntimeTransactionIcon = (
-  method: KnownRuntimeTxMethod | undefined,
-  label: string,
-  truncate?: boolean,
-) => {
+const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, truncate?: boolean) => {
   const props = {
     border: false,
     label,
@@ -185,7 +182,7 @@ const getRuntimeTransactionIcon = (
       return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
     case 'roflmarket.InstanceExecuteCmds':
       return <MethodIcon icon={<DeveloperBoard />} {...props} />
-    case undefined:
+    case '':
       return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
@@ -200,7 +197,7 @@ type RuntimeTransactionLabelProps = {
 
 export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ transaction, truncate }) => {
   const { t } = useTranslation()
-  let label = getRuntimeTransactionLabel(t, transaction.method as KnownRuntimeTxMethod | undefined)
+  let label = getRuntimeTransactionLabel(t, transaction.method as KnownRuntimeTxMethod)
   if (transaction.evm_fn_name) {
     if (truncate) {
       label = `${transaction.evm_fn_name}`
@@ -209,9 +206,7 @@ export const RuntimeTransactionMethod: FC<RuntimeTransactionLabelProps> = ({ tra
     }
   }
 
-  return (
-    <>{getRuntimeTransactionIcon(transaction.method as KnownRuntimeTxMethod | undefined, label, truncate)}</>
-  )
+  return <>{getRuntimeTransactionIcon(transaction.method as KnownRuntimeTxMethod, label, truncate)}</>
 }
 
 export const getRuntimeTransactionMethodFilteringParam = (

@@ -460,7 +460,6 @@
       "beaconPVSSCommit": "PVSSCommit",
       "beaconPVSSReveal": "PVSSReveal",
       "beaconVRFProve": "VRFProve",
-      "unavailable": "Malformed transaction, method unavailable",
       "accounts": {
         "transfer": "Transfer"
       },
