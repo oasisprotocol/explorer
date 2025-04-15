@@ -1195,6 +1195,13 @@ In practice, Nexus currently expects only the following methods:
   - "rofl.Update"
   - "rofl.Remove"
   - "rofl.Register"
+  - "roflmarket.ProviderCreate"
+  - "roflmarket.ProviderUpdate"
+  - "roflmarket.ProviderRemove"
+  - "roflmarket.InstanceCreate"
+  - "roflmarket.InstanceTopUp"
+  - "roflmarket.InstanceCancel"
+  - "roflmarket.InstanceExecuteCmds"
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
