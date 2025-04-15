@@ -139,7 +139,7 @@ export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork })
       Option={SelectOption}
       listbox={StyledListbox}
       label={
-        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.main })}>
+        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.helpScreenMainColor })}>
           {t('home.selectedNetwork')}
         </Typography>
       }

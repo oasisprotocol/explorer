@@ -33,6 +33,7 @@ declare module '@mui/material/styles' {
     networkBubbleBorder?: string
     titleOnBackground?: string
     graphZoomOutText?: string
+    helpScreenMainColor?: string
     helpScreenIconColor?: string
   }
 
@@ -109,6 +110,7 @@ export const defaultTheme = createTheme({
       networkBubbleBorder: COLORS.white,
       titleOnBackground: COLORS.white,
       graphZoomOutText: COLORS.white,
+      helpScreenMainColor: COLORS.white,
       helpScreenIconColor: COLORS.aqua,
     },
     primary: {
@@ -858,11 +860,11 @@ export const defaultTheme = createTheme({
           background: 'transparent',
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: theme.palette.layout.main,
+          borderColor: theme.palette.layout.helpScreenMainColor,
           borderRadius: theme.spacing(2),
         }),
         dotActive: ({ theme }) => ({
-          background: theme.palette.layout.main,
+          background: theme.palette.layout.helpScreenMainColor,
         }),
       },
     },

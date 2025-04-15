@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles'
 
 export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, ...restProps }) => {
   const theme = useTheme()
+  const mainColor = theme.palette.layout.helpScreenMainColor
   const secondaryColor = secondary ?? theme.palette.layout.helpScreenIconColor
 
   return (
@@ -19,7 +20,7 @@ export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, 
       />
       <path
         d="M17.9819 47V14C17.9819 10.134 21.1159 7 24.9819 7C28.8479 7 31.9819 10.134 31.9819 14V47"
-        stroke="currentColor"
+        stroke={mainColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -27,7 +28,7 @@ export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, 
       />
       <path
         d="M27.9819 19C27.9819 19 26.6489 20 24.9819 20C23.3149 20 21.9819 19 21.9819 19V15C21.9819 13.343 23.3249 12 24.9819 12C26.6389 12 27.9819 13.343 27.9819 15V19Z"
-        stroke="currentColor"
+        stroke={mainColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -35,14 +36,14 @@ export const TapIcon: FC<SvgIconProps & { secondary?: string }> = ({ secondary, 
       />
       <path
         d="M23 34H27"
-        stroke="currentColor"
+        stroke={mainColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M23 38H27"
-        stroke="currentColor"
+        stroke={mainColor}
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"

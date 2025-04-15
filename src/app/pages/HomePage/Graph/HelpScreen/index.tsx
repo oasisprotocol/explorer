@@ -113,8 +113,12 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
       </SwiperBox>
       <Typography
         variant="h4"
-        color="inherit"
-        sx={{ marginBottom: 5, fontWeight: 500, textTransform: 'capitalize' }}
+        sx={theme => ({
+          color: theme.palette.layout.helpScreenMainColor,
+          marginBottom: 5,
+          fontWeight: 500,
+          textTransform: 'capitalize',
+        })}
       >
         {currentStep.label}
       </Typography>
