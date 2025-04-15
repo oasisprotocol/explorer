@@ -10,6 +10,8 @@ import MemoryIcon from '@mui/icons-material/Memory'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
+import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
+import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
 import { SelectOptionBase } from '../Select'
@@ -44,6 +46,20 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod |
       return t('transactions.method.rofl.remove')
     case 'rofl.Update':
       return t('transactions.method.rofl.update')
+    case 'roflmarket.ProviderCreate':
+      return t('transactions.method.roflmarket.providerCreate')
+    case 'roflmarket.ProviderUpdate':
+      return t('transactions.method.roflmarket.providerUpdate')
+    case 'roflmarket.ProviderRemove':
+      return t('transactions.method.roflmarket.providerRemove')
+    case 'roflmarket.InstanceCreate':
+      return t('transactions.method.roflmarket.instanceCreate')
+    case 'roflmarket.InstanceTopUp':
+      return t('transactions.method.roflmarket.instanceTopUp')
+    case 'roflmarket.InstanceCancel':
+      return t('transactions.method.roflmarket.instanceCancel')
+    case 'roflmarket.InstanceExecuteCmds':
+      return t('transactions.method.roflmarket.instanceExecuteCmds')
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
       return method || t('common.unknown')
@@ -62,6 +78,13 @@ const knownRuntimeTxMethods = [
   'rofl.Register',
   'rofl.Remove',
   'rofl.Update',
+  'roflmarket.ProviderCreate',
+  'roflmarket.ProviderUpdate',
+  'roflmarket.ProviderRemove',
+  'roflmarket.InstanceCreate',
+  'roflmarket.InstanceTopUp',
+  'roflmarket.InstanceCancel',
+  'roflmarket.InstanceExecuteCmds',
 ] as const
 type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
@@ -106,6 +129,13 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBa
  *   - "rofl.Update"
  *   - "rofl.Remove"
  *   - "rofl.Register"
+ *   - "roflmarket.ProviderCreate"
+ *   - "roflmarket.ProviderUpdate"
+ *   - "roflmarket.ProviderRemove"
+ *   - "roflmarket.InstanceCreate"
+ *   - "roflmarket.InstanceTopUp"
+ *   - "roflmarket.InstanceCancel"
+ *   - "roflmarket.InstanceExecuteCmds"
  */
 const getRuntimeTransactionIcon = (
   method: KnownRuntimeTxMethod | undefined,
@@ -141,6 +171,20 @@ const getRuntimeTransactionIcon = (
       return <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />
     case 'rofl.Update':
       return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
+    case 'roflmarket.ProviderCreate':
+      return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.ProviderUpdate':
+      return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.ProviderRemove':
+      return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    case 'roflmarket.InstanceCreate':
+      return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.InstanceTopUp':
+      return <MethodIcon icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.InstanceCancel':
+      return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    case 'roflmarket.InstanceExecuteCmds':
+      return <MethodIcon icon={<DeveloperBoard />} {...props} />
     case undefined:
       return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
     default:
