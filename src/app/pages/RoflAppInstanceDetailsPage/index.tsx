@@ -2,10 +2,9 @@ import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
-import { Layer, RoflInstance, useGetRuntimeRoflAppsIdInstances } from '../../../oasis-nexus/api'
+import { Layer, RoflInstance, useGetRuntimeRoflAppsIdInstancesRak } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { AppErrors } from '../../../types/errors'
-import { API_MAX_TOTAL_COUNT } from '../../config'
 import { RoflAppInstanceDetailsContext } from './hooks'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -28,12 +27,10 @@ export const RoflAppInstanceDetailsPage: FC = () => {
     deleteParams: ['page'],
   })
   const context: RoflAppInstanceDetailsContext = { scope, id, rak, method, setMethod }
-  const instancesQuery = useGetRuntimeRoflAppsIdInstances(scope.network, Layer.sapphire, id, {
-    limit: API_MAX_TOTAL_COUNT,
-  })
+  const instancesQuery = useGetRuntimeRoflAppsIdInstancesRak(scope.network, Layer.sapphire, id, rak)
   const { isLoading, isFetched, data } = instancesQuery
-  const instances = data?.data.instances
-  const instance = instances?.find(inst => inst.rak === rak)
+  const instance = data?.data
+
   if (!instance && isFetched) {
     throw AppErrors.NotFoundRoflAppInstance
   }
