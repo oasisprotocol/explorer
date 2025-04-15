@@ -62,6 +62,7 @@ import GetRuntimeRoflAppsIdMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstanceTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstancesMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflAppsIdInstancesRakMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstancesRakTransactionsMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
@@ -5545,6 +5546,80 @@ export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<type
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeRoflAppsIdInstancesQueryOptions(network,runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a specific ROFL instance.
+ */
+export const GetRuntimeRoflAppsIdInstancesRak = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,
+ options?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflAppsIdInstancesRakMutator<RoflInstance>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/rofl_apps/${encodeURIComponent(String(id))}/instances/${encodeURIComponent(String(rak))}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesRakQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string,) => {
+    return [`/${network}/${runtime}/rofl_apps/${id}/instances/${rak}`] as const;
+    }
+
+    
+export const getGetRuntimeRoflAppsIdInstancesRakQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesRakQueryKey(network,runtime,id,rak);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>> = ({ signal }) => GetRuntimeRoflAppsIdInstancesRak(network,runtime,id,rak, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && id && rak), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflAppsIdInstancesRakQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>>
+export type GetRuntimeRoflAppsIdInstancesRakQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a specific ROFL instance.
+ */
+export const useGetRuntimeRoflAppsIdInstancesRak = <TData = Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    id: string,
+    rak: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflAppsIdInstancesRak>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflAppsIdInstancesRakMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesRakQueryOptions(network,runtime,id,rak,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
