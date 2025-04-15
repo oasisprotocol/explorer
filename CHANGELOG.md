@@ -62,9 +62,6 @@ The format is inspired by [Keep a Changelog].
 
 - Prepare views for incoming ROFL apps feature
   ([#1819](https://github.com/oasisprotocol/explorer/issues/1819),
-  [#1820](https://github.com/oasisprotocol/explorer/issues/1820),
-  [#1827](https://github.com/oasisprotocol/explorer/issues/1827),
-  [#1834](https://github.com/oasisprotocol/explorer/issues/1834),
   [#1837](https://github.com/oasisprotocol/explorer/issues/1837),
   [#1840](https://github.com/oasisprotocol/explorer/issues/1840),
   [#1841](https://github.com/oasisprotocol/explorer/issues/1841),
