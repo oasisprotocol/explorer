@@ -45,6 +45,7 @@ const StyledBadge = styled(Box, {
     gap: 8,
     flexShrink: 0,
     justifyContent: 'center',
+    alignItems: 'center',
     height: 28,
     fontSize: '12px',
     backgroundColor: bgColor,
