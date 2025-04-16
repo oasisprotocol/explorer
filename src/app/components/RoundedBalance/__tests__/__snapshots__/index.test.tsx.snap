@@ -943,7 +943,7 @@ exports[`RoundedBalance should match snapshot {
   ticker: 'wROSE',
   tokenAddress: '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3',
   value: '15000000'
-} 1`] = `"15M wROSE "`;
+} 1`] = `"15M wROSE http://localhost/mainnet/sapphire/token/0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3"`;
 
 exports[`RoundedBalance should match snapshot {
   compactLargeNumbers: true,
@@ -1033,7 +1033,7 @@ exports[`RoundedBalance should match snapshot {
   ticker: undefined,
   tokenAddress: '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3',
   value: '15000000'
-} 1`] = `"15M  "`;
+} 1`] = `"15M 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 http://localhost/mainnet/sapphire/token/0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3"`;
 
 exports[`RoundedBalance should match snapshot {
   compactLargeNumbers: true,
@@ -1303,7 +1303,7 @@ exports[`RoundedBalance should match snapshot {
   ticker: 'wROSE',
   tokenAddress: '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3',
   value: '15000000'
-} 1`] = `"+15M wROSE "`;
+} 1`] = `"+15M wROSE http://localhost/mainnet/sapphire/token/0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3"`;
 
 exports[`RoundedBalance should match snapshot {
   compactLargeNumbers: true,
@@ -1393,7 +1393,7 @@ exports[`RoundedBalance should match snapshot {
   ticker: undefined,
   tokenAddress: '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3',
   value: '15000000'
-} 1`] = `"+15M  "`;
+} 1`] = `"+15M 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 http://localhost/mainnet/sapphire/token/0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3"`;
 
 exports[`RoundedBalance should match snapshot {
   compactLargeNumbers: true,
