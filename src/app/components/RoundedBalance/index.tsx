@@ -47,27 +47,29 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <PlaceholderLabel label={ticker} />
     )
 
+  const preciseValueFormat = { ...getPreciseNumberFormat(value), ticker: ticker }
+  if (showSign) preciseValueFormat.formatParams!.value.signDisplay = 'always'
+
   if (compactAllNumbers || (number.isGreaterThan(100_000) && compactLargeNumbers)) {
     return (
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: ticker })}
+        title={t('common.valueInToken', preciseValueFormat)}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
         <span>
-          {t('common.valuePair', {
+          {t('common.valueInToken', {
             value: value,
+            ticker: ticker,
             formatParams: {
               value: {
                 notation: 'compact',
-                signDisplay: showSign ? 'exceptZero' : 'auto',
+                signDisplay: showSign ? 'always' : 'auto',
               } satisfies Intl.NumberFormatOptions,
             },
           })}
-          &nbsp;
-          {ticker}
         </span>
       </Tooltip>
     )
@@ -78,7 +80,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Trans
         t={t}
         i18nKey="common.valueInTokenWithLink"
-        values={{ ...getPreciseNumberFormat(value) }}
+        values={preciseValueFormat}
         components={{ TickerLink: tickerLink }}
       />
     )
@@ -91,7 +93,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
       <Tooltip
         arrow
         placement="top"
-        title={t('common.valueInToken', { ...getPreciseNumberFormat(value), ticker: ticker })}
+        title={t('common.valueInToken', preciseValueFormat)}
         enterDelay={tooltipDelay}
         enterNextDelay={tooltipDelay}
       >
@@ -105,6 +107,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
                 value: {
                   minimumFractionDigits: numberOfDecimals,
                   maximumFractionDigits: numberOfDecimals,
+                  signDisplay: showSign ? 'always' : 'auto',
                 } satisfies Intl.NumberFormatOptions,
               },
             }}
