@@ -13,6 +13,7 @@ import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../../components/Tokens/TokenLink'
 import { EvmNft } from 'oasis-nexus/api'
+import Box from '@mui/material/Box'
 
 type InstanceDetailsCardProps = {
   nft: EvmNft | undefined
@@ -56,7 +57,9 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             {nft.description && (
               <>
                 <dt>{t('common.description')}</dt>
-                <dd>{nft.description}</dd>
+                <dd>
+                  <Box sx={{ whiteSpace: 'pre-line' }}>{nft.description}</Box>
+                </dd>
               </>
             )}
             <dt>{t('nft.instanceTokenId')}</dt>
