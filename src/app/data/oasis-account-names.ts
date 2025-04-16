@@ -17,27 +17,20 @@ import {
   AccountNameSearchRuntimeMatch,
 } from './named-accounts'
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import * as externalLinks from '../utils/externalLinks'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
-    [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_consensus.json',
-    [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_emerald.json',
-    [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_sapphire.json',
+    [Layer.consensus]: externalLinks.api.oasis_named_addresses_mainnet_consensus,
+    [Layer.emerald]: externalLinks.api.oasis_named_addresses_mainnet_emerald,
+    [Layer.sapphire]: externalLinks.api.oasis_named_addresses_mainnet_sapphire,
   },
   [Network.testnet]: {
-    [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_consensus.json',
-    [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
-    [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
-    [Layer.pontusxdev]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxdev.json',
-    [Layer.pontusxtest]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxtest.json',
+    [Layer.consensus]: externalLinks.api.oasis_named_addresses_testnet_consensus,
+    [Layer.emerald]: externalLinks.api.oasis_named_addresses_testnet_emerald,
+    [Layer.sapphire]: externalLinks.api.oasis_named_addresses_testnet_sapphire,
+    [Layer.pontusxdev]: externalLinks.api.oasis_named_addresses_testnet_pontusxdev,
+    [Layer.pontusxtest]: externalLinks.api.oasis_named_addresses_testnet_pontusxtest,
   },
   [Network.localnet]: {
     [Layer.consensus]: undefined,

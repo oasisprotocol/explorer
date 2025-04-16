@@ -62,6 +62,24 @@ export const dapps = {
 
 export const api = {
   spec: `${process.env.REACT_APP_API}spec/v1.html`,
+  oasis_named_addresses_mainnet_consensus:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_consensus.json',
+  oasis_named_addresses_mainnet_emerald:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_emerald.json',
+  oasis_named_addresses_mainnet_sapphire:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_sapphire.json',
+  oasis_named_addresses_testnet_consensus:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_consensus.json',
+  oasis_named_addresses_testnet_emerald:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
+  oasis_named_addresses_testnet_sapphire:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
+  oasis_named_addresses_testnet_pontusxdev:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxdev.json',
+  oasis_named_addresses_testnet_pontusxtest:
+    'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxtest.json',
+  deltadao_named_addresses:
+    'https://raw.githubusercontent.com/deltaDAO/mvg-portal/main/pontusxAddresses.json',
 }
 
 export const ipfs = {
