@@ -34,6 +34,7 @@ import { TransactionLink } from '../Transactions/TransactionLink'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
+import { fromBaseUnits } from '../../utils/number-utils'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | undefined) => {
   switch (method) {
@@ -137,13 +138,13 @@ const EvmEventParamData: FC<{
       return address ? (
         <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
-    case 'uint256':
+    case 'uint256': {
       if (param.evm_token?.type === 'ERC20') {
         return (
           <Tooltip
             arrow
             placement="top"
-            title={param.value_raw}
+            title={t('common.valueLong', getPreciseNumberFormat(param.value_raw as string))}
             enterDelay={tooltipDelay}
             enterNextDelay={tooltipDelay}
           >
@@ -168,6 +169,27 @@ const EvmEventParamData: FC<{
           />
         )
       }
+
+      const commonEvmContractDecimals = 18
+      const maybeParsedBaseUnits = fromBaseUnits(param.value as string, commonEvmContractDecimals)
+      if (!maybeParsedBaseUnits.startsWith('0.0000')) {
+        // Don't parse suspiciously low values.
+        return (
+          <Tooltip
+            arrow
+            placement="top"
+            title={t('common.valueLong', getPreciseNumberFormat(param.value as string))}
+            enterDelay={tooltipDelay}
+            enterNextDelay={tooltipDelay}
+          >
+            <span>
+              {t('common.valueLong', getPreciseNumberFormat(maybeParsedBaseUnits))}
+              {`e${commonEvmContractDecimals}`}
+            </span>
+          </Tooltip>
+        )
+      }
+
       return (
         <span>
           {t('common.valueLong', {
@@ -175,6 +197,7 @@ const EvmEventParamData: FC<{
           })}
         </span>
       )
+    }
     default:
       return <span>{JSON.stringify(param.value, null, '  ')}</span>
   }
