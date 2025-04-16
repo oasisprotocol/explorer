@@ -144,7 +144,7 @@ const EvmEventParamData: FC<{
           <Tooltip
             arrow
             placement="top"
-            title={param.value_raw}
+            title={t('common.valueLong', getPreciseNumberFormat(param.value_raw as string))}
             enterDelay={tooltipDelay}
             enterNextDelay={tooltipDelay}
           >
@@ -178,7 +178,7 @@ const EvmEventParamData: FC<{
           <Tooltip
             arrow
             placement="top"
-            title={param.value as string}
+            title={t('common.valueLong', getPreciseNumberFormat(param.value as string))}
             enterDelay={tooltipDelay}
             enterNextDelay={tooltipDelay}
           >
