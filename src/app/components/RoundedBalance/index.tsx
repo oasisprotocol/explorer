@@ -60,16 +60,21 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
         enterNextDelay={tooltipDelay}
       >
         <span>
-          {t('common.valueInToken', {
-            value: value,
-            ticker: ticker,
-            formatParams: {
-              value: {
-                notation: 'compact',
-                signDisplay: showSign ? 'always' : 'auto',
-              } satisfies Intl.NumberFormatOptions,
-            },
-          })}
+          <Trans
+            t={t}
+            i18nKey="common.valueInTokenWithLink"
+            values={{
+              value: value,
+              ticker: ticker,
+              formatParams: {
+                value: {
+                  notation: 'compact',
+                  signDisplay: showSign ? 'always' : 'auto',
+                } satisfies Intl.NumberFormatOptions,
+              },
+            }}
+            components={{ TickerLink: tickerLink }}
+          />
         </span>
       </Tooltip>
     )
