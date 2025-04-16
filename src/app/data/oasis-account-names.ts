@@ -17,6 +17,7 @@ import {
   AccountNameSearchRuntimeMatch,
 } from './named-accounts'
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import { getOasisAddress } from '../utils/helpers'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
@@ -58,7 +59,7 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
   Array.from(response.data).forEach((entry: any) => {
     const metadata: AccountMetadata = {
       source: 'OasisRegistry',
-      address: entry.Address,
+      address: getOasisAddress(entry.Address),
       name: entry.Name,
       description: entry.Description,
     }
@@ -86,7 +87,7 @@ const useOasisAccountsMetadata = (
 export const useOasisAccountMetadata = (
   network: Network,
   layer: Layer,
-  address: string,
+  oasisAddress: string,
   queryOptions: UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ): AccountMetadataInfo => {
   const { isLoading, isError, error, data: allData } = useOasisAccountsMetadata(network, layer, queryOptions)
@@ -94,7 +95,7 @@ export const useOasisAccountMetadata = (
     console.log('Failed to load Oasis account metadata', error)
   }
   return {
-    metadata: allData?.map.get(address),
+    metadata: allData?.map.get(oasisAddress),
     isLoading,
     isError,
   }
