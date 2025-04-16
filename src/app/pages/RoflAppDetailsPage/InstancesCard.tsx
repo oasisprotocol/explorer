@@ -41,6 +41,8 @@ const InstancesView: FC<RoflAppDetailsContext> = ({ scope, id }) => {
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: limit,
       }}
+      appId={id}
+      scope={scope}
     />
   )
 }

@@ -57,6 +57,10 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     title: t('errors.notFoundRoflApp'),
     message: t('errors.validateURL'),
   }),
+  [AppErrors.NotFoundRoflAppInstance]: t => ({
+    title: t('errors.notFoundRoflAppInstance'),
+    message: t('errors.validateURL'),
+  }),
   [AppErrors.NotFoundProposalId]: t => ({
     title: t('errors.notFoundProposal'),
     message: t('errors.validateURL'),
