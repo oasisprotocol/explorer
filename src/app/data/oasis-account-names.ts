@@ -17,6 +17,7 @@ import {
   AccountNameSearchRuntimeMatch,
 } from './named-accounts'
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import { getOasisAddress } from '../utils/helpers'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
@@ -58,7 +59,7 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
   Array.from(response.data).forEach((entry: any) => {
     const metadata: AccountMetadata = {
       source: 'OasisRegistry',
-      address: entry.Address,
+      address: getOasisAddress(entry.Address),
       name: entry.Name,
       description: entry.Description,
     }
