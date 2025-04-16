@@ -12,7 +12,6 @@ import TableBody from '@mui/material/TableBody'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { SearchScope } from '../../../types/searchScope'
-import { getOasisAddress } from '../../utils/helpers'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
@@ -120,9 +119,8 @@ export const EventTypeIcon: FC<{
 const EvmEventParamData: FC<{
   scope: SearchScope
   param: EvmAbiParam
-  address?: string
   alwaysTrimOnTable?: boolean
-}> = ({ scope, param, address, alwaysTrimOnTable }) => {
+}> = ({ scope, param, alwaysTrimOnTable }) => {
   const { t } = useTranslation()
   /**
    * According to the API docs:
@@ -135,8 +133,8 @@ const EvmEventParamData: FC<{
   switch (param.evm_type) {
     // TODO: handle more EVM types
     case 'address':
-      return address ? (
-        <AccountLink address={address} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
+      return param.value ? (
+        <AccountLink address={param.value as string} scope={scope} alwaysTrimOnTablet={alwaysTrimOnTable} />
       ) : null
     case 'uint256': {
       if (param.evm_token?.type === 'ERC20') {
@@ -207,27 +205,18 @@ const EvmLogRow: FC<{
   scope: SearchScope
   param: EvmAbiParam
 }> = ({ scope, param }) => {
-  const evmAddress = param.evm_type === 'address' ? (param.value as string) : undefined
-  const oasisAddress = evmAddress ? getOasisAddress(evmAddress) : undefined
-  const address = evmAddress || oasisAddress
-
-  const getCopyToClipboardValue = () => {
-    if (address) {
-      return address
-    }
-
-    return typeof param.value === 'string' ? (param.value as string) : JSON.stringify(param.value, null, '  ')
-  }
+  const clipboardValue =
+    typeof param.value === 'string' ? param.value : JSON.stringify(param.value, null, '  ')
 
   return (
     <TableRow>
       <TableCell>{param.name}</TableCell>
       <TableCell>{param.evm_type}</TableCell>
       <TableCell>
-        <EvmEventParamData scope={scope} param={param} address={address} alwaysTrimOnTable />{' '}
+        <EvmEventParamData scope={scope} param={param} alwaysTrimOnTable />{' '}
       </TableCell>
       <TableCell>
-        <CopyToClipboard value={getCopyToClipboardValue()} />
+        <CopyToClipboard value={clipboardValue} />
       </TableCell>
     </TableRow>
   )
@@ -250,7 +239,6 @@ const RuntimeEventDetailsInner: FC<{
     case RuntimeEventType.evmlog: {
       const { parsedEvmLogName } = parseEvmEvent(event)
       const emittingEthAddress = event.body.address
-      const emittingOasisAddress = getOasisAddress(emittingEthAddress)
       if (!event.evm_log_name && !event.evm_log_params) {
         return (
           <div>
@@ -282,7 +270,7 @@ const RuntimeEventDetailsInner: FC<{
             <br />
             <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
               {t('runtimeEvent.fields.emittingContract')}:{' '}
-              <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+              <AccountLink scope={scope} alwaysTrim address={emittingEthAddress} />
             </Box>
           </div>
         )
@@ -315,7 +303,7 @@ const RuntimeEventDetailsInner: FC<{
           <br />
           <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
             {t('runtimeEvent.fields.emittingContract')}:{' '}
-            <AccountLink scope={scope} alwaysTrim address={emittingEthAddress || emittingOasisAddress} />
+            <AccountLink scope={scope} alwaysTrim address={emittingEthAddress} />
           </Box>
         </div>
       )
