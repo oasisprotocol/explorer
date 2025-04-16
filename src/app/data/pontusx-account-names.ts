@@ -30,7 +30,7 @@ const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> =>
       address: getOasisAddress(evmAddress),
       name: name as string,
     }
-    map.set(evmAddress.toLowerCase(), account)
+    map.set(account.address, account)
     list.push(account)
   })
   return {
@@ -49,7 +49,7 @@ export const usePontusXAccountsMetadata = (
 }
 
 export const usePontusXAccountMetadata = (
-  address: string,
+  oasisAddress: string,
   queryOptions: UseQueryOptions<PontusXAccountsMetadata, unknown, PontusXAccountsMetadata, string[]>,
 ): AccountMetadataInfo => {
   const { isLoading, isError, error, data: allData } = usePontusXAccountsMetadata(queryOptions)
@@ -57,7 +57,7 @@ export const usePontusXAccountMetadata = (
     console.log('Failed to load Pontus-X account names', error)
   }
   return {
-    metadata: allData?.map.get(address.toLowerCase()),
+    metadata: allData?.map.get(oasisAddress),
     isLoading,
     isError,
   }
