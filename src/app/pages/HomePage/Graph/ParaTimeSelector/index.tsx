@@ -75,7 +75,9 @@ const ParaTimeSelectorGlobe = styled(Box, {
   transform: 'translateX(-50%)',
   color: theme.palette.layout.main,
   backgroundImage: `url("${
-    network === Network.testnet ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
+    network === Network.testnet || network === Network.localnet
+      ? paratimeSelectorGlobeTestnet
+      : paratimeSelectorGlobe
   }")`,
   transitionProperty: 'background-image',
   transitionDuration: `${theme.transitions.duration.complex}ms`,
