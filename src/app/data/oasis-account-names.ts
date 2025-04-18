@@ -17,6 +17,7 @@ import {
   AccountNameSearchRuntimeMatch,
 } from './named-accounts'
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import { hasValidProtocol } from '../utils/url'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
@@ -61,6 +62,8 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
       address: entry.Address,
       name: entry.Name,
       description: entry.Description,
+      origin: entry.Origin,
+      icon: entry.Icon && hasValidProtocol(entry.Icon) ? entry.Icon : undefined,
     }
     // Register the metadata in its native form
     list.push(metadata)
