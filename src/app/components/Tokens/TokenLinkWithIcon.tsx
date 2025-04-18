@@ -5,6 +5,7 @@ import { TokenLink } from './TokenLink'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
+import { InitialsAvatar } from '../AccountAvatar/InitialsAvatar'
 
 export const TokenLinkWithIcon: FC<{
   scope: SearchScope
@@ -15,7 +16,11 @@ export const TokenLinkWithIcon: FC<{
   const { metadata } = useAccountMetadata(scope, address)
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-      {metadata?.icon && <img src={metadata.icon} alt="" width={28} />}
+      {metadata?.icon ? (
+        <img src={metadata.icon} alt="" width={28} />
+      ) : (
+        <InitialsAvatar name={metadata?.name || name || address.slice(2, 4)} size={28} />
+      )}
 
       <span>
         <TokenLink
