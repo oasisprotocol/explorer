@@ -60,7 +60,7 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           />
         )}
       </Box>
-      <ScrollableDataDisplay data={code} />
+      <ScrollableDataDisplay data={<StyledPre>{code}</StyledPre>} />
     </Box>
   )
 }
@@ -76,15 +76,26 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, extraTopP
   if (!code) {
     return null
   }
-  return (
-    <CodeDisplay code={code} copyToClipboardValue={code} label={label} extraTopPadding={extraTopPadding} />
-  )
+  return <CodeDisplay code={code} copyToClipboardValue={code} label={label} extraTopPadding />
 }
 
 const StyledPre = styled('pre')({
   margin: 0,
   whiteSpace: 'break-spaces',
 })
+
+export const DataDisplay: FC<RawDataDisplayProps> = ({ data, label }) => {
+  if (!data) return null
+
+  return (
+    <CodeDisplay
+      code={<StyledPre>{data}</StyledPre>}
+      copyToClipboardValue={data}
+      label={label}
+      extraTopPadding
+    />
+  )
+}
 
 type JsonCodeDisplayProps = {
   data: Record<string, any>

@@ -6,7 +6,7 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hook'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from '../TokenDashboardPage'
-import { RawDataDisplay } from '../../components/CodeDisplay'
+import { DataDisplay, RawDataDisplay } from '../../components/CodeDisplay'
 import { codeContainerId } from '../../utils/tabAnchors'
 
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
@@ -21,12 +21,20 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
       {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
         <CardContent>
           <LinkableDiv id={codeContainerId}>
+            {contract.verification?.source_files?.map((file, index) => (
+              <DataDisplay key={index} data={file.content} label={file.name} />
+            ))}
+
+            {contract.verification?.compilation_metadata && (
+              <DataDisplay
+                data={JSON.stringify(contract.verification.compilation_metadata, null, 2)}
+                label={t('contract.contractMetadata')}
+              />
+            )}
+
             <RawDataDisplay data={contract.creation_bytecode} label={t('contract.creationByteCode')} />
-            <RawDataDisplay
-              data={contract.runtime_bytecode}
-              label={t('contract.runtimeByteCode')}
-              extraTopPadding={!!contract.creation_bytecode}
-            />
+
+            <RawDataDisplay data={contract.runtime_bytecode} label={t('contract.runtimeByteCode')} />
           </LinkableDiv>
         </CardContent>
       )}
