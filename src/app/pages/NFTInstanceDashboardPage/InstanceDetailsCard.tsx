@@ -11,7 +11,7 @@ import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
-import { TokenLink } from '../../components/Tokens/TokenLink'
+import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 import { EvmNft } from 'oasis-nexus/api'
 import Box from '@mui/material/Box'
 
@@ -66,7 +66,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             <dd>{nft.id}</dd>
             <dt>{t('common.collection')} </dt>
             <dd>
-              <TokenLink scope={scope} address={contractAddress} name={token?.name} />
+              <TokenLinkWithIcon scope={scope} address={contractAddress} name={token?.name} />
             </dd>
             <dt>{t('common.type')} </dt>
             <dd>

@@ -14,7 +14,7 @@ import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
 import { VerificationIcon } from '../ContractVerificationIcon'
-import { TokenLink } from '../Tokens/TokenLink'
+import { TokenLinkWithIcon } from '../Tokens/TokenLinkWithIcon'
 import { AccountAvatar } from '../AccountAvatar'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
 import { calculateFiatValue } from '../Balance/hooks'
@@ -89,7 +89,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <>
           <dt>{t('common.token')}</dt>
           <dd>
-            <TokenLink
+            <TokenLinkWithIcon
               scope={account}
               address={token.eth_contract_addr || token.contract_addr}
               name={token.name}
