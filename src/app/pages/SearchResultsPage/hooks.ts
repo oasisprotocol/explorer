@@ -411,6 +411,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     : [
         ...blocks.map((block): BlockResult => ({ ...block, resultType: 'block' })),
         ...transactions.map((tx): TransactionResult => ({ ...tx, resultType: 'transaction' })),
+        ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
         ...accounts
           .filter(account => !(account as RuntimeAccount).evm_contract)
           .map((account): AccountResult => ({ ...account, resultType: 'account' })),
@@ -419,7 +420,6 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
         ...roflApps.map((roflApp): RoflAppResult => ({ ...roflApp, resultType: 'roflApp' })),
-        ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
         ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
       ]
   return {
