@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { JazzIcon } from '../JazzIcon'
-import { addressToJazzIconSeed } from './addressToJazzIconSeed'
+import { MetadataAvatar } from './MetadataAvatar'
+import { SearchScope } from '../../../types/searchScope'
 
 type AccountAvatarProps = {
-  account: {
+  account: SearchScope & {
     address: string
     address_eth?: string
   }
@@ -17,5 +17,5 @@ export const AccountAvatar: FC<AccountAvatarProps> = ({ account }) => {
     return null
   }
 
-  return <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToJazzIconSeed(account)} />
+  return <MetadataAvatar size={isMobile ? 30 : 40} account={account} />
 }

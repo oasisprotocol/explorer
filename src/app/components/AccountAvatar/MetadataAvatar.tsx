@@ -6,6 +6,7 @@ import { useTokenInfo } from '../../pages/TokenDashboardPage/hook'
 import { InitialsAvatar } from '../AccountAvatar/InitialsAvatar'
 import { addressToJazzIconSeed } from './addressToJazzIconSeed'
 import { JazzIcon } from '../JazzIcon'
+import { Layer } from '../../../oasis-nexus/api'
 
 export const MetadataAvatar: FC<{
   account: SearchScope & {
@@ -15,7 +16,9 @@ export const MetadataAvatar: FC<{
   size: number
 }> = ({ account, size }) => {
   const { metadata } = useAccountMetadata(account, account.address_eth ?? account.address)
-  const { token } = useTokenInfo(account, account.address_eth ?? account.address)
+  const { token } = useTokenInfo(account, account.address_eth ?? account.address, {
+    enabled: account.layer !== Layer.consensus,
+  })
   const name = metadata?.name || token?.name
 
   if (!metadata?.icon) {

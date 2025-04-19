@@ -7,6 +7,8 @@ describe('AccountAvatar', () => {
       render(
         <AccountAvatar
           account={{
+            layer: 'sapphire',
+            network: 'mainnet',
             address: 'oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe',
           }}
         />,
@@ -19,6 +21,8 @@ describe('AccountAvatar', () => {
       render(
         <AccountAvatar
           account={{
+            layer: 'sapphire',
+            network: 'mainnet',
             address: 'oasis1qz0k5q8vjqvu4s4nwxyj406ylnflkc4vrcjghuwk',
           }}
         />,
@@ -31,6 +35,8 @@ describe('AccountAvatar', () => {
       render(
         <AccountAvatar
           account={{
+            layer: 'sapphire',
+            network: 'mainnet',
             address_eth: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
             address: 'oasis1qqyehmqgp04swwv2vtz7lhy937r6m4wtmuxk9rtk',
           }}
@@ -44,6 +50,8 @@ describe('AccountAvatar', () => {
       render(
         <AccountAvatar
           account={{
+            layer: 'sapphire',
+            network: 'mainnet',
             address_eth: '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3',
             address: 'oasis1qpdgv5nv2dhxp4q897cgag6kgnm9qs0dccwnckuu',
           }}
