@@ -25,6 +25,7 @@ import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractM
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
+import { MetadataAvatar } from '../AccountAvatar/MetadataAvatar'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -74,6 +75,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
       )}
       <StyledListTitleWithAvatar>
         <AccountAvatar account={account} />
+        <MetadataAvatar account={account} size={28} />
       </StyledListTitleWithAvatar>
       <dd>
         <AccountLink
