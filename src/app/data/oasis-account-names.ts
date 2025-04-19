@@ -22,23 +22,23 @@ import { hasValidProtocol } from '../utils/url'
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
     [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_consensus.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/mainnet_consensus.json',
     [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_emerald.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/mainnet_emerald.json',
     [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_sapphire.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/mainnet_sapphire.json',
   },
   [Network.testnet]: {
     [Layer.consensus]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_consensus.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/testnet_consensus.json',
     [Layer.emerald]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_emerald.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/testnet_emerald.json',
     [Layer.sapphire]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_sapphire.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/testnet_sapphire.json',
     [Layer.pontusxdev]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxdev.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/testnet_pontusxdev.json',
     [Layer.pontusxtest]:
-      'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/testnet_pontusxtest.json',
+      'https://raw.githubusercontent.com/oasisprotocol/nexus/lw/token-icons/named-addresses/testnet_pontusxtest.json',
   },
   [Network.localnet]: {
     [Layer.consensus]: undefined,
