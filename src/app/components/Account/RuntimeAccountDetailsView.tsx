@@ -75,7 +75,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
       )}
       <StyledListTitleWithAvatar>
         <AccountAvatar account={account} />
-        <MetadataAvatar account={account} size={28} />
       </StyledListTitleWithAvatar>
       <dd>
         <AccountLink
