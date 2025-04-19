@@ -11,7 +11,7 @@ import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
-import { TokenLink } from '../../components/Tokens/TokenLink'
+import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import {
   getTokenTypePluralDescription,
@@ -69,7 +69,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
     data: [
       {
         content: (
-          <TokenLink
+          <TokenLinkWithIcon
             scope={scope}
             address={item.token_contract_addr_eth ?? item.token_contract_addr}
             name={item.token_name || t('common.missing')}

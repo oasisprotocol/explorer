@@ -3,7 +3,7 @@ import { EvmToken, EvmTokenType } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
-import { TokenLink } from './TokenLink'
+import { TokenLinkWithIcon } from './TokenLinkWithIcon'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
 import Box from '@mui/material/Box'
@@ -88,7 +88,7 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           content: (
-            <TokenLink
+            <TokenLinkWithIcon
               scope={token}
               address={token.eth_contract_addr ?? token.contract_addr}
               name={token.name}

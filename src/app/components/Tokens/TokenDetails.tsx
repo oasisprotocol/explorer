@@ -4,7 +4,7 @@ import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
-import { TokenLink } from './TokenLink'
+import { TokenLinkWithIcon } from './TokenLinkWithIcon'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
@@ -40,7 +40,7 @@ export const TokenDetails: FC<{
       )}
       <dt>{t('common.name')}</dt>
       <dd>
-        <TokenLink
+        <TokenLinkWithIcon
           scope={token}
           address={token.eth_contract_addr ?? token.contract_addr}
           name={token.name}

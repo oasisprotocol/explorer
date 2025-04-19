@@ -106,6 +106,14 @@ export const SearchResultsList: FC<{
         />
 
         <ResultsGroupByType
+          title={t('search.results.tokens.title')}
+          results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
+          resultComponent={item => <TokenDetails token={item} highlightedPartOfName={searchTerm} showLayer />}
+          link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
+          linkLabel={t('search.results.tokens.viewLink')}
+        />
+
+        <ResultsGroupByType
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item =>
@@ -157,14 +165,6 @@ export const SearchResultsList: FC<{
           )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
-        />
-
-        <ResultsGroupByType
-          title={t('search.results.tokens.title')}
-          results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} highlightedPartOfName={searchTerm} showLayer />}
-          link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
-          linkLabel={t('search.results.tokens.viewLink')}
         />
 
         <ResultsGroupByType

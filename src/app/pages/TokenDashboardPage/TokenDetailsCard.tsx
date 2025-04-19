@@ -17,12 +17,12 @@ import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { SearchScope } from '../../../types/searchScope'
 import { RouteUtils } from '../../utils/route-utils'
 import { RoundedBalance } from 'app/components/RoundedBalance'
-import { HighlightedText } from '../../components/HighlightedText'
 import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
 import { extractMinimalProxyERC1167 } from '../../components/ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../../components/ContractVerificationIcon/AbiPlaygroundLink'
 import Box from '@mui/material/Box'
 import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAnchors'
+import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 
 export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
   scope,
@@ -44,7 +44,12 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <dt>{t('common.token')}</dt>
             <dd>
-              <HighlightedText text={token.name} pattern={searchTerm} />
+              <TokenLinkWithIcon
+                scope={account}
+                address={token.eth_contract_addr || token.contract_addr}
+                name={token.name}
+                highlightedPart={searchTerm}
+              />
             </dd>
 
             {isMobile && (
