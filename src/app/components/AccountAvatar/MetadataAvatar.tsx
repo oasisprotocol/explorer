@@ -21,13 +21,11 @@ export const MetadataAvatar: FC<{
   })
   const name = metadata?.name || token?.name
 
-  if (!metadata?.icon) {
-    if (name) {
-      return <InitialsAvatar name={name} size={size} />
-    } else {
-      return <JazzIcon diameter={size} seed={addressToJazzIconSeed(account)} />
-    }
+  if (metadata?.icon) {
+    return <img src={metadata.icon} alt="" width={size} />
   }
-
-  return <img src={metadata.icon} alt="" width={size} />
+  if (name) {
+    return <InitialsAvatar name={name} size={size} />
+  }
+  return <JazzIcon diameter={size} seed={addressToJazzIconSeed(account)} />
 }
