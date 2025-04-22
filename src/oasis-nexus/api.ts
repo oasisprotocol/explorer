@@ -1589,6 +1589,22 @@ export const useGetRuntimeRoflAppsIdInstanceTransactions: typeof generated.useGe
     })
   }
 
+export const useGetRuntimeRoflAppsIdInstancesRakTransactions: typeof generated.useGetRuntimeRoflAppsIdInstancesRakTransactions =
+  (network, runtime, id, rak, params?, options?) => {
+    return generated.useGetRuntimeRoflAppsIdInstancesRakTransactions(network, runtime, id, rak, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.RuntimeTransactionList, headers, status) =>
+            transformRuntimeTransactionList(data, network, runtime, status),
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
 function transformRuntimeTransactionList(
   data: generated.RuntimeTransactionList,
   network: Network,

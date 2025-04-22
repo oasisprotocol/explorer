@@ -178,6 +178,10 @@ export abstract class RouteUtils {
     return `/${encodeURIComponent(network)}/sapphire/rofl/app/${encodeURIComponent(id)}`
   }
 
+  static getRoflAppInstanceRoute = (network: Network, id: string, rak: string) => {
+    return `/${encodeURIComponent(network)}/sapphire/rofl/app/${encodeURIComponent(id)}/instance/${encodeURIComponent(rak)}`
+  }
+
   static getAccountTokensRoute = (
     scope: SearchScope,
     account: string,
