@@ -14,6 +14,7 @@ import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
+import { LatestRoflApps } from './LatestRoflApps'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -33,13 +34,11 @@ export const ParatimeDashboardPage: FC = () => {
         <Grid item xs={12} md={6}>
           <LatestRuntimeBlocks scope={scope} />
         </Grid>
-        {isMobile && (
-          <Grid item xs={12}>
-            <TopTokens scope={scope} />
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <TopTokens scope={scope} />
+          {scope.layer === 'sapphire' && <LatestRoflApps scope={scope} />}
+        </Grid>
       </Grid>
-      {!isMobile && <TopTokens scope={scope} />}
       {!isLocal && (
         <>
           <Grid container spacing={4}>
