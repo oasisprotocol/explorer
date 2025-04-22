@@ -11,8 +11,7 @@ import { Layer, useGetRuntimeAccountsAddresses } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
 import { getOasisAddress } from '../utils/helpers'
-
-const DATA_SOURCE_URL = 'https://raw.githubusercontent.com/deltaDAO/mvg-portal/main/pontusxAddresses.json'
+import * as externalLinks from '../utils/externalLinks'
 
 type PontusXAccountsMetadata = {
   map: AccountMap
@@ -20,7 +19,7 @@ type PontusXAccountsMetadata = {
 }
 
 const getPontusXAccountsMetadata = async (): Promise<PontusXAccountsMetadata> => {
-  const response = await axios.get(DATA_SOURCE_URL)
+  const response = await axios.get(externalLinks.api.deltadao_named_addresses)
   if (response.status !== 200) throw new Error("Couldn't load names")
   if (!response.data) throw new Error("Couldn't load names")
   const map: AccountMap = new Map()
