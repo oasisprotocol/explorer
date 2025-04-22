@@ -34,19 +34,11 @@ export const ParatimeDashboardPage: FC = () => {
         <Grid item xs={12} md={6}>
           <LatestRuntimeBlocks scope={scope} />
         </Grid>
-        {isMobile && (
-          <Grid item xs={12}>
-            <TopTokens scope={scope} />
-            {scope.layer === 'sapphire' && <LatestRoflApps scope={scope} />}
-          </Grid>
-        )}
-      </Grid>
-      {!isMobile && (
-        <>
+        <Grid item xs={12}>
           <TopTokens scope={scope} />
           {scope.layer === 'sapphire' && <LatestRoflApps scope={scope} />}
-        </>
-      )}
+        </Grid>
+      </Grid>
       {!isLocal && (
         <>
           <Grid container spacing={4}>
