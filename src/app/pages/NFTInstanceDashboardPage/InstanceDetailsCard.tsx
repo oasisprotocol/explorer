@@ -97,7 +97,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
               <VerificationIcon
                 address_eth={token?.eth_contract_addr!}
                 scope={token!}
-                verified={!!token?.is_verified}
+                verificationLevel={token?.verification_level}
               />
             </dd>
           </StyledDescriptionList>

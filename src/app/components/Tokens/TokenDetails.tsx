@@ -69,7 +69,11 @@ export const TokenDetails: FC<{
       </dd>
       <dt>{t('contract.verification.title')}</dt>
       <dd>
-        <VerificationIcon address_eth={token.eth_contract_addr} scope={token} verified={token.is_verified} />
+        <VerificationIcon
+          address_eth={token.eth_contract_addr}
+          scope={token}
+          verificationLevel={token.verification_level}
+        />
       </dd>
 
       <dt>{t(isMobile ? 'tokens.holders' : 'tokens.holdersCount')}</dt>

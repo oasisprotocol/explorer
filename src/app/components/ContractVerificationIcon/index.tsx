@@ -13,15 +13,18 @@ import { StatusBadge } from '../common/StatusBadge'
 export const verificationIconBoxHeight = 28
 
 type ContractStatusProps = {
-  verified: boolean
+  verificationLevel?: 'full' | 'partial'
 }
-
-export const ContractStatus = ({ verified }: ContractStatusProps) => {
+export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
   const { t } = useTranslation()
-  const statusLabel = verified
-    ? t('contract.verification.isVerified')
-    : t('contract.verification.isNotVerified')
-  const statusVariant = verified ? 'success' : 'danger'
+  const statusLabel =
+    verificationLevel === 'full'
+      ? t('contract.verification.isVerified')
+      : verificationLevel === 'partial'
+        ? t('contract.verification.isPartiallyVerified')
+        : t('contract.verification.isNotVerified')
+  const statusVariant =
+    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
   return <StatusBadge label={statusLabel} variant={statusVariant} />
 }
@@ -29,9 +32,9 @@ export const ContractStatus = ({ verified }: ContractStatusProps) => {
 export const VerificationIcon: FC<{
   address_eth: string
   scope: SearchScope
-  verified: boolean
+  verificationLevel?: 'full' | 'partial'
   noLink?: boolean
-}> = ({ address_eth, scope, verified, noLink = false }) => {
+}> = ({ address_eth, scope, verificationLevel, noLink = false }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
@@ -42,7 +45,7 @@ export const VerificationIcon: FC<{
     rel: 'noopener noreferrer',
     target: '_blank',
     sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
-    onClick: verified ? undefined : () => setExplainDelay(true),
+    onClick: verificationLevel ? undefined : () => setExplainDelay(true),
   }
   const Component = noLink ? Box : (Link as React.ElementType)
   const componentProps = noLink ? {} : sourcifyLinkProps
@@ -50,11 +53,11 @@ export const VerificationIcon: FC<{
   return (
     <>
       <Component {...componentProps}>
-        <ContractStatus verified={verified} />
+        <ContractStatus verificationLevel={verificationLevel} />
       </Component>
       &nbsp; &nbsp;
       {!noLink &&
-        (verified ? (
+        (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
             <Trans
               t={t}

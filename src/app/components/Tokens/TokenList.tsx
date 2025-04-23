@@ -131,7 +131,7 @@ export const TokenList = (props: TokensProps) => {
               <VerificationIcon
                 address_eth={token.eth_contract_addr}
                 scope={token}
-                verified={token.is_verified}
+                verificationLevel={token.verification_level}
                 noLink
               />
             </Box>
