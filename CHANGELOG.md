@@ -19,7 +19,16 @@ The format is inspired by [Keep a Changelog].
 - Differentiate partially and fully verified contracts
   ([#1888](https://github.com/oasisprotocol/explorer/issues/1888))
 
+- Create ROFL app instance details page
+  ([#1895](https://github.com/oasisprotocol/explorer/issues/1895))
+
 ### Bug Fixes and Improvements
+
+- Enable latest ROFL apps list in dashboard
+  ([#1894](https://github.com/oasisprotocol/explorer/issues/1894))
+
+- Fix date formatting in ROFL apps
+  ([#1891](https://github.com/oasisprotocol/explorer/issues/1891))
 
 - Format token values in wROSE deposit and withdraw events
   ([#1884](https://github.com/oasisprotocol/explorer/issues/1884))
@@ -30,17 +39,8 @@ The format is inspired by [Keep a Changelog].
 - Fix multiple tooltip issue
   ([#1887](https://github.com/oasisprotocol/explorer/issues/1887))
 
-- Fix date formatting in ROFL apps
-  ([#1891](https://github.com/oasisprotocol/explorer/issues/1891))
-
 - Display number of shares in Sapphire undelegate transactions
   ([#1892](https://github.com/oasisprotocol/explorer/issues/1892))
-
-- Enable latest ROFL apps list in dashboard
-  ([#1894](https://github.com/oasisprotocol/explorer/issues/1894))
-
-- Create ROFL app instance details page
-  ([#1895](https://github.com/oasisprotocol/explorer/issues/1895))
 
 - Handle new roflmarket transaction methods
   ([#1898](https://github.com/oasisprotocol/explorer/issues/1898))
