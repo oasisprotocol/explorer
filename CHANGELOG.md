@@ -12,6 +12,50 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.20.0 (2025-04-23)
+
+### Features
+
+- Differentiate partially and fully verified contracts
+  ([#1888](https://github.com/oasisprotocol/explorer/issues/1888))
+
+- Create ROFL app instance details page
+  ([#1895](https://github.com/oasisprotocol/explorer/issues/1895))
+
+### Bug Fixes and Improvements
+
+- Enable latest ROFL apps list in dashboard
+  ([#1894](https://github.com/oasisprotocol/explorer/issues/1894))
+
+- Fix date formatting in ROFL apps
+  ([#1891](https://github.com/oasisprotocol/explorer/issues/1891))
+
+- Format token values in wROSE deposit and withdraw events
+  ([#1884](https://github.com/oasisprotocol/explorer/issues/1884))
+
+- Format probable base unit values in events as #.##e18
+  ([#1885](https://github.com/oasisprotocol/explorer/issues/1885))
+
+- Fix multiple tooltip issue
+  ([#1887](https://github.com/oasisprotocol/explorer/issues/1887))
+
+- Display number of shares in Sapphire undelegate transactions
+  ([#1892](https://github.com/oasisprotocol/explorer/issues/1892))
+
+- Handle new roflmarket transaction methods
+  ([#1898](https://github.com/oasisprotocol/explorer/issues/1898))
+
+- Fix helpscreen visibility by changing homescreen background
+  ([#1906](https://github.com/oasisprotocol/explorer/issues/1906))
+
+- Fix HighlightedText gaps in search results (parent style `gap: 3`)
+  ([#1908](https://github.com/oasisprotocol/explorer/issues/1908))
+
+### Internal Changes
+
+- Move brand logos to assets.oasis.io
+  ([#1870](https://github.com/oasisprotocol/explorer/issues/1870))
+
 ## 1.19.0 (2025-04-09)
 
 ### Features
