@@ -77,19 +77,19 @@ export const HighlightedText: FC<HighlightedTextProps> = ({
   const task = part ?? findTextMatch(text, [pattern], findOptions)
 
   if (text === undefined) return undefined // Nothing to display
-  if (task === NO_MATCH) return text // We don't have to highlight anything
+  if (task === NO_MATCH) return <span>{text}</span> // We don't have to highlight anything
 
   const beginning = text.substring(0, task.startPos)
   const focus = text.substring(task.startPos, task.endPos)
   const end = text.substring(task.endPos)
 
   return (
-    <>
+    <span>
       {beginning}
       <Box component="mark" sx={sx}>
         {focus}
       </Box>
       {end}
-    </>
+    </span>
   )
 }
