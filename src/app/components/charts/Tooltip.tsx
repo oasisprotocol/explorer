@@ -36,6 +36,8 @@ export const TooltipContent = ({
   if (!active || !payload || !payload.length) {
     return null
   }
+
+  if (Object.keys(payload[0].payload).length !== 2) throw new Error('Can not infer labelKey')
   const { [payload[0].dataKey!]: value, ...rest } = payload[0].payload
   const labelKey = dataLabelKey || Object.keys(rest)[0]
 

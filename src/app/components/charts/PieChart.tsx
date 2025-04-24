@@ -112,10 +112,9 @@ const PieChartCmp = <T extends object>({
   if (!data.length) {
     return null
   }
-  const labelKey = Object.keys(data[0]).find(key => key !== dataKey)
-  if (!labelKey) {
-    throw new Error('Not able to determine label key')
-  }
+  if (Object.keys(data[0]).length !== 2) throw new Error('Can not infer labelKey')
+  const labelKey = Object.keys(data[0]).find(key => key !== dataKey)!
+
   return (
     <ResponsiveContainer width="100%">
       <RechartsPieChart width={100} height={100}>

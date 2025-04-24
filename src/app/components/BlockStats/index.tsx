@@ -32,10 +32,8 @@ export const BlockStats = <T extends { [key: string]: any }>({
   legendLabels,
   tooltipFormatter,
 }: BlockStatsProps<T>) => {
-  const statusKey = Object.keys(data[0]).find(key => key !== dataKey)
-  if (!statusKey) {
-    throw new Error('Not able to determine status key')
-  }
+  if (Object.keys(data[0]).length !== 2) throw new Error('Can not infer statusKey')
+  const statusKey = Object.keys(data[0]).find(key => key !== dataKey)!
 
   return (
     <>
