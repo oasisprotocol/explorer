@@ -105,18 +105,18 @@ export const filterHourlyActiveAccounts = (
   return windows?.filter((value, index) => index % 12 === 0)
 }
 
-type NumberOnly<T> = {
-  [key in keyof T as T[key] extends number | undefined ? key : never]: T[key]
+type NumberFieldsOnly<T> = {
+  [key in keyof T as T[key] extends number | undefined ? key : 'T[key] must be a number']: T[key]
 }
 
-type StringOnly<T> = {
-  [key in keyof T as T[key] extends string | undefined ? key : never]: T[key]
+type StringFieldsOnly<T> = {
+  [key in keyof T as T[key] extends string | undefined ? key : 'T[key] must be a string']: T[key]
 }
 
 export const sumWindowsByStartDuration = <
-  T extends NumberOnly<any> & StringOnly<any>,
-  N extends keyof NumberOnly<T>,
-  S extends keyof StringOnly<T>,
+  T extends NumberFieldsOnly<any> & StringFieldsOnly<any>,
+  N extends keyof NumberFieldsOnly<T>,
+  S extends keyof StringFieldsOnly<T>,
 >(
   windows: T[] | undefined,
   sumKey: N,
