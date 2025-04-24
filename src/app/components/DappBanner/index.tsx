@@ -6,22 +6,23 @@ import { COLORS } from '../../../styles/theme/colors'
 import Box from '@mui/material/Box'
 import { useTranslation } from 'react-i18next'
 import { SearchScope } from '../../../types/searchScope'
-import { getDappForEthAddress } from '../../config/dapps'
+import { getDappForAddress } from '../../config/dapps'
 import Button from '@mui/material/Button'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { EthOrOasisAddress } from '../../../oasis-nexus/api'
 
-export const DappBanner: FC<{ scope: SearchScope; ethAddress: string | undefined }> = ({
+export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisAddress | undefined }> = ({
   scope,
-  ethAddress,
+  ethOrOasisAddress,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  if (!ethAddress) {
+  if (!ethOrOasisAddress) {
     return null
   }
 
-  const dApp = getDappForEthAddress(t, scope.network, scope.layer, ethAddress)
+  const dApp = getDappForAddress(t, scope.network, scope.layer, ethOrOasisAddress)
 
   return (
     !!dApp && (

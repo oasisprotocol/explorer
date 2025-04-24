@@ -68,7 +68,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
         tokenPrices={tokenPrices}
         highlightedPartOfName={searchTerm}
       />
-      <DappBanner scope={scope} ethAddress={account?.address_eth} />
+      <DappBanner scope={scope} ethOrOasisAddress={account?.address_eth} />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },

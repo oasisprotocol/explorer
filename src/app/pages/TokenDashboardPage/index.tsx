@@ -48,7 +48,7 @@ export const TokenDashboardPage: FC = () => {
   return (
     <PageLayout>
       <TokenTitleCard scope={scope} address={address} searchTerm={searchTerm} />
-      <DappBanner scope={scope} ethAddress={token?.eth_contract_addr} />
+      <DappBanner scope={scope} ethOrOasisAddress={token?.eth_contract_addr} />
       <TokenSnapshot scope={scope} address={address} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <TokenDetailsCard scope={scope} address={address} searchTerm={searchTerm} />
