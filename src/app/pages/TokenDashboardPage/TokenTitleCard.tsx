@@ -48,10 +48,9 @@ export const TokenTitleCard: FC<{ scope: SearchScope; address: string; searchTer
           &nbsp;
           <Typography
             component="span"
+            variant="inherit"
             sx={{
               color: COLORS.grayMedium,
-              fontSize: '24px',
-              fontWeight: 700,
             }}
           >
             {token?.symbol ? (
