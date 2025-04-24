@@ -94,7 +94,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
           formatters={{
             data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(String(payload!.preciseValue)),
+                ...getPreciseNumberFormat(payload!.preciseValue),
                 ticker: account.ticker,
               }),
             label: (label: string) => label,

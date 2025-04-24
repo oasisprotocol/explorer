@@ -13,7 +13,7 @@ import { Props } from 'recharts/types/component/DefaultLegendContent'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 import { NumberFieldsOnly } from '../../utils/chart-utils'
 
-interface PieChartProps<T extends object> extends Formatters {
+interface PieChartProps<T extends object> extends Formatters<T> {
   compact: boolean
   data: T[]
   dataKey: Extract<keyof NumberFieldsOnly<T>, string>

@@ -15,24 +15,24 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
 }))
 
-export type Formatters = {
+export type Formatters<T> = {
   formatters?: {
-    data?: (value: number, payload?: { [key: string]: string | number }) => string
+    data?: (value: number, payload?: T) => string
     label?: (value: string) => string
   }
 }
 
-type TooltipContentProps = TooltipProps<number, string> &
-  Formatters & {
+type TooltipContentProps<T> = TooltipProps<number, string> &
+  Formatters<T> & {
     labelKey?: string
   }
 
-export const TooltipContent = ({
+export const TooltipContent = <T extends object>({
   active,
   payload,
   formatters,
   labelKey: dataLabelKey,
-}: TooltipContentProps) => {
+}: TooltipContentProps<T>) => {
   if (!active || !payload || !payload.length) {
     return null
   }

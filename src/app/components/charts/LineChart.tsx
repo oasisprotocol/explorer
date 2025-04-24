@@ -13,7 +13,7 @@ import { Formatters, TooltipContent } from './Tooltip'
 import { useTranslation } from 'react-i18next'
 import { NumberFieldsOnly } from '../../utils/chart-utils'
 
-interface LineChartProps<T extends object> extends Formatters {
+interface LineChartProps<T extends object> extends Formatters<T> {
   cartesianGrid?: boolean
   data: T[]
   dataKey: Extract<keyof NumberFieldsOnly<T>, string>

@@ -65,7 +65,7 @@ export const EscrowDistributionCard: FC<BalanceDistributionCardProps> = ({ valid
           formatters={{
             data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(String(payload!.preciseValue)),
+                ...getPreciseNumberFormat(payload!.preciseValue),
                 ticker: validator.ticker,
               }),
             label: (label: string) => label,

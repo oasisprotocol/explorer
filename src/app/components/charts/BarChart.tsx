@@ -13,7 +13,7 @@ import { Margin } from 'recharts/types/util/types'
 import { useTranslation } from 'react-i18next'
 import { NumberFieldsOnly } from '../../utils/chart-utils'
 
-interface BarChartProps<T extends object> extends Formatters {
+interface BarChartProps<T extends object> extends Formatters<T> {
   barSize?: number
   barRadius?: number
   cartesianGrid?: boolean
