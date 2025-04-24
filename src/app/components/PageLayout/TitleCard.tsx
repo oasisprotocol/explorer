@@ -13,7 +13,7 @@ export const StyledCard = styled(Card)(() => ({
   },
 }))
 
-const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
+const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ minWidth: '20ex' }} />
 
 type TitleCardProps = {
   isLoading: boolean
@@ -25,40 +25,36 @@ export const TitleCard: FC<TitleCardProps> = ({ isLoading, details, title }) => 
   return (
     <StyledCard>
       <CardContent>
-        {isLoading ? (
-          <TitleSkeleton />
-        ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+          gap={3}
+        >
+          <Typography
+            variant="h2"
+            sx={{
+              display: 'inline-flex',
+              fontWeight: 700,
+              flexWrap: 'wrap',
+            }}
+          >
+            {isLoading ? <TitleSkeleton /> : title}
+          </Typography>
+
           <Box
             sx={{
               display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               alignItems: 'center',
             }}
-            gap={3}
           >
-            <Typography
-              variant="h2"
-              sx={{
-                display: 'inline-flex',
-                fontWeight: 700,
-                flexWrap: 'wrap',
-              }}
-            >
-              {title}
-            </Typography>
-
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              {details}
-            </Box>
+            {isLoading ? <TitleSkeleton /> : details}
           </Box>
-        )}
+        </Box>
       </CardContent>
     </StyledCard>
   )

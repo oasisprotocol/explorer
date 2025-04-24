@@ -29,7 +29,7 @@ export const TokenDashboardPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
 
-  const { token, isError } = useTokenInfo(scope, address)
+  const { isError } = useTokenInfo(scope, address)
 
   if (isError) {
     throw AppErrors.InvalidAddress
@@ -48,7 +48,7 @@ export const TokenDashboardPage: FC = () => {
   return (
     <PageLayout>
       <TokenTitleCard scope={scope} address={address} searchTerm={searchTerm} />
-      <DappBanner scope={scope} ethAddress={token?.eth_contract_addr} />
+      <DappBanner scope={scope} ethOrOasisAddress={address} />
       <TokenSnapshot scope={scope} address={address} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <TokenDetailsCard scope={scope} address={address} searchTerm={searchTerm} />

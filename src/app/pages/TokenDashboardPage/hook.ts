@@ -19,6 +19,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 
 interface UseTokenInfoParams {
+  /** Defaults to true */
   enabled?: boolean
   useCaching?: boolean
 }
@@ -40,7 +41,7 @@ export const useTokenInfo = (scope: SearchScope, address: string, params: UseTok
   const { isLoading, isError, isFetched } = query
   return {
     token,
-    isLoading: isLoading && !!enabled, // By default, we get true for isLoading on disabled queries. We don't want that.
+    isLoading: isLoading && enabled !== false, // By default, we get true for isLoading on disabled queries. We don't want that.
     isError,
     isFetched,
   }

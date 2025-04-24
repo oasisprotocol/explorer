@@ -1,5 +1,6 @@
-import { Layer } from '../../../oasis-nexus/api'
+import { Address, EthOrOasisAddress, Layer } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
+import { getOasisAddress } from '../../utils/helpers'
 import { wRose } from './wrose'
 import { TFunction } from 'i18next'
 
@@ -11,15 +12,15 @@ export type DappReference = {
 
 export type DappReferenceGenerator = (t: TFunction) => DappReference
 
-const dappsForToken: Record<Network, Partial<Record<Layer, Record<string, DappReferenceGenerator>>>> = {
+const dappsForToken: Record<Network, Partial<Record<Layer, Record<Address, DappReferenceGenerator>>>> = {
   [Network.testnet]: {
     [Layer.sapphire]: {
-      [wRose.testnetAddress]: wRose.app,
+      [getOasisAddress(wRose.testnetAddress)]: wRose.app,
     },
   },
   [Network.mainnet]: {
     [Layer.sapphire]: {
-      [wRose.mainnetAddress]: wRose.app,
+      [getOasisAddress(wRose.mainnetAddress)]: wRose.app,
     },
   },
   [Network.localnet]: {
@@ -30,8 +31,14 @@ const dappsForToken: Record<Network, Partial<Record<Layer, Record<string, DappRe
 /**
  * Return a dApp relevant to a given address, what we want to advertise
  */
-export const getDappForEthAddress = (t: TFunction, network: Network, layer: Layer, ethAddress: string) => {
-  const generator = dappsForToken[network]?.[layer]?.[ethAddress]
+export const getDappForAddress = (
+  t: TFunction,
+  network: Network,
+  layer: Layer,
+  ethOrOasisAddress: EthOrOasisAddress,
+) => {
+  const oasisAddress = getOasisAddress(ethOrOasisAddress)
+  const generator = dappsForToken[network]?.[layer]?.[oasisAddress]
   const dApp = generator ? generator(t) : undefined
   return dApp
 }

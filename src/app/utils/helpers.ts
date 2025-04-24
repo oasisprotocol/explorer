@@ -2,8 +2,9 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { Buffer } from 'buffer'
 import * as oasis from '@oasisprotocol/client'
 import * as oasisRT from '@oasisprotocol/client-rt'
+// We get this from the generated code to avoid circular imports
 // eslint-disable-next-line no-restricted-imports
-import { AddressPreimage } from '../../oasis-nexus/generated/api'
+import { Address, AddressPreimage } from '../../oasis-nexus/generated/api'
 import { validateMnemonic } from 'bip39'
 import { sha512_256 } from 'js-sha512'
 
@@ -60,7 +61,7 @@ export function getEvmBech32Address(evmAddress: string) {
   return oasis.staking.addressToBech32(addr)
 }
 
-export const getOasisAddress = (address: string): string => {
+export const getOasisAddress = (address: string): Address => {
   if (isValidOasisAddress(address)) {
     return address
   } else if (isValidEthAddress(address)) {
@@ -70,7 +71,7 @@ export const getOasisAddress = (address: string): string => {
   }
 }
 
-export const getOasisAddressOrNull = (address: string): string | null => {
+export const getOasisAddressOrNull = (address: string): Address | null => {
   try {
     return getOasisAddress(address)
   } catch (e) {
