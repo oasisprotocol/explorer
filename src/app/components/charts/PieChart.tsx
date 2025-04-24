@@ -11,11 +11,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { COLORS as TESTNET_COLORS } from '../../../styles/theme/testnet/colors'
 import { Props } from 'recharts/types/component/DefaultLegendContent'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
+import { NumberFieldsOnly } from '../../utils/chart-utils'
 
 interface PieChartProps<T extends object> extends Formatters {
   compact: boolean
   data: T[]
-  dataKey: Extract<keyof T, string>
+  dataKey: Extract<keyof NumberFieldsOnly<T>, string>
   prependLegendList?: ReactNode
 }
 

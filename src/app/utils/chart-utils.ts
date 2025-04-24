@@ -105,7 +105,7 @@ export const filterHourlyActiveAccounts = (
   return windows?.filter((value, index) => index % 12 === 0)
 }
 
-type NumberFieldsOnly<T> = {
+export type NumberFieldsOnly<T> = {
   [key in keyof T as T[key] extends number | undefined ? key : 'T[key] must be a number']: T[key]
 }
 

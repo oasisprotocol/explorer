@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
+import { NumberFieldsOnly } from '../../utils/chart-utils'
 
 const StyledSquare = styled(Box, {
   shouldForwardProp: prop => prop !== 'success',
@@ -18,7 +19,7 @@ const StyledSquare = styled(Box, {
 
 type BlockStatsProps<T> = {
   data: T[]
-  dataKey: Extract<keyof T, string>
+  dataKey: Extract<keyof NumberFieldsOnly<T>, string>
   legendLabels?: {
     success: string
     fail: string

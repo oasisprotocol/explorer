@@ -11,13 +11,14 @@ import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Margin } from 'recharts/types/util/types'
 import { useTranslation } from 'react-i18next'
+import { NumberFieldsOnly } from '../../utils/chart-utils'
 
 interface BarChartProps<T extends object> extends Formatters {
   barSize?: number
   barRadius?: number
   cartesianGrid?: boolean
   data: T[]
-  dataKey: Extract<keyof T, string>
+  dataKey: Extract<keyof NumberFieldsOnly<T>, string>
   rounded?: boolean
   withBarBackground?: boolean
   withLabels?: boolean

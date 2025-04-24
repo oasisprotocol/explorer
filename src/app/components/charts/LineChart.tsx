@@ -11,11 +11,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { memo, ReactElement } from 'react'
 import { Formatters, TooltipContent } from './Tooltip'
 import { useTranslation } from 'react-i18next'
+import { NumberFieldsOnly } from '../../utils/chart-utils'
 
 interface LineChartProps<T extends object> extends Formatters {
   cartesianGrid?: boolean
   data: T[]
-  dataKey: Extract<keyof T, string>
+  dataKey: Extract<keyof NumberFieldsOnly<T>, string>
   margin?: Margin
   strokeWidth?: number | string
   tickMargin?: number
