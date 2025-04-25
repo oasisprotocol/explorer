@@ -7,8 +7,8 @@ import { ConsensusAccountDetailsContext } from './hooks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../..//components/Table/useSearchParamsPagination'
-import { EmptyState } from '../../components/EmptyState'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { CardEmptyState } from 'app/components/CardEmptyState'
 
 const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -26,9 +26,7 @@ const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope,
   }
 
   if (!events?.length && isFetched) {
-    return (
-      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
-    )
+    return <CardEmptyState label={t('event.cantFindMatchingEvents')} />
   }
 
   return (

@@ -5,10 +5,10 @@ import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { EmptyState } from '../../components/EmptyState'
 import { ConsensusBlockDetailsContext } from '.'
 import { ConsensusEventsList } from '../../components/ConsensusEvents/ConsensusEventsList'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { CardEmptyState } from 'app/components/CardEmptyState'
 
 const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { t } = useTranslation()
@@ -26,9 +26,7 @@ const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blo
   }
 
   if (!events?.length && isFetched) {
-    return (
-      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
-    )
+    return <CardEmptyState label={t('event.cantFindMatchingEvents')} />
   }
 
   return (

@@ -18,10 +18,21 @@ export const RuntimeEventsDetailedList: FC<{
   showTxHash: boolean
 }> = ({ scope, events, isLoading, isError, pagination, showTxHash }) => {
   const { t } = useTranslation()
+
+  if (isError) {
+    return <CardEmptyState label={t('event.cantLoadEvents')} />
+  }
+
+  if (isLoading) {
+    return <TextSkeleton numberOfRows={10} />
+  }
+
+  if (!events?.length) {
+    return <CardEmptyState label={t('event.cantFindMatchingEvents')} />
+  }
+
   return (
     <>
-      {isError && <CardEmptyState label={t('event.cantLoadEvents')} />}
-      {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (
           <div key={`event-${index}`}>
