@@ -127,7 +127,7 @@ type TooltipInfo = {
   body: GraphTooltipBodyProps
 }
 
-const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate = false) => {
+const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate: boolean | undefined) => {
   if (!enabled) {
     return t('home.tooltip.coming')
   }
@@ -175,7 +175,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
       disabled: !isCipherEnabled,
       body: {
         title: (t: TFunction) => t('common.cipher'),
-        caption: (t: TFunction) => layerTooltipBodyCaption(t, isCipherEnabled),
+        caption: (t: TFunction) => layerTooltipBodyCaption(t, isCipherEnabled, false /* TODO */),
         body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },

@@ -31,21 +31,35 @@ type OfflineBannerProps = {
   scope: SearchScope
 }
 
-export const OfflineBanner: FC<OfflineBannerProps> = ({ layerStatus, scope }) => {
+export const OfflineBanner: FC<OfflineBannerProps> = props => {
   const { t } = useTranslation()
-  const { outOfDate, lastUpdate, unavailable } = layerStatus
-  if (!outOfDate && !unavailable) return null
-  const target = getNameForScope(t, scope)
+  const { outOfDateReason, lastUpdate, unavailable } = props.layerStatus
+  const scope = getNameForScope(t, props.scope)
 
-  return (
-    <StickyAlert severity="warning">
-      {unavailable
-        ? t('home.layerUnavailable', { target })
-        : lastUpdate
-          ? t('home.layerOutOfDateSince', { target, lastUpdate })
-          : t('home.layerOutOfDate', { target })}
-    </StickyAlert>
-  )
+  if (unavailable) {
+    return <StickyAlert severity="warning">{t('home.indexerUnavailable', { scope })}</StickyAlert>
+  }
+  if (outOfDateReason === undefined) return null
+  if (outOfDateReason === false) return null
+
+  if (outOfDateReason === 'indexer') {
+    return (
+      <StickyAlert severity="warning">
+        {lastUpdate
+          ? t('home.indexerOutOfDateSince', { scope, lastUpdate })
+          : t('home.indexerOutOfDate', { scope })}
+      </StickyAlert>
+    )
+  }
+  if (outOfDateReason === 'blocks') {
+    // Don't display lastUpdate. It's updating, but still many blocks behind.
+    return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
+  }
+  if (outOfDateReason === 'node') {
+    return <StickyAlert severity="warning">{t('home.nodeOutOfDateSince', { scope, lastUpdate })}</StickyAlert>
+  }
+  exhaustedTypeWarning('Unexpected outOfDateReason', outOfDateReason)
+  return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
 }
 
 export const ConsensusOfflineBanner: FC = () => {

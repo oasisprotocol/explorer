@@ -622,9 +622,10 @@
   "home": {
     "apiOffline": "Our {{ target }} API is offline. We’re trying to reconnect",
     "userOffline": "You are offline. We’re trying to reconnect",
-    "layerOutOfDate": "We don't have fully up-to-date data about our {{ target }}. The data displayed here might be out of date.",
-    "layerUnavailable": "Data about {{ target }} is currently not available. Please check back later.",
-    "layerOutOfDateSince": "The last update we have about our {{ target }} is from {{ lastUpdate }}. The data displayed here might be out of date.",
+    "indexerOutOfDate": "We don't have fully up-to-date data about our {{ scope }}. The data displayed here might be out of date.",
+    "indexerOutOfDateSince": "The last update we have about our {{ scope }} is from {{ lastUpdate }}. The data displayed here might be out of date.",
+    "nodeOutOfDateSince": "The explorer's gRPC node has not observed new blocks since {{ lastUpdate }}. Check status.oasis.io.",
+    "indexerUnavailable": "Data about {{ scope }} is currently not available. Please check back later.",
     "blocks": "Blocks",
     "exploreBtnText": "Explore Oasis",
     "link": "Oasis Explorer Home",
