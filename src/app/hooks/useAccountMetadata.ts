@@ -18,7 +18,7 @@ import { useTokenInfo } from '../pages/TokenDashboardPage/hook'
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
   // Look up metadata specified by us
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
-  const pontusXData = usePontusXAccountMetadata(address, {
+  const pontusXData = usePontusXAccountMetadata(getOasisAddress(address), {
     enabled: isPontusX,
     useErrorBoundary: false,
   })

@@ -1,10 +1,10 @@
 import { Network } from '../../types/network'
-import { Account, Layer, Runtime, RuntimeAccount } from '../../oasis-nexus/api'
+import { Account, Address, Layer, Runtime, RuntimeAccount } from '../../oasis-nexus/api'
 
 export type AccountMetadataSource = 'OasisRegistry' | 'DeltaDaoRegistry' | 'SelfProfessed'
 
 export type AccountMetadata = {
-  address: string
+  address: Address
   name?: string
   description?: string
   source: AccountMetadataSource
@@ -16,7 +16,7 @@ export type AccountMetadataInfo = {
   isError: boolean
 }
 
-export type AccountMap = Map<string, AccountMetadata>
+export type AccountMap = Map<Address, AccountMetadata>
 
 export type AccountData = {
   map: AccountMap
@@ -26,19 +26,19 @@ export type AccountData = {
 export type AccountNameSearchMatch = {
   network: Network
   layer: Layer
-  address: string
+  address: Address
 }
 
 export type AccountNameSearchRuntimeMatch = {
   network: Network
   layer: Runtime
-  address: string
+  address: Address
 }
 
 export type AccountNameSearchConsensusMatch = {
   network: Network
   layer: typeof Layer.consensus
-  address: string
+  address: Address
 }
 
 export type AccountNameSearchResults = {
