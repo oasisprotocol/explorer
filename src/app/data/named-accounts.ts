@@ -7,7 +7,9 @@ export type AccountMetadata = {
   address: Address
   name?: string
   description?: string
-  source: AccountMetadataSource
+  icon?: string // Sanitized URL
+  origin?: string // Origin of this token/account
+  source: AccountMetadataSource // Origin of metadata. TODO: rename to e.g. metadata_source
 }
 
 export type AccountMetadataInfo = {
