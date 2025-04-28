@@ -508,6 +508,42 @@ const RuntimeEventDetailsInner: FC<{
           </StyledDescriptionList>
         </div>
       )
+    case RuntimeEventType.roflmarketprovider_created:
+    case RuntimeEventType.roflmarketprovider_updated:
+    case RuntimeEventType.roflmarketprovider_removed:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('common.address')}</dt>
+            <dd>
+              <AccountLink scope={scope} address={event.body.address} />
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.roflmarketinstance_created:
+    case RuntimeEventType.roflmarketinstance_updated:
+    case RuntimeEventType.roflmarketinstance_accepted:
+    case RuntimeEventType.roflmarketinstance_cancelled:
+    case RuntimeEventType.roflmarketinstance_removed:
+    case RuntimeEventType.roflmarketinstance_command_queued:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('rofl.provider')}</dt>
+            <dd>
+              <AccountLink scope={scope} address={event.body.provider} />
+            </dd>
+            <dt>{t('rofl.instanceId')}</dt>
+            {/* oasis-sdk serializes roflmarket instance id as an array here */}
+            <dd>{JSON.stringify(event.body.id)}</dd>
+          </StyledDescriptionList>
+        </div>
+      )
     default:
       exhaustedTypeWarning('Unexpected event type', event.type)
       return (
