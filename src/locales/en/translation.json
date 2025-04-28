@@ -719,6 +719,7 @@
     "stakedAmount": "Staked amount",
     "endorsement": "Endorsement",
     "secrets": "Secrets",
+    "secretsTooltip": "These secrets are end-to-end encrypted and can only be read by the ROFL app.",
     "updates": "Updates",
     "secretLength": "[{{value}} bytes]",
     "expired": "Expired",
