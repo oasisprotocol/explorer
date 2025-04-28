@@ -28,6 +28,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import MemoryIcon from '@mui/icons-material/Memory'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
+import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
+import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import Tooltip from '@mui/material/Tooltip'
@@ -65,6 +67,25 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | und
       return t('runtimeEvent.roflAppRemoved')
     case RuntimeEventType.roflinstance_registered:
       return t('runtimeEvent.instanceRegistered')
+    case RuntimeEventType.roflmarketprovider_created:
+      return t('runtimeEvent.roflmarketProviderCreated')
+    case RuntimeEventType.roflmarketprovider_updated:
+      return t('runtimeEvent.roflmarketProviderUpdated')
+    case RuntimeEventType.roflmarketprovider_removed:
+      return t('runtimeEvent.roflmarketProviderRemoved')
+    case RuntimeEventType.roflmarketinstance_created:
+      return t('runtimeEvent.roflmarketInstanceCreated')
+    case RuntimeEventType.roflmarketinstance_updated:
+      return t('runtimeEvent.roflmarketInstanceUpdated')
+    case RuntimeEventType.roflmarketinstance_accepted:
+      return t('runtimeEvent.roflmarketInstanceAccepted')
+    case RuntimeEventType.roflmarketinstance_cancelled:
+      return t('runtimeEvent.roflmarketInstanceCancelled')
+    case RuntimeEventType.roflmarketinstance_removed:
+      return t('runtimeEvent.roflmarketInstanceRemoved')
+    case RuntimeEventType.roflmarketinstance_command_queued:
+      return t('runtimeEvent.roflmarketinstanceCommandQueued')
+
     case undefined:
       return t('common.unknown')
     default:
@@ -107,6 +128,29 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflmarketprovider_created]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketprovider_updated]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketprovider_removed]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_created]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_updated]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_accepted]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
+    [RuntimeEventType.roflmarketinstance_cancelled]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_removed]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_command_queued]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
   }
 
   return (
