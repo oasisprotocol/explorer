@@ -1425,6 +1425,15 @@ export const RuntimeEventType = {
   roflapp_updated: 'rofl.app_updated',
   roflapp_removed: 'rofl.app_removed',
   roflinstance_registered: 'rofl.instance_registered',
+  roflmarketprovider_created: 'roflmarket.provider_created',
+  roflmarketprovider_updated: 'roflmarket.provider_updated',
+  roflmarketprovider_removed: 'roflmarket.provider_removed',
+  roflmarketinstance_created: 'roflmarket.instance_created',
+  roflmarketinstance_updated: 'roflmarket.instance_updated',
+  roflmarketinstance_accepted: 'roflmarket.instance_accepted',
+  roflmarketinstance_cancelled: 'roflmarket.instance_cancelled',
+  roflmarketinstance_removed: 'roflmarket.instance_removed',
+  roflmarketinstance_command_queued: 'roflmarket.instance_command_queued',
 } as const;
 
 /**
