@@ -1,9 +1,12 @@
 import { FC, ReactNode } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
+import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import InfoIcon from '@mui/icons-material/Info'
 import { styled } from '@mui/material/styles'
 import {
   Layer,
@@ -16,6 +19,7 @@ import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { COLORS } from '../../../styles/theme/colors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -145,7 +149,16 @@ export const RoflAppDetailsView: FC<{
       <DetailsRow title={t('rofl.endorsement')}>
         <Endorsement policy={app.policy} />
       </DetailsRow>
-      <DetailsRow title={t('rofl.secrets')}>
+      <DetailsRow
+        title={
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {t('rofl.secrets')}
+            <Tooltip title={t('rofl.secretsTooltip')} placement="top">
+              <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+            </Tooltip>
+          </Box>
+        }
+      >
         <Secrets secrets={app.secrets} />
       </DetailsRow>
     </StyledDescriptionList>
@@ -319,7 +332,7 @@ const LastActivityRow: FC<{
 
 const DetailsRow: FC<{
   children: ReactNode
-  title: string
+  title: ReactNode
 }> = ({ children, title }) => {
   return (
     <>
