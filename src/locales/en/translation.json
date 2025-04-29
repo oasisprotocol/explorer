@@ -498,10 +498,10 @@
         "providerCreate": "ROFL Market Provider Create",
         "providerUpdate": "ROFL Market Provider Update",
         "providerRemove": "ROFL Market Provider Remove",
-        "instanceCreate": "ROFL Market Instance Create",
-        "instanceTopUp": "ROFL Market Instance Top Up",
-        "instanceCancel": "ROFL Market Instance Cancel",
-        "instanceExecuteCmds": "ROFL Market Instance Execute Commands"
+        "machineCreate": "ROFL Market Machine Create",
+        "machineTopUp": "ROFL Market Machine Top Up",
+        "machineCancel": "ROFL Market Machine Cancel",
+        "machineExecuteCmds": "ROFL Market Machine Execute Commands"
       },
       "vault": {
         "authorizeAction": "Vault: Authorize Action",
@@ -549,12 +549,12 @@
     "roflmarketProviderCreated": "ROFL Market Provider Created",
     "roflmarketProviderUpdated": "ROFL Market Provider Updated",
     "roflmarketProviderRemoved": "ROFL Market Provider Removed",
-    "roflmarketInstanceCreated": "ROFL Market Instance Created",
-    "roflmarketInstanceUpdated": "ROFL Market Instance Updated",
-    "roflmarketInstanceAccepted": "ROFL Market Instance Accepted",
-    "roflmarketInstanceCancelled": "ROFL Market Instance Cancelled",
-    "roflmarketInstanceRemoved": "ROFL Market Instance Removed",
-    "roflmarketinstanceCommandQueued": "ROFL Market Command Queued",
+    "roflmarketMachineCreated": "ROFL Market Machine Created",
+    "roflmarketMachineUpdated": "ROFL Market Machine Updated",
+    "roflmarketMachineAccepted": "ROFL Market Machine Accepted",
+    "roflmarketMachineCancelled": "ROFL Market Machine Cancelled",
+    "roflmarketMachineRemoved": "ROFL Market Machine Removed",
+    "roflmarketMachineCommandQueued": "ROFL Market Command Queued",
     "evmLog": "EVM log message",
     "filter": {
       "all": "All events",
@@ -689,7 +689,6 @@
     "appId": "App ID",
     "emptyRoflAppsList": "No ROFL apps found.",
     "created": "Date created",
-    "instanceId": "Instance ID",
     "instances": "Instances",
     "listTitle": "ROFL Apps",
     "nameNotProvided": "Name not provided",
@@ -706,7 +705,6 @@
     "repositoryUrl": "Repository URL",
     "verifyCommand": "Run <Command /> to verify.",
     "policy": "Policy",
-    "provider": "Provider",
     "instancePays": "Instance pays",
     "endorsingNodePays": "Endorsing node pays",
     "validity": "Validity period",
@@ -739,6 +737,10 @@
     "roflAppId": "ROFL App ID",
     "endorsingNodeId": "Endorsing node ID",
     "extraKeys": "Extra keys"
+  },
+  "roflmarket": {
+    "provider": "Provider",
+    "machineId": "Machine ID"
   },
   "search": {
     "placeholder": "Address, Block, Contract, Transaction hash, Token name, etc.",

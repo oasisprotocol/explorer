@@ -74,17 +74,17 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | und
     case RuntimeEventType.roflmarketprovider_removed:
       return t('runtimeEvent.roflmarketProviderRemoved')
     case RuntimeEventType.roflmarketinstance_created:
-      return t('runtimeEvent.roflmarketInstanceCreated')
+      return t('runtimeEvent.roflmarketMachineCreated')
     case RuntimeEventType.roflmarketinstance_updated:
-      return t('runtimeEvent.roflmarketInstanceUpdated')
+      return t('runtimeEvent.roflmarketMachineUpdated')
     case RuntimeEventType.roflmarketinstance_accepted:
-      return t('runtimeEvent.roflmarketInstanceAccepted')
+      return t('runtimeEvent.roflmarketMachineAccepted')
     case RuntimeEventType.roflmarketinstance_cancelled:
-      return t('runtimeEvent.roflmarketInstanceCancelled')
+      return t('runtimeEvent.roflmarketMachineCancelled')
     case RuntimeEventType.roflmarketinstance_removed:
-      return t('runtimeEvent.roflmarketInstanceRemoved')
+      return t('runtimeEvent.roflmarketMachineRemoved')
     case RuntimeEventType.roflmarketinstance_command_queued:
-      return t('runtimeEvent.roflmarketinstanceCommandQueued')
+      return t('runtimeEvent.roflmarketMachineCommandQueued')
 
     case undefined:
       return t('common.unknown')
@@ -534,12 +534,12 @@ const RuntimeEventDetailsInner: FC<{
           <EventTypeIcon eventType={event.type} />
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
-            <dt>{t('rofl.provider')}</dt>
+            <dt>{t('roflmarket.provider')}</dt>
             <dd>
               <AccountLink scope={scope} address={event.body.provider} />
             </dd>
-            <dt>{t('rofl.instanceId')}</dt>
-            {/* oasis-sdk serializes roflmarket instance id as an array here */}
+            <dt>{t('roflmarket.machineId')}</dt>
+            {/* oasis-sdk serializes roflmarket provider machines id as an array */}
             <dd>{JSON.stringify(event.body.id)}</dd>
           </StyledDescriptionList>
         </div>

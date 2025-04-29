@@ -53,13 +53,13 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
     case 'roflmarket.ProviderRemove':
       return t('transactions.method.roflmarket.providerRemove')
     case 'roflmarket.InstanceCreate':
-      return t('transactions.method.roflmarket.instanceCreate')
+      return t('transactions.method.roflmarket.machineCreate')
     case 'roflmarket.InstanceTopUp':
-      return t('transactions.method.roflmarket.instanceTopUp')
+      return t('transactions.method.roflmarket.machineTopUp')
     case 'roflmarket.InstanceCancel':
-      return t('transactions.method.roflmarket.instanceCancel')
+      return t('transactions.method.roflmarket.machineCancel')
     case 'roflmarket.InstanceExecuteCmds':
-      return t('transactions.method.roflmarket.instanceExecuteCmds')
+      return t('transactions.method.roflmarket.machineExecuteCmds')
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
       return method || t('common.unknown')
