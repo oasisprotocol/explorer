@@ -28,6 +28,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import MemoryIcon from '@mui/icons-material/Memory'
 import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
+import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
+import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import Tooltip from '@mui/material/Tooltip'
@@ -65,6 +67,25 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | und
       return t('runtimeEvent.roflAppRemoved')
     case RuntimeEventType.roflinstance_registered:
       return t('runtimeEvent.instanceRegistered')
+    case RuntimeEventType.roflmarketprovider_created:
+      return t('runtimeEvent.roflmarketProviderCreated')
+    case RuntimeEventType.roflmarketprovider_updated:
+      return t('runtimeEvent.roflmarketProviderUpdated')
+    case RuntimeEventType.roflmarketprovider_removed:
+      return t('runtimeEvent.roflmarketProviderRemoved')
+    case RuntimeEventType.roflmarketinstance_created:
+      return t('runtimeEvent.roflmarketMachineCreated')
+    case RuntimeEventType.roflmarketinstance_updated:
+      return t('runtimeEvent.roflmarketMachineUpdated')
+    case RuntimeEventType.roflmarketinstance_accepted:
+      return t('runtimeEvent.roflmarketMachineAccepted')
+    case RuntimeEventType.roflmarketinstance_cancelled:
+      return t('runtimeEvent.roflmarketMachineCancelled')
+    case RuntimeEventType.roflmarketinstance_removed:
+      return t('runtimeEvent.roflmarketMachineRemoved')
+    case RuntimeEventType.roflmarketinstance_command_queued:
+      return t('runtimeEvent.roflmarketMachineCommandQueued')
+
     case undefined:
       return t('common.unknown')
     default:
@@ -107,6 +128,29 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
     [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.roflmarketprovider_created]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketprovider_updated]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketprovider_removed]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_created]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_updated]: (
+      <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_accepted]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
+    [RuntimeEventType.roflmarketinstance_cancelled]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_removed]: (
+      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+    ),
+    [RuntimeEventType.roflmarketinstance_command_queued]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
   }
 
   return (
@@ -461,6 +505,42 @@ const RuntimeEventDetailsInner: FC<{
                 </dd>
               </>
             )}
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.roflmarketprovider_created:
+    case RuntimeEventType.roflmarketprovider_updated:
+    case RuntimeEventType.roflmarketprovider_removed:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('common.address')}</dt>
+            <dd>
+              <AccountLink scope={scope} address={event.body.address} />
+            </dd>
+          </StyledDescriptionList>
+        </div>
+      )
+    case RuntimeEventType.roflmarketinstance_created:
+    case RuntimeEventType.roflmarketinstance_updated:
+    case RuntimeEventType.roflmarketinstance_accepted:
+    case RuntimeEventType.roflmarketinstance_cancelled:
+    case RuntimeEventType.roflmarketinstance_removed:
+    case RuntimeEventType.roflmarketinstance_command_queued:
+      return (
+        <div>
+          <EventTypeIcon eventType={event.type} />
+          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+            <MaybeEventErrorLine event={event} />
+            <dt>{t('roflmarket.provider')}</dt>
+            <dd>
+              <AccountLink scope={scope} address={event.body.provider} />
+            </dd>
+            <dt>{t('roflmarket.machineId')}</dt>
+            {/* oasis-sdk serializes roflmarket provider machines id as an array */}
+            <dd>{JSON.stringify(event.body.id)}</dd>
           </StyledDescriptionList>
         </div>
       )
