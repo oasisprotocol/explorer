@@ -253,7 +253,8 @@ export const RuntimeTransactionDetailView: FC<{
                         {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
 
                         <Typography variant="body2">
-                          {t('common.for')} {amount} {symbol}
+                          {t('common.for')}
+                          <RoundedBalance compactLargeNumbers value={amount} ticker={symbol} />
                         </Typography>
                       </Box>
                     )
