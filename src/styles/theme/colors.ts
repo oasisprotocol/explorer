@@ -23,6 +23,7 @@ export const COLORS = {
   grayDark: '#31435a',
   grayExtraDark: '#06152b',
   grayLight: '#f4f5f7',
+  grayLight50A: '#f4f5f780',
   grayMedium: '#565b61',
   grayMedium2: '#d5d6d7',
   grayMediumLight: '#e3e8ed',
