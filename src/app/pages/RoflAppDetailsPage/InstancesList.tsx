@@ -46,7 +46,7 @@ export const InstancesList: FC<InstancesListProps> = ({
 
           return {
             key: instance.rak,
-            backgroundColor: isActive ? 'transparent' : COLORS.grayLight,
+            backgroundColor: isActive ? 'transparent' : COLORS.grayLight50A,
             data: [
               {
                 key: 'rak',
