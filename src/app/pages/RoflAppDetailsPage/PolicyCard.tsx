@@ -32,7 +32,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, policy
   })
   const transaction = data?.data.transactions[0]
   const feePolicy =
-    policy?.fees === 1 ? t('rofl.instancePays') : policy?.fees === 2 ? t('rofl.endorsingNodePays') : undefined
+    policy?.fees === 1 ? t('rofl.replicaPays') : policy?.fees === 2 ? t('rofl.endorsingNodePays') : undefined
 
   return (
     <Card sx={{ flex: 1 }}>

@@ -92,7 +92,7 @@ export const RoflAppDetailsPage: FC = () => {
           { label: t('common.transactions'), to: txLink },
           { label: t('rofl.updates'), to: updatesLink },
           {
-            label: t('rofl.instances'),
+            label: t('rofl.replicas'),
             to: instancesLink,
           },
         ]}
@@ -269,7 +269,7 @@ const ActiveInstancesNumberRow: FC<{
   number: number
 }> = ({ number }) => {
   const { t } = useTranslation()
-  return <DetailsRow title={t('rofl.activeInstances')}>{number.toLocaleString()}</DetailsRow>
+  return <DetailsRow title={t('rofl.activeReplicas')}>{number.toLocaleString()}</DetailsRow>
 }
 
 const VersionRow: FC<{

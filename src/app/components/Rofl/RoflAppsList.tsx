@@ -27,7 +27,7 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
     { key: 'id', content: t('rofl.appId') },
     {
       key: 'instances',
-      content: isTablet ? t('rofl.instances') : t('rofl.activeInstances'),
+      content: isTablet ? t('rofl.replicas') : t('rofl.activeReplicas'),
       align: TableCellAlign.Right,
     },
     { key: 'created', content: t('rofl.created'), align: TableCellAlign.Right },

@@ -37,7 +37,7 @@ export const RoflAppInstanceDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <SubPageCard featured title={t('rofl.instanceDetails')}>
+      <SubPageCard featured title={t('rofl.replicaDetails')}>
         <RoflAppInstanceDetailsView isLoading={isLoading} appId={id} instance={instance} scope={scope} />
       </SubPageCard>
       <RouterTabs tabs={[{ label: t('common.transactions'), to: txLink }]} context={context} />
