@@ -152,7 +152,6 @@ export const RuntimeTransactionsPage: FC = () => {
                   transaction={undefined}
                   tokenPrices={tokenPrices}
                   standalone
-                  scope={scope}
                 />
               ))}
 
@@ -163,7 +162,6 @@ export const RuntimeTransactionsPage: FC = () => {
                   transaction={tx}
                   tokenPrices={tokenPrices}
                   standalone
-                  scope={scope}
                 />
               ))}
           </VerticalList>

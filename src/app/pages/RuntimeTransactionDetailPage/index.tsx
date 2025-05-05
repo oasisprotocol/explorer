@@ -35,7 +35,6 @@ import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
-import { SearchScope } from '../../../types/searchScope'
 import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 
@@ -76,7 +75,6 @@ export const RuntimeTransactionDetailPage: FC = () => {
           isLoading={isLoading}
           transaction={transaction}
           tokenPrices={tokenPrices}
-          scope={scope}
         />
       </SubPageCard>
       {(transaction?.signers ?? []).map((signer, index) => (
@@ -104,8 +102,7 @@ export const RuntimeTransactionDetailView: FC<{
   showLayer?: boolean
   standalone?: boolean
   tokenPrices: AllTokenPrices
-  scope: SearchScope
-}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices, scope }) => {
+}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
@@ -114,15 +111,16 @@ export const RuntimeTransactionDetailView: FC<{
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
   const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
 
-  const transferParams = transaction?.hash
-    ? {
-        tx_hash: transaction.hash,
-        limit: 10,
-        offset: 0,
-      }
-    : undefined
-
-  const transferEventsQuery = useTokenTransfers(scope, transferParams)
+  const transferEventsQuery = useTokenTransfers(
+    transaction,
+    transaction?.hash
+      ? {
+          tx_hash: transaction.hash,
+          limit: 10,
+          offset: 0,
+        }
+      : undefined,
+  )
   const transfers = transferEventsQuery?.results?.data
   const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
 
@@ -247,10 +245,10 @@ export const RuntimeTransactionDetailView: FC<{
                   >
                     <TokenTypeTag tokenType={transfer.evm_token?.type} />
                     <Typography variant="body2">{t('common.from')} </Typography>
-                    {from ? <AccountLink scope={scope} address={from} alwaysTrim /> : '?'}
+                    {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
 
                     <Typography variant="body2">{t('common.to')}</Typography>
-                    {to ? <AccountLink scope={scope} address={to} alwaysTrim /> : '?'}
+                    {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
 
                     <Typography variant="body2">
                       {t('common.for')} {amount} {symbol}
