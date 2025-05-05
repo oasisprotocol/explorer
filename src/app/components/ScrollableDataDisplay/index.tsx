@@ -5,7 +5,7 @@ import { COLORS } from '../../../styles/theme/colors'
 
 export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }> = ({
   data,
-  fontWeight = 700,
+  fontWeight = 400,
 }) => {
   return (
     <Box
