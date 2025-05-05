@@ -22,6 +22,12 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
   const { token } = useTokenInfo(scope, address, {
     enabled: !!contract,
   })
+  const entryFilePath = Object.keys(
+    contract?.verification?.compilation_metadata?.settings?.compilationTarget ?? {},
+  )[0]
+  const filesSorted = contract?.verification?.source_files
+    ?.slice()
+    .sort((a, b) => b.path.endsWith(entryFilePath) - a.path.endsWith(entryFilePath))
 
   return (
     <Card>
@@ -74,7 +80,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
               </>
             )}
 
-            {contract.verification?.source_files?.map((file, index) => (
+            {filesSorted?.map((file, index) => (
               <FileDisplay key={file.path} code={file.content} filename={file.name} />
             ))}
 
