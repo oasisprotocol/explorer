@@ -77,11 +77,11 @@ export const InstancesList: FC<InstancesListProps> = ({
 
   return (
     <Table
-      emptyMessage={t('rofl.emptyInstancesList')}
+      emptyMessage={t('rofl.emptyReplicasList')}
       columns={tableColumns}
       rows={tableRows}
       rowsNumber={limit}
-      name={t('rofl.instances')}
+      name={t('rofl.replicas')}
       isLoading={isLoading}
       pagination={pagination}
       extraHorizontalSpaceOnMobile

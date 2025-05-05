@@ -66,7 +66,7 @@ const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | und
     case RuntimeEventType.roflapp_removed:
       return t('runtimeEvent.roflAppRemoved')
     case RuntimeEventType.roflinstance_registered:
-      return t('runtimeEvent.instanceRegistered')
+      return t('runtimeEvent.replicaRegistered')
     case RuntimeEventType.roflmarketprovider_created:
       return t('runtimeEvent.roflmarketProviderCreated')
     case RuntimeEventType.roflmarketprovider_updated:
