@@ -219,7 +219,7 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          {transfers && (
+          {transfers && transfers.length > 0 && (
             <>
               <dt>{t('common.recentTransactions')}</dt>
               <dd>
