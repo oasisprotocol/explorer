@@ -258,7 +258,7 @@ export const RuntimeTransactionDetailView: FC<{
                       </Box>
                     )
                   })}
-                  {(totalTransfers ?? 0) > 10 && (
+                  {(totalTransfers ?? 0) > transfers.length && (
                     <Typography
                       variant="body2"
                       sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
