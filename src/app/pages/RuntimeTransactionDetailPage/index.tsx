@@ -34,6 +34,10 @@ import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import { useTokenTransfers } from '../TokenDashboardPage/hook'
+import { SearchScope } from '../../../types/searchScope'
+import { TokenTypeTag } from 'app/components/Tokens/TokenList'
+import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -72,6 +76,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
           isLoading={isLoading}
           transaction={transaction}
           tokenPrices={tokenPrices}
+          scope={scope}
         />
       </SubPageCard>
       {(transaction?.signers ?? []).map((signer, index) => (
@@ -79,9 +84,11 @@ export const RuntimeTransactionDetailPage: FC = () => {
       ))}
       <DappBanner scope={scope} ethOrOasisAddress={transaction?.to_eth} />
       {transaction && (
-        <SubPageCard title={t('common.events')}>
-          <RuntimeTransactionEvents transaction={transaction} />
-        </SubPageCard>
+        <LinkableDiv id="events-section">
+          <SubPageCard title={t('common.events')}>
+            <RuntimeTransactionEvents transaction={transaction} />
+          </SubPageCard>
+        </LinkableDiv>
       )}
     </PageLayout>
   )
@@ -97,7 +104,8 @@ export const RuntimeTransactionDetailView: FC<{
   showLayer?: boolean
   standalone?: boolean
   tokenPrices: AllTokenPrices
-}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
+  scope: SearchScope
+}> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices, scope }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
@@ -105,6 +113,18 @@ export const RuntimeTransactionDetailView: FC<{
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
   const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
+
+  const transferParams = transaction?.hash
+    ? {
+        tx_hash: transaction.hash,
+        limit: 10,
+        offset: 0,
+      }
+    : undefined
+
+  const transferEventsQuery = useTokenTransfers(scope, transferParams)
+  const transfers = transferEventsQuery?.results?.data
+  const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
 
   return (
     <>
@@ -200,6 +220,60 @@ export const RuntimeTransactionDetailView: FC<{
               </dd>
             </>
           )}
+
+          <dt>{t('common.recentTransactions')}</dt>
+          <dd>
+            <Box sx={{ display: 'block', overflowX: 'auto' }}>
+              {transfers?.map((transfer, i) => {
+                const params = transfer.evm_log_params
+                if (!params) return null
+
+                const from = params.find(p => p.name === 'from')?.value as string | undefined
+                const to = params.find(p => p.name === 'to')?.value as string | undefined
+                const amount = params.find(p => p.name === 'value')?.value as string | undefined
+                const symbol = transfer.evm_token?.symbol
+
+                return (
+                  <Box
+                    key={i}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      mb: 2,
+                      minWidth: '100%',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    <TokenTypeTag tokenType={transfer.evm_token?.type} />
+                    <Typography variant="body2">{t('common.from')} </Typography>
+                    {from ? <AccountLink scope={scope} address={from} alwaysTrim /> : '?'}
+
+                    <Typography variant="body2">{t('common.to')}</Typography>
+                    {to ? <AccountLink scope={scope} address={to} alwaysTrim /> : '?'}
+
+                    <Typography variant="body2">
+                      {t('common.for')} {amount} {symbol}
+                    </Typography>
+                  </Box>
+                )
+              })}
+              {(totalTransfers ?? 0) > 10 && (
+                <Typography
+                  variant="body2"
+                  sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
+                  onClick={() => {
+                    const el = document.getElementById('events-section')
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
+                >
+                  {t('common.seeAll')}
+                </Typography>
+              )}
+            </Box>
+          </dd>
 
           <dt>{t('common.amount')}</dt>
           <dd>

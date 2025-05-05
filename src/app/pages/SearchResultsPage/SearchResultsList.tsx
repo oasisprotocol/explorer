@@ -29,6 +29,7 @@ import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
 import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
 import { RoflAppDetailsViewSearchResult } from '../RoflAppDetailsPage'
+import { SearchScope } from 'types/searchScope'
 
 /**
  * Component for displaying a list of search results
@@ -42,7 +43,8 @@ export const SearchResultsList: FC<{
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
   searchTerm?: string
-}> = ({ title, networkForTheme, searchResults, tokenPrices, searchTerm = '' }) => {
+  scope: SearchScope
+}> = ({ title, networkForTheme, searchResults, tokenPrices, searchTerm = '', scope }) => {
   const { t } = useTranslation()
 
   const numberOfResults = searchResults.length
@@ -96,6 +98,7 @@ export const SearchResultsList: FC<{
                 transaction={item}
                 tokenPrices={tokenPrices}
                 showLayer={true}
+                scope={scope}
               />
             )
           }
