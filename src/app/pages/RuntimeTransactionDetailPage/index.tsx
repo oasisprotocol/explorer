@@ -219,59 +219,63 @@ export const RuntimeTransactionDetailView: FC<{
             </>
           )}
 
-          <dt>{t('common.recentTransactions')}</dt>
-          <dd>
-            <Box sx={{ display: 'block', overflowX: 'auto' }}>
-              {transfers?.map((transfer, i) => {
-                const params = transfer.evm_log_params
-                if (!params) return null
+          {transfers && (
+            <>
+              <dt>{t('common.recentTransactions')}</dt>
+              <dd>
+                <Box sx={{ display: 'block', overflowX: 'auto' }}>
+                  {transfers.map((transfer, i) => {
+                    const params = transfer.evm_log_params
+                    if (!params) return null
 
-                const from = params.find(p => p.name === 'from')?.value as string | undefined
-                const to = params.find(p => p.name === 'to')?.value as string | undefined
-                const amount = params.find(p => p.name === 'value')?.value as string | undefined
-                const symbol = transfer.evm_token?.symbol
+                    const from = params.find(p => p.name === 'from')?.value as string | undefined
+                    const to = params.find(p => p.name === 'to')?.value as string | undefined
+                    const amount = params.find(p => p.name === 'value')?.value as string | undefined
+                    const symbol = transfer.evm_token?.symbol
 
-                return (
-                  <Box
-                    key={i}
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 2,
-                      mb: 2,
-                      minWidth: '100%',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    <TokenTypeTag tokenType={transfer.evm_token?.type} />
-                    <Typography variant="body2">{t('common.from')} </Typography>
-                    {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
+                    return (
+                      <Box
+                        key={i}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 2,
+                          mb: 2,
+                          minWidth: '100%',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        <TokenTypeTag tokenType={transfer.evm_token?.type} />
+                        <Typography variant="body2">{t('common.from')} </Typography>
+                        {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
 
-                    <Typography variant="body2">{t('common.to')}</Typography>
-                    {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
+                        <Typography variant="body2">{t('common.to')}</Typography>
+                        {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
 
-                    <Typography variant="body2">
-                      {t('common.for')} {amount} {symbol}
+                        <Typography variant="body2">
+                          {t('common.for')} {amount} {symbol}
+                        </Typography>
+                      </Box>
+                    )
+                  })}
+                  {(totalTransfers ?? 0) > 10 && (
+                    <Typography
+                      variant="body2"
+                      sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
+                      onClick={() => {
+                        const el = document.getElementById('events-section')
+                        if (el) {
+                          el.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }}
+                    >
+                      {t('common.seeAll')}
                     </Typography>
-                  </Box>
-                )
-              })}
-              {(totalTransfers ?? 0) > 10 && (
-                <Typography
-                  variant="body2"
-                  sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
-                  onClick={() => {
-                    const el = document.getElementById('events-section')
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  }}
-                >
-                  {t('common.seeAll')}
-                </Typography>
-              )}
-            </Box>
-          </dd>
+                  )}
+                </Box>
+              </dd>
+            </>
+          )}
 
           <dt>{t('common.amount')}</dt>
           <dd>
