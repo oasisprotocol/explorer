@@ -68,23 +68,38 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
 type RawDataDisplayProps = {
   data: string | undefined
   label: string
-  extraTopPadding?: boolean
 }
 
-export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, extraTopPadding }) => {
+export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label }) => {
   const code = data === undefined ? undefined : base64ToHex(data)
   if (!code) {
     return null
   }
-  return (
-    <CodeDisplay code={code} copyToClipboardValue={code} label={label} extraTopPadding={extraTopPadding} />
-  )
+  return <CodeDisplay code={code} copyToClipboardValue={code} label={label} extraTopPadding />
 }
 
 const StyledPre = styled('pre')({
   margin: 0,
   whiteSpace: 'break-spaces',
 })
+
+type FileDisplayProps = {
+  code: string | undefined
+  filename: string
+}
+
+export const FileDisplay: FC<FileDisplayProps> = ({ code, filename }) => {
+  if (!code) return null
+
+  return (
+    <CodeDisplay
+      code={<StyledPre>{code}</StyledPre>}
+      copyToClipboardValue={code}
+      label={filename}
+      extraTopPadding
+    />
+  )
+}
 
 type JsonCodeDisplayProps = {
   data: Record<string, any>
