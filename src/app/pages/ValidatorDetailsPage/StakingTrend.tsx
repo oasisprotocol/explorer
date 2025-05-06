@@ -24,7 +24,7 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
   const history = historyQuery.data?.data?.history
   const filteredHistory = history
     ?.map(item => ({
-      active_balance: item.active_balance,
+      active_balance: Number(item.active_balance), // Doesn't need to be very precise
       epoch: item.epoch,
     }))
     .reverse()
@@ -50,6 +50,11 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
                 t('common.valueInToken', {
                   value,
                   ticker: history[0].ticker,
+                  formatParams: {
+                    value: {
+                      maximumFractionDigits: 0,
+                    } satisfies Intl.NumberFormatOptions,
+                  },
                 }),
               label: (value: string) => `${t('common.epoch')}: ${value}`,
             }}
