@@ -82,7 +82,7 @@ export const TokenDetails: FC<{
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>
         {token.total_supply ? (
-          <RoundedBalance compactLargeNumbers value={token.total_supply} />
+          <RoundedBalance compactLargeNumbers value={token.total_supply} ticker={token?.symbol} />
         ) : (
           t('common.missing')
         )}
