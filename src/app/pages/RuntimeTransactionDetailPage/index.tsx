@@ -75,9 +75,13 @@ export const RuntimeTransactionDetailPage: FC = () => {
         />
       </SubPageCard>
       {(transaction?.signers ?? []).map((signer, index) => (
-        <DappBanner key={`signer-${index}`} scope={scope} ethOrOasisAddress={signer.address_eth} />
+        <DappBanner
+          key={`signer-${index}`}
+          scope={scope}
+          ethOrOasisAddress={signer.address_eth ?? signer.address}
+        />
       ))}
-      <DappBanner scope={scope} ethOrOasisAddress={transaction?.to_eth} />
+      {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
         <SubPageCard title={t('common.events')}>
           <RuntimeTransactionEvents transaction={transaction} />

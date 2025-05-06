@@ -10,7 +10,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { EthOrOasisAddress } from '../../../oasis-nexus/api'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 
-export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisAddress | undefined }> = ({
+export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisAddress }> = ({
   scope,
   ethOrOasisAddress,
 }) => {
