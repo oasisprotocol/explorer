@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import { COLORS } from '../../../styles/theme/colors'
 
 function extractTwoChars(strRaw: string) {
@@ -12,9 +13,17 @@ function extractTwoChars(strRaw: string) {
   return first + second
 }
 
-export const InitialsAvatar = ({ name, size }: { name: string; size: number }) => {
+export const InitialsAvatar = ({
+  name,
+  width,
+  style = {},
+}: {
+  name: string
+  width: number
+  style?: CSSProperties
+}) => {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100">
+    <svg width={width} viewBox="0 0 100 100" style={style}>
       <rect width="100" height="100" rx="50" fill={COLORS.brandDark} />
       <text fontSize="40" x="50" y="50" dominantBaseline="central" textAnchor="middle" fill={COLORS.white}>
         {extractTwoChars(name)}
