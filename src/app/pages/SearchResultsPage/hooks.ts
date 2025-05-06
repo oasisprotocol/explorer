@@ -392,18 +392,21 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...queries.runtimeBlockHash.results,
   ]
   const transactions = [...(queries.runtimeTxHash.results || []), ...(queries.consensusTxHash.results || [])]
+  const tokens = queries.tokens.results
+    .map(l => l.evm_tokens)
+    .flat()
+    .sort((t1, t2) => t2.num_holders - t1.num_holders)
+  const alreadyAToken = new Set(tokens.map(t => t.network + t.layer + t.contract_addr))
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),
     ...(queries.oasisRuntimeAccount.results || []),
     ...(queries.evmAccount.results || []),
     ...(queries.accountsByName.results || []),
     ...(queries.validatorByName.results || []),
-  ].filter(isAccountNonEmpty)
+  ]
+    .filter(isAccountNonEmpty)
+    .filter(a => !alreadyAToken.has(a.network + a.layer + a.address)) // Deduplicate tokens
   const roflApps = queries.roflApp.results
-  const tokens = queries.tokens.results
-    .map(l => l.evm_tokens)
-    .flat()
-    .sort((t1, t2) => t2.num_holders - t1.num_holders)
   const proposals = queries.proposals.results
 
   const results: SearchResultItem[] = isLoading
