@@ -2,7 +2,7 @@
   "extends": "@parcel/config-default",
   "transformers": {
     "*.html": [
-      "@plasmohq/parcel-transformer-inject-env",
+      "parcel-transformer-env-variables-injection",
       "..."
     ]
   }
