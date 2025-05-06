@@ -409,6 +409,7 @@
     "holdersValue": "{{ value, number }}",
     "holdersCount": "Holders Count",
     "inventory": "Inventory",
+    "originTooltip": "This token originates from <strong>{{origin}}</strong>",
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }} {{ticker}}",
     "transferEventType": {
