@@ -10,6 +10,11 @@ export type AccountMetadata = {
   icon?: string // Sanitized URL
   origin?: string // Origin of this token/account
   source: AccountMetadataSource // Origin of metadata. TODO: rename to e.g. metadata_source
+  dapp?: {
+    button: string
+    description: string
+    url: string
+  }
 }
 
 export type AccountMetadataInfo = {

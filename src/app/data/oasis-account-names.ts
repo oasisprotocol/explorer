@@ -58,6 +58,14 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
       description: entry.Description,
       origin: entry.Origin,
       icon: entry.Icon && hasValidProtocol(entry.Icon) ? entry.Icon : undefined,
+      dapp:
+        entry.Dapp && hasValidProtocol(entry.Dapp.Url)
+          ? {
+              button: entry.Dapp.Button,
+              description: entry.Dapp.Description,
+              url: entry.Dapp.Url,
+            }
+          : undefined,
     }
     // Register the metadata in its native form
     list.push(metadata)

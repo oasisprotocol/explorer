@@ -195,12 +195,6 @@
     "totalCirculation": "This is <StakedPercentage /> of the total circulation"
   },
   "currentEpoch": "Current Epoch",
-  "dapps": {
-    "wrose": {
-      "description": "Looking to wrap or unwrap your wROSE?",
-      "label": "Use our ROSE (un)wrapper"
-    }
-  },
   "networkProposal": {
     "close": "Closed",
     "closeTooltip": "Voting ended on epoch shown.",

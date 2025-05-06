@@ -4,28 +4,23 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import Box from '@mui/material/Box'
-import { useTranslation } from 'react-i18next'
 import { SearchScope } from '../../../types/searchScope'
-import { getDappForAddress } from '../../config/dapps'
 import Button from '@mui/material/Button'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { EthOrOasisAddress } from '../../../oasis-nexus/api'
+import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 
 export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisAddress | undefined }> = ({
   scope,
   ethOrOasisAddress,
 }) => {
-  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  if (!ethOrOasisAddress) {
-    return null
-  }
-
-  const dApp = getDappForAddress(t, scope.network, scope.layer, ethOrOasisAddress)
+  const { metadata } = useAccountMetadata(scope, ethOrOasisAddress)
+  const dApp = metadata?.dapp
 
   return (
-    !!dApp && (
+    !!dApp?.url && (
       <Card
         sx={{
           backgroundColor: COLORS.brandMedium,
@@ -67,7 +62,7 @@ export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisA
               target="_blank"
               rel="noopener noreferrer"
             >
-              {dApp.label}
+              {dApp.button}
             </Button>
           </Box>
         </CardContent>
