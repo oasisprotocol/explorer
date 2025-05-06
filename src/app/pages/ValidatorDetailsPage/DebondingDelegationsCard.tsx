@@ -4,7 +4,7 @@ import {
   DebondingDelegation,
   useGetConsensusAccountsAddressDebondingDelegationsTo,
 } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'

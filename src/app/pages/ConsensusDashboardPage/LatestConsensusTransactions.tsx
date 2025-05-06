@@ -8,7 +8,10 @@ import Link from '@mui/material/Link'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { ConsensusTransactions } from '../../components/Transactions'
-import { NUMBER_OF_ITEMS_ON_DASHBOARD as limit, FILTERING_ON_DASHBOARD as shouldFilter } from '../../config'
+import {
+  NUMBER_OF_ITEMS_ON_DASHBOARD as limit,
+  FILTERING_ON_DASHBOARD as shouldFilter,
+} from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
 import {
   getConsensusTransactionMethodFilteringParam,

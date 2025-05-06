@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeTransactions } from '../../components/Transactions'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useAccountTransactions } from './hook'
 import { RuntimeAccountDetailsContext } from './index'
 import { useScreenSize } from '../../hooks/useScreensize'

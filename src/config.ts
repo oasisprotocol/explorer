@@ -6,6 +6,12 @@ import { SearchScope } from './types/searchScope'
 import { Network } from './types/network'
 import type { Theme } from '@mui/material/styles/createTheme'
 
+export const NUMBER_OF_ITEMS_ON_DASHBOARD = 5
+export const FILTERING_ON_DASHBOARD = true
+export const NUMBER_OF_ITEMS_ON_SEPARATE_PAGE = 10
+export const REFETCH_INTERVAL = 5000
+export const API_MAX_TOTAL_COUNT = 1000
+
 export const consensusDecimals = 9
 /**
  * The maximum processing delay above which we consider the data on this paratime to be out of date.

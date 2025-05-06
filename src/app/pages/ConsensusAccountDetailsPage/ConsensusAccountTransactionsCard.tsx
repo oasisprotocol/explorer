@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { ConsensusTxMethod, useGetConsensusTransactions } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { ConsensusTransactions } from '../../components/Transactions'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusAccountDetailsContext } from './hooks'
