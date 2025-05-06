@@ -31,7 +31,7 @@ import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
-import { API_MAX_TOTAL_COUNT } from '../app/config'
+import { API_MAX_TOTAL_COUNT } from '../config'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'

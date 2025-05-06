@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router-dom'
 import { Layer, useGetRuntimeRoflAppsIdInstancesRakTransactions } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { useSearchParamsPagination } from '../..//components/Table/useSearchParamsPagination'
 

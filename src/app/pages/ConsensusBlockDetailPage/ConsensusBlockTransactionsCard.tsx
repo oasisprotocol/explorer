@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusTransactions } from '../../components/Transactions'

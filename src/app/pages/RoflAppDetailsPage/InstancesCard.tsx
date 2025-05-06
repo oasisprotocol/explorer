@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layer, useGetConsensusEpochs, useGetRuntimeRoflAppsIdInstances } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'

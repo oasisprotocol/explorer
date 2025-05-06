@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
 import { useAccountEvents } from './hook'

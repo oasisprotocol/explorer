@@ -15,7 +15,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { useRequiredScopeParam } from '../../../app/hooks/useScopeParam'
 import { AppErrors } from '../../../types/errors'
-import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../config'
+import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../..//components/Delegations'
 import { wallet } from '../../utils/externalLinks'

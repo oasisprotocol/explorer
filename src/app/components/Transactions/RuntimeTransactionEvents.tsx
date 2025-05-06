@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layer, RuntimeTransaction, useGetRuntimeEvents } from '../../../oasis-nexus/api'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeEventsDetailedList } from '../RuntimeEvents/RuntimeEventsDetailedList'

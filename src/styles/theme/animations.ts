@@ -1,6 +1,6 @@
 import { keyframes } from '@mui/material/styles'
 import { COLORS } from './colors'
-import { REFETCH_INTERVAL } from '../../app/config'
+import { REFETCH_INTERVAL } from '../../config'
 
 const backgroundColorKeyframes = keyframes`
   0% {
