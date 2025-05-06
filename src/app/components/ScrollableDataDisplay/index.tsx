@@ -5,7 +5,7 @@ import { COLORS } from '../../../styles/theme/colors'
 
 export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }> = ({
   data,
-  fontWeight = 700,
+  fontWeight = 400,
 }) => {
   return (
     <Box
@@ -26,6 +26,7 @@ export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }>
           overflowY: 'scroll',
           p: 4,
           width: '100%',
+          resize: 'vertical',
         }}
       >
         <Typography
