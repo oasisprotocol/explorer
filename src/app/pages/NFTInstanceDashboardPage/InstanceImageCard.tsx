@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { Button } from '@mui/base/Button'
@@ -15,7 +15,9 @@ import { processNftImageUrl } from '../../utils/nft-images'
 import { hasValidProtocol } from '../../utils/url'
 import { COLORS } from '../../../styles/theme/colors'
 import { ImagePreview } from '../../components/ImagePreview'
+import { VideoPreview } from 'app/components/VideoPreview'
 import { NoPreview } from '../../components/NoPreview'
+import { checkContentType } from 'app/utils/ipfs'
 
 const imageSize = '350px'
 
@@ -81,6 +83,21 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
   const handlePreviewOpen = () => setPreviewOpen(true)
   const handlePreviewClose = () => setPreviewOpen(false)
   const [imageLoadError, setImageLoadError] = useState(false)
+  const [contentType, setContentType] = useState<string>('')
+
+  useEffect(() => {
+    async function fetchContentType() {
+      try {
+        const url = processNftImageUrl(nft?.image)
+        const type = await checkContentType(url)
+        setContentType(type)
+      } catch (error) {
+        console.error('Error fetching content type:', error)
+      }
+    }
+
+    fetchContentType()
+  }, [nft?.image])
 
   return (
     <Card
@@ -130,15 +147,28 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
                   alignItems: 'center',
                 }}
               >
-                <ImagePreview
-                  handlePreviewClose={handlePreviewClose}
-                  handlePreviewOpen={handlePreviewOpen}
-                  previewOpen={previewOpen}
-                  src={processNftImageUrl(nft.image)}
-                  onError={() => setImageLoadError(true)}
-                  title={nft.name}
-                  maxThumbnailSize={imageSize}
-                />
+                {contentType === 'image' && (
+                  <ImagePreview
+                    handlePreviewClose={handlePreviewClose}
+                    handlePreviewOpen={handlePreviewOpen}
+                    previewOpen={previewOpen}
+                    src={processNftImageUrl(nft.image)}
+                    onError={() => setImageLoadError(true)}
+                    title={nft.name}
+                    maxThumbnailSize={imageSize}
+                  />
+                )}
+                {contentType === 'video' && (
+                  <VideoPreview
+                    handlePreviewClose={handlePreviewClose}
+                    handlePreviewOpen={handlePreviewOpen}
+                    previewOpen={previewOpen}
+                    src={processNftImageUrl(nft.image)}
+                    onError={() => setImageLoadError(true)}
+                    title={nft.name}
+                    maxThumbnailSize={imageSize}
+                  />
+                )}
               </Box>
               <Box
                 sx={{
