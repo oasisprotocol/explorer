@@ -29,11 +29,9 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Run dev server
-        run: yarn start &
       - name: Install playwright
         run: yarn install --frozen-lockfile
         working-directory: playwright
-      - name: Run playwright tests
+      - name: Run playwright tests (auto-starts dev server)
         run: yarn test
         working-directory: playwright
