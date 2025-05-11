@@ -16,6 +16,9 @@ jobs:
     # NOTE: This name appears in GitHub's Checks API.
     name: playwright
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.51.0-noble
+      options: --user 1001
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,9 +33,6 @@ jobs:
         run: yarn start &
       - name: Install playwright
         run: yarn install --frozen-lockfile
-        working-directory: playwright
-      - name: Install playwright dependencies
-        run: yarn playwright install --with-deps
         working-directory: playwright
       - name: Run playwright tests
         run: yarn test
