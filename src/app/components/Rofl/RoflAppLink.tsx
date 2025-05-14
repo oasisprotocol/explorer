@@ -10,6 +10,7 @@ type RoflAppLinkProps = {
   alwaysTrim?: boolean
   highlightedPartOfName?: string
   withSourceIndicator?: boolean
+  labelOnly?: boolean
 }
 
 export const RoflAppLink: FC<RoflAppLinkProps> = ({
@@ -19,6 +20,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
   alwaysTrim,
   highlightedPartOfName,
   withSourceIndicator,
+  labelOnly,
 }) => {
   const to = RouteUtils.getRoflAppRoute(network, id)
 
@@ -30,6 +32,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
       alwaysTrim={alwaysTrim}
       highlightedPartOfName={highlightedPartOfName}
       withSourceIndicator={withSourceIndicator}
+      labelOnly={labelOnly}
     />
   )
 }
