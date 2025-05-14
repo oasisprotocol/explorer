@@ -67,7 +67,19 @@ export const RoflAppDetailsPage: FC = () => {
       <SubPageCard
         featured
         title={
-          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+          isLoading ? (
+            <Skeleton variant="text" />
+          ) : (
+            roflApp && (
+              <RoflAppLink
+                id={roflApp.id}
+                network={scope.network}
+                name={roflApp.metadata['net.oasis.rofl.name']}
+                labelOnly
+                withSourceIndicator={false}
+              />
+            )
+          )
         }
       >
         <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
