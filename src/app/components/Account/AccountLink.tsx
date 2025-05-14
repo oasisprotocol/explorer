@@ -183,7 +183,16 @@ export const AccountLink: FC<Props> = ({
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
       <>
         {showAccountName && (
-          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <Box
+            component="span"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 3,
+              maxWidth: '100%',
+              overflowX: 'hidden',
+            }}
+          >
             <AccountMetadataSourceIndicator source={accountMetadata.source} />
             <AdaptiveHighlightedText
               text={accountName}

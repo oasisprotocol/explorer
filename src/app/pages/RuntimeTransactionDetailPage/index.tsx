@@ -179,7 +179,15 @@ export const RuntimeTransactionDetailView: FC<{
                 }}
               >
                 {(transaction?.signers ?? []).map((signer, index) => (
-                  <Box key={`signer-${index}-link`} sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <Box
+                    key={`signer-${index}-link`}
+                    sx={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      maxWidth: '100%',
+                      overflowX: 'hidden',
+                    }}
+                  >
                     <AccountLink
                       scope={transaction}
                       address={(signer.address_eth ?? signer.address) as string}

@@ -16,6 +16,8 @@ export const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({
         alignItems: 'center',
         verticalAlign: 'middle',
         padding: '2px 4px 2px 4px',
+        maxWidth: '100%',
+        overflowX: 'hidden',
         ...(isHighlighted
           ? {
               background: COLORS.warningLight,
