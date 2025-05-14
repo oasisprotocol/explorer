@@ -35,17 +35,23 @@ export const Link: FC<LinkProps> = ({
   const hasName = name?.toLowerCase() !== address.toLowerCase()
 
   const tooltipTitle =
-    hasName && withSourceIndicator ? (
+    hasName && (withSourceIndicator || isTablet) ? (
       <div>
         {name && (
           <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             <Box sx={{ fontWeight: 'bold' }}>{name}</Box>
-            <span>-</span>
-            <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+            {withSourceIndicator && (
+              <>
+                <span>-</span>
+                <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+              </>
+            )}
           </Box>
         )}
         <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
       </div>
+    ) : isTablet ? (
+      address
     ) : undefined
 
   return (
