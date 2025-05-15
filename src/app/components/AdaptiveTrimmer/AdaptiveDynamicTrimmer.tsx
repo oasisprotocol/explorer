@@ -3,6 +3,9 @@ import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
+// We are going to use this string as a test string to see if the available area is limited (as it should be)
+const testString = 'a'.repeat(1000)
+
 type AdaptiveDynamicTrimmerProps = {
   getFullContent: () => {
     content: ReactNode
@@ -44,6 +47,10 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   const [currentContent, setCurrentContent] = useState<ReactNode>()
   const [currentLength, setCurrentLength] = useState(0)
 
+  const [verificationStatus, setVerificationStatus] = useState<'none' | 'pending' | 'verified' | 'failed'>(
+    'none',
+  )
+
   // Known good - this fits
   const [largestKnownGood, setLargestKnownGood] = useState(0)
 
@@ -67,12 +74,26 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
     [attemptContent, getShortenedContent],
   )
 
+  // Verification is the process when we verify that the component is mounted in such a way
+  // that the width is actually limited. (The whole thing won't work otherwise.)
+  const initVerification = useCallback(() => {
+    setVerificationStatus('pending')
+    attemptContent(testString, testString.length)
+  }, [setVerificationStatus, attemptContent])
+
+  useEffect(() => {
+    initVerification()
+  }, [initVerification])
+
+  // Discovery is the process of finding the largest possible part of the text
+  // that still fits within the available width
   const initDiscovery = useCallback(() => {
+    if (verificationStatus !== 'verified') return
     setLargestKnownGood(0)
     setSmallestKnownBad(fullLength + 1)
     attemptContent(fullContent, fullLength)
     setInDiscovery(true)
-  }, [fullContent, fullLength, attemptContent])
+  }, [fullContent, fullLength, attemptContent, verificationStatus])
 
   useEffect(() => {
     initDiscovery()
@@ -85,43 +106,70 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   }, [initDiscovery])
 
   useEffect(() => {
-    if (inDiscovery) {
-      if (!textRef.current) {
-        return
-      }
-      const isOverflow = textRef.current.scrollWidth > textRef.current.clientWidth
+    const isOverflow = !!textRef.current && textRef.current.scrollWidth > textRef.current.clientWidth
 
-      if (isOverflow) {
-        // This is too much
+    switch (verificationStatus) {
+      case 'none':
+      case 'failed':
+        break
+      case 'pending':
+        if (!textRef.current) {
+          return
+        }
 
-        // Update known bad length
-        const newSmallestKnownBad = Math.min(currentLength, smallestKnownBad)
-        setSmallestKnownBad(newSmallestKnownBad)
-
-        // We should try something smaller
-        attemptShortenedContent(Math.floor((largestKnownGood + newSmallestKnownBad) / 2))
-      } else {
-        // This is OK
-
-        // Update known good length
-        const newLargestKnownGood = Math.max(currentLength, largestKnownGood)
-        setLargestKnownGood(currentLength)
-
-        if (currentLength === fullLength) {
-          // The whole thing fits, so we are good.
-          setInDiscovery(false)
+        if (!isOverflow) {
+          console.warn(
+            'Adaptive dynamic trimmer: component not configured properly! Please make sure that the width is fixed (i. e. max-width=...), and overflow-x is hidden.',
+          )
+          // console.log('Problem with displaying', fullContent, verificationStatus, currentLength, fullLength)
+          if (currentLength !== fullLength) {
+            attemptContent(fullContent, fullLength)
+            setVerificationStatus('failed')
+          }
         } else {
-          if (currentLength + 1 === smallestKnownBad) {
-            // This the best we can do, for now
-            setInDiscovery(false)
+          setVerificationStatus('verified')
+        }
+        break
+      case 'verified':
+        if (inDiscovery) {
+          if (!textRef.current) {
+            return
+          }
+
+          if (isOverflow) {
+            // This is too much
+
+            // Update known bad length
+            const newSmallestKnownBad = Math.min(currentLength, smallestKnownBad)
+            setSmallestKnownBad(newSmallestKnownBad)
+
+            // We should try something smaller
+            attemptShortenedContent(Math.floor((largestKnownGood + newSmallestKnownBad) / 2))
           } else {
-            // So far, so good, but we should try something longer
-            attemptShortenedContent(Math.floor((newLargestKnownGood + smallestKnownBad) / 2))
+            // This is OK
+
+            // Update known good length
+            const newLargestKnownGood = Math.max(currentLength, largestKnownGood)
+            setLargestKnownGood(currentLength)
+
+            if (currentLength === fullLength) {
+              // The whole thing fits, so we are good.
+              setInDiscovery(false)
+            } else {
+              if (currentLength + 1 === smallestKnownBad) {
+                // This the best we can do, for now
+                setInDiscovery(false)
+              } else {
+                // So far, so good, but we should try something longer
+                attemptShortenedContent(Math.floor((newLargestKnownGood + smallestKnownBad) / 2))
+              }
+            }
           }
         }
-      }
     }
   }, [
+    verificationStatus,
+    attemptContent,
     attemptShortenedContent,
     currentLength,
     fullContent,
@@ -154,6 +202,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
         overflow: 'hidden',
         maxWidth: '100%',
         textWrap: 'nowrap',
+        ...(verificationStatus === 'failed' ? { border: '4px solid pink' } : {}),
       }}
     >
       <MaybeWithTooltip title={title} spanSx={{ whiteSpace: 'nowrap' }}>
