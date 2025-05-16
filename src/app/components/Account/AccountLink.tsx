@@ -26,18 +26,7 @@ const WithTypographyAndLink: FC<{
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <WithHighlighting address={address}>
-      <Typography
-        variant="mono"
-        component="span"
-        sx={{
-          ...(mobile
-            ? {
-                maxWidth: '100%',
-                overflow: 'hidden',
-              }
-            : {}),
-        }}
-      >
+      <Typography variant="mono" component="span">
         {labelOnly ? (
           children
         ) : (
