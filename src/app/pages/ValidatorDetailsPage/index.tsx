@@ -252,7 +252,7 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.entityId')}</dt>
           <dd>{validator.entity_id}</dd>
-          <dt>{t('validator.nodeId')}</dt>
+          <dt>{t('common.nodeId')}</dt>
           <dd>{validator.node_id}</dd>
         </>
       )}
