@@ -3,12 +3,24 @@ import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 
+type ShorteningResult = {
+  content: ReactNode
+  length: number
+}
+
 type AdaptiveDynamicTrimmerProps = {
   getFullContent: () => {
     content: ReactNode
     length: number
   }
-  getShortenedContent: (wantedLength: number) => ReactNode
+  getShortenedContent: (wantedLength: number) => ShorteningResult
+
+  /**
+   * The minimum length we ever want to shorten to.
+   *
+   * Default is 2
+   */
+  minLength?: number
 
   /**
    * Normally, the tooltip will be the full content. Do you want to add something?
@@ -19,6 +31,11 @@ type AdaptiveDynamicTrimmerProps = {
    * Normally, the tooltip will be the full content. Do you want to replace it with something else?
    */
   tooltipOverride?: ReactNode
+
+  /**
+   * Run in debug mode
+   */
+  debugMode?: boolean
 }
 
 /**
@@ -35,6 +52,8 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   getShortenedContent,
   extraTooltip,
   tooltipOverride,
+  debugMode = true,
+  minLength = 2,
 }) => {
   // Initial setup
   const textRef = useRef<HTMLDivElement | null>(null)
@@ -53,26 +72,36 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   // Are we exploring our possibilities now?
   const [inDiscovery, setInDiscovery] = useState(false)
 
+  const debugLog = useCallback(
+    (message: any, ...args: any[]) => {
+      if (debugMode) console.log(message, ...args)
+    },
+    [debugMode],
+  )
+
   const attemptContent = useCallback((content: ReactNode, length: number) => {
     setCurrentContent(content)
     setCurrentLength(length)
   }, [])
 
   const attemptShortenedContent = useCallback(
-    (length: number) => {
-      const content = getShortenedContent(length)
-
+    (wantedLength: number) => {
+      const { content, length } = getShortenedContent(wantedLength)
+      if (length !== wantedLength) {
+        debugLog(`Wanted to shorten content to ${wantedLength}, received ${length}.`)
+      }
       attemptContent(content, length)
     },
-    [attemptContent, getShortenedContent],
+    [attemptContent, getShortenedContent, debugLog],
   )
 
   const initDiscovery = useCallback(() => {
     setLargestKnownGood(0)
     setSmallestKnownBad(fullLength + 1)
+    debugLog('Starting discovery. Attempting full content at length', fullLength)
     attemptContent(fullContent, fullLength)
     setInDiscovery(true)
-  }, [fullContent, fullLength, attemptContent])
+  }, [fullContent, fullLength, attemptContent, debugLog])
 
   useEffect(() => {
     initDiscovery()
@@ -89,7 +118,13 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
       if (!textRef.current) {
         return
       }
-      const isOverflow = textRef.current.scrollWidth > textRef.current.clientWidth
+      let element: HTMLElement | null = textRef.current
+      let isOverflow = false
+
+      while (element) {
+        isOverflow = isOverflow || element.scrollWidth > element.clientWidth
+        element = element.parentElement
+      }
 
       if (isOverflow) {
         // This is too much
@@ -98,8 +133,18 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
         const newSmallestKnownBad = Math.min(currentLength, smallestKnownBad)
         setSmallestKnownBad(newSmallestKnownBad)
 
-        // We should try something smaller
-        attemptShortenedContent(Math.floor((largestKnownGood + newSmallestKnownBad) / 2))
+        // Have we hit the minimum?
+        if (currentLength === minLength) {
+          // If we can not even fit the minimum number, there is nothing we can do here.
+          debugLog('Sticking to the minimum of', minLength)
+          setInDiscovery(false)
+        } else {
+          // We should try something smaller
+          debugLog(`${largestKnownGood} <= ? < ${newSmallestKnownBad}, going DOWN from ${currentLength}`)
+          attemptShortenedContent(
+            Math.max(minLength, Math.floor((largestKnownGood + newSmallestKnownBad) / 2)),
+          )
+        }
       } else {
         // This is OK
 
@@ -109,13 +154,16 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
 
         if (currentLength === fullLength) {
           // The whole thing fits, so we are good.
+          debugLog('The whole thing fits, we are good')
           setInDiscovery(false)
         } else {
           if (currentLength + 1 === smallestKnownBad) {
             // This the best we can do, for now
+            debugLog(currentLength, 'is as long as we can grow.')
             setInDiscovery(false)
           } else {
             // So far, so good, but we should try something longer
+            debugLog(`${newLargestKnownGood} <= ? < ${smallestKnownBad}, going UP from ${currentLength}`)
             attemptShortenedContent(Math.floor((newLargestKnownGood + smallestKnownBad) / 2))
           }
         }
@@ -130,6 +178,8 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
     initDiscovery,
     largestKnownGood,
     smallestKnownBad,
+    debugLog,
+    minLength,
   ])
 
   const title =
@@ -154,6 +204,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
         overflow: 'hidden',
         maxWidth: '100%',
         textWrap: 'nowrap',
+        opacity: inDiscovery ? 0 : 1,
       }}
     >
       <MaybeWithTooltip title={title} spanSx={{ whiteSpace: 'nowrap' }}>

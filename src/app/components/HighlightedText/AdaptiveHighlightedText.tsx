@@ -45,14 +45,20 @@ export const AdaptiveHighlightedText: FC<AdaptiveHighlightedTextProps> = ({
         content: fullContent,
         length: text.length,
       })}
-      getShortenedContent={wantedLength => (
-        <HighlightedTrimmedText
-          fragmentLength={wantedLength}
-          text={text}
-          pattern={pattern}
-          options={options}
-        />
-      )}
+      getShortenedContent={wantedLength => {
+        const content = (
+          <HighlightedTrimmedText
+            fragmentLength={wantedLength}
+            text={text}
+            pattern={pattern}
+            options={options}
+          />
+        )
+        return {
+          content,
+          length: wantedLength,
+        }
+      }}
       extraTooltip={
         extraTooltip ? (
           <>
