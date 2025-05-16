@@ -7,6 +7,13 @@ type AdaptiveTrimmerProps = {
   strategy: 'middle' | 'end'
 
   /**
+   * The minimum length we ever want to shorten to.
+   *
+   * Default is 2
+   */
+  minLength?: number
+
+  /**
    * Normally, the tooltip will be the text. Do you want to add something extra?
    */
   extraTooltip?: ReactNode
@@ -31,14 +38,25 @@ export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({
   strategy = 'end',
   extraTooltip,
   tooltipOverride,
+  minLength,
 }) => (
   <AdaptiveDynamicTrimmer
     getFullContent={() => ({ content: text, length: text.length })}
-    getShortenedContent={length =>
-      strategy === 'middle'
-        ? trimLongString(text, Math.floor(length / 2) - 1, Math.floor(length / 2) - 1)!
-        : trimLongString(text, length, 0)!
-    }
+    getShortenedContent={wantedLength => {
+      if (wantedLength >= text.length) {
+        return {
+          content: text,
+          length: text.length,
+        }
+      }
+      const content =
+        strategy === 'middle'
+          ? trimLongString(text, Math.floor(wantedLength / 2), Math.ceil(wantedLength / 2) - 1)!
+          : trimLongString(text, wantedLength, 0)!
+      const length = content.length
+      return { content, length }
+    }}
+    minLength={minLength}
     tooltipOverride={tooltipOverride}
     extraTooltip={extraTooltip}
   />

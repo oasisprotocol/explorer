@@ -74,7 +74,7 @@ export const TransactionLink: FC<{
   // Mobile mode
   return (
     <WithTypographyAndLink mobile to={to}>
-      <AdaptiveTrimmer text={hash} strategy="middle" extraTooltip={extraTooltip} />
+      <AdaptiveTrimmer text={hash} strategy="middle" extraTooltip={extraTooltip} minLength={13} />
     </WithTypographyAndLink>
   )
 }

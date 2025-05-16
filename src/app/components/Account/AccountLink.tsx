@@ -181,7 +181,7 @@ export const AccountLink: FC<Props> = ({
             />
           </Box>
         )}
-        <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
+        <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} minLength={13} />
       </>
     </WithTypographyAndLink>
   )
