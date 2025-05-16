@@ -52,7 +52,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   getShortenedContent,
   extraTooltip,
   tooltipOverride,
-  debugMode = false,
+  debugMode = true,
   minLength = 2,
 }) => {
   // Initial setup
@@ -87,7 +87,9 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   const attemptShortenedContent = useCallback(
     (wantedLength: number) => {
       const { content, length } = getShortenedContent(wantedLength)
-      debugLog(`Wanted to shorten content to ${wantedLength}, received ${length}.`)
+      if (length !== wantedLength) {
+        debugLog(`Wanted to shorten content to ${wantedLength}, received ${length}.`)
+      }
       attemptContent(content, length)
     },
     [attemptContent, getShortenedContent, debugLog],
@@ -138,7 +140,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
           setInDiscovery(false)
         } else {
           // We should try something smaller
-          debugLog("This is too big, let's go smaller")
+          debugLog(`${largestKnownGood} <= ? < ${newSmallestKnownBad}, going DOWN from ${currentLength}`)
           attemptShortenedContent(
             Math.max(minLength, Math.floor((largestKnownGood + newSmallestKnownBad) / 2)),
           )
@@ -157,11 +159,11 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
         } else {
           if (currentLength + 1 === smallestKnownBad) {
             // This the best we can do, for now
-            debugLog('This is as long as we can grow.')
+            debugLog(currentLength, 'is as long as we can grow.')
             setInDiscovery(false)
           } else {
             // So far, so good, but we should try something longer
-            debugLog("Let's go bigger")
+            debugLog(`${newLargestKnownGood} <= ? < ${smallestKnownBad}, going UP from ${currentLength}`)
             attemptShortenedContent(Math.floor((newLargestKnownGood + smallestKnownBad) / 2))
           }
         }
