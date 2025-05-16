@@ -202,6 +202,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
         overflow: 'hidden',
         maxWidth: '100%',
         textWrap: 'nowrap',
+        opacity: inDiscovery ? 0 : 1,
       }}
     >
       <MaybeWithTooltip title={title} spanSx={{ whiteSpace: 'nowrap' }}>
