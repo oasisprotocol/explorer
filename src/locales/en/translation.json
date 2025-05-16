@@ -691,6 +691,7 @@
     "emptyRoflAppsList": "No ROFL apps found.",
     "enclaveId": "Enclave ID",
     "endorsement": "Endorsement",
+    "endorsingNodeAddress": "Endorsing node address",
     "endorsingNodeId": "Endorsing node ID",
     "endorsingNodePays": "Endorsing node pays",
     "entity": "Entity",
