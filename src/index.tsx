@@ -9,6 +9,7 @@ import './styles/index.css'
 // Initialize languages
 import './locales/i18n'
 import { LocalSettingsContextProvider } from './app/providers/LocalSettingsProvider'
+import { AdaptiveTrimmerContextProvider } from './app/components/AdaptiveTrimmerContext/AdaptiveTrimmerProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,8 +42,10 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <LocalSettingsContextProvider>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <AdaptiveTrimmerContextProvider>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </AdaptiveTrimmerContextProvider>
       </LocalSettingsContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,

@@ -54,7 +54,7 @@ export const BlockHashLink: FC<{
   return (
     <Typography variant="mono" sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <Link component={RouterLink} to={to}>
-        <AdaptiveTrimmer text={hash} strategy="middle" />
+        <AdaptiveTrimmer text={hash} strategy="middle" minLength={13} />
       </Link>
     </Typography>
   )

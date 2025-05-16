@@ -3,8 +3,20 @@ import { AdaptiveDynamicTrimmer } from './AdaptiveDynamicTrimmer'
 import { trimLongString } from 'app/utils/trimLongString'
 
 type AdaptiveTrimmerProps = {
+  /**
+   * ID prefix to use (for debugging)
+   */
+  idPrefix?: string
+
   text: string | undefined
   strategy: 'middle' | 'end'
+
+  /**
+   * The minimum length we ever want to shorten to.
+   *
+   * Default is 2
+   */
+  minLength?: number
 
   /**
    * Normally, the tooltip will be the text. Do you want to add something extra?
@@ -15,6 +27,11 @@ type AdaptiveTrimmerProps = {
    * Normally, the tooltip will be the text. Do you want to replace it with something else?
    */
   tooltipOverride?: ReactNode
+
+  /**
+   * De we want extra debug output about the sizing process?
+   */
+  debugMode?: boolean
 }
 
 /**
@@ -27,19 +44,37 @@ type AdaptiveTrimmerProps = {
  * supplying it with a generator function which simply trims the given text to the wanted length.
  */
 export const AdaptiveTrimmer: FC<AdaptiveTrimmerProps> = ({
+  idPrefix = 'adaptive-trimmer',
   text = '',
   strategy = 'end',
   extraTooltip,
   tooltipOverride,
-}) => (
-  <AdaptiveDynamicTrimmer
-    getFullContent={() => ({ content: text, length: text.length })}
-    getShortenedContent={length =>
-      strategy === 'middle'
-        ? trimLongString(text, Math.floor(length / 2) - 1, Math.floor(length / 2) - 1)!
-        : trimLongString(text, length, 0)!
-    }
-    tooltipOverride={tooltipOverride}
-    extraTooltip={extraTooltip}
-  />
-)
+  minLength,
+  debugMode,
+}) => {
+  // console.log('Text', text)
+  return (
+    <AdaptiveDynamicTrimmer
+      idPrefix={idPrefix}
+      getFullContent={() => ({ content: text, length: text.length })}
+      getShortenedContent={wantedLength => {
+        if (wantedLength >= text.length) {
+          return {
+            content: text,
+            length: text.length,
+          }
+        }
+        const content =
+          strategy === 'middle'
+            ? trimLongString(text, Math.floor(wantedLength / 2), Math.ceil(wantedLength / 2) - 1)!
+            : trimLongString(text, wantedLength, 0)!
+        const length = content.length
+        return { content, length }
+      }}
+      minLength={minLength}
+      tooltipOverride={tooltipOverride}
+      extraTooltip={extraTooltip}
+      debugMode={debugMode}
+    />
+  )
+}

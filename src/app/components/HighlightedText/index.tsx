@@ -84,7 +84,7 @@ export const HighlightedText: FC<HighlightedTextProps> = ({
   const end = text.substring(task.endPos)
 
   return (
-    <span>
+    <span style={{ textWrap: 'nowrap' }}>
       {beginning}
       <Box component="mark" sx={sx}>
         {focus}
