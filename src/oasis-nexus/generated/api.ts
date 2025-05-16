@@ -134,7 +134,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string[];
+method?: string;
 };
 
 export type GetRuntimeRoflAppsIdInstancesParams = {
@@ -171,7 +171,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string[];
+method?: string;
 };
 
 export type GetRuntimeRoflAppsIdTransactionsParams = {
@@ -195,7 +195,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string[];
+method?: string;
 };
 
 export type GetRuntimeRoflAppsParams = {
@@ -406,7 +406,7 @@ In addition to the existing method names, the following special values are suppo
   - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
 
  */
-method?: string[];
+method?: string;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -699,7 +699,7 @@ block?: number;
 /**
  * A filter on transaction method.
  */
-method?: ConsensusTxMethod[];
+method?: ConsensusTxMethod;
 /**
  * A filter on transaction sender.
  */
@@ -1673,13 +1673,13 @@ This field is omitted when listing multiple accounts.
   allowances: Allowance[];
   /** The available balance, in base units. */
   available: TextBigInt;
-  /** The debonding escrow balance, in base units. */
+  /** Amount debonding from this validator, in base units. */
   debonding: TextBigInt;
   /** The balance of this accounts' (outgoing) debonding delegations, in base units. */
   debonding_delegations_balance: TextBigInt;
   /** The balance of this accounts' (outgoing) delegations, in base units. */
   delegations_balance: TextBigInt;
-  /** The active escrow balance, in base units. */
+  /** Amount delegated to this validator, in base units. */
   escrow: TextBigInt;
   /** The second-granular consensus time of the block in which this account was first active.
 Dates before Cobalt (2021-04-28) are approximate.
@@ -2566,7 +2566,7 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
 
 
 /**
- * @summary Returns the total supply of the consensus layer token.
+ * @summary Returns the total supply of the consensus layer token in token units.
  */
 export const GetConsensusTotalSupplyRaw = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -2608,7 +2608,7 @@ export type GetConsensusTotalSupplyRawQueryResult = NonNullable<Awaited<ReturnTy
 export type GetConsensusTotalSupplyRawQueryError = unknown
 
 /**
- * @summary Returns the total supply of the consensus layer token.
+ * @summary Returns the total supply of the consensus layer token in token units.
  */
 export const useGetConsensusTotalSupplyRaw = <TData = Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError = unknown>(
  network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusTotalSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusTotalSupplyRawMutator>}
@@ -2628,7 +2628,7 @@ export const useGetConsensusTotalSupplyRaw = <TData = Awaited<ReturnType<typeof 
 
 
 /**
- * @summary Returns the circulating supply of the consensus layer token.
+ * @summary Returns the circulating supply of the consensus layer token in token units.
  */
 export const GetConsensusCirculatingSupplyRaw = (
     network: 'mainnet' | 'testnet' | 'localnet',
@@ -2670,7 +2670,7 @@ export type GetConsensusCirculatingSupplyRawQueryResult = NonNullable<Awaited<Re
 export type GetConsensusCirculatingSupplyRawQueryError = unknown
 
 /**
- * @summary Returns the circulating supply of the consensus layer token.
+ * @summary Returns the circulating supply of the consensus layer token in token units.
  */
 export const useGetConsensusCirculatingSupplyRaw = <TData = Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError = unknown>(
  network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetConsensusCirculatingSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof GetConsensusCirculatingSupplyRawMutator>}
