@@ -2,10 +2,15 @@ import { FC, ReactNode, useEffect } from 'react'
 import { useAddressHighlighting } from './index'
 import { COLORS } from '../../../styles/theme/colors'
 import Box from '@mui/material/Box'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({ children, address }) => {
   const { highlightedAddress, highlightAddress, releaseAddress } = useAddressHighlighting()
   useEffect(() => () => releaseAddress(address)) // Release address on umount
+  const { isTablet } = useScreenSize()
+  // We have decided that we only want this feature on desktop,
+  // so we are on tablet (or mobile), just return the wrapped contnt directly.
+  if (isTablet) return children
   const isHighlighted = !!highlightedAddress && highlightedAddress.toLowerCase() === address.toLowerCase()
   return (
     <Box
