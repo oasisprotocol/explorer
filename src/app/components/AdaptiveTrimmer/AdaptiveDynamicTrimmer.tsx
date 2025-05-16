@@ -89,7 +89,13 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
       if (!textRef.current) {
         return
       }
-      const isOverflow = textRef.current.scrollWidth > textRef.current.clientWidth
+      let element: HTMLElement | null = textRef.current
+      let isOverflow = false
+
+      while (element) {
+        isOverflow = isOverflow || element.scrollWidth > element.clientWidth
+        element = element.parentElement
+      }
 
       if (isOverflow) {
         // This is too much
