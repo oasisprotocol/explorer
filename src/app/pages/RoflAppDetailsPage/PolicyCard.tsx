@@ -28,7 +28,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, policy
   const { t } = useTranslation()
   const { data } = useGetRuntimeRoflAppsIdTransactions(network, Layer.sapphire, id, {
     limit: 1,
-    method: 'rofl.Update' as unknown as string[],
+    method: 'rofl.Update',
   })
   const transaction = data?.data.transactions[0]
   const feePolicy =
