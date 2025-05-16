@@ -17,6 +17,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -89,7 +90,8 @@ export const RoflAppInstanceDetailsView: FC<{
       <dt>{t('rofl.endorsingNodeAddress')}</dt>
       <dd>
         <Typography variant="mono">
-          {nodeAddress} <CopyToClipboard value={nodeAddress} />
+          <AccountLink alwaysTrimOnTablet scope={scope} address={nodeAddress} />
+          <CopyToClipboard value={nodeAddress} />
         </Typography>
       </dd>
       <dt>{t('rofl.extraKeys')}</dt>

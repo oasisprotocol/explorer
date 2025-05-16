@@ -258,7 +258,13 @@ export const ValidatorDetailsView: FC<{
           {validator.node_id && (
             <>
               <dt>{t('common.nodeAddress')}</dt>
-              <dd>{getOasisAddressFromBase64PublicKey(validator.node_id)}</dd>
+              <dd>
+                <AccountLink
+                  alwaysTrimOnTablet
+                  scope={{ network, layer: 'consensus' }}
+                  address={getOasisAddressFromBase64PublicKey(validator.node_id)}
+                />
+              </dd>
             </>
           )}
         </>

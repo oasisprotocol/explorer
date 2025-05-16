@@ -52,7 +52,7 @@ export const InstancesList: FC<InstancesListProps> = ({
               },
               {
                 key: 'node',
-                content: <TableCellNode id={instance.endorsing_node_id} />,
+                content: <TableCellNode id={instance.endorsing_node_id} scope={scope} />,
               },
               {
                 key: 'expirationEpoch',
