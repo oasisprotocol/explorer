@@ -19,7 +19,7 @@ import {
 import { hasTextMatch } from '../components/HighlightedText/text-matching'
 import * as externalLinks from '../utils/externalLinks'
 import { getOasisAddress } from '../utils/helpers'
-import { hasValidProtocol } from '../utils/url'
+import { isUrlSafe } from '../utils/url'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
   [Network.mainnet]: {
@@ -57,9 +57,9 @@ const getOasisAccountsMetadata = async (network: Network, layer: Layer): Promise
       name: entry.Name,
       description: entry.Description,
       origin: entry.Origin,
-      icon: entry.Icon && hasValidProtocol(entry.Icon) ? entry.Icon : undefined,
+      icon: entry.Icon && isUrlSafe(entry.Icon) ? entry.Icon : undefined,
       dapp:
-        entry.Dapp && hasValidProtocol(entry.Dapp.Url)
+        entry.Dapp && isUrlSafe(entry.Dapp.Url)
           ? {
               button: entry.Dapp.Button,
               description: entry.Dapp.Description,

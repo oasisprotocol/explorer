@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { hasValidProtocol } from 'app/utils/url'
+import { isUrlSafe } from 'app/utils/url'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(5),
@@ -40,7 +40,7 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
         >
           {description}
         </Typography>
-        {url && hasValidProtocol(url) && (
+        {url && isUrlSafe(url) && (
           <Button href={url} target="_blank" rel="noopener noreferrer" color="secondary" variant="outlined">
             {label}
           </Button>

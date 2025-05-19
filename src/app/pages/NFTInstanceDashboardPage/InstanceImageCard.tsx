@@ -12,7 +12,7 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { styled } from '@mui/material/styles'
 import { EvmNft } from 'oasis-nexus/api'
 import { processNftImageUrl } from '../../utils/nft-images'
-import { hasValidProtocol } from '../../utils/url'
+import { isUrlSafe } from '../../utils/url'
 import { COLORS } from '../../../styles/theme/colors'
 import { ImagePreview } from '../../components/ImagePreview'
 import { NoPreview } from '../../components/NoPreview'
@@ -113,7 +113,7 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
                 }}
               >
                 <NoPreview placeholderSize={imageSize} />
-                {hasValidProtocol(nft.image) && (
+                {isUrlSafe(nft.image) && (
                   <Link href={nft.image} rel="noopener noreferrer" target="_blank">
                     {t('nft.openInNewTab')}
                   </Link>
@@ -121,7 +121,7 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
               </Box>
             </Box>
           )}
-          {isFetched && nft && hasValidProtocol(nft.image) && !imageLoadError && (
+          {isFetched && nft && isUrlSafe(nft.image) && !imageLoadError && (
             <>
               <Box
                 sx={{

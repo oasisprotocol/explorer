@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported'
-import { hasValidProtocol } from '../../utils/url'
+import { isUrlSafe } from '../../utils/url'
 import { COLORS } from 'styles/theme/colors'
 import { Circle } from '../Circle'
 
@@ -20,7 +20,7 @@ type ValidatorImageProps = {
 export const ValidatorImage: FC<ValidatorImageProps> = ({ address, name, logotype }) => {
   return (
     <>
-      {logotype && hasValidProtocol(logotype) ? (
+      {logotype && isUrlSafe(logotype) ? (
         <StyledImage alt={name || address} src={logotype} />
       ) : (
         <Circle color={COLORS.grayMedium2} size={5}>

@@ -13,6 +13,7 @@ import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
+import { isUrlSafe } from '../../utils/url'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -73,7 +74,7 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
                   />
                 }
               >
-                {metadata['net.oasis.rofl.repository'] ? (
+                {isUrlSafe(metadata['net.oasis.rofl.repository']) ? (
                   <StyledLink
                     href={metadata['net.oasis.rofl.repository']}
                     rel="noopener noreferrer"
