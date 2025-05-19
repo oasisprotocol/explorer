@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { RoundedBalance } from './../'
+import { MemoryRouter } from 'react-router-dom'
+import util from 'util'
 
 describe('RoundedBalance', () => {
   it('should keep original value', () => {
@@ -91,4 +93,45 @@ describe('RoundedBalance', () => {
       expect(screen.getByText('99,999.00000…')).toBeInTheDocument()
     })
   })
+
+  for (const compactLargeNumbers of [false, true]) {
+    for (const showSign of [false, true]) {
+      for (const tickerAsLink of [false, true]) {
+        for (const ticker of [undefined, 'wROSE']) {
+          for (const tokenAddress of [undefined, '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3']) {
+            for (const value of ['-0.0047956', '0.00000000000002231', '0.002231', '5', '15000000']) {
+              const params = { compactLargeNumbers, showSign, tickerAsLink, ticker, tokenAddress, value }
+              it(`should match snapshot ${util.inspect(params)}`, () => {
+                const { container } = render(
+                  <MemoryRouter>
+                    <RoundedBalance {...params} scope={{ layer: 'sapphire', network: 'mainnet' }} />
+                  </MemoryRouter>,
+                )
+                const txt = `${container.textContent} ${container.querySelector('a')?.href ?? ''}`
+                expect(txt).toMatchSnapshot()
+
+                if (tickerAsLink && tokenAddress) {
+                  expect(txt).toContain('http')
+                } else {
+                  expect(txt).not.toContain('http')
+                }
+
+                if (showSign) {
+                  expect(txt).toMatch(/^[<\-+]/)
+                } else {
+                  expect(txt).toMatch(/^[<\-\d]/)
+                }
+
+                if (compactLargeNumbers && value === '15000000') {
+                  expect(txt).toContain('M')
+                } else {
+                  expect(txt).not.toContain('M')
+                }
+              })
+            }
+          }
+        }
+      }
+    }
+  }
 })
