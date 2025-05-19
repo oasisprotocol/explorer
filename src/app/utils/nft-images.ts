@@ -1,9 +1,9 @@
 import { AppError, AppErrors } from 'types/errors'
 import { accessIpfsUrl } from './ipfs'
-import { hasValidProtocol } from './url'
+import { isUrlSafe } from './url'
 
 export const processNftImageUrl = (url: string | undefined): string => {
-  if (!url || !hasValidProtocol(url)) {
+  if (!url || !isUrlSafe(url)) {
     throw new AppError(AppErrors.InvalidUrl)
   }
 

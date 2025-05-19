@@ -6,7 +6,7 @@ import Link from '@mui/material/Link'
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
 import { styled } from '@mui/material/styles'
 import { processNftImageUrl } from 'app/utils/nft-images'
-import { hasValidProtocol } from 'app/utils/url'
+import { isUrlSafe } from 'app/utils/url'
 import { NoPreview } from '../../components/NoPreview'
 import { getNftInstanceLabel } from '../../utils/nft'
 import { EvmNft } from '../../../oasis-nexus/api'
@@ -62,7 +62,7 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
 
   return (
     <Link component={RouterLink} to={to} sx={{ display: 'flex', position: 'relative' }}>
-      {hasValidProtocol(instance.image) && !imageLoadError ? (
+      {isUrlSafe(instance.image) && !imageLoadError ? (
         <StyledImage
           onError={() => setImageLoadError(true)}
           src={processNftImageUrl(instance.image)}
