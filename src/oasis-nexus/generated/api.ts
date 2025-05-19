@@ -64,6 +64,10 @@ import GetRuntimeRoflAppsIdInstanceTransactionsMutator from '../replaceNetworkWi
 import GetRuntimeRoflAppsIdInstancesMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstancesRakMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsIdInstancesRakTransactionsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflmarketProvidersMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflmarketProvidersAddressMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflmarketProvidersAddressOffersMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeRoflmarketProvidersAddressInstancesMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
 export type GetLayerStatsActiveAccountsParams = {
@@ -111,6 +115,45 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 
  */
 window_step_seconds?: number;
+};
+
+export type GetRuntimeRoflmarketProvidersAddressInstancesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflmarketProvidersAddressOffersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflmarketProvidersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetRuntimeRoflAppsIdInstancesRakTransactionsParams = {
@@ -209,6 +252,10 @@ limit?: number;
 
  */
 offset?: number;
+/**
+ * A filter on the name of the ROFL app.
+ */
+name?: string;
 };
 
 export type GetRuntimeAccountsAddressNftsParams = {
@@ -765,6 +812,164 @@ export type HumanReadableErrorResponse = {
   msg: string;
 };
 
+export type RoflMarketInstanceListAllOf = {
+  instances: RoflMarketInstance[];
+};
+
+export type RoflMarketInstanceList = List & RoflMarketInstanceListAllOf;
+
+/**
+ * The resources allocated to this instance.
+ */
+export type RoflMarketInstanceResources = { [key: string]: any };
+
+/**
+ * The payment information for this instance.
+ */
+export type RoflMarketInstancePayment = { [key: string]: any };
+
+/**
+ * Arbitrary metadata key-value pairs assigned by the provider.
+ */
+export type RoflMarketInstanceMetadata = { [key: string]: any };
+
+/**
+ * The deployment configuration for this instance.
+ */
+export type RoflMarketInstanceDeployment = { [key: string]: any };
+
+/**
+ * The commands for this instance.
+ */
+export type RoflMarketInstanceCmdsItem = { [key: string]: any };
+
+export interface RoflMarketInstance {
+  /** The address of the administrator of the instance. */
+  admin: string;
+  /** The number of commands for this instance. */
+  cmd_count: number;
+  /** The next command ID for this instance. */
+  cmd_next_id: string;
+  cmds?: RoflMarketInstanceCmdsItem[];
+  /** The date and time when the instance was created. */
+  created_at: string;
+  /** The address of the creator of the instance. */
+  creator: string;
+  /** The deployment configuration for this instance. */
+  deployment: RoflMarketInstanceDeployment;
+  /** Unique instance identifier. */
+  id: string;
+  /** Arbitrary metadata key-value pairs assigned by the provider. */
+  metadata: RoflMarketInstanceMetadata;
+  /** The identifier of the node that this instance is deployed on. */
+  node_id: string;
+  /** The identifier of the offer that this instance belongs to. */
+  offer_id: string;
+  /** The date and time from which the instance has been paid for and not yet claimed by the provider. */
+  paid_from: string;
+  /** The date and time until which the instance has been paid for. */
+  paid_until: string;
+  /** The payment information for this instance. */
+  payment: RoflMarketInstancePayment;
+  /** The payment address for this instance. */
+  payment_address: string;
+  /** The address of the ROFL market provider that created this instance. */
+  provider: string;
+  /** The method-specific refund information. */
+  refund_data: string;
+  /** Whether the instance has been removed. */
+  removed: boolean;
+  /** The resources allocated to this instance. */
+  resources: RoflMarketInstanceResources;
+  /** The status of the instance. */
+  status: number;
+  /** The date and time when the instance was last updated. */
+  updated_at: string;
+}
+
+export type RoflMarketOfferListAllOf = {
+  offers: RoflMarketOffer[];
+};
+
+export type RoflMarketOfferList = List & RoflMarketOfferListAllOf;
+
+/**
+ * The offered resources by this offer.
+ */
+export type RoflMarketOfferResources = { [key: string]: any };
+
+/**
+ * The payment configuration for this offer.
+ */
+export type RoflMarketOfferPayment = { [key: string]: any };
+
+/**
+ * Arbitrary metadata key-value pairs assigned by the provider.
+ */
+export type RoflMarketOfferMetadata = { [key: string]: any };
+
+export interface RoflMarketOffer {
+  /** Amount of available instances for this offer. */
+  capacity: number;
+  /** Unique offer identifier. */
+  id: string;
+  /** Arbitrary metadata key-value pairs assigned by the provider. */
+  metadata: RoflMarketOfferMetadata;
+  /** The payment configuration for this offer. */
+  payment: RoflMarketOfferPayment;
+  /** The address of the ROFL market provider that created this offer. */
+  provider: string;
+  /** Whether the offer has been removed. */
+  removed: boolean;
+  /** The offered resources by this offer. */
+  resources: RoflMarketOfferResources;
+}
+
+export type RoflMarketProviderList = List & RoflMarketProviderListAllOf;
+
+/**
+ * The payment address configuration for this provider.
+ */
+export type RoflMarketProviderPaymentAddress = { [key: string]: any };
+
+/**
+ * Arbitrary metadata key-value pairs, assigned by the provider.
+ */
+export type RoflMarketProviderMetadata = { [key: string]: any };
+
+export interface RoflMarketProvider {
+  /** The address of the ROFL market provider. */
+  address: string;
+  /** The date and time when the provider was created. */
+  created_at: string;
+  /** The number of instances. */
+  instances_count: number;
+  /** The next instance ID for this provider. */
+  instances_next_id: string;
+  /** Arbitrary metadata key-value pairs, assigned by the provider. */
+  metadata: RoflMarketProviderMetadata;
+  /** The nodes that are part of the ROFL market provider. */
+  nodes: string[];
+  /** The number of offers. */
+  offers_count: number;
+  /** The next offer ID for this provider. */
+  offers_next_id: string;
+  /** The payment address configuration for this provider. */
+  payment_address: RoflMarketProviderPaymentAddress;
+  /** Whether the provider has been removed. */
+  removed: boolean;
+  /** The authorized scheduler ROFL app ID for this provider. */
+  scheduler: string;
+  /** The amount staked for provider registration. */
+  stake: TextBigInt;
+  /** The date and time when the provider was last updated. */
+  updated_at: string;
+}
+
+export type RoflMarketProviderListAllOf = {
+  providers: RoflMarketProvider[];
+};
+
 export interface RoflInstance {
   /** The optional identifier of the endorsing entity. */
   endorsing_entity_id?: string;
@@ -802,6 +1007,41 @@ export type RoflAppPolicy = { [key: string]: any };
  * Arbitrary key-value pairs.
  */
 export type RoflAppMetadata = { [key: string]: any };
+
+export interface RoflApp {
+  /** Registered application instances. Only active instances are returned.
+Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
+ */
+  active_instances: RoflInstance[];
+  /** The application administrator address. */
+  admin: string;
+  /** The Ethereum address of the application administrator (only provided if known). */
+  admin_eth?: string;
+  /** The date and time when the application was created. */
+  date_created: string;
+  /** The identifier of the ROFL application. */
+  id: string;
+  /** The date and time when the application was last active. */
+  last_activity: string;
+  /** The most recent transaction associated with this ROFL app.
+This field is only present when querying a single ROFL app.
+ */
+  last_activity_tx?: RuntimeTransaction;
+  /** Arbitrary key-value pairs. */
+  metadata: RoflAppMetadata;
+  /** The number of currently active instances of the application. */
+  num_active_instances: number;
+  /** The application authentication policy. */
+  policy: RoflAppPolicy;
+  /** Whether the application has been removed. */
+  removed: boolean;
+  /** Arbitrary SEK-encrypted key-value pairs. */
+  secrets: RoflAppSecrets;
+  /** The secrets encryption public key. */
+  sek: string;
+  /** The amount of stake in escrow by the administrator. */
+  stake: TextBigInt;
+}
 
 /**
  * A list of ROFL apps.
@@ -866,34 +1106,6 @@ certain actions which subtract/add tokens.
    * @deprecated
    */
   total_sent?: TextBigInt;
-}
-
-export interface EvmNft {
-  /** Describes the asset which this NFT represents */
-  description?: string;
-  /** The instance ID of this NFT within the collection represented by `token`. */
-  id: TextBigInt;
-  /** A URI pointing to a resource with mime type image/* representing
-the asset which this NFT represents. (Additional
-non-descriptive text from ERC-721 omitted.)
- */
-  image?: string;
-  /** A metadata document for this NFT instance.
-Currently only ERC-721 is supported, where the document is an Asset Metadata from the ERC721 Metadata JSON Schema.
- */
-  metadata?: unknown;
-  metadata_accessed?: string;
-  metadata_uri?: string;
-  /** Identifies the asset which this NFT represents */
-  name?: string;
-  /** The total number of transfers of this NFT instance.
- */
-  num_transfers?: number;
-  /** The Oasis address of this NFT instance's owner. */
-  owner?: Address;
-  /** The Ethereum address of this NFT instance's owner. */
-  owner_eth?: string;
-  token: EvmToken;
 }
 
 /**
@@ -1023,6 +1235,34 @@ detected or is not supported, this field will be null/absent.
  */
   type: EvmTokenType;
   verification_level?: VerificationLevel;
+}
+
+export interface EvmNft {
+  /** Describes the asset which this NFT represents */
+  description?: string;
+  /** The instance ID of this NFT within the collection represented by `token`. */
+  id: TextBigInt;
+  /** A URI pointing to a resource with mime type image/* representing
+the asset which this NFT represents. (Additional
+non-descriptive text from ERC-721 omitted.)
+ */
+  image?: string;
+  /** A metadata document for this NFT instance.
+Currently only ERC-721 is supported, where the document is an Asset Metadata from the ERC721 Metadata JSON Schema.
+ */
+  metadata?: unknown;
+  metadata_accessed?: string;
+  metadata_uri?: string;
+  /** Identifies the asset which this NFT represents */
+  name?: string;
+  /** The total number of transfers of this NFT instance.
+ */
+  num_transfers?: number;
+  /** The Oasis address of this NFT instance's owner. */
+  owner?: Address;
+  /** The Ethereum address of this NFT instance's owner. */
+  owner_eth?: string;
+  token: EvmToken;
 }
 
 /**
@@ -1262,41 +1502,6 @@ if applicable. The meaning varies based on the transaction method. Some notable 
   /** A reasonable "to" Ethereum address associated with this transaction,
  */
   to_eth?: string;
-}
-
-export interface RoflApp {
-  /** Registered application instances. Only active instances are returned.
-Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
- */
-  active_instances: RoflInstance[];
-  /** The application administrator address. */
-  admin: string;
-  /** The Ethereum address of the application administrator (only provided if known). */
-  admin_eth?: string;
-  /** The date and time when the application was created. */
-  date_created: string;
-  /** The identifier of the ROFL application. */
-  id: string;
-  /** The date and time when the application was last active. */
-  last_activity: string;
-  /** The most recent transaction associated with this ROFL app.
-This field is only present when querying a single ROFL app.
- */
-  last_activity_tx?: RuntimeTransaction;
-  /** Arbitrary key-value pairs. */
-  metadata: RoflAppMetadata;
-  /** The number of currently active instances of the application. */
-  num_active_instances: number;
-  /** The application authentication policy. */
-  policy: RoflAppPolicy;
-  /** Whether the application has been removed. */
-  removed: boolean;
-  /** Arbitrary SEK-encrypted key-value pairs. */
-  secrets: RoflAppSecrets;
-  /** The secrets encryption public key. */
-  sek: string;
-  /** The amount of stake in escrow by the administrator. */
-  stake: TextBigInt;
 }
 
 /**
@@ -5708,6 +5913,297 @@ export const useGetRuntimeRoflAppsIdInstancesRakTransactions = <TData = Awaited<
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryOptions(network,runtime,id,rak,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL market providers.
+ */
+export const GetRuntimeRoflmarketProviders = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams,
+ options?: SecondParameter<typeof GetRuntimeRoflmarketProvidersMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflmarketProvidersMutator<RoflMarketProviderList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/roflmarket_providers`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams,) => {
+    return [`/${network}/${runtime}/roflmarket_providers`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflmarketProvidersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersQueryKey(network,runtime,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>> = ({ signal }) => GetRuntimeRoflmarketProviders(network,runtime,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflmarketProvidersQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>>
+export type GetRuntimeRoflmarketProvidersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market providers.
+ */
+export const useGetRuntimeRoflmarketProviders = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProviders>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersQueryOptions(network,runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a specific ROFL market provider.
+ */
+export const GetRuntimeRoflmarketProvidersAddress = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+ options?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflmarketProvidersAddressMutator<RoflMarketProvider>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/roflmarket_providers/${encodeURIComponent(String(address))}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,) => {
+    return [`/${network}/${runtime}/roflmarket_providers/${address}`] as const;
+    }
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressQueryKey(network,runtime,address);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>> = ({ signal }) => GetRuntimeRoflmarketProvidersAddress(network,runtime,address, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflmarketProvidersAddressQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>>
+export type GetRuntimeRoflmarketProvidersAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a specific ROFL market provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddress = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddress>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressQueryOptions(network,runtime,address,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL market offers for a specific provider.
+ */
+export const GetRuntimeRoflmarketProvidersAddressOffers = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams,
+ options?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressOffersMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflmarketProvidersAddressOffersMutator<RoflMarketOfferList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/roflmarket_providers/${encodeURIComponent(String(address))}/offers`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressOffersQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams,) => {
+    return [`/${network}/${runtime}/roflmarket_providers/${address}/offers`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressOffersQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressOffersMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressOffersQueryKey(network,runtime,address,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>> = ({ signal }) => GetRuntimeRoflmarketProvidersAddressOffers(network,runtime,address,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflmarketProvidersAddressOffersQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>>
+export type GetRuntimeRoflmarketProvidersAddressOffersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market offers for a specific provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddressOffers = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressOffers>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressOffersMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressOffersQueryOptions(network,runtime,address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of ROFL market instances for a specific provider.
+ */
+export const GetRuntimeRoflmarketProvidersAddressInstances = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams,
+ options?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressInstancesMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeRoflmarketProvidersAddressInstancesMutator<RoflMarketInstanceList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/roflmarket_providers/${encodeURIComponent(String(address))}/instances`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressInstancesQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams,) => {
+    return [`/${network}/${runtime}/roflmarket_providers/${address}/instances`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressInstancesQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressInstancesMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressInstancesQueryKey(network,runtime,address,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>> = ({ signal }) => GetRuntimeRoflmarketProvidersAddressInstances(network,runtime,address,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeRoflmarketProvidersAddressInstancesQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>>
+export type GetRuntimeRoflmarketProvidersAddressInstancesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market instances for a specific provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddressInstances = <TData = Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeRoflmarketProvidersAddressInstances>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeRoflmarketProvidersAddressInstancesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressInstancesQueryOptions(network,runtime,address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
