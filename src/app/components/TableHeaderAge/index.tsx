@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TableAgeType } from '../../../types/table-age-type'
+import { exhaustedTypeWarning } from '../../../types/errors'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { getTimeZone } from '../../hooks/useFormattedTimestamp'
 import { TableHeaderToggle } from '../TableHeaderToggle'
@@ -29,7 +30,6 @@ export const TableHeaderAge: FC<TableHeaderAgeProps> = ({ label }) => {
       )
     }
     case TableAgeType.Distance:
-    default:
       return (
         <TableHeaderToggle
           label={label || t('common.age')}
@@ -37,5 +37,8 @@ export const TableHeaderAge: FC<TableHeaderAgeProps> = ({ label }) => {
           tooltipTitle={t('table.headers.age.tooltipTitle')}
         />
       )
+    default:
+      exhaustedTypeWarning('Unknown age header type', ageHeaderType)
+      return null
   }
 }

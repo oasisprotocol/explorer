@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NodeDisplayType } from '../../../types/node-display-type'
+import { exhaustedTypeWarning } from '../../../types/errors'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { TableHeaderToggle } from '../TableHeaderToggle'
 
@@ -22,7 +23,6 @@ export const TableHeaderNode: FC = () => {
       )
     }
     case NodeDisplayType.Id:
-    default:
       return (
         <TableHeaderToggle
           label={t('common.nodeId')}
@@ -30,5 +30,8 @@ export const TableHeaderNode: FC = () => {
           tooltipTitle={t('rofl.nodeAddressSwitch')}
         />
       )
+    default:
+      exhaustedTypeWarning('Unknown node display type', nodeHeaderType)
+      return null
   }
 }
