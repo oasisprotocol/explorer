@@ -1,15 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import { RoflInstance } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
-import { useScreenSize } from '../../hooks/useScreensize'
-import { trimLongString } from '../../utils/trimLongString'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { RoflAppInstanceStatusBadge } from '../../components/Rofl/RoflAppInstanceStatusBadge'
 import { RoflAppInstanceLink } from '../../components/Rofl/RoflAppInstanceLink'
+import { TableCellNode } from '../../components/TableCellNode'
+import { TableHeaderNode } from '../../components/TableHeaderNode'
 
 type InstancesListProps = {
   currentEpoch: number | undefined
@@ -31,11 +30,10 @@ export const InstancesList: FC<InstancesListProps> = ({
   scope,
 }) => {
   const { t } = useTranslation()
-  const { isTablet } = useScreenSize()
 
   const tableColumns: TableColProps[] = [
     { key: 'rak', content: t('rofl.rakAbbreviation') },
-    { key: 'node', content: t('rofl.nodeId') },
+    { key: 'node', content: <TableHeaderNode /> },
     { key: 'expirationEpoch', content: t('rofl.expirationEpoch'), align: TableCellAlign.Right },
     { key: 'expirationStatus', content: t('common.status'), align: TableCellAlign.Right },
   ]
@@ -54,11 +52,7 @@ export const InstancesList: FC<InstancesListProps> = ({
               },
               {
                 key: 'node',
-                content: (
-                  <Typography variant="mono">
-                    {isTablet ? trimLongString(instance.endorsing_node_id) : instance.endorsing_node_id}
-                  </Typography>
-                ),
+                content: <TableCellNode id={instance.endorsing_node_id} scope={scope} />,
               },
               {
                 key: 'expirationEpoch',

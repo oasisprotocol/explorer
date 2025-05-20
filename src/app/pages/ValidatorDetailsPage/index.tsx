@@ -16,6 +16,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
+import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
 import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -252,8 +253,20 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.entityId')}</dt>
           <dd>{validator.entity_id}</dd>
-          <dt>{t('validator.nodeId')}</dt>
+          <dt>{t('common.nodeId')}</dt>
           <dd>{validator.node_id}</dd>
+          {validator.node_id && (
+            <>
+              <dt>{t('common.nodeAddress')}</dt>
+              <dd>
+                <AccountLink
+                  alwaysTrimOnTablet
+                  scope={{ network, layer: 'consensus' }}
+                  address={getOasisAddressFromBase64PublicKey(validator.node_id)}
+                />
+              </dd>
+            </>
+          )}
         </>
       )}
       {!detailsPage && (

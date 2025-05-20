@@ -8,6 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { RoflAppInstanceDetailsContext } from './hooks'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -16,6 +17,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { AccountLink } from '../../components/Account/AccountLink'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -56,6 +58,7 @@ export const RoflAppInstanceDetailsView: FC<{
 
   if (isLoading) return <TextSkeleton numberOfRows={6} />
   if (!instance) return <></>
+  const nodeAddress = getOasisAddressFromBase64PublicKey(instance.endorsing_node_id)
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
@@ -82,6 +85,13 @@ export const RoflAppInstanceDetailsView: FC<{
       <dd>
         <Typography variant="mono">
           {instance.endorsing_node_id} <CopyToClipboard value={instance.endorsing_node_id} />
+        </Typography>
+      </dd>
+      <dt>{t('rofl.endorsingNodeAddress')}</dt>
+      <dd>
+        <Typography variant="mono">
+          <AccountLink alwaysTrimOnTablet scope={scope} address={nodeAddress} />
+          <CopyToClipboard value={nodeAddress} />
         </Typography>
       </dd>
       <dt>{t('rofl.extraKeys')}</dt>
