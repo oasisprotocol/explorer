@@ -25,7 +25,7 @@ export const useFormattedTimestamp = (
   })
 }
 
-export const useFormattedTimestampWithDistance = (
+const useFormattedTimestampWithDistance = (
   timestamp: Date | undefined,
   dateTimeFormatOptions: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -33,6 +33,7 @@ export const useFormattedTimestampWithDistance = (
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
+    second: 'numeric',
     timeZoneName: 'short',
   },
 ) => {
