@@ -38,6 +38,8 @@ import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 import { EventBalance } from 'app/components/Tokens/TokenTransfers'
+import { transactionEventsContainerId } from '../../utils/tabAnchors'
+import Link from '@mui/material/Link'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -83,7 +85,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
       ))}
       <DappBanner scope={scope} ethOrOasisAddress={transaction?.to_eth} />
       {transaction && (
-        <LinkableDiv id="events-section">
+        <LinkableDiv id={transactionEventsContainerId}>
           <SubPageCard title={t('common.events')}>
             <RuntimeTransactionEvents transaction={transaction} />
           </SubPageCard>
@@ -258,18 +260,15 @@ export const RuntimeTransactionDetailView: FC<{
                     )
                   })}
                   {(totalTransfers ?? 0) > transfers.length && (
-                    <Typography
-                      variant="body2"
-                      sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
-                      onClick={() => {
-                        const el = document.getElementById('events-section')
-                        if (el) {
-                          el.scrollIntoView({ behavior: 'smooth' })
-                        }
-                      }}
-                    >
-                      {t('common.seeAll')}
-                    </Typography>
+                    <>
+                      <Link
+                        href={`#${transactionEventsContainerId}`}
+                        variant="body2"
+                        sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
+                      >
+                        {t('common.seeMore')}
+                      </Link>
+                    </>
                   )}
                 </Box>
               </dd>
