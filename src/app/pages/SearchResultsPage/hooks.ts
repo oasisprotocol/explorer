@@ -24,6 +24,7 @@ import {
   useGetConsensusTransactionsTxHash,
   useGetRuntimeRoflAppsId,
   RoflApp,
+  useGetRuntimeRoflApps,
 } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -366,6 +367,30 @@ export function useRoflAppIdConditionally(id: string | undefined): ConditionalRe
   }
 }
 
+export function useRoflAppNameConditionally(nameFragment: string | undefined): ConditionalResults<RoflApp> {
+  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
+    // See explanation above
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetRuntimeRoflApps(
+      network,
+      Layer.sapphire,
+      {
+        name: nameFragment!,
+      },
+      {
+        query: {
+          enabled: !!nameFragment,
+        },
+      },
+    ),
+  )
+
+  return {
+    isLoading: queries.some(query => query.isInitialLoading),
+    results: queries.flatMap(query => query.data?.data.rofl_apps).filter(isDefined),
+  }
+}
+
 export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams) => {
   const queries = {
     runtimeBlockHeight: useRuntimeBlocksByHeightConditionally(currentScope, q.blockHeight),
@@ -378,6 +403,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
     roflAppId: useRoflAppIdConditionally(q.roflAppId),
+    roflAppName: useRoflAppNameConditionally(q.roflAppNameFragment),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     validatorByName: useNamedValidatorConditionally(q.validatorNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
@@ -406,7 +432,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   ]
     .filter(isAccountNonEmpty)
     .filter(a => !alreadyAToken.has(a.network + a.layer + a.address)) // Deduplicate tokens
-  const roflApps = queries.roflAppId.results
+  const roflApps = [...queries.roflAppId.results, ...queries.roflAppName.results]
   const proposals = queries.proposals.results
 
   const results: SearchResultItem[] = isLoading
