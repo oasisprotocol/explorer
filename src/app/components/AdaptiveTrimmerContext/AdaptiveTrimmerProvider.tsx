@@ -21,7 +21,8 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
 
   const [shouldMinimize, setShouldMinimize] = useState(false)
   const [shouldAdjust, setShouldAdjust] = useState(false)
-  const [adjustIndex, setAdjustIndex] = useState(0)
+  const [adjustedList, setAdjustedList] = useState<string[]>([])
+  const [currentlyAdjusting, setCurrentlyAdjusting] = useState<string>()
   const [minimizedList, setMinimizedList] = useState<string[]>([])
   const [hasMissedAction, setHasMissedAction] = useState(false)
 
@@ -67,29 +68,46 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
     }
   }, [shouldMinimize, shouldAdjust, hasMissedAction, startProcess])
 
-  const reportProcessFinish = useCallback(
-    (id: string, process: AdjustmentProcess) => {
-      // debugLog(id, 'has finished to', process)
-      switch (process) {
-        case 'minimize':
-          setMinimizedList(list => (list.includes(id) ? list : [...list, id]))
-          break
-        case 'adjusting':
-          if (adjustIndex + 1 === minimizedList.length) {
-            debugLog('This was last one, we are all good')
-            setShouldAdjust(false)
-            setMinimizedList([])
-          } else {
-            debugLog('Now we will adjust', minimizedList[adjustIndex + 1])
-            setAdjustIndex(index => index + 1)
-          }
-          break
-        default:
-          console.warn("Don't know how to handle this.")
-      }
-    },
-    [minimizedList, adjustIndex],
-  )
+  const reportProcessFinish = useCallback((id: string, process: AdjustmentProcess) => {
+    // debugLog(id, 'has finished to', process)
+    switch (process) {
+      case 'minimize':
+        setMinimizedList(list => (list.includes(id) ? list : [...list, id]))
+        break
+      case 'adjusting':
+        setAdjustedList(list => [...list, id])
+        break
+      default:
+        console.warn("Don't know how to handle this.")
+    }
+  }, [])
+
+  // If we somehow end up dropping the currently adjusted component, make sure to mark it
+  useLayoutEffect(() => {
+    if (shouldAdjust && !!currentlyAdjusting && !minimizedList.includes(currentlyAdjusting)) {
+      debugLog(`Ooops, the component that we were adjusting ${currentlyAdjusting} has disappeared.`)
+      setCurrentlyAdjusting(undefined)
+    }
+  }, [shouldAdjust, currentlyAdjusting, minimizedList])
+
+  // Select the next instance to adjust
+  useLayoutEffect(() => {
+    if (!shouldAdjust) return
+    debugLog('Previously adjusting:', currentlyAdjusting)
+    debugLog('Existing instances:', minimizedList, 'Already adjusted:', adjustedList)
+    const nextAdjustment = minimizedList.find(id => !adjustedList.includes(id))
+    if (nextAdjustment) {
+      debugLog(`Now we will adjust "${nextAdjustment}"`)
+      setCurrentlyAdjusting(nextAdjustment)
+    } else {
+      debugLog('Nothing more to adjust, we are done with the whole page.')
+      setShouldAdjust(false)
+      setCurrentlyAdjusting(undefined)
+      setMinimizedList([])
+      setAdjustedList([])
+      return
+    }
+  }, [shouldAdjust, minimizedList, adjustedList, currentlyAdjusting])
 
   // When we ara done minimizing, start the size discovery process
   useLayoutEffect(() => {
@@ -102,7 +120,8 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
           'instances:',
           minimizedList,
         )
-        setAdjustIndex(0)
+        setAdjustedList([])
+        setCurrentlyAdjusting(undefined)
         setShouldAdjust(true)
       } else {
         debugLog('Finished minimizing, but there is nothing to adjust, so we are good')
@@ -118,19 +137,28 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
   const onUnmount = useCallback((id: string) => {
     setInstances(instances => instances.filter(instance => instance !== id))
     setMinimizedList(instances => instances.filter(instance => instance !== id))
+    setAdjustedList(instances => instances.filter(instance => instance !== id))
   }, [])
 
   const useController = useCallback(
     (id: string): ControlSignals => {
       return {
-        onMount: () => onMount(id),
-        onUnmount: () => onUnmount(id),
+        onMount,
+        onUnmount,
         shouldMinimize: shouldMinimize && !minimizedList.includes(id),
-        shouldAdjust: shouldAdjust && minimizedList[adjustIndex] === id,
+        shouldAdjust: shouldAdjust && currentlyAdjusting === id,
         reportProcessFinish: process => reportProcessFinish(id, process),
       }
     },
-    [onMount, onUnmount, minimizedList, reportProcessFinish, shouldMinimize, adjustIndex, shouldAdjust],
+    [
+      onMount,
+      onUnmount,
+      minimizedList,
+      reportProcessFinish,
+      shouldMinimize,
+      currentlyAdjusting,
+      shouldAdjust,
+    ],
   )
 
   const adaptiveState: AdaptiveTrimmerContextData = {

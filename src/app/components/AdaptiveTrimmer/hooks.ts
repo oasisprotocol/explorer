@@ -43,15 +43,10 @@ export const useAdaptiveSizing = (
   const { shouldMinimize, shouldAdjust, reportProcessFinish, onMount, onUnmount } = useController(id)
 
   // Register and de-register this instance (the controller needs to know who is here)
-  useLayoutEffect(
-    () => {
-      onMount()
-      return () => onUnmount()
-    },
-    // We only want to run this on mounting and unmounting, so we deliberately ignore any dep changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  )
+  useLayoutEffect(() => {
+    onMount(id)
+    return () => onUnmount(id)
+  }, [id, onMount, onUnmount])
 
   const debugLog = useCallback(
     (message: any, ...args: any[]) => {
