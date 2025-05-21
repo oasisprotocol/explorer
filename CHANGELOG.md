@@ -12,6 +12,58 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.21.0 (2025-05-21)
+
+### Features
+
+- Display contract Source Code and Contract Metadata fields
+  ([#1890](https://github.com/oasisprotocol/explorer/issues/1890),
+   [#1944](https://github.com/oasisprotocol/explorer/issues/1944))
+
+- Display token icons and origins from metadata
+  ([#1909](https://github.com/oasisprotocol/explorer/issues/1909))
+
+- Move dApp URLs into named-addresses
+  ([#1952](https://github.com/oasisprotocol/explorer/issues/1952))
+
+### Bug Fixes and Improvements
+
+- Improve detecting if API is out-of-date
+  ([#1876](https://github.com/oasisprotocol/explorer/issues/1876))
+
+- Improve token page while loading
+  ([#1926](https://github.com/oasisprotocol/explorer/issues/1926))
+
+- Handle rofl market event details
+  ([#1934](https://github.com/oasisprotocol/explorer/issues/1934))
+
+- Fix upside down staking trends
+  ([#1946](https://github.com/oasisprotocol/explorer/issues/1946))
+
+- Deduplicate contracts that are also tokens in search results
+  ([#1948](https://github.com/oasisprotocol/explorer/issues/1948))
+
+- Show address of Node ID
+  ([#1962](https://github.com/oasisprotocol/explorer/issues/1962))
+
+- Sanitize URL in metadata['net.oasis.rofl.repository']
+  ([#1965](https://github.com/oasisprotocol/explorer/issues/1965))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1850](https://github.com/oasisprotocol/explorer/issues/1850),
+   [#1958](https://github.com/oasisprotocol/explorer/issues/1958))
+
+- Fix RoundedBalance prop combinations
+  ([#1902](https://github.com/oasisprotocol/explorer/issues/1902))
+
+- Merge config files
+  ([#1951](https://github.com/oasisprotocol/explorer/issues/1951))
+
+- Update API bindings
+  ([#1964](https://github.com/oasisprotocol/explorer/issues/1964))
+
 ## 1.20.0 (2025-04-23)
 
 ### Features
