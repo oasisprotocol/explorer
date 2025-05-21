@@ -10,12 +10,17 @@ import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
+import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
+import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
+
+export type TrimMode = 'fixes' | 'adaptive'
 
 type LinkProps = {
   address: string
   name?: string
   alwaysTrim?: boolean
+  trimMode?: TrimMode
   highlightedPartOfName?: string
   to: string
   withSourceIndicator?: boolean
@@ -26,6 +31,7 @@ export const Link: FC<LinkProps> = ({
   address,
   name,
   alwaysTrim,
+  trimMode,
   highlightedPartOfName,
   to,
   withSourceIndicator = true,
@@ -70,6 +76,7 @@ export const Link: FC<LinkProps> = ({
               to={to}
               highlightedPart={highlightedPartOfName}
               labelOnly={labelOnly}
+              trimMode={trimMode}
             />
           ) : (
             <DesktopLink
@@ -79,6 +86,7 @@ export const Link: FC<LinkProps> = ({
               to={to}
               highlightedPart={highlightedPartOfName}
               labelOnly={labelOnly}
+              trimMode={trimMode}
             />
           )}
         </Typography>
@@ -92,6 +100,7 @@ type CustomTrimEndLinkLabelProps = {
   to: string
   highlightedPart?: string
   labelOnly?: boolean
+  trimMode?: TrimMode
 }
 
 const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
@@ -105,8 +114,14 @@ const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({
   to,
   highlightedPart,
   labelOnly,
+  trimMode,
 }) => {
-  const label = <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+  const label =
+    trimMode === 'adaptive' ? (
+      <AdaptiveHighlightedText text={name} pattern={highlightedPart} minLength={14} debugMode={true} />
+    ) : (
+      <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+    )
   return labelOnly ? (
     <LinkLabel>{label}</LinkLabel>
   ) : (
@@ -122,20 +137,33 @@ type TabletLinkProps = {
   to: string
   highlightedPart?: string
   labelOnly?: boolean
+  trimMode?: TrimMode
 }
 
-const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart, labelOnly }) => {
+const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart, labelOnly, trimMode }) => {
   if (name) {
     return (
-      <CustomTrimEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} labelOnly={labelOnly} />
+      <CustomTrimEndLinkLabel
+        name={name}
+        to={to}
+        highlightedPart={highlightedPart}
+        labelOnly={labelOnly}
+        trimMode={trimMode}
+      />
     )
   }
 
+  const label =
+    trimMode === 'adaptive' ? (
+      <AdaptiveTrimmer text={address} strategy={'middle'} minLength={13} />
+    ) : (
+      trimLongString(address)
+    )
   return labelOnly ? (
-    <LinkLabel>{trimLongString(address)}</LinkLabel>
+    <LinkLabel>{label}</LinkLabel>
   ) : (
     <MuiLink component={RouterLink} to={to}>
-      {trimLongString(address)}
+      {label}
     </MuiLink>
   )
 }
@@ -145,7 +173,15 @@ type DesktopLinkProps = TabletLinkProps & {
   labelOnly?: boolean
 }
 
-const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, highlightedPart, labelOnly }) => {
+const DesktopLink: FC<DesktopLinkProps> = ({
+  address,
+  name,
+  to,
+  alwaysTrim,
+  trimMode,
+  highlightedPart,
+  labelOnly,
+}) => {
   if (alwaysTrim) {
     return (
       <WithHighlighting address={address}>
@@ -155,6 +191,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, high
             to={to}
             highlightedPart={highlightedPart}
             labelOnly={labelOnly}
+            trimMode={trimMode}
           />
         ) : labelOnly ? (
           <LinkLabel>{trimLongString(address)}</LinkLabel>
