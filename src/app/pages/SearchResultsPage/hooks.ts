@@ -349,7 +349,7 @@ export function useNamedValidatorConditionally(nameFragment: string | undefined)
   }
 }
 
-export function useRoflAppConditionally(id: string | undefined): ConditionalResults<RoflApp> {
+export function useRoflAppIdConditionally(id: string | undefined): ConditionalResults<RoflApp> {
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -377,7 +377,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     oasisConsensusAccount: useConsensusAccountConditionally(q.consensusAccount),
     oasisRuntimeAccount: useRuntimeAccountConditionally(currentScope, q.consensusAccount),
     evmAccount: useRuntimeAccountConditionally(currentScope, q.evmAccount),
-    roflApp: useRoflAppConditionally(q.roflApp),
+    roflAppId: useRoflAppIdConditionally(q.roflAppId),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
     validatorByName: useNamedValidatorConditionally(q.validatorNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
@@ -406,7 +406,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   ]
     .filter(isAccountNonEmpty)
     .filter(a => !alreadyAToken.has(a.network + a.layer + a.address)) // Deduplicate tokens
-  const roflApps = queries.roflApp.results
+  const roflApps = queries.roflAppId.results
   const proposals = queries.proposals.results
 
   const results: SearchResultItem[] = isLoading
