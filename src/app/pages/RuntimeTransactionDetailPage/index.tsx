@@ -37,6 +37,7 @@ import { RoundedBalance } from 'app/components/RoundedBalance'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
+import { EventBalance } from 'app/components/Tokens/TokenTransfers'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -230,8 +231,6 @@ export const RuntimeTransactionDetailView: FC<{
 
                     const from = params.find(p => p.name === 'from')?.value as string | undefined
                     const to = params.find(p => p.name === 'to')?.value as string | undefined
-                    const amount = params.find(p => p.name === 'value')?.value as string | undefined
-                    const symbol = transfer.evm_token?.symbol
 
                     return (
                       <Box
@@ -253,8 +252,7 @@ export const RuntimeTransactionDetailView: FC<{
                         {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
 
                         <Typography variant="body2">
-                          {t('common.for')}
-                          <RoundedBalance compactLargeNumbers value={amount} ticker={symbol} />
+                          {t('common.for')} <EventBalance event={transfer} tickerAsLink={false} />
                         </Typography>
                       </Box>
                     )
