@@ -153,7 +153,7 @@ export const useAdaptiveSizing = (
         attemptContent(emptyTestContent, emptyTestContent.length)
       } else {
         // phase 2: proceed to next step
-        debugLog(`I wonder if layout has updated yet. scrollWidth is now ${textRef.current?.scrollWidth}`)
+        // debugLog(`I wonder if layout has updated yet. scrollWidth is now ${textRef.current?.scrollWidth}`)
         setIsMinimizing(false)
         reportProcessFinish('minimize')
       }
@@ -163,7 +163,7 @@ export const useAdaptiveSizing = (
   // Execute the next phase of adjustment
   useLayoutEffect(() => {
     if (!shouldAdjust) return
-    debugLog('Doing step', adjustmentStep)
+    debugLog(`Step "${adjustmentStep}"`)
     let overflowStatus: OverflowStatus
     let isOverflow: boolean
     switch (adjustmentStep) {
@@ -186,7 +186,7 @@ export const useAdaptiveSizing = (
           )
           setOverflowRoot(overflowStatus.element)
         } else {
-          debugLog('At baseline test, found no overflow', textRef.current)
+          debugLog('At baseline test, found no overflow around', textRef.current)
           setOverflowRoot(undefined)
         }
         setAdjustmentStep('checkFull')
@@ -256,7 +256,6 @@ export const useAdaptiveSizing = (
         }
         break
       case 'done':
-        debugLog('We are done, going back to idle state')
         reportProcessFinish('adjusting')
         setAdjustmentStep('idle')
         break
