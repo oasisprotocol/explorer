@@ -58,7 +58,7 @@ export const TokenDetails: FC<{
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>
-        <span>
+        <span style={{ textWrap: 'nowrap' }}>
           <AccountLink
             showOnlyAddress
             scope={token}

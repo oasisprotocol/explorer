@@ -4,6 +4,7 @@ import { withDefaultTheme } from '../../components/ThemeByScope'
 import React from 'react'
 import { useIsApiReachable, useRuntimeFreshness } from '../../components/OfflineBanner/hook'
 import { LocalSettingsContextProvider } from '../../providers/LocalSettingsProvider'
+import { AdaptiveTrimmerContextProvider } from '../../components/AdaptiveTrimmerContext/AdaptiveTrimmerProvider'
 
 jest.mock('../../components/OfflineBanner/hook')
 
@@ -17,7 +18,9 @@ export function renderWithProviders(component: React.ReactElement) {
     wrapper: ({ children }) =>
       withDefaultTheme(
         <LocalSettingsContextProvider>
-          <MemoryRouter>{children}</MemoryRouter>
+          <AdaptiveTrimmerContextProvider>
+            <MemoryRouter>{children}</MemoryRouter>
+          </AdaptiveTrimmerContextProvider>
         </LocalSettingsContextProvider>,
       ),
   })

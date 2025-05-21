@@ -22,22 +22,11 @@ const WithTypographyAndLink: FC<{
   mobile?: boolean
   children: ReactNode
   labelOnly?: boolean
-}> = ({ scope, address, children, mobile, labelOnly }) => {
+}> = ({ scope, address, children, labelOnly }) => {
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <WithHighlighting address={address}>
-      <Typography
-        variant="mono"
-        component="span"
-        sx={{
-          ...(mobile
-            ? {
-                maxWidth: '100%',
-                overflow: 'hidden',
-              }
-            : {}),
-        }}
-      >
+      <Typography variant="mono" component="span">
         {labelOnly ? (
           children
         ) : (
@@ -186,13 +175,21 @@ export const AccountLink: FC<Props> = ({
           <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             <AccountMetadataSourceIndicator source={accountMetadata.source} />
             <AdaptiveHighlightedText
+              idPrefix="account-name"
               text={accountName}
               pattern={highlightedPartOfName}
               extraTooltip={tooltipTitle}
+              minLength={5}
             />
           </Box>
         )}
-        <AdaptiveTrimmer text={address} strategy="middle" tooltipOverride={tooltipTitle} />
+        <AdaptiveTrimmer
+          idPrefix="account-address"
+          text={address}
+          strategy="middle"
+          tooltipOverride={tooltipTitle}
+          minLength={13}
+        />
       </>
     </WithTypographyAndLink>
   )

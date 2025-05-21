@@ -123,7 +123,7 @@ export const ConsensusBlockDetailView: FC<{
           <dd>
             {isTablet ? (
               <Typography variant="mono" sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
-                <AdaptiveTrimmer text={block.state_root} strategy="middle" />
+                <AdaptiveTrimmer text={block.state_root} strategy="middle" minLength={13} />
               </Typography>
             ) : (
               <Typography variant="mono">{block.state_root}</Typography>
