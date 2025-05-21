@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -36,7 +36,7 @@ import { Secrets } from './Secrets'
 import { RouterTabs } from '../../components/RouterTabs'
 import { TableCellAge } from '../../components/TableCellAge'
 import { instancesContainerId, updatesContainerId } from '../../utils/tabAnchors'
-import { RoflAppDetailsContext } from '../RoflAppDetailsPage/hooks'
+import { RoflAppDetailsContext } from './hooks'
 import { MetaDataCard } from './MetaDataCard'
 import { PolicyCard } from './PolicyCard'
 import { LastActivity } from './LastActivity'
@@ -44,11 +44,13 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { SearchScope } from 'types/searchScope'
 import { Ticker } from 'types/ticker'
 import { WithHighlighting } from '../../components/HighlightingContext/WithHighlighting'
+import { HighlightedText } from '../../components/HighlightedText'
+import { RoflAppLoaderData } from '../../utils/route-utils'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
-  const id = useParams().id!
+  const { id, searchTerm } = useLoaderData() as RoflAppLoaderData
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)
@@ -76,6 +78,7 @@ export const RoflAppDetailsPage: FC = () => {
                 id={roflApp.id}
                 network={scope.network}
                 name={roflApp.metadata['net.oasis.rofl.name']}
+                highlightedPartOfName={searchTerm}
                 labelOnly
                 trimMode={'adaptive'}
                 withSourceIndicator={false}
@@ -84,7 +87,7 @@ export const RoflAppDetailsPage: FC = () => {
           )
         }
       >
-        <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
+        <RoflAppDetailsView isLoading={isLoading} app={roflApp} highlightedPartOfName={searchTerm} />
       </SubPageCard>
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
@@ -125,7 +128,8 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 export const RoflAppDetailsView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-}> = ({ app, isLoading }) => {
+  highlightedPartOfName: string
+}> = ({ app, isLoading, highlightedPartOfName }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -134,7 +138,7 @@ export const RoflAppDetailsView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightedPartOfName={highlightedPartOfName} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
@@ -197,7 +201,7 @@ export const RoflAppDetailsViewSearchResult: FC<{
       <DetailsRow title={t('common.paratime')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
       </DetailsRow>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightedPartOfName={highlightedPartOfName} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
@@ -264,9 +268,14 @@ export const RoflAppDetailsVerticalListView: FC<{
 
 const NameRow: FC<{
   name?: string
-}> = ({ name }) => {
+  highlightedPartOfName?: string
+}> = ({ name, highlightedPartOfName }) => {
   const { t } = useTranslation()
-  return <DetailsRow title={t('common.name')}>{name || t('common.missing')}</DetailsRow>
+  return (
+    <DetailsRow title={t('common.name')}>
+      {name ? <HighlightedText text={name} pattern={highlightedPartOfName} /> : t('common.missing')}
+    </DetailsRow>
+  )
 }
 
 const StatusBadgeRow: FC<{

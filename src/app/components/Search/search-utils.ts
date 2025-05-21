@@ -139,6 +139,11 @@ export const validateAndNormalize = {
       return searchTerm.replace(/\s/g, '').toLowerCase()
     }
   },
+  roflAppNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length >= textSearchMinimumLength) {
+      return searchTerm.toLowerCase()
+    }
+  },
   evmAccount: (searchTerm: string): string | undefined => {
     if (isValidEthAddress(`0x${searchTerm}`)) {
       return `0x${searchTerm.toLowerCase()}`
