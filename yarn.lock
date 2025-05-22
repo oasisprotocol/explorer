@@ -2052,10 +2052,9 @@
     "@mischnic/json-sourcemap" "^0.1.1"
     nullthrows "^1.1.1"
 
-"@parcel/error-overlay@2.15.1":
+"@parcel/error-overlay@2.15.1", "@parcel/error-overlay@https://github.com/lukaw3d/parcel-error-overlay-ignore-console#2.15.1":
   version "2.15.1"
-  resolved "https://registry.yarnpkg.com/@parcel/error-overlay/-/error-overlay-2.15.1.tgz#13010a2ca748b7ea344b1facab13a48d92bea5c4"
-  integrity sha512-ljuYuotFr+24r3m3x/xFUvKFudHtV1cPbhTGuzp3AnRFOk66nLXsAIso9Vmj57GdwYtzW2/b9J0OjC4lZB19sg==
+  resolved "https://github.com/lukaw3d/parcel-error-overlay-ignore-console#596592185c1027a564779f70bd7229631eacb3b8"
 
 "@parcel/events@2.15.1":
   version "2.15.1"

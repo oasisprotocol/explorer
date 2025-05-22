@@ -46,6 +46,7 @@
   },
   "resolutions": {
     "**/@emotion/styled": "11.14.0",
+    "@parcel/error-overlay": "https://github.com/lukaw3d/parcel-error-overlay-ignore-console#2.15.1",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "react-refresh": "0.16.0",
