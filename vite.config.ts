@@ -15,5 +15,6 @@ export default defineConfig(() => {
       open: true,
     },
     publicDir: 'public',
+    envPrefix: 'REACT_APP_',
   }
 })
