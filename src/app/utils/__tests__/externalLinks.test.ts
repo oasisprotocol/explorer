@@ -6,7 +6,7 @@ jest.retryTimes(3)
 
 // Requesting external links is sometimes slow; and links will rarely break.
 // So only run this on CI, so local tests remain quick.
-const onlyRunOnCI = process.env.CI ? describe : describe.skip
+const onlyRunOnCI = import.meta.env.CI ? describe : describe.skip
 
 onlyRunOnCI('externalLinks', () => {
   it('file should contain groups of links as objects', () => {

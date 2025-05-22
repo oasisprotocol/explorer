@@ -78,15 +78,15 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
         ) : (
           <>
             <StyledBox>
-              {process.env.REACT_APP_BUILD_SHA && (
+              {import.meta.env.REACT_APP_BUILD_SHA && (
                 <Typography variant="footer">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
                     components={{
-                      ReleaseLink: process.env.REACT_APP_BUILD_VERSION ? (
+                      ReleaseLink: import.meta.env.REACT_APP_BUILD_VERSION ? (
                         <Link
-                          href={`${github.releaseTag}${process.env.REACT_APP_BUILD_VERSION}`}
+                          href={`${github.releaseTag}${import.meta.env.REACT_APP_BUILD_VERSION}`}
                           rel="noopener noreferrer"
                           target="_blank"
                           sx={{ color: theme.palette.layout.main }}
@@ -96,7 +96,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                       ),
                       CommitLink: (
                         <Link
-                          href={`${github.commit}${process.env.REACT_APP_BUILD_SHA}`}
+                          href={`${github.commit}${import.meta.env.REACT_APP_BUILD_SHA}`}
                           rel="noopener noreferrer"
                           target="_blank"
                           sx={{ color: theme.palette.layout.main }}
@@ -105,7 +105,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                     }}
                     values={{
                       buildTime: t('common.formattedDateTime', {
-                        timestamp: new Date(Number(process.env.REACT_APP_BUILD_DATETIME)),
+                        timestamp: new Date(Number(import.meta.env.REACT_APP_BUILD_DATETIME)),
                         formatParams: {
                           timestamp: {
                             year: 'numeric',
@@ -117,9 +117,9 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           } satisfies Intl.DateTimeFormatOptions,
                         },
                       }),
-                      sha: process.env.REACT_APP_BUILD_SHA.substring(0, 7),
-                      version: process.env.REACT_APP_BUILD_VERSION
-                        ? process.env.REACT_APP_BUILD_VERSION.replace('v', '')
+                      sha: import.meta.env.REACT_APP_BUILD_SHA.substring(0, 7),
+                      version: import.meta.env.REACT_APP_BUILD_VERSION
+                        ? import.meta.env.REACT_APP_BUILD_VERSION.replace('v', '')
                         : '-',
                     }}
                   />
