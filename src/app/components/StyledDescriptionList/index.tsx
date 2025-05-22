@@ -42,6 +42,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
 })<StyledDescriptionListProps>(({ theme, standalone, highlight }) => ({
   'dt, dd': {
     display: 'flex',
+    flexWrap: 'wrap',
     boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
     ':last-of-type': {
       boxShadow: 'none',

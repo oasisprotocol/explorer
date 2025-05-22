@@ -12,7 +12,6 @@ import { AppErrors } from '../../../types/errors'
 import { AccountLink } from './AccountLink'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
-import { useScreenSize } from '../../hooks/useScreensize'
 
 const TxSender: FC<{ scope: SearchScope; txHash: string; alwaysTrim?: boolean }> = ({
   scope,
@@ -48,26 +47,17 @@ export const ContractCreatorInfo: FC<{
   alwaysTrim?: boolean
 }> = ({ scope, isLoading, creationTxHash, alwaysTrim }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   return isLoading ? (
     <Skeleton variant="text" sx={{ width: '50%' }} />
   ) : creationTxHash === undefined ? (
     t('common.missing')
   ) : (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        alignItems: isMobile ? 'flex-start' : 'center',
-        gap: isMobile ? 0 : 2,
-        minWidth: '25%',
-      }}
-    >
+    <>
       <TxSender scope={scope} txHash={creationTxHash} alwaysTrim={alwaysTrim} />
-      <Box>{t('contract.createdAt')}</Box>
+      <Box>&nbsp;{t('contract.createdAt')}&nbsp;</Box>
       <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim={alwaysTrim} />
-    </Box>
+    </>
   )
 }
 
