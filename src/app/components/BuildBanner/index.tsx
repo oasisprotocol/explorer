@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { deploys, getAppTitle } from '../../../config'
 import { StickyAlert } from '../StickyAlert'
 
-const useBuildBanners = process.env.REACT_APP_SHOW_BUILD_BANNERS === 'true'
+const useBuildBanners = import.meta.env.REACT_APP_SHOW_BUILD_BANNERS === 'true'
 
 export const BuildBanner: FC = () => {
   const { t } = useTranslation()

@@ -21,7 +21,7 @@ export const AnalyticsIsBlocked = (props: { isOpen: boolean; onReload: () => voi
           components={{
             PrivacyPolicyLink: (
               <Link
-                href={process.env.REACT_APP_PRIVACY_POLICY}
+                href={import.meta.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
                 sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />
