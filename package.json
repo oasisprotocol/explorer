@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/lukaw3d/parcel-bundler-json-schemas/main/package_schema.json",
   "name": "@oasisprotocol/explorer-frontend",
   "version": "1.21.0",
   "private": true,
@@ -9,8 +8,8 @@
   },
   "scripts": {
     "build": "node ./internals/scripts/build.js",
-    "clean": "rm -rf build/ .parcel-cache",
-    "start": "parcel --dist-dir build-dev --no-cache",
+    "clean": "rm -rf build/ node_modules/.vite/",
+    "start": "vite",
     "checkTs": "tsc --noEmit",
     "lint": "eslint --ext js,ts,tsx ./",
     "lint:fix": "yarn run lint --fix",
@@ -21,14 +20,6 @@
     "release-tag": "node ./internals/scripts/release-tag.js",
     "prettify": "prettier src internals --write",
     "test": "jest"
-  },
-  "targets": {
-    "web": {
-      "source": "public/index.html",
-      "distDir": "./build",
-      "context": "browser",
-      "scopeHoist": false
-    }
   },
   "browserslist": {
     "production": [
@@ -51,9 +42,6 @@
     "react-refresh": "0.16.0",
     "jackspeak": "2.1.1",
     "eslint-plugin-react": "7.37.4"
-  },
-  "alias": {
-    "swiper/element/bundle": "swiper/swiper-element-bundle"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -87,8 +75,6 @@
   },
   "devDependencies": {
     "@emotion/jest": "11.13.0",
-    "@parcel/packager-raw-url": "2.12.0",
-    "@parcel/transformer-webmanifest": "2.12.0",
     "@testing-library/jest-dom": "6.4.8",
     "@testing-library/react": "14.3.1",
     "@testing-library/user-event": "14.5.2",
@@ -99,6 +85,7 @@
     "@types/react-dom": "18.3.5",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
+    "@vitejs/plugin-react": "^4.4.1",
     "buffer": "^6.0.3",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
@@ -112,14 +99,14 @@
     "markdownlint-cli": "0.44.0",
     "matomo-js-client-types": "5.0.0",
     "node-fetch": "2.7.0",
-    "parcel": "2.12.0",
-    "parcel-transformer-env-variables-injection": "^0.1.2",
     "prettier": "3.5.3",
     "process": "0.11.10",
     "react-app-polyfill": "3.0.0",
     "stream-browserify": "3.0.0",
     "ts-jest": "29.2.4",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
