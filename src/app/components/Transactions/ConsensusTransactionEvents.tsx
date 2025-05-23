@@ -5,7 +5,7 @@ import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { ConsensusEventsList } from '../ConsensusEvents/ConsensusEventsList'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
-import { EmptyState } from '../EmptyState'
+import { CardEmptyState } from '../CardEmptyState'
 
 export const ConsensusTransactionEvents: FC<{
   transaction: Transaction
@@ -25,9 +25,7 @@ export const ConsensusTransactionEvents: FC<{
   }
 
   if (!events?.length && isFetched) {
-    return (
-      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
-    )
+    return <CardEmptyState label={t('event.cantFindMatchingEvents')} />
   }
 
   return (
