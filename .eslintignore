@@ -8,7 +8,6 @@ stats.json
 .pnp
 .pnp.js
 generated/
-jest.config.js
 
 # misc
 .DS_Store

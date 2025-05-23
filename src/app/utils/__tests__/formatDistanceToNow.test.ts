@@ -1,13 +1,14 @@
+import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { formatDistanceToNow } from '../dateFormatter'
 
 describe('formatDistanceToNow', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
-    jest.setSystemTime(new Date('2023-01-01T01:01:01Z'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2023-01-01T01:01:01Z'))
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('should format future dates', () => {
