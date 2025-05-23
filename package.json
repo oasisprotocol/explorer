@@ -19,7 +19,8 @@
     "changelog": "node ./internals/scripts/changelog.js",
     "release-tag": "node ./internals/scripts/release-tag.js",
     "prettify": "prettier src internals --write",
-    "test": "jest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "browserslist": {
     "production": [
@@ -72,11 +73,10 @@
     "use-resize-observer": "9.1.0"
   },
   "devDependencies": {
-    "@emotion/jest": "11.13.0",
-    "@testing-library/jest-dom": "6.4.8",
-    "@testing-library/react": "14.3.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "14.5.2",
-    "@types/jest": "^29.5.14",
     "@types/node": "20.17.24",
     "@types/node-fetch": "2.6.12",
     "@types/react": "18.3.19",
@@ -92,8 +92,7 @@
     "eslint-plugin-react": "7.37.4",
     "eslint-plugin-react-hooks": "4.6.2",
     "events": "^3.1.0",
-    "jest": "29.7.0",
-    "jest-environment-jsdom": "29.7.0",
+    "jsdom": "^26.1.0",
     "markdownlint-cli": "0.44.0",
     "matomo-js-client-types": "5.0.0",
     "node-fetch": "2.7.0",
@@ -101,10 +100,10 @@
     "process": "0.11.10",
     "react-app-polyfill": "3.0.0",
     "stream-browserify": "3.0.0",
-    "ts-jest": "29.2.4",
     "typescript": "5.6.3",
     "vite": "^6.3.5",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.4"
   },
   "packageManager": "yarn@1.22.19+sha512.ff4579ab459bb25aa7c0ff75b62acebe576f6084b36aa842971cf250a5d8c6cd3bc9420b22ce63c7f93a0857bc6ef29291db39c3e7a23aab5adfd5a4dd6c5d71"
 }
