@@ -40,6 +40,7 @@ import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 import { EventBalance } from 'app/components/Tokens/TokenTransfers'
 import { transactionEventsContainerId } from '../../utils/tabAnchors'
 import Link from '@mui/material/Link'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -107,6 +108,7 @@ export const RuntimeTransactionDetailView: FC<{
   tokenPrices: AllTokenPrices
 }> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
+  const location = useLocation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
   // @ts-expect-error Ignore index type error
@@ -262,9 +264,10 @@ export const RuntimeTransactionDetailView: FC<{
                   {(totalTransfers ?? 0) > transfers.length && (
                     <>
                       <Link
-                        href={`#${transactionEventsContainerId}`}
+                        component={RouterLink}
+                        to={`${location.pathname}#${transactionEventsContainerId}`}
                         variant="body2"
-                        sx={{ mt: 1, cursor: 'pointer', textDecoration: 'underline' }}
+                        sx={{ mt: 1, textDecoration: 'underline' }}
                       >
                         {t('common.seeMore')}
                       </Link>
