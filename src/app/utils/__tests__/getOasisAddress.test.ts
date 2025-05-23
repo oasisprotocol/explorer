@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { getOasisAddress } from '../helpers'
 import { suggestedParsedAccount } from '../test-fixtures'
 
