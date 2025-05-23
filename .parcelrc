@@ -4,6 +4,8 @@
     "*.html": [
       "parcel-transformer-env-variables-injection",
       "..."
-    ]
+    ],
+    "*.svg": ["...", "@parcel/transformer-raw"],
+    "*.png": ["...", "@parcel/transformer-raw"]
   }
 }
