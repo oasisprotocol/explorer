@@ -4,11 +4,7 @@ import * as externalLinksModule from '../externalLinks'
 
 vi.setConfig({ testTimeout: 30_000 })
 
-// Requesting external links is sometimes slow; and links will rarely break.
-// So only run this on CI, so local tests remain quick.
-const onlyRunOnCI = import.meta.env.CI ? describe : describe.skip
-
-onlyRunOnCI('externalLinks', () => {
+describe('externalLinks', () => {
   it('file should contain groups of links as objects', () => {
     expect(Object.entries(externalLinksModule).length).toBeGreaterThan(0)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
