@@ -224,7 +224,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           {transfers && transfers.length > 0 && (
             <>
-              <dt>{t('common.recentTransactions')}</dt>
+              <dt>{t('common.summary')}</dt>
               <dd>
                 <Box sx={{ display: 'block', overflowX: 'auto' }}>
                   {transfers.map((transfer, i) => {
