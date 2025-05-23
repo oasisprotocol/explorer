@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { isSearchValid, validateAndNormalize } from '../search-utils'
 
 const notHexAndBech32Char = 'o'

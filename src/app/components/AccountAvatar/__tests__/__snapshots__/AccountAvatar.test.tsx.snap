@@ -1,10 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AccountAvatar 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
-.css-u1jr60 {
-  height: 40px;
-}
-
+exports[`AccountAvatar > 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
 <div>
   <div
     class="MuiBox-root css-u1jr60"
@@ -48,11 +44,7 @@ exports[`AccountAvatar 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
 </div>
 `;
 
-exports[`AccountAvatar 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
-.css-u1jr60 {
-  height: 40px;
-}
-
+exports[`AccountAvatar > 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
 <div>
   <div
     class="MuiBox-root css-u1jr60"
@@ -96,11 +88,7 @@ exports[`AccountAvatar 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
 </div>
 `;
 
-exports[`AccountAvatar oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
-.css-u1jr60 {
-  height: 40px;
-}
-
+exports[`AccountAvatar > oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
 <div>
   <div
     class="MuiBox-root css-u1jr60"
@@ -144,11 +132,7 @@ exports[`AccountAvatar oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
 </div>
 `;
 
-exports[`AccountAvatar oasis1qz0k5q8vjqvu4s4nwxyj406ylnflkc4vrcjghuwk 1`] = `
-.css-u1jr60 {
-  height: 40px;
-}
-
+exports[`AccountAvatar > oasis1qz0k5q8vjqvu4s4nwxyj406ylnflkc4vrcjghuwk 1`] = `
 <div>
   <div
     class="MuiBox-root css-u1jr60"

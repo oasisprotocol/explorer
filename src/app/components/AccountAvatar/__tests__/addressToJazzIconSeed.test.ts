@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { addressToJazzIconSeed } from '../addressToJazzIconSeed'
 
 test('Consensus addressToJazzIconSeed for JazzIcon should return the same value as wallets', () => {

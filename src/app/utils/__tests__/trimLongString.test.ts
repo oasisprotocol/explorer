@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { trimLongString } from '../trimLongString'
 
 describe('trimLongString', () => {

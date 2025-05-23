@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { getEthAccountAddressFromPreimage } from '../helpers'
 import { suggestedEmptyAccount, suggestedParsedAccount } from '../test-fixtures'
 
