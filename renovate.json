@@ -8,7 +8,7 @@
     },
     {
       "groupName": "test dependencies",
-      "matchPackagePatterns": ["jest", "testing-library"]
+      "matchPackagePatterns": ["testing-library"]
     },
     {
       "groupName": "react dependencies",
