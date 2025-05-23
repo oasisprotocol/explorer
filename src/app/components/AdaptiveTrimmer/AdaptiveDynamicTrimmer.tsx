@@ -8,7 +8,7 @@ type AdaptiveDynamicTrimmerProps = {
   /**
    * The ID (prefix) used for debugging
    */
-  idPrefix: string
+  idPrefix?: string
 
   /**
    * A function to return the full content
@@ -56,7 +56,7 @@ type AdaptiveDynamicTrimmerProps = {
  * expects a function to provide a shortened version of the components.
  */
 export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
-  idPrefix,
+  idPrefix = 'adaptive-dynamic-trimmer',
   getFullContent,
   getShortenedContent,
   extraTooltip,

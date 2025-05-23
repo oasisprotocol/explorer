@@ -3,8 +3,8 @@ import { createContext, useContext } from 'react'
 export type AdjustmentProcess = 'minimize' | 'adjusting'
 
 export interface ControlSignals {
-  onMount: () => void
-  onUnmount: () => void
+  onMount: (id: string) => void
+  onUnmount: (id: string) => void
   shouldMinimize: boolean
   shouldAdjust: boolean
   reportProcessFinish(process: AdjustmentProcess): void

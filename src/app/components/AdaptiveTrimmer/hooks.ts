@@ -43,15 +43,10 @@ export const useAdaptiveSizing = (
   const { shouldMinimize, shouldAdjust, reportProcessFinish, onMount, onUnmount } = useController(id)
 
   // Register and de-register this instance (the controller needs to know who is here)
-  useLayoutEffect(
-    () => {
-      onMount()
-      return () => onUnmount()
-    },
-    // We only want to run this on mounting and unmounting, so we deliberately ignore any dep changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  )
+  useLayoutEffect(() => {
+    onMount(id)
+    return () => onUnmount(id)
+  }, [id, onMount, onUnmount])
 
   const debugLog = useCallback(
     (message: any, ...args: any[]) => {
@@ -158,7 +153,7 @@ export const useAdaptiveSizing = (
         attemptContent(emptyTestContent, emptyTestContent.length)
       } else {
         // phase 2: proceed to next step
-        debugLog(`I wonder if layout has updated yet. scrollWidth is now ${textRef.current?.scrollWidth}`)
+        // debugLog(`I wonder if layout has updated yet. scrollWidth is now ${textRef.current?.scrollWidth}`)
         setIsMinimizing(false)
         reportProcessFinish('minimize')
       }
@@ -168,7 +163,7 @@ export const useAdaptiveSizing = (
   // Execute the next phase of adjustment
   useLayoutEffect(() => {
     if (!shouldAdjust) return
-    debugLog('Doing step', adjustmentStep)
+    debugLog(`Step "${adjustmentStep}"`)
     let overflowStatus: OverflowStatus
     let isOverflow: boolean
     switch (adjustmentStep) {
@@ -191,7 +186,7 @@ export const useAdaptiveSizing = (
           )
           setOverflowRoot(overflowStatus.element)
         } else {
-          debugLog('At baseline test, found no overflow', textRef.current)
+          debugLog('At baseline test, found no overflow around', textRef.current)
           setOverflowRoot(undefined)
         }
         setAdjustmentStep('checkFull')
@@ -261,7 +256,6 @@ export const useAdaptiveSizing = (
         }
         break
       case 'done':
-        debugLog('We are done, going back to idle state')
         reportProcessFinish('adjusting')
         setAdjustmentStep('idle')
         break
