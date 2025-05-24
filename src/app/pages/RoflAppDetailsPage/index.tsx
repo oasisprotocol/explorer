@@ -43,6 +43,7 @@ import { LastActivity } from './LastActivity'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { SearchScope } from 'types/searchScope'
 import { Ticker } from 'types/ticker'
+import { WithHighlighting } from '../../components/HighlightingContext/WithHighlighting'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -67,7 +68,20 @@ export const RoflAppDetailsPage: FC = () => {
       <SubPageCard
         featured
         title={
-          isLoading ? <Skeleton variant="text" /> : roflApp?.metadata['net.oasis.rofl.name'] || roflApp?.id
+          isLoading ? (
+            <Skeleton variant="text" />
+          ) : (
+            roflApp && (
+              <RoflAppLink
+                id={roflApp.id}
+                network={scope.network}
+                name={roflApp.metadata['net.oasis.rofl.name']}
+                labelOnly
+                trimMode={'adaptive'}
+                withSourceIndicator={false}
+              />
+            )
+          )
         }
       >
         <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
@@ -124,9 +138,11 @@ export const RoflAppDetailsView: FC<{
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
-        <Typography variant="mono" component="span">
-          {app.id}
-        </Typography>
+        <WithHighlighting address={app.id}>
+          <Typography variant="mono" component="span">
+            {app.id}
+          </Typography>
+        </WithHighlighting>
         <CopyToClipboard value={app.id} />
       </DetailsRow>
       <DetailsRow title={t('rofl.enclaveId')}>

@@ -1,58 +1,83 @@
-import { FC } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
-import { trimLongString } from '../..//utils/trimLongString'
+import { trimLongString } from '../../utils/trimLongString'
 import { HighlightedText } from '../HighlightedText'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
+import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
+import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
+
+export type TrimMode = 'fixes' | 'adaptive'
 
 type LinkProps = {
   address: string
   name?: string
   alwaysTrim?: boolean
+  trimMode?: TrimMode
   highlightedPartOfName?: string
   to: string
   withSourceIndicator?: boolean
+  labelOnly?: boolean
 }
 
 export const Link: FC<LinkProps> = ({
   address,
   name,
   alwaysTrim,
+  trimMode,
   highlightedPartOfName,
   to,
   withSourceIndicator = true,
+  labelOnly,
 }) => {
   const { isTablet } = useScreenSize()
   const hasName = name?.toLowerCase() !== address.toLowerCase()
 
   const tooltipTitle =
-    hasName && withSourceIndicator ? (
+    hasName && (withSourceIndicator || isTablet) ? (
       <div>
         {name && (
           <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             <Box sx={{ fontWeight: 'bold' }}>{name}</Box>
-            <span>-</span>
-            <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+            {withSourceIndicator && (
+              <>
+                <span>-</span>
+                <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
+              </>
+            )}
           </Box>
         )}
         <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
       </div>
+    ) : isTablet ? (
+      address
     ) : undefined
 
   return (
     <MaybeWithTooltip title={tooltipTitle}>
       <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
         {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
-        <Typography variant="mono" component="span" sx={{ color: COLORS.brandDark, fontWeight: 700 }}>
+        <Typography
+          variant="mono"
+          component="span"
+          sx={{ color: labelOnly ? COLORS.brandExtraDark : COLORS.brandDark, fontWeight: 700 }}
+        >
           {isTablet ? (
-            <TabletLink address={address} name={name} to={to} highlightedPart={highlightedPartOfName} />
+            <TabletLink
+              address={address}
+              name={name}
+              to={to}
+              highlightedPart={highlightedPartOfName}
+              labelOnly={labelOnly}
+              trimMode={trimMode}
+            />
           ) : (
             <DesktopLink
               address={address}
@@ -60,6 +85,8 @@ export const Link: FC<LinkProps> = ({
               name={name}
               to={to}
               highlightedPart={highlightedPartOfName}
+              labelOnly={labelOnly}
+              trimMode={trimMode}
             />
           )}
         </Typography>
@@ -72,12 +99,34 @@ type CustomTrimEndLinkLabelProps = {
   name: string
   to: string
   highlightedPart?: string
+  labelOnly?: boolean
+  trimMode?: TrimMode
 }
 
-const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, highlightedPart }) => {
-  return (
-    <MuiLink component={RouterLink} to={to}>
+const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
+  <Typography component={'span'} fontSize={'inherit'} fontWeight={'inherit'} lineHeight={'inherit'}>
+    <span>{children}</span>
+  </Typography>
+)
+
+const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({
+  name,
+  to,
+  highlightedPart,
+  labelOnly,
+  trimMode,
+}) => {
+  const label =
+    trimMode === 'adaptive' ? (
+      <AdaptiveHighlightedText text={name} pattern={highlightedPart} minLength={14} debugMode={true} />
+    ) : (
       <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+    )
+  return labelOnly ? (
+    <LinkLabel>{label}</LinkLabel>
+  ) : (
+    <MuiLink component={RouterLink} to={to}>
+      {label}
     </MuiLink>
   )
 }
@@ -87,29 +136,65 @@ type TabletLinkProps = {
   name?: string
   to: string
   highlightedPart?: string
+  labelOnly?: boolean
+  trimMode?: TrimMode
 }
 
-const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart }) => {
+const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart, labelOnly, trimMode }) => {
   if (name) {
-    return <CustomTrimEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
+    return (
+      <CustomTrimEndLinkLabel
+        name={name}
+        to={to}
+        highlightedPart={highlightedPart}
+        labelOnly={labelOnly}
+        trimMode={trimMode}
+      />
+    )
   }
-  return (
+
+  const label =
+    trimMode === 'adaptive' ? (
+      <AdaptiveTrimmer text={address} strategy={'middle'} minLength={13} />
+    ) : (
+      trimLongString(address)
+    )
+  return labelOnly ? (
+    <LinkLabel>{label}</LinkLabel>
+  ) : (
     <MuiLink component={RouterLink} to={to}>
-      {trimLongString(address)}
+      {label}
     </MuiLink>
   )
 }
 
 type DesktopLinkProps = TabletLinkProps & {
   alwaysTrim?: boolean
+  labelOnly?: boolean
 }
 
-const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, highlightedPart }) => {
+const DesktopLink: FC<DesktopLinkProps> = ({
+  address,
+  name,
+  to,
+  alwaysTrim,
+  trimMode,
+  highlightedPart,
+  labelOnly,
+}) => {
   if (alwaysTrim) {
     return (
       <WithHighlighting address={address}>
         {name ? (
-          <CustomTrimEndLinkLabel name={name} to={to} highlightedPart={highlightedPart} />
+          <CustomTrimEndLinkLabel
+            name={name}
+            to={to}
+            highlightedPart={highlightedPart}
+            labelOnly={labelOnly}
+            trimMode={trimMode}
+          />
+        ) : labelOnly ? (
+          <LinkLabel>{trimLongString(address)}</LinkLabel>
         ) : (
           <MuiLink component={RouterLink} to={to}>
             {trimLongString(address)}
@@ -118,11 +203,16 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, high
       </WithHighlighting>
     )
   }
+  const label = name ? <HighlightedText text={name} pattern={highlightedPart} /> : address
   return (
     <WithHighlighting address={address}>
-      <MuiLink component={RouterLink} to={to}>
-        {name ? <HighlightedText text={name} pattern={highlightedPart} /> : address}
-      </MuiLink>
+      {labelOnly ? (
+        <LinkLabel>{label}</LinkLabel>
+      ) : (
+        <MuiLink component={RouterLink} to={to}>
+          {label}
+        </MuiLink>
+      )}
     </WithHighlighting>
   )
 }
