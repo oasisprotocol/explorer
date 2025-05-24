@@ -34,6 +34,13 @@ import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import { useTokenTransfers } from '../TokenDashboardPage/hook'
+import { TokenTypeTag } from 'app/components/Tokens/TokenList'
+import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
+import { EventBalance } from 'app/components/Tokens/TokenTransfers'
+import { transactionEventsContainerId } from '../../utils/tabAnchors'
+import Link from '@mui/material/Link'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -83,9 +90,11 @@ export const RuntimeTransactionDetailPage: FC = () => {
       ))}
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
-        <SubPageCard title={t('common.events')}>
-          <RuntimeTransactionEvents transaction={transaction} />
-        </SubPageCard>
+        <LinkableDiv id={transactionEventsContainerId}>
+          <SubPageCard title={t('common.events')}>
+            <RuntimeTransactionEvents transaction={transaction} />
+          </SubPageCard>
+        </LinkableDiv>
       )}
     </PageLayout>
   )
@@ -103,12 +112,26 @@ export const RuntimeTransactionDetailView: FC<{
   tokenPrices: AllTokenPrices
 }> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
+  const location = useLocation()
   const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
   // @ts-expect-error Ignore index type error
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
   const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
+
+  const transferEventsQuery = useTokenTransfers(
+    transaction,
+    transaction?.hash
+      ? {
+          tx_hash: transaction.hash,
+          limit: 10,
+          offset: 0,
+        }
+      : undefined,
+  )
+  const transfers = transferEventsQuery?.results?.data
+  const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
 
   return (
     <>
@@ -201,6 +224,60 @@ export const RuntimeTransactionDetailView: FC<{
                   address={(transaction?.to_eth || transaction?.to) as string}
                 />
                 <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
+              </dd>
+            </>
+          )}
+
+          {transfers && transfers.length > 0 && (
+            <>
+              <dt>{t('common.summary')}</dt>
+              <dd>
+                <Box sx={{ display: 'block', overflowX: 'auto' }}>
+                  {transfers.map((transfer, i) => {
+                    const params = transfer.evm_log_params
+                    if (!params) return null
+
+                    const from = params.find(p => p.name === 'from')?.value as string | undefined
+                    const to = params.find(p => p.name === 'to')?.value as string | undefined
+
+                    return (
+                      <Box
+                        key={i}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 2,
+                          mb: 2,
+                          minWidth: '100%',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        <TokenTypeTag tokenType={transfer.evm_token?.type} />
+                        <Typography variant="body2">{t('common.from')} </Typography>
+                        {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
+
+                        <Typography variant="body2">{t('common.to')}</Typography>
+                        {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
+
+                        <Typography variant="body2">
+                          {t('common.for')} <EventBalance event={transfer} tickerAsLink={false} />
+                        </Typography>
+                      </Box>
+                    )
+                  })}
+                  {(totalTransfers ?? 0) > transfers.length && (
+                    <>
+                      <Link
+                        component={RouterLink}
+                        to={`${location.pathname}#${transactionEventsContainerId}`}
+                        variant="body2"
+                        sx={{ mt: 1, textDecoration: 'underline' }}
+                      >
+                        {t('common.seeMore')}
+                      </Link>
+                    </>
+                  )}
+                </Box>
               </dd>
             </>
           )}
