@@ -1,16 +1,16 @@
 /** @file Put all external links into this file so tests make sure links are still reachable */
 
 export const socialMedia = {
-  telegram: process.env.REACT_APP_SOCIAL_TELEGRAM,
-  twitter: process.env.REACT_APP_SOCIAL_TWITTER,
-  discord: process.env.REACT_APP_SOCIAL_DISCORD,
+  telegram: import.meta.env.REACT_APP_SOCIAL_TELEGRAM,
+  twitter: import.meta.env.REACT_APP_SOCIAL_TWITTER,
+  discord: import.meta.env.REACT_APP_SOCIAL_DISCORD,
   // This API link is for testing if invite is still valid.
   isDiscordStillValid: 'https://oasis.io/discord/invite-api-check',
-  youtube: process.env.REACT_APP_SOCIAL_YOUTUBE,
-  reddit: process.env.REACT_APP_SOCIAL_REDDIT,
-  linkedin: process.env.REACT_APP_SOCIAL_LINKEDIN,
-  docs: process.env.REACT_APP_SOCIAL_DOCS,
-  home: process.env.REACT_APP_SOCIAL_HOME,
+  youtube: import.meta.env.REACT_APP_SOCIAL_YOUTUBE,
+  reddit: import.meta.env.REACT_APP_SOCIAL_REDDIT,
+  linkedin: import.meta.env.REACT_APP_SOCIAL_LINKEDIN,
+  docs: import.meta.env.REACT_APP_SOCIAL_DOCS,
+  home: import.meta.env.REACT_APP_SOCIAL_HOME,
 }
 
 export const marketingPage = {
@@ -61,7 +61,7 @@ export const dapps = {
 }
 
 export const api = {
-  spec: `${process.env.REACT_APP_API}spec/v1.html`,
+  spec: `${import.meta.env.REACT_APP_API}spec/v1.html`,
   oasis_named_addresses_mainnet_consensus:
     'https://raw.githubusercontent.com/oasisprotocol/nexus/main/named-addresses/mainnet_consensus.json',
   oasis_named_addresses_mainnet_emerald:

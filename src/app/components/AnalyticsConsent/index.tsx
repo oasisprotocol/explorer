@@ -99,7 +99,7 @@ const StyledPrivacyButton = styled(Button)(() => ({
 export const PrivacyPolicyFooterLink: FC = () => {
   const { t } = useTranslation()
   return (
-    <Link href={process.env.REACT_APP_PRIVACY_POLICY} target="_blank" color="inherit">
+    <Link href={import.meta.env.REACT_APP_PRIVACY_POLICY} target="_blank" color="inherit">
       {t('analyticsConsent.privacyPolicy')}
     </Link>
   )
@@ -139,7 +139,7 @@ export const AnalyticsConsentView = (props: {
           components={{
             PrivacyPolicyLink: (
               <Link
-                href={process.env.REACT_APP_PRIVACY_POLICY}
+                href={import.meta.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
                 sx={{ fontWeight: 400, textDecoration: 'underline' }}
               />

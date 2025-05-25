@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { render } from '@testing-library/react'
 import { EventTypeIcon } from '../RuntimeEventDetails'
 import { TokenTransferIcon } from '../../Tokens/TokenTransferIcon'

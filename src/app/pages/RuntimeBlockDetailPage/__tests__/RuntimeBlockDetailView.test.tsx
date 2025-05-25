@@ -1,3 +1,4 @@
+import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { RuntimeBlock } from '../../../../oasis-nexus/api'
 import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
@@ -6,12 +7,12 @@ import { suggestedParsedBlock } from '../../../utils/test-fixtures'
 
 describe('RuntimeBlockDetailView', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
-    jest.setSystemTime(new Date('2023-01-01T01:01:01Z'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2023-01-01T01:01:01Z'))
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('should display formatted values', () => {

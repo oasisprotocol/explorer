@@ -191,12 +191,12 @@ const splitUrls = (input: string | undefined): string[] =>
     : []
 
 export const deploys = {
-  production: splitUrls(process.env.REACT_APP_PRODUCTION_URLS),
-  staging: splitUrls(process.env.REACT_APP_STAGING_URLS),
+  production: splitUrls(import.meta.env.REACT_APP_PRODUCTION_URLS),
+  staging: splitUrls(import.meta.env.REACT_APP_STAGING_URLS),
   localhost: 'http://localhost:1234',
 }
 
-export const getAppTitle = () => process.env.REACT_APP_META_TITLE
+export const getAppTitle = () => import.meta.env.REACT_APP_META_TITLE
 
 export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {
   if (!scope) return []
@@ -207,7 +207,7 @@ export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenIn
 export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
   (scope ? paraTimesConfig[scope.layer]?.[scope.network]?.fiatCurrency : undefined) ?? 'usd'
 
-export const showFiatValues = process.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
+export const showFiatValues = import.meta.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
 
 export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
   [Network.mainnet]: {},
