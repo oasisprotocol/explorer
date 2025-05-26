@@ -1884,6 +1884,10 @@ This field is omitted when listing multiple accounts.
   debonding_delegations_balance: TextBigInt;
   /** The balance of this accounts' (outgoing) delegations, in base units. */
   delegations_balance: TextBigInt;
+  /** The entity address, if this account *is* an entity. If present, this address should match the queried address. */
+  entity?: string;
+  /** The entity address, if this account is a node belonging to an entity. Only present when querying a single account. */
+  entity_node_for?: string;
   /** Amount delegated to this validator, in base units. */
   escrow: TextBigInt;
   /** The second-granular consensus time of the block in which this account was first active.
