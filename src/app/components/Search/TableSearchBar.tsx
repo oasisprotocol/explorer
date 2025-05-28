@@ -14,6 +14,8 @@ import Button from '@mui/material/Button'
 import { CardEmptyState } from '../CardEmptyState'
 import { inputBaseClasses } from '@mui/material/InputBase'
 
+type SearchBarSize = 'small' | 'medium' | 'large'
+
 export interface TableSearchBarProps {
   placeholder: string
   warning?: string
@@ -31,6 +33,24 @@ export interface TableSearchBarProps {
   width?: string | number
 
   onChange: (value: string) => void
+
+  size?: SearchBarSize
+}
+
+type SizingInfo = {
+  font: number | string
+}
+
+const sizeMapping: Record<SearchBarSize, SizingInfo> = {
+  small: {
+    font: '1em',
+  },
+  medium: {
+    font: '1.25em',
+  },
+  large: {
+    font: '1.5em',
+  },
 }
 
 export const TableSearchBar: FC<TableSearchBarProps> = ({
@@ -39,6 +59,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
   placeholder,
   warning,
   fullWidth,
+  size = 'medium',
   width = 250,
 }) => {
   const { isTablet } = useScreenSize()
@@ -129,6 +150,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
             p: 0,
             width: fullWidth ? '100%' : width,
             margin: 2,
+            fontSize: sizeMapping[size].font,
           },
         },
         startAdornment,
