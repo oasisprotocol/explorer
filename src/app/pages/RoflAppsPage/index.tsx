@@ -15,7 +15,7 @@ import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButt
 import { VerticalList } from '../../components/VerticalList'
 import { RoflAppDetailsVerticalListView } from '../RoflAppDetailsPage'
 import { useROFLAppFiltering, useRoflApps, useTableViewMode } from './hook'
-import { TableSearchBar } from '../../components/Search/TableSearchBar'
+import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { Network } from '../../../types/network'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
@@ -24,15 +24,23 @@ const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayou
   layer,
   tableView,
 }) => {
-  const { wantedNamePattern } = useROFLAppFiltering()
+  const { wantedNamePattern, clearFilters } = useROFLAppFiltering()
 
-  const { tablePagination, isLoading, roflApps, limit, hasNoResultsOnSelectedPage } = useRoflApps(
-    network,
-    layer,
-  )
+  const {
+    tablePagination,
+    isLoading,
+    roflApps,
+    limit,
+    hasNoResultsOnSelectedPage,
+    hasNoResultsBecauseOfFilters,
+  } = useRoflApps(network, layer)
 
   if (hasNoResultsOnSelectedPage) {
     throw AppErrors.PageDoesNotExist
+  }
+
+  if (hasNoResultsBecauseOfFilters) {
+    return <NoMatchingDataMaybeClearFilters clearFilters={clearFilters} />
   }
 
   return (
@@ -77,7 +85,7 @@ export const RoflAppsPage: FC = () => {
 
   if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
-  const { pagination, isLoading } = useRoflApps(network, layer)
+  const { pagination, isLoading, hasNoResultsBecauseOfFilters } = useRoflApps(network, layer)
 
   const searchBar = (
     <TableSearchBar
@@ -93,7 +101,8 @@ export const RoflAppsPage: FC = () => {
   return (
     <PageLayout
       mobileFooterAction={
-        tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
+        tableView === TableLayout.Vertical &&
+        !hasNoResultsBecauseOfFilters && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
       {!isMobile && <Divider variant="layout" />}
