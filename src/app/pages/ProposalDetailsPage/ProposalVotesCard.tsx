@@ -128,6 +128,7 @@ export const ProposalVotesCard: FC = () => {
               onChange={setWantedNameInput}
               placeholder={t('networkProposal.searchForVoter')}
               warning={nameError}
+              size={'small'}
             />
             <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
           </Box>
