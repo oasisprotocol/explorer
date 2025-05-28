@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, KeyboardEventHandler, useCallback, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
@@ -22,6 +22,7 @@ export interface TableSearchBarProps {
   value: string
   fullWidth?: boolean
   onChange: (value: string) => void
+  onEnter?: () => void
   size?: SearchBarSize
   autoFocus?: boolean
 }
@@ -50,6 +51,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
   fullWidth,
   size = 'medium',
   autoFocus,
+  onEnter,
 }) => {
   const { isTablet } = useScreenSize()
 
@@ -65,6 +67,15 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
       setIsWarningFresh(true)
     }
   }, [warning])
+
+  const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    event => {
+      if (event.key === 'Enter') {
+        if (onEnter) onEnter()
+      }
+    },
+    [onEnter],
+  )
 
   const startAdornment = (
     <InputAdornment
@@ -133,6 +144,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
       variant={'outlined'}
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyDown={handleKeyPress}
       InputProps={{
         inputProps: {
           sx: {
