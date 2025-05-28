@@ -134,9 +134,14 @@ export const validateAndNormalize = {
       return searchTerm.replace(/\s/g, '').toLowerCase()
     }
   },
-  roflApp: (searchTerm: string) => {
+  roflAppId: (searchTerm: string) => {
     if (isValidRoflAppId(searchTerm.replace(/\s/g, '').toLowerCase())) {
       return searchTerm.replace(/\s/g, '').toLowerCase()
+    }
+  },
+  roflAppNameFragment: (searchTerm: string) => {
+    if (searchTerm?.length >= textSearchMinimumLength) {
+      return searchTerm.toLowerCase()
     }
   },
   evmAccount: (searchTerm: string): string | undefined => {
