@@ -1,6 +1,6 @@
 import { Runtime, useGetRuntimeRoflApps } from 'oasis-nexus/api'
 import { TableLayout } from '../../components/TableLayoutButton'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
@@ -10,7 +10,8 @@ import { useTranslation } from 'react-i18next'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { textSearch } from '../../components/Search/search-utils'
 import { getHighlightPattern } from '../../components/Search/search-utils'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -27,10 +28,14 @@ export const useTableViewMode = () => {
   return { tableView, setTableView }
 }
 
+const ROFL_SEARCH_ARG_NAME = 'name'
+
 export const useROFLAppFiltering = () => {
   const setSearchParams = useSearchParams()[1]
   const { t } = useTranslation()
-  const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('name', '', { deleteParams: ['page'] })
+  const [wantedNameInput, setWantedNameInput] = useTypedSearchParam(ROFL_SEARCH_ARG_NAME, '', {
+    deleteParams: ['page'],
+  })
   const search = textSearch.roflAppName(wantedNameInput, t)
   const { result: wantedNamePattern, warning: nameError } = search
   const highlightPattern = getHighlightPattern(search)
@@ -55,8 +60,9 @@ export const useROFLAppFiltering = () => {
 
 export const useRoflApps = (network: Network, layer: Runtime) => {
   const { tableView } = useTableViewMode()
+  const navigate = useNavigate()
   const pagination = useSearchParamsPagination('page')
-  const { wantedNamePattern, hasFilters } = useROFLAppFiltering()
+  const { wantedNameInput, wantedNamePattern, hasFilters } = useROFLAppFiltering()
   const offset = (pagination.selectedPage - 1) * limit
   const roflAppsQuery = useGetRuntimeRoflApps(network, layer, {
     name: wantedNamePattern,
@@ -80,6 +86,15 @@ export const useRoflApps = (network: Network, layer: Runtime) => {
   const hasNoResultsOnSelectedPage = isFetched && !isOnFirstPage && !hasData
   const hasNoResultsBecauseOfFilters = !isLoading && !hasData && isOnFirstPage && hasFilters
 
+  const jumpToSingleResult = useCallback(() => {
+    // If we only have a single result
+    if (hasData && isOnFirstPage && roflApps?.length === 1) {
+      // Then let's jump to it
+      const path = `${RouteUtils.getRoflAppRoute(network, roflApps![0].id)}?q=${encodeURIComponentPretty(wantedNameInput)}`
+      navigate(path)
+    }
+  }, [hasData, isOnFirstPage, roflApps, navigate, network, wantedNameInput])
+
   return {
     isLoading,
     limit,
@@ -88,5 +103,6 @@ export const useRoflApps = (network: Network, layer: Runtime) => {
     tablePagination,
     hasNoResultsOnSelectedPage,
     hasNoResultsBecauseOfFilters,
+    jumpToSingleResult,
   }
 }
