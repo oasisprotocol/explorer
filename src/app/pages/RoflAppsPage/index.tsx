@@ -17,6 +17,7 @@ import { RoflAppDetailsVerticalListView } from '../RoflAppDetailsPage'
 import { useROFLAppFiltering, useRoflApps, useTableViewMode } from './hook'
 import { TableSearchBar } from '../../components/Search/TableSearchBar'
 import { Network } from '../../../types/network'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayout }> = ({
   network,
@@ -105,7 +106,9 @@ export const RoflAppsPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
       >
-        <RoflAppsView network={network} layer={layer} tableView={tableView} />
+        <ErrorBoundary>
+          <RoflAppsView network={network} layer={layer} tableView={tableView} />
+        </ErrorBoundary>
       </SubPageCard>
     </PageLayout>
   )
