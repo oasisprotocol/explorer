@@ -14,9 +14,16 @@ type RoflAppsListProps = {
   isLoading: boolean
   limit: number
   pagination: TablePaginationProps | false
+  highlightedPartOfName?: string
 }
 
-export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, pagination, apps }) => {
+export const RoflAppsList: FC<RoflAppsListProps> = ({
+  isLoading,
+  limit,
+  pagination,
+  apps,
+  highlightedPartOfName,
+}) => {
   const { t } = useTranslation()
   const { isTablet } = useScreenSize()
 
@@ -50,7 +57,12 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
         },
         {
           content: app?.metadata['net.oasis.rofl.name'] ? (
-            <RoflAppLink id={app.id} name={app?.metadata['net.oasis.rofl.name']} network={app.network} />
+            <RoflAppLink
+              id={app.id}
+              name={app?.metadata['net.oasis.rofl.name']}
+              network={app.network}
+              highlightedPartOfName={highlightedPartOfName}
+            />
           ) : (
             t('rofl.nameNotProvided')
           ),
