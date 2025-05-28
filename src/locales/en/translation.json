@@ -395,7 +395,7 @@
     "changeView": "Change view"
   },
   "testnetFaucet": {
-    "description": "Drops are limited to 10 TEST tokens",
+    "description": "Drops are limited to 150 TEST tokens",
     "header": "Oasis Testnet Faucet",
     "request": "Request test tokens"
   },
