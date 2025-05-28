@@ -87,8 +87,10 @@ export const RoflAppsPage: FC = () => {
     throw AppErrors.UnsupportedLayer
   }
 
-  const { pagination, isLoading, hasNoResultsBecauseOfFilters } = useRoflApps(network, layer)
-
+  const { pagination, isLoading, hasNoResultsBecauseOfFilters, jumpToSingleResult } = useRoflApps(
+    network,
+    layer,
+  )
   const searchBar = (
     <TableSearchBar
       value={wantedNameInput}
@@ -97,6 +99,7 @@ export const RoflAppsPage: FC = () => {
       warning={nameError}
       fullWidth={isMobile}
       autoFocus={!isMobile}
+      onEnter={jumpToSingleResult}
     />
   )
 
