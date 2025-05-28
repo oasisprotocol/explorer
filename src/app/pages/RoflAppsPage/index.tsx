@@ -1,46 +1,36 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import { useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, paraTimesConfig } from '../../../config'
+import { paraTimesConfig } from '../../../config'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
-import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { VerticalList } from '../../components/VerticalList'
 import { RoflAppDetailsVerticalListView } from '../RoflAppDetailsPage'
 
-const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
+import { useRoflApps, useTableViewMode } from './hook'
 
 export const RoflAppsPage: FC = () => {
-  const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
+  const { tableView, setTableView } = useTableViewMode()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const pagination = useSearchParamsPagination('page')
-  const offset = (pagination.selectedPage - 1) * limit
+
   const scope = useRuntimeScope()
 
   if (!paraTimesConfig[scope.layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
-  useEffect(() => {
-    if (!isMobile) {
-      setTableView(TableLayout.Horizontal)
-    }
-  }, [isMobile, setTableView])
+  const { pagination, tablePagination, isLoading, roflApps, limit, hasNoResultsOnSelectedPage } = useRoflApps(
+    scope.network,
+    scope.layer,
+  )
 
-  const roflAppsQuery = useGetRuntimeRoflApps(scope.network, scope.layer, {
-    limit: tableView === TableLayout.Vertical ? offset + limit : limit,
-    offset: tableView === TableLayout.Vertical ? 0 : offset,
-  })
-  const { isLoading, isFetched, data } = roflAppsQuery
-  const roflApps = data?.data.rofl_apps
-
-  if (isFetched && pagination.selectedPage > 1 && !roflApps?.length) {
+  if (hasNoResultsOnSelectedPage) {
     throw AppErrors.PageDoesNotExist
   }
 
@@ -58,18 +48,7 @@ export const RoflAppsPage: FC = () => {
         mainTitle
       >
         {tableView === TableLayout.Horizontal && (
-          <RoflAppsList
-            apps={roflApps}
-            isLoading={isLoading}
-            limit={limit}
-            pagination={{
-              selectedPage: pagination.selectedPage,
-              linkToPage: pagination.linkToPage,
-              totalCount: data?.data.total_count,
-              isTotalCountClipped: data?.data.is_total_count_clipped,
-              rowsPerPage: limit,
-            }}
-          />
+          <RoflAppsList apps={roflApps} isLoading={isLoading} limit={limit} pagination={tablePagination} />
         )}
 
         {tableView === TableLayout.Vertical && (
