@@ -84,8 +84,6 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
     <TextField
       sx={{
         backgroundColor: COLORS.white,
-        marginLeft: 4,
-        marginRight: helperText ? '25px' : '25px',
         '&:focus-within': {
           boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.125) !important',
         },
