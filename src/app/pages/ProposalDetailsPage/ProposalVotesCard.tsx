@@ -140,6 +140,7 @@ export const ProposalVotesCard: FC = () => {
               placeholder={t('networkProposal.searchForVoter')}
               warning={nameError}
               fullWidth={isTablet}
+              size={'small'}
             />
           </Box>
         }
