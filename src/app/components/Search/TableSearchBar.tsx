@@ -18,10 +18,29 @@ export interface TableSearchBarProps {
   placeholder: string
   warning?: string
   value: string
+  /**
+   * Should we go 100% width?
+   */
+  fullWidth?: boolean
+
+  /**
+   * Width of the whole component
+   *
+   * Note: fullWidth overrides this.
+   */
+  width?: string | number
+
   onChange: (value: string) => void
 }
 
-export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, placeholder, warning }) => {
+export const TableSearchBar: FC<TableSearchBarProps> = ({
+  value,
+  onChange,
+  placeholder,
+  warning,
+  fullWidth,
+  width = 250,
+}) => {
   const { isTablet } = useScreenSize()
 
   const [isWarningFresh, setIsWarningFresh] = useState(false)
@@ -72,7 +91,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         verticalAlign: 'middle',
         mt: 3,
         mb: 4,
-        width: isTablet ? '160px' : undefined,
+        width: fullWidth ? '100%' : isTablet ? '160px' : undefined,
       }}
     >
       <WarningIcon sx={{ mr: 3 }} />
@@ -99,6 +118,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
             }
           : {}),
         zIndex: 10,
+        ...(fullWidth ? { width: '100%' } : {}),
       }}
       variant={'outlined'}
       value={value}
@@ -107,7 +127,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         inputProps: {
           sx: {
             p: 0,
-            width: isTablet ? 110 : 300,
+            width: fullWidth ? '100%' : width,
             margin: 2,
           },
         },
