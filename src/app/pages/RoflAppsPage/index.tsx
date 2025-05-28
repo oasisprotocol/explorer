@@ -13,8 +13,8 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { VerticalList } from '../../components/VerticalList'
 import { RoflAppDetailsVerticalListView } from '../RoflAppDetailsPage'
-
-import { useRoflApps, useTableViewMode } from './hook'
+import { useROFLAppFiltering, useRoflApps, useTableViewMode } from './hook'
+import { TableSearchBar } from '../../components/Search/TableSearchBar'
 
 export const RoflAppsPage: FC = () => {
   const { tableView, setTableView } = useTableViewMode()
@@ -25,6 +25,7 @@ export const RoflAppsPage: FC = () => {
 
   if (!paraTimesConfig[scope.layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
+  const { wantedNameInput, setWantedNameInput, nameError, highlightPattern } = useROFLAppFiltering()
   const { pagination, tablePagination, isLoading, roflApps, limit, hasNoResultsOnSelectedPage } = useRoflApps(
     scope.network,
     scope.layer,
@@ -33,6 +34,17 @@ export const RoflAppsPage: FC = () => {
   if (hasNoResultsOnSelectedPage) {
     throw AppErrors.PageDoesNotExist
   }
+
+  const searchBar = (
+    <TableSearchBar
+      value={wantedNameInput}
+      onChange={setWantedNameInput}
+      placeholder={t('rofl.searchByNameOrKeyword')}
+      warning={nameError}
+      fullWidth={isMobile}
+      autoFocus={!isMobile}
+    />
+  )
 
   return (
     <PageLayout
@@ -43,12 +55,21 @@ export const RoflAppsPage: FC = () => {
       {!isMobile && <Divider variant="layout" />}
       <SubPageCard
         title={t('rofl.listTitle')}
-        action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
+        action={
+          isMobile ? <TableLayoutButton tableView={tableView} setTableView={setTableView} /> : searchBar
+        }
+        title2={isMobile && searchBar}
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
       >
         {tableView === TableLayout.Horizontal && (
-          <RoflAppsList apps={roflApps} isLoading={isLoading} limit={limit} pagination={tablePagination} />
+          <RoflAppsList
+            apps={roflApps}
+            isLoading={isLoading}
+            limit={limit}
+            pagination={tablePagination}
+            highlightPattern={highlightPattern}
+          />
         )}
 
         {tableView === TableLayout.Vertical && (
@@ -57,7 +78,14 @@ export const RoflAppsPage: FC = () => {
               [...Array(limit).keys()].map(key => (
                 <RoflAppDetailsVerticalListView key={key} isLoading={true} app={undefined} />
               ))}
-            {!isLoading && roflApps?.map(app => <RoflAppDetailsVerticalListView key={app.id} app={app} />)}
+            {!isLoading &&
+              roflApps?.map(app => (
+                <RoflAppDetailsVerticalListView
+                  key={app.id}
+                  app={app}
+                  highlightPattern={highlightPattern}
+                />
+              ))}
           </VerticalList>
         )}
       </SubPageCard>
