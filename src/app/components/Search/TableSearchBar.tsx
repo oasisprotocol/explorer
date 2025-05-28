@@ -23,6 +23,7 @@ export interface TableSearchBarProps {
   fullWidth?: boolean
   onChange: (value: string) => void
   size?: SearchBarSize
+  autoFocus?: boolean
 }
 
 type SizingInfo = {
@@ -48,6 +49,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
   warning,
   fullWidth,
   size = 'medium',
+  autoFocus,
 }) => {
   const { isTablet } = useScreenSize()
 
@@ -139,6 +141,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
             margin: 2,
             fontSize: sizeMapping[size].font,
           },
+          autoFocus,
         },
         startAdornment,
         endAdornment,
