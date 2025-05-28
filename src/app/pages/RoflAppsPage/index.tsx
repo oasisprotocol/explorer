@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import { Layer } from '../../../oasis-nexus/api'
+import { Layer, Runtime } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -16,27 +16,69 @@ import { VerticalList } from '../../components/VerticalList'
 import { RoflAppDetailsVerticalListView } from '../RoflAppDetailsPage'
 import { useROFLAppFiltering, useRoflApps, useTableViewMode } from './hook'
 import { TableSearchBar } from '../../components/Search/TableSearchBar'
+import { Network } from '../../../types/network'
+
+const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayout }> = ({
+  network,
+  layer,
+  tableView,
+}) => {
+  const { wantedNamePattern } = useROFLAppFiltering()
+
+  const { tablePagination, isLoading, roflApps, limit, hasNoResultsOnSelectedPage } = useRoflApps(
+    network,
+    layer,
+  )
+
+  if (hasNoResultsOnSelectedPage) {
+    throw AppErrors.PageDoesNotExist
+  }
+
+  return (
+    <>
+      {tableView === TableLayout.Horizontal && (
+        <RoflAppsList
+          apps={roflApps}
+          isLoading={isLoading}
+          limit={limit}
+          pagination={tablePagination}
+          highlightedPartOfName={wantedNamePattern}
+        />
+      )}
+
+      {tableView === TableLayout.Vertical && (
+        <VerticalList>
+          {isLoading &&
+            [...Array(limit).keys()].map(key => (
+              <RoflAppDetailsVerticalListView key={key} isLoading={true} app={undefined} />
+            ))}
+          {!isLoading &&
+            roflApps?.map(app => (
+              <RoflAppDetailsVerticalListView
+                key={app.id}
+                app={app}
+                highlightedPartOfName={wantedNamePattern}
+              />
+            ))}
+        </VerticalList>
+      )}
+    </>
+  )
+}
 
 export const RoflAppsPage: FC = () => {
   const { tableView, setTableView } = useTableViewMode()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
-  const scope = useRequiredScopeParam()
+  const { wantedNameInput, setWantedNameInput, nameError } = useROFLAppFiltering()
+  const { network, layer } = useRequiredScopeParam()
 
-  if (scope.layer !== Layer.sapphire) {
+  if (layer !== Layer.sapphire) {
     throw AppErrors.UnsupportedLayer
   }
 
-  const { wantedNameInput, setWantedNameInput, nameError, wantedNamePattern } = useROFLAppFiltering()
-  const { pagination, tablePagination, isLoading, roflApps, limit, hasNoResultsOnSelectedPage } = useRoflApps(
-    scope.network,
-    scope.layer,
-  )
-
-  if (hasNoResultsOnSelectedPage) {
-    throw AppErrors.PageDoesNotExist
-  }
+  const { pagination, isLoading } = useRoflApps(network, layer)
 
   const searchBar = (
     <TableSearchBar
@@ -65,32 +107,7 @@ export const RoflAppsPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
       >
-        {tableView === TableLayout.Horizontal && (
-          <RoflAppsList
-            apps={roflApps}
-            isLoading={isLoading}
-            limit={limit}
-            pagination={tablePagination}
-            highlightedPartOfName={wantedNamePattern}
-          />
-        )}
-
-        {tableView === TableLayout.Vertical && (
-          <VerticalList>
-            {isLoading &&
-              [...Array(limit).keys()].map(key => (
-                <RoflAppDetailsVerticalListView key={key} isLoading={true} app={undefined} />
-              ))}
-            {!isLoading &&
-              roflApps?.map(app => (
-                <RoflAppDetailsVerticalListView
-                  key={app.id}
-                  app={app}
-                  highlightedPartOfName={wantedNamePattern}
-                />
-              ))}
-          </VerticalList>
-        )}
+        <RoflAppsView network={network} layer={layer} tableView={tableView} />
       </SubPageCard>
     </PageLayout>
   )
