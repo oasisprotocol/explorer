@@ -8,6 +8,7 @@ import { TablePaginationProps } from '../../components/Table/TablePagination'
 import { Network } from '../../../types/network'
 import { useTranslation } from 'react-i18next'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useSearchParams } from 'react-router-dom'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -25,22 +26,33 @@ export const useTableViewMode = () => {
 }
 
 export const useROFLAppFiltering = () => {
+  const setSearchParams = useSearchParams()[1]
   const { t } = useTranslation()
   const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('name', '', { deleteParams: ['page'] })
   const wantedNamePattern = wantedNameInput.length < 3 ? undefined : wantedNameInput
   const nameError = !!wantedNameInput && !wantedNamePattern ? t('tableSearch.error.tooShort') : undefined
+  const hasFilters = !!wantedNamePattern
+  const clearFilters = () => {
+    setSearchParams(searchParams => {
+      searchParams.delete('name')
+      searchParams.delete('page')
+      return searchParams
+    })
+  }
   return {
     wantedNameInput,
     setWantedNameInput,
     nameError,
     wantedNamePattern,
+    hasFilters,
+    clearFilters,
   }
 }
 
 export const useRoflApps = (network: Network, layer: Runtime) => {
   const { tableView } = useTableViewMode()
   const pagination = useSearchParamsPagination('page')
-  const { wantedNamePattern } = useROFLAppFiltering()
+  const { wantedNamePattern, hasFilters } = useROFLAppFiltering()
   const offset = (pagination.selectedPage - 1) * limit
   const roflAppsQuery = useGetRuntimeRoflApps(network, layer, {
     name: wantedNamePattern,
@@ -58,7 +70,11 @@ export const useRoflApps = (network: Network, layer: Runtime) => {
     rowsPerPage: limit,
   }
 
-  const hasNoResultsOnSelectedPage = isFetched && pagination.selectedPage > 1 && !roflApps?.length
+  const hasData = !!roflApps?.length
+  const isOnFirstPage = pagination.selectedPage === 1
+
+  const hasNoResultsOnSelectedPage = isFetched && !isOnFirstPage && !hasData
+  const hasNoResultsBecauseOfFilters = !isLoading && !hasData && isOnFirstPage && hasFilters
 
   return {
     isLoading,
@@ -67,5 +83,6 @@ export const useRoflApps = (network: Network, layer: Runtime) => {
     pagination,
     tablePagination,
     hasNoResultsOnSelectedPage,
+    hasNoResultsBecauseOfFilters,
   }
 }
