@@ -174,8 +174,13 @@ export abstract class RouteUtils {
     return `/${encodeURIComponent(network)}/sapphire/rofl/app`
   }
 
-  static getRoflAppRoute = (network: Network, id: string) => {
-    return `/${encodeURIComponent(network)}/sapphire/rofl/app/${encodeURIComponent(id)}`
+  static getRoflAppRoute = (
+    network: Network,
+    id: string,
+    searchParams?: URLSearchParams,
+    preserveParams: string[] = [],
+  ) => {
+    return `/${encodeURIComponent(network)}/sapphire/rofl/app/${encodeURIComponent(id)}${formatPreservedParams(searchParams, preserveParams)}`
   }
 
   static getRoflAppInstanceRoute = (network: Network, id: string, rak: string) => {
