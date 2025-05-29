@@ -55,7 +55,7 @@ export const ContractCreatorInfo: FC<{
   ) : (
     <>
       <TxSender scope={scope} txHash={creationTxHash} alwaysTrim={alwaysTrim} />
-      <Box>&nbsp;{t('contract.createdAt')}&nbsp;</Box>
+      <Box alignSelf="end">&nbsp;{t('contract.createdAt')}&nbsp;</Box>
       <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim={alwaysTrim} />
     </>
   )

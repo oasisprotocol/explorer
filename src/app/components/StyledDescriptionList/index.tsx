@@ -64,6 +64,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
     alignItems: 'center',
     maxWidth: '100%',
     overflowX: 'hidden',
+    paddingLeft: '5px', // Needed to fix highlightedAddress being clipped by overflow-x: hidden
   },
   ...(standalone && {
     '&&': {

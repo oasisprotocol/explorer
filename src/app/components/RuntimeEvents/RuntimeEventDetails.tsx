@@ -312,8 +312,8 @@ const RuntimeEventDetailsInner: FC<{
               fontWeight={400}
             />
             <br />
-            <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
-              {t('runtimeEvent.fields.emittingContract')}:{' '}
+            <Box sx={{ display: 'inline-flex', alignItems: 'end', gap: '1ex' }}>
+              {t('runtimeEvent.fields.emittingContract')}:
               <AccountLink scope={scope} alwaysTrim address={emittingEthAddress} />
             </Box>
           </div>
@@ -345,8 +345,8 @@ const RuntimeEventDetailsInner: FC<{
             </Table>
           )}
           <br />
-          <Box sx={{ display: 'inline-flex', verticalAlign: 'middle', alignItems: 'center' }}>
-            {t('runtimeEvent.fields.emittingContract')}:{' '}
+          <Box sx={{ display: 'inline-flex', alignItems: 'end', gap: '1ex' }}>
+            {t('runtimeEvent.fields.emittingContract')}:
             <AccountLink scope={scope} alwaysTrim address={emittingEthAddress} />
           </Box>
         </div>

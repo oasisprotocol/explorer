@@ -196,11 +196,7 @@ export const RuntimeTransactionDetailView: FC<{
           {!!transaction?.signers.length && (
             <>
               <dt>{t('common.from')}</dt>
-              <dd
-                style={{
-                  display: 'block',
-                }}
-              >
+              <dd style={{ columnGap: '1em', rowGap: '3px' }}>
                 {(transaction?.signers ?? []).map((signer, index) => (
                   <Box key={`signer-${index}-link`} sx={{ display: 'inline-flex', alignItems: 'center' }}>
                     <AccountLink
@@ -208,7 +204,6 @@ export const RuntimeTransactionDetailView: FC<{
                       address={(signer.address_eth ?? signer.address) as string}
                     />
                     <CopyToClipboard value={signer.address_eth ?? signer.address} />
-                    <br />
                   </Box>
                 ))}
               </dd>
@@ -234,7 +229,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.eventsSummary')}</dt>
               <dd>
-                <Box sx={{ overflowX: 'auto' }}>
+                <Box sx={{ overflowX: 'auto', paddingTop: '1px' }}>
                   {transfers.map((transfer, i) => {
                     const params = transfer.evm_log_params
                     if (!params) return null

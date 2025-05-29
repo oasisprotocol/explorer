@@ -27,7 +27,7 @@ const StyledIconButton = styled(ButtonBase, {
   fontSize: 'inherit',
   fontFamily: 'inherit',
   padding: 0,
-  marginLeft: theme.spacing(4),
+  marginLeft: theme.spacing(3),
   ...(floating && {
     position: 'absolute',
     right: theme.spacing(5),
