@@ -57,6 +57,7 @@
     "@mui/material": "5.16.7",
     "@oasisprotocol/client": "1.2.0",
     "@oasisprotocol/client-rt": "1.2.0",
+    "@oasisprotocol/ui-library": "file:./ui-library",
     "@tanstack/react-query": "4.36.1",
     "@tanstack/react-query-devtools": "4.36.1",
     "axios": "1.8.4",
