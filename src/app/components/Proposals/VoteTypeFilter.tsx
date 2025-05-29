@@ -6,6 +6,7 @@ import { FilterButtons } from '../FilterButtons'
 type VoteTypeFilterProps = {
   onSelect: (voteType: VoteType) => void
   value?: VoteType
+  fullWidth?: boolean
 }
 
 export const VoteTypeFilter: FC<VoteTypeFilterProps> = props => {
