@@ -34,6 +34,14 @@ import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import { useTokenTransfers } from '../TokenDashboardPage/hook'
+import { TokenTypeTag } from 'app/components/Tokens/TokenList'
+import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
+import { EventBalance } from 'app/components/Tokens/TokenTransfers'
+import { transactionEventsContainerId } from '../../utils/tabAnchors'
+import Link from '@mui/material/Link'
+import { Link as RouterLink } from 'react-router-dom'
+import { RouteUtils } from '../../utils/route-utils'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -83,9 +91,11 @@ export const RuntimeTransactionDetailPage: FC = () => {
       ))}
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
-        <SubPageCard title={t('common.events')}>
-          <RuntimeTransactionEvents transaction={transaction} />
-        </SubPageCard>
+        <LinkableDiv id={transactionEventsContainerId}>
+          <SubPageCard title={t('common.events')}>
+            <RuntimeTransactionEvents transaction={transaction} />
+          </SubPageCard>
+        </LinkableDiv>
       )}
     </PageLayout>
   )
@@ -109,6 +119,19 @@ export const RuntimeTransactionDetailView: FC<{
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
   const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
+
+  const transferEventsQuery = useTokenTransfers(
+    transaction,
+    transaction?.hash
+      ? {
+          tx_hash: transaction.hash,
+          limit: 10,
+          offset: 0,
+        }
+      : undefined,
+  )
+  const transfers = transferEventsQuery?.results?.data
+  const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
 
   return (
     <>
@@ -201,6 +224,61 @@ export const RuntimeTransactionDetailView: FC<{
                   address={(transaction?.to_eth || transaction?.to) as string}
                 />
                 <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
+              </dd>
+            </>
+          )}
+
+          {transfers && transfers.length > 0 && (
+            <>
+              <dt>{t('transaction.eventsSummary')}</dt>
+              <dd>
+                <Box sx={{ overflowX: 'auto' }}>
+                  {transfers.map((transfer, i) => {
+                    const params = transfer.evm_log_params
+                    if (!params) return null
+
+                    const from = params.find(p => p.name === 'from')?.value as string | undefined
+                    const to = params.find(p => p.name === 'to')?.value as string | undefined
+
+                    return (
+                      <Box
+                        key={i}
+                        sx={{
+                          display: 'flex',
+                          flexDirection: isMobile ? 'column' : 'row',
+                          alignItems: isMobile ? 'flex-start' : 'center',
+                          columnGap: 2,
+                          mb: isMobile ? 4 : 2,
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        <TokenTypeTag tokenType={transfer.evm_token?.type} />
+                        <Typography variant="body2">
+                          {t('common.from')}{' '}
+                          {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
+                        </Typography>
+
+                        <Typography variant="body2">
+                          {t('common.to')}{' '}
+                          {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
+                        </Typography>
+
+                        <Typography variant="body2">
+                          {t('common.for')} <EventBalance event={transfer} tickerAsLink={false} />
+                        </Typography>
+                      </Box>
+                    )
+                  })}
+                  {(totalTransfers ?? 0) > transfers.length && (
+                    <Link
+                      component={RouterLink}
+                      to={`${RouteUtils.getTransactionRoute(transaction, transaction.hash)}#${transactionEventsContainerId}`}
+                      sx={{ mt: 1, textDecoration: 'underline' }}
+                    >
+                      {t('common.seeMore')}
+                    </Link>
+                  )}
+                </Box>
               </dd>
             </>
           )}

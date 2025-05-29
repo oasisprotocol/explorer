@@ -54,24 +54,30 @@ export const useNFTInstanceTransfers = (
   return useTokenTransfers(scope, { nft_id: params.nft_id, contract_address: params.contract_address })
 }
 
-export const useTokenTransfers = (scope: SearchScope, params: undefined | GetRuntimeEventsParams) => {
+export const useTokenTransfers = (
+  scope: undefined | SearchScope,
+  params: undefined | GetRuntimeEventsParams,
+) => {
   if (params && Object.values(params).some(value => value === undefined || value === null)) {
     throw new Error('Must set params=undefined while some values are unavailable')
   }
+  if (params && !scope) {
+    throw new Error('Must set params=undefined while scope is unavailable')
+  }
+  const mockScopeForDisabledQuery = { network: 'mainnet', layer: 'sapphire' } as const
 
-  const { network, layer } = scope
   const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
     paramName: 'page',
     pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
   })
-  if (layer === Layer.consensus) {
+  if (scope?.layer === Layer.consensus) {
     throw AppErrors.UnsupportedLayer
     // Loading transactions on the consensus layer is not supported yet.
     // We should use useGetConsensusTransactions()
   }
   const query = useGetRuntimeEvents(
-    network,
-    layer, // This is OK since consensus has been handled separately
+    scope?.network ?? mockScopeForDisabledQuery.network,
+    scope?.layer ?? mockScopeForDisabledQuery.layer, // This is OK since consensus has been handled separately
     {
       ...pagination.paramsForQuery,
       type: RuntimeEventType.evmlog,
