@@ -85,7 +85,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
       sx={{
         backgroundColor: COLORS.white,
         '&:focus-within': {
-          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.25) !important',
+          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.125) !important',
         },
         [`.${inputBaseClasses.root}`]: {
           border: '1px solid',
