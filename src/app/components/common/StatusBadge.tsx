@@ -6,6 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import InfoIcon from '@mui/icons-material/Info'
 import ErrorIcon from '@mui/icons-material/Error'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 export type StatusVariant = 'success' | 'partialsuccess' | 'warning' | 'danger' | 'info'
 
@@ -43,7 +44,7 @@ type StatusBadgeProps = {
 
 const StyledBadge = styled(Box, {
   shouldForwardProp: prop => prop !== 'bgColor',
-})<{ bgColor: string }>(({ bgColor }) => {
+})<{ bgColor: string }>(({ bgColor, theme }) => {
   return {
     display: 'inline-flex',
     gap: 8,
@@ -58,13 +59,17 @@ const StyledBadge = styled(Box, {
     padding: 4,
     paddingLeft: 10,
     paddingRight: 5,
+    [theme.breakpoints.down('sm')]: {
+      padding: 4,
+    },
   }
 })
 
 export const StatusBadge = ({ label, icon, variant = 'info' }: StatusBadgeProps) => {
+  const { isMobile } = useScreenSize()
   return (
     <StyledBadge bgColor={variantStyles[variant].bgColor}>
-      {label}
+      {!isMobile && label}
       {icon || variantIcon[variant]}
     </StyledBadge>
   )
