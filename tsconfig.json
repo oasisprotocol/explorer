@@ -19,8 +19,12 @@
     // Strictness
     "strict": true,
     "skipLibCheck": true,
+    "paths": {
+      "@oasisprotocol/ui-library/*": ["../ui-library/src/*"]
+    },
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "ui-library/src"],
+  "exclude": ["ui-library/src/stories"]
 }
