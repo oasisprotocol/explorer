@@ -76,13 +76,15 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <AccountAvatar account={account} />
       </StyledListTitleWithAvatar>
       <dd>
-        <AccountLink
-          showOnlyAddress={!!token?.name}
-          scope={account}
-          address={address!}
-          highlightedPartOfName={highlightedPartOfName}
-        />
-        <CopyToClipboard value={address!} />
+        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+          <AccountLink
+            showOnlyAddress={!!token?.name}
+            scope={account}
+            address={address!}
+            highlightedPartOfName={highlightedPartOfName}
+          />
+          <CopyToClipboard value={address!} />
+        </Box>
       </dd>
 
       {token && (
