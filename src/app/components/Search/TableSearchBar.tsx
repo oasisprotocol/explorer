@@ -87,7 +87,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         marginLeft: 4,
         marginRight: helperText ? '25px' : '25px',
         '&:focus-within': {
-          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.25) !important',
+          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.125) !important',
         },
         [`.${inputBaseClasses.root}`]: {
           border: '1px solid',
