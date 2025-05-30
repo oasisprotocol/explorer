@@ -4,10 +4,10 @@ import { useHref, useOutletContext, useParams } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { Block, EntityMetadata, Layer, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
+import { Block, EntityMetadata, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
+import { ConsensusScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useConsensusScope } from '../../hooks/useScopeParam'
 import { RouterTabs } from '../..//components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -26,7 +26,7 @@ export type BlockDetailConsensusBlock = Block & {
 }
 
 export type ConsensusBlockDetailsContext = {
-  scope: SearchScope
+  scope: ConsensusScope
   blockHeight?: number
 }
 
@@ -34,12 +34,9 @@ export const useConsensusBlockDetailsProps = () => useOutletContext<ConsensusBlo
 
 export const ConsensusBlockDetailPage: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const txLink = useHref('')
   const eventsLink = useHref(`events#${eventsContainerId}`)
-  if (scope.layer !== Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
   const blockHeight = parseInt(useParams().blockHeight!, 10)
   const { isLoading, data } = useGetConsensusBlockByHeight(scope.network, blockHeight)
   if (!data && !isLoading) {

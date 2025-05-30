@@ -54,28 +54,28 @@ declare module './generated/api' {
     amount: string | undefined
     to: string | undefined
     network: Network
-    layer: Layer
+    layer: typeof Layer.consensus
     ticker: Ticker
   }
 
   export interface RuntimeTransaction {
     network: Network
-    layer: Layer
+    layer: Runtime
   }
 
   export interface Block {
     network: Network
-    layer: Layer
+    layer: typeof Layer.consensus
   }
 
   export interface RuntimeBlock {
     network: Network
-    layer: Layer
+    layer: Runtime
   }
 
   export interface Account {
     network: Network
-    layer: Layer
+    layer: typeof Layer.consensus
     ticker: Ticker
     size: string
     total: string
@@ -83,14 +83,14 @@ declare module './generated/api' {
 
   export interface RuntimeAccount {
     network: Network
-    layer: Layer
+    layer: Runtime
     address_eth?: string
     tokenBalances: Partial<Record<EvmTokenType, generated.RuntimeEvmBalance[]>>
   }
 
   export interface RuntimeEvent {
     network: Network
-    layer: Layer
+    layer: Runtime
   }
 
   export interface EvmAbiParam {
@@ -105,12 +105,12 @@ declare module './generated/api' {
 
   export interface EvmToken {
     network: Network
-    layer: Layer
+    layer: Runtime
   }
 
   export interface BareTokenHolder {
     network: Network
-    layer: Layer
+    layer: Runtime
     rank: number
   }
 
@@ -150,7 +150,7 @@ declare module './generated/api' {
   }
 
   export interface RoflApp {
-    layer: typeof Layer.sapphire
+    layer: Runtime
     network: Network
     ticker: Ticker
   }
@@ -1495,7 +1495,7 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
   params?,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.sapphire })[0].ticker
+  const ticker = getTokensForScope({ network, layer })[0].ticker
   return generated.useGetRuntimeRoflApps(network, layer, params, {
     ...options,
     request: {
@@ -1511,7 +1511,7 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
                 ...app,
                 stake: app.stake ? fromBaseUnits(app.stake, paraTimesConfig.sapphire.decimals) : undefined,
                 network,
-                layer: Layer.sapphire,
+                layer,
                 ticker,
               }
             }),
@@ -1529,7 +1529,7 @@ export const useGetRuntimeRoflAppsId: typeof generated.useGetRuntimeRoflAppsId =
   id,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.sapphire })[0].ticker
+  const ticker = getTokensForScope({ network, layer })[0].ticker
   return generated.useGetRuntimeRoflAppsId(network, layer, id, {
     ...options,
     request: {
@@ -1542,7 +1542,7 @@ export const useGetRuntimeRoflAppsId: typeof generated.useGetRuntimeRoflAppsId =
             ...data,
             stake: data.stake ? fromBaseUnits(data.stake, paraTimesConfig.sapphire.decimals) : undefined,
             network,
-            layer: Layer.sapphire,
+            layer,
             ticker,
           }
         },

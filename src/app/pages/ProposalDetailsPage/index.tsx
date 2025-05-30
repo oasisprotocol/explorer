@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
-import { Layer, Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
+import { useConsensusScope } from '../../hooks/useScopeParam'
+import { Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { useLoaderData } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
@@ -27,10 +27,7 @@ import { getTypeNameForProposal } from '../../../types/proposalType'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
-  if (scope.layer !== Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
+  const scope = useConsensusScope()
   const { proposalId, searchTerm } = useLoaderData() as ProposalIdLoaderData
 
   const {

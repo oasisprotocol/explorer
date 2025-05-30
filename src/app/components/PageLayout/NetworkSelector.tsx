@@ -12,7 +12,7 @@ import { Layer } from '../../../oasis-nexus/api'
 import { LayerPicker } from './../LayerPicker'
 import { fixedLayer, fixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 
 export const StyledBox = styled(Box)(({ theme }) => ({
@@ -33,11 +33,11 @@ type NetworkSelectorProps = {
   network: Network
 }
 
-export const NetworkSelector: FC<NetworkSelectorProps> = props => {
-  return props.layer === Layer.consensus ? (
-    <ConsensusNetworkSelector {...props} />
+export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, layer }) => {
+  return layer === Layer.consensus ? (
+    <ConsensusNetworkSelector network={network} layer={layer} />
   ) : (
-    <RuntimeNetworkSelector {...props} />
+    <RuntimeNetworkSelector network={network} layer={layer} />
   )
 }
 
@@ -47,7 +47,7 @@ const ConsensusNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) 
   return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />
 }
 
-const RuntimeNetworkSelector: FC<NetworkSelectorProps> = ({ layer, network }) => {
+const RuntimeNetworkSelector: FC<RuntimeScope> = ({ layer, network }) => {
   const { outOfDate } = useRuntimeFreshness({ network, layer })
 
   return <NetworkSelectorView layer={layer} network={network} isOutOfDate={outOfDate} />

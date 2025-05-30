@@ -1,5 +1,4 @@
 import {
-  Layer,
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
   useGetRuntimeTransactions,
@@ -7,15 +6,11 @@ import {
 import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 
-export const useAccount = (scope: SearchScope, address: string) => {
+export const useAccount = (scope: RuntimeScope, address: string) => {
   const { network, layer } = scope
-  if (layer === Layer.consensus) {
-    // There can be no ERC-20 or ERC-721 tokens on consensus
-    throw AppErrors.UnsupportedLayer
-  }
   const query = useGetRuntimeAccountsAddress(network, layer, address)
   const account = query.data?.data
 
@@ -24,16 +19,10 @@ export const useAccount = (scope: SearchScope, address: string) => {
   return { account, isLoading, isError, isFetched }
 }
 
-export const useAccountTransactions = (scope: SearchScope, address: string, method: string) => {
+export const useAccountTransactions = (scope: RuntimeScope, address: string, method: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Loading transactions on the consensus layer is not supported yet.
-    // We should use useGetConsensusTransactions()
-  }
-
   const query = useGetRuntimeTransactions(
     network,
     layer, // This is OK since consensus has been handled separately
@@ -64,16 +53,10 @@ export const useAccountTransactions = (scope: SearchScope, address: string, meth
   }
 }
 
-export const useAccountEvents = (scope: SearchScope, address: string) => {
+export const useAccountEvents = (scope: RuntimeScope, address: string) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Loading events on the consensus layer is not supported yet.
-    // We should use useGetConsensusEvents()
-  }
-
   const query = useGetRuntimeEvents(network, layer, {
     limit,
     offset: offset,

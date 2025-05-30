@@ -10,10 +10,10 @@ import { TokenSupplyCard } from './TokenSupplyCard'
 import { TokenHoldersCountCard } from './TokenHoldersCountCard'
 import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { StyledGrid } from '../../components/Snapshots/Snapshot'
 
-export const TokenSnapshot: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenSnapshot: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const theme = useTheme()

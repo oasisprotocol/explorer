@@ -1,13 +1,13 @@
 import { useOutletContext } from 'react-router-dom'
-import { Layer, useGetRuntimeRoflAppsIdInstancesRakTransactions } from '../../../oasis-nexus/api'
+import { useGetRuntimeRoflAppsIdInstancesRakTransactions } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
-import { SearchScope } from '../../../types/searchScope'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
+import { RuntimeScope } from '../../../types/searchScope'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit, paraTimesConfig } from '../../../config'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { useSearchParamsPagination } from '../..//components/Table/useSearchParamsPagination'
 
 export type RoflAppInstanceDetailsContext = {
-  scope: SearchScope
+  scope: RuntimeScope
   id: string
   rak: string
   method: string
@@ -17,7 +17,7 @@ export type RoflAppInstanceDetailsContext = {
 export const useRoflAppInstanceDetailsProps = () => useOutletContext<RoflAppInstanceDetailsContext>()
 
 export const useRoflAppInstanceRakTransactions = (
-  scope: SearchScope,
+  scope: RuntimeScope,
   id: string,
   rak: string,
   method: string,
@@ -25,11 +25,9 @@ export const useRoflAppInstanceRakTransactions = (
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  if (layer !== Layer.sapphire) {
-    throw AppErrors.UnsupportedLayer
-  }
+  if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
-  const query = useGetRuntimeRoflAppsIdInstancesRakTransactions(network, Layer.sapphire, id, rak, {
+  const query = useGetRuntimeRoflAppsIdInstancesRakTransactions(network, layer, id, rak, {
     limit,
     offset: offset,
     ...getRuntimeTransactionMethodFilteringParam(method),

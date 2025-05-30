@@ -10,11 +10,11 @@ import { useConstant } from '../../hooks/useConstant'
 import { getTokensForScope, showFiatValues } from '../../../config'
 import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { Snapshot, StyledGrid } from 'app/components/Snapshots/Snapshot'
 import { getFaucetLink } from '../../utils/faucet-links'
 
-export const ParaTimeSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const defaultChartDurationValue = useConstant<ChartDuration>(() => ChartDuration.TODAY)
   const [chartDuration, setChartDuration] = useState<ChartDuration>(defaultChartDurationValue)
