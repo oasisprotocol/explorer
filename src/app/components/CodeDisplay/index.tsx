@@ -6,23 +6,24 @@ import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyT
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
 import { TextSkeleton } from '../Skeleton'
+import { MonacoLanguages } from './MonacoLanguages'
 
 const MonacoEditor = React.lazy(() => import('@monaco-editor/react'))
 
 type CodeDisplayProps = {
   code: string
+  language: MonacoLanguages
   label?: string
   extraTopPadding?: boolean
   floatingCopyButton?: boolean
-  monacoLanguage?: string
 }
 
 const CodeDisplay: FC<CodeDisplayProps> = ({
   code,
   label,
   extraTopPadding,
+  language,
   floatingCopyButton = false,
-  monacoLanguage = 'solidity',
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -64,7 +65,7 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
       <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
         <MonacoEditor
           height="300px"
-          language={monacoLanguage}
+          language={language}
           value={code}
           theme="vs-dark"
           options={{
@@ -87,14 +88,7 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label }) => {
   const code = data === undefined ? undefined : base64ToHex(data)
   if (!code) return null
 
-  return (
-    <CodeDisplay
-      code={code}
-      label={label}
-      extraTopPadding
-      monacoLanguage="plaintext"
-    />
-  )
+  return <CodeDisplay code={code} label={label} extraTopPadding language="plaintext" />
 }
 
 type FileDisplayProps = {
@@ -105,14 +99,7 @@ type FileDisplayProps = {
 export const FileDisplay: FC<FileDisplayProps> = ({ code, filename }) => {
   if (!code) return null
 
-  return (
-    <CodeDisplay
-      code={code}
-      label={filename}
-      extraTopPadding
-      monacoLanguage="sol"
-    />
-  )
+  return <CodeDisplay code={code} label={filename} extraTopPadding language="sol" />
 }
 
 type JsonCodeDisplayProps = {
@@ -125,11 +112,6 @@ export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, floatin
   const formattedJson = JSON.stringify(data, null, 2)
 
   return (
-    <CodeDisplay
-      code={formattedJson}
-      label={label}
-      floatingCopyButton={floatingCopyButton}
-      monacoLanguage="json"
-    />
+    <CodeDisplay code={formattedJson} label={label} floatingCopyButton={floatingCopyButton} language="json" />
   )
 }
