@@ -45,7 +45,7 @@ type StatusBadgeProps = {
 
 const StyledBadge = styled(Box, {
   shouldForwardProp: prop => prop !== 'bgColor' && prop !== 'compact',
-})<{ bgColor: string, compact: boolean }>(({ bgColor, theme, compact }) => {
+})<{ bgColor: string; compact: boolean }>(({ bgColor, theme, compact }) => {
   return {
     display: 'inline-flex',
     gap: 8,

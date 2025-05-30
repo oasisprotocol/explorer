@@ -27,7 +27,7 @@ export const ContractStatus = ({ verificationLevel, hideLabelMobile }: ContractS
   const statusVariant =
     verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
-  return <StatusBadge label={statusLabel} variant={statusVariant} hideLabelMobile={hideLabelMobile}/>
+  return <StatusBadge label={statusLabel} variant={statusVariant} hideLabelMobile={hideLabelMobile} />
 }
 
 export const VerificationIcon: FC<{
@@ -55,7 +55,7 @@ export const VerificationIcon: FC<{
   return (
     <>
       <Component {...componentProps}>
-        <ContractStatus verificationLevel={verificationLevel} hideLabelMobile={hideLabelMobile}/>
+        <ContractStatus verificationLevel={verificationLevel} hideLabelMobile={hideLabelMobile} />
       </Component>
       &nbsp; &nbsp;
       {!noLink &&
