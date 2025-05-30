@@ -71,31 +71,6 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
             language={monacoLanguage}
             value={code}
             theme="vs-dark"
-            onMount={(_, monaco) => {
-              if (!monaco.languages.getLanguages().some(lang => lang.id === 'solidity')) {
-                monaco.languages.register({ id: 'solidity' })
-                monaco.languages.setMonarchTokensProvider('solidity', {
-                  tokenizer: {
-                    root: [
-                      [
-                        /\b(contract|function|event|modifier|mapping|struct|enum|address|bool|uint256|int256|string|bytes|public|private|view|pure|memory|storage|calldata)\b/,
-                        'keyword',
-                      ],
-                      [/[a-zA-Z_]\w*/, 'identifier'],
-                      [/\d+/, 'number'],
-                      [/".*?"/, 'string'],
-                      [/\/\/.*/, 'comment'],
-                      [/\/\*/, 'comment', '@comment'],
-                    ],
-                    comment: [
-                      [/[^/*]+/, 'comment'],
-                      [/\*\//, 'comment', '@pop'],
-                      [/./, 'comment'],
-                    ],
-                  },
-                })
-              }
-            }}
             options={{
               readOnly: true,
               minimap: { enabled: false },
@@ -129,7 +104,7 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, useMonaco
       label={label}
       extraTopPadding
       useMonaco={useMonaco}
-      monacoLanguage="text"
+      monacoLanguage="plaintext"
     />
   )
 }
@@ -149,7 +124,7 @@ export const FileDisplay: FC<FileDisplayProps> = ({ code, filename, useMonaco })
       label={filename}
       extraTopPadding
       useMonaco={useMonaco}
-      monacoLanguage="solidity"
+      monacoLanguage="sol"
     />
   )
 }
