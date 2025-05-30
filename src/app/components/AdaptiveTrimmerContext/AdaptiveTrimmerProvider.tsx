@@ -25,6 +25,8 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
   const [currentlyAdjusting, setCurrentlyAdjusting] = useState<string>()
   const [minimizedList, setMinimizedList] = useState<string[]>([])
   const [hasMissedAction, setHasMissedAction] = useState(false)
+  const [knownWindowWidth, setKnownWindowWidth] = useState(0)
+  const [newWindowWidth, setNewWindowWidth] = useState(0)
 
   // If there are no instances around, forget that we should minimize or adjust
   useLayoutEffect(() => {
@@ -42,23 +44,26 @@ export const AdaptiveTrimmerContextProvider: FC<PropsWithChildren> = ({ children
     setShouldMinimize(true)
   }, [])
 
-  // Add a window resize handler
+  // Add a window resize handler to track width
   useLayoutEffect(() => {
-    const handleResize = () => {
-      if (!instances.length || shouldMinimize) return
-      if (shouldAdjust) {
-        // We are inside an adjustment cycle, so we need to wait
-        setHasMissedAction(true)
-      } else {
-        startProcess()
-      }
-    }
-
+    const handleResize = (event: UIEvent) => setNewWindowWidth((event.target as Window).innerWidth)
+    setNewWindowWidth(window.innerWidth)
     window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // React to window width changes
+  useLayoutEffect(() => {
+    if (!instances.length || shouldMinimize) return
+    if (newWindowWidth === knownWindowWidth) return
+    setKnownWindowWidth(newWindowWidth)
+    if (shouldAdjust) {
+      // We are inside an adjustment cycle, so we need to wait
+      setHasMissedAction(true)
+    } else {
+      startProcess()
     }
-  }, [shouldMinimize, shouldAdjust, instances.length, startProcess])
+  }, [newWindowWidth, knownWindowWidth, shouldMinimize, shouldAdjust, instances.length, startProcess])
 
   useLayoutEffect(() => {
     if (!shouldMinimize && !shouldAdjust && hasMissedAction) {
