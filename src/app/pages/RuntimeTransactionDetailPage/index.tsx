@@ -219,11 +219,13 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <AccountLink
-                  scope={transaction}
-                  address={(transaction?.to_eth || transaction?.to) as string}
-                />
-                <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
+                <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <AccountLink
+                    scope={transaction}
+                    address={(transaction?.to_eth || transaction?.to) as string}
+                  />
+                  <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
+                </Box>
               </dd>
             </>
           )}

@@ -58,14 +58,14 @@ export const TokenDetails: FC<{
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>
-        <span style={{ textWrap: 'nowrap' }}>
+        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
           <AccountLink
             showOnlyAddress
             scope={token}
             address={token.eth_contract_addr ?? token.contract_addr}
           />
           <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
-        </span>
+        </Box>
       </dd>
       <dt>{t('contract.verification.title')}</dt>
       <dd>

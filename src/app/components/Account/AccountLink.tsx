@@ -153,7 +153,10 @@ export const AccountLink: FC<Props> = ({
       <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
         <MaybeWithTooltip title={tooltipTitle}>
           {showAccountName ? (
-            <Box component="span" sx={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
+            <Box
+              component="span"
+              sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+            >
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
               <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
             </Box>
@@ -172,7 +175,10 @@ export const AccountLink: FC<Props> = ({
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
       <>
         {showAccountName && (
-          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <Box
+            component="span"
+            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+          >
             <AccountMetadataSourceIndicator source={accountMetadata.source} />
             <AdaptiveHighlightedText
               idPrefix="account-name"
