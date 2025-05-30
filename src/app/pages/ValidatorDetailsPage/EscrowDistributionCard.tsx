@@ -29,7 +29,7 @@ function chartData(t: TFunction, validator: Validator | undefined) {
     },
     {
       label: t('validator.others'),
-      preciseValue: validator.escrow.self_delegation_balance,
+      preciseValue: validator.escrow.otherBalance,
       value: Number(validator.escrow.otherBalance),
     },
   ]
