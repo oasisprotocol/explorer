@@ -12,12 +12,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
+const LatestConsensusBlocksContent: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
-  const { t } = useTranslation()
   const { network } = scope
   const blocksQuery = useGetConsensusBlocks(
     network,
@@ -28,6 +28,19 @@ export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => 
       },
     },
   )
+  return (
+    <ConsensusBlocks
+      isLoading={blocksQuery.isLoading}
+      blocks={blocksQuery.data?.data.blocks}
+      limit={limit}
+      pagination={false}
+      showHash={!isMobile}
+    />
+  )
+}
+
+export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
+  const { t } = useTranslation()
 
   return (
     <Card sx={{ flex: 1 }}>
@@ -45,14 +58,11 @@ export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => 
           </Link>
         }
       />
+
       <CardContent>
-        <ConsensusBlocks
-          isLoading={blocksQuery.isLoading}
-          blocks={blocksQuery.data?.data.blocks}
-          limit={limit}
-          pagination={false}
-          showHash={!isMobile}
-        />
+        <ErrorBoundary light={true}>
+          <LatestConsensusBlocksContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )
