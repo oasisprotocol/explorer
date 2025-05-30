@@ -34,6 +34,7 @@ import { JsonCodeDisplay } from '../..//components/CodeDisplay'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import * as oasis from '@oasisprotocol/client'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -249,6 +250,20 @@ export const RuntimeTransactionDetailView: FC<{
               ticker: transaction.fee_symbol,
             })}
           </dd>
+
+          {transaction.fee_proxy_module && transaction.fee_proxy_id && (
+            <>
+              <dt>Fee Proxy Module</dt>
+              <dd>{transaction.fee_proxy_module}</dd>
+
+              <dt>Fee Proxy Identifier</dt>
+              <dd>
+                {transaction.fee_proxy_module === 'rofl'
+                  ? oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))
+                  : base64ToHex(transaction.fee_proxy_id)}
+              </dd>
+            </>
+          )}
 
           {gasPrice && (
             <>
