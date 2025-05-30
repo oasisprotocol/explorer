@@ -17,11 +17,11 @@ export const TokenLinkWithIcon: FC<{
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
       {metadata?.icon ? (
-        <img src={metadata.icon} alt="" width={40} style={{ maxHeight: 32, margin: '-4px 0' }} />
+        <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
       ) : (
         <InitialsAvatar
           name={metadata?.name || name || address.slice(2, 4)}
-          width={40}
+          width={42}
           style={{ maxHeight: 32, margin: '-4px 0' }}
         />
       )}

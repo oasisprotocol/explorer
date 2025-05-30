@@ -88,6 +88,7 @@
     "fiatValue": "Fiat Value",
     "fiatValueInUSD": "{{value, currency}}",
     "fill": "Fill",
+    "for": "For",
     "formattedBlockTimestamp": "{{timestamp, dateTime}} ({{distance}})",
     "formattedDateTime": "{{timestamp, dateTime}}",
     "from": "From",
@@ -122,6 +123,7 @@
     "proposer": "Proposer",
     "rank": "Rank",
     "rofl": "ROFL",
+    "seeMore": "See more",
     "select": "Select",
     "size": "Size",
     "sapphire": "Sapphire",
@@ -513,6 +515,7 @@
   "transaction": {
     "delegate": "Delegate",
     "deposit": "Deposit",
+    "eventsSummary": "Summary",
     "header": "Transaction",
     "rawData": "Raw Data",
     "started": "Started",
