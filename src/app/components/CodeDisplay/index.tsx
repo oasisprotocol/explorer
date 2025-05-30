@@ -73,11 +73,8 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
             theme="vs-dark"
             options={{
               readOnly: true,
-              minimap: { enabled: false },
-              scrollBeyondLastLine: false,
               fontSize: 14,
               wordWrap: 'on',
-              lineNumbers: monacoLanguage === 'text' ? 'off' : 'on',
             }}
           />
         </Suspense>
