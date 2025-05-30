@@ -40,11 +40,12 @@ type StatusBadgeProps = {
   label: string
   icon?: ReactNode
   variant?: StatusVariant
+  hideLabelMobile?: boolean
 }
 
 const StyledBadge = styled(Box, {
-  shouldForwardProp: prop => prop !== 'bgColor',
-})<{ bgColor: string }>(({ bgColor, theme }) => {
+  shouldForwardProp: prop => prop !== 'bgColor' && prop !== 'compact',
+})<{ bgColor: string, compact: boolean }>(({ bgColor, theme, compact }) => {
   return {
     display: 'inline-flex',
     gap: 8,
@@ -58,18 +59,19 @@ const StyledBadge = styled(Box, {
     borderRadius: 10,
     padding: 4,
     paddingLeft: 10,
-    paddingRight: 5,
+    paddingRight: compact ? 5 : 10,
     [theme.breakpoints.down('sm')]: {
       padding: 4,
     },
   }
 })
 
-export const StatusBadge = ({ label, icon, variant = 'info' }: StatusBadgeProps) => {
+export const StatusBadge = ({ label, icon, variant = 'info', hideLabelMobile = false }: StatusBadgeProps) => {
   const { isMobile } = useScreenSize()
+  const showLabel = !(hideLabelMobile && isMobile)
   return (
-    <StyledBadge bgColor={variantStyles[variant].bgColor}>
-      {!isMobile && label}
+    <StyledBadge bgColor={variantStyles[variant].bgColor} compact={hideLabelMobile && isMobile}>
+      {showLabel && label}
       {icon || variantIcon[variant]}
     </StyledBadge>
   )

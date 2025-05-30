@@ -14,8 +14,9 @@ export const verificationIconBoxHeight = 28
 
 type ContractStatusProps = {
   verificationLevel?: 'full' | 'partial'
+  hideLabelMobile?: boolean
 }
-export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
+export const ContractStatus = ({ verificationLevel, hideLabelMobile }: ContractStatusProps) => {
   const { t } = useTranslation()
   const statusLabel =
     verificationLevel === 'full'
@@ -26,7 +27,7 @@ export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
   const statusVariant =
     verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
-  return <StatusBadge label={statusLabel} variant={statusVariant} />
+  return <StatusBadge label={statusLabel} variant={statusVariant} hideLabelMobile={hideLabelMobile}/>
 }
 
 export const VerificationIcon: FC<{
@@ -34,7 +35,8 @@ export const VerificationIcon: FC<{
   scope: SearchScope
   verificationLevel?: 'full' | 'partial'
   noLink?: boolean
-}> = ({ address_eth, scope, verificationLevel, noLink = false }) => {
+  hideLabelMobile?: boolean
+}> = ({ address_eth, scope, verificationLevel, noLink = false, hideLabelMobile }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
@@ -53,7 +55,7 @@ export const VerificationIcon: FC<{
   return (
     <>
       <Component {...componentProps}>
-        <ContractStatus verificationLevel={verificationLevel} />
+        <ContractStatus verificationLevel={verificationLevel} hideLabelMobile={hideLabelMobile}/>
       </Component>
       &nbsp; &nbsp;
       {!noLink &&

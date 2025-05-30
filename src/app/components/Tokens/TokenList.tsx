@@ -138,6 +138,7 @@ export const TokenList = (props: TokensProps) => {
                 scope={token}
                 verificationLevel={token.verification_level}
                 noLink
+                hideLabelMobile={isMobile}
               />
             </Box>
           ),
