@@ -76,8 +76,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
               <>
                 <dt>{t('nft.owner')}</dt>
                 <dd>
-                  <AccountLink scope={scope} address={owner} />
-                  <CopyToClipboard value={owner} />
+                  <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <AccountLink scope={scope} address={owner} />
+                    <CopyToClipboard value={owner} />
+                  </Box>
                 </dd>
               </>
             )}
@@ -89,8 +91,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
-              <AccountLink scope={account} address={account.address_eth || account.address} />
-              <CopyToClipboard value={account.address_eth || account.address} />
+              <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                <AccountLink scope={account} address={account.address_eth || account.address} />
+                <CopyToClipboard value={account.address_eth || account.address} />
+              </Box>
             </dd>
             <dt>{t('contract.verification.title')}</dt>
             <dd>
