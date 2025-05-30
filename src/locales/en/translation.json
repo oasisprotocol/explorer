@@ -188,6 +188,8 @@
       "isPartiallyVerified": "Partially Verified",
       "openInAbiPlayground": "Interact in <AbiPlaygroundLink>ABI Playground</AbiPlaygroundLink>",
       "openInSourcify": "Open in <SourcifyLink>Sourcify</SourcifyLink>",
+      "source": "Source",
+      "sourceShort": "Src",
       "verifyInSourcify": "Verify through <SourcifyLink>Sourcify</SourcifyLink>",
       "explainVerificationDelay": "If you have just verified a contract, it should take a few minutes to update here.",
       "proxyERC1167": "ERC-1167 proxy to"
