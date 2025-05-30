@@ -60,8 +60,14 @@ export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchT
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
-              <AccountLink showOnlyAddress scope={account} address={account.address_eth || account.address} />
-              <CopyToClipboard value={account.address_eth || account.address} />
+              <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                <AccountLink
+                  showOnlyAddress
+                  scope={account}
+                  address={account.address_eth || account.address}
+                />
+                <CopyToClipboard value={account.address_eth || account.address} />
+              </Box>
             </dd>
 
             <dt>{t('contract.verification.title')}</dt>
