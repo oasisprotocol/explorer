@@ -81,28 +81,19 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
             )}
 
             {filesSorted?.map((file, index) => (
-              <FileDisplay key={file.path} code={file.content} filename={file.name} useMonaco />
+              <FileDisplay key={file.path} code={file.content} filename={file.name} />
             ))}
 
             {contract.verification?.compilation_metadata && (
               <FileDisplay
                 code={JSON.stringify(contract.verification.compilation_metadata, null, 2)}
                 filename={t('contract.contractMetadata')}
-                useMonaco
               />
             )}
 
-            <RawDataDisplay
-              data={contract.creation_bytecode}
-              label={t('contract.creationByteCode')}
-              useMonaco
-            />
+            <RawDataDisplay data={contract.creation_bytecode} label={t('contract.creationByteCode')} />
 
-            <RawDataDisplay
-              data={contract.runtime_bytecode}
-              label={t('contract.runtimeByteCode')}
-              useMonaco
-            />
+            <RawDataDisplay data={contract.runtime_bytecode} label={t('contract.runtimeByteCode')} />
           </LinkableDiv>
         </CardContent>
       )}

@@ -2,7 +2,6 @@ import React, { FC, useState, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
 import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
@@ -15,7 +14,6 @@ type CodeDisplayProps = {
   label?: string
   extraTopPadding?: boolean
   floatingCopyButton?: boolean
-  useMonaco?: boolean
   monacoLanguage?: string
 }
 
@@ -24,7 +22,6 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
   label,
   extraTopPadding,
   floatingCopyButton = false,
-  useMonaco = false,
   monacoLanguage = 'solidity',
 }) => {
   const { t } = useTranslation()
@@ -64,23 +61,19 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           />
         )}
       </Box>
-      {useMonaco ? (
-        <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
-          <MonacoEditor
-            height="300px"
-            language={monacoLanguage}
-            value={code}
-            theme="vs-dark"
-            options={{
-              readOnly: true,
-              fontSize: 14,
-              wordWrap: 'on',
-            }}
-          />
-        </Suspense>
-      ) : (
-        <ScrollableDataDisplay data={code} />
-      )}
+      <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
+        <MonacoEditor
+          height="300px"
+          language={monacoLanguage}
+          value={code}
+          theme="vs-dark"
+          options={{
+            readOnly: true,
+            fontSize: 14,
+            wordWrap: 'on',
+          }}
+        />
+      </Suspense>
     </Box>
   )
 }
@@ -88,10 +81,9 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
 type RawDataDisplayProps = {
   data: string | undefined
   label: string
-  useMonaco?: boolean
 }
 
-export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, useMonaco }) => {
+export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label }) => {
   const code = data === undefined ? undefined : base64ToHex(data)
   if (!code) return null
 
@@ -100,7 +92,6 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, useMonaco
       code={code}
       label={label}
       extraTopPadding
-      useMonaco={useMonaco}
       monacoLanguage="plaintext"
     />
   )
@@ -109,10 +100,9 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, useMonaco
 type FileDisplayProps = {
   code: string | undefined
   filename: string
-  useMonaco?: boolean
 }
 
-export const FileDisplay: FC<FileDisplayProps> = ({ code, filename, useMonaco }) => {
+export const FileDisplay: FC<FileDisplayProps> = ({ code, filename }) => {
   if (!code) return null
 
   return (
@@ -120,7 +110,6 @@ export const FileDisplay: FC<FileDisplayProps> = ({ code, filename, useMonaco })
       code={code}
       label={filename}
       extraTopPadding
-      useMonaco={useMonaco}
       monacoLanguage="sol"
     />
   )
@@ -140,7 +129,6 @@ export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, floatin
       code={formattedJson}
       label={label}
       floatingCopyButton={floatingCopyButton}
-      useMonaco
       monacoLanguage="json"
     />
   )
