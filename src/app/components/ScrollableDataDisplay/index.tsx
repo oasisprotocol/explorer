@@ -1,9 +1,15 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
+import { styled } from '@mui/material/styles'
 
-export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }> = ({
+const StyledPre = styled('pre')({
+  margin: 0,
+  whiteSpace: 'break-spaces',
+})
+
+export const ScrollableDataDisplay: FC<{ data: string; fontWeight?: number }> = ({
   data,
   fontWeight = 400,
 }) => {
@@ -38,7 +44,7 @@ export const ScrollableDataDisplay: FC<{ data: ReactNode; fontWeight?: number }>
           }}
           color={COLORS.brandExtraDark}
         >
-          {data}
+          <StyledPre>{data}</StyledPre>
         </Typography>
       </Box>
     </Box>

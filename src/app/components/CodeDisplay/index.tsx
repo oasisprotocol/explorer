@@ -1,8 +1,7 @@
-import React, { FC, ReactNode, useState, Suspense } from 'react'
+import React, { FC, useState, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
 import { ScrollableDataDisplay } from '../../components/ScrollableDataDisplay'
 import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -12,8 +11,7 @@ import { TextSkeleton } from '../Skeleton'
 const MonacoEditor = React.lazy(() => import('@monaco-editor/react'))
 
 type CodeDisplayProps = {
-  code: ReactNode
-  copyToClipboardValue: string
+  code: string
   label?: string
   extraTopPadding?: boolean
   floatingCopyButton?: boolean
@@ -23,7 +21,6 @@ type CodeDisplayProps = {
 
 const CodeDisplay: FC<CodeDisplayProps> = ({
   code,
-  copyToClipboardValue,
   label,
   extraTopPadding,
   floatingCopyButton = false,
@@ -59,10 +56,10 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           </Typography>
         )}
         {floatingCopyButton ? (
-          <FloatingCopyToClipboard isVisible={isHovering} value={copyToClipboardValue} />
+          <FloatingCopyToClipboard isVisible={isHovering} value={code} />
         ) : (
           <CopyToClipboard
-            value={copyToClipboardValue}
+            value={code}
             label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
           />
         )}
@@ -71,8 +68,8 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
         <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
           <MonacoEditor
             height="300px"
-            defaultLanguage={monacoLanguage}
-            defaultValue={String(copyToClipboardValue)}
+            language={monacoLanguage}
+            value={code}
             theme="vs-dark"
             onMount={(_, monaco) => {
               if (!monaco.languages.getLanguages().some(lang => lang.id === 'solidity')) {
@@ -116,11 +113,6 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
   )
 }
 
-const StyledPre = styled('pre')({
-  margin: 0,
-  whiteSpace: 'break-spaces',
-})
-
 type RawDataDisplayProps = {
   data: string | undefined
   label: string
@@ -134,7 +126,6 @@ export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label, useMonaco
   return (
     <CodeDisplay
       code={code}
-      copyToClipboardValue={code}
       label={label}
       extraTopPadding
       useMonaco={useMonaco}
@@ -154,8 +145,7 @@ export const FileDisplay: FC<FileDisplayProps> = ({ code, filename, useMonaco })
 
   return (
     <CodeDisplay
-      code={<StyledPre>{code}</StyledPre>}
-      copyToClipboardValue={code}
+      code={code}
       label={filename}
       extraTopPadding
       useMonaco={useMonaco}
@@ -175,8 +165,7 @@ export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label, floatin
 
   return (
     <CodeDisplay
-      code={<StyledPre>{formattedJson}</StyledPre>}
-      copyToClipboardValue={formattedJson}
+      code={formattedJson}
       label={label}
       floatingCopyButton={floatingCopyButton}
       useMonaco
