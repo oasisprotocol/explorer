@@ -9,7 +9,7 @@ import { COLORS as TESTNET_COLORS } from '../../../styles/theme/testnet/colors'
 import { Badge } from '../../components/Badge'
 
 type RuntimeStatusIconProps = {
-  status: 'stable' | 'outdated' | 'inactive'
+  status: 'stable' | 'outdated' | 'inactive' | 'unknown'
 }
 
 const getStatuses = (t: TFunction) => ({
@@ -30,6 +30,12 @@ const getStatuses = (t: TFunction) => ({
     icon: AlarmIcon,
     iconColor: COLORS.brandMedium,
     label: t('paratimes.inactive'),
+  },
+  unknown: {
+    backgroundColor: TESTNET_COLORS.testnetLight,
+    icon: WarningIcon,
+    iconColor: TESTNET_COLORS.testnet,
+    label: t('common.unknown'),
   },
 })
 

@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component, ReactNode } from 'react'
 import { ErrorDisplay } from '../ErrorDisplay'
 
 type HasChildren = {
@@ -7,6 +7,7 @@ type HasChildren = {
 
 type ErrorBoundaryProps = HasChildren & {
   light?: boolean
+  fallbackContent?: ReactNode
 }
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, { hasError: boolean; error?: unknown }> {
@@ -21,7 +22,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, { hasError: boo
 
   render() {
     if (this.state.hasError) {
-      return <ErrorDisplay error={this.state.error} light={this.props.light} />
+      return this.props.fallbackContent ?? <ErrorDisplay error={this.state.error} light={this.props.light} />
     }
 
     return this.props.children

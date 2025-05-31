@@ -22,6 +22,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { Network } from '../../../types/network'
 import { TransactionsChartCard } from '../ParatimeDashboardPage/TransactionsChartCard'
 import { ActiveAccounts } from '../ParatimeDashboardPage/ActiveAccounts'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
   marginBottom: theme.spacing(4),
@@ -92,7 +93,26 @@ type RuntimeProps = {
   runtime: Runtime
 }
 
-export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+type UnreachableRuntimePreviewProps = {
+  runtime: Runtime
+}
+
+export const UnreachableRuntimePreview: FC<UnreachableRuntimePreviewProps> = ({ runtime }) => {
+  const { t } = useTranslation()
+  const layerLabels = getLayerLabels(t)
+  const runtimeLabel = layerLabels[runtime]
+
+  return (
+    <StyledDisabledRuntime>
+      <StyledTypography>{runtimeLabel}</StyledTypography>
+      <Box>
+        <RuntimeStatusIcon status="unknown" />
+      </Box>
+    </StyledDisabledRuntime>
+  )
+}
+
+export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
   const query = useGetRuntimeStatus(network, runtime)
   const { outOfDate } = useRuntimeFreshness({
     network,
@@ -111,6 +131,14 @@ export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network
         outOfDate,
       }}
     />
+  )
+}
+
+export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+  return (
+    <ErrorBoundary light={true} fallbackContent={<UnreachableRuntimePreview runtime={runtime} />}>
+      <EnabledRuntimePreviewContent network={network} runtime={runtime} prominentItem={prominentItem} />
+    </ErrorBoundary>
   )
 }
 
