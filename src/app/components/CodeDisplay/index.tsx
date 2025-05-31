@@ -8,7 +8,23 @@ import { base64ToHex } from '../../utils/helpers'
 import { TextSkeleton } from '../Skeleton'
 import { MonacoLanguages } from './MonacoLanguages'
 
-const MonacoEditor = React.lazy(() => import('@monaco-editor/react'))
+const MonacoEditor = React.lazy(async () => {
+  const monaco = await import('monaco-editor')
+  const monacoReact = await import('@monaco-editor/react')
+  // Load from npm, not cdn.jsdelivr.net
+  // https://www.npmjs.com/package/@monaco-editor/react#use-monaco-editor-as-an-npm-package
+  window.MonacoEnvironment = {
+    getWorker(id, label) {
+      return new Worker(
+        new URL('../../../../node_modules/monaco-editor/esm/vs/editor/editor.worker.js', import.meta.url),
+        { type: 'module' },
+      )
+    },
+  }
+  monacoReact.loader.config({ monaco })
+
+  return monacoReact
+})
 
 type CodeDisplayProps = {
   code: string
