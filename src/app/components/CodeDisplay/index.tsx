@@ -36,9 +36,9 @@ type CodeDisplayProps = {
 
 const CodeDisplay: FC<CodeDisplayProps> = ({
   code,
-  label,
-  extraTopPadding,
   language,
+  label = undefined,
+  extraTopPadding = false,
   floatingCopyButton = false,
 }) => {
   const { t } = useTranslation()
@@ -78,19 +78,20 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           />
         )}
       </Box>
-      <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
-        <MonacoEditor
-          height="300px"
-          language={language}
-          value={code}
-          theme="vs-dark"
-          options={{
-            readOnly: true,
-            fontSize: 14,
-            wordWrap: 'on',
-          }}
-        />
-      </Suspense>
+      <Box sx={{ height: '350px', overflow: 'auto', resize: 'vertical' }}>
+        <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
+          <MonacoEditor
+            language={language}
+            value={code}
+            theme="vs-dark"
+            options={{
+              readOnly: true,
+              fontSize: 14,
+              wordWrap: 'on',
+            }}
+          />
+        </Suspense>
+      </Box>
     </Box>
   )
 }
