@@ -2,6 +2,13 @@ import CardHeader, { cardHeaderClasses } from '@mui/material/CardHeader'
 import { styled } from '@mui/material/styles'
 
 export const CardHeaderWithResponsiveActions = styled(CardHeader)(({ theme }) => ({
+  [`.${cardHeaderClasses.content}`]: {
+    flex: 0,
+  },
+  [`.${cardHeaderClasses.action}`]: {
+    marginLeft: theme.spacing(4),
+    flex: 1,
+  },
   [theme.breakpoints.down('md')]: {
     display: 'inline',
     alignItems: 'flex-start',

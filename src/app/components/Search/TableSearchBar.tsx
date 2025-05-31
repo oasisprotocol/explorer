@@ -18,10 +18,17 @@ export interface TableSearchBarProps {
   placeholder: string
   warning?: string
   value: string
+  fullWidth?: boolean
   onChange: (value: string) => void
 }
 
-export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, placeholder, warning }) => {
+export const TableSearchBar: FC<TableSearchBarProps> = ({
+  value,
+  onChange,
+  placeholder,
+  warning,
+  fullWidth,
+}) => {
   const { isTablet } = useScreenSize()
 
   const [isWarningFresh, setIsWarningFresh] = useState(false)
@@ -72,7 +79,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         verticalAlign: 'middle',
         mt: 3,
         mb: 4,
-        width: isTablet ? '160px' : undefined,
+        width: fullWidth ? '100%' : isTablet ? '160px' : undefined,
       }}
     >
       <WarningIcon sx={{ mr: 3 }} />
@@ -84,10 +91,8 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
     <TextField
       sx={{
         backgroundColor: COLORS.white,
-        marginLeft: 4,
-        marginRight: helperText ? '25px' : '25px',
         '&:focus-within': {
-          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.25) !important',
+          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.125) !important',
         },
         [`.${inputBaseClasses.root}`]: {
           border: '1px solid',
@@ -101,6 +106,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
             }
           : {}),
         zIndex: 10,
+        ...(fullWidth ? { width: '100%' } : {}),
       }}
       variant={'outlined'}
       value={value}
@@ -109,7 +115,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         inputProps: {
           sx: {
             p: 0,
-            width: isTablet ? 110 : 300,
+            width: fullWidth ? '100%' : isTablet ? 110 : 300,
             margin: 2,
           },
         },
