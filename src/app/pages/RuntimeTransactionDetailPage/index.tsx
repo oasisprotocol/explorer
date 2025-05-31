@@ -30,7 +30,7 @@ import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { convertToNano, getGasPrice } from '../../utils/number-utils'
 import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
-import { JsonCodeDisplay } from '../..//components/CodeDisplay'
+import { SimpleJsonCode } from '../../components/CodeDisplay/SimpleJsonCode'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
@@ -361,7 +361,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
-                <JsonCodeDisplay data={transaction.body} floatingCopyButton />
+                <SimpleJsonCode data={transaction.body} />
               </dd>
             </>
           )}
