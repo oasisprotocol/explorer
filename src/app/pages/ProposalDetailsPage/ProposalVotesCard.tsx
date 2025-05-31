@@ -122,15 +122,16 @@ export const ProposalVotesCard: FC = () => {
     <SubPageCard>
       <CardHeaderWithResponsiveActions
         action={
-          <>
+          <Box sx={{ display: 'inline-flex', gap: 5 }}>
             <TableSearchBar
               value={wantedNameInput}
               onChange={setWantedNameInput}
               placeholder={t('networkProposal.searchForVoter')}
               warning={nameError}
+              size={'small'}
             />
             <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
-          </>
+          </Box>
         }
         disableTypography
         component="h2"

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, KeyboardEventHandler, useCallback, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
@@ -14,14 +14,45 @@ import Button from '@mui/material/Button'
 import { CardEmptyState } from '../CardEmptyState'
 import { inputBaseClasses } from '@mui/material/InputBase'
 
+type SearchBarSize = 'small' | 'medium' | 'large'
+
 export interface TableSearchBarProps {
   placeholder: string
   warning?: string
   value: string
+  fullWidth?: boolean
   onChange: (value: string) => void
+  onEnter?: () => void
+  size?: SearchBarSize
+  autoFocus?: boolean
 }
 
-export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, placeholder, warning }) => {
+type SizingInfo = {
+  font: number | string
+}
+
+const sizeMapping: Record<SearchBarSize, SizingInfo> = {
+  small: {
+    font: '1em',
+  },
+  medium: {
+    font: '1.25em',
+  },
+  large: {
+    font: '1.5em',
+  },
+}
+
+export const TableSearchBar: FC<TableSearchBarProps> = ({
+  value,
+  onChange,
+  placeholder,
+  warning,
+  fullWidth,
+  size = 'medium',
+  autoFocus,
+  onEnter,
+}) => {
   const { isTablet } = useScreenSize()
 
   const [isWarningFresh, setIsWarningFresh] = useState(false)
@@ -36,6 +67,15 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
       setIsWarningFresh(true)
     }
   }, [warning])
+
+  const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    event => {
+      if (event.key === 'Enter') {
+        if (onEnter) onEnter()
+      }
+    },
+    [onEnter],
+  )
 
   const startAdornment = (
     <InputAdornment
@@ -72,7 +112,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
         verticalAlign: 'middle',
         mt: 3,
         mb: 4,
-        width: isTablet ? '160px' : undefined,
+        width: fullWidth ? '100%' : isTablet ? '160px' : undefined,
       }}
     >
       <WarningIcon sx={{ mr: 3 }} />
@@ -84,10 +124,8 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
     <TextField
       sx={{
         backgroundColor: COLORS.white,
-        marginLeft: 4,
-        marginRight: helperText ? '25px' : '25px',
         '&:focus-within': {
-          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.25) !important',
+          boxShadow: '3px 3px 3px 3px rgb(0, 0, 98, 0.125) !important',
         },
         [`.${inputBaseClasses.root}`]: {
           border: '1px solid',
@@ -101,17 +139,21 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({ value, onChange, place
             }
           : {}),
         zIndex: 10,
+        ...(fullWidth ? { width: '100%' } : {}),
       }}
       variant={'outlined'}
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyDown={handleKeyPress}
       InputProps={{
         inputProps: {
           sx: {
             p: 0,
-            width: isTablet ? 110 : 300,
+            width: fullWidth ? '100%' : isTablet ? 110 : 300,
             margin: 2,
+            fontSize: sizeMapping[size].font,
           },
+          autoFocus,
         },
         startAdornment,
         endAdornment,
