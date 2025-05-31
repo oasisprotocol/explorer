@@ -5,25 +5,37 @@ import Typography from '@mui/material/Typography'
 import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
-import { TextSkeleton } from '../Skeleton'
 import { MonacoLanguages } from './MonacoLanguages'
 
-const MonacoEditor = React.lazy(async () => {
-  const monaco = await import('monaco-editor')
-  const monacoReact = await import('@monaco-editor/react')
-  // Load from npm, not cdn.jsdelivr.net
-  // https://www.npmjs.com/package/@monaco-editor/react#use-monaco-editor-as-an-npm-package
-  window.MonacoEnvironment = {
-    getWorker(id, label) {
-      return new Worker(
-        new URL('../../../../node_modules/monaco-editor/esm/vs/editor/editor.worker.js', import.meta.url),
-        { type: 'module' },
-      )
-    },
-  }
-  monacoReact.loader.config({ monaco })
+const TextAreaFallback = ({ value }: { value?: string }) => (
+  <textarea readOnly value={value} style={{ width: '100%', height: '100%', colorScheme: 'dark' }} />
+)
 
-  return monacoReact
+const MonacoEditor = React.lazy(async () => {
+  try {
+    const monaco = await import('monaco-editor')
+    const monacoReact = await import('@monaco-editor/react')
+    // Load from npm, not cdn.jsdelivr.net
+    // https://www.npmjs.com/package/@monaco-editor/react#use-monaco-editor-as-an-npm-package
+    window.MonacoEnvironment = {
+      getWorker(id, label) {
+        return new Worker(
+          new URL('../../../../node_modules/monaco-editor/esm/vs/editor/editor.worker.js', import.meta.url),
+          { type: 'module' },
+        )
+      },
+    }
+    monacoReact.loader.config({ monaco })
+
+    return monacoReact
+  } catch (e) {
+    console.error('monaco-editor wrapper failed to load. Using <textarea> instead')
+    return {
+      default: (props => (
+        <TextAreaFallback value={props.value || props.defaultValue} />
+      )) as typeof import('@monaco-editor/react').default,
+    }
+  }
 })
 
 type CodeDisplayProps = {
@@ -79,8 +91,11 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
         )}
       </Box>
       <Box sx={{ height: '350px', overflow: 'auto', resize: 'vertical' }}>
-        <Suspense fallback={<TextSkeleton numberOfRows={5} />}>
+        {/* While loading wrapper show <textarea> instead */}
+        <Suspense fallback={<TextAreaFallback value={code} />}>
           <MonacoEditor
+            // While loading and if monaco-editor internals fail to load: show <textarea> instead
+            loading={<TextAreaFallback value={code} />}
             language={language}
             value={code}
             theme="vs-dark"
