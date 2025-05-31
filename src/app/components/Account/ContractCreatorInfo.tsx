@@ -1,27 +1,22 @@
 import { FC } from 'react'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { useTranslation } from 'react-i18next'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import {
-  Layer,
   Runtime,
   useGetRuntimeAccountsAddress,
   useGetRuntimeTransactionsTxHash,
 } from '../../../oasis-nexus/api'
-import { AppErrors } from '../../../types/errors'
 import { AccountLink } from './AccountLink'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 
-const TxSender: FC<{ scope: SearchScope; txHash: string; alwaysTrim?: boolean }> = ({
+const TxSender: FC<{ scope: RuntimeScope; txHash: string; alwaysTrim?: boolean }> = ({
   scope,
   txHash,
   alwaysTrim,
 }) => {
   const { t } = useTranslation()
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
   const query = useGetRuntimeTransactionsTxHash(scope.network, scope.layer, txHash)
   const tx = query.data?.data.transactions[0]
   const senderAddress = tx?.signers[0].address_eth ?? tx?.signers[0].address
@@ -41,7 +36,7 @@ const TxSender: FC<{ scope: SearchScope; txHash: string; alwaysTrim?: boolean }>
 }
 
 export const ContractCreatorInfo: FC<{
-  scope: SearchScope
+  scope: RuntimeScope
   isLoading?: boolean
   creationTxHash: string | undefined
   alwaysTrim?: boolean
@@ -62,7 +57,7 @@ export const ContractCreatorInfo: FC<{
 }
 
 export const DelayedContractCreatorInfo: FC<{
-  scope: SearchScope
+  scope: RuntimeScope
   contractOasisAddress: string | undefined
   alwaysTrim?: boolean
 }> = ({ scope, contractOasisAddress, alwaysTrim }) => {

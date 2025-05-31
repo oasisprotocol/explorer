@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Layer, useGetRuntimeStatus, useGetStatus } from '../../oasis-nexus/api'
-import { AppError, AppErrors } from 'types/errors'
-import { SearchScope } from 'types/searchScope'
+import { useGetRuntimeStatus, useGetStatus } from '../../oasis-nexus/api'
+import { ConsensusScope, RuntimeScope } from 'types/searchScope'
 
 // Workaround around "before" filter exclusive maximum transaction time
 function addOneSecond(timestamp: string | undefined) {
@@ -39,12 +38,8 @@ const useListBeforeDate = (
   return { beforeDate, setBeforeDateFromCollection }
 }
 
-export const useRuntimeListBeforeDate = (scope: SearchScope, offset: number) => {
+export const useRuntimeListBeforeDate = (scope: RuntimeScope, offset: number) => {
   const [offsetAssociatedWithDate, setOffsetAssociatedWithDate] = useState<number | undefined>(offset)
-
-  if (scope.layer === Layer.consensus) {
-    throw new AppError(AppErrors.UnsupportedLayer)
-  }
 
   const { data } = useGetRuntimeStatus(scope.network, scope.layer, {
     query: {
@@ -55,7 +50,7 @@ export const useRuntimeListBeforeDate = (scope: SearchScope, offset: number) => 
   return useListBeforeDate(data?.data.latest_block_time, offset, setOffsetAssociatedWithDate)
 }
 
-export const useConsensusListBeforeDate = (scope: SearchScope, offset: number) => {
+export const useConsensusListBeforeDate = (scope: ConsensusScope, offset: number) => {
   const [offsetAssociatedWithDate, setOffsetAssociatedWithDate] = useState<number | undefined>(offset)
   const { data } = useGetStatus(scope.network, {
     query: {

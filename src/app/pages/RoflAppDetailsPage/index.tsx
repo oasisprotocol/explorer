@@ -8,16 +8,10 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
 import { styled } from '@mui/material/styles'
-import {
-  Layer,
-  RoflApp,
-  RoflAppPolicy,
-  RuntimeTransaction,
-  useGetRuntimeRoflAppsId,
-} from '../../../oasis-nexus/api'
+import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { COLORS } from '../../../styles/theme/colors'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -49,7 +43,7 @@ import { RoflAppLoaderData } from '../../utils/route-utils'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const { id, searchTerm } = useLoaderData() as RoflAppLoaderData
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
@@ -58,7 +52,7 @@ export const RoflAppDetailsPage: FC = () => {
     deleteParams: ['page'],
   })
   const context: RoflAppDetailsContext = { scope, id, method, setMethod }
-  const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, Layer.sapphire, id)
+  const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer, id)
   const roflApp = data?.data
 
   if (!roflApp && isFetched) {
@@ -98,6 +92,7 @@ export const RoflAppDetailsPage: FC = () => {
             <PolicyCard
               id={roflApp?.id}
               network={roflApp?.network}
+              layer={roflApp?.layer}
               isFetched={isFetched}
               policy={roflApp?.policy}
             />

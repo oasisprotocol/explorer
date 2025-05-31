@@ -6,17 +6,13 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 import InfoIcon from '@mui/icons-material/Info'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
-import { Layer, useGetRuntimeStatus } from '../../../oasis-nexus/api'
-import { AppErrors } from '../../../types/errors'
+import { useGetRuntimeStatus } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 
-export const Nodes: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
   const { data, isFetched } = useGetRuntimeStatus(scope.network, scope.layer)
   const activeNodes = data?.data.active_nodes
   const title = (

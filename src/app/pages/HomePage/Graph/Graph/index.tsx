@@ -19,7 +19,7 @@ import { COLORS } from '../../../../../styles/theme/testnet/colors'
 import { COLORS as LOCALNET_COLORS } from '../../../../../styles/theme/localnet/colors'
 import { useTranslation } from 'react-i18next'
 import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
-import { SearchScope } from '../../../../../types/searchScope'
+import { RuntimeScope, SearchScope } from '../../../../../types/searchScope'
 import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
 
 interface GraphBaseProps {
@@ -248,7 +248,7 @@ const ConsensusStatus: FC<{ network: Network; statusChange: (outOfDate?: boolean
   return null
 }
 
-const RuntimeStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) => void }> = ({
+const RuntimeStatus: FC<{ scope: RuntimeScope; statusChange: (outOfDate?: boolean) => void }> = ({
   scope,
   statusChange,
 }) => {
@@ -265,13 +265,13 @@ const RuntimeStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean
 }
 
 const LayerStatus: FC<{ scope: SearchScope; statusChange: (outOfDate?: boolean) => void }> = ({
-  scope,
+  scope: { network, layer },
   statusChange,
 }) =>
-  scope.layer === Layer.consensus ? (
-    <ConsensusStatus network={scope.network} statusChange={statusChange} />
+  layer === Layer.consensus ? (
+    <ConsensusStatus network={network} statusChange={statusChange} />
   ) : (
-    <RuntimeStatus scope={scope} statusChange={statusChange} />
+    <RuntimeStatus scope={{ network, layer }} statusChange={statusChange} />
   )
 
 const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (

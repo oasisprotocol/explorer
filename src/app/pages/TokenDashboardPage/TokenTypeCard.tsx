@@ -7,9 +7,9 @@ import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
 import Skeleton from '@mui/material/Skeleton'
 import { getTokenTypeDescription, getTokenTypeStrictName } from '../../../types/tokens'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 
-export const TokenTypeCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenTypeCard: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const { isLoading, token, isFetched } = useTokenInfo(scope, address)

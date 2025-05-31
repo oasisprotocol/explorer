@@ -16,7 +16,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { docs } from '../../utils/externalLinks'
 import { TextList, TextListItem } from '../TextList'
 import { getLayerLabels, getNetworkIcons } from '../../utils/content'
-import { getNameForScope, SearchScope } from '../../../types/searchScope'
+import { ConsensusScope, getNameForScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -114,23 +114,26 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-type LayerDetailsProps = {
+type LayerDetailsProps<Scope = SearchScope> = {
   handleConfirm: () => void
-  selectedScope: SearchScope
+  selectedScope: Scope
   isOutOfDate: boolean | undefined
 }
 
 // Prevent modal height from changing height when switching between layers
 const contentMinHeight = '270px'
 
-export const LayerDetails: FC<LayerDetailsProps> = (props: LayerDetailsProps) =>
-  props.selectedScope.layer === Layer.consensus ? (
-    <ConsensusDetails {...props} />
+export const LayerDetails: FC<LayerDetailsProps> = ({
+  selectedScope: { network, layer },
+  ...rest
+}: LayerDetailsProps) =>
+  layer === Layer.consensus ? (
+    <ConsensusDetails selectedScope={{ network, layer }} {...rest} />
   ) : (
-    <RuntimeDetails {...props} />
+    <RuntimeDetails selectedScope={{ network, layer }} {...rest} />
   )
 
-const ConsensusDetails: FC<LayerDetailsProps> = props => {
+const ConsensusDetails: FC<LayerDetailsProps<ConsensusScope>> = props => {
   const { t } = useTranslation()
   const { handleConfirm, selectedScope } = props
   const isOutOfDate = useConsensusFreshness(selectedScope.network).outOfDate
@@ -150,7 +153,7 @@ const ConsensusDetails: FC<LayerDetailsProps> = props => {
   )
 }
 
-const RuntimeDetails: FC<LayerDetailsProps> = props => {
+const RuntimeDetails: FC<LayerDetailsProps<RuntimeScope>> = props => {
   const { t } = useTranslation()
   const { handleConfirm, selectedScope } = props
   const isOutOfDate = useRuntimeFreshness(selectedScope).outOfDate

@@ -5,7 +5,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TableRuntimeTransactionList, RuntimeTransactions } from '../../components/Transactions'
-import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
+import { useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AxiosResponse } from 'axios'
@@ -13,7 +13,7 @@ import { AppErrors } from '../../../types/errors'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { RuntimeTransactionDetailView } from '../RuntimeTransactionDetailPage'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { VerticalList } from '../../components/VerticalList'
 import { getFiatCurrencyForScope } from '../../../config'
@@ -32,15 +32,9 @@ export const RuntimeTransactionsPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const { method, setMethod } = useRuntimeTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const enablePolling = offset === 0
   const { beforeDate, setBeforeDateFromCollection } = useRuntimeListBeforeDate(scope, offset)
-  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus transactions is not yet implemented.
-    // we should call useGetConsensusTransactions()
-  }
 
   const tokenPrices = useAllTokenPrices(getFiatCurrencyForScope(scope))
 

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import Skeleton from '@mui/material/Skeleton'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { useTokenInfo } from './hook'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 
-export const TokenTotalTransactionsCard: FC<{ scope: SearchScope; address: string }> = ({
+export const TokenTotalTransactionsCard: FC<{ scope: RuntimeScope; address: string }> = ({
   scope,
   address,
 }) => {

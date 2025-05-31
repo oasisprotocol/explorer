@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { Layer, useGetRuntimeBlocks } from '../../../oasis-nexus/api'
+import { useGetRuntimeBlocks } from '../../../oasis-nexus/api'
 import { RuntimeBlocks, BlocksTableType, TableRuntimeBlockList } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
@@ -13,7 +13,7 @@ import { RuntimeBlockDetailView } from '../RuntimeBlockDetailPage'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
 
@@ -25,15 +25,9 @@ export const RuntimeBlocksPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const enablePolling = offset === 0
   const { beforeDate, setBeforeDateFromCollection } = useRuntimeListBeforeDate(scope, offset)
-  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus blocks is not yet implemented.
-    // we should call useGetConsensusBlocks()
-  }
 
   useEffect(() => {
     if (!isMobile) {
@@ -43,7 +37,7 @@ export const RuntimeBlocksPage: FC = () => {
 
   const blocksQuery = useGetRuntimeBlocks<AxiosResponse<TableRuntimeBlockList>>(
     scope.network,
-    scope.layer, // This is OK, since consensus is already handled separately
+    scope.layer,
     {
       limit: tableView === TableLayout.Vertical ? offset + PAGE_SIZE : PAGE_SIZE,
       offset: tableView === TableLayout.Vertical ? 0 : offset,

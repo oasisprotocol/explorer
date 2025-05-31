@@ -10,7 +10,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 import { EvmNft } from 'oasis-nexus/api'
 import Box from '@mui/material/Box'
@@ -19,7 +19,7 @@ type InstanceDetailsCardProps = {
   nft: EvmNft | undefined
   isFetched: boolean
   isLoading: boolean
-  scope: SearchScope
+  scope: RuntimeScope
   contractAddress: string
 }
 

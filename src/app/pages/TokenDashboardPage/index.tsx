@@ -5,19 +5,19 @@ import Divider from '@mui/material/Divider'
 import { TokenTitleCard } from './TokenTitleCard'
 import { TokenSnapshot } from './TokenSnapshot'
 import { TokenDetailsCard } from './TokenDetailsCard'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
 import { useTokenInfo } from './hook'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { codeContainerId, holdersContainerId, inventoryContainerId } from '../../utils/tabAnchors'
 
 export type TokenDashboardContext = {
-  scope: SearchScope
+  scope: RuntimeScope
   address: string
 }
 
@@ -26,7 +26,7 @@ export const useTokenDashboardProps = () => useOutletContext<TokenDashboardConte
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
 
   const { isError } = useTokenInfo(scope, address)

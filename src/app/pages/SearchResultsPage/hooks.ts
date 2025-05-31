@@ -351,6 +351,7 @@ export function useNamedValidatorConditionally(nameFragment: string | undefined)
 }
 
 export function useRoflAppIdConditionally(id: string | undefined): ConditionalResults<RoflApp> {
+  // TODO: also search on other layers that support Rofl
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -368,6 +369,7 @@ export function useRoflAppIdConditionally(id: string | undefined): ConditionalRe
 }
 
 export function useRoflAppNameConditionally(nameFragment: string | undefined): ConditionalResults<RoflApp> {
+  // TODO: also search on other layers that support Rofl
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks

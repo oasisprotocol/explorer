@@ -5,13 +5,13 @@ import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
-import { EvmTokenType, Layer, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
+import { EvmTokenType, useGetRuntimeEvmTokens } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { TokenList } from '../../components/Tokens/TokenList'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { VerticalList } from '../../components/VerticalList'
@@ -29,13 +29,7 @@ export const TokensPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
-  const scope = useRequiredScopeParam()
-  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus blocks is not yet implemented.
-    // we should call useGetConsensusBlocks()
-  }
+  const scope = useRuntimeScope()
 
   useEffect(() => {
     if (!isMobile) {

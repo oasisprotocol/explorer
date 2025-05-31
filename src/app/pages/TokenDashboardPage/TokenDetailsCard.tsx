@@ -14,7 +14,7 @@ import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
 import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { RouteUtils } from '../../utils/route-utils'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
@@ -24,7 +24,7 @@ import Box from '@mui/material/Box'
 import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAnchors'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 
-export const TokenDetailsCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
+export const TokenDetailsCard: FC<{ scope: RuntimeScope; address: string; searchTerm: string }> = ({
   scope,
   address,
   searchTerm,

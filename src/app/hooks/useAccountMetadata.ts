@@ -1,4 +1,4 @@
-import { SearchScope } from '../../types/searchScope'
+import { RuntimeScope, SearchScope } from '../../types/searchScope'
 import { Layer } from '../../oasis-nexus/api'
 import { usePontusXAccountMetadata, useSearchForPontusXAccountsByName } from '../data/pontusx-account-names'
 import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-accounts'
@@ -33,7 +33,8 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     token,
     isLoading: isTokenLoading,
     isError: isTokenError,
-  } = useTokenInfo(scope, address, {
+  } = useTokenInfo(scope as RuntimeScope, address, {
+    // The type cast is OK because whenever we are on consensus, we will set enabled to false
     enabled: !registryData?.metadata && scope.layer !== Layer.consensus,
     useCaching: true,
   })

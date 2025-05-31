@@ -7,8 +7,7 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
-import { EvmTokenType, Layer } from '../../../oasis-nexus/api'
-import { AppErrors } from '../../../types/errors'
+import { EvmTokenType } from '../../../oasis-nexus/api'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
@@ -59,11 +58,6 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
         ]
       : []),
   ]
-  const { layer } = scope
-  if (layer === Layer.consensus) {
-    // There can be no ERC-20 or ERC-721 tokens on consensus
-    throw AppErrors.UnsupportedLayer
-  }
   const tableRows = (account?.tokenBalances[type] || []).map(item => ({
     key: item.token_contract_addr,
     data: [

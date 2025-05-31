@@ -6,10 +6,10 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
 import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
 import { useAccount } from './hook'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { getTokenTypePluralName } from '../../../types/tokens'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
@@ -23,7 +23,7 @@ import {
 } from '../../utils/tabAnchors'
 
 export type RuntimeAccountDetailsContext = {
-  scope: SearchScope
+  scope: RuntimeScope
   address: string
   account?: RuntimeAccount
   method: string
@@ -35,7 +35,7 @@ export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccou
 export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const { address, searchTerm } = useLoaderData() as AddressLoaderData
   const { method, setMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)

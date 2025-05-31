@@ -1,13 +1,6 @@
-import {
-  Layer,
-  getStatus,
-  GetRuntimeStatus,
-  useGetRuntimeStatus,
-  useGetStatus,
-} from '../../../oasis-nexus/api'
+import { getStatus, GetRuntimeStatus, useGetRuntimeStatus, useGetStatus } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
-import { SearchScope } from '../../../types/searchScope'
-import { AppError, AppErrors } from '../../../types/errors'
+import { RuntimeScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { outOfDateThreshold } from '../../../config'
 import { UseQueryResult } from '@tanstack/react-query'
@@ -110,13 +103,9 @@ export const useConsensusFreshness = (
 }
 
 export const useRuntimeFreshness = (
-  scope: SearchScope,
+  scope: RuntimeScope,
   queryParams: { polling?: boolean } = {},
 ): FreshnessInfo => {
-  if (scope.layer === Layer.consensus) {
-    throw new AppError(AppErrors.UnsupportedLayer)
-  }
-
   const query = useGetRuntimeStatus(scope.network, scope.layer, {
     query: { refetchInterval: queryParams.polling ? 8000 : undefined, useErrorBoundary: false },
   })

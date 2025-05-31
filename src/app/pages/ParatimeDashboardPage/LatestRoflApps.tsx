@@ -5,20 +5,18 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
-import { Layer, useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
-import { NUMBER_OF_ITEMS_ON_DASHBOARD as limit } from '../../../config'
+import { useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
+import { RuntimeScope } from '../../../types/searchScope'
+import { NUMBER_OF_ITEMS_ON_DASHBOARD as limit, paraTimesConfig } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
 
-export const LatestRoflApps: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LatestRoflApps: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { network, layer } = scope
-  if (layer !== Layer.sapphire) {
-    throw AppErrors.UnsupportedLayer
-  }
+  if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
   const roflAppsQuery = useGetRuntimeRoflApps(network, layer, { limit })
   const { isLoading, data } = roflAppsQuery
   const roflApps = data?.data.rofl_apps

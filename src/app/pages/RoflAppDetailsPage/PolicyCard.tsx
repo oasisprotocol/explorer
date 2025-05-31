@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { Layer, RoflAppPolicy, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
+import { RoflAppPolicy, Runtime, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { EmptyStateCard } from './EmptyStateCard'
@@ -15,6 +15,7 @@ type PolicyCardProps = {
   id: string
   isFetched: boolean
   network: Network
+  layer: Runtime
   policy: RoflAppPolicy | undefined
 }
 
@@ -24,9 +25,9 @@ type PolicyCardProps = {
 // feePolicy can be 1 for InstancePays and 2 for EndorsingNodePays
 // https://github.com/oasisprotocol/oasis-sdk/blob/41480106d585debd33391cb0dfcad32d2f3cdc9d/runtime-sdk/src/modules/rofl/policy.rs#L48
 
-export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, policy }) => {
+export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer, policy }) => {
   const { t } = useTranslation()
-  const { data } = useGetRuntimeRoflAppsIdTransactions(network, Layer.sapphire, id, {
+  const { data } = useGetRuntimeRoflAppsIdTransactions(network, layer, id, {
     limit: 1,
     method: 'rofl.Update',
   })

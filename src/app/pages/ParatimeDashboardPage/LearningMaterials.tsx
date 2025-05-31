@@ -7,10 +7,9 @@ import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { Network } from '../../../types/network'
 import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
 import { LearningSection } from '../../components/LearningMaterialsCard/LearningSection'
-import { AppErrors } from 'types/errors'
 
 type Content = {
   description: string
@@ -39,7 +38,7 @@ const getContent = (t: TFunction) => {
           url: docs.token,
         },
         tertiary: {
-          description: t('learningMaterials.transfer.description', { layer: labels['emerald'] }),
+          description: t('learningMaterials.transfer.description', { layer: labels[Layer.emerald] }),
           header: t('learningMaterials.transfer.header'),
           url: docs.paraTimeTransfer,
         },
@@ -56,7 +55,7 @@ const getContent = (t: TFunction) => {
           url: docs.token,
         },
         tertiary: {
-          description: t('learningMaterials.transfer.description', { layer: labels['sapphire'] }),
+          description: t('learningMaterials.transfer.description', { layer: labels[Layer.sapphire] }),
           header: t('learningMaterials.transfer.header'),
           url: docs.paraTimeTransfer,
         },
@@ -96,7 +95,7 @@ const getContent = (t: TFunction) => {
         },
         tertiary: {
           description: t('learningMaterials.hardhat.description'),
-          header: t('learningMaterials.hardhat.header', { layer: labels['sapphire'] }),
+          header: t('learningMaterials.hardhat.header', { layer: labels[Layer.sapphire] }),
           url: docs.sapphireTestnetHardhat,
         },
       },
@@ -167,7 +166,7 @@ const getContent = (t: TFunction) => {
         },
         tertiary: {
           description: t('learningMaterials.tools.description'),
-          header: t('learningMaterials.tools.header', { layer: labels['sapphire'] }),
+          header: t('learningMaterials.tools.header', { layer: labels[Layer.sapphire] }),
           url: docs.tools,
         },
       },
@@ -178,12 +177,9 @@ const getContent = (t: TFunction) => {
   } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }
 
-export const LearningMaterials: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LearningMaterials: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { layer, network } = scope
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-  }
   const content = getContent(t)[network][layer]
 
   if (!content) {

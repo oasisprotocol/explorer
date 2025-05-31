@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useRequiredScopeParam, useScopeParam } from '../../hooks/useScopeParam'
+import { useRequiredScopeParam, useRuntimeScope, useScopeParam } from '../../hooks/useScopeParam'
 import { getNetworkNames, Network } from '../../../types/network'
 import { FreshnessInfo, useConsensusFreshness, useIsApiReachable, useRuntimeFreshness } from './hook'
 import { SearchScope, getNameForScope } from '../../../types/searchScope'
@@ -70,7 +70,7 @@ export const ConsensusOfflineBanner: FC = () => {
 }
 
 export const RuntimeOfflineBanner: FC = () => {
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const layerStatus = useRuntimeFreshness(scope)
 
   return <OfflineBanner layerStatus={layerStatus} scope={scope} />

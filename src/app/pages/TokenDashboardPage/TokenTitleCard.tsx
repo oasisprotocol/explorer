@@ -6,11 +6,11 @@ import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTranslation } from 'react-i18next'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { HighlightedText } from '../../components/HighlightedText'
 import { TitleCard } from '../../components/PageLayout/TitleCard'
 
-export const TokenTitleCard: FC<{ scope: SearchScope; address: string; searchTerm: string }> = ({
+export const TokenTitleCard: FC<{ scope: RuntimeScope; address: string; searchTerm: string }> = ({
   scope,
   address,
   searchTerm,

@@ -15,7 +15,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useConsensusScope } from '../../hooks/useScopeParam'
 import { ConsensusBlocks, TableConsensusBlockList } from '../../components/Blocks/ConsensusBlocks'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 
@@ -34,7 +34,7 @@ export const ConsensusBlocksPage: FC = () => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const enablePolling = offset === 0
   const { beforeDate, setBeforeDateFromCollection } = useConsensusListBeforeDate(scope, offset)
 

@@ -12,13 +12,14 @@ import { TotalTransactions } from '../../components/TotalTransactions'
 import { PageLayout } from '../../components/PageLayout'
 import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { LatestRoflApps } from './LatestRoflApps'
+import { paraTimesConfig } from '../../../config'
 
 export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const isLocal = isLocalnet(scope.network)
   const { method, setMethod } = useRuntimeTxMethodParam()
 
@@ -36,7 +37,7 @@ export const ParatimeDashboardPage: FC = () => {
         </Grid>
         <Grid item xs={12}>
           <TopTokens scope={scope} />
-          {scope.layer === 'sapphire' && <LatestRoflApps scope={scope} />}
+          {paraTimesConfig[scope.layer]?.offerRoflTxTypes && <LatestRoflApps scope={scope} />}
         </Grid>
       </Grid>
       {!isLocal && (
