@@ -23,12 +23,14 @@ import { COLORS } from 'styles/theme/colors'
 import { ProposalVotesCard } from './ProposalVotesCard'
 import { useVoteStats } from './hooks'
 import Skeleton from '@mui/material/Skeleton'
+import { HighlightPattern } from '../../components/HighlightedText'
 import { getTypeNameForProposal } from '../../../types/proposalType'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useConsensusScope()
-  const { proposalId, searchTerm } = useLoaderData() as ProposalIdLoaderData
+  const { proposalId, searchQuery } = useLoaderData() as ProposalIdLoaderData
+  const highlightPattern = searchQuery
 
   const {
     isLoading: areStatsLoading,
@@ -49,7 +51,7 @@ export const ProposalDetailsPage: FC = () => {
           totalVotesLoading={areStatsLoading}
           totalVotesProblematic={!areStatsComplete && !areStatsLoading}
           totalVotes={allVotesCount}
-          highlightedPart={searchTerm}
+          highlightPattern={highlightPattern}
         />
       </SubPageCard>
       <ProposalVotesCard />
@@ -68,7 +70,7 @@ const VoteLoadingProblemIndicator: FC = () => {
 
 export const ProposalDetailView: FC<{
   proposal: Proposal | undefined
-  highlightedPart?: string
+  highlightPattern?: HighlightPattern
   isLoading?: boolean
   totalVotesLoading?: boolean
   totalVotesProblematic?: boolean
@@ -83,7 +85,7 @@ export const ProposalDetailView: FC<{
   totalVotes,
   showLayer = false,
   standalone = false,
-  highlightedPart,
+  highlightPattern,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -108,7 +110,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.title')}</dt>
       <dd>
-        <HighlightedText text={proposal.title} pattern={highlightedPart} />
+        <HighlightedText text={proposal.title} pattern={highlightPattern} />
       </dd>
 
       <dt>{t('common.type')}</dt>

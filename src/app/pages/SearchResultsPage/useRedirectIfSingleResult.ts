@@ -16,7 +16,7 @@ export function useRedirectIfSingleResult(
 ) {
   const navigate = useNavigate()
   const { data: validatorsData } = useGetConsensusValidatorsAddressNameMap(results[0]?.network)
-  const { searchTerm, accountNameFragment, evmAccount, consensusAccount } = searchParams
+  const { query, accountNameFragment, evmAccount, consensusAccount } = searchParams
 
   let shouldRedirect = results.length === 1
 
@@ -63,13 +63,13 @@ export function useRedirectIfSingleResult(
         redirectTo = `${RouteUtils.getTokenRoute(
           item,
           item.eth_contract_addr || item.contract_addr,
-        )}?q=${searchTerm}`
+        )}?q=${query}`
         break
       case 'proposal':
-        redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${searchTerm}`
+        redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${query}`
         break
       case 'roflApp':
-        redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${searchTerm}`
+        redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${query}`
         break
       default:
         exhaustedTypeWarning('Unexpected result type', item)

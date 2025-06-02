@@ -36,7 +36,8 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRuntimeScope()
-  const { address, searchTerm } = useLoaderData() as AddressLoaderData
+  const { address, searchQuery } = useLoaderData() as AddressLoaderData
+  const highlightPattern = searchQuery
   const { method, setMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
@@ -66,7 +67,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
         account={account}
         token={token}
         tokenPrices={tokenPrices}
-        highlightedPartOfName={searchTerm}
+        highlightPattern={highlightPattern}
       />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
       <RouterTabs

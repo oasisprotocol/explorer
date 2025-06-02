@@ -99,7 +99,6 @@ export const TokensPage: FC = () => {
                   key={key}
                   isLoading={true}
                   token={undefined}
-                  highlightedPartOfName={undefined}
                   standalone
                 />
               ))}
@@ -109,7 +108,6 @@ export const TokensPage: FC = () => {
                 <TokenDetails
                   key={token.contract_addr}
                   token={token}
-                  highlightedPartOfName={undefined}
                   standalone
                 />
               ))}

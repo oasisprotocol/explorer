@@ -35,6 +35,10 @@ const defaultHighlight: HighlightOptions = {
   sx: defaultHighlightStyle,
 }
 
+export type HighlightPattern = string | undefined
+
+export const NoHighlights: HighlightPattern = undefined
+
 interface HighlightedTextProps {
   /**
    * The text to display
@@ -44,7 +48,7 @@ interface HighlightedTextProps {
   /**
    * The pattern to search for (and highlight)
    */
-  pattern: string | undefined
+  pattern: HighlightPattern | undefined
 
   /**
    * Instructions about which part to highlight.
@@ -67,7 +71,7 @@ interface HighlightedTextProps {
  */
 export const HighlightedText: FC<HighlightedTextProps> = ({
   text,
-  pattern,
+  pattern = NoHighlights,
   part,
   options = defaultHighlight,
 }) => {

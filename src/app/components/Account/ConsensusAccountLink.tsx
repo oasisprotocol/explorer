@@ -3,13 +3,14 @@ import { Layer, useGetConsensusValidatorsAddressNameMap } from './../../../oasis
 import { Network } from '../../../types/network'
 import { ValidatorLink } from '../Validators/ValidatorLink'
 import { AccountLink } from './AccountLink'
+import { HighlightPattern } from '../HighlightedText'
 
 type ConsensusAccountLinkProps = {
   address: string
   alwaysTrim?: boolean
   labelOnly?: boolean
   network: Network
-  highlightedPartOfName?: string | undefined
+  highlightPattern?: HighlightPattern
 }
 
 export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
@@ -17,7 +18,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
   alwaysTrim = true,
   labelOnly,
   network,
-  highlightedPartOfName,
+  highlightPattern,
 }) => {
   const { data } = useGetConsensusValidatorsAddressNameMap(network)
 
@@ -27,7 +28,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
         address={address}
         network={network}
         alwaysTrim={alwaysTrim}
-        highlightedPartOfName={highlightedPartOfName}
+        highlightPattern={highlightPattern}
       />
     )
   }
@@ -38,7 +39,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
       scope={{ network, layer: Layer.consensus }}
       address={address}
       alwaysTrim={alwaysTrim}
-      highlightedPartOfName={highlightedPartOfName}
+      highlightPattern={highlightPattern}
     />
   )
 }

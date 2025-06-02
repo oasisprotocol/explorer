@@ -41,8 +41,8 @@ export const SearchResultsList: FC<{
   networkForTheme: Network
   searchResults: SearchResults
   tokenPrices: AllTokenPrices
-  searchTerm?: string
-}> = ({ title, networkForTheme, searchResults, tokenPrices, searchTerm = '' }) => {
+  searchQuery?: string
+}> = ({ title, networkForTheme, searchResults, tokenPrices, searchQuery = '' }) => {
   const { t } = useTranslation()
 
   const numberOfResults = searchResults.length
@@ -108,7 +108,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.tokens.title')}
           results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} highlightedPartOfName={searchTerm} showLayer />}
+          resultComponent={item => <TokenDetails token={item} highlightPattern={searchQuery} showLayer />}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
         />
@@ -123,7 +123,7 @@ export const SearchResultsList: FC<{
                 isError={false}
                 account={item as Account}
                 showLayer={true}
-                highlightedPartOfName={searchTerm}
+                highlightPattern={searchQuery}
               />
             ) : (
               <RuntimeAccountDetailsView
@@ -132,7 +132,7 @@ export const SearchResultsList: FC<{
                 account={item as RuntimeAccount}
                 tokenPrices={tokenPrices}
                 showLayer={true}
-                highlightedPartOfName={searchTerm}
+                highlightPattern={searchQuery}
               />
             )
           }
@@ -150,7 +150,7 @@ export const SearchResultsList: FC<{
               account={item}
               tokenPrices={tokenPrices}
               showLayer={true}
-              highlightedPartOfName={searchTerm}
+              highlightPattern={searchQuery}
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
@@ -161,7 +161,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.roflApps.title')}
           results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
           resultComponent={item => (
-            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightedPartOfName={searchTerm} />
+            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={searchQuery} />
           )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
@@ -171,7 +171,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
           resultComponent={item => (
-            <ProposalDetailView proposal={item} highlightedPart={searchTerm} showLayer />
+            <ProposalDetailView proposal={item} highlightPattern={searchQuery} showLayer />
           )}
           link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
           linkLabel={t('search.results.proposals.viewLink')}

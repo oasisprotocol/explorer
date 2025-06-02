@@ -6,6 +6,7 @@ import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import { InitialsAvatar } from '../AccountAvatar/InitialsAvatar'
+import { HighlightPattern } from '../HighlightedText'
 import Tooltip from '@mui/material/Tooltip'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -13,8 +14,8 @@ export const TokenLinkWithIcon: FC<{
   scope: SearchScope
   address: string
   name: string | undefined
-  highlightedPart?: string | undefined
-}> = ({ scope, address, name, highlightedPart }) => {
+  highlightPattern?: HighlightPattern
+}> = ({ scope, address, name, highlightPattern }) => {
   const { t } = useTranslation()
   const { metadata } = useAccountMetadata(scope, address)
   return (
@@ -51,7 +52,7 @@ export const TokenLinkWithIcon: FC<{
           scope={scope}
           address={address}
           name={metadata?.name || name}
-          highlightedPart={highlightedPart}
+          highlightPattern={highlightPattern}
         />
         <Box component="span" sx={{ color: COLORS.grayMedium }}>
           {metadata?.origin && ` (${metadata.origin})`}

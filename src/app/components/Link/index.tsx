@@ -5,7 +5,7 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { trimLongString } from '../../utils/trimLongString'
-import { HighlightedText } from '../HighlightedText'
+import { HighlightedText, HighlightPattern } from '../HighlightedText'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
@@ -21,7 +21,7 @@ type LinkProps = {
   name?: string
   alwaysTrim?: boolean
   trimMode?: TrimMode
-  highlightedPartOfName?: string
+  highlightPattern?: HighlightPattern
   to: string
   withSourceIndicator?: boolean
   labelOnly?: boolean
@@ -32,7 +32,7 @@ export const Link: FC<LinkProps> = ({
   name,
   alwaysTrim,
   trimMode,
-  highlightedPartOfName,
+  highlightPattern,
   to,
   withSourceIndicator = true,
   labelOnly,
@@ -74,7 +74,7 @@ export const Link: FC<LinkProps> = ({
               address={address}
               name={name}
               to={to}
-              highlightedPart={highlightedPartOfName}
+              highlightPattern={highlightPattern}
               labelOnly={labelOnly}
               trimMode={trimMode}
             />
@@ -84,7 +84,7 @@ export const Link: FC<LinkProps> = ({
               alwaysTrim={alwaysTrim}
               name={name}
               to={to}
-              highlightedPart={highlightedPartOfName}
+              highlightPattern={highlightPattern}
               labelOnly={labelOnly}
               trimMode={trimMode}
             />
@@ -98,7 +98,7 @@ export const Link: FC<LinkProps> = ({
 type CustomTrimEndLinkLabelProps = {
   name: string
   to: string
-  highlightedPart?: string
+  highlightPattern?: HighlightPattern
   labelOnly?: boolean
   trimMode?: TrimMode
 }
@@ -112,15 +112,15 @@ const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
 const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({
   name,
   to,
-  highlightedPart,
+  highlightPattern,
   labelOnly,
   trimMode,
 }) => {
   const label =
     trimMode === 'adaptive' ? (
-      <AdaptiveHighlightedText text={name} pattern={highlightedPart} minLength={14} debugMode={true} />
+      <AdaptiveHighlightedText text={name} pattern={highlightPattern} minLength={14} debugMode={true} />
     ) : (
-      <HighlightedTrimmedText text={name} pattern={highlightedPart} fragmentLength={14} />
+      <HighlightedTrimmedText text={name} pattern={highlightPattern} fragmentLength={14} />
     )
   return labelOnly ? (
     <LinkLabel>{label}</LinkLabel>
@@ -135,18 +135,18 @@ type TabletLinkProps = {
   address: string
   name?: string
   to: string
-  highlightedPart?: string
+  highlightPattern?: HighlightPattern
   labelOnly?: boolean
   trimMode?: TrimMode
 }
 
-const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightedPart, labelOnly, trimMode }) => {
+const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightPattern, labelOnly, trimMode }) => {
   if (name) {
     return (
       <CustomTrimEndLinkLabel
         name={name}
         to={to}
-        highlightedPart={highlightedPart}
+        highlightPattern={highlightPattern}
         labelOnly={labelOnly}
         trimMode={trimMode}
       />
@@ -179,7 +179,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({
   to,
   alwaysTrim,
   trimMode,
-  highlightedPart,
+  highlightPattern,
   labelOnly,
 }) => {
   if (alwaysTrim) {
@@ -189,7 +189,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({
           <CustomTrimEndLinkLabel
             name={name}
             to={to}
-            highlightedPart={highlightedPart}
+            highlightPattern={highlightPattern}
             labelOnly={labelOnly}
             trimMode={trimMode}
           />
@@ -203,7 +203,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({
       </WithHighlighting>
     )
   }
-  const label = name ? <HighlightedText text={name} pattern={highlightedPart} /> : address
+  const label = name ? <HighlightedText text={name} pattern={highlightPattern} /> : address
   return (
     <WithHighlighting address={address}>
       {labelOnly ? (

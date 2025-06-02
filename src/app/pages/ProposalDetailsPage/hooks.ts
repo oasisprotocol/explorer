@@ -126,6 +126,7 @@ export const useVoteFiltering = () => {
   })
   const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('voter', '', { deleteParams: ['page'] })
   const wantedNamePattern = wantedNameInput.length < 3 ? undefined : wantedNameInput
+  const highlightPattern = wantedNamePattern
   const nameError = !!wantedNameInput && !wantedNamePattern ? t('tableSearch.error.tooShort') : undefined
   const hasFilters = wantedType !== 'any' || !!wantedNamePattern
   const clearFilters = () => {
@@ -142,6 +143,7 @@ export const useVoteFiltering = () => {
     wantedNameInput,
     setWantedNameInput,
     wantedNamePattern,
+    highlightPattern,
     nameError,
     hasFilters,
     clearFilters,
