@@ -4,6 +4,7 @@ import { renderWithProviders } from '../../../utils/__tests__/renderWithProvider
 import { TableCellAge } from '../'
 import { useLocalSettings } from '../../../hooks/useLocalSettings'
 import { TableAgeType } from '../../../../types/table-age-type'
+import { LocalSettingsProviderContext } from '../../../providers/LocalSettingsContext'
 
 vi.mock('../../../hooks/useLocalSettings', () => ({
   useLocalSettings: vi.fn(),
@@ -29,9 +30,9 @@ describe('TableCellAge', () => {
   })
 
   it('should display relative time by default', () => {
-    ;(useLocalSettings as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    vi.mocked(useLocalSettings).mockReturnValue({
       settings: { ageHeaderType: TableAgeType.Distance },
-    })
+    } as LocalSettingsProviderContext)
 
     renderWithProviders(<TableCellAge sinceTimestamp="2024-02-05T10:14:40.000Z" />)
 
@@ -39,9 +40,9 @@ describe('TableCellAge', () => {
   })
 
   it('should display formatted date when ageHeaderType is DateTime', () => {
-    ;(useLocalSettings as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    vi.mocked(useLocalSettings).mockReturnValue({
       settings: { ageHeaderType: TableAgeType.DateTime },
-    })
+    } as LocalSettingsProviderContext)
 
     renderWithProviders(<TableCellAge sinceTimestamp="2024-02-05T10:14:40.000Z" />)
 
@@ -49,9 +50,9 @@ describe('TableCellAge', () => {
   })
 
   it('should handle invalid timestamp gracefully', () => {
-    ;(useLocalSettings as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    vi.mocked(useLocalSettings).mockReturnValue({
       settings: { ageHeaderType: TableAgeType.Distance },
-    })
+    } as LocalSettingsProviderContext)
 
     renderWithProviders(<TableCellAge sinceTimestamp="invalid-timestamp" />)
 
