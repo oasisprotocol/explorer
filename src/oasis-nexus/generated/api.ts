@@ -253,9 +253,9 @@ limit?: number;
  */
 offset?: number;
 /**
- * A filter on the name of the ROFL app.
+ * A filter on the name of the ROFL app. If multiple names are provided, the ROFL App must match all of them.
  */
-name?: string;
+name?: string[];
 };
 
 export type GetRuntimeAccountsAddressNftsParams = {
@@ -322,9 +322,9 @@ limit?: number;
  */
 offset?: number;
 /**
- * A filter on the name, the name or symbol must contain this value as a substring.
+ * A filter on the name, the name or symbol must contain this value as a substring. If multiple names are provided, the token must match all of them.
  */
-name?: string;
+name?: string[];
 /**
  * The field to sort the tokens by.
 If unset, the tokens will be sorted by number of holders.
@@ -1716,6 +1716,8 @@ export interface RuntimeBlock {
   gas_used: number;
   /** The block header hash. */
   hash: string;
+  /** The minimum gas price for the block, in base units. */
+  min_gas_price?: TextBigInt;
   /** The number of transactions in the block. */
   num_transactions: number;
   /** The block round. */
