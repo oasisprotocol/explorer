@@ -6,6 +6,7 @@ import {
   isValidOasisAddress,
   isValidEthAddress,
   isValidRoflAppId,
+  uniq,
 } from '../../utils/helpers'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -124,6 +125,43 @@ const simpleTextSearch = (input: string = '', t?: TFunction): ParsedSimpleSearch
   }
 }
 
+export type ParsedMultiSearchQuery = {
+  result: string[]
+  warning: string | undefined
+}
+
+const multiTermSearch =
+  (textSearchMaximumTokens?: number) =>
+  (input: string = '', t?: TFunction): ParsedMultiSearchQuery => {
+    const tokens = uniq(
+      input
+        .split(' ')
+        .map(e => e.trim())
+        .filter(e => !!e),
+    )
+
+    const hasMinimumLength = tokens.some(token => token.length >= textSearchMinimumLength)
+    const hasTooManyTokens = textSearchMaximumTokens && tokens.length > textSearchMaximumTokens
+    const result = hasMinimumLength
+      ? textSearchMaximumTokens
+        ? tokens.slice(0, textSearchMaximumTokens)
+        : tokens
+      : []
+
+    return {
+      result,
+      warning: hasTooManyTokens
+        ? t
+          ? t('tableSearch.error.tooMany')
+          : 'Too many words'
+        : !!tokens.length && !hasMinimumLength
+          ? t
+            ? t('tableSearch.error.tooShort')
+            : 'too short'
+          : undefined,
+    }
+  }
+
 export const textSearch = {
   networkProposalName: simpleTextSearch,
   consensusAccountName: simpleTextSearch,
@@ -197,7 +235,10 @@ export const validateAndNormalize = {
 } satisfies { [name: string]: (searchTerm: string) => string | string[] | undefined }
 
 export function isSearchValid(searchTerm: string) {
-  return Object.values(validateAndNormalize).some(fn => !!fn(searchTerm))
+  return Object.values(validateAndNormalize).some(fn => {
+    const result = fn(searchTerm)
+    return !!result && !(Array.isArray(result) && !result.length)
+  })
 }
 
 export const getSearchTermFromRequest = (request: Request) =>
@@ -223,7 +264,10 @@ export const useParamSearch = () => {
 export type SearchParams = ReturnType<typeof useParamSearch>
 
 // Provide a list of highlight patterns for a search
-export const getHighlightPattern = (data: ParsedSimpleSearchQuery): HighlightPattern => {
+export const getHighlightPattern = (
+  data: ParsedSimpleSearchQuery | ParsedMultiSearchQuery | undefined,
+): HighlightPattern => {
+  if (data === undefined) return []
   const { result } = data
   return result === undefined ? [] : Array.isArray(result) ? result : [result]
 }
