@@ -1492,6 +1492,25 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
     })
   }
 
+/**
+ * Custom param serializer that uses comma for array
+ *
+ * By default, we would serialize params like this: "a[]=b&a[]=c"
+ * However, Nexus expects "a=b,c" instead.
+ *
+ * We will use this custom serializer when we need to send an array.
+ */
+const paramSerializerWithComma = (params: Record<string, any>) => {
+  return Object.entries(params)
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return `${key}=${value.join(',')}`
+      }
+      return `${key}=${value}`
+    })
+    .join('&')
+}
+
 export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
   network,
   layer,
@@ -1503,6 +1522,7 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
     ...options,
     request: {
       ...options?.request,
+      paramsSerializer: paramSerializerWithComma,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RoflAppList, headers, status) => {

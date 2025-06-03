@@ -253,9 +253,9 @@ limit?: number;
  */
 offset?: number;
 /**
- * A filter on the name of the ROFL app.
+ * A filter on the name of the ROFL app. If multiple names are provided, the ROFL App must match all of them.
  */
-name?: string;
+name?: string[];
 };
 
 export type GetRuntimeAccountsAddressNftsParams = {

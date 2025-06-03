@@ -366,7 +366,7 @@ export function useRoflAppIdConditionally(id: string | undefined): ConditionalRe
   }
 }
 
-export function useRoflAppNameConditionally(nameFragment: string | undefined): ConditionalResults<RoflApp> {
+export function useRoflAppNameConditionally(nameFragment: string[]): ConditionalResults<RoflApp> {
   // TODO: also search on other layers that support Rofl
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
     // See explanation above
@@ -375,11 +375,11 @@ export function useRoflAppNameConditionally(nameFragment: string | undefined): C
       network,
       Layer.sapphire,
       {
-        name: nameFragment!,
+        name: nameFragment,
       },
       {
         query: {
-          enabled: !!nameFragment,
+          enabled: !!nameFragment.length,
         },
       },
     ),

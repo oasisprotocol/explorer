@@ -162,7 +162,11 @@ export const SearchResultsList: FC<{
           title={t('search.results.roflApps.title')}
           results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
           resultComponent={item => (
-            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={getHighlightPattern(textSearch.roflAppName(searchQuery))} />
+            <RoflAppDetailsViewSearchResult
+              isLoading={false}
+              app={item}
+              highlightPattern={getHighlightPattern(textSearch.roflAppName(searchQuery))}
+            />
           )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
