@@ -18,7 +18,7 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   height: 'auto',
   width: '280px',
   padding: 0,
-  borderRadius: '12px',
+  borderRadius: '6px',
   borderColor: theme.palette.layout.darkBorder,
   borderWidth: theme.spacing(1),
   backgroundColor: COLORS.white,
@@ -42,8 +42,8 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: `0 ${theme.spacing(4)}`,
-    borderTopRightRadius: '12px',
-    borderBottomRightRadius: '12px',
+    borderTopRightRadius: '6px',
+    borderBottomRightRadius: '6px',
     borderLeftWidth: theme.spacing(1),
     borderLeftStyle: 'solid',
     borderLeftColor: theme.palette.layout.secondary,
@@ -105,7 +105,7 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
 
 export const StyledMobileNetworkButton = styled(Button)(({ theme }) => ({
   backgroundColor: COLORS.white,
-  borderRadius: '30px',
+  borderRadius: '6px',
   border: `solid 1px ${COLORS.brandExtraDark}`,
   fontSize: '14px',
   fontWeight: 500,

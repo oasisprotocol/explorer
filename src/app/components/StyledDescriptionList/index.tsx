@@ -71,7 +71,7 @@ export const StyledDescriptionList = styled(InlineDescriptionList, {
       padding: theme.spacing(3, 4),
       backgroundColor: COLORS.white,
       marginBottom: theme.spacing(4),
-      borderRadius: '12px',
+      borderRadius: '6px',
     },
   }),
   ...(highlight && backgroundColorAnimation),

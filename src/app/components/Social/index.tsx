@@ -69,7 +69,7 @@ export const Social: FC = () => {
         borderStyle: 'solid',
         borderWidth: '1px',
         borderColor: COLORS.white,
-        borderRadius: '12px',
+        borderRadius: '6px',
         backgroundImage: `url(${backgroundSocial})`,
         backgroundSize: 'cover',
       }}
