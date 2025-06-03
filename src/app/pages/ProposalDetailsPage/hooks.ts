@@ -126,7 +126,7 @@ export const useVoteFiltering = () => {
     deleteParams: ['page'],
   })
   const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('voter', '', { deleteParams: ['page'] })
-  const parsedNameQuery = textSearch(wantedNameInput, t)
+  const parsedNameQuery = textSearch.voterName(wantedNameInput, t)
   const highlightPattern = getHighlightPattern(parsedNameQuery)
   const { result: wantedNamePattern, warning: nameError } = parsedNameQuery
   const hasFilters = wantedType !== 'any' || !!wantedNamePattern

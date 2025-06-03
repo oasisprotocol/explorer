@@ -31,8 +31,7 @@ export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useConsensusScope()
   const { proposalId, searchQuery } = useLoaderData() as ProposalIdLoaderData
-  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
-
+  const highlightPattern = getHighlightPattern(textSearch.networkProposalName(searchQuery, t))
   const {
     isLoading: areStatsLoading,
     allVotesCount,

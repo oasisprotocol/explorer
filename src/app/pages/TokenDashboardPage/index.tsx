@@ -29,7 +29,7 @@ export const TokenDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
+  const highlightPattern = getHighlightPattern(textSearch.evmTokenName(searchQuery))
   const { isError } = useTokenInfo(scope, address)
 
   if (isError) {

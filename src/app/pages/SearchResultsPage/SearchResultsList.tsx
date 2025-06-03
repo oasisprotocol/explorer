@@ -109,7 +109,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.tokens.title')}
           results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} highlightPattern={getHighlightPattern(textSearch(searchQuery))} showLayer />}
+          resultComponent={item => <TokenDetails token={item} highlightPattern={getHighlightPattern(textSearch.evmTokenName(searchQuery))} showLayer />}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
         />
@@ -124,7 +124,7 @@ export const SearchResultsList: FC<{
                 isError={false}
                 account={item as Account}
                 showLayer={true}
-                highlightPattern={getHighlightPattern(textSearch(searchQuery))}
+                highlightPattern={getHighlightPattern(textSearch.consensusAccountName(searchQuery))}
               />
             ) : (
               <RuntimeAccountDetailsView
@@ -133,7 +133,7 @@ export const SearchResultsList: FC<{
                 account={item as RuntimeAccount}
                 tokenPrices={tokenPrices}
                 showLayer={true}
-                highlightPattern={getHighlightPattern(textSearch(searchQuery))}
+                highlightPattern={getHighlightPattern(textSearch.consensusAccountName(searchQuery))}
               />
             )
           }
@@ -151,7 +151,7 @@ export const SearchResultsList: FC<{
               account={item}
               tokenPrices={tokenPrices}
               showLayer={true}
-              highlightPattern={getHighlightPattern(textSearch(searchQuery))}
+              highlightPattern={getHighlightPattern(textSearch.runtimeAccountName(searchQuery))}
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
@@ -162,7 +162,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.roflApps.title')}
           results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
           resultComponent={item => (
-            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={getHighlightPattern(textSearch(searchQuery))} />
+            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={getHighlightPattern(textSearch.roflAppName(searchQuery))} />
           )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
@@ -171,7 +171,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
-          resultComponent={item => <ProposalDetailView proposal={item} highlightPattern={getHighlightPattern(textSearch(searchQuery))} showLayer />}
+          resultComponent={item => <ProposalDetailView proposal={item} highlightPattern={getHighlightPattern(textSearch.networkProposalName(searchQuery))} showLayer />}
           link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
           linkLabel={t('search.results.proposals.viewLink')}
         />

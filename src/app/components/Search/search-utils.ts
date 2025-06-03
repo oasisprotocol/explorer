@@ -110,7 +110,7 @@ export type ParsedSimpleSearchQuery = {
 export const textSearchMinimumLength = 3
 
 // A basic search strategy that searches for the whole text as a single token
-export const textSearch = (input: string = '', t?: TFunction): ParsedSimpleSearchQuery => {
+const simpleTextSearch = (input: string = '', t?: TFunction): ParsedSimpleSearchQuery => {
   const term = input.length >= textSearchMinimumLength ? input.toLowerCase() : undefined
   const warning =
     !!input && input.length < textSearchMinimumLength
@@ -123,6 +123,16 @@ export const textSearch = (input: string = '', t?: TFunction): ParsedSimpleSearc
     warning,
   }
 }
+
+export const textSearch = {
+  networkProposalName: simpleTextSearch,
+  consensusAccountName: simpleTextSearch,
+  runtimeAccountName: simpleTextSearch,
+  evmTokenName: simpleTextSearch,
+  roflAppName: simpleTextSearch,
+  validatorName: simpleTextSearch,
+  voterName: simpleTextSearch,
+} as const
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
@@ -162,7 +172,7 @@ export const validateAndNormalize = {
     }
   },
 
-  roflAppNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+  roflAppNameFragment: (searchTerm: string) => textSearch.roflAppName(searchTerm).result,
 
   evmAccount: (searchTerm: string): string | undefined => {
     if (isValidEthAddress(`0x${searchTerm}`)) {
@@ -173,9 +183,9 @@ export const validateAndNormalize = {
     }
   },
 
-  evmTokenNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+  evmTokenNameFragment: (searchTerm: string) => textSearch.evmTokenName(searchTerm).result,
 
-  networkProposalNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+  networkProposalNameFragment: (searchTerm: string) => textSearch.networkProposalName(searchTerm).result,
 
   accountNameFragment: (searchTerm: string) => {
     if (searchTerm?.length >= textSearchMinimumLength) {
@@ -183,7 +193,7 @@ export const validateAndNormalize = {
     }
   },
 
-  validatorNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+  validatorNameFragment: (searchTerm: string) => textSearch.validatorName(searchTerm).result,
 } satisfies { [name: string]: (searchTerm: string) => string | string[] | undefined }
 
 export function isSearchValid(searchTerm: string) {

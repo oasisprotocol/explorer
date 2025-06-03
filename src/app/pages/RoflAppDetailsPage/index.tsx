@@ -46,7 +46,7 @@ export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRuntimeScope()
   const { id, searchQuery } = useLoaderData() as RoflAppLoaderData
-  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
+  const highlightPattern = getHighlightPattern(textSearch.roflAppName(searchQuery))
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)

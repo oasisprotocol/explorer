@@ -38,7 +38,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
+  const highlightPattern = getHighlightPattern(textSearch.runtimeAccountName(searchQuery))
   const { method, setMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
