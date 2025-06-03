@@ -1,9 +1,10 @@
-import { defineConfig, UserConfig } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig((): UserConfig => {
+/** @type {import('vite').UserConfig} */
+export default defineConfig(() => {
   return {
     plugins: [react(), tsconfigPaths(), tailwindcss()],
     build: {
