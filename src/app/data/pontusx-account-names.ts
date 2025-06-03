@@ -65,7 +65,7 @@ export const usePontusXAccountMetadata = (
 
 export const useSearchForPontusXAccountsByName = (
   network: Network,
-  nameFragment: string,
+  nameFragments: string[],
   queryOptions: { enabled: boolean } & UseQueryOptions<
     PontusXAccountsMetadata,
     unknown,
@@ -84,8 +84,8 @@ export const useSearchForPontusXAccountsByName = (
   }
 
   const textMatcher =
-    nameFragment && queryOptions.enabled
-      ? (account: AccountMetadata) => hasTextMatch(account.name, [nameFragment])
+    nameFragments.length && queryOptions.enabled
+      ? (account: AccountMetadata) => nameFragments.every(nameFragment => hasTextMatch(account.name, [nameFragment]))
       : () => false
 
   const matches =

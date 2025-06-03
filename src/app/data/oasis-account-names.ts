@@ -108,7 +108,7 @@ export const useOasisAccountMetadata = (
 export const useSearchForOasisAccountsByName = (
   network: Network,
   layer: Layer,
-  nameFragment: string,
+  nameFragments: string[],
   queryOptions: { enabled: boolean } & UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ): AccountNameSearchResults => {
   const {
@@ -122,8 +122,8 @@ export const useSearchForOasisAccountsByName = (
   }
 
   const textMatcher =
-    nameFragment && queryOptions.enabled
-      ? (account: AccountMetadata) => hasTextMatch(account.name, [nameFragment])
+    nameFragments.length && queryOptions.enabled
+      ? (account: AccountMetadata) => nameFragments.every(nameFragment => hasTextMatch(account.name, [nameFragment]))
       : () => false
 
   const matches =

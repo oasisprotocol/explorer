@@ -22,7 +22,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.consensusAccountName(searchQuery))
+  const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
   const { method, setMethod } = useConsensusTxMethodParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery

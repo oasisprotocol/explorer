@@ -317,7 +317,7 @@ export function useNetworkProposalsConditionally(nameFragment: string[]): Condit
 
 export function useNamedAccountConditionally(
   currentScope: SearchScope | undefined,
-  nameFragment: string | undefined,
+  nameFragment: string[],
 ): ConditionalResults<Account | RuntimeAccount> {
   const queries = RouteUtils.getVisibleScopes(currentScope).map(scope =>
     // eslint-disable-next-line react-hooks/rules-of-hooks

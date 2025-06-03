@@ -124,7 +124,7 @@ export const SearchResultsList: FC<{
                 isError={false}
                 account={item as Account}
                 showLayer={true}
-                highlightPattern={getHighlightPattern(textSearch.consensusAccountName(searchQuery))}
+                highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
               />
             ) : (
               <RuntimeAccountDetailsView
@@ -133,7 +133,7 @@ export const SearchResultsList: FC<{
                 account={item as RuntimeAccount}
                 tokenPrices={tokenPrices}
                 showLayer={true}
-                highlightPattern={getHighlightPattern(textSearch.consensusAccountName(searchQuery))}
+                highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
               />
             )
           }
@@ -151,7 +151,7 @@ export const SearchResultsList: FC<{
               account={item}
               tokenPrices={tokenPrices}
               showLayer={true}
-              highlightPattern={getHighlightPattern(textSearch.runtimeAccountName(searchQuery))}
+              highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}

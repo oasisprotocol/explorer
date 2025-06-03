@@ -53,7 +53,7 @@ export function useRedirectIfSingleResult(
             (!!consensusAccount && item.address.toLowerCase() === consensusAccount.toLowerCase())
           ) // If we found this account based on address, then we don't want to highlight that.
         ) {
-          redirectTo += `?q=${accountNameFragment}`
+          redirectTo += `?q=${query}`
         }
         break
       case 'contract':

@@ -164,8 +164,7 @@ const multiTermSearch =
 
 export const textSearch = {
   networkProposalName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
-  consensusAccountName: simpleTextSearch,
-  runtimeAccountName: simpleTextSearch,
+  accountName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
   evmTokenName: simpleTextSearch,
   roflAppName: simpleTextSearch,
   validatorName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
@@ -225,11 +224,7 @@ export const validateAndNormalize = {
 
   networkProposalNameFragment: (searchTerm: string) => textSearch.networkProposalName(searchTerm).result,
 
-  accountNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMinimumLength) {
-      return searchTerm.toLowerCase()
-    }
-  },
+  accountNameFragment: (searchTerm: string) => textSearch.accountName(searchTerm).result,
 
   validatorNameFragment: (searchTerm: string) => textSearch.validatorName(searchTerm).result,
 } satisfies { [name: string]: (searchTerm: string) => string | string[] | undefined }
