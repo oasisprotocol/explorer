@@ -8,14 +8,14 @@ import Link from '@mui/material/Link'
 import { useGetConsensusAccounts } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { AccountList } from 'app/components/AccountList'
 import { RouteUtils } from 'app/utils/route-utils'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-const AccountsContent: FC<{ scope: SearchScope }> = ({ scope }) => {
+const AccountsContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { network } = scope
   // TODO: Add query param to sort by rank when API is ready
   const accountsQuery = useGetConsensusAccounts(network, { limit })
@@ -29,7 +29,7 @@ const AccountsContent: FC<{ scope: SearchScope }> = ({ scope }) => {
   )
 }
 
-export const AccountsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const AccountsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
   return (
     <Card>

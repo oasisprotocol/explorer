@@ -7,7 +7,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { TotalTransactions } from '../../components/TotalTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
 import { Social } from '../../components/Social'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useConsensusScope } from '../../hooks/useScopeParam'
 import { LearningMaterials } from './LearningMaterials'
 import { NetworkProposalsCard } from './NetworkProposalsCard'
 import { ValidatorsCard } from './Validators'
@@ -16,12 +16,12 @@ import { LatestConsensusBlocks } from './LatestConsensusBlocks'
 import { AccountsCard } from './AccountsCard'
 import { LatestConsensusTransactions } from './LatestConsensusTransactions'
 import { ParaTimesCard } from './ParaTimesCard'
-import { SearchScope } from 'types/searchScope'
+import { ConsensusScope } from 'types/searchScope'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 
 export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const isLocal = isLocalnet(scope.network)
   const { method, setMethod } = useConsensusTxMethodParam()
 
@@ -54,7 +54,7 @@ export const ConsensusDashboardPage: FC = () => {
   )
 }
 
-const LatestBlocksGrid = ({ scope }: { scope: SearchScope }) => {
+const LatestBlocksGrid = ({ scope }: { scope: ConsensusScope }) => {
   return (
     <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
       <LatestConsensusBlocks scope={scope} />

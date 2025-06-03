@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusTransactions } from '../../components/Transactions'
 import {
   NUMBER_OF_ITEMS_ON_DASHBOARD as limit,
@@ -23,10 +23,10 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const LatestConsensusTransactionsContent: FC<{
-  scope: SearchScope
+  scope: ConsensusScope
   method: ConsensusTxMethodFilterOption
   setMethod: (value: ConsensusTxMethodFilterOption) => void
-}> = ({ scope, method, setMethod }) => {
+}> = ({ scope, method }) => {
   const { network } = scope
 
   const transactionsQuery = useGetConsensusTransactions(
@@ -55,7 +55,7 @@ const LatestConsensusTransactionsContent: FC<{
 }
 
 export const LatestConsensusTransactions: FC<{
-  scope: SearchScope
+  scope: ConsensusScope
   method: ConsensusTxMethodFilterOption
   setMethod: (value: ConsensusTxMethodFilterOption) => void
 }> = ({ scope, method, setMethod }) => {

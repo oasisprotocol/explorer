@@ -8,14 +8,14 @@ import Link from '@mui/material/Link'
 import { useGetConsensusProposals } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { NetworkProposalsList } from '../../components/NetworkProposalsList'
 import { RouteUtils } from 'app/utils/route-utils'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-const NetworkProposalsCardContent: FC<{ scope: SearchScope }> = ({ scope }) => {
+const NetworkProposalsCardContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { network } = scope
   const proposalsQuery = useGetConsensusProposals(network, { limit })
 
@@ -29,7 +29,7 @@ const NetworkProposalsCardContent: FC<{ scope: SearchScope }> = ({ scope }) => {
   )
 }
 
-export const NetworkProposalsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const NetworkProposalsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
 

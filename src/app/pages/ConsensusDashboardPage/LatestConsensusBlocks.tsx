@@ -11,12 +11,12 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-const LatestConsensusBlocksContent: FC<{ scope: SearchScope }> = ({ scope }) => {
+const LatestConsensusBlocksContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { network } = scope
   const blocksQuery = useGetConsensusBlocks(
@@ -39,7 +39,7 @@ const LatestConsensusBlocksContent: FC<{ scope: SearchScope }> = ({ scope }) => 
   )
 }
 
-export const LatestConsensusBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LatestConsensusBlocks: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
