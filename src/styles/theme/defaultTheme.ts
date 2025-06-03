@@ -641,9 +641,8 @@ export const defaultTheme = createTheme({
           },
         }),
         head: {
-          border: 0,
           color: COLORS.grayDark,
-          fontWeight: 700,
+          fontWeight: 500,
         },
       },
     },
