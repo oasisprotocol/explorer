@@ -192,7 +192,7 @@ export const useParamSearch = () => {
   const query = useSearchParams()[0].get('q')?.trim() ?? ''
   const normalized = Object.fromEntries(
     Object.entries(validateAndNormalize).map(([key, fn]) => [key, fn(query)]),
-  ) as { [Key in keyof typeof validateAndNormalize]: string | undefined }
+  ) as { [Key in keyof typeof validateAndNormalize]: ReturnType<(typeof validateAndNormalize)[Key]> }
   return {
     query,
     ...normalized,
