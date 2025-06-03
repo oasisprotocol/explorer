@@ -300,9 +300,7 @@ export function useRuntimeTokenConditionally(
   }
 }
 
-export function useNetworkProposalsConditionally(
-  nameFragment: string | undefined,
-): ConditionalResults<Proposal> {
+export function useNetworkProposalsConditionally(nameFragment: string[]): ConditionalResults<Proposal> {
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetConsensusProposalsByName(network, nameFragment),

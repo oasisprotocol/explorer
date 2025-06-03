@@ -171,7 +171,13 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
-          resultComponent={item => <ProposalDetailView proposal={item} highlightPattern={getHighlightPattern(textSearch.networkProposalName(searchQuery))} showLayer />}
+          resultComponent={item => (
+            <ProposalDetailView
+              proposal={item}
+              highlightPattern={getHighlightPattern(textSearch.networkProposalName(searchQuery))}
+              showLayer
+            />
+          )}
           link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
           linkLabel={t('search.results.proposals.viewLink')}
         />

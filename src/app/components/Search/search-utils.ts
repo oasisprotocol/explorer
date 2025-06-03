@@ -163,7 +163,7 @@ const multiTermSearch =
   }
 
 export const textSearch = {
-  networkProposalName: simpleTextSearch,
+  networkProposalName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
   consensusAccountName: simpleTextSearch,
   runtimeAccountName: simpleTextSearch,
   evmTokenName: simpleTextSearch,

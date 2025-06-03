@@ -32,6 +32,7 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../config'
+import { hasTextMatch } from '../app/components/HighlightedText/text-matching'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1106,30 +1107,32 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
   })
 }
 
-export const useGetConsensusProposalsByName = (network: Network, nameFragment: string | undefined) => {
-  const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
+export const useGetConsensusProposalsByName = (network: Network, nameFragments: string[]) => {
+  const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragments.length } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
-  const textMatcher = nameFragment
-    ? (proposal: generated.Proposal): boolean => {
-        if (proposal.title?.includes(nameFragment)) {
-          return true
-        }
+  const textMatcher = nameFragments.length
+    ? (proposal: generated.Proposal): boolean =>
+        nameFragments.every(nameFragment => {
+          if (hasTextMatch(proposal.title, [nameFragment])) {
+            return true
+          }
 
-        if (proposal.handler?.includes(nameFragment)) {
-          return true
-        }
+          if (hasTextMatch(proposal.handler, [nameFragment])) {
+            return true
+          }
 
-        if (getCancelTitle(proposal.cancels).includes(nameFragment)) {
-          return true
-        }
+          if (hasTextMatch(getCancelTitle(proposal.cancels), [nameFragment])) {
+            return true
+          }
 
-        return (
-          !!proposal.parameters_change &&
-          getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change).includes(
-            nameFragment,
+          return (
+            !!proposal.parameters_change &&
+            hasTextMatch(
+              getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change),
+              [nameFragment],
+            )
           )
-        )
-      }
+        })
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {
