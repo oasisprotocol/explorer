@@ -80,6 +80,8 @@ export const isScopeHidden = (scope: SearchScope): boolean =>
 
 export const isNotInHiddenScope = (item: HasScope) => !isScopeHidden(item)
 
+export const encodeStringForUrl = (text: string) => encodeURIComponent(text).replace(/%20/g, '+')
+
 const formatPreservedParams = (searchParams: URLSearchParams | undefined, paramsToKeep: string[]): string => {
   if (!searchParams) return ''
   const toDelete: string[] = []
@@ -200,7 +202,7 @@ export abstract class RouteUtils {
   static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
     return scope
       ? `${this.getScopeRoute(scope)}/search?q=${encodeURIComponent(searchTerm)}`
-      : `/search?q=${encodeURIComponent(searchTerm)}`
+      : `/search?q=${encodeStringForUrl(searchTerm)}`
   }
 
   static getTokenRoute = (scope: SearchScope, tokenAddress: string) => {
