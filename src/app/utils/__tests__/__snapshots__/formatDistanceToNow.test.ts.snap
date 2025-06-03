@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`formatDistanceToNow should format future dates 1`] = `
+exports[`formatDistanceToNow > should format future dates 1`] = `
 [
   "0 sec",
   "20 sec",
@@ -13,7 +13,7 @@ exports[`formatDistanceToNow should format future dates 1`] = `
 ]
 `;
 
-exports[`formatDistanceToNow should format past dates 1`] = `
+exports[`formatDistanceToNow > should format past dates 1`] = `
 [
   "0 sec",
   "20 sec",

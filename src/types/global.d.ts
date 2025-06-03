@@ -1,15 +1,15 @@
 declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
+  interface ImportMeta {
+    env: {
       NODE_ENV: 'development' | 'production' | 'test'
       REACT_APP_BUILD_DATETIME: string
       REACT_APP_BUILD_SHA: string
       REACT_APP_BUILD_VERSION: string
       REACT_APP_PRIVACY_POLICY: string
-      /** Access it through {@link window.REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS} instead, to support overriding it in e2e tests */
-      REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: never
+      REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: string
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
+      REACT_APP_LOCALNET_API?: string
       REACT_APP_SHOW_BUILD_BANNERS: 'true' | 'false'
       REACT_APP_META_TITLE: string
       REACT_APP_META_IMAGE: string

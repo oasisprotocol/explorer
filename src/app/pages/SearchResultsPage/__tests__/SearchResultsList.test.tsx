@@ -1,3 +1,4 @@
+import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
 
@@ -10,16 +11,16 @@ import { Network } from '../../../../types/network'
 import { SearchResultsList } from '../SearchResultsList'
 import { Ticker } from '../../../../types/ticker'
 
-jest.mock('../../../hooks/useAccountMetadata')
+vi.mock('../../../hooks/useAccountMetadata')
 
 describe('SearchResultsView', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
-    jest.setSystemTime(new Date('2023-01-01T01:01:01Z'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2023-01-01T01:01:01Z'))
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('block should correctly link to transactions', () => {

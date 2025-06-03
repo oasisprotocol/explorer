@@ -10,9 +10,9 @@ import { getSearchTermFromRequest } from '../components/Search/search-utils'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { orderByLayer } from '../../types/layers'
 
-export const fixedNetwork = process.env.REACT_APP_FIXED_NETWORK as Network | undefined
-export const fixedLayer = process.env.REACT_APP_FIXED_LAYER as Layer | undefined
-export const skipGraph = !!fixedLayer || !!(process.env.REACT_APP_SKIP_GRAPH as boolean | undefined)
+export const fixedNetwork = import.meta.env.REACT_APP_FIXED_NETWORK as Network | undefined
+export const fixedLayer = import.meta.env.REACT_APP_FIXED_LAYER as Layer | undefined
+export const skipGraph = !!fixedLayer || !!(import.meta.env.REACT_APP_SKIP_GRAPH as boolean | undefined)
 
 export type ScopeFreedom =
   | 'network' // We can select only the network
@@ -110,12 +110,12 @@ export abstract class RouteUtils {
       [Layer.consensus]: true,
     },
     [Network.localnet]: {
-      [Layer.emerald]: process.env.REACT_APP_LOCALNET_EMERALD === 'true',
-      [Layer.sapphire]: process.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
+      [Layer.emerald]: import.meta.env.REACT_APP_LOCALNET_EMERALD === 'true',
+      [Layer.sapphire]: import.meta.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
       [Layer.cipher]: false,
       [Layer.pontusxdev]: false,
       [Layer.pontusxtest]: false,
-      [Layer.consensus]: process.env.REACT_APP_LOCALNET_CONSENSUS === 'true',
+      [Layer.consensus]: import.meta.env.REACT_APP_LOCALNET_CONSENSUS === 'true',
     },
   } satisfies Record<Network, Record<Layer, boolean>>
 

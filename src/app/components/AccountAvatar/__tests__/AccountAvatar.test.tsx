@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { AccountAvatar } from '../index'
 import { render } from '@testing-library/react'
 

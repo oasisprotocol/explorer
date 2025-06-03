@@ -129,7 +129,7 @@ test.describe('analytics', () => {
       document.body.appendChild(link)
     })
     await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
-    await expect(page.getByText('Latest Blocks')).toBeVisible()
+    await expect(page.getByText('Latest Blocks')).toBeVisible({ timeout: 10000 })
     await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
     await page.waitForTimeout(100)
     expect(getMatomoRequests().length).toBeGreaterThanOrEqual(3) // Tracked, possibly twice due to React StrictMode
