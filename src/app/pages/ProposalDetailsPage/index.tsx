@@ -25,13 +25,13 @@ import { useVoteStats } from './hooks'
 import Skeleton from '@mui/material/Skeleton'
 import { HighlightPattern } from '../../components/HighlightedText'
 import { getTypeNameForProposal } from '../../../types/proposalType'
-import { getHighlightPattern } from '../../components/Search/search-utils'
+import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useConsensusScope()
   const { proposalId, searchQuery } = useLoaderData() as ProposalIdLoaderData
-  const highlightPattern = getHighlightPattern(searchQuery)
+  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
 
   const {
     isLoading: areStatsLoading,

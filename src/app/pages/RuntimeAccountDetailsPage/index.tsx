@@ -21,7 +21,7 @@ import {
   tokenContainerId,
   transfersContainerId,
 } from '../../utils/tabAnchors'
-import { getHighlightPattern } from '../../components/Search/search-utils'
+import { getHighlightPattern, textSearch } from "../../components/Search/search-utils";
 
 export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
@@ -38,7 +38,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(searchQuery)
+  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
   const { method, setMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract

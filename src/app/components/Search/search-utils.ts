@@ -10,6 +10,7 @@ import {
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { useNetworkParam } from '../../hooks/useScopeParam'
+import { TFunction } from 'i18next'
 import { HighlightPattern } from '../HighlightedText'
 
 type LayerSuggestions = {
@@ -101,7 +102,27 @@ export const searchSuggestionTerms = {
   },
 } satisfies SpecifiedPerEnabledLayer<LayerSuggestions>
 
+export type ParsedSimpleSearchQuery = {
+  result: string | undefined
+  warning: string | undefined
+}
+
 export const textSearchMinimumLength = 3
+
+// A basic search strategy that searches for the whole text as a single token
+export const textSearch = (input: string = '', t?: TFunction): ParsedSimpleSearchQuery => {
+  const term = input.length >= textSearchMinimumLength ? input.toLowerCase() : undefined
+  const warning =
+    !!input && input.length < textSearchMinimumLength
+      ? t
+        ? t('tableSearch.error.tooShort')
+        : 'too short'
+      : undefined
+  return {
+    result: term,
+    warning,
+  }
+}
 
 export const validateAndNormalize = {
   blockHeight: (searchTerm: string) => {
@@ -140,11 +161,9 @@ export const validateAndNormalize = {
       return searchTerm.replace(/\s/g, '').toLowerCase()
     }
   },
-  roflAppNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMinimumLength) {
-      return searchTerm.toLowerCase()
-    }
-  },
+
+  roflAppNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+
   evmAccount: (searchTerm: string): string | undefined => {
     if (isValidEthAddress(`0x${searchTerm}`)) {
       return `0x${searchTerm.toLowerCase()}`
@@ -153,27 +172,19 @@ export const validateAndNormalize = {
       return searchTerm.toLowerCase()
     }
   },
-  evmTokenNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMinimumLength) {
-      return searchTerm.toLowerCase()
-    }
-  },
-  networkProposalNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMinimumLength) {
-      return searchTerm.toLowerCase()
-    }
-  },
+
+  evmTokenNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+
+  networkProposalNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+
   accountNameFragment: (searchTerm: string) => {
     if (searchTerm?.length >= textSearchMinimumLength) {
       return searchTerm.toLowerCase()
     }
   },
-  validatorNameFragment: (searchTerm: string) => {
-    if (searchTerm?.length >= textSearchMinimumLength) {
-      return searchTerm.toLowerCase()
-    }
-  },
-} satisfies { [name: string]: (searchTerm: string) => string | undefined }
+
+  validatorNameFragment: (searchTerm: string) => textSearch(searchTerm).result,
+} satisfies { [name: string]: (searchTerm: string) => string | string[] | undefined }
 
 export function isSearchValid(searchTerm: string) {
   return Object.values(validateAndNormalize).some(fn => !!fn(searchTerm))
@@ -201,7 +212,8 @@ export const useParamSearch = () => {
 
 export type SearchParams = ReturnType<typeof useParamSearch>
 
-export const getHighlightPattern = (searchQuery: string | undefined): HighlightPattern =>
-  (searchQuery === undefined)
-    ? []
-    : [searchQuery]
+// Provide a list of highlight patterns for a search
+export const getHighlightPattern = (data: ParsedSimpleSearchQuery): HighlightPattern => {
+  const { result } = data
+  return result === undefined ? [] : Array.isArray(result) ? result : [result]
+}

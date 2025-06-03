@@ -40,13 +40,13 @@ import { Ticker } from 'types/ticker'
 import { WithHighlighting } from '../../components/HighlightingContext/WithHighlighting'
 import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
 import { RoflAppLoaderData } from '../../utils/route-utils'
-import { getHighlightPattern } from '../../components/Search/search-utils'
+import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRuntimeScope()
   const { id, searchQuery } = useLoaderData() as RoflAppLoaderData
-  const highlightPattern = getHighlightPattern(searchQuery)
+  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)

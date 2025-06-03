@@ -14,7 +14,7 @@ import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
-import { getHighlightPattern } from '../../components/Search/search-utils'
+import { getHighlightPattern, textSearch } from "../../components/Search/search-utils";
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -22,7 +22,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const scope = useRequiredScopeParam()
   const { network } = scope
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(searchQuery)
+  const highlightPattern = getHighlightPattern(textSearch(searchQuery))
   const { method, setMethod } = useConsensusTxMethodParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery

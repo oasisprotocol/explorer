@@ -13,7 +13,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
-import { getHighlightPattern } from '../../components/Search/search-utils'
+import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export type AllVotesData = List & {
   isLoading: boolean
@@ -126,9 +126,9 @@ export const useVoteFiltering = () => {
     deleteParams: ['page'],
   })
   const [wantedNameInput, setWantedNameInput] = useTypedSearchParam('voter', '', { deleteParams: ['page'] })
-  const wantedNamePattern = wantedNameInput.length < 3 ? undefined : wantedNameInput
-  const highlightPattern = getHighlightPattern(wantedNamePattern)
-  const nameError = !!wantedNameInput && !wantedNamePattern ? t('tableSearch.error.tooShort') : undefined
+  const parsedNameQuery = textSearch(wantedNameInput, t)
+  const highlightPattern = getHighlightPattern(parsedNameQuery)
+  const { result: wantedNamePattern, warning: nameError } = parsedNameQuery
   const hasFilters = wantedType !== 'any' || !!wantedNamePattern
   const clearFilters = () => {
     setSearchParams(searchParams => {
