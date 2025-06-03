@@ -271,7 +271,7 @@ export function useConsensusAccountConditionally(address: string | undefined): C
 
 export function useRuntimeTokenConditionally(
   currentScope: SearchScope | undefined,
-  nameFragment: string | undefined,
+  nameFragment: string[],
 ): ConditionalResults<EvmTokenList> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
@@ -287,7 +287,7 @@ export function useRuntimeTokenConditionally(
         },
         {
           query: {
-            enabled: !!nameFragment,
+            enabled: !!nameFragment.length,
           },
         },
       ),

@@ -792,6 +792,7 @@ export const useGetRuntimeEvmTokens: typeof generated.useGetRuntimeEvmTokens = (
     ...options,
     request: {
       ...options?.request,
+      paramsSerializer: paramSerializerWithComma,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.EvmTokenList, headers, status) => {

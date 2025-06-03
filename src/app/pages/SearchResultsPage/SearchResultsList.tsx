@@ -109,7 +109,13 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.tokens.title')}
           results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} highlightPattern={getHighlightPattern(textSearch.evmTokenName(searchQuery))} showLayer />}
+          resultComponent={item => (
+            <TokenDetails
+              token={item}
+              highlightPattern={getHighlightPattern(textSearch.evmTokenName(searchQuery))}
+              showLayer
+            />
+          )}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
         />

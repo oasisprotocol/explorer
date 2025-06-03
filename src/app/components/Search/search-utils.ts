@@ -165,7 +165,7 @@ const multiTermSearch =
 export const textSearch = {
   networkProposalName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
   accountName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
-  evmTokenName: simpleTextSearch,
+  evmTokenName: multiTermSearch(6), // Nexus limits the number of search queries to 6
   roflAppName: multiTermSearch(6), // Nexus limits the number of search queries to 6
   validatorName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
   voterName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
