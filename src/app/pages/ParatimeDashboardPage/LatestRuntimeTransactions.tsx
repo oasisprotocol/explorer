@@ -5,14 +5,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
+import { useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { FILTERING_ON_DASHBOARD, NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
@@ -21,18 +20,13 @@ const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
 
 export const LatestRuntimeTransactions: FC<{
-  scope: SearchScope
+  scope: RuntimeScope
   method: string
   setMethod: (value: string) => void
 }> = ({ scope, method, setMethod }) => {
   const { isMobile, isTablet } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = scope
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus transactions is not yet supported.
-    // We should use useGetConsensusTransactions()
-  }
 
   const transactionsQuery = useGetRuntimeTransactions(
     network,

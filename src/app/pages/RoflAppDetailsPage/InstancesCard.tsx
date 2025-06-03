@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Layer, useGetConsensusEpochs, useGetRuntimeRoflAppsIdInstances } from '../../../oasis-nexus/api'
+import { useGetConsensusEpochs, useGetRuntimeRoflAppsIdInstances } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
@@ -19,7 +19,7 @@ const InstancesView: FC<RoflAppDetailsContext> = ({ scope, id }) => {
   const { network } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  const instancesQuery = useGetRuntimeRoflAppsIdInstances(network, Layer.sapphire, id, {
+  const instancesQuery = useGetRuntimeRoflAppsIdInstances(network, scope.layer, id, {
     limit,
     offset,
   })

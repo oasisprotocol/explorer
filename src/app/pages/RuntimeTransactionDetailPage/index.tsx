@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Layer, RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
+import { RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -16,7 +16,7 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { RuntimeTransactionEvents } from '../../components/Transactions/RuntimeTransactionEvents'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
@@ -46,14 +46,7 @@ import { RouteUtils } from '../../utils/route-utils'
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
 
-  const scope = useRequiredScopeParam()
-  // Consensus is not yet enabled in ENABLED_LAYERS, just some preparation
-  if (scope.layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Displaying consensus transactions is not yet implemented.
-    // we should call useGetConsensusTransactionsTxHash()
-  }
-
+  const scope = useRuntimeScope()
   const hash = useParams().hash!
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(

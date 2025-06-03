@@ -5,26 +5,20 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
-import { Layer, useGetRuntimeBlocks } from '../../../oasis-nexus/api'
+import { useGetRuntimeBlocks } from '../../../oasis-nexus/api'
 import { RuntimeBlocks, BlocksTableType } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestRuntimeBlocks: FC<{ scope: SearchScope }> = ({ scope }) => {
+export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const { network, layer } = scope
-  if (layer === Layer.consensus) {
-    throw AppErrors.UnsupportedLayer
-    // Listing the latest consensus blocks is not yet implemented.
-    // We should use useGetConsensusBlocks()
-  }
   const blocksQuery = useGetRuntimeBlocks(
     network,
     layer,

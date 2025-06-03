@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import PaginationItem from '@mui/material/PaginationItem'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RouteUtils } from '../../utils/route-utils'
@@ -58,12 +58,15 @@ const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound:
   )
 }
 
-type NextBlockButtonProps = {
-  scope: SearchScope
+type NextBlockButtonProps<Scope = SearchScope> = {
+  scope: Scope
   currentRound: number
 }
 
-export const ConsensusNextBlockButton: FC<NextBlockButtonProps> = ({ currentRound, scope }) => {
+export const ConsensusNextBlockButton: FC<NextBlockButtonProps<ConsensusScope>> = ({
+  currentRound,
+  scope,
+}) => {
   const { latestBlock } = useConsensusFreshness(scope.network)
   const disabled = !!latestBlock && currentRound >= latestBlock
   useConsensusFreshness(scope.network, { polling: disabled })
@@ -71,7 +74,7 @@ export const ConsensusNextBlockButton: FC<NextBlockButtonProps> = ({ currentRoun
   return <NextBlockButton currentRound={currentRound} disabled={disabled} scope={scope} />
 }
 
-export const RuntimeNextBlockButton: FC<NextBlockButtonProps> = ({ currentRound, scope }) => {
+export const RuntimeNextBlockButton: FC<NextBlockButtonProps<RuntimeScope>> = ({ currentRound, scope }) => {
   const { latestBlock } = useRuntimeFreshness(scope)
   const disabled = !!latestBlock && currentRound >= latestBlock
   useRuntimeFreshness(scope, { polling: disabled })

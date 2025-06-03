@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
-import { SearchScope } from '../../../types/searchScope'
+import { RuntimeScope } from '../../../types/searchScope'
 
-export const TokenGasUsedCard: FC<{ scope: SearchScope; address: string }> = ({ scope, address }) => {
+export const TokenGasUsedCard: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
 
   const { account, isFetched } = useAccount(scope, address)

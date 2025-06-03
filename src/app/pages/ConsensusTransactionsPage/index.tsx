@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useConsensusScope } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
@@ -28,7 +28,7 @@ export const ConsensusTransactionsPage: FC = () => {
   const pagination = useSearchParamsPagination('page')
   const { method, setMethod } = useConsensusTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const enablePolling = offset === 0
   const { beforeDate, setBeforeDateFromCollection } = useConsensusListBeforeDate(scope, offset)
 

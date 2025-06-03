@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
-import { Layer, useGetRuntimeTransactions } from '../../../oasis-nexus/api'
+import { useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeBlockDetailsContext } from '.'
@@ -15,11 +15,7 @@ import { transactionsContainerId } from '../../utils/tabAnchors'
 const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, method }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-  if (scope.layer === Layer.consensus) {
-    // Loading transactions for consensus blocks is not yet supported.
-    // Should use useGetConsensusTransactions()
-    throw AppErrors.UnsupportedLayer
-  }
+
   const transactionsQuery = useGetRuntimeTransactions(scope.network, scope.layer, {
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,

@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Divider from '@mui/material/Divider'
-import { Layer, useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
+import { useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
-import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
+import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, paraTimesConfig } from '../../../config'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
@@ -23,11 +23,9 @@ export const RoflAppsPage: FC = () => {
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
 
-  if (scope.layer !== Layer.sapphire) {
-    throw AppErrors.UnsupportedLayer
-  }
+  if (!paraTimesConfig[scope.layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
   useEffect(() => {
     if (!isMobile) {

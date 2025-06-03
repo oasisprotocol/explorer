@@ -2,11 +2,11 @@ import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
-import { Layer, RoflInstance, useGetRuntimeRoflAppsIdInstancesRak } from '../../../oasis-nexus/api'
+import { RoflInstance, useGetRuntimeRoflAppsIdInstancesRak } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { AppErrors } from '../../../types/errors'
 import { RoflAppInstanceDetailsContext } from './hooks'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
 import { PageLayout } from '../../components/PageLayout'
@@ -21,7 +21,7 @@ import { AccountLink } from '../../components/Account/AccountLink'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const scope = useRequiredScopeParam()
+  const scope = useRuntimeScope()
   const id = useParams().id!
   const rak = useParams().rak!
   const txLink = useHref('')
@@ -29,7 +29,7 @@ export const RoflAppInstanceDetailsPage: FC = () => {
     deleteParams: ['page'],
   })
   const context: RoflAppInstanceDetailsContext = { scope, id, rak, method, setMethod }
-  const instancesQuery = useGetRuntimeRoflAppsIdInstancesRak(scope.network, Layer.sapphire, id, rak)
+  const instancesQuery = useGetRuntimeRoflAppsIdInstancesRak(scope.network, scope.layer, id, rak)
   const { isLoading, isFetched, data } = instancesQuery
   const instance = data?.data
 
