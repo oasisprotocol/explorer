@@ -13,9 +13,10 @@ const voteFilters: Record<VoteType, VoteFilter> = {
 
 export const getFilterForVoteType = (voteType: VoteType): VoteFilter => voteFilters[voteType]
 
-export const getFilterForVoterNameFragment = (fragment: string | undefined) => {
-  if (!fragment) {
+export const getFilterForVoterNameFragment = (fragment: string[]) => {
+  if (!fragment.length) {
     return () => true
   }
-  return (vote: ExtendedVote) => hasTextMatch(vote.validator?.media?.name, [fragment])
+  return (vote: ExtendedVote) =>
+    fragment.every(fragment => hasTextMatch(vote.validator?.media?.name, [fragment]))
 }
