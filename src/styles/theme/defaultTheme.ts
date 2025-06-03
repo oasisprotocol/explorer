@@ -219,7 +219,7 @@ export const defaultTheme = createTheme({
           fontSize: '18px',
           lineHeight: '23px',
           height: '47px',
-          borderRadius: 47,
+          borderRadius: 6,
           textTransform: 'capitalize',
           '&:disabled': {
             backgroundColor: COLORS.lavenderGray,
@@ -388,7 +388,7 @@ export const defaultTheme = createTheme({
       },
       styleOverrides: {
         root: ({ theme }) => ({
-          borderRadius: 12,
+          borderRadius: 6,
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
             padding: theme.spacing(4, 4, 0),
@@ -529,7 +529,7 @@ export const defaultTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paperAnchorTop: ({ theme }) => ({
-          borderRadius: '0 0 12px 12px',
+          borderRadius: '0 0 6px 6px',
           padding: theme.spacing(4, '5%'),
         }),
         paper: ({ theme }) => ({
@@ -597,7 +597,7 @@ export const defaultTheme = createTheme({
       ],
       styleOverrides: {
         root: () => ({
-          borderRadius: 12,
+          borderRadius: 6,
         }),
       },
     },
@@ -731,10 +731,10 @@ export const defaultTheme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: ({ theme }) => ({
-          borderRadius: '24px',
+          borderRadius: '6px',
           backgroundColor: COLORS.grayMediumLight,
           [`.${inputBaseClasses.root}`]: {
-            borderRadius: '24px',
+            borderRadius: '6px',
             backgroundColor: COLORS.white,
 
             // Prevent first child's edges overflowing due to border-radius

@@ -8,7 +8,7 @@ import { COLORS } from 'styles/theme/colors'
 const styles = {
   width: '44px',
   height: '44px',
-  borderRadius: '50%',
+  borderRadius: '6px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
