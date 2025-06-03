@@ -6,6 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import InfoIcon from '@mui/icons-material/Info'
 import ErrorIcon from '@mui/icons-material/Error'
+import { Badge } from '@oasisprotocol/ui-library/src/components/ui/badge'
 
 export type StatusVariant = 'success' | 'partialsuccess' | 'warning' | 'danger' | 'info'
 
@@ -63,9 +64,12 @@ const StyledBadge = styled(Box, {
 
 export const StatusBadge = ({ label, icon, variant = 'info' }: StatusBadgeProps) => {
   return (
-    <StyledBadge bgColor={variantStyles[variant].bgColor}>
-      {label}
-      {icon || variantIcon[variant]}
-    </StyledBadge>
+    <>
+      <StyledBadge bgColor={variantStyles[variant].bgColor}>
+        {label}
+        {icon || variantIcon[variant]}
+      </StyledBadge>
+      <Badge variant="default">Badge</Badge>
+    </>
   )
 }
