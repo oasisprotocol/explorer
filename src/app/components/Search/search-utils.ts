@@ -168,8 +168,8 @@ export const textSearch = {
   runtimeAccountName: simpleTextSearch,
   evmTokenName: simpleTextSearch,
   roflAppName: simpleTextSearch,
-  validatorName: simpleTextSearch,
-  voterName: multiTermSearch(),  // This is client-side, therefore we can accept unlimited tokens
+  validatorName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
+  voterName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
 } as const
 
 export const validateAndNormalize = {

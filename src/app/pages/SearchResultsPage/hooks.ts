@@ -333,7 +333,7 @@ export function useNamedAccountConditionally(
   }
 }
 
-export function useNamedValidatorConditionally(nameFragment: string | undefined) {
+export function useNamedValidatorConditionally(nameFragment: string[]) {
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useSearchForValidatorsByName(network, nameFragment),
