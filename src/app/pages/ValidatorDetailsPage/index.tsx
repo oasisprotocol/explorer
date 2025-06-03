@@ -44,6 +44,9 @@ import { eventsContainerId } from '../../utils/tabAnchors'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { Network } from '../../../types/network'
+import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
+import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
+import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -60,7 +63,8 @@ export const ValidatorDetailsPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRequiredScopeParam()
   const { method, setMethod } = useConsensusTxMethodParam()
-  const { address } = useLoaderData() as AddressLoaderData
+  const { address, searchQuery } = useLoaderData() as AddressLoaderData
+  const highlightPattern = getHighlightPattern(textSearch.validatorName(searchQuery))
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading: isValidatorLoading, isFetched, data } = validatorQuery
   const validator = data?.data.validators[0]
@@ -77,7 +81,12 @@ export const ValidatorDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <ValidatorTitleCard isLoading={isLoading} network={scope.network} validator={validator} />
+      <ValidatorTitleCard
+        isLoading={isLoading}
+        network={scope.network}
+        validator={validator}
+        highlightPattern={highlightPattern}
+      />
       <ValidatorSnapshot scope={scope} validator={validator} stats={stats} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
       <ValidatorDetailsCard
@@ -86,6 +95,7 @@ export const ValidatorDetailsPage: FC = () => {
         validator={validator}
         account={account}
         stats={stats}
+        highlightPattern={highlightPattern}
       />
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>
@@ -115,6 +125,7 @@ type ValidatorDetailsCardProps = {
   validator: Validator | undefined
   account: Account | undefined
   stats: ValidatorAggStats | undefined
+  highlightPattern?: HighlightPattern
 }
 
 const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
@@ -123,6 +134,7 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
   validator,
   account,
   stats,
+  highlightPattern,
 }) => {
   return (
     <Card>
@@ -134,6 +146,7 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
           validator={validator}
           account={account}
           stats={stats}
+          highlightPattern={highlightPattern}
         />
       </CardContent>
     </Card>
@@ -148,9 +161,19 @@ export const ValidatorDetailsView: FC<{
   account: Account | undefined
   standalone?: boolean
   stats: ValidatorAggStats | undefined
-}> = ({ network, detailsPage, isLoading, validator, account, standalone = false, stats }) => {
+  highlightPattern?: HighlightPattern
+}> = ({
+  network,
+  detailsPage,
+  isLoading,
+  validator,
+  account,
+  standalone = false,
+  stats,
+  highlightPattern,
+}) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
+  const { isMobile, isTablet } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!validator) return null
@@ -167,7 +190,13 @@ export const ValidatorDetailsView: FC<{
             />
           </dt>
           <dd>
-            <b>{validator.media?.name}</b>
+            <b>
+              {isTablet ? (
+                <AdaptiveHighlightedText text={validator.media?.name} pattern={highlightPattern} />
+              ) : (
+                <HighlightedText text={validator.media?.name} pattern={highlightPattern} />
+              )}
+            </b>
           </dd>
           <dt>{t('common.rank')}</dt>
           <dd>{validator.rank}</dd>
