@@ -14,7 +14,7 @@ import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
-import { getHighlightPattern, textSearch } from "../../components/Search/search-utils";
+import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()

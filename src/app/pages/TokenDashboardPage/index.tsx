@@ -52,7 +52,7 @@ export const TokenDashboardPage: FC = () => {
       <DappBanner scope={scope} ethOrOasisAddress={address} />
       <TokenSnapshot scope={scope} address={address} />
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <TokenDetailsCard scope={scope} address={address} highlighPattern={highlightPattern} />
+      <TokenDetailsCard scope={scope} address={address} highlightPattern={highlightPattern} />
       <RouterTabs
         tabs={[
           { label: t('common.transfers'), to: tokenTransfersLink },

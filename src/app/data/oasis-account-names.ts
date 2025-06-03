@@ -123,7 +123,8 @@ export const useSearchForOasisAccountsByName = (
 
   const textMatcher =
     nameFragments.length && queryOptions.enabled
-      ? (account: AccountMetadata) => nameFragments.every(nameFragment => hasTextMatch(account.name, [nameFragment]))
+      ? (account: AccountMetadata) =>
+          nameFragments.every(nameFragment => hasTextMatch(account.name, [nameFragment]))
       : () => false
 
   const matches =

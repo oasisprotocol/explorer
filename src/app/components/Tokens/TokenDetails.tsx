@@ -14,7 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
 import { RoundedBalance } from '../RoundedBalance'
 import { HighlightedText } from '../HighlightedText'
-import { HighlightPattern } from "../HighlightedText";
+import { HighlightPattern } from '../HighlightedText'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
@@ -22,7 +22,7 @@ export const TokenDetails: FC<{
   showLayer?: boolean
   standalone?: boolean
   highlightPattern?: HighlightPattern
-}> = ({ isLoading, token, showLayer, standalone = false, highlightPattern}) => {
+}> = ({ isLoading, token, showLayer, standalone = false, highlightPattern }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 

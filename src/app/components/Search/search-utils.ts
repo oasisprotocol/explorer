@@ -111,6 +111,7 @@ export type ParsedSimpleSearchQuery = {
 export const textSearchMinimumLength = 3
 
 // A basic search strategy that searches for the whole text as a single token
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const simpleTextSearch = (input: string = '', t?: TFunction): ParsedSimpleSearchQuery => {
   const term = input.length >= textSearchMinimumLength ? input.toLowerCase() : undefined
   const warning =

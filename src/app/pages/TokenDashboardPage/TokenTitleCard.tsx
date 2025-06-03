@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next'
 import { RuntimeScope } from '../../../types/searchScope'
 import { HighlightedText } from '../../components/HighlightedText'
 import { TitleCard } from '../../components/PageLayout/TitleCard'
-import { HighlightPattern } from "../../components/HighlightedText";
+import { HighlightPattern } from '../../components/HighlightedText'
 
-export const TokenTitleCard: FC<{ scope: RuntimeScope; address: string; highlightPattern?: HighlightPattern }> = ({
-  scope,
-  address,
-  highlightPattern,
-}) => {
+export const TokenTitleCard: FC<{
+  scope: RuntimeScope
+  address: string
+  highlightPattern?: HighlightPattern
+}> = ({ scope, address, highlightPattern }) => {
   const { t } = useTranslation()
   const { isLoading, token } = useTokenInfo(scope, address)
 
@@ -45,7 +45,11 @@ export const TokenTitleCard: FC<{ scope: RuntimeScope; address: string; highligh
       isLoading={isLoading}
       title={
         <>
-          {token?.name ? <HighlightedText text={token.name} pattern={highlightPattern} />  : t('common.missing')}
+          {token?.name ? (
+            <HighlightedText text={token.name} pattern={highlightPattern} />
+          ) : (
+            t('common.missing')
+          )}
           &nbsp;
           <Typography
             component="span"

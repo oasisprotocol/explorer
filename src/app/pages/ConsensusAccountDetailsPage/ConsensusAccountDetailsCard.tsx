@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { Account } from '../../../oasis-nexus/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { ConsensusAccountDetailsView } from '../../components/Account/ConsensusAccountDetailsView'
-import { HighlightPattern } from "../.../../../components/HighlightedText"
+import { HighlightPattern } from '../.../../../components/HighlightedText'
 
 type ConsensusAccountDetailsCardProps = {
   account: Account | undefined
   isError: boolean
   isLoading: boolean
-  highlightPattern: HighlightPattern,
+  highlightPattern: HighlightPattern
 }
 
 export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({

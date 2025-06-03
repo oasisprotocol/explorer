@@ -25,11 +25,11 @@ import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAn
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 import { HighlightPattern } from '../../components/HighlightedText'
 
-export const TokenDetailsCard: FC<{ scope: RuntimeScope; address: string; highlighPattern?: HighlightPattern }> = ({
-  scope,
-  address,
-  highlighPattern,
-}) => {
+export const TokenDetailsCard: FC<{
+  scope: RuntimeScope
+  address: string
+  highlightPattern?: HighlightPattern
+}> = ({ scope, address, highlightPattern }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -49,7 +49,7 @@ export const TokenDetailsCard: FC<{ scope: RuntimeScope; address: string; highli
                 scope={account}
                 address={token.eth_contract_addr || token.contract_addr}
                 name={token.name}
-                highlightPattern={highlighPattern}
+                highlightPattern={highlightPattern}
               />
             </dd>
 
