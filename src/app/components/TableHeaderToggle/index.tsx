@@ -6,9 +6,9 @@ import { styled } from '@mui/material/styles'
 import { tooltipDelay } from '../../../styles/theme'
 
 const StyledButton = styled(Button)(() => ({
-  paddingLeft: '0px',
-  paddingRight: '0px',
+  padding: '0px',
   minWidth: 'auto',
+  height: 'auto',
 }))
 
 type TableHeaderToggleProps = {
