@@ -33,6 +33,6 @@ type HighlightedTrimmedTextProps = {
  */
 export const HighlightedTrimmedText: FC<HighlightedTrimmedTextProps> = props => {
   const { text, pattern = NoHighlights, fragmentLength, options } = props
-  const { part, match } = trimAroundMatch(text, pattern, { fragmentLength })
-  return <HighlightedText text={part} pattern={pattern} part={match} options={options} />
+  const { part } = trimAroundMatch(text, pattern, { fragmentLength })
+  return <HighlightedText text={part} pattern={pattern} options={options} />
 }

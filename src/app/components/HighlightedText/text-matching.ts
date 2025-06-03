@@ -16,16 +16,18 @@ export type MatchInfo = PositiveMatchInfo | typeof NO_MATCH
 /**
  * Identify pattern matches within a corpus, also considering normalization
  *
+ * If there is no match, an empty array is returned.
+ *
  * NOTE: depending on normalization options, the string length can change,
  * and in that case, match position can be incorrect.
  */
-export const findTextMatch = (
+export const findTextMatches = (
   rawCorpus: string | null | undefined,
-  search: (string | undefined)[],
+  pattern: (string | undefined)[],
   options: NormalizerOptions = {},
-): MatchInfo => {
+): PositiveMatchInfo[] => {
   const normalizedCorpus = normalizeTextForSearch(rawCorpus || '', options)
-  const matches: PositiveMatchInfo[] = search
+  const matches: PositiveMatchInfo[] = pattern
     .filter((s): s is string => !!s)
     .map(rawPattern => {
       const normalizedPattern = normalizeTextForSearch(rawPattern!, options)
@@ -38,6 +40,23 @@ export const findTextMatch = (
         : 'NO_MATCH'
     })
     .filter((m): m is PositiveMatchInfo => m !== NO_MATCH)
+  return matches
+}
+
+/**
+ * Identify the first pattern match within a corpus, also considering normalization
+ *
+ * If there is no match, NO_MATCH is returned.
+ *
+ * NOTE: depending on normalization options, the string length can change,
+ * and in that case, match position can be incorrect.
+ */
+export const findTextMatch = (
+  rawCorpus: string | null | undefined,
+  search: (string | undefined)[],
+  options: NormalizerOptions = {},
+): MatchInfo => {
+  const matches = findTextMatches(rawCorpus, search, options)
   return matches[0] ?? NO_MATCH
 }
 

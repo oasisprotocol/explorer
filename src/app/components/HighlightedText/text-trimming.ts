@@ -1,4 +1,5 @@
-import { MatchInfo, findTextMatch, NO_MATCH, NormalizerOptions } from './text-matching'
+import { NO_MATCH, NormalizerOptions, findTextMatches } from './text-matching'
+import { HighlightPattern } from './index'
 
 export interface TrimAroundOptions extends NormalizerOptions {
   /**
@@ -27,29 +28,35 @@ export interface TrimAroundOptions extends NormalizerOptions {
  */
 export function trimAroundMatch(
   corpus: string | undefined,
-  pattern: string | undefined,
+  pattern: HighlightPattern,
   options: TrimAroundOptions = {},
 ): {
   part: string | undefined
-  match: MatchInfo
 } {
   const { fragmentLength = 80, ...matchOptions } = options
 
   if (!corpus) {
     // there is nothing to see here
-    return { part: undefined, match: NO_MATCH }
+    return { part: undefined }
   }
 
   // do we have a match?
-  const match = pattern ? findTextMatch(corpus, [pattern], matchOptions) : NO_MATCH
+  const matches = findTextMatches(corpus, pattern, matchOptions)
+
+  const match = matches.length
+    ? {
+        startPos: Math.min(...matches.map(m => m.startPos)),
+        endPos: Math.max(...matches.map(m => m.endPos)),
+      }
+    : NO_MATCH
 
   if (corpus.length <= fragmentLength) {
     // the whole corpus fits into the max size, no need to cut.
-    return { part: corpus, match }
+    return { part: corpus }
   }
 
   // how much extra space do we have?
-  const buffer = fragmentLength - (pattern || '').length
+  const buffer = match === NO_MATCH ? fragmentLength : fragmentLength - (match.endPos - match.startPos)
 
   const matchStart = match === NO_MATCH ? 0 : match.startPos
 
@@ -63,14 +70,5 @@ export function trimAroundMatch(
   const part = prefix + corpus.substring(startPos, endPos) + postFix
 
   // compile the result
-  return {
-    part,
-    match:
-      match === NO_MATCH
-        ? NO_MATCH
-        : {
-            startPos: Math.max(0, matchStart - startPos + prefix.length),
-            endPos: Math.min(part.length, match.endPos - startPos + prefix.length),
-          },
-  }
+  return { part }
 }

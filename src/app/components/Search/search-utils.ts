@@ -201,4 +201,7 @@ export const useParamSearch = () => {
 
 export type SearchParams = ReturnType<typeof useParamSearch>
 
-export const getHighlightPattern = (searchQuery: string | undefined): HighlightPattern => searchQuery
+export const getHighlightPattern = (searchQuery: string | undefined): HighlightPattern =>
+  (searchQuery === undefined)
+    ? []
+    : [searchQuery]

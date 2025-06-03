@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { MatchInfo, findTextMatch, NO_MATCH, NormalizerOptions } from './text-matching'
-import { FC } from 'react'
+import { findTextMatches, NormalizerOptions, PositiveMatchInfo } from './text-matching'
+import { FC, ReactNode } from 'react'
 import { SxProps } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 
@@ -35,9 +35,9 @@ const defaultHighlight: HighlightOptions = {
   sx: defaultHighlightStyle,
 }
 
-export type HighlightPattern = string | undefined
+export type HighlightPattern = string[]
 
-export const NoHighlights: HighlightPattern = undefined
+export const NoHighlights: HighlightPattern = []
 
 interface HighlightedTextProps {
   /**
@@ -48,7 +48,7 @@ interface HighlightedTextProps {
   /**
    * The pattern to search for (and highlight)
    */
-  pattern: HighlightPattern | undefined
+  pattern?: HighlightPattern
 
   /**
    * Instructions about which part to highlight.
@@ -56,7 +56,7 @@ interface HighlightedTextProps {
    * If not given, we will just search for the pattern.
    * If given, this will be executed, and the pattern will not even be considered.
    */
-  part?: MatchInfo
+  partsToHighlight?: PositiveMatchInfo[]
 
   /**
    * Options for highlighting (case sensitivity, styling, etc.)
@@ -72,28 +72,50 @@ interface HighlightedTextProps {
 export const HighlightedText: FC<HighlightedTextProps> = ({
   text,
   pattern = NoHighlights,
-  part,
+  partsToHighlight,
   options = defaultHighlight,
 }) => {
   const { sx = defaultHighlightStyle, findOptions = {} } = options
 
   // Have we been told what to highlight exactly? If not, look for the pattern
-  const task = part ?? findTextMatch(text, [pattern], findOptions)
+  const matches = partsToHighlight ?? findTextMatches(text, pattern, findOptions)
 
   if (text === undefined) return undefined // Nothing to display
-  if (task === NO_MATCH) return <span>{text}</span> // We don't have to highlight anything
+  if (!matches.length) return text // We don't have to highlight anything
 
-  const beginning = text.substring(0, task.startPos)
-  const focus = text.substring(task.startPos, task.endPos)
-  const end = text.substring(task.endPos)
-
-  return (
-    <span style={{ textWrap: 'nowrap' }}>
-      {beginning}
-      <Box component="mark" sx={sx}>
-        {focus}
-      </Box>
-      {end}
-    </span>
+  const sortedMatches = matches.sort((a, b) =>
+    a.startPos > b.startPos ? 1 : a.startPos < b.startPos ? -1 : 0,
   )
+
+  const pieces: ReactNode[] = []
+  let processedChars = 0
+  let processedTasks = 0
+
+  while (processedChars < text.length) {
+    // Do we still have tasks?
+    if (processedTasks < sortedMatches.length) {
+      // Yes, there are more tasks
+      const task = sortedMatches[processedTasks]
+      if (task.startPos < processedChars) {
+        // This task with collude
+        processedTasks++ // just skip this task
+      } else {
+        // We use this task
+        pieces.push(text.substring(processedChars, task.startPos))
+        const focus = text.substring(task.startPos, task.endPos)
+        pieces.push(
+          <Box key={processedTasks} component="mark" sx={sx}>
+            {focus}
+          </Box>,
+        )
+        processedChars = task.endPos
+      }
+    } else {
+      // No more tasks, just grab the remaining string
+      pieces.push(text.substring(processedChars))
+      processedChars = text.length
+    }
+  }
+
+  return <span style={{ textWrap: 'nowrap' }}>{pieces}</span>
 }
