@@ -29,6 +29,7 @@ import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
 import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
 import { RoflAppDetailsViewSearchResult } from '../RoflAppDetailsPage'
+import { getHighlightPattern } from "../../components/Search/search-utils";
 
 /**
  * Component for displaying a list of search results
@@ -108,7 +109,7 @@ export const SearchResultsList: FC<{
         <ResultsGroupByType
           title={t('search.results.tokens.title')}
           results={searchResults.filter((item): item is TokenResult => item.resultType === 'token')}
-          resultComponent={item => <TokenDetails token={item} highlightPattern={searchQuery} showLayer />}
+          resultComponent={item => <TokenDetails token={item} highlightPattern={getHighlightPattern(searchQuery)} showLayer />}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
         />
@@ -123,7 +124,7 @@ export const SearchResultsList: FC<{
                 isError={false}
                 account={item as Account}
                 showLayer={true}
-                highlightPattern={searchQuery}
+                highlightPattern={getHighlightPattern(searchQuery)}
               />
             ) : (
               <RuntimeAccountDetailsView
@@ -132,7 +133,7 @@ export const SearchResultsList: FC<{
                 account={item as RuntimeAccount}
                 tokenPrices={tokenPrices}
                 showLayer={true}
-                highlightPattern={searchQuery}
+                highlightPattern={getHighlightPattern(searchQuery)}
               />
             )
           }
@@ -150,7 +151,7 @@ export const SearchResultsList: FC<{
               account={item}
               tokenPrices={tokenPrices}
               showLayer={true}
-              highlightPattern={searchQuery}
+              highlightPattern={getHighlightPattern(searchQuery)}
             />
           )}
           link={acc => RouteUtils.getAccountRoute(acc, acc.address_eth ?? acc.address)}
@@ -161,7 +162,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.roflApps.title')}
           results={searchResults.filter((item): item is RoflAppResult => item.resultType === 'roflApp')}
           resultComponent={item => (
-            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={searchQuery} />
+            <RoflAppDetailsViewSearchResult isLoading={false} app={item} highlightPattern={getHighlightPattern(searchQuery)} />
           )}
           link={item => RouteUtils.getRoflAppRoute(item.network, item.id)}
           linkLabel={t('search.results.roflApps.viewLink')}
@@ -171,7 +172,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.proposals.title')}
           results={searchResults.filter((item): item is ProposalResult => item.resultType === 'proposal')}
           resultComponent={item => (
-            <ProposalDetailView proposal={item} highlightPattern={searchQuery} showLayer />
+            <ProposalDetailView proposal={item} highlightPattern={getHighlightPattern(searchQuery)} showLayer />
           )}
           link={proposal => RouteUtils.getProposalRoute(proposal.network, proposal.id)}
           linkLabel={t('search.results.proposals.viewLink')}

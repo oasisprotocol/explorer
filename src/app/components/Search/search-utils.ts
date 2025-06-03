@@ -10,6 +10,7 @@ import {
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
 import { useNetworkParam } from '../../hooks/useScopeParam'
+import { HighlightPattern } from '../HighlightedText'
 
 type LayerSuggestions = {
   suggestedBlock: string
@@ -199,3 +200,5 @@ export const useParamSearch = () => {
 }
 
 export type SearchParams = ReturnType<typeof useParamSearch>
+
+export const getHighlightPattern = (searchQuery: string | undefined): HighlightPattern => searchQuery

@@ -15,6 +15,7 @@ import { DappBanner } from '../../components/DappBanner'
 import { RuntimeScope } from '../../../types/searchScope'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { codeContainerId, holdersContainerId, inventoryContainerId } from '../../utils/tabAnchors'
+import { getHighlightPattern } from '../../components/Search/search-utils'
 
 export type TokenDashboardContext = {
   scope: RuntimeScope
@@ -28,7 +29,7 @@ export const TokenDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = searchQuery
+  const highlightPattern = getHighlightPattern(searchQuery)
   const { isError } = useTokenInfo(scope, address)
 
   if (isError) {
