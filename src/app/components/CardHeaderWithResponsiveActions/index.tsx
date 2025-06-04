@@ -2,6 +2,16 @@ import CardHeader, { cardHeaderClasses } from '@mui/material/CardHeader'
 import { styled } from '@mui/material/styles'
 
 export const CardHeaderWithResponsiveActions = styled(CardHeader)(({ theme }) => ({
+  [`.${cardHeaderClasses.content}`]: {
+    flex: 0,
+    textWrap: 'nowrap',
+  },
+  [`.${cardHeaderClasses.action}`]: {
+    marginLeft: theme.spacing(4),
+    flex: 1,
+    alignSelf: 'auto',
+    textAlign: 'end',
+  },
   [theme.breakpoints.down('md')]: {
     display: 'inline',
     alignItems: 'flex-start',

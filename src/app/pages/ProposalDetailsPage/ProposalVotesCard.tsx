@@ -16,6 +16,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary'
 import Box from '@mui/material/Box'
 import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { CardEmptyState } from '../../components/CardEmptyState'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -115,6 +116,7 @@ export const ProposalVotesView: FC = () => {
 
 export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
+  const { isMobile, isTablet } = useScreenSize()
 
   const { wantedType, setWantedType, wantedNameInput, setWantedNameInput, nameError } = useVoteFiltering()
 
@@ -122,15 +124,24 @@ export const ProposalVotesCard: FC = () => {
     <SubPageCard>
       <CardHeaderWithResponsiveActions
         action={
-          <>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: isTablet ? 'wrap' : 'nowrap',
+              gap: 4,
+              paddingRight: isMobile ? 4 : 0,
+            }}
+          >
+            <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
             <TableSearchBar
               value={wantedNameInput}
               onChange={setWantedNameInput}
               placeholder={t('networkProposal.searchForVoter')}
               warning={nameError}
+              fullWidth={isTablet}
             />
-            <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
-          </>
+          </Box>
         }
         disableTypography
         component="h2"
