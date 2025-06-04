@@ -22,6 +22,7 @@ import { ChartDuration } from '../../utils/chart-utils'
 import { Network } from '../../../types/network'
 import { TransactionsChartCard } from '../ParatimeDashboardPage/TransactionsChartCard'
 import { ActiveAccounts } from '../ParatimeDashboardPage/ActiveAccounts'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
   marginBottom: theme.spacing(4),
@@ -92,7 +93,7 @@ type RuntimeProps = {
   runtime: Runtime
 }
 
-export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
   const query = useGetRuntimeStatus(network, runtime)
   const { outOfDate } = useRuntimeFreshness({
     network,
@@ -111,6 +112,15 @@ export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network
         outOfDate,
       }}
     />
+  )
+}
+
+export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+  const { t } = useTranslation()
+  return (
+    <ErrorBoundary light={true} fallbackContent={<b>{t('paratimes.canNotReadStatus', { name: runtime })}</b>}>
+      <EnabledRuntimePreviewContent network={network} runtime={runtime} prominentItem={prominentItem} />
+    </ErrorBoundary>
   )
 }
 

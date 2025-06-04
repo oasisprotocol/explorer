@@ -8,18 +8,29 @@ import Link from '@mui/material/Link'
 import { useGetConsensusAccounts } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { AccountList } from 'app/components/AccountList'
 import { RouteUtils } from 'app/utils/route-utils'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const AccountsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
-  const { t } = useTranslation()
+const AccountsContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { network } = scope
   // TODO: Add query param to sort by rank when API is ready
   const accountsQuery = useGetConsensusAccounts(network, { limit })
+  return (
+    <AccountList
+      accounts={accountsQuery.data?.data.accounts}
+      isLoading={accountsQuery.isLoading}
+      limit={limit}
+      pagination={false}
+    />
+  )
+}
 
+export const AccountsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
+  const { t } = useTranslation()
   return (
     <Card>
       <CardHeader
@@ -37,12 +48,9 @@ export const AccountsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <AccountList
-          accounts={accountsQuery.data?.data.accounts}
-          isLoading={accountsQuery.isLoading}
-          limit={limit}
-          pagination={false}
-        />
+        <ErrorBoundary light={true}>
+          <AccountsContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusTransactions } from '../../components/Transactions'
 import {
   NUMBER_OF_ITEMS_ON_DASHBOARD as limit,
@@ -20,14 +20,13 @@ import {
 import Box from '@mui/material/Box'
 import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
-export const LatestConsensusTransactions: FC<{
-  scope: SearchScope
+const LatestConsensusTransactionsContent: FC<{
+  scope: ConsensusScope
   method: ConsensusTxMethodFilterOption
   setMethod: (value: ConsensusTxMethodFilterOption) => void
-}> = ({ scope, method, setMethod }) => {
-  const { isMobile } = useScreenSize()
-  const { t } = useTranslation()
+}> = ({ scope, method }) => {
   const { network } = scope
 
   const transactionsQuery = useGetConsensusTransactions(
@@ -43,6 +42,25 @@ export const LatestConsensusTransactions: FC<{
     },
   )
 
+  return (
+    <ConsensusTransactions
+      transactions={transactionsQuery.data?.data.transactions}
+      isLoading={transactionsQuery.isLoading}
+      limit={limit}
+      pagination={false}
+      verbose={false}
+      filtered={method !== 'any'}
+    />
+  )
+}
+
+export const LatestConsensusTransactions: FC<{
+  scope: ConsensusScope
+  method: ConsensusTxMethodFilterOption
+  setMethod: (value: ConsensusTxMethodFilterOption) => void
+}> = ({ scope, method, setMethod }) => {
+  const { isMobile } = useScreenSize()
+  const { t } = useTranslation()
   return (
     <Card>
       <CardHeader
@@ -72,14 +90,9 @@ export const LatestConsensusTransactions: FC<{
         <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand />
       )}
       <CardContent>
-        <ConsensusTransactions
-          transactions={transactionsQuery.data?.data.transactions}
-          isLoading={transactionsQuery.isLoading}
-          limit={limit}
-          pagination={false}
-          verbose={false}
-          filtered={method !== 'any'}
-        />
+        <ErrorBoundary light={true}>
+          <LatestConsensusTransactionsContent scope={scope} method={method} setMethod={setMethod} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

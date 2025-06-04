@@ -9,13 +9,14 @@ import { useGetConsensusValidators } from '../../../oasis-nexus/api'
 import { Validators } from '../../components/Validators'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { COLORS } from '../../../styles/theme/colors'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { RouteUtils } from 'app/utils/route-utils'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
+const ValidatorsTitle: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const { network } = scope
 
@@ -23,16 +24,41 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
   const validators = validatorsQuery.data?.data
 
   return (
+    <CardHeaderWithCounter
+      label={t('validator.listTitle')}
+      totalCount={validators?.total_count}
+      isTotalCountClipped={validators?.is_total_count_clipped}
+    />
+  )
+}
+
+const ValidatorsContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
+  const { network } = scope
+  const validatorsQuery = useGetConsensusValidators(network, { limit })
+
+  return (
+    <Validators
+      validators={validatorsQuery.data?.data.validators}
+      stats={validatorsQuery.data?.data.stats}
+      isLoading={validatorsQuery.isLoading}
+      limit={limit}
+      pagination={false}
+    />
+  )
+}
+
+export const ValidatorsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
+  const { t } = useTranslation()
+
+  return (
     <Card>
       <CardHeader
         disableTypography
         component="h3"
         title={
-          <CardHeaderWithCounter
-            label={t('validator.listTitle')}
-            totalCount={validators?.total_count}
-            isTotalCountClipped={validators?.is_total_count_clipped}
-          />
+          <ErrorBoundary fallbackContent={t('validator.listTitle')}>
+            <ValidatorsTitle scope={scope} />
+          </ErrorBoundary>
         }
         action={
           <Link
@@ -45,13 +71,9 @@ export const ValidatorsCard: FC<{ scope: SearchScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <Validators
-          validators={validatorsQuery.data?.data.validators}
-          stats={validatorsQuery.data?.data.stats}
-          isLoading={validatorsQuery.isLoading}
-          limit={limit}
-          pagination={false}
-        />
+        <ErrorBoundary light={true}>
+          <ValidatorsContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

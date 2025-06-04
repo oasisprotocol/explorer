@@ -676,7 +676,8 @@
     "listTitle": "ParaTimes",
     "noData": "No data available",
     "nodes": "Nodes:",
-    "outdated": "Out-of-date"
+    "outdated": "Out-of-date",
+    "canNotReadStatus": "Can't load status paratime '{{name}}'."
   },
   "pontusx": {
     "devnet": "Pontus-X devnet",
