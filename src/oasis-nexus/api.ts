@@ -536,7 +536,7 @@ export const useGetRuntimeAccountsAddresses = (
     // The number of iterations is constant here, so we will always call the hook the same number.
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetRuntimeAccountsAddress(
-      target?.network ?? Network.mainnet,
+      target?.network ?? 'mainnet',
       target?.layer ?? 'emerald',
       target?.address ?? '',
       {
@@ -563,7 +563,7 @@ export const useGetConsensusAccountsAddresses = (
   const queries = MASS_LOAD_INDEXES.map((i): ConsensusTarget | undefined => targets[i]).map(target =>
     // The number of iterations is constant here, so we will always call the hook the same number.
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useGetConsensusAccountsAddress(target?.network ?? Network.mainnet, target?.address ?? '', {
+    useGetConsensusAccountsAddress(target?.network ?? 'mainnet', target?.address ?? '', {
       query: { enabled: queryOptions.enabled && !!target?.address },
     }),
   )

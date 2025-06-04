@@ -16,7 +16,7 @@ export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
 })
 
 export const getNetworkIcons = ({ size }: { size?: number } = {}): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon sx={{ fontSize: size }} />,
-  [Network.testnet]: <TestnetIcon sx={{ fontSize: size }} />,
-  [Network.localnet]: <ConstructionIcon sx={{ fontSize: size }} />,
+  mainnet: <MainnetIcon sx={{ fontSize: size }} />,
+  testnet: <TestnetIcon sx={{ fontSize: size }} />,
+  localnet: <ConstructionIcon sx={{ fontSize: size }} />,
 })

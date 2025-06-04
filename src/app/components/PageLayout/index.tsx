@@ -9,7 +9,6 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { NetworkOfflineBanner, RuntimeOfflineBanner, ConsensusOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiReachable } from '../OfflineBanner/hook'
-import { Network } from '../../../types/network'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
@@ -23,7 +22,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
   const theme = useTheme()
   const { isMobile, isTablet } = useScreenSize()
   const scope = useScopeParam()
-  const isApiReachable = useIsApiReachable(scope?.network || Network.mainnet).reachable
+  const isApiReachable = useIsApiReachable(scope?.network ?? 'mainnet').reachable
 
   return (
     <>

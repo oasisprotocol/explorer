@@ -38,9 +38,7 @@ const ParaTimeSelectorGlow = styled(Box, {
   width: '130vw',
   height: '130vw',
   marginTop: '-5vh',
-  backgroundImage: `url("${
-    network === Network.testnet ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
-  }")`,
+  backgroundImage: `url("${network === 'testnet' ? paratimeSelectorGlowTestnet : paratimeSelectorGlow}")`,
   transitionProperty: 'background-image',
   transitionDuration: `${theme.transitions.duration.complex}ms`,
   transitionTimingFunction: theme.transitions.easing.easeInOut,
@@ -74,9 +72,7 @@ const ParaTimeSelectorGlobe = styled(Box, {
   transform: 'translateX(-50%)',
   color: theme.palette.layout.main,
   backgroundImage: `url("${
-    network === Network.testnet || network === Network.localnet
-      ? paratimeSelectorGlobeTestnet
-      : paratimeSelectorGlobe
+    network === 'testnet' || network === 'localnet' ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
   }")`,
   transitionProperty: 'background-image',
   transitionDuration: `${theme.transitions.duration.complex}ms`,
@@ -293,7 +289,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
           )}
         </ParaTimeSelectorGlobe>
         {!fixedNetwork && step === ParaTimeSelectorStep.Explore && (
-          <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? Network.mainnet)} />
+          <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? 'mainnet')} />
         )}
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip.current && (

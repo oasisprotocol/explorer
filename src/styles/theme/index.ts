@@ -18,11 +18,11 @@ export const getThemeForScope = (network: Network, layer?: Layer): Theme => {
   if (specialTheme) return specialTheme
 
   switch (network) {
-    case Network.mainnet:
+    case 'mainnet':
       return defaultTheme
-    case Network.testnet:
+    case 'testnet':
       return testnetTheme
-    case Network.localnet:
+    case 'localnet':
       return localnetTheme
   }
 }

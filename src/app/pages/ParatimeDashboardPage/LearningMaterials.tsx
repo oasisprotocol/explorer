@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Grid from '@mui/material/Unstable_Grid2'
 import { docs } from '../../utils/externalLinks'
 import { getLayerLabels } from '../../utils/content'
-import { Network } from '../../../types/network'
 import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { RuntimeScope } from '../../../types/searchScope'
 import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
@@ -24,7 +23,7 @@ const getContent = (t: TFunction) => {
   const labels = getLayerLabels(t)
 
   return {
-    [Network.mainnet]: {
+    mainnet: {
       emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),
@@ -63,7 +62,7 @@ const getContent = (t: TFunction) => {
       pontusxdev: undefined,
       pontusxtest: undefined,
     },
-    [Network.testnet]: {
+    testnet: {
       emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),
@@ -134,7 +133,7 @@ const getContent = (t: TFunction) => {
         },
       },
     },
-    [Network.localnet]: {
+    localnet: {
       emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { isConsensusBlock, isConsensusTransaction, SearchResults } from './hooks'
 import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
-import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { RuntimeAccount } from '../../../oasis-nexus/api'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -21,7 +20,7 @@ export function useRedirectIfSingleResult(
 
   if (shouldRedirect) {
     const result = results[0]
-    shouldRedirect = scope ? isItemInScope(result, scope) : result.network === Network.mainnet
+    shouldRedirect = scope ? isItemInScope(result, scope) : result.network === 'mainnet'
   }
 
   let redirectTo: string | undefined
