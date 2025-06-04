@@ -2,7 +2,6 @@ import { useRouteLoaderData, useParams } from 'react-router-dom'
 import { Network } from '../../types/network'
 import { AppError, AppErrors } from '../../types/errors'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../types/searchScope'
-import { Layer } from '../../oasis-nexus/api'
 
 export const useNetworkParam = (): Network | undefined => {
   const { network } = useParams()
@@ -35,7 +34,7 @@ export const useRequiredScopeParam = (): SearchScope => {
 export const useRuntimeScope = (): RuntimeScope => {
   const { network, layer } = useRequiredScopeParam()
 
-  if (layer === Layer.consensus) throw new AppError(AppErrors.UnsupportedLayer)
+  if (layer === 'consensus') throw new AppError(AppErrors.UnsupportedLayer)
 
   return { network, layer }
 }
@@ -46,7 +45,7 @@ export const useRuntimeScope = (): RuntimeScope => {
 export const useConsensusScope = (): ConsensusScope => {
   const { network, layer } = useRequiredScopeParam()
 
-  if (layer !== Layer.consensus) throw new AppError(AppErrors.UnsupportedLayer)
+  if (layer !== 'consensus') throw new AppError(AppErrors.UnsupportedLayer)
 
   return { network, layer }
 }

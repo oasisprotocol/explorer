@@ -44,7 +44,7 @@ export type AccountNameSearchRuntimeMatch = {
 
 export type AccountNameSearchConsensusMatch = {
   network: Network
-  layer: typeof Layer.consensus
+  layer: 'consensus'
   address: Address
 }
 

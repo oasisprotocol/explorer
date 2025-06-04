@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { Layer, Validator } from '../../../oasis-nexus/api'
+import { Validator } from '../../../oasis-nexus/api'
 import { COLORS } from 'styles/theme/colors'
 import { ValidatorImage } from 'app/components/Validators/ValidatorImage'
 import { TitleCard } from 'app/components/PageLayout/TitleCard'
@@ -36,7 +36,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({
               <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
               <Box sx={{ paddingLeft: 4 }}>
                 <AccountLink
-                  scope={{ network, layer: Layer.consensus }}
+                  scope={{ network, layer: 'consensus' }}
                   address={validator.entity_address}
                   showOnlyAddress
                 />

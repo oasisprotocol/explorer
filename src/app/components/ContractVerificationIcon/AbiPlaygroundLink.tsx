@@ -15,16 +15,16 @@ export const AbiPlaygroundLink: FC<{
 
   const scopeToPlaygroundURL: Record<Network, Partial<Record<Layer, string>>> = {
     [Network.mainnet]: {
-      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42262&contractAddress=${address_eth}`,
-      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23294&contractAddress=${address_eth}`,
+      emerald: `${externalLinks.dapps.abiPlayground}?network=42262&contractAddress=${address_eth}`,
+      sapphire: `${externalLinks.dapps.abiPlayground}?network=23294&contractAddress=${address_eth}`,
     },
     [Network.testnet]: {
-      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42261&contractAddress=${address_eth}`,
-      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23295&contractAddress=${address_eth}`,
+      emerald: `${externalLinks.dapps.abiPlayground}?network=42261&contractAddress=${address_eth}`,
+      sapphire: `${externalLinks.dapps.abiPlayground}?network=23295&contractAddress=${address_eth}`,
     },
     [Network.localnet]: {
-      [Layer.emerald]: `${externalLinks.dapps.abiPlayground}?network=42260&contractAddress=${address_eth}`,
-      [Layer.sapphire]: `${externalLinks.dapps.abiPlayground}?network=23293&contractAddress=${address_eth}`,
+      emerald: `${externalLinks.dapps.abiPlayground}?network=42260&contractAddress=${address_eth}`,
+      sapphire: `${externalLinks.dapps.abiPlayground}?network=23293&contractAddress=${address_eth}`,
     },
   }
   const abiPlaygroundLinkProps = {

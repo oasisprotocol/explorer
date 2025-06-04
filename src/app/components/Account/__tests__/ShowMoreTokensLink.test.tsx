@@ -7,7 +7,7 @@ import { Network } from '../../../../types/network'
 
 const mockedAccount = {
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
-  layer: Layer.emerald,
+  layer: 'emerald',
   network: Network.mainnet,
 } as RuntimeAccount
 
