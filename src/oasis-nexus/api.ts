@@ -1491,7 +1491,7 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
  * We will use this custom serializer when we need to send an array.
  */
 const paramSerializerWithComma = (params: Record<string, any>) => {
-  const result = Object.entries(params)
+  return Object.entries(params)
     .map(([key, value]) => {
       if (Array.isArray(value)) {
         return `${key}=${value.map(v => encodeURIComponent(v)).join(',')}`
@@ -1499,8 +1499,6 @@ const paramSerializerWithComma = (params: Record<string, any>) => {
       return `${key}=${value}`
     })
     .join('&')
-  console.log('Result is', result)
-  return ''
 }
 
 export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
