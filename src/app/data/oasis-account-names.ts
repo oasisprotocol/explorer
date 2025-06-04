@@ -22,19 +22,19 @@ import { getOasisAddress } from '../utils/helpers'
 import { isUrlSafe } from '../utils/url'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
-  [Network.mainnet]: {
+  mainnet: {
     consensus: externalLinks.api.oasis_named_addresses_mainnet_consensus,
     emerald: externalLinks.api.oasis_named_addresses_mainnet_emerald,
     sapphire: externalLinks.api.oasis_named_addresses_mainnet_sapphire,
   },
-  [Network.testnet]: {
+  testnet: {
     consensus: externalLinks.api.oasis_named_addresses_testnet_consensus,
     emerald: externalLinks.api.oasis_named_addresses_testnet_emerald,
     sapphire: externalLinks.api.oasis_named_addresses_testnet_sapphire,
     pontusxdev: externalLinks.api.oasis_named_addresses_testnet_pontusxdev,
     pontusxtest: externalLinks.api.oasis_named_addresses_testnet_pontusxtest,
   },
-  [Network.localnet]: {
+  localnet: {
     consensus: undefined,
     emerald: undefined,
     sapphire: undefined,

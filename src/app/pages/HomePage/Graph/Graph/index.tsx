@@ -603,7 +603,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover('emerald', setHoveredLayer)}
         >
-          {network === Network.mainnet && (
+          {network === 'mainnet' && (
             <ellipse cx="195.702" cy="94.6959" rx="31.6963" ry="31.6959" fill="#030092" />
           )}
           <ellipse cx="195.702" cy="94.6959" rx="31.6963" ry="31.6959" fill={graphTheme.emeraldCircle} />
@@ -655,7 +655,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...preventDoubleClick}
           {...handleHover('sapphire', setHoveredLayer)}
         >
-          {network === Network.mainnet && (
+          {network === 'mainnet' && (
             <ellipse cx="123.702" cy="302.696" rx="31.6963" ry="31.6959" fill="#030092" />
           )}
           <ellipse cx="123.702" cy="302.696" rx="31.6963" ry="31.6959" fill={graphTheme.sapphireCircle} />
@@ -779,7 +779,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           {...handleHover('cipher', setHoveredLayer)}
         >
           <ellipse cx="306.702" cy="201.696" rx="31.6963" ry="31.6959" fill={graphTheme.cipherCircleFill} />
-          {network === Network.mainnet && (
+          {network === 'mainnet' && (
             <ellipse cx="306.702" cy="201.696" rx="31.6963" ry="31.6959" fill={graphTheme.cipherCircle} />
           )}
           <ellipse
@@ -815,7 +815,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           )}
         </g>
 
-        {network === Network.testnet && (
+        {network === 'testnet' && (
           <defs>
             <filter
               id="filter0_di_6093_290291"
@@ -919,7 +919,7 @@ const GraphCmp: ForwardRefRenderFunction<SVGSVGElement, GraphProps> = (
           </defs>
         )}
 
-        {network === Network.mainnet && (
+        {network === 'mainnet' && (
           <defs>
             <filter
               id="filter0_dii_6093_287252"

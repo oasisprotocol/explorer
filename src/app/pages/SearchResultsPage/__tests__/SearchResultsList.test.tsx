@@ -7,7 +7,6 @@ import {
   suggestedParsedAccountResult,
   suggestedParsedBlock,
 } from '../../../utils/test-fixtures'
-import { Network } from '../../../../types/network'
 import { SearchResultsList } from '../SearchResultsList'
 import { Ticker } from '../../../../types/ticker'
 
@@ -55,7 +54,7 @@ describe('SearchResultsView', () => {
           },
         }}
         title="test search"
-        networkForTheme={Network.mainnet}
+        networkForTheme="mainnet"
       />,
     )
     expect(screen.getByText('1,396,255')).toBeInTheDocument()
@@ -78,7 +77,7 @@ describe('SearchResultsView', () => {
       <SearchResultsList
         searchResults={[suggestedParsedAccountResult]}
         title="test search"
-        networkForTheme={Network.mainnet}
+        networkForTheme="mainnet"
         tokenPrices={{
           [Ticker.ROSE]: {
             ticker: Ticker.ROSE,

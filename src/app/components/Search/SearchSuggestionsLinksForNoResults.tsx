@@ -12,7 +12,6 @@ import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SxProps } from '@mui/material/styles'
-import { Network } from '../../../types/network'
 
 interface Props {
   scope: SearchScope | undefined
@@ -31,7 +30,7 @@ export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope }) => {
   const { isMobile } = useScreenSize()
   const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
     (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
-    searchSuggestionTerms[Network.mainnet].sapphire!
+    searchSuggestionTerms.mainnet.sapphire!
   const defaultComponents = {
     OptionalBreak: <OptionalBreak />,
     BlockIcon: isMobile ? empty : <WidgetsIcon sx={iconSxProps} />,

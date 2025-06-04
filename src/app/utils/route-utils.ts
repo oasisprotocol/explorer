@@ -67,10 +67,10 @@ function invertSpecialScopePaths() {
 invertSpecialScopePaths()
 
 export const hiddenScopes: SearchScope[] = [
-  { network: Network.testnet, layer: 'pontusxdev' },
-  { network: Network.mainnet, layer: 'pontusxdev' },
-  { network: Network.mainnet, layer: 'pontusxtest' },
-  // { network: Network.mainnet, layer: 'sapphire' }, // This is only for testing
+  { network: 'testnet', layer: 'pontusxdev' },
+  { network: 'mainnet', layer: 'pontusxdev' },
+  { network: 'mainnet', layer: 'pontusxtest' },
+  // { network: 'mainnet', layer: 'sapphire' }, // This is only for testing
 ]
 
 export const mergeNetworksInLayerSelector = false
@@ -95,7 +95,7 @@ const formatPreservedParams = (searchParams: URLSearchParams | undefined, params
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
-    [Network.mainnet]: {
+    mainnet: {
       emerald: true,
       sapphire: true,
       cipher: false,
@@ -103,7 +103,7 @@ export abstract class RouteUtils {
       pontusxtest: false,
       consensus: true,
     },
-    [Network.testnet]: {
+    testnet: {
       emerald: true,
       sapphire: true,
       cipher: false,
@@ -111,7 +111,7 @@ export abstract class RouteUtils {
       pontusxtest: true,
       consensus: true,
     },
-    [Network.localnet]: {
+    localnet: {
       emerald: import.meta.env.REACT_APP_LOCALNET_EMERALD === 'true',
       sapphire: import.meta.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
       cipher: false,

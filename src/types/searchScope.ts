@@ -22,7 +22,7 @@ export interface ConsensusScope {
 }
 
 export const MainnetEmerald: SearchScope = {
-  network: Network.mainnet,
+  network: 'mainnet',
   layer: 'emerald',
 }
 

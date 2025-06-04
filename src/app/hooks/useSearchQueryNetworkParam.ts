@@ -12,14 +12,14 @@ export const useSearchQueryNetworkParam = (): {
   setNetwork: (network: Network) => void
 } => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const networkQueryParam = fixedNetwork ?? searchParams.get('network') ?? Network.mainnet
+  const networkQueryParam = fixedNetwork ?? searchParams.get('network') ?? 'mainnet'
   if (!RouteUtils.getEnabledNetworks().includes(networkQueryParam as any)) {
     throw AppErrors.InvalidUrl
   }
   return {
     network: networkQueryParam as Network,
     setNetwork: network => {
-      if (network === Network.mainnet) {
+      if (network === 'mainnet') {
         searchParams.delete('network')
       } else {
         searchParams.set('network', network)

@@ -4,7 +4,7 @@ import { Layer } from '../../oasis-nexus/api'
 import { faucets } from './externalLinks'
 
 const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<Ticker, string>>>>>> = {
-  [Network.testnet]: {
+  testnet: {
     consensus: { [Ticker.TEST]: faucets.oasisTestnet },
     emerald: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=emerald` },
     sapphire: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=sapphire` },

@@ -14,15 +14,15 @@ export const AbiPlaygroundLink: FC<{
   const { t } = useTranslation()
 
   const scopeToPlaygroundURL: Record<Network, Partial<Record<Layer, string>>> = {
-    [Network.mainnet]: {
+    mainnet: {
       emerald: `${externalLinks.dapps.abiPlayground}?network=42262&contractAddress=${address_eth}`,
       sapphire: `${externalLinks.dapps.abiPlayground}?network=23294&contractAddress=${address_eth}`,
     },
-    [Network.testnet]: {
+    testnet: {
       emerald: `${externalLinks.dapps.abiPlayground}?network=42261&contractAddress=${address_eth}`,
       sapphire: `${externalLinks.dapps.abiPlayground}?network=23295&contractAddress=${address_eth}`,
     },
-    [Network.localnet]: {
+    localnet: {
       emerald: `${externalLinks.dapps.abiPlayground}?network=42260&contractAddress=${address_eth}`,
       sapphire: `${externalLinks.dapps.abiPlayground}?network=23293&contractAddress=${address_eth}`,
     },

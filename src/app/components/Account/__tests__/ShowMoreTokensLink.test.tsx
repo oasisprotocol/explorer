@@ -1,14 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/__tests__/renderWithProviders.test'
-import { ShowMoreTokensLink } from './../ShowMoreTokensLink'
-import { Layer, EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-nexus/api'
-import { Network } from '../../../../types/network'
+import { ShowMoreTokensLink } from '../ShowMoreTokensLink'
+import { EvmTokenType, RuntimeAccount, Token } from '../../../../oasis-nexus/api'
 
 const mockedAccount = {
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
   layer: 'emerald',
-  network: Network.mainnet,
+  network: 'mainnet',
 } as RuntimeAccount
 
 const mockedToken1: Token = {

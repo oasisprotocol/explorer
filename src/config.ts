@@ -210,16 +210,16 @@ export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
 export const showFiatValues = import.meta.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
 
 export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }
 
 export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }

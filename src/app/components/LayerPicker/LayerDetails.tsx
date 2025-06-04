@@ -34,7 +34,7 @@ type LayerDetailsContent = {
 type NetworkDetails = Partial<Record<Layer, LayerDetailsContent>>
 type Details = Record<Network, NetworkDetails>
 const getDetails = (t: TFunction): Details => ({
-  [Network.mainnet]: {
+  mainnet: {
     emerald: {
       description: t('layerPicker.mainnet.emerald'),
       rpcHttp: 'https://emerald.oasis.io',
@@ -52,7 +52,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.sapphire,
     },
   },
-  [Network.testnet]: {
+  testnet: {
     emerald: {
       description: t('layerPicker.testnet.emerald'),
       rpcHttp: 'https://testnet.emerald.oasis.io',
@@ -86,7 +86,7 @@ const getDetails = (t: TFunction): Details => ({
       docs: docs.pontusx1,
     },
   },
-  [Network.localnet]: {
+  localnet: {
     sapphire: {
       chainHexId: '0x5afd',
       chainDecimalId: '23293',

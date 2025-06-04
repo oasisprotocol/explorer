@@ -52,7 +52,7 @@ export const NoResults: FC<{
 export const NoResultsWhatsoever: FC = () => <NoResults />
 export const NoResultsOnNetwork: FC<{ network: Network }> = ({ network }) => <NoResults network={network} />
 
-export const NoResultsOnMainnet: FC = () => <NoResultsOnNetwork network={Network.mainnet} />
+export const NoResultsOnMainnet: FC = () => <NoResultsOnNetwork network="mainnet" />
 
 export const NoResultsInScope: FC<{ scope: SearchScope }> = ({ scope }) => (
   <NoResults network={scope.network} layer={scope.layer} />
