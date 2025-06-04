@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { isConsensusBlock, isConsensusTransaction, SearchResults } from './hooks'
-import { encodeStringForUrl, RouteUtils } from '../../utils/route-utils'
+import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
@@ -53,7 +53,7 @@ export function useRedirectIfSingleResult(
             (!!consensusAccount && item.address.toLowerCase() === consensusAccount.toLowerCase())
           ) // If we found this account based on address, then we don't want to highlight that.
         ) {
-          redirectTo += `?q=${encodeStringForUrl(query)}`
+          redirectTo += `?q=${encodeURIComponentPretty(query)}`
         }
         break
       case 'contract':
@@ -63,13 +63,13 @@ export function useRedirectIfSingleResult(
         redirectTo = `${RouteUtils.getTokenRoute(
           item,
           item.eth_contract_addr || item.contract_addr,
-        )}?q=${encodeStringForUrl(query)}`
+        )}?q=${encodeURIComponentPretty(query)}`
         break
       case 'proposal':
-        redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${encodeStringForUrl(query)}`
+        redirectTo = `${RouteUtils.getProposalRoute(item.network, item.id)}?q=${encodeURIComponentPretty(query)}`
         break
       case 'roflApp':
-        redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${encodeStringForUrl(query)}`
+        redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${encodeURIComponentPretty(query)}`
         break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
