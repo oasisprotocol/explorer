@@ -29,7 +29,7 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, p
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
 
-  const { wantedNamePattern } = useVoteFiltering()
+  const { highlightPattern } = useVoteFiltering()
 
   const tableColumns: TableColProps[] = [
     { key: 'index', content: <></>, width: '50px' },
@@ -52,7 +52,7 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, p
               address={vote.address}
               isError={vote.haveValidatorsFailed}
               validator={vote.validator}
-              highlightedPart={wantedNamePattern}
+              highlightPattern={highlightPattern}
             />
           ),
         },

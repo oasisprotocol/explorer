@@ -25,6 +25,7 @@ import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractM
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
+import { HighlightPattern } from '../HighlightedText'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -33,7 +34,7 @@ type RuntimeAccountDetailsViewProps = {
   token?: EvmToken
   tokenPrices: AllTokenPrices
   showLayer?: boolean
-  highlightedPartOfName?: string
+  highlightPattern?: HighlightPattern
 }
 
 export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
@@ -43,7 +44,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   isError,
   tokenPrices,
   showLayer,
-  highlightedPartOfName,
+  highlightPattern,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -81,7 +82,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
             showOnlyAddress={!!token?.name}
             scope={account}
             address={address!}
-            highlightedPartOfName={highlightedPartOfName}
+            highlightPattern={highlightPattern}
           />
           <CopyToClipboard value={address!} />
         </Box>

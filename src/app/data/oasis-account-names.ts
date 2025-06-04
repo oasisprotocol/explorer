@@ -16,7 +16,7 @@ import {
   AccountNameSearchResults,
   AccountNameSearchRuntimeMatch,
 } from './named-accounts'
-import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import { hasTextMatchesForAll } from '../components/HighlightedText/text-matching'
 import * as externalLinks from '../utils/externalLinks'
 import { getOasisAddress } from '../utils/helpers'
 import { isUrlSafe } from '../utils/url'
@@ -108,7 +108,7 @@ export const useOasisAccountMetadata = (
 export const useSearchForOasisAccountsByName = (
   network: Network,
   layer: Layer,
-  nameFragment: string,
+  nameFragments: string[],
   queryOptions: { enabled: boolean } & UseQueryOptions<AccountData, unknown, AccountData, string[]>,
 ): AccountNameSearchResults => {
   const {
@@ -121,19 +121,18 @@ export const useSearchForOasisAccountsByName = (
     console.log('Failed to load Oasis account metadata', metadataError)
   }
 
-  const textMatcher =
-    nameFragment && queryOptions.enabled
-      ? (account: AccountMetadata) => hasTextMatch(account.name, [nameFragment])
-      : () => false
-
   const matches =
-    namedAccounts?.list.filter(textMatcher).map(
-      (account): AccountNameSearchMatch => ({
-        network,
-        layer,
-        address: account.address,
-      }),
-    ) ?? []
+    !isMetadataLoading && nameFragments.length && queryOptions.enabled && namedAccounts
+      ? namedAccounts.list
+          .filter(account => hasTextMatchesForAll(account.name, nameFragments))
+          .map(
+            (account): AccountNameSearchMatch => ({
+              network,
+              layer,
+              address: account.address,
+            }),
+          )
+      : []
 
   const consensusMatches = layer === Layer.consensus ? (matches as AccountNameSearchConsensusMatch[]) : []
   const runtimeMatches = layer === Layer.consensus ? [] : (matches as AccountNameSearchRuntimeMatch[])

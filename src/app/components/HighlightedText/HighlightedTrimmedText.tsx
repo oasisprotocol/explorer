@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { HighlightedText, HighlightOptions } from './index'
+import { HighlightedText, HighlightOptions, HighlightPattern, NoHighlights } from './index'
 import { trimAroundMatch } from './text-trimming'
 
 type HighlightedTrimmedTextProps = {
@@ -12,7 +12,7 @@ type HighlightedTrimmedTextProps = {
   /**
    * The pattern to search for (and highlight)
    */
-  pattern: string | undefined
+  pattern?: HighlightPattern
 
   /**
    * Options for highlighting (case sensitivity, styling, etc.)
@@ -32,7 +32,7 @@ type HighlightedTrimmedTextProps = {
  * Display a text with a part highlighted, trimmed to a specific length around the highlight
  */
 export const HighlightedTrimmedText: FC<HighlightedTrimmedTextProps> = props => {
-  const { text, pattern, fragmentLength, options } = props
-  const { part, match } = trimAroundMatch(text, pattern, { fragmentLength })
-  return <HighlightedText text={part} pattern={pattern} part={match} options={options} />
+  const { text, pattern = NoHighlights, fragmentLength, options } = props
+  const { part } = trimAroundMatch(text, pattern, { fragmentLength })
+  return <HighlightedText text={part} pattern={pattern} options={options} />
 }

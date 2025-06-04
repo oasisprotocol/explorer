@@ -10,7 +10,7 @@ import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import Box from '@mui/material/Box'
-import { HighlightedText } from '../HighlightedText'
+import { HighlightedText, HighlightPattern } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
@@ -62,7 +62,7 @@ interface Props {
   /**
    * What part of the name should be highlighted (if any)
    */
-  highlightedPartOfName?: string | undefined
+  highlightPattern?: HighlightPattern
 
   /**
    * Any extra tooltips to display
@@ -85,7 +85,7 @@ export const AccountLink: FC<Props> = ({
   address,
   alwaysTrim,
   alwaysTrimOnTablet,
-  highlightedPartOfName,
+  highlightPattern,
   extraTooltip,
   labelOnly,
 }) => {
@@ -158,7 +158,7 @@ export const AccountLink: FC<Props> = ({
               sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
             >
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
-              <HighlightedText text={accountName} pattern={highlightedPartOfName} /> ({address})
+              <HighlightedText text={accountName} pattern={highlightPattern} /> ({address})
             </Box>
           ) : (
             address
@@ -183,7 +183,7 @@ export const AccountLink: FC<Props> = ({
             <AdaptiveHighlightedText
               idPrefix="account-name"
               text={accountName}
-              pattern={highlightedPartOfName}
+              pattern={highlightPattern}
               extraTooltip={tooltipTitle}
               minLength={5}
             />

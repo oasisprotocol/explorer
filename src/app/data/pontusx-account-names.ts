@@ -9,7 +9,7 @@ import {
 } from './named-accounts'
 import { Layer, useGetRuntimeAccountsAddresses } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
-import { hasTextMatch } from '../components/HighlightedText/text-matching'
+import { hasTextMatchesForAll } from '../components/HighlightedText/text-matching'
 import { getOasisAddress } from '../utils/helpers'
 import * as externalLinks from '../utils/externalLinks'
 
@@ -65,7 +65,7 @@ export const usePontusXAccountMetadata = (
 
 export const useSearchForPontusXAccountsByName = (
   network: Network,
-  nameFragment: string,
+  nameFragments: string[],
   queryOptions: { enabled: boolean } & UseQueryOptions<
     PontusXAccountsMetadata,
     unknown,
@@ -83,21 +83,18 @@ export const useSearchForPontusXAccountsByName = (
     console.log('Failed to load Pontus-X account names', metadataError)
   }
 
-  const textMatcher =
-    nameFragment && queryOptions.enabled
-      ? (account: AccountMetadata) => hasTextMatch(account.name, [nameFragment])
-      : () => false
-
   const matches =
-    isMetadataLoading || isMetadataLoading
+    isMetadataLoading || !nameFragments.length || !queryOptions.enabled
       ? undefined
-      : namedAccounts?.list.filter(textMatcher).map(
-          (account): AccountNameSearchRuntimeMatch => ({
-            network,
-            layer: Layer.pontusxtest,
-            address: account.address,
-          }),
-        )
+      : namedAccounts?.list
+          .filter(account => hasTextMatchesForAll(account.name, nameFragments))
+          .map(
+            (account): AccountNameSearchRuntimeMatch => ({
+              network,
+              layer: Layer.pontusxtest,
+              address: account.address,
+            }),
+          )
 
   const {
     isLoading: areAccountsLoading,

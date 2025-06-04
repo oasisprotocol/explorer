@@ -3,19 +3,20 @@ import { useTranslation } from 'react-i18next'
 import { Account } from '../../../oasis-nexus/api'
 import { SubPageCard } from '../../components/SubPageCard'
 import { ConsensusAccountDetailsView } from '../../components/Account/ConsensusAccountDetailsView'
+import { HighlightPattern } from '../.../../../components/HighlightedText'
 
 type ConsensusAccountDetailsCardProps = {
   account: Account | undefined
   isError: boolean
   isLoading: boolean
-  highlightedPartOfName?: string | undefined
+  highlightPattern: HighlightPattern
 }
 
 export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> = ({
   account,
   isError,
   isLoading,
-  highlightedPartOfName,
+  highlightPattern,
 }) => {
   const { t } = useTranslation()
 
@@ -25,7 +26,7 @@ export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> =
         isError={isError}
         isLoading={isLoading}
         account={account}
-        highlightedPartOfName={highlightedPartOfName}
+        highlightPattern={highlightPattern}
       />
     </SubPageCard>
   )

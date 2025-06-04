@@ -23,12 +23,13 @@ import { AbiPlaygroundLink } from '../../components/ContractVerificationIcon/Abi
 import Box from '@mui/material/Box'
 import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAnchors'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
+import { HighlightPattern } from '../../components/HighlightedText'
 
-export const TokenDetailsCard: FC<{ scope: RuntimeScope; address: string; searchTerm: string }> = ({
-  scope,
-  address,
-  searchTerm,
-}) => {
+export const TokenDetailsCard: FC<{
+  scope: RuntimeScope
+  address: string
+  highlightPattern?: HighlightPattern
+}> = ({ scope, address, highlightPattern }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -48,7 +49,7 @@ export const TokenDetailsCard: FC<{ scope: RuntimeScope; address: string; search
                 scope={account}
                 address={token.eth_contract_addr || token.contract_addr}
                 name={token.name}
-                highlightedPart={searchTerm}
+                highlightPattern={highlightPattern}
               />
             </dd>
 

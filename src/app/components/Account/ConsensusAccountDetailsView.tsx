@@ -14,6 +14,7 @@ import { AccountSizeBadge } from '../AccountSizeBadge'
 import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { HighlightPattern } from '../HighlightedText'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -25,7 +26,7 @@ type ConsensusAccountDetailsViewProps = {
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
-  highlightedPartOfName?: string
+  highlightPattern?: HighlightPattern
 }
 
 export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> = ({
@@ -34,7 +35,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   isLoading,
   showLayer,
   standalone,
-  highlightedPartOfName,
+  highlightPattern,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -64,7 +65,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           alwaysTrim={false}
           network={account.network}
           address={account.address}
-          highlightedPartOfName={highlightedPartOfName}
+          highlightPattern={highlightPattern}
         />
         <CopyToClipboard value={account.address} />
       </dd>

@@ -3,14 +3,15 @@ import { Network } from '../../../types/network'
 import { Layer, Validator } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { ValidatorLink } from './ValidatorLink'
+import { HighlightPattern } from '../HighlightedText'
 
 export const DeferredValidatorLink: FC<{
   network: Network
   address: string
   validator: Validator | undefined
   isError: boolean
-  highlightedPart?: string | undefined
-}> = ({ network, address, validator, isError, highlightedPart }) => {
+  highlightPattern?: HighlightPattern
+}> = ({ network, address, validator, isError, highlightPattern }) => {
   const scope: SearchScope = { network, layer: Layer.consensus }
 
   if (isError) {
@@ -22,7 +23,7 @@ export const DeferredValidatorLink: FC<{
       address={address}
       network={scope.network}
       name={validator?.media?.name}
-      highlightedPartOfName={highlightedPart}
+      highlightPattern={highlightPattern}
     />
   )
 }

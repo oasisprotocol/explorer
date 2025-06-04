@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { Link, TrimMode } from '../Link'
+import { HighlightPattern } from '../HighlightedText'
 
 type RoflAppLinkProps = {
   id: string
@@ -9,7 +10,7 @@ type RoflAppLinkProps = {
   network: Network
   alwaysTrim?: boolean
   trimMode?: TrimMode
-  highlightedPartOfName?: string
+  highlightPattern?: HighlightPattern
   withSourceIndicator?: boolean
   labelOnly?: boolean
 }
@@ -20,7 +21,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
   network,
   alwaysTrim,
   trimMode,
-  highlightedPartOfName,
+  highlightPattern,
   withSourceIndicator,
   labelOnly,
 }) => {
@@ -33,7 +34,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
       to={to}
       alwaysTrim={alwaysTrim}
       trimMode={trimMode}
-      highlightedPartOfName={highlightedPartOfName}
+      highlightPattern={highlightPattern}
       withSourceIndicator={withSourceIndicator}
       labelOnly={labelOnly}
     />

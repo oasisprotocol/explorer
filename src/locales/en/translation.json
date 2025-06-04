@@ -808,7 +808,8 @@
   },
   "tableSearch": {
     "error": {
-      "tooShort": "Please enter at least 3 characters to perform a search."
+      "tooShort": "Please enter at least 3 characters to perform a search.",
+      "tooMany": "Too many words"
     },
     "noMatchingResults": "There are no results matching your filters.",
     "clearFilters": "Clear filters"

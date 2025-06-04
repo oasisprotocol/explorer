@@ -1,4 +1,4 @@
-import { hasTextMatch } from 'app/components/HighlightedText/text-matching'
+import { hasTextMatchesForAll } from 'app/components/HighlightedText/text-matching'
 import {
   Layer,
   useGetConsensusValidatorsAddressNameMap,
@@ -8,11 +8,15 @@ import {
 import { Network } from 'types/network'
 import { AccountNameSearchResults, AccountNameSearchConsensusMatch } from '../data/named-accounts'
 
-function findAddressesWithMatch(addressMap: ValidatorAddressNameMap, nameFragment: string, network: Network) {
+function findAddressesWithMatch(
+  addressMap: ValidatorAddressNameMap,
+  nameFragments: string[],
+  network: Network,
+) {
   const matchedAddresses: AccountNameSearchConsensusMatch[] = []
 
   for (const [address, name] of Object.entries(addressMap)) {
-    if (hasTextMatch(name, [nameFragment])) {
+    if (hasTextMatchesForAll(name, nameFragments)) {
       matchedAddresses.push({ address, layer: Layer.consensus, network })
     }
   }
@@ -22,10 +26,11 @@ function findAddressesWithMatch(addressMap: ValidatorAddressNameMap, nameFragmen
 
 export const useSearchForValidatorsByName = (
   network: Network,
-  nameFragment: string | undefined,
+  nameFragment: string[],
 ): AccountNameSearchResults => {
   const { isLoading, isError, data } = useGetConsensusValidatorsAddressNameMap(network)
-  const matches = data?.data && nameFragment ? findAddressesWithMatch(data?.data, nameFragment, network) : []
+  const matches =
+    data?.data && !!nameFragment.length ? findAddressesWithMatch(data?.data, nameFragment, network) : []
   const {
     isLoading: areConsensusAccountsLoading,
     isError: areConsensusAccountsError,

@@ -32,6 +32,7 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../config'
+import { hasTextMatchesForAll } from '../app/components/HighlightedText/text-matching'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -791,6 +792,7 @@ export const useGetRuntimeEvmTokens: typeof generated.useGetRuntimeEvmTokens = (
     ...options,
     request: {
       ...options?.request,
+      paramsSerializer: paramSerializerWithComma,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.EvmTokenList, headers, status) => {
@@ -1106,30 +1108,21 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
   })
 }
 
-export const useGetConsensusProposalsByName = (network: Network, nameFragment: string | undefined) => {
-  const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragment } })
+export const useGetConsensusProposalsByName = (network: Network, nameFragments: string[]) => {
+  const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragments.length } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
-  const textMatcher = nameFragment
-    ? (proposal: generated.Proposal): boolean => {
-        if (proposal.title?.includes(nameFragment)) {
-          return true
-        }
-
-        if (proposal.handler?.includes(nameFragment)) {
-          return true
-        }
-
-        if (getCancelTitle(proposal.cancels).includes(nameFragment)) {
-          return true
-        }
-
-        return (
-          !!proposal.parameters_change &&
-          getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change).includes(
-            nameFragment,
-          )
+  const textMatcher = nameFragments.length
+    ? ({
+        title,
+        handler,
+        cancels,
+        parameters_change,
+        parameters_change_module,
+      }: generated.Proposal): boolean =>
+        hasTextMatchesForAll(
+          `${title} ${handler} ${getCancelTitle(cancels)} ${getParameterChangeTitle(parameters_change_module, parameters_change)}`,
+          nameFragments,
         )
-      }
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {
@@ -1489,6 +1482,25 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
     })
   }
 
+/**
+ * Custom param serializer that uses comma for array
+ *
+ * By default, we would serialize params like this: "a[]=b&a[]=c"
+ * However, Nexus expects "a=b,c" instead.
+ *
+ * We will use this custom serializer when we need to send an array.
+ */
+const paramSerializerWithComma = (params: Record<string, any>) => {
+  return Object.entries(params)
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return `${key}=${value.map(v => encodeURIComponent(v)).join(',')}`
+      }
+      return `${key}=${value}`
+    })
+    .join('&')
+}
+
 export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
   network,
   layer,
@@ -1500,6 +1512,7 @@ export const useGetRuntimeRoflApps: typeof generated.useGetRuntimeRoflApps = (
     ...options,
     request: {
       ...options?.request,
+      paramsSerializer: paramSerializerWithComma,
       transformResponse: [
         ...arrayify(axios.defaults.transformResponse),
         (data: generated.RoflAppList, headers, status) => {

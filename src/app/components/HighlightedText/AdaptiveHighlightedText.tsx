@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import InfoIcon from '@mui/icons-material/Info'
-import { HighlightedText, HighlightOptions } from './index'
+import { HighlightedText, HighlightOptions, HighlightPattern } from './index'
 import { AdaptiveDynamicTrimmer } from '../AdaptiveTrimmer/AdaptiveDynamicTrimmer'
 import { HighlightedTrimmedText } from './HighlightedTrimmedText'
 
@@ -15,7 +15,7 @@ type AdaptiveHighlightedTextProps = {
   /**
    * The pattern to search for (and highlight)
    */
-  pattern: string | undefined
+  pattern?: HighlightPattern
 
   /**
    * Options for highlighting (case sensitivity, styling, etc.)

@@ -16,16 +16,18 @@ export type MatchInfo = PositiveMatchInfo | typeof NO_MATCH
 /**
  * Identify pattern matches within a corpus, also considering normalization
  *
+ * If there is no match, an empty array is returned.
+ *
  * NOTE: depending on normalization options, the string length can change,
  * and in that case, match position can be incorrect.
  */
-export const findTextMatch = (
+export const findTextMatches = (
   rawCorpus: string | null | undefined,
-  search: (string | undefined)[],
+  pattern: (string | undefined)[],
   options: NormalizerOptions = {},
-): MatchInfo => {
+): PositiveMatchInfo[] => {
   const normalizedCorpus = normalizeTextForSearch(rawCorpus || '', options)
-  const matches: PositiveMatchInfo[] = search
+  const matches: PositiveMatchInfo[] = pattern
     .filter((s): s is string => !!s)
     .map(rawPattern => {
       const normalizedPattern = normalizeTextForSearch(rawPattern!, options)
@@ -38,17 +40,40 @@ export const findTextMatch = (
         : 'NO_MATCH'
     })
     .filter((m): m is PositiveMatchInfo => m !== NO_MATCH)
-  return matches[0] ?? NO_MATCH
+  return matches
 }
 
 /**
- * Check if a pattern matches within a corpus, also considering normalization
+ * Identify the first pattern match within a corpus, also considering normalization
+ *
+ * If there is no match, NO_MATCH is returned.
  *
  * NOTE: depending on normalization options, the string length can change,
  * and in that case, match position can be incorrect.
  */
-export const hasTextMatch = (
+export const findTextMatch = (
   rawCorpus: string | null | undefined,
   search: (string | undefined)[],
   options: NormalizerOptions = {},
-): boolean => findTextMatch(rawCorpus, search, options) !== NO_MATCH
+): MatchInfo => {
+  const matches = findTextMatches(rawCorpus, search, options)
+  return matches[0] ?? NO_MATCH
+}
+
+/**
+ * Check if all patterns match within a corpus, also considering normalization
+ *
+ * NOTE: depending on normalization options, the string length can change,
+ * and in that case, match position can be incorrect.
+ *
+ * Also NOTE: if there are no patterns given, the result will be true.
+ *
+ */
+export const hasTextMatchesForAll = (
+  rawCorpus: string | null | undefined,
+  patterns: (string | undefined)[],
+  options: NormalizerOptions = {},
+): boolean =>
+  patterns
+    .filter(pattern => !!pattern)
+    .every(pattern => findTextMatch(rawCorpus, [pattern], options) !== NO_MATCH)

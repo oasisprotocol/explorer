@@ -80,6 +80,8 @@ export const isScopeHidden = (scope: SearchScope): boolean =>
 
 export const isNotInHiddenScope = (item: HasScope) => !isScopeHidden(item)
 
+export const encodeURIComponentPretty = (text: string) => encodeURIComponent(text).replace(/%20/g, '+')
+
 const formatPreservedParams = (searchParams: URLSearchParams | undefined, paramsToKeep: string[]): string => {
   if (!searchParams) return ''
   const toDelete: string[] = []
@@ -200,7 +202,7 @@ export abstract class RouteUtils {
   static getSearchRoute = (scope: SearchScope | undefined, searchTerm: string) => {
     return scope
       ? `${this.getScopeRoute(scope)}/search?q=${encodeURIComponent(searchTerm)}`
-      : `/search?q=${encodeURIComponent(searchTerm)}`
+      : `/search?q=${encodeURIComponentPretty(searchTerm)}`
   }
 
   static getTokenRoute = (scope: SearchScope, tokenAddress: string) => {
@@ -311,7 +313,7 @@ const validateRoflAppIdParam = (id: string) => {
 
 export type RoflAppLoaderData = {
   id: string
-  searchTerm: string
+  searchQuery: string
 }
 
 const validateRuntimeAddressParam = (address: string) => {
@@ -350,7 +352,7 @@ const validateRuntimeTxHashParam = (hash: string) => {
 
 export type AddressLoaderData = {
   address: string
-  searchTerm: string
+  searchQuery: string
 }
 
 const validateProposalIdParam = (proposalId: string) => {
@@ -368,7 +370,7 @@ export const consensusAddressParamLoader =
     validateConsensusAddressParam(params[queryParam]!)
     return {
       address: params[queryParam]!,
-      searchTerm: getSearchTermFromRequest(request),
+      searchQuery: getSearchTermFromRequest(request),
     }
   }
 
@@ -379,7 +381,7 @@ export const runtimeAddressParamLoader =
     validateRuntimeAddressParam(rawAddress)
     return {
       address: isValidEthAddress(rawAddress) ? toChecksumAddress(rawAddress) : rawAddress,
-      searchTerm: getSearchTermFromRequest(request),
+      searchQuery: getSearchTermFromRequest(request),
     }
   }
 
@@ -389,7 +391,7 @@ export const roflAppParamLoader =
     validateRoflAppIdParam(params[queryParam]!)
     return {
       id: params[queryParam]!,
-      searchTerm: getSearchTermFromRequest(request),
+      searchQuery: getSearchTermFromRequest(request),
     }
   }
 
@@ -433,14 +435,14 @@ export const assertEnabledScope = (params: {
 
 export type ProposalIdLoaderData = {
   proposalId: number
-  searchTerm: string
+  searchQuery: string
 }
 
 export const proposalIdParamLoader = async ({ params, request }: LoaderFunctionArgs) => {
   validateProposalIdParam(params.proposalId!)
   return {
     proposalId: parseInt(params.proposalId!),
-    searchTerm: getSearchTermFromRequest(request),
+    searchQuery: getSearchTermFromRequest(request),
   }
 }
 

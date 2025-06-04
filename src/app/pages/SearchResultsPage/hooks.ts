@@ -271,7 +271,7 @@ export function useConsensusAccountConditionally(address: string | undefined): C
 
 export function useRuntimeTokenConditionally(
   currentScope: SearchScope | undefined,
-  nameFragment: string | undefined,
+  nameFragment: string[],
 ): ConditionalResults<EvmTokenList> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
     .filter(scope => scope.layer !== Layer.consensus)
@@ -287,7 +287,7 @@ export function useRuntimeTokenConditionally(
         },
         {
           query: {
-            enabled: !!nameFragment,
+            enabled: !!nameFragment.length,
           },
         },
       ),
@@ -300,9 +300,7 @@ export function useRuntimeTokenConditionally(
   }
 }
 
-export function useNetworkProposalsConditionally(
-  nameFragment: string | undefined,
-): ConditionalResults<Proposal> {
+export function useNetworkProposalsConditionally(nameFragment: string[]): ConditionalResults<Proposal> {
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetConsensusProposalsByName(network, nameFragment),
@@ -319,7 +317,7 @@ export function useNetworkProposalsConditionally(
 
 export function useNamedAccountConditionally(
   currentScope: SearchScope | undefined,
-  nameFragment: string | undefined,
+  nameFragment: string[],
 ): ConditionalResults<Account | RuntimeAccount> {
   const queries = RouteUtils.getVisibleScopes(currentScope).map(scope =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -335,7 +333,7 @@ export function useNamedAccountConditionally(
   }
 }
 
-export function useNamedValidatorConditionally(nameFragment: string | undefined) {
+export function useNamedValidatorConditionally(nameFragment: string[]) {
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useSearchForValidatorsByName(network, nameFragment),
@@ -368,7 +366,7 @@ export function useRoflAppIdConditionally(id: string | undefined): ConditionalRe
   }
 }
 
-export function useRoflAppNameConditionally(nameFragment: string | undefined): ConditionalResults<RoflApp> {
+export function useRoflAppNameConditionally(nameFragment: string[]): ConditionalResults<RoflApp> {
   // TODO: also search on other layers that support Rofl
   const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
     // See explanation above
@@ -377,11 +375,11 @@ export function useRoflAppNameConditionally(nameFragment: string | undefined): C
       network,
       Layer.sapphire,
       {
-        name: nameFragment!,
+        name: nameFragment,
       },
       {
         query: {
-          enabled: !!nameFragment,
+          enabled: !!nameFragment.length,
         },
       },
     ),

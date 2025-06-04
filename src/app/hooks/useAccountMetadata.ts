@@ -50,16 +50,16 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
 /** Doesn't throw if it fails. */
 export const useSearchForAccountsByName = (
   scope: SearchScope,
-  nameFragment = '',
+  nameFragments: string[],
 ): AccountNameSearchResults => {
   const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
-  const isValidPontusXSearch = isPontusX && !!nameFragment
-  const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragment, {
+  const isValidPontusXSearch = isPontusX && !!nameFragments.length
+  const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragments, {
     enabled: isValidPontusXSearch,
     useErrorBoundary: false,
   })
-  const isValidOasisSearch = !isPontusX && !!nameFragment
-  const oasisResults = useSearchForOasisAccountsByName(scope.network, scope.layer, nameFragment, {
+  const isValidOasisSearch = !isPontusX && !!nameFragments.length
+  const oasisResults = useSearchForOasisAccountsByName(scope.network, scope.layer, nameFragments, {
     enabled: isValidOasisSearch,
     useErrorBoundary: false,
   })
