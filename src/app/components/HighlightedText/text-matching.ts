@@ -61,13 +61,19 @@ export const findTextMatch = (
 }
 
 /**
- * Check if a pattern matches within a corpus, also considering normalization
+ * Check if all patterns match within a corpus, also considering normalization
  *
  * NOTE: depending on normalization options, the string length can change,
  * and in that case, match position can be incorrect.
+ *
+ * Also NOTE: if there are no patterns given, the result will be true.
+ *
  */
-export const hasTextMatch = (
+export const hasTextMatchesForAll = (
   rawCorpus: string | null | undefined,
-  search: (string | undefined)[],
+  patterns: (string | undefined)[],
   options: NormalizerOptions = {},
-): boolean => findTextMatch(rawCorpus, search, options) !== NO_MATCH
+): boolean =>
+  patterns
+    .filter(pattern => !!pattern)
+    .every(pattern => findTextMatch(rawCorpus, [pattern], options) !== NO_MATCH)

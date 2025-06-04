@@ -1,4 +1,4 @@
-import { hasTextMatch } from 'app/components/HighlightedText/text-matching'
+import { hasTextMatchesForAll } from 'app/components/HighlightedText/text-matching'
 import {
   Layer,
   useGetConsensusValidatorsAddressNameMap,
@@ -10,13 +10,13 @@ import { AccountNameSearchResults, AccountNameSearchConsensusMatch } from '../da
 
 function findAddressesWithMatch(
   addressMap: ValidatorAddressNameMap,
-  nameFragment: string[],
+  nameFragments: string[],
   network: Network,
 ) {
   const matchedAddresses: AccountNameSearchConsensusMatch[] = []
 
   for (const [address, name] of Object.entries(addressMap)) {
-    if (nameFragment.every(nameFragment => hasTextMatch(name, [nameFragment]))) {
+    if (hasTextMatchesForAll(name, nameFragments)) {
       matchedAddresses.push({ address, layer: Layer.consensus, network })
     }
   }

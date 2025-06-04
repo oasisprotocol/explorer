@@ -32,7 +32,7 @@ import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../config'
-import { hasTextMatch } from '../app/components/HighlightedText/text-matching'
+import { hasTextMatchesForAll } from '../app/components/HighlightedText/text-matching'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1112,28 +1112,17 @@ export const useGetConsensusProposalsByName = (network: Network, nameFragments: 
   const query = useGetConsensusProposals(network, {}, { query: { enabled: !!nameFragments.length } })
   const { isError, isLoading, isInitialLoading, data, status, error } = query
   const textMatcher = nameFragments.length
-    ? (proposal: generated.Proposal): boolean =>
-        nameFragments.every(nameFragment => {
-          if (hasTextMatch(proposal.title, [nameFragment])) {
-            return true
-          }
-
-          if (hasTextMatch(proposal.handler, [nameFragment])) {
-            return true
-          }
-
-          if (hasTextMatch(getCancelTitle(proposal.cancels), [nameFragment])) {
-            return true
-          }
-
-          return (
-            !!proposal.parameters_change &&
-            hasTextMatch(
-              getParameterChangeTitle(proposal.parameters_change_module, proposal.parameters_change),
-              [nameFragment],
-            )
-          )
-        })
+    ? ({
+        title,
+        handler,
+        cancels,
+        parameters_change,
+        parameters_change_module,
+      }: generated.Proposal): boolean =>
+        hasTextMatchesForAll(
+          `${title} ${handler} ${getCancelTitle(cancels)} ${getParameterChangeTitle(parameters_change_module, parameters_change)}`,
+          nameFragments,
+        )
     : () => false
   const results = data ? query.data.data.proposals.filter(textMatcher) : undefined
   return {

@@ -89,29 +89,29 @@ export const HighlightedText: FC<HighlightedTextProps> = ({
 
   const pieces: ReactNode[] = []
   let processedChars = 0
-  let processedTasks = 0
+  let processedMatches = 0
 
   while (processedChars < text.length) {
-    // Do we still have tasks?
-    if (processedTasks < sortedMatches.length) {
-      // Yes, there are more tasks
-      const task = sortedMatches[processedTasks]
-      if (task.startPos < processedChars) {
-        // This task with collude
-        processedTasks++ // just skip this task
+    // Do we still have matches to highlight?
+    if (processedMatches < sortedMatches.length) {
+      // Yes, there are more matches
+      const match = sortedMatches[processedMatches]
+      if (match.startPos < processedChars) {
+        // This match would collude with something already highlighted
+        processedMatches++ // just skip this match
       } else {
-        // We use this task
-        pieces.push(text.substring(processedChars, task.startPos))
-        const focus = text.substring(task.startPos, task.endPos)
+        // We want to highlight this match
+        pieces.push(text.substring(processedChars, match.startPos))
+        const focus = text.substring(match.startPos, match.endPos)
         pieces.push(
-          <Box key={processedTasks} component="mark" sx={sx}>
+          <Box key={processedMatches} component="mark" sx={sx}>
             {focus}
           </Box>,
         )
-        processedChars = task.endPos
+        processedChars = match.endPos
       }
     } else {
-      // No more tasks, just grab the remaining string
+      // No more matches, just grab the remaining string
       pieces.push(text.substring(processedChars))
       processedChars = text.length
     }
