@@ -24,18 +24,20 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
   loading,
 }) => {
   const { t } = useTranslation()
+  const hasFailed = !!unknownTickers.length
   return (
     <FiatMoneyAmountBox>
       <span>
-        {t('common.fiatValueInUSD', {
-          value,
-          formatParams: {
-            value: {
-              currency: fiatCurrency,
-            } satisfies Intl.NumberFormatOptions,
-          },
-        })}
-        {!!unknownTickers.length && (
+        {!hasFailed ? (
+          t('common.fiatValueInUSD', {
+            value,
+            formatParams: {
+              value: {
+                currency: fiatCurrency,
+              } satisfies Intl.NumberFormatOptions,
+            },
+          })
+        ) : (
           <Tooltip
             title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}
             placement="top"
