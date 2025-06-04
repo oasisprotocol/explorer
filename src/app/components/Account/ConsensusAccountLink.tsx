@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Layer, useGetConsensusValidatorsAddressNameMap } from './../../../oasis-nexus/api'
+import { useGetConsensusValidatorsAddressNameMap } from './../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 import { ValidatorLink } from '../Validators/ValidatorLink'
 import { AccountLink } from './AccountLink'
@@ -36,7 +36,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
   return (
     <AccountLink
       labelOnly={labelOnly}
-      scope={{ network, layer: Layer.consensus }}
+      scope={{ network, layer: 'consensus' }}
       address={address}
       alwaysTrim={alwaysTrim}
       highlightPattern={highlightPattern}

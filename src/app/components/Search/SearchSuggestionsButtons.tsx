@@ -11,7 +11,6 @@ import TokenIcon from '@mui/icons-material/Token'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
-import { Layer } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 
 const StyledPlainTextButton = styled(Button)({
@@ -40,7 +39,7 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
   const { t } = useTranslation()
   const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
     (scope?.network && scope?.layer && searchSuggestionTerms[scope.network][scope.layer]) ??
-    searchSuggestionTerms[Network.mainnet][Layer.sapphire]!
+    searchSuggestionTerms[Network.mainnet]['sapphire']!
   const defaultComponents = {
     OptionalBreak: <OptionalBreak />,
     BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
@@ -62,11 +61,11 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
         <Trans
           t={t}
           i18nKey={
-            scope?.layer === Layer.consensus
+            scope?.layer === 'consensus'
               ? 'search.searchSuggestionsForConsensus'
               : 'search.searchSuggestionsForRuntime'
           }
-          components={scope?.layer === Layer.consensus ? defaultComponents : runtimeComponents}
+          components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
         />
       </Typography>
     </span>

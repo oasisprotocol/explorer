@@ -10,7 +10,6 @@ import {
   EvmTokenType,
   GetRuntimeAccountsAddress,
   HumanReadableErrorResponse,
-  Layer,
   NotFoundErrorResponse,
   Runtime,
   RuntimeAccount,
@@ -55,7 +54,7 @@ declare module './generated/api' {
     amount: string | undefined
     to: string | undefined
     network: Network
-    layer: typeof Layer.consensus
+    layer: 'consensus'
     ticker: Ticker
   }
 
@@ -66,7 +65,7 @@ declare module './generated/api' {
 
   export interface Block {
     network: Network
-    layer: typeof Layer.consensus
+    layer: 'consensus'
   }
 
   export interface RuntimeBlock {
@@ -76,7 +75,7 @@ declare module './generated/api' {
 
   export interface Account {
     network: Network
-    layer: typeof Layer.consensus
+    layer: 'consensus'
     ticker: Ticker
     size: string
     total: string
@@ -117,23 +116,23 @@ declare module './generated/api' {
 
   export interface Proposal {
     network: Network
-    layer: typeof Layer.consensus
+    layer: 'consensus'
   }
 
   export interface Delegation {
     network: Network
-    layer: typeof Layer.consensus
+    layer: 'consensus'
     ticker: Ticker
   }
 
   export interface DebondingDelegation {
-    layer: typeof Layer.consensus
+    layer: 'consensus'
     network: Network
     ticker: Ticker
   }
 
   export interface ValidatorHistoryPoint {
-    layer: typeof Layer.consensus
+    layer: 'consensus'
     network: Network
     ticker: Ticker
   }
@@ -158,7 +157,7 @@ declare module './generated/api' {
 }
 
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
-  if (account.layer === Layer.consensus) {
+  if (account.layer === 'consensus') {
     const {
       available,
       nonce,
@@ -216,7 +215,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
   params?,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusTransactions(network, params, {
     ...options,
     request: {
@@ -235,7 +234,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 amount,
                 to,
                 network,
-                layer: Layer.consensus,
+                layer: 'consensus',
                 ticker,
                 fee: fromBaseUnits(tx.fee, consensusDecimals),
                 body: {
@@ -307,7 +306,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
   txHash,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusTransactionsTxHash(network, txHash, {
     ...options,
     request: {
@@ -336,7 +335,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
                 amount,
                 to,
                 network,
-                layer: Layer.consensus,
+                layer: 'consensus',
                 ticker,
                 fee: fromBaseUnits(tx.fee, consensusDecimals),
                 body: {
@@ -383,7 +382,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
   address,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusAccountsAddress(network, address, {
     ...options,
     query: {
@@ -409,7 +408,7 @@ export const useGetConsensusAccountsAddress: typeof generated.useGetConsensusAcc
               data.debonding_delegations_balance.toString(),
               consensusDecimals,
             ),
-            layer: Layer.consensus,
+            layer: 'consensus',
             network,
             size: getAccountSize(total),
             ticker,
@@ -538,7 +537,7 @@ export const useGetRuntimeAccountsAddresses = (
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetRuntimeAccountsAddress(
       target?.network ?? Network.mainnet,
-      target?.layer ?? Layer.emerald,
+      target?.layer ?? 'emerald',
       target?.address ?? '',
       {
         query: { enabled: queryOptions.enabled && !!target?.address },
@@ -593,7 +592,7 @@ export function useGetConsensusBlockByHeight(
             if (status !== 200) return block
             return {
               ...block,
-              layer: Layer.consensus,
+              layer: 'consensus',
               network,
             }
           },
@@ -631,7 +630,7 @@ export function useGetConsensusBlockByHash(
             }
             return {
               ...block,
-              layer: Layer.consensus,
+              layer: 'consensus',
               network,
             }
           },
@@ -739,7 +738,7 @@ export const useGetConsensusBlocks: typeof generated.useGetConsensusBlocks = (ne
             blocks: data.blocks.map(block => {
               return {
                 ...block,
-                layer: Layer.consensus,
+                layer: 'consensus',
                 network,
               }
             }),
@@ -1068,7 +1067,7 @@ export const useGetConsensusProposals: typeof generated.useGetConsensusProposals
               return {
                 ...proposal,
                 network,
-                layer: Layer.consensus,
+                layer: 'consensus',
                 deposit: fromBaseUnits(proposal.deposit, consensusDecimals),
                 title: getProposalTitle(proposal),
               }
@@ -1097,7 +1096,7 @@ export const useGetConsensusProposalsProposalId: typeof generated.useGetConsensu
           return {
             ...data,
             network,
-            layer: Layer.consensus,
+            layer: 'consensus',
             deposit: fromBaseUnits(data.deposit, consensusDecimals),
             title: getProposalTitle(data),
           }
@@ -1178,7 +1177,7 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
   params?,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusValidators(network, params, {
     ...options,
     request: {
@@ -1229,7 +1228,7 @@ export const useGetConsensusValidators: typeof generated.useGetConsensusValidato
 
 export const useGetConsensusValidatorsAddressHistory: typeof generated.useGetConsensusValidatorsAddressHistory =
   (network, address, params?, options?) => {
-    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
     return generated.useGetConsensusValidatorsAddressHistory(network, address, params, {
       ...options,
       request: {
@@ -1246,7 +1245,7 @@ export const useGetConsensusValidatorsAddressHistory: typeof generated.useGetCon
                   active_balance: history.active_balance
                     ? fromBaseUnits(history.active_balance, consensusDecimals)
                     : undefined,
-                  layer: Layer.consensus,
+                  layer: 'consensus',
                   network,
                   ticker,
                 }
@@ -1263,7 +1262,7 @@ export const useGetConsensusValidatorsAddress: typeof generated.useGetConsensusV
   address,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusValidatorsAddress(network, address, {
     ...options,
     request: {
@@ -1322,7 +1321,7 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
   params?,
   options?,
 ) => {
-  const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+  const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
   return generated.useGetConsensusAccounts(network, params, {
     ...options,
     request: {
@@ -1348,7 +1347,7 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
                   account.debonding_delegations_balance.toString(),
                   consensusDecimals,
                 ),
-                layer: Layer.consensus,
+                layer: 'consensus',
                 network,
                 size: getAccountSize(total),
                 ticker,
@@ -1364,7 +1363,7 @@ export const useGetConsensusAccounts: typeof generated.useGetConsensusAccounts =
 
 export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetConsensusAccountsAddressDelegations =
   (network, address, params?, options?) => {
-    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
     return generated.useGetConsensusAccountsAddressDelegations(network, address, params, {
       ...options,
       request: {
@@ -1379,7 +1378,7 @@ export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetC
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
-                  layer: Layer.consensus,
+                  layer: 'consensus',
                   network,
                   ticker,
                 }
@@ -1394,7 +1393,7 @@ export const useGetConsensusAccountsAddressDelegations: typeof generated.useGetC
 
 export const useGetConsensusAccountsAddressDebondingDelegations: typeof generated.useGetConsensusAccountsAddressDebondingDelegations =
   (network, address, params?, options?) => {
-    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
     return generated.useGetConsensusAccountsAddressDebondingDelegations(network, address, params, {
       ...options,
       request: {
@@ -1409,7 +1408,7 @@ export const useGetConsensusAccountsAddressDebondingDelegations: typeof generate
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
-                  layer: Layer.consensus,
+                  layer: 'consensus',
                   network,
                   ticker,
                 }
@@ -1424,7 +1423,7 @@ export const useGetConsensusAccountsAddressDebondingDelegations: typeof generate
 
 export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof generated.useGetConsensusAccountsAddressDebondingDelegationsTo =
   (network, address, params?, options?) => {
-    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
     return generated.useGetConsensusAccountsAddressDebondingDelegationsTo(network, address, params, {
       ...options,
       request: {
@@ -1439,7 +1438,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof genera
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
-                  layer: Layer.consensus,
+                  layer: 'consensus',
                   network,
                   ticker,
                 }
@@ -1454,7 +1453,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo: typeof genera
 
 export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGetConsensusAccountsAddressDelegationsTo =
   (network, address, params?, options?) => {
-    const ticker = getTokensForScope({ network, layer: Layer.consensus })[0].ticker
+    const ticker = getTokensForScope({ network, layer: 'consensus' })[0].ticker
     return generated.useGetConsensusAccountsAddressDelegationsTo(network, address, params, {
       ...options,
       request: {
@@ -1469,7 +1468,7 @@ export const useGetConsensusAccountsAddressDelegationsTo: typeof generated.useGe
                 return {
                   ...delegation,
                   amount: fromBaseUnits(delegation.amount, consensusDecimals),
-                  layer: Layer.consensus,
+                  layer: 'consensus',
                   network,
                   ticker,
                 }

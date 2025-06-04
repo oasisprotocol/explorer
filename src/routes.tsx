@@ -50,7 +50,6 @@ import { ValidatorDetailsPage } from './app/pages/ValidatorDetailsPage'
 import { useValidatorDetailsProps } from './app/pages/ValidatorDetailsPage/hooks'
 import { DebondingDelegationsCard } from './app/pages/ValidatorDetailsPage/DebondingDelegationsCard'
 import { DelegatorsCard } from './app/pages/ValidatorDetailsPage/DelegatorsCard'
-import { Layer } from './oasis-nexus/api'
 import { SearchScope } from './types/searchScope'
 import { ProposalDetailsPage } from './app/pages/ProposalDetailsPage'
 import { ConsensusBlocksPage } from './app/pages/ConsensusBlocksPage'
@@ -147,7 +146,7 @@ export const routes: RouteObject[] = [
         element: <ScopeSpecificPart />,
         errorElement: <RoutingErrorPage />,
         loader: async ({ params }): Promise<SearchScope> => {
-          return assertEnabledScope({ network: params._network, layer: Layer.consensus })
+          return assertEnabledScope({ network: params._network, layer: 'consensus' })
         },
         id: 'consensusScope',
         children: [

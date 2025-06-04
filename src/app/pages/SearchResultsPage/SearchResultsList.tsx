@@ -28,7 +28,7 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
-import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
+import { Account, RuntimeAccount } from '../../../oasis-nexus/api'
 import { RoflAppDetailsViewSearchResult } from '../RoflAppDetailsPage'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
@@ -141,7 +141,7 @@ export const SearchResultsList: FC<{
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item =>
-            item.layer === Layer.consensus ? (
+            item.layer === 'consensus' ? (
               <ConsensusAccountDetailsView
                 isLoading={false}
                 isError={false}

@@ -18,7 +18,6 @@ import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
 import { NetworkSelector } from '../NetworkSelector'
-import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
 import { storage } from '../../../../utils/storage'
@@ -158,12 +157,7 @@ const localStore = storage()
 // and see the whole universe.
 export const UniverseArea = 'Universe'
 
-export type SelectorArea =
-  | typeof UniverseArea
-  | typeof Layer.consensus
-  | typeof Layer.cipher
-  | typeof Layer.emerald
-  | typeof Layer.sapphire
+export type SelectorArea = typeof UniverseArea | 'consensus' | 'cipher' | 'emerald' | 'sapphire'
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   disabled,

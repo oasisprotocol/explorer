@@ -1,5 +1,4 @@
 import { ScaleToOptions } from 'react-quick-pinch-zoom'
-import { Layer } from '../../../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../../../types/errors'
 import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
 
@@ -19,25 +18,25 @@ export abstract class GraphUtils {
     }
 
     switch (area) {
-      case Layer.emerald:
+      case 'emerald':
         return {
           scale: 2.4,
           x: 0.68 * width,
           y: 0.1 * height,
         }
-      case Layer.cipher:
+      case 'cipher':
         return {
           scale: 2.4,
           x: 1.2 * width,
           y: 0.7 * height,
         }
-      case Layer.sapphire:
+      case 'sapphire':
         return {
           scale: 2.4,
           x: 0.31 * width,
           y: 1.1 * height,
         }
-      case Layer.consensus:
+      case 'consensus':
         return {
           scale: 2.4,
           x: 0.65 * width,

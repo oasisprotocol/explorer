@@ -35,7 +35,7 @@ type NetworkDetails = Partial<Record<Layer, LayerDetailsContent>>
 type Details = Record<Network, NetworkDetails>
 const getDetails = (t: TFunction): Details => ({
   [Network.mainnet]: {
-    [Layer.emerald]: {
+    emerald: {
       description: t('layerPicker.mainnet.emerald'),
       rpcHttp: 'https://emerald.oasis.io',
       rpcWebSockets: 'wss://emerald.oasis.io/ws',
@@ -43,7 +43,7 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '42262',
       docs: docs.emerald,
     },
-    [Layer.sapphire]: {
+    sapphire: {
       description: t('layerPicker.mainnet.sapphire'),
       rpcHttp: 'https://sapphire.oasis.io',
       rpcWebSockets: 'wss://sapphire.oasis.io/ws',
@@ -53,7 +53,7 @@ const getDetails = (t: TFunction): Details => ({
     },
   },
   [Network.testnet]: {
-    [Layer.emerald]: {
+    emerald: {
       description: t('layerPicker.testnet.emerald'),
       rpcHttp: 'https://testnet.emerald.oasis.io',
       rpcWebSockets: 'wss://testnet.emerald.oasis.io/ws',
@@ -61,7 +61,7 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '42261',
       docs: docs.emerald,
     },
-    [Layer.sapphire]: {
+    sapphire: {
       description: t('layerPicker.testnet.sapphire'),
       rpcHttp: 'https://testnet.sapphire.oasis.io',
       rpcWebSockets: 'wss://testnet.sapphire.oasis.io/ws',
@@ -69,7 +69,7 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '23295',
       docs: docs.sapphire,
     },
-    [Layer.pontusxdev]: {
+    pontusxdev: {
       description: t('layerPicker.testnet.pontusxdev'),
       // See https://docs.pontus-x.eu/docs/Pontus-X%20Testnet/quick_start#setup-metamask
       rpcHttp: 'https://rpc.dev.pontus-x.eu',
@@ -77,7 +77,7 @@ const getDetails = (t: TFunction): Details => ({
       chainDecimalId: '32456',
       docs: docs.pontusx1,
     },
-    [Layer.pontusxtest]: {
+    pontusxtest: {
       description: t('layerPicker.testnet.pontusxtest'),
       // See https://docs.pontus-x.eu/docs/Pontus-X%20Testnet/quick_start#setup-metamask
       rpcHttp: 'https://rpc.test.pontus-x.eu',
@@ -87,12 +87,12 @@ const getDetails = (t: TFunction): Details => ({
     },
   },
   [Network.localnet]: {
-    [Layer.sapphire]: {
+    sapphire: {
       chainHexId: '0x5afd',
       chainDecimalId: '23293',
       description: t('layerPicker.localnet.sapphire'),
     },
-    [Layer.emerald]: {
+    emerald: {
       chainHexId: '0xa514',
       chainDecimalId: '42260',
       description: t('layerPicker.localnet.emerald'),
@@ -127,7 +127,7 @@ export const LayerDetails: FC<LayerDetailsProps> = ({
   selectedScope: { network, layer },
   ...rest
 }: LayerDetailsProps) =>
-  layer === Layer.consensus ? (
+  layer === 'consensus' ? (
     <ConsensusDetails selectedScope={{ network, layer }} {...rest} />
   ) : (
     <RuntimeDetails selectedScope={{ network, layer }} {...rest} />

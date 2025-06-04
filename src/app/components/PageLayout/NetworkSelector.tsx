@@ -34,7 +34,7 @@ type NetworkSelectorProps = {
 }
 
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, layer }) => {
-  return layer === Layer.consensus ? (
+  return layer === 'consensus' ? (
     <ConsensusNetworkSelector network={network} layer={layer} />
   ) : (
     <RuntimeNetworkSelector network={network} layer={layer} />
