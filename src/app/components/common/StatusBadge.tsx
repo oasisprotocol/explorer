@@ -56,15 +56,13 @@ const StyledBadge = styled(Box, {
     color: COLORS.brandExtraDark,
     borderRadius: 10,
     padding: 4,
-    paddingLeft: 10,
-    paddingRight: 5,
   }
 })
 
 export const StatusBadge = ({ label, icon, variant = 'info' }: StatusBadgeProps) => {
   return (
     <StyledBadge bgColor={variantStyles[variant].bgColor}>
-      {label}
+      {label && <span style={{ paddingLeft: '5px' }}>{label}</span>}
       {icon || variantIcon[variant]}
     </StyledBadge>
   )

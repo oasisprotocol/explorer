@@ -14,8 +14,9 @@ export const verificationIconBoxHeight = 28
 
 type ContractStatusProps = {
   verificationLevel?: 'full' | 'partial'
+  hideLabel?: boolean
 }
-export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
+export const ContractStatus = ({ verificationLevel, hideLabel }: ContractStatusProps) => {
   const { t } = useTranslation()
   const statusLabel =
     verificationLevel === 'full'
@@ -26,7 +27,9 @@ export const ContractStatus = ({ verificationLevel }: ContractStatusProps) => {
   const statusVariant =
     verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
-  return <StatusBadge label={statusLabel} variant={statusVariant} />
+  const label = hideLabel ? '' : statusLabel
+
+  return <StatusBadge label={label} variant={statusVariant} />
 }
 
 export const VerificationIcon: FC<{
@@ -34,7 +37,8 @@ export const VerificationIcon: FC<{
   scope: SearchScope
   verificationLevel?: 'full' | 'partial'
   noLink?: boolean
-}> = ({ address_eth, scope, verificationLevel, noLink = false }) => {
+  hideLabel?: boolean
+}> = ({ address_eth, scope, verificationLevel, noLink = false, hideLabel }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
@@ -49,16 +53,15 @@ export const VerificationIcon: FC<{
   }
   const Component = noLink ? Box : (Link as React.ElementType)
   const componentProps = noLink ? {} : sourcifyLinkProps
-
   return (
     <>
       <Component {...componentProps}>
-        <ContractStatus verificationLevel={verificationLevel} />
+        <ContractStatus verificationLevel={verificationLevel} hideLabel={hideLabel} />
       </Component>
-      &nbsp; &nbsp;
       {!noLink &&
         (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
+            &nbsp; &nbsp;
             <Trans
               t={t}
               i18nKey={'contract.verification.openInSourcify'}
@@ -70,6 +73,7 @@ export const VerificationIcon: FC<{
           </Typography>
         ) : (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
+            &nbsp; &nbsp;
             <Trans
               t={t}
               i18nKey={'contract.verification.verifyInSourcify'}

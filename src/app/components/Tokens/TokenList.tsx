@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
+import { useScreenSize } from 'app/hooks/useScreensize'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -59,12 +60,16 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProp
 export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '' },
     { key: 'name', content: t('common.name') },
     { key: 'type', content: t('common.type') },
     { key: 'contract', content: t('common.smartContract') },
-    { key: 'verification', content: t('contract.verification.title') },
+    {
+      key: 'verification',
+      content: isMobile ? t('contract.verification.sourceShort') : t('contract.verification.source'),
+    },
     {
       key: 'holders',
       content: t('tokens.holders'),
@@ -133,6 +138,7 @@ export const TokenList = (props: TokensProps) => {
                 scope={token}
                 verificationLevel={token.verification_level}
                 noLink
+                hideLabel={isMobile}
               />
             </Box>
           ),
