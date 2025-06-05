@@ -149,6 +149,8 @@
     "transactions": "Transactions",
     "transactionAbbreviation": "Txs",
     "fee": "Fee",
+    "feeProxyModule": "Fee proxy module",
+    "feeProxyIdentifier": "Fee proxy identifier",
     "transfers": "Transfers",
     "type": "Type",
     "quantity": "Quantity",
