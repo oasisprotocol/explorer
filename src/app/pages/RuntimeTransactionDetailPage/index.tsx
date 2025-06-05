@@ -333,10 +333,10 @@ export const RuntimeTransactionDetailView: FC<{
 
           {transaction.fee_proxy_module && transaction.fee_proxy_id && (
             <>
-              <dt>Fee Proxy Module</dt>
+              <dt>{t('common.feeProxyModule')}</dt>
               <dd>{transaction.fee_proxy_module}</dd>
 
-              <dt>Fee Proxy Identifier</dt>
+              <dt>{t('common.feeProxyIdentifier')}</dt>
               <dd>
                 {transaction.fee_proxy_module === 'rofl'
                   ? oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))
