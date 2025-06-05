@@ -10,6 +10,8 @@ describe('CurrentFiatValue', () => {
         amount="1000000000100000000010000000001000000000.10000000001"
         price={0.55555}
         fiatCurrency="usd"
+        hasFailed={false}
+        ticker={'TEST'}
       />,
     )
     expect(screen.getByText('$555,550,000,055,555,000,005,555,500,000,555,550,000.06')).toBeInTheDocument()

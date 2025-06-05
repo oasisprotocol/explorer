@@ -300,8 +300,8 @@ export const RuntimeTransactionDetailView: FC<{
             transaction.amount !== undefined &&
             !!amountSymbolPriceInfo &&
             !amountSymbolPriceInfo.isLoading &&
-            !amountSymbolPriceInfo.isFree &&
-            amountSymbolPriceInfo.price !== undefined && (
+            (amountSymbolPriceInfo.hasFailed ||
+              (!amountSymbolPriceInfo.isFree && amountSymbolPriceInfo.price !== undefined)) && (
               <>
                 <dt>{t('currentFiatValue.title')}</dt>
                 <dd>
