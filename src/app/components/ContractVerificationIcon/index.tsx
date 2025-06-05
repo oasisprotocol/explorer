@@ -36,9 +36,9 @@ export const VerificationIcon: FC<{
   address_eth: string
   scope: SearchScope
   verificationLevel?: 'full' | 'partial'
-  noLink?: boolean
+  hideLink?: boolean
   hideLabel?: boolean
-}> = ({ address_eth, scope, verificationLevel, noLink = false, hideLabel }) => {
+}> = ({ address_eth, scope, verificationLevel, hideLink: noLink, hideLabel }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
