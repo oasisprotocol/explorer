@@ -140,7 +140,7 @@ export const TokenList = (props: TokensProps) => {
                 address_eth={token.eth_contract_addr}
                 scope={token}
                 verificationLevel={token.verification_level}
-                noLink
+                hideLink
                 hideLabel={isMobile}
               />
             </Box>
