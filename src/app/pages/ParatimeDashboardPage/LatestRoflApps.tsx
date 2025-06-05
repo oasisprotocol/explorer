@@ -12,18 +12,24 @@ import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
-export const LatestRoflApps: FC<{ scope: RuntimeScope }> = ({ scope }) => {
-  const { t } = useTranslation()
+const LatestRoflAppsContent: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { network, layer } = scope
   if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
   const roflAppsQuery = useGetRuntimeRoflApps(network, layer, { limit })
   const { isLoading, data } = roflAppsQuery
   const roflApps = data?.data.rofl_apps
-
   if (!roflApps?.length) {
     return null
   }
+  return <RoflAppsList apps={roflApps} isLoading={isLoading} limit={limit} pagination={false} />
+}
+
+export const LatestRoflApps: FC<{ scope: RuntimeScope }> = ({ scope }) => {
+  const { t } = useTranslation()
+  const { layer } = scope
+  if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
 
   return (
     <Card>
@@ -42,7 +48,9 @@ export const LatestRoflApps: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <RoflAppsList apps={roflApps} isLoading={isLoading} limit={limit} pagination={false} />
+        <ErrorBoundary light>
+          <LatestRoflAppsContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )
