@@ -16,6 +16,18 @@ export const FiatMoneyAmountBox = styled(Box)(() => ({
   flex: 1,
 }))
 
+export const FiatMoneyWarning: FC<{ unknownTickers: string[] }> = ({ unknownTickers }) => {
+  const { t } = useTranslation()
+  return (
+    <Tooltip
+      title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}
+      placement="top"
+    >
+      <WarningIcon />
+    </Tooltip>
+  )
+}
+
 export const FiatMoneyAmount: FC<FiatValueInfo> = ({
   value,
   fiatCurrency,
@@ -38,12 +50,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
             },
           })
         ) : (
-          <Tooltip
-            title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}
-            placement="top"
-          >
-            <WarningIcon />
-          </Tooltip>
+          <FiatMoneyWarning unknownTickers={unknownTickers} />
         )}
         {loading && <Skeleton variant="rectangular" sx={{ height: 200 }} />}
       </span>
