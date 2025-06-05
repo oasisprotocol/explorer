@@ -49,9 +49,11 @@ export function useGetTokenPricesFromGecko(tokenIds: string[], fiatCurrency: str
 }
 
 export type TokenPriceInfo = {
+  ticker: string
   price?: number
   fiatCurrency?: string
   isLoading: boolean
+  hasFailed: boolean
   isFree: boolean
   hasUsedCoinGecko: boolean
 }
@@ -70,15 +72,21 @@ export type AllTokenPrices = Partial<Record<Ticker, TokenPriceInfo>>
 export const useAllTokenPrices = (fiatCurrency: string): AllTokenPrices => {
   const tokens = uniq(RouteUtils.getEnabledScopes().map(getTokensForScope).flat())
   const geckoIds = tokens.map(token => token.geckoId).filter((id): id is string => !!id)
-  const { isLoading: geckoIsLoading, data: geckoPrices } = useGetTokenPricesFromGecko(geckoIds, fiatCurrency)
+  const {
+    isLoading: geckoIsLoading,
+    data: geckoPrices,
+    error,
+  } = useGetTokenPricesFromGecko(geckoIds, fiatCurrency)
   const results: AllTokenPrices = {}
   tokens.forEach(token => {
     results[token.ticker] = {
+      ticker: token.ticker,
       isLoading: geckoIsLoading,
       isFree: !!token.free,
       hasUsedCoinGecko: !!token.geckoId,
       price: token.geckoId && geckoPrices ? geckoPrices[token.geckoId] : undefined,
       fiatCurrency: token.geckoId && geckoPrices ? fiatCurrency : 'xx',
+      hasFailed: !!error,
     }
   })
   return results

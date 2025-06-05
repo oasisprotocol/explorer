@@ -29,19 +29,25 @@ describe('SearchResultsView', () => {
         searchResults={[suggestedParsedBlock, sapphireParsedBlock]}
         tokenPrices={{
           [Ticker.ROSE]: {
+            ticker: Ticker.ROSE,
             isLoading: false,
+            hasFailed: false,
             isFree: false,
             price: 1,
             fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
           [Ticker.TEST]: {
+            ticker: Ticker.TEST,
             isLoading: false,
+            hasFailed: false,
             isFree: true,
             hasUsedCoinGecko: false,
           },
           [Ticker.EUROe]: {
+            ticker: Ticker.EUROe,
             isLoading: false,
+            hasFailed: false,
             isFree: false,
             price: 1,
             fiatCurrency: 'usd',
@@ -75,19 +81,25 @@ describe('SearchResultsView', () => {
         networkForTheme={Network.mainnet}
         tokenPrices={{
           [Ticker.ROSE]: {
+            ticker: Ticker.ROSE,
             isLoading: false,
+            hasFailed: false,
             isFree: false,
             price: 1,
             fiatCurrency: 'usd',
             hasUsedCoinGecko: true,
           },
           [Ticker.TEST]: {
+            ticker: Ticker.TEST,
             isLoading: false,
+            hasFailed: false,
             isFree: true,
             hasUsedCoinGecko: false,
           },
           [Ticker.EUROe]: {
+            ticker: Ticker.EUROe,
             isLoading: false,
+            hasFailed: false,
             isFree: false,
             price: 1,
             fiatCurrency: 'usd',

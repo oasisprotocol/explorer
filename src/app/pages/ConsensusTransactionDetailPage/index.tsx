@@ -148,8 +148,7 @@ export const ConsensusTransactionDetailView: FC<{
           {transaction.amount &&
             !!tokenPriceInfo &&
             !tokenPriceInfo.isLoading &&
-            !tokenPriceInfo.isFree &&
-            tokenPriceInfo.price !== undefined && (
+            (tokenPriceInfo.hasFailed || (!tokenPriceInfo.isFree && tokenPriceInfo.price !== undefined)) && (
               <>
                 <dt>{t('currentFiatValue.title')}</dt>
                 <dd>
