@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -38,27 +37,25 @@ export const VerificationIcon: FC<{
   verificationLevel?: 'full' | 'partial'
   hideLink?: boolean
   hideLabel?: boolean
-}> = ({ address_eth, scope, verificationLevel, hideLink: noLink, hideLabel }) => {
+}> = ({ address_eth, scope, verificationLevel, hideLink, hideLabel }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
     return null
   }
   const sourcifyLinkProps = {
-    href: `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
+    href: hideLink ? undefined : `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
     target: '_blank',
     sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
     onClick: verificationLevel ? undefined : () => setExplainDelay(true),
   }
-  const Component = noLink ? Box : (Link as React.ElementType)
-  const componentProps = noLink ? {} : sourcifyLinkProps
   return (
     <>
-      <Component {...componentProps}>
+      <Link {...sourcifyLinkProps}>
         <ContractStatus verificationLevel={verificationLevel} hideLabel={hideLabel} />
-      </Component>
-      {!noLink &&
+      </Link>
+      {!hideLink &&
         (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
             &nbsp; &nbsp;
