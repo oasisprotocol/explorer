@@ -4,15 +4,15 @@ import { Layer } from '../../oasis-nexus/api'
 import { faucets } from './externalLinks'
 
 const faucetLinks: Partial<Record<Network, Partial<Record<Layer, Partial<Record<Ticker, string>>>>>> = {
-  [Network.testnet]: {
-    [Layer.consensus]: { [Ticker.TEST]: faucets.oasisTestnet },
-    [Layer.emerald]: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=emerald` },
-    [Layer.sapphire]: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=sapphire` },
-    [Layer.cipher]: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=cipher` },
-    [Layer.pontusxdev]: {
+  testnet: {
+    consensus: { [Ticker.TEST]: faucets.oasisTestnet },
+    emerald: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=emerald` },
+    sapphire: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=sapphire` },
+    cipher: { [Ticker.TEST]: `${faucets.oasisTestnet}?paratime=cipher` },
+    pontusxdev: {
       [Ticker.EUROe]: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Devnet')}`,
     },
-    [Layer.pontusxtest]: {
+    pontusxtest: {
       [Ticker.EUROe]: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Testnet')}`,
     },
   },

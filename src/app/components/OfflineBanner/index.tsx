@@ -10,7 +10,7 @@ import { StickyAlert } from '../StickyAlert'
 export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNetwork }) => {
   const scope = useScopeParam()
   const { t } = useTranslation()
-  const targetNetwork = wantedNetwork || scope?.network || Network.mainnet
+  const targetNetwork = wantedNetwork ?? scope?.network ?? 'mainnet'
   const isNetworkReachable = useIsApiReachable(targetNetwork)
   const networkNames = getNetworkNames(t)
   const target = networkNames[targetNetwork]

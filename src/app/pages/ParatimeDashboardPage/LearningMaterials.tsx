@@ -3,9 +3,7 @@ import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import Grid from '@mui/material/Unstable_Grid2'
 import { docs } from '../../utils/externalLinks'
-import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
-import { Network } from '../../../types/network'
 import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
 import { RuntimeScope } from '../../../types/searchScope'
 import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
@@ -25,8 +23,8 @@ const getContent = (t: TFunction) => {
   const labels = getLayerLabels(t)
 
   return {
-    [Network.mainnet]: {
-      [Layer.emerald]: {
+    mainnet: {
+      emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),
           header: t('learningMaterials.emerald.header'),
@@ -38,12 +36,12 @@ const getContent = (t: TFunction) => {
           url: docs.token,
         },
         tertiary: {
-          description: t('learningMaterials.transfer.description', { layer: labels[Layer.emerald] }),
+          description: t('learningMaterials.transfer.description', { layer: labels.emerald }),
           header: t('learningMaterials.transfer.header'),
           url: docs.paraTimeTransfer,
         },
       },
-      [Layer.sapphire]: {
+      sapphire: {
         primary: {
           description: t('learningMaterials.sapphire.description'),
           header: t('learningMaterials.sapphire.header'),
@@ -55,17 +53,17 @@ const getContent = (t: TFunction) => {
           url: docs.token,
         },
         tertiary: {
-          description: t('learningMaterials.transfer.description', { layer: labels[Layer.sapphire] }),
+          description: t('learningMaterials.transfer.description', { layer: labels.sapphire }),
           header: t('learningMaterials.transfer.header'),
           url: docs.paraTimeTransfer,
         },
       },
-      [Layer.cipher]: undefined,
-      [Layer.pontusxdev]: undefined,
-      [Layer.pontusxtest]: undefined,
+      cipher: undefined,
+      pontusxdev: undefined,
+      pontusxtest: undefined,
     },
-    [Network.testnet]: {
-      [Layer.emerald]: {
+    testnet: {
+      emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),
           header: t('learningMaterials.emerald.header'),
@@ -82,7 +80,7 @@ const getContent = (t: TFunction) => {
           url: docs.emeraldGateway,
         },
       },
-      [Layer.sapphire]: {
+      sapphire: {
         primary: {
           description: t('learningMaterials.sapphire.description'),
           header: t('learningMaterials.sapphire.header'),
@@ -95,12 +93,12 @@ const getContent = (t: TFunction) => {
         },
         tertiary: {
           description: t('learningMaterials.hardhat.description'),
-          header: t('learningMaterials.hardhat.header', { layer: labels[Layer.sapphire] }),
+          header: t('learningMaterials.hardhat.header', { layer: labels.sapphire }),
           url: docs.sapphireTestnetHardhat,
         },
       },
-      [Layer.cipher]: undefined,
-      [Layer.pontusxdev]: {
+      cipher: undefined,
+      pontusxdev: {
         primary: {
           description: t('learningMaterials.pontusxdevnet.1.description'),
           header: t('learningMaterials.pontusxdevnet.1.header'),
@@ -117,7 +115,7 @@ const getContent = (t: TFunction) => {
           url: docs.pontusx3,
         },
       },
-      [Layer.pontusxtest]: {
+      pontusxtest: {
         primary: {
           description: t('learningMaterials.pontusxtestnet.1.description'),
           header: t('learningMaterials.pontusxtestnet.1.header'),
@@ -135,8 +133,8 @@ const getContent = (t: TFunction) => {
         },
       },
     },
-    [Network.localnet]: {
-      [Layer.emerald]: {
+    localnet: {
+      emerald: {
         primary: {
           description: t('learningMaterials.emerald.description'),
           header: t('learningMaterials.emerald.header'),
@@ -153,7 +151,7 @@ const getContent = (t: TFunction) => {
           url: docs.emeraldGateway,
         },
       },
-      [Layer.sapphire]: {
+      sapphire: {
         primary: {
           description: t('learningMaterials.sapphire.description'),
           header: t('learningMaterials.sapphire.header'),
@@ -166,13 +164,13 @@ const getContent = (t: TFunction) => {
         },
         tertiary: {
           description: t('learningMaterials.tools.description'),
-          header: t('learningMaterials.tools.header', { layer: labels[Layer.sapphire] }),
+          header: t('learningMaterials.tools.header', { layer: 'sapphire' }),
           url: docs.tools,
         },
       },
-      [Layer.cipher]: undefined,
-      [Layer.pontusxdev]: undefined,
-      [Layer.pontusxtest]: undefined,
+      cipher: undefined,
+      pontusxdev: undefined,
+      pontusxtest: undefined,
     },
   } satisfies SpecifiedPerEnabledRuntime<LayerContent>
 }

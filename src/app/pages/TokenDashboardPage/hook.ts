@@ -9,14 +9,12 @@ import {
   useGetRuntimeEvmTokensAddressNftsId,
   RuntimeEventType,
   GetRuntimeEventsParams,
-  Layer,
 } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
-import { Network } from '../../../types/network'
 
 interface UseTokenInfoParams {
   /** Defaults to true */
@@ -60,7 +58,7 @@ export const useTokenTransfers = (
   if (params && !scope) {
     throw new Error('Must set params=undefined while scope is unavailable')
   }
-  const mockScopeForDisabledQuery = { network: Network.mainnet, layer: Layer.sapphire } as const
+  const mockScopeForDisabledQuery = { network: 'mainnet', layer: 'sapphire' } as const
 
   const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
     paramName: 'page',

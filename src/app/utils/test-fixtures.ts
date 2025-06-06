@@ -1,5 +1,4 @@
-import { EvmTokenType, groupAccountTokenBalances, Layer, RuntimeAccount } from '../../oasis-nexus/api'
-import { Network } from '../../types/network'
+import { EvmTokenType, groupAccountTokenBalances, RuntimeAccount } from '../../oasis-nexus/api'
 import { AccountResult, BlockResult } from '../pages/SearchResultsPage/hooks'
 
 export const suggestedParsedBlock: BlockResult = {
@@ -9,8 +8,8 @@ export const suggestedParsedBlock: BlockResult = {
   size: 4214,
   num_transactions: 10,
   gas_used: 1482530,
-  layer: Layer.emerald,
-  network: Network.mainnet,
+  layer: 'emerald',
+  network: 'mainnet',
   resultType: 'block',
 }
 
@@ -21,8 +20,8 @@ export const sapphireParsedBlock: BlockResult = {
   size: 292,
   num_transactions: 1,
   gas_used: 11292,
-  layer: Layer.sapphire,
-  network: Network.mainnet,
+  layer: 'sapphire',
+  network: 'mainnet',
   resultType: 'block',
 }
 
@@ -60,8 +59,8 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
     total_received: '0',
     total_sent: '0',
   },
-  layer: Layer.emerald,
-  network: Network.mainnet,
+  layer: 'emerald',
+  network: 'mainnet',
 })
 
 export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
@@ -75,8 +74,8 @@ export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
     total_received: '0',
     total_sent: '0',
   },
-  layer: Layer.emerald,
-  network: Network.mainnet,
+  layer: 'emerald',
+  network: 'mainnet',
   evm_contract: undefined,
 })
 

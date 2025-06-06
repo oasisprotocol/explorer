@@ -174,12 +174,12 @@ type LayersConfig = {
 }
 
 export const paraTimesConfig = {
-  [Layer.cipher]: cipherConfig,
-  [Layer.emerald]: emeraldConfig,
-  [Layer.sapphire]: sapphireConfig,
-  [Layer.pontusxdev]: pontusxDevConfig,
-  [Layer.pontusxtest]: pontusxTestConfig,
-  [Layer.consensus]: null,
+  cipher: cipherConfig,
+  emerald: emeraldConfig,
+  sapphire: sapphireConfig,
+  pontusxdev: pontusxDevConfig,
+  pontusxtest: pontusxTestConfig,
+  consensus: null,
 } satisfies LayersConfig
 
 const splitUrls = (input: string | undefined): string[] =>
@@ -200,7 +200,7 @@ export const getAppTitle = () => import.meta.env.REACT_APP_META_TITLE
 
 export const getTokensForScope = (scope: SearchScope | undefined): NativeTokenInfo[] => {
   if (!scope) return []
-  if (scope.layer === Layer.consensus) return consensusConfig[scope.network].tokens
+  if (scope.layer === 'consensus') return consensusConfig[scope.network].tokens
   return paraTimesConfig?.[scope.layer]?.[scope.network]?.tokens!
 }
 
@@ -210,16 +210,16 @@ export const getFiatCurrencyForScope = (scope: SearchScope | undefined) =>
 export const showFiatValues = import.meta.env.REACT_APP_SHOW_FIAT_VALUES === 'true'
 
 export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, string>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }
 
 export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
-  [Network.mainnet]: {},
-  [Network.testnet]: {},
+  mainnet: {},
+  testnet: {},
 }

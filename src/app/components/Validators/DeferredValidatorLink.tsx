@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Network } from '../../../types/network'
-import { Layer, Validator } from '../../../oasis-nexus/api'
+import { Validator } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { ValidatorLink } from './ValidatorLink'
 import { HighlightPattern } from '../HighlightedText'
@@ -12,7 +12,7 @@ export const DeferredValidatorLink: FC<{
   isError: boolean
   highlightPattern?: HighlightPattern
 }> = ({ network, address, validator, isError, highlightPattern }) => {
-  const scope: SearchScope = { network, layer: Layer.consensus }
+  const scope: SearchScope = { network, layer: 'consensus' }
 
   if (isError) {
     console.log('Warning: failed to look up validators!')
