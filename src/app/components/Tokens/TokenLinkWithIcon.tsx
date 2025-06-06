@@ -37,15 +37,17 @@ export const TokenLinkWithIcon: FC<{
           )
         }
       >
-        {metadata?.icon ? (
-          <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
-        ) : (
-          <InitialsAvatar
-            name={metadata?.name || name || address.slice(2, 4)}
-            width={42}
-            style={{ maxHeight: 32, margin: '-4px 0' }}
-          />
-        )}
+        <Box sx={{ lineHeight: 0 }}>
+          {metadata?.icon ? (
+            <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
+          ) : (
+            <InitialsAvatar
+              name={metadata?.name || name || address.slice(2, 4)}
+              width={42}
+              style={{ maxHeight: 32, margin: '-4px 0' }}
+            />
+          )}
+        </Box>
       </Tooltip>
 
       <span
