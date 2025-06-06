@@ -1716,6 +1716,8 @@ export interface RuntimeBlock {
   gas_used: number;
   /** The block header hash. */
   hash: string;
+  /** The minimum gas price for the block, in base units. */
+  min_gas_price?: TextBigInt;
   /** The number of transactions in the block. */
   num_transactions: number;
   /** The block round. */
