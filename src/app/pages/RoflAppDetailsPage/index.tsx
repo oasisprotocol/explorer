@@ -229,7 +229,8 @@ export const RoflAppDetailsViewSearchResult: FC<{
 export const RoflAppDetailsVerticalListView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-}> = ({ app, isLoading }) => {
+  highlightPattern?: HighlightPattern
+}> = ({ app, isLoading, highlightPattern }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -238,7 +239,7 @@ export const RoflAppDetailsVerticalListView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightPattern={highlightPattern} />
       <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
       <DetailsRow title={t('rofl.appId')}>
         <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
