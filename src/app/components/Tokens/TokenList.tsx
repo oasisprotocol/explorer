@@ -98,6 +98,7 @@ export const TokenList = (props: TokensProps) => {
               scope={token}
               address={token.eth_contract_addr ?? token.contract_addr}
               name={token.name}
+              alwaysTrim
             />
           ),
         },
