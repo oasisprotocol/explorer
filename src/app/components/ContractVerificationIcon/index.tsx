@@ -11,26 +11,6 @@ import { StatusBadge } from '../common/StatusBadge'
 
 export const verificationIconBoxHeight = 28
 
-type ContractStatusProps = {
-  verificationLevel?: 'full' | 'partial'
-  hideLabel?: boolean
-}
-export const ContractStatus = ({ verificationLevel, hideLabel }: ContractStatusProps) => {
-  const { t } = useTranslation()
-  const statusLabel =
-    verificationLevel === 'full'
-      ? t('contract.verification.isVerified')
-      : verificationLevel === 'partial'
-        ? t('contract.verification.isPartiallyVerified')
-        : t('contract.verification.isNotVerified')
-  const statusVariant =
-    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
-
-  const label = hideLabel ? '' : statusLabel
-
-  return <StatusBadge label={label} variant={statusVariant} />
-}
-
 export const VerificationIcon: FC<{
   address_eth: string
   scope: SearchScope
@@ -43,6 +23,15 @@ export const VerificationIcon: FC<{
   if (isLocalnet(scope.network)) {
     return null
   }
+  const label =
+    verificationLevel === 'full'
+      ? t('contract.verification.isVerified')
+      : verificationLevel === 'partial'
+        ? t('contract.verification.isPartiallyVerified')
+        : t('contract.verification.isNotVerified')
+  const statusVariant =
+    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
+
   const sourcifyLinkProps = {
     href: hideLink ? undefined : `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
@@ -53,7 +42,7 @@ export const VerificationIcon: FC<{
   return (
     <>
       <Link {...sourcifyLinkProps}>
-        <ContractStatus verificationLevel={verificationLevel} hideLabel={hideLabel} />
+        <StatusBadge label={hideLabel ? '' : label} variant={statusVariant} />
       </Link>
       {!hideLink &&
         (verificationLevel ? (
