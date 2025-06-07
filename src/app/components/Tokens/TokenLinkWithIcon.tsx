@@ -15,7 +15,8 @@ export const TokenLinkWithIcon: FC<{
   address: string
   name: string | undefined
   highlightPattern?: HighlightPattern
-}> = ({ scope, address, name, highlightPattern }) => {
+  alwaysTrim?: boolean
+}> = ({ scope, address, name, highlightPattern, alwaysTrim }) => {
   const { t } = useTranslation()
   const { metadata } = useAccountMetadata(scope, address)
   return (
@@ -47,7 +48,13 @@ export const TokenLinkWithIcon: FC<{
         )}
       </Tooltip>
 
-      <span>
+      <span
+        style={
+          alwaysTrim
+            ? { whiteSpace: 'nowrap', maxWidth: '25vw', overflow: 'hidden', textOverflow: 'ellipsis' }
+            : {}
+        }
+      >
         <TokenLink
           scope={scope}
           address={address}
