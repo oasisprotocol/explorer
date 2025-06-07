@@ -45,7 +45,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
                     address_eth={account.address_eth!}
                     scope={account}
                     verificationLevel={contract.verification?.verification_level}
-                    noLink
+                    hideLink
                   />
                 </Box>
 
