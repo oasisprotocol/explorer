@@ -8,6 +8,7 @@ import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
 import { StatusBadge } from '../common/StatusBadge'
+import Tooltip from '@mui/material/Tooltip'
 
 export const verificationIconBoxHeight = 28
 
@@ -41,9 +42,11 @@ export const VerificationIcon: FC<{
   }
   return (
     <>
-      <Link {...sourcifyLinkProps}>
-        <StatusBadge label={hideLabel ? '' : label} variant={statusVariant} />
-      </Link>
+      <Tooltip placement="top" arrow title={hideLabel ? label : undefined}>
+        <Link {...sourcifyLinkProps}>
+          <StatusBadge label={hideLabel ? '' : label} variant={statusVariant} />
+        </Link>
+      </Tooltip>
       {!hideLink &&
         (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
