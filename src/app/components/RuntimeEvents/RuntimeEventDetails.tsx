@@ -36,6 +36,8 @@ import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { fromBaseUnits } from '../../utils/number-utils'
+import { RoflAppLink } from '../Rofl/RoflAppLink'
+import { RoflAppInstanceLink } from '../Rofl/RoflAppInstanceLink'
 
 const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | undefined) => {
   switch (method) {
@@ -485,7 +487,9 @@ const RuntimeEventDetailsInner: FC<{
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.id')}</dt>
-            <dd>{event.body.id}</dd>
+            <dd>
+              <RoflAppLink id={event.body.id} network={scope.network} />
+            </dd>
           </StyledDescriptionList>
         </div>
       )
@@ -496,12 +500,18 @@ const RuntimeEventDetailsInner: FC<{
           <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.id')}</dt>
-            <dd>{event.body.app_id}</dd>
+            <dd>
+              <RoflAppLink id={event.body.app_id} network={scope.network} />
+            </dd>
             {event.body?.rak?.PublicKey && (
               <>
                 <dt>{t('rofl.rak')}</dt>
                 <dd>
-                  <Typography variant="mono">{event.body.rak.PublicKey}</Typography>
+                  <RoflAppInstanceLink
+                    id={event.body.app_id}
+                    network={scope.network}
+                    rak={event.body?.rak?.PublicKey}
+                  />
                 </dd>
               </>
             )}
