@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -43,7 +43,7 @@ export const BlockStats = <T extends { [key: string]: any }>({
         {data.map(item => {
           const title = tooltipFormatter ? tooltipFormatter(item[dataKey].toString()) : item[dataKey]
           return (
-            <Tooltip key={item[dataKey]} title={title} placement="top">
+            <Tooltip key={item[dataKey]} title={title}>
               <StyledSquare success={item[statusKey]} />
             </Tooltip>
           )

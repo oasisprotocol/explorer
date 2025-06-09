@@ -5,7 +5,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
-import Tooltip from '@mui/material/Tooltip'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
@@ -36,7 +36,7 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, tar
   const labels = getLayerLabels(t)
 
   return (
-    <Tooltip arrow placement="top" title={t('layerPicker.comingSoonTitle')}>
+    <Tooltip title={t('layerPicker.comingSoonTitle')}>
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>

@@ -3,7 +3,7 @@ import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import PaginationItem from '@mui/material/PaginationItem'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
@@ -15,7 +15,7 @@ const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ sco
   const [searchParams] = useSearchParams()
   const disabled = currentRound === 0
   return (
-    <Tooltip title={disabled ? t('blocks.viewingFirst') : t('blocks.viewPrevious')} placement="top">
+    <Tooltip title={disabled ? t('blocks.viewingFirst') : t('blocks.viewPrevious')}>
       <Box>
         <PaginationItem
           component={RouterLink}

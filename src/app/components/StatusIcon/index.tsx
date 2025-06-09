@@ -6,8 +6,8 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { TxError } from '../../../oasis-nexus/api'
-import Tooltip from '@mui/material/Tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
 
@@ -142,11 +142,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
     )
   } else {
     return (
-      <Tooltip
-        arrow
-        placement="top"
-        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
-      >
+      <Tooltip title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}>
         <StyledBox status={status} withText={withText}>
           {statusIcon[status]}
         </StyledBox>

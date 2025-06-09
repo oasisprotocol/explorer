@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Proposal } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -66,7 +66,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       {
         align: TableCellAlign.Right,
         content: (
-          <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
+          <Tooltip title={t('networkProposal.createTooltip')}>
             <Box>{proposal.created_at}</Box>
           </Tooltip>
         ),
@@ -75,7 +75,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
       {
         align: TableCellAlign.Right,
         content: (
-          <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
+          <Tooltip title={t('networkProposal.closeTooltip')}>
             <Box>{proposal.closes_at}</Box>
           </Tooltip>
         ),

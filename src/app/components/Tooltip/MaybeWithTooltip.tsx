@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
-import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material/styles'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { useScreenSize } from '../../hooks/useScreensize'
 
 type MaybeWithTooltipProps = {
@@ -30,7 +30,6 @@ export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, s
   const { isMobile } = useScreenSize()
   return (
     <Tooltip
-      placement="top"
       title={
         <Box
           sx={{
@@ -45,9 +44,6 @@ export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, s
           {title}
         </Box>
       }
-      disableFocusListener={!title}
-      disableHoverListener={!title}
-      disableTouchListener={!title}
     >
       <Box
         component="span"

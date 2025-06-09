@@ -1,9 +1,8 @@
 import { FC } from 'react'
 import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-import { tooltipDelay } from '../../../styles/theme'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 
 const StyledButton = styled(Button)(() => ({
   padding: '0px',
@@ -19,7 +18,7 @@ type TableHeaderToggleProps = {
 
 export const TableHeaderToggle: FC<TableHeaderToggleProps> = ({ label, onClick, tooltipTitle }) => {
   return (
-    <Tooltip title={tooltipTitle} enterDelay={tooltipDelay} leaveDelay={0} placement="top">
+    <Tooltip title={tooltipTitle}>
       <StyledButton variant="text" onClick={onClick}>
         <Typography
           sx={{
