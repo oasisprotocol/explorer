@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
 import CancelIcon from '@mui/icons-material/Cancel'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
@@ -154,7 +154,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('networkProposal.create')}</dt>
       <dd>
-        <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
+        <Tooltip title={t('networkProposal.createTooltip')}>
           <Box sx={{ display: 'flex' }} gap={2}>
             {proposal.created_at}
             <InfoIcon htmlColor={COLORS.brandDark} />
@@ -164,7 +164,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('networkProposal.close')}</dt>
       <dd>
-        <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
+        <Tooltip title={t('networkProposal.closeTooltip')}>
           <Box sx={{ display: 'flex' }} gap={2}>
             {proposal.closes_at}
             <InfoIcon htmlColor={COLORS.brandDark} />

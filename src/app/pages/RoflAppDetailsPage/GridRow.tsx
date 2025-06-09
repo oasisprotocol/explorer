@@ -2,8 +2,8 @@ import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
-import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { COLORS } from '../../../styles/theme/colors'
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
@@ -29,7 +29,7 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
       <StyledGrid item xs={4} md={5}>
         {label}:
         {tooltip && (
-          <Tooltip title={tooltip} placement="top">
+          <Tooltip title={tooltip}>
             <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
           </Tooltip>
         )}

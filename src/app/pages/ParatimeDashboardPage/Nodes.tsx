@@ -7,9 +7,8 @@ import InfoIcon from '@mui/icons-material/Info'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useGetRuntimeStatus } from '../../../oasis-nexus/api'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
 import { RuntimeScope } from '../../../types/searchScope'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 
 export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
@@ -26,13 +25,7 @@ export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
       }}
     >
       {t('nodes.title')}
-      <Tooltip
-        arrow
-        placement="top"
-        title={t('nodes.tooltip')}
-        enterDelay={tooltipDelay}
-        enterNextDelay={tooltipDelay}
-      >
+      <Tooltip title={t('nodes.tooltip')}>
         <InfoIcon htmlColor={COLORS.brandDark} />
       </Tooltip>
     </Box>

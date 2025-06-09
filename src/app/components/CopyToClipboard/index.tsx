@@ -1,11 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Tooltip from '@mui/material/Tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { COLORS } from '../../../styles/theme/colors'
 import ButtonBase from '@mui/material/ButtonBase'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 
 const clipboardTooltipDuration = 2000
 
@@ -82,7 +82,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, floating, isF
   }, [])
 
   return (
-    <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
+    <Tooltip onOpenChange={hideTooltip} open={isCopied} side="right" title={t('clipboard.success')}>
       {label ? (
         <Button variant="outlined" color="secondary" onClick={handleCopyToClipboard} aria-label={ariaLabel}>
           {label}

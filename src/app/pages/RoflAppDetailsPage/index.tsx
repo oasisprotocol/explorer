@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
 import { styled } from '@mui/material/styles'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
@@ -168,7 +168,7 @@ export const RoflAppDetailsView: FC<{
         title={
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {t('rofl.secrets')}
-            <Tooltip title={t('rofl.secretsTooltip')} placement="top">
+            <Tooltip title={t('rofl.secretsTooltip')}>
               <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
             </Tooltip>
           </Box>

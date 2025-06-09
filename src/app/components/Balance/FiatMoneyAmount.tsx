@@ -1,11 +1,11 @@
 import { styled } from '@mui/material/styles'
 import WarningIcon from '@mui/icons-material/WarningAmber'
 import Box from '@mui/material/Box'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { useTranslation } from 'react-i18next'
 import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
-import Tooltip from '@mui/material/Tooltip'
 import Skeleton from '@mui/material/Skeleton'
 
 export const FiatMoneyAmountBox = styled(Box)(() => ({
@@ -36,10 +36,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
           },
         })}
         {!!unknownTickers.length && (
-          <Tooltip
-            title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}
-            placement="top"
-          >
+          <Tooltip title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}>
             <WarningIcon />
           </Tooltip>
         )}

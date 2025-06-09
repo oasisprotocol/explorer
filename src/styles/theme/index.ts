@@ -10,7 +10,6 @@ export { defaultTheme } from './defaultTheme'
 export { testnetTheme } from './testnet/theme'
 export { localnetTheme } from './localnet/theme'
 
-export const tooltipDelay = 500
 export const typingDelay = 1000
 
 export const getThemeForScope = (network: Network, layer?: Layer): Theme => {

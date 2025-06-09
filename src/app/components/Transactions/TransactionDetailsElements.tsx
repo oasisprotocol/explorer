@@ -1,11 +1,10 @@
 import { FC, PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
-import { tooltipDelay } from '../../../styles/theme'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { trimLongString } from '../../utils/trimLongString'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -103,7 +102,7 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
     <Box sx={{ display: 'inline-flex' }}>
       <Label>{label || t('common.amount')}</Label>
       {trimEnabled ? (
-        <Tooltip arrow placement="top" title={value} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
+        <Tooltip title={value}>
           <Typography variant="mono">{trimLongString(value, 2, 18)}</Typography>
         </Tooltip>
       ) : (

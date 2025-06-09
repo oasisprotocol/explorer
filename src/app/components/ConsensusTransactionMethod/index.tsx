@@ -14,8 +14,7 @@ import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices
 import PersonIcon from '@mui/icons-material/Person'
 import PriceChangeIcon from '@mui/icons-material/PriceChange'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { ConsensusTxMethod, GetConsensusTransactionsParams } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { SelectOptionBase } from '../Select'
@@ -155,16 +154,7 @@ const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
   }, [applyTruncate, elementRef, props.label, props.size])
 
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={props.label}
-      enterDelay={tooltipDelay}
-      enterNextDelay={tooltipDelay}
-      disableFocusListener={!truncate}
-      disableHoverListener={!truncate}
-      disableTouchListener={!truncate}
-    >
+    <Tooltip title={props.label}>
       <Box>
         <MethodIconContent {...props} elementRef={elementRef} truncate={truncate} />
       </Box>

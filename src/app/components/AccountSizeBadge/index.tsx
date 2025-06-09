@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
+import { TooltipWrapper as Tooltip } from '@oasisprotocol/ui-library/src/components/ui/tooltipWrapper'
 import { styled } from '@mui/material/styles'
 import { FC } from 'react'
 import { COLORS } from 'styles/theme/colors'
@@ -30,7 +30,7 @@ export const AccountSizeBadge: FC<AccountSizeBadgeProps> = ({ size }) => {
   const { t } = useTranslation()
 
   return (
-    <Tooltip arrow placement="top" title={t('account.sizeTooltip', { size })}>
+    <Tooltip title={t('account.sizeTooltip', { size })}>
       <StyledBox>{size}</StyledBox>
     </Tooltip>
   )
