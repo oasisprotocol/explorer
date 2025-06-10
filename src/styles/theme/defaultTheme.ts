@@ -634,7 +634,8 @@ export const defaultTheme = createTheme({
           color: COLORS.grayExtraDark,
           whiteSpace: 'nowrap',
           padding: theme.spacing(4, 3),
-          a: {
+          // Low specificity
+          ':is(a)': {
             color: COLORS.brandDark,
             fontWeight: 700,
             textDecoration: 'none',
