@@ -17,6 +17,7 @@ import {
   SearchResults,
   TokenResult,
   TransactionResult,
+  ValidatorResult,
   isConsensusBlock,
   isConsensusTransaction,
 } from './hooks'
@@ -118,6 +119,22 @@ export const SearchResultsList: FC<{
           )}
           link={token => RouteUtils.getTokenRoute(token, token.eth_contract_addr ?? token.contract_addr)}
           linkLabel={t('search.results.tokens.viewLink')}
+        />
+
+        <ResultsGroupByType
+          title={t('search.results.validators.title')}
+          results={searchResults.filter((item): item is ValidatorResult => item.resultType === 'validator')}
+          resultComponent={item => (
+            <ConsensusAccountDetailsView
+              isLoading={false}
+              isError={false}
+              account={item}
+              showLayer={true}
+              highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
+            />
+          )}
+          link={(acc: Account) => RouteUtils.getValidatorRoute(acc.network, acc.entity || acc.address)}
+          linkLabel={t('search.results.validators.viewLink')}
         />
 
         <ResultsGroupByType
