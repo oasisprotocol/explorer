@@ -460,7 +460,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
         ...validators
-          .filter(validator => (validator as Account).entity)
+          .filter(validator => validator.entity)
           .map((validator): ValidatorResult => ({ ...validator, resultType: 'validator' })),
         ...roflApps.map((roflApp): RoflAppResult => ({ ...roflApp, resultType: 'roflApp' })),
         ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
