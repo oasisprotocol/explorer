@@ -122,6 +122,22 @@ export const SearchResultsList: FC<{
         />
 
         <ResultsGroupByType
+          title={t('search.results.validators.title')}
+          results={searchResults.filter((item): item is ValidatorResult => item.resultType === 'validator')}
+          resultComponent={item => (
+            <ConsensusAccountDetailsView
+              isLoading={false}
+              isError={false}
+              account={item}
+              showLayer={true}
+              highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
+            />
+          )}
+          link={(acc: Account) => RouteUtils.getValidatorRoute(acc.network, acc.entity || acc.address)}
+          linkLabel={t('search.results.validators.viewLink')}
+        />
+
+        <ResultsGroupByType
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item =>
@@ -146,22 +162,6 @@ export const SearchResultsList: FC<{
           }
           link={acc => RouteUtils.getAccountRoute(acc, (acc as RuntimeAccount).address_eth ?? acc.address)}
           linkLabel={t('search.results.accounts.viewLink')}
-        />
-
-        <ResultsGroupByType
-          title={t('search.results.validators.title')}
-          results={searchResults.filter((item): item is ValidatorResult => item.resultType === 'validator')}
-          resultComponent={item => (
-            <ConsensusAccountDetailsView
-              isLoading={false}
-              isError={false}
-              account={item}
-              showLayer={true}
-              highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
-            />
-          )}
-          link={(acc: Account) => RouteUtils.getValidatorRoute(acc.network, acc.entity || acc.address)}
-          linkLabel={t('search.results.validators.viewLink')}
         />
 
         <ResultsGroupByType
