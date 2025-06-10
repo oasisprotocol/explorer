@@ -797,6 +797,10 @@
         "title": "Proposals",
         "viewLink": "View Proposal"
       },
+      "validators": {
+        "title": "Validators",
+        "viewLink": "View Validator"
+      },
       "count_one": "1 result",
       "count_other": "{{ count }} results",
       "moreCount_one": "1 more result",

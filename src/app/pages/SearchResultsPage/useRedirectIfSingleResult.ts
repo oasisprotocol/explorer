@@ -71,6 +71,9 @@ export function useRedirectIfSingleResult(
       case 'roflApp':
         redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${encodeURIComponentPretty(query)}`
         break
+      case 'validator':
+        redirectTo = RouteUtils.getValidatorRoute(item.network, item.entity || item.address)
+        break
       default:
         exhaustedTypeWarning('Unexpected result type', item)
     }

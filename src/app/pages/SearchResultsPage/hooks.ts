@@ -39,7 +39,15 @@ function isDefined<T>(item: T): item is NonNullable<T> {
 export type ConditionalResults<T> = { isLoading: boolean; isError?: boolean; results: T[] }
 
 type SearchResultItemCore = HasScope & {
-  resultType: 'block' | 'transaction' | 'account' | 'contract' | 'token' | 'proposal' | 'roflApp'
+  resultType:
+    | 'block'
+    | 'transaction'
+    | 'account'
+    | 'contract'
+    | 'token'
+    | 'proposal'
+    | 'roflApp'
+    | 'validator'
 }
 
 export type BlockResult = SearchResultItemCore & (RuntimeBlock | Block) & { resultType: 'block' }
@@ -57,6 +65,8 @@ export type TokenResult = SearchResultItemCore & EvmToken & { resultType: 'token
 
 export type ProposalResult = SearchResultItemCore & Proposal & { resultType: 'proposal' }
 
+export type ValidatorResult = SearchResultItemCore & Account & { resultType: 'validator' }
+
 export type SearchResultItem =
   | BlockResult
   | TransactionResult
@@ -65,6 +75,7 @@ export type SearchResultItem =
   | RoflAppResult
   | TokenResult
   | ProposalResult
+  | ValidatorResult
 
 export type SearchResults = SearchResultItem[]
 
@@ -428,13 +439,12 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     ...(queries.oasisRuntimeAccount.results || []),
     ...(queries.evmAccount.results || []),
     ...(queries.accountsByName.results || []),
-    ...(queries.validatorByName.results || []),
   ]
     .filter(isAccountNonEmpty)
     .filter(a => !alreadyAToken.has(a.network + a.layer + a.address)) // Deduplicate tokens
   const roflApps = [...queries.roflAppId.results, ...queries.roflAppName.results]
   const proposals = queries.proposals.results
-
+  const validators = [...queries.validatorByName.results, ...queries.oasisConsensusAccount.results]
   const results: SearchResultItem[] = isLoading
     ? []
     : [
@@ -443,11 +453,15 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
         ...tokens.map((token): TokenResult => ({ ...token, resultType: 'token' })),
         ...accounts
           .filter(account => !(account as RuntimeAccount).evm_contract)
+          .filter(account => !(account as Account).entity)
           .map((account): AccountResult => ({ ...account, resultType: 'account' })),
         ...accounts
           .filter((account): account is RuntimeAccount => account.layer !== Layer.consensus)
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
+        ...validators
+          .filter(validator => (validator as Account).entity)
+          .map((validator): ValidatorResult => ({ ...validator, resultType: 'validator' })),
         ...roflApps.map((roflApp): RoflAppResult => ({ ...roflApp, resultType: 'roflApp' })),
         ...proposals.map((proposal): ProposalResult => ({ ...proposal, resultType: 'proposal' })),
       ]
