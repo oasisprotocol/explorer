@@ -64,7 +64,8 @@ export const TokenList = (props: TokensProps) => {
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '' },
     { key: 'name', content: t('common.name') },
-    { key: 'type', content: t('common.type') },
+    { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
+    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
     { key: 'contract', content: t('common.smartContract') },
     {
       key: 'verification',
@@ -75,8 +76,7 @@ export const TokenList = (props: TokensProps) => {
       content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
-    { key: 'supply', content: t('tokens.totalSupply'), align: TableCellAlign.Right },
-    { key: 'ticker', content: t('common.ticker'), align: TableCellAlign.Left },
+    { key: 'type', content: t('common.type') },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -84,32 +84,36 @@ export const TokenList = (props: TokensProps) => {
       key: token.contract_addr,
       data: [
         {
+          key: 'index',
           content: (
             (pagination ? (pagination.selectedPage - 1) * pagination.rowsPerPage : 0) +
             index +
             1
           ).toLocaleString(),
-          key: 'index',
         },
         {
+          key: 'name',
           content: (
             <TokenLinkWithIcon
               scope={token}
               address={token.eth_contract_addr ?? token.contract_addr}
               name={token.name}
+              alwaysTrim
             />
           ),
-          key: 'name',
         },
         {
-          key: 'type',
-          content: (
-            <Box sx={{ pr: 4 }}>
-              <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />
-            </Box>
-          ),
+          key: 'supply',
+          content: <RoundedBalance compactLargeNumbers value={token.total_supply} />,
+          align: TableCellAlign.Right,
         },
         {
+          key: 'ticker',
+          content: token.symbol,
+          align: TableCellAlign.Left,
+        },
+        {
+          key: 'contactAddress',
           content: (
             <span>
               <AccountLink
@@ -121,7 +125,6 @@ export const TokenList = (props: TokensProps) => {
               <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
             </span>
           ),
-          key: 'contactAddress',
         },
         {
           key: 'verification',
@@ -144,19 +147,17 @@ export const TokenList = (props: TokensProps) => {
           ),
         },
         {
-          content: token.num_holders.toLocaleString(),
           key: 'holdersCount',
+          content: token.num_holders.toLocaleString(),
           align: TableCellAlign.Right,
         },
         {
-          content: <RoundedBalance compactLargeNumbers value={token.total_supply} />,
-          key: 'supply',
-          align: TableCellAlign.Right,
-        },
-        {
-          content: token.symbol,
-          key: 'ticker',
-          align: TableCellAlign.Left,
+          key: 'type',
+          content: (
+            <Box sx={{ pr: 4 }}>
+              <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />
+            </Box>
+          ),
         },
       ],
     }
