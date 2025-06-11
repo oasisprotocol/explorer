@@ -29,6 +29,7 @@ const StyledBoxLight = styled(Box)(() => ({
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
+  height: '100%',
 }))
 
 type EmptyStateProps = {
