@@ -12,12 +12,12 @@ export interface HasLayer {
 export const getFilterForLayer = (layer: Layer) => (item: HasLayer) => item.layer === layer
 
 const layerOrder: Record<Layer, number> = {
-  [Layer.consensus]: 1,
-  [Layer.sapphire]: 2,
-  [Layer.emerald]: 3,
-  [Layer.cipher]: 4,
-  [Layer.pontusxdev]: 5,
-  [Layer.pontusxtest]: 6,
+  consensus: 1,
+  sapphire: 2,
+  emerald: 3,
+  cipher: 4,
+  pontusxdev: 5,
+  pontusxtest: 6,
 }
 
 export function orderByLayer(itemA: Layer, itemB: Layer): number
@@ -28,7 +28,7 @@ export function orderByLayer(itemA: Layer | HasLayer, itemB: Layer | HasLayer): 
   return layerOrder[layerA] - layerOrder[layerB]
 }
 
-const layersWithEncryptedTransactions: Layer[] = [Layer.sapphire, Layer.cipher]
+const layersWithEncryptedTransactions: Layer[] = ['sapphire', 'cipher']
 
 export const doesLayerSupportEncryptedTransactions = (layer: Layer): boolean =>
   layersWithEncryptedTransactions.includes(layer)

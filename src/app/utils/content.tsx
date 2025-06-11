@@ -7,16 +7,16 @@ import { TestnetIcon } from '../components/CustomIcons/Testnet'
 import ConstructionIcon from '@mui/icons-material/Construction'
 
 export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
-  [Layer.emerald]: t('common.emerald'),
-  [Layer.sapphire]: t('common.sapphire'),
-  [Layer.cipher]: t('common.cipher'),
-  [Layer.pontusxdev]: t('pontusx.devnet'),
-  [Layer.pontusxtest]: t('pontusx.testnet'),
-  [Layer.consensus]: t('common.consensus'),
+  emerald: t('common.emerald'),
+  sapphire: t('common.sapphire'),
+  cipher: t('common.cipher'),
+  pontusxdev: t('pontusx.devnet'),
+  pontusxtest: t('pontusx.testnet'),
+  consensus: t('common.consensus'),
 })
 
 export const getNetworkIcons = ({ size }: { size?: number } = {}): Record<Network, ReactNode> => ({
-  [Network.mainnet]: <MainnetIcon sx={{ fontSize: size }} />,
-  [Network.testnet]: <TestnetIcon sx={{ fontSize: size }} />,
-  [Network.localnet]: <ConstructionIcon sx={{ fontSize: size }} />,
+  mainnet: <MainnetIcon sx={{ fontSize: size }} />,
+  testnet: <TestnetIcon sx={{ fontSize: size }} />,
+  localnet: <ConstructionIcon sx={{ fontSize: size }} />,
 })

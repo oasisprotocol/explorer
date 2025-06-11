@@ -1,5 +1,4 @@
 import { RuntimeScope, SearchScope } from '../../types/searchScope'
-import { Layer } from '../../oasis-nexus/api'
 import { usePontusXAccountMetadata, useSearchForPontusXAccountsByName } from '../data/pontusx-account-names'
 import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-accounts'
 import { useOasisAccountMetadata, useSearchForOasisAccountsByName } from '../data/oasis-account-names'
@@ -17,7 +16,7 @@ import { useTokenInfo } from '../pages/TokenDashboardPage/hook'
  */
 export const useAccountMetadata = (scope: SearchScope, address: string): AccountMetadataInfo => {
   // Look up metadata specified by us
-  const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
+  const isPontusX = scope.layer === 'pontusxtest' || scope.layer === 'pontusxdev'
   const pontusXData = usePontusXAccountMetadata(getOasisAddress(address), {
     enabled: isPontusX,
     useErrorBoundary: false,
@@ -35,7 +34,7 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     isError: isTokenError,
   } = useTokenInfo(scope as RuntimeScope, address, {
     // The type cast is OK because whenever we are on consensus, we will set enabled to false
-    enabled: !registryData?.metadata && scope.layer !== Layer.consensus,
+    enabled: !registryData?.metadata && scope.layer !== 'consensus',
     useCaching: true,
   })
   const tokenData: AccountMetadataInfo = {
@@ -52,7 +51,7 @@ export const useSearchForAccountsByName = (
   scope: SearchScope,
   nameFragments: string[],
 ): AccountNameSearchResults => {
-  const isPontusX = scope.layer === Layer.pontusxtest || scope.layer === Layer.pontusxdev
+  const isPontusX = scope.layer === 'pontusxtest' || scope.layer === 'pontusxdev'
   const isValidPontusXSearch = isPontusX && !!nameFragments.length
   const pontusXResults = useSearchForPontusXAccountsByName(scope.network, nameFragments, {
     enabled: isValidPontusXSearch,

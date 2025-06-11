@@ -14,7 +14,7 @@ import { EnabledRuntimePreview, DisabledRuntimePreview } from './RuntimePreview'
 import { Network } from '../../../types/network'
 
 function shouldIncludeLayer(network: Network, layer: Layer) {
-  return layer !== Layer.consensus && isNotInHiddenScope({ network, layer })
+  return layer !== 'consensus' && isNotInHiddenScope({ network, layer })
 }
 
 const StyledInnerGrid = styled(Grid)(({ theme }) => ({

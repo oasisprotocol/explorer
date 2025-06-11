@@ -18,7 +18,6 @@ import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
 import { NetworkSelector } from '../NetworkSelector'
-import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
 import { storage } from '../../../../utils/storage'
@@ -39,9 +38,7 @@ const ParaTimeSelectorGlow = styled(Box, {
   width: '130vw',
   height: '130vw',
   marginTop: '-5vh',
-  backgroundImage: `url("${
-    network === Network.testnet ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
-  }")`,
+  backgroundImage: `url("${network === 'testnet' ? paratimeSelectorGlowTestnet : paratimeSelectorGlow}")`,
   transitionProperty: 'background-image',
   transitionDuration: `${theme.transitions.duration.complex}ms`,
   transitionTimingFunction: theme.transitions.easing.easeInOut,
@@ -75,9 +72,7 @@ const ParaTimeSelectorGlobe = styled(Box, {
   transform: 'translateX(-50%)',
   color: theme.palette.layout.main,
   backgroundImage: `url("${
-    network === Network.testnet || network === Network.localnet
-      ? paratimeSelectorGlobeTestnet
-      : paratimeSelectorGlobe
+    network === 'testnet' || network === 'localnet' ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
   }")`,
   transitionProperty: 'background-image',
   transitionDuration: `${theme.transitions.duration.complex}ms`,
@@ -158,12 +153,7 @@ const localStore = storage()
 // and see the whole universe.
 export const UniverseArea = 'Universe'
 
-export type SelectorArea =
-  | typeof UniverseArea
-  | typeof Layer.consensus
-  | typeof Layer.cipher
-  | typeof Layer.emerald
-  | typeof Layer.sapphire
+export type SelectorArea = typeof UniverseArea | 'consensus' | 'cipher' | 'emerald' | 'sapphire'
 
 const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
   disabled,
@@ -299,7 +289,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
           )}
         </ParaTimeSelectorGlobe>
         {!fixedNetwork && step === ParaTimeSelectorStep.Explore && (
-          <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? Network.mainnet)} />
+          <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? 'mainnet')} />
         )}
       </ParaTimeSelectorGlow>
       {activeMobileGraphTooltip.current && (

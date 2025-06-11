@@ -7,7 +7,7 @@ import {
   AccountNameSearchRuntimeMatch,
   AccountNameSearchRuntimeResults,
 } from './named-accounts'
-import { Layer, useGetRuntimeAccountsAddresses } from '../../oasis-nexus/api'
+import { useGetRuntimeAccountsAddresses } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { hasTextMatchesForAll } from '../components/HighlightedText/text-matching'
 import { getOasisAddress } from '../utils/helpers'
@@ -91,7 +91,7 @@ export const useSearchForPontusXAccountsByName = (
           .map(
             (account): AccountNameSearchRuntimeMatch => ({
               network,
-              layer: Layer.pontusxtest,
+              layer: 'pontusxtest',
               address: account.address,
             }),
           )

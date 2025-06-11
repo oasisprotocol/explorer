@@ -6,7 +6,6 @@ import {
   useGetRuntimeBlockByHeight,
   useGetRuntimeTransactionsTxHash,
   Runtime,
-  Layer,
   isAccountNonEmpty,
   HasScope,
   useGetRuntimeEvmTokens,
@@ -82,13 +81,13 @@ export type SearchResults = SearchResultItem[]
 export function isConsensusBlock(
   block: BlockResult,
 ): block is SearchResultItemCore & Block & { resultType: 'block' } {
-  return block.layer === Layer.consensus
+  return block.layer === 'consensus'
 }
 
 export function isConsensusTransaction(
   transaction: TransactionResult,
 ): transaction is SearchResultItemCore & Transaction & { resultType: 'transaction' } {
-  return transaction.layer === Layer.consensus
+  return transaction.layer === 'consensus'
 }
 
 export function useRuntimeBlocksByHeightConditionally(
@@ -96,7 +95,7 @@ export function useRuntimeBlocksByHeightConditionally(
   blockHeight: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer !== Layer.consensus)
+    .filter(scope => scope.layer !== 'consensus')
     .map(scope =>
       /**
        * Normally, calling React hooks from callbacks and other conditional code
@@ -123,7 +122,7 @@ export function useConsensusBlocksByHeightConditionally(
   blockHeight: string | undefined,
 ): ConditionalResults<Block> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer === Layer.consensus)
+    .filter(scope => scope.layer === 'consensus')
     .map(scope =>
       /**
        * Normally, calling React hooks from callbacks and other conditional code
@@ -150,7 +149,7 @@ export function useRuntimeBlocksByHashConditionally(
   blockHash: string | undefined,
 ): ConditionalResults<RuntimeBlock> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer !== Layer.consensus)
+    .filter(scope => scope.layer !== 'consensus')
     .map(scope =>
       /**
        * Normally, calling React hooks from callbacks and other conditional code
@@ -177,7 +176,7 @@ export function useConsensusBlocksByHashConditionally(
   blockHash: string | undefined,
 ): ConditionalResults<Block> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer === Layer.consensus)
+    .filter(scope => scope.layer === 'consensus')
     .map(scope =>
       /**
        * Normally, calling React hooks from callbacks and other conditional code
@@ -204,7 +203,7 @@ export function useRuntimeTransactionsConditionally(
   txHash: string | undefined,
 ): ConditionalResults<RuntimeTransaction> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer !== Layer.consensus)
+    .filter(scope => scope.layer !== 'consensus')
     .map(scope =>
       // See explanation above
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -225,7 +224,7 @@ export function useConsensusTransactionsConditionally(
   txHash: string | undefined,
 ): ConditionalResults<Transaction> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer === Layer.consensus)
+    .filter(scope => scope.layer === 'consensus')
     .map(scope =>
       // See explanation above
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -246,7 +245,7 @@ export function useRuntimeAccountConditionally(
   address: string | undefined,
 ): ConditionalResults<RuntimeAccount> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer !== Layer.consensus)
+    .filter(scope => scope.layer !== 'consensus')
     .map(scope =>
       // See explanation above
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -264,7 +263,7 @@ export function useRuntimeAccountConditionally(
 }
 
 export function useConsensusAccountConditionally(address: string | undefined): ConditionalResults<Account> {
-  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
+  const queries = RouteUtils.getEnabledNetworksForLayer('consensus').map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetConsensusAccountsAddress(network, address!, {
@@ -285,7 +284,7 @@ export function useRuntimeTokenConditionally(
   nameFragment: string[],
 ): ConditionalResults<EvmTokenList> {
   const queries = RouteUtils.getVisibleScopes(currentScope)
-    .filter(scope => scope.layer !== Layer.consensus)
+    .filter(scope => scope.layer !== 'consensus')
     .map(scope =>
       // See explanation above
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -312,7 +311,7 @@ export function useRuntimeTokenConditionally(
 }
 
 export function useNetworkProposalsConditionally(nameFragment: string[]): ConditionalResults<Proposal> {
-  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
+  const queries = RouteUtils.getEnabledNetworksForLayer('consensus').map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetConsensusProposalsByName(network, nameFragment),
   )
@@ -345,7 +344,7 @@ export function useNamedAccountConditionally(
 }
 
 export function useNamedValidatorConditionally(nameFragment: string[]) {
-  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.consensus).map(network =>
+  const queries = RouteUtils.getEnabledNetworksForLayer('consensus').map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useSearchForValidatorsByName(network, nameFragment),
   )
@@ -361,10 +360,10 @@ export function useNamedValidatorConditionally(nameFragment: string[]) {
 
 export function useRoflAppIdConditionally(id: string | undefined): ConditionalResults<RoflApp> {
   // TODO: also search on other layers that support Rofl
-  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
+  const queries = RouteUtils.getEnabledNetworksForLayer('sapphire').map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useGetRuntimeRoflAppsId(network, Layer.sapphire, id!, {
+    useGetRuntimeRoflAppsId(network, 'sapphire', id!, {
       query: {
         enabled: !!id,
       },
@@ -379,12 +378,12 @@ export function useRoflAppIdConditionally(id: string | undefined): ConditionalRe
 
 export function useRoflAppNameConditionally(nameFragment: string[]): ConditionalResults<RoflApp> {
   // TODO: also search on other layers that support Rofl
-  const queries = RouteUtils.getEnabledNetworksForLayer(Layer.sapphire).map(network =>
+  const queries = RouteUtils.getEnabledNetworksForLayer('sapphire').map(network =>
     // See explanation above
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useGetRuntimeRoflApps(
       network,
-      Layer.sapphire,
+      'sapphire',
       {
         name: nameFragment,
       },
@@ -456,7 +455,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
           .filter(account => !(account as Account).entity)
           .map((account): AccountResult => ({ ...account, resultType: 'account' })),
         ...accounts
-          .filter((account): account is RuntimeAccount => account.layer !== Layer.consensus)
+          .filter((account): account is RuntimeAccount => account.layer !== 'consensus')
           .filter(account => account.evm_contract)
           .map((account): ContractResult => ({ ...account, resultType: 'contract' })),
         ...validators

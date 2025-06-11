@@ -13,7 +13,6 @@ import {
   useGetConsensusValidatorsAddress,
   Account,
   useGetConsensusAccountsAddress,
-  Layer,
 } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
@@ -202,7 +201,7 @@ export const ValidatorDetailsView: FC<{
           <dd>{validator.rank}</dd>
           <dt>{t('common.address')}</dt>
           <dd>
-            <AccountLink scope={{ network, layer: Layer.consensus }} address={validator.entity_address} />
+            <AccountLink scope={{ network, layer: 'consensus' }} address={validator.entity_address} />
           </dd>
           <dt>
             <strong>{t('account.totalBalance')}</strong>
@@ -291,7 +290,7 @@ export const ValidatorDetailsView: FC<{
               <dd>
                 <AccountLink
                   alwaysTrimOnTablet
-                  scope={{ network, layer: Layer.consensus }}
+                  scope={{ network, layer: 'consensus' }}
                   address={getOasisAddressFromBase64PublicKey(validator.node_id)}
                 />
               </dd>

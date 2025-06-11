@@ -34,7 +34,7 @@ type NetworkSelectorProps = {
 }
 
 export const NetworkSelector: FC<NetworkSelectorProps> = ({ network, layer }) => {
-  return layer === Layer.consensus ? (
+  return layer === 'consensus' ? (
     <ConsensusNetworkSelector network={network} layer={layer} />
   ) : (
     <RuntimeNetworkSelector network={network} layer={layer} />
@@ -88,7 +88,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
       {!isMobile && (
         <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
-      {!fixedNetwork && !fixedLayer && !isTablet && network !== Network.mainnet && (
+      {!fixedNetwork && !fixedLayer && !isTablet && network !== 'mainnet' && (
         <StyledBox>
           <Typography
             component="span"

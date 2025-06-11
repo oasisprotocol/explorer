@@ -22,22 +22,22 @@ import { getOasisAddress } from '../utils/helpers'
 import { isUrlSafe } from '../utils/url'
 
 const dataSources: Record<Network, Partial<Record<Layer, string>>> = {
-  [Network.mainnet]: {
-    [Layer.consensus]: externalLinks.api.oasis_named_addresses_mainnet_consensus,
-    [Layer.emerald]: externalLinks.api.oasis_named_addresses_mainnet_emerald,
-    [Layer.sapphire]: externalLinks.api.oasis_named_addresses_mainnet_sapphire,
+  mainnet: {
+    consensus: externalLinks.api.oasis_named_addresses_mainnet_consensus,
+    emerald: externalLinks.api.oasis_named_addresses_mainnet_emerald,
+    sapphire: externalLinks.api.oasis_named_addresses_mainnet_sapphire,
   },
-  [Network.testnet]: {
-    [Layer.consensus]: externalLinks.api.oasis_named_addresses_testnet_consensus,
-    [Layer.emerald]: externalLinks.api.oasis_named_addresses_testnet_emerald,
-    [Layer.sapphire]: externalLinks.api.oasis_named_addresses_testnet_sapphire,
-    [Layer.pontusxdev]: externalLinks.api.oasis_named_addresses_testnet_pontusxdev,
-    [Layer.pontusxtest]: externalLinks.api.oasis_named_addresses_testnet_pontusxtest,
+  testnet: {
+    consensus: externalLinks.api.oasis_named_addresses_testnet_consensus,
+    emerald: externalLinks.api.oasis_named_addresses_testnet_emerald,
+    sapphire: externalLinks.api.oasis_named_addresses_testnet_sapphire,
+    pontusxdev: externalLinks.api.oasis_named_addresses_testnet_pontusxdev,
+    pontusxtest: externalLinks.api.oasis_named_addresses_testnet_pontusxtest,
   },
-  [Network.localnet]: {
-    [Layer.consensus]: undefined,
-    [Layer.emerald]: undefined,
-    [Layer.sapphire]: undefined,
+  localnet: {
+    consensus: undefined,
+    emerald: undefined,
+    sapphire: undefined,
   },
 }
 
@@ -134,8 +134,8 @@ export const useSearchForOasisAccountsByName = (
           )
       : []
 
-  const consensusMatches = layer === Layer.consensus ? (matches as AccountNameSearchConsensusMatch[]) : []
-  const runtimeMatches = layer === Layer.consensus ? [] : (matches as AccountNameSearchRuntimeMatch[])
+  const consensusMatches = layer === 'consensus' ? (matches as AccountNameSearchConsensusMatch[]) : []
+  const runtimeMatches = layer === 'consensus' ? [] : (matches as AccountNameSearchRuntimeMatch[])
 
   const {
     isLoading: areConsensusAccountsLoading,

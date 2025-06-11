@@ -9,7 +9,6 @@ import ErrorIcon from '@mui/icons-material/Error'
 import { useScreenSize } from '../../../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import { Layer } from '../../../../../oasis-nexus/api'
 import { Network } from '../../../../../types/network'
 import { useConsensusFreshness, useRuntimeFreshness } from '../../../../components/OfflineBanner/hook'
 import { getNetworkIcons } from '../../../../utils/content'
@@ -136,16 +135,16 @@ const layerTooltipBodyCaption = (t: TFunction, enabled: boolean, outOfDate: bool
 }
 
 const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, TooltipInfo>> => {
-  const isSapphireEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.sapphire)
-  const isEmeraldEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.emerald)
-  const isCipherEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.cipher)
-  const isConsensusEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes(Layer.consensus)
+  const isSapphireEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes('sapphire')
+  const isEmeraldEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes('emerald')
+  const isCipherEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes('cipher')
+  const isConsensusEnabled = RouteUtils.getAllLayersForNetwork(network).enabled.includes('consensus')
 
-  const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: Layer.emerald }).outOfDate
-  const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: Layer.sapphire }).outOfDate
+  const isEmeraldOutOfDate = useRuntimeFreshness({ network, layer: 'emerald' }).outOfDate
+  const isSapphireOutOfDate = useRuntimeFreshness({ network, layer: 'sapphire' }).outOfDate
   const isConsensusOutOfDate = useConsensusFreshness(network).outOfDate
   return {
-    [Layer.sapphire]: {
+    sapphire: {
       disabled: !isSapphireEnabled,
       body: {
         title: (t: TFunction) => t('common.sapphire'),
@@ -158,7 +157,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
           }
         : {}),
     },
-    [Layer.emerald]: {
+    emerald: {
       disabled: !isEmeraldEnabled,
       body: {
         title: (t: TFunction) => t('common.emerald'),
@@ -171,7 +170,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
           }
         : {}),
     },
-    [Layer.cipher]: {
+    cipher: {
       disabled: !isCipherEnabled,
       body: {
         title: (t: TFunction) => t('common.cipher'),
@@ -179,7 +178,7 @@ const useAreaTooltipMap = (network: Network): Partial<Record<SelectorArea, Toolt
         body: (t: TFunction) => t('home.tooltip.cipherParaTimeDesc'),
       },
     },
-    [Layer.consensus]: {
+    consensus: {
       disabled: !isConsensusEnabled,
       body: {
         title: (t: TFunction) => t('common.consensus'),
@@ -218,7 +217,7 @@ const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, ar
             color={COLORS.white}
             sx={{ fontSize: '10px', position: 'absolute', bottom: '10px' }}
           >
-            {area === Layer.consensus ? t('home.tooltip.openConsensus') : t('home.tooltip.openParatime')}
+            {area === 'consensus' ? t('home.tooltip.openConsensus') : t('home.tooltip.openParatime')}
           </Typography>
         </>
       )}

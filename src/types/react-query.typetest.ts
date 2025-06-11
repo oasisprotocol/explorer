@@ -1,13 +1,11 @@
 import { expect } from 'vitest'
 import { AxiosResponse } from 'axios'
 import {
-  Runtime,
   RuntimeBlock,
   RuntimeTransaction,
   useGetRuntimeBlocks,
   useGetRuntimeTransactions,
 } from '../oasis-nexus/api'
-import { Network } from './network'
 
 type BlocksWithExtra = AxiosResponse<{
   blocks: Array<RuntimeBlock & { extraProperty: boolean }>
@@ -18,7 +16,7 @@ type TransactionsWithExtra = AxiosResponse<{
 }>
 
 export function ExpectStructuralSharingToHaveCorrectType() {
-  const blocks = useGetRuntimeBlocks<BlocksWithExtra>(Network.mainnet, Runtime.emerald, undefined, {
+  const blocks = useGetRuntimeBlocks<BlocksWithExtra>('mainnet', 'emerald', undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {
@@ -43,7 +41,7 @@ export function ExpectStructuralSharingToHaveCorrectType() {
   // @ts-expect-error Shouldn't allow everything
   expect(blocks.data?.data.blocks[0].typo).toBeUndefined()
 
-  const txs = useGetRuntimeTransactions<TransactionsWithExtra>(Network.mainnet, Runtime.emerald, undefined, {
+  const txs = useGetRuntimeTransactions<TransactionsWithExtra>('mainnet', 'emerald', undefined, {
     query: {
       refetchInterval: 1000,
       structuralSharing: (prev, next) => {

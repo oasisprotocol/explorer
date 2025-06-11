@@ -37,7 +37,7 @@ export type SpecifiedPerEnabledLayer<T = any, ExcludeLayers = never> = {
   }
 }
 
-export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, typeof Layer.consensus>
+export type SpecifiedPerEnabledRuntime<T = any> = SpecifiedPerEnabledLayer<T, 'consensus'>
 
 export const specialScopeRecognition: Partial<Record<string, Partial<Record<string, SearchScope>>>> = {}
 
@@ -67,10 +67,10 @@ function invertSpecialScopePaths() {
 invertSpecialScopePaths()
 
 export const hiddenScopes: SearchScope[] = [
-  { network: Network.testnet, layer: Layer.pontusxdev },
-  { network: Network.mainnet, layer: Layer.pontusxdev },
-  { network: Network.mainnet, layer: Layer.pontusxtest },
-  // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
+  { network: 'testnet', layer: 'pontusxdev' },
+  { network: 'mainnet', layer: 'pontusxdev' },
+  { network: 'mainnet', layer: 'pontusxtest' },
+  // { network: 'mainnet', layer: 'sapphire' }, // This is only for testing
 ]
 
 export const mergeNetworksInLayerSelector = false
@@ -95,29 +95,29 @@ const formatPreservedParams = (searchParams: URLSearchParams | undefined, params
 
 export abstract class RouteUtils {
   private static ENABLED_LAYERS_FOR_NETWORK = {
-    [Network.mainnet]: {
-      [Layer.emerald]: true,
-      [Layer.sapphire]: true,
-      [Layer.cipher]: false,
-      [Layer.pontusxdev]: false,
-      [Layer.pontusxtest]: false,
-      [Layer.consensus]: true,
+    mainnet: {
+      emerald: true,
+      sapphire: true,
+      cipher: false,
+      pontusxdev: false,
+      pontusxtest: false,
+      consensus: true,
     },
-    [Network.testnet]: {
-      [Layer.emerald]: true,
-      [Layer.sapphire]: true,
-      [Layer.cipher]: false,
-      [Layer.pontusxdev]: true,
-      [Layer.pontusxtest]: true,
-      [Layer.consensus]: true,
+    testnet: {
+      emerald: true,
+      sapphire: true,
+      cipher: false,
+      pontusxdev: true,
+      pontusxtest: true,
+      consensus: true,
     },
-    [Network.localnet]: {
-      [Layer.emerald]: import.meta.env.REACT_APP_LOCALNET_EMERALD === 'true',
-      [Layer.sapphire]: import.meta.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
-      [Layer.cipher]: false,
-      [Layer.pontusxdev]: false,
-      [Layer.pontusxtest]: false,
-      [Layer.consensus]: import.meta.env.REACT_APP_LOCALNET_CONSENSUS === 'true',
+    localnet: {
+      emerald: import.meta.env.REACT_APP_LOCALNET_EMERALD === 'true',
+      sapphire: import.meta.env.REACT_APP_LOCALNET_SAPPHIRE === 'true',
+      cipher: false,
+      pontusxdev: false,
+      pontusxtest: false,
+      consensus: import.meta.env.REACT_APP_LOCALNET_CONSENSUS === 'true',
     },
   } satisfies Record<Network, Record<Layer, boolean>>
 
