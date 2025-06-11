@@ -15,17 +15,17 @@ import { RuntimeScope } from '../../../types/searchScope'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
 
-export const LatestRuntimeTransactions: FC<{
+const LatestRuntimeTransactionsContent: FC<{
   scope: RuntimeScope
   method: string
   setMethod: (value: string) => void
-}> = ({ scope, method, setMethod }) => {
-  const { isMobile, isTablet } = useScreenSize()
-  const { t } = useTranslation()
+}> = ({ scope, method }) => {
+  const { isTablet } = useScreenSize()
   const { network, layer } = scope
 
   const transactionsQuery = useGetRuntimeTransactions(
@@ -41,6 +41,27 @@ export const LatestRuntimeTransactions: FC<{
       },
     },
   )
+
+  return (
+    <RuntimeTransactions
+      transactions={transactionsQuery.data?.data.transactions}
+      isLoading={transactionsQuery.isLoading}
+      limit={limit}
+      pagination={false}
+      verbose={!isTablet}
+      filtered={method !== 'any'}
+    />
+  )
+}
+
+export const LatestRuntimeTransactions: FC<{
+  scope: RuntimeScope
+  method: string
+  setMethod: (value: string) => void
+}> = ({ scope, method, setMethod }) => {
+  const { isMobile } = useScreenSize()
+  const { t } = useTranslation()
+  const { layer } = scope
 
   return (
     <Card>
@@ -75,14 +96,9 @@ export const LatestRuntimeTransactions: FC<{
         <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} expand />
       )}
       <CardContent>
-        <RuntimeTransactions
-          transactions={transactionsQuery.data?.data.transactions}
-          isLoading={transactionsQuery.isLoading}
-          limit={limit}
-          pagination={false}
-          verbose={!isTablet}
-          filtered={method !== 'any'}
-        />
+        <ErrorBoundary light>
+          <LatestRuntimeTransactionsContent scope={scope} method={method} setMethod={setMethod} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

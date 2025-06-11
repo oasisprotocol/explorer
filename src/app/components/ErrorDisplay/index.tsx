@@ -85,7 +85,11 @@ export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
   return errorMap[error.code](t, error)
 }
 
-export const ErrorDisplay: FC<{ error: unknown; light?: boolean }> = ({ error, light }) => {
+export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: string | number }> = ({
+  error,
+  light,
+  minHeight,
+}) => {
   const { t } = useTranslation()
 
   let errorPayload: ErrorPayload
@@ -103,5 +107,5 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean }> = ({ error, l
 
   const { title, message } = errorFormatter(t, errorPayload)
 
-  return <EmptyState title={title} description={message} light={light} />
+  return <EmptyState title={title} description={message} light={light} minHeight={minHeight} />
 }
