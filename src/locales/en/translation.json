@@ -732,6 +732,7 @@
     "roflName": "ROFL name",
     "roleCompute": "Role compute",
     "roleObserver": "Role observer",
+    "searchByNameOrKeyword":  "Search by name or keyword",
     "secretLength": "[{{value}} bytes]",
     "secrets": "Secrets",
     "secretsTooltip": "These secrets are end-to-end encrypted and can only be read by the ROFL app.",

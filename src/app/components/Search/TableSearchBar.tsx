@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, KeyboardEventHandler, useCallback, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
 import { CardEmptyState } from '../CardEmptyState'
 import { inputBaseClasses } from '@mui/material/InputBase'
+
+type SearchBarSize = 'small' | 'medium' | 'large'
 
 export interface TableSearchBarProps {
   placeholder: string
@@ -31,6 +33,25 @@ export interface TableSearchBarProps {
   width?: string | number
 
   onChange: (value: string) => void
+  onEnter?: () => void
+  size?: SearchBarSize
+  autoFocus?: boolean
+}
+
+type SizingInfo = {
+  font: number | string
+}
+
+const sizeMapping: Record<SearchBarSize, SizingInfo> = {
+  small: {
+    font: '1em',
+  },
+  medium: {
+    font: '1.25em',
+  },
+  large: {
+    font: '1.5em',
+  },
 }
 
 export const TableSearchBar: FC<TableSearchBarProps> = ({
@@ -39,6 +60,9 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
   placeholder,
   warning,
   fullWidth,
+  size = 'medium',
+  autoFocus,
+  onEnter,
   width = 250,
 }) => {
   const { isTablet } = useScreenSize()
@@ -55,6 +79,15 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
       setIsWarningFresh(true)
     }
   }, [warning])
+
+  const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    event => {
+      if (event.key === 'Enter') {
+        if (onEnter) onEnter()
+      }
+    },
+    [onEnter],
+  )
 
   const startAdornment = (
     <InputAdornment
@@ -123,13 +156,16 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
       variant={'outlined'}
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyDown={handleKeyPress}
       InputProps={{
         inputProps: {
           sx: {
             p: 0,
             width: fullWidth ? '100%' : width,
             margin: 2,
+            fontSize: sizeMapping[size].font,
           },
+          autoFocus,
         },
         startAdornment,
         endAdornment,
