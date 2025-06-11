@@ -34,13 +34,12 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({
           {validator && (
             <Box sx={{ display: 'flex' }}>
               <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
-              <Box sx={{ paddingLeft: 4 }}>
-                <AccountLink
-                  scope={{ network, layer: 'consensus' }}
-                  address={validator.entity_address}
-                  showOnlyAddress
-                />
-              </Box>
+              &nbsp;&nbsp;&nbsp;
+              <AccountLink
+                scope={{ network, layer: 'consensus' }}
+                address={validator.entity_address}
+                showOnlyAddress
+              />
               <CopyToClipboard value={validator.entity_address} />
             </Box>
           )}
@@ -51,29 +50,30 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({
         <>
           {validator && (
             <>
-              <Box sx={{ display: 'flex', alignItems: 'center' }} gap={4}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <ValidatorImage
                   address={validator.entity_address}
                   name={validator.media?.name}
                   logotype={validator.media?.logoUrl}
                 />
+                &nbsp;&nbsp;
                 {isTablet ? (
                   <AdaptiveHighlightedText text={validator?.media?.name} pattern={highlightPattern} />
                 ) : (
                   <HighlightedText text={validator?.media?.name} pattern={highlightPattern} />
                 )}
+                &nbsp;
+                <Typography
+                  component="span"
+                  sx={{
+                    color: COLORS.grayMedium,
+                    fontSize: '24px',
+                    fontWeight: 400,
+                  }}
+                >
+                  ({validator.rank})
+                </Typography>
               </Box>
-              &nbsp;
-              <Typography
-                component="span"
-                sx={{
-                  color: COLORS.grayMedium,
-                  fontSize: '24px',
-                  fontWeight: 400,
-                }}
-              >
-                ({validator.rank})
-              </Typography>
             </>
           )}
         </>
