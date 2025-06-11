@@ -61,7 +61,7 @@ export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <ErrorBoundary light>
+        <ErrorBoundary light minHeight={400}>
           <LatestRuntimeBlocksContent scope={scope} />
         </ErrorBoundary>
       </CardContent>
