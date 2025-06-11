@@ -61,13 +61,15 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
         </Box>
       </StyledListTitleWithAvatar>
       <dd>
-        <ConsensusAccountLink
-          alwaysTrim={false}
-          network={account.network}
-          address={account.address}
-          highlightPattern={highlightPattern}
-        />
-        <CopyToClipboard value={account.address} />
+        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+          <ConsensusAccountLink
+            alwaysTrim={false}
+            network={account.network}
+            address={account.address}
+            highlightPattern={highlightPattern}
+          />
+          <CopyToClipboard value={account.address} />
+        </Box>
       </dd>
       <dt>
         <strong>{t('account.totalBalance')}</strong>
