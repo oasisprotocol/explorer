@@ -6,6 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
+import LockIcon from '@mui/icons-material/Lock'
 import { TxError } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
@@ -30,7 +31,7 @@ const statusFgColor: Record<TxStatus, string> = {
 }
 
 export const statusIcon: Record<TxStatus, ReactNode> = {
-  unknown: <HelpIcon color="inherit" fontSize="inherit" />,
+  unknown: <LockIcon color="inherit" fontSize="inherit" />,
   success: <CheckCircleIcon color="inherit" fontSize="inherit" />,
   partialsuccess: <CheckCircleIcon color="success" fontSize="inherit" />,
   failure: <CancelIcon color="error" fontSize="inherit" />,
