@@ -26,6 +26,7 @@ import { getFiatCurrencyForScope } from '../../../config'
 import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
+import Box from '@mui/material/Box'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -120,15 +121,27 @@ export const ConsensusTransactionDetailView: FC<{
       </dd>
       <dt>{t('common.from')}</dt>
       <dd>
-        <ConsensusAccountLink network={transaction.network} address={transaction.sender} alwaysTrim={false} />
-        <CopyToClipboard value={transaction.sender} />
+        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+          <ConsensusAccountLink
+            network={transaction.network}
+            address={transaction.sender}
+            alwaysTrim={false}
+          />
+          <CopyToClipboard value={transaction.sender} />
+        </Box>
       </dd>
       {transaction.to && (
         <>
           <dt>{t('common.to')}</dt>
           <dd>
-            <ConsensusAccountLink network={transaction.network} address={transaction.to} alwaysTrim={false} />
-            <CopyToClipboard value={transaction.to} />
+            <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <ConsensusAccountLink
+                network={transaction.network}
+                address={transaction.to}
+                alwaysTrim={false}
+              />
+              <CopyToClipboard value={transaction.to} />
+            </Box>
           </dd>
         </>
       )}
