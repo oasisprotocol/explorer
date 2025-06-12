@@ -1,12 +1,11 @@
 import { hasTextMatchesForAll } from 'app/components/HighlightedText/text-matching'
 import {
-  Layer,
   useGetConsensusValidatorsAddressNameMap,
   useGetConsensusAccountsAddresses,
   ValidatorAddressNameMap,
 } from 'oasis-nexus/api'
 import { Network } from 'types/network'
-import { AccountNameSearchResults, AccountNameSearchConsensusMatch } from '../data/named-accounts'
+import { AccountNameSearchValidatorResults, AccountNameSearchConsensusMatch } from '../data/named-accounts'
 
 function findAddressesWithMatch(
   addressMap: ValidatorAddressNameMap,
@@ -17,7 +16,7 @@ function findAddressesWithMatch(
 
   for (const [address, name] of Object.entries(addressMap)) {
     if (hasTextMatchesForAll(name, nameFragments)) {
-      matchedAddresses.push({ address, layer: Layer.consensus, network })
+      matchedAddresses.push({ address, layer: 'consensus', network })
     }
   }
 
@@ -27,7 +26,7 @@ function findAddressesWithMatch(
 export const useSearchForValidatorsByName = (
   network: Network,
   nameFragment: string[],
-): AccountNameSearchResults => {
+): AccountNameSearchValidatorResults => {
   const { isLoading, isError, data } = useGetConsensusValidatorsAddressNameMap(network)
   const matches =
     data?.data && !!nameFragment.length ? findAddressesWithMatch(data?.data, nameFragment, network) : []

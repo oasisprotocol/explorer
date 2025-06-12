@@ -17,6 +17,7 @@ import {
   SearchResults,
   TokenResult,
   TransactionResult,
+  ValidatorResult,
   isConsensusBlock,
   isConsensusTransaction,
 } from './hooks'
@@ -27,7 +28,7 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ResultListFrame } from './ResultListFrame'
 import { TokenDetails } from '../../components/Tokens/TokenDetails'
 import { ProposalDetailView } from '../ProposalDetailsPage'
-import { Account, Layer, RuntimeAccount } from '../../../oasis-nexus/api'
+import { Account, RuntimeAccount } from '../../../oasis-nexus/api'
 import { RoflAppDetailsViewSearchResult } from '../RoflAppDetailsPage'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
@@ -121,10 +122,26 @@ export const SearchResultsList: FC<{
         />
 
         <ResultsGroupByType
+          title={t('search.results.validators.title')}
+          results={searchResults.filter((item): item is ValidatorResult => item.resultType === 'validator')}
+          resultComponent={item => (
+            <ConsensusAccountDetailsView
+              isLoading={false}
+              isError={false}
+              account={item}
+              showLayer={true}
+              highlightPattern={getHighlightPattern(textSearch.accountName(searchQuery))}
+            />
+          )}
+          link={(acc: Account) => RouteUtils.getValidatorRoute(acc.network, acc.entity || acc.address)}
+          linkLabel={t('search.results.validators.viewLink')}
+        />
+
+        <ResultsGroupByType
           title={t('search.results.accounts.title')}
           results={searchResults.filter((item): item is AccountResult => item.resultType === 'account')}
           resultComponent={item =>
-            item.layer === Layer.consensus ? (
+            item.layer === 'consensus' ? (
               <ConsensusAccountDetailsView
                 isLoading={false}
                 isError={false}

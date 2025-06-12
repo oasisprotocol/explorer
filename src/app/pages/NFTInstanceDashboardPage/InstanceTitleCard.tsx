@@ -69,7 +69,7 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
                 address_eth={token.eth_contract_addr}
                 scope={token}
                 verificationLevel={token.verification_level}
-                noLink
+                hideLink
               />
               <AccountLink scope={scope} address={displayAddress!} alwaysTrim />
               <CopyToClipboard value={displayAddress!} />

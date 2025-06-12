@@ -11,13 +11,26 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { TokenList } from '../../components/Tokens/TokenList'
 import { RuntimeScope } from '../../../types/searchScope'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const TopTokens: FC<{ scope: RuntimeScope }> = ({ scope }) => {
-  const { t } = useTranslation()
+const TopTokensContent: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { network, layer } = scope
   const tokensQuery = useGetRuntimeEvmTokens(network, layer, { limit })
+
+  return (
+    <TokenList
+      tokens={tokensQuery.data?.data.evm_tokens}
+      isLoading={tokensQuery.isLoading}
+      limit={limit}
+      pagination={false}
+    />
+  )
+}
+
+export const TopTokens: FC<{ scope: RuntimeScope }> = ({ scope }) => {
+  const { t } = useTranslation()
 
   return (
     <Card>
@@ -36,12 +49,9 @@ export const TopTokens: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <TokenList
-          tokens={tokensQuery.data?.data.evm_tokens}
-          isLoading={tokensQuery.isLoading}
-          limit={limit}
-          pagination={false}
-        />
+        <ErrorBoundary light>
+          <TopTokensContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )

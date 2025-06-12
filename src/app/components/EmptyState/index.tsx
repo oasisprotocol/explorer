@@ -11,7 +11,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  minHeight: '250px',
   color: theme.palette.layout.main,
   backgroundColor: theme.palette.background.empty,
   backgroundImage: `url("${backgroundEmptyState}")`,
@@ -26,19 +25,20 @@ const StyledBoxLight = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  minHeight: '250px',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
+  height: '100%',
 }))
 
 type EmptyStateProps = {
   description: ReactNode
   title: string
   light?: boolean
+  minHeight?: number | string
 }
 
-export const EmptyState: FC<EmptyStateProps> = ({ description, title, light }) => {
+export const EmptyState: FC<EmptyStateProps> = ({ description, title, light, minHeight = '250px' }) => {
   const theme = useTheme()
   const content = (
     <Box sx={{ color: theme.palette.layout.networkSelect, textAlign: 'center' }}>
@@ -51,11 +51,11 @@ export const EmptyState: FC<EmptyStateProps> = ({ description, title, light }) =
     </Box>
   )
   return light ? (
-    <StyledBoxLight>
+    <StyledBoxLight sx={{ minHeight }}>
       <CancelIcon color="error" fontSize="large" />
       {content}
     </StyledBoxLight>
   ) : (
-    <StyledBox>{content}</StyledBox>
+    <StyledBox sx={{ minHeight }}>{content}</StyledBox>
   )
 }

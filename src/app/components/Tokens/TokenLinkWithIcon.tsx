@@ -15,7 +15,8 @@ export const TokenLinkWithIcon: FC<{
   address: string
   name: string | undefined
   highlightPattern?: HighlightPattern
-}> = ({ scope, address, name, highlightPattern }) => {
+  alwaysTrim?: boolean
+}> = ({ scope, address, name, highlightPattern, alwaysTrim }) => {
   const { t } = useTranslation()
   const { metadata } = useAccountMetadata(scope, address)
   return (
@@ -36,18 +37,26 @@ export const TokenLinkWithIcon: FC<{
           )
         }
       >
-        {metadata?.icon ? (
-          <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
-        ) : (
-          <InitialsAvatar
-            name={metadata?.name || name || address.slice(2, 4)}
-            width={42}
-            style={{ maxHeight: 32, margin: '-4px 0' }}
-          />
-        )}
+        <Box sx={{ lineHeight: 0 }}>
+          {metadata?.icon ? (
+            <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
+          ) : (
+            <InitialsAvatar
+              name={metadata?.name || name || address.slice(2, 4)}
+              width={42}
+              style={{ maxHeight: 32, margin: '-4px 0' }}
+            />
+          )}
+        </Box>
       </Tooltip>
 
-      <span>
+      <span
+        style={
+          alwaysTrim
+            ? { whiteSpace: 'nowrap', maxWidth: '25vw', overflow: 'hidden', textOverflow: 'ellipsis' }
+            : {}
+        }
+      >
         <TokenLink
           scope={scope}
           address={address}

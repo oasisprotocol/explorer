@@ -12,6 +12,93 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.22.0 (2025-06-11)
+
+### Features
+
+- Show first 10 ERC-20 and ERC-721 transfers on transaction details page.
+  ([#1939](https://github.com/oasisprotocol/explorer/issues/1939))
+
+- Basic support for searching for ROFL apps by app name fragment
+  ([#1973](https://github.com/oasisprotocol/explorer/issues/1973))
+
+- Add Monaco Editor for contract source code syntax highlighting
+  ([#1979](https://github.com/oasisprotocol/explorer/issues/1979))
+
+- Improve Consensus dashboard resilience
+  ([#2004](https://github.com/oasisprotocol/explorer/issues/2004))
+
+- Change border-radius to match new design
+  ([#2011](https://github.com/oasisprotocol/explorer/issues/2011))
+
+- Enable flexible multi-word searching in names
+  ([#2012](https://github.com/oasisprotocol/explorer/issues/2012))
+
+- Add support for filtering Rofl app list by name
+  ([#2013](https://github.com/oasisprotocol/explorer/issues/2013))
+
+- Improve runtime dashboard resilience
+  ([#2018](https://github.com/oasisprotocol/explorer/issues/2018))
+
+### Bug Fixes and Improvements
+
+- Fix LinkableDiv getting covered by sticky header
+  ([#1953](https://github.com/oasisprotocol/explorer/issues/1953))
+
+- Fix a regression in adaptive trimming
+  ([#1970](https://github.com/oasisprotocol/explorer/issues/1970))
+
+- Fix details view wrapping on mobile
+  ([#1974](https://github.com/oasisprotocol/explorer/issues/1974))
+
+- Fix validator delegations value in chart's tooltip
+  ([#1995](https://github.com/oasisprotocol/explorer/issues/1995))
+
+- Prevent WithHighlighting from taking up more space than original
+  ([#1997](https://github.com/oasisprotocol/explorer/issues/1997))
+
+- Inline copy button next to some account links using AdaptiveTrimmer
+  ([#1998](https://github.com/oasisprotocol/explorer/issues/1998))
+
+- Avoid twitching on window height changes
+  ([#2000](https://github.com/oasisprotocol/explorer/issues/2000))
+
+- Hide label of contract verification badge in a table for mobile screens
+  ([#2003](https://github.com/oasisprotocol/explorer/issues/2003))
+
+- Don't show fake fiat zero value on Gecko failures
+  ([#2017](https://github.com/oasisprotocol/explorer/issues/2017))
+
+- Improve tokens table on mobile
+  ([#2021](https://github.com/oasisprotocol/explorer/issues/2021))
+
+- Correctly mark validators accounts in search results
+  ([#2026](https://github.com/oasisprotocol/explorer/issues/2026))
+
+### Internal Changes
+
+- Update dependencies
+  ([#1484](https://github.com/oasisprotocol/explorer/issues/1484),
+   [#1967](https://github.com/oasisprotocol/explorer/issues/1967))
+
+- Speedup CI: use playwright container instead of installing system deps
+  ([#1956](https://github.com/oasisprotocol/explorer/issues/1956))
+
+- Migrate build and tests from parcel/jest to vite/vitest
+  ([#1975](https://github.com/oasisprotocol/explorer/issues/1975))
+
+- Update API bindings
+  ([#1977](https://github.com/oasisprotocol/explorer/issues/1977))
+
+- Migrate Cloudflare preview deploys to wrangler action
+  ([#1990](https://github.com/oasisprotocol/explorer/issues/1990))
+
+- Layer handling cleanup
+  ([#2002](https://github.com/oasisprotocol/explorer/issues/2002))
+
+- Prefer string literals instead of constants
+  ([#2016](https://github.com/oasisprotocol/explorer/issues/2016))
+
 ## 1.21.0 (2025-05-21)
 
 ### Features

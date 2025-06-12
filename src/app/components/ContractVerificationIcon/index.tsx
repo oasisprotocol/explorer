@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { COLORS } from '../../../styles/theme/colors'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -9,16 +8,23 @@ import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
 import { StatusBadge } from '../common/StatusBadge'
+import Tooltip from '@mui/material/Tooltip'
 
 export const verificationIconBoxHeight = 28
 
-type ContractStatusProps = {
+export const VerificationIcon: FC<{
+  address_eth: string
+  scope: SearchScope
   verificationLevel?: 'full' | 'partial'
+  hideLink?: boolean
   hideLabel?: boolean
-}
-export const ContractStatus = ({ verificationLevel, hideLabel }: ContractStatusProps) => {
+}> = ({ address_eth, scope, verificationLevel, hideLink, hideLabel }) => {
   const { t } = useTranslation()
-  const statusLabel =
+  const [explainDelay, setExplainDelay] = useState(false)
+  if (isLocalnet(scope.network)) {
+    return null
+  }
+  const label =
     verificationLevel === 'full'
       ? t('contract.verification.isVerified')
       : verificationLevel === 'partial'
@@ -27,38 +33,21 @@ export const ContractStatus = ({ verificationLevel, hideLabel }: ContractStatusP
   const statusVariant =
     verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
 
-  const label = hideLabel ? '' : statusLabel
-
-  return <StatusBadge label={label} variant={statusVariant} />
-}
-
-export const VerificationIcon: FC<{
-  address_eth: string
-  scope: SearchScope
-  verificationLevel?: 'full' | 'partial'
-  noLink?: boolean
-  hideLabel?: boolean
-}> = ({ address_eth, scope, verificationLevel, noLink = false, hideLabel }) => {
-  const { t } = useTranslation()
-  const [explainDelay, setExplainDelay] = useState(false)
-  if (isLocalnet(scope.network)) {
-    return null
-  }
   const sourcifyLinkProps = {
-    href: `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
+    href: hideLink ? undefined : `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
     target: '_blank',
     sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
     onClick: verificationLevel ? undefined : () => setExplainDelay(true),
   }
-  const Component = noLink ? Box : (Link as React.ElementType)
-  const componentProps = noLink ? {} : sourcifyLinkProps
   return (
     <>
-      <Component {...componentProps}>
-        <ContractStatus verificationLevel={verificationLevel} hideLabel={hideLabel} />
-      </Component>
-      {!noLink &&
+      <Tooltip placement="top" arrow title={hideLabel ? label : undefined}>
+        <Link {...sourcifyLinkProps}>
+          <StatusBadge label={hideLabel ? '' : label} variant={statusVariant} />
+        </Link>
+      </Tooltip>
+      {!hideLink &&
         (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
             &nbsp; &nbsp;

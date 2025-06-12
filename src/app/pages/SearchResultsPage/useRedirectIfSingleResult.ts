@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { isConsensusBlock, isConsensusTransaction, SearchResults } from './hooks'
 import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'
-import { Network } from '../../../types/network'
 import { exhaustedTypeWarning } from '../../../types/errors'
-import { RuntimeAccount, useGetConsensusValidatorsAddressNameMap } from '../../../oasis-nexus/api'
+import { RuntimeAccount } from '../../../oasis-nexus/api'
 import { SearchParams } from '../../components/Search/search-utils'
 
 /** If search only finds one result then redirect to it */
@@ -15,14 +14,13 @@ export function useRedirectIfSingleResult(
   results: SearchResults,
 ) {
   const navigate = useNavigate()
-  const { data: validatorsData } = useGetConsensusValidatorsAddressNameMap(results[0]?.network)
   const { query, accountNameFragment, evmAccount, consensusAccount } = searchParams
 
   let shouldRedirect = results.length === 1
 
   if (shouldRedirect) {
     const result = results[0]
-    shouldRedirect = scope ? isItemInScope(result, scope) : result.network === Network.mainnet
+    shouldRedirect = scope ? isItemInScope(result, scope) : result.network === 'mainnet'
   }
 
   let redirectTo: string | undefined
@@ -40,9 +38,7 @@ export function useRedirectIfSingleResult(
         )
         break
       case 'account':
-        redirectTo = validatorsData?.data?.[item.address]
-          ? RouteUtils.getValidatorRoute(item.network, item.address)
-          : RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
+        redirectTo = RouteUtils.getAccountRoute(item, (item as RuntimeAccount).address_eth ?? item.address)
         if (
           accountNameFragment && // Is there anything to highlight?
           !(
@@ -70,6 +66,9 @@ export function useRedirectIfSingleResult(
         break
       case 'roflApp':
         redirectTo = `${RouteUtils.getRoflAppRoute(item.network, item.id)}?q=${encodeURIComponentPretty(query)}`
+        break
+      case 'validator':
+        redirectTo = `${RouteUtils.getValidatorRoute(item.network, item.entity || item.address)}?q=${encodeURIComponentPretty(query)}`
         break
       default:
         exhaustedTypeWarning('Unexpected result type', item)

@@ -18,12 +18,12 @@ export interface RuntimeScope {
 // This is just like SearchScope, but we know it's consensus
 export interface ConsensusScope {
   network: Network
-  layer: typeof Layer.consensus
+  layer: 'consensus'
 }
 
 export const MainnetEmerald: SearchScope = {
-  network: Network.mainnet,
-  layer: Layer.emerald,
+  network: 'mainnet',
+  layer: 'emerald',
 }
 
 export const getNameForScope = (t: TFunction, scope: SearchScope) =>

@@ -44,12 +44,18 @@ export type AccountNameSearchRuntimeMatch = {
 
 export type AccountNameSearchConsensusMatch = {
   network: Network
-  layer: typeof Layer.consensus
+  layer: 'consensus'
   address: Address
 }
 
 export type AccountNameSearchResults = {
   results: (Account | RuntimeAccount)[] | undefined
+  isLoading: boolean
+  isError: boolean
+}
+
+export type AccountNameSearchValidatorResults = {
+  results: Account[] | undefined
   isLoading: boolean
   isError: boolean
 }

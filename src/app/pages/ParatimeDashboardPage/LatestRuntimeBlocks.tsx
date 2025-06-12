@@ -12,12 +12,12 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeScope } from '../../../types/searchScope'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
-export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
+const LatestRuntimeBlocksContent: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { isMobile } = useScreenSize()
-  const { t } = useTranslation()
   const { network, layer } = scope
   const blocksQuery = useGetRuntimeBlocks(
     network,
@@ -29,6 +29,20 @@ export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
       },
     },
   )
+
+  return (
+    <RuntimeBlocks
+      isLoading={blocksQuery.isLoading}
+      blocks={blocksQuery.data?.data.blocks}
+      limit={limit}
+      pagination={false}
+      type={isMobile ? BlocksTableType.Mobile : BlocksTableType.DesktopLite}
+    />
+  )
+}
+
+export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
+  const { t } = useTranslation()
 
   return (
     <Card>
@@ -47,13 +61,9 @@ export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         }
       />
       <CardContent>
-        <RuntimeBlocks
-          isLoading={blocksQuery.isLoading}
-          blocks={blocksQuery.data?.data.blocks}
-          limit={limit}
-          pagination={false}
-          type={isMobile ? BlocksTableType.Mobile : BlocksTableType.DesktopLite}
-        />
+        <ErrorBoundary light minHeight={400}>
+          <LatestRuntimeBlocksContent scope={scope} />
+        </ErrorBoundary>
       </CardContent>
     </Card>
   )
