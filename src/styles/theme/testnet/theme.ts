@@ -22,6 +22,7 @@ export const testnetTheme = createTheme(
         primaryBackground: COLORS.testnetLight,
         secondaryBackground: COLORS.white,
         networkBubbleBorder: COLORS.testnet,
+        networkSelect: COLORS.brandExtraDark,
         titleOnBackground: COLORS.grayExtraDark,
         graphZoomOutText: COLORS.brandDark,
         helpScreenIconColor: COLORS.brandExtraDark,

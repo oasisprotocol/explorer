@@ -33,7 +33,7 @@ const HomepageLayout = styled(Box)(({ theme }) => ({
   maxWidth: '100%',
   height: 'fill-available',
   minHeight: '100vh',
-  backgroundColor: COLORS.brandDark,
+  backgroundColor: COLORS.white,
   overflowX: 'hidden',
   [theme.breakpoints.up('sm')]: {
     height: '100vh',
