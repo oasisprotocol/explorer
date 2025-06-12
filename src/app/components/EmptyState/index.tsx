@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import backgroundEmptyState from './images/background-empty-state.svg'
 import CancelIcon from '@mui/icons-material/Cancel'
+import { useTheme } from '@mui/material/styles'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -38,15 +39,16 @@ type EmptyStateProps = {
 }
 
 export const EmptyState: FC<EmptyStateProps> = ({ description, title, light, minHeight = '250px' }) => {
+  const theme = useTheme()
   const content = (
-    <>
-      <Typography component="span" sx={{ fontSize: '24px', fontWeight: 600 }}>
+    <Box sx={{ color: theme.palette.layout.contrastMain, textAlign: 'center' }}>
+      <Typography component="span" sx={{ fontSize: '24px', fontWeight: 600, display: 'block' }}>
         {title}
       </Typography>
       <Typography component="span" sx={{ fontSize: '16px' }}>
         {description}
       </Typography>
-    </>
+    </Box>
   )
   return light ? (
     <StyledBoxLight sx={{ minHeight }}>

@@ -31,9 +31,7 @@ export const Header: FC = () => {
           ? theme.palette.layout.contrastSecondary
           : theme.palette.layout.secondary,
         borderRadius: 0,
-        boxShadow: scrollTrigger
-          ? '0px 4px 4px rgba(0, 0, 0, 0.25), 0px 34px 24px -9px rgba(50, 77, 171, 0.12)'
-          : 'none',
+        boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
       }}
     >
       <Box sx={{ px: '15px' }}>
@@ -46,10 +44,7 @@ export const Header: FC = () => {
           }}
         >
           <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
-            <HomePageLink
-              color={scrollTrigger ? theme.palette.layout.contrastMain : undefined}
-              showText={!scrollTrigger && !isMobile}
-            />
+            <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
           </Grid>
           {withScopeSelector && (
             <>

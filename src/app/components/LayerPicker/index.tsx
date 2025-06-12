@@ -101,8 +101,8 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
 
   return (
     <StyledLayerPickerContent>
-      <Box sx={{ mb: isTablet ? 0 : 5, color: 'red', position: 'relative' }}>
-        <HomePageLink color={COLORS.brandExtraDark} showText={!isMobile} />
+      <Box sx={{ mb: isTablet ? 0 : 5, position: 'relative' }}>
+        <HomePageLink color="#0500e2" showText={!isMobile} />
       </Box>
       {isTablet && (
         <TabletActionBar>

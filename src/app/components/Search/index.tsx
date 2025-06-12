@@ -193,6 +193,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
                 },
               }
             : {}),
+          border: `1px solid ${COLORS.grayLight}`,
         }}
         value={value}
         onChange={e => onChange(e.target.value)}

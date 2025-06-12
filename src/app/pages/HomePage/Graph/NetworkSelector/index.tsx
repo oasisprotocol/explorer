@@ -42,7 +42,7 @@ const StyledButton = styled(StyledSelectButton)(({ theme }) => ({
   minWidth: '200px',
   backgroundColor: theme.palette.layout.primaryBackground,
   border: `2px solid ${theme.palette.layout.lightBorder}`,
-  color: theme.palette.layout.main,
+  color: theme.palette.layout.contrastMain,
   '&:hover': {
     backgroundColor: theme.palette.layout.primaryBackground,
   },
@@ -139,7 +139,7 @@ export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork })
       Option={SelectOption}
       listbox={StyledListbox}
       label={
-        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.main })}>
+        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.contrastMain })}>
           {t('home.selectedNetwork')}
         </Typography>
       }
