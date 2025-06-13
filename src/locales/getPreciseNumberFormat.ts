@@ -12,7 +12,7 @@ export function getPreciseNumberFormat(value: string) {
   const isFloatPrecise = new BigNumber(value).isEqualTo(parseFloat(value))
   // Fallback if types are not strict enough to prevent value=undefined and ''
   if (value == null || value === '' || decimalPlaces == null) {
-    if (import.meta.env.NODE_ENV !== 'production') {
+    if (!import.meta.env.PROD) {
       throw new Error(`Not a number in getNumberFormat(${value})`)
     }
     // Note: changing this to { value: '-' } would still display "NaN"

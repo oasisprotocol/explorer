@@ -1,7 +1,7 @@
 declare global {
   interface ImportMeta {
     env: {
-      NODE_ENV: 'development' | 'production' | 'test'
+      PROD: boolean
       REACT_APP_BUILD_DATETIME: string
       REACT_APP_BUILD_SHA: string
       REACT_APP_BUILD_VERSION: string
