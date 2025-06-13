@@ -7,7 +7,7 @@ import { updatesContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
-import { getRuntimeRoflUpdatesMethodOptions } from '../..//components/RuntimeTransactionMethod'
+import { getRuntimeRoflUpdatesMethodOptions } from '../../components/RuntimeTransactionMethod'
 import { RoflAppDetailsContext, useRoflAppUpdates } from './hooks'
 
 export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
