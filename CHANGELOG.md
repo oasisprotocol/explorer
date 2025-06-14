@@ -12,6 +12,13 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.22.1 (2025-06-14)
+
+### Bug Fixes and Improvements
+
+- Fix exhausted type error in production (should be a console warning)
+  ([#2037](https://github.com/oasisprotocol/explorer/issues/2037))
+
 ## 1.22.0 (2025-06-11)
 
 ### Features
