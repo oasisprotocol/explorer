@@ -12,6 +12,7 @@ import LanIcon from '@mui/icons-material/Lan'
 import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
 import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
 import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
+import LockIcon from '@mui/icons-material/Lock'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
 import { SelectOptionBase } from '../Select'
@@ -23,6 +24,7 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
   switch (method) {
     case '':
       // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
+      // TODO: differentiate malformed and encrypted
       return t('common.unknown')
     case 'accounts.Transfer':
       return t('transactions.method.accounts.transfer')
@@ -189,7 +191,9 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case 'roflmarket.InstanceExecuteCmds':
       return <MethodIcon icon={<DeveloperBoard />} {...props} />
     case '':
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
+      // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
+      // TODO: differentiate malformed and encrypted
+      return <MethodIcon color="green" icon={<LockIcon />} {...props} />
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
       return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
