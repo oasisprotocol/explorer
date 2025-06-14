@@ -502,6 +502,7 @@
       "roflmarket": {
         "providerCreate": "ROFL Market Provider Create",
         "providerUpdate": "ROFL Market Provider Update",
+        "providerUpdateOffers": "ROFL Market Provider Update Offers",
         "providerRemove": "ROFL Market Provider Remove",
         "machineCreate": "ROFL Market Machine Create",
         "machineTopUp": "ROFL Market Machine Top Up",
