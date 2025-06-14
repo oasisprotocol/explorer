@@ -84,7 +84,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
-rl.question('Are you sure you want to continue? (y/n) ', answer => {
+rl.question('Are you sure you want to continue? (y/N) ', answer => {
   if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
     console.log(
       'If this appears to be stuck, you might need to touch your security key for GPG sign operation.',
