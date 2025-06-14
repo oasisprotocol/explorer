@@ -8,7 +8,7 @@ import { Block, EntityMetadata, useGetConsensusBlockByHeight } from '../../../oa
 import { ConsensusScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { useConsensusScope } from '../../hooks/useScopeParam'
-import { RouterTabs } from '../..//components/RouterTabs'
+import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'

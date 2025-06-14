@@ -40,6 +40,7 @@ export const isRoflTransaction = (method: string | undefined): boolean => {
     'rofl.Register',
     'roflmarket.ProviderCreate',
     'roflmarket.ProviderUpdate',
+    'roflmarket.ProviderUpdateOffers',
     'roflmarket.ProviderRemove',
     'roflmarket.InstanceCreate',
     'roflmarket.InstanceTopUp',

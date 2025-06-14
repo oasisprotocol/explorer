@@ -50,6 +50,8 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
       return t('transactions.method.roflmarket.providerCreate')
     case 'roflmarket.ProviderUpdate':
       return t('transactions.method.roflmarket.providerUpdate')
+    case 'roflmarket.ProviderUpdateOffers':
+      return t('transactions.method.roflmarket.providerUpdateOffers')
     case 'roflmarket.ProviderRemove':
       return t('transactions.method.roflmarket.providerRemove')
     case 'roflmarket.InstanceCreate':
@@ -80,6 +82,7 @@ const knownRuntimeTxMethods = [
   'rofl.Update',
   'roflmarket.ProviderCreate',
   'roflmarket.ProviderUpdate',
+  'roflmarket.ProviderUpdateOffers',
   'roflmarket.ProviderRemove',
   'roflmarket.InstanceCreate',
   'roflmarket.InstanceTopUp',
@@ -132,6 +135,7 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBa
  *   - "rofl.Register"
  *   - "roflmarket.ProviderCreate"
  *   - "roflmarket.ProviderUpdate"
+ *   - "roflmarket.ProviderUpdateOffers"
  *   - "roflmarket.ProviderRemove"
  *   - "roflmarket.InstanceCreate"
  *   - "roflmarket.InstanceTopUp"
@@ -171,6 +175,8 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case 'roflmarket.ProviderCreate':
       return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.ProviderUpdate':
+      return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.ProviderUpdateOffers':
       return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.ProviderRemove':
       return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
