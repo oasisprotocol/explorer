@@ -32,6 +32,7 @@ import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../config'
 import { hasTextMatchesForAll } from '../app/components/HighlightedText/text-matching'
+import * as oasis from '@oasisprotocol/client'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1628,6 +1629,20 @@ function transformRuntimeTransactionList(
   return {
     ...data,
     transactions: data.transactions.map(tx => {
+      if (tx.method?.startsWith('roflmarket')) {
+        if (tx.body?.cmds) {
+          tx.body.cmds = tx.body.cmds.map((cmd: string) => {
+            const parsed = oasis.misc.fromCBOR(Buffer.from(cmd, 'base64')) as { method: string; args: any }
+            if (parsed.args?.deployment?.app_id) {
+              parsed.args.deployment.app_id = oasis.address.toBech32('rofl', parsed.args.deployment.app_id)
+            }
+            return parsed
+          })
+        }
+        if (Array.isArray(tx.body?.id) && tx.body.id.length === 8) {
+          tx.body.id = `0x${Buffer.from(tx.body.id).toString('hex')}`
+        }
+      }
       return {
         ...tx,
         to_eth: tx.to_eth || fallbackEthAddress(tx.to, relAddress),
