@@ -28,17 +28,22 @@ export const NoResults: FC<{
       title={title}
       description={
         <Box
-          sx={{ textAlign: 'center', a: { color: theme.palette.layout.main, textDecoration: 'underline' } }}
+          sx={{
+            textAlign: 'center',
+            a: { color: theme.palette.layout.contrastMain, textDecoration: 'underline' },
+          }}
         >
           <p>
-            <Trans
-              t={t}
-              i18nKey="search.noResults.description"
-              components={{
-                OptionalBreak: <OptionalBreak />,
-                HomeLink: <Link component={RouterLink} to="/" />,
-              }}
-            />
+            <Box>
+              <Trans
+                t={t}
+                i18nKey="search.noResults.description"
+                components={{
+                  OptionalBreak: <OptionalBreak />,
+                  HomeLink: <Link component={RouterLink} to="/" />,
+                }}
+              />
+            </Box>
           </p>
           <p>
             <SearchSuggestionsLinksForNoResults scope={layer && network ? { network, layer } : undefined} />

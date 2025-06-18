@@ -92,18 +92,18 @@ export const defaultTheme = createTheme({
   },
   palette: {
     background: {
-      default: COLORS.brandDark,
+      default: COLORS.white,
       empty: COLORS.brandExtraDark,
     },
     layout: {
-      main: COLORS.white,
-      border: COLORS.brandDark,
-      contrastMain: COLORS.brandExtraDark,
+      main: COLORS.brandExtraDark,
+      border: COLORS.white,
+      contrastMain: COLORS.white,
       contrastSecondary: COLORS.white,
       darkBorder: COLORS.brandExtraDark,
       hoverBorder: COLORS.white,
       lightBorder: COLORS.aqua,
-      secondary: COLORS.brandDark,
+      secondary: COLORS.white,
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
       networkBubbleBorder: COLORS.white,
@@ -389,6 +389,8 @@ export const defaultTheme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: 6,
+          border: `1px solid ${COLORS.grayLight}`,
+          boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
             padding: theme.spacing(4, 4, 0),
@@ -833,7 +835,9 @@ export const defaultTheme = createTheme({
           fontSize: '16px',
           fontWeight: 700,
           color: COLORS.brandDark,
-          backgroundColor: COLORS.inactiveTab,
+          backgroundColor: COLORS.grayLight,
+          border: `1px solid ${COLORS.grayLight}`,
+          borderBottom: 'none',
           marginRight: theme.spacing(2),
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
