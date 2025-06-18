@@ -452,7 +452,7 @@
       "stakingReclaimEscrow": "Start Undelegate",
       "stakingAmendCommissionSchedule": "Amend Commission Schedule",
       "stakingAllow": "Allowance Change",
-      "stakingWithdraw": "Continued Delegate",
+      "stakingWithdraw": "Withdraw from Allowance",
       "registryDeregisterEntity": "Deregister Entity",
       "registryUnfreezeNode": "Registry: Unfreeze Node",
       "roothashExecutorCommit": "Executor Commit",
@@ -472,11 +472,11 @@
         "transfer": "Transfer"
       },
       "consensus": {
-        "deposit": "Consensus Deposit",
-        "delegate": "Consensus Delegate",
+        "deposit": "Deposit from Consensus",
+        "delegate": "Start Delegate",
         "meta": "Consensus Meta",
-        "undelegate": "Consensus Undelegate",
-        "withdraw": "Consensus Withdraw"
+        "undelegate": "Start Undelegate",
+        "withdraw": "Withdraw to Consensus"
       },
       "evm": {
         "call": "Contract Call",
@@ -547,8 +547,8 @@
     "consensusDeposit": "Deposit from consensus",
     "consensusWithdrawal": "Withdrawal to consensus",
     "consensusDelegate": "Delegate to consensus",
-    "consensusUndelegateStart": "Start to undelegate from consensus",
-    "consensusUndelegateDone": "Undelegate from consensus finished",
+    "consensusUndelegateStart": "Start to undelegate",
+    "consensusUndelegateDone": "Undelegate finished",
     "roflAppCreated": "ROFL App Created",
     "roflAppUpdated": "ROFL App Updated",
     "roflAppRemoved": "ROFL App Removed",
