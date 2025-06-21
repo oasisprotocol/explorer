@@ -335,9 +335,16 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.feeProxy')}</dt>
               <dd>
-                {transaction.fee_proxy_module === 'rofl'
-                  ? oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))
-                  : `${t('common.module')}: ${transaction.fee_proxy_module}, ${t('common.id')}: ${base64ToHex(transaction.fee_proxy_id)}`}
+                {transaction.fee_proxy_module === 'rofl' ? (
+                  <Link
+                    component={RouterLink}
+                    to={`/${transaction.network}/${transaction.layer}/${transaction.fee_proxy_module}/app/${oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))}`}
+                  >
+                    {oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))}
+                  </Link>
+                ) : (
+                  `module: ${transaction.fee_proxy_module}, id: ${base64ToHex(transaction.fee_proxy_id)}`
+                )}
               </dd>
             </>
           )}
