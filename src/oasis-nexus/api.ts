@@ -16,6 +16,7 @@ import {
   RuntimeEventType,
 } from './generated/api'
 import {
+  base64ToHex,
   getAccountSize,
   getEthAccountAddressFromBase64,
   getEthAccountAddressFromPreimage,
@@ -32,6 +33,7 @@ import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
 import { API_MAX_TOTAL_COUNT } from '../config'
 import { hasTextMatchesForAll } from '../app/components/HighlightedText/text-matching'
+import { decodeAbiParameters } from 'viem'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1628,6 +1630,26 @@ function transformRuntimeTransactionList(
   return {
     ...data,
     transactions: data.transactions.map(tx => {
+      const parsedSubcall = (() => {
+        if (
+          tx.to_eth === '0x0100000000000000000000000000000000000103' &&
+          tx.body?.data &&
+          !tx.encryption_envelope &&
+          !tx.oasis_encryption_envelope
+        ) {
+          try {
+            const [methodName, cborHexArgs] = decodeAbiParameters(
+              [{ type: 'string' }, { type: 'bytes' }],
+              base64ToHex(tx.body.data) as `0x${string}`,
+            )
+            const shortMethodName = methodName.split('.').at(-1)
+            return { shortMethodName, methodName, cborHexArgs }
+          } catch (e) {
+            console.error('Failed to parse subcall data (might be malformed)', e, tx)
+          }
+        }
+      })()
+
       return {
         ...tx,
         to_eth: tx.to_eth || fallbackEthAddress(tx.to, relAddress),
@@ -1643,6 +1665,7 @@ function transformRuntimeTransactionList(
         layer: runtime,
         network,
         method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
+        evm_fn_name: parsedSubcall?.shortMethodName ?? tx.evm_fn_name,
       }
     }),
   }
