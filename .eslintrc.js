@@ -27,6 +27,14 @@ const config = {
             name: '@mui/icons-material',
             message: "Use '@mui/icons-material/*' instead.",
           },
+          {
+            name: 'date-fns',
+            message: "Use 'date-fns/*' instead.",
+          },
+          {
+            name: 'date-fns/formatDistanceToNow',
+            message: 'Use formatDistanceToNow from dateFormatter.ts instead.',
+          },
         ],
         patterns: [
           {

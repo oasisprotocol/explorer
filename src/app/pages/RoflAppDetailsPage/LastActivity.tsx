@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { formatDistanceStrict } from 'date-fns'
+import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import { RuntimeTransaction } from '../../../oasis-nexus/api'
