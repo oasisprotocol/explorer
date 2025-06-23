@@ -34,6 +34,7 @@ import { SimpleJsonCode } from '../../components/CodeDisplay/SimpleJsonCode'
 import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
+import * as oasis from '@oasisprotocol/client'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
@@ -317,6 +318,27 @@ export const RuntimeTransactionDetailView: FC<{
               ticker: transaction.fee_symbol,
             })}
           </dd>
+
+          {transaction.fee_proxy_module && transaction.fee_proxy_id && (
+            <>
+              <dt>{t('common.feeProxy')}</dt>
+              <dd>
+                {transaction.fee_proxy_module === 'rofl' ? (
+                  <Link
+                    component={RouterLink}
+                    to={RouteUtils.getRoflAppRoute(
+                      transaction.network,
+                      oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64')),
+                    )}
+                  >
+                    {oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))}
+                  </Link>
+                ) : (
+                  `${t('common.module')}: ${transaction.fee_proxy_module}, ${t('common.id')}: ${base64ToHex(transaction.fee_proxy_id)}`
+                )}
+              </dd>
+            </>
+          )}
 
           {gasPrice && (
             <>
