@@ -9,9 +9,11 @@ import { RoflAppInstanceStatusBadge } from '../../components/Rofl/RoflAppInstanc
 import { RoflAppInstanceLink } from '../../components/Rofl/RoflAppInstanceLink'
 import { TableCellNode } from '../../components/TableCellNode'
 import { TableHeaderNode } from '../../components/TableHeaderNode'
+import { formatDistanceToNow } from '../../utils/dateFormatter'
 
 type InstancesListProps = {
   currentEpoch: number | undefined
+  currentEpochTimestamp: string | undefined
   instances: RoflInstance[] | undefined
   isLoading: boolean
   limit: number
@@ -26,6 +28,7 @@ export const InstancesList: FC<InstancesListProps> = ({
   pagination,
   instances,
   currentEpoch,
+  currentEpochTimestamp,
   appId,
   scope,
 }) => {
@@ -38,9 +41,13 @@ export const InstancesList: FC<InstancesListProps> = ({
     { key: 'expirationStatus', content: t('common.status'), align: TableCellAlign.Right },
   ]
   const tableRows =
-    currentEpoch !== undefined && instances
+    currentEpoch !== undefined && currentEpochTimestamp && instances
       ? instances?.map(instance => {
           const isActive = instance.expiration_epoch > currentEpoch
+
+          // Approximately 1 epoch per hour
+          const approxExpiration = new Date(currentEpochTimestamp)
+          approxExpiration.setHours(approxExpiration.getHours() + instance.expiration_epoch - currentEpoch)
 
           return {
             key: instance.rak,
@@ -56,7 +63,12 @@ export const InstancesList: FC<InstancesListProps> = ({
               },
               {
                 key: 'expirationEpoch',
-                content: instance.expiration_epoch.toLocaleString(),
+                content: (
+                  <span>
+                    {instance.expiration_epoch.toLocaleString()} (
+                    {formatDistanceToNow(approxExpiration, { keepSuffix: true })})
+                  </span>
+                ),
                 align: TableCellAlign.Right,
               },
               {

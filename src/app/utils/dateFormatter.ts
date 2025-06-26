@@ -16,9 +16,10 @@ export const intlDateFormat = (date: Date | number) => dateFormat.format(date)
 // TODO: Works only in en-US locale, as suffixes are hardcoded
 export const formatDistanceToNow = (
   date: Date | number,
-  baseDate: Date | number = new Date(),
-  locale = 'en-US',
+  options: { baseDate?: Date | number; locale?: string; keepSuffix?: true } = {},
 ) => {
+  const { baseDate = new Date(), locale = 'en-US', keepSuffix = false } = options
+
   const diffInSeconds = differenceInSeconds(date, baseDate)
   let unit: Intl.RelativeTimeFormatUnit
   // Simplified from date-fns code, but without quarters
@@ -38,13 +39,15 @@ export const formatDistanceToNow = (
     unit = 'year'
   }
 
-  return intlFormatDistance(date, baseDate, {
+  const distanceWithSuffix = intlFormatDistance(date, baseDate, {
     unit,
     style: 'short',
     numeric: 'always',
     locale,
   })
+  if (keepSuffix) return distanceWithSuffix
+  return distanceWithSuffix
     .replace(/ ago$/, '')
-    .replace(/^in /, '')
+    .replace(/^in /, '') // Doesn't differentiate future vs past
     .replace(/\.$/, '')
 }

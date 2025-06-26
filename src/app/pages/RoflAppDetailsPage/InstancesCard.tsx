@@ -1,5 +1,9 @@
 import { FC } from 'react'
-import { useGetConsensusEpochs, useGetRuntimeRoflAppsIdInstances } from '../../../oasis-nexus/api'
+import {
+  useGetConsensusBlockByHeight,
+  useGetConsensusEpochs,
+  useGetRuntimeRoflAppsIdInstances,
+} from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { instancesContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
@@ -27,12 +31,19 @@ const InstancesView: FC<RoflAppDetailsContext> = ({ scope, id }) => {
   const instances = data?.data.instances
   const { isLoading: isEpochLoading, data: epochData } = useGetConsensusEpochs(scope.network, { limit: 1 })
   const currentEpoch = epochData?.data.epochs[0].id
+  const { isLoading: isBlockLoading, data: epochStartBlockData } = useGetConsensusBlockByHeight(
+    scope.network,
+    epochData?.data.epochs[0].start_height!,
+    { query: { enabled: !!epochData?.data.epochs[0].start_height } },
+  )
+  const currentEpochTimestamp = epochStartBlockData?.data.timestamp
 
   return (
     <InstancesList
       instances={instances}
       currentEpoch={currentEpoch}
-      isLoading={isLoading || isEpochLoading}
+      currentEpochTimestamp={currentEpochTimestamp}
+      isLoading={isLoading || isEpochLoading || isBlockLoading}
       limit={limit}
       pagination={{
         selectedPage: pagination.selectedPage,
