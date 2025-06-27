@@ -72,7 +72,8 @@
     "react-router-dom": "6.30.0",
     "recharts": "2.15.1",
     "swiper": "11.2.5",
-    "use-resize-observer": "9.1.0"
+    "use-resize-observer": "9.1.0",
+    "viem": "^2.31.4"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
