@@ -12,6 +12,30 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.23.0 (2025-06-27)
+
+### Features
+
+- Change explorer background, logo and card borders
+  ([#2033](https://github.com/oasisprotocol/explorer/issues/2033))
+
+### Bug Fixes and Improvements
+
+- Assume "unknown" method and status means encrypted so show a lock icon
+  ([#2032](https://github.com/oasisprotocol/explorer/issues/2032))
+
+- Improve transaction method labels
+  ([#2042](https://github.com/oasisprotocol/explorer/issues/2042))
+
+- Parse ROFL machine commands in transaction body
+  ([#2043](https://github.com/oasisprotocol/explorer/issues/2043))
+
+- Show method name in subcall transactions
+  ([#2044](https://github.com/oasisprotocol/explorer/issues/2044))
+
+- Estimate ROFL app instance expiration time based on epoch
+  ([#2045](https://github.com/oasisprotocol/explorer/issues/2045))
+
 ## 1.22.1 (2025-06-14)
 
 ### Bug Fixes and Improvements
