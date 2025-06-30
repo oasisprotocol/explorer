@@ -107,7 +107,7 @@ export const defaultTheme = createTheme({
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
       networkBubbleBorder: COLORS.white,
-      titleOnBackground: COLORS.white,
+      titleOnBackground: COLORS.brandExtraDark,
       graphZoomOutText: COLORS.white,
       helpScreenIconColor: COLORS.aqua,
     },
