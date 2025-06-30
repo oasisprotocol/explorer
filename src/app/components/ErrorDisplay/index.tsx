@@ -94,7 +94,7 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: str
 
   let errorPayload: ErrorPayload
   if (isRouteErrorResponse(error)) {
-    errorPayload = { code: AppErrors.Unknown, message: error.statusText }
+    errorPayload = { code: AppErrors.InvalidUrl, message: error.statusText }
   } else if (error instanceof AppError) {
     errorPayload = { code: error.type, message: error.message }
   } else if (error instanceof Error) {
