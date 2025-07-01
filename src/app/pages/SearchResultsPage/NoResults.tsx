@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
 import { getNetworkNames, Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
+import { ExploreOasisButton } from './ExploreOasisButton'
 
 export const NoResults: FC<{
   network?: Network
@@ -48,6 +49,7 @@ export const NoResults: FC<{
           <p>
             <SearchSuggestionsLinksForNoResults scope={layer && network ? { network, layer } : undefined} />
           </p>
+          <ExploreOasisButton />
         </Box>
       }
     />
