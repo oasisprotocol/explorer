@@ -14,6 +14,7 @@ import { TapIcon } from '../../../../components/CustomIcons/Tap'
 import { PinchIcon } from '../../../../components/CustomIcons/Pinch'
 import { NavigateIcon } from '../../../../components/CustomIcons/Navigate'
 import { Theme } from '@mui/material/styles/createTheme'
+import { COLORS } from 'styles/theme/colors'
 
 const HelpScreenContainer = styled(Box)(() => ({
   position: 'absolute',
@@ -27,6 +28,7 @@ const HelpScreenContainer = styled(Box)(() => ({
   minHeight: '185px',
   width: '90%',
   height: '100%',
+  color: COLORS.white,
 }))
 
 const SwiperBox = styled(Box)(() => ({
