@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { searchSuggestionTerms } from '../../components/Search/search-utils'
+import { searchSuggestionTerms } from './search-utils'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
