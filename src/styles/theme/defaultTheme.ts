@@ -93,7 +93,6 @@ export const defaultTheme = createTheme({
   palette: {
     background: {
       default: COLORS.white,
-      empty: COLORS.brandExtraDark,
     },
     layout: {
       main: COLORS.brandExtraDark,
