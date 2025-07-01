@@ -164,7 +164,7 @@ export const HomePage: FC = () => {
             </SearchInputBox>
             {showInfoScreenBtn && (
               <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
-                <InfoOutlinedIcon fontSize="medium" sx={{ color: 'white' }} />
+                <InfoOutlinedIcon fontSize="medium" sx={{ color: COLORS.grayMedium2 }} />
               </InfoScreenBtn>
             )}
           </SearchInputContainer>
