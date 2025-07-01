@@ -5,12 +5,25 @@ import { EmptyState } from '../EmptyState'
 import { AppError, AppErrors, ErrorPayload } from '../../../types/errors'
 import { TFunction } from 'i18next'
 import { GoToFirstPageLink } from '../Table/GoToFirstPageLink'
+import { ExploreOasisButton } from '../../pages/SearchResultsPage/ExploreOasisButton'
+import Box from '@mui/material/Box'
+import { SearchSuggestionsLinksForNoResults } from '../Search/SearchSuggestionsLinksForNoResults'
+import { SearchScope } from '../../../types/searchScope'
+import { useScopeParam } from '../../hooks/useScopeParam'
+import { Theme } from '@mui/material/styles/createTheme'
+import { useTheme } from '@mui/material/styles'
 
 type FormattedError = { title: string; message: ReactNode }
 
-const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => FormattedError> = {
+const errorMap: Record<
+  AppErrors,
+  (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined, theme: Theme) => FormattedError
+> = {
   [AppErrors.Unknown]: (t, error) => ({ title: t('errors.unknown'), message: error.message }),
-  [AppErrors.InvalidAddress]: t => ({ title: t('errors.invalidAddress'), message: t('errors.validateURL') }),
+  [AppErrors.InvalidAddress]: t => ({
+    title: t('errors.invalidAddress'),
+    message: t('errors.validateURL'),
+  }),
   [AppErrors.InvalidRoflAppId]: t => ({
     title: t('errors.invalidRoflAppId'),
     message: t('errors.validateURL'),
@@ -65,7 +78,22 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
     title: t('errors.notFoundProposal'),
     message: t('errors.validateURL'),
   }),
-  [AppErrors.InvalidUrl]: t => ({ title: t('errors.invalidUrl'), message: t('errors.validateURL') }),
+  [AppErrors.InvalidUrl]: (t, _, scope, theme) => ({
+    title: t('errors.invalidUrl'),
+    message: (
+      <Box
+        sx={{
+          a: { color: theme.palette.layout.contrastMain, textDecoration: 'underline' },
+        }}
+      >
+        <p>
+          <SearchSuggestionsLinksForNoResults scope={scope} suggestSearch />
+        </p>
+        <p>{t('errors.alternativelyGoExplore')}</p>
+        <ExploreOasisButton />
+      </Box>
+    ),
+  }),
   [AppErrors.UnsupportedLayer]: t => ({
     title: t('errors.error'),
     message: t('errors.unsupportedLayer'),
@@ -81,8 +109,13 @@ const errorMap: Record<AppErrors, (t: TFunction, error: ErrorPayload) => Formatt
   [AppErrors.InvalidVote]: t => ({ title: t('errors.invalidVote'), message: null }),
 }
 
-export const errorFormatter = (t: TFunction, error: ErrorPayload) => {
-  return errorMap[error.code](t, error)
+export const errorFormatter = (
+  t: TFunction,
+  error: ErrorPayload,
+  scope: SearchScope | undefined,
+  theme: Theme,
+) => {
+  return errorMap[error.code](t, error, scope, theme)
 }
 
 export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: string | number }> = ({
@@ -91,6 +124,8 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: str
   minHeight,
 }) => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const scope = useScopeParam()
 
   let errorPayload: ErrorPayload
   if (isRouteErrorResponse(error)) {
@@ -105,7 +140,7 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: str
     errorPayload = { code: AppErrors.Unknown, message: error as string }
   }
 
-  const { title, message } = errorFormatter(t, errorPayload)
+  const { title, message } = errorFormatter(t, errorPayload, scope, theme)
 
   return <EmptyState title={title} description={message} light={light} minHeight={minHeight} />
 }
