@@ -12,6 +12,19 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.23.1 (2025-07-01)
+
+### Bug Fixes and Improvements
+
+- Inline copy button next to some account links using AdaptiveTrimmer
+  ([#2029](https://github.com/oasisprotocol/explorer/issues/2029))
+
+- Adjust the titleOnBackground color in the default theme
+  ([#2051](https://github.com/oasisprotocol/explorer/issues/2051))
+
+- Quick fix for mobile opening screen
+  ([#2053](https://github.com/oasisprotocol/explorer/issues/2053))
+
 ## 1.23.0 (2025-06-27)
 
 ### Features
