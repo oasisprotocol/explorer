@@ -53,8 +53,8 @@ export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope }) => {
       t={t}
       i18nKey={
         scope?.layer === 'consensus'
-          ? 'search.searchSuggestionsForNoResultsForConsensus'
-          : 'search.searchSuggestionsForNoResultsForRuntime'
+          ? 'search.searchSuggestionsForConsensus'
+          : 'search.searchSuggestionsForRuntime'
       }
       components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
     />
