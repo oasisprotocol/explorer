@@ -12,6 +12,16 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.23.2 (2025-07-01)
+
+### Bug Fixes and Improvements
+
+- Quick fix for mobile opening screen on TestNet
+  ([#2056](https://github.com/oasisprotocol/explorer/issues/2056))
+
+- Fix color of info button on mobile opening screen
+  ([#2057](https://github.com/oasisprotocol/explorer/issues/2057))
+
 ## 1.23.1 (2025-07-01)
 
 ### Bug Fixes and Improvements
