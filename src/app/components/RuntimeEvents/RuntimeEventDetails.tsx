@@ -550,7 +550,7 @@ const RuntimeEventDetailsInner: FC<{
             </dd>
             <dt>{t('roflmarket.machineId')}</dt>
             {/* oasis-sdk serializes roflmarket provider machines id as an array */}
-            <dd>{JSON.stringify(event.body.id)}</dd>
+            <dd>0x{Buffer.from(event.body.id).toString('hex')}</dd>
           </StyledDescriptionList>
         </div>
       )
