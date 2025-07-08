@@ -24,7 +24,7 @@ const StyledTypography = styled(Typography)({
 
 export const NFTCollectionLink: FC<NFTLinkProps> = ({ scope, instance }) => {
   const { t } = useTranslation()
-  const to = RouteUtils.getTokenRoute(scope, instance.token?.contract_addr)
+  const to = RouteUtils.getTokenRoute(scope, instance.token?.eth_contract_addr)
 
   return (
     <StyledTypography>
