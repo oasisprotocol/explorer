@@ -179,7 +179,20 @@ export const RuntimeTransactionDetailView: FC<{
           <dd>
             <RuntimeTransactionMethod transaction={transaction} />
           </dd>
-
+          {transaction.evm_fn_params && (
+            <>
+              <dt>{t('transactions.method.evm.call')}</dt>
+              <dd>
+                <LongDataDisplay
+                  data={`${transaction.evm_fn_name}(${transaction.evm_fn_params
+                    ?.map(a => `${a.name}: ${JSON.stringify(a.value, null, 2)}`)
+                    .join(', ')})`}
+                  collapsedLinesNumber={2}
+                  fontWeight={400}
+                />
+              </dd>
+            </>
+          )}
           <dt>{t('transactions.encryption.format')}</dt>
           <dd>
             <TransactionEncryptionStatus envelope={envelope} withText={true} />
