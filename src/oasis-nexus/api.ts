@@ -1643,7 +1643,7 @@ function transformRuntimeTransactionList(
               [{ type: 'string' }, { type: 'bytes' }],
               base64ToHex(tx.body.data) as `0x${string}`,
             )
-            const shortMethodName = methodName.split('.').at(-1)
+            const shortMethodName = methodName.replace('consensus.', '')
             return { shortMethodName, methodName, cborHexArgs }
           } catch (e) {
             console.error('Failed to parse subcall data (might be malformed)', e, tx)
