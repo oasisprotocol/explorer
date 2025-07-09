@@ -35,6 +35,7 @@ import { API_MAX_TOTAL_COUNT } from '../config'
 import { hasTextMatchesForAll } from '../app/components/HighlightedText/text-matching'
 import { decodeAbiParameters } from 'viem'
 import * as oasis from '@oasisprotocol/client'
+import { yamlDump } from '../app/utils/yamlDump'
 
 export * from './generated/api'
 export type { RuntimeEvmBalance as Token } from './generated/api'
@@ -1639,12 +1640,46 @@ function transformRuntimeTransactionList(
           !tx.oasis_encryption_envelope
         ) {
           try {
-            const [methodName, cborHexArgs] = decodeAbiParameters(
+            const [methodName, cborHexParams] = decodeAbiParameters(
               [{ type: 'string' }, { type: 'bytes' }],
               base64ToHex(tx.body.data) as `0x${string}`,
             )
             const shortMethodName = methodName.replace('consensus.', '')
-            return { shortMethodName, methodName, cborHexArgs }
+
+            // TODO: could type as oasisRT.rofl.TransactionCallHandlers etc
+            const params = oasis.misc.fromCBOR(oasis.misc.fromHex(cborHexParams.replace('0x', ''))) as any
+            try {
+              if (methodName === 'consensus.Delegate') {
+                if (params?.to instanceof Uint8Array) params.to = oasis.staking.addressToBech32(params.to)
+                if (params?.amount?.[0] instanceof Uint8Array)
+                  params.amount[0] = oasis.quantity.toBigInt(params.amount[0])
+                if (params?.amount?.[1] instanceof Uint8Array)
+                  params.amount[1] = oasis.misc.toStringUTF8(params.amount[1])
+              }
+              if (methodName === 'consensus.Undelegate') {
+                if (params?.from instanceof Uint8Array)
+                  params.from = oasis.staking.addressToBech32(params.from)
+                if (params?.shares instanceof Uint8Array)
+                  params.shares = oasis.quantity.toBigInt(params.shares)
+              }
+            } catch (e) {
+              console.error('Failed to normalize subcall data', e, params, tx)
+            }
+
+            let stringifiedParams
+            try {
+              stringifiedParams = yamlDump(params)
+            } catch (e) {
+              console.error('Failed to stringify subcall data', e, params, tx)
+            }
+            const paramsAsAbi: generated.EvmAbiParam[] = [
+              {
+                name: 'body',
+                evm_type: 'string',
+                value: stringifiedParams ?? cborHexParams,
+              },
+            ]
+            return { shortMethodName, methodName, cborHexParams, params, paramsAsAbi }
           } catch (e) {
             console.error('Failed to parse subcall data (might be malformed)', e, tx)
           }
@@ -1680,6 +1715,7 @@ function transformRuntimeTransactionList(
         network,
         method: adjustRuntimeTransactionMethod(tx.method, tx.is_likely_native_token_transfer),
         evm_fn_name: parsedSubcall?.shortMethodName ?? tx.evm_fn_name,
+        evm_fn_params: parsedSubcall?.paramsAsAbi ?? tx.evm_fn_params,
       }
     }),
   }
