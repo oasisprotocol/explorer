@@ -151,6 +151,7 @@
     "transactionAbbreviation": "Txs",
     "fee": "Fee",
     "feeProxy": "Fee proxy",
+    "feeProxyTooltip": "Account paying for the transaction fee on behalf of the caller",
     "transfers": "Transfers",
     "type": "Type",
     "quantity": "Quantity",
