@@ -1662,6 +1662,25 @@ function transformRuntimeTransactionList(
                 if (params?.shares instanceof Uint8Array)
                   params.shares = oasis.quantity.toBigInt(params.shares)
               }
+              if (methodName.startsWith('rofl.')) {
+                if (params?.id instanceof Uint8Array) params.id = oasis.address.toBech32('rofl', params.id)
+                if (params?.admin instanceof Uint8Array)
+                  params.admin = oasis.staking.addressToBech32(params.admin)
+              }
+              if (methodName.startsWith('roflmarket.')) {
+                if (params?.id instanceof Uint8Array) params.id = `0x${oasis.misc.toHex(params.id)}`
+                if (params?.offer instanceof Uint8Array) params.offer = `0x${oasis.misc.toHex(params.offer)}`
+                if (params?.provider instanceof Uint8Array)
+                  params.provider = oasis.staking.addressToBech32(params.provider)
+                if (params?.deployment?.app_id instanceof Uint8Array)
+                  params.deployment.app_id = oasis.address.toBech32('rofl', params.deployment.app_id)
+                if (params?.deployment?.manifest_hash instanceof Uint8Array)
+                  params.deployment.manifest_hash = `0x${oasis.misc.toHex(params.deployment.manifest_hash)}`
+                if (params?.cmds?.[0] instanceof Uint8Array)
+                  params.cmds = params.cmds.map((cmdUint: Uint8Array) =>
+                    parseCmd(oasis.misc.toBase64(cmdUint)),
+                  )
+              }
             } catch (e) {
               console.error('Failed to normalize subcall data', e, params, tx)
             }
@@ -1685,15 +1704,16 @@ function transformRuntimeTransactionList(
           }
         }
       })()
+      function parseCmd(cmdBase64: string) {
+        const parsed = oasis.misc.fromCBOR(Buffer.from(cmdBase64, 'base64')) as { method: string; args: any }
+        if (parsed.args?.deployment?.app_id) {
+          parsed.args.deployment.app_id = oasis.address.toBech32('rofl', parsed.args.deployment.app_id)
+        }
+        return parsed
+      }
       if (tx.method?.startsWith('roflmarket')) {
         if (tx.body?.cmds) {
-          tx.body.cmds = tx.body.cmds.map((cmd: string) => {
-            const parsed = oasis.misc.fromCBOR(Buffer.from(cmd, 'base64')) as { method: string; args: any }
-            if (parsed.args?.deployment?.app_id) {
-              parsed.args.deployment.app_id = oasis.address.toBech32('rofl', parsed.args.deployment.app_id)
-            }
-            return parsed
-          })
+          tx.body.cmds = tx.body.cmds.map((cmdBase64: string) => parseCmd(cmdBase64))
         }
         if (Array.isArray(tx.body?.id) && tx.body.id.length === 8) {
           tx.body.id = `0x${Buffer.from(tx.body.id).toString('hex')}`
