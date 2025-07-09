@@ -44,6 +44,7 @@ import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import { RouteUtils } from '../../utils/route-utils'
 import Tooltip from '@mui/material/Tooltip'
+import { yamlDump } from '../../utils/yamlDump'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -184,10 +185,8 @@ export const RuntimeTransactionDetailView: FC<{
               <dt>{t('transactions.method.evm.call')}</dt>
               <dd>
                 <LongDataDisplay
-                  data={`${transaction.evm_fn_name}(${transaction.evm_fn_params
-                    ?.map(a => `${a.name}: ${JSON.stringify(a.value, null, 2)}`)
-                    .join(', ')})`}
-                  collapsedLinesNumber={2}
+                  data={`${transaction.evm_fn_name}(\n${yamlDump(transaction.evm_fn_params.map(a => ({ [a.name]: a.value })))})`}
+                  collapsedLinesNumber={8}
                   fontWeight={400}
                 />
               </dd>

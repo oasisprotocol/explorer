@@ -35,6 +35,10 @@ const config = {
             name: 'date-fns/formatDistanceToNow',
             message: 'Use formatDistanceToNow from dateFormatter.ts instead.',
           },
+          {
+            name: 'js-yaml',
+            message: "Use 'yamlDump' instead.",
+          },
         ],
         patterns: [
           {
