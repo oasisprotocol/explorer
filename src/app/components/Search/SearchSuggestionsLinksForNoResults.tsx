@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { searchSuggestionTerms } from '../../components/Search/search-utils'
+import { searchSuggestionTerms } from './search-utils'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
@@ -15,6 +15,7 @@ import { SxProps } from '@mui/material/styles'
 
 interface Props {
   scope: SearchScope | undefined
+  suggestSearch?: boolean
 }
 
 const iconSxProps: SxProps = {
@@ -25,7 +26,7 @@ const iconSxProps: SxProps = {
 
 const empty = <></>
 
-export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope }) => {
+export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope, suggestSearch }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { suggestedBlock, suggestedTransaction, suggestedAccount, suggestedTokenFragment } =
@@ -52,9 +53,13 @@ export const SearchSuggestionsLinksForNoResults: FC<Props> = ({ scope }) => {
     <Trans
       t={t}
       i18nKey={
-        scope?.layer === 'consensus'
-          ? 'search.searchSuggestionsForNoResultsForConsensus'
-          : 'search.searchSuggestionsForNoResultsForRuntime'
+        suggestSearch
+          ? scope?.layer === 'consensus'
+            ? 'search.suggestSearchForConsensus'
+            : 'search.suggestSearchForRuntime'
+          : scope?.layer === 'consensus'
+            ? 'search.searchSuggestionsForConsensus'
+            : 'search.searchSuggestionsForRuntime'
       }
       components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
     />
