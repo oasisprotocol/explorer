@@ -44,6 +44,7 @@ import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import { RouteUtils } from '../../utils/route-utils'
 import Tooltip from '@mui/material/Tooltip'
+import { yamlDump } from '../../utils/yamlDump'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -179,7 +180,18 @@ export const RuntimeTransactionDetailView: FC<{
           <dd>
             <RuntimeTransactionMethod transaction={transaction} />
           </dd>
-
+          {transaction.evm_fn_params && (
+            <>
+              <dt>{t('transactions.method.evm.call')}</dt>
+              <dd>
+                <LongDataDisplay
+                  data={`${transaction.evm_fn_name}(\n${yamlDump(transaction.evm_fn_params.map(a => ({ [a.name]: a.value })))})`}
+                  collapsedLinesNumber={8}
+                  fontWeight={400}
+                />
+              </dd>
+            </>
+          )}
           <dt>{t('transactions.encryption.format')}</dt>
           <dd>
             <TransactionEncryptionStatus envelope={envelope} withText={true} />

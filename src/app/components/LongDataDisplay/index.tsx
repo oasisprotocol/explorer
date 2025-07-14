@@ -68,6 +68,7 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
           display: '-webkit-box',
           WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
           WebkitBoxOrient: 'vertical',
+          whiteSpace: 'pre-wrap',
         }}
       >
         {data}
