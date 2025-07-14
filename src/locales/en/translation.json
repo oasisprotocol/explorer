@@ -277,8 +277,9 @@
     "pageDoesNotExist": "The page you are looking for does not exist.",
     "validateURL": "Please validate provided URL",
     "validateURLOrGoToFirstPage": "Please check the URL or <FirstPageLink />.",
-    "invalidUrl": "Invalid URL",
+    "invalidUrl": "This URL doesn't exist",
     "invalidVote": "Invalid vote",
+    "alternativelyGoExplore": "Alternatively, discover our ecosystem by exploring Oasis.",
     "revertedWithoutMessage": "reverted without a message",
     "storage": "Access to browser storage denied"
   },
@@ -767,7 +768,7 @@
     "noResults": {
       "header": "No results found",
       "scopeHeader": "No results found on {{scope}}",
-      "description": "Please try another search query <OptionalBreak> or explore the <HomeLink>Oasis ecosystem</HomeLink>.</OptionalBreak>"
+      "description": "Please try another search query <OptionalBreak> or <HomeLink>explore Oasis</HomeLink>.</OptionalBreak>"
     },
     "otherResults": {
       "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
@@ -815,8 +816,8 @@
     "searchBtnText": "Search",
     "searchSuggestionsForRuntime": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
     "searchSuggestionsForConsensus": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> </OptionalBreak>.",
-    "searchSuggestionsForNoResultsForRuntime": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> or <TokenLink><TokenIcon/> Token</TokenLink></OptionalBreak> <OptionalBreak>to discover our Explorer.</OptionalBreak>",
-    "searchSuggestionsForNoResultsForConsensus": "Alternatively, you can view a random <BlockLink><BlockIcon/> Block</BlockLink>, <OptionalBreak><TransactionLink><TransactionIcon/> Transaction</TransactionLink> or <AccountLink><AccountIcon/> Address</AccountLink> <OptionalBreak>to discover our Explorer.</OptionalBreak>"
+    "suggestSearchForRuntime": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
+    "suggestSearchForConsensus": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> </OptionalBreak>."
   },
   "tableSearch": {
     "error": {
