@@ -164,7 +164,7 @@ export const RoflAppDetailsView: FC<{
         transaction={app.last_activity_tx}
       />
       <DetailsRow title={t('rofl.endorsement')}>
-        <Endorsement policy={app.policy} />
+        <Endorsement endorsements={app.policy.endorsements} />
       </DetailsRow>
       <DetailsRow
         title={
