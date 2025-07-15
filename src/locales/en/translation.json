@@ -704,10 +704,14 @@
     "endorsement": "Endorsement",
     "endorsementLabels": {
       "any": "Any node can endorse the enclave",
-      "entity": "Registered node from a specific entity can endorse the enclave",
-      "node": "Specific node can endorse the enclave",
-      "roleCompute": "Compute node for the current runtime can endorse the enclave",
-      "roleObserver": "Observer node for the current runtime can endorse the enclave"
+      "entity": "Registered node from a specific entity can endorse the enclave: ",
+      "node": "Specific node can endorse the enclave: ",
+      "role_compute": "Compute node for the current runtime can endorse the enclave",
+      "role_observer": "Observer node for the current runtime can endorse the enclave",
+      "provider": "Any node from a specific provider can endorse the enclave: ",
+      "provider_instance_admin": "Any provider instance where the given address is currently the admin: ",
+      "and": "Evaluate all of the child endorsement policies and allow in case all accept the node: ",
+      "or": "Evaluate all of the child endorsement policies and allow in case any accepts the node: "
     },
     "endorsingNodeAddress": "Endorsing node address",
     "endorsingNodeId": "Endorsing node ID",
