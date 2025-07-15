@@ -20,11 +20,11 @@ export const Endorsement: FC<EndorsementProps> = ({ policy }) => {
 
   const getEndorsementLabel = (key: string): string => {
     const labelMap: Record<string, string> = {
-      any: t('rofl.any'),
-      role_compute: t('rofl.roleCompute'),
-      role_observer: t('rofl.roleObserver'),
-      entity: t('rofl.entity'),
-      node: t('rofl.node'),
+      any: t('rofl.endorsementLabels.any'),
+      role_compute: t('rofl.endorsementLabels.roleCompute'),
+      role_observer: t('rofl.endorsementLabels.roleObserver'),
+      entity: t('rofl.endorsementLabels.entity'),
+      node: t('rofl.endorsementLabels.node'),
     }
     return labelMap[key] || key
   }
