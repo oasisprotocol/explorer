@@ -703,11 +703,11 @@
     "enclaveId": "Enclave ID",
     "endorsement": "Endorsement",
     "endorsementLabels": {
-      "any": "Any",
-      "entity": "Entity",
-      "node": "Node",
-      "roleCompute": "Role compute",
-      "roleObserver": "Role observer"
+      "any": "Any node can endorse the enclave",
+      "entity": "Registered node from a specific entity can endorse the enclave",
+      "node": "Specific node can endorse the enclave",
+      "roleCompute": "Compute node for the current runtime can endorse the enclave",
+      "roleObserver": "Observer node for the current runtime can endorse the enclave"
     },
     "endorsingNodeAddress": "Endorsing node address",
     "endorsingNodeId": "Endorsing node ID",
