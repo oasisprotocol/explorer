@@ -1,9 +1,32 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, PropsWithChildren, ReactNode } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { RoflAppPolicy } from '../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { AccountLink } from '../../components/Account/AccountLink'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
+import { useScreenSize } from '../../hooks/useScreensize'
+import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
+
+const StyledBox: FC<PropsWithChildren> = ({ children }) => {
+  const { isTablet } = useScreenSize()
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: isTablet ? 'wrap' : 'nowrap',
+        textWrap: isTablet ? 'wrap' : 'nowrap',
+        gap: 2,
+        alignItems: 'center',
+        flex: 1,
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
 
 type RoflAllowedEndorsementFields =
   | 'any'
@@ -16,12 +39,21 @@ type RoflAllowedEndorsementFields =
   | 'and'
   | 'or'
 
+type GroupOperator = 'and' | 'or'
+
 type EndorsementProps = {
   endorsements: RoflAppPolicy['endorsements']
+  groupOp: GroupOperator
 }
 
-export const Endorsement: FC<EndorsementProps> = ({ endorsements }) => {
+export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => {
   const { t } = useTranslation()
+  const scope = useRuntimeScope()
+
+  const groupOpLabel: Record<GroupOperator, string> = {
+    or: t('rofl.endorsementLabels.or'),
+    and: t('rofl.endorsementLabels.and'),
+  }
 
   if (!endorsements || endorsements.length === 0) {
     return <>{t('common.missing')}</>
@@ -30,77 +62,142 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements }) => {
   // Nexus is not parsing ROFL app policy, but we can expect object to be similar to this:
   // https://github.com/oasisprotocol/oasis-sdk/blob/3f1f6f4aa4a7800b1c176fea3cbb2faaba915ddb/runtime-sdk/src/modules/rofl/policy.rs#L91
 
-  const getEndorsementLabel = (key: RoflAllowedEndorsementFields): string => {
+  const getEndorsementExplanation = (key: RoflAllowedEndorsementFields, value: any): ReactNode => {
     switch (key) {
       case 'any':
-        return t('rofl.endorsementLabels.any')
-      case 'role_compute':
-        return t('rofl.endorsementLabels.role_compute')
-      case 'role_observer':
-        return t('rofl.endorsementLabels.role_observer')
-      case 'entity':
-        return t('rofl.endorsementLabels.entity')
-      case 'node':
-        return t('rofl.endorsementLabels.node')
-      case 'provider':
-        return t('rofl.endorsementLabels.provider')
-      case 'provider_instance_admin':
-        return t('rofl.endorsementLabels.provider_instance_admin')
-      case 'and':
-        return t('rofl.endorsementLabels.and')
-      case 'or':
-        return t('rofl.endorsementLabels.or')
-    }
-    exhaustedTypeWarning('Unknown endorsement', key)
-    return key
-  }
-
-  const getValue = (key: RoflAllowedEndorsementFields, value: any) => {
-    switch (key) {
-      case 'any':
-        return ''
-      case 'role_compute':
-        return ''
-      case 'role_observer':
-        return ''
-      case 'entity':
-        return <Typography variant="mono">{value}</Typography>
-      case 'node':
-        return <Typography variant="mono">{value}</Typography>
-      case 'provider':
-        return <Typography variant="mono">{value}</Typography>
-      case 'provider_instance_admin':
-        return <Typography variant="mono">{value}</Typography>
-      case 'and':
         return (
-          <Box sx={{ ml: 4 }}>
-            <Endorsement endorsements={value} />
+          <StyledBox>
+            <Trans t={t} i18nKey="rofl.endorsementLabels.any" />
+          </StyledBox>
+        )
+      case 'role_compute':
+        return (
+          <StyledBox>
+            <Trans t={t} i18nKey="rofl.endorsementLabels.role_compute" />
+          </StyledBox>
+        )
+      case 'role_observer':
+        return (
+          <StyledBox>
+            <Trans t={t} i18nKey="rofl.endorsementLabels.role_observer" />
+          </StyledBox>
+        )
+      case 'provider_instance_admin':
+        return (
+          <StyledBox>
+            <Trans
+              t={t}
+              i18nKey="rofl.endorsementLabels.provider_instance_admin"
+              components={{
+                Address: <AccountLink scope={scope} address={value} alwaysAdapt />,
+              }}
+            />
+          </StyledBox>
+        )
+      case 'provider':
+        return (
+          <StyledBox>
+            <Trans
+              t={t}
+              i18nKey="rofl.endorsementLabels.provider"
+              components={{
+                Address: <AccountLink scope={scope} address={value} alwaysAdapt />,
+              }}
+            />
+          </StyledBox>
+        )
+      case 'node':
+        return (
+          <StyledBox>
+            <Trans
+              t={t}
+              i18nKey="rofl.endorsementLabels.node"
+              components={{
+                Address: <AccountLink scope={scope} address={value} alwaysAdapt />,
+              }}
+            />
+          </StyledBox>
+        )
+      case 'entity':
+        return (
+          <StyledBox>
+            <Trans
+              t={t}
+              i18nKey="rofl.endorsementLabels.entity"
+              components={{
+                Address: (
+                  <AccountLink
+                    scope={{ network: scope.network, layer: 'consensus' }}
+                    address={getOasisAddressFromBase64PublicKey(value)}
+                    alwaysAdapt
+                  />
+                ),
+              }}
+            />
+          </StyledBox>
+        )
+      case 'and':
+      case 'or':
+        return (
+          <Box
+            component={'div'}
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              overflowX: 'hidden',
+              paddingLeft: '15px',
+              borderLeft: '1px solid #000' /* Vertical line of the brace */,
+              borderTopLeftRadius: '10px',
+              borderBottomLeftRadius: '10px',
+            }}
+          >
+            <Endorsement endorsements={value} groupOp={key} />
           </Box>
         )
-      case 'or':
-        return (
-          <Box sx={{ ml: 4 }}>
-            <Endorsement endorsements={value} />
-          </Box>
-        )
     }
     exhaustedTypeWarning('Unknown endorsement', key)
-    return JSON.stringify(value)
   }
 
   return (
-    <div>
+    <>
       {endorsements.map((endorsement: { [key: string]: any }, index: number) => {
         const key = Object.keys(endorsement)[0] as RoflAllowedEndorsementFields
         const value = endorsement[key]
 
-        return (
-          <Box key={index}>
-            {getEndorsementLabel(key)}
-            {getValue(key, value)}
-          </Box>
+        const renderedExplanation = getEndorsementExplanation(key, value)
+
+        return endorsements.length !== 1 ? (
+          <>
+            {!!index && (
+              <span
+                key={index}
+                style={{
+                  textWrap: 'nowrap',
+                  fontWeight: 'bold',
+                }}
+              >
+                {groupOpLabel[groupOp]}
+              </span>
+            )}
+            <Box
+              key={index}
+              sx={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'nowrap',
+                overflowX: 'hidden',
+                gap: 3,
+              }}
+            >
+              {renderedExplanation}
+            </Box>
+          </>
+        ) : (
+          <>{renderedExplanation}</>
         )
       })}
-    </div>
+    </>
   )
 }
