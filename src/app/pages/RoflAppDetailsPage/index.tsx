@@ -164,7 +164,15 @@ export const RoflAppDetailsView: FC<{
         transaction={app.last_activity_tx}
       />
       <DetailsRow title={t('rofl.endorsement')}>
-        <Endorsement endorsements={app.policy.endorsements} />
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Endorsement endorsements={app.policy.endorsements} />
+        </Box>
       </DetailsRow>
       <DetailsRow
         title={
