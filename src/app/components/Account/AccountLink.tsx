@@ -60,6 +60,11 @@ interface Props {
   alwaysTrimOnTablet?: boolean
 
   /**
+   * When trimming, use Adaptive trimmer, instead of fixes length
+   */
+  preferAdaptive?: boolean
+
+  /**
    * What part of the name should be highlighted (if any)
    */
   highlightPattern?: HighlightPattern
@@ -184,6 +189,7 @@ export const AccountLink: FC<Props> = ({
   address,
   alwaysTrim,
   alwaysTrimOnTablet,
+  preferAdaptive,
   highlightPattern,
   extraTooltip,
   labelOnly,
@@ -227,6 +233,19 @@ export const AccountLink: FC<Props> = ({
   // Are we in a situation when we should always trim?
   if (alwaysTrim || (alwaysTrimOnTablet && isTablet)) {
     // In a table, we only ever want a short line
+
+    if (preferAdaptive) {
+      return (
+        <AdaptivelyTrimmedAccountLink
+          scope={scope}
+          address={address}
+          showOnlyAddress={showOnlyAddress}
+          labelOnly={labelOnly}
+          highlightPattern={highlightPattern}
+          tooltipTitle={tooltipTitle}
+        />
+      )
+    }
 
     return (
       <TrimmedAccountLink
