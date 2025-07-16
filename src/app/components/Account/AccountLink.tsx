@@ -79,6 +79,105 @@ interface Props {
   labelOnly?: boolean
 }
 
+// We want two lines, one for name (if available), one for address
+// Both lines adaptively shortened to fill available space
+const AdaptivelyTrimmedAccountLink: FC<
+  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress' | 'highlightPattern'> & {
+    tooltipTitle: ReactNode
+  }
+> = ({ scope, address, labelOnly, showOnlyAddress, highlightPattern, tooltipTitle }) => {
+  const {
+    metadata: accountMetadata,
+    // isError, // Use this to indicate that we have failed to load the name for this account
+  } = useAccountMetadata(scope, address)
+  const accountName = accountMetadata?.name // TODO: we should also use the description
+  const showAccountName = !showOnlyAddress && !!accountName
+
+  return (
+    <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
+      <>
+        {showAccountName && (
+          <Box
+            component="span"
+            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+          >
+            <AccountMetadataSourceIndicator source={accountMetadata.source} />
+            <AdaptiveHighlightedText
+              idPrefix="account-name"
+              text={accountName}
+              pattern={highlightPattern}
+              extraTooltip={tooltipTitle}
+              minLength={5}
+            />
+          </Box>
+        )}
+        <AdaptiveTrimmer
+          idPrefix="account-address"
+          text={address}
+          strategy="middle"
+          tooltipOverride={tooltipTitle}
+          minLength={13}
+        />
+      </>
+    </WithTypographyAndLink>
+  )
+}
+
+const TrimmedAccountLink: FC<
+  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress'> & { tooltipTitle: ReactNode }
+> = ({ scope, address, labelOnly, tooltipTitle, showOnlyAddress }) => {
+  const {
+    metadata: accountMetadata,
+    // isError, // Use this to indicate that we have failed to load the name for this account
+  } = useAccountMetadata(scope, address)
+  const accountName = accountMetadata?.name // TODO: we should also use the description
+  const showAccountName = !showOnlyAddress && !!accountName
+  return (
+    <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
+      <MaybeWithTooltip title={tooltipTitle}>
+        {showAccountName ? (
+          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
+            {trimLongString(accountName, 12, 0)}
+          </Box>
+        ) : (
+          trimLongString(address, 6, 6)
+        )}
+      </MaybeWithTooltip>
+    </WithTypographyAndLink>
+  )
+}
+
+const DesktopAccountLink: FC<
+  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress' | 'highlightPattern'> & {
+    tooltipTitle: ReactNode
+  }
+> = ({ scope, address, labelOnly, showOnlyAddress, highlightPattern, tooltipTitle }) => {
+  const {
+    metadata: accountMetadata,
+    // isError, // Use this to indicate that we have failed to load the name for this account
+  } = useAccountMetadata(scope, address)
+  const accountName = accountMetadata?.name // TODO: we should also use the description
+  const showAccountName = !showOnlyAddress && !!accountName
+  return (
+    <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
+      <MaybeWithTooltip title={tooltipTitle}>
+        {showAccountName ? (
+          <Box
+            component="span"
+            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+          >
+            <AccountMetadataSourceIndicator source={accountMetadata!.source} />
+            <HighlightedText text={accountName} pattern={highlightPattern} /> ({address})
+          </Box>
+        ) : (
+          address
+        )}
+      </MaybeWithTooltip>
+    </WithTypographyAndLink>
+  )
+}
+
 export const AccountLink: FC<Props> = ({
   showOnlyAddress,
   scope,
@@ -130,18 +229,13 @@ export const AccountLink: FC<Props> = ({
     // In a table, we only ever want a short line
 
     return (
-      <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={tooltipTitle}>
-          {showAccountName ? (
-            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-              <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
-              {trimLongString(accountName, 12, 0)}
-            </Box>
-          ) : (
-            trimLongString(address, 6, 6)
-          )}
-        </MaybeWithTooltip>
-      </WithTypographyAndLink>
+      <TrimmedAccountLink
+        scope={scope}
+        address={address}
+        showOnlyAddress={showOnlyAddress}
+        labelOnly={labelOnly}
+        tooltipTitle={tooltipTitle}
+      />
     )
   }
 
@@ -150,53 +244,26 @@ export const AccountLink: FC<Props> = ({
     // We want one long line, with name and address.
 
     return (
-      <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
-        <MaybeWithTooltip title={tooltipTitle}>
-          {showAccountName ? (
-            <Box
-              component="span"
-              sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
-            >
-              <AccountMetadataSourceIndicator source={accountMetadata!.source} />
-              <HighlightedText text={accountName} pattern={highlightPattern} /> ({address})
-            </Box>
-          ) : (
-            address
-          )}
-        </MaybeWithTooltip>
-      </WithTypographyAndLink>
+      <DesktopAccountLink
+        scope={scope}
+        address={address}
+        showOnlyAddress={showOnlyAddress}
+        labelOnly={labelOnly}
+        highlightPattern={highlightPattern}
+        tooltipTitle={tooltipTitle}
+      />
     )
   }
 
   // We need to show the data in details mode on mobile.
-  // We want two lines, one for name (if available), one for address
-  // Both lines adaptively shortened to fill available space
   return (
-    <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
-      <>
-        {showAccountName && (
-          <Box
-            component="span"
-            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
-          >
-            <AccountMetadataSourceIndicator source={accountMetadata.source} />
-            <AdaptiveHighlightedText
-              idPrefix="account-name"
-              text={accountName}
-              pattern={highlightPattern}
-              extraTooltip={tooltipTitle}
-              minLength={5}
-            />
-          </Box>
-        )}
-        <AdaptiveTrimmer
-          idPrefix="account-address"
-          text={address}
-          strategy="middle"
-          tooltipOverride={tooltipTitle}
-          minLength={13}
-        />
-      </>
-    </WithTypographyAndLink>
+    <AdaptivelyTrimmedAccountLink
+      scope={scope}
+      address={address}
+      showOnlyAddress={showOnlyAddress}
+      labelOnly={labelOnly}
+      highlightPattern={highlightPattern}
+      tooltipTitle={tooltipTitle}
+    />
   )
 }
