@@ -4,6 +4,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { RoflAppPolicy } from '../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { AccountLink } from '../../components/Account/AccountLink'
+import { useRuntimeScope } from '../../hooks/useScopeParam'
 
 type RoflAllowedEndorsementFields =
   | 'any'
@@ -22,6 +24,7 @@ type EndorsementProps = {
 
 export const Endorsement: FC<EndorsementProps> = ({ endorsements }) => {
   const { t } = useTranslation()
+  const scope = useRuntimeScope()
 
   if (!endorsements || endorsements.length === 0) {
     return <>{t('common.missing')}</>
@@ -64,13 +67,15 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements }) => {
       case 'role_observer':
         return ''
       case 'entity':
+        // TODO: make this a link to consensus layer entity with the given public key
+        // (probably you need to derive an address from that public key)
         return <Typography variant="mono">{value}</Typography>
       case 'node':
-        return <Typography variant="mono">{value}</Typography>
+        return <AccountLink scope={scope} address={value} />
       case 'provider':
-        return <Typography variant="mono">{value}</Typography>
+        return <AccountLink scope={scope} address={value} />
       case 'provider_instance_admin':
-        return <Typography variant="mono">{value}</Typography>
+        return <AccountLink scope={scope} address={value} />
       case 'and':
         return (
           <Box sx={{ ml: 4 }}>
@@ -95,7 +100,14 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements }) => {
         const value = endorsement[key]
 
         return (
-          <Box key={index}>
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              gap: 3,
+              alignItems: 'center',
+            }}
+          >
             {getEndorsementLabel(key)}
             {getValue(key, value)}
           </Box>
