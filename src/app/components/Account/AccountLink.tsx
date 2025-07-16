@@ -60,6 +60,11 @@ interface Props {
   alwaysTrimOnTablet?: boolean
 
   /**
+   * Use adaptive trimming, ignoring the size
+   */
+  alwaysAdapt?: boolean
+
+  /**
    * What part of the name should be highlighted (if any)
    */
   highlightPattern?: HighlightPattern
@@ -184,6 +189,7 @@ export const AccountLink: FC<Props> = ({
   address,
   alwaysTrim,
   alwaysTrimOnTablet,
+  alwaysAdapt,
   highlightPattern,
   extraTooltip,
   labelOnly,
@@ -227,7 +233,6 @@ export const AccountLink: FC<Props> = ({
   // Are we in a situation when we should always trim?
   if (alwaysTrim || (alwaysTrimOnTablet && isTablet)) {
     // In a table, we only ever want a short line
-
     return (
       <TrimmedAccountLink
         scope={scope}
@@ -239,8 +244,8 @@ export const AccountLink: FC<Props> = ({
     )
   }
 
-  if (!isTablet) {
-    // Details in desktop mode.
+  if (!isTablet && !alwaysTrimOnTablet) {
+    // We are in desktop mode, and there is no need to do adaptive trimming
     // We want one long line, with name and address.
 
     return (
@@ -255,7 +260,8 @@ export const AccountLink: FC<Props> = ({
     )
   }
 
-  // We need to show the data in details mode on mobile.
+  // We need to use adaptive mode, either because we are on tablet or mobile,
+  // or because it has been explicitly requested
   return (
     <AdaptivelyTrimmedAccountLink
       scope={scope}
