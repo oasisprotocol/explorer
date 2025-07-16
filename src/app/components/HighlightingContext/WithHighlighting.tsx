@@ -25,7 +25,7 @@ export const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({
         alignItems: 'center',
         verticalAlign: 'middle',
         padding: '2px 4px',
-        margin: '-3px -5px',
+        margin: '-7px -5px -3px -5px',
         ...(isHighlighted
           ? {
               background: COLORS.warningLight,
