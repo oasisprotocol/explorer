@@ -15,6 +15,10 @@ import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { HighlightPattern } from '../HighlightedText'
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@mui/material/Link'
+import { RouteUtils } from '../../utils/route-utils'
+import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -43,6 +47,11 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
+
+  const transactionsLabel = account.stats.num_txns.toLocaleString()
+  const transactionsAnchor = account.entity
+    ? `${RouteUtils.getValidatorRoute(account.network, account.entity)}#${transactionsContainerId}`
+    : `${RouteUtils.getAccountRoute(account, account.address)}#${transactionsContainerId}`
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>
@@ -108,6 +117,16 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       <dt>{t('account.firstActivity')}</dt>
       <dd>
         <>{formattedFirstActivity || t('common.missing')}</>
+      </dd>
+      <dt>{t('common.transactions')}</dt>
+      <dd>
+        {account.stats.num_txns ? (
+          <Link component={RouterLink} to={transactionsAnchor!}>
+            {transactionsLabel}
+          </Link>
+        ) : (
+          transactionsLabel
+        )}
       </dd>
     </StyledDescriptionList>
   )
