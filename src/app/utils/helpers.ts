@@ -100,17 +100,19 @@ export function uniq<T>(input: T[] | undefined): T[] {
 export const isValidMnemonic = (candidate: string): boolean => validateMnemonic(candidate)
 
 export const getAccountSize = (value: bigint) => {
-  if (value >= 100_000_000_000_000_000n) {
+  if (value === 0n) {
+    return '-'
+  } else if (value >= 100_000_000_000_000_000n) {
     return 'XXL'
-  } else if (value >= 50_000_000_000_000_000n && value <= 99_999_999_000_000_000n) {
+  } else if (value >= 50_000_000_000_000_000n && value <= 99_999_999_999_999_999n) {
     return 'XL'
-  } else if (value >= 25_000_000_000_000_000n && value <= 49_999_999_000_000_000n) {
+  } else if (value >= 25_000_000_000_000_000n && value <= 49_999_999_999_999_999n) {
     return 'L'
-  } else if (value >= 1_000_000_000_000_000n && value <= 24_999_999_000_000_000n) {
+  } else if (value >= 1_000_000_000_000_000n && value <= 24_999_999_999_999_999n) {
     return 'M'
-  } else if (value >= 500_000_000_000_000n && value <= 999_999_000_000_000n) {
+  } else if (value >= 500_000_000_000_000n && value <= 999_999_999_999_999n) {
     return 'S'
-  } else if (value >= 100_000_000_000_000n && value <= 499_99_000_000_0009n) {
+  } else if (value >= 100_000_000_000_000n && value <= 499_999_999_999_999n) {
     return 'XS'
   } else {
     return 'XXS'
