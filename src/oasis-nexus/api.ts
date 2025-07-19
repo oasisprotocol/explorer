@@ -1718,6 +1718,9 @@ function transformRuntimeTransactionList(
         if (Array.isArray(tx.body?.id) && tx.body.id.length === 8) {
           tx.body.id = `0x${Buffer.from(tx.body.id).toString('hex')}`
         }
+        if (Array.isArray(tx.body?.offer) && tx.body.offer.length === 8) {
+          tx.body.offer = `0x${Buffer.from(tx.body.offer).toString('hex')}`
+        }
       }
       return {
         ...tx,
