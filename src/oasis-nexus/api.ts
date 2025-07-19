@@ -1709,6 +1709,9 @@ function transformRuntimeTransactionList(
         if (parsed.args?.deployment?.app_id) {
           parsed.args.deployment.app_id = oasis.address.toBech32('rofl', parsed.args.deployment.app_id)
         }
+        if (parsed.args?.deployment?.manifest_hash) {
+          parsed.args.deployment.manifest_hash = `0x${Buffer.from(parsed.args.deployment.manifest_hash).toString('hex')}`
+        }
         return parsed
       }
       if (tx.method?.startsWith('roflmarket')) {
