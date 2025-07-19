@@ -13,7 +13,8 @@ import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
-import { isUrlSafe } from '../../utils/url'
+import { isTwitterHandle, isUrlSafe } from '../../utils/url'
+import { XProfileWidget } from '../../components/XProfileWidget'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -60,11 +61,12 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               <GridRow label={t('rofl.author')}>{metadata['net.oasis.rofl.author']}</GridRow>
               <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
               <GridRow label={t('rofl.homePage')}>
-                {isUrlSafe(homepage) ? (
+                {isUrlSafe(homepage) && (
                   <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
                     {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
                   </StyledLink>
-                ) : undefined}
+                )}
+                {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
               </GridRow>
               <GridRow
                 label={t('rofl.repositoryUrl')}
