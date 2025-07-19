@@ -13,7 +13,9 @@ import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
-import { isUrlSafe } from '../../utils/url'
+import { isDiscordHandle, isTwitterHandle, isUrlSafe } from '../../utils/url'
+import { XProfileWidget } from '../../components/XProfileWidget'
+import { DiscordProfileWidget } from '../../components/DiscordProfileWidget'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -33,6 +35,10 @@ type MetaDataCardProps = {
 
 export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => {
   const { t } = useTranslation()
+
+  if (metadata) metadata['net.oasis.rofl.homepage'] = `@elmo`
+
+  const homepage = metadata?.['net.oasis.rofl.homepage']
 
   return (
     <Card sx={{ flex: 1 }}>
@@ -59,15 +65,13 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               <GridRow label={t('rofl.author')}>{metadata['net.oasis.rofl.author']}</GridRow>
               <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
               <GridRow label={t('rofl.homePage')}>
-                {isUrlSafe(metadata['net.oasis.rofl.homepage']) ? (
-                  <StyledLink
-                    href={metadata['net.oasis.rofl.homepage']}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {metadata['net.oasis.rofl.homepage']} <OpenInNewIcon sx={{ fontSize: 20 }} />
+                {isUrlSafe(homepage) && (
+                  <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
+                    {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
                   </StyledLink>
-                ) : undefined}
+                )}
+                {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
+                {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
               </GridRow>
               <GridRow
                 label={t('rofl.repositoryUrl')}
