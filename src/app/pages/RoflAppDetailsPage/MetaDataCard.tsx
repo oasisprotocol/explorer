@@ -35,6 +35,9 @@ type MetaDataCardProps = {
 
 export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => {
   const { t } = useTranslation()
+
+  if (metadata) metadata['net.oasis.rofl.homepage'] = `@elmo`
+
   const homepage = metadata?.['net.oasis.rofl.homepage']
 
   return (
