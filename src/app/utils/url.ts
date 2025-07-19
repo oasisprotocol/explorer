@@ -9,6 +9,11 @@ const twitterHandlePattern = /^@([a-zA-Z0-9_]{1,15})$/
  */
 export const isTwitterHandle = (value: string): boolean => twitterHandlePattern.test(value)
 
+/**
+ * Does this look like a valid Discord handle?
+ */
+export const isDiscordHandle = (value: string): boolean => value.startsWith('discord:')
+
 /** Blocks dangerous URLs that start with "javascript:". When we upgrade to React@19 that should block them too. */
 export const isUrlSafe = (url: string | undefined): boolean => {
   if (!url) {

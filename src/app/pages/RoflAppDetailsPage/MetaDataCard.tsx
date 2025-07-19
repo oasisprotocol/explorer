@@ -13,10 +13,10 @@ import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
-import { isUrlSafe } from '../../utils/url'
+import { isDiscordHandle, isTwitterHandle, isUrlSafe } from '../../utils/url'
 import { Email } from './Email'
-import { isTwitterHandle, isUrlSafe } from '../../utils/url'
 import { XProfileWidget } from '../../components/XProfileWidget'
+import { DiscordProfileWidget } from '../../components/DiscordProfileWidget'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -70,6 +70,7 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
                   </StyledLink>
                 )}
                 {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
+                {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
               </GridRow>
               <GridRow
                 label={t('rofl.repositoryUrl')}
