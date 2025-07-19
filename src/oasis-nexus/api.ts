@@ -1709,6 +1709,9 @@ function transformRuntimeTransactionList(
         if (parsed.args?.deployment?.app_id) {
           parsed.args.deployment.app_id = oasis.address.toBech32('rofl', parsed.args.deployment.app_id)
         }
+        if (parsed.args?.deployment?.manifest_hash) {
+          parsed.args.deployment.manifest_hash = `0x${Buffer.from(parsed.args.deployment.manifest_hash).toString('hex')}`
+        }
         return parsed
       }
       if (tx.method?.startsWith('roflmarket')) {
@@ -1717,6 +1720,9 @@ function transformRuntimeTransactionList(
         }
         if (Array.isArray(tx.body?.id) && tx.body.id.length === 8) {
           tx.body.id = `0x${Buffer.from(tx.body.id).toString('hex')}`
+        }
+        if (Array.isArray(tx.body?.offer) && tx.body.offer.length === 8) {
+          tx.body.offer = `0x${Buffer.from(tx.body.offer).toString('hex')}`
         }
       }
       return {
