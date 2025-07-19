@@ -3,11 +3,17 @@
 const validProtocols = ['http:', 'https:', 'ftp:', 'ipfs:', 'data:', 'mailto:']
 
 const twitterHandlePattern = /^@([a-zA-Z0-9_]{1,15})$/
+const discordHandlePattern = /^discord:[a-z0-9][a-z0-9_\.]{0,30}[a-z0-9]$/
 
 /**
  * Does this look like a valid Twitter (X) handle?
  */
 export const isTwitterHandle = (value: string): boolean => twitterHandlePattern.test(value)
+
+/**
+ * Does this look like a valid Discord handle?
+ */
+export const isDiscordHandle = (value: string): boolean => discordHandlePattern.test(value)
 
 /** Blocks dangerous URLs that start with "javascript:". When we upgrade to React@19 that should block them too. */
 export const isUrlSafe = (url: string | undefined): boolean => {
