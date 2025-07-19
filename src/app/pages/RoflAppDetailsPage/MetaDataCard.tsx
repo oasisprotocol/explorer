@@ -35,6 +35,7 @@ type MetaDataCardProps = {
 export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => {
   const { t } = useTranslation()
   const email = metadata?.['net.oasis.rofl.author']
+  const homepage = metadata?.['net.oasis.rofl.homepage']
 
   return (
     <Card sx={{ flex: 1 }}>
@@ -61,13 +62,9 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               <GridRow label={t('rofl.author')}>{email ? <Email email={email} /> : undefined}</GridRow>
               <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
               <GridRow label={t('rofl.homePage')}>
-                {isUrlSafe(metadata['net.oasis.rofl.homepage']) ? (
-                  <StyledLink
-                    href={metadata['net.oasis.rofl.homepage']}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {metadata['net.oasis.rofl.homepage']} <OpenInNewIcon sx={{ fontSize: 20 }} />
+                {isUrlSafe(homepage) ? (
+                  <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
+                    {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
                   </StyledLink>
                 ) : undefined}
               </GridRow>
