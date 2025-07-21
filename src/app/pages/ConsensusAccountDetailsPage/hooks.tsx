@@ -5,8 +5,8 @@ import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransac
 export type ConsensusAccountDetailsContext = {
   scope: ConsensusScope
   address: string
-  method: ConsensusTxMethodFilterOption
-  setMethod: (value: ConsensusTxMethodFilterOption) => void
+  txMethod: ConsensusTxMethodFilterOption
+  setTxMethod: (value: ConsensusTxMethodFilterOption) => void
 }
 
 export const useConsensusAccountDetailsProps = () => useOutletContext<ConsensusAccountDetailsContext>()

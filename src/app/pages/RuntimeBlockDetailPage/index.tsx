@@ -25,8 +25,8 @@ import { eventsContainerId, transactionsContainerId } from '../../utils/tabAncho
 export type RuntimeBlockDetailsContext = {
   scope: RuntimeScope
   blockHeight?: number
-  method: string
-  setMethod: (method: string) => void
+  txMethod: string
+  setTxMethod: (method: string) => void
 }
 
 export const useRuntimeBlockDetailsProps = () => useOutletContext<RuntimeBlockDetailsContext>()
@@ -46,8 +46,8 @@ export const RuntimeBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
-  const { method, setMethod } = useRuntimeTxMethodParam()
-  const context: RuntimeBlockDetailsContext = { scope, blockHeight, method, setMethod }
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
+  const context: RuntimeBlockDetailsContext = { scope, blockHeight, txMethod, setTxMethod }
 
   return (
     <PageLayout>

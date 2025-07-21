@@ -61,7 +61,7 @@ export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
-  const { method, setMethod } = useConsensusTxMethodParam()
+  const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.validatorName(searchQuery))
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
@@ -75,7 +75,7 @@ export const ValidatorDetailsPage: FC = () => {
   const accountQuery = useGetConsensusAccountsAddress(scope.network, address)
   const { isLoading: isAccountLoading, data: accountData } = accountQuery
   const account = accountData?.data
-  const context: ValidatorDetailsContext = { scope, address, method, setMethod }
+  const context: ValidatorDetailsContext = { scope, address, txMethod, setTxMethod }
   const isLoading = isValidatorLoading || isAccountLoading
 
   return (

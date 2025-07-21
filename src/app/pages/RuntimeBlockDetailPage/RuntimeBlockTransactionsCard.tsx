@@ -12,7 +12,7 @@ import { getRuntimeTransactionMethodFilteringParam } from '../../components/Runt
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
-const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, method }) => {
+const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, txMethod }) => {
   const txsPagination = useSearchParamsPagination('page')
   const txsOffset = (txsPagination.selectedPage - 1) * NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -20,7 +20,7 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, m
     block: blockHeight,
     limit: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     offset: txsOffset,
-    ...getRuntimeTransactionMethodFilteringParam(method),
+    ...getRuntimeTransactionMethodFilteringParam(txMethod),
   })
 
   const { isLoading, isFetched, data } = transactionsQuery
@@ -43,14 +43,14 @@ const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, m
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
-      filtered={method !== 'any'}
+      filtered={txMethod !== 'any'}
     />
   )
 }
 
 export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = props => {
   const { isMobile } = useScreenSize()
-  const { blockHeight, method, setMethod, scope } = props
+  const { blockHeight, txMethod, setTxMethod, scope } = props
 
   if (!blockHeight) {
     return null
@@ -67,13 +67,13 @@ export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = prop
           }}
         >
           {!isMobile && (
-            <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} />
+            <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
         </Box>
       }
     >
       {isMobile && (
-        <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} expand />
+        <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
       )}
       <TransactionList {...props} />
     </LinkableCardLayout>

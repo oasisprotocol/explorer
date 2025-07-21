@@ -27,8 +27,8 @@ export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
   address: string
   account?: RuntimeAccount
-  method: string
-  setMethod: (value: string) => void
+  txMethod: string
+  setTxMethod: (value: string) => void
 }
 
 export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
@@ -39,7 +39,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
-  const { method, setMethod } = useRuntimeTxMethodParam()
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, { enabled: isContract })
@@ -57,7 +57,13 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const isLoading = isAccountLoading || isTokenLoading
 
-  const context: RuntimeAccountDetailsContext = { scope, address, account, method, setMethod }
+  const context: RuntimeAccountDetailsContext = {
+    scope,
+    address,
+    account,
+    txMethod,
+    setTxMethod,
+  }
 
   return (
     <PageLayout>

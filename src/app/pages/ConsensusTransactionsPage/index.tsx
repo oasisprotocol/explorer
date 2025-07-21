@@ -26,7 +26,7 @@ export const ConsensusTransactionsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
-  const { method, setMethod } = useConsensusTxMethodParam()
+  const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useConsensusScope()
   const enablePolling = offset === 0
@@ -44,7 +44,7 @@ export const ConsensusTransactionsPage: FC = () => {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
       before: enablePolling ? undefined : beforeDate,
-      ...getConsensusTransactionMethodFilteringParam(method),
+      ...getConsensusTransactionMethodFilteringParam(txMethod),
     },
     {
       query: {
@@ -98,11 +98,13 @@ export const ConsensusTransactionsPage: FC = () => {
             }}
           >
             {t('transactions.latest')}
-            {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
+            {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
           </Box>
         }
         title2={
-          isMobile ? <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand /> : undefined
+          isMobile ? (
+            <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />
+          ) : undefined
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
         noPadding={tableView === TableLayout.Vertical}
@@ -121,7 +123,7 @@ export const ConsensusTransactionsPage: FC = () => {
               rowsPerPage: limit,
             }}
             verbose={false}
-            filtered={method !== 'any'}
+            filtered={txMethod !== 'any'}
           />
         )}
 

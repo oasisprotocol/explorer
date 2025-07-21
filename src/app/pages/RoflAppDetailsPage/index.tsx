@@ -50,10 +50,10 @@ export const RoflAppDetailsPage: FC = () => {
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)
-  const [method, setMethod] = useTypedSearchParam('method', 'any', {
+  const [txMethod, setTxMethod] = useTypedSearchParam('method', 'any', {
     deleteParams: ['page'],
   })
-  const context: RoflAppDetailsContext = { scope, id, method, setMethod }
+  const context: RoflAppDetailsContext = { scope, id, txMethod, setTxMethod }
   const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer, id)
   const roflApp = data?.data
 

@@ -30,7 +30,7 @@ export const RuntimeTransactionsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const pagination = useSearchParamsPagination('page')
-  const { method, setMethod } = useRuntimeTxMethodParam()
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
   const offset = (pagination.selectedPage - 1) * limit
   const scope = useRuntimeScope()
   const enablePolling = offset === 0
@@ -51,7 +51,7 @@ export const RuntimeTransactionsPage: FC = () => {
       limit: tableView === TableLayout.Vertical ? offset + limit : limit,
       offset: tableView === TableLayout.Vertical ? 0 : offset,
       before: enablePolling ? undefined : beforeDate,
-      ...getRuntimeTransactionMethodFilteringParam(method),
+      ...getRuntimeTransactionMethodFilteringParam(txMethod),
     },
     {
       query: {
@@ -107,13 +107,18 @@ export const RuntimeTransactionsPage: FC = () => {
           >
             {t('transactions.latest')}
             {!isMobile && (
-              <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} />
+              <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
             )}
           </Box>
         }
         title2={
           isMobile ? (
-            <RuntimeTransactionTypeFilter layer={scope.layer} value={method} setValue={setMethod} expand />
+            <RuntimeTransactionTypeFilter
+              layer={scope.layer}
+              value={txMethod}
+              setValue={setTxMethod}
+              expand
+            />
           ) : undefined
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
@@ -132,7 +137,7 @@ export const RuntimeTransactionsPage: FC = () => {
               isTotalCountClipped: data?.data.is_total_count_clipped,
               rowsPerPage: limit,
             }}
-            filtered={method !== 'any'}
+            filtered={txMethod !== 'any'}
           />
         )}
 

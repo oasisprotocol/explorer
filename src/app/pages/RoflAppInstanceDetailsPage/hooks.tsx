@@ -10,8 +10,8 @@ export type RoflAppInstanceDetailsContext = {
   scope: RuntimeScope
   id: string
   rak: string
-  method: string
-  setMethod: (value: string) => void
+  txMethod: string
+  setTxMethod: (value: string) => void
 }
 
 export const useRoflAppInstanceDetailsProps = () => useOutletContext<RoflAppInstanceDetailsContext>()
