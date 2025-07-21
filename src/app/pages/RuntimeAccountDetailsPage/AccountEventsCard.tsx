@@ -5,15 +5,25 @@ import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/Runtim
 import { useAccountEvents } from './hook'
 import { RuntimeAccountDetailsContext } from '.'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
+import Divider from '@mui/material/Divider'
 
-export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
+export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({
+  scope,
+  address,
+  eventType,
+  setEventType,
+}) => {
   const { isLoading, isError, events, pagination, totalCount, isTotalCountClipped } = useAccountEvents(
     scope,
     address,
+    eventType,
   )
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
+      <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+      <Divider variant="card" />
       <RuntimeEventsDetailedList
         scope={scope}
         events={events}
@@ -27,6 +37,7 @@ export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = ({ scope, add
           rowsPerPage: limit,
         }}
         showTxHash
+        filtered={eventType !== 'any'}
       />
     </LinkableCardLayout>
   )

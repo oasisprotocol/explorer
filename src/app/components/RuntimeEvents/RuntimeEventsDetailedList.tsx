@@ -16,11 +16,15 @@ export const RuntimeEventsDetailedList: FC<{
   isError: boolean
   pagination: false | TablePaginationProps
   showTxHash: boolean
-}> = ({ scope, events, isLoading, isError, pagination, showTxHash }) => {
+  filtered: boolean
+}> = ({ scope, events, isLoading, isError, pagination, showTxHash, filtered }) => {
   const { t } = useTranslation()
   return (
     <>
       {isError && <CardEmptyState label={t('event.cantLoadEvents')} />}
+      {!isError && filtered && (!pagination || pagination.selectedPage === 1) && !events?.length && (
+        <CardEmptyState label={t('tableSearch.noMatchingResults')} />
+      )}
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {events &&
         events.map((event, index) => (

@@ -420,6 +420,7 @@
     "totalSupply": "Total Supply",
     "totalSupplyValue": "{{ value, number }} {{ticker}}",
     "transferEventType": {
+      "erc20Transfer": "ERC-20 token transfer",
       "transfer": "Transfer",
       "approval": "Approval",
       "minting": "Minting",
@@ -541,6 +542,7 @@
   "event": {
     "cantLoadEvents": "Unfortunately we couldn't load the list of events. Please try again later.",
     "cantFindMatchingEvents": "We can't find any matching events.",
+    "filterByType": "Filter by type",
     "noEvents": "No events",
     "fields": {
       "emittingTransaction": "Transaction"

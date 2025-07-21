@@ -14,7 +14,11 @@ import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
-import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
+import {
+  RuntimeEventFilteringType,
+  useRuntimeEventTypeParam,
+  useRuntimeTxMethodParam,
+} from '../../hooks/useCommonParams'
 import {
   codeContainerId,
   eventsContainerId,
@@ -22,6 +26,7 @@ import {
   transfersContainerId,
 } from '../../utils/tabAnchors'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
@@ -29,6 +34,8 @@ export type RuntimeAccountDetailsContext = {
   account?: RuntimeAccount
   txMethod: string
   setTxMethod: (value: string) => void
+  eventType: RuntimeEventFilteringType
+  setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }
 
 export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
@@ -40,6 +47,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
   const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
+  const { eventType, setEventType } = useRuntimeEventTypeParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, { enabled: isContract })
@@ -63,6 +71,8 @@ export const RuntimeAccountDetailsPage: FC = () => {
     account,
     txMethod,
     setTxMethod,
+    eventType,
+    setEventType,
   }
 
   return (

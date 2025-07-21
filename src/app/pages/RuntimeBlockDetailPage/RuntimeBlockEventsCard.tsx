@@ -8,8 +8,11 @@ import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/Runtim
 import { EmptyState } from '../../components/EmptyState'
 import { RuntimeBlockDetailsContext } from '.'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { getRuntimeEventTypeFilteringParam } from '../../hooks/useCommonParams'
+import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
+import Divider from '@mui/material/Divider'
 
-const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
+const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, eventType }) => {
   const { t } = useTranslation()
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -18,6 +21,7 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
     // TODO: search for tx_hash = null
     limit,
     offset,
+    ...getRuntimeEventTypeFilteringParam(eventType),
   })
 
   const { isLoading, isError, data } = eventsQuery
@@ -44,17 +48,21 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
         rowsPerPage: limit,
       }}
       showTxHash
+      filtered={eventType !== 'any'}
     />
   )
 }
 
 export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = props => {
-  if (!props.blockHeight) {
+  const { scope, blockHeight, eventType, setEventType } = props
+  if (!blockHeight) {
     return null
   }
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
+      <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+      <Divider variant={'card'} />
       <EventsList {...props} />
     </LinkableCardLayout>
   )
