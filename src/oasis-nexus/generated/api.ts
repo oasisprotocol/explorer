@@ -1444,6 +1444,7 @@ In practice, Nexus currently expects only the following methods:
   - "roflmarket.InstanceTopUp"
   - "roflmarket.InstanceCancel"
   - "roflmarket.InstanceExecuteCmds"
+  - "roflmarket.InstanceChangeAdmin"
 May be null if the transaction was malformed or encrypted.
  */
   method?: string;
