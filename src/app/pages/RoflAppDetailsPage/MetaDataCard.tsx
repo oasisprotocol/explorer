@@ -64,13 +64,17 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               <GridRow label={t('rofl.author')}>{email ? <Email email={email} /> : undefined}</GridRow>
               <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
               <GridRow label={t('rofl.homePage')}>
-                {isUrlSafe(homepage) && (
-                  <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
-                    {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
-                  </StyledLink>
+                {!homepage ? undefined : (
+                  <>
+                    {isUrlSafe(homepage) && (
+                      <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
+                        {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
+                      </StyledLink>
+                    )}
+                    {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
+                    {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
+                  </>
                 )}
-                {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
-                {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
               </GridRow>
               <GridRow
                 label={t('rofl.repositoryUrl')}
