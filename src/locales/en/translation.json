@@ -512,7 +512,8 @@
         "machineCreate": "ROFL Market Machine Create",
         "machineTopUp": "ROFL Market Machine Top Up",
         "machineCancel": "ROFL Market Machine Cancel",
-        "machineExecuteCmds": "ROFL Market Machine Execute Commands"
+        "machineExecuteCmds": "ROFL Market Machine Execute Commands",
+        "machineChangeAdmin": "ROFL Market Machine Change Admin"
       },
       "vault": {
         "authorizeAction": "Vault: Authorize Action",
@@ -745,7 +746,7 @@
     "repositoryUrl": "Repository URL",
     "roflAppId": "ROFL App ID",
     "roflName": "ROFL name",
-    "searchByNameOrKeyword":  "Search by name or keyword",
+    "searchByNameOrKeyword": "Search by name or keyword",
     "secretLength": "[{{value}} bytes]",
     "secrets": "Secrets",
     "secretsTooltip": "These secrets are end-to-end encrypted and can only be read by the ROFL app.",

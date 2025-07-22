@@ -46,6 +46,7 @@ export const isRoflTransaction = (method: string | undefined): boolean => {
     'roflmarket.InstanceTopUp',
     'roflmarket.InstanceCancel',
     'roflmarket.InstanceExecuteCmds',
+    'roflmarket.InstanceChangeAdmin',
   ]
   return method ? roflMethods.includes(method) : false
 }
