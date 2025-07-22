@@ -64,6 +64,8 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
       return t('transactions.method.roflmarket.machineCancel')
     case 'roflmarket.InstanceExecuteCmds':
       return t('transactions.method.roflmarket.machineExecuteCmds')
+    case 'roflmarket.InstanceChangeAdmin':
+      return t('transactions.method.roflmarket.machineChangeAdmin')
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
       return method || t('common.unknown')
@@ -90,6 +92,7 @@ const knownRuntimeTxMethods = [
   'roflmarket.InstanceTopUp',
   'roflmarket.InstanceCancel',
   'roflmarket.InstanceExecuteCmds',
+  'roflmarket.InstanceChangeAdmin',
   '',
 ] as const
 type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
@@ -143,6 +146,7 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBa
  *   - "roflmarket.InstanceTopUp"
  *   - "roflmarket.InstanceCancel"
  *   - "roflmarket.InstanceExecuteCmds"
+ *   - "roflmarket.InstanceChangeAdmin"
  */
 const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, truncate?: boolean) => {
   const props = {
@@ -189,6 +193,8 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case 'roflmarket.InstanceCancel':
       return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
     case 'roflmarket.InstanceExecuteCmds':
+      return <MethodIcon icon={<DeveloperBoard />} {...props} />
+    case 'roflmarket.InstanceChangeAdmin':
       return <MethodIcon icon={<DeveloperBoard />} {...props} />
     case '':
       // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
