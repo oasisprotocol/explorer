@@ -6,13 +6,17 @@ import { useTheme } from '@mui/material/styles'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
+import { useTranslation } from 'react-i18next'
 
 export const Header: FC = () => {
   const theme = useTheme()
+  const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const { isDesktop } = useScreenSize()
   const scope = useScopeParam()
   const withScopeSelector = !!scope && isScopeSelectorNeeded(scope)
   const scrollTrigger = useScrollTrigger({
@@ -51,8 +55,22 @@ export const Header: FC = () => {
               <Grid lg={6} xs={8}>
                 <NetworkSelector layer={scope.layer} network={scope.network} />
               </Grid>
-              <Grid lg={3} xs={0} />
             </>
+          )}
+          {isDesktop && (
+            <Grid md={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                component="a"
+                href="https://rose.oasis.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="secondary"
+                variant="outlined"
+                size="large"
+              >
+                {t('common.visitRoseApp')}
+              </Button>
+            </Grid>
           )}
         </Grid>
       </Box>
