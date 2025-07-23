@@ -546,6 +546,29 @@
       "emittingTransaction": "Transaction"
     }
   },
+  "consensusEvent": {
+    "governanceProposalExecuted": "Governance Proposal Executed",
+    "governanceProposalFinalized": "Governance Proposal Finalized",
+    "governanceProposalSubmitted": "Governance Proposal Submitted",
+    "governanceVote": "Governance Vote Submitted",
+    "registryEntity": "Entity Registered",
+    "registryNodeUnfrozen": "Node Unfrozen",
+    "registryNode": "Node Registered",
+    "registryRuntime": "Runtime Registered",
+    "registryRuntimeSuspended": "Runtime Suspended",
+    "roothashExecution_discrepancy": "Discrepancy Detected",
+    "roothashExecutorCommitted": "Runtime Executor Committed",
+    "roothashFinalized":  "Runtime Round Finalized",
+    "roothashMessage": "Runtime Message Emitted",
+    "roothashInMsgProcessed": "Incoming Runtime Message Processed",
+    "stakingAllowanceChange": "Allowance Changed",
+    "stakingBurn": "Burn",
+    "stakingEscrowAdd": "Stake Added",
+    "stakingEscrowDebondingStart": "Started to debond stake",
+    "stakingEscrowReclaim": "Finished reclaiming stake",
+    "stakingEscrowTake": "Stake Slashed",
+    "stakingTransfer": "Transfer"
+  },
   "runtimeEvent": {
     "accountsburn": "Tokens burnt",
     "accountsmint": "Tokens minted",
