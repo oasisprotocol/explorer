@@ -12,7 +12,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeScope } from '../../../types/searchScope'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
@@ -80,7 +80,7 @@ export const LatestRuntimeTransactions: FC<{
           >
             {t('transactions.latest')}
             {shouldFilter && !isMobile && (
-              <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} />
+              <RuntimeTransactionMethodFilter layer={layer} value={method} setValue={setMethod} />
             )}
           </Box>
         }
@@ -95,7 +95,7 @@ export const LatestRuntimeTransactions: FC<{
         }
       />
       {shouldFilter && isMobile && (
-        <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} expand />
+        <RuntimeTransactionMethodFilter layer={layer} value={method} setValue={setMethod} expand />
       )}
       <CardContent>
         <ErrorBoundary light>

@@ -5,7 +5,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { RuntimeTransactions } from '../../components/Transactions'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { RoflAppInstanceDetailsContext, useRoflAppInstanceRakTransactions } from './hooks'
 
 export const RoflAppInstanceRakTransactionsCard: FC<RoflAppInstanceDetailsContext> = context => {
@@ -23,13 +23,13 @@ export const RoflAppInstanceRakTransactionsCard: FC<RoflAppInstanceDetailsContex
           }}
         >
           {!isMobile && (
-            <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
+            <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
         </Box>
       }
     >
       {isMobile && (
-        <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
+        <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
       )}
       <RoflAppInstanceRakTransactions {...context} />
     </LinkableCardLayout>

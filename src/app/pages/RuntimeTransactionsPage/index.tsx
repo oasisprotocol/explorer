@@ -19,7 +19,7 @@ import { VerticalList } from '../../components/VerticalList'
 import { getFiatCurrencyForScope } from '../../../config'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import Box from '@mui/material/Box'
 
@@ -107,13 +107,13 @@ export const RuntimeTransactionsPage: FC = () => {
           >
             {t('transactions.latest')}
             {!isMobile && (
-              <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
+              <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
             )}
           </Box>
         }
         title2={
           isMobile ? (
-            <RuntimeTransactionTypeFilter
+            <RuntimeTransactionMethodFilter
               layer={scope.layer}
               value={txMethod}
               setValue={setTxMethod}

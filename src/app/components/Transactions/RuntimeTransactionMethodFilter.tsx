@@ -20,12 +20,12 @@ const FilterLabel: FC = () => {
         marginRight: 4,
       }}
     >
-      {t('transactions.filterByType')}
+      {t('transactions.filterByMethod')}
     </Typography>
   )
 }
 
-export const RuntimeTransactionTypeFilter: FC<{
+export const RuntimeTransactionMethodFilter: FC<{
   layer: Layer
   value: RuntimeTxMethodFilteringType
   setValue: ParamSetterFunction<RuntimeTxMethodFilteringType>
