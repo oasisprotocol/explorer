@@ -1,9 +1,9 @@
 import { useOutletContext } from 'react-router-dom'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
 
 export type ValidatorDetailsContext = {
-  scope: SearchScope
+  scope: ConsensusScope
   address: string
   method: ConsensusTxMethodFilterOption
   setMethod: (method: ConsensusTxMethodFilterOption) => void

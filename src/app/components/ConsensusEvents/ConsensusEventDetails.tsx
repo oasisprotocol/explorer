@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConsensusEvent } from '../../../oasis-nexus/api'
-import { SearchScope } from '../../../types/searchScope'
+import { ConsensusScope } from '../../../types/searchScope'
 import { TransactionLink } from '../Transactions/TransactionLink'
 
 const ConsensusEventDetailsContent: FC<{
@@ -18,7 +18,7 @@ const ConsensusEventDetailsContent: FC<{
 }
 
 export const ConsensusEventDetails: FC<{
-  scope: SearchScope
+  scope: ConsensusScope
   event: ConsensusEvent
   showTxHash: boolean
 }> = ({ scope, event, showTxHash }) => {

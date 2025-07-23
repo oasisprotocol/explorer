@@ -6,7 +6,7 @@ import { useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { AddressLoaderData } from '../../utils/route-utils'
-import { useRequiredScopeParam } from '../../hooks/useScopeParam'
+import { useConsensusScope } from '../../hooks/useScopeParam'
 import { ConsensusAccountDetailsCard } from './ConsensusAccountDetailsCard'
 import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
@@ -19,7 +19,7 @@ import { getHighlightPattern, textSearch } from '../../components/Search/search-
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const { network } = scope
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
