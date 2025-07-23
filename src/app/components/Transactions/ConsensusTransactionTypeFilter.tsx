@@ -1,8 +1,13 @@
 import { FC } from 'react'
-import { getConsensusTxMethodOptions, ConsensusTxMethodFilterOption } from '../ConsensusTransactionMethod'
+import {
+  getConsensusTxMethodOptions,
+  ConsensusTxMethodFilterOption,
+  ConsensusTransactionTypeFilterOption,
+} from '../ConsensusTransactionMethod'
 import { useTranslation } from 'react-i18next'
 import { Select } from '../Select'
 import Typography from '@mui/material/Typography'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 const FilterLabel: FC = () => {
   const { t } = useTranslation()
@@ -24,12 +29,12 @@ const FilterLabel: FC = () => {
 
 export const ConsensusTransactionTypeFilter: FC<{
   value: ConsensusTxMethodFilterOption
-  setValue: (value: ConsensusTxMethodFilterOption) => void
+  setValue: ParamSetterFunction<ConsensusTxMethodFilterOption>
   expand?: boolean
 }> = ({ value, setValue, expand }) => {
   const { t } = useTranslation()
   return (
-    <Select
+    <Select<ConsensusTransactionTypeFilterOption>
       className={expand ? 'expand' : undefined}
       light={true}
       label={<FilterLabel />}

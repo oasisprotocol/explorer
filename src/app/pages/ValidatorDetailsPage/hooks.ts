@@ -8,7 +8,7 @@ export type ValidatorDetailsContext = {
   scope: ConsensusScope
   address: string
   txMethod: ConsensusTxMethodFilterOption
-  setTxMethod: (method: ConsensusTxMethodFilterOption) => void
+  setTxMethod: ParamSetterFunction<ConsensusTxMethodFilterOption>
   eventType: ConsensusEventFilteringType
   setEventType: ParamSetterFunction<ConsensusEventFilteringType>
 }
