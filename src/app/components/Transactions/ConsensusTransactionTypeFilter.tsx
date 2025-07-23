@@ -17,7 +17,7 @@ const FilterLabel: FC = () => {
         marginRight: 4,
       }}
     >
-      {t('transactions.filterByType')}
+      {t('transactions.filterByMethod')}
     </Typography>
   )
 }
@@ -35,7 +35,7 @@ export const ConsensusTransactionTypeFilter: FC<{
       label={<FilterLabel />}
       options={[{ value: 'any', label: 'Any' }, ...getConsensusTxMethodOptions(t)]}
       value={value}
-      handleChange={setValue as any}
+      handleChange={setValue}
     />
   )
 }

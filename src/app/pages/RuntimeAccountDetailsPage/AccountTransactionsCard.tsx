@@ -5,7 +5,7 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useAccountTransactions } from './hook'
 import { RuntimeAccountDetailsContext } from './index'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
@@ -25,13 +25,13 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context
           }}
         >
           {!isMobile && (
-            <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
+            <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
         </Box>
       }
     >
       {isMobile && (
-        <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
+        <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
       )}
       <AccountTransactions {...context} />
     </LinkableCardLayout>
