@@ -16,6 +16,7 @@ import { RuntimeTransactionTypeFilter } from '../../components/Transactions/Runt
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
@@ -57,7 +58,7 @@ const LatestRuntimeTransactionsContent: FC<{
 export const LatestRuntimeTransactions: FC<{
   scope: RuntimeScope
   method: string
-  setMethod: (value: string) => void
+  setMethod: ParamSetterFunction
 }> = ({ scope, method, setMethod }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()

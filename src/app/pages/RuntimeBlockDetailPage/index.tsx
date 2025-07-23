@@ -31,7 +31,7 @@ export type RuntimeBlockDetailsContext = {
   scope: RuntimeScope
   blockHeight?: number
   txMethod: string
-  setTxMethod: (method: string) => void
+  setTxMethod: ParamSetterFunction
   eventType: RuntimeEventFilteringType
   setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }

@@ -21,7 +21,10 @@ export type UrlSettingOptions = {
   deleteParams?: string[]
 }
 
-export type ParamSetterFunction<T> = (value: T | null | undefined, options?: UrlSettingOptions) => void
+export type ParamSetterFunction<T = string> = (
+  value: T | null | undefined,
+  options?: UrlSettingOptions,
+) => void
 
 export function useTypedSearchParam<T = string>(
   paramName: string,

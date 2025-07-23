@@ -33,7 +33,7 @@ export type RuntimeAccountDetailsContext = {
   address: string
   account?: RuntimeAccount
   txMethod: string
-  setTxMethod: (value: string) => void
+  setTxMethod: ParamSetterFunction
   eventType: RuntimeEventFilteringType
   setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }
