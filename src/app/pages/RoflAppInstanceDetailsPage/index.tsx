@@ -16,7 +16,7 @@ import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { RouterTabs } from '../../components/RouterTabs'
 import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { AccountLink } from '../../components/Account/AccountLink'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
@@ -25,9 +25,7 @@ export const RoflAppInstanceDetailsPage: FC = () => {
   const id = useParams().id!
   const rak = useParams().rak!
   const txLink = useHref('')
-  const [txMethod, setTxMethod] = useTypedSearchParam('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
   const context: RoflAppInstanceDetailsContext = { scope, id, rak, txMethod, setTxMethod }
   const instancesQuery = useGetRuntimeRoflAppsIdInstancesRak(scope.network, scope.layer, id, rak)
   const { isLoading, isFetched, data } = instancesQuery

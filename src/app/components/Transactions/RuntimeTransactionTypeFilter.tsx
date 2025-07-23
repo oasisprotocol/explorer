@@ -1,9 +1,11 @@
 import { FC } from 'react'
-import { getRuntimeTxMethodOptions } from '../RuntimeTransactionMethod'
+import { getRuntimeTxMethodOptions, RuntimeTxMethodFilterOption } from '../RuntimeTransactionMethod'
 import { useTranslation } from 'react-i18next'
-import { Select, SelectOptionBase } from '../Select'
+import { Select } from '../Select'
 import Typography from '@mui/material/Typography'
 import { Layer } from '../../../oasis-nexus/api'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
+import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
 
 const FilterLabel: FC = () => {
   const { t } = useTranslation()
@@ -25,13 +27,13 @@ const FilterLabel: FC = () => {
 
 export const RuntimeTransactionTypeFilter: FC<{
   layer: Layer
-  value: string
-  setValue: (value: string) => void
+  value: RuntimeTxMethodFilteringType
+  setValue: ParamSetterFunction<RuntimeTxMethodFilteringType>
   expand?: boolean
-  customOptions?: SelectOptionBase[]
+  customOptions?: RuntimeTxMethodFilterOption[]
 }> = ({ layer, value, setValue, expand, customOptions }) => {
   const { t } = useTranslation()
-  const defaultOptions = [{ value: 'any', label: 'Any' }]
+  const defaultOptions: RuntimeTxMethodFilterOption[] = [{ value: 'any', label: 'Any' }]
   const options = customOptions
     ? [...defaultOptions, ...customOptions]
     : [...defaultOptions, ...getRuntimeTxMethodOptions(t, layer)]
@@ -43,7 +45,7 @@ export const RuntimeTransactionTypeFilter: FC<{
       label={<FilterLabel />}
       options={options}
       value={value}
-      handleChange={setValue as any}
+      handleChange={setValue}
     />
   )
 }

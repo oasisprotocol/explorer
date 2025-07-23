@@ -6,6 +6,7 @@ import {
   RuntimeEventType,
   ConsensusEventType,
 } from '../../oasis-nexus/api'
+import { KnownRuntimeTxMethod } from '../components/RuntimeTransactionMethod'
 
 export const TX_METHOD_QUERY_ARG_NAME = 'tx_method'
 
@@ -20,10 +21,16 @@ export const useConsensusTxMethodParam = () => {
   return { txMethod, setTxMethod }
 }
 
+export type RuntimeTxMethodFilteringType = KnownRuntimeTxMethod | 'any'
+
 export const useRuntimeTxMethodParam = () => {
-  const [txMethod, setTxMethod] = useTypedSearchParam(TX_METHOD_QUERY_ARG_NAME, 'any', {
-    deleteParams: ['page', 'date'],
-  })
+  const [txMethod, setTxMethod] = useTypedSearchParam<RuntimeTxMethodFilteringType>(
+    TX_METHOD_QUERY_ARG_NAME,
+    'any',
+    {
+      deleteParams: ['page', 'date'],
+    },
+  )
   return { txMethod, setTxMethod }
 }
 

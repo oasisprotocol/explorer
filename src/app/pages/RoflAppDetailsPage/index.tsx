@@ -12,7 +12,7 @@ import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } f
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
-import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
+import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { COLORS } from '../../../styles/theme/colors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
@@ -50,9 +50,7 @@ export const RoflAppDetailsPage: FC = () => {
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)
-  const [txMethod, setTxMethod] = useTypedSearchParam('method', 'any', {
-    deleteParams: ['page'],
-  })
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
   const context: RoflAppDetailsContext = { scope, id, txMethod, setTxMethod }
   const { isFetched, isLoading, data } = useGetRuntimeRoflAppsId(scope.network, scope.layer, id)
   const roflApp = data?.data

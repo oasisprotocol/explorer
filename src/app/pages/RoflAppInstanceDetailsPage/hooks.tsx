@@ -5,13 +5,15 @@ import { RuntimeScope } from '../../../types/searchScope'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit, paraTimesConfig } from '../../../config'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
+import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
 
 export type RoflAppInstanceDetailsContext = {
   scope: RuntimeScope
   id: string
   rak: string
-  txMethod: string
-  setTxMethod: (value: string) => void
+  txMethod: RuntimeTxMethodFilteringType
+  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
 }
 
 export const useRoflAppInstanceDetailsProps = () => useOutletContext<RoflAppInstanceDetailsContext>()
