@@ -48,6 +48,7 @@ import { yamlDump } from '../../utils/yamlDump'
 import { useRuntimeEventTypeParam } from '../../hooks/useCommonParams'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
 import Divider from '@mui/material/Divider'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -107,7 +108,9 @@ export const RuntimeTransactionDetailPage: FC = () => {
                 <Divider variant={'card'} />
               </>
             )}
-            <RuntimeTransactionEvents transaction={transaction} eventType={eventType} />
+            <ErrorBoundary light>
+              <RuntimeTransactionEvents transaction={transaction} eventType={eventType} />
+            </ErrorBoundary>
           </SubPageCard>
         </LinkableDiv>
       )}
