@@ -21,18 +21,18 @@ export type UrlSettingOptions = {
   deleteParams?: string[]
 }
 
-type SetterFunction<T> = (value: T, options?: UrlSettingOptions) => void
+export type ParamSetterFunction<T> = (value: T | null | undefined, options?: UrlSettingOptions) => void
 
 export function useTypedSearchParam<T = string>(
   paramName: string,
   defaultValue: T,
   defaultSetterOptions: UrlSettingOptions = {},
-): [T, SetterFunction<T>] {
+): [T, ParamSetterFunction<T>] {
   const [searchParams, setSearchParams] = useSearchParams()
   const value = (searchParams.get(paramName) as T) ?? defaultValue
-  const setValue = (newValue: T, options: UrlSettingOptions = defaultSetterOptions) => {
+  const setValue: ParamSetterFunction<T> = (newValue, options = defaultSetterOptions) => {
     const { replace, preventScrollReset = true, deleteParams = [] } = options
-    if (newValue === defaultValue) {
+    if (newValue === undefined || newValue === null || newValue === defaultValue) {
       searchParams.delete(paramName)
     } else {
       searchParams.set(paramName, newValue as string)
