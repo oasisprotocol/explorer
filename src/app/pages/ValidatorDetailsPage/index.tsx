@@ -26,7 +26,7 @@ import { ValidatorImage } from '../../components/Validators/ValidatorImage'
 import { ValidatorCommission } from '../../components/Validators/ValidatorCommission'
 import { ValidatorCumulativeVoting } from '../../components/Validators/ValidatorCumulativeVoting'
 import { ValidatorTitleCard } from './ValidatorTitleCard'
-import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
+import { useConsensusScope } from 'app/hooks/useScopeParam'
 import { AddressLoaderData } from 'app/utils/route-utils'
 import { ValidatorSnapshot } from './ValidatorSnapshot'
 import { SignedBlocks } from './SignedBlocks'
@@ -60,7 +60,7 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const scope = useRequiredScopeParam()
+  const scope = useConsensusScope()
   const { method, setMethod } = useConsensusTxMethodParam()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.validatorName(searchQuery))
