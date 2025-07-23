@@ -1,35 +1,24 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Transaction, useGetConsensusEvents } from '../../../oasis-nexus/api'
-import { AppErrors } from '../../../types/errors'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { ConsensusEventsList } from '../ConsensusEvents/ConsensusEventsList'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
-import { EmptyState } from '../EmptyState'
+import { ConsensusEventFilteringType, getConsensusEventTypeFilteringParam } from '../../hooks/useCommonParams'
 
 export const ConsensusTransactionEvents: FC<{
   transaction: Transaction
-}> = ({ transaction }) => {
-  const { t } = useTranslation()
+  eventType: ConsensusEventFilteringType
+}> = ({ transaction, eventType }) => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
   const eventsQuery = useGetConsensusEvents(transaction.network, {
     tx_hash: transaction.hash,
+    ...getConsensusEventTypeFilteringParam(eventType),
     limit,
     offset,
   })
-  const { isFetched, isLoading, data, isError } = eventsQuery
+  const { isLoading, data, isError } = eventsQuery
   const events = data?.data.events
-  if (isFetched && pagination.selectedPage > 1 && !events?.length) {
-    throw AppErrors.PageDoesNotExist
-  }
-
-  if (!events?.length && isFetched) {
-    return (
-      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
-    )
-  }
-
   return (
     <ConsensusEventsList
       scope={transaction}
@@ -44,6 +33,7 @@ export const ConsensusTransactionEvents: FC<{
         rowsPerPage: limit,
       }}
       showTxHash={false}
+      filtered={eventType !== 'any'}
     />
   )
 }

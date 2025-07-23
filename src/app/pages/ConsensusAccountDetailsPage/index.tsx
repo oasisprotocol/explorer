@@ -12,7 +12,7 @@ import { RouterTabs } from '../../components/RouterTabs'
 import { BalanceDistribution } from './BalanceDistribution'
 import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
-import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
+import { useConsensusEventTypeParam, useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
@@ -24,12 +24,20 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
   const { txMethod, setTxMethod } = useConsensusTxMethodParam()
+  const { eventType, setEventType } = useConsensusEventTypeParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
   const transactionsLink = useHref('')
   const eventsLink = useHref(`events#${eventsContainerId}`)
-  const context: ConsensusAccountDetailsContext = { scope, address, txMethod, setTxMethod }
+  const context: ConsensusAccountDetailsContext = {
+    scope,
+    address,
+    txMethod,
+    setTxMethod,
+    eventType,
+    setEventType,
+  }
 
   return (
     <PageLayout>

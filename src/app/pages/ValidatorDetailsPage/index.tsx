@@ -38,7 +38,7 @@ import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { PercentageValue } from '../../components/PercentageValue'
 import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
-import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
+import { useConsensusEventTypeParam, useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -62,6 +62,7 @@ export const ValidatorDetailsPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
   const { txMethod, setTxMethod } = useConsensusTxMethodParam()
+  const { eventType, setEventType } = useConsensusEventTypeParam()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.validatorName(searchQuery))
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
@@ -75,7 +76,7 @@ export const ValidatorDetailsPage: FC = () => {
   const accountQuery = useGetConsensusAccountsAddress(scope.network, address)
   const { isLoading: isAccountLoading, data: accountData } = accountQuery
   const account = accountData?.data
-  const context: ValidatorDetailsContext = { scope, address, txMethod, setTxMethod }
+  const context: ValidatorDetailsContext = { scope, address, txMethod, setTxMethod, eventType, setEventType }
   const isLoading = isValidatorLoading || isAccountLoading
 
   return (

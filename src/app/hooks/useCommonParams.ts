@@ -1,6 +1,11 @@
 import { useTypedSearchParam } from './useTypedSearchParam'
 import { ConsensusTxMethodFilterOption } from '../components/ConsensusTransactionMethod'
-import { GetRuntimeEventsParams, RuntimeEventType } from '../../oasis-nexus/api'
+import {
+  GetRuntimeEventsParams,
+  GetConsensusEventsParams,
+  RuntimeEventType,
+  ConsensusEventType,
+} from '../../oasis-nexus/api'
 
 export const TX_METHOD_QUERY_ARG_NAME = 'tx_method'
 
@@ -48,6 +53,30 @@ export const getRuntimeEventTypeFilteringParam = (
         type: RuntimeEventType.evmlog,
         evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
       }
+    default:
+      return { type }
+  }
+}
+
+export type ConsensusEventFilteringType = ConsensusEventType | 'any'
+
+export const useConsensusEventTypeParam = () => {
+  const [eventType, setEventType] = useTypedSearchParam<ConsensusEventFilteringType>(
+    EVENT_TYPE_QUERY_ARG_NAME,
+    'any',
+    {
+      deleteParams: ['page', 'date'],
+    },
+  )
+  return { eventType, setEventType }
+}
+
+export const getConsensusEventTypeFilteringParam = (
+  type: ConsensusEventFilteringType,
+): Partial<GetConsensusEventsParams> => {
+  switch (type) {
+    case 'any':
+      return {}
     default:
       return { type }
   }
