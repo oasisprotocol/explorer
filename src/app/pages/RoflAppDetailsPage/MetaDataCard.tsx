@@ -14,6 +14,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
 import { isUrlSafe } from '../../utils/url'
+import { Email } from './Email'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -56,7 +57,9 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
             <Grid container spacing={4}>
               <GridRow label={t('rofl.roflName')}>{metadata['net.oasis.rofl.name']}</GridRow>
               <GridRow label={t('rofl.description')}>{metadata['net.oasis.rofl.description']}</GridRow>
-              <GridRow label={t('rofl.author')}>{metadata['net.oasis.rofl.author']}</GridRow>
+              <GridRow label={t('rofl.author')}>
+                <Email email={metadata['net.oasis.rofl.author']} />
+              </GridRow>
               <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
               <GridRow label={t('rofl.homePage')}>
                 {isUrlSafe(metadata['net.oasis.rofl.homepage']) ? (
