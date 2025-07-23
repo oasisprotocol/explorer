@@ -18,7 +18,6 @@ import Tooltip from '@mui/material/Tooltip'
 import { tooltipDelay } from '../../../styles/theme'
 import { ConsensusTxMethod, GetConsensusTransactionsParams } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
-import { SelectOptionBase } from '../Select'
 import { exhaustedTypeWarning } from '../../../types/errors'
 
 type MethodIconProps = {
@@ -293,9 +292,14 @@ const knownConsensusTxMethods = [
 const typeTestExhaustiveArray =
   undefined as unknown as ConsensusTxMethod satisfies (typeof knownConsensusTxMethods)[number]
 
-export const getConsensusTxMethodOptions = (t: TFunction): SelectOptionBase[] =>
+export type ConsensusTransactionTypeFilterOption = {
+  value: ConsensusTxMethodFilterOption
+  label: string
+}
+
+export const getConsensusTxMethodOptions = (t: TFunction) =>
   knownConsensusTxMethods.map(
-    (method): SelectOptionBase => ({
+    (method): ConsensusTransactionTypeFilterOption => ({
       value: method,
       label: getConsensusTransactionLabel(t, method),
     }),
