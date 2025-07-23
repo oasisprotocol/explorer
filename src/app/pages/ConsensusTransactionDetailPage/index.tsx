@@ -27,12 +27,16 @@ import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import Box from '@mui/material/Box'
+import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
+import Divider from '@mui/material/Divider'
+import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
 })
 
 export const ConsensusTransactionDetailPage: FC = () => {
+  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const scope = useRequiredScopeParam()
   const hash = useParams().hash!
@@ -41,6 +45,7 @@ export const ConsensusTransactionDetailPage: FC = () => {
   const { wantedTransaction: transaction, warningMultipleTransactionsSameHash } = useWantedTransaction(
     data?.data,
   )
+  const { eventType, setEventType } = useConsensusEventTypeParam()
   if (!transaction && !isLoading) {
     throw AppErrors.NotFoundTxHash
   }
@@ -57,8 +62,21 @@ export const ConsensusTransactionDetailPage: FC = () => {
         />
       </SubPageCard>
       {transaction && (
-        <SubPageCard title={t('common.events')}>
-          <ConsensusTransactionEvents transaction={transaction} />
+        <SubPageCard
+          title={t('common.events')}
+          action={
+            !isMobile && (
+              <ConsensusEventTypeFilter layer={transaction.layer} value={eventType} setValue={setEventType} />
+            )
+          }
+        >
+          {isMobile && (
+            <>
+              <ConsensusEventTypeFilter layer={transaction.layer} value={eventType} setValue={setEventType} />
+              <Divider variant={'card'} />
+            </>
+          )}
+          <ConsensusTransactionEvents transaction={transaction} eventType={eventType} />
         </SubPageCard>
       )}
     </PageLayout>
