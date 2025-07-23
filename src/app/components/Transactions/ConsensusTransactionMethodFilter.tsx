@@ -27,7 +27,7 @@ const FilterLabel: FC = () => {
   )
 }
 
-export const ConsensusTransactionTypeFilter: FC<{
+export const ConsensusTransactionMethodFilter: FC<{
   value: ConsensusTxMethodFilterOption
   setValue: ParamSetterFunction<ConsensusTxMethodFilterOption>
   expand?: boolean

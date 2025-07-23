@@ -17,7 +17,7 @@ import { VerticalList } from '../../components/VerticalList'
 import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
-import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
 
@@ -98,12 +98,12 @@ export const ConsensusTransactionsPage: FC = () => {
             }}
           >
             {t('transactions.latest')}
-            {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
+            {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
           </Box>
         }
         title2={
           isMobile ? (
-            <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />
+            <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />
           ) : undefined
         }
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
