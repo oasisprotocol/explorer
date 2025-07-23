@@ -18,7 +18,7 @@ import {
   ConsensusTxMethodFilterOption,
 } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
-import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
@@ -77,7 +77,7 @@ export const LatestConsensusTransactions: FC<{
           >
             {t('transactions.latest')}
             {shouldFilter && !isMobile && (
-              <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />
+              <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />
             )}
           </Box>
         }
@@ -88,7 +88,7 @@ export const LatestConsensusTransactions: FC<{
         }
       />
       {shouldFilter && isMobile && (
-        <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />
+        <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />
       )}
       <CardContent>
         <ErrorBoundary light={true}>
