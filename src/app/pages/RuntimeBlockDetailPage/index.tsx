@@ -19,14 +19,21 @@ import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
 import { RuntimeScope } from 'types/searchScope'
-import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
+import {
+  RuntimeEventFilteringType,
+  useRuntimeEventTypeParam,
+  useRuntimeTxMethodParam,
+} from '../../hooks/useCommonParams'
 import { eventsContainerId, transactionsContainerId } from '../../utils/tabAnchors'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeBlockDetailsContext = {
   scope: RuntimeScope
   blockHeight?: number
-  method: string
-  setMethod: (method: string) => void
+  txMethod: string
+  setTxMethod: (method: string) => void
+  eventType: RuntimeEventFilteringType
+  setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }
 
 export const useRuntimeBlockDetailsProps = () => useOutletContext<RuntimeBlockDetailsContext>()
@@ -46,8 +53,16 @@ export const RuntimeBlockDetailPage: FC = () => {
     throw AppErrors.NotFoundBlockHeight
   }
   const block = data?.data
-  const { method, setMethod } = useRuntimeTxMethodParam()
-  const context: RuntimeBlockDetailsContext = { scope, blockHeight, method, setMethod }
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
+  const { eventType, setEventType } = useRuntimeEventTypeParam()
+  const context: RuntimeBlockDetailsContext = {
+    scope,
+    blockHeight,
+    txMethod,
+    setTxMethod,
+    eventType,
+    setEventType,
+  }
 
   return (
     <PageLayout>

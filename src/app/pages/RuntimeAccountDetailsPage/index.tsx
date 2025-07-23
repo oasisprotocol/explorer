@@ -14,7 +14,11 @@ import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
-import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
+import {
+  RuntimeEventFilteringType,
+  useRuntimeEventTypeParam,
+  useRuntimeTxMethodParam,
+} from '../../hooks/useCommonParams'
 import {
   codeContainerId,
   eventsContainerId,
@@ -22,13 +26,16 @@ import {
   transfersContainerId,
 } from '../../utils/tabAnchors'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
   address: string
   account?: RuntimeAccount
-  method: string
-  setMethod: (value: string) => void
+  txMethod: string
+  setTxMethod: (value: string) => void
+  eventType: RuntimeEventFilteringType
+  setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }
 
 export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
@@ -39,7 +46,8 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
-  const { method, setMethod } = useRuntimeTxMethodParam()
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
+  const { eventType, setEventType } = useRuntimeEventTypeParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
   const isContract = !!account?.evm_contract
   const { token, isLoading: isTokenLoading } = useTokenInfo(scope, address, { enabled: isContract })
@@ -57,7 +65,15 @@ export const RuntimeAccountDetailsPage: FC = () => {
 
   const isLoading = isAccountLoading || isTokenLoading
 
-  const context: RuntimeAccountDetailsContext = { scope, address, account, method, setMethod }
+  const context: RuntimeAccountDetailsContext = {
+    scope,
+    address,
+    account,
+    txMethod,
+    setTxMethod,
+    eventType,
+    setEventType,
+  }
 
   return (
     <PageLayout>

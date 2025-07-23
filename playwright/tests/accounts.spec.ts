@@ -119,10 +119,12 @@ async function setup(page: Page) {
 
 test.describe('Account details page', () => {
   test('does not crash when rendering new event types', async ({ page }) => {
+    // We don't care about options in the runtime event type filter
+    const excludeListOptions = page.locator(':not(.MuiTypography-select)')
     await setup(page)
     await expect(page.getByText('Unknown error')).not.toBeVisible()
-    await expect(page.getByText('Delegate to consensus')).toBeVisible()
-    await expect(page.getByText('Start to undelegate')).toBeVisible()
-    await expect(page.getByText('Undelegate finished')).toBeVisible()
+    await expect(page.getByText('Delegate to consensus').and(excludeListOptions)).toBeVisible()
+    await expect(page.getByText('Start to undelegate').and(excludeListOptions)).toBeVisible()
+    await expect(page.getByText('Undelegate finished').and(excludeListOptions)).toBeVisible()
   })
 })

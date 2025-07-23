@@ -21,13 +21,13 @@ export const ParatimeDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useRuntimeScope()
   const isLocal = isLocalnet(scope.network)
-  const { method, setMethod } = useRuntimeTxMethodParam()
+  const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
 
   return (
     <PageLayout>
       {!isLocal && <ParaTimeSnapshot scope={scope} />}
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <LatestRuntimeTransactions scope={scope} method={method} setMethod={setMethod} />
+      <LatestRuntimeTransactions scope={scope} method={txMethod} setMethod={setTxMethod} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
           <LearningMaterials scope={scope} />

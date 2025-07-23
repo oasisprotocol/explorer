@@ -55,7 +55,7 @@ const TransactionList: FC<{
 }
 
 export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
-  const { method, setMethod } = useConsensusTxMethodParam()
+  const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const { isMobile } = useScreenSize()
 
   if (!blockHeight) {
@@ -72,12 +72,12 @@ export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = 
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
+          {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
         </Box>
       }
     >
-      {isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand />}
-      <TransactionList scope={scope} blockHeight={blockHeight} method={method} />
+      {isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />}
+      <TransactionList scope={scope} blockHeight={blockHeight} method={txMethod} />
     </LinkableCardLayout>
   )
 }

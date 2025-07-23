@@ -45,12 +45,18 @@ import { Link as RouterLink } from 'react-router-dom'
 import { RouteUtils } from '../../utils/route-utils'
 import Tooltip from '@mui/material/Tooltip'
 import { yamlDump } from '../../utils/yamlDump'
+import { useRuntimeEventTypeParam } from '../../hooks/useCommonParams'
+import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
+import Divider from '@mui/material/Divider'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
 
   const scope = useRuntimeScope()
   const hash = useParams().hash!
+  const { eventType, setEventType } = useRuntimeEventTypeParam()
 
   const { isLoading, data } = useGetRuntimeTransactionsTxHash(
     scope.network,
@@ -88,8 +94,23 @@ export const RuntimeTransactionDetailPage: FC = () => {
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
         <LinkableDiv id={transactionEventsContainerId}>
-          <SubPageCard title={t('common.events')}>
-            <RuntimeTransactionEvents transaction={transaction} />
+          <SubPageCard
+            title={t('common.events')}
+            action={
+              !isMobile && (
+                <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+              )
+            }
+          >
+            {isMobile && (
+              <>
+                <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+                <Divider variant={'card'} />
+              </>
+            )}
+            <ErrorBoundary light>
+              <RuntimeTransactionEvents transaction={transaction} eventType={eventType} />
+            </ErrorBoundary>
           </SubPageCard>
         </LinkableDiv>
       )}

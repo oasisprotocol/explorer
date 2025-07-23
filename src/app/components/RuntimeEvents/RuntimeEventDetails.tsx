@@ -39,7 +39,7 @@ import { fromBaseUnits } from '../../utils/number-utils'
 import { RoflAppLink } from '../Rofl/RoflAppLink'
 import { RoflAppInstanceLink } from '../Rofl/RoflAppInstanceLink'
 
-const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | undefined) => {
+export const getRuntimeEventMethodLabel = (t: TFunction, method: RuntimeEventType | undefined) => {
   switch (method) {
     case RuntimeEventType.accountstransfer:
       return t('runtimeEvent.accountstransfer')

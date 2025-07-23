@@ -8,7 +8,7 @@ import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/search
 import { COLORS } from '../../../styles/theme/colors'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RouteUtils } from '../../utils/route-utils'
-import { METHOD_QUERY_ARG_NAME } from '../../hooks/useCommonParams'
+import { TX_METHOD_QUERY_ARG_NAME } from '../../hooks/useCommonParams'
 
 const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ scope, currentRound }) => {
   const { t } = useTranslation()
@@ -19,7 +19,7 @@ const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ sco
       <Box>
         <PaginationItem
           component={RouterLink}
-          to={RouteUtils.getBlockRoute(scope, currentRound - 1, searchParams, [METHOD_QUERY_ARG_NAME])}
+          to={RouteUtils.getBlockRoute(scope, currentRound - 1, searchParams, [TX_METHOD_QUERY_ARG_NAME])}
           type="previous"
           disabled={disabled}
           sx={{
@@ -48,7 +48,7 @@ const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound:
       <Box>
         <PaginationItem
           component={RouterLink}
-          to={RouteUtils.getBlockRoute(scope, currentRound + 1, searchParams, [METHOD_QUERY_ARG_NAME])}
+          to={RouteUtils.getBlockRoute(scope, currentRound + 1, searchParams, [TX_METHOD_QUERY_ARG_NAME])}
           type="next"
           disabled={disabled}
           sx={{ background: COLORS.grayMediumLight }}

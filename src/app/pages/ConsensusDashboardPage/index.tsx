@@ -23,7 +23,7 @@ export const ConsensusDashboardPage: FC = () => {
   const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
   const isLocal = isLocalnet(scope.network)
-  const { method, setMethod } = useConsensusTxMethodParam()
+  const { txMethod, setTxMethod } = useConsensusTxMethodParam()
 
   return (
     <PageLayout>
@@ -41,7 +41,7 @@ export const ConsensusDashboardPage: FC = () => {
       <ValidatorsCard scope={scope} />
       {!isLocal && <ParaTimesCard scope={scope} />}
       <AccountsCard scope={scope} />
-      <LatestConsensusTransactions scope={scope} method={method} setMethod={setMethod} />
+      <LatestConsensusTransactions scope={scope} method={txMethod} setMethod={setTxMethod} />
       {!isLocal && (
         <>
           <NetworkProposalsCard scope={scope} />

@@ -12,7 +12,7 @@ import { RoflAppDetailsContext, useRoflAppUpdates } from './hooks'
 
 export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
   const { t } = useTranslation()
-  const { method, setMethod, scope } = context
+  const { txMethod, setTxMethod, scope } = context
   const { isMobile } = useScreenSize()
   const customOptions = getRuntimeRoflUpdatesMethodOptions(t)
 
@@ -29,8 +29,8 @@ export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
           {!isMobile && (
             <RuntimeTransactionTypeFilter
               layer={scope.layer}
-              value={method}
-              setValue={setMethod}
+              value={txMethod}
+              setValue={setTxMethod}
               customOptions={customOptions}
             />
           )}
@@ -40,8 +40,8 @@ export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
       {isMobile && (
         <RuntimeTransactionTypeFilter
           layer={scope.layer}
-          value={method}
-          setValue={setMethod}
+          value={txMethod}
+          setValue={setTxMethod}
           expand
           customOptions={customOptions}
         />
@@ -51,11 +51,11 @@ export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
   )
 }
 
-const RoflAppUpdates: FC<RoflAppDetailsContext> = ({ scope, id, method }) => {
+const RoflAppUpdates: FC<RoflAppDetailsContext> = ({ scope, id, txMethod }) => {
   const { isLoading, transactions, pagination, totalCount, isTotalCountClipped } = useRoflAppUpdates(
     scope,
     id,
-    method,
+    txMethod,
   )
   return (
     <RuntimeTransactions
@@ -69,7 +69,7 @@ const RoflAppUpdates: FC<RoflAppDetailsContext> = ({ scope, id, method }) => {
         isTotalCountClipped,
         rowsPerPage: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
       }}
-      filtered={method !== 'any'}
+      filtered={txMethod !== 'any'}
     />
   )
 }

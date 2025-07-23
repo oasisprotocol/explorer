@@ -12,7 +12,7 @@ import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext> = context => {
   const { isMobile } = useScreenSize()
-  const { method, setMethod } = context
+  const { txMethod, setTxMethod } = context
 
   return (
     <LinkableCardLayout
@@ -24,17 +24,17 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />}
+          {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
         </Box>
       }
     >
-      {isMobile && <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand />}
+      {isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />}
       <ConsensusAccountTransactions {...context} />
     </LinkableCardLayout>
   )
 }
 
-const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scope, address, method }) => {
+const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scope, address, txMethod }) => {
   const { network } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -42,7 +42,7 @@ const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scop
     limit,
     offset,
     rel: address,
-    method: method === 'any' ? undefined : method,
+    method: txMethod === 'any' ? undefined : txMethod,
   })
   const { isLoading, data } = transactionsQuery
   const transactions = data?.data.transactions
@@ -60,7 +60,7 @@ const ConsensusAccountTransactions: FC<ConsensusAccountDetailsContext> = ({ scop
         isTotalCountClipped: data?.data.is_total_count_clipped,
         rowsPerPage: limit,
       }}
-      filtered={method !== 'any'}
+      filtered={txMethod !== 'any'}
     />
   )
 }

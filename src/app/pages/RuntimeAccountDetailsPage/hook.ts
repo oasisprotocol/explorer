@@ -8,6 +8,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { RuntimeScope } from '../../../types/searchScope'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeEventTypeFilteringParam, RuntimeEventFilteringType } from '../../hooks/useCommonParams'
 
 export const useAccount = (scope: RuntimeScope, address: string) => {
   const { network, layer } = scope
@@ -53,7 +54,7 @@ export const useAccountTransactions = (scope: RuntimeScope, address: string, met
   }
 }
 
-export const useAccountEvents = (scope: RuntimeScope, address: string) => {
+export const useAccountEvents = (scope: RuntimeScope, address: string, type: RuntimeEventFilteringType) => {
   const { network, layer } = scope
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -61,7 +62,7 @@ export const useAccountEvents = (scope: RuntimeScope, address: string) => {
     limit,
     offset: offset,
     rel: address,
-    // TODO: implement filtering for non-transactional events
+    ...getRuntimeEventTypeFilteringParam(type),
   })
   const { isFetched, isLoading, isError, data } = query
   const events = data?.data.events

@@ -5,8 +5,8 @@ import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransac
 export type ValidatorDetailsContext = {
   scope: ConsensusScope
   address: string
-  method: ConsensusTxMethodFilterOption
-  setMethod: (method: ConsensusTxMethodFilterOption) => void
+  txMethod: ConsensusTxMethodFilterOption
+  setTxMethod: (method: ConsensusTxMethodFilterOption) => void
 }
 
 export const useValidatorDetailsProps = () => useOutletContext<ValidatorDetailsContext>()

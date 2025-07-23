@@ -23,13 +23,13 @@ export const ConsensusAccountDetailsPage: FC = () => {
   const { network } = scope
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
-  const { method, setMethod } = useConsensusTxMethodParam()
+  const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
   const { isError, isLoading, data } = accountQuery
   const account = data?.data
   const transactionsLink = useHref('')
   const eventsLink = useHref(`events#${eventsContainerId}`)
-  const context: ConsensusAccountDetailsContext = { scope, address, method, setMethod }
+  const context: ConsensusAccountDetailsContext = { scope, address, txMethod, setTxMethod }
 
   return (
     <PageLayout>

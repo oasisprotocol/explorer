@@ -2,12 +2,13 @@ import { FC } from 'react'
 import { RuntimeTransaction, useGetRuntimeEvents } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
-import { AppErrors } from '../../../types/errors'
 import { RuntimeEventsDetailedList } from '../RuntimeEvents/RuntimeEventsDetailedList'
+import { getRuntimeEventTypeFilteringParam, RuntimeEventFilteringType } from '../../hooks/useCommonParams'
 
 export const RuntimeTransactionEvents: FC<{
   transaction: RuntimeTransaction
-}> = ({ transaction }) => {
+  eventType: RuntimeEventFilteringType
+}> = ({ transaction, eventType }) => {
   const { network, layer } = transaction
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
@@ -15,12 +16,10 @@ export const RuntimeTransactionEvents: FC<{
     tx_hash: transaction.hash,
     limit,
     offset,
+    ...getRuntimeEventTypeFilteringParam(eventType),
   })
-  const { isFetched, isLoading, data, isError } = eventsQuery
+  const { isLoading, data, isError } = eventsQuery
   const events = data?.data.events
-  if (isFetched && pagination.selectedPage > 1 && !events?.length) {
-    throw AppErrors.PageDoesNotExist
-  }
 
   return (
     <RuntimeEventsDetailedList
@@ -36,6 +35,7 @@ export const RuntimeTransactionEvents: FC<{
         rowsPerPage: limit,
       }}
       showTxHash={false}
+      filtered={eventType !== 'any'}
     />
   )
 }

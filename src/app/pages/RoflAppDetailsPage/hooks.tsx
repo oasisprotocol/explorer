@@ -12,8 +12,8 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 export type RoflAppDetailsContext = {
   scope: RuntimeScope
   id: string
-  method: string
-  setMethod: (value: string) => void
+  txMethod: string
+  setTxMethod: (value: string) => void
 }
 
 export const useRoflAppDetailsProps = () => useOutletContext<RoflAppDetailsContext>()

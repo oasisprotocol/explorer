@@ -1,16 +1,17 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useGetRuntimeEvents } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { RuntimeEventsDetailedList } from '../../components/RuntimeEvents/RuntimeEventsDetailedList'
-import { EmptyState } from '../../components/EmptyState'
 import { RuntimeBlockDetailsContext } from '.'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { getRuntimeEventTypeFilteringParam } from '../../hooks/useCommonParams'
+import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
+import Divider from '@mui/material/Divider'
+import { ErrorBoundary } from '../../components/ErrorBoundary'
 
-const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
-  const { t } = useTranslation()
+const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, eventType }) => {
   const pagination = useSearchParamsPagination('page')
   const offset = (pagination.selectedPage - 1) * limit
   const eventsQuery = useGetRuntimeEvents(scope.network, scope.layer, {
@@ -18,17 +19,11 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
     // TODO: search for tx_hash = null
     limit,
     offset,
+    ...getRuntimeEventTypeFilteringParam(eventType),
   })
 
   const { isLoading, isError, data } = eventsQuery
-
   const events = data?.data.events
-
-  if (!events?.length && !isLoading) {
-    return (
-      <EmptyState description={t('event.cantFindMatchingEvents')} title={t('event.noEvents')} light={true} />
-    )
-  }
 
   return (
     <RuntimeEventsDetailedList
@@ -44,18 +39,24 @@ const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight }) => {
         rowsPerPage: limit,
       }}
       showTxHash
+      filtered={eventType !== 'any'}
     />
   )
 }
 
 export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = props => {
-  if (!props.blockHeight) {
+  const { scope, blockHeight, eventType, setEventType } = props
+  if (!blockHeight) {
     return null
   }
 
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
-      <EventsList {...props} />
+      <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+      <Divider variant={'card'} />
+      <ErrorBoundary light>
+        <EventsList {...props} />
+      </ErrorBoundary>
     </LinkableCardLayout>
   )
 }
