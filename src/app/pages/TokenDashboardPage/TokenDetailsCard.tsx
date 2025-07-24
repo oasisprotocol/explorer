@@ -119,18 +119,23 @@ export const TokenDetailsCard: FC<{
                 t('common.not_defined')
               )}
             </dd>
-            <dt>{t('tokens.holders')}</dt>
-            <dd>
-              <Link
-                component={RouterLink}
-                to={`${RouteUtils.getTokenHoldersRoute(
-                  scope,
-                  token.eth_contract_addr,
-                )}#${holdersContainerId}`}
-              >
-                {t('tokens.holdersValue', { value: token?.num_holders })}
-              </Link>
-            </dd>
+
+            {!!token.num_holders && (
+              <>
+                <dt>{t('tokens.holders')}</dt>
+                <dd>
+                  <Link
+                    component={RouterLink}
+                    to={`${RouteUtils.getTokenHoldersRoute(
+                      scope,
+                      token.eth_contract_addr,
+                    )}#${holdersContainerId}`}
+                  >
+                    {t('tokens.holdersValue', { value: token.num_holders })}
+                  </Link>
+                </dd>
+              </>
+            )}
 
             {!!token.num_transfers && (
               <>

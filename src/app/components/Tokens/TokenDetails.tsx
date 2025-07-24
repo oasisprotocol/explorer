@@ -78,7 +78,9 @@ export const TokenDetails: FC<{
       </dd>
 
       <dt>{t(isMobile ? 'tokens.holders' : 'tokens.holdersCount')}</dt>
-      <dd>{token.num_holders.toLocaleString()}</dd>
+      <dd>
+        {typeof token.num_holders === 'number' ? token.num_holders.toLocaleString() : t('common.missing')}
+      </dd>
 
       <dt>{t('tokens.totalSupply')}</dt>
       <dd>

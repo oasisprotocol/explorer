@@ -17,7 +17,13 @@ export const TokenTotalTransactionsCard: FC<{ scope: RuntimeScope; address: stri
       {isLoading ? (
         <Skeleton variant="text" />
       ) : (
-        isFetched && <>{t('common.valuePair', { value: token?.num_transfers })}</>
+        isFetched && (
+          <>
+            {typeof token?.num_transfers === 'number'
+              ? t('common.valuePair', { value: token.num_transfers })
+              : t('common.missing')}
+          </>
+        )
       )}
     </SnapshotTextCard>
   )
