@@ -1197,9 +1197,12 @@ DEPRECATED: This field will be removed in the future in favor of verification_le
   /** Name of the token, as provided by token contract's `name()` method. */
   name?: string;
   /** The number of addresses that have a nonzero balance of this token.
+May be omited if the number of holders cannot be known (e.g. private ERC20 tokens such as BitUSD).
  */
-  num_holders: number;
+  num_holders?: number;
   /** The total number of transfers of this token.
+
+May be omitted if the number of transfers cannot be known (e.g. private ERC20 tokens such as BitUSD).
  */
   num_transfers?: number;
   /** Information about a swap contract between this token and a
