@@ -148,7 +148,8 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           key: 'holdersCount',
-          content: token.num_holders.toLocaleString(),
+          content:
+            typeof token.num_holders === 'number' ? token.num_holders.toLocaleString() : t('common.missing'),
           align: TableCellAlign.Right,
         },
         {

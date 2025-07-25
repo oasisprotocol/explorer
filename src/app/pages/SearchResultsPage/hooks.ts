@@ -431,7 +431,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
   const tokens = queries.tokens.results
     .map(l => l.evm_tokens)
     .flat()
-    .sort((t1, t2) => t2.num_holders - t1.num_holders)
+    .sort((t1, t2) => (t2.num_holders ?? 0) - (t1.num_holders ?? 0))
   const alreadyAToken = new Set(tokens.map(t => t.network + t.layer + t.contract_addr))
   const accounts = [
     ...(queries.oasisConsensusAccount.results || []),
