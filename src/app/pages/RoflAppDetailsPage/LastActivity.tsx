@@ -10,6 +10,7 @@ import { useScreenSize } from '../../hooks/useScreensize'
 
 const StyledBox = styled(Box)(() => ({
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
   gap: 5,
 }))
