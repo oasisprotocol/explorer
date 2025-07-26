@@ -7,7 +7,7 @@ import { RuntimeTransactions } from '../../components/Transactions'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeBlockDetailsContext } from '.'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
@@ -67,13 +67,13 @@ export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = prop
           }}
         >
           {!isMobile && (
-            <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
+            <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
         </Box>
       }
     >
       {isMobile && (
-        <RuntimeTransactionTypeFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
+        <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} expand />
       )}
       <TransactionList {...props} />
     </LinkableCardLayout>

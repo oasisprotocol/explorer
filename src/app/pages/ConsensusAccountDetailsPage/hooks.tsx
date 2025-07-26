@@ -8,7 +8,7 @@ export type ConsensusAccountDetailsContext = {
   scope: ConsensusScope
   address: string
   txMethod: ConsensusTxMethodFilterOption
-  setTxMethod: (value: ConsensusTxMethodFilterOption) => void
+  setTxMethod: ParamSetterFunction<ConsensusTxMethodFilterOption>
   eventType: ConsensusEventFilteringType
   setEventType: ParamSetterFunction<ConsensusEventFilteringType>
 }

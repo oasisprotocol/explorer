@@ -41,7 +41,7 @@ export const ConsensusDashboardPage: FC = () => {
       <ValidatorsCard scope={scope} />
       {!isLocal && <ParaTimesCard scope={scope} />}
       <AccountsCard scope={scope} />
-      <LatestConsensusTransactions scope={scope} method={txMethod} setMethod={setTxMethod} />
+      <LatestConsensusTransactions scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
       {!isLocal && (
         <>
           <NetworkProposalsCard scope={scope} />

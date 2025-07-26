@@ -449,7 +449,7 @@
       "publicKey": "Public Key",
       "resultNonce": "Result Nonce"
     },
-    "filterByType": "Filter by type",
+    "filterByMethod": "Filter by method",
     "latest": "Latest Transactions",
     "method": {
       "stakingBurn": "Burn",

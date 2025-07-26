@@ -8,7 +8,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { ConsensusBlockDetailsContext } from '.'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
-import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
 import {
   getConsensusTransactionMethodFilteringParam,
@@ -72,11 +72,11 @@ export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = 
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
+          {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
         </Box>
       }
     >
-      {isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />}
+      {isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />}
       <TransactionList scope={scope} blockHeight={blockHeight} method={txMethod} />
     </LinkableCardLayout>
   )
