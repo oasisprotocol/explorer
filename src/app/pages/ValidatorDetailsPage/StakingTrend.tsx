@@ -41,7 +41,7 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
             strokeWidth={3}
             dataKey="active_balance"
             data={filteredHistory}
-            margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
+            margin={{ top: isMobile ? 0 : 16, bottom: 16, left: 24 }}
             tickMargin={16}
             withLabels
             maximumFractionDigits={2}
