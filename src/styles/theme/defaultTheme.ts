@@ -426,6 +426,9 @@ export const defaultTheme = createTheme({
     },
     MuiCardHeader: {
       styleOverrides: {
+        content: {
+          display: 'inline-flex',
+        },
         root: ({ theme }) => ({
           color: COLORS.brandExtraDark,
           margin: 0,

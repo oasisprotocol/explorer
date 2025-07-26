@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
+import CheckIcon from '@mui/icons-material/Check'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -22,6 +23,7 @@ export const FilterButtons = <T extends string>({ options, onSelect, value }: Fi
             color="secondary"
             label={
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {selected && <CheckIcon />}
                 <Typography component="span" sx={{ fontSize: 16 }}>
                   {option.label}
                 </Typography>
