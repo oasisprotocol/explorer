@@ -16,6 +16,11 @@ import DocsIcon from '@mui/icons-material/MenuBook'
 import HomeIcon from '@mui/icons-material/Cottage'
 import { COLORS } from '../../../styles/theme/colors'
 import { socialMedia } from '../../utils/externalLinks'
+import { styled } from '@mui/material/styles'
+
+const StyledImage = styled('img')({
+  height: '40px',
+})
 
 type SocialLinkProps = {
   label: string
@@ -43,7 +48,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, imgSrc, img })
     >
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
         <>
-          {imgSrc && <img src={imgSrc} alt={label} height={40} />}
+          {imgSrc && <StyledImage src={imgSrc} alt={label} />}
           {img}
         </>
       </Box>
