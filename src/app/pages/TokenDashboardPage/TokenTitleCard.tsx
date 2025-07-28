@@ -31,6 +31,7 @@ export const TokenTitleCard: FC<{
                 verificationLevel={token.verification_level}
                 hideLink
               />
+              &nbsp;&nbsp;&nbsp;
               <AccountLink
                 scope={token}
                 address={token.eth_contract_addr || token.contract_addr}
