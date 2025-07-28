@@ -71,7 +71,8 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
                 verificationLevel={token.verification_level}
                 hideLink
               />
-              <AccountLink scope={scope} address={displayAddress!} alwaysTrim />
+              &nbsp;&nbsp;&nbsp;
+              <AccountLink scope={scope} address={displayAddress!} alwaysTrim showOnlyAddress />
               <CopyToClipboard value={displayAddress!} />
             </Box>
           </Box>
