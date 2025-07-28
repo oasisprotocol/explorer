@@ -732,7 +732,7 @@
     "endorsementLabels": {
       "any": "Any node can endorse the enclave",
       "entity": "Node from entity <Address />",
-      "node": "Node <address />",
+      "node": "Node <Address />",
       "role_compute": "Node has the <i>compute</i> role for the current runtime",
       "role_observer": "Node has the <i>observer</i> role for the current runtime",
       "provider": "Node from provider <Address />",

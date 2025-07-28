@@ -113,7 +113,13 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
               t={t}
               i18nKey="rofl.endorsementLabels.node"
               components={{
-                Address: <AccountLink scope={scope} address={value} alwaysAdapt />,
+                Address: (
+                  <AccountLink
+                    scope={scope}
+                    address={getOasisAddressFromBase64PublicKey(value)}
+                    alwaysAdapt
+                  />
+                ),
               }}
             />
           </StyledBox>
