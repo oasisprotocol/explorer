@@ -12,7 +12,7 @@ import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { RuntimeScope } from '../../../types/searchScope'
 import { Snapshot, StyledGrid } from 'app/components/Snapshots/Snapshot'
-import { getFaucetLink } from '../../utils/faucet-links'
+import { getFaucetInfo } from '../../utils/faucet-links'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
@@ -23,7 +23,7 @@ export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const tokens = getTokensForScope(scope)
   const mainToken = tokens[0]
   const mainTicker = mainToken.ticker
-  const faucetLink = getFaucetLink(scope.network, scope.layer, mainTicker)
+  const faucetInfo = getFaucetInfo(t, scope.network, scope.layer, mainTicker)
   const handleDurationSelectedChange = (duration: ChartDuration | null) => {
     if (!duration) {
       return
@@ -55,7 +55,7 @@ export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         </StyledGrid>
         <StyledGrid item xs={22} md={5}>
           {showFiatValues && !mainToken.free && <TokenPriceCard token={mainToken} />}
-          {faucetLink && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
+          {faucetInfo && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
         </StyledGrid>
       </Snapshot>
     </ErrorBoundary>
