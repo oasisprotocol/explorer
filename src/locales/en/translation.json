@@ -715,7 +715,12 @@
   },
   "pontusx": {
     "devnet": "Pontus-X devnet",
-    "testnet": "Pontus-X"
+    "testnet": "Pontus-X",
+    "testTokens": {
+      "description": "Do you need some tokens for testing?",
+      "header": "Test tokens",
+      "request": "Contact us"
+    }
   },
   "rofl": {
     "active": "Active",
