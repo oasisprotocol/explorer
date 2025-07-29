@@ -54,17 +54,17 @@ export const getFaucetInfo = (
       pontusxdev: {
         [Ticker.EUROe]: {
           url: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Devnet')}`,
-          description: t('testnetFaucet.description'),
-          title: t('testnetFaucet.header'),
-          label: t('testnetFaucet.request'),
+          description: t('pontusx.testTokens.description'),
+          title: t('pontusx.testTokens.header'),
+          label: t('pontusx.testTokens.request'),
         },
       },
       pontusxtest: {
         [Ticker.EUROe]: {
           url: `mailto:contact@delta-dao.com?subject=${encodeURIComponent('Request test tokens for Pontus-X Testnet')}`,
-          description: t('testnetFaucet.description'),
-          title: t('testnetFaucet.header'),
-          label: t('testnetFaucet.request'),
+          description: t('pontusx.testTokens.description'),
+          title: t('pontusx.testTokens.header'),
+          label: t('pontusx.testTokens.request'),
         },
       },
     },
