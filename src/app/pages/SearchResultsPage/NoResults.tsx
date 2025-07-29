@@ -6,7 +6,6 @@ import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { SearchSuggestionsLinksForNoResults } from '../../components/Search/SearchSuggestionsLinksForNoResults'
 import { OptionalBreak } from '../../components/OptionalBreak'
-import { useTheme } from '@mui/material/styles'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
 import { getNetworkNames, Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
@@ -17,7 +16,6 @@ export const NoResults: FC<{
   layer?: Layer
 }> = ({ network, layer }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
   const title = network
     ? t('search.noResults.scopeHeader', {
         scope: layer ? getNameForScope(t, { network, layer }) : getNetworkNames(t)[network],
@@ -28,12 +26,7 @@ export const NoResults: FC<{
     <EmptyState
       title={title}
       description={
-        <Box
-          sx={{
-            textAlign: 'center',
-            a: { color: theme.palette.layout.contrastMain, textDecoration: 'underline' },
-          }}
-        >
+        <Box sx={{ a: { color: 'inherit', textDecoration: 'underline' } }}>
           <p>
             <Box>
               <Trans
