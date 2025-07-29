@@ -42,17 +42,7 @@ type EmptyStateProps = {
 
 export const EmptyState: FC<EmptyStateProps> = ({ description, title, light, minHeight = '360px' }) => {
   const content = (
-    <Box
-      sx={{
-        ...(light
-          ? { color: 'inherit' }
-          : {
-              color: COLORS.white,
-              '& span a': { color: COLORS.white },
-            }),
-        textAlign: 'center',
-      }}
-    >
+    <Box sx={{ color: light ? 'inherit' : COLORS.white, textAlign: 'center' }}>
       <Typography component="span" sx={{ fontSize: '30px', fontWeight: 500, display: 'block' }}>
         {title}
       </Typography>
