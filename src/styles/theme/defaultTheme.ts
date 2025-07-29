@@ -478,6 +478,7 @@ export const defaultTheme = createTheme({
             backgroundColor: COLORS.grayMediumLight,
             ':hover, :focus-visible': {
               backgroundColor: COLORS.grayMediumLight,
+              color: COLORS.brandExtraDark,
             },
           }),
         },
