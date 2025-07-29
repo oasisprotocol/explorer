@@ -18,21 +18,22 @@ import {
   ConsensusTxMethodFilterOption,
 } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
-import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 const LatestConsensusTransactionsContent: FC<{
   scope: ConsensusScope
-  method: ConsensusTxMethodFilterOption
-  setMethod: (value: ConsensusTxMethodFilterOption) => void
-}> = ({ scope, method }) => {
+  txMethod: ConsensusTxMethodFilterOption
+  setTxMethod: ParamSetterFunction<ConsensusTxMethodFilterOption>
+}> = ({ scope, txMethod }) => {
   const { network } = scope
 
   const transactionsQuery = useGetConsensusTransactions(
     network,
     {
-      ...getConsensusTransactionMethodFilteringParam(method),
+      ...getConsensusTransactionMethodFilteringParam(txMethod),
       limit,
     },
     {
@@ -49,16 +50,16 @@ const LatestConsensusTransactionsContent: FC<{
       limit={limit}
       pagination={false}
       verbose={false}
-      filtered={method !== 'any'}
+      filtered={txMethod !== 'any'}
     />
   )
 }
 
 export const LatestConsensusTransactions: FC<{
   scope: ConsensusScope
-  method: ConsensusTxMethodFilterOption
-  setMethod: (value: ConsensusTxMethodFilterOption) => void
-}> = ({ scope, method, setMethod }) => {
+  txMethod: ConsensusTxMethodFilterOption
+  setTxMethod: ParamSetterFunction<ConsensusTxMethodFilterOption>
+}> = ({ scope, txMethod, setTxMethod }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   return (
@@ -76,7 +77,7 @@ export const LatestConsensusTransactions: FC<{
           >
             {t('transactions.latest')}
             {shouldFilter && !isMobile && (
-              <ConsensusTransactionTypeFilter value={method} setValue={setMethod} />
+              <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />
             )}
           </Box>
         }
@@ -87,11 +88,11 @@ export const LatestConsensusTransactions: FC<{
         }
       />
       {shouldFilter && isMobile && (
-        <ConsensusTransactionTypeFilter value={method} setValue={setMethod} expand />
+        <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />
       )}
       <CardContent>
         <ErrorBoundary light={true}>
-          <LatestConsensusTransactionsContent scope={scope} method={method} setMethod={setMethod} />
+          <LatestConsensusTransactionsContent scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
         </ErrorBoundary>
       </CardContent>
     </Card>

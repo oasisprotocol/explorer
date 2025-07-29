@@ -27,7 +27,7 @@ export const ParatimeDashboardPage: FC = () => {
     <PageLayout>
       {!isLocal && <ParaTimeSnapshot scope={scope} />}
       <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
-      <LatestRuntimeTransactions scope={scope} method={txMethod} setMethod={setTxMethod} />
+      <LatestRuntimeTransactions scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
           <LearningMaterials scope={scope} />

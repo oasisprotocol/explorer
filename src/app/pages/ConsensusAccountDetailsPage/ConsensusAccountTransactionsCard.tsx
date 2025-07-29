@@ -6,7 +6,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { ConsensusAccountDetailsContext } from './hooks'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { ConsensusTransactionTypeFilter } from '../../components/Transactions/ConsensusTransactionTypeFilter'
+import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
@@ -24,11 +24,11 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
             justifyContent: 'end',
           }}
         >
-          {!isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} />}
+          {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
         </Box>
       }
     >
-      {isMobile && <ConsensusTransactionTypeFilter value={txMethod} setValue={setTxMethod} expand />}
+      {isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />}
       <ConsensusAccountTransactions {...context} />
     </LinkableCardLayout>
   )

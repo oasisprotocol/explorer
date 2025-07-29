@@ -15,9 +15,9 @@ import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import LockIcon from '@mui/icons-material/Lock'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
-import { SelectOptionBase } from '../Select'
 import { paraTimesConfig } from '../../../config'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) => {
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
@@ -95,25 +95,30 @@ const knownRuntimeTxMethods = [
   'roflmarket.InstanceChangeAdmin',
   '',
 ] as const
-type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
+export type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
-export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer): SelectOptionBase[] => {
+export type RuntimeTxMethodFilterOption = {
+  value: RuntimeTxMethodFilteringType
+  label: string
+}
+
+export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer) => {
   const hasRofl = !!paraTimesConfig[layer]?.offerRoflTxTypes
   return knownRuntimeTxMethods
     .filter(method => !method.startsWith('rofl') || hasRofl)
     .map(
-      (method): SelectOptionBase => ({
+      (method): RuntimeTxMethodFilterOption => ({
         value: method,
         label: getRuntimeTransactionLabel(t, method),
       }),
     )
 }
 
-export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction): SelectOptionBase[] => {
+export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction) => {
   const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update'] as const
 
   return options.map(
-    (method): SelectOptionBase => ({
+    (method): RuntimeTxMethodFilterOption => ({
       value: method,
       label: getRuntimeTransactionLabel(t, method),
     }),

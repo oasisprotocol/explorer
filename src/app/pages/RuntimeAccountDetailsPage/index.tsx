@@ -16,6 +16,7 @@ import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
 import {
   RuntimeEventFilteringType,
+  RuntimeTxMethodFilteringType,
   useRuntimeEventTypeParam,
   useRuntimeTxMethodParam,
 } from '../../hooks/useCommonParams'
@@ -32,8 +33,8 @@ export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
   address: string
   account?: RuntimeAccount
-  txMethod: string
-  setTxMethod: (value: string) => void
+  txMethod: RuntimeTxMethodFilteringType
+  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
   eventType: RuntimeEventFilteringType
   setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }

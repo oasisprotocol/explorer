@@ -21,6 +21,7 @@ import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components
 import { RuntimeScope } from 'types/searchScope'
 import {
   RuntimeEventFilteringType,
+  RuntimeTxMethodFilteringType,
   useRuntimeEventTypeParam,
   useRuntimeTxMethodParam,
 } from '../../hooks/useCommonParams'
@@ -30,8 +31,8 @@ import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 export type RuntimeBlockDetailsContext = {
   scope: RuntimeScope
   blockHeight?: number
-  txMethod: string
-  setTxMethod: (method: string) => void
+  txMethod: RuntimeTxMethodFilteringType
+  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
   eventType: RuntimeEventFilteringType
   setEventType: ParamSetterFunction<RuntimeEventFilteringType>
 }

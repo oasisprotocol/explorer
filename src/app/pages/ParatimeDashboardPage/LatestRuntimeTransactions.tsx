@@ -12,19 +12,20 @@ import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeScope } from '../../../types/searchScope'
-import { RuntimeTransactionTypeFilter } from '../../components/Transactions/RuntimeTransactionTypeFilter'
+import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
+import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 const shouldFilter = FILTERING_ON_DASHBOARD
 
 const LatestRuntimeTransactionsContent: FC<{
   scope: RuntimeScope
-  method: string
-  setMethod: (value: string) => void
-}> = ({ scope, method }) => {
+  txMethod: string
+}> = ({ scope, txMethod }) => {
   const { isTablet } = useScreenSize()
   const { network, layer } = scope
 
@@ -32,7 +33,7 @@ const LatestRuntimeTransactionsContent: FC<{
     network,
     layer,
     {
-      ...getRuntimeTransactionMethodFilteringParam(method),
+      ...getRuntimeTransactionMethodFilteringParam(txMethod),
       limit,
     },
     {
@@ -49,16 +50,16 @@ const LatestRuntimeTransactionsContent: FC<{
       limit={limit}
       pagination={false}
       verbose={!isTablet}
-      filtered={method !== 'any'}
+      filtered={txMethod !== 'any'}
     />
   )
 }
 
 export const LatestRuntimeTransactions: FC<{
   scope: RuntimeScope
-  method: string
-  setMethod: (value: string) => void
-}> = ({ scope, method, setMethod }) => {
+  txMethod: RuntimeTxMethodFilteringType
+  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
+}> = ({ scope, txMethod, setTxMethod }) => {
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const { layer } = scope
@@ -78,7 +79,7 @@ export const LatestRuntimeTransactions: FC<{
           >
             {t('transactions.latest')}
             {shouldFilter && !isMobile && (
-              <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} />
+              <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
             )}
           </Box>
         }
@@ -93,11 +94,11 @@ export const LatestRuntimeTransactions: FC<{
         }
       />
       {shouldFilter && isMobile && (
-        <RuntimeTransactionTypeFilter layer={layer} value={method} setValue={setMethod} expand />
+        <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} expand />
       )}
       <CardContent>
         <ErrorBoundary light>
-          <LatestRuntimeTransactionsContent scope={scope} method={method} setMethod={setMethod} />
+          <LatestRuntimeTransactionsContent scope={scope} txMethod={txMethod} />
         </ErrorBoundary>
       </CardContent>
     </Card>
