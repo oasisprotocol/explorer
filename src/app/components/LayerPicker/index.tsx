@@ -17,7 +17,6 @@ import { scopeFreedom, RouteUtils, mergeNetworksInLayerSelector } from '../../ut
 import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { MobileNetworkButton } from '../PageLayout/NetworkButton'
 
 type LayerPickerProps = {
   onClose: () => void
@@ -137,12 +136,6 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 </TabletBackButton>
               )}
           </div>
-          <MobileNetworkButton
-            isOutOfDate={isOutOfDate}
-            network={activeScope.network}
-            layer={activeScope.layer}
-            onClick={onClose}
-          />
         </TabletActionBar>
       )}
       <Divider />
