@@ -12,6 +12,68 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.24.0 (2025-07-29)
+
+### Features
+
+- Display evm_fn_params in transaction details
+  ([#2065](https://github.com/oasisprotocol/explorer/issues/2065))
+
+- Display subcall params
+  ([#2068](https://github.com/oasisprotocol/explorer/issues/2068))
+
+- Link to ROSE App
+  ([#2077](https://github.com/oasisprotocol/explorer/issues/2077))
+
+- Implement filtering for Runtime event type
+  ([#2078](https://github.com/oasisprotocol/explorer/issues/2078))
+
+- Implement filtering for Consensus event type
+  ([#2081](https://github.com/oasisprotocol/explorer/issues/2081))
+
+### Bug Fixes and Improvements
+
+- Fix machine ID serialization
+  ([#2059](https://github.com/oasisprotocol/explorer/issues/2059))
+
+- Support new endorsement fields
+  ([#2071](https://github.com/oasisprotocol/explorer/issues/2071))
+
+- Fix y-axis overflowing in Staking Trend line chart
+  ([#2076](https://github.com/oasisprotocol/explorer/issues/2076))
+
+- Obfuscate displayed email
+  ([#2080](https://github.com/oasisprotocol/explorer/issues/2080))
+
+- Don't crash on missing ROFL app author email
+  ([#2086](https://github.com/oasisprotocol/explorer/issues/2086))
+
+- Fix CSS module build config
+  ([#2087](https://github.com/oasisprotocol/explorer/issues/2087))
+
+- Take into account missing num_holders and num_transfers in tokens
+  ([#2088](https://github.com/oasisprotocol/explorer/issues/2088))
+
+- Support EIP-1167 0age/thirdweb proxy variant
+  ([#2090](https://github.com/oasisprotocol/explorer/issues/2090))
+
+- Fix 404 text color on testnet
+  ([#2094](https://github.com/oasisprotocol/explorer/issues/2094))
+
+- Fix regression in displaying Endorsements
+  ([#2097](https://github.com/oasisprotocol/explorer/issues/2097))
+
+- Improve spacing around addresses at some places
+  ([#2098](https://github.com/oasisprotocol/explorer/issues/2098))
+
+### Internal Changes
+
+- Clean up TX filtering and listing code
+  ([#2082](https://github.com/oasisprotocol/explorer/issues/2082))
+
+- Adjust some consensus event types
+  ([#2085](https://github.com/oasisprotocol/explorer/issues/2085))
+
 ## 1.23.2 (2025-07-01)
 
 ### Bug Fixes and Improvements
