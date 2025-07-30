@@ -1,25 +1,35 @@
-import Paper, { type PaperProps } from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { FC } from 'react'
 import { COLORS } from 'styles/theme/colors'
 import { AnchorCircle } from '../StyledLinks'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
-type LearningSectionProps = PaperProps & {
+type LearningSectionProps = {
+  className?: string
   description: string
   title: string
   url: string
 }
 
-export const LearningSection: FC<LearningSectionProps> = ({ description, title, url, ...props }) => {
+export const LearningSection: FC<LearningSectionProps> = ({ className, description, title, url }) => {
   return (
-    <Paper variant="content" {...props}>
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        {title}
-      </Typography>
-      <Typography variant="body2" sx={{ color: COLORS.grayMedium }}>
-        {description}
-      </Typography>
-      <AnchorCircle url={url} />
-    </Paper>
+    <div
+      className={cn(
+        'flex flex-col w-full px-6 py-5 gap-4 rounded-md border border-zinc-200 bg-zinc-50',
+        className,
+      )}
+    >
+      <div className="flex-1 inline-flex flex-col justify-start items-start gap-1">
+        <Typography variant="h4" sx={{ mb: 4 }}>
+          {title}
+        </Typography>
+        <Typography variant="body2" sx={{ color: COLORS.grayMedium }}>
+          {description}
+        </Typography>
+      </div>
+      <div className="flex-1">
+        <AnchorCircle url={url} />
+      </div>
+    </div>
   )
 }

@@ -192,7 +192,7 @@ export const LearningMaterials: FC<{ scope: RuntimeScope }> = ({ scope }) => {
             description={content.primary.description}
             title={content.primary.header}
             url={content.primary.url}
-            sx={{ height: '100%' }}
+            className="h-full"
           />
         </Grid>
         <Grid xs={12} md={6} spacing={3}>
