@@ -7,9 +7,9 @@ import { CardEmptyState } from '../CardEmptyState'
 import { TextSkeleton } from '../Skeleton'
 import { RuntimeEventDetails } from './RuntimeEventDetails'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import { AppErrors } from '../../../types/errors'
 import { EmptyState } from '../EmptyState'
+import { CardDivider } from '../../components/Divider'
 
 export const RuntimeEventsDetailedList: FC<{
   scope: SearchScope
@@ -51,7 +51,7 @@ export const RuntimeEventsDetailedList: FC<{
       <>
         {events.map((event, index) => (
           <div key={`event-${index}`}>
-            {index > 0 && <Divider variant="card" />}
+            {index > 0 && <CardDivider />}
             <RuntimeEventDetails scope={scope} event={event} showTxHash={showTxHash} />
           </div>
         ))}

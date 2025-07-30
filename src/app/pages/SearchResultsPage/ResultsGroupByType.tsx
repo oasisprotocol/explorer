@@ -2,7 +2,7 @@ import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 import Typography from '@mui/material/Typography'
 
 interface Props<T> {
@@ -44,7 +44,7 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
               {linkLabel}
             </Button>
           </Box>
-          {i < results.length - 1 && <Divider variant="card" />}
+          {i < results.length - 1 && <CardDivider />}
         </div>
       ))}
     </>

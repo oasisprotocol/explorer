@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusEvent } from '../../../oasis-nexus/api'
 import { TablePagination, TablePaginationProps } from '../Table/TablePagination'
@@ -10,6 +9,7 @@ import { TextSkeleton } from '../Skeleton'
 import { ConsensusEventDetails } from './ConsensusEventDetails'
 import { AppErrors } from '../../../types/errors'
 import { EmptyState } from '../EmptyState'
+import { CardDivider } from '../../components/Divider'
 
 export const ConsensusEventsList: FC<{
   scope: ConsensusScope
@@ -50,7 +50,7 @@ export const ConsensusEventsList: FC<{
       <>
         {events.map((event, index) => (
           <div key={`event-${index}`}>
-            {index > 0 && <Divider variant="card" />}
+            {index > 0 && <CardDivider />}
             <ConsensusEventDetails scope={scope} event={event} showTxHash={showTxHash} />
           </div>
         ))}
