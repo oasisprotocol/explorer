@@ -21,6 +21,12 @@ const StyledBox: FC<PropsWithChildren> = ({ children }) => {
         flex: 1,
         overflowX: 'hidden',
         overflowY: 'hidden',
+        /**
+         * We need padding so that the highlight bubble can fit inside the box.
+         * Without padding, the borders of the bubble would be clipped.
+         * These are the minimum values required for the whole bubble to be visible.
+         */
+        padding: '3px 0 1px 5px',
       }}
     >
       {children}

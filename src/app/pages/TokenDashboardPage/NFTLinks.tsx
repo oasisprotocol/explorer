@@ -72,7 +72,14 @@ export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
   const { t } = useTranslation()
 
   return (
-    <Typography sx={{ display: 'flex', whiteSpace: 'initial' }}>
+    <Typography
+      sx={{
+        display: 'flex',
+        whiteSpace: 'initial',
+        pt: '4px', // This is needed so that we have space for highlighting on hover
+        pb: '1px', // These are the minimum values required for the full highlight bubble to be visible
+      }}
+    >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>{t('nft.owner')}:</Box>
       &nbsp;
       <AccountLink scope={scope} address={owner} alwaysTrim />
