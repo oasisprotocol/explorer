@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import TableContainer from '@mui/material/TableContainer'
 import MuiTable from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
@@ -26,7 +26,7 @@ const SkeletonTableRows: FC<SkeletonTableRowsProps> = ({ rowsNumber, columnsNumb
     {[...Array(rowsNumber)].map((item, index) => (
       <TableRow key={index}>
         <TableCell colSpan={columnsNumber}>
-          <Skeleton variant="text" height={textSkeletonHeight} />
+          <Skeleton className={`h-[${textSkeletonHeight}px]`} />
         </TableCell>
       </TableRow>
     ))}

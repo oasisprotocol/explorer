@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import ImageListItemBar from '@mui/material/ImageListItemBar'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { RuntimeAccountDetailsContext } from './index'
@@ -70,7 +70,7 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
                   />
                 )}
               </Breadcrumbs>
-              {isLoading && <Skeleton variant="text" sx={{ width: '50%' }} />}
+              {isLoading && <Skeleton className="w-1/2 h-4" />}
             </Box>
           }
         />
@@ -119,7 +119,7 @@ const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
 
   return (
     <>
-      {isLoading && <Skeleton variant="rectangular" sx={{ height: 200 }} />}
+      {isLoading && <Skeleton className="h-[200px]" />}
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
       {!!inventory?.length && (
         <>

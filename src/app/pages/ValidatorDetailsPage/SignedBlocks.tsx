@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Typography from '@mui/material/Typography'
 import { COLORS } from 'styles/theme/colors'
 import { BlockStats } from '../../components/BlockStats'
@@ -27,7 +27,7 @@ export const SignedBlocks: FC<SignedBlocksProps> = ({ isLoading, isFetched, sign
         sx={{ paddingBottom: 0 }}
       />
       <CardContent>
-        {isLoading && <Skeleton variant="rectangular" sx={{ height: 240 }} />}
+        {isLoading && <Skeleton className="h-[240px]" />}
         {isFetched && signedBlocks && signedBlocks.length > 0 && (
           <SignedBlocksContent signedBlocks={signedBlocks} />
         )}
