@@ -6,7 +6,7 @@ import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
 import Tooltip from '@mui/material/Tooltip'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 export const FiatMoneyAmountBox = styled(Box)(() => ({
   display: 'flex',
@@ -52,7 +52,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
         ) : (
           <FiatMoneyWarning unknownTickers={unknownTickers} />
         )}
-        {loading && <Skeleton variant="rectangular" sx={{ height: 200 }} />}
+        {loading && <Skeleton className="h-4" />}
       </span>
       {hasUsedCoinGecko && <CoinGeckoReferral />}
     </FiatMoneyAmountBox>

@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 
@@ -13,7 +13,7 @@ export const StyledCard = styled(Card)(() => ({
   },
 }))
 
-const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ minWidth: '20ex' }} />
+const TitleSkeleton: FC = () => <Skeleton className="min-w-[20ex] h-4" />
 
 type TitleCardProps = {
   isLoading: boolean

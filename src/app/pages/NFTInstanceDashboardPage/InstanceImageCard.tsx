@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import Card from '@mui/material/Card'
 import ContrastIcon from '@mui/icons-material/Contrast'
 import Link from '@mui/material/Link'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { styled } from '@mui/material/styles'
@@ -99,7 +99,7 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
             minHeight: imageSize,
           }}
         >
-          {isLoading && <Skeleton variant="rectangular" width={imageSize} height={imageSize} />}
+          {isLoading && <Skeleton className="w-[350px] h-[350px]" />}
           {/* API did not process NFT data fully */}
           {isFetched && !nft?.image && <NoPreview placeholderSize={imageSize} />}
           {/* API processed NFT data, but image prop is not valid image source */}

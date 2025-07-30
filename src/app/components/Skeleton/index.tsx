@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 type TextSkeletonProps = {
   numberOfRows: number
@@ -9,7 +9,7 @@ export const TextSkeleton: FC<TextSkeletonProps> = ({ numberOfRows }) => {
   return (
     <>
       {[...Array(numberOfRows).keys()].map(i => (
-        <Skeleton key={i} variant="text" height={30} sx={{ my: 4 }} />
+        <Skeleton key={i} className="h-[30px] my-4" />
       ))}
     </>
   )

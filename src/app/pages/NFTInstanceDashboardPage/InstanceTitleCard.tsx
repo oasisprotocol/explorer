@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Typography from '@mui/material/Typography'
 import { EvmNft } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
@@ -28,7 +28,7 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
   return (
     <Card>
       <CardContent>
-        {isLoading && <Skeleton variant="text" />}
+        {isLoading && <Skeleton className="h-8" />}
         {isFetched && token && (
           <Box
             sx={{

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import { styled } from '@mui/material/styles'
@@ -51,7 +51,7 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
       </Tabs>
       <StyledCard>
         <CardContent>
-          {isLoading && <Skeleton variant="rectangular" height={300} sx={{ marginTop: 5 }} />}
+          {isLoading && <Skeleton className="h-[300px] mt-8" />}
           {account && tab === 0 && <ActiveDelegations address={account?.address} />}
           {account && tab === 1 && <DebondingDelegations address={account?.address} />}
         </CardContent>

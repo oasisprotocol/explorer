@@ -3,7 +3,7 @@ import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
@@ -65,7 +65,7 @@ export const RoflAppDetailsPage: FC = () => {
         featured
         title={
           isLoading ? (
-            <Skeleton variant="text" />
+            <Skeleton className="h-4" />
           ) : (
             roflApp && (
               <RoflAppLink

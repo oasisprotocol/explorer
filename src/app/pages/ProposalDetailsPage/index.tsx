@@ -22,7 +22,7 @@ import { ProposalIdLoaderData } from '../../utils/route-utils'
 import { COLORS } from 'styles/theme/colors'
 import { ProposalVotesCard } from './ProposalVotesCard'
 import { useVoteStats } from './hooks'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { HighlightPattern } from '../../components/HighlightedText'
 import { getTypeNameForProposal } from '../../../types/proposalType'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
@@ -89,7 +89,7 @@ export const ProposalDetailView: FC<{
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  if (isLoading) return <TextSkeleton numberOfRows={7} />
+  if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!proposal) return null
 
   const proposalType = getTypeNameForProposal(t, proposal)
@@ -125,11 +125,7 @@ export const ProposalDetailView: FC<{
         <>
           <dt>{t('common.totalVotes')}</dt>
           <dd>
-            {totalVotesLoading ? (
-              <Skeleton variant="text" sx={{ width: '25%' }} />
-            ) : (
-              totalVotes?.toLocaleString()
-            )}
+            {totalVotesLoading ? <Skeleton className="w-1/4 h-4" /> : totalVotes?.toLocaleString()}
             {totalVotesProblematic && <VoteLoadingProblemIndicator />}
           </dd>
         </>

@@ -9,7 +9,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { AccountLink } from './AccountLink'
 import Box from '@mui/material/Box'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 const TxSender: FC<{ scope: RuntimeScope; txHash: string; alwaysTrim?: boolean }> = ({
   scope,
@@ -22,12 +22,7 @@ const TxSender: FC<{ scope: RuntimeScope; txHash: string; alwaysTrim?: boolean }
   const senderAddress = tx?.signers[0].address_eth ?? tx?.signers[0].address
 
   return query.isLoading ? (
-    <Skeleton
-      variant="text"
-      sx={{
-        width: '25%',
-      }}
-    />
+    <Skeleton className="w-1/4 h-4" />
   ) : senderAddress ? (
     <AccountLink scope={scope} address={senderAddress} alwaysTrim={alwaysTrim} />
   ) : (
@@ -44,7 +39,7 @@ export const ContractCreatorInfo: FC<{
   const { t } = useTranslation()
 
   return isLoading ? (
-    <Skeleton variant="text" sx={{ width: '50%' }} />
+    <Skeleton className="w-1/4 h-4" />
   ) : creationTxHash === undefined ? (
     t('common.missing')
   ) : (

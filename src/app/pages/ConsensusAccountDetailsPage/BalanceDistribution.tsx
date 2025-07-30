@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Typography from '@mui/material/Typography'
 import { Account } from '../../../oasis-nexus/api'
 import { PieChart } from '../../components/charts/PieChart'
@@ -30,7 +30,7 @@ export const BalanceDistribution: FC<BalanceDistributionProps> = ({ account, isL
         sx={{ paddingBottom: 0 }}
       />
       <CardContent>
-        {isLoading && <Skeleton variant="rectangular" height={300} />}
+        {isLoading && <Skeleton className="h-[300px]" />}
         {account && <BalanceDistributionContent account={account} />}
       </CardContent>
     </Card>

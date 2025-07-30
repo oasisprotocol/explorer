@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useTokenInfo } from './hook'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { getTokenTypeDescription, getTokenTypeStrictName } from '../../../types/tokens'
 import { RuntimeScope } from '../../../types/searchScope'
 
@@ -18,7 +18,7 @@ export const TokenTypeCard: FC<{ scope: RuntimeScope; address: string }> = ({ sc
     <SnapshotCard title={t('common.type')} alignWithCardsWithActions>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         {isLoading ? (
-          <Skeleton variant="text" sx={{ width: '50%' }} />
+          <Skeleton className="h-4 w-1/2" />
         ) : (
           isFetched && (
             <Typography
