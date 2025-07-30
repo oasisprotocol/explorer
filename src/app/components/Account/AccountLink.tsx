@@ -275,7 +275,7 @@ export const AccountLink: FC<Props> = ({
     )
   }
 
-  if (!isTablet && !alwaysTrimOnTablet) {
+  if (!isTablet && !alwaysAdapt) {
     // We are in desktop mode, and there is no need to do adaptive trimming
     // We want one long line, with name and address.
 
