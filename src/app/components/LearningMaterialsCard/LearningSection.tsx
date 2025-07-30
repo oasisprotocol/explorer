@@ -14,12 +14,9 @@ type LearningSectionProps = {
 export const LearningSection: FC<LearningSectionProps> = ({ className, description, title, url }) => {
   return (
     <div
-      className={cn(
-        'flex flex-col w-full px-6 py-5 gap-4 rounded-md border border-zinc-200 bg-zinc-50',
-        className,
-      )}
+      className={cn('flex flex-col px-6 py-5 gap-4 rounded-md border border-zinc-200 bg-zinc-50', className)}
     >
-      <div className="flex-1 inline-flex flex-col justify-start items-start gap-1">
+      <div className="flex-1 flex flex-col gap-1">
         <Typography variant="h4" sx={{ mb: 4 }}>
           {title}
         </Typography>
@@ -27,7 +24,7 @@ export const LearningSection: FC<LearningSectionProps> = ({ className, descripti
           {description}
         </Typography>
       </div>
-      <div className="flex-1">
+      <div>
         <AnchorCircle url={url} />
       </div>
     </div>
