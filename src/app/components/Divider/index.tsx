@@ -6,3 +6,4 @@ export const DashboardDivider = () => {
   const { isMobile } = useScreenSize()
   return <Separator className={isMobile ? 'mt-4 mb-8' : 'mb-8'} />
 }
+export const CardDivider = () => <Separator className="my-10" />
