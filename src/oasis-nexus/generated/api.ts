@@ -316,7 +316,7 @@ export type TransactionList = List & TransactionListAllOf;
 /**
  * The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables).
  */
-export type TransactionBody = { [key: string]: unknown };
+export type TransactionBody = { [key: string]: any };
 
 /**
  * A consensus transaction.
@@ -430,7 +430,7 @@ This object will conform to one of the `*Event` types two levels down
 the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
 
  */
-export type ConsensusEventBody = { [key: string]: unknown };
+export type ConsensusEventBody = { [key: string]: any };
 
 /**
  * An event emitted by the consensus layer.
@@ -507,7 +507,7 @@ structure
 with `from` and `amount` fields in JSON.
 
  */
-export type RoothashMessageBody = { [key: string]: unknown };
+export type RoothashMessageBody = { [key: string]: any };
 
 export interface RoothashMessage {
   /** The runtime that sent this message.
@@ -1106,7 +1106,7 @@ will add a field specifying the corresponding Ethereum address, if known. Curren
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
-export type RuntimeEventBody = { [key: string]: unknown };
+export type RuntimeEventBody = { [key: string]: any };
 
 /**
  * An event emitted by the runtime layer
@@ -1264,9 +1264,9 @@ export const VerificationLevel = {
 Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
 
  */
-export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: unknown };
+export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
 
-export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: unknown };
+export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
 
 export interface RuntimeEvmContractVerification {
   verification_level?: VerificationLevel;
@@ -1292,7 +1292,7 @@ export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
 /**
  * The method call body. May be null if the transaction was malformed.
  */
-export type RuntimeTransactionBody = { [key: string]: unknown };
+export type RuntimeTransactionBody = { [key: string]: any };
 
 /**
  * A runtime transaction.
@@ -1758,17 +1758,17 @@ export type RoflAppList = List & RoflAppListAllOf;
 /**
  * The application authentication policy.
  */
-export type RoflAppPolicy = { [key: string]: unknown };
+export type RoflAppPolicy = { [key: string]: any };
 
 /**
  * Arbitrary key-value pairs.
  */
-export type RoflAppMetadata = { [key: string]: unknown };
+export type RoflAppMetadata = { [key: string]: any };
 
 /**
  * Arbitrary SEK-encrypted key-value pairs.
  */
-export type RoflAppSecrets = { [key: string]: unknown };
+export type RoflAppSecrets = { [key: string]: any };
 
 export interface RoflApp {
   /** The identifier of the ROFL application. */
@@ -1831,12 +1831,12 @@ export type RoflAppInstanceList = List & RoflAppInstanceListAllOf;
 /**
  * The payment address configuration for this provider.
  */
-export type RoflMarketProviderPaymentAddress = { [key: string]: unknown };
+export type RoflMarketProviderPaymentAddress = { [key: string]: any };
 
 /**
  * Arbitrary metadata key-value pairs, assigned by the provider.
  */
-export type RoflMarketProviderMetadata = { [key: string]: unknown };
+export type RoflMarketProviderMetadata = { [key: string]: any };
 
 export interface RoflMarketProvider {
   /** The address of the ROFL market provider. */
@@ -1876,17 +1876,17 @@ export type RoflMarketProviderList = List & RoflMarketProviderListAllOf;
 /**
  * The offered resources by this offer.
  */
-export type RoflMarketOfferResources = { [key: string]: unknown };
+export type RoflMarketOfferResources = { [key: string]: any };
 
 /**
  * The payment configuration for this offer.
  */
-export type RoflMarketOfferPayment = { [key: string]: unknown };
+export type RoflMarketOfferPayment = { [key: string]: any };
 
 /**
  * Arbitrary metadata key-value pairs assigned by the provider.
  */
-export type RoflMarketOfferMetadata = { [key: string]: unknown };
+export type RoflMarketOfferMetadata = { [key: string]: any };
 
 export interface RoflMarketOffer {
   /** Unique offer identifier. */
@@ -1914,27 +1914,27 @@ export type RoflMarketOfferList = List & RoflMarketOfferListAllOf;
 /**
  * Arbitrary metadata key-value pairs assigned by the provider.
  */
-export type RoflMarketInstanceMetadata = { [key: string]: unknown };
+export type RoflMarketInstanceMetadata = { [key: string]: any };
 
 /**
  * The resources allocated to this instance.
  */
-export type RoflMarketInstanceResources = { [key: string]: unknown };
+export type RoflMarketInstanceResources = { [key: string]: any };
 
 /**
  * The deployment configuration for this instance.
  */
-export type RoflMarketInstanceDeployment = { [key: string]: unknown };
+export type RoflMarketInstanceDeployment = { [key: string]: any };
 
 /**
  * The payment information for this instance.
  */
-export type RoflMarketInstancePayment = { [key: string]: unknown };
+export type RoflMarketInstancePayment = { [key: string]: any };
 
 /**
  * The commands for this instance.
  */
-export type RoflMarketInstanceCmdsItem = { [key: string]: unknown };
+export type RoflMarketInstanceCmdsItem = { [key: string]: any };
 
 export interface RoflMarketInstance {
   /** Unique instance identifier. */
