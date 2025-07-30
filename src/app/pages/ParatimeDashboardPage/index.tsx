@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Divider from '@mui/material/Divider'
+import { DashboardDivider } from '../../components/Divider'
 import Grid from '@mui/material/Grid'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isLocalnet } from '../../utils/route-utils'
@@ -26,7 +26,7 @@ export const ParatimeDashboardPage: FC = () => {
   return (
     <PageLayout>
       {!isLocal && <ParaTimeSnapshot scope={scope} />}
-      <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
+      <DashboardDivider />
       <LatestRuntimeTransactions scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>

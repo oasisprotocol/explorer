@@ -48,7 +48,6 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/Divider' {
   interface DividerPropsVariantOverrides {
-    layout: true
     card: true
   }
 }
@@ -506,14 +505,6 @@ export const defaultTheme = createTheme({
     },
     MuiDivider: {
       variants: [
-        {
-          props: { variant: 'layout' },
-          style: ({ theme }) => ({
-            // More customizable than borderStyle: 'dashed',
-            borderImage: `repeating-linear-gradient(90deg, ${theme.palette.layout.main}, ${theme.palette.layout.main} 5px, transparent 5px, transparent 12px) 1`,
-            marginBottom: theme.spacing(5),
-          }),
-        },
         {
           props: { variant: 'card' },
           style: ({ theme }) => ({

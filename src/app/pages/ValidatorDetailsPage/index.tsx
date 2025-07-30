@@ -5,7 +5,6 @@ import { useHref, useLoaderData } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import {
   Validator,
@@ -46,6 +45,7 @@ import { Network } from '../../../types/network'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
+import { DashboardDivider } from '../../components/Divider'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -59,7 +59,6 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
   const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const { eventType, setEventType } = useConsensusEventTypeParam()
@@ -88,7 +87,7 @@ export const ValidatorDetailsPage: FC = () => {
         highlightPattern={highlightPattern}
       />
       <ValidatorSnapshot scope={scope} validator={validator} stats={stats} />
-      <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
+      <DashboardDivider />
       <ValidatorDetailsCard
         network={scope.network}
         isLoading={isLoading}

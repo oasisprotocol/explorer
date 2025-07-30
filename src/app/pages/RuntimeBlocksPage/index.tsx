@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -16,6 +15,7 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
+import { LayoutDivider } from '../../components/Divider'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -84,7 +84,7 @@ export const RuntimeBlocksPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={t('blocks.latest')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}
