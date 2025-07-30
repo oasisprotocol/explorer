@@ -578,13 +578,6 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: () => ({
-          borderRadius: 6,
-        }),
-      },
-    },
     MuiLinearProgress: {
       styleOverrides: {
         root: {

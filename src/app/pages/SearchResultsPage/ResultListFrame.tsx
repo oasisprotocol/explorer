@@ -3,7 +3,6 @@ import { styled, useTheme } from '@mui/material/styles'
 import { cardClasses } from '@mui/material/Card'
 import { boxClasses } from '../../utils/mui-helpers'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { paperClasses } from '@mui/material/Paper'
 import { COLORS } from '../../../styles/theme/colors'
 
 export const ResultListFrame = styled(Box)(({ theme: wantedTheme }) => {
@@ -11,7 +10,7 @@ export const ResultListFrame = styled(Box)(({ theme: wantedTheme }) => {
   const isMobile = useMediaQuery(wantedTheme.breakpoints.down('sm'))
   return isMobile
     ? {
-        [`&& > div > .${paperClasses.root}`]:
+        [`&& > div > .${cardClasses.root}`]:
           currentTheme.palette.layout.border !== wantedTheme.palette.layout.networkBubbleBorder &&
           wantedTheme.palette.layout.main !== wantedTheme.palette.layout.networkBubbleBorder
             ? {
