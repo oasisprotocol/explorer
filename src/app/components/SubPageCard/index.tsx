@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled, css, useTheme } from '@mui/material/styles'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 type StyledComponentProps = {
   featured?: boolean
@@ -64,7 +64,7 @@ const StyledCardContent = styled(CardContent, {
     : {},
 }))
 
-const TitleSkeleton: FC = () => <Skeleton variant="text" sx={{ display: 'inline-block', width: '100%' }} />
+const TitleSkeleton: FC = () => <Skeleton className="h-4" />
 
 export const SubPageCard: FC<SubPageCardProps> = ({
   children,

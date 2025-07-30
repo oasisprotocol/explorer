@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { RuntimeScope } from '../../../types/searchScope'
 import { useTokenInfo } from './hook'
@@ -13,7 +13,7 @@ export const TokenHoldersCountCard: FC<{ scope: RuntimeScope; address: string }>
   return (
     <SnapshotTextCard title={title} alignWithCardsWithActions>
       {isLoading ? (
-        <Skeleton variant="text" />
+        <Skeleton className="h-4" />
       ) : (
         isFetched && (
           <>
