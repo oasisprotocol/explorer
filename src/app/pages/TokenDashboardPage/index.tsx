@@ -1,7 +1,6 @@
-import { useScreenSize } from '../../hooks/useScreensize'
 import { FC } from 'react'
 import { PageLayout } from '../../components/PageLayout'
-import Divider from '@mui/material/Divider'
+import { DashboardDivider } from '../../components/Divider'
 import { TokenTitleCard } from './TokenTitleCard'
 import { TokenSnapshot } from './TokenSnapshot'
 import { TokenDetailsCard } from './TokenDetailsCard'
@@ -26,7 +25,6 @@ export const useTokenDashboardProps = () => useOutletContext<TokenDashboardConte
 
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const scope = useRuntimeScope()
   const { address, searchQuery } = useLoaderData() as AddressLoaderData
   const highlightPattern = getHighlightPattern(textSearch.evmTokenName(searchQuery))
@@ -51,7 +49,7 @@ export const TokenDashboardPage: FC = () => {
       <TokenTitleCard scope={scope} address={address} highlightPattern={highlightPattern} />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
       <TokenSnapshot scope={scope} address={address} />
-      <Divider variant="layout" sx={{ mt: isMobile ? 4 : 0 }} />
+      <DashboardDivider />
       <TokenDetailsCard scope={scope} address={address} highlightPattern={highlightPattern} />
       <RouterTabs
         tabs={[
