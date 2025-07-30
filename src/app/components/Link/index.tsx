@@ -118,7 +118,7 @@ const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({
 }) => {
   const label =
     trimMode === 'adaptive' ? (
-      <AdaptiveHighlightedText text={name} pattern={highlightPattern} minLength={14} debugMode={true} />
+      <AdaptiveHighlightedText text={name} pattern={highlightPattern} minLength={14} />
     ) : (
       <HighlightedTrimmedText text={name} pattern={highlightPattern} fragmentLength={14} />
     )
