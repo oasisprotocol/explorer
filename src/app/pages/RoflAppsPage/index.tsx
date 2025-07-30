@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Divider from '@mui/material/Divider'
 import { AppErrors } from '../../../types/errors'
 import { paraTimesConfig } from '../../../config'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -18,6 +17,7 @@ import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../component
 import { Network } from 'types/network'
 import { Runtime } from 'oasis-nexus/api'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { LayoutDivider } from '../../components/Divider'
 
 const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayout }> = ({
   network,
@@ -104,7 +104,7 @@ export const RoflAppsPage: FC = () => {
         !hasNoResultsBecauseOfFilters && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={t('rofl.listTitle')}
         action={

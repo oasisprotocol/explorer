@@ -46,13 +46,6 @@ declare module '@mui/material/Button' {
   }
 }
 
-declare module '@mui/material/Divider' {
-  interface DividerPropsVariantOverrides {
-    layout: true
-    card: true
-  }
-}
-
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     footer: true
@@ -503,29 +496,6 @@ export const defaultTheme = createTheme({
           marginRight: 2,
         },
       },
-    },
-    MuiDivider: {
-      variants: [
-        {
-          props: { variant: 'layout' },
-          style: ({ theme }) => ({
-            // More customizable than borderStyle: 'dashed',
-            borderImage: `repeating-linear-gradient(90deg, ${theme.palette.layout.main}, ${theme.palette.layout.main} 5px, transparent 5px, transparent 12px) 1`,
-            marginBottom: theme.spacing(5),
-          }),
-        },
-        {
-          props: { variant: 'card' },
-          style: ({ theme }) => ({
-            // More customizable than borderStyle: 'dashed',
-            borderImage: `repeating-linear-gradient(90deg, ${COLORS.brandDark}, ${COLORS.brandDark} 5px, transparent 5px, transparent 12px) 1`,
-            margin: '40px -12px',
-            [theme.breakpoints.down('sm')]: {
-              margin: '20px -12px',
-            },
-          }),
-        },
-      ],
     },
     MuiDrawer: {
       styleOverrides: {

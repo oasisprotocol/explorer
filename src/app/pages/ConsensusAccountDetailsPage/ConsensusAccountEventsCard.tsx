@@ -8,7 +8,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
 import { getConsensusEventTypeFilteringParam } from '../../hooks/useCommonParams'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 
 const ConsensusAccountEventsList: FC<ConsensusAccountDetailsContext> = ({ scope, address, eventType }) => {
   const pagination = useSearchParamsPagination('page')
@@ -46,7 +46,7 @@ export const ConsensusAccountEventsCard: FC<ConsensusAccountDetailsContext> = co
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
       <ConsensusEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-      <Divider variant={'card'} />
+      <CardDivider />
       <ConsensusAccountEventsList {...context} />
     </LinkableCardLayout>
   )

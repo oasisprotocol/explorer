@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
@@ -18,6 +17,7 @@ import { LoadMoreButton } from '../../components/LoadMoreButton'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { ConsensusBlocks, TableConsensusBlockList } from '../../components/Blocks/ConsensusBlocks'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
+import { LayoutDivider } from '../../components/Divider'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -92,7 +92,7 @@ export const ConsensusBlocksPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={t('blocks.title')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}

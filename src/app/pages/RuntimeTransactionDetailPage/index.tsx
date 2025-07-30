@@ -47,7 +47,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { yamlDump } from '../../utils/yamlDump'
 import { useRuntimeEventTypeParam } from '../../hooks/useCommonParams'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 export const RuntimeTransactionDetailPage: FC = () => {
@@ -105,7 +105,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
             {isMobile && (
               <>
                 <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-                <Divider variant={'card'} />
+                <CardDivider />
               </>
             )}
             <ErrorBoundary light>

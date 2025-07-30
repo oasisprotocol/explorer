@@ -6,7 +6,7 @@ import { useAccountEvents } from './hook'
 import { RuntimeAccountDetailsContext } from '.'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const AccountEventsCardContent: FC<RuntimeAccountDetailsContext> = props => {
@@ -40,7 +40,7 @@ export const AccountEventsCard: FC<RuntimeAccountDetailsContext> = props => {
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
       <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-      <Divider variant="card" />
+      <CardDivider />
       <ErrorBoundary light>
         <AccountEventsCardContent {...props} />
       </ErrorBoundary>

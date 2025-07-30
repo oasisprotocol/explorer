@@ -8,7 +8,7 @@ import { ConsensusEventsList } from '../../components/ConsensusEvents/ConsensusE
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getConsensusEventTypeFilteringParam, useConsensusEventTypeParam } from '../../hooks/useCommonParams'
 import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 
 const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blockHeight }) => {
   const { eventType, setEventType } = useConsensusEventTypeParam()
@@ -26,7 +26,7 @@ const ConsensusBlockEventsList: FC<ConsensusBlockDetailsContext> = ({ scope, blo
   return (
     <>
       <ConsensusEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-      <Divider variant={'card'} />
+      <CardDivider />
       <ConsensusEventsList
         scope={scope}
         events={events}
