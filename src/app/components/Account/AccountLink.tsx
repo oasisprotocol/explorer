@@ -100,11 +100,25 @@ const AdaptivelyTrimmedAccountLink: FC<
 
   return (
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
-      <>
+      <Box
+        sx={{
+          // External box: this holds both the name and the address.
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          flexWrap: 'wrap', // We want this to wrap, if name and address doesn't fit in one line.
+        }}
+      >
         {showAccountName && (
           <Box
             component="span"
-            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+            sx={{
+              // Internal box: this holds the source indicator and the name.
+              // We don't want this to wrap.
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 2,
+            }}
           >
             <AccountMetadataSourceIndicator source={accountMetadata.source} />
             <AdaptiveHighlightedText
@@ -118,12 +132,12 @@ const AdaptivelyTrimmedAccountLink: FC<
         )}
         <AdaptiveTrimmer
           idPrefix="account-address"
-          text={address}
+          text={showAccountName ? `(${address})` : address}
           strategy="middle"
           tooltipOverride={tooltipTitle}
           minLength={13}
         />
-      </>
+      </Box>
     </WithTypographyAndLink>
   )
 }
@@ -169,11 +183,28 @@ const DesktopAccountLink: FC<
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
           <Box
-            component="span"
-            sx={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexWrap: 'wrap' }}
+            sx={{
+              // External box: this holds both the name and the address.
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap', // We want this to wrap, if the name and the address won't fit in one line.
+              gap: 2,
+            }}
           >
-            <AccountMetadataSourceIndicator source={accountMetadata!.source} />
-            <HighlightedText text={accountName} pattern={highlightPattern} /> ({address})
+            <Box
+              component="span"
+              sx={{
+                // Internal box: this holds only the source indicator and the name.
+                // We don't want this to wrap.
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 2,
+              }}
+            >
+              <AccountMetadataSourceIndicator source={accountMetadata!.source} />
+              <HighlightedText text={accountName} pattern={highlightPattern} />
+            </Box>
+            ({address})
           </Box>
         ) : (
           address
@@ -244,7 +275,7 @@ export const AccountLink: FC<Props> = ({
     )
   }
 
-  if (!isTablet && !alwaysTrimOnTablet) {
+  if (!isTablet && !alwaysAdapt) {
     // We are in desktop mode, and there is no need to do adaptive trimming
     // We want one long line, with name and address.
 
