@@ -72,7 +72,7 @@ export const TokensPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
         subheader={
-          <Box sx={{ display: 'inline-flex', ml: 4, fontStyle: 'normal' }}>
+          <Box component="span" sx={{ ml: 4, fontStyle: 'normal' }}>
             <TokenTypeFilter onSelect={setType} value={type} />
           </Box>
         }
