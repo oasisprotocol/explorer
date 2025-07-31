@@ -244,8 +244,19 @@ export const useAdaptiveSizing = (
           const newLargestKnownGood = Math.max(currentLength, largestKnownGood)
           setLargestKnownGood(currentLength)
 
-          if (currentLength + 1 === smallestKnownBad) {
-            // This the best we can do, for now
+          if (currentLength === smallestKnownBad) {
+            // Note: normally, when there is no overflow,
+            // currentLength should always be lower than smallestKnownBad.
+            // However, once in a while, it's possible that it will be
+            // the same value, which means that because of some race
+            // condition during rendering, at one time,
+            // we had an overflow at this length, but now we don't.
+            // In that case, let's just stop here.
+            debugLog('Anomalous results at', currentLength, '. Stopping.')
+            setAdjustmentStep('done')
+          } else if (currentLength + 1 === smallestKnownBad) {
+            // This the best we can do, for now.
+            // One more character would be too much.
             debugLog(currentLength, 'is as long as we can grow.')
             setAdjustmentStep('done')
           } else {
