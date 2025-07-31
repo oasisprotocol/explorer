@@ -255,14 +255,15 @@ export const ValidatorDetailsView: FC<{
           {typeof validator.voting_power === 'number' && (
             <>
               <dt>{t('validator.votingPower')}</dt>
-              <dd>{validator.voting_power.toLocaleString()}</dd>
-            </>
-          )}
-          {typeof validator.voting_power === 'number' && stats?.total_voting_power && (
-            <>
-              <dt>{t('validator.totalShare')}</dt>
               <dd>
-                <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
+                {stats?.total_voting_power ? (
+                  <>
+                    <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
+                    &nbsp; ({validator.voting_power.toLocaleString()})
+                  </>
+                ) : (
+                  validator.voting_power.toLocaleString()
+                )}
               </dd>
             </>
           )}
