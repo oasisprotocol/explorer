@@ -11,6 +11,7 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
 import { useTranslation } from 'react-i18next'
+import { hideRoseAppButton } from '../../../config'
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -57,7 +58,7 @@ export const Header: FC = () => {
               </Grid>
             </>
           )}
-          {isDesktop && (
+          {isDesktop && !hideRoseAppButton && (
             <Grid md={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
                 component="a"
