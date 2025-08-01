@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Drawer from '@mui/material/Drawer'
+import MuiDrawer from '@mui/material/Drawer'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
@@ -18,6 +18,7 @@ import { styled } from '@mui/material/styles'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
+import { Drawer, DrawerContent } from '@oasisprotocol/ui-library/src/components/ui/drawer'
 
 type LayerPickerProps = {
   onClose: () => void
@@ -27,9 +28,14 @@ type LayerPickerProps = {
 }
 
 export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, isOutOfDate }) => (
-  <Drawer anchor="top" open={open} onClose={onClose}>
-    <LayerPickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
-  </Drawer>
+  <>
+    <Drawer direction="top" open={open} onClose={onClose}>
+      {/* Match MUI md breakpoint during migration */}
+      <DrawerContent className="py-4 px-[5%] z-[1200] max-[900px]:h-dvh max-[900px]:!max-h-dvh max-[900px]:mb-0">
+        <LayerPickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
+      </DrawerContent>
+    </Drawer>
+  </>
 )
 
 const StyledLayerPickerContent = styled(Box)(({ theme }) => ({
