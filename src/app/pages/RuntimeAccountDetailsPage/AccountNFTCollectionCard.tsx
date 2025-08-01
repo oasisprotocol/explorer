@@ -8,9 +8,6 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import ImageList from '@mui/material/ImageList'
-import ImageListItem from '@mui/material/ImageListItem'
-import ImageListItemBar from '@mui/material/ImageListItemBar'
 import Skeleton from '@mui/material/Skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
@@ -27,6 +24,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLinks'
 import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 import { nftCollectionContainerId } from '../../utils/tabAnchors'
+import { ImageList, ImageListItem } from '../../components/ImageList'
 
 export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -123,17 +121,16 @@ const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
       {!!inventory?.length && (
         <>
-          <ImageList gap={10}>
+          <ImageList>
             {inventory?.map(instance => {
               const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.contract_addr, instance.id)
               return (
-                <ImageListItem key={instance.id}>
+                <ImageListItem
+                  key={instance.id}
+                  title={<NFTCollectionLink instance={instance} scope={scope} />}
+                  subtitle={<NFTInstanceLink instance={instance} scope={scope} />}
+                >
                   <ImageListItemImage instance={instance} to={to} />
-                  <ImageListItemBar
-                    title={<NFTCollectionLink instance={instance} scope={scope} />}
-                    subtitle={<NFTInstanceLink instance={instance} scope={scope} />}
-                    position="below"
-                  />
                 </ImageListItem>
               )
             })}

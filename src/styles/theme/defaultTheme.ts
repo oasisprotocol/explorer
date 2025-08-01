@@ -491,41 +491,6 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiImageList: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          [theme.breakpoints.up('sm')]: {
-            // default gridTemplateColumns is set by cols prop default number via inline styles
-            // and cannot be overridden without !important statement
-            gridTemplateColumns: `repeat(auto-fill, minmax(210px, auto))!important`,
-          },
-        }),
-      },
-    },
-    MuiImageListItem: {
-      styleOverrides: {
-        root: {
-          borderWidth: '1px',
-          borderStyle: 'solid',
-          borderColor: COLORS.brandExtraDark,
-          borderRadius: 8,
-          overflow: 'hidden',
-          transition: 'border-color, box-shadow 250ms ease-in-out',
-          '&:hover, &:focus-visible': {
-            boxShadow: '0px 8px 8px 0px rgba(0, 0, 0, 0.15)',
-            borderColor: COLORS.brandDark,
-          },
-        },
-      },
-    },
-    MuiImageListItemBar: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          paddingLeft: theme.spacing(3),
-          paddingRight: theme.spacing(3),
-        }),
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {

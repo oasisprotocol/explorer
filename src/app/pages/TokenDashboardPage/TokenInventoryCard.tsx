@@ -1,9 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import ImageList from '@mui/material/ImageList'
-import ImageListItem from '@mui/material/ImageListItem'
-import ImageListItemBar from '@mui/material/ImageListItemBar'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from './index'
@@ -16,6 +13,7 @@ import { EvmNft } from 'oasis-nexus/api'
 import { To } from 'react-router-dom'
 import { SearchScope } from 'types/searchScope'
 import { inventoryContainerId } from '../../utils/tabAnchors'
+import { ImageList, ImageListItem } from '../../components/ImageList'
 
 export const TokenInventoryCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { inventory, isFetched, pagination, totalCount } = useTokenInventory(scope, address)
@@ -60,18 +58,17 @@ const TokenInventoryView: FC<TokenInventoryViewProps> = ({
       {isFetched && !totalCount && <CardEmptyState label={t('tokens.emptyInventory')} />}
       {!!inventory?.length && (
         <>
-          <ImageList gap={10}>
+          <ImageList>
             {inventory?.map(instance => {
               const owner = instance?.owner_eth ?? instance?.owner
               const to = RouteUtils.getNFTInstanceRoute(scope, instance.token?.contract_addr, instance.id)
               return (
-                <ImageListItem key={instance.id}>
+                <ImageListItem
+                  key={instance.id}
+                  title={<NFTInstanceLink scope={scope} instance={instance} />}
+                  subtitle={owner ? <NFTOwnerLink scope={scope} owner={owner} /> : undefined}
+                >
                   <ImageListItemImage instance={instance} to={to} />
-                  <ImageListItemBar
-                    title={<NFTInstanceLink scope={scope} instance={instance} />}
-                    subtitle={owner ? <NFTOwnerLink scope={scope} owner={owner} /> : undefined}
-                    position="below"
-                  />
                 </ImageListItem>
               )
             })}
