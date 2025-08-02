@@ -21,6 +21,8 @@ const StyledBox: FC<PropsWithChildren> = ({ children }) => {
         flex: 1,
         overflowX: 'hidden',
         overflowY: 'hidden',
+        // Fix WithHighlighting clipping
+        padding: '3px 0 1px 5px',
       }}
     >
       {children}

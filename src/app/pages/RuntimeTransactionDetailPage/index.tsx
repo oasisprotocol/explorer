@@ -257,7 +257,13 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.eventsSummary')}</dt>
               <dd>
-                <Box sx={{ overflowX: 'auto', paddingTop: '1px' }}>
+                <Box
+                  sx={{
+                    overflowX: 'auto',
+                    // Fix WithHighlighting clipping
+                    paddingTop: '1px',
+                  }}
+                >
                   {transfers.map((transfer, i) => {
                     const params = transfer.evm_log_params
                     if (!params) return null
