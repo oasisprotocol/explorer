@@ -915,12 +915,5 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiListItemIcon: {
-      styleOverrides: {
-        root: {
-          color: 'inherit',
-        },
-      },
-    },
   },
 })
