@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
-import ListItemText from '@mui/material/ListItemText'
 import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
@@ -40,10 +39,10 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, tar
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>
-          <ListItemText>
+          <div className="flex-auto">
             {labels[targetScope.layer]}
             {isTablet && <LayerMenuItemCaption>{t('layerPicker.comingSoonLabel')}</LayerMenuItemCaption>}
-          </ListItemText>
+          </div>
         </MenuItem>
       </div>
     </Tooltip>
@@ -85,10 +84,10 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
       selected={isSelected}
       tabIndex={isSelected ? 0 : -1}
     >
-      <ListItemText>
+      <div className="flex-auto">
         {labels[targetScope.layer]}
         {isActive && <LayerMenuItemCaption>{t('layerPicker.active')}</LayerMenuItemCaption>}
-      </ListItemText>
+      </div>
       {isSelected && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
