@@ -741,22 +741,6 @@ export const defaultTheme = createTheme({
         }),
       },
     },
-    MuiIconButton: {
-      variants: [
-        {
-          props: { color: 'primary' },
-          style: () => ({
-            background: COLORS.white,
-            svg: {
-              color: COLORS.brandExtraDark,
-            },
-            '&:hover, &:focus-visible': {
-              background: COLORS.white,
-            },
-          }),
-        },
-      ],
-    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
