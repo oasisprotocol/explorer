@@ -3,7 +3,6 @@ import { Legend, ResponsiveContainer, Tooltip, PieChart as RechartsPieChart, Pie
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import CircleIcon from '@mui/icons-material/Circle'
-import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
@@ -29,7 +28,7 @@ type LegendListItemProps = {
 
 const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, color }) => {
   return (
-    <ListItem sx={{ padding: 0 }}>
+    <li className="flex items-center">
       <Box
         sx={{
           width: compact ? 32 : 48,
@@ -55,7 +54,7 @@ const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, 
       >
         {children}
       </Typography>
-    </ListItem>
+    </li>
   )
 }
 
