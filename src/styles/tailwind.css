@@ -1,0 +1,49 @@
+@import '@oasisprotocol/ui-library/src/styles/global.css';
+
+/* Specific fixes needed during migration to Oasis UI Library */
+
+/* Override MUI styles that are applied globally */
+[class*=' text-'] {
+  font-family: var(--default-font-family);
+}
+
+/* Override Tailwind's header reset for actual HTML header elements within MUI components */
+[class*='Mui'] h1:not([class*='MuiTypography']),
+[class*='Mui'] h2:not([class*='MuiTypography']),
+[class*='Mui'] h3:not([class*='MuiTypography']),
+[class*='Mui'] h4:not([class*='MuiTypography']),
+[class*='Mui'] h5:not([class*='MuiTypography']),
+[class*='Mui'] h6:not([class*='MuiTypography']) {
+  font-size: revert;
+  font-weight: revert;
+}
+
+/* Override Tailwind's vertical-align reset for MUI SVG components */
+[class*='Mui'] img,
+[class*='Mui'] svg,
+[class*='Mui'] video,
+[class*='Mui'] canvas,
+[class*='Mui'] audio,
+[class*='Mui'] iframe,
+[class*='Mui'] embed,
+[class*='Mui'] object {
+  vertical-align: revert;
+}
+
+/* Override Tailwind's table cell padding reset for actual HTML td elements within MUI components */
+[class*='Mui'] td:not([class*='MuiTableCell']),
+[class*='Mui'] th:not([class*='MuiTableCell']) {
+  padding: 1px;
+}
+
+/* Override Tailwind's table border-collapse reset for actual HTML table elements within MUI components */
+[class*='Mui'] table:not([class*='MuiTable']),
+[class*='Mui'] tbody:not([class*='MuiTableBody']) {
+  border-collapse: revert;
+}
+
+/* Override Tailwind's image list margin */
+[class*='MuiImageList'] {
+  margin-block-start: revert;
+  margin-block-end: revert;
+}

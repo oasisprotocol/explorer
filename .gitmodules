@@ -1,0 +1,3 @@
+[submodule "ui-library"]
+	path = ui-library
+	url = https://github.com/oasisprotocol/ui-library.git
