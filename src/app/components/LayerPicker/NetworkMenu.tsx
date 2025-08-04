@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
-import ListItemText from '@mui/material/ListItemText'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
@@ -47,7 +46,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       }}
     >
       <div className="min-w-9 shrink-0 inline-flex text-inherit">{icons[network]}</div>
-      <ListItemText>
+      <div className="flex-auto">
         {labels[network]}
         {isActive && (
           <Typography
@@ -57,7 +56,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
             {t('layerPicker.active')}
           </Typography>
         )}
-      </ListItemText>
+      </div>
       {network === selectedNetwork && <KeyboardArrowRightIcon />}
     </MenuItem>
   )
