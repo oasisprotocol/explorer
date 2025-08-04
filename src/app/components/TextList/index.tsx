@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
-import ListItem from '@mui/material/ListItem'
 import { COLORS } from '../../../styles/theme/colors'
 
 type TextListProps = {
@@ -22,7 +21,7 @@ const StyledList = styled('ul')(({ theme }) => ({
 
 export const TextList: FC<TextListProps> = ({ children }) => <StyledList>{children}</StyledList>
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
+const StyledListItem = styled('li')(({ theme }) => ({
   display: 'list-item',
   padding: 0,
   paddingBottom: theme.spacing(1),
