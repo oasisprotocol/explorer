@@ -4,13 +4,13 @@ import SearchIcon from '@mui/icons-material/Search'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import InputAdornment from '@mui/material/InputAdornment'
 import { COLORS } from '../../../styles/theme/colors'
-import IconButton from '@mui/material/IconButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { useScreenSize } from '../../hooks/useScreensize'
 import WarningIcon from '@mui/icons-material/WarningAmber'
 import { typingDelay } from '../../../styles/theme'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import Button from '@mui/material/Button'
+import MuiButton from '@mui/material/Button'
 import { CardEmptyState } from '../CardEmptyState'
 import { inputBaseClasses } from '@mui/material/InputBase'
 
@@ -103,9 +103,14 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
   const endAdornment = (
     <InputAdornment position="end">
       {value ? (
-        <IconButton color="inherit" sx={{ mt: -3, mb: -3, mr: -1 }} onClick={onClearValue}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClearValue}
+          className="hover:bg-black/[0.04] rounded-full -my-2 -ml-0.5"
+        >
           <HighlightOffIcon />
-        </IconButton>
+        </Button>
       ) : (
         <span style={{ width: '38px' }} />
       )}
@@ -179,9 +184,9 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
 export const NoMatchingDataMaybeClearFilters: FC<{ clearFilters: () => void }> = ({ clearFilters }) => {
   const { t } = useTranslation()
   const clearButton = (
-    <Button variant={'text'} onClick={() => clearFilters()}>
+    <MuiButton variant={'text'} onClick={() => clearFilters()}>
       {t('tableSearch.clearFilters')}
-    </Button>
+    </MuiButton>
   )
   return <CardEmptyState label={t('tableSearch.noMatchingResults')} action={clearButton} />
 }
