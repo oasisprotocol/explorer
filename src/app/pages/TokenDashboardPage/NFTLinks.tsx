@@ -72,7 +72,15 @@ export const NFTOwnerLink: FC<NFTOwnerLinkProps> = ({ scope, owner }) => {
   const { t } = useTranslation()
 
   return (
-    <Typography sx={{ display: 'flex', whiteSpace: 'initial' }}>
+    <Typography
+      sx={{
+        display: 'flex',
+        whiteSpace: 'initial',
+        // Fix WithHighlighting clipping
+        pt: '4px',
+        pb: '1px',
+      }}
+    >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>{t('nft.owner')}:</Box>
       &nbsp;
       <AccountLink scope={scope} address={owner} alwaysTrim />
