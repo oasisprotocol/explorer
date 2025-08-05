@@ -16,7 +16,7 @@ export const LearningMaterials: FC = () => {
             description={t('learningMaterials.consensus.description')}
             title={t('learningMaterials.consensus.header')}
             url={docs.consensus}
-            sx={{ height: '100%' }}
+            className="h-full"
           />
         </Grid>
         <Grid xs={12} md={3}>
@@ -40,7 +40,7 @@ export const LearningMaterials: FC = () => {
             description={t('learningMaterials.consensus.delegationDescription')}
             title={t('learningMaterials.consensus.delegation')}
             url={docs.delegation}
-            sx={{ height: '100%' }}
+            className="h-full"
           />
         </Grid>
         <Grid xs={12} md={3}>

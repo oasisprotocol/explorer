@@ -54,12 +54,6 @@ declare module '@mui/material/Typography' {
   }
 }
 
-declare module '@mui/material/Paper' {
-  interface PaperPropsVariantOverrides {
-    content: true
-  }
-}
-
 declare module '@mui/material/Chip' {
   export interface ChipPropsColorOverrides {
     tertiary: true
@@ -552,24 +546,6 @@ export const defaultTheme = createTheme({
           fontWeight: 700,
           textDecoration: 'none',
         },
-      },
-    },
-    MuiPaper: {
-      variants: [
-        {
-          props: { variant: 'content' },
-          style: ({ theme }) => ({
-            backgroundColor: COLORS.brightGray,
-            boxShadow: 'none',
-            color: COLORS.darkBlueGray,
-            padding: theme.spacing(4),
-          }),
-        },
-      ],
-      styleOverrides: {
-        root: () => ({
-          borderRadius: 6,
-        }),
       },
     },
     MuiLinearProgress: {
