@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -20,6 +19,7 @@ import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
 import Box from '@mui/material/Box'
+import { LayoutDivider } from '../../components/Divider'
 
 export const ConsensusTransactionsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -87,7 +87,7 @@ export const ConsensusTransactionsPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={
           <Box

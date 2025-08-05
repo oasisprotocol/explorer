@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -15,6 +14,7 @@ import { NetworkProposalsList } from '../../components/NetworkProposalsList'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { VerticalList } from '../../components/VerticalList'
 import { ProposalDetailView } from '../ProposalDetailsPage'
+import { LayoutDivider } from '../../components/Divider'
 
 export const ProposalsPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -47,7 +47,7 @@ export const ProposalsPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={
           <CardHeaderWithCounter

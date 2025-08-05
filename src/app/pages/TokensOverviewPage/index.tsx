@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
+import { LayoutDivider } from '../../components/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -65,7 +65,7 @@ export const TokensPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" sx={{ mb: 6 }} />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={t('common.tokens')}
         action={isMobile && <TableLayoutButton tableView={tableView} setTableView={setTableView} />}

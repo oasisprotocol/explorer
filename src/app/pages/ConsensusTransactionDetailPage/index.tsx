@@ -28,7 +28,7 @@ import { MultipleTransactionsWarning } from '../../components/Transactions/Multi
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import Box from '@mui/material/Box'
 import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
 
 const StyledDescriptionDetails = styled('dd')({
@@ -73,7 +73,7 @@ export const ConsensusTransactionDetailPage: FC = () => {
           {isMobile && (
             <>
               <ConsensusEventTypeFilter layer={transaction.layer} value={eventType} setValue={setEventType} />
-              <Divider variant={'card'} />
+              <CardDivider />
             </>
           )}
           <ConsensusTransactionEvents transaction={transaction} eventType={eventType} />

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
-import Divider from '@mui/material/Divider'
+import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
 import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
@@ -145,7 +145,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
           />
         </TabletActionBar>
       )}
-      <Divider />
+      <Separator />
       <StyledContent>
         <Grid container>
           {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&

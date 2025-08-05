@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Divider from '@mui/material/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -22,6 +21,7 @@ import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import Box from '@mui/material/Box'
+import { LayoutDivider } from '../../components/Divider'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
 
@@ -95,7 +95,7 @@ export const RuntimeTransactionsPage: FC = () => {
         tableView === TableLayout.Vertical && <LoadMoreButton pagination={pagination} isLoading={isLoading} />
       }
     >
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={
           <Box

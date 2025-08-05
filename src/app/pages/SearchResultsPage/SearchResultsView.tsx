@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import Divider from '@mui/material/Divider'
 import { SearchScope } from '../../../types/searchScope'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -11,6 +10,7 @@ import { AllTokenPrices } from '../../../coin-gecko/api'
 import { getFilterForLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchParams } from '../../components/Search/search-utils'
+import { LayoutDivider } from '../../components/Divider'
 
 export const SearchResultsView: FC<{
   wantedScope?: SearchScope
@@ -23,7 +23,7 @@ export const SearchResultsView: FC<{
   const { isMobile } = useScreenSize()
   return (
     <PageLayout>
-      {!isMobile && <Divider variant="layout" />}
+      {!isMobile && <LayoutDivider />}
       {isLoading ? (
         <SubPageCard featured isLoadingTitle={true}>
           <TextSkeleton numberOfRows={7} />

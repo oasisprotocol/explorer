@@ -8,7 +8,7 @@ import { RuntimeBlockDetailsContext } from '.'
 import { eventsContainerId } from '../../utils/tabAnchors'
 import { getRuntimeEventTypeFilteringParam } from '../../hooks/useCommonParams'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
-import Divider from '@mui/material/Divider'
+import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
 const EventsList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, eventType }) => {
@@ -53,7 +53,7 @@ export const RuntimeBlockEventsCard: FC<RuntimeBlockDetailsContext> = props => {
   return (
     <LinkableCardLayout containerId={eventsContainerId} title="">
       <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-      <Divider variant={'card'} />
+      <CardDivider />
       <ErrorBoundary light>
         <EventsList {...props} />
       </ErrorBoundary>
