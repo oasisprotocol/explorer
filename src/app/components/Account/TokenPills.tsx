@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Chip from '@mui/material/Chip'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
@@ -49,19 +49,10 @@ export const Pill: FC<PillProps> = ({ account, pill }) => {
   )
 
   return (
-    <Chip
-      clickable
-      color="tertiary"
-      component={RouterLink}
-      to={tokenRoute}
-      key={pill.token_contract_addr_eth ?? pill.token_contract_addr}
-      label={
-        <>
-          <RoundedBalance value={pill.balance} ticker={pill.token_symbol || t('common.missing')} />
-        </>
-      }
-      sx={{ mr: 2 }}
-      variant="outlined"
-    />
+    <RouterLink to={tokenRoute}>
+      <Badge className="px-3 py-1.5 bg-blue-100 outline outline-2 outline-offset-[-2px] outline-blue-600 text-base-foreground font-medium">
+        <RoundedBalance value={pill.balance} ticker={pill.token_symbol || t('common.missing')} />
+      </Badge>
+    </RouterLink>
   )
 }

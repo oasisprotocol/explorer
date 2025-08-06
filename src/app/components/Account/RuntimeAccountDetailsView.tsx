@@ -137,7 +137,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
       </dd>
 
       <dt>{t('common.tokens')}</dt>
-      <dd>
+      <dd className="gap-2">
         <TokenPills account={account} tokens={account.evm_balances} />
       </dd>
 
