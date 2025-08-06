@@ -1,46 +1,20 @@
-import Snackbar from '@mui/material/Snackbar'
-import Typography from '@mui/material/Typography'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import { useScreenSize } from 'app/hooks/useScreensize'
-
 export const AnalyticsDialogLayout = (props: {
   isOpen: boolean
   message: React.ReactNode
   actions: React.ReactNode
 }) => {
-  const { isMobile } = useScreenSize()
   return (
     <>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        sx={{
-          maxWidth: '450px',
-        }}
-        open={props.isOpen}
-      >
-        <Card elevation={4}>
-          <CardContent>
-            <Typography
-              fontSize="14px"
-              sx={{
-                paddingBottom: '12px',
-                lineHeight: '1.25',
-              }}
-              align="center"
-            >
-              {props.message}
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: 'center', paddingBottom: isMobile ? '16px' : '32px' }}>
-            {props.actions}
-          </CardActions>
-        </Card>
-      </Snackbar>
+      {props.isOpen && (
+        <div className="fixed bottom-14 right-0 z-50 animate-in zoom-in duration-200 mx-3 sm:mx-6">
+          <div className="bg-white border rounded-lg shadow-lg p-8 max-w-md">
+            <div className="text-center mb-3">
+              <div className="text-sm pb-3 leading-tight">{props.message}</div>
+            </div>
+            <div className="flex justify-center gap-2">{props.actions}</div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
