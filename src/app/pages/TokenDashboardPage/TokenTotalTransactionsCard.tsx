@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Skeleton from '@mui/material/Skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { useTokenInfo } from './hook'
 import { RuntimeScope } from '../../../types/searchScope'
@@ -15,7 +15,7 @@ export const TokenTotalTransactionsCard: FC<{ scope: RuntimeScope; address: stri
   return (
     <SnapshotTextCard title={t('common.transfers')} alignWithCardsWithActions>
       {isLoading ? (
-        <Skeleton variant="text" />
+        <Skeleton className="h-4" />
       ) : (
         isFetched && (
           <>
