@@ -23,6 +23,9 @@ import { tableCellClasses } from '@mui/material/TableCell'
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   flex: 1,
+  borderTopRightRadius: 0,
+  borderTopLeftRadius: 0,
+  borderTop: 'none',
   '&': {
     padding: `0 ${theme.spacing(4)}`,
     marginBottom: 0,
@@ -47,13 +50,7 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
           <TabsTrigger value="staked">{t('common.staked')}</TabsTrigger>
           <TabsTrigger value="debonding">{t('common.debonding')}</TabsTrigger>
         </TabsList>
-        <StyledCard
-          sx={{
-            borderTopRightRadius: 0,
-            borderTopLeftRadius: 0,
-            borderTop: 'none',
-          }}
-        >
+        <StyledCard>
           <CardContent>
             {isLoading && <Skeleton className="h-[300px] mt-8" />}
             {!isLoading && account && (
