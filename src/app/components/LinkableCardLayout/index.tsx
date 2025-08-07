@@ -13,7 +13,13 @@ type LinkableCardLayoutProps = {
 }
 export const LinkableCardLayout: FC<LinkableCardLayoutProps> = ({ children, containerId, title, action }) => {
   return (
-    <Card>
+    <Card
+      sx={{
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
+        borderTop: 'none',
+      }}
+    >
       <LinkableDiv id={containerId}>
         <CardHeader disableTypography component="h3" title={title} action={action} />
       </LinkableDiv>
