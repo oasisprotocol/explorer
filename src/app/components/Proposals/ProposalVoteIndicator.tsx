@@ -1,55 +1,29 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CancelIcon from '@mui/icons-material/Cancel'
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
+import { CircleCheckIcon, CircleXIcon, CircleOffIcon } from 'lucide-react'
 import { ProposalVoteValue } from '../../../types/vote'
 import { AppErrors } from '../../../types/errors'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: 3,
-  flex: 1,
-  borderRadius: 10,
-  padding: theme.spacing(2, 2, 2, '10px'),
-  fontSize: '12px',
-  minWidth: '85px',
-}))
-
-const StyledIcon = styled(Box)({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '18px',
-})
+const statusVariant: Record<ProposalVoteValue, 'success' | 'muted' | 'error'> = {
+  [ProposalVoteValue.yes]: 'success',
+  [ProposalVoteValue.abstain]: 'muted',
+  [ProposalVoteValue.no]: 'error',
+}
 
 const getStatuses = (t: TFunction) => ({
   [ProposalVoteValue.abstain]: {
-    backgroundColor: COLORS.lightSilver,
-    icon: RemoveCircleIcon,
-    iconColor: COLORS.grayMedium,
+    icon: CircleOffIcon,
     label: t('networkProposal.vote.abstain'),
-    textColor: COLORS.grayExtraDark,
   },
   [ProposalVoteValue.yes]: {
-    backgroundColor: COLORS.honeydew,
-    icon: CheckCircleIcon,
-    iconColor: COLORS.eucalyptus,
+    icon: CircleCheckIcon,
     label: t('networkProposal.vote.yes'),
-    textColor: COLORS.grayExtraDark,
   },
   [ProposalVoteValue.no]: {
-    backgroundColor: COLORS.linen,
-    icon: CancelIcon,
-    iconColor: COLORS.errorIndicatorBackground,
+    icon: CircleXIcon,
     label: t('networkProposal.vote.no'),
-    textColor: COLORS.grayExtraDark,
   },
 })
 
@@ -68,11 +42,9 @@ export const ProposalVoteIndicator: FC<ProposalVoteIndicatorProps> = ({ vote }) 
   const IconComponent = statusConfig.icon
 
   return (
-    <StyledBox sx={{ backgroundColor: statusConfig.backgroundColor, color: statusConfig.textColor }}>
+    <Badge variant={statusVariant[vote]}>
       {statusConfig.label}
-      <StyledIcon sx={{ color: statusConfig.iconColor }}>
-        <IconComponent color="inherit" fontSize="inherit" />
-      </StyledIcon>
-    </StyledBox>
+      <IconComponent />
+    </Badge>
   )
 }

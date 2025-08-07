@@ -1,40 +1,28 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CancelIcon from '@mui/icons-material/Cancel'
-import { COLORS } from '../../../styles/theme/colors'
 import { ProposalState } from '../../../oasis-nexus/api'
-import { Badge } from '../../components/Badge'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
+
+const statusVariant: Record<ProposalState, 'partial-success' | 'success' | 'error' | 'destructive'> = {
+  [ProposalState.active]: 'partial-success',
+  [ProposalState.passed]: 'success',
+  [ProposalState.rejected]: 'error',
+  [ProposalState.failed]: 'destructive',
+}
 
 const getStatuses = (t: TFunction) => ({
   [ProposalState.active]: {
-    backgroundColor: COLORS.honeydew,
-    icon: CheckCircleIcon,
-    iconColor: COLORS.eucalyptus,
     label: t('networkProposal.state.active'),
-    textColor: COLORS.grayExtraDark,
   },
   [ProposalState.passed]: {
-    backgroundColor: COLORS.eucalyptus,
-    icon: CheckCircleIcon,
-    iconColor: COLORS.honeydew,
     label: t('networkProposal.state.passed'),
-    textColor: COLORS.white,
   },
   [ProposalState.rejected]: {
-    backgroundColor: COLORS.errorIndicatorBackground,
-    icon: CancelIcon,
-    iconColor: COLORS.linen,
     label: t('networkProposal.state.rejected'),
-    textColor: COLORS.white,
   },
   [ProposalState.failed]: {
-    backgroundColor: COLORS.linen,
-    icon: CancelIcon,
-    iconColor: COLORS.errorIndicatorBackground,
     label: t('networkProposal.state.failed'),
-    textColor: COLORS.grayExtraDark,
   },
 })
 
@@ -50,14 +38,6 @@ export const ProposalStatusIcon: FC<ProposalStatusIconProps> = ({ status }) => {
   }
 
   const statusConfig = getStatuses(t)[status]
-  const IconComponent = statusConfig.icon
 
-  return (
-    <Badge
-      backgroundColor={statusConfig.backgroundColor}
-      textColor={statusConfig.textColor}
-      label={statusConfig.label}
-      icon={<IconComponent sx={{ color: statusConfig.iconColor }} fontSize="inherit" />}
-    />
-  )
+  return <Badge variant={statusVariant[status]}>{statusConfig.label}</Badge>
 }
