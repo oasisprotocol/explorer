@@ -1,7 +1,6 @@
 import { EvmTokenType } from '../oasis-nexus/api'
 import { TFunction } from 'i18next'
 import { exhaustedTypeWarning } from './errors'
-import { COLORS } from '../styles/theme/colors'
 
 export const getTokenTypeDescription = (t: TFunction, tokenType: EvmTokenType | undefined): string => {
   switch (tokenType) {
@@ -15,18 +14,6 @@ export const getTokenTypeDescription = (t: TFunction, tokenType: EvmTokenType | 
       exhaustedTypeWarning('Unknown token type', tokenType)
       return '???'
   }
-}
-
-export const tokenBackgroundColor: Record<EvmTokenType | 'missing', string> = {
-  missing: COLORS.errorIndicatorBackground,
-  ERC20: COLORS.brandMedium15,
-  ERC721: COLORS.pink15,
-}
-
-export const tokenBorderColor: Record<EvmTokenType | 'missing', string> = {
-  missing: COLORS.pink,
-  ERC20: COLORS.brandMedium,
-  ERC721: COLORS.pink,
 }
 
 export const getTokenTypePluralDescription = (t: TFunction, tokenType: EvmTokenType): string => {

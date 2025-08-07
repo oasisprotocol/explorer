@@ -12,7 +12,6 @@ import CircleIcon from '@mui/icons-material/Circle'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
-import { RuntimeStatusIcon } from '../../components/RuntimeStatusIcon'
 import { InlineDescriptionList } from '../../components/StyledDescriptionList'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { RouterLinkCircle } from '../../components/StyledLinks'
@@ -23,6 +22,7 @@ import { Network } from '../../../types/network'
 import { TransactionsChartCard } from '../ParatimeDashboardPage/TransactionsChartCard'
 import { ActiveAccounts } from '../ParatimeDashboardPage/ActiveAccounts'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
   marginBottom: theme.spacing(4),
@@ -137,7 +137,7 @@ export const DisabledRuntimePreview: FC<DisabledRuntimePreviewProps> = ({ runtim
     <StyledDisabledRuntime>
       <StyledTypography>{runtimeLabel}</StyledTypography>
       <Box>
-        <RuntimeStatusIcon status="inactive" />
+        <Badge variant="info">{t('paratimes.inactive')}</Badge>
       </Box>
     </StyledDisabledRuntime>
   )
@@ -180,7 +180,8 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
         <dt>{t('common.status')}:</dt>
         <dd>
           <Box>
-            <RuntimeStatusIcon status={runtimeStatus} />
+            {runtimeStatus === 'stable' && <Badge variant="success">{t('common.online')}</Badge>}
+            {runtimeStatus === 'outdated' && <Badge variant="error">{t('paratimes.outdated')}</Badge>}
           </Box>
         </dd>
         <dt>{t('paratimes.blockNumber')}</dt>
