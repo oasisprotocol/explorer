@@ -4,6 +4,9 @@
     "generate": "orval"
   },
   "dependencies": {
-    "orval": "^6.30.2"
+    "orval": "^7.10.0"
+  },
+  "resolutions": {
+    "@apidevtools/swagger-parser": "10.1.0"
   }
 }
