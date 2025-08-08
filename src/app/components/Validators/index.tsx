@@ -13,6 +13,7 @@ import { ValidatorLink } from './ValidatorLink'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { BalancesDiff } from '../BalancesDiff'
 import { PercentageValue } from '../PercentageValue'
+import { UptimeStatus } from '../UptimeStatus'
 
 type ValidatorsProps = {
   validators?: Validator[]
@@ -36,6 +37,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
     { align: TableCellAlign.Right, key: 'delegators', content: t('validator.delegators') },
     { align: TableCellAlign.Right, key: 'commission', content: t('validator.commission') },
     { key: 'status', content: t('common.status') },
+    { align: TableCellAlign.Center, key: 'uptime', content: t('validator.uptime') },
   ]
   const tableRows = validators?.map((validator, index) => ({
     key: validator.entity_address,
@@ -124,6 +126,11 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
           </Box>
         ),
         key: 'status',
+      },
+      {
+        align: TableCellAlign.Right,
+        content: <UptimeStatus small uptime={validator.uptime} />,
+        key: 'uptime',
       },
     ],
   }))

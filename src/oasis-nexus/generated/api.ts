@@ -2115,6 +2115,24 @@ export interface ValidatorSignedBlock {
   signed: boolean;
 }
 
+export interface ValidatorUptime {
+  /** The length of the window segment, in blocks. We subdivide the window into segments of equal length
+and aggregate the uptime of each segment into `segment_uptimes`.
+Currently always 1200 blocks, which is approximately 2 hours.
+ */
+  segment_length: number;
+  /** An array showing the signed block counts for each sub-segment within window_length.
+The segments are in reverse-chronological order; ie the first element represents the most recent segment of blocks.
+ */
+  segment_uptimes: number[];
+  /** The length of the historical window for which this object provides uptime information, in blocks.
+Currently always 14400 blocks, or approximately 24 hours.
+ */
+  window_length: number;
+  /** The number of blocks signed by the validator out of the last window_length blocks. */
+  window_uptime: number;
+}
+
 export interface ValidatorMedia {
   /** An email address associated with the entity. */
   email?: string;
@@ -2138,7 +2156,7 @@ export interface ValidatorCommissionBound {
 }
 
 /**
- * An validator registered at the consensus layer.
+ * A validator registered at the consensus layer.
 
  */
 export interface Validator {
@@ -2164,6 +2182,8 @@ export interface Validator {
   signed_blocks?: ValidatorSignedBlock[];
   /** The second-granular consensus time. */
   start_date: string;
+  /** The validator's uptime statistics for a period of time up to now. */
+  uptime?: ValidatorUptime;
   /** The voting power of this validator. */
   voting_power: number;
   /** The cumulative voting power of this validator and all other validators ranked higher than itself. */
