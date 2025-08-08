@@ -1,61 +1,62 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 import { COLORS } from '../../../styles/theme/colors'
 import { PercentageValue } from '../PercentageValue'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { ValidatorUptime } from 'oasis-nexus/api'
 
 const getUptimeItemColor = (value: number | undefined) => {
-  if (!value) {
+  if (typeof value !== 'number') {
     return COLORS.grayMediumLight
   }
 
-  if (value > 90) {
+  if (value > 900) {
     return COLORS.eucalyptus
   }
 
   return COLORS.errorIndicatorBackground
 }
 
-type UptimeItem = {
-  small?: boolean
-  value?: number
-}
-
-const StyledBox = styled(Box)<UptimeItem>(({ small, value }) => ({
-  background: getUptimeItemColor(value),
-  width: small ? '3px' : '7px',
-  minWidth: small ? '3px' : '7px',
-  height: small ? '15px' : '45px',
-  borderRadius: small ? '2px' : '4px',
-  color: COLORS.white,
-  marginRight: small ? 1 : 2,
-}))
-
 export const ensureTwelveElements = (inputArray: number[] = []) => {
   return [...inputArray, ...new Array(12).fill(undefined)].slice(0, 12)
 }
 
 type UptimeStatusProps = {
-  percentage?: number
   small?: boolean
-  status?: number[]
+  uptime?: ValidatorUptime
 }
 
-export const UptimeStatus: FC<UptimeStatusProps> = ({ percentage, status, small }) => {
-  const adjustedStatus = ensureTwelveElements(status)
+export const UptimeStatus: FC<UptimeStatusProps> = ({ uptime, small }) => {
+  const { t } = useTranslation()
+
+  if (!uptime?.segment_uptimes) {
+    return <>{t('common.missing')}</>
+  }
+
+  const adjustedStatus = ensureTwelveElements(uptime?.segment_uptimes)
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: small ? 4 : 5 }}>
-      <Box sx={{ display: 'flex' }}>
+    <div className={cn('flex items-center gap-4 justify-between', small && 'w-[110px]')}>
+      <div className="flex">
         {adjustedStatus?.map((value, index) => (
-          <StyledBox small={small} key={`${value}-${index}`} value={value} />
+          <div
+            key={`${value}-${index}`}
+            className={cn(
+              'inline-block',
+              small
+                ? 'w-[3px] min-w-[3px] h-[15px] rounded-[2px] mr-[1px]'
+                : 'w-[7px] min-w-[7px] h-[45px] rounded-[4px] mr-[2px]',
+            )}
+            style={{ backgroundColor: getUptimeItemColor(value), color: COLORS.white }}
+          />
         ))}
-      </Box>
-      {percentage && (
-        <Box>
-          <PercentageValue value={percentage} />
-        </Box>
+      </div>
+      {uptime?.window_uptime && uptime?.window_length && (
+        <PercentageValue
+          value={(uptime.window_uptime / uptime.window_length) * 100}
+          maximumFractionDigits={1}
+        />
       )}
-    </Box>
+    </div>
   )
 }
