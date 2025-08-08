@@ -5,10 +5,12 @@ type PercentageValueProps = {
   adaptMaximumFractionDigits?: boolean
   total?: number
   value: number | undefined
+  maximumFractionDigits?: number
 }
 
 export const PercentageValue: FC<PercentageValueProps> = ({
-  adaptMaximumFractionDigits,
+  maximumFractionDigits,
+  adaptMaximumFractionDigits = 2,
   value,
   total = 100,
 }) => {
@@ -27,7 +29,8 @@ export const PercentageValue: FC<PercentageValueProps> = ({
         formatParams: {
           value: {
             style: 'percent',
-            maximumFractionDigits: adaptMaximumFractionDigits && percentageValue < 0.001 ? 3 : 2,
+            maximumFractionDigits:
+              adaptMaximumFractionDigits && percentageValue < 0.001 ? 3 : maximumFractionDigits,
           } satisfies Intl.NumberFormatOptions,
         },
       })}
