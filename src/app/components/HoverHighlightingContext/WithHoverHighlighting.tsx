@@ -1,11 +1,14 @@
 import { FC, ReactNode, useEffect } from 'react'
-import { useAddressHighlighting } from './index'
+import { useHoverHighlighting } from './index'
 import { COLORS } from '../../../styles/theme/colors'
 import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
 
-export const WithHighlighting: FC<{ children: ReactNode; address: string }> = ({ children, address }) => {
-  const { highlightedAddress, highlightAddress, releaseAddress } = useAddressHighlighting()
+export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }> = ({
+  children,
+  address,
+}) => {
+  const { highlightedAddress, highlightAddress, releaseAddress } = useHoverHighlighting()
   useEffect(() => {
     // Release address on unmount
     return () => releaseAddress(address)

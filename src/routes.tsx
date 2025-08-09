@@ -67,7 +67,7 @@ import { RoflAppsPage } from './app/pages/RoflAppsPage'
 import { RoflAppDetailsPage } from 'app/pages/RoflAppDetailsPage'
 import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
-import { HighlightingContextProvider } from './app/components/HighlightingContext'
+import { HoverHighlightingContextProvider } from './app/components/HoverHighlightingContext'
 import { useLocalSettings } from './app/hooks/useLocalSettings'
 import { InstancesCard } from './app/pages/RoflAppDetailsPage/InstancesCard'
 import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
@@ -126,9 +126,9 @@ export const routes: RouteObject[] = [
     element: (
       <AnalyticsConsentProvider>
         <ScrollRestoration />
-        <HighlightingContextProvider>
+        <HoverHighlightingContextProvider>
           <Outlet />
-        </HighlightingContextProvider>
+        </HoverHighlightingContextProvider>
       </AnalyticsConsentProvider>
     ),
     children: [

@@ -9,7 +9,7 @@ import { HighlightedText, HighlightPattern } from '../HighlightedText'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
-import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
+import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHighlighting'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
@@ -184,7 +184,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({
 }) => {
   if (alwaysTrim) {
     return (
-      <WithHighlighting address={address}>
+      <WithHoverHighlighting address={address}>
         {name ? (
           <CustomTrimEndLinkLabel
             name={name}
@@ -200,12 +200,12 @@ const DesktopLink: FC<DesktopLinkProps> = ({
             {trimLongString(address)}
           </MuiLink>
         )}
-      </WithHighlighting>
+      </WithHoverHighlighting>
     )
   }
   const label = name ? <HighlightedText text={name} pattern={highlightPattern} /> : address
   return (
-    <WithHighlighting address={address}>
+    <WithHoverHighlighting address={address}>
       {labelOnly ? (
         <LinkLabel>{label}</LinkLabel>
       ) : (
@@ -213,6 +213,6 @@ const DesktopLink: FC<DesktopLinkProps> = ({
           {label}
         </MuiLink>
       )}
-    </WithHighlighting>
+    </WithHoverHighlighting>
   )
 }

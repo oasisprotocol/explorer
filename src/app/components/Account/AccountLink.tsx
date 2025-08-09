@@ -14,7 +14,7 @@ import { HighlightedText, HighlightPattern } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
-import { WithHighlighting } from '../HighlightingContext/WithHighlighting'
+import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHighlighting'
 
 const WithTypographyAndLink: FC<{
   scope: SearchScope
@@ -25,7 +25,7 @@ const WithTypographyAndLink: FC<{
 }> = ({ scope, address, children, labelOnly }) => {
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
-    <WithHighlighting address={address}>
+    <WithHoverHighlighting address={address}>
       <Typography variant="mono" component="span">
         {labelOnly ? (
           children
@@ -35,7 +35,7 @@ const WithTypographyAndLink: FC<{
           </Link>
         )}
       </Typography>
-    </WithHighlighting>
+    </WithHoverHighlighting>
   )
 }
 

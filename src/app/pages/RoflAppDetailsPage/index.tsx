@@ -37,7 +37,7 @@ import { LastActivity } from './LastActivity'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { SearchScope } from 'types/searchScope'
 import { Ticker } from 'types/ticker'
-import { WithHighlighting } from '../../components/HighlightingContext/WithHighlighting'
+import { WithHoverHighlighting } from '../../components/HoverHighlightingContext/WithHoverHighlighting'
 import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
 import { RoflAppLoaderData } from '../../utils/route-utils'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
@@ -137,11 +137,11 @@ export const RoflAppDetailsView: FC<{
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
-        <WithHighlighting address={app.id}>
+        <WithHoverHighlighting address={app.id}>
           <Typography variant="mono" component="span">
             {app.id}
           </Typography>
-        </WithHighlighting>
+        </WithHoverHighlighting>
         <CopyToClipboard value={app.id} />
       </DetailsRow>
       <DetailsRow title={t('rofl.enclaveId')}>
