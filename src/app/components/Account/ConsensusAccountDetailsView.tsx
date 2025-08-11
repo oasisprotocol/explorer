@@ -14,7 +14,6 @@ import { AccountSizeBadge } from '../AccountSizeBadge'
 import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
-import { HighlightPattern } from '../HighlightedText'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
@@ -30,7 +29,6 @@ type ConsensusAccountDetailsViewProps = {
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
-  highlightPattern?: HighlightPattern
 }
 
 export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> = ({
@@ -39,7 +37,6 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   isLoading,
   showLayer,
   standalone,
-  highlightPattern,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -71,12 +68,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       </StyledListTitleWithAvatar>
       <dd>
         <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
-          <ConsensusAccountLink
-            alwaysTrim={false}
-            network={account.network}
-            address={account.address}
-            highlightPattern={highlightPattern}
-          />
+          <ConsensusAccountLink alwaysTrim={false} network={account.network} address={account.address} />
           <CopyToClipboard value={account.address} />
         </Box>
       </dd>

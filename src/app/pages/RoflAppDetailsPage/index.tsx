@@ -38,7 +38,7 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { SearchScope } from 'types/searchScope'
 import { Ticker } from 'types/ticker'
 import { WithHoverHighlighting } from '../../components/HoverHighlightingContext/WithHoverHighlighting'
-import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
+import { HighlightedText } from '../../components/HighlightedText'
 import { RoflAppLoaderData } from '../../utils/route-utils'
 
 export const RoflAppDetailsPage: FC = () => {
@@ -120,8 +120,7 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 export const RoflAppDetailsView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-  highlightPattern?: HighlightPattern
-}> = ({ app, isLoading, highlightPattern }) => {
+}> = ({ app, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -130,7 +129,7 @@ export const RoflAppDetailsView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightPattern={highlightPattern} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
@@ -191,8 +190,7 @@ export const RoflAppDetailsView: FC<{
 export const RoflAppDetailsViewSearchResult: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-  highlightPattern?: HighlightPattern
-}> = ({ app, isLoading, highlightPattern }) => {
+}> = ({ app, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -204,17 +202,11 @@ export const RoflAppDetailsViewSearchResult: FC<{
       <DetailsRow title={t('common.paratime')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
       </DetailsRow>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightPattern={highlightPattern} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
-        <RoflAppLink
-          id={app.id}
-          name={app.id}
-          network={app.network}
-          highlightPattern={highlightPattern}
-          withSourceIndicator={false}
-        />
+        <RoflAppLink id={app.id} name={app.id} network={app.network} withSourceIndicator={false} />
         <CopyToClipboard value={app.id} />
       </DetailsRow>
       <AdminAccountRow
@@ -235,8 +227,7 @@ export const RoflAppDetailsViewSearchResult: FC<{
 export const RoflAppDetailsVerticalListView: FC<{
   isLoading?: boolean
   app: RoflApp | undefined
-  highlightPattern?: HighlightPattern
-}> = ({ app, isLoading, highlightPattern }) => {
+}> = ({ app, isLoading }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -245,7 +236,7 @@ export const RoflAppDetailsVerticalListView: FC<{
 
   return (
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} highlightPattern={highlightPattern} />
+      <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
       <DetailsRow title={t('rofl.appId')}>
         <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />
@@ -272,12 +263,11 @@ export const RoflAppDetailsVerticalListView: FC<{
 
 const NameRow: FC<{
   name?: string
-  highlightPattern?: HighlightPattern
-}> = ({ name, highlightPattern }) => {
+}> = ({ name }) => {
   const { t } = useTranslation()
   return (
     <DetailsRow title={t('common.name')}>
-      {name ? <HighlightedText text={name} pattern={highlightPattern} /> : t('common.missing')}
+      {name ? <HighlightedText text={name} /> : t('common.missing')}
     </DetailsRow>
   )
 }

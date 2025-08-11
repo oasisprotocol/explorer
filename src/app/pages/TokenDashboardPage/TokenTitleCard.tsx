@@ -9,13 +9,11 @@ import { useTranslation } from 'react-i18next'
 import { RuntimeScope } from '../../../types/searchScope'
 import { HighlightedText } from '../../components/HighlightedText'
 import { TitleCard } from '../../components/PageLayout/TitleCard'
-import { HighlightPattern } from '../../components/HighlightedText'
 
 export const TokenTitleCard: FC<{
   scope: RuntimeScope
   address: string
-  highlightPattern?: HighlightPattern
-}> = ({ scope, address, highlightPattern }) => {
+}> = ({ scope, address }) => {
   const { t } = useTranslation()
   const { isLoading, token } = useTokenInfo(scope, address)
 
@@ -46,11 +44,7 @@ export const TokenTitleCard: FC<{
       isLoading={isLoading}
       title={
         <>
-          {token?.name ? (
-            <HighlightedText text={token.name} pattern={highlightPattern} />
-          ) : (
-            t('common.missing')
-          )}
+          {token?.name ? <HighlightedText text={token.name} /> : t('common.missing')}
           &nbsp;
           <Typography
             component="span"
@@ -59,11 +53,7 @@ export const TokenTitleCard: FC<{
               color: COLORS.grayMedium,
             }}
           >
-            {token?.symbol ? (
-              <HighlightedText text={token.symbol} pattern={highlightPattern} />
-            ) : (
-              t('common.missing')
-            )}
+            {token?.symbol ? <HighlightedText text={token.symbol} /> : t('common.missing')}
           </Typography>
         </>
       }

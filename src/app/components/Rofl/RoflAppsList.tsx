@@ -8,23 +8,15 @@ import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
 import { RoflAppStatusBadge } from './RoflAppStatusBadge'
 import { RoflAppLink } from './RoflAppLink'
-import { HighlightPattern } from '../HighlightedText'
 
 type RoflAppsListProps = {
   apps?: RoflApp[]
   isLoading: boolean
   limit: number
   pagination: TablePaginationProps | false
-  highlightPattern?: HighlightPattern
 }
 
-export const RoflAppsList: FC<RoflAppsListProps> = ({
-  isLoading,
-  limit,
-  pagination,
-  apps,
-  highlightPattern,
-}) => {
+export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, pagination, apps }) => {
   const { t } = useTranslation()
   const { isTablet } = useScreenSize()
 
@@ -58,12 +50,7 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({
         },
         {
           content: app?.metadata['net.oasis.rofl.name'] ? (
-            <RoflAppLink
-              id={app.id}
-              name={app?.metadata['net.oasis.rofl.name']}
-              network={app.network}
-              highlightPattern={highlightPattern}
-            />
+            <RoflAppLink id={app.id} name={app?.metadata['net.oasis.rofl.name']} network={app.network} />
           ) : (
             t('rofl.nameNotProvided')
           ),

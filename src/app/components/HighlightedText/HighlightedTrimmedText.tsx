@@ -31,5 +31,5 @@ export const HighlightedTrimmedText: FC<HighlightedTrimmedTextProps> = props => 
   const pattern = useHighlightPattern()
   const { text, fragmentLength, options } = props
   const { part } = trimAroundMatch(text, pattern, { fragmentLength })
-  return <HighlightedText text={part} pattern={pattern} options={options} />
+  return <HighlightedText text={part} options={options} />
 }

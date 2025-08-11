@@ -23,7 +23,6 @@ import { COLORS } from 'styles/theme/colors'
 import { ProposalVotesCard } from './ProposalVotesCard'
 import { useVoteStats } from './hooks'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import { HighlightPattern } from '../../components/HighlightedText'
 import { getTypeNameForProposal } from '../../../types/proposalType'
 
 export const ProposalDetailsPage: FC = () => {
@@ -67,7 +66,6 @@ const VoteLoadingProblemIndicator: FC = () => {
 
 export const ProposalDetailView: FC<{
   proposal: Proposal | undefined
-  highlightPattern?: HighlightPattern
   isLoading?: boolean
   totalVotesLoading?: boolean
   totalVotesProblematic?: boolean
@@ -82,7 +80,6 @@ export const ProposalDetailView: FC<{
   totalVotes,
   showLayer = false,
   standalone = false,
-  highlightPattern,
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
@@ -107,7 +104,7 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.title')}</dt>
       <dd>
-        <HighlightedText text={proposal.title} pattern={highlightPattern} />
+        <HighlightedText text={proposal.title} />
       </dd>
 
       <dt>{t('common.type')}</dt>

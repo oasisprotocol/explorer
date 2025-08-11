@@ -9,7 +9,7 @@ import { TitleCard } from 'app/components/PageLayout/TitleCard'
 import { Network } from '../../../types/network'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { AccountLink } from '../../components/Account/AccountLink'
-import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
+import { HighlightedText } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 import { useScreenSize } from '../../hooks/useScreensize'
 
@@ -17,15 +17,9 @@ type ValidatorTitleCardProps = {
   isLoading: boolean
   network: Network
   validator?: Validator
-  highlightPattern?: HighlightPattern
 }
 
-export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({
-  isLoading,
-  network,
-  validator,
-  highlightPattern,
-}) => {
+export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, network, validator }) => {
   const { isTablet } = useScreenSize()
   return (
     <TitleCard
@@ -58,9 +52,9 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({
                 />
                 &nbsp;&nbsp;
                 {isTablet ? (
-                  <AdaptiveHighlightedText text={validator?.media?.name} pattern={highlightPattern} />
+                  <AdaptiveHighlightedText text={validator?.media?.name} />
                 ) : (
-                  <HighlightedText text={validator?.media?.name} pattern={highlightPattern} />
+                  <HighlightedText text={validator?.media?.name} />
                 )}
                 &nbsp;
                 <Typography

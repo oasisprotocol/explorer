@@ -5,7 +5,7 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { COLORS } from '../../../styles/theme/colors'
 import { trimLongString } from '../../utils/trimLongString'
-import { HighlightedText, HighlightPattern } from '../HighlightedText'
+import { HighlightedText } from '../HighlightedText'
 import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
@@ -21,7 +21,6 @@ type LinkProps = {
   name?: string
   alwaysTrim?: boolean
   trimMode?: TrimMode
-  highlightPattern?: HighlightPattern
   to: string
   withSourceIndicator?: boolean
   labelOnly?: boolean
@@ -32,7 +31,6 @@ export const Link: FC<LinkProps> = ({
   name,
   alwaysTrim,
   trimMode,
-  highlightPattern,
   to,
   withSourceIndicator = true,
   labelOnly,
@@ -70,21 +68,13 @@ export const Link: FC<LinkProps> = ({
           sx={{ color: labelOnly ? COLORS.brandExtraDark : COLORS.brandDark, fontWeight: 700 }}
         >
           {isTablet ? (
-            <TabletLink
-              address={address}
-              name={name}
-              to={to}
-              highlightPattern={highlightPattern}
-              labelOnly={labelOnly}
-              trimMode={trimMode}
-            />
+            <TabletLink address={address} name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
           ) : (
             <DesktopLink
               address={address}
               alwaysTrim={alwaysTrim}
               name={name}
               to={to}
-              highlightPattern={highlightPattern}
               labelOnly={labelOnly}
               trimMode={trimMode}
             />
@@ -98,7 +88,6 @@ export const Link: FC<LinkProps> = ({
 type CustomTrimEndLinkLabelProps = {
   name: string
   to: string
-  highlightPattern?: HighlightPattern
   labelOnly?: boolean
   trimMode?: TrimMode
 }
@@ -109,18 +98,12 @@ const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
   </Typography>
 )
 
-const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({
-  name,
-  to,
-  highlightPattern,
-  labelOnly,
-  trimMode,
-}) => {
+const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, labelOnly, trimMode }) => {
   const label =
     trimMode === 'adaptive' ? (
-      <AdaptiveHighlightedText text={name} pattern={highlightPattern} minLength={14} />
+      <AdaptiveHighlightedText text={name} minLength={14} />
     ) : (
-      <HighlightedTrimmedText text={name} pattern={highlightPattern} fragmentLength={14} />
+      <HighlightedTrimmedText text={name} fragmentLength={14} />
     )
   return labelOnly ? (
     <LinkLabel>{label}</LinkLabel>
@@ -135,22 +118,13 @@ type TabletLinkProps = {
   address: string
   name?: string
   to: string
-  highlightPattern?: HighlightPattern
   labelOnly?: boolean
   trimMode?: TrimMode
 }
 
-const TabletLink: FC<TabletLinkProps> = ({ address, name, to, highlightPattern, labelOnly, trimMode }) => {
+const TabletLink: FC<TabletLinkProps> = ({ address, name, to, labelOnly, trimMode }) => {
   if (name) {
-    return (
-      <CustomTrimEndLinkLabel
-        name={name}
-        to={to}
-        highlightPattern={highlightPattern}
-        labelOnly={labelOnly}
-        trimMode={trimMode}
-      />
-    )
+    return <CustomTrimEndLinkLabel name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
   }
 
   const label =
@@ -173,26 +147,12 @@ type DesktopLinkProps = TabletLinkProps & {
   labelOnly?: boolean
 }
 
-const DesktopLink: FC<DesktopLinkProps> = ({
-  address,
-  name,
-  to,
-  alwaysTrim,
-  trimMode,
-  highlightPattern,
-  labelOnly,
-}) => {
+const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, trimMode, labelOnly }) => {
   if (alwaysTrim) {
     return (
       <WithHoverHighlighting address={address}>
         {name ? (
-          <CustomTrimEndLinkLabel
-            name={name}
-            to={to}
-            highlightPattern={highlightPattern}
-            labelOnly={labelOnly}
-            trimMode={trimMode}
-          />
+          <CustomTrimEndLinkLabel name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
         ) : labelOnly ? (
           <LinkLabel>{trimLongString(address)}</LinkLabel>
         ) : (
@@ -203,7 +163,7 @@ const DesktopLink: FC<DesktopLinkProps> = ({
       </WithHoverHighlighting>
     )
   }
-  const label = name ? <HighlightedText text={name} pattern={highlightPattern} /> : address
+  const label = name ? <HighlightedText text={name} /> : address
   return (
     <WithHoverHighlighting address={address}>
       {labelOnly ? (

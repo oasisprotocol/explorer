@@ -14,15 +14,13 @@ import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
 import { RoundedBalance } from '../RoundedBalance'
 import { HighlightedText } from '../HighlightedText'
-import { HighlightPattern } from '../HighlightedText'
 
 export const TokenDetails: FC<{
   isLoading?: boolean
   token: EvmToken | undefined
   showLayer?: boolean
   standalone?: boolean
-  highlightPattern?: HighlightPattern
-}> = ({ isLoading, token, showLayer, standalone = false, highlightPattern }) => {
+}> = ({ isLoading, token, showLayer, standalone = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -45,10 +43,9 @@ export const TokenDetails: FC<{
           scope={token}
           address={token.eth_contract_addr ?? token.contract_addr}
           name={token.name}
-          highlightPattern={highlightPattern}
         />
         <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
-          <HighlightedText text={token.symbol} pattern={highlightPattern} />
+          <HighlightedText text={token.symbol} />
         </Box>
       </dd>
 

@@ -116,7 +116,6 @@ type ValidatorDetailsCardProps = {
   validator: Validator | undefined
   account: Account | undefined
   stats: ValidatorAggStats | undefined
-  highlightPattern?: HighlightPattern
 }
 
 const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
@@ -125,7 +124,6 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
   validator,
   account,
   stats,
-  highlightPattern,
 }) => {
   return (
     <Card>
@@ -137,7 +135,6 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
           validator={validator}
           account={account}
           stats={stats}
-          highlightPattern={highlightPattern}
         />
       </CardContent>
     </Card>
@@ -152,17 +149,7 @@ export const ValidatorDetailsView: FC<{
   account: Account | undefined
   standalone?: boolean
   stats: ValidatorAggStats | undefined
-  highlightPattern?: HighlightPattern
-}> = ({
-  network,
-  detailsPage,
-  isLoading,
-  validator,
-  account,
-  standalone = false,
-  stats,
-  highlightPattern,
-}) => {
+}> = ({ network, detailsPage, isLoading, validator, account, standalone = false, stats }) => {
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
@@ -183,9 +170,9 @@ export const ValidatorDetailsView: FC<{
           <dd>
             <b>
               {isTablet ? (
-                <AdaptiveHighlightedText text={validator.media?.name} pattern={highlightPattern} />
+                <AdaptiveHighlightedText text={validator.media?.name} />
               ) : (
-                <HighlightedText text={validator.media?.name} pattern={highlightPattern} />
+                <HighlightedText text={validator.media?.name} />
               )}
             </b>
           </dd>

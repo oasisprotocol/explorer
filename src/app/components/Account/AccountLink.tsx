@@ -10,7 +10,7 @@ import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import Box from '@mui/material/Box'
-import { HighlightedText, HighlightPattern } from '../HighlightedText'
+import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
@@ -65,11 +65,6 @@ interface Props {
   alwaysAdapt?: boolean
 
   /**
-   * What part of the name should be highlighted (if any)
-   */
-  highlightPattern?: HighlightPattern
-
-  /**
    * Any extra tooltips to display
    *
    * (Besides the content necessary because of potential shortening)
@@ -87,10 +82,10 @@ interface Props {
 // We want two lines, one for name (if available), one for address
 // Both lines adaptively shortened to fill available space
 const AdaptivelyTrimmedAccountLink: FC<
-  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress' | 'highlightPattern'> & {
+  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress'> & {
     tooltipTitle: ReactNode
   }
-> = ({ scope, address, labelOnly, showOnlyAddress, highlightPattern, tooltipTitle }) => {
+> = ({ scope, address, labelOnly, showOnlyAddress, tooltipTitle }) => {
   const {
     metadata: accountMetadata,
     // isError, // Use this to indicate that we have failed to load the name for this account
@@ -124,7 +119,6 @@ const AdaptivelyTrimmedAccountLink: FC<
             <AdaptiveHighlightedText
               idPrefix="account-name"
               text={accountName}
-              pattern={highlightPattern}
               extraTooltip={tooltipTitle}
               minLength={5}
             />
@@ -168,10 +162,10 @@ const TrimmedAccountLink: FC<
 }
 
 const DesktopAccountLink: FC<
-  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress' | 'highlightPattern'> & {
+  Pick<Props, 'scope' | 'address' | 'labelOnly' | 'showOnlyAddress'> & {
     tooltipTitle: ReactNode
   }
-> = ({ scope, address, labelOnly, showOnlyAddress, highlightPattern, tooltipTitle }) => {
+> = ({ scope, address, labelOnly, showOnlyAddress, tooltipTitle }) => {
   const {
     metadata: accountMetadata,
     // isError, // Use this to indicate that we have failed to load the name for this account
@@ -202,7 +196,7 @@ const DesktopAccountLink: FC<
               }}
             >
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
-              <HighlightedText text={accountName} pattern={highlightPattern} />
+              <HighlightedText text={accountName} />
             </Box>
             ({address})
           </Box>
@@ -221,7 +215,6 @@ export const AccountLink: FC<Props> = ({
   alwaysTrim,
   alwaysTrimOnTablet,
   alwaysAdapt,
-  highlightPattern,
   extraTooltip,
   labelOnly,
 }) => {
@@ -285,7 +278,6 @@ export const AccountLink: FC<Props> = ({
         address={address}
         showOnlyAddress={showOnlyAddress}
         labelOnly={labelOnly}
-        highlightPattern={highlightPattern}
         tooltipTitle={tooltipTitle}
       />
     )
@@ -299,7 +291,6 @@ export const AccountLink: FC<Props> = ({
       address={address}
       showOnlyAddress={showOnlyAddress}
       labelOnly={labelOnly}
-      highlightPattern={highlightPattern}
       tooltipTitle={tooltipTitle}
     />
   )
