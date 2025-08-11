@@ -163,6 +163,8 @@ const multiTermSearch =
     }
   }
 
+export const parseMultiTermSearch = (input: string): HighlightPattern => multiTermSearch()(input).result
+
 export const textSearch = {
   networkProposalName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
   accountName: multiTermSearch(), // This is client-side, therefore we can accept unlimited tokens
@@ -259,7 +261,12 @@ export const useParamSearch = () => {
 
 export type SearchParams = ReturnType<typeof useParamSearch>
 
-// Provide a list of highlight patterns for a search
+/**
+ * Provide a list of highlight patterns for a search
+ *
+ * For input, this function expects the output of a search strategy,
+ * i.e. SingleTermSearch or MultiTermSearch
+ */
 export const getHighlightPattern = (
   data: ParsedSimpleSearchQuery | ParsedMultiSearchQuery | undefined,
 ): HighlightPattern => {

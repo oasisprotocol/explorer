@@ -14,15 +14,13 @@ import { Staking } from './Staking'
 import { ConsensusAccountDetailsContext } from './hooks'
 import { useConsensusEventTypeParam, useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
   const { network } = scope
-  const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
+  const { address } = useLoaderData() as AddressLoaderData
   const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const { eventType, setEventType } = useConsensusEventTypeParam()
   const accountQuery = useGetConsensusAccountsAddress(network, address)
@@ -41,12 +39,7 @@ export const ConsensusAccountDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <ConsensusAccountDetailsCard
-        account={account}
-        isError={isError}
-        isLoading={isLoading}
-        highlightPattern={highlightPattern}
-      />
+      <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
       <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
         <Grid item xs={12} md={6}>
           <BalanceDistribution account={account} isLoading={isLoading} />

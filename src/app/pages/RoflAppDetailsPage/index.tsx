@@ -40,13 +40,11 @@ import { Ticker } from 'types/ticker'
 import { WithHoverHighlighting } from '../../components/HoverHighlightingContext/WithHoverHighlighting'
 import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
 import { RoflAppLoaderData } from '../../utils/route-utils'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRuntimeScope()
-  const { id, searchQuery } = useLoaderData() as RoflAppLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.roflAppName(searchQuery))
+  const { id } = useLoaderData() as RoflAppLoaderData
   const txLink = useHref('')
   const updatesLink = useHref(`updates#${updatesContainerId}`)
   const instancesLink = useHref(`instances#${instancesContainerId}`)
@@ -72,7 +70,6 @@ export const RoflAppDetailsPage: FC = () => {
                 id={roflApp.id}
                 network={scope.network}
                 name={roflApp.metadata['net.oasis.rofl.name']}
-                highlightPattern={highlightPattern}
                 labelOnly
                 trimMode={'adaptive'}
                 withSourceIndicator={false}
@@ -81,7 +78,7 @@ export const RoflAppDetailsPage: FC = () => {
           )
         }
       >
-        <RoflAppDetailsView isLoading={isLoading} app={roflApp} highlightPattern={highlightPattern} />
+        <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>

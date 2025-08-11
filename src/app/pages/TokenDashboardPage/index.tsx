@@ -14,7 +14,6 @@ import { DappBanner } from '../../components/DappBanner'
 import { RuntimeScope } from '../../../types/searchScope'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { codeContainerId, holdersContainerId, inventoryContainerId } from '../../utils/tabAnchors'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export type TokenDashboardContext = {
   scope: RuntimeScope
@@ -26,8 +25,7 @@ export const useTokenDashboardProps = () => useOutletContext<TokenDashboardConte
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()
   const scope = useRuntimeScope()
-  const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.evmTokenName(searchQuery))
+  const { address } = useLoaderData() as AddressLoaderData
   const { isError } = useTokenInfo(scope, address)
 
   if (isError) {
@@ -46,11 +44,11 @@ export const TokenDashboardPage: FC = () => {
 
   return (
     <PageLayout>
-      <TokenTitleCard scope={scope} address={address} highlightPattern={highlightPattern} />
+      <TokenTitleCard scope={scope} address={address} />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
       <TokenSnapshot scope={scope} address={address} />
       <DashboardDivider />
-      <TokenDetailsCard scope={scope} address={address} highlightPattern={highlightPattern} />
+      <TokenDetailsCard scope={scope} address={address} />
       <RouterTabs
         tabs={[
           { label: t('common.transfers'), to: tokenTransfersLink },

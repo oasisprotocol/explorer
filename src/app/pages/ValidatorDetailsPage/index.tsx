@@ -42,8 +42,7 @@ import { eventsContainerId } from '../../utils/tabAnchors'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { Network } from '../../../types/network'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
-import { HighlightedText, HighlightPattern } from '../../components/HighlightedText'
+import { HighlightedText } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 import { DashboardDivider } from '../../components/Divider'
 
@@ -62,8 +61,7 @@ export const ValidatorDetailsPage: FC = () => {
   const scope = useConsensusScope()
   const { txMethod, setTxMethod } = useConsensusTxMethodParam()
   const { eventType, setEventType } = useConsensusEventTypeParam()
-  const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.validatorName(searchQuery))
+  const { address } = useLoaderData() as AddressLoaderData
   const validatorQuery = useGetConsensusValidatorsAddress(scope.network, address)
   const { isLoading: isValidatorLoading, isFetched, data } = validatorQuery
   const validator = data?.data.validators[0]
@@ -80,12 +78,7 @@ export const ValidatorDetailsPage: FC = () => {
 
   return (
     <PageLayout>
-      <ValidatorTitleCard
-        isLoading={isLoading}
-        network={scope.network}
-        validator={validator}
-        highlightPattern={highlightPattern}
-      />
+      <ValidatorTitleCard isLoading={isLoading} network={scope.network} validator={validator} />
       <ValidatorSnapshot scope={scope} validator={validator} stats={stats} />
       <DashboardDivider />
       <ValidatorDetailsCard
@@ -94,7 +87,6 @@ export const ValidatorDetailsPage: FC = () => {
         validator={validator}
         account={account}
         stats={stats}
-        highlightPattern={highlightPattern}
       />
       <Grid container spacing={4}>
         <StyledGrid item xs={12} md={6}>

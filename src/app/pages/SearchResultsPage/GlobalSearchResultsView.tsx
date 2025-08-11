@@ -30,7 +30,6 @@ export const GlobalSearchResultsView: FC<{
   useRedirectIfSingleResult(undefined, searchParams, searchResults)
 
   const networkNames = getNetworkNames(t)
-  const { query } = searchParams
 
   if (fixedNetwork) {
     return (
@@ -39,7 +38,6 @@ export const GlobalSearchResultsView: FC<{
         <SearchResultsList
           key={fixedNetwork}
           title={networkNames[fixedNetwork]}
-          searchQuery={query}
           searchResults={searchResults}
           networkForTheme={fixedNetwork}
           tokenPrices={tokenPrices}
@@ -60,7 +58,6 @@ export const GlobalSearchResultsView: FC<{
         <SearchResultsList
           key="mainnet"
           title={networkNames.mainnet}
-          searchQuery={query}
           searchResults={mainnetResults}
           networkForTheme="mainnet"
           tokenPrices={tokenPrices}
@@ -74,7 +71,6 @@ export const GlobalSearchResultsView: FC<{
               <SearchResultsList
                 key={net}
                 title={networkNames[net]}
-                searchQuery={query}
                 searchResults={otherResults.filter(getFilterForNetwork(net))}
                 networkForTheme={net}
                 tokenPrices={tokenPrices}

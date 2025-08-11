@@ -17,6 +17,7 @@ import Box from '@mui/material/Box'
 import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { WithHighlightPattern } from '../../components/PatternHighlightingContext'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -47,21 +48,24 @@ const ProposalVotes: FC<ProposalVotesProps> = ({ isLoading, votes, rowsNumber, p
         {
           key: 'voter',
           content: (
-            <DeferredValidatorLink
-              network={scope.network}
-              address={vote.address}
-              isError={vote.haveValidatorsFailed}
-              validator={vote.validator}
-              highlightPattern={highlightPattern}
-            />
+            <WithHighlightPattern pattern={highlightPattern}>
+              <DeferredValidatorLink
+                network={scope.network}
+                address={vote.address}
+                isError={vote.haveValidatorsFailed}
+                validator={vote.validator}
+              />
+            </WithHighlightPattern>
           ),
         },
         {
           key: 'vote',
           content: (
-            <ErrorBoundary light={true}>
-              <ProposalVoteIndicator vote={vote.vote as ProposalVoteValue} />
-            </ErrorBoundary>
+            <WithHighlightPattern pattern={highlightPattern}>
+              <ErrorBoundary light={true}>
+                <ProposalVoteIndicator vote={vote.vote as ProposalVoteValue} />
+              </ErrorBoundary>
+            </WithHighlightPattern>
           ),
           align: TableCellAlign.Right,
         },

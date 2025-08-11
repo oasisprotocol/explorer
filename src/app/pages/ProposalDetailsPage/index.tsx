@@ -25,13 +25,11 @@ import { useVoteStats } from './hooks'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { HighlightPattern } from '../../components/HighlightedText'
 import { getTypeNameForProposal } from '../../../types/proposalType'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export const ProposalDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useConsensusScope()
-  const { proposalId, searchQuery } = useLoaderData() as ProposalIdLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.networkProposalName(searchQuery, t))
+  const { proposalId } = useLoaderData() as ProposalIdLoaderData
   const {
     isLoading: areStatsLoading,
     allVotesCount,
@@ -51,7 +49,6 @@ export const ProposalDetailsPage: FC = () => {
           totalVotesLoading={areStatsLoading}
           totalVotesProblematic={!areStatsComplete && !areStatsLoading}
           totalVotes={allVotesCount}
-          highlightPattern={highlightPattern}
         />
       </SubPageCard>
       <ProposalVotesCard />
