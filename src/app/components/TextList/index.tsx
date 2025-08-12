@@ -1,19 +1,18 @@
 import { FC, ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import { COLORS } from '../../../styles/theme/colors'
 
 type TextListProps = {
   children: ReactNode
 }
 
-const StyledList = styled(List)(({ theme }) => ({
+const StyledList = styled('ul')(({ theme }) => ({
   listStyleType: 'disc',
   listStylePosition: 'outside',
   color: COLORS.brandExtraDark,
   fontSize: '14px',
   paddingLeft: theme.spacing(4),
+  paddingBottom: theme.spacing(3),
   '& ul': {
     paddingTop: 0,
     paddingBottom: 0,
@@ -22,7 +21,7 @@ const StyledList = styled(List)(({ theme }) => ({
 
 export const TextList: FC<TextListProps> = ({ children }) => <StyledList>{children}</StyledList>
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
+const StyledListItem = styled('li')(({ theme }) => ({
   display: 'list-item',
   padding: 0,
   paddingBottom: theme.spacing(1),
