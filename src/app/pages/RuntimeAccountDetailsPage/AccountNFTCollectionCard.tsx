@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
 import Box from '@mui/material/Box'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -25,6 +24,12 @@ import { NFTCollectionLink, NFTInstanceLink } from '../TokenDashboardPage/NFTLin
 import { CardHeaderWithCounter } from 'app/components/CardHeaderWithCounter'
 import { nftCollectionContainerId } from '../../utils/tabAnchors'
 import { ImageList, ImageListItem } from '../../components/ImageList'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from '@oasisprotocol/ui-library/src/components/ui/breadcrumb'
 
 export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -50,24 +55,32 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
           component="h3"
           title={
             <Box sx={{ display: 'flex' }} gap={4}>
-              <Breadcrumbs separator="›" aria-label="breadcrumb">
-                <Typography fontSize={18}>
-                  <Link
-                    preventScrollReset={true}
-                    component={RouterLink}
-                    to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
-                  >
-                    {t('nft.accountCollection')}
-                  </Link>
-                </Typography>
-                {isFetched && (
-                  <CardHeaderWithCounter
-                    label={firstToken?.name ? inventory?.[0].token.name : t('common.collection')}
-                    totalCount={totalCount}
-                    isTotalCountClipped={isTotalCountClipped}
-                  />
-                )}
-              </Breadcrumbs>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <Typography fontSize={18}>
+                      <Link
+                        preventScrollReset={true}
+                        component={RouterLink}
+                        to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
+                      >
+                        {t('nft.accountCollection')}
+                      </Link>
+                    </Typography>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem className="text-lg">
+                    {isFetched && (
+                      <CardHeaderWithCounter
+                        label={firstToken?.name ? inventory?.[0].token.name : t('common.collection')}
+                        totalCount={totalCount}
+                        isTotalCountClipped={isTotalCountClipped}
+                      />
+                    )}
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+
               {isLoading && <Skeleton className="w-1/2 h-4" />}
             </Box>
           }
