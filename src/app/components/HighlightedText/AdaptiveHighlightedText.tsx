@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import InfoIcon from '@mui/icons-material/Info'
-import { HighlightedText, HighlightOptions, HighlightPattern } from './index'
+import { HighlightedText, HighlightOptions } from './index'
 import { AdaptiveDynamicTrimmer } from '../AdaptiveTrimmer/AdaptiveDynamicTrimmer'
 import { HighlightedTrimmedText } from './HighlightedTrimmedText'
 
@@ -11,11 +11,6 @@ type AdaptiveHighlightedTextProps = {
    * The text to display
    */
   text: string | undefined
-
-  /**
-   * The pattern to search for (and highlight)
-   */
-  pattern?: HighlightPattern
 
   /**
    * Options for highlighting (case sensitivity, styling, etc.)
@@ -46,13 +41,12 @@ type AdaptiveHighlightedTextProps = {
 export const AdaptiveHighlightedText: FC<AdaptiveHighlightedTextProps> = ({
   idPrefix = 'adaptive-highlighted-text',
   text,
-  pattern,
   options,
   extraTooltip,
   minLength,
   debugMode,
 }) => {
-  const fullContent = <HighlightedText text={text} pattern={pattern} options={options} />
+  const fullContent = <HighlightedText text={text} options={options} />
 
   return text ? (
     <AdaptiveDynamicTrimmer
@@ -62,14 +56,7 @@ export const AdaptiveHighlightedText: FC<AdaptiveHighlightedTextProps> = ({
         length: text.length,
       })}
       getShortenedContent={wantedLength => {
-        const content = (
-          <HighlightedTrimmedText
-            fragmentLength={wantedLength}
-            text={text}
-            pattern={pattern}
-            options={options}
-          />
-        )
+        const content = <HighlightedTrimmedText fragmentLength={wantedLength} text={text} options={options} />
         return {
           content,
           length: wantedLength,

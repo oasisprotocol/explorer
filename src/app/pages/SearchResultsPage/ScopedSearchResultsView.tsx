@@ -35,14 +35,11 @@ export const ScopedSearchResultsView: FC<{
 
   useRedirectIfSingleResult(wantedScope, searchParams, searchResults)
 
-  const { query } = searchParams
-
   return (
     <>
       {wantedResults.length ? (
         <SearchResultsList
           title={getNameForScope(t, wantedScope)}
-          searchQuery={query}
           searchResults={wantedResults}
           networkForTheme={wantedScope.network}
           tokenPrices={tokenPrices}
@@ -60,7 +57,6 @@ export const ScopedSearchResultsView: FC<{
                 key={net}
                 networkForTheme={net}
                 title={networkNames[net]}
-                searchQuery={query}
                 searchResults={otherResults.filter(getFilterForNetwork(net))}
                 tokenPrices={tokenPrices}
               />

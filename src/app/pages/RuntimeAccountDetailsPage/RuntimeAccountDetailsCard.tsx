@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { EvmToken, RuntimeAccount } from '../../../oasis-nexus/api'
 import { RuntimeAccountDetailsView } from '../../components/Account/RuntimeAccountDetailsView'
 import { AllTokenPrices } from '../../../coin-gecko/api'
-import { HighlightPattern } from '../../components/HighlightedText'
 
 type RuntimeAccountDetailsProps = {
   isLoading: boolean
@@ -13,7 +12,6 @@ type RuntimeAccountDetailsProps = {
   account: RuntimeAccount | undefined
   token: EvmToken | undefined
   tokenPrices: AllTokenPrices
-  highlightPattern: HighlightPattern
 }
 
 export const RuntimeAccountDetailsCard: FC<RuntimeAccountDetailsProps> = ({
@@ -23,7 +21,6 @@ export const RuntimeAccountDetailsCard: FC<RuntimeAccountDetailsProps> = ({
   account,
   token,
   tokenPrices,
-  highlightPattern,
 }) => {
   const { t } = useTranslation()
   return (
@@ -39,7 +36,6 @@ export const RuntimeAccountDetailsCard: FC<RuntimeAccountDetailsProps> = ({
         account={account}
         token={token}
         tokenPrices={tokenPrices}
-        highlightPattern={highlightPattern}
       />
     </SubPageCard>
   )

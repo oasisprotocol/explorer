@@ -18,6 +18,7 @@ import { Network } from 'types/network'
 import { Runtime } from 'oasis-nexus/api'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LayoutDivider } from '../../components/Divider'
+import { WithHighlightPattern } from '../../components/PatternHighlightingContext'
 
 const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayout }> = ({
   network,
@@ -43,15 +44,9 @@ const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayou
   }
 
   return (
-    <>
+    <WithHighlightPattern pattern={highlightPattern}>
       {tableView === TableLayout.Horizontal && (
-        <RoflAppsList
-          apps={roflApps}
-          isLoading={isLoading}
-          limit={limit}
-          pagination={tablePagination}
-          highlightPattern={highlightPattern}
-        />
+        <RoflAppsList apps={roflApps} isLoading={isLoading} limit={limit} pagination={tablePagination} />
       )}
 
       {tableView === TableLayout.Vertical && (
@@ -60,13 +55,10 @@ const RoflAppsView: FC<{ network: Network; layer: Runtime; tableView: TableLayou
             [...Array(limit).keys()].map(key => (
               <RoflAppDetailsVerticalListView key={key} isLoading={true} app={undefined} />
             ))}
-          {!isLoading &&
-            roflApps?.map(app => (
-              <RoflAppDetailsVerticalListView key={app.id} app={app} highlightPattern={highlightPattern} />
-            ))}
+          {!isLoading && roflApps?.map(app => <RoflAppDetailsVerticalListView key={app.id} app={app} />)}
         </VerticalList>
       )}
-    </>
+    </WithHighlightPattern>
   )
 }
 

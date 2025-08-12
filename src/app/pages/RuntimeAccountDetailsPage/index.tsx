@@ -26,7 +26,6 @@ import {
   tokenContainerId,
   transfersContainerId,
 } from '../../utils/tabAnchors'
-import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
 export type RuntimeAccountDetailsContext = {
@@ -45,8 +44,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
 
   const scope = useRuntimeScope()
-  const { address, searchQuery } = useLoaderData() as AddressLoaderData
-  const highlightPattern = getHighlightPattern(textSearch.accountName(searchQuery))
+  const { address } = useLoaderData() as AddressLoaderData
   const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
   const { eventType, setEventType } = useRuntimeEventTypeParam()
   const { account, isLoading: isAccountLoading, isError } = useAccount(scope, address)
@@ -85,7 +83,6 @@ export const RuntimeAccountDetailsPage: FC = () => {
         account={account}
         token={token}
         tokenPrices={tokenPrices}
-        highlightPattern={highlightPattern}
       />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
       <RouterTabs

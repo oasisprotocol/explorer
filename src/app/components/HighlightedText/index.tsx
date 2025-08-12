@@ -3,6 +3,7 @@ import { findTextMatches, NormalizerOptions, PositiveMatchInfo } from './text-ma
 import { FC, ReactNode } from 'react'
 import { SxProps } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import { useHighlightPattern } from '../PatternHighlightingContext'
 
 export interface HighlightOptions {
   /**
@@ -46,11 +47,6 @@ interface HighlightedTextProps {
   text: string | undefined
 
   /**
-   * The pattern to search for (and highlight)
-   */
-  pattern?: HighlightPattern
-
-  /**
    * Instructions about which part to highlight.
    *
    * If not given, we will just search for the pattern.
@@ -71,10 +67,10 @@ interface HighlightedTextProps {
  */
 export const HighlightedText: FC<HighlightedTextProps> = ({
   text,
-  pattern = NoHighlights,
   partsToHighlight,
   options = defaultHighlight,
 }) => {
+  const pattern = useHighlightPattern()
   const { sx = defaultHighlightStyle, findOptions = {} } = options
 
   // Have we been told what to highlight exactly? If not, look for the pattern
