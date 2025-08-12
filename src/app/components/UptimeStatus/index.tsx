@@ -37,21 +37,23 @@ export const UptimeStatus: FC<UptimeStatusProps> = ({ uptime, small }) => {
 
   return (
     <div className={cn('flex items-center gap-4 justify-between', small && 'w-[110px]')}>
-      <div className="flex">
-        {adjustedStatus
-          ?.reverse()
-          .map((value, index) => (
-            <div
-              key={`${value}-${index}`}
-              className={cn(
-                'inline-block',
-                small
-                  ? 'w-[3px] min-w-[3px] h-[15px] rounded-[2px] mr-[1px]'
-                  : 'w-[7px] min-w-[7px] h-[45px] rounded-[4px] mr-[2px]',
-              )}
-              style={{ backgroundColor: getUptimeItemColor(value), color: COLORS.white }}
-            />
-          ))}
+      <div className="flex items-end">
+        {adjustedStatus?.reverse().map((value, index) => (
+          <div
+            key={`${value}-${index}`}
+            className={cn(
+              'inline-block',
+              small
+                ? 'w-[3px] min-w-[3px] h-[15px] rounded-[2px] mr-[1px]'
+                : 'w-[7px] min-w-[7px] rounded-[4px] mr-[2px]',
+            )}
+            style={{
+              backgroundColor: getUptimeItemColor(value),
+              color: COLORS.white,
+              height: `${Math.round((value * 45) / 1200)}px`,
+            }}
+          />
+        ))}
       </div>
       {uptime?.window_uptime && uptime?.window_length && (
         <PercentageValue
