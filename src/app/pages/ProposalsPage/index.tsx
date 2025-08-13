@@ -51,7 +51,6 @@ export const ProposalsPage: FC = () => {
       <SubPageCard
         title={
           <CardHeaderWithCounter
-            changeMobileColors
             label={t('networkProposal.listTitle')}
             totalCount={proposalsData?.total_count}
             isTotalCountClipped={proposalsData?.is_total_count_clipped}
