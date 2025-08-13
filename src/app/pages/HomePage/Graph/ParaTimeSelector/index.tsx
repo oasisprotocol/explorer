@@ -10,7 +10,6 @@ import Button from '@mui/material/Button'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from '../types'
 import { ParaTimeSelectorUtils } from '../para-time-selector-utils'
-import Fade from '@mui/material/Fade'
 import { useScreenSize } from '../../../../hooks/useScreensize'
 import QuickPinchZoom, { make3dTransformValue, UpdateAction } from 'react-quick-pinch-zoom'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
@@ -24,6 +23,7 @@ import { storage } from '../../../../utils/storage'
 import { StorageKeys } from '../../../../../types/storage'
 import { GraphTooltipMobile } from '../GraphTooltipMobile'
 import { fixedNetwork } from '../../../../utils/route-utils'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
@@ -110,10 +110,6 @@ export const ZoomOutBtn = styled(Button)(({ theme }) => ({
   '&&': {
     backgroundColor: 'transparent',
   },
-}))
-
-const ZoomOutBtnFade = styled(Fade)(() => ({
-  transitionDelay: '500ms !important',
 }))
 
 // border affecting scale (quick-pinch-zoom)
@@ -261,7 +257,12 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
             </QuickPinchZoom>
           </QuickPinchZoomOuter>
           {!isMobile && (
-            <ZoomOutBtnFade in={graphZoomedIn}>
+            <div
+              className={cn('transition-opacity duration-300 delay-300', {
+                'opacity-100': graphZoomedIn,
+                'opacity-0 pointer-events-none': !graphZoomedIn,
+              })}
+            >
               <ZoomOutBtn
                 color="primary"
                 variant="text"
@@ -271,7 +272,7 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
               >
                 {t('home.zoomOutBtnText')}
               </ZoomOutBtn>
-            </ZoomOutBtnFade>
+            </div>
           )}
           {isMobile && ParaTimeSelectorUtils.showExploreBtn(step) && (
             <ExploreBtn
