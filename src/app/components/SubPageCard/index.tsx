@@ -99,7 +99,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
           >
             {subheader}
           </Typography>
-          {action && <Box sx={{ marginLeft: 'auto' }}>{action}</Box>}
+          {action && <div className="ml-auto my-auto">{action}</div>}
         </Box>
       )}
       {title2 && (

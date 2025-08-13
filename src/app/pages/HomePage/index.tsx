@@ -8,7 +8,7 @@ import { Search, SearchVariant } from '../../components/Search'
 import { ParaTimeSelector } from './Graph/ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import { useScreenSize } from '../../hooks/useScreensize'
-import IconButton from '@mui/material/IconButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import { ParaTimeSelectorStep } from './Graph/types'
@@ -113,12 +113,6 @@ const FooterStyled = styled(Box)(({ theme }) => ({
   },
 }))
 
-const InfoScreenBtn = styled(IconButton)(({ theme }) => ({
-  position: 'absolute',
-  top: theme.spacing(6),
-  zIndex: zIndexHomePage.paraTimeSelector,
-}))
-
 export const HomePage: FC = () => {
   const { t } = useTranslation()
   const infoAriaLabel = t('home.helpScreen.infoIconAria')
@@ -163,9 +157,15 @@ export const HomePage: FC = () => {
               <Search disabled={!isApiReachable} variant={searchVariant} onFocusChange={onFocusChange} />
             </SearchInputBox>
             {showInfoScreenBtn && (
-              <InfoScreenBtn aria-label={infoAriaLabel} onClick={onToggleInfoScreenClick}>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={infoAriaLabel}
+                onClick={onToggleInfoScreenClick}
+                className={`hover:bg-black/[0.04] rounded-full absolute top-16 z-[${zIndexHomePage.paraTimeSelector}]`}
+              >
                 <InfoOutlinedIcon fontSize="medium" sx={{ color: COLORS.grayMedium2 }} />
-              </InfoScreenBtn>
+              </Button>
             )}
           </SearchInputContainer>
           <ThemeByScope isRootTheme={false} network={network}>

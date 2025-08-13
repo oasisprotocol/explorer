@@ -2,7 +2,7 @@ import { FC, ReactNode, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -266,15 +266,19 @@ type PanelButtonProps = {
 
 const PanelButton: FC<PanelButtonProps> = ({ activePanel, ariaLabel, panel, setPanel }) => {
   return (
-    <>
-      <IconButton aria-label={ariaLabel} onClick={() => setPanel(panel)}>
-        {panel === activePanel ? (
-          <CircleIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
-        ) : (
-          <RadioButtonUncheckedIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
-        )}
-      </IconButton>
-    </>
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label={ariaLabel}
+      onClick={() => setPanel(panel)}
+      className="hover:bg-black/[0.04] rounded-full w-[26px] h-[26px]"
+    >
+      {panel === activePanel ? (
+        <CircleIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
+      ) : (
+        <RadioButtonUncheckedIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
+      )}
+    </Button>
   )
 }
 

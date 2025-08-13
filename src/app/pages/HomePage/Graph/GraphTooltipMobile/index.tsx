@@ -15,7 +15,7 @@ import { getNetworkIcons } from '../../../../utils/content'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
 import Fade from '@mui/material/Fade'
-import IconButton from '@mui/material/IconButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import CloseIcon from '@mui/icons-material/Close'
 import { zIndexHomePage } from '../../index'
 import { SelectorArea, UniverseArea } from '../ParaTimeSelector'
@@ -287,9 +287,9 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, area,
       <MobileBackdrop onClick={onClose} />
       <Fade in>
         <MobileGraphTooltip>
-          <IconButton color="inherit" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={onClose} className="hover:bg-black/[0.04]">
             <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
-          </IconButton>
+          </Button>
           <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
             <GraphTooltipHeader disabled={disabled} network={network} area={area} />
             <GraphTooltipBody {...body} disabled={disabled} failing={failing} />

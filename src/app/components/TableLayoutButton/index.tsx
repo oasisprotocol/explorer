@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import IconButton from '@mui/material/IconButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import PivotTableChartIcon from '@mui/icons-material/PivotTableChart'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -19,14 +19,16 @@ export const TableLayoutButton: FC<TableLayoutButtonProps> = ({ tableView, setTa
 
   return (
     <Tooltip arrow placement="right" title={t('tableLayoutButton.changeView')}>
-      <IconButton
-        color="primary"
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => {
           setTableView(tableView === TableLayout.Horizontal ? TableLayout.Vertical : TableLayout.Horizontal)
         }}
+        className="hover:bg-black/[0.04]"
       >
         <PivotTableChartIcon fontSize="medium" />
-      </IconButton>
+      </Button>
     </Tooltip>
   )
 }
