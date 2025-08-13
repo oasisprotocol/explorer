@@ -14,7 +14,6 @@ import { useConsensusFreshness, useRuntimeFreshness } from '../../../../componen
 import { getNetworkIcons } from '../../../../utils/content'
 import { useNavigate } from 'react-router-dom'
 import { RouteUtils } from '../../../../utils/route-utils'
-import Fade from '@mui/material/Fade'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import CloseIcon from '@mui/icons-material/Close'
 import { zIndexHomePage } from '../../index'
@@ -98,20 +97,6 @@ const MobileBackdrop = styled(Box)(() => ({
   backgroundColor: COLORS.black,
   opacity: 0.3,
   zIndex: zIndexHomePage.mobileTooltip,
-}))
-
-const MobileGraphTooltip = styled(Box)(({ theme }) => ({
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 120,
-  zIndex: zIndexHomePage.mobileTooltip,
-  '> button': {
-    position: 'fixed',
-    right: theme.spacing(2),
-    bottom: 125,
-  },
 }))
 
 interface GraphTooltipMobileProps {
@@ -285,17 +270,23 @@ export const GraphTooltipMobile: FC<GraphTooltipMobileProps> = ({ network, area,
   return (
     <>
       <MobileBackdrop onClick={onClose} />
-      <Fade in>
-        <MobileGraphTooltip>
-          <Button variant="ghost" size="icon" onClick={onClose} className="hover:bg-black/[0.04]">
-            <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
-          </Button>
-          <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
-            <GraphTooltipHeader disabled={disabled} network={network} area={area} />
-            <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
-          </GraphTooltipStyled>
-        </MobileGraphTooltip>
-      </Fade>
+      <div
+        className="fixed bottom-0 left-0 right-0 h-[120px] animate-in fade-in duration-300"
+        style={{ zIndex: zIndexHomePage.mobileTooltip }}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClose}
+          className="hover:bg-black/[0.04] fixed right-1 bottom-[125px]"
+        >
+          <CloseIcon fontSize="medium" sx={{ color: COLORS.white }} aria-label={t('home.tooltip.close')} />
+        </Button>
+        <GraphTooltipStyled disabled={disabled} isMobile={isMobile} onClick={navigateTo}>
+          <GraphTooltipHeader disabled={disabled} network={network} area={area} />
+          <GraphTooltipBody {...body} disabled={disabled} failing={failing} />
+        </GraphTooltipStyled>
+      </div>
     </>
   )
 }
