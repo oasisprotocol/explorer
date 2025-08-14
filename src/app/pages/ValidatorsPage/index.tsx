@@ -52,7 +52,6 @@ export const ValidatorsPage: FC = () => {
       <SubPageCard
         title={
           <CardHeaderWithCounter
-            changeMobileColors
             label={t('validator.listTitle')}
             totalCount={validatorsData?.total_count}
             isTotalCountClipped={validatorsData?.is_total_count_clipped}

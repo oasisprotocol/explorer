@@ -51,7 +51,6 @@ export const ConsensusAccountsPage: FC = () => {
       <SubPageCard
         title={
           <CardHeaderWithCounter
-            changeMobileColors
             label={t('account.listTitle')}
             totalCount={accountsData?.total_count}
             isTotalCountClipped={accountsData?.is_total_count_clipped}
