@@ -157,36 +157,6 @@ export const defaultTheme = createTheme({
     },
   },
   components: {
-    MuiAlert: {
-      variants: [
-        {
-          props: { severity: 'error' },
-          style: () => ({
-            color: COLORS.errorIndicatorBackground,
-          }),
-        },
-        {
-          props: { severity: 'warning' },
-          style: () => ({
-            color: COLORS.warningColor,
-            backgroundColor: COLORS.warningBackground,
-          }),
-        },
-      ],
-      styleOverrides: {
-        root: ({ theme }) => ({
-          alignItems: 'center',
-          padding: theme.spacing(2, 3),
-          borderRadius: 10,
-        }),
-        icon: {
-          padding: 0,
-        },
-        message: {
-          padding: 0,
-        },
-      },
-    },
     MuiBackdrop: {
       styleOverrides: {
         root: {
