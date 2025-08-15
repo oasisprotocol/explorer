@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { deploys, getAppTitle } from '../../../config'
-import { StickyAlert } from '../StickyAlert'
+import { Alert } from '@oasisprotocol/ui-library/src/components/alert'
 
 const useBuildBanners = import.meta.env.REACT_APP_SHOW_BUILD_BANNERS === 'true'
 
@@ -14,8 +14,14 @@ export const BuildBanner: FC = () => {
   if (deploys.production.includes(window.location.origin)) {
     return null
   }
-  if (deploys.staging.includes(window.location.origin)) {
-    return <StickyAlert severity="warning">{t('banner.buildStaging')}</StickyAlert>
-  }
-  return <StickyAlert severity="warning">{t('banner.buildPreview', { appTitle: getAppTitle() })}</StickyAlert>
+
+  const message = deploys.staging.includes(window.location.origin)
+    ? t('banner.buildStaging')
+    : t('banner.buildPreview', { appTitle: getAppTitle() })
+
+  return (
+    <Alert variant="warning-filled" sticky>
+      {message}
+    </Alert>
+  )
 }
