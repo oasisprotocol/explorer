@@ -5,7 +5,7 @@ import { getNetworkNames, Network } from '../../../types/network'
 import { FreshnessInfo, useConsensusFreshness, useIsApiReachable, useRuntimeFreshness } from './hook'
 import { SearchScope, getNameForScope } from '../../../types/searchScope'
 import { exhaustedTypeWarning } from '../../../types/errors'
-import { StickyAlert } from '../StickyAlert'
+import { Alert } from '@oasisprotocol/ui-library/src/components/alert'
 
 export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNetwork }) => {
   const scope = useScopeParam()
@@ -16,10 +16,18 @@ export const NetworkOfflineBanner: FC<{ wantedNetwork?: Network }> = ({ wantedNe
   const target = networkNames[targetNetwork]
   if (!isNetworkReachable.reachable) {
     if (isNetworkReachable.reason === 'userOffline') {
-      return <StickyAlert severity="warning">{t('home.userOffline', { target })}</StickyAlert>
+      return (
+        <Alert variant="warning-filled" sticky>
+          {t('home.userOffline', { target })}
+        </Alert>
+      )
     }
     if (isNetworkReachable.reason === 'apiOffline') {
-      return <StickyAlert severity="warning">{t('home.apiOffline', { target })}</StickyAlert>
+      return (
+        <Alert variant="warning-filled" sticky>
+          {t('home.apiOffline', { target })}
+        </Alert>
+      )
     }
     exhaustedTypeWarning('Unexpected isNetworkReachable reason', isNetworkReachable.reason)
   }
@@ -37,29 +45,45 @@ export const OfflineBanner: FC<OfflineBannerProps> = props => {
   const scope = getNameForScope(t, props.scope)
 
   if (unavailable) {
-    return <StickyAlert severity="warning">{t('home.indexerUnavailable', { scope })}</StickyAlert>
+    return (
+      <Alert variant="warning-filled" sticky>
+        {t('home.indexerUnavailable', { scope })}
+      </Alert>
+    )
   }
   if (outOfDateReason === undefined) return null
   if (outOfDateReason === false) return null
 
   if (outOfDateReason === 'indexer') {
     return (
-      <StickyAlert severity="warning">
+      <Alert variant="warning-filled" sticky>
         {lastUpdate
           ? t('home.indexerOutOfDateSince', { scope, lastUpdate })
           : t('home.indexerOutOfDate', { scope })}
-      </StickyAlert>
+      </Alert>
     )
   }
   if (outOfDateReason === 'blocks') {
     // Don't display lastUpdate. It's updating, but still many blocks behind.
-    return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
+    return (
+      <Alert variant="warning-filled" sticky>
+        {t('home.indexerOutOfDate', { scope })}
+      </Alert>
+    )
   }
   if (outOfDateReason === 'node') {
-    return <StickyAlert severity="warning">{t('home.nodeOutOfDateSince', { scope, lastUpdate })}</StickyAlert>
+    return (
+      <Alert variant="warning-filled" sticky>
+        {t('home.nodeOutOfDateSince', { scope, lastUpdate })}
+      </Alert>
+    )
   }
   exhaustedTypeWarning('Unexpected outOfDateReason', outOfDateReason)
-  return <StickyAlert severity="warning">{t('home.indexerOutOfDate', { scope })}</StickyAlert>
+  return (
+    <Alert variant="warning-filled" sticky>
+      {t('home.indexerOutOfDate', { scope })}
+    </Alert>
+  )
 }
 
 export const ConsensusOfflineBanner: FC = () => {
