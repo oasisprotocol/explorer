@@ -43,16 +43,6 @@ const StyledLinearProgress = styled(LinearProgress, {
   ...(barBackgroundColor && { backgroundColor: barBackgroundColor }),
 }))
 
-export const ProgressBar = styled(LinearProgress)(() => ({
-  [`&.${linearProgressClasses.determinate} > .${linearProgressClasses.bar1Determinate}`]: {
-    backgroundColor: COLORS.eucalyptus,
-  },
-  borderColor: COLORS.eucalyptus,
-  backgroundColor: COLORS.honeydew,
-  height: '12px',
-  width: '85px',
-}))
-
 export const BrandProgressBar = styled(LinearProgress)(() => ({
   [`&.${linearProgressClasses.determinate} > .${linearProgressClasses.bar1Determinate}`]: {
     backgroundColor: COLORS.brandDark,

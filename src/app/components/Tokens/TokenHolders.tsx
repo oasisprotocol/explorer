@@ -1,12 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { BareTokenHolder } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { RoundedBalance } from '../RoundedBalance'
-import { ProgressBar } from '../ProgressBar'
+import { Progress } from '@oasisprotocol/ui-library/src/components/progress'
 import { fromBaseUnits } from '../../utils/number-utils'
 
 type TableTokenHolder = BareTokenHolder & {
@@ -70,15 +69,15 @@ export const TokenHolders: FC<TokenHoldersProps> = ({
           content: (
             <>
               {totalSupply ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} gap={4}>
+                <div className="flex items-center justify-end gap-4">
                   {`${calculateRatio(holder.balance, totalSupply, decimals).toFixed(4)}%`}
-                  <ProgressBar
+                  <Progress
                     value={calculateRatio(holder.balance, totalSupply, decimals)}
-                    variant="determinate"
+                    className="w-[85px]"
                   />
-                </Box>
+                </div>
               ) : (
-                <Box>{t('common.missing')}</Box>
+                <div>{t('common.missing')}</div>
               )}
             </>
           ),
