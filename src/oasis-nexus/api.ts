@@ -1672,6 +1672,8 @@ function transformRuntimeTransactionList(
                 if (params?.offer instanceof Uint8Array) params.offer = `0x${oasis.misc.toHex(params.offer)}`
                 if (params?.provider instanceof Uint8Array)
                   params.provider = oasis.staking.addressToBech32(params.provider)
+                if (params?.admin instanceof Uint8Array)
+                  params.admin = oasis.staking.addressToBech32(params.admin)
                 if (params?.deployment?.app_id instanceof Uint8Array)
                   params.deployment.app_id = oasis.address.toBech32('rofl', params.deployment.app_id)
                 if (params?.deployment?.manifest_hash instanceof Uint8Array)
