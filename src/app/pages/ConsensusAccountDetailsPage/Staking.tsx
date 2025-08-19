@@ -1,12 +1,10 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 import { styled } from '@mui/material/styles'
 import {
   Account,
@@ -41,22 +39,37 @@ type StakingProps = {
 
 export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
-  const [tab, setTabValue] = useState(0)
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Tabs value={tab} onChange={(event, tab) => setTabValue(tab)} aria-label={t('validator.delegations')}>
-        <Tab label={t('common.staked')} />
-        <Tab label={t('common.debonding')} />
+    <div className="flex flex-col h-full">
+      <Tabs defaultValue="staked" className="h-full" aria-label={t('validator.delegations')}>
+        <TabsList variant="layout">
+          <TabsTrigger value="staked">{t('common.staked')}</TabsTrigger>
+          <TabsTrigger value="debonding">{t('common.debonding')}</TabsTrigger>
+        </TabsList>
+        <StyledCard
+          sx={{
+            borderTopRightRadius: 0,
+            borderTopLeftRadius: 0,
+            borderTop: 'none',
+          }}
+        >
+          <CardContent>
+            {isLoading && <Skeleton className="h-[300px] mt-8" />}
+            {!isLoading && account && (
+              <>
+                <TabsContent value="staked">
+                  <ActiveDelegations address={account?.address} />
+                </TabsContent>
+                <TabsContent value="debonding">
+                  <DebondingDelegations address={account?.address} />
+                </TabsContent>
+              </>
+            )}
+          </CardContent>
+        </StyledCard>
       </Tabs>
-      <StyledCard>
-        <CardContent>
-          {isLoading && <Skeleton className="h-[300px] mt-8" />}
-          {account && tab === 0 && <ActiveDelegations address={account?.address} />}
-          {account && tab === 1 && <DebondingDelegations address={account?.address} />}
-        </CardContent>
-      </StyledCard>
-    </Box>
+    </div>
   )
 }
 
