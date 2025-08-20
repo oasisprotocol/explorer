@@ -44,13 +44,13 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
     { key: 'height', content: t('common.height'), align: TableCellAlign.Left },
     ...(showHash ? [{ key: 'hash', content: t('common.hash') }] : []),
     ...(showEpoch ? [{ key: 'epoch', content: t('common.epoch') }] : []),
+    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
     {
       key: 'transaction',
       content: isLaptop ? t('common.transactionAbbreviation') : t('common.transactions'),
       align: TableCellAlign.Right,
     },
     ...(showProposer ? [{ key: 'proposer', content: t('common.proposer') }] : []),
-    { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
   ]
 
   const tableRows = blocks?.map(block => {
@@ -80,6 +80,11 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
           : []),
         {
           align: TableCellAlign.Right,
+          content: <TableCellAge sinceTimestamp={block.timestamp} />,
+          key: 'timestamp',
+        },
+        {
+          align: TableCellAlign.Right,
           content: block.num_transactions.toLocaleString(),
           key: 'txs',
         },
@@ -104,11 +109,6 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
               },
             ]
           : []),
-        {
-          align: TableCellAlign.Right,
-          content: <TableCellAge sinceTimestamp={block.timestamp} />,
-          key: 'timestamp',
-        },
       ],
       highlight: block.markAsNew,
     }

@@ -39,8 +39,16 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
-    { key: 'fill', content: t('common.fill') },
-    { key: 'height', content: t('common.height'), align: TableCellAlign.Right },
+    ...(type === BlocksTableType.Desktop ? [{ key: 'fill', content: t('common.fill') }] : []),
+    { key: 'height', content: t('common.height') },
+    ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
+      ? [
+          {
+            key: 'hash',
+            content: t('common.hash'),
+          },
+        ]
+      : []),
     { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
     ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
       ? [
@@ -67,15 +75,26 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
     return {
       key: block.hash,
       data: [
+        ...(type === BlocksTableType.Desktop
+          ? [
+              {
+                content: <VerticalProgressBar value={(100 * block.gas_used) / blockGasLimit} />,
+                key: 'fill',
+              },
+            ]
+          : []),
         {
-          content: <VerticalProgressBar value={(100 * block.gas_used) / blockGasLimit} />,
-          key: 'fill',
-        },
-        {
-          align: TableCellAlign.Right,
           content: <BlockLink scope={block} height={block.round} />,
           key: 'block',
         },
+        ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
+          ? [
+              {
+                content: <BlockHashLink scope={block} hash={block.hash} height={block.round} alwaysTrim />,
+                key: 'hash',
+              },
+            ]
+          : []),
         {
           align: TableCellAlign.Right,
           content: <TableCellAge sinceTimestamp={block.timestamp} />,
@@ -87,14 +106,6 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
                 align: TableCellAlign.Right,
                 content: block.num_transactions.toLocaleString(),
                 key: 'txs',
-              },
-            ]
-          : []),
-        ...(type === BlocksTableType.Desktop
-          ? [
-              {
-                content: <BlockHashLink scope={block} hash={block.hash} height={block.round} alwaysTrim />,
-                key: 'hash',
               },
             ]
           : []),
