@@ -5,20 +5,11 @@ import { TablePaginationProps } from '../Table/TablePagination'
 import { AccountLink } from '../Account/AccountLink'
 import { TokenLinkWithIcon } from './TokenLinkWithIcon'
 import { CopyToClipboard } from '../CopyToClipboard'
-import { VerificationIcon, verificationIconBoxHeight } from '../ContractVerificationIcon'
-import Box from '@mui/material/Box'
-import {
-  getTokenTypeDescription,
-  getTokenTypeStrictName,
-  tokenBackgroundColor,
-  tokenBorderColor,
-} from '../../../types/tokens'
+import { VerificationIcon } from '../ContractVerificationIcon'
 import { FC } from 'react'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
-import { SxProps } from '@mui/material/styles'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from 'app/hooks/useScreensize'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 type TokensProps = {
   tokens?: EvmToken[]
@@ -27,34 +18,24 @@ type TokensProps = {
   pagination: false | TablePaginationProps
 }
 
-export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined; sx?: SxProps }> = ({
-  tokenType,
-  sx = {},
-}) => {
+export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined }> = ({ tokenType }) => {
   const { t } = useTranslation()
-  return (
-    <Box
-      sx={{
-        background: tokenBackgroundColor[tokenType ?? 'missing'],
-        border: `1px solid ${tokenBorderColor[tokenType ?? 'missing']}`,
-        display: 'inline-block',
-        borderRadius: 2,
-        py: 1,
-        px: 3,
-        fontSize: 12,
-        height: verificationIconBoxHeight,
-        verticalAlign: 'middle',
-        textAlign: 'center',
-        ...sx,
-      }}
-    >
-      <Typography component="span">{getTokenTypeDescription(t, tokenType)}</Typography>
-      &nbsp;
-      <Typography component="span" color={COLORS.grayMedium}>
-        {t('common.parentheses', { subject: getTokenTypeStrictName(t, tokenType ?? 'missing') })}
-      </Typography>
-    </Box>
-  )
+
+  if (tokenType === 'ERC20') {
+    return (
+      <Badge variant="token-erc-20">
+        {t('common.token')} <span className="font-normal">({t('account.ERC20')})</span>
+      </Badge>
+    )
+  } else if (tokenType === 'ERC721') {
+    return (
+      <Badge variant="token-erc-721">
+        {t('common.nft')} <span className="font-normal">({t('account.ERC721')})</span>
+      </Badge>
+    )
+  }
+
+  return <Badge>{t('common.missing')}</Badge>
 }
 
 export const TokenList = (props: TokensProps) => {
@@ -76,7 +57,7 @@ export const TokenList = (props: TokensProps) => {
       content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
-    { key: 'type', content: t('common.type') },
+    { key: 'type', content: t('common.type'), align: TableCellAlign.Right },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -129,21 +110,13 @@ export const TokenList = (props: TokensProps) => {
         {
           key: 'verification',
           content: (
-            <Box
-              sx={{
-                display: 'inline-flex',
-                verticalAlign: 'middle',
-                width: '100%',
-              }}
-            >
-              <VerificationIcon
-                address_eth={token.eth_contract_addr}
-                scope={token}
-                verificationLevel={token.verification_level}
-                hideLink
-                hideLabel={isMobile}
-              />
-            </Box>
+            <VerificationIcon
+              address_eth={token.eth_contract_addr}
+              scope={token}
+              verificationLevel={token.verification_level}
+              hideLink
+              hideLabel={isMobile}
+            />
           ),
         },
         {
@@ -154,11 +127,8 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           key: 'type',
-          content: (
-            <Box sx={{ pr: 4 }}>
-              <TokenTypeTag tokenType={token.type} sx={{ width: '100%' }} />
-            </Box>
-          ),
+          content: <TokenTypeTag tokenType={token.type} />,
+          align: TableCellAlign.Right,
         },
       ],
     }

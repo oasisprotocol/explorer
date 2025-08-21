@@ -5,7 +5,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { TablePaginationProps } from '../../components/Table/TablePagination'
-import { RoflAppInstanceStatusBadge } from '../../components/Rofl/RoflAppInstanceStatusBadge'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 import { RoflAppInstanceLink } from '../../components/Rofl/RoflAppInstanceLink'
 import { TableCellNode } from '../../components/TableCellNode'
 import { TableHeaderNode } from '../../components/TableHeaderNode'
@@ -73,7 +73,11 @@ export const InstancesList: FC<InstancesListProps> = ({
               },
               {
                 key: 'expirationStatus',
-                content: <RoflAppInstanceStatusBadge isActive={isActive} />,
+                content: (
+                  <Badge variant={isActive ? 'success' : 'warning'}>
+                    {isActive ? t('rofl.active') : t('rofl.expired')}
+                  </Badge>
+                ),
                 align: TableCellAlign.Right,
               },
             ],

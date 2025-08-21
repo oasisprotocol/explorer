@@ -7,8 +7,8 @@ import { SearchScope } from '../../../types/searchScope'
 import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
-import { StatusBadge } from '../common/StatusBadge'
 import Tooltip from '@mui/material/Tooltip'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 export const verificationIconBoxHeight = 28
 
@@ -31,7 +31,7 @@ export const VerificationIcon: FC<{
         ? t('contract.verification.isPartiallyVerified')
         : t('contract.verification.isNotVerified')
   const statusVariant =
-    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partialsuccess' : 'danger'
+    verificationLevel === 'full' ? 'success' : verificationLevel === 'partial' ? 'partial-success' : 'error'
 
   const sourcifyLinkProps = {
     href: hideLink ? undefined : `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
@@ -44,7 +44,7 @@ export const VerificationIcon: FC<{
     <>
       <Tooltip placement="top" arrow title={hideLabel ? label : undefined}>
         <Link {...sourcifyLinkProps}>
-          <StatusBadge label={hideLabel ? '' : label} variant={statusVariant} />
+          <Badge variant={statusVariant}>{hideLabel ? '' : label}</Badge>
         </Link>
       </Tooltip>
       {!hideLink &&

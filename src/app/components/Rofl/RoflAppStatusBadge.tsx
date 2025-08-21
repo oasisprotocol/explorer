@@ -1,7 +1,5 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import { StatusBadge, StatusVariant } from '../common/StatusBadge'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 type RoflAppStatusTypes = 'active' | 'inactive' | 'removed'
 
@@ -10,14 +8,10 @@ function getRoflAppStatus(hasActiveInstances: boolean, removed: boolean): RoflAp
   return hasActiveInstances ? 'active' : 'inactive'
 }
 
-const statusVariant: Record<RoflAppStatusTypes, StatusVariant> = {
+const statusVariant: Record<RoflAppStatusTypes, 'success' | 'warning' | 'error'> = {
   active: 'success',
   inactive: 'warning',
-  removed: 'danger',
-}
-
-const statusIcon: Partial<Record<RoflAppStatusTypes, ReactNode>> = {
-  inactive: <CheckCircleIcon color="warning" fontSize="small" />,
+  removed: 'error',
 }
 
 type RoflAppStatusBadgeProps = {
@@ -34,5 +28,5 @@ export const RoflAppStatusBadge = ({ hasActiveInstances, removed }: RoflAppStatu
     removed: t('rofl.removed'),
   }
 
-  return <StatusBadge label={statusLabel[status]} icon={statusIcon[status]} variant={statusVariant[status]} />
+  return <Badge variant={statusVariant[status]}>{statusLabel[status]}</Badge>
 }

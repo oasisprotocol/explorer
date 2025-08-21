@@ -1,18 +1,12 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Pending from '@mui/icons-material/Pending'
-import { StatusBadge, StatusVariant } from '../../components/common/StatusBadge'
+import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 type ValidatorStatus = 'active' | 'waiting' | 'inactive'
 
-const statusVariant: Record<ValidatorStatus, StatusVariant> = {
+const statusVariant: Record<ValidatorStatus, 'success' | 'info' | 'error'> = {
   active: 'success',
   waiting: 'info',
-  inactive: 'danger',
-}
-
-export const statusIcon: Partial<Record<ValidatorStatus, ReactNode>> = {
-  waiting: <Pending color="info" fontSize="small" />,
+  inactive: 'error',
 }
 
 type ValidatorStatusBadgeProps = {
@@ -34,5 +28,5 @@ export const ValidatorStatusBadge = ({ active, inValidatorSet }: ValidatorStatus
     inactive: t('validator.inactive'),
   }
 
-  return <StatusBadge label={statusLabel[status]} icon={statusIcon[status]} variant={statusVariant[status]} />
+  return <Badge variant={statusVariant[status]}>{statusLabel[status]}</Badge>
 }
