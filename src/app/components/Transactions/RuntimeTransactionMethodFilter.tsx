@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { getRuntimeTxMethodOptions, RuntimeTxMethodFilterOption } from '../RuntimeTransactionMethod'
 import { useTranslation } from 'react-i18next'
-import { Select } from '../Select'
+import { Select } from '@oasisprotocol/ui-library/src/components/select'
 import Typography from '@mui/material/Typography'
 import { Layer } from '../../../oasis-nexus/api'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
@@ -38,14 +38,5 @@ export const RuntimeTransactionMethodFilter: FC<{
     ? [...defaultOptions, ...customOptions]
     : [...defaultOptions, ...getRuntimeTxMethodOptions(t, layer)]
 
-  return (
-    <Select
-      className={expand ? 'expand' : undefined}
-      light={true}
-      label={<FilterLabel />}
-      options={options}
-      value={value}
-      handleChange={setValue}
-    />
-  )
+  return <Select options={options} value={value} handleChange={setValue} />
 }

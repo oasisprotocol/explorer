@@ -1,11 +1,7 @@
 import { FC } from 'react'
-import {
-  getConsensusTxMethodOptions,
-  ConsensusTxMethodFilterOption,
-  ConsensusTransactionTypeFilterOption,
-} from '../ConsensusTransactionMethod'
+import { getConsensusTxMethodOptions, ConsensusTxMethodFilterOption } from '../ConsensusTransactionMethod'
 import { useTranslation } from 'react-i18next'
-import { Select } from '../Select'
+import { Select } from '@oasisprotocol/ui-library/src/components/select'
 import Typography from '@mui/material/Typography'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 
@@ -34,10 +30,7 @@ export const ConsensusTransactionMethodFilter: FC<{
 }> = ({ value, setValue, expand }) => {
   const { t } = useTranslation()
   return (
-    <Select<ConsensusTransactionTypeFilterOption>
-      className={expand ? 'expand' : undefined}
-      light={true}
-      label={<FilterLabel />}
+    <Select
       options={[{ value: 'any', label: 'Any' }, ...getConsensusTxMethodOptions(t)]}
       value={value}
       handleChange={setValue}
