@@ -1,15 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Alert from '@mui/material/Alert'
-import { styled } from '@mui/material/styles'
+import { Alert } from '@oasisprotocol/ui-library/src/components/alert'
 
 type MultipleTransactionsWarningProps = {
   enable: boolean | undefined
 }
-
-const StyledAlert = styled(Alert)(() => ({
-  marginBottom: '1em',
-}))
 
 export const MultipleTransactionsWarning: FC<MultipleTransactionsWarningProps> = ({ enable }) => {
   const { t } = useTranslation()
@@ -18,5 +13,9 @@ export const MultipleTransactionsWarning: FC<MultipleTransactionsWarningProps> =
     return null
   }
 
-  return <StyledAlert severity="error">{t('transaction.warningMultipleTransactionsSameHash')}</StyledAlert>
+  return (
+    <Alert variant="error" className="mb-4">
+      {t('transaction.warningMultipleTransactionsSameHash')}
+    </Alert>
+  )
 }
