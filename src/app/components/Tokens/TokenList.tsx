@@ -6,7 +6,6 @@ import { AccountLink } from '../Account/AccountLink'
 import { TokenLinkWithIcon } from './TokenLinkWithIcon'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon } from '../ContractVerificationIcon'
-import Box from '@mui/material/Box'
 import { FC } from 'react'
 import { RoundedBalance } from '../RoundedBalance'
 import { useScreenSize } from 'app/hooks/useScreensize'
@@ -58,7 +57,7 @@ export const TokenList = (props: TokensProps) => {
       content: t('tokens.holders'),
       align: TableCellAlign.Right,
     },
-    { key: 'type', content: t('common.type') },
+    { key: 'type', content: t('common.type'), align: TableCellAlign.Right },
   ]
 
   const tableRows = tokens?.map((token, index) => {
@@ -111,21 +110,13 @@ export const TokenList = (props: TokensProps) => {
         {
           key: 'verification',
           content: (
-            <Box
-              sx={{
-                display: 'inline-flex',
-                verticalAlign: 'middle',
-                width: '100%',
-              }}
-            >
-              <VerificationIcon
-                address_eth={token.eth_contract_addr}
-                scope={token}
-                verificationLevel={token.verification_level}
-                hideLink
-                hideLabel={isMobile}
-              />
-            </Box>
+            <VerificationIcon
+              address_eth={token.eth_contract_addr}
+              scope={token}
+              verificationLevel={token.verification_level}
+              hideLink
+              hideLabel={isMobile}
+            />
           ),
         },
         {
@@ -136,11 +127,8 @@ export const TokenList = (props: TokensProps) => {
         },
         {
           key: 'type',
-          content: (
-            <Box sx={{ pr: 4 }}>
-              <TokenTypeTag tokenType={token.type} />
-            </Box>
-          ),
+          content: <TokenTypeTag tokenType={token.type} />,
+          align: TableCellAlign.Right,
         },
       ],
     }
