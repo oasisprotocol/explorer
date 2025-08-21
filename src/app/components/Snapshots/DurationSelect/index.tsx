@@ -1,19 +1,17 @@
-import { FC, memo } from 'react'
-import { Select, SelectOptionBase } from '../../Select'
+import { FC } from 'react'
+import { Select } from '@oasisprotocol/ui-library/src/components/select'
 import { ChartDuration } from '../../../utils/chart-utils'
 import { useTranslation } from 'react-i18next'
-
-interface DurationOption extends SelectOptionBase {
-  label: string
-  value: ChartDuration
-}
 
 interface DurationSelectProps {
   defaultValue?: ChartDuration
   handleChange: (duration: ChartDuration | null) => void
 }
 
-const DurationSelectCmp: FC<DurationSelectProps> = ({ defaultValue = ChartDuration.TODAY, handleChange }) => {
+export const DurationSelect: FC<DurationSelectProps> = ({
+  defaultValue = ChartDuration.TODAY,
+  handleChange,
+}) => {
   const { t } = useTranslation()
 
   const options = [
@@ -35,7 +33,5 @@ const DurationSelectCmp: FC<DurationSelectProps> = ({ defaultValue = ChartDurati
     },
   ]
 
-  return <Select<DurationOption> defaultValue={defaultValue} handleChange={handleChange} options={options} />
+  return <Select defaultValue={defaultValue} handleChange={handleChange} options={options} />
 }
-
-export const DurationSelect = memo(DurationSelectCmp)

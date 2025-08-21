@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Select } from '../Select'
+import { Select } from '@oasisprotocol/ui-library/src/components/select'
 import Typography from '@mui/material/Typography'
 import { ConsensusEventType, Layer } from '../../../oasis-nexus/api'
 import { ConsensusEventFilteringType } from '../../hooks/useCommonParams'
@@ -57,14 +57,5 @@ export const ConsensusEventTypeFilter: FC<{
     ? [...defaultOptions, ...customOptions]
     : [...defaultOptions, ...getConsensusEventTypeOptions(t, layer)]
 
-  return (
-    <Select
-      className={expand ? 'expand' : undefined}
-      light={true}
-      label={<FilterLabel />}
-      options={options}
-      value={value}
-      handleChange={setValue}
-    />
-  )
+  return <Select options={options} value={value} handleChange={setValue} />
 }
