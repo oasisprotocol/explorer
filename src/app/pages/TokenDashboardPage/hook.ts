@@ -51,6 +51,7 @@ export const useNFTInstanceTransfers = (
 export const useTokenTransfers = (
   scope: undefined | RuntimeScope,
   params: undefined | GetRuntimeEventsParams,
+  querySearchParamName?: string,
 ) => {
   if (params && Object.values(params).some(value => value === undefined || value === null)) {
     throw new Error('Must set params=undefined while some values are unavailable')
@@ -61,7 +62,7 @@ export const useTokenTransfers = (
   const mockScopeForDisabledQuery = { network: 'mainnet', layer: 'sapphire' } as const
 
   const pagination = useComprehensiveSearchParamsPagination<RuntimeEvent, RuntimeEventList>({
-    paramName: 'page',
+    paramName: querySearchParamName ?? 'page',
     pageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
   })
   const query = useGetRuntimeEvents(
