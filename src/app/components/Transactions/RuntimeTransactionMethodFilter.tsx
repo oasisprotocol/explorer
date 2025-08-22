@@ -1,29 +1,10 @@
 import { FC } from 'react'
 import { getRuntimeTxMethodOptions, RuntimeTxMethodFilterOption } from '../RuntimeTransactionMethod'
 import { useTranslation } from 'react-i18next'
-import { Select } from '@oasisprotocol/ui-library/src/components/select'
-import Typography from '@mui/material/Typography'
 import { Layer } from '../../../oasis-nexus/api'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
-
-const FilterLabel: FC = () => {
-  const { t } = useTranslation()
-  return (
-    <Typography
-      component={'span'}
-      sx={{
-        fontStyle: 'normal',
-        fontWeight: 700,
-        fontSize: 16,
-        lineHeight: '150%',
-        marginRight: 4,
-      }}
-    >
-      {t('transactions.filterByMethod')}
-    </Typography>
-  )
-}
+import { FilterByType } from '../FilterByType'
 
 export const RuntimeTransactionMethodFilter: FC<{
   layer: Layer
@@ -38,5 +19,5 @@ export const RuntimeTransactionMethodFilter: FC<{
     ? [...defaultOptions, ...customOptions]
     : [...defaultOptions, ...getRuntimeTxMethodOptions(t, layer)]
 
-  return <Select options={options} value={value} handleChange={setValue} />
+  return <FilterByType options={options} value={value} handleChange={setValue} />
 }
