@@ -100,7 +100,7 @@ export const Runtime = {
  * An Oasis-style (bech32) address.
  * @pattern ^oasis1[a-z0-9]{40}$
  */
-export type StakingAddress = string;
+export type StakingAddress = OasisAddress; /* modified by afterAllFilesWrite */
 
 /**
  * @pattern ^-?[0-9]+$
@@ -111,12 +111,15 @@ export type TextBigInt = string;
  * An Oasis-style (bech32) address.
  * @pattern ^oasis1[a-z0-9]{40}$
  */
-export type Address = string;
+export type Address = OasisAddress; /* modified by afterAllFilesWrite */
 
 /**
  * @pattern ^oasis1[a-z0-9]{40}$|^(0x)?[0-9a-fA-F]{40}$
  */
-export type EthOrOasisAddress = string;
+export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */
+export type OasisAddress = `oasis1${string}`; /* modified by afterAllFilesWrite */
+export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */
+
 
 /**
  * A base64-encoded ed25519 public key.
