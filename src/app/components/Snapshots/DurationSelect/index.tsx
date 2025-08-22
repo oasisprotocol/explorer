@@ -33,5 +33,9 @@ export const DurationSelect: FC<DurationSelectProps> = ({
     },
   ]
 
-  return <Select defaultValue={defaultValue} handleChange={handleChange} options={options} />
+  return (
+    <div className="md:ml-3">
+      <Select defaultValue={defaultValue} handleChange={handleChange} options={options} />
+    </div>
+  )
 }
