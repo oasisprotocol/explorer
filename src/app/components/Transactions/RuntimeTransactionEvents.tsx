@@ -10,7 +10,7 @@ export const RuntimeTransactionEvents: FC<{
   eventType: RuntimeEventFilteringType
 }> = ({ transaction, eventType }) => {
   const { network, layer } = transaction
-  const pagination = useSearchParamsPagination('page')
+  const pagination = useSearchParamsPagination('event-page')
   const offset = (pagination.selectedPage - 1) * limit
   const eventsQuery = useGetRuntimeEvents(network, layer, {
     tx_hash: transaction.hash,
