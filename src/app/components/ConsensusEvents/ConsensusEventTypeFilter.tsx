@@ -1,13 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Select } from '@oasisprotocol/ui-library/src/components/select'
-import Typography from '@mui/material/Typography'
 import { ConsensusEventType, Layer } from '../../../oasis-nexus/api'
 import { ConsensusEventFilteringType } from '../../hooks/useCommonParams'
 import { TFunction } from 'i18next'
 import { paraTimesConfig } from '../../../config'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { getConsensusEventTypeLabel } from './ConsensusEventDetails'
+import { FilterByType } from '../FilterByType'
 
 type Option = {
   value: ConsensusEventFilteringType
@@ -26,24 +25,6 @@ const getConsensusEventTypeOptions = (t: TFunction, layer: Layer) => {
     )
 }
 
-const FilterLabel: FC = () => {
-  const { t } = useTranslation()
-  return (
-    <Typography
-      component={'span'}
-      sx={{
-        fontStyle: 'normal',
-        fontWeight: 700,
-        fontSize: 16,
-        lineHeight: '150%',
-        marginRight: 4,
-      }}
-    >
-      {t('event.filterByType')}
-    </Typography>
-  )
-}
-
 export const ConsensusEventTypeFilter: FC<{
   layer: Layer
   value: ConsensusEventFilteringType
@@ -57,5 +38,5 @@ export const ConsensusEventTypeFilter: FC<{
     ? [...defaultOptions, ...customOptions]
     : [...defaultOptions, ...getConsensusEventTypeOptions(t, layer)]
 
-  return <Select options={options} value={value} handleChange={setValue} />
+  return <FilterByType options={options} value={value} handleChange={setValue} />
 }
