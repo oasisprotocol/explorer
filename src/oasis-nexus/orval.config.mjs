@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import prependNetworkPath from './prependNetworkPath.mjs'
 import removeNetworkFromName from './removeNetworkFromName.mjs'
 
@@ -7,6 +8,7 @@ const config = {
     input: {
       // target: './v1.yaml',
       target: 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/api/spec/v1.yaml',
+      // target: 'https://raw.githubusercontent.com/oasisprotocol/nexus/v0.7.1/api/spec/v1.yaml',
       // target: 'https://nexus.stg.oasis.io/v1/spec/v1.yaml',
       // target: 'https://nexus.oasis.io/v1/spec/v1.yaml',
       override: {
@@ -27,6 +29,20 @@ const config = {
       override: {
         operationName: removeNetworkFromName,
         mutator: './replaceNetworkWithBaseURL.ts',
+      },
+    },
+    hooks: {
+      afterAllFilesWrite: async filesPaths => {
+        for (const filePath of filesPaths) {
+          const generatedApiFile = await fs.promises.readFile(filePath, 'utf-8')
+
+          const patchedApiFile = generatedApiFile.replaceAll(
+            '{ [key: string]: unknown };',
+            '{ [key: string]: any }; /* modified by afterAllFilesWrite */',
+          )
+
+          await fs.promises.writeFile(filePath, patchedApiFile, 'utf-8')
+        }
       },
     },
   },
