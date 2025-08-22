@@ -146,6 +146,7 @@ export const RuntimeTransactionDetailView: FC<{
           offset: 0,
         }
       : undefined,
+    'workaroundQueryParamOverwrittenByOffset',
   )
   const transfers = transferEventsQuery?.results?.data
   const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
