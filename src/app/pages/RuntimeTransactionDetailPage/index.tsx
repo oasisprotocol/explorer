@@ -1,7 +1,12 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
+import {
+  RuntimeEventType,
+  RuntimeTransaction,
+  useGetRuntimeEvents,
+  useGetRuntimeTransactionsTxHash,
+} from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -35,7 +40,6 @@ import { isRoflTransaction } from '../../utils/transaction'
 import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import * as oasis from '@oasisprotocol/client'
-import { useTokenTransfers } from '../TokenDashboardPage/hook'
 import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 import { EventBalance } from 'app/components/Tokens/TokenTransfers'
@@ -137,18 +141,27 @@ export const RuntimeTransactionDetailView: FC<{
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
   const envelope = transaction?.encryption_envelope ?? transaction?.oasis_encryption_envelope
 
-  const transferEventsQuery = useTokenTransfers(
-    transaction,
-    transaction?.hash
-      ? {
-          tx_hash: transaction.hash,
-          limit: 10,
-          offset: 0,
-        }
-      : undefined,
+  const transferEventsQuery = useGetRuntimeEvents(
+    // follows mockScopeForDisabledQuery from useTokenTransfers
+    transaction?.network ?? 'mainnet',
+    transaction?.layer ?? 'sapphire',
+    {
+      type: RuntimeEventType.evmlog,
+      // The following is the hex-encoded signature for Transfer(address,address,uint256)
+      evm_log_signature: 'ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+      tx_hash: transaction?.hash,
+      limit: 10,
+      offset: 0,
+    },
+    {
+      query: {
+        enabled: !!transaction,
+      },
+    },
   )
-  const transfers = transferEventsQuery?.results?.data
-  const totalTransfers = transferEventsQuery?.results?.tablePaginationProps?.totalCount
+
+  const transfers = transaction ? transferEventsQuery?.data?.data.events : undefined
+  const totalTransfers = transaction ? transferEventsQuery?.data?.data.total_count : undefined
 
   return (
     <>
