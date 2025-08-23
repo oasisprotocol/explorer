@@ -30,7 +30,13 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
     .sort((a, b) => b.path.endsWith(entryFilePath) - a.path.endsWith(entryFilePath))
 
   return (
-    <Card>
+    <Card
+      sx={{
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
+        borderTop: 'none',
+      }}
+    >
       {noCode && <CardEmptyState label={t('contract.noCode')} />}
       {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
         <CardContent>
