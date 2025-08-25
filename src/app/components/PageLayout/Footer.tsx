@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { styled } from '@mui/material/styles'
@@ -11,30 +10,6 @@ import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
-
-const FooterBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'enableMobileSearch',
-})<{ enableMobileSearch: boolean }>(({ theme, enableMobileSearch }) => ({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-between',
-  padding: theme.spacing(5, enableMobileSearch ? 4 : 0),
-  [theme.breakpoints.up('sm')]: {
-    flex: '0 1 100%',
-    padding: theme.spacing(5, 0),
-  },
-}))
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-}))
-
-const StyledLinksGroup = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(3),
-  paddingLeft: theme.spacing(2),
-}))
 
 const StyledTypography = styled(Typography)(() => ({
   display: 'flex',
@@ -55,11 +30,12 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
   const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
   const hasMobileAction = isMobile && mobileSearchAction
-  const privacyPolicyLinkStyles = hasMobileAction ? { order: 1, flexBasis: '100%' } : {}
 
   return (
     <footer>
-      <FooterBox enableMobileSearch={enableMobileSearch}>
+      <div
+        className={`flex justify-between items-center sm:px-6 py-6 ${enableMobileSearch ? 'px-2' : 'px-4'}`}
+      >
         {isTablet ? (
           <AppendMobileSearch
             scope={scope}
@@ -67,17 +43,17 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             enableMobileSearch={enableMobileSearch}
           >
             <StyledTypography variant="footer">
-              <Box sx={{ whiteSpace: 'nowrap' }}>{t('footer.mobileTitle')} |</Box>
-              <Box sx={privacyPolicyLinkStyles}>
+              <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
+              <div className={hasMobileAction ? 'order-1 basis-full sm:order-none sm:basis-auto' : ''}>
                 <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
-              </Box>
-              <Box>{currentYear}</Box>
+              </div>
+              <div>{currentYear}</div>
             </StyledTypography>
           </AppendMobileSearch>
         ) : (
           <>
-            <StyledBox>
+            <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
                 <Typography variant="footer">
                   <Trans
@@ -125,7 +101,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                   />
                 </Typography>
               )}
-              <StyledLinksGroup>
+              <div className="flex gap-2 pl-1">
                 <Typography variant="footer">
                   {' | '}
                   <Link
@@ -147,14 +123,14 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                     {t('footer.github')}
                   </Link>
                 </Typography>
-              </StyledLinksGroup>
-            </StyledBox>
+              </div>
+            </div>
             <Typography variant="footer">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>
         )}
-      </FooterBox>
+      </div>
     </footer>
   )
 }
