@@ -12,6 +12,78 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.24.1 (2025-08-26)
+
+### Bug Fixes and Improvements
+
+- Enable validator uptime
+  ([#2123](https://github.com/oasisprotocol/explorer/issues/2123))
+
+- Fix headers colors after changing Explorer background
+  ([#2126](https://github.com/oasisprotocol/explorer/issues/2126))
+
+- Avoid query param conflict in tx details view
+  ([#2150](https://github.com/oasisprotocol/explorer/issues/2150))
+
+### Internal Changes
+
+- Introduce Oasis UI Library
+  ([#1993](https://github.com/oasisprotocol/explorer/issues/1993))
+
+- Upgrade orval to 7.10.0
+  ([#2104](https://github.com/oasisprotocol/explorer/issues/2104))
+
+- Replace MUI Skeleton with Oasis UI Library component
+  ([#2106](https://github.com/oasisprotocol/explorer/issues/2106))
+
+- Remove usage of MUI Paper component
+  ([#2109](https://github.com/oasisprotocol/explorer/issues/2109))
+
+- Replace MUI Divider with Oasis UI Library component
+  ([#2110](https://github.com/oasisprotocol/explorer/issues/2110))
+
+- Replace MUI Modal with Oasis UI Library component
+  ([#2111](https://github.com/oasisprotocol/explorer/issues/2111))
+
+- Replace MUI Breadcrumbs with Oasis UI Library component
+  ([#2112](https://github.com/oasisprotocol/explorer/issues/2112))
+
+- Replace MUI Drawer with Oasis UI Library component
+  ([#2113](https://github.com/oasisprotocol/explorer/issues/2113))
+
+- Replace MUI ImageList with custom component
+  ([#2114](https://github.com/oasisprotocol/explorer/issues/2114))
+
+- Replace MUI Snackbar with custom component
+  ([#2115](https://github.com/oasisprotocol/explorer/issues/2115))
+
+- Remove MUI Switch customization
+  ([#2116](https://github.com/oasisprotocol/explorer/issues/2116))
+
+- Adjust tailwind import after Parcel to Vite transition
+  ([#2117](https://github.com/oasisprotocol/explorer/issues/2117))
+
+- Replace MUI IconButton with Oasis UI Library component
+  ([#2118](https://github.com/oasisprotocol/explorer/issues/2118))
+
+- Remove usage of MUI List component
+  ([#2119](https://github.com/oasisprotocol/explorer/issues/2119))
+
+- Replace badges with Oasis UI Library component
+  ([#2121](https://github.com/oasisprotocol/explorer/issues/2121))
+
+- Change how highlight pattern is communicated among components
+  ([#2124](https://github.com/oasisprotocol/explorer/issues/2124))
+
+- Replace MUI Fade with tailwind classes
+  ([#2125](https://github.com/oasisprotocol/explorer/issues/2125))
+
+- Replace MUI Alert with Oasis UI Library component
+  ([#2128](https://github.com/oasisprotocol/explorer/issues/2128))
+
+- Replace MUI LinearProgress with Oasis UI Library component
+  ([#2131](https://github.com/oasisprotocol/explorer/issues/2131))
+
 ## 1.24.0 (2025-07-29)
 
 ### Features
