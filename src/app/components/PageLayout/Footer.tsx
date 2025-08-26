@@ -1,22 +1,14 @@
 import { FC, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
-import Link from '@mui/material/Link'
-import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
-
-const StyledTypography = styled(Typography)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2,
-  flexWrap: 'wrap',
-}))
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 interface FooterProps {
   scope?: SearchScope
@@ -25,7 +17,6 @@ interface FooterProps {
 }
 
 export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobileSearch = true }) => {
-  const theme = useTheme()
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
@@ -34,7 +25,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
   return (
     <footer>
       <div
-        className={`flex justify-between items-center sm:px-6 py-6 ${enableMobileSearch ? 'px-2' : 'px-4'}`}
+        className={cn('flex justify-between items-center py-6 sm:px-6', enableMobileSearch ? 'px-2' : 'px-4')}
       >
         {isTablet ? (
           <AppendMobileSearch
@@ -42,20 +33,20 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             action={isMobile && mobileSearchAction}
             enableMobileSearch={enableMobileSearch}
           >
-            <StyledTypography variant="footer">
+            <Typography variant="muted" className="flex items-center gap-0.5 flex-wrap">
               <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
-              <div className={hasMobileAction ? 'order-1 basis-full sm:order-none sm:basis-auto' : ''}>
+              <div className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
               </div>
               <div>{currentYear}</div>
-            </StyledTypography>
+            </Typography>
           </AppendMobileSearch>
         ) : (
           <>
             <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
-                <Typography variant="footer">
+                <Typography variant="muted">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
@@ -65,7 +56,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.releaseTag}${import.meta.env.REACT_APP_BUILD_VERSION}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          sx={{ color: theme.palette.layout.main }}
+                          className="text-muted-foreground"
                         />
                       ) : (
                         <>-</>
@@ -75,7 +66,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.commit}${import.meta.env.REACT_APP_BUILD_SHA}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          sx={{ color: theme.palette.layout.main }}
+                          className="text-muted-foreground"
                         />
                       ),
                     }}
@@ -102,30 +93,30 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                 </Typography>
               )}
               <div className="flex gap-2 pl-1">
-                <Typography variant="footer">
+                <Typography variant="muted">
                   {' | '}
                   <Link
                     href={api.spec}
                     rel="noopener noreferrer"
                     target="_blank"
-                    sx={{ color: theme.palette.layout.main }}
+                    className="text-muted-foreground"
                   >
                     {t('footer.apiDocs')}
                   </Link>
                 </Typography>
-                <Typography variant="footer">
+                <Typography variant="muted">
                   <Link
                     href={github.home}
                     rel="noopener noreferrer"
                     target="_blank"
-                    sx={{ color: theme.palette.layout.main }}
+                    className="text-muted-foreground"
                   >
                     {t('footer.github')}
                   </Link>
                 </Typography>
               </div>
             </div>
-            <Typography variant="footer">
+            <Typography variant="muted">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>

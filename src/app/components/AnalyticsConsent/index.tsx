@@ -3,7 +3,7 @@ import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { useBlocker, useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
 import { ThemeByScope } from '../ThemeByScope'
@@ -87,13 +87,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
   )
 }
 
-const StyledPrivacyButton = styled(Button)(() => ({
-  padding: 0,
-  textAlign: 'left',
-  height: 'auto',
-  fontSize: 'inherit',
-  fontWeight: 700,
-}))
+
 
 export const PrivacyPolicyFooterLink: FC = () => {
   const { t } = useTranslation()
@@ -111,9 +105,15 @@ export const ReopenAnalyticsConsentButton = () => {
   const context = useContext(AnalyticsContext)
   if (context === null) throw new Error('must be used within AnalyticsContext')
   return (
-    <StyledPrivacyButton size="small" color="inherit" onClick={() => context.reopenAnalyticsConsent()}>
-      {t('analyticsConsent.settings')}
-    </StyledPrivacyButton>
+    <Link asChild className="text-muted-foreground">
+      <button
+        type="button"
+        onClick={() => context.reopenAnalyticsConsent()}
+        className="bg-transparent p-0 cursor-pointer"
+      >
+        {t('analyticsConsent.settings')}
+      </button>
+    </Link>
   )
 }
 
@@ -140,7 +140,7 @@ export const AnalyticsConsentView = (props: {
               <Link
                 href={import.meta.env.REACT_APP_PRIVACY_POLICY}
                 target="_blank"
-                sx={{ fontWeight: 400, textDecoration: 'underline' }}
+                className="font-normal underline"
               />
             ),
           }}
