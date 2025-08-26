@@ -12,6 +12,50 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.24.1 (2025-08-26)
+
+### Bug Fixes and Improvements
+
+- Enable validator uptime
+  ([#2123](https://github.com/oasisprotocol/explorer/issues/2123))
+
+- Fix headers colors after changing Explorer background
+  ([#2126](https://github.com/oasisprotocol/explorer/issues/2126))
+
+- Avoid query param conflict in tx details view
+  ([#2150](https://github.com/oasisprotocol/explorer/issues/2150))
+
+- Fix highlighting issues
+  ([#2108](https://github.com/oasisprotocol/explorer/issues/2108),
+  [#2107](https://github.com/oasisprotocol/explorer/issues/2107))
+
+### Internal Changes
+
+- Introduce Oasis UI Library
+  ([#1993](https://github.com/oasisprotocol/explorer/issues/1993),
+  [#2106](https://github.com/oasisprotocol/explorer/issues/2106),
+  [#2109](https://github.com/oasisprotocol/explorer/issues/2109),
+  [#2110](https://github.com/oasisprotocol/explorer/issues/2110),
+  [#2111](https://github.com/oasisprotocol/explorer/issues/2111),
+  [#2112](https://github.com/oasisprotocol/explorer/issues/2112),
+  [#2113](https://github.com/oasisprotocol/explorer/issues/2113),
+  [#2114](https://github.com/oasisprotocol/explorer/issues/2114),
+  [#2115](https://github.com/oasisprotocol/explorer/issues/2115),
+  [#2116](https://github.com/oasisprotocol/explorer/issues/2116),
+  [#2117](https://github.com/oasisprotocol/explorer/issues/2117),
+  [#2118](https://github.com/oasisprotocol/explorer/issues/2118),
+  [#2119](https://github.com/oasisprotocol/explorer/issues/2119),
+  [#2121](https://github.com/oasisprotocol/explorer/issues/2121)
+  [#2125](https://github.com/oasisprotocol/explorer/issues/2125),
+  [#2128](https://github.com/oasisprotocol/explorer/issues/2128),
+  [#2131](https://github.com/oasisprotocol/explorer/issues/2131))
+
+- Upgrade orval to 7.10.0
+  ([#2104](https://github.com/oasisprotocol/explorer/issues/2104))
+
+- Change how highlight pattern is communicated among components
+  ([#2124](https://github.com/oasisprotocol/explorer/issues/2124))
+
 ## 1.24.0 (2025-07-29)
 
 ### Features
