@@ -1,10 +1,8 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { Drawer, DrawerContent, DrawerTitle } from '@oasisprotocol/ui-library/src'
 import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
-import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
@@ -37,46 +35,11 @@ export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, is
   </>
 )
 
-const StyledLayerPickerContent = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    flex: 1,
-  },
-}))
-
-const StyledContent = styled(Box)(({ theme }) => ({
-  flex: 1,
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-}))
-
 const TabletBackButton = styled(Button)({
   color: COLORS.brandDark,
   width: 'fit-content',
   textDecoration: 'none',
 })
-
-const TabletActionBar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  minHeight: '55px',
-  paddingBottom: theme.spacing(3),
-}))
-
-const ActionBar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-around',
-  [theme.breakpoints.up('md')]: {
-    justifyContent: 'flex-end',
-    gap: theme.spacing(4),
-  },
-}))
 
 type LayerPickerContentProps = Omit<LayerPickerProps, 'open'>
 
@@ -105,14 +68,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   const handleConfirm = () => onConfirm(selectedScope)
 
   return (
-    <StyledLayerPickerContent>
-      <DrawerTitle>
-        <Box sx={{ mb: isTablet ? 0 : 5, position: 'relative' }}>
-          <HomePageLink color="#0500e2" showText={!isMobile} />
-        </Box>
-      </DrawerTitle>
+    <div className="flex flex-col w-full flex-1 md:block md:w-auto md:flex-none">
+      <div className="relative mb-0 md:mb-10">
+        <HomePageLink color="#0500e2" showText={!isMobile} />
+      </div>
       {isTablet && (
-        <TabletActionBar>
+        <div className="flex justify-between items-center min-h-14 pb-6">
           <div>
             {
               // Do we need a "back to networks" button ?
@@ -150,14 +111,14 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             layer={activeScope.layer}
             onClick={onClose}
           />
-        </TabletActionBar>
+        </div>
       )}
       <Separator />
-      <StyledContent>
-        <Grid container>
+      <div className="flex-1 flex flex-col justify-between md:block">
+        <div className="grid grid-cols-12">
           {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
-              <Grid xs={12} lg={3}>
+              <div className="col-span-12 md:col-span-3">
                 <NetworkMenu
                   activeNetwork={activeScope.network}
                   selectedNetwork={selectedNetwork}
@@ -170,11 +131,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                     )
                   }}
                 />
-              </Grid>
+              </div>
             )}
           {scopeFreedom !== 'network' &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
-              <Grid xs={12} lg={3}>
+              <div className="col-span-12 md:col-span-3">
                 <LayerMenu
                   selectedNetwork={selectedNetwork}
                   selectedScope={selectedScope}
@@ -183,20 +144,20 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                     setTabletStep(LayerPickerTabletStep.LayerDetails)
                   }}
                 />
-              </Grid>
+              </div>
             )}
           {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
-            <Grid xs={12} lg={6}>
+            <div className="col-span-12 md:col-span-6">
               <LayerDetails
                 handleConfirm={handleConfirm}
                 selectedScope={selectedScope}
                 isOutOfDate={isOutOfDate}
               />
-            </Grid>
+            </div>
           )}
-        </Grid>
+        </div>
 
-        <ActionBar>
+        <div className="flex justify-around md:justify-end md:gap-8">
           <Button onClick={onClose} color="secondary" variant="outlined" size="large">
             {t('common.cancel')}
           </Button>
@@ -206,8 +167,8 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
               ? t('layerPicker.goToDashboard')
               : t('common.select')}
           </Button>
-        </ActionBar>
-      </StyledContent>
-    </StyledLayerPickerContent>
+        </div>
+      </div>
+    </div>
   )
 }
