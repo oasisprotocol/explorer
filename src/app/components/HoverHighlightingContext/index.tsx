@@ -3,7 +3,7 @@ import { getEvmBech32Address, isValidEthAddress } from '../../utils/helpers'
 
 interface HoverHighlightingContextInfo {
   shouldHighlight: (address: string) => boolean
-  highlightAddress: (value: string) => void
+  selectAddress: (value: string) => void
   releaseAddress: (value: string) => void
 }
 
@@ -11,7 +11,7 @@ const HoverHighlightingContext = createContext<HoverHighlightingContextInfo | nu
 
 const noContext: HoverHighlightingContextInfo = {
   shouldHighlight: () => false,
-  highlightAddress: () => {},
+  selectAddress: () => {},
   releaseAddress: () => {},
 }
 
@@ -24,17 +24,18 @@ const normalizeAddress = (address: string) =>
     : address.toLowerCase() // wherever else this is, just lowercase it
 
 export const HoverHighlightingContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [address, setAddress] = useState<string | undefined>()
-  const shouldHighlight = (testAddress: string) => !!address && address === normalizeAddress(testAddress)
-  const highlightAddress = (address: string) => setAddress(normalizeAddress(address))
-  const releaseAddress = (oldAddress: string) => {
-    if (address === normalizeAddress(oldAddress)) setAddress(undefined)
+  const [selectedAddress, setSelectedAddress] = useState<string | undefined>()
+  const shouldHighlight = (address: string) =>
+    !!selectedAddress && selectedAddress === normalizeAddress(address)
+  const selectAddress = (address: string) => setSelectedAddress(normalizeAddress(address))
+  const releaseAddress = (address: string) => {
+    if (selectedAddress === normalizeAddress(address)) setSelectedAddress(undefined)
   }
   return (
     <HoverHighlightingContext.Provider
       value={{
         shouldHighlight,
-        highlightAddress,
+        selectAddress,
         releaseAddress,
       }}
     >

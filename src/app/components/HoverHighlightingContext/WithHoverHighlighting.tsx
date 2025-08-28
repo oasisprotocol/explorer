@@ -8,7 +8,7 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
   children,
   address,
 }) => {
-  const { shouldHighlight, highlightAddress, releaseAddress } = useHoverHighlighting()
+  const { shouldHighlight, selectAddress, releaseAddress } = useHoverHighlighting()
   useEffect(() => {
     // Release address on unmount
     return () => releaseAddress(address)
@@ -20,7 +20,7 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
   const isHighlighted = !isTablet && shouldHighlight(address)
   return (
     <Box
-      onMouseEnter={() => highlightAddress(address)}
+      onMouseEnter={() => selectAddress(address)}
       onMouseLeave={() => releaseAddress(address)}
       sx={{
         display: 'inline-flex',
