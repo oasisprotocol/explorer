@@ -1,7 +1,7 @@
 import { createContext, FC, ReactNode, useContext, useState } from 'react'
 
 interface HoverHighlightingContextInfo {
-  readonly highlightedAddress: string | undefined
+  shouldHighlight: (address: string) => boolean
   highlightAddress: (value: string) => void
   releaseAddress: (value: string) => void
 }
@@ -9,20 +9,22 @@ interface HoverHighlightingContextInfo {
 const HoverHighlightingContext = createContext<HoverHighlightingContextInfo | null>(null)
 
 const noContext: HoverHighlightingContextInfo = {
-  highlightedAddress: undefined,
+  shouldHighlight: () => false,
   highlightAddress: () => {},
   releaseAddress: () => {},
 }
 
 export const HoverHighlightingContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [address, setAddress] = useState<string | undefined>()
+  const shouldHighlight = (testAddress: string) =>
+    !!address && address.toLowerCase() === testAddress.toLowerCase()
   const releaseAddress = (oldAddress: string) => {
     if (address === oldAddress) setAddress(undefined)
   }
   return (
     <HoverHighlightingContext.Provider
       value={{
-        highlightedAddress: address,
+        shouldHighlight,
         highlightAddress: setAddress,
         releaseAddress,
       }}
