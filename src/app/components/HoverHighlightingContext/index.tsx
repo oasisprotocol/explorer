@@ -1,4 +1,5 @@
 import { createContext, FC, ReactNode, useContext, useState } from 'react'
+import { getEvmBech32Address, isValidEthAddress } from '../../utils/helpers'
 
 interface HoverHighlightingContextInfo {
   shouldHighlight: (address: string) => boolean
@@ -14,18 +15,26 @@ const noContext: HoverHighlightingContextInfo = {
   releaseAddress: () => {},
 }
 
+/**
+ * Convert highlight address to a uniform format:
+ */
+const normalizeAddress = (address: string) =>
+  isValidEthAddress(address)
+    ? getEvmBech32Address(address).toLowerCase() // We always want oasis address, not eth
+    : address.toLowerCase() // wherever else this is, just lowercase it
+
 export const HoverHighlightingContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [address, setAddress] = useState<string | undefined>()
-  const shouldHighlight = (testAddress: string) =>
-    !!address && address.toLowerCase() === testAddress.toLowerCase()
+  const shouldHighlight = (testAddress: string) => !!address && address === normalizeAddress(testAddress)
+  const highlightAddress = (address: string) => setAddress(normalizeAddress(address))
   const releaseAddress = (oldAddress: string) => {
-    if (address === oldAddress) setAddress(undefined)
+    if (address === normalizeAddress(oldAddress)) setAddress(undefined)
   }
   return (
     <HoverHighlightingContext.Provider
       value={{
         shouldHighlight,
-        highlightAddress: setAddress,
+        highlightAddress,
         releaseAddress,
       }}
     >
