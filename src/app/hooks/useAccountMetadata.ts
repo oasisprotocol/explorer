@@ -36,6 +36,7 @@ export const useAccountMetadata = (scope: SearchScope, address: string): Account
     // The type cast is OK because whenever we are on consensus, we will set enabled to false
     enabled: !registryData?.metadata && scope.layer !== 'consensus',
     useCaching: true,
+    swallowError: true,
   })
   const tokenData: AccountMetadataInfo = {
     metadata: token ? { address: token.contract_addr, name: token.name, source: 'SelfProfessed' } : undefined,
