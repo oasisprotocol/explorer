@@ -8,7 +8,7 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
   children,
   address,
 }) => {
-  const { highlightedAddress, highlightAddress, releaseAddress } = useHoverHighlighting()
+  const { shouldHighlight, selectAddress, releaseAddress } = useHoverHighlighting()
   useEffect(() => {
     // Release address on unmount
     return () => releaseAddress(address)
@@ -17,11 +17,10 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
   const { isTablet } = useScreenSize()
   // We have decided that we only want this feature on desktop,
   // so we are on tablet (or mobile), just return the wrapped contnt directly.
-  const isHighlighted =
-    !isTablet && !!highlightedAddress && highlightedAddress.toLowerCase() === address.toLowerCase()
+  const isHighlighted = !isTablet && shouldHighlight(address)
   return (
     <Box
-      onMouseEnter={() => highlightAddress(address)}
+      onMouseEnter={() => selectAddress(address)}
       onMouseLeave={() => releaseAddress(address)}
       sx={{
         display: 'inline-flex',
