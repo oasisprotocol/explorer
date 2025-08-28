@@ -20,16 +20,18 @@ interface UseTokenInfoParams {
   /** Defaults to true */
   enabled?: boolean
   useCaching?: boolean
+  swallowError?: boolean
 }
 
 export const useTokenInfo = (scope: RuntimeScope, address: string, params: UseTokenInfoParams = {}) => {
   const { network, layer } = scope
-  const { enabled, useCaching } = params
+  const { enabled, useCaching, swallowError = false } = params
   const query = useGetRuntimeEvmTokensAddress(network, layer, address, {
     query: {
       enabled,
       staleTime: useCaching ? 3600000 : undefined,
     },
+    request: swallowError ? ({ swallowError } as any) : undefined,
   })
   const token = query.data?.data
   const { isLoading, isError, isFetched } = query
