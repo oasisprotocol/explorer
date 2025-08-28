@@ -1666,6 +1666,19 @@ function transformRuntimeTransactionList(
                 if (params?.id instanceof Uint8Array) params.id = oasis.address.toBech32('rofl', params.id)
                 if (params?.admin instanceof Uint8Array)
                   params.admin = oasis.staking.addressToBech32(params.admin)
+                if (params?.policy?.endorsements && Array.isArray(params.policy.endorsements)) {
+                  params.policy.endorsements = params.policy.endorsements.map((endorsement: any) => {
+                    if (endorsement.provider_instance_admin instanceof Uint8Array) {
+                      return {
+                        ...endorsement,
+                        provider_instance_admin: oasis.staking.addressToBech32(
+                          endorsement.provider_instance_admin,
+                        ),
+                      }
+                    }
+                    return endorsement
+                  })
+                }
               }
               if (methodName.startsWith('roflmarket.')) {
                 if (params?.id instanceof Uint8Array) params.id = `0x${oasis.misc.toHex(params.id)}`
