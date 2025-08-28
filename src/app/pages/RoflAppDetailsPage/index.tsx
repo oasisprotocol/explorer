@@ -81,10 +81,10 @@ export const RoflAppDetailsPage: FC = () => {
         <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
       </SubPageCard>
       <Grid container spacing={4}>
-        <StyledGrid item xs={12} md={6}>
+        <StyledGrid item xs={12} lg={6}>
           <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
         </StyledGrid>
-        <StyledGrid item xs={12} md={6}>
+        <StyledGrid item xs={12} lg={6}>
           {roflApp && (
             <PolicyCard
               id={roflApp?.id}

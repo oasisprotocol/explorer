@@ -22,7 +22,6 @@ export const TokenSnapshot: FC<{ scope: RuntimeScope; address: string }> = ({ sc
           </AppendMobileSearch>
         </div>
       </div>
-
       <div className="grid grid-cols-12 gap-4 w-full pb-8">
         <div className="col-span-12 lg:col-span-3">
           <TokenTotalTransactionsCard scope={scope} address={address} />

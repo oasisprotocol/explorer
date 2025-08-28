@@ -29,10 +29,10 @@ export const ParatimeDashboardPage: FC = () => {
       <DashboardDivider />
       <LatestRuntimeTransactions scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
+        <Grid item xs={12} lg={6} sx={{ display: 'flex', order: isMobile ? 1 : 0 }}>
           <LearningMaterials scope={scope} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6}>
           <LatestRuntimeBlocks scope={scope} />
         </Grid>
         <Grid item xs={12}>
