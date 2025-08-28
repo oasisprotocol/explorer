@@ -12,7 +12,21 @@ import './locales/i18n'
 import { LocalSettingsContextProvider } from './app/providers/LocalSettingsProvider'
 import { AdaptiveTrimmerContextProvider } from './app/components/AdaptiveTrimmerContext/AdaptiveTrimmerProvider'
 
+const customLogger = {
+  log: console.log.bind(console),
+  warn: console.warn.bind(console),
+  error: (error: any) => {
+    // Suppress error messages when swallowError is set
+    if (typeof error === 'object' && error?.config.swallowError) return
+    // We don't need the warning about custom logger feature being deprecated.
+    // When we migrate to the next major version of react-query, we can simply drop this
+    if (typeof error === 'string' && error.startsWith('Passing a custom logger has been deprecated')) return
+    console.error(error) // Log any other errors
+  },
+}
+
 const queryClient = new QueryClient({
+  logger: customLogger, // This can be dropped when support is removed
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
