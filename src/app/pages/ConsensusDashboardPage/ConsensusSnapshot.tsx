@@ -17,16 +17,16 @@ export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
 
   return (
     <Snapshot title={t('consensusSnapshot.title')} scope={scope}>
-      <StyledGrid item xs={22} md={5}>
+      <StyledGrid item xs={22} lg={5}>
         <SnapshotEpoch scope={scope} />
       </StyledGrid>
-      <StyledGrid item xs={22} md={6}>
+      <StyledGrid item xs={22} lg={6}>
         <SnapshotValidators validators={validators} />
       </StyledGrid>
-      <StyledGrid item xs={22} md={5}>
+      <StyledGrid item xs={22} lg={5}>
         <SnapshotDelegators totalDelegators={stats?.total_delegators} />
       </StyledGrid>
-      <StyledGrid item xs={22} md={6}>
+      <StyledGrid item xs={22} lg={6}>
         <SnapshotStaked totalStaked={stats?.total_staked_balance} ticker={stats?.ticker} />
       </StyledGrid>
     </Snapshot>

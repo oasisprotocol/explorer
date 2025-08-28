@@ -155,7 +155,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
         <Grid container>
           {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
-              <Grid xs={12} md={3}>
+              <Grid xs={12} lg={3}>
                 <NetworkMenu
                   activeNetwork={activeScope.network}
                   selectedNetwork={selectedNetwork}
@@ -172,7 +172,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             )}
           {scopeFreedom !== 'network' &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
-              <Grid xs={12} md={3}>
+              <Grid xs={12} lg={3}>
                 <LayerMenu
                   selectedNetwork={selectedNetwork}
                   selectedScope={selectedScope}
@@ -184,7 +184,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
               </Grid>
             )}
           {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
-            <Grid xs={12} md={6}>
+            <Grid xs={12} lg={6}>
               <LayerDetails
                 handleConfirm={handleConfirm}
                 selectedScope={selectedScope}

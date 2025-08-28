@@ -44,16 +44,16 @@ export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         title={t('paraTimeSnapshot.header', { paratime })}
         scope={scope}
       >
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <TransactionsChartCard scope={scope} chartDuration={chartDuration} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           <ActiveAccounts scope={scope} chartDuration={chartDuration} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <Nodes scope={scope} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           {showFiatValues && !mainToken.free && <TokenPriceCard token={mainToken} />}
           {faucetInfo && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
         </StyledGrid>

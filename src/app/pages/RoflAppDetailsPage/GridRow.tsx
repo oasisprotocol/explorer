@@ -26,7 +26,7 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
 
   return (
     <>
-      <StyledGrid item xs={4} md={5}>
+      <StyledGrid item xs={4} lg={5}>
         {label}:
         {tooltip && (
           <Tooltip title={tooltip} placement="top">

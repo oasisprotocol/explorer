@@ -47,7 +47,7 @@ export const Header: FC = () => {
             pb: 4,
           }}
         >
-          <Grid md={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Grid lg={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
             <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
           </Grid>
           {withScopeSelector && (
@@ -58,7 +58,7 @@ export const Header: FC = () => {
             </>
           )}
           {isDesktop && (
-            <Grid md={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Grid lg={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
                 component="a"
                 href="https://rose.oasis.io/"
