@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -24,7 +23,7 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
       <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
         <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
           <AppendMobileSearch scope={scope}>
-            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', mb: 2 }}>
+            <div className="flex mb-1 flex-col sm:flex-row sm:items-center">
               <Typography
                 variant="h2"
                 sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
@@ -32,7 +31,7 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
                 {title}
               </Typography>
               {header}
-            </Box>
+            </div>
           </AppendMobileSearch>
         </Grid>
       </Grid>
