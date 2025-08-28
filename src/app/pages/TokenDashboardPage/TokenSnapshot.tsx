@@ -34,16 +34,16 @@ export const TokenSnapshot: FC<{ scope: RuntimeScope; address: string }> = ({ sc
       </Grid>
 
       <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           <TokenTotalTransactionsCard scope={scope} address={address} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <TokenSupplyCard scope={scope} address={address} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           <TokenHoldersCountCard scope={scope} address={address} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <TokenTypeCard scope={scope} address={address} />
           {/*<TokenGasUsedCard /> TODO: use this when gas used becomes available */}
         </StyledGrid>

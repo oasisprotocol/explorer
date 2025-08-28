@@ -89,10 +89,10 @@ export const ValidatorDetailsPage: FC = () => {
         stats={stats}
       />
       <Grid container spacing={4}>
-        <StyledGrid item xs={12} md={6}>
+        <StyledGrid item xs={12} lg={6}>
           <StakingTrend address={address} scope={scope} />
         </StyledGrid>
-        <StyledGrid item xs={12} md={6}>
+        <StyledGrid item xs={12} lg={6}>
           <SignedBlocks isLoading={isLoading} isFetched={isFetched} signedBlocks={validator?.signed_blocks} />
         </StyledGrid>
       </Grid>

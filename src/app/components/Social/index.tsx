@@ -79,7 +79,7 @@ export const Social: FC = () => {
         backgroundSize: 'cover',
       }}
     >
-      <Grid xs={12} md={4}>
+      <Grid xs={12} lg={4}>
         <Typography sx={{ fontSize: 18, fontWeight: 700, mb: 3 }} color={COLORS.white}>
           {t('social.header')}
         </Typography>

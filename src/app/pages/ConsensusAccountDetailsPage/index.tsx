@@ -41,10 +41,10 @@ export const ConsensusAccountDetailsPage: FC = () => {
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
       <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6}>
           <BalanceDistribution account={account} isLoading={isLoading} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} lg={6}>
           <Staking account={account} isLoading={isLoading} />
         </Grid>
       </Grid>

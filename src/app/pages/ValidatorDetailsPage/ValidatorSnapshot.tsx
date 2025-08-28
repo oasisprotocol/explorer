@@ -41,16 +41,16 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
       </Grid>
 
       <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <EscrowDistributionCard validator={validator} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
+        <StyledGrid item xs={22} lg={6}>
           <VotingPowerCard validator={validator} stats={stats} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           <UptimeCard uptime={validator?.uptime} />
         </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        <StyledGrid item xs={22} lg={5}>
           <ExternalLinkCard link={validator?.media?.url} />
         </StyledGrid>
       </Grid>
