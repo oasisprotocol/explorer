@@ -11,8 +11,6 @@ const localSettingsInitialState: LocalSettings = {
   ...(localStorage.get(StorageKeys.LocalSettings) ?? {}),
 }
 
-console.log('initial local settings initialized', localSettingsInitialState)
-
 export const LocalSettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [settings, setSettings] = useState<LocalSettings>(localSettingsInitialState)
 
