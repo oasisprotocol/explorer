@@ -33,7 +33,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             action={isMobile && mobileSearchAction}
             enableMobileSearch={enableMobileSearch}
           >
-            <Typography variant="muted" className="flex items-center gap-0.5 flex-wrap">
+            <Typography variant="small" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
               <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
               <div className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
@@ -46,7 +46,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
           <>
             <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
-                <Typography variant="muted">
+                <Typography variant="small" textColor="muted">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
@@ -93,7 +93,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                 </Typography>
               )}
               <div className="flex gap-2 pl-1">
-                <Typography variant="muted">
+                <Typography variant="small" textColor="muted">
                   {' | '}
                   <Link
                     href={api.spec}
@@ -104,7 +104,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                     {t('footer.apiDocs')}
                   </Link>
                 </Typography>
-                <Typography variant="muted">
+                <Typography variant="small" textColor="muted">
                   <Link
                     href={github.home}
                     rel="noopener noreferrer"
@@ -116,7 +116,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                 </Typography>
               </div>
             </div>
-            <Typography variant="muted">
+            <Typography variant="small" textColor="muted">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>
