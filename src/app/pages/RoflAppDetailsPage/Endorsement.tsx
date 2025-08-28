@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactNode } from 'react'
+import { FC, Fragment, PropsWithChildren, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { RoflAppPolicy } from '../../../oasis-nexus/api'
@@ -176,10 +176,9 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
         const renderedExplanation = getEndorsementExplanation(key, value)
 
         return endorsements.length !== 1 ? (
-          <>
+          <Fragment key={index}>
             {!!index && (
               <span
-                key={index}
                 style={{
                   textWrap: 'nowrap',
                   fontWeight: 'bold',
@@ -189,7 +188,6 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
               </span>
             )}
             <Box
-              key={index}
               sx={{
                 flex: 1,
                 display: 'flex',
@@ -201,9 +199,9 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
             >
               {renderedExplanation}
             </Box>
-          </>
+          </Fragment>
         ) : (
-          <>{renderedExplanation}</>
+          <Fragment key={index}>{renderedExplanation}</Fragment>
         )
       })}
     </>
