@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { Drawer, DrawerContent } from '@oasisprotocol/ui-library/src/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle } from '@oasisprotocol/ui-library/src'
 import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
 import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
@@ -106,9 +106,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
 
   return (
     <StyledLayerPickerContent>
-      <Box sx={{ mb: isTablet ? 0 : 5, position: 'relative' }}>
-        <HomePageLink color="#0500e2" showText={!isMobile} />
-      </Box>
+      <DrawerTitle>
+        <Box sx={{ mb: isTablet ? 0 : 5, position: 'relative' }}>
+          <HomePageLink color="#0500e2" showText={!isMobile} />
+        </Box>
+      </DrawerTitle>
       {isTablet && (
         <TabletActionBar>
           <div>
