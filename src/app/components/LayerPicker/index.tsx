@@ -1,10 +1,8 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@mui/material/Button'
-import { Drawer, DrawerContent, DrawerTitle } from '@oasisprotocol/ui-library/src'
+import { Drawer, DrawerContent } from '@oasisprotocol/ui-library/src/components/ui/drawer'
 import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
 import { HomePageLink } from '../PageLayout/Logotype'
-import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { SearchScope } from '../../../types/searchScope'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -12,10 +10,10 @@ import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
 import { scopeFreedom, RouteUtils, mergeNetworksInLayerSelector } from '../../utils/route-utils'
-import { styled } from '@mui/material/styles'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { ChevronLeft } from 'lucide-react'
 
 type LayerPickerProps = {
   onClose: () => void
@@ -34,12 +32,6 @@ export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, is
     </Drawer>
   </>
 )
-
-const TabletBackButton = styled(Button)({
-  color: COLORS.brandDark,
-  width: 'fit-content',
-  textDecoration: 'none',
-})
 
 type LayerPickerContentProps = Omit<LayerPickerProps, 'open'>
 
@@ -73,7 +65,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
         <HomePageLink color="#0500e2" showText={!isMobile} />
       </div>
       {isTablet && (
-        <div className="flex justify-between items-center min-h-14 pb-6">
+        <div className="flex justify-between items-center min-h-14">
           <div>
             {
               // Do we need a "back to networks" button ?
@@ -81,28 +73,30 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 !mergeNetworksInLayerSelector &&
                 tabletStep === LayerPickerTabletStep.Layer) || // Stepping back from layers
                 (scopeFreedom === 'network' && tabletStep === LayerPickerTabletStep.LayerDetails)) && ( // Stepping back from details, skipping layers
-                <TabletBackButton
-                  variant="text"
-                  startIcon={<KeyboardArrowLeft />}
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="text-primary mt-2"
                   onClick={() => {
                     setTabletStep(LayerPickerTabletStep.Network)
                   }}
                 >
+                  <ChevronLeft className="-ml-0.5" />
                   {t('layerPicker.viewNetworks')}
-                </TabletBackButton>
+                </Button>
               )
             }
             {scopeFreedom !== 'network' &&
               tabletStep === LayerPickerTabletStep.LayerDetails && ( // Stepping back from details, going to layers
-                <TabletBackButton
-                  variant="text"
-                  startIcon={<KeyboardArrowLeft />}
-                  onClick={() => {
-                    setTabletStep(LayerPickerTabletStep.Layer)
-                  }}
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="text-primary"
+                  onClick={() => setTabletStep(LayerPickerTabletStep.Layer)}
                 >
+                  <ChevronLeft className="-ml-0.5" />
                   {t('layerPicker.viewLayers')}
-                </TabletBackButton>
+                </Button>
               )}
           </div>
           <MobileNetworkButton
@@ -158,11 +152,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
         </div>
 
         <div className="flex justify-around md:justify-end md:gap-8">
-          <Button onClick={onClose} color="secondary" variant="outlined" size="large">
+          <Button onClick={onClose} color="secondary" variant="outline" size="lg">
             {t('common.cancel')}
           </Button>
 
-          <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
+          <Button onClick={handleConfirm} color="primary" variant="default" size="lg">
             {selectedScope.network === activeScope.network && selectedScope.layer === activeScope.layer
               ? t('layerPicker.goToDashboard')
               : t('common.select')}
