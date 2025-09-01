@@ -18,18 +18,18 @@ function shouldIncludeLayer(network: Network, layer: Layer) {
 }
 
 const StyledInnerGrid = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     paddingTop: 0,
   },
 }))
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     flexDirection: 'column',
     gap: theme.spacing(4),
   },
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up('lg')]: {
     flexDirection: 'row',
     gap: theme.spacing(5),
   },
@@ -62,11 +62,11 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
       />
       <CardContent>
         <Grid container spacing={5}>
-          <Grid xs={12} md={spaceForSecondaryParaTimes ? 5 : 6}>
+          <Grid xs={12} lg={spaceForSecondaryParaTimes ? 5 : 6}>
             <EnabledRuntimePreview prominentItem network={scope.network} runtime={firstEnabledRuntime} />
           </Grid>
-          <Grid xs={12} md={spaceForSecondaryParaTimes ? 7 : 6} container>
-            <StyledInnerGrid xs={12} md={spaceForSecondaryParaTimes ? 9 : 8}>
+          <Grid xs={12} lg={spaceForSecondaryParaTimes ? 7 : 6} container>
+            <StyledInnerGrid xs={12} lg={spaceForSecondaryParaTimes ? 9 : 8}>
               <StyledBox>
                 {!!restEnabledRuntimes.length &&
                   restEnabledRuntimes.map(runtime => (
@@ -74,7 +74,7 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
                   ))}
               </StyledBox>
             </StyledInnerGrid>
-            <StyledInnerGrid xs={12} md={spaceForSecondaryParaTimes ? 3 : 4}>
+            <StyledInnerGrid xs={12} lg={spaceForSecondaryParaTimes ? 3 : 4}>
               {!!disabledRuntimes.length &&
                 disabledRuntimes.map(runtime => <DisabledRuntimePreview key={runtime} runtime={runtime} />)}
             </StyledInnerGrid>
