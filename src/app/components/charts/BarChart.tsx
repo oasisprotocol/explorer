@@ -79,7 +79,7 @@ const BarChartCmp = <T extends object>({
           }
           dataKey={dataKey}
           barSize={barSize}
-          fill={COLORS.denimBlue}
+          fill={COLORS.brandDark}
           radius={rounded ? barRadius : [barRadius, barRadius, 0, 0]}
         />
       </RechartsBarChart>

@@ -38,7 +38,6 @@ export const COLORS = {
   white: '#ffffff',
   white025A: '#ffffff40',
   spaceCadet: '#0f0f5f',
-  denimBlue: '#0500E2',
   disabledPagination: '#7575a7',
   purpleBackground: '#e0e0f4',
   inactiveTab: '#e5e5f6',
