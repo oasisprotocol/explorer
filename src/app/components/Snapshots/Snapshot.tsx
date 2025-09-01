@@ -20,12 +20,12 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
 
   return (
     <>
-      <Grid container sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
-        <Grid item xs={12} sx={{ px: isMobile ? 4 : 0 }}>
+      <div className="grid grid-cols-12 gap-x-4 gap-y-2">
+        <div className="col-span-12 md:col-span-6 lg:col-span-4">
           <AppendMobileSearch scope={scope}>
             <div className="flex mb-1 flex-col sm:flex-row sm:items-center">
               <Typography
-                variant="h2"
+                variant="h4"
                 sx={{ color: theme.palette.layout.main, fontWeight: 700, mr: 3, mb: isMobile ? 4 : 0 }}
               >
                 {title}
@@ -33,12 +33,10 @@ export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) 
               {header}
             </div>
           </AppendMobileSearch>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
 
-      <Grid container rowSpacing={1} columnSpacing={4} columns={22}>
-        {children}
-      </Grid>
+      <div className="grid grid-cols-12 gap-x-4 gap-y-2">{children}</div>
     </>
   )
 }
