@@ -11,7 +11,7 @@ import { getTokensForScope, showFiatValues } from '../../../config'
 import { getLayerLabels } from '../../utils/content'
 import { TestnetFaucet } from './TestnetFaucet'
 import { RuntimeScope } from '../../../types/searchScope'
-import { Snapshot, StyledGrid } from 'app/components/Snapshots/Snapshot'
+import { Snapshot } from 'app/components/Snapshots/Snapshot'
 import { getFaucetInfo } from '../../utils/faucet-links'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
@@ -44,19 +44,19 @@ export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         title={t('paraTimeSnapshot.header', { paratime })}
         scope={scope}
       >
-        <StyledGrid item xs={22} md={6}>
+        <div className="col-span-12 lg:col-span-3">
           <TransactionsChartCard scope={scope} chartDuration={chartDuration} />
-        </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        </div>
+        <div className="col-span-12 lg:col-span-3">
           <ActiveAccounts scope={scope} chartDuration={chartDuration} />
-        </StyledGrid>
-        <StyledGrid item xs={22} md={6}>
+        </div>
+        <div className="col-span-12 lg:col-span-3">
           <Nodes scope={scope} />
-        </StyledGrid>
-        <StyledGrid item xs={22} md={5}>
+        </div>
+        <div className="col-span-12 lg:col-span-3">
           {showFiatValues && !mainToken.free && <TokenPriceCard token={mainToken} />}
           {faucetInfo && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
-        </StyledGrid>
+        </div>
       </Snapshot>
     </ErrorBoundary>
   )

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SearchScope } from '../../../types/searchScope'
 import { useGetConsensusValidators } from '../../../oasis-nexus/api'
-import { Snapshot, StyledGrid } from '../../components/Snapshots/Snapshot'
+import { Snapshot } from '../../components/Snapshots/Snapshot'
 import { API_MAX_TOTAL_COUNT } from '../../../config'
 import { SnapshotEpoch } from './SnapshotEpoch'
 import { SnapshotDelegators } from './SnapshotDelegators'
@@ -17,18 +17,18 @@ export const ConsensusSnapshot: FC<{ scope: SearchScope }> = ({ scope }) => {
 
   return (
     <Snapshot title={t('consensusSnapshot.title')} scope={scope}>
-      <StyledGrid item xs={22} md={5}>
+      <div className="col-span-12 lg:col-span-3">
         <SnapshotEpoch scope={scope} />
-      </StyledGrid>
-      <StyledGrid item xs={22} md={6}>
+      </div>
+      <div className="col-span-12 lg:col-span-3">
         <SnapshotValidators validators={validators} />
-      </StyledGrid>
-      <StyledGrid item xs={22} md={5}>
+      </div>
+      <div className="col-span-12 lg:col-span-3">
         <SnapshotDelegators totalDelegators={stats?.total_delegators} />
-      </StyledGrid>
-      <StyledGrid item xs={22} md={6}>
+      </div>
+      <div className="col-span-12 lg:col-span-3">
         <SnapshotStaked totalStaked={stats?.total_staked_balance} ticker={stats?.ticker} />
-      </StyledGrid>
+      </div>
     </Snapshot>
   )
 }
