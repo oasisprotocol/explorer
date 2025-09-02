@@ -9,7 +9,7 @@ export const LearningMaterials: FC = () => {
 
   return (
     <LearningMaterialsCard>
-      <div className="grid grid-cols-12 gap-2">
+      <div className="grid grid-cols-12 gap-3">
         <div className="col-span-12 lg:col-span-3">
           <LearningSection
             description={t('learningMaterials.consensus.description')}
@@ -19,7 +19,7 @@ export const LearningMaterials: FC = () => {
           />
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <div className="flex h-full flex-col gap-2">
+          <div className="flex h-full flex-col gap-3">
             <LearningSection
               className="h-full flex-1"
               description={t('learningMaterials.consensus.tokenomicsDescription')}
@@ -43,7 +43,7 @@ export const LearningMaterials: FC = () => {
           />
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <div className="flex h-full flex-col gap-2">
+          <div className="flex h-full flex-col gap-3">
             <LearningSection
               className="h-full flex-1"
               description={t('learningMaterials.consensus.validatorsDescription')}
