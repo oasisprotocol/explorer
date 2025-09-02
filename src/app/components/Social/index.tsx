@@ -9,7 +9,8 @@ import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
-import { Linkedin, NotebookText, Home } from 'lucide-react'
+import linkedin from './images/linkedin.svg'
+import { NotebookText, Home } from 'lucide-react'
 import { socialMedia } from '../../utils/externalLinks'
 
 type SocialLinkProps = {
@@ -55,9 +56,7 @@ export const Social: FC = () => {
         <Typography className="text-white w-full md:w-64">{t('social.description')}</Typography>
       </div>
       <div className="col-span-12 lg:col-span-8">
-        <div
-          className={'flex flex-wrap items-center w-full h-full justify-center sm:gap-4 md:justify-between'}
-        >
+        <div className="flex flex-wrap items-center w-full h-full justify-center sm:gap-4 md:justify-between">
           {socialMedia.telegram && (
             <SocialLink
               isMobile={isMobile}
@@ -103,7 +102,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.linkedin')}
               href={socialMedia.linkedin}
-              img={<Linkedin className="size-12 -m-1" />}
+              imgSrc={linkedin}
             />
           )}
           {socialMedia.docs && (
@@ -111,7 +110,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.docs')}
               href={socialMedia.docs}
-              img={<NotebookText className="size-12 -m-1" />}
+              img={<NotebookText className="size-12" />}
             />
           )}
           {socialMedia.home && (
@@ -119,7 +118,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.home')}
               href={socialMedia.home}
-              img={<Home className="size-12 -m-1" />}
+              img={<Home className="size-12 -mb-1" />}
             />
           )}
         </div>
