@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { TokenSupplyCard } from './TokenSupplyCard'
@@ -8,18 +7,16 @@ import { TokenHoldersCountCard } from './TokenHoldersCountCard'
 import { TokenTypeCard } from './TokenTypeCard'
 import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 import { RuntimeScope } from '../../../types/searchScope'
-import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export const TokenSnapshot: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   return (
     <>
       <div className="flex items-center gap-2 mb-4">
-        <div className={cn('w-full', isMobile ? 'px-4' : 'px-0')}>
+        <div className="w-full px-4 md:px-0">
           <AppendMobileSearch scope={scope}>
-            <div className={cn('flex mb-2', isMobile ? 'flex-col' : 'flex-row')}>
+            <div className="flex flex-col md:flex-row mb-2">
               <Typography variant="h3">{t('tokenSnapshot.header')}</Typography>
             </div>
           </AppendMobileSearch>
