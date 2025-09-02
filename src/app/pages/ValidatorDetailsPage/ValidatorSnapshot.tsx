@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { ExternalLinkCard } from './ExternalLinkCard'
@@ -9,7 +8,6 @@ import { UptimeCard } from './UptimeCard'
 import { VotingPowerCard } from './VotingPowerCard'
 import { EscrowDistributionCard } from './EscrowDistributionCard'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
-import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type ValidatorSnapshotProps = {
   scope: SearchScope
@@ -19,14 +17,13 @@ type ValidatorSnapshotProps = {
 
 export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator, stats }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   return (
     <>
-      <div className="flex items-center gap-2 mb-4">
-        <div className={cn('flex mb-2', isMobile ? 'flex-col' : 'flex-row')}>
+      <div className="flex items-center gap-2 px-4 sm:px-0">
+        <div className="flex flex-col lg:flex-row mb-2 w-full">
           <AppendMobileSearch scope={scope}>
-            <div className={isMobile ? 'flex flex-col mb-2' : 'flex flex-row mb-2'}>
+            <div className="flex flex-col lg:flex-row mb-2">
               <Typography variant="h3">{t('validator.snapshot')}</Typography>
             </div>
           </AppendMobileSearch>

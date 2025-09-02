@@ -13,7 +13,7 @@ type SnapshotProps = {
 export const Snapshot: FC<SnapshotProps> = ({ children, header, scope, title }) => {
   return (
     <>
-      <div className="grid grid-cols-12 gap-x-4 gap-y-2">
+      <div className="grid grid-cols-12 gap-x-4 gap-y-2 px-4 pb-4 sm:px-0 sm:pb-0">
         <div className="col-span-12 md:col-span-6 lg:col-span-4">
           <AppendMobileSearch scope={scope}>
             <div className="flex mb-4 flex-col sm:flex-row sm:items-center gap-1">
