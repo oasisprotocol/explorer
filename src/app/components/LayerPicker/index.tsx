@@ -61,11 +61,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
 
   return (
     <div className="flex flex-col w-full flex-1 md:block md:w-auto md:flex-none">
-      <div className="relative mb-0 md:mb-10">
+      <div className="relative mb-0 md:mb-2 lg:mb-10">
         <HomePageLink color="#0500e2" showText={!isMobile} />
       </div>
       {isTablet && (
-        <div className="flex justify-between items-center min-h-14">
+        <div className="flex justify-between items-center min-h-12">
           <div>
             {
               // Do we need a "back to networks" button ?
@@ -76,12 +76,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 <Button
                   variant="ghost"
                   size="default"
-                  className="text-primary mt-2"
+                  className="text-primary !pl-0"
                   onClick={() => {
                     setTabletStep(LayerPickerTabletStep.Network)
                   }}
                 >
-                  <ChevronLeft className="-ml-0.5" />
+                  <ChevronLeft />
                   {t('layerPicker.viewNetworks')}
                 </Button>
               )
@@ -91,10 +91,10 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 <Button
                   variant="ghost"
                   size="default"
-                  className="text-primary"
+                  className="text-primary !pl-0"
                   onClick={() => setTabletStep(LayerPickerTabletStep.Layer)}
                 >
-                  <ChevronLeft className="-ml-0.5" />
+                  <ChevronLeft />
                   {t('layerPicker.viewLayers')}
                 </Button>
               )}
