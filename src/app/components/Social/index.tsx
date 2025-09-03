@@ -110,7 +110,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.docs')}
               href={socialMedia.docs}
-              img={<NotebookText className="size-12" />}
+              img={<NotebookText className="size-12 text-white" />}
             />
           )}
           {socialMedia.home && (
@@ -118,7 +118,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.home')}
               href={socialMedia.home}
-              img={<Home className="size-12 -mb-1" />}
+              img={<Home className="size-12 text-white" />}
             />
           )}
         </div>
