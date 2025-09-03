@@ -60,8 +60,8 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   const handleConfirm = () => onConfirm(selectedScope)
 
   return (
-    <div className="flex flex-col w-full flex-1 md:block md:w-auto md:flex-none">
-      <div className="relative mb-0 md:mb-2 lg:mb-10">
+    <div className="flex flex-col w-full flex-1 lg:block lg:w-auto lg:flex-none">
+      <div className="relative mb-0 lg:mb-2 lg:mb-10">
         <HomePageLink color="#0500e2" showText={!isMobile} />
       </div>
       {isTablet && (
@@ -108,11 +108,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
         </div>
       )}
       <Separator />
-      <div className="flex-1 flex flex-col justify-between md:block">
+      <div className="flex-1 flex flex-col justify-between lg:block">
         <div className="grid grid-cols-12">
           {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
-              <div className="col-span-12 md:col-span-3">
+              <div className="col-span-12 lg:col-span-3">
                 <NetworkMenu
                   activeNetwork={activeScope.network}
                   selectedNetwork={selectedNetwork}
@@ -129,7 +129,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             )}
           {scopeFreedom !== 'network' &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
-              <div className="col-span-12 md:col-span-3">
+              <div className="col-span-12 lg:col-span-3">
                 <LayerMenu
                   selectedNetwork={selectedNetwork}
                   selectedScope={selectedScope}
@@ -141,7 +141,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
               </div>
             )}
           {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 lg:col-span-6">
               <LayerDetails
                 handleConfirm={handleConfirm}
                 selectedScope={selectedScope}
@@ -151,7 +151,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
           )}
         </div>
 
-        <div className="flex justify-around md:justify-end md:gap-8">
+        <div className="flex justify-around lg:justify-end lg:gap-8">
           <Button onClick={onClose} color="secondary" variant="outline" size="lg">
             {t('common.cancel')}
           </Button>
