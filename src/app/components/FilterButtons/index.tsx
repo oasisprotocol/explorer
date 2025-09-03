@@ -1,7 +1,4 @@
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import CheckIcon from '@mui/icons-material/Check'
-import { COLORS } from '../../../styles/theme/colors'
+import { Tabs, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 
 type FilterButtonsProps<T extends string> = {
   options: { label: string; value: T }[]
@@ -11,27 +8,14 @@ type FilterButtonsProps<T extends string> = {
 
 export const FilterButtons = <T extends string>({ options, onSelect, value }: FilterButtonsProps<T>) => {
   return (
-    <Box component="span" fontSize={25}>
-      {options.map(option => {
-        const selected = option.value === value
-        return (
-          <Chip
-            key={option.value}
-            onClick={() => onSelect(option.value)}
-            clickable
-            color="secondary"
-            icon={selected ? <CheckIcon /> : undefined}
-            label={option.label}
-            sx={{
-              mr: 3,
-              borderColor: COLORS.brandMedium,
-              backgroundColor: selected ? COLORS.brandMedium : COLORS.brandMedium15,
-              color: selected ? COLORS.white : COLORS.grayExtraDark,
-            }}
-            variant={selected ? 'outlined-selected' : 'outlined'}
-          />
-        )
-      })}
-    </Box>
+    <Tabs defaultValue={value} className="inline-flex w-auto">
+      <TabsList>
+        {options.map(option => (
+          <TabsTrigger key={option.value} value={option.value} onClick={() => onSelect(option.value)}>
+            {option.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   )
 }
