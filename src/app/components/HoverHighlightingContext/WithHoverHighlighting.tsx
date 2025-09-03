@@ -22,28 +22,10 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
     <Box
       onMouseEnter={() => selectAddress(address)}
       onMouseLeave={() => releaseAddress(address)}
+      component={'span'}
       sx={{
         display: 'inline-flex',
-        alignItems: 'center',
-        verticalAlign: 'middle',
-        // We want to have a bit of space inside the highlight bubble.
-        // No need for vertical padding, there is already enough space
-        padding: '0 4px',
-        // We don't want the children to move when we add highlighting around them,
-        // so we are compensating the padding+border with negative margins.
-        // Q: Why do we asymmetrical top and bottom?
-        // Q: Nobody really knows, but this way text is aligned properly,
-        // when placed on a line with other (non-highlighted) text in a flex div.
-        margin: '-3px -5px -1px -5px',
-        ...(isHighlighted
-          ? {
-              background: COLORS.warningLight,
-              border: `1px dashed ${COLORS.warningColor}`,
-              borderRadius: '6px',
-            }
-          : {
-              border: `1px dashed transparent`,
-            }),
+        ...(isHighlighted ? { background: COLORS.warningLight } : {}),
       }}
     >
       {children}

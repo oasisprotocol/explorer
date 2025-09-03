@@ -49,14 +49,7 @@ export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, s
       disableHoverListener={!title}
       disableTouchListener={!title}
     >
-      <Box
-        component="span"
-        sx={{
-          ...spanSx,
-          display: 'inline-flex',
-          verticalAlign: 'middle',
-        }}
-      >
+      <Box component="span" className={'inline-flex'} sx={spanSx}>
         {children}
       </Box>
     </Tooltip>
