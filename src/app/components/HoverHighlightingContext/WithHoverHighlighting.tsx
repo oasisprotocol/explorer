@@ -25,7 +25,15 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
       component={'span'}
       sx={{
         display: 'inline-flex',
-        ...(isHighlighted ? { background: COLORS.warningLight } : {}),
+        ...(isHighlighted
+          ? {
+              background: COLORS.warningLight,
+              border: `1px dashed ${COLORS.warningColor}`,
+              borderRadius: '6px',
+            }
+          : {
+              border: `1px dashed transparent`,
+            }),
       }}
     >
       {children}
