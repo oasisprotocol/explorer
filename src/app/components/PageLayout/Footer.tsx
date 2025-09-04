@@ -46,7 +46,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
           <>
             <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
-                <Typography variant="xsmall" textColor="muted" className="text-xs">
+                <Typography variant="xsmall" textColor="muted">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
@@ -57,7 +57,6 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           rel="noopener noreferrer"
                           target="_blank"
                           textColor="inherit"
-                          className="text-xs"
                         />
                       ) : (
                         <>-</>
@@ -68,7 +67,6 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           rel="noopener noreferrer"
                           target="_blank"
                           textColor="inherit"
-                          className="text-xs"
                         />
                       ),
                     }}
@@ -97,24 +95,13 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
               <div className="flex gap-2 pl-1">
                 <Typography variant="xsmall" textColor="muted">
                   {' | '}
-                  <Link
-                    href={api.spec}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    textColor="inherit"
-                    className="text-xs"
-                  >
+                  <Link href={api.spec} rel="noopener noreferrer" target="_blank" textColor="inherit">
                     {t('footer.apiDocs')}
                   </Link>
                 </Typography>
                 <Typography variant="xsmall" textColor="muted">
-                  <Link
-                    href={github.home}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    textColor="inherit"
-                    className="text-xs"
-                  >
+                  {' | '}
+                  <Link href={github.home} rel="noopener noreferrer" target="_blank" textColor="inherit">
                     {t('footer.github')}
                   </Link>
                 </Typography>
