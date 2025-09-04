@@ -77,11 +77,11 @@ const StyledEnabledRuntime = styled(Box)(({ theme }) => ({
   height: '100%',
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     paddingBottom: theme.spacing(5),
     borderBottom: `1px solid ${COLORS.grayMediumLight}`,
   },
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up('lg')]: {
     paddingRight: theme.spacing(5),
     borderRight: `1px solid ${COLORS.grayMediumLight}`,
   },

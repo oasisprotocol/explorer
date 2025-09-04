@@ -187,7 +187,7 @@ export const LearningMaterials: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   return (
     <LearningMaterialsCard>
       <Grid container spacing={3}>
-        <Grid xs={12} md={6}>
+        <Grid xs={12} lg={6}>
           <LearningSection
             description={content.primary.description}
             title={content.primary.header}
@@ -195,7 +195,7 @@ export const LearningMaterials: FC<{ scope: RuntimeScope }> = ({ scope }) => {
             className="h-full"
           />
         </Grid>
-        <Grid xs={12} md={6} spacing={3}>
+        <Grid xs={12} lg={6} spacing={3}>
           <Grid sx={{ pb: 3 }}>
             <LearningSection
               description={content.secondary.description}

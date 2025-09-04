@@ -11,7 +11,7 @@ export const LearningMaterials: FC = () => {
   return (
     <LearningMaterialsCard>
       <Grid container spacing={3}>
-        <Grid xs={12} md={3}>
+        <Grid xs={12} lg={3}>
           <LearningSection
             description={t('learningMaterials.consensus.description')}
             title={t('learningMaterials.consensus.header')}
@@ -19,7 +19,7 @@ export const LearningMaterials: FC = () => {
             className="h-full"
           />
         </Grid>
-        <Grid xs={12} md={3}>
+        <Grid xs={12} lg={3}>
           <Grid sx={{ pb: 3 }}>
             <LearningSection
               description={t('learningMaterials.consensus.tokenomicsDescription')}
@@ -27,7 +27,7 @@ export const LearningMaterials: FC = () => {
               url={marketingPage.tokenomics}
             />
           </Grid>
-          <Grid xs={12} md={3}>
+          <Grid xs={12} lg={3}>
             <LearningSection
               description={t('learningMaterials.consensus.manageRoseDescription')}
               title={t('learningMaterials.consensus.manageRose')}
@@ -35,7 +35,7 @@ export const LearningMaterials: FC = () => {
             />
           </Grid>
         </Grid>
-        <Grid xs={12} md={3}>
+        <Grid xs={12} lg={3}>
           <LearningSection
             description={t('learningMaterials.consensus.delegationDescription')}
             title={t('learningMaterials.consensus.delegation')}
@@ -43,7 +43,7 @@ export const LearningMaterials: FC = () => {
             className="h-full"
           />
         </Grid>
-        <Grid xs={12} md={3}>
+        <Grid xs={12} lg={3}>
           <Grid sx={{ pb: 3 }}>
             <LearningSection
               description={t('learningMaterials.consensus.validatorsDescription')}
@@ -51,7 +51,7 @@ export const LearningMaterials: FC = () => {
               url={marketingPage.validators}
             />
           </Grid>
-          <Grid xs={12} md={3}>
+          <Grid xs={12} lg={3}>
             <LearningSection
               description={t('learningMaterials.consensus.nodeDescription')}
               title={t('learningMaterials.consensus.node')}

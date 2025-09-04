@@ -29,7 +29,7 @@ export const ConsensusDashboardPage: FC = () => {
       <DashboardDivider />
       {!isLocal && (
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+          <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
             <TotalTransactions chartContainerHeight={350} scope={scope} />
           </Grid>
           <LatestBlocksGrid scope={scope} />
@@ -54,7 +54,7 @@ export const ConsensusDashboardPage: FC = () => {
 
 const LatestBlocksGrid = ({ scope }: { scope: ConsensusScope }) => {
   return (
-    <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
+    <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
       <LatestConsensusBlocks scope={scope} />
     </Grid>
   )
