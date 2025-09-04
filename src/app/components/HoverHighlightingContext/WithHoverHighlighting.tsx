@@ -25,6 +25,7 @@ export const WithHoverHighlighting: FC<{ children: ReactNode; address: string }>
       component={'span'}
       sx={{
         display: 'inline-flex',
+        margin: '0 -1px',
         ...(isHighlighted
           ? {
               background: COLORS.warningLight,
