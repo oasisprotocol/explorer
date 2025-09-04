@@ -93,7 +93,7 @@ type CustomTrimEndLinkLabelProps = {
 }
 
 const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
-  <Typography component={'span'} fontSize={'inherit'} fontWeight={'inherit'} lineHeight={'inherit'}>
+  <Typography component="span" fontSize={'inherit'} fontWeight={'inherit'} lineHeight={'inherit'}>
     <span>{children}</span>
   </Typography>
 )

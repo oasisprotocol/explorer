@@ -26,11 +26,11 @@ const WithTypographyAndLink: FC<{
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <WithHoverHighlighting address={address}>
-      <Typography variant="mono" component="span">
+      <Typography variant="mono" component="span" sx={{ display: 'inline-flex' }}>
         {labelOnly ? (
           children
         ) : (
-          <Link component={RouterLink} to={to}>
+          <Link component={RouterLink} to={to} sx={{ display: 'inline-flex' }}>
             {children}
           </Link>
         )}

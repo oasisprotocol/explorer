@@ -22,7 +22,7 @@ export const DiscordProfileWidget: FC<{
       }}
     >
       <Typography
-        component={'span'}
+        component="span"
         sx={{
           fontWeight: 'bold',
           color: '#5865f2' /* Discord's brand color */,

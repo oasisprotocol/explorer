@@ -258,13 +258,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.eventsSummary')}</dt>
               <dd>
-                <Box
-                  sx={{
-                    overflowX: 'auto',
-                    // Fix WithHighlighting clipping
-                    paddingTop: '1px',
-                  }}
-                >
+                <Box sx={{ overflowX: 'auto' }}>
                   {transfers.map((transfer, i) => {
                     const params = transfer.evm_log_params
                     if (!params) return null
@@ -285,12 +279,18 @@ export const RuntimeTransactionDetailView: FC<{
                         }}
                       >
                         <TokenTypeTag tokenType={transfer.evm_token?.type} />
-                        <Typography variant="body2">
+                        <Typography
+                          variant="body2"
+                          sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}
+                        >
                           {t('common.from')}{' '}
                           {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
                         </Typography>
 
-                        <Typography variant="body2">
+                        <Typography
+                          variant="body2"
+                          sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}
+                        >
                           {t('common.to')}{' '}
                           {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
                         </Typography>

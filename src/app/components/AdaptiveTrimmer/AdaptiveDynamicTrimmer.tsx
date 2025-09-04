@@ -89,7 +89,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   )
 
   return (
-    <Box component={'span'} ref={textRef} sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
+    <Box component="span" ref={textRef} sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <MaybeWithTooltip
         title={title}
         spanSx={{ textWrap: 'nowrap', whiteSpace: 'nowrap', opacity: isFinal ? 1 : 0 }}
