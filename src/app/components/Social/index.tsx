@@ -1,9 +1,7 @@
 import React, { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Unstable_Grid2'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useScreenSize } from '../../hooks/useScreensize'
 import backgroundSocial from './images/background-social.png'
 import telegram from './images/telegram.svg'
@@ -11,16 +9,9 @@ import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
 import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import DocsIcon from '@mui/icons-material/MenuBook'
-import HomeIcon from '@mui/icons-material/Cottage'
-import { COLORS } from '../../../styles/theme/colors'
+import linkedin from './images/linkedin.svg'
+import { NotebookText, Home } from 'lucide-react'
 import { socialMedia } from '../../utils/externalLinks'
-import { styled } from '@mui/material/styles'
-
-const StyledImage = styled('img')({
-  height: '40px',
-})
 
 type SocialLinkProps = {
   label: string
@@ -30,74 +21,46 @@ type SocialLinkProps = {
   img?: ReactNode
 }
 
-const SocialLink: FC<SocialLinkProps> = ({ label, href, isMobile, imgSrc, img }) => {
+const SocialLink: FC<SocialLinkProps> = ({ label, href, imgSrc, img }) => {
   return (
     <Link
       href={href}
-      color={COLORS.white}
-      underline="none"
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        mx: isMobile ? 4 : 0,
-        mt: isMobile ? 4 : 0,
-      }}
+      className="flex flex-col items-center text-white mx-4 mt-4 sm:mx-0 sm:mt-0"
       rel="noopener noreferrer"
       target="_blank"
     >
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+      <div className="flex justify-center mb-2">
         <>
-          {imgSrc && <StyledImage src={imgSrc} alt={label} />}
-          {img}
+          {imgSrc && <img src={imgSrc} alt={label} className="h-10 w-auto inline-block" />}
+          {img && <span className="[&_svg]:h-10 [&_svg]:w-10 inline-block">{img}</span>}
         </>
-      </Box>
-      <Typography sx={{ fontSize: 18, fontWeight: 700, mb: isMobile ? 4 : 0 }}>{label}</Typography>
+      </div>
+      <Typography variant="large" className="mb-1 text-white">
+        {label}
+      </Typography>
     </Link>
   )
 }
-
-const iconProps = { sx: { fontSize: 50, margin: '-4px' } }
 
 export const Social: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
   return (
-    <Grid
-      container
-      sx={{
-        px: isMobile ? 5 : 6,
-        pt: 5,
-        pb: isMobile ? 4 : 5,
-        backgroundColor: COLORS.brandDark,
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        borderColor: COLORS.white,
-        borderRadius: '6px',
+    <div
+      className="grid grid-cols-12 bg-cover rounded-md border pt-8 px-8 border-white bg-primary lg:px-16 pb-4 lg:pb-8"
+      style={{
         backgroundImage: `url(${backgroundSocial})`,
-        backgroundSize: 'cover',
       }}
     >
-      <Grid xs={12} md={4}>
-        <Typography sx={{ fontSize: 18, fontWeight: 700, mb: 3 }} color={COLORS.white}>
+      <div className="col-span-12 mb-4 lg:col-span-4 lg:mb-0">
+        <Typography variant="large" className="mb-1 text-white">
           {t('social.header')}
         </Typography>
-        <Typography color={COLORS.white} sx={{ maxWidth: 230 }}>
-          {t('social.description')}
-        </Typography>
-      </Grid>
-      <Grid xs={12} md={8}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            justifyContent: isMobile ? 'center' : 'space-between',
-            width: '100%',
-            height: '100%',
-          }}
-        >
+        <Typography className="text-white w-full md:w-64">{t('social.description')}</Typography>
+      </div>
+      <div className="col-span-12 lg:col-span-8">
+        <div className="flex flex-wrap items-center w-full h-full justify-center sm:gap-4 md:justify-between">
           {socialMedia.telegram && (
             <SocialLink
               isMobile={isMobile}
@@ -143,7 +106,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.linkedin')}
               href={socialMedia.linkedin}
-              img={<LinkedInIcon {...iconProps} />}
+              imgSrc={linkedin}
             />
           )}
           {socialMedia.docs && (
@@ -151,7 +114,7 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.docs')}
               href={socialMedia.docs}
-              img={<DocsIcon {...iconProps} />}
+              img={<NotebookText className="size-12 text-white" />}
             />
           )}
           {socialMedia.home && (
@@ -159,11 +122,11 @@ export const Social: FC = () => {
               isMobile={isMobile}
               label={t('social.home')}
               href={socialMedia.home}
-              img={<HomeIcon {...iconProps} />}
+              img={<Home className="size-12 text-white" />}
             />
           )}
-        </Box>
-      </Grid>
-    </Grid>
+        </div>
+      </div>
+    </div>
   )
 }
