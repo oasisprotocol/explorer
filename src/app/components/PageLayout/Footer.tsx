@@ -33,7 +33,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             action={isMobile && mobileSearchAction}
             enableMobileSearch={enableMobileSearch}
           >
-            <Typography variant="muted" className="flex items-center gap-0.5 flex-wrap">
+            <Typography variant="xsmall" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
               <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
               <div className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
@@ -46,7 +46,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
           <>
             <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
-                <Typography variant="muted">
+                <Typography variant="xsmall" textColor="muted" className="text-xs">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
@@ -56,7 +56,8 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.releaseTag}${import.meta.env.REACT_APP_BUILD_VERSION}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          className="text-muted-foreground"
+                          textColor="inherit"
+                          className="text-xs"
                         />
                       ) : (
                         <>-</>
@@ -66,7 +67,8 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.commit}${import.meta.env.REACT_APP_BUILD_SHA}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          className="text-muted-foreground"
+                          textColor="inherit"
+                          className="text-xs"
                         />
                       ),
                     }}
@@ -93,30 +95,32 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                 </Typography>
               )}
               <div className="flex gap-2 pl-1">
-                <Typography variant="muted">
+                <Typography variant="xsmall" textColor="muted">
                   {' | '}
                   <Link
                     href={api.spec}
                     rel="noopener noreferrer"
                     target="_blank"
-                    className="text-muted-foreground"
+                    textColor="inherit"
+                    className="text-xs"
                   >
                     {t('footer.apiDocs')}
                   </Link>
                 </Typography>
-                <Typography variant="muted">
+                <Typography variant="xsmall" textColor="muted">
                   <Link
                     href={github.home}
                     rel="noopener noreferrer"
                     target="_blank"
-                    className="text-muted-foreground"
+                    textColor="inherit"
+                    className="text-xs"
                   >
                     {t('footer.github')}
                   </Link>
                 </Typography>
               </div>
             </div>
-            <Typography variant="muted">
+            <Typography variant="xsmall" textColor="muted">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>

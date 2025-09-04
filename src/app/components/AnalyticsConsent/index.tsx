@@ -87,8 +87,6 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
   )
 }
 
-
-
 export const PrivacyPolicyFooterLink: FC = () => {
   const { t } = useTranslation()
   return (
