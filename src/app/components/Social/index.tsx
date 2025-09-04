@@ -35,7 +35,9 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, imgSrc, img }) => {
           {img && <span className="[&_svg]:h-10 [&_svg]:w-10 inline-block">{img}</span>}
         </>
       </div>
-      <Typography className="text-lg font-bold mb-4 md:mb-0 text-white">{label}</Typography>
+      <Typography variant="large" className="mb-1 text-white">
+        {label}
+      </Typography>
     </Link>
   )
 }
@@ -52,7 +54,9 @@ export const Social: FC = () => {
       }}
     >
       <div className="col-span-12 mb-4 lg:col-span-4 lg:mb-0">
-        <Typography className="text-lg font-bold mb-1 text-white">{t('social.header')}</Typography>
+        <Typography variant="large" className="mb-1 text-white">
+          {t('social.header')}
+        </Typography>
         <Typography className="text-white w-full md:w-64">{t('social.description')}</Typography>
       </div>
       <div className="col-span-12 lg:col-span-8">
