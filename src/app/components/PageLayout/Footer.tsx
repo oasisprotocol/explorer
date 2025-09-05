@@ -1,47 +1,14 @@
 import { FC, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
-import Link from '@mui/material/Link'
-import { useTheme } from '@mui/material/styles'
 import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
 import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
-
-const FooterBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'enableMobileSearch',
-})<{ enableMobileSearch: boolean }>(({ theme, enableMobileSearch }) => ({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-between',
-  padding: theme.spacing(5, enableMobileSearch ? 4 : 0),
-  [theme.breakpoints.up('sm')]: {
-    flex: '0 1 100%',
-    padding: theme.spacing(5, 0),
-  },
-}))
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-}))
-
-const StyledLinksGroup = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(3),
-  paddingLeft: theme.spacing(2),
-}))
-
-const StyledTypography = styled(Typography)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2,
-  flexWrap: 'wrap',
-}))
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 interface FooterProps {
   scope?: SearchScope
@@ -50,36 +17,36 @@ interface FooterProps {
 }
 
 export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobileSearch = true }) => {
-  const theme = useTheme()
   const { t } = useTranslation()
   const { isMobile, isTablet } = useScreenSize()
   const currentYear = useConstant(() => new Date().getFullYear())
   const hasMobileAction = isMobile && mobileSearchAction
-  const privacyPolicyLinkStyles = hasMobileAction ? { order: 1, flexBasis: '100%' } : {}
 
   return (
     <footer>
-      <FooterBox enableMobileSearch={enableMobileSearch}>
+      <div
+        className={cn('flex justify-between items-center py-6 sm:px-6', enableMobileSearch ? 'px-2' : 'px-4')}
+      >
         {isTablet ? (
           <AppendMobileSearch
             scope={scope}
             action={isMobile && mobileSearchAction}
             enableMobileSearch={enableMobileSearch}
           >
-            <StyledTypography variant="footer">
-              <Box sx={{ whiteSpace: 'nowrap' }}>{t('footer.mobileTitle')} |</Box>
-              <Box sx={privacyPolicyLinkStyles}>
+            <Typography variant="xsmall" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
+              <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
+              <div className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
-              </Box>
-              <Box>{currentYear}</Box>
-            </StyledTypography>
+              </div>
+              <div>{currentYear}</div>
+            </Typography>
           </AppendMobileSearch>
         ) : (
           <>
-            <StyledBox>
+            <div className="flex items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
-                <Typography variant="footer">
+                <Typography variant="xsmall" textColor="muted">
                   <Trans
                     t={t}
                     i18nKey="footer.version"
@@ -89,7 +56,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.releaseTag}${import.meta.env.REACT_APP_BUILD_VERSION}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          sx={{ color: theme.palette.layout.main }}
+                          textColor="inherit"
                         />
                       ) : (
                         <>-</>
@@ -99,7 +66,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                           href={`${github.commit}${import.meta.env.REACT_APP_BUILD_SHA}`}
                           rel="noopener noreferrer"
                           target="_blank"
-                          sx={{ color: theme.palette.layout.main }}
+                          textColor="inherit"
                         />
                       ),
                     }}
@@ -125,36 +92,27 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                   />
                 </Typography>
               )}
-              <StyledLinksGroup>
-                <Typography variant="footer">
+              <div className="flex gap-2 pl-1">
+                <Typography variant="xsmall" textColor="muted">
                   {' | '}
-                  <Link
-                    href={api.spec}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    sx={{ color: theme.palette.layout.main }}
-                  >
+                  <Link href={api.spec} rel="noopener noreferrer" target="_blank" textColor="inherit">
                     {t('footer.apiDocs')}
                   </Link>
                 </Typography>
-                <Typography variant="footer">
-                  <Link
-                    href={github.home}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    sx={{ color: theme.palette.layout.main }}
-                  >
+                <Typography variant="xsmall" textColor="muted">
+                  {' | '}
+                  <Link href={github.home} rel="noopener noreferrer" target="_blank" textColor="inherit">
                     {t('footer.github')}
                   </Link>
                 </Typography>
-              </StyledLinksGroup>
-            </StyledBox>
-            <Typography variant="footer">
+              </div>
+            </div>
+            <Typography variant="xsmall" textColor="muted">
               {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
             </Typography>
           </>
         )}
-      </FooterBox>
+      </div>
     </footer>
   )
 }

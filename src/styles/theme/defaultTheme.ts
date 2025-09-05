@@ -46,7 +46,6 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    footer: true
     select: true
     mono: true
   }
@@ -520,15 +519,6 @@ export const defaultTheme = createTheme({
           style: () => ({
             fontFamily: 'Roboto Mono Variable, monospace',
             fontWeight: 700,
-          }),
-        },
-        {
-          props: { variant: 'footer' },
-          style: ({ theme }) => ({
-            color: theme.palette.layout.main,
-            fontWeight: 400,
-            fontSize: '12px',
-            lineHeight: '18px',
           }),
         },
         {
