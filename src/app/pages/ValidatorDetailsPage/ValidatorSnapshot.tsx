@@ -29,7 +29,7 @@ export const ValidatorSnapshot: FC<ValidatorSnapshotProps> = ({ scope, validator
           </AppendMobileSearch>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-4 w-full pb-8">
+      <div className="grid grid-cols-12 gap-4 w-full md:pb-6">
         <div className="col-span-12 lg:col-span-3">
           <EscrowDistributionCard validator={validator} />
         </div>
