@@ -1,12 +1,8 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import { Drawer, DrawerContent, DrawerTitle } from '@oasisprotocol/ui-library/src'
+import { Drawer, DrawerContent } from '@oasisprotocol/ui-library/src/components/ui/drawer'
 import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
-import Grid from '@mui/material/Unstable_Grid2'
 import { HomePageLink } from '../PageLayout/Logotype'
-import { COLORS } from '../../../styles/theme/colors'
 import { Network } from '../../../types/network'
 import { SearchScope } from '../../../types/searchScope'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
@@ -14,10 +10,10 @@ import { NetworkMenu } from './NetworkMenu'
 import { LayerMenu } from './LayerMenu'
 import { LayerDetails } from './LayerDetails'
 import { scopeFreedom, RouteUtils, mergeNetworksInLayerSelector } from '../../utils/route-utils'
-import { styled } from '@mui/material/styles'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { ChevronLeft } from 'lucide-react'
 
 type LayerPickerProps = {
   onClose: () => void
@@ -30,53 +26,12 @@ export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, is
   <>
     <Drawer direction="top" open={open} onClose={onClose}>
       {/* Match MUI md breakpoint during migration */}
-      <DrawerContent className="py-4 px-[5%] z-[1200] max-[900px]:h-dvh max-[900px]:!max-h-dvh max-[900px]:mb-0">
+      <DrawerContent className="py-4 px-[5%] z-[1200] max-lg:h-dvh max-lg:!max-h-dvh max-lg:mb-0">
         <LayerPickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
       </DrawerContent>
     </Drawer>
   </>
 )
-
-const StyledLayerPickerContent = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    flex: 1,
-  },
-}))
-
-const StyledContent = styled(Box)(({ theme }) => ({
-  flex: 1,
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-}))
-
-const TabletBackButton = styled(Button)({
-  color: COLORS.brandDark,
-  width: 'fit-content',
-  textDecoration: 'none',
-})
-
-const TabletActionBar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  minHeight: '55px',
-  paddingBottom: theme.spacing(3),
-}))
-
-const ActionBar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-around',
-  [theme.breakpoints.up('md')]: {
-    justifyContent: 'flex-end',
-    gap: theme.spacing(4),
-  },
-}))
 
 type LayerPickerContentProps = Omit<LayerPickerProps, 'open'>
 
@@ -105,14 +60,12 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   const handleConfirm = () => onConfirm(selectedScope)
 
   return (
-    <StyledLayerPickerContent>
-      <DrawerTitle>
-        <Box sx={{ mb: isTablet ? 0 : 5, position: 'relative' }}>
-          <HomePageLink color="#0500e2" showText={!isMobile} />
-        </Box>
-      </DrawerTitle>
+    <div className="flex flex-col w-full flex-1 lg:block lg:w-auto lg:flex-none">
+      <div className="relative mb-0 lg:mb-2 lg:mb-10">
+        <HomePageLink color="#0500e2" showText={!isMobile} />
+      </div>
       {isTablet && (
-        <TabletActionBar>
+        <div className="flex justify-between items-center min-h-12">
           <div>
             {
               // Do we need a "back to networks" button ?
@@ -120,28 +73,30 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                 !mergeNetworksInLayerSelector &&
                 tabletStep === LayerPickerTabletStep.Layer) || // Stepping back from layers
                 (scopeFreedom === 'network' && tabletStep === LayerPickerTabletStep.LayerDetails)) && ( // Stepping back from details, skipping layers
-                <TabletBackButton
-                  variant="text"
-                  startIcon={<KeyboardArrowLeft />}
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="text-primary !pl-0"
                   onClick={() => {
                     setTabletStep(LayerPickerTabletStep.Network)
                   }}
                 >
+                  <ChevronLeft />
                   {t('layerPicker.viewNetworks')}
-                </TabletBackButton>
+                </Button>
               )
             }
             {scopeFreedom !== 'network' &&
               tabletStep === LayerPickerTabletStep.LayerDetails && ( // Stepping back from details, going to layers
-                <TabletBackButton
-                  variant="text"
-                  startIcon={<KeyboardArrowLeft />}
-                  onClick={() => {
-                    setTabletStep(LayerPickerTabletStep.Layer)
-                  }}
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className="text-primary !pl-0"
+                  onClick={() => setTabletStep(LayerPickerTabletStep.Layer)}
                 >
+                  <ChevronLeft />
                   {t('layerPicker.viewLayers')}
-                </TabletBackButton>
+                </Button>
               )}
           </div>
           <MobileNetworkButton
@@ -150,14 +105,14 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
             layer={activeScope.layer}
             onClick={onClose}
           />
-        </TabletActionBar>
+        </div>
       )}
       <Separator />
-      <StyledContent>
-        <Grid container>
+      <div className="flex-1 flex flex-col justify-between lg:block">
+        <div className="grid grid-cols-12">
           {!(scopeFreedom === 'layer' || mergeNetworksInLayerSelector) &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Network)) && (
-              <Grid xs={12} lg={3}>
+              <div className="col-span-12 lg:col-span-3">
                 <NetworkMenu
                   activeNetwork={activeScope.network}
                   selectedNetwork={selectedNetwork}
@@ -170,11 +125,11 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                     )
                   }}
                 />
-              </Grid>
+              </div>
             )}
           {scopeFreedom !== 'network' &&
             (!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.Layer)) && (
-              <Grid xs={12} lg={3}>
+              <div className="col-span-12 lg:col-span-3">
                 <LayerMenu
                   selectedNetwork={selectedNetwork}
                   selectedScope={selectedScope}
@@ -183,31 +138,31 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
                     setTabletStep(LayerPickerTabletStep.LayerDetails)
                   }}
                 />
-              </Grid>
+              </div>
             )}
           {(!isTablet || (isTablet && tabletStep === LayerPickerTabletStep.LayerDetails)) && (
-            <Grid xs={12} lg={6}>
+            <div className="col-span-12 lg:col-span-6">
               <LayerDetails
                 handleConfirm={handleConfirm}
                 selectedScope={selectedScope}
                 isOutOfDate={isOutOfDate}
               />
-            </Grid>
+            </div>
           )}
-        </Grid>
+        </div>
 
-        <ActionBar>
-          <Button onClick={onClose} color="secondary" variant="outlined" size="large">
+        <div className="flex justify-around lg:justify-end lg:gap-8">
+          <Button onClick={onClose} color="secondary" variant="outline" size="lg">
             {t('common.cancel')}
           </Button>
 
-          <Button onClick={handleConfirm} color="primary" variant="contained" size="large">
+          <Button onClick={handleConfirm} color="primary" variant="default" size="lg">
             {selectedScope.network === activeScope.network && selectedScope.layer === activeScope.layer
               ? t('layerPicker.goToDashboard')
               : t('common.select')}
           </Button>
-        </ActionBar>
-      </StyledContent>
-    </StyledLayerPickerContent>
+        </div>
+      </div>
+    </div>
   )
 }
