@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import Grid from '@mui/material/Grid'
 import { DashboardDivider } from '../../components/Divider'
 import { isLocalnet } from '../../utils/route-utils'
 import { PageLayout } from '../../components/PageLayout'
@@ -28,12 +27,12 @@ export const ConsensusDashboardPage: FC = () => {
       {!isLocal && <ConsensusSnapshot scope={scope} />}
       <DashboardDivider />
       {!isLocal && (
-        <Grid container spacing={4}>
-          <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
+        <div className="grid grid-cols-12 gap-x-6">
+          <div className="col-span-12 lg:col-span-6 flex">
             <TotalTransactions chartContainerHeight={350} scope={scope} />
-          </Grid>
+          </div>
           <LatestBlocksGrid scope={scope} />
-        </Grid>
+        </div>
       )}
       {isLocal && <LatestBlocksGrid scope={scope} />}
       <ValidatorsCard scope={scope} />
@@ -54,8 +53,8 @@ export const ConsensusDashboardPage: FC = () => {
 
 const LatestBlocksGrid = ({ scope }: { scope: ConsensusScope }) => {
   return (
-    <Grid item xs={12} lg={6} sx={{ display: 'flex' }}>
+    <div className="col-span-12 lg:col-span-6 flex">
       <LatestConsensusBlocks scope={scope} />
-    </Grid>
+    </div>
   )
 }

@@ -343,7 +343,7 @@ export const defaultTheme = createTheme({
             },
           },
           [theme.breakpoints.up('sm')]: {
-            marginBottom: theme.spacing(5),
+            marginBottom: '24px',
             padding: theme.spacing(5, 5, 0),
           },
         }),
