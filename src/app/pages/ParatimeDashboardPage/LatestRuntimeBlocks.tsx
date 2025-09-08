@@ -45,7 +45,7 @@ export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <CardHeader
         disableTypography
         component="h3"
