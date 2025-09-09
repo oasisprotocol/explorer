@@ -107,7 +107,7 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
-            compact: true,
+            className: 'mt-2',
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,
@@ -148,7 +148,7 @@ const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
           limit={PAGE_SIZE}
           linkType="validator"
           pagination={{
-            compact: true,
+            className: 'mt-2',
             selectedPage: pagination.selectedPage,
             linkToPage: pagination.linkToPage,
             totalCount: data?.data.total_count,

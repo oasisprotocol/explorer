@@ -1,11 +1,10 @@
 import { FC } from 'react'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import PaginationItem from '@mui/material/PaginationItem'
+import { PaginationNext, PaginationPrevious } from '@oasisprotocol/ui-library/src/components/pagination'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
-import { COLORS } from '../../../styles/theme/colors'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RouteUtils } from '../../utils/route-utils'
 import { TX_METHOD_QUERY_ARG_NAME } from '../../hooks/useCommonParams'
@@ -16,19 +15,13 @@ const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ sco
   const disabled = currentRound === 0
   return (
     <Tooltip title={disabled ? t('blocks.viewingFirst') : t('blocks.viewPrevious')} placement="top">
-      <Box>
-        <PaginationItem
-          component={RouterLink}
+      <div className="ml-4">
+        <PaginationPrevious
+          linkComponent={RouterLink}
           to={RouteUtils.getBlockRoute(scope, currentRound - 1, searchParams, [TX_METHOD_QUERY_ARG_NAME])}
-          type="previous"
           disabled={disabled}
-          sx={{
-            marginLeft: 4,
-            marginRight: 1,
-            background: COLORS.grayMediumLight,
-          }}
         />
-      </Box>
+      </div>
     </Tooltip>
   )
 }
@@ -46,12 +39,10 @@ const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound:
   return (
     <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')} placement="top">
       <Box>
-        <PaginationItem
-          component={RouterLink}
+        <PaginationNext
+          linkComponent={RouterLink}
           to={RouteUtils.getBlockRoute(scope, currentRound + 1, searchParams, [TX_METHOD_QUERY_ARG_NAME])}
-          type="next"
           disabled={disabled}
-          sx={{ background: COLORS.grayMediumLight }}
         />
       </Box>
     </Tooltip>
