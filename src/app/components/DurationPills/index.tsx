@@ -1,19 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import Typography from '@mui/material/Typography'
 import { ChartDuration } from '../../utils/chart-utils'
-import { COLORS } from '../../../styles/theme/colors'
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: COLORS.brandDark,
-  width: 14,
-  height: 14,
-  marginRight: theme.spacing(3),
-  borderRadius: 4,
-}))
+import { Tabs, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 
 type DurationPillsProps = {
   handleChange: (duration: ChartDuration) => void
@@ -38,25 +26,15 @@ export const DurationPills: FC<DurationPillsProps> = ({ handleChange, value }) =
   ]
 
   return (
-    <>
-      {options.map(option => (
-        <Chip
-          key={option.value}
-          onClick={() => handleChange(option.value)}
-          clickable
-          color="secondary"
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <StyledBox />
-              <Typography component="span" sx={{ fontSize: 12 }}>
-                {option.label}
-              </Typography>
-            </Box>
-          }
-          sx={{ mr: 2 }}
-          variant={value === option.value ? 'outlined-selected' : 'outlined'}
-        />
-      ))}
-    </>
+    // Mobile margin prevents overflow Recharts
+    <Tabs defaultValue={value} className="my-2 lg:my-0">
+      <TabsList className="ml-auto w-full lg:w-auto">
+        {options.map(option => (
+          <TabsTrigger key={option.value} value={option.value} onClick={() => handleChange(option.value)}>
+            {option.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   )
 }

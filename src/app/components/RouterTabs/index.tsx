@@ -1,7 +1,6 @@
 import { useLocation, Outlet, useMatches } from 'react-router-dom'
 import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
+import { Tabs, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 
 type RouterTabsProps<Context> = {
   tabs: {
@@ -29,18 +28,18 @@ export function RouterTabs<Context>({ tabs, context }: RouterTabsProps<Context>)
 
   return (
     <>
-      <Tabs value={targetTab?.to} variant="scrollable" scrollButtons={false}>
-        {tabs
-          .filter(tab => tab === targetTab || tab.visible !== false)
-          .map(tab => (
-            <Tab
-              key={tab.to}
-              component={NonScrollingRouterLink}
-              value={tab.to}
-              label={tab.label}
-              to={tab.to}
-            />
-          ))}
+      <Tabs value={targetTab?.to}>
+        <TabsList variant="layout">
+          {tabs
+            .filter(tab => tab === targetTab || tab.visible !== false)
+            .map(tab => (
+              <TabsTrigger key={tab.to} value={tab.to} asChild>
+                <NonScrollingRouterLink to={tab.to} className="flex items-center">
+                  {tab.label}
+                </NonScrollingRouterLink>
+              </TabsTrigger>
+            ))}
+        </TabsList>
       </Tabs>
       <Outlet context={context} />
     </>
