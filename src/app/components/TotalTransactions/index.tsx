@@ -6,11 +6,11 @@ import { LineChart } from '../charts/LineChart'
 import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from '../DurationPills'
-import { CardHeaderWithResponsiveActions } from '../CardHeaderWithResponsiveActions'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
 import { ErrorBoundary } from '../ErrorBoundary'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 const TotalTransactionsContent: FC<{
   scope: SearchScope
@@ -73,12 +73,15 @@ export const TotalTransactions: FC<{ chartContainerHeight?: number; scope: Searc
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeaderWithResponsiveActions
-        action={<DurationPills handleChange={setChartDuration} value={chartDuration} />}
-        disableTypography
-        component="h3"
-        title={t('totalTransactions.header')}
-      />
+      <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between gap-4">
+        <Typography variant="h3" className="whitespace-nowrap">
+          {t('totalTransactions.header')}
+        </Typography>
+
+        <div className="md:ml-4 md:flex-1 md:text-right">
+          <DurationPills handleChange={setChartDuration} value={chartDuration} />
+        </div>
+      </div>
       <CardContent sx={{ height: chartContainerHeight }}>
         <ErrorBoundary light>
           <TotalTransactionsContent scope={scope} chartDuration={chartDuration} />

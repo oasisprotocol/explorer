@@ -1,18 +1,17 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
 import { useGetConsensusValidators } from '../../../oasis-nexus/api'
 import { Validators } from '../../components/Validators'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
-import { COLORS } from '../../../styles/theme/colors'
 import { ConsensusScope } from '../../../types/searchScope'
 import { RouteUtils } from 'app/utils/route-utils'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
@@ -52,24 +51,17 @@ export const ValidatorsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
 
   return (
     <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={
-          <ErrorBoundary fallbackContent={t('validator.listTitle')}>
+      <div className="flex items-center justify-between pr-4 mb-4 sm:pr-0">
+        <ErrorBoundary fallbackContent={t('validator.listTitle')}>
+          <Typography variant="h3">
             <ValidatorsTitle scope={scope} />
-          </ErrorBoundary>
-        }
-        action={
-          <Link
-            component={RouterLink}
-            to={RouteUtils.getValidatorsRoute(scope.network)}
-            sx={{ color: COLORS.brandDark }}
-          >
-            {t('common.viewAll')}
-          </Link>
-        }
-      />
+          </Typography>
+        </ErrorBoundary>
+
+        <Link asChild textColor="primary" className="font-medium">
+          <RouterLink to={RouteUtils.getValidatorsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
+        </Link>
+      </div>
       <CardContent>
         <ErrorBoundary light={true}>
           <ValidatorsContent scope={scope} />
