@@ -1,19 +1,17 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetRuntimeTransactions } from '../../../oasis-nexus/api'
 import { RuntimeTransactions } from '../../components/Transactions'
 import { FILTERING_ON_DASHBOARD, NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
-import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeScope } from '../../../types/searchScope'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
-import Box from '@mui/material/Box'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
@@ -66,33 +64,17 @@ export const LatestRuntimeTransactions: FC<{
 
   return (
     <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 6,
-              alignItems: 'center',
-            }}
-          >
-            {t('transactions.latest')}
-            {shouldFilter && !isMobile && (
-              <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
-            )}
-          </Box>
-        }
-        action={
-          <Link
-            component={RouterLink}
-            to={RouteUtils.getLatestTransactionsRoute(scope)}
-            sx={{ color: COLORS.brandDark }}
-          >
-            {t('common.viewAll')}
-          </Link>
-        }
-      />
+      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
+        <div className="flex items-center gap-6">
+          <Typography variant="h3">{t('transactions.latest')}</Typography>
+          {shouldFilter && !isMobile && (
+            <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
+          )}
+        </div>
+        <Link asChild className="font-medium" textColor="primary">
+          <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
+        </Link>
+      </div>
       {shouldFilter && isMobile && (
         <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} expand />
       )}
