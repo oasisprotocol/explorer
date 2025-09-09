@@ -15,6 +15,7 @@ import { RuntimeScope } from '../../../types/searchScope'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
+import { getOasisAddress } from '../../utils/helpers'
 
 interface UseTokenInfoParams {
   /** Defaults to true */
@@ -25,7 +26,7 @@ interface UseTokenInfoParams {
 export const useTokenInfo = (scope: RuntimeScope, address: string, params: UseTokenInfoParams = {}) => {
   const { network, layer } = scope
   const { enabled, useCaching } = params
-  const query = useGetRuntimeEvmTokensAddress(network, layer, address, {
+  const query = useGetRuntimeEvmTokensAddress(network, layer, getOasisAddress(address), {
     query: {
       enabled,
       staleTime: useCaching ? 3600000 : undefined,
