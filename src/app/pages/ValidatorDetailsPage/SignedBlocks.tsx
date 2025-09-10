@@ -1,13 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Typography from '@mui/material/Typography'
-import { COLORS } from 'styles/theme/colors'
 import { BlockStats } from '../../components/BlockStats'
 import { ValidatorSignedBlock } from '../../../oasis-nexus/api'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 type SignedBlocksProps = {
   isLoading: boolean
@@ -20,12 +18,7 @@ export const SignedBlocks: FC<SignedBlocksProps> = ({ isLoading, isFetched, sign
 
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={t('validator.signedBlocks')}
-        sx={{ paddingBottom: 0 }}
-      />
+      <Typography variant="h3">{t('validator.signedBlocks')}</Typography>
       <CardContent>
         {isLoading && <Skeleton className="h-[240px]" />}
         {isFetched && signedBlocks && signedBlocks.length > 0 && (
@@ -45,13 +38,7 @@ export const SignedBlocksContent: FC<SignedBlocksContentProps> = ({ signedBlocks
 
   return (
     <>
-      <Typography
-        sx={{
-          fontSize: '18px',
-          color: COLORS.grayMedium,
-          paddingBottom: 4,
-        }}
-      >
+      <Typography variant="xsmall" textColor="muted" className="pb-4">
         {t('validator.signedBlocksDescription')}
       </Typography>
       <BlockStats

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { Tabs, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 import { ChartDuration } from '../../utils/chart-utils'
 
-
 type DurationPillsProps = {
   handleChange: (duration: ChartDuration) => void
   value?: ChartDuration

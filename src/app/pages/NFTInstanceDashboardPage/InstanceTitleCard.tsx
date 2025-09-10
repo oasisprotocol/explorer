@@ -4,9 +4,8 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { EvmNft } from 'oasis-nexus/api'
-import { COLORS } from '../../../styles/theme/colors'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -27,7 +26,7 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
 
   return (
     <Card>
-      <CardContent>
+      <CardContent sx={{ paddingBottom: '0!important' }}>
         {isLoading && <Skeleton className="h-8" />}
         {isFetched && token && (
           <Box
@@ -38,25 +37,10 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
               alignItems: 'bottom',
             }}
           >
-            <Typography
-              variant="h2"
-              sx={{
-                fontWeight: 600,
-                paddingBottom: 3,
-              }}
-            >
+            <Typography variant="h2">
               {getNftInstanceLabel(nft)}
               &nbsp;
-              <Typography
-                component="span"
-                noWrap
-                sx={{
-                  color: COLORS.grayMedium,
-                  fontWeight: 400,
-                }}
-              >
-                {t('nft.instanceTitleSuffix')}
-              </Typography>
+              <span className="font-normal text-muted-foreground">{t('nft.instanceTitleSuffix')}</span>
             </Typography>
             <Box
               sx={{

@@ -16,7 +16,9 @@ export const LearningSection: FC<LearningSectionProps> = ({ className, descripti
       className={cn('flex flex-row p-6 gap-4 rounded-md border border-zinc-200 bg-zinc-50 w-full', className)}
     >
       <div className="flex-1 flex flex-col gap-1">
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h4" className="text-sm">
+          {title}
+        </Typography>
         <Typography>{description}</Typography>
       </div>
       <div className="flex items-end">

@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { RoflAppPolicy, Runtime, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
@@ -37,7 +36,9 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer,
 
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeader disableTypography component="h3" title={t('rofl.policy')} />
+      <Typography variant="h3" className="mb-4">
+        {t('rofl.policy')}
+      </Typography>
       <CardContent>
         {isFetched && !policy && <EmptyStateCard />}
         {policy && (
@@ -52,9 +53,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer,
                 {policy.quotes?.pcs?.min_tcb_evaluation_data_number ? (
                   <>
                     {policy.quotes?.pcs?.min_tcb_evaluation_data_number}
-                    <Typography component="span" sx={{ pl: 2 }}>
-                      {t('rofl.min')}
-                    </Typography>
+                    <span className="pl-1">{t('rofl.min')}</span>
                   </>
                 ) : undefined}
               </GridRow>

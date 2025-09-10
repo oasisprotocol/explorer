@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useGetConsensusValidatorsAddressHistory } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { LineChart } from '../../components/charts/LineChart'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 const epochsInMonth = 720
 
@@ -31,7 +31,7 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
 
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeader disableTypography component="h3" title={t('validator.stakingTrend')} />
+      <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
       <CardContent sx={{ height: 250 }}>
         {history && filteredHistory && (
           <LineChart

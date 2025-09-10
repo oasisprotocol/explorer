@@ -7,7 +7,6 @@ import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from '../DurationPills'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
 import { ErrorBoundary } from '../ErrorBoundary'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
@@ -16,7 +15,6 @@ const TotalTransactionsContent: FC<{
   scope: SearchScope
   chartDuration: ChartDuration
 }> = ({ scope, chartDuration }) => {
-  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const statsParams = {
     ...durationToQueryParams[chartDuration],
@@ -42,7 +40,7 @@ const TotalTransactionsContent: FC<{
         strokeWidth={3}
         dataKey="tx_volume"
         data={windows}
-        margin={{ bottom: 16, top: isMobile ? 0 : 16 }}
+        margin={{ bottom: 16, top: 16 }}
         tickMargin={16}
         withLabels
         formatters={{
@@ -73,10 +71,8 @@ export const TotalTransactions: FC<{ chartContainerHeight?: number; scope: Searc
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
     <Card sx={{ flex: 1 }}>
-      <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between gap-4">
-        <Typography variant="h3" className="whitespace-nowrap">
-          {t('totalTransactions.header')}
-        </Typography>
+      <div className="flex flex-col mb-4 sm:flex-row sm:items-center sm:justify-between gap-1">
+        <Typography variant="h3">{t('totalTransactions.header')}</Typography>
 
         <div className="md:ml-4 md:flex-1 md:text-right">
           <DurationPills handleChange={setChartDuration} value={chartDuration} />

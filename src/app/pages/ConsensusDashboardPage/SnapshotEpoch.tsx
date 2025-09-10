@@ -37,9 +37,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
               i18nKey="consensusSnapshot.blockHeight"
               components={{
                 BlockHeight: (
-                  <Typography className="font-semibold text-primary">
-                    {blockHeight.toLocaleString()}
-                  </Typography>
+                  <span className="font-semibold text-primary">{blockHeight.toLocaleString()}</span>
                 ),
               }}
             />

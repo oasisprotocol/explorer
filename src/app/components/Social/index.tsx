@@ -35,9 +35,7 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, imgSrc, img }) => {
           {img && <span className="[&_svg]:h-10 [&_svg]:w-10 inline-block">{img}</span>}
         </>
       </div>
-      <Typography variant="large" className="mb-1 text-white">
-        {label}
-      </Typography>
+      <Typography className="mb-1 text-white">{label}</Typography>
     </Link>
   )
 }

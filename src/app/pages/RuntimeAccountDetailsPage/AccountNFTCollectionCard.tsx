@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
@@ -41,28 +40,18 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
   return (
     <Card>
       <LinkableDiv id={nftCollectionContainerId}>
-        <CardHeader
-          action={
-            isFetched &&
-            firstToken && (
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', paddingY: 3 }}>
-                <AccountLink scope={scope} address={firstToken?.eth_contract_addr} alwaysTrim />
-                <CopyToClipboard value={firstToken?.eth_contract_addr} />
-              </Box>
-            )
-          }
-          disableTypography
-          component="h3"
-          title={
-            <Box sx={{ display: 'flex' }} gap={4}>
+        <div className="flex items-center p-4" role="heading" aria-level={3}>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-8">
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <Typography fontSize={18}>
+                    <Typography variant="h3" className="text-lg font-medium">
                       <Link
-                        preventScrollReset={true}
+                        preventScrollReset
                         component={RouterLink}
                         to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
+                        className="hover:underline"
                       >
                         {t('nft.accountCollection')}
                       </Link>
@@ -82,9 +71,16 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
               </Breadcrumb>
 
               {isLoading && <Skeleton className="w-1/2 h-4" />}
-            </Box>
-          }
-        />
+            </div>
+          </div>
+
+          {isFetched && firstToken ? (
+            <div className="flex items-start gap-2 py-6 self-start">
+              <AccountLink scope={scope} address={firstToken.eth_contract_addr} alwaysTrim />
+              <CopyToClipboard value={firstToken.eth_contract_addr} />
+            </div>
+          ) : null}
+        </div>
       </LinkableDiv>
       <CardContent>
         <ErrorBoundary light={true}>

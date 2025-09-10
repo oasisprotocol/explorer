@@ -1,12 +1,11 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled, css, useTheme } from '@mui/material/styles'
+import { styled, css } from '@mui/material/styles'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type StyledComponentProps = {
   featured?: boolean
@@ -22,19 +21,6 @@ type StyledComponentProps = {
   mainTitle?: boolean
 }
 type SubPageCardProps = PropsWithChildren<StyledComponentProps>
-
-const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'featured',
-})<StyledComponentProps>(
-  ({ featured, theme }) => css`
-    ${featured && {
-      margin: `-${theme.spacing(5)} -${theme.spacing(6)} ${theme.spacing(5)}`,
-      padding: theme.spacing(5, 6, 4),
-      borderRadius: '6px',
-      boxShadow: '-20px 4px 40px rgba(34, 47, 63, 0.24)',
-    }};
-  `,
-)
 
 const StyledCard = styled(Card, {
   shouldForwardProp: prop => prop !== 'featured' && prop !== 'noPadding',
@@ -77,60 +63,41 @@ export const SubPageCard: FC<SubPageCardProps> = ({
   noPadding = false,
   mainTitle = false,
 }) => {
-  const theme = useTheme()
   const { isMobile } = useScreenSize()
 
   return (
     <div>
       {isMobile && (title || subheader || action) && (
-        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'baseline', mb: 4, mx: 4 }}>
-          <Typography
-            variant={mainTitle ? 'h2' : 'h3'}
-            component={mainTitle ? 'h2' : 'h3'}
-            sx={{ display: 'inline' }}
-            color={theme.palette.layout.titleOnBackground}
-          >
+        <div className="relative flex items-baseline mb-4 mx-4">
+          <Typography variant={mainTitle ? 'h2' : 'h3'} className="inline text-[--title-on-background]">
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{ ml: '1ex', display: 'inline', fontStyle: 'italic' }}
-            color={theme.palette.layout.titleOnBackground}
-          >
+          <Typography variant="p" className="inline ml-2 italic leading-6">
             {subheader}
           </Typography>
           {action && <div className="ml-auto my-auto">{action}</div>}
-        </Box>
+        </div>
       )}
-      {title2 && (
-        <Box
-          sx={{
-            color: theme.palette.layout.titleOnBackground,
-            mb: 4,
-            mx: 4,
-          }}
-        >
-          {title2}
-        </Box>
-      )}
+      {title2 && <div className="mb-4 mx-4">{title2}</div>}
       <StyledCard featured={featured} noPadding={noPadding}>
         {!isMobile && (
-          <StyledBox featured={featured}>
-            <CardHeader
-              title={isLoadingTitle ? <TitleSkeleton /> : title}
-              titleTypographyProps={{
-                display: 'inline',
-                component: mainTitle ? 'h2' : 'h3',
-                variant: mainTitle ? 'h2' : 'h3',
-              }}
-              subheader={subheader}
-              subheaderTypographyProps={{
-                display: 'inline',
-                marginLeft: '1ex',
-              }}
-              action={action}
-            />
-          </StyledBox>
+          <div className={cn(featured && 'pb-4')}>
+            <div className="flex items-start justify-between">
+              <div className="flex gap-1 items-center">
+                <Typography variant={mainTitle ? 'h2' : 'h3'}>
+                  {isLoadingTitle ? <TitleSkeleton /> : title}
+                </Typography>
+
+                {subheader && (
+                  <Typography variant="p" className="inline ml-2 italic">
+                    {subheader}
+                  </Typography>
+                )}
+              </div>
+
+              {action && <div className="ml-4 shrink-0">{action}</div>}
+            </div>
+          </div>
         )}
         <StyledCardContent noPadding={noPadding}>{children}</StyledCardContent>
       </StyledCard>

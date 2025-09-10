@@ -51,7 +51,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
         <CardActions sx={{ minHeight: 60 }}>
           <div className="flex justify-between items-center w-full px-4 pb-4">
             <div>{badge}</div>
-            <Typography variant="h2" className="font-bold flex-1 text-primary">
+            <Typography textColor="muted" className="flex-1">
               {label}
             </Typography>
           </div>
@@ -84,7 +84,7 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
       alignWithCardsWithActions={alignWithCardsWithActions}
     >
       <div className="h-full flex items-center justify-center">
-        <span className="text-2xl font-bold text-primary flex-1 text-center px-4">{children}</span>
+        <span className="text-2xl font-semibold text-primary flex-1 text-center px-4">{children}</span>
       </div>
     </SnapshotCard>
   )
