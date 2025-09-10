@@ -84,7 +84,7 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
       alignWithCardsWithActions={alignWithCardsWithActions}
     >
       <div className="h-full flex items-center justify-center">
-        <span className="text-3xl font-bold text-primary flex-1 text-center px-4">{children}</span>
+        <span className="text-2xl font-bold text-primary flex-1 text-center px-4">{children}</span>
       </div>
     </SnapshotCard>
   )
