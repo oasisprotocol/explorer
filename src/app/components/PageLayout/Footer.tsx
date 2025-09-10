@@ -34,12 +34,12 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             enableMobileSearch={enableMobileSearch}
           >
             <Typography variant="xsmall" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
-              <div className="whitespace-nowrap">{t('footer.mobileTitle')} |</div>
-              <div className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
+              <span className="whitespace-nowrap">{t('footer.mobileTitle')} |</span>
+              <span className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
-              </div>
-              <div>{currentYear}</div>
+              </span>
+              <span>{currentYear}</span>
             </Typography>
           </AppendMobileSearch>
         ) : (
