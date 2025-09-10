@@ -337,14 +337,14 @@ export const defaultTheme = createTheme({
           boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
-            padding: theme.spacing(4, 4, 0),
+            padding: theme.spacing(4),
             ':has(table)': {
               paddingRight: 0,
             },
           },
           [theme.breakpoints.up('sm')]: {
             marginBottom: '24px',
-            padding: theme.spacing(5, 5, 0),
+            padding: theme.spacing('24px'),
           },
         }),
       },

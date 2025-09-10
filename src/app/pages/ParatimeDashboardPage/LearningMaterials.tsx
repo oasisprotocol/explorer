@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import Grid from '@mui/material/Unstable_Grid2'
 import { docs } from '../../utils/externalLinks'
 import { getLayerLabels } from '../../utils/content'
 import { SpecifiedPerEnabledRuntime } from '../../utils/route-utils'
@@ -186,32 +185,32 @@ export const LearningMaterials: FC<{ scope: RuntimeScope }> = ({ scope }) => {
 
   return (
     <LearningMaterialsCard>
-      <Grid container spacing={3}>
-        <Grid xs={12} lg={6}>
+      <div className="flex flex-col gap-3 md:flex-row md:h-full">
+        <div className="md:flex-1">
           <LearningSection
             description={content.primary.description}
             title={content.primary.header}
             url={content.primary.url}
             className="h-full"
           />
-        </Grid>
-        <Grid xs={12} lg={6} spacing={3}>
-          <Grid sx={{ pb: 3 }}>
+        </div>
+        <div className="md:flex-1 flex flex-col gap-3">
+          <div className="flex flex-1">
             <LearningSection
               description={content.secondary.description}
               title={content.secondary.header}
               url={content.secondary.url}
             />
-          </Grid>
-          <Grid>
+          </div>
+          <div className="flex flex-1">
             <LearningSection
               description={content.tertiary.description}
               title={content.tertiary.header}
               url={content.tertiary.url}
             />
-          </Grid>
-        </Grid>
-      </Grid>
+          </div>
+        </div>
+      </div>
     </LearningMaterialsCard>
   )
 }

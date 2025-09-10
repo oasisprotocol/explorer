@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import { COLORS } from '../../../styles/theme/colors'
 import { docs } from '../../utils/externalLinks'
@@ -15,7 +14,7 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
   const { t } = useTranslation()
 
   return (
-    <Card>
+    <Card sx={{ display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         disableTypography
         component="h3"
@@ -26,7 +25,7 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
           </Link>
         }
       />
-      <CardContent>{children}</CardContent>
+      <div className="md:h-[-webkit-fill-available]">{children}</div>
     </Card>
   )
 }
