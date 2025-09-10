@@ -109,7 +109,7 @@ export const defaultTheme = createTheme({
     fontWeightRegular: 400,
     fontWeightBold: 700,
     body2: {
-      fontSize: '16px',
+      fontSize: '14px',
     },
     h1: {
       fontSize: '24px',
@@ -162,7 +162,7 @@ export const defaultTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          fontSize: '18px',
+          fontSize: '14px',
           lineHeight: '23px',
           height: '47px',
           borderRadius: 6,
@@ -217,7 +217,7 @@ export const defaultTheme = createTheme({
           },
         },
         textSizeMedium: {
-          fontSize: '16px',
+          fontSize: '14px',
         },
         textSizeSmall: {
           fontSize: '14px',
@@ -325,6 +325,7 @@ export const defaultTheme = createTheme({
           borderRadius: 6,
           border: `1px solid ${COLORS.grayLight}`,
           boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          fontSize: '14px',
           [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing(4),
             padding: theme.spacing(4),
@@ -362,7 +363,7 @@ export const defaultTheme = createTheme({
         action: {
           margin: 0,
           fontWeight: 400,
-          fontSize: '16px',
+          fontSize: '14px',
           color: COLORS.brandExtraDark,
         },
         title: {
@@ -463,7 +464,7 @@ export const defaultTheme = createTheme({
           style: () => ({
             color: COLORS.white,
             fontWeight: 400,
-            fontSize: '16px',
+            fontSize: '14px',
             lineHeight: '20px',
           }),
         },
@@ -603,7 +604,7 @@ export const defaultTheme = createTheme({
             color: COLORS.brandExtraDark,
             backgroundColor: COLORS.white,
           },
-          fontSize: '16px',
+          fontSize: '14px',
           fontWeight: 700,
           color: COLORS.brandDark,
           backgroundColor: COLORS.grayLight,
