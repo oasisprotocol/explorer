@@ -2,8 +2,6 @@ import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import MenuList from '@mui/material/MenuList'
-import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
@@ -14,6 +12,7 @@ import { orderByLayer } from '../../../types/layers'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { SearchScope } from '../../../types/searchScope'
+import { MenuItem } from '../LayerPicker/MenuItem'
 
 type BaseLayerMenuItemProps = {
   divider: boolean
@@ -82,7 +81,6 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
         setSelectedScope(targetScope)
       }}
       selected={isSelected}
-      tabIndex={isSelected ? 0 : -1}
     >
       <div className="flex-auto">
         {labels[targetScope.layer]}
@@ -128,7 +126,7 @@ export const LayerMenu: FC<LayerMenuProps> = ({ selectedNetwork, selectedScope, 
     : getOptionsForNetwork(selectedNetwork ?? activeScope.network, activeScope)
 
   return (
-    <MenuList>
+    <ul role="menu">
       {options.map((option, index) => {
         if (!option.enabled) {
           if (selectedNetwork === 'localnet') return null
@@ -154,6 +152,6 @@ export const LayerMenu: FC<LayerMenuProps> = ({ selectedNetwork, selectedScope, 
           )
         }
       })}
-    </MenuList>
+    </ul>
   )
 }
