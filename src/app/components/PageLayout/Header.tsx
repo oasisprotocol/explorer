@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import AppBar from '@mui/material/AppBar'
-import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { useTheme } from '@mui/material/styles'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -38,27 +36,20 @@ export const Header: FC = () => {
         boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
       }}
     >
-      <Box sx={{ px: '15px' }}>
-        <Grid
-          container
-          sx={{
-            px: isMobile ? 0 : '4%',
-            pt: isMobile ? 4 : '15px',
-            pb: 4,
-          }}
-        >
-          <Grid lg={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
+      <div className="px-4">
+        <div className="grid grid-cols-12 pt-3 pb-4 px-0 md:px-[4%]">
+          <div className="col-span-6 xl:col-span-3 flex items-center">
             <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
-          </Grid>
+          </div>
+
           {withScopeSelector && (
-            <>
-              <Grid lg={6} xs={8}>
-                <NetworkSelector layer={scope.layer} network={scope.network} />
-              </Grid>
-            </>
+            <div className="col-span-6 xl:col-span-6 flex justify-end xl:justify-center items-center">
+              <NetworkSelector layer={scope.layer} network={scope.network} />
+            </div>
           )}
+
           {isDesktop && (
-            <Grid lg={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="col-span-3 flex justify-end items-center">
               <Button
                 component="a"
                 href="https://rose.oasis.io/"
@@ -70,10 +61,10 @@ export const Header: FC = () => {
               >
                 {t('common.visitRoseApp')}
               </Button>
-            </Grid>
+            </div>
           )}
-        </Grid>
-      </Box>
+        </div>
+      </div>
     </AppBar>
   )
 }
