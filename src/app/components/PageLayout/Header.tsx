@@ -38,7 +38,7 @@ export const Header: FC = () => {
         boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
       }}
     >
-      <Box sx={{ px: '15px' }}>
+      <div className="px-[15px]">
         <Grid
           container
           sx={{
@@ -47,18 +47,18 @@ export const Header: FC = () => {
             pb: 4,
           }}
         >
-          <Grid lg={3} xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
+          <div className="w-1/3 lg:w-1/4 flex items-center">
             <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
-          </Grid>
+          </div>
           {withScopeSelector && (
             <>
-              <Grid lg={6} xs={8}>
+              <div className="w-2/3 lg:w-1/2">
                 <NetworkSelector layer={scope.layer} network={scope.network} />
-              </Grid>
+              </div>
             </>
           )}
           {isDesktop && (
-            <Grid lg={3} xs={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="w-1/3 lg:w-1/4 flex justify-end">
               <Button
                 component="a"
                 href="https://rose.oasis.io/"
@@ -70,10 +70,10 @@ export const Header: FC = () => {
               >
                 {t('common.visitRoseApp')}
               </Button>
-            </Grid>
+            </div>
           )}
         </Grid>
-      </Box>
+      </div>
     </AppBar>
   )
 }
