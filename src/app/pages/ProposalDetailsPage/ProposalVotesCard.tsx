@@ -9,15 +9,15 @@ import { ExtendedVote, ProposalVoteValue } from '../../../types/vote'
 import { useVotes, useVoteFiltering } from './hooks'
 import { ProposalVoteIndicator } from '../../components/Proposals/ProposalVoteIndicator'
 import { DeferredValidatorLink } from '../../components/Validators/DeferredValidatorLink'
-import { CardHeaderWithResponsiveActions } from '../../components/CardHeaderWithResponsiveActions'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VoteTypeFilter } from '../../components/Proposals/VoteTypeFilter'
 import { AppErrors } from '../../../types/errors'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import Box from '@mui/material/Box'
 import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { WithHighlightPattern } from '../../components/PatternHighlightingContext'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -120,38 +120,29 @@ export const ProposalVotesView: FC = () => {
 
 export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isTablet } = useScreenSize()
 
   const { wantedType, setWantedType, wantedNameInput, setWantedNameInput, nameError } = useVoteFiltering()
 
   return (
     <SubPageCard>
-      <CardHeaderWithResponsiveActions
-        action={
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexWrap: isTablet ? 'wrap' : 'nowrap',
-              gap: 4,
-              paddingRight: isMobile ? 4 : 0,
-            }}
-          >
-            <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
-            <TableSearchBar
-              value={wantedNameInput}
-              onChange={setWantedNameInput}
-              placeholder={t('networkProposal.searchForVoter')}
-              warning={nameError}
-              fullWidth={isTablet}
-              size={'small'}
-            />
-          </Box>
-        }
-        disableTypography
-        component="h2"
-        title={t('common.votes')}
-      />
+      <div className="flex flex-col md:flex-row md:flex-row md:items-center md:justify-between mb-2">
+        <Typography variant="h2" className="mb-2 sm:mb-0">
+          {t('common.votes')}
+        </Typography>
+
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 pr-4 sm:pr-0">
+          <VoteTypeFilter onSelect={setWantedType} value={wantedType} />
+          <TableSearchBar
+            value={wantedNameInput}
+            onChange={setWantedNameInput}
+            placeholder={t('networkProposal.searchForVoter')}
+            warning={nameError}
+            size={'small'}
+            fullWidth={isTablet}
+          />
+        </div>
+      </div>
       <ErrorBoundary light={true}>
         <Box sx={{ height: '704px' }}>
           <ProposalVotesView />

@@ -202,7 +202,7 @@ const SearchCmp: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: o
         onBlur={() => onFocusChange(false)}
         InputProps={{
           inputProps: {
-            sx: { p: 0 },
+            sx: { p: 0, fontSize: '14px' },
           },
           startAdornment,
           endAdornment: (

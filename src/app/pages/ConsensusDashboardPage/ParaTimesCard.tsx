@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { styled } from '@mui/material/styles'
@@ -12,6 +11,7 @@ import { isNotInHiddenScope, RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { EnabledRuntimePreview, DisabledRuntimePreview } from './RuntimePreview'
 import { Network } from '../../../types/network'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 function shouldIncludeLayer(network: Network, layer: Layer) {
   return layer !== 'consensus' && isNotInHiddenScope({ network, layer })
@@ -49,17 +49,13 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
 
   return (
     <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={
-          <CardHeaderWithCounter
-            label={t('paratimes.listTitle')}
-            totalCount={runtimesNumber}
-            isTotalCountClipped={false}
-          />
-        }
-      />
+      <Typography variant="h3" className="mb-4">
+        <CardHeaderWithCounter
+          label={t('paratimes.listTitle')}
+          totalCount={runtimesNumber}
+          isTotalCountClipped={false}
+        />
+      </Typography>
       <CardContent>
         <Grid container spacing={5}>
           <Grid xs={12} lg={spaceForSecondaryParaTimes ? 5 : 6}>

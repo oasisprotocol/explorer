@@ -8,10 +8,8 @@ import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from '../TokenDashboardPage'
 import { FileDisplay, RawDataDisplay } from '../../components/CodeDisplay'
 import { codeContainerId } from '../../utils/tabAnchors'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VerificationIcon } from 'app/components/ContractVerificationIcon'
-import Box from '@mui/material/Box'
-import { COLORS } from 'styles/theme/colors'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -43,46 +41,51 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
           <LinkableDiv id={codeContainerId}>
             {contract.verification?.source_files && (
               <>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
-                  <Typography variant="h4" component="h4">
-                    {t('contract.sourceCode')}
-                  </Typography>
-                  <VerificationIcon
-                    address_eth={account.address_eth!}
-                    scope={account}
-                    verificationLevel={contract.verification?.verification_level}
-                    hideLink
-                  />
-                </Box>
+                <Typography variant="h4" className="mb-4">
+                  {t('contract.sourceCode')}
+                </Typography>
 
-                {contract.verification?.compilation_metadata?.settings?.compilationTarget && (
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    sx={{ display: 'block', mb: 2 }}
-                    color={COLORS.brandExtraDark}
-                  >
-                    {t('contract.name')}:{' '}
-                    <b>
-                      {
-                        Object.values(
-                          contract.verification.compilation_metadata.settings.compilationTarget,
-                        )[0] as string
-                      }
-                    </b>
-                  </Typography>
-                )}
+                <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-y-3">
+                  <dt className="mx-6">
+                    <Typography>{t('contract.verification.title')}</Typography>
+                  </dt>
+                  <dd className="flex items-center">
+                    <VerificationIcon
+                      address_eth={account.address_eth!}
+                      scope={account}
+                      verificationLevel={contract.verification?.verification_level}
+                      hideLink
+                    />
+                  </dd>
 
-                {token?.name && (
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    sx={{ display: 'block' }}
-                    color={COLORS.brandExtraDark}
-                  >
-                    {t('common.tokenName')}: <b>{token.name}</b>
-                  </Typography>
-                )}
+                  {contract.verification?.compilation_metadata?.settings?.compilationTarget && (
+                    <>
+                      <dt className="mx-6">
+                        <Typography>{t('contract.name')}</Typography>
+                      </dt>
+                      <dd>
+                        <Typography>
+                          {
+                            Object.values(
+                              contract.verification.compilation_metadata.settings.compilationTarget,
+                            )[0] as string
+                          }
+                        </Typography>
+                      </dd>
+                    </>
+                  )}
+
+                  {token?.name && (
+                    <>
+                      <dt className="mx-6">
+                        <Typography>{t('common.tokenName')}</Typography>
+                      </dt>
+                      <dd>
+                        <Typography>{token.name}</Typography>
+                      </dd>
+                    </>
+                  )}
+                </dl>
               </>
             )}
 

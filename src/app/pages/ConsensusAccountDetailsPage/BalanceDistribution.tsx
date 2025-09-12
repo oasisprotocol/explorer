@@ -2,16 +2,14 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Typography from '@mui/material/Typography'
 import { Account } from '../../../oasis-nexus/api'
 import { PieChart } from '../../components/charts/PieChart'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
-import { COLORS } from '../../../styles/theme/colors'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 type BalanceDistributionProps = {
   account: Account | undefined
@@ -23,12 +21,9 @@ export const BalanceDistribution: FC<BalanceDistributionProps> = ({ account, isL
 
   return (
     <Card sx={{ height: '100%' }}>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={t('account.balanceDistribution')}
-        sx={{ paddingBottom: 0 }}
-      />
+      <Typography variant="h3" className="pb-0">
+        {t('account.balanceDistribution')}
+      </Typography>
       <CardContent>
         {isLoading && <Skeleton className="h-[300px]" />}
         {account && <BalanceDistributionContent account={account} />}
@@ -74,14 +69,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
 
   return (
     <>
-      <Typography
-        sx={{
-          fontSize: isMobile ? '14px' : '18px',
-          fontWeight: isMobile ? 500 : 700,
-          color: COLORS.brandDark,
-          mb: 4,
-        }}
-      >
+      <Typography variant="small" className="md:text-lg font-medium md:font-bold mb-8 text-primary">
         {t('account.totalValue', {
           value: totalValue,
         })}

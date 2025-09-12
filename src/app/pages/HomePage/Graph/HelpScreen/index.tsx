@@ -4,7 +4,7 @@ import { TFunction } from 'i18next'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import Button from '@mui/material/Button'
 import { ParaTimeSelectorStep } from '../types'
 import { SlideChangeEvent } from '../../../../../types/swiper'
@@ -112,11 +112,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           ))}
         </swiper-container>
       </SwiperBox>
-      <Typography
-        variant="h4"
-        color="inherit"
-        sx={{ marginBottom: 5, fontWeight: 500, textTransform: 'capitalize' }}
-      >
+      <Typography variant="h4" className="text-inherit mb-10 capitalize">
         {currentStep.label}
       </Typography>
       {activeStep < 2 && (

@@ -1,19 +1,11 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useGetConsensusEpochs } from '../../../oasis-nexus/api'
 import { useGetStatus } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
-import { COLORS } from '../../../styles/theme/colors'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { BrandProgressBar } from '../../components/ProgressBar'
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  marginTop: `-${theme.spacing(3)}`,
-  marginBottom: theme.spacing(3),
-}))
 
 // We need to get the previous epoch to compute end_height for the current one
 // This may not be precise during abnormal network conditions, but such conditions never happened so far
@@ -39,35 +31,31 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
       title={t('currentEpoch')}
       label={
         blockHeight !== undefined && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-            <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
-              <Trans
-                t={t}
-                i18nKey="consensusSnapshot.blockHeight"
-                components={{
-                  BlockHeight: (
-                    <Typography component="span" sx={{ fontSize: '24px', color: COLORS.grayExtraDark }}>
-                      {blockHeight.toLocaleString()}
-                    </Typography>
-                  ),
-                }}
-              />
-            </Typography>
-          </Box>
+          <Typography className="font-normal flex gap-2 items-center">
+            <Trans
+              t={t}
+              i18nKey="consensusSnapshot.blockHeight"
+              components={{
+                BlockHeight: (
+                  <span className="font-semibold text-primary">{blockHeight.toLocaleString()}</span>
+                ),
+              }}
+            />
+          </Typography>
         )
       }
     >
       {epoch !== undefined && (
         <>
           {percentageValue !== undefined && (
-            <StyledBox>
+            <div className="-mt-2 mb-2">
               <BrandProgressBar value={percentageValue * 100} variant="determinate" />
-            </StyledBox>
+            </div>
           )}
-          <Box gap={3} sx={{ display: 'flex', alignItems: 'baseline' }}>
+          <div className="flex items-baseline gap-2">
             {epoch.toLocaleString()}
             {percentageValue !== undefined && (
-              <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>
+              <Typography variant="xsmall" textColor="muted">
                 (
                 {t('common.valuePair', {
                   value: percentageValue,
@@ -80,7 +68,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
                 )
               </Typography>
             )}
-          </Box>
+          </div>
         </>
       )}
     </SnapshotTextCard>

@@ -1,6 +1,5 @@
 import { FC } from 'react'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useTokenInfo } from './hook'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -43,19 +42,13 @@ export const TokenTitleCard: FC<{
       }
       isLoading={isLoading}
       title={
-        <>
+        <div className="flex items-center">
           {token?.name ? <HighlightedText text={token.name} /> : t('common.missing')}
           &nbsp;
-          <Typography
-            component="span"
-            variant="inherit"
-            sx={{
-              color: COLORS.grayMedium,
-            }}
-          >
+          <Typography variant="large" textColor="muted" className="font-normal">
             {token?.symbol ? <HighlightedText text={token.symbol} /> : t('common.missing')}
           </Typography>
-        </>
+        </div>
       }
     />
   )

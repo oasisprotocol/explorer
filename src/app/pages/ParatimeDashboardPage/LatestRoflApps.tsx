@@ -2,13 +2,12 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Link from '@mui/material/Link'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetRuntimeRoflApps } from '../../../oasis-nexus/api'
 import { RuntimeScope } from '../../../types/searchScope'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as limit, paraTimesConfig } from '../../../config'
-import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { RouteUtils } from '../../utils/route-utils'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
@@ -33,20 +32,12 @@ export const LatestRoflApps: FC<{ scope: RuntimeScope }> = ({ scope }) => {
 
   return (
     <Card>
-      <CardHeader
-        disableTypography
-        component="h3"
-        title={t('rofl.listTitle')}
-        action={
-          <Link
-            component={RouterLink}
-            to={RouteUtils.getRoflAppsRoute(scope.network)}
-            sx={{ color: COLORS.brandDark }}
-          >
-            {t('common.viewAll')}
-          </Link>
-        }
-      />
+      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
+        <Typography variant="h3">{t('rofl.listTitle')}</Typography>
+        <Link asChild className="font-medium" textColor="primary">
+          <RouterLink to={RouteUtils.getRoflAppsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
+        </Link>
+      </div>
       <CardContent>
         <ErrorBoundary light>
           <LatestRoflAppsContent scope={scope} />

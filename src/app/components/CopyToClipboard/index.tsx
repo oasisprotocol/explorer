@@ -24,7 +24,7 @@ const StyledIconButton = styled(ButtonBase, {
   border: 0,
   background: 'none',
   cursor: 'pointer',
-  fontSize: 'inherit',
+  fontSize: '14px',
   fontFamily: 'inherit',
   padding: 0,
   marginLeft: theme.spacing(3),
@@ -95,7 +95,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ label, floating, isF
           onClick={handleCopyToClipboard}
           aria-label={ariaLabel}
         >
-          <ContentCopyIcon sx={{ fontSize: '1.25em', color: COLORS.brandDark }} />
+          <ContentCopyIcon sx={{ fontSize: '14px', color: COLORS.brandDark }} />
         </StyledIconButton>
       )}
     </Tooltip>

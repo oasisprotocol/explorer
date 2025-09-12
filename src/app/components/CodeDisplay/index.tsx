@@ -1,7 +1,7 @@
 import React, { FC, useState, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { CopyToClipboard, FloatingCopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { base64ToHex } from '../../utils/helpers'
@@ -76,11 +76,7 @@ const CodeDisplay: FC<CodeDisplayProps> = ({
           pt: extraTopPadding ? 4 : 0,
         }}
       >
-        {label && (
-          <Typography variant="h4" component="h4">
-            {label}
-          </Typography>
-        )}
+        {label && <Typography variant="h4">{label}</Typography>}
         {floatingCopyButton ? (
           <FloatingCopyToClipboard isVisible={isHovering} value={code} />
         ) : (

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import CardContent from '@mui/material/CardContent'
 import { SearchScope } from 'types/searchScope'
 import { useGetConsensusBlocks, Validator } from '../../../oasis-nexus/api'
@@ -29,7 +29,7 @@ export const ProposedBlocks: FC<ProposedBlocksProps> = ({ scope, validator }) =>
 
   return (
     <Card>
-      <CardHeader disableTypography component="h3" title={t('validator.proposedBlocks')} />
+      <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
       <CardContent>
         <ConsensusBlocks
           isLoading={isLoading}

@@ -1,9 +1,8 @@
 import { FC, ReactNode } from 'react'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { styled } from '@mui/material/styles'
 
 export const StyledCard = styled(Card)(() => ({
@@ -24,37 +23,14 @@ type TitleCardProps = {
 export const TitleCard: FC<TitleCardProps> = ({ isLoading, details, title }) => {
   return (
     <StyledCard>
-      <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-          gap={3}
-        >
-          <Typography
-            variant="h2"
-            sx={{
-              display: 'inline-flex',
-              fontWeight: 700,
-              flexWrap: 'wrap',
-            }}
-          >
+      <CardContent sx={{ paddingBottom: '0!important' }}>
+        <div className="flex flex-wrap justify-between items-center gap-3">
+          <Typography variant="h2" className="inline-flex flex-wrap">
             {isLoading ? <TitleSkeleton /> : title}
           </Typography>
 
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {isLoading ? <TitleSkeleton /> : details}
-          </Box>
-        </Box>
+          <div className="flex justify-center align-center">{isLoading ? <TitleSkeleton /> : details}</div>
+        </div>
       </CardContent>
     </StyledCard>
   )

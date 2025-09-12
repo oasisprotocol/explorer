@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { CardDivider } from '../../components/Divider'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 interface Props<T> {
   title: string
@@ -26,13 +26,7 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
   return (
     <>
       <Box sx={{ mb: 5 }}>
-        <Typography
-          variant="h4"
-          component="h4"
-          sx={{
-            display: 'inline',
-          }}
-        >
+        <Typography variant="h4" className="inline">
           {title}
         </Typography>
       </Box>

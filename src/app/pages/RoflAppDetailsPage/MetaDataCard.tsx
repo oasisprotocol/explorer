@@ -1,22 +1,19 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'
-import { COLORS } from '../../../styles/theme/colors'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
 import { isDiscordHandle, isTwitterHandle, isUrlSafe } from '../../utils/url'
 import { Email } from './Email'
 import { XProfileWidget } from '../../components/XProfileWidget'
 import { DiscordProfileWidget } from '../../components/DiscordProfileWidget'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 export const StyledLink = styled(Link)(() => ({
   display: 'inline-flex',
@@ -41,19 +38,12 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
 
   return (
     <Card sx={{ flex: 1 }}>
-      <CardHeader
-        titleTypographyProps={{ variant: 'h1' }}
-        disableTypography
-        component="h3"
-        title={
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <Box sx={{ flex: 1, whiteSpace: 'nowrap' }}>{t('rofl.metadata')}</Box>
-            <Typography component="span" sx={{ fontSize: '12px', color: COLORS.grayDark }}>
-              {t('rofl.metadataInfo')}
-            </Typography>
-          </Box>
-        }
-      />
+      <div className="flex items-center gap-5 mb-4">
+        <Typography variant="h3">{t('rofl.metadata')}</Typography>
+        <Typography variant="xsmall" textColor="muted">
+          {t('rofl.metadataInfo')}
+        </Typography>
+      </div>
       <CardContent>
         {isFetched && !metadata && <EmptyStateCard />}
         {metadata && (
@@ -83,11 +73,7 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
                     i18nKey="rofl.verifyCommand"
                     t={t}
                     components={{
-                      Command: (
-                        <Typography variant="mono" component="span">
-                          oasis rofl build --verify
-                        </Typography>
-                      ),
+                      Command: <span className="font-mono">oasis rofl build --verify</span>,
                     }}
                   />
                 }

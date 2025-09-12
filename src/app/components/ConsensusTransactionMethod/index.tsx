@@ -103,6 +103,7 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
       {label && (
         <Typography
           sx={{
+            fontSize: '14px',
             fontWeight: 'inherit',
             order: reverseLabel ? -1 : 0,
             ...(truncate
