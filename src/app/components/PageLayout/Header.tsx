@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import AppBar from '@mui/material/AppBar'
-import Grid from '@mui/material/Unstable_Grid2'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { useTheme } from '@mui/material/styles'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -38,27 +36,20 @@ export const Header: FC = () => {
         boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
       }}
     >
-      <div className="px-[15px]">
-        <Grid
-          container
-          sx={{
-            px: isMobile ? 0 : '4%',
-            pt: isMobile ? 4 : '15px',
-            pb: 4,
-          }}
-        >
+      <div className="px-4">
+        <div className="flex justify-between pt-3 pb-4 px-0 md:px-[4%]">
           <div className="w-1/3 lg:w-1/4 flex items-center">
             <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
           </div>
           {withScopeSelector && (
             <>
-              <div className="w-2/3 lg:w-1/2">
+              <div className="w-2/3 lg:w-1/2 flex justify-end xl:justify-center items-center">
                 <NetworkSelector layer={scope.layer} network={scope.network} />
               </div>
             </>
           )}
           {isDesktop && (
-            <div className="w-1/3 lg:w-1/4 flex justify-end">
+            <div className="w-1/3 lg:w-1/4 flex justify-end items-center">
               <Button
                 component="a"
                 href="https://rose.oasis.io/"
@@ -72,7 +63,7 @@ export const Header: FC = () => {
               </Button>
             </div>
           )}
-        </Grid>
+        </div>
       </div>
     </AppBar>
   )
