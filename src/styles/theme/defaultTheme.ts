@@ -50,15 +50,6 @@ declare module '@mui/material/Typography' {
   }
 }
 
-declare module '@mui/material/Chip' {
-  export interface ChipPropsColorOverrides {
-    tertiary: true
-  }
-  export interface ChipPropsVariantOverrides {
-    ['outlined-selected']: true
-  }
-}
-
 declare module '@mui/material/styles' {
   // allow configuration using `createTheme`
   interface TypeBackground {
@@ -380,59 +371,6 @@ export const defaultTheme = createTheme({
         subheader: {
           fontStyle: 'italic',
           color: COLORS.grayMedium,
-        },
-      },
-    },
-    MuiChip: {
-      variants: [
-        {
-          props: { color: 'tertiary' },
-          style: () => ({
-            color: COLORS.brandExtraDark,
-            backgroundColor: COLORS.purpleBackground,
-            borderColor: COLORS.brandDark,
-          }),
-        },
-        {
-          props: { color: 'primary' },
-          style: ({ theme }) => ({
-            color: COLORS.grayMedium,
-            backgroundColor: COLORS.grayMediumLight,
-            borderColor: COLORS.grayMedium,
-            borderWidth: theme.spacing(1),
-          }),
-        },
-        {
-          props: { variant: 'outlined-selected', color: 'secondary' },
-          style: () => ({
-            border: `solid 1px ${COLORS.grayMediumLight}`,
-            backgroundColor: COLORS.grayMediumLight,
-            ':hover, :focus-visible': {
-              backgroundColor: COLORS.grayMediumLight,
-              color: COLORS.brandExtraDark,
-            },
-          }),
-        },
-      ],
-      styleOverrides: {
-        colorSecondary: {
-          color: COLORS.brandExtraDark,
-        },
-
-        root: ({ theme }) => ({
-          fontSize: '15px',
-          lineHeight: '18px',
-          fontWeight: 400,
-          borderRadius: 9,
-          gap: 2,
-          padding: theme.spacing(3),
-        }),
-        label: {
-          padding: 0,
-        },
-        icon: {
-          marginLeft: 0,
-          marginRight: 2,
         },
       },
     },

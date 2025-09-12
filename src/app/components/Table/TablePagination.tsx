@@ -1,25 +1,29 @@
-import Pagination from '@mui/material/Pagination'
-import PaginationItem from '@mui/material/PaginationItem'
+import {
+  Pagination,
+  PaginationLink,
+  PaginationItemProps,
+} from '@oasisprotocol/ui-library/src/components/pagination'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, To } from 'react-router-dom'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export type TablePaginationProps = {
-  compact?: boolean
   linkToPage: (page: number) => To
   rowsPerPage: number
   selectedPage: number
   totalCount: number | undefined
   isTotalCountClipped: boolean | undefined
+  className?: string
 }
 
 export const TablePagination: FC<TablePaginationProps> = ({
-  compact,
   selectedPage,
   linkToPage,
   rowsPerPage,
   totalCount,
   isTotalCountClipped,
+  className,
 }) => {
   const { t } = useTranslation()
 
@@ -35,25 +39,25 @@ export const TablePagination: FC<TablePaginationProps> = ({
 
   return (
     <Pagination
-      count={numberOfPages}
-      page={selectedPage}
-      renderItem={item => (
-        <PaginationItem
-          slots={{
-            first: () => <>{t('pagination.first')}</>,
-            last: () => <>{isTotalCountClipped ? '…' : t('pagination.last')}</>,
-          }}
-          component={Link}
-          to={item.page == null ? '' : linkToPage(item.page)}
+      className={cn('mt-4', className)}
+      totalCount={totalCount}
+      selectedPage={selectedPage}
+      rowsPerPage={rowsPerPage}
+      showFirstPageButton
+      showLastPageButton
+      isTotalCountClipped={isTotalCountClipped}
+      renderItem={(item: PaginationItemProps) => (
+        <PaginationLink
+          linkComponent={Link}
+          to={item.page ? linkToPage(item.page) : ''}
           preventScrollReset={true}
+          slots={{
+            first: t('pagination.first'),
+            last: t('pagination.last'),
+          }}
           {...item}
-          sx={isTotalCountClipped && item.type === 'last' ? { pointerEvents: 'none', cursor: 'default' } : {}}
         />
       )}
-      showFirstButton
-      showLastButton
-      size="small"
-      sx={{ marginTop: compact ? 2 : 5 }}
     />
   )
 }
