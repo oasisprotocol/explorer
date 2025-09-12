@@ -50,12 +50,6 @@ export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
 }))
 
-export const StyledGrid = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
-    display: 'flex',
-  },
-}))
-
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
   const scope = useConsensusScope()
@@ -88,14 +82,14 @@ export const ValidatorDetailsPage: FC = () => {
         account={account}
         stats={stats}
       />
-      <Grid container spacing={4}>
-        <StyledGrid item xs={12} lg={6}>
+      <div className="grid grid-cols-1 gap-x-6 lg:grid-cols-2">
+        <div className="sm:flex">
           <StakingTrend address={address} scope={scope} />
-        </StyledGrid>
-        <StyledGrid item xs={12} lg={6}>
+        </div>
+        <div className="sm:flex">
           <SignedBlocks isLoading={isLoading} isFetched={isFetched} signedBlocks={validator?.signed_blocks} />
-        </StyledGrid>
-      </Grid>
+        </div>
+      </div>
       <ProposedBlocks scope={scope} validator={validator} />
       <RouterTabs
         tabs={[
