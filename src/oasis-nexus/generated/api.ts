@@ -174,10 +174,10 @@ export interface Block {
 Blocks from Cobalt, Damask, and early Eden had no gas limit as their sizes were only
 restricted by byte size until an upgrade during Eden introduced a gas limit.
  */
-  gas_limit: TextBigInt;
+  gas_limit: number;
   /** The size limit for the block in bytes.
  */
-  size_limit?: TextBigInt;
+  size_limit?: number;
   /** The epoch number of the epoch in which the block was produced. */
   epoch: number;
   /** The Merkle root of the state tree after applying the block. */
@@ -186,6 +186,14 @@ restricted by byte size until an upgrade during Eden introduced a gas limit.
   proposer: EntityInfo;
   /** A list of the entities that signed the block. */
   signers?: EntityInfo[];
+  /** The size of the block in bytes.
+This field is missing for blocks pre Oasis-Core 24.3.
+ */
+  size?: number;
+  /** Total gas used by the transactions in the block.
+This field is missing for blocks pre Oasis-Core 24.3.
+ */
+  gas_used?: number;
 }
 
 /**
@@ -343,7 +351,11 @@ to pay to execute it.
   fee: TextBigInt;
   /** The maximum gas that a transaction can use.
  */
-  gas_limit: TextBigInt;
+  gas_limit: number;
+  /** The gas used by the transaction.
+This field is missing for transactions pre Oasis-Core 24.3.
+ */
+  gas_used?: number;
   /** The method that was called. */
   method: ConsensusTxMethod;
   /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
@@ -1084,6 +1096,8 @@ export interface RuntimeBlock {
   size: number;
   /** The total gas used by all transactions in the block. */
   gas_used: number;
+  /** The minimum gas price for the block, in base units. */
+  min_gas_price?: TextBigInt;
 }
 
 /**
