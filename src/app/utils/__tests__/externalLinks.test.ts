@@ -55,3 +55,32 @@ describe('externalLinks', () => {
     }
   })
 })
+
+describe('links in named-addresses', () => {
+  describe('should be reachable', () => {
+    for (const json_url of [
+      externalLinksModule.api.oasis_named_addresses_mainnet_consensus,
+      externalLinksModule.api.oasis_named_addresses_mainnet_emerald,
+      externalLinksModule.api.oasis_named_addresses_mainnet_sapphire,
+      externalLinksModule.api.oasis_named_addresses_testnet_consensus,
+      externalLinksModule.api.oasis_named_addresses_testnet_emerald,
+      externalLinksModule.api.oasis_named_addresses_testnet_sapphire,
+      externalLinksModule.api.oasis_named_addresses_testnet_pontusxdev,
+      externalLinksModule.api.oasis_named_addresses_testnet_pontusxtest,
+    ]) {
+      it.concurrent(json_url, async () => {
+        const metadataList = await (await nodeFetch(json_url, { method: 'GET' })).json()
+        for (const metadata of metadataList) {
+          if (metadata.Icon) {
+            const { url, status, statusText } = await nodeFetch(metadata.Icon, { method: 'GET' })
+            expect({ url, status, statusText }).toEqual(expect.objectContaining({ status: 200 }))
+          }
+          if (metadata.Dapp?.Url) {
+            const { url, status, statusText } = await nodeFetch(metadata.Dapp?.Url, { method: 'GET' })
+            expect({ url, status, statusText }).toEqual(expect.objectContaining({ status: 200 }))
+          }
+        }
+      })
+    }
+  })
+})
