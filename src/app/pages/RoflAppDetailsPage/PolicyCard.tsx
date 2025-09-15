@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Grid'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { RoflAppPolicy, Runtime, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
@@ -43,7 +42,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer,
         {isFetched && !policy && <EmptyStateCard />}
         {policy && (
           <>
-            <Grid container spacing={4}>
+            <div className="grid grid-cols-3">
               <GridRow label={t('rofl.validity')}>
                 {policy.quotes?.pcs?.tcb_validity_period
                   ? t('rofl.validityPeriodDays', { value: policy.quotes?.pcs?.tcb_validity_period })
@@ -80,7 +79,7 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer,
                   </>
                 ) : undefined}
               </GridRow>
-            </Grid>
+            </div>
           </>
         )}
       </CardContent>
