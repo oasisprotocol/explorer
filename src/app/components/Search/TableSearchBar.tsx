@@ -38,32 +38,15 @@ export interface TableSearchBarProps {
   autoFocus?: boolean
 }
 
-type SizingInfo = {
-  font: number | string
-}
-
-const sizeMapping: Record<SearchBarSize, SizingInfo> = {
-  small: {
-    font: '1em',
-  },
-  medium: {
-    font: '1.25em',
-  },
-  large: {
-    font: '1.5em',
-  },
-}
-
 export const TableSearchBar: FC<TableSearchBarProps> = ({
   value,
   onChange,
   placeholder,
   warning,
   fullWidth,
-  size = 'medium',
   autoFocus,
   onEnter,
-  width = 250,
+  width = 190,
 }) => {
   const { isTablet } = useScreenSize()
 
@@ -165,10 +148,12 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
       InputProps={{
         inputProps: {
           sx: {
-            p: 0,
+            p: 2,
             width: fullWidth ? '100%' : width,
             margin: 2,
-            fontSize: sizeMapping[size].font,
+            marginLeft: 0,
+            paddingLeft: 0,
+            fontSize: '14px',
           },
           autoFocus,
         },
