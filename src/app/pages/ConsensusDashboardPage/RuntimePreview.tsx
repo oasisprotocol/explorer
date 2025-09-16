@@ -82,7 +82,7 @@ const StyledEnabledRuntime = styled(Box)(({ theme }) => ({
     borderBottom: `1px solid ${COLORS.grayMediumLight}`,
   },
   [theme.breakpoints.up('lg')]: {
-    paddingRight: theme.spacing(5),
+    paddingRight: theme.spacing(4),
     borderRight: `1px solid ${COLORS.grayMediumLight}`,
   },
 }))

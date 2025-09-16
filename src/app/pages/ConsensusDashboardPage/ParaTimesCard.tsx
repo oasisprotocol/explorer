@@ -1,10 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Unstable_Grid2'
-import { styled } from '@mui/material/styles'
 import { Layer, Runtime } from '../../../oasis-nexus/api'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { isNotInHiddenScope, RouteUtils } from '../../utils/route-utils'
@@ -12,28 +9,11 @@ import { SearchScope } from '../../../types/searchScope'
 import { EnabledRuntimePreview, DisabledRuntimePreview } from './RuntimePreview'
 import { Network } from '../../../types/network'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 function shouldIncludeLayer(network: Network, layer: Layer) {
   return layer !== 'consensus' && isNotInHiddenScope({ network, layer })
 }
-
-const StyledInnerGrid = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down('lg')]: {
-    paddingTop: 0,
-  },
-}))
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  [theme.breakpoints.down('lg')]: {
-    flexDirection: 'column',
-    gap: theme.spacing(4),
-  },
-  [theme.breakpoints.up('lg')]: {
-    flexDirection: 'row',
-    gap: theme.spacing(5),
-  },
-}))
 
 type ParaTimesCardProps = { scope: SearchScope }
 
@@ -57,25 +37,36 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
         />
       </Typography>
       <CardContent>
-        <Grid container spacing={5}>
-          <Grid xs={12} lg={spaceForSecondaryParaTimes ? 5 : 6}>
+        <div className="grid grid-cols-12 gap-4">
+          <div className={cn('col-span-12', spaceForSecondaryParaTimes ? 'lg:col-span-5' : 'lg:col-span-6')}>
             <EnabledRuntimePreview prominentItem network={scope.network} runtime={firstEnabledRuntime} />
-          </Grid>
-          <Grid xs={12} lg={spaceForSecondaryParaTimes ? 7 : 6} container>
-            <StyledInnerGrid xs={12} lg={spaceForSecondaryParaTimes ? 9 : 8}>
-              <StyledBox>
-                {!!restEnabledRuntimes.length &&
-                  restEnabledRuntimes.map(runtime => (
-                    <EnabledRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
-                  ))}
-              </StyledBox>
-            </StyledInnerGrid>
-            <StyledInnerGrid xs={12} lg={spaceForSecondaryParaTimes ? 3 : 4}>
-              {!!disabledRuntimes.length &&
-                disabledRuntimes.map(runtime => <DisabledRuntimePreview key={runtime} runtime={runtime} />)}
-            </StyledInnerGrid>
-          </Grid>
-        </Grid>
+          </div>
+
+          <div
+            className={cn(
+              'grid col-span-12 grid-cols-12 gap-x-4',
+              spaceForSecondaryParaTimes ? 'lg:col-span-7' : 'lg:col-span-6',
+            )}
+          >
+            <div
+              className={cn('col-span-12', spaceForSecondaryParaTimes ? 'lg:col-span-9' : 'lg:col-span-6')}
+            >
+              <div className="flex flex-col gap-4 lg:flex-row lg:gap-5">
+                {restEnabledRuntimes.map(runtime => (
+                  <EnabledRuntimePreview key={runtime} network={scope.network} runtime={runtime} />
+                ))}
+              </div>
+            </div>
+
+            <div
+              className={cn('col-span-12', spaceForSecondaryParaTimes ? 'lg:col-span-3' : 'lg:col-span-6')}
+            >
+              {disabledRuntimes.map(runtime => (
+                <DisabledRuntimePreview key={runtime} runtime={runtime} />
+              ))}
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   )

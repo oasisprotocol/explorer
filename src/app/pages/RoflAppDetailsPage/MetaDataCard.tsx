@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'
@@ -38,58 +37,63 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
 
   return (
     <Card sx={{ flex: 1 }}>
-      <div className="flex items-center gap-5 mb-4">
-        <Typography variant="h3">{t('rofl.metadata')}</Typography>
-        <Typography variant="xsmall" textColor="muted">
+      <div className="grid grid-cols-3 mb-4 gap-2">
+        <Typography variant="h3" className="col-span-1">
+          {t('rofl.metadata')}
+        </Typography>
+        <Typography variant="xsmall" className="col-span-2 flex items-center" textColor="muted">
           {t('rofl.metadataInfo')}
         </Typography>
       </div>
       <CardContent>
         {isFetched && !metadata && <EmptyStateCard />}
         {metadata && (
-          <>
-            <Grid container spacing={4}>
-              <GridRow label={t('rofl.roflName')}>{metadata['net.oasis.rofl.name']}</GridRow>
-              <GridRow label={t('rofl.description')}>{metadata['net.oasis.rofl.description']}</GridRow>
-              <GridRow label={t('rofl.author')}>{email ? <Email email={email} /> : undefined}</GridRow>
-              <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
-              <GridRow label={t('rofl.homePage')}>
-                {!homepage ? undefined : (
-                  <>
-                    {isUrlSafe(homepage) && (
-                      <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
-                        {homepage} <OpenInNewIcon sx={{ fontSize: 20 }} />
-                      </StyledLink>
-                    )}
-                    {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
-                    {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
-                  </>
-                )}
-              </GridRow>
-              <GridRow
-                label={t('rofl.repositoryUrl')}
-                tooltip={
-                  <Trans
-                    i18nKey="rofl.verifyCommand"
-                    t={t}
-                    components={{
-                      Command: <span className="font-mono">oasis rofl build --verify</span>,
-                    }}
-                  />
-                }
-              >
-                {isUrlSafe(metadata['net.oasis.rofl.repository']) ? (
-                  <StyledLink
-                    href={metadata['net.oasis.rofl.repository']}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {metadata['net.oasis.rofl.repository']} <OpenInNewIcon sx={{ fontSize: 20 }} />
-                  </StyledLink>
-                ) : undefined}
-              </GridRow>
-            </Grid>
-          </>
+          <div className="grid grid-cols-3">
+            <GridRow label={t('rofl.roflName')}>{metadata['net.oasis.rofl.name']}</GridRow>
+
+            <GridRow label={t('rofl.description')}>{metadata['net.oasis.rofl.description']}</GridRow>
+
+            <GridRow label={t('rofl.author')}>{email ? <Email email={email} /> : undefined}</GridRow>
+
+            <GridRow label={t('rofl.license')}>{metadata['net.oasis.rofl.license']}</GridRow>
+
+            <GridRow label={t('rofl.homePage')}>
+              {!homepage ? undefined : (
+                <>
+                  {isUrlSafe(homepage) && (
+                    <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
+                      {homepage} <OpenInNewIcon className="text-base" />
+                    </StyledLink>
+                  )}
+                  {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
+                  {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
+                </>
+              )}
+            </GridRow>
+
+            <GridRow
+              label={t('rofl.repositoryUrl')}
+              tooltip={
+                <Trans
+                  i18nKey="rofl.verifyCommand"
+                  t={t}
+                  components={{
+                    Command: <span className="font-mono">oasis rofl build --verify</span>,
+                  }}
+                />
+              }
+            >
+              {isUrlSafe(metadata['net.oasis.rofl.repository']) ? (
+                <StyledLink
+                  href={metadata['net.oasis.rofl.repository']}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {metadata['net.oasis.rofl.repository']} <OpenInNewIcon className="text-base" />
+                </StyledLink>
+              ) : undefined}
+            </GridRow>
+          </div>
         )}
       </CardContent>
     </Card>

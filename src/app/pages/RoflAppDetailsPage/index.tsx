@@ -1,13 +1,10 @@
 import { FC, ReactNode } from 'react'
 import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
-import { styled } from '@mui/material/styles'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
@@ -80,11 +77,11 @@ export const RoflAppDetailsPage: FC = () => {
       >
         <RoflAppDetailsView isLoading={isLoading} app={roflApp} />
       </SubPageCard>
-      <Grid container spacing={4}>
-        <StyledGrid item xs={12} lg={6}>
+      <div className="grid grid-cols-12 gap-x-6">
+        <div className="col-span-12 lg:col-span-6 flex">
           <MetaDataCard isFetched={isFetched} metadata={roflApp?.metadata} />
-        </StyledGrid>
-        <StyledGrid item xs={12} lg={6}>
+        </div>
+        <div className="col-span-12 lg:col-span-6 flex">
           {roflApp && (
             <PolicyCard
               id={roflApp?.id}
@@ -94,8 +91,8 @@ export const RoflAppDetailsPage: FC = () => {
               policy={roflApp?.policy}
             />
           )}
-        </StyledGrid>
-      </Grid>
+        </div>
+      </div>
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
@@ -110,12 +107,6 @@ export const RoflAppDetailsPage: FC = () => {
     </PageLayout>
   )
 }
-
-export const StyledGrid = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
-    display: 'flex',
-  },
-}))
 
 export const RoflAppDetailsView: FC<{
   isLoading?: boolean
@@ -158,27 +149,21 @@ export const RoflAppDetailsView: FC<{
         transaction={app.last_activity_tx}
       />
       <DetailsRow title={t('rofl.endorsement')}>
-        <Box
-          sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+        <div className="flex flex-1 flex-col">
           <Endorsement
             endorsements={app.policy.endorsements}
             groupOp={'or'} // We have an implicit default "or" for toplevel endorsement
           />
-        </Box>
+        </div>
       </DetailsRow>
       <DetailsRow
         title={
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <div className="flex items-center gap-4">
             {t('rofl.secrets')}
             <Tooltip title={t('rofl.secretsTooltip')} placement="top">
               <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
             </Tooltip>
-          </Box>
+          </div>
         }
       >
         <Secrets secrets={app.secrets} />

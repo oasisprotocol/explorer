@@ -1,9 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
-import Grid from '@mui/material/Grid'
 import { useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { useConsensusScope } from '../../hooks/useScopeParam'
@@ -17,7 +15,6 @@ import { eventsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountDetailsPage: FC = () => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const scope = useConsensusScope()
   const { network } = scope
   const { address } = useLoaderData() as AddressLoaderData
@@ -40,14 +37,14 @@ export const ConsensusAccountDetailsPage: FC = () => {
   return (
     <PageLayout>
       <ConsensusAccountDetailsCard account={account} isError={isError} isLoading={isLoading} />
-      <Grid container spacing={4} sx={{ mb: isMobile ? 4 : 5 }}>
-        <Grid item xs={12} lg={6}>
+      <div className="grid grid-cols-12 gap-6 mb-6">
+        <div className="col-span-12 lg:col-span-6">
           <BalanceDistribution account={account} isLoading={isLoading} />
-        </Grid>
-        <Grid item xs={12} lg={6}>
+        </div>
+        <div className="col-span-12 lg:col-span-6">
           <Staking account={account} isLoading={isLoading} />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: transactionsLink },
