@@ -7,7 +7,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
 import { ExtendedVote, ProposalVoteValue, VoteType } from '../../../types/vote'
-import { getFilterForVoterNameFragment, getFilterForVoteType, getRandomVote } from '../../utils/vote'
+import { getFilterForVoterNameFragment } from '../../utils/vote'
 import { useClientSidePagination } from '../../components/Table/useClientSidePagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
@@ -21,18 +21,6 @@ export type AllVotesData = List & {
   loadedVotes: ExtendedVote[]
 }
 
-const DEBUG_MODE = false
-
-const voteTable: Record<string, ProposalVoteValue> = {}
-
-const getRandomVoteFor = (address: string) => {
-  const storedVote = voteTable[address]
-  if (storedVote) return storedVote
-  const newVote = getRandomVote()
-  voteTable[address] = newVote
-  return newVote
-}
-
 const useValidatorMap = (network: Network) => {
   const { data, isLoading, isError } = useGetConsensusValidators(network)
   return {
@@ -42,8 +30,10 @@ const useValidatorMap = (network: Network) => {
   }
 }
 
-export const useAllVotes = (network: Network, proposalId: number): AllVotesData => {
-  const query = useGetConsensusProposalsProposalIdVotes(network, proposalId)
+export const useAllVotes = (network: Network, proposalId: number, typeFilter?: VoteType): AllVotesData => {
+  const query = useGetConsensusProposalsProposalIdVotes(network, proposalId, {
+    vote: typeFilter === 'any' ? undefined : typeFilter,
+  })
   const {
     map: validators,
     isLoading: areValidatorsLoading,
@@ -64,9 +54,7 @@ export const useAllVotes = (network: Network, proposalId: number): AllVotesData 
   return {
     isLoading,
     isError,
-    loadedVotes: DEBUG_MODE
-      ? extendedVotes.map(v => ({ ...v, vote: getRandomVoteFor(v.address) })) || []
-      : extendedVotes,
+    loadedVotes: extendedVotes,
     total_count: data?.data.total_count ?? 0, // We need fallbacks here so that we always satisfy the List interface
     is_total_count_clipped: data?.data.is_total_count_clipped ?? false,
   }
@@ -153,18 +141,17 @@ export const useVoteFiltering = () => {
 
 export const useVotes = (network: Network, proposalId: number) => {
   const { hasFilters, wantedType, wantedNamePattern } = useVoteFiltering()
-  const typeFilter = getFilterForVoteType(wantedType)
   const nameFilter = getFilterForVoterNameFragment(wantedNamePattern)
 
   const pagination = useClientSidePagination<ExtendedVote, AllVotesData>({
     paramName: 'page',
     clientPageSize: NUMBER_OF_ITEMS_ON_SEPARATE_PAGE,
     serverPageSize: 1000,
-    filter: (vote: ExtendedVote) => typeFilter(vote) && nameFilter(vote),
+    filter: (vote: ExtendedVote) => nameFilter(vote),
   })
 
   // Get all the votes
-  const allVotes = useAllVotes(network, proposalId)
+  const allVotes = useAllVotes(network, proposalId, wantedType)
 
   // Get the section of the votes that we should display in the table
   const results = pagination.getResults(allVotes)
