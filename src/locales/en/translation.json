@@ -642,6 +642,7 @@
     "comingSoonTitle": "Coming soon",
     "comingSoonLabel": "(coming soon)",
     "consensus": "The consensus layer is a scalable, high-throughput, secure, proof-of-stake consensus run by a decentralized set of validator nodes.",
+    "description": "Select the network and layer you want to explore.",
     "goToDashboard": "Go to dashboard",
     "hex": "Hex: {{ id }}",
     "hostedOn": "Hosted on {{ network }}",
