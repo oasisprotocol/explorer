@@ -4,7 +4,6 @@ import Fade from '@mui/material/Fade'
 import { outlinedInputClasses } from '@mui/material/OutlinedInput'
 import { inputBaseClasses } from '@mui/material/InputBase'
 import { inputAdornmentClasses } from '@mui/material/InputAdornment'
-import { tabClasses } from '@mui/material/Tab'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -149,13 +148,6 @@ export const defaultTheme = createTheme({
     },
   },
   components: {
-    MuiBackdrop: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(0, 0, 0, 0.9)',
-        },
-      },
-    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
@@ -537,92 +529,6 @@ export const defaultTheme = createTheme({
         },
       ],
     },
-    MuiPagination: {
-      variants: [
-        {
-          props: { showFirstButton: true, showLastButton: true },
-          style: {
-            // Swap First and Previous page buttons
-            'li:nth-of-type(2)': {
-              order: -1,
-            },
-            // Swap Last and Next page buttons
-            'li:nth-last-of-type(2)': {
-              order: 1,
-            },
-          },
-        },
-      ],
-    },
-    MuiPaginationItem: {
-      variants: [
-        {
-          props: { selected: false },
-          style: {
-            color: COLORS.brandExtraDark,
-          },
-        },
-        {
-          props: { selected: true },
-          style: {
-            backgroundColor: 'unset !important',
-            color: COLORS.disabledPagination,
-          },
-        },
-        {
-          props: { type: 'page' },
-          style: {
-            minWidth: 0,
-          },
-        },
-      ],
-    },
-    MuiTabs: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          // neglect the default border radius of sibling element (Card component in most cases)
-          '&& + *': {
-            borderTopLeftRadius: 0,
-            [theme.breakpoints.down('sm')]: {
-              borderTopRightRadius: 0,
-            },
-          },
-        }),
-        indicator: {
-          display: 'none',
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          '&:hover, &:focus-visible': {
-            color: COLORS.brandExtraDark,
-            backgroundColor: COLORS.grayLight,
-          },
-          [`&.${tabClasses.selected}`]: {
-            color: COLORS.brandExtraDark,
-            backgroundColor: COLORS.white,
-          },
-          fontSize: '14px',
-          fontWeight: 700,
-          color: COLORS.brandDark,
-          backgroundColor: COLORS.grayLight,
-          border: `1px solid ${COLORS.grayLight}`,
-          borderBottom: 'none',
-          marginRight: theme.spacing(2),
-          borderTopLeftRadius: 12,
-          borderTopRightRadius: 12,
-          textTransform: 'capitalize',
-          [theme.breakpoints.down('sm')]: {
-            padding: theme.spacing(3, 4),
-          },
-          [theme.breakpoints.up('sm')]: {
-            padding: theme.spacing(4, 5),
-          },
-        }),
-      },
-    },
     MuiMobileStepper: {
       styleOverrides: {
         root: {
@@ -640,13 +546,6 @@ export const defaultTheme = createTheme({
         dotActive: ({ theme }) => ({
           background: theme.palette.layout.main,
         }),
-      },
-    },
-    MuiList: {
-      styleOverrides: {
-        padding: {
-          paddingTop: 0,
-        },
       },
     },
   },
