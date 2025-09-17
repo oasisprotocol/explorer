@@ -2353,6 +2353,10 @@ limit?: number;
 
  */
 offset?: number;
+/**
+ * A filter on the vote value.
+ */
+vote?: string;
 };
 
 export type GetRuntimeBlocksParams = {
