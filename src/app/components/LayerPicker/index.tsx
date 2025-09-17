@@ -62,7 +62,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   return (
     <div className="flex flex-col w-full flex-1 lg:block lg:w-auto lg:flex-none">
       <div className="relative mb-0 lg:mb-2 lg:mb-10">
-        <HomePageLink color="#0500e2" showText={!isMobile} />
+        <HomePageLink showText={!isMobile} />
       </div>
       {isTablet && (
         <div className="flex justify-between items-center min-h-12">

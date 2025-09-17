@@ -150,7 +150,7 @@ export const HomePage: FC = () => {
       <HomepageLayout>
         <Content>
           <LogotypeBox>
-            <Logotype showText color="#0500e2" />
+            <Logotype showText />
           </LogotypeBox>
           <SearchInputContainer transparent={isGraphZoomedIn && !searchHasFocus}>
             <SearchInputBox>
