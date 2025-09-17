@@ -203,7 +203,8 @@ export const ConsensusTransactionDetailView: FC<{
             })}
           </dd>
 
-          {/* TODO: gasUsed field will be available for Nexus with the next oasis-core release  */}
+          <dt>{t('common.gasUsed')}</dt>
+          <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
 
           {transaction.gas_limit && (
             <>
