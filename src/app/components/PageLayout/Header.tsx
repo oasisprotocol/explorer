@@ -39,7 +39,7 @@ export const Header: FC = () => {
       <div className="px-4">
         <div className="grid grid-cols-12 pt-3 pb-4 px-0 md:px-[4%]">
           <div className="col-span-6 xl:col-span-3 flex items-center">
-            <HomePageLink showText={!scrollTrigger && !isMobile} color="#0500e2" />
+            <HomePageLink showText={!scrollTrigger && !isMobile} />
           </div>
 
           {withScopeSelector && (

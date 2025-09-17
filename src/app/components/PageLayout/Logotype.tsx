@@ -6,21 +6,20 @@ import { OasisIcon } from '../CustomIcons/OasisIcon'
 import { ExplorerIcon } from '../CustomIcons/ExplorerIcon'
 
 interface LogotypeProps {
-  color?: string
   showText: boolean
 }
 
-export const HomePageLink: FC<LogotypeProps> = ({ color, showText }) => {
+export const HomePageLink: FC<LogotypeProps> = ({ showText }) => {
   const { t } = useTranslation()
 
   return (
     <RouterLink to="/" aria-label={t('home.link')}>
-      <Logotype color={color} showText={showText} />
+      <Logotype showText={showText} />
     </RouterLink>
   )
 }
 
-export const Logotype: FC<LogotypeProps> = ({ color, showText }) => {
+export const Logotype: FC<LogotypeProps> = ({ showText }) => {
   const { isMobile } = useScreenSize()
   const oasisLogoSize = isMobile ? 32 : 40
   const logoSize = !showText ? { height: oasisLogoSize, width: oasisLogoSize } : { height: 40, width: 214 }

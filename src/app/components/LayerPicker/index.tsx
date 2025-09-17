@@ -1,6 +1,11 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Drawer, DrawerContent } from '@oasisprotocol/ui-library/src/components/ui/drawer'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+  DrawerDescription,
+} from '@oasisprotocol/ui-library/src/components/ui/drawer'
 import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
 import { HomePageLink } from '../PageLayout/Logotype'
 import { Network } from '../../../types/network'
@@ -62,7 +67,10 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
   return (
     <div className="flex flex-col w-full flex-1 lg:block lg:w-auto lg:flex-none">
       <div className="relative mb-0 lg:mb-2 lg:mb-10">
-        <HomePageLink color="#0500e2" showText={!isMobile} />
+        <DrawerTitle>
+          <HomePageLink showText={!isMobile} />
+        </DrawerTitle>
+        <DrawerDescription className="sr-only">{t('layerPicker.description')}</DrawerDescription>
       </div>
       {isTablet && (
         <div className="flex justify-between items-center min-h-12">
