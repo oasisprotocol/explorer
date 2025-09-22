@@ -14,7 +14,7 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
   const { t } = useTranslation()
 
   return (
-    <Card>
+    <Card sx={{ display: 'flex', flexDirection: 'column' }}>
       <div className="flex justify-between mb-4">
         <Typography variant="h3">{t('learningMaterials.header')}</Typography>
         <Link
@@ -27,7 +27,7 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
           {t('common.viewAll')}
         </Link>
       </div>
-      <CardContent>{children}</CardContent>
+      <CardContent sx={{ flex: '1', paddingBottom: '0!important' }}>{children}</CardContent>
     </Card>
   )
 }
