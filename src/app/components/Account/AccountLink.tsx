@@ -1,10 +1,8 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
-import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import InfoIcon from '@mui/icons-material/Info'
-import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
@@ -15,6 +13,7 @@ import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedT
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
 import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHighlighting'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 const WithTypographyAndLink: FC<{
   scope: SearchScope
@@ -26,15 +25,13 @@ const WithTypographyAndLink: FC<{
   const to = RouteUtils.getAccountRoute(scope, address)
   return (
     <WithHoverHighlighting address={address}>
-      <Typography variant="mono" component="span" sx={{ display: 'inline-flex' }}>
-        {labelOnly ? (
-          children
-        ) : (
-          <Link component={RouterLink} to={to} sx={{ display: 'inline-flex' }}>
-            {children}
-          </Link>
-        )}
-      </Typography>
+      {labelOnly ? (
+        <span className="text-foreground font-medium">{children}</span>
+      ) : (
+        <Link asChild className="font-medium">
+          <RouterLink to={to}>{children}</RouterLink>
+        </Link>
+      )}
     </WithHoverHighlighting>
   )
 }

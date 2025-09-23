@@ -1,9 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
-import MuiLink from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
+import { Link as UilLink } from '@oasisprotocol/ui-library/src/components/link'
 import { trimLongString } from '../../utils/trimLongString'
 import { HighlightedText } from '../HighlightedText'
 import Box from '@mui/material/Box'
@@ -13,6 +11,7 @@ import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHigh
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { HighlightedTrimmedText } from '../HighlightedText/HighlightedTrimmedText'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export type TrimMode = 'fixes' | 'adaptive'
 
@@ -62,11 +61,7 @@ export const Link: FC<LinkProps> = ({
     <MaybeWithTooltip title={tooltipTitle}>
       <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
         {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
-        <Typography
-          variant="mono"
-          component="span"
-          sx={{ color: labelOnly ? COLORS.brandExtraDark : COLORS.brandDark, fontWeight: 700 }}
-        >
+        <span className={cn('font-medium', !labelOnly && 'text-primary')}>
           {isTablet ? (
             <TabletLink address={address} name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
           ) : (
@@ -79,7 +74,7 @@ export const Link: FC<LinkProps> = ({
               trimMode={trimMode}
             />
           )}
-        </Typography>
+        </span>
       </Box>
     </MaybeWithTooltip>
   )
@@ -93,9 +88,7 @@ type CustomTrimEndLinkLabelProps = {
 }
 
 const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
-  <Typography component="span" fontSize={'inherit'} fontWeight={'inherit'} lineHeight={'inherit'}>
-    <span>{children}</span>
-  </Typography>
+  <span className="text-inherit font-inherit leading-inherit">{children}</span>
 )
 
 const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, labelOnly, trimMode }) => {
@@ -108,9 +101,9 @@ const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, lab
   return labelOnly ? (
     <LinkLabel>{label}</LinkLabel>
   ) : (
-    <MuiLink component={RouterLink} to={to}>
-      {label}
-    </MuiLink>
+    <UilLink asChild>
+      <RouterLink to={to}>{label}</RouterLink>
+    </UilLink>
   )
 }
 
@@ -136,9 +129,9 @@ const TabletLink: FC<TabletLinkProps> = ({ address, name, to, labelOnly, trimMod
   return labelOnly ? (
     <LinkLabel>{label}</LinkLabel>
   ) : (
-    <MuiLink component={RouterLink} to={to}>
-      {label}
-    </MuiLink>
+    <UilLink asChild>
+      <RouterLink to={to}>{label}</RouterLink>
+    </UilLink>
   )
 }
 
@@ -156,9 +149,9 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, trim
         ) : labelOnly ? (
           <LinkLabel>{trimLongString(address)}</LinkLabel>
         ) : (
-          <MuiLink component={RouterLink} to={to}>
-            {trimLongString(address)}
-          </MuiLink>
+          <UilLink asChild>
+            <RouterLink to={to}>{trimLongString(address)}</RouterLink>
+          </UilLink>
         )}
       </WithHoverHighlighting>
     )
@@ -169,9 +162,9 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, trim
       {labelOnly ? (
         <LinkLabel>{label}</LinkLabel>
       ) : (
-        <MuiLink component={RouterLink} to={to}>
-          {label}
-        </MuiLink>
+        <UilLink asChild>
+          <RouterLink to={to}>{label}</RouterLink>
+        </UilLink>
       )}
     </WithHoverHighlighting>
   )

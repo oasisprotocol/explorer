@@ -4,7 +4,7 @@
 
 /* Override MUI styles that are applied globally */
 [class*=' text-'] {
-  font-family: var(--default-font-family);
+  font-family: 'Inter Variable', sans-serif;
 }
 
 /* Override Tailwind's vertical-align reset for MUI SVG components */

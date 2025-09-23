@@ -1,7 +1,5 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RouteUtils } from '../../utils/route-utils'
@@ -10,23 +8,17 @@ import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { trimLongString } from '../../utils/trimLongString'
 import Box from '@mui/material/Box'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 const WithTypographyAndLink: FC<{ children: ReactNode; mobile?: boolean; to: string }> = ({
   children,
   mobile,
   to,
 }) => (
-  <Typography
-    variant="mono"
-    component="span"
-    sx={{
-      ...(mobile ? { maxWidth: '85%' } : {}),
-    }}
-  >
-    <Link component={RouterLink} to={to}>
-      {children}
-    </Link>
-  </Typography>
+  <Link asChild className={cn('font-medium', mobile && 'max-w-[85%]')}>
+    <RouterLink to={to}>{children}</RouterLink>
+  </Link>
 )
 
 export const TransactionLink: FC<{
