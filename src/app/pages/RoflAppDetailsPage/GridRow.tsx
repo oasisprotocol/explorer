@@ -25,7 +25,7 @@ export const GridRow: FC<GridRowProps> = ({ label, children, tooltip }) => {
       </div>
 
       <div className="col-span-2 border-b border-gray-100 p-2 md:p-4">
-        {children ? <strong>{children}</strong> : t('common.missing')}
+        {children ? <span className="font-medium">{children}</span> : t('common.missing')}
       </div>
     </>
   )
