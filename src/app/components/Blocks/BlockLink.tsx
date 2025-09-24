@@ -1,20 +1,17 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import { trimLongString } from '../../utils/trimLongString'
 import { SearchScope } from '../../../types/searchScope'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 export const BlockLink: FC<{ scope: SearchScope; height: number }> = ({ scope, height }) => (
-  <Typography variant="mono">
-    <Link component={RouterLink} to={RouteUtils.getBlockRoute(scope, height)}>
-      {height?.toLocaleString()}
-    </Link>
-  </Typography>
+  <Link asChild className="font-medium">
+    <RouterLink to={RouteUtils.getBlockRoute(scope, height)}>{height?.toLocaleString()}</RouterLink>
+  </Link>
 )
 
 export const BlockHashLink: FC<{
@@ -29,33 +26,35 @@ export const BlockHashLink: FC<{
   if (alwaysTrim) {
     // Table view
     return (
-      <Typography variant="mono">
-        <MaybeWithTooltip title={hash}>
-          <Link component={RouterLink} to={to}>
+      <MaybeWithTooltip title={hash}>
+        <Link asChild>
+          <RouterLink to={to} className="text-primary font-medium">
             {trimLongString(hash)}
-          </Link>
-        </MaybeWithTooltip>
-      </Typography>
+          </RouterLink>
+        </Link>
+      </MaybeWithTooltip>
     )
   }
 
   if (!isTablet) {
     // Desktop view
     return (
-      <Typography variant="mono">
-        <Link component={RouterLink} to={to}>
+      <Link asChild>
+        <RouterLink to={to} className="text-primary font-medium">
           {hash}
-        </Link>
-      </Typography>
+        </RouterLink>
+      </Link>
     )
   }
 
   // Mobile view
   return (
-    <Typography variant="mono" sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
-      <Link component={RouterLink} to={to}>
-        <AdaptiveTrimmer text={hash} strategy="middle" minLength={13} />
+    <span className="max-w-full overflow-x-hidden">
+      <Link asChild>
+        <RouterLink to={to} className="text-primary font-medium">
+          <AdaptiveTrimmer text={hash} strategy="middle" minLength={13} />
+        </RouterLink>
       </Link>
-    </Typography>
+    </span>
   )
 }
