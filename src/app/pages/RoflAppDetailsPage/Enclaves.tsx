@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import { RoflAppPolicy } from '../../../oasis-nexus/api'
 import { CopyToClipboard } from 'app/components/CopyToClipboard'
 
@@ -21,9 +20,7 @@ export const Enclaves: FC<EnclavesProps> = ({ policy }) => {
         {policy.enclaves.map((enclave: string) => (
           <tr key={enclave}>
             <td>
-              <Typography variant="mono" component="span">
-                {enclave}
-              </Typography>
+              <span className="font-medium">{enclave}</span>
             </td>
             <td>
               <CopyToClipboard value={enclave} />

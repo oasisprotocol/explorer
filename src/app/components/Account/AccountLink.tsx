@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RouteUtils } from '../../utils/route-utils'
 import InfoIcon from '@mui/icons-material/Info'
 import { SearchScope } from '../../../types/searchScope'
@@ -13,7 +14,6 @@ import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedT
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { AccountMetadataSourceIndicator } from './AccountMetadataSourceIndicator'
 import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHighlighting'
-import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 const WithTypographyAndLink: FC<{
   scope: SearchScope

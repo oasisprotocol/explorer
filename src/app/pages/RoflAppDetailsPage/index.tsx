@@ -3,7 +3,6 @@ import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -125,9 +124,7 @@ export const RoflAppDetailsView: FC<{
       <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
         <WithHoverHighlighting address={app.id}>
-          <Typography variant="mono" component="span">
-            {app.id}
-          </Typography>
+          <span className="font-medium">{app.id}</span>
         </WithHoverHighlighting>
         <CopyToClipboard value={app.id} />
       </DetailsRow>
@@ -135,7 +132,7 @@ export const RoflAppDetailsView: FC<{
         <Enclaves policy={app.policy} />
       </DetailsRow>
       <DetailsRow title={t('rofl.sekPublicKey')}>
-        <Typography variant="mono">{app.sek}</Typography> <CopyToClipboard value={app.sek} />
+        <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
       </DetailsRow>
       <AdminAccountRow
         address={app.admin_eth ?? app.admin}

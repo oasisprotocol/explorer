@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import InfoIcon from '@mui/icons-material/Info'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RouteUtils } from '../../utils/route-utils'
@@ -9,7 +10,6 @@ import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { trimLongString } from '../../utils/trimLongString'
 import Box from '@mui/material/Box'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
-import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 const WithTypographyAndLink: FC<{ children: ReactNode; mobile?: boolean; to: string }> = ({
   children,
