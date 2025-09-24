@@ -39,10 +39,8 @@ export const BlockHashLink: FC<{
   if (!isTablet) {
     // Desktop view
     return (
-      <Link asChild>
-        <RouterLink to={to} className="text-primary font-medium">
-          {hash}
-        </RouterLink>
+      <Link asChild className="font-medium">
+        <RouterLink to={to}>{hash}</RouterLink>
       </Link>
     )
   }
