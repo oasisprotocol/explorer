@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -58,16 +57,10 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
     <div>
       <span
         ref={textRef}
-        className="
-    font-medium
-    overflow-hidden
-    overflow-wrap-anywhere
-    whitespace-pre-wrap
-    [display:-webkit-box]
-    [WebkitBoxOrient:vertical]
-  "
+        className="font-medium overflow-hidden overflow-wrap-anywhere whitespace-pre-wrap [display:-webkit-box][WebkitBoxOrient:vertical]"
         style={{
-          maxHeight: isExpanded ? 'none' : `${collapsedContainerMaxHeight}px`,
+          lineHeight: `${lineHeight}px`,
+          maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
           WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
         }}
       >

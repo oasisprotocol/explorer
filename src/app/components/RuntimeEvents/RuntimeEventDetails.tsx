@@ -17,7 +17,6 @@ import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 import { TokenTransferIcon } from '../Tokens/TokenTransferIcon'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -291,7 +290,7 @@ const RuntimeEventDetailsInner: FC<{
             <b>{eventName}</b>
             <br />
             {t('runtimeEvent.fields.topics')}:
-            <span className="font-medium block whitespace-pre-wrap [overflow-wrap:break-word]">
+            <span className="font-medium block whitespace-pre-wrap wrap-break-word">
               {event.body.topics
                 /* @ts-expect-error -- Event body is missing types */
                 .map((base64Topic, index) => {
