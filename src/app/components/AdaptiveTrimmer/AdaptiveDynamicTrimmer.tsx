@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { getAdaptiveId, ShorteningResult, useAdaptiveSizing } from './hooks'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type AdaptiveDynamicTrimmerProps = {
   /**
@@ -92,7 +93,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
     <Box component="span" ref={textRef} sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <MaybeWithTooltip
         title={title}
-        spanSx={{ textWrap: 'nowrap', whiteSpace: 'nowrap', opacity: isFinal ? 1 : 0 }}
+        spanClassName={cn('whitespace-nowrap', isFinal ? 'opacity-100' : 'opacity-0')}
       >
         {currentContent}
       </MaybeWithTooltip>

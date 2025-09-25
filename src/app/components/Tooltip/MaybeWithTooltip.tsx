@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
-import { SxProps } from '@mui/material/styles'
 import { useScreenSize } from '../../hooks/useScreensize'
 
 type MaybeWithTooltipProps = {
@@ -15,7 +14,7 @@ type MaybeWithTooltipProps = {
   /**
    * Any extra styles to apply to the span
    */
-  spanSx?: SxProps
+  spanClassName?: string
 
   /**
    * The content to show
@@ -26,8 +25,9 @@ type MaybeWithTooltipProps = {
 /**
  * A component to display some content with or without a tooltip
  */
-export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, spanSx }) => {
+export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, spanClassName }) => {
   const { isMobile } = useScreenSize()
+
   return (
     <Tooltip
       placement="top"
@@ -49,9 +49,7 @@ export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, s
       disableHoverListener={!title}
       disableTouchListener={!title}
     >
-      <Box component="span" sx={{ display: 'inline-flex', ...spanSx }}>
-        {children}
-      </Box>
+      <span className={spanClassName}>{children}</span>
     </Tooltip>
   )
 }
