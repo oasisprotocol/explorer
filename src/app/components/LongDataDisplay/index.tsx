@@ -56,23 +56,23 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
 
   return (
     <div>
-      <Typography
-        variant="mono"
+      <span
         ref={textRef}
-        sx={{
-          fontWeight,
-          maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
-          overflow: 'hidden',
-          lineHeight: `${lineHeight}px`,
-          overflowWrap: 'anywhere',
-          display: '-webkit-box',
+        className="
+    font-medium
+    overflow-hidden
+    overflow-wrap-anywhere
+    whitespace-pre-wrap
+    [display:-webkit-box]
+    [WebkitBoxOrient:vertical]
+  "
+        style={{
+          maxHeight: isExpanded ? 'none' : `${collapsedContainerMaxHeight}px`,
           WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
-          WebkitBoxOrient: 'vertical',
-          whiteSpace: 'pre-wrap',
         }}
       >
         {data}
-      </Typography>
+      </span>
       {(isOverflowing || isExpanded) && (
         <StyledButton onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? t('common.hide') : t('common.show')}

@@ -291,22 +291,14 @@ const RuntimeEventDetailsInner: FC<{
             <b>{eventName}</b>
             <br />
             {t('runtimeEvent.fields.topics')}:
-            <Typography
-              variant="mono"
-              fontWeight={400}
-              sx={{
-                display: 'block',
-                whiteSpace: 'pre-wrap',
-                overflowWrap: 'break-word',
-              }}
-            >
+            <span className="font-medium block whitespace-pre-wrap [overflow-wrap:break-word]">
               {event.body.topics
                 /* @ts-expect-error -- Event body is missing types */
                 .map((base64Topic, index) => {
                   return `${index}: 0x${Buffer.from(base64Topic, 'base64').toString('hex')}`
                 })
                 .join('\n')}
-            </Typography>
+            </span>
             <br />
             {t('runtimeEvent.fields.data')}:
             <LongDataDisplay
