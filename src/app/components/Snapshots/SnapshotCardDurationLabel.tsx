@@ -1,7 +1,5 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { COLORS } from '../../../styles/theme/colors'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 type SnapshotCardLabelProps = {
   label: string
@@ -13,9 +11,10 @@ export const SnapshotCardDurationLabel: FC<SnapshotCardLabelProps> = ({ label, v
   }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 3 }}>
-      <Typography sx={{ fontSize: 12, color: COLORS.grayMedium }}>{label}</Typography>
-      <Typography sx={{ fontSize: 'inherit' }}>{value.toLocaleString()}</Typography>
-    </Box>
+    <Typography className="flex gap-2 flex justify-end items-center" asChild>
+      <span>
+        {label} <span className="font-semibold text-primary">{value.toLocaleString()}</span>
+      </span>
+    </Typography>
   )
 }
