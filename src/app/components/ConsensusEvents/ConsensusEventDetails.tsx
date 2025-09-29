@@ -67,7 +67,7 @@ const ConsensusEventDetailsContent: FC<{
     <div>
       <b>{getConsensusEventTypeLabel(t, event.type)}</b>
       <br />
-      <pre>{JSON.stringify(event, null, ' ')}</pre>
+      <pre className="whitespace-pre-wrap break-words">{JSON.stringify(event, null, ' ')}</pre>
     </div>
   )
 }
