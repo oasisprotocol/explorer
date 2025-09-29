@@ -57,11 +57,18 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
     <div>
       <span
         ref={textRef}
-        className="font-medium overflow-hidden overflow-wrap-anywhere whitespace-pre-wrap [display:-webkit-box][WebkitBoxOrient:vertical]"
+        className="
+    font-medium
+    overflow-hidden
+    whitespace-pre-wrap
+  "
         style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
+          overflowWrap: 'anywhere',
           lineHeight: `${lineHeight}px`,
           maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
-          WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
         }}
       >
         {data}
