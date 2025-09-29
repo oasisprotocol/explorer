@@ -22,7 +22,7 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
           rel="noopener noreferrer"
           target="_blank"
           textColor="primary"
-          className="font-medium "
+          className="font-medium px-4"
         >
           {t('common.viewAll')}
         </Link>

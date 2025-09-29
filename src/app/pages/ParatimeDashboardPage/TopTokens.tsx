@@ -35,7 +35,7 @@ export const TopTokens: FC<{ scope: RuntimeScope }> = ({ scope }) => {
     <Card>
       <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
         <Typography variant="h3">{t('common.tokens')}</Typography>
-        <Link asChild className="font-medium" textColor="primary">
+        <Link asChild className="font-medium px-4" textColor="primary">
           <RouterLink to={RouteUtils.getTopTokensRoute(scope)}>{t('common.viewAll')}</RouterLink>
         </Link>
       </div>

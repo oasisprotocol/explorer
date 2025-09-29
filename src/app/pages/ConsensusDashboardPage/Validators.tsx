@@ -58,7 +58,7 @@ export const ValidatorsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
           </Typography>
         </ErrorBoundary>
 
-        <Link asChild textColor="primary" className="font-medium">
+        <Link asChild textColor="primary" className="font-medium px-4">
           <RouterLink to={RouteUtils.getValidatorsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
         </Link>
       </div>

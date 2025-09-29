@@ -36,7 +36,7 @@ export const NetworkProposalsCard: FC<{ scope: ConsensusScope }> = ({ scope }) =
     <Card>
       <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
         <Typography variant="h3">{t('networkProposal.listTitle')}</Typography>
-        <Link asChild className="font-medium" textColor="primary">
+        <Link asChild className="font-medium px-4" textColor="primary">
           <RouterLink to={RouteUtils.getProposalsRoute(network)}>{t('common.viewAll')}</RouterLink>
         </Link>
       </div>
