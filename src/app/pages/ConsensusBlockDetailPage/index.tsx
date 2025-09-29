@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useOutletContext, useParams } from 'react-router-dom'
-import Typography from '@mui/material/Typography'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Block, EntityMetadata, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
@@ -119,11 +118,11 @@ export const ConsensusBlockDetailView: FC<{
           <dt>{t('common.stateRoot')}</dt>
           <dd>
             {isTablet ? (
-              <Typography variant="mono" sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
+              <span className="max-w-full overflow-x-hidden">
                 <AdaptiveTrimmer text={block.state_root} strategy="middle" minLength={13} />
-              </Typography>
+              </span>
             ) : (
-              <Typography variant="mono">{block.state_root}</Typography>
+              <span>{block.state_root}</span>
             )}
             <CopyToClipboard value={block.state_root} />
           </dd>

@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 
@@ -56,23 +55,17 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
 
   return (
     <div>
-      <Typography
-        variant="mono"
+      <span
         ref={textRef}
-        sx={{
-          fontWeight,
-          maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
-          overflow: 'hidden',
+        className="font-medium overflow-hidden overflow-wrap-anywhere whitespace-pre-wrap [display:-webkit-box][WebkitBoxOrient:vertical]"
+        style={{
           lineHeight: `${lineHeight}px`,
-          overflowWrap: 'anywhere',
-          display: '-webkit-box',
+          maxHeight: isExpanded ? 'none' : collapsedContainerMaxHeight,
           WebkitLineClamp: isExpanded ? 'none' : collapsedLinesNumber,
-          WebkitBoxOrient: 'vertical',
-          whiteSpace: 'pre-wrap',
         }}
       >
         {data}
-      </Typography>
+      </span>
       {(isOverflowing || isExpanded) && (
         <StyledButton onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? t('common.hide') : t('common.show')}

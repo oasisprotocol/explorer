@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useHref, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import { RoflInstance, useGetRuntimeRoflAppsIdInstancesRak } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { AppErrors } from '../../../types/errors'
@@ -62,15 +61,15 @@ export const RoflAppInstanceDetailsView: FC<{
     <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
       <dt>{t('rofl.rakAbbreviation')}</dt>
       <dd>
-        <Typography variant="mono">
+        <span>
           {instance.rak} <CopyToClipboard value={instance.rak} />
-        </Typography>
+        </span>
       </dd>
       <dt>{t('rofl.rekAbbreviation')}</dt>
       <dd>
-        <Typography variant="mono">
+        <span>
           {instance.rek} <CopyToClipboard value={instance.rek} />
-        </Typography>
+        </span>
       </dd>
       <dt>{t('rofl.expirationEpoch')}</dt>
       <dd>{instance.expiration_epoch.toLocaleString()}</dd>
@@ -81,16 +80,16 @@ export const RoflAppInstanceDetailsView: FC<{
       </dd>
       <dt>{t('rofl.endorsingNodeId')}</dt>
       <dd>
-        <Typography variant="mono">
+        <span>
           {instance.endorsing_node_id} <CopyToClipboard value={instance.endorsing_node_id} />
-        </Typography>
+        </span>
       </dd>
       <dt>{t('rofl.endorsingNodeAddress')}</dt>
       <dd>
-        <Typography variant="mono">
+        <span>
           <AccountLink alwaysTrimOnTablet scope={scope} address={nodeAddress} />
           <CopyToClipboard value={nodeAddress} />
-        </Typography>
+        </span>
       </dd>
       <dt>{t('rofl.extraKeys')}</dt>
       <dd>
@@ -104,10 +103,10 @@ export const RoflAppInstanceDetailsView: FC<{
                 return (
                   <tr key={index}>
                     <td>
-                      <Typography variant="mono">{keyType}:</Typography>
+                      <span>{keyType}:</span>
                     </td>
                     <td>
-                      <Typography variant="mono">{String(keyValue)}</Typography>
+                      <span>{String(keyValue)}</span>
                     </td>
                   </tr>
                 )
