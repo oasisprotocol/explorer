@@ -59,7 +59,6 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
           },
         ]
       : []),
-    ...(type === BlocksTableType.Desktop ? [{ key: 'hash', content: t('common.hash') }] : []),
     { key: 'size', content: t('common.size'), align: TableCellAlign.Right },
     ...(type === BlocksTableType.Desktop
       ? [{ key: 'gasUsed', content: t('common.gasUsed'), align: TableCellAlign.Right }]
