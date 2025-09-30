@@ -719,7 +719,7 @@
     "testTokens": {
       "description": "Do you need some tokens for testing?",
       "header": "Test tokens",
-      "request": "Contact us"
+      "request": "Get Tokens"
     }
   },
   "rofl": {
