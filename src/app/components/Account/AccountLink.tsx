@@ -146,10 +146,10 @@ const TrimmedAccountLink: FC<
     <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
-          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+          <span className="flex items-center gap-1">
             <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
             {trimLongString(accountName, 12, 0)}
-          </Box>
+          </span>
         ) : (
           trimLongString(address, 6, 6)
         )}
