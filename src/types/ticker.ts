@@ -4,7 +4,7 @@ export type Ticker = (typeof Ticker)[keyof typeof Ticker]
 export const Ticker = {
   ROSE: 'ROSE',
   TEST: 'TEST',
-  EUROe: 'EUROe',
+  EURAU: 'EURAU',
 } as const
 
 export type NativeTokenInfo = {
@@ -22,8 +22,8 @@ export const NativeToken = {
     ticker: Ticker.TEST,
     free: true,
   },
-  EUROe: {
-    ticker: Ticker.EUROe,
-    geckoId: 'euroe-stablecoin',
+  EURAU: {
+    ticker: Ticker.EURAU,
+    geckoId: 'allunity-eur',
   },
 } as const

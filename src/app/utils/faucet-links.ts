@@ -52,7 +52,7 @@ export const getFaucetInfo = (
         },
       },
       pontusxdev: {
-        [Ticker.EUROe]: {
+        [Ticker.EURAU]: {
           url: 'https://portal.pontus-x.eu/faucet',
           description: t('pontusx.testTokens.description'),
           title: t('pontusx.testTokens.header'),
@@ -60,7 +60,7 @@ export const getFaucetInfo = (
         },
       },
       pontusxtest: {
-        [Ticker.EUROe]: {
+        [Ticker.EURAU]: {
           url: 'https://portal.pontus-x.eu/faucet',
           description: t('pontusx.testTokens.description'),
           title: t('pontusx.testTokens.header'),
