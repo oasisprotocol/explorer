@@ -8,7 +8,6 @@ import { SearchScope } from '../../../types/searchScope'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
-import Box from '@mui/material/Box'
 import { HighlightedText } from '../HighlightedText'
 import { AdaptiveHighlightedText } from '../HighlightedText/AdaptiveHighlightedText'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
@@ -92,26 +91,9 @@ const AdaptivelyTrimmedAccountLink: FC<
 
   return (
     <WithTypographyAndLink scope={scope} address={address} mobile labelOnly={labelOnly}>
-      <Box
-        sx={{
-          // External box: this holds both the name and the address.
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          flexWrap: 'wrap', // We want this to wrap, if name and address doesn't fit in one line.
-        }}
-      >
+      <div className="flex items-center gap-1 flex-wrap">
         {showAccountName && (
-          <Box
-            component="span"
-            sx={{
-              // Internal box: this holds the source indicator and the name.
-              // We don't want this to wrap.
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 2,
-            }}
-          >
+          <span className="inline-flex items-center gap-1">
             <AccountMetadataSourceIndicator source={accountMetadata.source} />
             <AdaptiveHighlightedText
               idPrefix="account-name"
@@ -119,7 +101,7 @@ const AdaptivelyTrimmedAccountLink: FC<
               extraTooltip={tooltipTitle}
               minLength={5}
             />
-          </Box>
+          </span>
         )}
         <AdaptiveTrimmer
           idPrefix="account-address"
@@ -128,7 +110,7 @@ const AdaptivelyTrimmedAccountLink: FC<
           tooltipOverride={tooltipTitle}
           minLength={13}
         />
-      </Box>
+      </div>
     </WithTypographyAndLink>
   )
 }
@@ -173,30 +155,13 @@ const DesktopAccountLink: FC<
     <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
-          <Box
-            sx={{
-              // External box: this holds both the name and the address.
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'wrap', // We want this to wrap, if the name and the address won't fit in one line.
-              gap: 2,
-            }}
-          >
-            <Box
-              component="span"
-              sx={{
-                // Internal box: this holds only the source indicator and the name.
-                // We don't want this to wrap.
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 2,
-              }}
-            >
+          <div className="flex items-center flex-wrap gap-1">
+            <span className="inline-flex items-center gap-1">
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
               <HighlightedText text={accountName} />
-            </Box>
+            </span>
             ({address})
-          </Box>
+          </div>
         ) : (
           address
         )}
@@ -224,29 +189,22 @@ export const AccountLink: FC<Props> = ({
   const showAccountName = !showOnlyAddress && !!accountName
 
   const extraTooltipWithIcon = extraTooltip ? (
-    <Box
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        verticalAlign: 'middle',
-        gap: 2,
-      }}
-    >
+    <div className="flex items-center align-middle gap-1">
       <InfoIcon />
       {extraTooltip}
-    </Box>
+    </div>
   ) : undefined
 
   const tooltipTitle = (
     <div>
       {showAccountName && (
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-          <Box sx={{ fontWeight: 'bold' }}>{accountName}</Box>
+        <div className="inline-flex items-center gap-2">
+          <div className="font-bold">{accountName}</div>
           <span>-</span>
           <AccountMetadataSourceIndicator source={accountMetadata!.source} withText />
-        </Box>
+        </div>
       )}
-      <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+      <div className="font-normal">{address}</div>
       {extraTooltipWithIcon}
     </div>
   )
