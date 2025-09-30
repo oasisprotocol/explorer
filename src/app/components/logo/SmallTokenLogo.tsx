@@ -6,8 +6,8 @@ export const SmallTokenLogo: FC<{ ticker: Ticker }> = ({ ticker }) => {
   switch (ticker) {
     case Ticker.ROSE:
       return <SmallOasisLogo />
-    case Ticker.EUROe:
-      return <img src="https://assets.oasis.io/explorer-tokens/euroe.png" width={25} alt={ticker} />
+    case Ticker.EURAU:
+      return <img src="https://assets.oasis.io/explorer-tokens/EURAU.webp" width={25} alt={ticker} />
     default:
       return null
   }

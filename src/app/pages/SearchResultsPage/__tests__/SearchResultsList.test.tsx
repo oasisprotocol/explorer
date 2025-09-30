@@ -43,8 +43,8 @@ describe('SearchResultsView', () => {
             isFree: true,
             hasUsedCoinGecko: false,
           },
-          [Ticker.EUROe]: {
-            ticker: Ticker.EUROe,
+          [Ticker.EURAU]: {
+            ticker: Ticker.EURAU,
             isLoading: false,
             hasFailed: false,
             isFree: false,
@@ -95,8 +95,8 @@ describe('SearchResultsView', () => {
             isFree: true,
             hasUsedCoinGecko: false,
           },
-          [Ticker.EUROe]: {
-            ticker: Ticker.EUROe,
+          [Ticker.EURAU]: {
+            ticker: Ticker.EURAU,
             isLoading: false,
             hasFailed: false,
             isFree: false,
