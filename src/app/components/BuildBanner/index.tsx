@@ -20,7 +20,11 @@ export const BuildBanner: FC = () => {
     : t('banner.buildPreview', { appTitle: getAppTitle() })
 
   return (
-    <Alert variant="warning-filled" sticky>
+    <Alert
+      variant="warning-filled"
+      // classes for [sticky] alert, without being sticky
+      className="rounded-none border-0 flex justify-center items-center [&>svg]:-mt-1"
+    >
       {message}
     </Alert>
   )
