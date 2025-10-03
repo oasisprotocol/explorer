@@ -8,7 +8,6 @@ import {
   useGetRuntimeTransactionsTxHash,
 } from '../../../oasis-nexus/api'
 import { AccountLink } from './AccountLink'
-import Box from '@mui/material/Box'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 const TxSender: FC<{ scope: RuntimeScope; txHash: string; alwaysTrim?: boolean }> = ({
@@ -45,7 +44,7 @@ export const ContractCreatorInfo: FC<{
   ) : (
     <>
       <TxSender scope={scope} txHash={creationTxHash} alwaysTrim={alwaysTrim} />
-      <Box alignSelf="end">&nbsp;{t('contract.createdAt')}&nbsp;</Box>
+      <div className="self-end">&nbsp;{t('contract.createdAt')}&nbsp;</div>
       <TransactionLink scope={scope} hash={creationTxHash} alwaysTrim={alwaysTrim} />
     </>
   )

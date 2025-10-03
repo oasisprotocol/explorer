@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -32,9 +31,9 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
     data: [
       {
         content: (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="flex justify-center">
             <AccountSizeBadge size={account.size} />
-          </Box>
+          </div>
         ),
         key: 'size',
       },
