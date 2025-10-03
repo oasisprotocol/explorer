@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
@@ -24,10 +23,10 @@ export const ExternalLinkCard: FC<ExternalLinkCardProps> = ({ link }) => {
     <SnapshotCardExternalLink
       description={t('validator.externalLinkDescription')}
       label={
-        <Box gap={2} sx={{ display: 'flex', alignItems: 'center' }}>
+        <div className="flex items-center gap-1">
           <StyledTypography>{getHostname(link)}</StyledTypography>
           <OpenInNewIcon sx={{ fontSize: 20 }} />
-        </Box>
+        </div>
       }
       title={t('validator.externalLink')}
       url={link}
