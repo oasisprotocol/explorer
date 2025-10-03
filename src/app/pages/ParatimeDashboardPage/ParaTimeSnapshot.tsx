@@ -53,7 +53,7 @@ export const ParaTimeSnapshot: FC<{ scope: RuntimeScope }> = ({ scope }) => {
         <div className="col-span-12 lg:col-span-3">
           <Nodes scope={scope} />
         </div>
-        <div className="col-span-12 lg:col-span-3">
+        <div className="flex flex-col lg:flex-row col-span-12 lg:col-span-3 gap-4 lg:gap-0">
           {showFiatValues && !mainToken.free && <TokenPriceCard token={mainToken} />}
           {faucetInfo && <TestnetFaucet network={scope.network} layer={scope.layer} ticker={mainTicker} />}
         </div>
