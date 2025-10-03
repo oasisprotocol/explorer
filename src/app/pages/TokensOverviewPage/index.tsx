@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { LayoutDivider } from '../../components/Divider'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
@@ -72,9 +71,9 @@ export const TokensPage: FC = () => {
         noPadding={tableView === TableLayout.Vertical}
         mainTitle
         subheader={
-          <Box component="span" sx={{ ml: 4, fontStyle: 'normal' }}>
+          <span className="ml-4 not-italic">
             <TokenTypeFilter onSelect={setType} value={type} />
-          </Box>
+          </span>
         }
       >
         {tableView === TableLayout.Horizontal && (
