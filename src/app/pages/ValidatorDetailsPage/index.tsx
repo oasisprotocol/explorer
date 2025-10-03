@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import {
@@ -277,14 +276,14 @@ export const ValidatorDetailsView: FC<{
           <dd>{validator.rank}</dd>
           <dt>{t('validator.title')}</dt>
           <dd>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <div className="flex gap-1">
               <ValidatorImage
                 address={validator.entity_address}
                 name={validator.media?.name}
                 logotype={validator.media?.logoUrl}
               />
               <b>{validator.media?.name}</b>
-            </Box>
+            </div>
           </dd>
           <dt>{t('validator.cumulativeVoting')}</dt>
           <dd>

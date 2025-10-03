@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
@@ -29,14 +28,14 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
       withContentPadding={false}
     >
       {typeof validator?.voting_power === 'number' && stats?.total_voting_power && (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="flex justify-between">
+          <div className="flex flex-col">
             <Typography sx={{ fontSize: 12, color: COLORS.grayMedium, textAlign: 'left', paddingBottom: 3 }}>
               {t('validator.votingPowerOverall')}
             </Typography>
             <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
-          </Box>
-          <Box sx={{ paddingTop: 4 }}>
+          </div>
+          <div className="pt-4">
             <VerticalProgressBar
               height={80}
               width={50}
@@ -44,8 +43,8 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
               barWithBorder={false}
               barBackgroundColor={COLORS.grayMediumLight}
             />
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
     </SnapshotTextCard>
   )

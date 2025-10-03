@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { Validator } from '../../../oasis-nexus/api'
 import { COLORS } from 'styles/theme/colors'
@@ -26,7 +25,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
       details={
         <>
           {validator && (
-            <Box sx={{ display: 'flex' }}>
+            <div className="flex">
               <ValidatorStatusBadge active={validator.active} inValidatorSet={validator?.in_validator_set} />
               &nbsp;&nbsp;&nbsp;
               <AccountLink
@@ -35,7 +34,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                 showOnlyAddress
               />
               <CopyToClipboard value={validator.entity_address} />
-            </Box>
+            </div>
           )}
         </>
       }
@@ -44,7 +43,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
         <>
           {validator && (
             <>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <div className="flex items-center">
                 <ValidatorImage
                   address={validator.entity_address}
                   name={validator.media?.name}
@@ -67,7 +66,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                 >
                   ({validator.rank})
                 </Typography>
-              </Box>
+              </div>
             </>
           )}
         </>
