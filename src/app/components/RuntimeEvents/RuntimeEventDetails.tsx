@@ -4,11 +4,14 @@ import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
 import { useScreenSize } from '../../hooks/useScreensize'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
-import TableBody from '@mui/material/TableBody'
+import {
+  Table,
+  TableHeader,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from '@oasisprotocol/ui-library/src/components/table'
 import { AccountLink } from '../Account/AccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { SearchScope } from '../../../types/searchScope'
@@ -321,15 +324,15 @@ const RuntimeEventDetailsInner: FC<{
           </Box>
           <br />
           {event.evm_log_params && event.evm_log_params.length > 0 && (
-            <Table sx={{ border: '1px solid lightgray' }}>
-              <TableHead>
+            <Table className="border">
+              <TableHeader>
                 <TableRow>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell>{t('common.type')}</TableCell>
-                  <TableCell>{t('common.data')}</TableCell>
+                  <TableHead>{t('common.name')}</TableHead>
+                  <TableHead>{t('common.type')}</TableHead>
+                  <TableHead>{t('common.data')}</TableHead>
                   <TableCell />
                 </TableRow>
-              </TableHead>
+              </TableHeader>
               <TableBody>
                 {event.evm_log_params.map((param, index) => (
                   <EvmLogRow scope={scope} key={`param-${index}`} param={param} />
