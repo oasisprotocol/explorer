@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Transaction } from '../../../oasis-nexus/api'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -90,22 +89,14 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
         {
           align: TableCellAlign.Right,
           content: (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                position: 'relative',
-                justifyContent: 'space-between',
-                pr: 3,
-              }}
-            >
+            <div className="flex items-center relative justify-between pr-3">
               <ConsensusAccountLink
                 labelOnly={!!ownAddress && transaction.sender === ownAddress}
                 network={transaction.network}
                 address={transaction.sender}
               />
               {verbose && transaction.to && <TransferIcon />}
-            </Box>
+            </div>
           ),
           key: 'from',
         },

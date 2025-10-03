@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { TFunction } from 'i18next'
-import Box from '@mui/material/Box'
 import { ConsensusTxMethod, Transaction } from '../../../oasis-nexus/api'
 import { From, LabelValue, Shares, To } from './TransactionDetailsElements'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +16,7 @@ export const ConsensusTransactionDetails: FC<ConsensusTransactionDetailsProps> =
   const { t } = useTranslation()
   const details = getConsensusTransactionDetails(t, transaction, ownAddress)
 
-  return <Box sx={{ display: 'flex', flexWrap: 'no-wrap', gap: '20px' }}>{details}</Box>
+  return <div className="flex flex-nowrap gap-5">{details}</div>
 }
 
 // TODO: validate when new designs are ready and use in details column

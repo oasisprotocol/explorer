@@ -8,7 +8,6 @@ import { SearchScope } from '../../../types/searchScope'
 import { AdaptiveTrimmer } from '../AdaptiveTrimmer/AdaptiveTrimmer'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { trimLongString } from '../../utils/trimLongString'
-import Box from '@mui/material/Box'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 const WithTypographyAndLink: FC<{ children: ReactNode; mobile?: boolean; to: string }> = ({
@@ -30,10 +29,10 @@ export const TransactionLink: FC<{
   const { isTablet } = useScreenSize()
   const to = RouteUtils.getTransactionRoute(scope, hash)
   const extraToolTipWithIcon = extraTooltip ? (
-    <Box sx={{ display: 'flex', alignContent: 'center', gap: 2 }}>
+    <div className="inline-flex items-center gap-2">
       <InfoIcon />
       {extraTooltip}
-    </Box>
+    </div>
   ) : undefined
 
   if (alwaysTrim) {
@@ -42,10 +41,10 @@ export const TransactionLink: FC<{
       <WithTypographyAndLink to={to}>
         <MaybeWithTooltip
           title={
-            <Box>
+            <div>
               {hash}
               {extraToolTipWithIcon}
-            </Box>
+            </div>
           }
         >
           {trimLongString(hash, 6, 6)}

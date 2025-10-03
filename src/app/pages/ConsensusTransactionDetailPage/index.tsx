@@ -26,7 +26,6 @@ import { getFiatCurrencyForScope } from '../../../config'
 import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import Box from '@mui/material/Box'
 import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
 import { CardDivider } from '../../components/Divider'
 import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
@@ -139,27 +138,27 @@ export const ConsensusTransactionDetailView: FC<{
       </dd>
       <dt>{t('common.from')}</dt>
       <dd>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div className="inline-flex items-center">
           <ConsensusAccountLink
             network={transaction.network}
             address={transaction.sender}
             alwaysTrim={false}
           />
           <CopyToClipboard value={transaction.sender} />
-        </Box>
+        </div>
       </dd>
       {transaction.to && (
         <>
           <dt>{t('common.to')}</dt>
           <dd>
-            <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+            <div className="inline-flex items-center">
               <ConsensusAccountLink
                 network={transaction.network}
                 address={transaction.to}
                 alwaysTrim={false}
               />
               <CopyToClipboard value={transaction.to} />
-            </Box>
+            </div>
           </dd>
         </>
       )}
