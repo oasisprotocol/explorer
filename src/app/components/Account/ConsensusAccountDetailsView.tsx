@@ -6,7 +6,6 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../StyledDescriptionList'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { AccountAvatar } from '../AccountAvatar'
@@ -61,16 +60,16 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
         </>
       )}
       <StyledListTitleWithAvatar>
-        <Box gap={1} sx={{ display: 'flex', alignItems: 'center' }}>
+        <div className="flex items-center gap-1">
           <AccountAvatar account={account} />
           <AccountSizeBadge size={account.size} />
-        </Box>
+        </div>
       </StyledListTitleWithAvatar>
       <dd>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div className="inline-flex items-center">
           <ConsensusAccountLink alwaysTrim={false} network={account.network} address={account.address} />
           <CopyToClipboard value={account.address} />
-        </Box>
+        </div>
       </dd>
       <dt>
         <strong>{t('account.totalBalance')}</strong>

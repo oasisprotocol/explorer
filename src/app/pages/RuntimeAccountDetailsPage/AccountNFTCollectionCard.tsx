@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
@@ -145,13 +144,13 @@ const AccountNFTCollection: FC<AccountNFTCollectionProps> = ({
             })}
           </ImageList>
           {pagination && (
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="flex justify-center">
               <TablePagination
                 {...pagination}
                 totalCount={totalCount}
                 isTotalCountClipped={isTotalCountClipped}
               />
-            </Box>
+            </div>
           )}
         </>
       )}

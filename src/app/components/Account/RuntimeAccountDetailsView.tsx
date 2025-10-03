@@ -23,7 +23,6 @@ import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
 import { CardEmptyState } from '../CardEmptyState'
 import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
-import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 type RuntimeAccountDetailsViewProps = {
@@ -74,10 +73,10 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <AccountAvatar account={account} />
       </StyledListTitleWithAvatar>
       <dd>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div className="inline-flex items-center">
           <AccountLink showOnlyAddress={!!token?.name} scope={account} address={address!} />
           <CopyToClipboard value={address!} />
-        </Box>
+        </div>
       </dd>
 
       {token && (
@@ -110,10 +109,10 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         <>
           <dt>{t('contract.verification.proxyERC1167')}</dt>
           <dd>
-            <Box>
+            <div>
               <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
               <AbiPlaygroundLink scope={account} address_eth={account.address_eth!} />
-            </Box>
+            </div>
           </dd>
         </>
       )}

@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { AccountMetadataSource } from '../../data/named-accounts'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 
 const OasisNameIndicator: FC = () => {
   return (
@@ -53,10 +52,10 @@ export const AccountMetadataSourceIndicator: FC<AccountMetadataSourceIndicatorPr
 
   const renderWithOrWithoutLabel = (label: string, labelNeeded: boolean, icon: JSX.Element) =>
     labelNeeded ? (
-      <Box sx={{ display: 'inline-flex', gap: 2, alignItems: 'Center', fontWeight: 'normal' }}>
+      <div className="inline-flex items-center gap-1 font-normal">
         {icon}
         {label}
-      </Box>
+      </div>
     ) : (
       icon
     )
