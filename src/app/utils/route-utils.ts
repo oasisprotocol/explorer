@@ -67,13 +67,19 @@ function invertSpecialScopePaths() {
 invertSpecialScopePaths()
 
 export const hiddenScopes: SearchScope[] = [
-  { network: 'testnet', layer: 'pontusxdev' },
-  { network: 'mainnet', layer: 'pontusxdev' },
-  { network: 'mainnet', layer: 'pontusxtest' },
-  // { network: 'mainnet', layer: 'sapphire' }, // This is only for testing
+  { network: 'testnet', layer: Layer.consensus },
+  { network: 'testnet', layer: Layer.sapphire },
+  { network: 'testnet', layer: Layer.emerald },
+  { network: 'testnet', layer: Layer.cipher },
+  { network: 'mainnet', layer: Layer.consensus },
+  { network: 'mainnet', layer: Layer.emerald },
+  { network: 'mainnet', layer: Layer.cipher },
+  { network: 'mainnet', layer: Layer.pontusxdev },
+  { network: 'mainnet', layer: Layer.pontusxtest },
+  // { network: Network.mainnet, layer: Layer.sapphire }, // This is only for testing
 ]
 
-export const mergeNetworksInLayerSelector = false
+export const mergeNetworksInLayerSelector = true
 
 export const isScopeHidden = (scope: SearchScope): boolean =>
   !!hiddenScopes.find(s => s.network === scope.network && s.layer === scope.layer)
@@ -104,12 +110,12 @@ export abstract class RouteUtils {
       consensus: true,
     },
     testnet: {
-      emerald: true,
-      sapphire: true,
+      emerald: false,
+      sapphire: false,
       cipher: false,
       pontusxdev: true,
       pontusxtest: true,
-      consensus: true,
+      consensus: false,
     },
     localnet: {
       emerald: import.meta.env.REACT_APP_LOCALNET_EMERALD === 'true',
