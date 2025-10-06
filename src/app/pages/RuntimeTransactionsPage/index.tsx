@@ -20,7 +20,6 @@ import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
-import Box from '@mui/material/Box'
 import { LayoutDivider } from '../../components/Divider'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
@@ -98,18 +97,12 @@ export const RuntimeTransactionsPage: FC = () => {
       {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-            }}
-          >
+          <div className="flex items-center gap-6">
             {t('transactions.latest')}
             {!isMobile && (
               <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
             )}
-          </Box>
+          </div>
         }
         title2={
           isMobile ? (

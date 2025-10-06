@@ -20,7 +20,6 @@ import { RoundedBalance } from 'app/components/RoundedBalance'
 import { RuntimeBalanceDisplay } from '../../components/Balance/RuntimeBalanceDisplay'
 import { extractMinimalProxyERC1167 } from '../../components/ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../../components/ContractVerificationIcon/AbiPlaygroundLink'
-import Box from '@mui/material/Box'
 import { holdersContainerId, tokenTransfersContainerId } from '../../utils/tabAnchors'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 
@@ -58,14 +57,14 @@ export const TokenDetailsCard: FC<{
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
-              <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <div className="inline-flex items-center">
                 <AccountLink
                   showOnlyAddress
                   scope={account}
                   address={account.address_eth || account.address}
                 />
                 <CopyToClipboard value={account.address_eth || account.address} />
-              </Box>
+              </div>
             </dd>
 
             <dt>{t('contract.verification.title')}</dt>
@@ -81,10 +80,10 @@ export const TokenDetailsCard: FC<{
               <>
                 <dt>{t('contract.verification.proxyERC1167')}</dt>
                 <dd>
-                  <Box>
+                  <div>
                     <AccountLink scope={account} address={extractMinimalProxyERC1167(account)!} />
                     <AbiPlaygroundLink scope={account} address_eth={account.address_eth!} />
-                  </Box>
+                  </div>
                 </dd>
               </>
             )}

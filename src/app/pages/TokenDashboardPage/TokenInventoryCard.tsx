@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from './index'
@@ -74,9 +73,9 @@ const TokenInventoryView: FC<TokenInventoryViewProps> = ({
             })}
           </ImageList>
           {pagination && (
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="flex justify-center">
               <TablePagination {...pagination} totalCount={totalCount} />
-            </Box>
+            </div>
           )}
         </>
       )}

@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { StatusIcon } from '../StatusIcon'
@@ -118,15 +117,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
               {
                 align: TableCellAlign.Right,
                 content: (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      position: 'relative',
-                      justifyContent: 'space-between',
-                      pr: 3,
-                    }}
-                  >
+                  <div className="flex items-center relative justify-between pr-3">
                     <AccountLink
                       labelOnly={
                         !!ownAddress &&
@@ -138,7 +129,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
                       alwaysTrim
                     />
                     {targetAddress && <TransferIcon />}
-                  </Box>
+                  </div>
                 ),
                 key: 'from',
               },

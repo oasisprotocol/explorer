@@ -18,7 +18,6 @@ import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
-import Box from '@mui/material/Box'
 import { LayoutDivider } from '../../components/Divider'
 
 export const ConsensusTransactionsPage: FC = () => {
@@ -90,16 +89,10 @@ export const ConsensusTransactionsPage: FC = () => {
       {!isMobile && <LayoutDivider />}
       <SubPageCard
         title={
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 6,
-              alignItems: 'center',
-            }}
-          >
+          <div className="flex gap-6 items-center">
             {t('transactions.latest')}
             {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
-          </Box>
+          </div>
         }
         title2={
           isMobile ? (

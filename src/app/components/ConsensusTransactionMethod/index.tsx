@@ -1,8 +1,7 @@
 import { FC, ReactElement, Ref, cloneElement, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -19,6 +18,7 @@ import { tooltipDelay } from '../../../styles/theme'
 import { ConsensusTxMethod, GetConsensusTransactionsParams } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { exhaustedTypeWarning } from '../../../types/errors'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type MethodIconProps = {
   border?: boolean
@@ -83,45 +83,32 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
   }
 
   return (
-    <Box ref={elementRef} gap={3} sx={{ display: 'inline-flex', alignItems: 'center' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+    <div ref={elementRef} className="inline-flex items-center gap-3">
+      <div
+        className="flex items-center justify-center"
+        style={{
           width: size,
           minWidth: size,
           height: size,
           borderRadius: size,
           color: theme.primary,
-          border: border ? `solid 2px ${theme.primary}` : 'none',
-          backgroundColor: theme.secondary,
+          border: border ? `2px solid ${theme.primary}` : 'none',
         }}
       >
         {cloneElement(icon, { sx: { fontSize: Math.ceil(size * iconRatio) } })}
-      </Box>
+      </div>
       {label && (
         <Typography
-          sx={{
-            fontSize: '14px',
-            fontWeight: 'inherit',
-            order: reverseLabel ? -1 : 0,
-            ...(truncate
-              ? {
-                  minWidth: '100px',
-                  // all properties are needed to enable overflow, maxWidth allows to squeeze content
-                  maxWidth: '1px',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }
-              : {}),
-          }}
+          className={cn(
+            'font-inherit',
+            reverseLabel ? '-order-1' : 'order-0',
+            truncate && 'min-w-[100px] max-w-[1px] whitespace-nowrap overflow-hidden text-ellipsis',
+          )}
         >
           {label}
         </Typography>
       )}
-    </Box>
+    </div>
   )
 }
 
@@ -165,9 +152,9 @@ const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
       disableHoverListener={!truncate}
       disableTouchListener={!truncate}
     >
-      <Box>
+      <div>
         <MethodIconContent {...props} elementRef={elementRef} truncate={truncate} />
-      </Box>
+      </div>
     </Tooltip>
   )
 }
