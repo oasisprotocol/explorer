@@ -1,9 +1,7 @@
 import { FC } from 'react'
-import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import Button, { ButtonProps } from '@mui/material/Button'
 import { Trans, useTranslation } from 'react-i18next'
-import { COLORS } from '../../../styles/theme/colors'
 import WidgetsIcon from '@mui/icons-material/Widgets'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
@@ -27,6 +25,7 @@ const PlainTextButton = (props: ButtonProps) => (
 
 export const SuggestionButton = styled(PlainTextButton)({
   gap: '0.2ch', // Space after icon
+  lineHeight: '1',
 })
 
 interface Props {
@@ -56,7 +55,7 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
 
   return (
     <span>
-      <Typography component="span" sx={{ color: COLORS.grayExtraDark, fontSize: 12 }}>
+      <span className="text-gray-800 text-xs">
         <Trans
           t={t}
           i18nKey={
@@ -66,7 +65,7 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
           }
           components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
         />
-      </Typography>
+      </span>
     </span>
   )
 }
