@@ -376,20 +376,6 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiLinearProgress: {
-      styleOverrides: {
-        root: {
-          backgroundColor: COLORS.grayLight,
-          borderWidth: '1px',
-          borderStyle: 'solid',
-          borderColor: COLORS.vistaBlue,
-          borderRadius: 5,
-        },
-        bar: {
-          borderRadius: 5,
-        },
-      },
-    },
     MuiTableContainer: {
       styleOverrides: {
         root: ({ theme }) => ({
