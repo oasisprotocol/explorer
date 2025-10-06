@@ -18,21 +18,3 @@
 [class*='Mui'] object {
   vertical-align: revert;
 }
-
-/* Override Tailwind's table cell padding reset for actual HTML td elements within MUI components */
-[class*='Mui'] td:not([class*='MuiTableCell']),
-[class*='Mui'] th:not([class*='MuiTableCell']) {
-  padding: 1px;
-}
-
-/* Override Tailwind's table border-collapse reset for actual HTML table elements within MUI components */
-[class*='Mui'] table:not([class*='MuiTable']),
-[class*='Mui'] tbody:not([class*='MuiTableBody']) {
-  border-collapse: revert;
-}
-
-/* Override Tailwind's image list margin */
-[class*='MuiImageList'] {
-  margin-block-start: revert;
-  margin-block-end: revert;
-}

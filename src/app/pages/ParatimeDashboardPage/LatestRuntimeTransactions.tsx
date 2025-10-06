@@ -71,7 +71,7 @@ export const LatestRuntimeTransactions: FC<{
             <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
           )}
         </div>
-        <Link asChild className="font-medium" textColor="primary">
+        <Link asChild className="font-medium px-4" textColor="primary">
           <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
         </Link>
       </div>

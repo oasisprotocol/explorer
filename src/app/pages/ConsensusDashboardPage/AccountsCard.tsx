@@ -34,7 +34,7 @@ export const AccountsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
     <Card>
       <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
         <Typography variant="h3">{t('account.listTitle')}</Typography>
-        <Link asChild textColor="primary" className="font-medium">
+        <Link asChild textColor="primary" className="font-medium px-4">
           <RouterLink to={RouteUtils.getAccountsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
         </Link>
       </div>
