@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
@@ -29,26 +28,13 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
       <CardContent sx={{ paddingBottom: '0!important' }}>
         {isLoading && <Skeleton className="h-8" />}
         {isFetched && token && (
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              alignItems: 'bottom',
-            }}
-          >
+          <div className="flex flex-wrap justify-between items-center">
             <Typography variant="h2">
               {getNftInstanceLabel(nft)}
               &nbsp;
               <span className="font-normal text-muted-foreground">{t('nft.instanceTitleSuffix')}</span>
             </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <div className="flex justify-center items-center">
               <VerificationIcon
                 address_eth={token.eth_contract_addr}
                 scope={token}
@@ -58,8 +44,8 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
               &nbsp;&nbsp;&nbsp;
               <AccountLink scope={scope} address={displayAddress!} alwaysTrim showOnlyAddress />
               <CopyToClipboard value={displayAddress!} />
-            </Box>
-          </Box>
+            </div>
+          </div>
         )}
       </CardContent>
     </Card>

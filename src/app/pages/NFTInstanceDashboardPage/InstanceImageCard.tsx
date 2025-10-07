@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Button } from '@mui/base/Button'
 import CardContent from '@mui/material/CardContent'
 import Card from '@mui/material/Card'
@@ -16,6 +15,7 @@ import { isUrlSafe } from '../../utils/url'
 import { COLORS } from '../../../styles/theme/colors'
 import { ImagePreview } from '../../components/ImagePreview'
 import { NoPreview } from '../../components/NoPreview'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 const imageSize = '350px'
 
@@ -89,47 +89,29 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
       }}
     >
       <CardContent>
-        <Box
-          sx={{
-            background: darkMode ? COLORS.grayExtraDark : COLORS.white,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            minHeight: imageSize,
-          }}
+        <div
+          className={cn('flex flex-col items-center justify-between', darkMode ? 'bg-gray-900' : 'bg-white')}
+          style={{ minHeight: imageSize }}
         >
           {isLoading && <Skeleton className="w-[350px] h-[350px]" />}
           {/* API did not process NFT data fully */}
           {isFetched && !nft?.image && <NoPreview placeholderSize={imageSize} />}
           {/* API processed NFT data, but image prop is not valid image source */}
           {isFetched && nft?.image && imageLoadError && (
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+            <div className="flex-1 flex items-center">
+              <div className="flex flex-col items-center">
                 <NoPreview placeholderSize={imageSize} />
                 {isUrlSafe(nft.image) && (
                   <Link href={nft.image} rel="noopener noreferrer" target="_blank">
                     {t('nft.openInNewTab')}
                   </Link>
                 )}
-              </Box>
-            </Box>
+              </div>
+            </div>
           )}
           {isFetched && nft && isUrlSafe(nft.image) && !imageLoadError && (
             <>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
+              <div className="flex justify-center items-center">
                 <ImagePreview
                   handlePreviewClose={handlePreviewClose}
                   handlePreviewOpen={handlePreviewOpen}
@@ -139,21 +121,14 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
                   title={nft.name}
                   maxThumbnailSize={imageSize}
                 />
-              </Box>
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'right',
-                  gap: 3,
-                }}
-              >
+              </div>
+              <div className="w-full flex justify-end gap-3">
                 <FullScreenButton darkMode={darkMode} onClick={handlePreviewOpen} />
                 <DarkModeSwitch darkMode={darkMode} onSetDarkMode={setDarkMode} />
-              </Box>
+              </div>
             </>
           )}
-        </Box>
+        </div>
       </CardContent>
     </Card>
   )

@@ -13,7 +13,6 @@ import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { RuntimeScope } from '../../../types/searchScope'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
 import { EvmNft } from 'oasis-nexus/api'
-import Box from '@mui/material/Box'
 
 type InstanceDetailsCardProps = {
   nft: EvmNft | undefined
@@ -58,7 +57,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
               <>
                 <dt>{t('common.description')}</dt>
                 <dd>
-                  <Box sx={{ whiteSpace: 'pre-line' }}>{nft.description}</Box>
+                  <div className="whitespace-pre-line">{nft.description}</div>
                 </dd>
               </>
             )}
@@ -76,10 +75,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
               <>
                 <dt>{t('nft.owner')}</dt>
                 <dd>
-                  <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <div className="inline-flex items-center">
                     <AccountLink scope={scope} address={owner} />
                     <CopyToClipboard value={owner} />
-                  </Box>
+                  </div>
                 </dd>
               </>
             )}
@@ -91,10 +90,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
             )}
             <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
             <dd>
-              <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <div className="inline-flex items-center">
                 <AccountLink scope={account} address={account.address_eth || account.address} />
                 <CopyToClipboard value={account.address_eth || account.address} />
-              </Box>
+              </div>
             </dd>
             <dt>{t('contract.verification.title')}</dt>
             <dd>
