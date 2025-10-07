@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react'
 import { Progress } from '@oasisprotocol/ui-library/src/components/progress'
 
-type CustomProgressProps = {
+type LabeledProgresssProps = {
   value?: number
   max?: number
   label: ReactNode
 }
 
-export const CustomProgress: FC<CustomProgressProps> = ({ value, max, label }) => {
+export const LabeledProgress: FC<LabeledProgresssProps> = ({ value, max, label }) => {
   if (!value || !max) {
     return null
   }

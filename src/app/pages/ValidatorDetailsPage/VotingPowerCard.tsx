@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
-import { CustomProgress } from 'app/components/ProgressBar'
+import { LabeledProgress } from 'app/components/LabeledProgress'
 import { PercentageValue } from '../../components/PercentageValue'
 
 type VotingPowerCardProps = {
@@ -30,7 +30,7 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
             {t('validator.votingPowerOverall')}
           </Typography>
           <div className="pt-4">
-            <CustomProgress
+            <LabeledProgress
               value={validator.voting_power}
               max={stats.total_voting_power}
               label={

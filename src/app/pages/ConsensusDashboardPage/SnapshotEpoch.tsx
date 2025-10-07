@@ -6,7 +6,7 @@ import { useGetStatus } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { PercentageValue } from '../../components/PercentageValue'
-import { CustomProgress } from '../../components/ProgressBar'
+import { LabeledProgress } from '../../components/LabeledProgress'
 
 // We need to get the previous epoch to compute end_height for the current one
 // This may not be precise during abnormal network conditions, but such conditions never happened so far
@@ -47,7 +47,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
       }
     >
       {epoch !== undefined && (
-        <CustomProgress
+        <LabeledProgress
           value={completedBlocksInCurrentEpoch}
           max={epochDiffHeight}
           label={
