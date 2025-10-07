@@ -1,6 +1,5 @@
 import React, { FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -41,7 +40,6 @@ type CodeDisplayProps = {
   code: string
   language: MonacoLanguages
   label?: string
-  extraTopPadding?: boolean
 }
 
 export const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = undefined }) => {
@@ -53,24 +51,16 @@ export const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = unde
   }
 
   return (
-    <Box sx={{ flex: 1, position: 'relative' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          my: 3,
-          pt: 0,
-        }}
-      >
+    <div className="flex-1">
+      <div className="flex justify-between items-center my-2 pt-4">
         {label && <Typography variant="h4">{label}</Typography>}
 
         <CopyToClipboard
           value={code}
           label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
         />
-      </Box>
-      <Box sx={{ height: '350px', overflow: 'auto', resize: 'vertical' }}>
+      </div>
+      <div className="h-[350px] overflow-auto resize-y">
         {/* While loading wrapper show <textarea> instead */}
         <Suspense fallback={<TextAreaFallback value={code} />}>
           <MonacoEditor
@@ -86,7 +76,7 @@ export const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = unde
             }}
           />
         </Suspense>
-      </Box>
-    </Box>
+      </div>
+    </div>
   )
 }
