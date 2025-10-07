@@ -6,11 +6,13 @@ import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hook'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { TokenDashboardContext } from '../TokenDashboardPage'
-import { FileDisplay, RawDataDisplay } from '../../components/CodeDisplay'
+import { CodeDisplay } from '../../components/CodeDisplay'
 import { codeContainerId } from '../../utils/tabAnchors'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VerificationIcon } from 'app/components/ContractVerificationIcon'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
+import { base64ToHex } from '../../utils/helpers'
+
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
 
@@ -90,19 +92,32 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
             )}
 
             {filesSorted?.map((file, index) => (
-              <FileDisplay key={file.path} code={file.content} filename={file.name} />
+              <CodeDisplay key={file.path} code={file.content} label={file.name} language="sol" />
             ))}
 
             {contract.verification?.compilation_metadata && (
-              <FileDisplay
+              <CodeDisplay
                 code={JSON.stringify(contract.verification.compilation_metadata, null, 2)}
-                filename={t('contract.contractMetadata')}
+                label={t('contract.contractMetadata')}
+                language="sol"
               />
             )}
 
-            <RawDataDisplay data={contract.creation_bytecode} label={t('contract.creationByteCode')} />
+            {contract.creation_bytecode && (
+              <CodeDisplay
+                code={base64ToHex(contract.creation_bytecode)}
+                label={t('contract.creationByteCode')}
+                language="plaintext"
+              />
+            )}
 
-            <RawDataDisplay data={contract.runtime_bytecode} label={t('contract.runtimeByteCode')} />
+            {contract.runtime_bytecode && (
+              <CodeDisplay
+                code={base64ToHex(contract.runtime_bytecode)}
+                label={t('contract.runtimeByteCode')}
+                language="plaintext"
+              />
+            )}
           </LinkableDiv>
         </CardContent>
       )}
