@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { base64ToHex } from '../../utils/helpers'
 import { MonacoLanguages } from './MonacoLanguages'
 
 const TextAreaFallback = ({ value }: { value?: string }) => (
@@ -45,7 +44,7 @@ type CodeDisplayProps = {
   extraTopPadding?: boolean
 }
 
-const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = undefined }) => {
+export const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = undefined }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
 
@@ -90,38 +89,4 @@ const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = undefined }
       </Box>
     </Box>
   )
-}
-
-type RawDataDisplayProps = {
-  data: string | undefined
-  label: string
-}
-
-export const RawDataDisplay: FC<RawDataDisplayProps> = ({ data, label }) => {
-  const code = data === undefined ? undefined : base64ToHex(data)
-  if (!code) return null
-
-  return <CodeDisplay code={code} label={label} extraTopPadding language="plaintext" />
-}
-
-type FileDisplayProps = {
-  code: string | undefined
-  filename: string
-}
-
-export const FileDisplay: FC<FileDisplayProps> = ({ code, filename }) => {
-  if (!code) return null
-
-  return <CodeDisplay code={code} label={filename} extraTopPadding language="sol" />
-}
-
-type JsonCodeDisplayProps = {
-  data: Record<string, any>
-  label?: string
-}
-
-export const JsonCodeDisplay: FC<JsonCodeDisplayProps> = ({ data, label }) => {
-  const formattedJson = JSON.stringify(data, null, 2)
-
-  return <CodeDisplay code={formattedJson} label={label} language="json" />
 }

@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { NftDashboardContext } from '../NFTInstanceDashboardPage'
-import { JsonCodeDisplay } from '../../components/CodeDisplay'
+import { CodeDisplay } from '../../components/CodeDisplay'
 import { useNFTInstance } from '../TokenDashboardPage/hook'
 import { metadataContainerId } from '../../utils/tabAnchors'
 
@@ -21,7 +21,11 @@ export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, insta
         {metadata && (
           <CardContent>
             <LinkableDiv id={metadataContainerId}>
-              <JsonCodeDisplay data={metadata} label={t('nft.metadata')} />
+              <CodeDisplay
+                code={JSON.stringify(metadata, null, 2)}
+                label={t('nft.metadata')}
+                language="json"
+              />
             </LinkableDiv>
           </CardContent>
         )}
