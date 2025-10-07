@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import { CardDivider } from '../../components/Divider'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
@@ -25,19 +24,19 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
 
   return (
     <>
-      <Box sx={{ mb: 5 }}>
+      <div className="mb-7">
         <Typography variant="h4" className="inline">
           {title}
         </Typography>
-      </Box>
+      </div>
       {results.map((item, i) => (
         <div key={i}>
           {resultComponent(item)}
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+          <div className="flex justify-center mt-7">
             <Button variant="contained" color="primary" component={RouterLink} to={link(item)}>
               {linkLabel}
             </Button>
-          </Box>
+          </div>
           {i < results.length - 1 && <CardDivider />}
         </div>
       ))}

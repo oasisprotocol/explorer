@@ -810,9 +810,9 @@
       "description": "Please try another search query <OptionalBreak> or <HomeLink>explore Oasis</HomeLink>.</OptionalBreak>"
     },
     "otherResults": {
-      "clickToShowThem": "We found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
-      "clickToShowMore": "We also found <strong>{{ countLabel }}</strong> on other <strong>Networks</strong>. Click to open these results.",
-      "clickToHide": "The results from other <strong>Networks</strong> are shown below. Click to hide those results."
+      "clickToShowThem": "We found {{ countLabel }} on other Networks. Click to open these results.",
+      "clickToShowMore": "We also found {{ countLabel }} on other Networks. Click to open these results.",
+      "clickToHide": "The results from other Networks are shown below. Click to hide those results."
     },
     "results": {
       "accounts": {
@@ -853,10 +853,10 @@
       "moreCount_other": "{{ count }} more results"
     },
     "searchBtnText": "Search",
-    "searchSuggestionsForRuntime": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
-    "searchSuggestionsForConsensus": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> </OptionalBreak>.",
-    "suggestSearchForRuntime": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink>, <TokenLink><TokenIcon/> Token</TokenLink> </OptionalBreak>.",
-    "suggestSearchForConsensus": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink><BlockIcon/> Block</BlockLink>, <TransactionLink><TransactionIcon/> Transaction</TransactionLink>, <AccountLink><AccountIcon/> Address</AccountLink> </OptionalBreak>."
+    "searchSuggestionsForRuntime": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink>Block</BlockLink>, <TransactionLink>Transaction</TransactionLink>, <AccountLink>Address</AccountLink>, <TokenLink>Token</TokenLink></OptionalBreak>.",
+    "searchSuggestionsForConsensus": "Not sure what to look for? Try out a search: <OptionalBreak><BlockLink>Block</BlockLink>, <TransactionLink>Transaction</TransactionLink>, <AccountLink>Address</AccountLink></OptionalBreak>.",
+    "suggestSearchForRuntime": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink>Block</BlockLink>, <TransactionLink>Transaction</TransactionLink>, <AccountLink>Address</AccountLink>, <TokenLink>Token</TokenLink></OptionalBreak>.",
+    "suggestSearchForConsensus": "Use search to find what you are looking for, i.e. <OptionalBreak><BlockLink>Block</BlockLink>, <TransactionLink>Transaction</TransactionLink>, <AccountLink>Address</AccountLink></OptionalBreak>."
   },
   "tableSearch": {
     "error": {

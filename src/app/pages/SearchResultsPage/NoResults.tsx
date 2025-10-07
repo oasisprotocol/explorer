@@ -1,9 +1,7 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
 import { EmptyState } from '../../components/EmptyState'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
 import { SearchSuggestionsLinksForNoResults } from '../../components/Search/SearchSuggestionsLinksForNoResults'
 import { OptionalBreak } from '../../components/OptionalBreak'
 import { getNameForScope, SearchScope } from '../../../types/searchScope'
@@ -26,24 +24,24 @@ export const NoResults: FC<{
     <EmptyState
       title={title}
       description={
-        <Box sx={{ a: { color: 'inherit', textDecoration: 'underline' } }}>
+        <div>
           <p>
-            <Box>
+            <span>
               <Trans
                 t={t}
                 i18nKey="search.noResults.description"
                 components={{
                   OptionalBreak: <OptionalBreak />,
-                  HomeLink: <Link component={RouterLink} to="/" />,
+                  HomeLink: <RouterLink to="/" className="font-semibold" />,
                 }}
               />
-            </Box>
+            </span>
           </p>
-          <p>
+          <p className="flex gap-1">
             <SearchSuggestionsLinksForNoResults scope={layer && network ? { network, layer } : undefined} />
           </p>
           <ExploreOasisButton />
-        </Box>
+        </div>
       }
     />
   )

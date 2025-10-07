@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, useCallback } from 'react'
 import { Button } from '@mui/base/Button'
-import Box from '@mui/material/Box'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import { useTranslation } from 'react-i18next'
 
@@ -19,16 +18,10 @@ export const ExploreOasisButton: FC = () => {
       }}
       onClick={explore}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-        }}
-      >
+      <div className="flex items-center gap-1">
         {t('home.exploreBtnText')}
         <ArrowForward fontSize={'small'} />
-      </Box>
+      </div>
     </Button>
   )
 }
