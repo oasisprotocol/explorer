@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { updatesContainerId } from '../../utils/tabAnchors'
@@ -20,12 +19,7 @@ export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
     <LinkableCardLayout
       containerId={updatesContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && (
             <RuntimeTransactionMethodFilter
               layer={scope.layer}
@@ -34,7 +28,7 @@ export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {
               customOptions={customOptions}
             />
           )}
-        </Box>
+        </div>
       }
     >
       {isMobile && (
