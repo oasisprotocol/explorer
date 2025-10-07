@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
-import { COLORS } from 'styles/theme/colors'
-import { VerticalProgressBar } from 'app/components/ProgressBar'
+import { LabeledProgress } from 'app/components/LabeledProgress'
 import { PercentageValue } from '../../components/PercentageValue'
 
 type VotingPowerCardProps = {
@@ -20,31 +19,33 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
       title={t('validator.votingPower')}
       label={
         typeof validator?.voting_power === 'number' && (
-          <Typography sx={{ fontSize: 18, color: COLORS.grayMedium }}>
-            ({validator?.voting_power.toLocaleString()})
-          </Typography>
+          <Typography>({validator?.voting_power.toLocaleString()})</Typography>
         )
       }
       withContentPadding={false}
     >
       {typeof validator?.voting_power === 'number' && stats?.total_voting_power && (
-        <div className="flex justify-between">
-          <div className="flex flex-col">
-            <Typography sx={{ fontSize: 12, color: COLORS.grayMedium, textAlign: 'left', paddingBottom: 3 }}>
-              {t('validator.votingPowerOverall')}
-            </Typography>
-            <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
-          </div>
+        <>
+          <Typography className="font-normal text-xs text-muted-foreground text-left pb-2">
+            {t('validator.votingPowerOverall')}
+          </Typography>
           <div className="pt-4">
-            <VerticalProgressBar
-              height={80}
-              width={50}
-              value={(100 * validator.voting_power) / stats.total_voting_power}
-              barWithBorder={false}
-              barBackgroundColor={COLORS.grayMediumLight}
+            <LabeledProgress
+              value={validator.voting_power}
+              max={stats.total_voting_power}
+              label={
+                <span className="font-bold">
+                  <PercentageValue
+                    adaptMaximumFractionDigits
+                    value={validator.voting_power}
+                    total={stats.total_voting_power}
+                    maximumFractionDigits={2}
+                  />
+                </span>
+              }
             />
           </div>
-        </div>
+        </>
       )}
     </SnapshotTextCard>
   )

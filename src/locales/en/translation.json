@@ -200,11 +200,11 @@
     }
   },
   "consensusSnapshot": {
-    "blockHeight": "Block Height <BlockHeight />",
+    "blockHeight": "Current block height <BlockHeight />",
     "title": "Consensus Snapshot",
     "totalCirculation": "This is <StakedPercentage /> of the total circulation"
   },
-  "currentEpoch": "Current Epoch",
+  "snapshotEpochTitle": "Current epoch & block height",
   "networkProposal": {
     "close": "Closed",
     "closeTooltip": "Voting ended on epoch shown.",

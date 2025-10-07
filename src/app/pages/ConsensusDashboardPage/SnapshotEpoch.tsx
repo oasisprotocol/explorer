@@ -5,7 +5,8 @@ import { useGetConsensusEpochs } from '../../../oasis-nexus/api'
 import { useGetStatus } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
-import { BrandProgressBar } from '../../components/ProgressBar'
+import { PercentageValue } from '../../components/PercentageValue'
+import { LabeledProgress } from '../../components/LabeledProgress'
 
 // We need to get the previous epoch to compute end_height for the current one
 // This may not be precise during abnormal network conditions, but such conditions never happened so far
@@ -18,17 +19,17 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
   const epochsQuery = useGetConsensusEpochs(scope.network, { limit: epochsLimit })
   const epochs = epochsQuery.data?.data.epochs
   const epoch = epochs?.length && epochs[0].id
-  let percentageValue = undefined
+  let epochDiffHeight = undefined
+  let completedBlocksInCurrentEpoch = undefined
 
   if (epochs && epochs[1]?.end_height && blockHeight) {
-    const epochDiffHeight = epochs[1]?.end_height - epochs[1]?.start_height
-    const completedBlocksInCurrentEpoch = blockHeight - epochs[0]?.start_height
-    percentageValue = completedBlocksInCurrentEpoch / epochDiffHeight
+    epochDiffHeight = epochs[1]?.end_height - epochs[1]?.start_height + 1
+    completedBlocksInCurrentEpoch = blockHeight - epochs[0]?.start_height
   }
 
   return (
     <SnapshotTextCard
-      title={t('currentEpoch')}
+      title={t('snapshotEpochTitle')}
       label={
         blockHeight !== undefined && (
           <Typography className="font-normal flex gap-2 items-center">
@@ -46,30 +47,21 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
       }
     >
       {epoch !== undefined && (
-        <>
-          {percentageValue !== undefined && (
-            <div className="-mt-2 mb-2">
-              <BrandProgressBar value={percentageValue * 100} variant="determinate" />
-            </div>
-          )}
-          <div className="flex items-baseline gap-2">
-            {epoch.toLocaleString()}
-            {percentageValue !== undefined && (
-              <Typography variant="xsmall" textColor="muted">
-                (
-                {t('common.valuePair', {
-                  value: percentageValue,
-                  formatParams: {
-                    value: {
-                      style: 'percent',
-                    } satisfies Intl.NumberFormatOptions,
-                  },
-                })}
-                )
-              </Typography>
-            )}
-          </div>
-        </>
+        <LabeledProgress
+          value={completedBlocksInCurrentEpoch}
+          max={epochDiffHeight}
+          label={
+            <>
+              <span className="font-bold">{completedBlocksInCurrentEpoch}</span>/{epochDiffHeight} (
+              <PercentageValue
+                value={completedBlocksInCurrentEpoch}
+                total={epochDiffHeight}
+                maximumFractionDigits={1}
+              />
+              )
+            </>
+          }
+        />
       )}
     </SnapshotTextCard>
   )

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import { RuntimeBlock } from '../../../oasis-nexus/api'
-import { VerticalProgressBar } from '../../components/ProgressBar'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { paraTimesConfig } from '../../../config'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -10,6 +9,7 @@ import { FC } from 'react'
 import { BlocksTableType } from './index'
 import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
+import { Progress } from '@oasisprotocol/ui-library/src/components/progress'
 
 export type TableRuntimeBlock = RuntimeBlock & {
   markAsNew?: boolean
@@ -77,7 +77,7 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
         ...(type === BlocksTableType.Desktop
           ? [
               {
-                content: <VerticalProgressBar value={(100 * block.gas_used) / blockGasLimit} />,
+                content: <Progress className="w-6" value={(100 * block.gas_used) / blockGasLimit} />,
                 key: 'fill',
               },
             ]
