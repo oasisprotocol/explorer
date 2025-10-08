@@ -83,7 +83,6 @@ export const RoflAppsPage: FC = () => {
       onChange={setWantedNameInput}
       placeholder={t('rofl.searchByNameOrKeyword')}
       warning={nameError}
-      fullWidth={isMobile}
       autoFocus={!isMobile}
       onEnter={jumpToSingleResult}
     />
