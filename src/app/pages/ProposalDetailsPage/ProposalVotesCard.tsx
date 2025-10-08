@@ -17,7 +17,6 @@ import Box from '@mui/material/Box'
 import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { WithHighlightPattern } from '../../components/PatternHighlightingContext'
-import { useScreenSize } from '../../hooks/useScreensize'
 
 type ProposalVotesProps = {
   isLoading: boolean
@@ -120,7 +119,6 @@ export const ProposalVotesView: FC = () => {
 
 export const ProposalVotesCard: FC = () => {
   const { t } = useTranslation()
-  const { isTablet } = useScreenSize()
 
   const { wantedType, setWantedType, wantedNameInput, setWantedNameInput, nameError } = useVoteFiltering()
 
@@ -138,8 +136,6 @@ export const ProposalVotesCard: FC = () => {
             onChange={setWantedNameInput}
             placeholder={t('networkProposal.searchForVoter')}
             warning={nameError}
-            size={'small'}
-            fullWidth={isTablet}
           />
         </div>
       </div>
