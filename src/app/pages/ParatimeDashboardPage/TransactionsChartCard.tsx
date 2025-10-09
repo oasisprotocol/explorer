@@ -26,9 +26,10 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
 interface TransactionsChartCardProps {
   scope: SearchScope
   chartDuration: ChartDuration
+  noBorder?: boolean
 }
 
-const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chartDuration }) => {
+const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chartDuration, noBorder }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
   const { isMobile } = useScreenSize()
@@ -72,6 +73,7 @@ const TransactionsChartCardCmp: FC<TransactionsChartCardProps> = ({ scope, chart
           value={lineChartData?.length && lineChartData[0].tx_volume}
         />
       }
+      noBorder={noBorder}
     >
       {lineChartData && (
         <LineChart
