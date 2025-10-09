@@ -7,7 +7,6 @@ import { ConsensusAccountDetailsContext } from './hooks'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
-import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext> = context => {
@@ -18,14 +17,9 @@ export const ConsensusAccountTransactionsCard: FC<ConsensusAccountDetailsContext
     <LinkableCardLayout
       containerId={transactionsContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
-        </Box>
+        </div>
       }
     >
       {isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />}

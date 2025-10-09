@@ -14,7 +14,6 @@ import {
   getConsensusTransactionMethodFilteringParam,
   ConsensusTxMethodFilterOption,
 } from '../../components/ConsensusTransactionMethod'
-import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<{
@@ -66,14 +65,9 @@ export const ConsensusBlockTransactionsCard: FC<ConsensusBlockDetailsContext> = 
     <LinkableCardLayout
       containerId={transactionsContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />}
-        </Box>
+        </div>
       }
     >
       {isMobile && <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />}

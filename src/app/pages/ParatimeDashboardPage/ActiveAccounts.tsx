@@ -54,6 +54,7 @@ export const getChartLabelFormatParams = (duration: ChartDuration) => {
 type ActiveAccountsProps = {
   scope: SearchScope
   chartDuration: ChartDuration
+  noBorder?: boolean
 }
 
 const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
@@ -63,7 +64,7 @@ const getLabels = (t: TFunction): Record<ChartDuration, string> => ({
   [ChartDuration.YEAR]: t('chartDuration.lastMonth'),
 })
 
-export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }) => {
+export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration, noBorder }) => {
   const { t } = useTranslation()
   const labels = getLabels(t)
   const { limit, window_step_seconds } = {
@@ -103,6 +104,7 @@ export const ActiveAccounts: FC<ActiveAccountsProps> = ({ scope, chartDuration }
           value={windows?.length && windows[0].active_accounts}
         />
       }
+      noBorder={noBorder}
     >
       {windows && (
         <BarChart

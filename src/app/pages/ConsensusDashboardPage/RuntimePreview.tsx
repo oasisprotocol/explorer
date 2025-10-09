@@ -1,10 +1,9 @@
 import { FC, ReactNode, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { styled } from '@mui/material/styles'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
@@ -35,55 +34,6 @@ const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
   },
   dd: {
     justifyContent: 'end',
-  },
-}))
-
-const StyledBox = styled(Box)(() => ({
-  border: `2px solid ${COLORS.brandDark}`,
-  borderRadius: '12px',
-  height: '180px',
-  display: 'flex',
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  boxShadow: '0px 34px 24px -9px #324DAB1F',
-  overflow: 'hidden',
-}))
-
-const StyledTypography = styled(Typography)(() => ({
-  fontSize: '18px',
-  fontWeight: 700,
-  color: COLORS.brandDark,
-  flex: 1,
-  minHeight: '44px',
-  display: 'flex',
-  alignItems: 'center',
-}))
-
-const StyledDisabledRuntime = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: 3,
-  paddingTop: theme.spacing(3),
-  flexDirection: 'row',
-  alignItems: 'center',
-  [theme.breakpoints.between('md', 'xl')]: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-}))
-
-const StyledEnabledRuntime = styled(Box)(({ theme }) => ({
-  flex: 1,
-  height: '100%',
-  paddingTop: theme.spacing(3),
-  paddingBottom: theme.spacing(3),
-  [theme.breakpoints.down('lg')]: {
-    paddingBottom: theme.spacing(5),
-    borderBottom: `1px solid ${COLORS.grayMediumLight}`,
-  },
-  [theme.breakpoints.up('lg')]: {
-    paddingRight: theme.spacing(4),
-    borderRight: `1px solid ${COLORS.grayMediumLight}`,
   },
 }))
 
@@ -134,12 +84,14 @@ export const DisabledRuntimePreview: FC<DisabledRuntimePreviewProps> = ({ runtim
   const runtimeLabel = layerLabels[runtime]
 
   return (
-    <StyledDisabledRuntime>
-      <StyledTypography>{runtimeLabel}</StyledTypography>
-      <Box>
+    <div className="flex gap-2 flex-row items-center pt-2 lg:pt-0">
+      <Typography className="text-base font-semibold text-primary flex items-center flex-1 min-h-[44px]">
+        {runtimeLabel}
+      </Typography>
+      <div>
         <Badge variant="info">{t('paratimes.inactive')}</Badge>
-      </Box>
-    </StyledDisabledRuntime>
+      </div>
+    </div>
   )
 }
 
@@ -161,28 +113,28 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
   const dashboardLink = RouteUtils.getDashboardRoute({ network, layer: runtime })
   const runtimeStatus = status ? (status.outOfDate ? 'outdated' : 'stable') : 'inactive'
   return (
-    <StyledEnabledRuntime>
-      <Box sx={{ marginBottom: 4 }}>
-        <StyledTypography>
+    <div className="flex-1 h-full pb-6 border-b border-gray-200 lg:p-0 lg:pr-4 lg:border-b-0 lg:border-r">
+      <div className="mb-4">
+        <Typography className="text-base font-semibold text-primary flex items-center flex-1 min-h-[44px]">
           {status ? (
             <>
-              <Link component={RouterLink} to={dashboardLink}>
-                {runtimeLabel}
+              <Link asChild>
+                <RouterLink to={dashboardLink}>{runtimeLabel}</RouterLink>
               </Link>
               <RouterLinkCircle to={dashboardLink} />
             </>
           ) : (
             <>{runtimeLabel}</>
           )}
-        </StyledTypography>
-      </Box>
+        </Typography>
+      </div>
       <StyledList>
         <dt>{t('common.status')}:</dt>
         <dd>
-          <Box>
+          <div>
             {runtimeStatus === 'stable' && <Badge variant="success">{t('common.online')}</Badge>}
             {runtimeStatus === 'outdated' && <Badge variant="error">{t('paratimes.outdated')}</Badge>}
-          </Box>
+          </div>
         </dd>
         <dt>{t('paratimes.blockNumber')}</dt>
         <dd>
@@ -201,7 +153,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
         <dt>{t('paratimes.nodes')} </dt>
         <dd>{status?.activeNodes ? t('paratimes.activeNodes', { nodes: status?.activeNodes }) : '-'} </dd>
       </StyledList>
-      <Box sx={{ display: 'flex', gap: 3 }}>
+      <div className="flex gap-2">
         <ChartsContainer status={status}>
           {panel === 'transactions' && (
             <TransactionsChartCard
@@ -210,6 +162,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
                 network,
               }}
               chartDuration={ChartDuration.TODAY}
+              noBorder
             />
           )}
           {panel === 'accounts' && (
@@ -219,6 +172,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
                 network,
               }}
               chartDuration={ChartDuration.TODAY}
+              noBorder
             />
           )}
         </ChartsContainer>
@@ -230,12 +184,13 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
                 network,
               }}
               chartDuration={ChartDuration.TODAY}
+              noBorder
             />
           </ChartsContainer>
         )}
-      </Box>
+      </div>
       {!prominentItem && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 3 }}>
+        <div className="flex justify-center pt-2">
           {status && (
             <>
               <PanelButton
@@ -252,9 +207,9 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
               />
             </>
           )}
-        </Box>
+        </div>
       )}
-    </StyledEnabledRuntime>
+    </div>
   )
 }
 
@@ -296,16 +251,16 @@ const ChartsContainer: FC<ChartsContainerProps> = ({ children, status }) => {
   const { t } = useTranslation()
 
   return (
-    <StyledBox>
-      <Box gap={3} sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {status && <Box sx={{ width: '100%' }}>{children}</Box>}
+    <div className="flex flex-1 items-center justify-center h-[180px] border-1 border-gray-200 rounded-md overflow-hidden">
+      <div className="flex flex-1 flex-col items-center gap-2">
+        {status && <div className="w-full">{children}</div>}
         {!status && (
           <>
             <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
             {t('paratimes.noData')}
           </>
         )}
-      </Box>
-    </StyledBox>
+      </div>
+    </div>
   )
 }

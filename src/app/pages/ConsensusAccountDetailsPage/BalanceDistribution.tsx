@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
@@ -74,7 +73,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
           value: totalValue,
         })}
       </Typography>
-      <Box sx={{ height: isMobile ? '100px' : '250px' }}>
+      <div className="h-[100px] md:h-[250px]">
         <PieChart
           compact={isMobile}
           data={data}
@@ -88,7 +87,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
             label: (label: string) => label,
           }}
         />
-      </Box>
+      </div>
     </>
   )
 }
