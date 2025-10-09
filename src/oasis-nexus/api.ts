@@ -3,18 +3,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { consensusDecimals, getTokensForScope, paraTimesConfig } from '../config'
 import * as generated from './generated/api'
-import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
-import {
-  Account,
-  EvmToken,
-  EvmTokenType,
-  GetRuntimeAccountsAddress,
-  HumanReadableErrorResponse,
-  NotFoundErrorResponse,
-  Runtime,
-  RuntimeAccount,
-  RuntimeEventType,
-} from './generated/api'
+import { UseQueryOptions } from '@tanstack/react-query'
+import { Account, EvmToken, Runtime, RuntimeAccount, RuntimeEventType } from './generated/api'
 import {
   base64ToHex,
   getAccountSize,
@@ -27,7 +17,6 @@ import { getCancelTitle, getParameterChangeTitle, getProposalTitle } from '../ap
 import { Network } from '../types/network'
 import { SearchScope } from '../types/searchScope'
 import { Ticker } from '../types/ticker'
-import { getRPCAccountBalances } from '../app/utils/getRPCAccountBalances'
 import { toChecksumAddress } from '@ethereumjs/util'
 import { fromBaseUnits } from '../app/utils/number-utils'
 import { getConsensusTransactionAmount, getConsensusTransactionToAddress } from '../app/utils/transaction'
@@ -460,7 +449,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
   address,
   options,
 ) => {
-  const query = generated.useGetRuntimeAccountsAddress(network, runtime, address, {
+  return generated.useGetRuntimeAccountsAddress(network, runtime, address, {
     ...options,
     query: {
       ...(options?.query ?? {}),
@@ -515,42 +504,7 @@ export const useGetRuntimeAccountsAddress: typeof generated.useGetRuntimeAccount
         ...arrayify(options?.request?.transformResponse),
       ],
     },
-  }) as UseQueryResult<
-    Awaited<ReturnType<typeof GetRuntimeAccountsAddress>>,
-    HumanReadableErrorResponse | NotFoundErrorResponse
-  > & { queryKey: QueryKey }
-
-  const runtimeAccount = query.data?.data
-
-  // TODO: Remove after account balances on Nexus are in sync with the node
-  const oasisAddress = getOasisAddressOrNull(address)
-  const rpcAccountBalances = useQuery({
-    enabled: !!oasisAddress,
-    queryKey: [oasisAddress, network, runtime],
-    queryFn: async () => {
-      if (!oasisAddress) throw new Error('Needed to fix types - see `enabled`')
-      return await getRPCAccountBalances(oasisAddress, { network: network, layer: runtime })
-    },
-  }).data
-
-  const data =
-    rpcAccountBalances && runtimeAccount
-      ? {
-          ...runtimeAccount,
-          balances: rpcAccountBalances,
-        }
-      : runtimeAccount
-
-  return {
-    ...query,
-    data: query.data
-      ? {
-          ...query.data,
-          data,
-        }
-      : query.data,
-    // TypeScript complaining for no good reason
-  } as any
+  })
 }
 
 const MAX_LOADED_ADDRESSES = 100
