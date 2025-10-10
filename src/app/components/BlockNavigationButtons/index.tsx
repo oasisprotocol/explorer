@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { PaginationNext, PaginationPrevious } from '@oasisprotocol/ui-library/src/components/pagination'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
@@ -38,13 +37,13 @@ const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound:
   const [searchParams] = useSearchParams()
   return (
     <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')} placement="top">
-      <Box>
+      <div>
         <PaginationNext
           linkComponent={RouterLink}
           to={RouteUtils.getBlockRoute(scope, currentRound + 1, searchParams, [TX_METHOD_QUERY_ARG_NAME])}
           disabled={disabled}
         />
-      </Box>
+      </div>
     </Tooltip>
   )
 }

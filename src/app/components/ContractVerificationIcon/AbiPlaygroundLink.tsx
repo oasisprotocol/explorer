@@ -5,7 +5,6 @@ import { Layer } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
 import * as externalLinks from '../../utils/externalLinks'
-import Box from '@mui/material/Box'
 
 export const AbiPlaygroundLink: FC<{
   address_eth: string
@@ -38,7 +37,7 @@ export const AbiPlaygroundLink: FC<{
   return (
     <span>
       &nbsp;|&nbsp;
-      <Box sx={{ display: 'inline-block' }}>
+      <div className="inline-block">
         <Trans
           t={t}
           i18nKey={'contract.verification.openInAbiPlayground'}
@@ -46,7 +45,7 @@ export const AbiPlaygroundLink: FC<{
             AbiPlaygroundLink: <Link {...abiPlaygroundLinkProps} />,
           }}
         />
-      </Box>
+      </div>
     </span>
   )
 }

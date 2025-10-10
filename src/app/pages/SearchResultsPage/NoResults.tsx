@@ -37,7 +37,7 @@ export const NoResults: FC<{
               />
             </span>
           </p>
-          <p className="flex gap-1">
+          <p>
             <SearchSuggestionsLinksForNoResults scope={layer && network ? { network, layer } : undefined} />
           </p>
           <ExploreOasisButton />
