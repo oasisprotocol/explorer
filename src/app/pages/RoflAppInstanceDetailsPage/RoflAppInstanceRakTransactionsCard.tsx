@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { transactionsContainerId } from '../../utils/tabAnchors'
@@ -16,16 +15,11 @@ export const RoflAppInstanceRakTransactionsCard: FC<RoflAppInstanceDetailsContex
     <LinkableCardLayout
       containerId={transactionsContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && (
             <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
-        </Box>
+        </div>
       }
     >
       {isMobile && (

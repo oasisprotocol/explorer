@@ -1,30 +1,16 @@
 import { FC, Fragment, PropsWithChildren, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { RoflAppPolicy } from '../../../oasis-nexus/api'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
 
 const StyledBox: FC<PropsWithChildren> = ({ children }) => {
-  const { isTablet } = useScreenSize()
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexWrap: isTablet ? 'wrap' : 'nowrap',
-        textWrap: isTablet ? 'wrap' : 'nowrap',
-        gap: 2,
-        alignItems: 'center',
-        flex: 1,
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-      }}
-    >
+    <div className="flex flex-nowrap md:flex-wrap gap-1 items-center flex-1 overflow-x-hidden overflow-y-hidden text-nowrap md:whitespace-normal">
       {children}
-    </Box>
+    </div>
   )
 }
 
@@ -145,21 +131,9 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
       case 'and':
       case 'or':
         return (
-          <Box
-            component={'div'}
-            sx={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              overflowX: 'hidden',
-              paddingLeft: '15px',
-              borderLeft: '1px solid #000' /* Vertical line of the brace */,
-              borderTopLeftRadius: '10px',
-              borderBottomLeftRadius: '10px',
-            }}
-          >
+          <div className="flex-1 flex flex-col overflow-x-hidden pl-4 border-l border-black rounded-tl-lg rounded-bl-lg">
             <Endorsement endorsements={value} groupOp={key} />
-          </Box>
+          </div>
         )
     }
     exhaustedTypeWarning('Unknown endorsement', key)
@@ -185,18 +159,9 @@ export const Endorsement: FC<EndorsementProps> = ({ endorsements, groupOp }) => 
                 {groupOpLabel[groupOp]}
               </span>
             )}
-            <Box
-              sx={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                flexWrap: 'nowrap',
-                overflowX: 'hidden',
-                gap: 3,
-              }}
-            >
+            <div className="flex flex-1 items-center flex-nowrap overflow-x-hidden gap-2">
               {renderedExplanation}
-            </Box>
+            </div>
           </Fragment>
         ) : (
           <Fragment key={index}>{renderedExplanation}</Fragment>
