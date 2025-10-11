@@ -9,6 +9,7 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
 import { useTranslation } from 'react-i18next'
+import { hideRoseAppButton } from '../../../config'
 
 export const Header: FC = () => {
   const theme = useTheme()
@@ -48,7 +49,7 @@ export const Header: FC = () => {
             </div>
           )}
 
-          {isDesktop && (
+          {isDesktop && !hideRoseAppButton && (
             <div className="col-span-3 flex justify-end items-center">
               <Button
                 component="a"
