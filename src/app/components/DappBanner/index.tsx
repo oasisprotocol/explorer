@@ -3,7 +3,6 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { COLORS } from '../../../styles/theme/colors'
-import Box from '@mui/material/Box'
 import { SearchScope } from '../../../types/searchScope'
 import Button from '@mui/material/Button'
 import { EthOrOasisAddress } from '../../../oasis-nexus/api'
@@ -25,15 +24,7 @@ export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisA
         }}
       >
         <CardContent sx={{ paddingBottom: '0!important' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 3,
-            }}
-          >
+          <div className="flex flex-wrap justify-center items-center gap-2">
             <Typography variant="h3" className="text-white">
               {dApp.description}
             </Typography>
@@ -53,7 +44,7 @@ export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisA
             >
               {dApp.button}
             </Button>
-          </Box>
+          </div>
         </CardContent>
       </Card>
     )
