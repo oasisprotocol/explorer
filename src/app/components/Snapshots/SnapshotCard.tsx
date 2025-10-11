@@ -5,7 +5,9 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import { styled } from '@mui/material/styles'
 
-export const StyledCard = styled(Card)(({ theme }) => ({
+export const StyledCard = styled(Card, {
+  shouldForwardProp: prop => prop !== 'noBorder',
+})<{ noBorder?: boolean }>(({ theme, noBorder }) => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
@@ -15,6 +17,8 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     margin: 0,
   },
   height: 186,
+  border: noBorder ? 0 : undefined,
+  backgroundColor: '#FAFAFA',
 }))
 
 const StyledCardContent = styled(CardContent, {
@@ -31,6 +35,7 @@ type SnapshotCardProps = PropsWithChildren & {
   title: ReactNode
   withContentPadding?: boolean
   alignWithCardsWithActions?: boolean
+  noBorder?: boolean
 }
 
 export const SnapshotCard: FC<SnapshotCardProps> = ({
@@ -40,10 +45,11 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
   label,
   withContentPadding = true,
   alignWithCardsWithActions = false,
+  noBorder = false,
 }) => {
   return (
-    <StyledCard>
-      <Typography variant="h4" className="pl-4 pt-4">
+    <StyledCard noBorder={noBorder}>
+      <Typography variant="h4" className="pl-4 pt-4 text-sm">
         {title}
       </Typography>
       <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
@@ -51,9 +57,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
         <CardActions sx={{ minHeight: 60 }}>
           <div className="flex justify-between items-center w-full px-4 pb-4">
             <div>{badge}</div>
-            <Typography textColor="muted" className="flex-1">
-              {label}
-            </Typography>
+            <div className="flex-1 text-muted-foreground">{label}</div>
           </div>
         </CardActions>
       )}

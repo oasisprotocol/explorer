@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusEvent } from '../../../oasis-nexus/api'
 import { TablePagination, TablePaginationProps } from '../Table/TablePagination'
@@ -55,9 +54,9 @@ export const ConsensusEventsList: FC<{
           </div>
         ))}
         {pagination && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="flex justify-center">
             <TablePagination {...pagination} />
-          </Box>
+          </div>
         )}
       </>
     )
