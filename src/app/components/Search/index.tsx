@@ -12,6 +12,7 @@ import { isValidMnemonic } from '../../utils/helpers'
 import { getAppTitle } from '../../../config'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
 import { Search as SearchIcon } from 'lucide-react'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export interface SearchProps {
   scope?: SearchScope
@@ -79,23 +80,34 @@ export const Search: FC<SearchProps> = ({
   }, [hasProblem])
 
   return (
-    <form
-      className="flex gap-2"
-      onSubmit={onFormSubmit}
-      role="search"
-      aria-label={searchPlaceholderTranslated}
-    >
-      <SearchInput size="lg" onChange={onChange} placeholder={searchPlaceholderTranslated} value={value} />
-      <Button
-        className="max-lg:!px-2.5"
-        onClick={onFormSubmit}
-        disabled={disabled || hasProblem}
-        type="submit"
-        size="lg"
+    <div className="group flex justify-end">
+      <form
+        className={cn(
+          'flex-1 flex gap-2 items-center',
+          expandable && 'absolute h-10 group-hover:inset-0 group-focus-within:inset-0',
+        )}
+        onSubmit={onFormSubmit}
+        role="search"
+        aria-label={searchPlaceholderTranslated}
       >
-        <SearchIcon className="lg:hidden" style={{ width: '20px', height: '20px' }} />
-        <span className="max-lg:hidden">{t('search.searchBtnText')}</span>
-      </Button>
-    </form>
+        <SearchInput
+          className={cn(expandable && 'hidden group-hover:flex group-focus-within:flex')}
+          size="lg"
+          onChange={onChange}
+          placeholder={searchPlaceholderTranslated}
+          value={value}
+        />
+        <Button
+          className="max-lg:!px-2.5"
+          onClick={onFormSubmit}
+          disabled={disabled || hasProblem}
+          type="submit"
+          size="lg"
+        >
+          <SearchIcon className="lg:hidden" style={{ width: '20px', height: '20px' }} />
+          <span className="max-lg:hidden">{t('search.searchBtnText')}</span>
+        </Button>
+      </form>
+    </div>
   )
 }
