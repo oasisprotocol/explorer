@@ -1,6 +1,5 @@
 import { memo, useEffect, useRef } from 'react'
 import jazzicon from '@metamask/jazzicon'
-import Box from '@mui/material/Box'
 
 interface JazzIconProps {
   diameter: number
@@ -18,5 +17,5 @@ export const JazzIcon = memo(({ diameter, seed }: JazzIconProps) => {
     }
   }, [diameter, ref, seed])
 
-  return <Box ref={ref} sx={{ height: diameter }} />
+  return <div ref={ref} style={{ height: diameter, width: diameter, display: 'inline-block' }} />
 })

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { findTextMatches, NormalizerOptions, PositiveMatchInfo } from './text-matching'
 import { FC, ReactNode } from 'react'
-import { SxProps } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import { useHighlightPattern } from '../PatternHighlightingContext'
 
 export interface HighlightOptions {
@@ -10,30 +8,6 @@ export interface HighlightOptions {
    * Options for identifying the matches
    */
   findOptions?: NormalizerOptions
-
-  /**
-   * Which class to use for highlighting?
-   *
-   * Please don't supply both class and style together.
-   */
-  className?: string
-
-  /**
-   * Which styles to use for highlighting?
-   *
-   * Please don't supply both class and style together.
-   */
-  sx?: SxProps
-}
-
-const defaultHighlightStyle: SxProps = {
-  background: '#FFFF5480',
-  padding: '2px',
-  margin: '-2px',
-}
-
-const defaultHighlight: HighlightOptions = {
-  sx: defaultHighlightStyle,
 }
 
 export type HighlightPattern = string[]
@@ -65,13 +39,9 @@ interface HighlightedTextProps {
 /**
  * Display a text, with potential pattern matches highlighted with html MARKs
  */
-export const HighlightedText: FC<HighlightedTextProps> = ({
-  text,
-  partsToHighlight,
-  options = defaultHighlight,
-}) => {
+export const HighlightedText: FC<HighlightedTextProps> = ({ text, partsToHighlight, options = {} }) => {
   const pattern = useHighlightPattern()
-  const { sx = defaultHighlightStyle, findOptions = {} } = options
+  const { findOptions = {} } = options
 
   // Have we been told what to highlight exactly? If not, look for the pattern
   const matches = partsToHighlight ?? findTextMatches(text, pattern, findOptions)
@@ -100,9 +70,9 @@ export const HighlightedText: FC<HighlightedTextProps> = ({
         pieces.push(text.substring(processedChars, match.startPos))
         const focus = text.substring(match.startPos, match.endPos)
         pieces.push(
-          <Box key={processedMatches} component="mark" sx={sx}>
+          <mark key={processedMatches} className="bg-yellow-200 px-0.5 -mx-0.5">
             {focus}
-          </Box>,
+          </mark>,
         )
         processedChars = match.endPos
       }

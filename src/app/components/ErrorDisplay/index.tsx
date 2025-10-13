@@ -6,7 +6,6 @@ import { AppError, AppErrors, ErrorPayload } from '../../../types/errors'
 import { TFunction } from 'i18next'
 import { GoToFirstPageLink } from '../Table/GoToFirstPageLink'
 import { ExploreOasisButton } from '../../pages/SearchResultsPage/ExploreOasisButton'
-import Box from '@mui/material/Box'
 import { SearchSuggestionsLinksForNoResults } from '../Search/SearchSuggestionsLinksForNoResults'
 import { SearchScope } from '../../../types/searchScope'
 import { useScopeParam } from '../../hooks/useScopeParam'
@@ -78,20 +77,16 @@ const errorMap: Record<
     title: t('errors.notFoundProposal'),
     message: t('errors.validateURL'),
   }),
-  [AppErrors.InvalidUrl]: (t, _, scope, theme) => ({
+  [AppErrors.InvalidUrl]: (t, _, scope) => ({
     title: t('errors.invalidUrl'),
     message: (
-      <Box
-        sx={{
-          a: { color: theme.palette.layout.contrastMain, textDecoration: 'underline' },
-        }}
-      >
+      <div>
         <p>
           <SearchSuggestionsLinksForNoResults scope={scope} suggestSearch />
         </p>
         <p>{t('errors.alternativelyGoExplore')}</p>
         <ExploreOasisButton />
-      </Box>
+      </div>
     ),
   }),
   [AppErrors.UnsupportedLayer]: t => ({
