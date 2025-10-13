@@ -22,10 +22,10 @@ The format is inspired by [Keep a Changelog].
 - Fix responsiveness in paratime snapshot header
   ([#2196](https://github.com/oasisprotocol/explorer/issues/2196))
 
-- Update font size of table search input.
+- Update font size of table search input
   ([#2203](https://github.com/oasisprotocol/explorer/issues/2203))
 
-- Learning Materials content height update.
+- Learning Materials content height update
   ([#2205](https://github.com/oasisprotocol/explorer/issues/2205))
 
 - Remove duplicated hash column from blocks list table
@@ -34,52 +34,36 @@ The format is inspired by [Keep a Changelog].
 - Add word wrapping for events code snippets on mobile
   ([#2216](https://github.com/oasisprotocol/explorer/issues/2216))
 
-- Fix EVM log message data display.
+- Fix EVM log message data display
   ([#2219](https://github.com/oasisprotocol/explorer/issues/2219))
 
 - Fix emitting contract alignment.
   ([#2220](https://github.com/oasisprotocol/explorer/issues/2220))
 
-- Fix snapshot alignment for Pontus-x.
+- Fix snapshot alignment for Pontus-x
   ([#2227](https://github.com/oasisprotocol/explorer/issues/2227))
 
 ### Internal Changes
 
-- Remove usage of MUI Tabs component
-  ([#2122](https://github.com/oasisprotocol/explorer/issues/2122))
-
-- Replace MUI Select component with Oasis UI Library component
-  ([#2144](https://github.com/oasisprotocol/explorer/issues/2144))
-
-- Solve warning about missing dialog title
-  ([#2168](https://github.com/oasisprotocol/explorer/issues/2168))
+- Introduce Oasis UI Library
+  ([#2122](https://github.com/oasisprotocol/explorer/issues/2122),
+  [#2144](https://github.com/oasisprotocol/explorer/issues/2144),
+  [#2187](https://github.com/oasisprotocol/explorer/issues/2187),
+  [#2194](https://github.com/oasisprotocol/explorer/issues/2194),
+  [#2215](https://github.com/oasisprotocol/explorer/issues/2215),
+  [#2235](https://github.com/oasisprotocol/explorer/issues/2235),
+  [#2236](https://github.com/oasisprotocol/explorer/issues/2236),
+  [#2247](https://github.com/oasisprotocol/explorer/issues/2247),
+  [#2168](https://github.com/oasisprotocol/explorer/issues/2168))
 
 - Simplify hover highlighting
   ([#2182](https://github.com/oasisprotocol/explorer/issues/2182))
 
-- Replace MUI Pagination with Oasis UI Library component
-  ([#2187](https://github.com/oasisprotocol/explorer/issues/2187))
-
-- Remove usage of MUI Menu components
-  ([#2194](https://github.com/oasisprotocol/explorer/issues/2194))
-
-- Update dependencies
-  ([#2201](https://github.com/oasisprotocol/explorer/issues/2201))
-
 - Trigger workflows for stable/* branches
   ([#2213](https://github.com/oasisprotocol/explorer/issues/2213))
 
-- Replace MUI Table with Oasis UI Library components
-  ([#2215](https://github.com/oasisprotocol/explorer/issues/2215))
-
-- Replace MUI Progress with Oasis UI Library component
-  ([#2235](https://github.com/oasisprotocol/explorer/issues/2235))
-
-- Replace MUI ButtonBase with Oasis UI Library component
-  ([#2236](https://github.com/oasisprotocol/explorer/issues/2236))
-
-- Replace MUI dependencies in TableSearchBar with Oasis UI Library
-  ([#2247](https://github.com/oasisprotocol/explorer/issues/2247))
+- Update dependencies
+  ([#2201](https://github.com/oasisprotocol/explorer/issues/2201))
 
 ## 1.24.1 (2025-08-26)
 
