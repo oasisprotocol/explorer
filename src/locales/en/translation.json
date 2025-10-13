@@ -201,8 +201,7 @@
   },
   "consensusSnapshot": {
     "blockHeight": "Current block height <BlockHeight />",
-    "title": "Consensus Snapshot",
-    "totalCirculation": "This is <StakedPercentage /> of the total circulation"
+    "title": "Consensus Snapshot"
   },
   "snapshotEpochTitle": "Current epoch & block height",
   "networkProposal": {
