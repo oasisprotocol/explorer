@@ -1,4 +1,4 @@
-import { FC, FormEvent, memo, useEffect, useState } from 'react'
+import { FC, FormEvent, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
@@ -13,18 +13,20 @@ import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 import { getAppTitle } from '../../../config'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
-import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
-
-export type SearchVariant = 'button' | 'icon' | 'expandable'
 
 export interface SearchProps {
   scope?: SearchScope
-  variant: SearchVariant
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void
+  expandable?: boolean
 }
 
-export const Search: FC<SearchProps> = ({ scope, variant, disabled, onFocusChange: onFocusChangeProp }) => {
+export const Search: FC<SearchProps> = ({
+  scope,
+  expandable,
+  disabled,
+  onFocusChange: onFocusChangeProp,
+}) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useScreenSize()
@@ -84,25 +86,16 @@ export const Search: FC<SearchProps> = ({ scope, variant, disabled, onFocusChang
       role="search"
       aria-label={searchPlaceholderTranslated}
     >
-      <SearchInput
-        className=""
-        size="lg"
-        onChange={onChange}
-        placeholder={searchPlaceholderTranslated}
-        value={value}
-      />
+      <SearchInput size="lg" onChange={onChange} placeholder={searchPlaceholderTranslated} value={value} />
       <Button
-        className={cn('', variant === 'icon' && '!px-2.5')}
+        className="max-lg:!px-2.5"
         onClick={onFormSubmit}
         disabled={disabled || hasProblem}
         type="submit"
         size="lg"
       >
-        {variant !== 'button' ? (
-          <SearchIcon sx={{ color: COLORS.grayMediumLight }} />
-        ) : (
-          t('search.searchBtnText')
-        )}
+        <SearchIcon className="lg:hidden" sx={{ color: COLORS.grayMediumLight }} />
+        <span className="max-lg:hidden">{t('search.searchBtnText')}</span>
       </Button>
     </form>
   )
