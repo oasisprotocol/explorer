@@ -1,8 +1,6 @@
 import { FC, FormEvent, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
-import { COLORS } from '../../../styles/theme/colors'
 import { RouteUtils } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
@@ -13,6 +11,7 @@ import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 import { getAppTitle } from '../../../config'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
+import { Search as SearchIcon } from 'lucide-react'
 
 export interface SearchProps {
   scope?: SearchScope
@@ -94,7 +93,7 @@ export const Search: FC<SearchProps> = ({
         type="submit"
         size="lg"
       >
-        <SearchIcon className="lg:hidden" sx={{ color: COLORS.grayMediumLight }} />
+        <SearchIcon className="lg:hidden" style={{ width: '20px', height: '20px' }} />
         <span className="max-lg:hidden">{t('search.searchBtnText')}</span>
       </Button>
     </form>
