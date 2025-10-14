@@ -91,7 +91,10 @@ export const Search: FC<SearchProps> = ({
         aria-label={searchPlaceholderTranslated}
       >
         <SearchInput
-          className={cn(expandable && 'hidden group-hover:flex group-focus-within:flex')}
+          className={cn(
+            '[&>svg]:max-lg:hidden [&>input]:max-lg:px-4',
+            expandable && 'hidden group-hover:flex group-focus-within:flex',
+          )}
           size="lg"
           onChange={onChange}
           placeholder={searchPlaceholderTranslated}
