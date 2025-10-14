@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
 import discord from './discord-blue.svg'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 
 export const DiscordProfileWidget: FC<{
   handle: string
@@ -14,26 +12,11 @@ export const DiscordProfileWidget: FC<{
       : handle
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 3,
-      }}
-    >
-      <Typography
-        component="span"
-        sx={{
-          fontWeight: 'bold',
-          color: '#5865f2' /* Discord's brand color */,
-          fontSize: '16px',
-        }}
-      >
-        @{cleanHandle}
-      </Typography>
+    <div className="flex items-center gap-2">
+      <span className="font-bold text-[#5865f2]">@{cleanHandle}</span>
       at
       <img src={discord} height={24} alt="" />
       Discord
-    </Box>
+    </div>
   )
 }

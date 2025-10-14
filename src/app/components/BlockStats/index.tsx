@@ -1,20 +1,21 @@
 import { ReactNode } from 'react'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
-const StyledSquare = styled(Box, {
-  shouldForwardProp: prop => prop !== 'success',
-})(({ success }: { success?: boolean }) => {
-  return {
-    display: 'flex',
-    width: '24px',
-    height: '24px',
-    borderRadius: '3px',
-    backgroundColor: success ? COLORS.eucalyptus : COLORS.errorIndicatorBackground,
-  }
-})
+const Square = ({ success, size = 32 }: { success?: boolean; size?: number }) => {
+  const borderRadius = size <= 8 ? 2 : 6
+
+  return (
+    <div
+      className={cn(success ? 'bg-success' : 'bg-destructive')}
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: `${borderRadius}px`,
+      }}
+    />
+  )
+}
 
 type BlockStatsProps<T> = {
   data: T[]
@@ -39,25 +40,25 @@ export const BlockStats = <T extends { [key: string]: any }>({
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap' }} gap={2}>
+      <div className="flex flex-wrap gap-2">
         {data.map(item => {
           const title = tooltipFormatter ? tooltipFormatter(item[dataKey].toString()) : item[dataKey]
           return (
             <Tooltip key={item[dataKey]} title={title} placement="top">
-              <StyledSquare success={item[statusKey]} />
+              <Square success={item[statusKey]} />
             </Tooltip>
           )
         })}
-      </Box>
+      </div>
       {legendLabels && (
-        <Box pt={5} sx={{ display: 'flex' }}>
-          <Box gap={3} mr={4} sx={{ display: 'flex' }}>
-            <StyledSquare success /> {legendLabels.success}
-          </Box>
-          <Box gap={3} sx={{ display: 'flex' }}>
-            <StyledSquare /> {legendLabels.fail}
-          </Box>
-        </Box>
+        <div className="pt-8 flex">
+          <div className="flex gap-2 mr-4 items-center">
+            <Square success size={8} /> {legendLabels.success}
+          </div>
+          <div className="flex gap-2 items-center">
+            <Square size={8} /> {legendLabels.fail}
+          </div>
+        </div>
       )}
     </>
   )

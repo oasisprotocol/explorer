@@ -1,14 +1,13 @@
 import { FC, memo, ReactNode, useState } from 'react'
 import { Legend, ResponsiveContainer, Tooltip, PieChart as RechartsPieChart, Pie, Cell } from 'recharts'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import CircleIcon from '@mui/icons-material/Circle'
-import Typography from '@mui/material/Typography'
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { COLORS as TESTNET_COLORS } from '../../../styles/theme/testnet/colors'
 import { Props } from 'recharts/types/component/DefaultLegendContent'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 interface PieChartProps<T extends object> extends Formatters {
   compact: boolean
@@ -29,31 +28,27 @@ type LegendListItemProps = {
 const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, color }) => {
   return (
     <li className="flex items-center">
-      <Box
-        sx={{
-          width: compact ? 32 : 48,
-          height: compact ? 32 : 48,
-          display: 'flex',
-          position: 'relative',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: '50%',
-          backgroundColor: isActive && color ? `${color}40` : 'transparent',
-        }}
+      <div
+        className={cn(
+          'flex items-center justify-center rounded-full relative',
+          compact ? 'w-8 h-8' : 'w-12 h-12',
+          isActive && color ? '' : 'bg-transparent',
+        )}
+        style={isActive && color ? { backgroundColor: `${color}40` } : undefined}
       >
         <CircleIcon sx={{ color: color || COLORS.grayMedium, fontSize: compact ? 12 : 18 }} />
-      </Box>
-      <Typography
-        component="span"
-        sx={{
-          color: isActive && color ? color : COLORS.grayMedium,
-          fontSize: compact ? 12 : 18,
-          ml: 2,
-          fontWeight: isActive ? 700 : 400,
-        }}
+      </div>
+      <span
+        className={cn(
+          'ml-1',
+          compact ? 'text-xs' : 'text-lg',
+          isActive ? 'font-bold' : 'font-normal',
+          isActive && color ? '' : 'text-gray-600',
+        )}
+        style={isActive && color ? { color } : undefined}
       >
         {children}
-      </Typography>
+      </span>
     </li>
   )
 }

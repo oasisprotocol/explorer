@@ -1,5 +1,4 @@
 import { FC, ReactNode, useMemo } from 'react'
-import Box from '@mui/material/Box'
 import InfoIcon from '@mui/icons-material/Info'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { getAdaptiveId, ShorteningResult, useAdaptiveSizing } from './hooks'
@@ -76,27 +75,27 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   )
 
   const title = isTruncated ? (
-    <Box>
-      <Box>{tooltipOverride ?? fullContent}</Box>
+    <div>
+      <div>{tooltipOverride ?? fullContent}</div>
       {extraTooltip && (
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+        <div className="inline-flex items-center gap-1">
           <InfoIcon />
           {extraTooltip}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   ) : (
     extraTooltip
   )
 
   return (
-    <Box component="span" ref={textRef} sx={{ maxWidth: '100%', overflowX: 'hidden' }}>
+    <span ref={textRef} className="max-w-full overflow-x-hidden">
       <MaybeWithTooltip
         title={title}
         spanClassName={cn('whitespace-nowrap', isFinal ? 'opacity-100' : 'opacity-0')}
       >
         {currentContent}
       </MaybeWithTooltip>
-    </Box>
+    </span>
   )
 }
