@@ -12,6 +12,7 @@ import { getAppTitle } from '../../../config'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
 import { Search as SearchIcon } from 'lucide-react'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { SearchSuggestionsButtons } from './SearchSuggestionsButtons'
 
 export interface SearchProps {
   scope?: SearchScope
@@ -89,7 +90,17 @@ export const Search: FC<SearchProps> = ({
           onBlur={() => onFocusChange(false)}
           placeholder={searchPlaceholderTranslated}
           value={value}
-          hint={errorMessage || warningMessage}
+          warning={errorMessage || warningMessage}
+          hint={
+            isFocused && (
+              <SearchSuggestionsButtons
+                scope={scope}
+                onClickSuggestion={suggestion => {
+                  setValue(suggestion)
+                }}
+              />
+            )
+          }
         />
         <Button
           className="max-lg:!px-2.5"

@@ -36,7 +36,7 @@ export const TableSearchBar: FC<TableSearchBarProps> = ({
     <SearchInput
       className={className}
       autoFocus={autoFocus}
-      hint={warning}
+      warning={warning}
       onChange={onChange}
       onKeyDown={handleKeyPress}
       placeholder={placeholder}

@@ -54,18 +54,14 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
   }
 
   return (
-    <span>
-      <span className="text-gray-800 text-xs">
-        <Trans
-          t={t}
-          i18nKey={
-            scope?.layer === 'consensus'
-              ? 'search.searchSuggestionsForConsensus'
-              : 'search.searchSuggestionsForRuntime'
-          }
-          components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
-        />
-      </span>
-    </span>
+    <Trans
+      t={t}
+      i18nKey={
+        scope?.layer === 'consensus'
+          ? 'search.searchSuggestionsForConsensus'
+          : 'search.searchSuggestionsForRuntime'
+      }
+      components={scope?.layer === 'consensus' ? defaultComponents : runtimeComponents}
+    />
   )
 }
