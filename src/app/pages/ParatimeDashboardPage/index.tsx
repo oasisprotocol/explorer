@@ -12,13 +12,15 @@ import { ParaTimeSnapshot } from './ParaTimeSnapshot'
 import { TopTokens } from './TopTokens'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
-import { LatestRoflApps } from './LatestRoflApps'
 import { paraTimesConfig } from '../../../config'
+import { LatestRoflApps } from './LatestRoflApps'
 
 export const ParatimeDashboardPage: FC = () => {
   const scope = useRuntimeScope()
   const isLocal = isLocalnet(scope.network)
   const { txMethod, setTxMethod } = useRuntimeTxMethodParam()
+
+  const { hideTokensFromDashboard } = paraTimesConfig[scope.layer]!
 
   return (
     <PageLayout>
@@ -33,7 +35,7 @@ export const ParatimeDashboardPage: FC = () => {
           <LatestRuntimeBlocks scope={scope} />
         </div>
         <div className="col-span-1 lg:col-span-2">
-          <TopTokens scope={scope} />
+          {!hideTokensFromDashboard && <TopTokens scope={scope} />}
           {paraTimesConfig[scope.layer]?.offerRoflTxTypes && <LatestRoflApps scope={scope} />}
         </div>
       </div>
