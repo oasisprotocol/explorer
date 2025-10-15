@@ -78,9 +78,10 @@ export const Search: FC<SearchProps> = ({
       >
         <SearchInput
           className={cn(
-            '[&>svg]:max-lg:hidden [&>input]:max-lg:px-4',
+            '[&>svg]:max-lg:hidden [&>input]:max-lg:px-4 transition-shadow duration-300',
             expandable && 'hidden group-hover:flex group-focus-within:flex',
-            isFocused && '[&>svg]:text-muted-foreground/50',
+            isFocused && '[&>svg]:text-muted-foreground/50 shadow-[0_4px_50px_15px_rgba(0,0,98,0.54)]',
+            '[&_input]:focus-visible:ring-[rgba(9,9,11,0.20)] rounded-md',
           )}
           size="lg"
           onChange={onChange}
