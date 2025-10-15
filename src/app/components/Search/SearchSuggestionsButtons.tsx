@@ -41,16 +41,36 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
   const defaultComponents = {
     OptionalBreak: <OptionalBreak />,
     BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
-    BlockLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedBlock)} />,
+    BlockLink: (
+      <SuggestionButton
+        onClick={() => onClickSuggestion(suggestedBlock)}
+        onMouseDown={e => e.preventDefault()}
+      />
+    ),
     TransactionIcon: <RepeatIcon sx={{ fontSize: '18px' }} />,
-    TransactionLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTransaction)} />,
+    TransactionLink: (
+      <SuggestionButton
+        onClick={() => onClickSuggestion(suggestedTransaction)}
+        onMouseDown={e => e.preventDefault()}
+      />
+    ),
     AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
-    AccountLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedAccount)} />,
+    AccountLink: (
+      <SuggestionButton
+        onClick={() => onClickSuggestion(suggestedAccount)}
+        onMouseDown={e => e.preventDefault()}
+      />
+    ),
   }
   const runtimeComponents = {
     ...defaultComponents,
     TokenIcon: <TokenIcon sx={{ fontSize: '18px' }} />,
-    TokenLink: <SuggestionButton onClick={() => onClickSuggestion(suggestedTokenFragment)} />,
+    TokenLink: (
+      <SuggestionButton
+        onClick={() => onClickSuggestion(suggestedTokenFragment)}
+        onMouseDown={e => e.preventDefault()}
+      />
+    ),
   }
 
   return (
