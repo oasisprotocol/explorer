@@ -7,7 +7,6 @@ import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { SearchScope } from '../../../types/searchScope'
 import { textSearchMinimumLength } from './search-utils'
 import { isValidBlockHeight } from '../../utils/helpers'
-import { typingDelay } from '../../../styles/theme'
 import { isValidMnemonic } from '../../utils/helpers'
 import { getAppTitle } from '../../../config'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
@@ -34,7 +33,6 @@ export const Search: FC<SearchProps> = ({
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const valueInSearchParams = useSearchParams()[0].get('q') ?? ''
-  const [isProblemFresh, setIsProblemFresh] = useState(false)
 
   const trimmedValue = value.trim()
 
@@ -65,19 +63,7 @@ export const Search: FC<SearchProps> = ({
   const warningMessage = isValidMnemonic(trimmedValue)
     ? t('search.error.privacy', { appName: getAppTitle() })
     : undefined
-  const hasWarning = !!warningMessage
-  const hasProblem = hasError || hasWarning
-
-  useEffect(() => {
-    if (hasProblem) {
-      const timeout = setTimeout(() => {
-        setIsProblemFresh(false)
-      }, typingDelay)
-      return () => clearTimeout(timeout)
-    } else {
-      setIsProblemFresh(true)
-    }
-  }, [hasProblem])
+  const hasProblem = hasError || !!warningMessage
 
   return (
     <div className="group flex justify-end">
@@ -99,6 +85,7 @@ export const Search: FC<SearchProps> = ({
           onChange={onChange}
           placeholder={searchPlaceholderTranslated}
           value={value}
+          hint={errorMessage || warningMessage}
         />
         <Button
           className="max-lg:!px-2.5"
