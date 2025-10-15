@@ -80,9 +80,12 @@ export const Search: FC<SearchProps> = ({
           className={cn(
             '[&>svg]:max-lg:hidden [&>input]:max-lg:px-4',
             expandable && 'hidden group-hover:flex group-focus-within:flex',
+            isFocused && '[&>svg]:text-muted-foreground/50',
           )}
           size="lg"
           onChange={onChange}
+          onFocus={() => onFocusChange(true)}
+          onBlur={() => onFocusChange(false)}
           placeholder={searchPlaceholderTranslated}
           value={value}
           hint={errorMessage || warningMessage}
