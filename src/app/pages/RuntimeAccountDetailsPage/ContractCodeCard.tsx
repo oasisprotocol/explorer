@@ -12,6 +12,7 @@ import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VerificationIcon } from 'app/components/ContractVerificationIcon'
 import { useTokenInfo } from '../TokenDashboardPage/hook'
 import { base64ToHex } from '../../utils/helpers'
+import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
 
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()
@@ -48,7 +49,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
                 </Typography>
 
                 <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-y-3">
-                  <dt className="mx-6">
+                  <dt className="mx-6 py-2">
                     <Typography>{t('contract.verification.title')}</Typography>
                   </dt>
                   <dd className="flex items-center">
@@ -62,7 +63,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
 
                   {contract.verification?.compilation_metadata?.settings?.compilationTarget && (
                     <>
-                      <dt className="mx-6">
+                      <dt className="mx-6 py-2">
                         <Typography>{t('contract.name')}</Typography>
                       </dt>
                       <dd>
@@ -79,7 +80,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
 
                   {token?.name && (
                     <>
-                      <dt className="mx-6">
+                      <dt className="mx-6 py-2">
                         <Typography>{t('common.tokenName')}</Typography>
                       </dt>
                       <dd>
@@ -88,6 +89,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
                     </>
                   )}
                 </dl>
+                <Separator className="my-4" />
               </>
             )}
 
