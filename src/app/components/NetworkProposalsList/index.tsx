@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Proposal } from '../../../oasis-nexus/api'
@@ -67,7 +66,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
         align: TableCellAlign.Right,
         content: (
           <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
-            <Box>{proposal.created_at}</Box>
+            <div>{proposal.created_at}</div>
           </Tooltip>
         ),
         key: 'create',
@@ -76,7 +75,7 @@ export const NetworkProposalsList: FC<NetworkProposalsListProps> = ({
         align: TableCellAlign.Right,
         content: (
           <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
-            <Box>{proposal.closes_at}</Box>
+            <div>{proposal.closes_at}</div>
           </Tooltip>
         ),
         key: 'close',

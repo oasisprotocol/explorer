@@ -1,12 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useTheme } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { styled } from '@mui/material/styles'
 import { Circle } from '../Circle'
 import { COLORS } from '../../../styles/theme/colors'
@@ -19,7 +18,6 @@ import { getLayerLabels, getNetworkIcons } from '../../utils/content'
 import { ConsensusScope, getNameForScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { LayerStatus } from '../LayerStatus'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { mergeNetworksInLayerSelector } from '../../utils/route-utils'
 
 type LayerDetailsContent = {
@@ -146,9 +144,7 @@ const ConsensusDetails: FC<LayerDetailsProps<ConsensusScope>> = props => {
       isOutOfDate={isOutOfDate}
       selectedScope={selectedScope}
     >
-      <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-        {t('layerPicker.consensus')}
-      </Typography>
+      <Typography className="pb-4">{t('layerPicker.consensus')}</Typography>
     </LayerDetailsSection>
   )
 }
@@ -168,17 +164,13 @@ const RuntimeDetails: FC<LayerDetailsProps<RuntimeScope>> = props => {
       selectedScope={selectedScope}
     >
       {mergeNetworksInLayerSelector && (
-        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
+        <Typography className="pb-4">
           {t('layerPicker.hostedOn', {
             network: networkNames[selectedScope.network],
           })}
         </Typography>
       )}
-      {details?.description && (
-        <Typography sx={{ fontSize: '14px', color: COLORS.brandExtraDark, pb: 4 }}>
-          {details.description}
-        </Typography>
-      )}
+      {details?.description && <Typography className="pb-4">{details.description}</Typography>}
       <TextList>
         {details?.rpcHttp && (
           <TextListItem>
@@ -230,14 +222,13 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
 }) => {
   const { t } = useTranslation()
   const theme = useTheme()
-  const { isTablet } = useScreenSize()
   const networkNames = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
 
   return (
-    <Box sx={{ px: isTablet ? 2 : 5, py: 4, display: 'flex', minHeight: contentMinHeight }}>
-      <Box sx={{ pt: 1, pr: 4, color: COLORS.brandDark }}>
+    <div className="flex py-4 px-1 md:px-8" style={{ minHeight: contentMinHeight }}>
+      <div className="pt-0.5 pr-4 text-primary">
         <Circle
           color={COLORS.white}
           size={5}
@@ -249,43 +240,32 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
         >
           {icons[selectedScope.network]}
         </Circle>
-      </Box>
-      <Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            pb: 3,
-          }}
-        >
+      </div>
+      <div>
+        <div className="flex items-center pb-2">
           <StyledButton variant="text" onClick={handleConfirm}>
             {getNameForScope(t, selectedScope)}
           </StyledButton>
           <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
-        </Box>
+        </div>
         {children}
         {docsUrl && (
-          <Link
-            component={RouterLink}
-            to={docsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              fontSize: '14px',
-              fontWeight: 400,
-            }}
-          >
-            {t('layerPicker.readMore', {
-              layer: layerLabels[selectedScope.layer],
-              network: networkNames[selectedScope.network],
-            })}
-            <OpenInNewIcon sx={{ fontSize: '16px' }} />
+          <Link asChild>
+            <RouterLink
+              to={docsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm font-normal"
+            >
+              {t('layerPicker.readMore', {
+                layer: layerLabels[selectedScope.layer],
+                network: networkNames[selectedScope.network],
+              })}
+              <OpenInNewIcon sx={{ fontSize: '16px' }} />
+            </RouterLink>
           </Link>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   )
 }

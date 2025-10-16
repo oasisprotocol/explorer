@@ -3,7 +3,7 @@
 exports[`AccountAvatar > 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
 <div>
   <div
-    class="MuiBox-root css-u1jr60"
+    style="height: 40px; width: 40px; display: inline-block;"
   >
     <div
       style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(24, 176, 242);"
@@ -47,7 +47,7 @@ exports[`AccountAvatar > 0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3 1`] = `
 exports[`AccountAvatar > 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
 <div>
   <div
-    class="MuiBox-root css-u1jr60"
+    style="height: 40px; width: 40px; display: inline-block;"
   >
     <div
       style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(200, 20, 77);"
@@ -91,7 +91,7 @@ exports[`AccountAvatar > 0xdAC17F958D2ee523a2206206994597C13D831ec7 1`] = `
 exports[`AccountAvatar > oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
 <div>
   <div
-    class="MuiBox-root css-u1jr60"
+    style="height: 40px; width: 40px; display: inline-block;"
   >
     <div
       style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(24, 107, 242);"
@@ -135,7 +135,7 @@ exports[`AccountAvatar > oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe 1`] = `
 exports[`AccountAvatar > oasis1qz0k5q8vjqvu4s4nwxyj406ylnflkc4vrcjghuwk 1`] = `
 <div>
   <div
-    class="MuiBox-root css-u1jr60"
+    style="height: 40px; width: 40px; display: inline-block;"
   >
     <div
       style="border-radius: 50px; overflow: hidden; padding: 0px; margin: 0px; width: 40px; height: 40px; display: inline-block; background: rgb(250, 129, 0);"

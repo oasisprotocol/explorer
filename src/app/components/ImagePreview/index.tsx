@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Button } from '@mui/base/Button'
 import { styled } from '@mui/material/styles'
 import { ImagePreviewDialog } from '@oasisprotocol/ui-library/src/components/dialog'
@@ -42,11 +41,11 @@ export const ImagePreview: FC<ImagePreviewProps> = ({
 
   return (
     <>
-      <Box>
+      <div>
         <StyledButton onClick={handlePreviewOpen}>
           <StyledThumbnail onError={onError} src={src} alt={label} maxThumbnailSize={maxThumbnailSize} />
         </StyledButton>
-      </Box>
+      </div>
       <ImagePreviewDialog open={previewOpen} onClose={handlePreviewClose} src={src} title={title} />
     </>
   )

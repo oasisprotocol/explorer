@@ -1,12 +1,8 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
 import { NetworkButton, MobileNetworkButton } from './NetworkButton'
-import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { LayerPicker } from './../LayerPicker'
@@ -14,19 +10,6 @@ import { fixedLayer, fixedNetwork, RouteUtils } from '../../utils/route-utils'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  marginLeft: `-${theme.spacing(1)}`,
-  zIndex: 1,
-  display: 'flex',
-  borderColor: COLORS.brandExtraDark,
-  borderStyle: 'solid',
-  borderWidth: '1px 1px 1px 0',
-  padding: theme.spacing(2, 3, 2, 2),
-  borderTopRightRadius: '9px',
-  borderBottomRightRadius: '9px',
-  boxShadow: `inset 0px 4px 4px rgba(34, 47, 63, 0.24)`,
-}))
 
 type NetworkSelectorProps = {
   layer: Layer
@@ -68,13 +51,7 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
   const handleDrawerOpen = () => setOpenDrawer(true)
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: isTablet ? 'flex-end' : 'center',
-      }}
-    >
+    <div className="flex items-center justify-center md:justify-end">
       <LayerPicker
         open={openDrawer}
         onClose={handleDrawerClose}
@@ -89,16 +66,13 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
         <NetworkButton isOutOfDate={isOutOfDate} layer={layer} network={network} onClick={handleDrawerOpen} />
       )}
       {!fixedNetwork && !fixedLayer && !isTablet && network !== 'mainnet' && (
-        <StyledBox>
-          <Typography
-            component="span"
-            sx={{ fontSize: '12px', color: COLORS.brandExtraDark, whiteSpace: 'nowrap' }}
-          >
+        <div className="flex z-10 -ml-0.5 border border-l-0 border-black pr-2 py-1 pl-1 rounded-r-lg shadow-[inset_0_2px_4px_rgba(0,0,0,0.25)]">
+          <span className="text-xs text-foreground whitespace-nowrap">
             {t('pageHeader.ribbon', {
               network: labels[network],
             })}
-          </Typography>
-        </StyledBox>
+          </span>
+        </div>
       )}
       {isMobile && (
         <MobileNetworkButton
@@ -108,6 +82,6 @@ const NetworkSelectorView: FC<NetworkSelectorViewProps> = ({ isOutOfDate, layer,
           onClick={handleDrawerOpen}
         />
       )}
-    </Box>
+    </div>
   )
 }

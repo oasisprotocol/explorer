@@ -1,37 +1,8 @@
 import { FC, ReactNode } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
 import lightBackgroundEmptyState from './images/background-empty-state.svg'
 import darkBackgroundEmptyState from './images/background-empty-state-dark.svg'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { COLORS } from '../../../styles/theme/colors'
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  color: theme.palette.layout.main,
-  backgroundImage: `url("${darkBackgroundEmptyState}")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  borderRadius: 6,
-}))
-
-const StyledBoxLight = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  backgroundImage: `url("${lightBackgroundEmptyState}")`,
-  color: COLORS.brandExtraDark,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  height: '100%',
-}))
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type EmptyStateProps = {
   description: ReactNode
@@ -42,21 +13,25 @@ type EmptyStateProps = {
 
 export const EmptyState: FC<EmptyStateProps> = ({ description, title, light, minHeight = '360px' }) => {
   const content = (
-    <Box sx={{ color: light ? 'inherit' : COLORS.white, textAlign: 'center' }}>
-      <Typography component="span" sx={{ fontSize: '30px', fontWeight: 500, display: 'block' }}>
-        {title}
-      </Typography>
-      <Typography component="span" sx={{ fontSize: '16px' }}>
-        {description}
-      </Typography>
-    </Box>
+    <div className={cn('text-center', light ? 'text-inherit' : 'text-white')}>
+      <span className="block text-2xl font-medium">{title}</span>
+      <span className="text-sm">{description}</span>
+    </div>
   )
   return light ? (
-    <StyledBoxLight sx={{ minHeight }}>
+    <div
+      className="flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center h-full"
+      style={{ backgroundImage: `url(${lightBackgroundEmptyState})`, minHeight }}
+    >
       <CancelIcon color="error" fontSize="large" />
       {content}
-    </StyledBoxLight>
+    </div>
   ) : (
-    <StyledBox sx={{ minHeight }}>{content}</StyledBox>
+    <div
+      className="flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center rounded-md text-white"
+      style={{ backgroundImage: `url(${darkBackgroundEmptyState})`, minHeight }}
+    >
+      {content}
+    </div>
   )
 }
