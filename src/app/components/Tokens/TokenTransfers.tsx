@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../Table'
 import { EvmTokenType, RuntimeEvent } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -138,15 +137,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
             isMinting || fromAddress === undefined ? (
               ''
             ) : (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  position: 'relative',
-                  justifyContent: 'space-between',
-                  pr: 3,
-                }}
-              >
+              <div className="flex items-center justify-between relative pr-3">
                 <AccountLink
                   scope={transfer}
                   address={fromAddress}
@@ -154,7 +145,7 @@ export const TokenTransfers: FC<TokenTransfersProps> = ({
                   labelOnly={!!ownAddress && fromAddress === ownAddress}
                 />
                 <TransferIcon />
-              </Box>
+              </div>
             ),
         },
         {

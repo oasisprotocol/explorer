@@ -1,7 +1,5 @@
 import { FC, ReactNode } from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import Box from '@mui/material/Box'
-import { useScreenSize } from '../../hooks/useScreensize'
 
 type MaybeWithTooltipProps = {
   /**
@@ -26,24 +24,13 @@ type MaybeWithTooltipProps = {
  * A component to display some content with or without a tooltip
  */
 export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, spanClassName }) => {
-  const { isMobile } = useScreenSize()
-
   return (
     <Tooltip
       placement="top"
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            overflowWrap: 'anywhere',
-            marginLeft: isMobile ? -3 : undefined,
-            marginRight: isMobile ? -3 : undefined,
-          }}
-        >
+        <div className="flex items-center gap-2 md:mx-0 -mx-3 min-w-0 [overflow-wrap:anywhere] rounded-lg">
           {title}
-        </Box>
+        </div>
       }
       disableFocusListener={!title}
       disableHoverListener={!title}

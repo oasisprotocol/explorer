@@ -1,7 +1,6 @@
 import { Select as SelectUnstyled, SelectProps, selectClasses, SelectRootSlotProps } from '@mui/base/Select'
 import { Option, optionClasses } from '@mui/base/Option'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import React, {
   ForwardedRef,
   forwardRef,
@@ -226,7 +225,7 @@ const SelectCmp = <T extends SelectOptionBase>({
   const withLight = { light }
 
   return (
-    <Box className={className}>
+    <div className={className}>
       {label && <label htmlFor={selectId}>{label}</label>}
       <CustomSelect<T['value']>
         id={selectId}
@@ -246,7 +245,7 @@ const SelectCmp = <T extends SelectOptionBase>({
           <Option key={props.value.toString()} {...props} light={light} />
         ))}
       </CustomSelect>
-    </Box>
+    </div>
   )
 }
 

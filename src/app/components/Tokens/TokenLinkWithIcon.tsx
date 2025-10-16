@@ -3,8 +3,6 @@ import { FC } from 'react'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from './TokenLink'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
-import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { InitialsAvatar } from '../AccountAvatar/InitialsAvatar'
 import Tooltip from '@mui/material/Tooltip'
 import { Trans, useTranslation } from 'react-i18next'
@@ -18,7 +16,7 @@ export const TokenLinkWithIcon: FC<{
   const { t } = useTranslation()
   const { metadata } = useAccountMetadata(scope, address)
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+    <div className="flex items-center gap-4">
       <Tooltip
         placement="top"
         arrow
@@ -35,7 +33,7 @@ export const TokenLinkWithIcon: FC<{
           )
         }
       >
-        <Box sx={{ lineHeight: 0 }}>
+        <div className="leading-none">
           {metadata?.icon ? (
             <img src={metadata.icon} alt="" width={42} style={{ maxHeight: 32, margin: '-4px 0' }} />
           ) : (
@@ -45,7 +43,7 @@ export const TokenLinkWithIcon: FC<{
               style={{ maxHeight: 32, margin: '-4px 0' }}
             />
           )}
-        </Box>
+        </div>
       </Tooltip>
 
       <span
@@ -56,10 +54,8 @@ export const TokenLinkWithIcon: FC<{
         }
       >
         <TokenLink scope={scope} address={address} name={metadata?.name || name} />
-        <Box component="span" sx={{ color: COLORS.grayMedium }}>
-          {metadata?.origin && ` (${metadata.origin})`}
-        </Box>
+        <span className="text-muted-foreground">{metadata?.origin && ` (${metadata.origin})`}</span>
       </span>
-    </Box>
+    </div>
   )
 }

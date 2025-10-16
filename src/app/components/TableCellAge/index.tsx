@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import { formatDistanceToNow } from '../../utils/dateFormatter'
-import Box from '@mui/material/Box'
 import { useFormattedTimestamp } from '../../hooks/useFormattedTimestamp'
 import { tooltipDelay } from '../../../styles/theme'
 import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
@@ -34,14 +33,14 @@ export const TableCellAge: FC<{ sinceTimestamp: string }> = ({ sinceTimestamp })
   const title = (
     <span>
       {defaultFormatted}
-      <Box fontWeight={100}>{distanceWithSuffix}</Box>
+      <div className="font-normal">{distanceWithSuffix}</div>
     </span>
   )
   const content = ageHeaderType === TableAgeType.DateTime ? tableFormatted : distance
 
   return (
     <Tooltip title={title} enterDelay={tooltipDelay} placement={'top'}>
-      <Box>{content}</Box>
+      <div>{content}</div>
     </Tooltip>
   )
 }

@@ -9,8 +9,6 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { AccountLink } from '../Account/AccountLink'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { VerificationIcon } from '../ContractVerificationIcon'
-import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { TokenTypeTag } from './TokenList'
 import { RoundedBalance } from '../RoundedBalance'
 import { HighlightedText } from '../HighlightedText'
@@ -44,9 +42,9 @@ export const TokenDetails: FC<{
           address={token.eth_contract_addr ?? token.contract_addr}
           name={token.name}
         />
-        <Box sx={{ ml: 3, fontWeight: 700, color: COLORS.grayMedium, whiteSpace: 'nowrap' }}>
+        <div className="ml-3 font-bold text-muted-foreground whitespace-nowrap">
           <HighlightedText text={token.symbol} />
-        </Box>
+        </div>
       </dd>
 
       <dt>{t('common.type')}</dt>
@@ -56,14 +54,14 @@ export const TokenDetails: FC<{
 
       <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
       <dd>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div className="inline-flex items-center">
           <AccountLink
             showOnlyAddress
             scope={token}
             address={token.eth_contract_addr ?? token.contract_addr}
           />
           <CopyToClipboard value={token.eth_contract_addr ?? token.contract_addr} />
-        </Box>
+        </div>
       </dd>
       <dt>{t('contract.verification.title')}</dt>
       <dd>
