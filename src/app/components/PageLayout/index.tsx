@@ -14,10 +14,10 @@ interface PageLayoutProps {
 }
 
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
-  const theme = useTheme()
   const { isMobile } = useScreenSize()
   const scope = useScopeParam()
   const isApiReachable = useIsApiReachable(scope?.network ?? 'mainnet').reachable
+  const theme = useTheme()
 
   return (
     <>

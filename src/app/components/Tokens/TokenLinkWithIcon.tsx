@@ -16,7 +16,7 @@ export const TokenLinkWithIcon: FC<{
   const { t } = useTranslation()
   const { metadata } = useAccountMetadata(scope, address)
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <Tooltip
         placement="top"
         arrow

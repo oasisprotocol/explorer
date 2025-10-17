@@ -42,7 +42,7 @@ export const TokenDetails: FC<{
           address={token.eth_contract_addr ?? token.contract_addr}
           name={token.name}
         />
-        <div className="ml-3 font-bold text-muted-foreground whitespace-nowrap">
+        <div className="ml-2 font-bold text-muted-foreground whitespace-nowrap">
           <HighlightedText text={token.symbol} />
         </div>
       </dd>

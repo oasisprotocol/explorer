@@ -27,11 +27,7 @@ export const MaybeWithTooltip: FC<MaybeWithTooltipProps> = ({ title, children, s
   return (
     <Tooltip
       placement="top"
-      title={
-        <div className="flex items-center gap-2 md:mx-0 -mx-3 min-w-0 [overflow-wrap:anywhere] rounded-lg">
-          {title}
-        </div>
-      }
+      title={<div className="flex items-center gap-2 md:mx-0 -mx-3 min-w-0 wrap-anywhere">{title}</div>}
       disableFocusListener={!title}
       disableHoverListener={!title}
       disableTouchListener={!title}
