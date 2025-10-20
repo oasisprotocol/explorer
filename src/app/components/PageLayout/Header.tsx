@@ -1,10 +1,9 @@
 import { FC } from 'react'
-import AppBar from '@mui/material/AppBar'
-import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { useTheme } from '@mui/material/styles'
+import { useScrolled } from '../../hooks/useScrolled'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
@@ -17,29 +16,19 @@ export const Header: FC = () => {
   const { isDesktop } = useScreenSize()
   const scope = useScopeParam()
   const withScopeSelector = !!scope && isScopeSelectorNeeded(scope)
-  const scrollTrigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  })
+  const scrolled = useScrolled()
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        transitionProperty: 'background-color',
-        transitionDuration: `${theme.transitions.duration.standard}ms`,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
-        backgroundColor: scrollTrigger
-          ? theme.palette.layout.contrastSecondary
-          : theme.palette.layout.secondary,
-        borderRadius: 0,
-        boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    <header
+      className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto shadow-md"
+      style={{
+        backgroundColor: theme.palette.layout.contrastSecondary,
       }}
     >
       <div className="px-4">
         <div className="grid grid-cols-12 pt-3 pb-4 px-0 md:px-[4%]">
           <div className="col-span-6 xl:col-span-3 flex items-center">
-            <HomePageLink showText={!scrollTrigger && !isMobile} />
+            <HomePageLink showText={!scrolled && !isMobile} />
           </div>
 
           {withScopeSelector && (
@@ -50,21 +39,15 @@ export const Header: FC = () => {
 
           {isDesktop && (
             <div className="col-span-3 flex justify-end items-center">
-              <Button
-                component="a"
-                href="https://rose.oasis.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                color="secondary"
-                variant="outlined"
-                size="large"
-              >
-                {t('common.visitRoseApp')}
+              <Button variant="outline" size="lg" asChild>
+                <a href="https://rose.oasis.io/" target="_blank" rel="noopener noreferrer">
+                  {t('common.visitRoseApp')}
+                </a>
               </Button>
             </div>
           )}
         </div>
       </div>
-    </AppBar>
+    </header>
   )
 }
