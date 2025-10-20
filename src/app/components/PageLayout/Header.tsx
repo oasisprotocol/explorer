@@ -1,10 +1,9 @@
 import { FC } from 'react'
-import AppBar from '@mui/material/AppBar'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { useTheme } from '@mui/material/styles'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
@@ -23,17 +22,12 @@ export const Header: FC = () => {
   })
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        transitionProperty: 'background-color',
-        transitionDuration: `${theme.transitions.duration.standard}ms`,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
+    <header
+      className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto transition-colors duration-300 ease-in-out shadow-md"
+      style={{
         backgroundColor: scrollTrigger
           ? theme.palette.layout.contrastSecondary
           : theme.palette.layout.secondary,
-        borderRadius: 0,
-        boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
       }}
     >
       <div className="px-4">
@@ -50,21 +44,15 @@ export const Header: FC = () => {
 
           {isDesktop && (
             <div className="col-span-3 flex justify-end items-center">
-              <Button
-                component="a"
-                href="https://rose.oasis.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                color="secondary"
-                variant="outlined"
-                size="large"
-              >
-                {t('common.visitRoseApp')}
+              <Button variant="outline" size="lg" asChild>
+                <a href="https://rose.oasis.io/" target="_blank" rel="noopener noreferrer">
+                  {t('common.visitRoseApp')}
+                </a>
               </Button>
             </div>
           )}
         </div>
       </div>
-    </AppBar>
+    </header>
   )
 }
