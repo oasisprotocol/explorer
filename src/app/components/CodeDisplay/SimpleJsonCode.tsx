@@ -3,7 +3,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
-export function SimpleJsonCode(props: { data: Record<string, any> }) {
+export function SimpleJsonCode(props: { className?: string; data: Record<string, any> }) {
   const [isHovering, setIsHovering] = useState(false)
   const value = JSON.stringify(props.data, null, 2)
 
@@ -21,7 +21,7 @@ export function SimpleJsonCode(props: { data: Record<string, any> }) {
         value={value}
       />
       <textarea
-        className="w-full h-[350px] rounded-sm p-3 bg-border"
+        className={cn('w-full h-[350px] rounded-sm p-3 bg-border', props.className)}
         readOnly
         value={value}
         style={{
