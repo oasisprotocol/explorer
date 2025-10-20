@@ -6,43 +6,43 @@ import util from 'util'
 
 describe('RoundedBalance', () => {
   it('should keep original value', () => {
-    render(<RoundedBalance value="0.00075" ticker="USDC" />)
-    expect(screen.getByText('0.00075 USDC')).toBeInTheDocument()
+    render(<RoundedBalance value="7.5" ticker="USDC" />)
+    expect(screen.getByText('7.5 USDC')).toBeInTheDocument()
   })
 
   it('should render rounded value', () => {
-    render(<RoundedBalance value="0.00223100001" ticker="USDC" />)
-    expect(screen.getByText('0.00223 USDC')).toBeInTheDocument()
+    render(<RoundedBalance value="0.223100001" ticker="USDC" />)
+    expect(screen.getByText('0.22 USDC')).toBeInTheDocument()
   })
 
   it('should render sparse decimals', () => {
     render(<RoundedBalance value="0.10000000001" ticker="USDC" />)
-    expect(screen.getByText('0.10000 USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.10 USDC')).toBeInTheDocument()
   })
 
   it('should render sparse whole number', () => {
     render(<RoundedBalance value="100.00000000001" ticker="USDC" />)
-    expect(screen.getByText('100.00000 USDC')).toBeInTheDocument()
+    expect(screen.getByText('100.00 USDC')).toBeInTheDocument()
   })
 
   it('should render variant when rounded value is equal zero', () => {
     render(<RoundedBalance value="0.00000000000002231" ticker="USDC" />)
-    expect(screen.getByText('< 0.00001 USDC')).toBeInTheDocument()
+    expect(screen.getByText('< 0.01 USDC')).toBeInTheDocument()
   })
 
   it('should not round value up', () => {
-    render(<RoundedBalance value="0.004795600000000000" ticker="USDC" />)
-    expect(screen.getByText('0.00479 USDC')).toBeInTheDocument()
+    render(<RoundedBalance value="0.4795600000000000" ticker="USDC" />)
+    expect(screen.getByText('0.47 USDC')).toBeInTheDocument()
   })
 
   it('should not round negative value up', () => {
-    render(<RoundedBalance value="-0.004795600000000000" ticker="USDC" />)
-    expect(screen.getByText('-0.00479 USDC')).toBeInTheDocument()
+    render(<RoundedBalance value="-0.4795600000000000" ticker="USDC" />)
+    expect(screen.getByText('-0.47 USDC')).toBeInTheDocument()
   })
 
   it('should render value with ROSE ticker symbol', () => {
-    render(<RoundedBalance value="0.002231" ticker="ROSE" />)
-    expect(screen.getByText('0.00223 ROSE')).toBeInTheDocument()
+    render(<RoundedBalance value="0.2231" ticker="ROSE" />)
+    expect(screen.getByText('0.22 ROSE')).toBeInTheDocument()
   })
 
   describe('should render large values', () => {
@@ -61,7 +61,7 @@ describe('RoundedBalance', () => {
         />,
       )
       expect(
-        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111.00000 ROSE'),
+        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111.00 ROSE'),
       ).toBeInTheDocument()
     })
 
@@ -91,7 +91,7 @@ describe('RoundedBalance', () => {
 
     it('should not format if number is too small', () => {
       render(<RoundedBalance compactLargeNumbers value="99999.00000000000002231" />)
-      expect(screen.getByText('99,999.00000')).toBeInTheDocument()
+      expect(screen.getByText('99,999.00')).toBeInTheDocument()
     })
   })
 
@@ -100,7 +100,7 @@ describe('RoundedBalance', () => {
       for (const tickerAsLink of [false, true]) {
         for (const ticker of [undefined, 'wROSE']) {
           for (const tokenAddress of [undefined, '0x8Bc2B030b299964eEfb5e1e0b36991352E56D2D3']) {
-            for (const value of ['-0.0047956', '0.00000000000002231', '0.002231', '5', '15000000']) {
+            for (const value of ['-0.47956', '0.00000000000002231', '0.2231', '5', '15000000']) {
               const params = { compactLargeNumbers, showSign, tickerAsLink, ticker, tokenAddress, value }
               it(`should match snapshot ${util.inspect(params)}`, () => {
                 const { container } = render(

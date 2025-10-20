@@ -19,8 +19,8 @@ type RoundedBalanceProps = {
   showSign?: boolean
 }
 
-const numberOfDecimals = 5
-const minNumber = new BigNumber('1e-99').toFixed(numberOfDecimals, BigNumber.ROUND_UP) // 0.00001
+const numberOfDecimals = 2
+const minNumber = new BigNumber('1e-99').toFixed(numberOfDecimals, BigNumber.ROUND_UP) // 0.01
 
 export const RoundedBalance: FC<RoundedBalanceProps> = ({
   compactAllNumbers,
