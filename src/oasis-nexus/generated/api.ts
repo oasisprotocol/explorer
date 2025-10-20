@@ -1819,6 +1819,11 @@ Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
   active_instances: RoflInstance[];
 }
 
+/**
+ * Arbitrary metadata key-value pairs, assigned by the application.
+ */
+export type RoflInstanceMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
+
 export interface RoflInstance {
   /** The runtime attestation public key (Ed25519). */
   rak: string;
@@ -1830,6 +1835,8 @@ export interface RoflInstance {
   endorsing_entity_id?: string;
   /** The epoch at which the instance expires. */
   expiration_epoch: number;
+  /** Arbitrary metadata key-value pairs, assigned by the application. */
+  metadata?: RoflInstanceMetadata;
   /** The extra endorsed public keys. Extra keys can be Ed25519, Secp256k1, or Sr25519. And
 are stored as json with included type information.
  */
