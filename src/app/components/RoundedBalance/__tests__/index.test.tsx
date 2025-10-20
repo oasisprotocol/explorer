@@ -27,7 +27,7 @@ describe('RoundedBalance', () => {
 
   it('should render variant when rounded value is equal zero', () => {
     render(<RoundedBalance value="0.00000000000002231" ticker="USDC" />)
-    expect(screen.getByText('< 0.01 USDC')).toBeInTheDocument()
+    expect(screen.getByText('<0.01 USDC')).toBeInTheDocument()
   })
 
   it('should not round value up', () => {
