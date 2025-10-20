@@ -157,7 +157,7 @@
     "unknown": "Unknown",
     "valueLong": "{{value, number}}",
     "valueInToken": "{{value, number}} {{ticker}}",
-    "roundedValueInToken": "{{value, number}}… <TickerLink />",
+    "roundedValueInToken": "{{value, number}} <TickerLink />",
     "valueInTokenWithLink": "{{value, number}} <TickerLink />",
     "view": "View",
     "viewAll": "View all",

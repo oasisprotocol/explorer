@@ -12,17 +12,17 @@ describe('RoundedBalance', () => {
 
   it('should render rounded value', () => {
     render(<RoundedBalance value="0.00223100001" ticker="USDC" />)
-    expect(screen.getByText('0.00223… USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.00223 USDC')).toBeInTheDocument()
   })
 
   it('should render sparse decimals', () => {
     render(<RoundedBalance value="0.10000000001" ticker="USDC" />)
-    expect(screen.getByText('0.10000… USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.10000 USDC')).toBeInTheDocument()
   })
 
   it('should render sparse whole number', () => {
     render(<RoundedBalance value="100.00000000001" ticker="USDC" />)
-    expect(screen.getByText('100.00000… USDC')).toBeInTheDocument()
+    expect(screen.getByText('100.00000 USDC')).toBeInTheDocument()
   })
 
   it('should render variant when rounded value is equal zero', () => {
@@ -32,17 +32,17 @@ describe('RoundedBalance', () => {
 
   it('should not round value up', () => {
     render(<RoundedBalance value="0.004795600000000000" ticker="USDC" />)
-    expect(screen.getByText('0.00479… USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.00479 USDC')).toBeInTheDocument()
   })
 
   it('should not round negative value up', () => {
     render(<RoundedBalance value="-0.004795600000000000" ticker="USDC" />)
-    expect(screen.getByText('-0.00479… USDC')).toBeInTheDocument()
+    expect(screen.getByText('-0.00479 USDC')).toBeInTheDocument()
   })
 
   it('should render value with ROSE ticker symbol', () => {
     render(<RoundedBalance value="0.002231" ticker="ROSE" />)
-    expect(screen.getByText('0.00223… ROSE')).toBeInTheDocument()
+    expect(screen.getByText('0.00223 ROSE')).toBeInTheDocument()
   })
 
   describe('should render large values', () => {
@@ -61,7 +61,7 @@ describe('RoundedBalance', () => {
         />,
       )
       expect(
-        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111.00000… ROSE'),
+        screen.getByText('1,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111.00000 ROSE'),
       ).toBeInTheDocument()
     })
 
@@ -91,7 +91,7 @@ describe('RoundedBalance', () => {
 
     it('should not format if number is too small', () => {
       render(<RoundedBalance compactLargeNumbers value="99999.00000000000002231" />)
-      expect(screen.getByText('99,999.00000…')).toBeInTheDocument()
+      expect(screen.getByText('99,999.00000')).toBeInTheDocument()
     })
   })
 
