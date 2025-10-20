@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -134,9 +133,9 @@ export const ProposalDetailView: FC<{
 
       <dt>{t('common.status')}</dt>
       <dd>
-        <Box>
+        <div>
           <ProposalStatusIcon status={proposal.state} />
-        </Box>
+        </div>
       </dd>
 
       <dt>{t('networkProposal.deposit')}</dt>
@@ -147,20 +146,20 @@ export const ProposalDetailView: FC<{
       <dt>{t('networkProposal.create')}</dt>
       <dd>
         <Tooltip title={t('networkProposal.createTooltip')} placement={'top'}>
-          <Box sx={{ display: 'flex' }} gap={2}>
+          <div className="flex gap-1 items-center">
             {proposal.created_at}
             <InfoIcon htmlColor={COLORS.brandDark} />
-          </Box>
+          </div>
         </Tooltip>
       </dd>
 
       <dt>{t('networkProposal.close')}</dt>
       <dd>
         <Tooltip title={t('networkProposal.closeTooltip')} placement={'top'}>
-          <Box sx={{ display: 'flex' }} gap={2}>
+          <div className="flex gap-1 items-center">
             {proposal.closes_at}
             <InfoIcon htmlColor={COLORS.brandDark} />
-          </Box>
+          </div>
         </Tooltip>
       </dd>
     </StyledDescriptionList>

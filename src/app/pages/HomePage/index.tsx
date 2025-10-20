@@ -1,7 +1,5 @@
 import { FC, useState } from 'react'
 import { Logotype } from '../../components/PageLayout/Logotype'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
 import { Search } from '../../components/Search'
@@ -17,6 +15,7 @@ import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkPar
 import { ThemeByScope } from '../../components/ThemeByScope'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export const zIndexHomePage = {
   paraTimeSelector: 1,
@@ -24,94 +23,6 @@ export const zIndexHomePage = {
   logo: 3,
   mobileTooltip: 4,
 }
-
-const HomepageLayout = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100vw',
-  maxWidth: '100%',
-  height: 'fill-available',
-  minHeight: '100vh',
-  backgroundColor: COLORS.white,
-  overflowX: 'hidden',
-  [theme.breakpoints.up('sm')]: {
-    height: '100vh',
-    minHeight: '800px',
-    '&::before': {
-      content: '" "',
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: `url("${background}")`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    },
-  },
-}))
-
-const Content = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  flex: '1 1 0',
-  padding: `0 ${theme.spacing(4)}`,
-  [theme.breakpoints.up('sm')]: {
-    justifyContent: 'flex-end',
-  },
-}))
-
-const LogotypeBox = styled(Box)(({ theme }) => ({
-  zIndex: zIndexHomePage.logo,
-  marginBottom: 40,
-  textAlign: 'center',
-  marginTop: 60,
-  [theme.breakpoints.up('sm')]: {
-    marginBottom: 60,
-    marginTop: 'unset',
-  },
-}))
-
-const SearchInputContainer = styled(Box, {
-  shouldForwardProp: prop => prop !== 'transparent',
-})<{ transparent: boolean }>(({ theme, transparent }) => ({
-  position: 'relative',
-  zIndex: zIndexHomePage.searchInput,
-  width: '100%',
-  [theme.breakpoints.up('md')]: {
-    width: 'auto',
-    '&:not(:hover)': {
-      ...(transparent
-        ? {
-            opacity: 0.5,
-          }
-        : {}),
-    },
-  },
-}))
-
-const SearchInputBox = styled(Box)(({ theme }) => ({
-  width: '100%',
-  margin: '0 auto',
-  [theme.breakpoints.up('sm')]: {
-    width: '75vw',
-  },
-  [theme.breakpoints.up('md')]: {
-    width: '50vw',
-  },
-}))
-
-const FooterStyled = styled(Box)(({ theme }) => ({
-  width: '100%',
-  flex: '0 0 0',
-  padding: `0 ${theme.spacing(6)}`,
-  [theme.breakpoints.up('md')]: {
-    // needed to make footer elements clickable
-    zIndex: zIndexHomePage.paraTimeSelector,
-  },
-}))
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
@@ -146,15 +57,25 @@ export const HomePage: FC = () => {
     <>
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
-      <HomepageLayout>
-        <Content>
-          <LogotypeBox>
+      <div
+        className="relative flex flex-col w-screen max-w-full min-h-screen overflow-x-hidden sm:h-screen sm:min-h-[800px] bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${background})`,
+        }}
+      >
+        <div className="relative flex flex-col justify-start items-center flex-1 px-4 sm:justify-end">
+          <div className="z-30 mb-10 mt-15 text-center sm:mb-15 sm:mt-0">
             <Logotype showText />
-          </LogotypeBox>
-          <SearchInputContainer transparent={isGraphZoomedIn && !searchHasFocus}>
-            <SearchInputBox>
+          </div>
+          <div
+            className={cn(
+              'relative z-20 w-full md:w-auto',
+              isGraphZoomedIn && !searchHasFocus && 'md:opacity-50 md:hover:opacity-100',
+            )}
+          >
+            <div className="w-full mx-auto sm:w-[75vw] md:w-[50vw]">
               <Search disabled={!isApiReachable} onFocusChange={onFocusChange} />
-            </SearchInputBox>
+            </div>
             {showInfoScreenBtn && (
               <Button
                 variant="ghost"
@@ -166,9 +87,9 @@ export const HomePage: FC = () => {
                 <InfoOutlinedIcon fontSize="medium" sx={{ color: COLORS.grayMedium2 }} />
               </Button>
             )}
-          </SearchInputContainer>
+          </div>
           <ThemeByScope isRootTheme={false} network={network}>
-            <Box sx={{ zIndex: zIndexHomePage.paraTimeSelector }}>
+            <div className="z-0">
               <ParaTimeSelector
                 step={step}
                 setStep={setStep}
@@ -177,14 +98,13 @@ export const HomePage: FC = () => {
                 graphZoomedIn={isGraphZoomedIn}
                 onGraphZoomedIn={setIsGraphZoomedIn}
               />
-            </Box>
+            </div>
           </ThemeByScope>
-        </Content>
-
-        <FooterStyled>
+        </div>
+        <div className="w-full flex-none align-center px-16 md:z-10">
           <Footer enableMobileSearch={false} />
-        </FooterStyled>
-      </HomepageLayout>
+        </div>
+      </div>
     </>
   )
 }

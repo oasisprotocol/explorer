@@ -9,7 +9,6 @@ import { RuntimeBlockDetailsContext } from '.'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
-import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, txMethod }) => {
@@ -60,16 +59,11 @@ export const RuntimeBlockTransactionsCard: FC<RuntimeBlockDetailsContext> = prop
     <LinkableCardLayout
       containerId={transactionsContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && (
             <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
-        </Box>
+        </div>
       }
     >
       {isMobile && (

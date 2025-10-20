@@ -23,6 +23,7 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
         'relative w-full',
         action ? 'grid grid-cols-[1fr_auto_1fr]' : 'flex justify-between',
         isMobile ? 'items-center' : 'items-start',
+        enableMobileSearch ? 'justify-between' : 'justify-center',
       )}
     >
       <div>{children}</div>

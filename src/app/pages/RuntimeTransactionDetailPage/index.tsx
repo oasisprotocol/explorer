@@ -21,7 +21,7 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices, useAllTokenPrices } from '../../../coin-gecko/api'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { TransactionEncryptionStatus } from '../../components/TransactionEncryptionStatus'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
@@ -32,7 +32,6 @@ import { useWantedTransaction } from '../../hooks/useWantedTransaction'
 import { MultipleTransactionsWarning } from '../../components/Transactions/MultipleTransactionsWarning'
 import { SimpleJsonCode } from '../../components/CodeDisplay/SimpleJsonCode'
 import { isRoflTransaction } from '../../utils/transaction'
-import Box from '@mui/material/Box'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import * as oasis from '@oasisprotocol/client'
 import { useTokenTransfers } from '../TokenDashboardPage/hook'
@@ -227,13 +226,13 @@ export const RuntimeTransactionDetailView: FC<{
               <dt>{t('common.from')}</dt>
               <dd style={{ columnGap: '1em', rowGap: '3px' }}>
                 {(transaction?.signers ?? []).map((signer, index) => (
-                  <Box key={`signer-${index}-link`} sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <div key={`signer-${index}-link`} className="inline-flex items-center">
                     <AccountLink
                       scope={transaction}
                       address={(signer.address_eth ?? signer.address) as string}
                     />
                     <CopyToClipboard value={signer.address_eth ?? signer.address} />
-                  </Box>
+                  </div>
                 ))}
               </dd>
             </>
@@ -243,13 +242,13 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.to')}</dt>
               <dd>
-                <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                <div className="inline-flex items-center">
                   <AccountLink
                     scope={transaction}
                     address={(transaction?.to_eth || transaction?.to) as string}
                   />
                   <CopyToClipboard value={(transaction?.to_eth || transaction?.to) as string} />
-                </Box>
+                </div>
               </dd>
             </>
           )}
@@ -258,7 +257,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('transaction.eventsSummary')}</dt>
               <dd>
-                <Box sx={{ overflowX: 'auto' }}>
+                <div className="overflow-x-auto">
                   {transfers.map((transfer, i) => {
                     const params = transfer.evm_log_params
                     if (!params) return null
@@ -267,38 +266,25 @@ export const RuntimeTransactionDetailView: FC<{
                     const to = params.find(p => p.name === 'to')?.value as string | undefined
 
                     return (
-                      <Box
+                      <div
                         key={i}
-                        sx={{
-                          display: 'flex',
-                          flexDirection: isMobile ? 'column' : 'row',
-                          alignItems: isMobile ? 'flex-start' : 'center',
-                          columnGap: 2,
-                          mb: isMobile ? 4 : 2,
-                          whiteSpace: 'nowrap',
-                        }}
+                        className="flex flex-col items-start mb-4 gap-0.5 whitespace-nowrap sm:flex-row sm:items-center sm:mb-1 sm:gap-1"
                       >
                         <TokenTypeTag tokenType={transfer.evm_token?.type} />
-                        <Typography
-                          variant="body2"
-                          sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}
-                        >
+                        <Typography className="inline-flex items-center gap-1">
                           {t('common.from')}{' '}
                           {from ? <AccountLink scope={transaction} address={from} alwaysTrim /> : '?'}
                         </Typography>
 
-                        <Typography
-                          variant="body2"
-                          sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}
-                        >
+                        <Typography className="inline-flex items-center gap-1">
                           {t('common.to')}{' '}
                           {to ? <AccountLink scope={transaction} address={to} alwaysTrim /> : '?'}
                         </Typography>
 
-                        <Typography variant="body2">
+                        <Typography>
                           {t('common.for')} <EventBalance event={transfer} tickerAsLink={false} />
                         </Typography>
-                      </Box>
+                      </div>
                     )
                   })}
                   {(totalTransfers ?? 0) > transfers.length && (
@@ -310,7 +296,7 @@ export const RuntimeTransactionDetailView: FC<{
                       {t('common.seeMore')}
                     </Link>
                   )}
-                </Box>
+                </div>
               </dd>
             </>
           )}
@@ -446,9 +432,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.publicKey')}</dt>
                   <dd>
-                    <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {envelope.public_key}
-                    </Typography>
+                    <span className="font-normal">{envelope.public_key}</span>
                   </dd>
                 </>
               )}
@@ -457,9 +441,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.dataNonce')}</dt>
                   <dd>
-                    <Typography variant="mono" sx={{ overflowWrap: 'anywhere' }}>
-                      {envelope.data_nonce}
-                    </Typography>
+                    <span className="font-normal">{envelope.data_nonce}</span>
                   </dd>
                 </>
               )}
@@ -477,9 +459,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.resultNonce')}</dt>
                   <dd>
-                    <Typography variant="mono" sx={{ fontWeight: 400 }}>
-                      {envelope.result_nonce}
-                    </Typography>
+                    <span className="font-normal">{envelope.result_nonce}</span>
                   </dd>
                 </>
               )}

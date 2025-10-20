@@ -6,7 +6,6 @@ import { useAccountTransactions } from './hook'
 import { RuntimeAccountDetailsContext } from './index'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
-import Box from '@mui/material/Box'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context => {
@@ -18,16 +17,11 @@ export const AccountTransactionsCard: FC<RuntimeAccountDetailsContext> = context
     <LinkableCardLayout
       containerId={transactionsContainerId}
       title={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className="flex justify-end">
           {!isMobile && (
             <RuntimeTransactionMethodFilter layer={scope.layer} value={txMethod} setValue={setTxMethod} />
           )}
-        </Box>
+        </div>
       }
     >
       {isMobile && (

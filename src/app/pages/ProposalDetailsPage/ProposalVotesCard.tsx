@@ -13,7 +13,6 @@ import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VoteTypeFilter } from '../../components/Proposals/VoteTypeFilter'
 import { AppErrors } from '../../../types/errors'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
-import Box from '@mui/material/Box'
 import { NoMatchingDataMaybeClearFilters, TableSearchBar } from '../../components/Search/TableSearchBar'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { WithHighlightPattern } from '../../components/PatternHighlightingContext'
@@ -140,9 +139,9 @@ export const ProposalVotesCard: FC = () => {
         </div>
       </div>
       <ErrorBoundary light={true}>
-        <Box sx={{ height: '704px' }}>
+        <div>
           <ProposalVotesView />
-        </Box>
+        </div>
       </ErrorBoundary>
     </SubPageCard>
   )

@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
@@ -49,7 +48,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         content: (
-          <Box sx={{ display: 'flex', alignItems: 'center' }} gap={4}>
+          <div className="flex items-center gap-2">
             <ValidatorImage
               address={validator.entity_address}
               name={validator.media?.name}
@@ -60,7 +59,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
               name={validator.media?.name}
               network={network}
             />
-          </Box>
+          </div>
         ),
         key: 'name',
       },
@@ -121,9 +120,9 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       },
       {
         content: (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="flex justify-center">
             <StatusIcon success={validator.active} error={undefined} />
-          </Box>
+          </div>
         ),
         key: 'status',
       },

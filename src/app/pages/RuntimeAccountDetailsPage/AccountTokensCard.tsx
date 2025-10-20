@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
@@ -32,10 +31,10 @@ export const ContractLink: FC<{ scope: SearchScope; address: string; alwaysTrim?
   alwaysTrim,
 }) => {
   return (
-    <Box sx={{ display: 'flex', alignContent: 'center' }}>
+    <div className="flex items-center">
       <AccountLink scope={scope} address={address} alwaysTrim={alwaysTrim} />
       <CopyToClipboard value={address} />
-    </Box>
+    </div>
   )
 }
 
