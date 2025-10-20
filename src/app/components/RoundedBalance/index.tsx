@@ -20,6 +20,7 @@ type RoundedBalanceProps = {
 }
 
 const numberOfDecimals = 5
+const minNumber = new BigNumber('1e-99').toFixed(numberOfDecimals, BigNumber.ROUND_UP) // 0.00001
 
 export const RoundedBalance: FC<RoundedBalanceProps> = ({
   compactAllNumbers,
@@ -107,7 +108,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             t={t}
             i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
             values={{
-              value: truncatedNumber.toFixed(numberOfDecimals),
+              value: almostZero ? minNumber : truncatedNumber.toFixed(numberOfDecimals),
               formatParams: {
                 value: {
                   minimumFractionDigits: numberOfDecimals,
