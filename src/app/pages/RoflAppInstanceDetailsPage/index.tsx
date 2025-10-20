@@ -17,6 +17,7 @@ import { RoflAppLink } from '../../components/Rofl/RoflAppLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { AccountLink } from '../../components/Account/AccountLink'
+import { SimpleJsonCode } from 'app/components/CodeDisplay/SimpleJsonCode'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -117,6 +118,14 @@ export const RoflAppInstanceDetailsView: FC<{
           t('common.missing')
         )}
       </dd>
+      {instance.metadata && Object.keys(instance.metadata).length > 0 && (
+        <>
+          <dt>{t('rofl.metadata')}</dt>
+          <dd>
+            <SimpleJsonCode className="h-[250px]" data={instance.metadata} />
+          </dd>
+        </>
+      )}
     </StyledDescriptionList>
   )
 }
