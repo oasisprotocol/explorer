@@ -161,7 +161,7 @@ export const ConsensusBlockDetailView: FC<{
         </>
       )}
 
-      {block.gas_limit && (
+      {!!block.gas_limit && (
         <>
           <dt>{t('common.gasLimit')}</dt>
           <dd>
