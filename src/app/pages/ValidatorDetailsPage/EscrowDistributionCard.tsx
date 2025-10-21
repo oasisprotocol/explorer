@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Typography from '@mui/material/Typography'
 import { Validator } from '../../../oasis-nexus/api'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { PieChart } from '../../components/charts/PieChart'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -65,7 +64,12 @@ export const EscrowDistributionCard: FC<BalanceDistributionCardProps> = ({ valid
           formatters={{
             data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(String(payload!.preciseValue)),
+                value: payload!.preciseValue,
+                formatParams: {
+                  value: {
+                    notation: 'compact',
+                  } satisfies Intl.NumberFormatOptions,
+                },
                 ticker: validator.ticker,
               }),
             label: (label: string) => label,

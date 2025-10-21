@@ -48,6 +48,14 @@ async function setup(page: Page, balance: string, decimals: number) {
   await page.goto(
     'http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/tokens/erc-20#tokens',
   )
+  await expect(page.getByText('TokenForTests')).toBeVisible()
+
+  // Trigger tooltips to find all precise numbers
+  await page.evaluate(() => {
+    document.querySelectorAll('[aria-label]').forEach(el => {
+      el.dispatchEvent(new MouseEvent('mouseover', { view: window, bubbles: true, cancelable: true }))
+    })
+  })
 }
 
 test.describe('getPreciseNumberFormat', () => {

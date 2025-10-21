@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { RuntimeSdkBalance } from '../../../oasis-nexus/api'
 import { useTranslation } from 'react-i18next'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
+import { RoundedBalance } from '../RoundedBalance'
 
 export const RuntimeBalanceDisplay: FC<{ balances: RuntimeSdkBalance[] | undefined }> = ({
   balances = [],
@@ -14,10 +14,7 @@ export const RuntimeBalanceDisplay: FC<{ balances: RuntimeSdkBalance[] | undefin
     <div>
       {balances.map(balance => (
         <div key={balance.token_symbol}>
-          {t('common.valueInToken', {
-            ...getPreciseNumberFormat(balance.balance),
-            ticker: balance.token_symbol,
-          })}
+          <RoundedBalance value={balance.balance} ticker={balance.token_symbol} />
         </div>
       ))}
     </div>

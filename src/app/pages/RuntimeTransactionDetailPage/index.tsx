@@ -23,7 +23,6 @@ import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { TransactionEncryptionStatus } from '../../components/TransactionEncryptionStatus'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { LongDataDisplay } from '../../components/LongDataDisplay'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { base64ToHex } from '../../utils/helpers'
 import { DappBanner } from '../../components/DappBanner'
 import { getFiatCurrencyForScope, showFiatValues } from '../../../config'
@@ -303,12 +302,11 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.amount')}</dt>
           <dd>
-            {transaction.amount != null
-              ? t('common.valueInToken', {
-                  ...getPreciseNumberFormat(transaction.amount),
-                  ticker: transaction.amount_symbol,
-                })
-              : t('common.missing')}
+            {transaction.amount != null ? (
+              <RoundedBalance value={transaction.amount} ticker={transaction.amount_symbol} />
+            ) : (
+              t('common.missing')
+            )}
           </dd>
 
           {transaction?.body?.shares && (
@@ -340,10 +338,7 @@ export const RuntimeTransactionDetailView: FC<{
 
           <dt>{t('common.fee')}</dt>
           <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(transaction.charged_fee),
-              ticker: transaction.fee_symbol,
-            })}
+            <RoundedBalance value={transaction.charged_fee} ticker={transaction.fee_symbol} />
           </dd>
 
           {transaction.fee_proxy_module && transaction.fee_proxy_id && (
@@ -380,10 +375,7 @@ export const RuntimeTransactionDetailView: FC<{
             <>
               <dt>{t('common.gasPrice')}</dt>
               <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(convertToNano(gasPrice)),
-                  ticker: `n${transaction.fee_symbol}`,
-                })}
+                <RoundedBalance value={convertToNano(gasPrice)} ticker={`n${transaction.fee_symbol}`} />
               </dd>
             </>
           )}

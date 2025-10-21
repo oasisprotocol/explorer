@@ -18,8 +18,8 @@ import {
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsContext } from './index'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { tokenContainerId } from '../../utils/tabAnchors'
+import { RoundedBalance } from '../../components/RoundedBalance'
 
 type AccountTokensCardProps = RuntimeAccountDetailsContext & {
   type: EvmTokenType
@@ -84,7 +84,7 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
       },
       {
         align: TableCellAlign.Right,
-        content: t('common.valueLong', getPreciseNumberFormat(item.balance)),
+        content: <RoundedBalance value={item.balance} />,
         key: 'balance',
       },
       {

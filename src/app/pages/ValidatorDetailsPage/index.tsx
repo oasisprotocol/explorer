@@ -37,7 +37,6 @@ import { BalancesDiff } from '../../components/BalancesDiff'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { useConsensusEventTypeParam, useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId } from '../../utils/tabAnchors'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { Network } from '../../../types/network'
 import { HighlightedText } from '../../components/HighlightedText'
@@ -174,39 +173,23 @@ export const ValidatorDetailsView: FC<{
           <dd>
             <AccountLink scope={{ network, layer: 'consensus' }} address={validator.entity_address} />
           </dd>
-          <dt>
-            <strong>{t('account.totalBalance')}</strong>
-          </dt>
+          <dt>{t('account.totalBalance')}</dt>
           {account && (
             <>
               <dd>
-                <strong>
-                  {t('common.valueInToken', {
-                    ...getPreciseNumberFormat(account.total),
-                    ticker: account.ticker,
-                  })}
-                </strong>
+                <RoundedBalance value={account.total} ticker={account.ticker} />
               </dd>
               <StyledListTitle>{t('account.available')}</StyledListTitle>
               <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.available),
-                  ticker: account.ticker,
-                })}
+                <RoundedBalance value={account.available} ticker={account.ticker} />
               </dd>
               <StyledListTitle>{t('common.staked')}</StyledListTitle>
               <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.delegations_balance!),
-                  ticker: account.ticker,
-                })}
+                <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
               </dd>
               <StyledListTitle>{t('account.debonding')}</StyledListTitle>
               <dd>
-                {t('common.valueInToken', {
-                  ...getPreciseNumberFormat(account.debonding_delegations_balance!),
-                  ticker: account.ticker,
-                })}
+                <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
               </dd>
             </>
           )}

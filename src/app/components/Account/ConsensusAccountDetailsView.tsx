@@ -12,11 +12,11 @@ import { AccountAvatar } from '../AccountAvatar'
 import { AccountSizeBadge } from '../AccountSizeBadge'
 import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { RouteUtils } from '../../utils/route-utils'
 import { transactionsContainerId } from '../../utils/tabAnchors'
+import { RoundedBalance } from '../RoundedBalance'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -71,37 +71,21 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           <CopyToClipboard value={account.address} />
         </div>
       </dd>
-      <dt>
-        <strong>{t('account.totalBalance')}</strong>
-      </dt>
+      <dt>{t('account.totalBalance')}</dt>
       <dd>
-        <strong>
-          {t('common.valueInToken', {
-            ...getPreciseNumberFormat(account.total),
-            ticker: account.ticker,
-          })}
-        </strong>
+        <RoundedBalance value={account.total} ticker={account.ticker} />
       </dd>
       <StyledListTitle>{t('account.available')}</StyledListTitle>
       <dd>
-        {t('common.valueInToken', {
-          ...getPreciseNumberFormat(account.available),
-          ticker: account.ticker,
-        })}
+        <RoundedBalance value={account.available} ticker={account.ticker} />
       </dd>
       <StyledListTitle>{t('common.staked')}</StyledListTitle>
       <dd>
-        {t('common.valueInToken', {
-          ...getPreciseNumberFormat(account.delegations_balance!),
-          ticker: account.ticker,
-        })}
+        <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
       </dd>
       <StyledListTitle>{t('account.debonding')}</StyledListTitle>
       <dd>
-        {t('common.valueInToken', {
-          ...getPreciseNumberFormat(account.debonding_delegations_balance!),
-          ticker: account.ticker,
-        })}
+        <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
       </dd>
       <dt>{t('common.nonce')}</dt>
       <dd>{account.nonce}</dd>
