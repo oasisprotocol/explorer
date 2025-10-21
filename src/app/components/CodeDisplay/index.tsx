@@ -1,8 +1,6 @@
 import React, { FC, Suspense } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { MonacoLanguages } from './MonacoLanguages'
 
 const TextAreaFallback = ({ value }: { value?: string }) => (
@@ -43,22 +41,16 @@ type CodeDisplayProps = {
 }
 
 export const CodeDisplay: FC<CodeDisplayProps> = ({ code, language, label = undefined }) => {
-  const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
-
   if (!code) {
     return null
   }
 
   return (
     <div className="flex-1">
-      <div className="flex justify-between items-center my-2 pt-4">
-        {label && <Typography variant="h4">{label}</Typography>}
+      <div className="flex justify-between items-center mb-4 pt-4 h-13">
+        {label && <Typography className="font-bold">{label}</Typography>}
 
-        <CopyToClipboard
-          value={code}
-          label={isMobile ? t('common.copy') : t('contract.copyButton', { subject: label })}
-        />
+        <CopyToClipboard value={code} />
       </div>
       <div className="h-[350px] overflow-auto resize-y">
         {/* While loading wrapper show <textarea> instead */}

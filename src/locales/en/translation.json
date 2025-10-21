@@ -73,7 +73,6 @@
     "bytes": "{{value, number}}",
     "cancel": "Cancel",
     "collection": "Collection",
-    "copy": "Copy",
     "data": "Data",
     "debonding": "Debonding",
     "description": "Description",
@@ -176,7 +175,6 @@
   "contract": {
     "code": "Code",
     "contractMetadata": "Contract Metadata",
-    "copyButton": "Copy {{subject}}",
     "creationByteCode": "Creation ByteCode",
     "creator": "Creator",
     "createdAt": "at",
