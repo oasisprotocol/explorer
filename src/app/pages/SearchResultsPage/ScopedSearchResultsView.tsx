@@ -13,7 +13,7 @@ import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
 import { NoResultsInScope } from './NoResults'
 import { AllTokenPrices } from '../../../coin-gecko/api'
-import { HideMoreResults, ShowMoreResults } from './notifications'
+import { HideMoreResults, ShowMoreResults } from './ShowMoreResults'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { SearchParams } from '../../components/Search/search-utils'
 

@@ -7,7 +7,7 @@ import ZoomIn from '@mui/icons-material/ZoomIn'
 export const HideMoreResults: FC<{ theme: Theme; onHide: () => void }> = ({ onHide }) => {
   return (
     <div
-      className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5]"
+      className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5] hover:bg-[#DDDDDE] cursor-pointer"
       onClick={onHide}
     >
       <ZoomOut />
@@ -27,7 +27,7 @@ export const ShowMoreResults: FC<{
   const { t } = useTranslation()
   return (
     <div
-      className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5]"
+      className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5] hover:bg-[#DDDDDE] cursor-pointer"
       onClick={onShow}
     >
       <ZoomIn />

@@ -13,7 +13,7 @@ import {
   isNotOnMainnet,
   isOnMainnet,
 } from '../../../types/network'
-import { HideMoreResults, ShowMoreResults } from './notifications'
+import { HideMoreResults, ShowMoreResults } from './ShowMoreResults'
 import { getThemeForScope } from '../../../styles/theme'
 import { orderByLayer } from '../../../types/layers'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
