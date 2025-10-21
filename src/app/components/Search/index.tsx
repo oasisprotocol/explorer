@@ -71,7 +71,7 @@ export const Search: FC<SearchProps> = ({
       <form
         className={cn(
           'flex-1 flex gap-2 items-center',
-          expandable && 'absolute h-10 group-hover:inset-0 group-focus-within:inset-0',
+          expandable && 'absolute h-10 group-hover:inset-x-0 group-focus-within:inset-x-0',
         )}
         onSubmit={onFormSubmit}
         role="search"
