@@ -23,7 +23,6 @@ declare module '@mui/material/styles' {
     primaryBackground?: string
     secondaryBackground?: string
     networkBubbleBorder?: string
-    titleOnBackground?: string
     graphZoomOutText?: string
     helpScreenIconColor?: string
   }
@@ -77,7 +76,6 @@ export const defaultTheme = createTheme({
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
       networkBubbleBorder: COLORS.white,
-      titleOnBackground: COLORS.brandExtraDark,
       graphZoomOutText: COLORS.white,
       helpScreenIconColor: COLORS.aqua,
     },

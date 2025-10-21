@@ -21,7 +21,6 @@ export const localnetTheme = createTheme(
         primaryBackground: COLORS.localnetLight,
         secondaryBackground: COLORS.white,
         networkBubbleBorder: COLORS.localnet,
-        titleOnBackground: COLORS.grayExtraDark,
         graphZoomOutText: COLORS.brandDark,
         helpScreenIconColor: COLORS.brandExtraDark,
       },
