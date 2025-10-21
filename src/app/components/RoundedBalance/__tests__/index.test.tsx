@@ -30,14 +30,14 @@ describe('RoundedBalance', () => {
     expect(screen.getByText('<0.01 USDC')).toBeInTheDocument()
   })
 
-  it('should not round value up', () => {
+  it('should round value up', () => {
     render(<RoundedBalance value="0.4795600000000000" ticker="USDC" />)
-    expect(screen.getByText('0.47 USDC')).toBeInTheDocument()
+    expect(screen.getByText('0.48 USDC')).toBeInTheDocument()
   })
 
-  it('should not round negative value up', () => {
+  it('should round negative value up', () => {
     render(<RoundedBalance value="-0.4795600000000000" ticker="USDC" />)
-    expect(screen.getByText('-0.47 USDC')).toBeInTheDocument()
+    expect(screen.getByText('-0.48 USDC')).toBeInTheDocument()
   })
 
   it('should render value with ROSE ticker symbol', () => {
