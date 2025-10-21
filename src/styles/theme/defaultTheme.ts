@@ -1,9 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import { COLORS } from './colors'
 import Fade from '@mui/material/Fade'
-import { outlinedInputClasses } from '@mui/material/OutlinedInput'
-import { inputBaseClasses } from '@mui/material/InputBase'
-import { inputAdornmentClasses } from '@mui/material/InputAdornment'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -376,38 +373,6 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiTableContainer: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          [theme.breakpoints.down('sm')]: {
-            paddingRight: theme.spacing(4),
-            // force scrollbar to cover the whole table horizontally
-            marginLeft: `-${theme.spacing(4)}`,
-            width: `calc(100% + ${theme.spacing(4)})`,
-          },
-        }),
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          borderColor: COLORS.antiFlashWhite2,
-          color: COLORS.grayExtraDark,
-          whiteSpace: 'nowrap',
-          padding: theme.spacing(4, 3),
-          // Low specificity
-          ':is(a)': {
-            color: COLORS.brandDark,
-            fontWeight: 700,
-            textDecoration: 'none',
-          },
-        }),
-        head: {
-          color: COLORS.grayDark,
-          fontWeight: 500,
-        },
-      },
-    },
     MuiTooltip: {
       defaultProps: {
         TransitionComponent: Fade,
@@ -452,68 +417,6 @@ export const defaultTheme = createTheme({
       defaultProps: {
         noSsr: true,
       },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          padding: 0,
-        },
-        input: {
-          backgroundColor: COLORS.white,
-          color: COLORS.grayDark,
-          '&::placeholder': {
-            color: COLORS.grayDark,
-          },
-        },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          padding: 0,
-          [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]: {
-            borderWidth: '3px',
-          },
-        },
-        notchedOutline: {
-          borderColor: 'transparent',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          borderRadius: '6px',
-          backgroundColor: COLORS.grayMediumLight,
-          [`.${inputBaseClasses.root}`]: {
-            borderRadius: '6px',
-            backgroundColor: COLORS.white,
-
-            // Prevent first child's edges overflowing due to border-radius
-            [`&.${inputBaseClasses.adornedStart} .${inputAdornmentClasses.positionStart}`]: {
-              marginLeft: theme.spacing(4),
-            },
-            [`&:not(.${inputBaseClasses.adornedStart}) .${inputBaseClasses.input}`]: {
-              marginLeft: theme.spacing(4),
-            },
-          },
-          ':focus-within': {
-            boxShadow: '0px 4px 50px 15px rgba(0, 0, 98, 0.54)',
-          },
-          transition: 'box-shadow 250ms ease-in-out',
-        }),
-      },
-    },
-    MuiInputAdornment: {
-      variants: [
-        {
-          props: { position: 'end' },
-          style: {
-            height: '100%',
-            maxHeight: '100%',
-          },
-        },
-      ],
     },
     MuiMobileStepper: {
       styleOverrides: {

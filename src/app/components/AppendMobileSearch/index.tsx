@@ -30,8 +30,8 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
       {action}
 
       {isMobile && enableMobileSearch && (
-        <div className="w-[50px] h-[47px] ml-auto">
-          <Search scope={scope} variant="expandable" />
+        <div className="w-[40px] h-[40px] ml-auto">
+          <Search scope={scope} expandable />
         </div>
       )}
     </div>

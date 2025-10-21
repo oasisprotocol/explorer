@@ -20,7 +20,7 @@ export const StyledMain = styled('main')({
 
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
   const theme = useTheme()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isMobile } = useScreenSize()
   const scope = useScopeParam()
   const isApiReachable = useIsApiReachable(scope?.network ?? 'mainnet').reachable
 
@@ -62,7 +62,7 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
                 mb: 6,
               }}
             >
-              <Search scope={scope} variant={isTablet ? 'icon' : 'button'} disabled={!isApiReachable} />
+              <Search scope={scope} disabled={!isApiReachable} />
             </Box>
           )}
           <StyledMain>{children}</StyledMain>

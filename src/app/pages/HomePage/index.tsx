@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import background from './images/background.svg'
 import { COLORS } from '../../../styles/theme/colors'
-import { Search, SearchVariant } from '../../components/Search'
+import { Search } from '../../components/Search'
 import { ParaTimeSelector } from './Graph/ParaTimeSelector'
 import { Footer } from '../../components/PageLayout/Footer'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -140,7 +140,6 @@ export const HomePage: FC = () => {
     setShowInfoScreen(true)
   }
 
-  const searchVariant: SearchVariant = isMobile ? 'icon' : 'button'
   const showInfoScreenBtn = isMobile && step !== ParaTimeSelectorStep.ShowHelpScreen
 
   return (
@@ -154,7 +153,7 @@ export const HomePage: FC = () => {
           </LogotypeBox>
           <SearchInputContainer transparent={isGraphZoomedIn && !searchHasFocus}>
             <SearchInputBox>
-              <Search disabled={!isApiReachable} variant={searchVariant} onFocusChange={onFocusChange} />
+              <Search disabled={!isApiReachable} onFocusChange={onFocusChange} />
             </SearchInputBox>
             {showInfoScreenBtn && (
               <Button
