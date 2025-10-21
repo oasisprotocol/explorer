@@ -13,7 +13,6 @@ export const testnetTheme = createTheme(
         main: COLORS.brandExtraDark,
         border: COLORS.testnet,
         contrastMain: COLORS.brandExtraDark,
-        contrastSecondary: COLORS.testnet,
         darkBorder: COLORS.testnet,
         hoverBorder: COLORS.testnet,
         lightBorder: COLORS.testnet,

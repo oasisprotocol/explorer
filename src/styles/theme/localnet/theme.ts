@@ -14,7 +14,6 @@ export const localnetTheme = createTheme(
         main: COLORS.brandExtraDark,
         border: COLORS.localnet,
         contrastMain: COLORS.brandExtraDark,
-        contrastSecondary: COLORS.localnet,
         darkBorder: COLORS.localnet,
         hoverBorder: COLORS.localnet,
         lightBorder: COLORS.localnet,

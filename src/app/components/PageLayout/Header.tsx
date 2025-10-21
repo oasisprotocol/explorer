@@ -22,7 +22,7 @@ export const Header: FC = () => {
     <header
       className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto shadow-md"
       style={{
-        backgroundColor: theme.palette.layout.contrastSecondary,
+        backgroundColor: theme.palette.layout.secondary,
       }}
     >
       <div className="px-4">
