@@ -1,5 +1,33 @@
 @import '@oasisprotocol/ui-library/src/styles/global.css';
 
+@theme {
+  --color-theme-surface: var(--color-theme-surface);
+  --color-theme-accent: var(--color-theme-accent);
+  --color-theme-accent-light: var(--color-theme-accent-light);
+  --color-theme-accent-dark: var(--color-theme-accent-dark);
+}
+
+.mainnet {
+  --color-theme-surface: #ffffff;
+  --color-theme-accent: #0500e2;
+  --color-theme-accent-light: #6665d8;
+  --color-theme-accent-dark: #000062;
+}
+
+.testnet {
+  --color-theme-surface: #fff0e4;
+  --color-theme-accent: #ffa800;
+  --color-theme-accent-light: #fff0e4;
+  --color-theme-accent-dark: #000062;
+}
+
+.localnet {
+  --color-theme-surface: #ebebeb;
+  --color-theme-accent: #cecece;
+  --color-theme-accent-light: #ebebeb;
+  --color-theme-accent-dark: #000062;
+}
+
 /* Specific fixes needed during migration to Oasis UI Library */
 
 /* Override MUI styles that are applied globally */
