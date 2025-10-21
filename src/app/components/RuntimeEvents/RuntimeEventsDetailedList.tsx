@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { CardEmptyState } from '../CardEmptyState'
 import { TextSkeleton } from '../Skeleton'
 import { RuntimeEventDetails } from './RuntimeEventDetails'
-import Box from '@mui/material/Box'
 import { AppErrors } from '../../../types/errors'
 import { EmptyState } from '../EmptyState'
 import { CardDivider } from '../../components/Divider'
@@ -56,9 +55,9 @@ export const RuntimeEventsDetailedList: FC<{
           </div>
         ))}
         {pagination && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="flex justify-center">
             <TablePagination {...pagination} />
-          </Box>
+          </div>
         )}
       </>
     )

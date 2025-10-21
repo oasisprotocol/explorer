@@ -19,7 +19,6 @@ import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 import { TokenTransferIcon } from '../Tokens/TokenTransferIcon'
-import Box from '@mui/material/Box'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -158,9 +157,9 @@ export const EventTypeIcon: FC<{
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <div className="flex items-center">
       <b>{eventTypeIcons[eventType]}</b>
-    </Box>
+    </div>
   )
 }
 
@@ -317,11 +316,11 @@ const RuntimeEventDetailsInner: FC<{
       }
       return (
         <div>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <div className="flex items-center">
             <b>
               <TokenTransferIcon reverseLabel method={parsedEvmLogName} size={25} />
             </b>
-          </Box>
+          </div>
           <br />
           {event.evm_log_params && event.evm_log_params.length > 0 && (
             <Table className="border">

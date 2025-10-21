@@ -1,28 +1,23 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import Box from '@mui/material/Box'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled, useTheme } from '@mui/material/styles'
 import { BuildBanner } from '../BuildBanner'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { NetworkOfflineBanner, RuntimeOfflineBanner, ConsensusOfflineBanner } from '../OfflineBanner'
 import { Search } from '../Search'
 import { useIsApiReachable } from '../OfflineBanner/hook'
+import useTheme from '@mui/material/styles/useTheme'
 
 interface PageLayoutProps {
   mobileFooterAction?: ReactNode
 }
 
-export const StyledMain = styled('main')({
-  minHeight: '75vh',
-})
-
 export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, mobileFooterAction }) => {
-  const theme = useTheme()
   const { isMobile } = useScreenSize()
   const scope = useScopeParam()
   const isApiReachable = useIsApiReachable(scope?.network ?? 'mainnet').reachable
+  const theme = useTheme()
 
   return (
     <>
@@ -30,45 +25,23 @@ export const PageLayout: FC<PropsWithChildren<PageLayoutProps>> = ({ children, m
       <NetworkOfflineBanner />
       {scope && scope.layer !== 'consensus' && <RuntimeOfflineBanner />}
       {scope && scope.layer === 'consensus' && <ConsensusOfflineBanner />}
-      <Box
-        sx={{
-          minHeight: '100vh',
-        }}
-      >
+      <div className="min-h-screen">
         <Header />
-        <Box
-          sx={
-            isMobile
-              ? {
-                  border:
-                    theme.palette.background.default !== theme.palette.layout.border
-                      ? `solid 10px ${theme.palette.layout.border}`
-                      : 'none',
-                  borderTop: 0,
-                  px: 0,
-                  pt: 4,
-                }
-              : {
-                  border: `solid 15px ${theme.palette.layout.border}`,
-                  borderTop: 0,
-                  px: '4%',
-                  pt: 6,
-                }
-          }
+        <div
+          className="border-8 md:border-[15px] border-transparent px-0 md:px-[4%] pt-4 md:pt-6 border-t-0"
+          style={{
+            borderColor: theme.palette.layout.border,
+          }}
         >
           {!isMobile && (
-            <Box
-              sx={{
-                mb: 6,
-              }}
-            >
+            <div className="mb-6">
               <Search scope={scope} disabled={!isApiReachable} />
-            </Box>
+            </div>
           )}
-          <StyledMain>{children}</StyledMain>
+          <main className="min-h-[75vh]">{children}</main>
           <Footer scope={scope} mobileSearchAction={mobileFooterAction} />
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   )
 }

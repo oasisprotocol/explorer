@@ -1,6 +1,5 @@
 import { ComponentProps, FC, ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import {
   Table as BaseTable,
@@ -164,9 +163,9 @@ export const Table: FC<TableProps> = ({
         </TableBody>
       </BaseTable>
       {pagination && (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="flex justify-center">
           <TablePagination {...pagination} />
-        </Box>
+        </div>
       )}
     </>
   )

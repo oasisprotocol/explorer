@@ -4,7 +4,6 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { Link as UilLink } from '@oasisprotocol/ui-library/src/components/link'
 import { trimLongString } from '../../utils/trimLongString'
 import { HighlightedText } from '../HighlightedText'
-import Box from '@mui/material/Box'
 import { AccountMetadataSourceIndicator } from '../Account/AccountMetadataSourceIndicator'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { WithHoverHighlighting } from '../HoverHighlightingContext/WithHoverHighlighting'
@@ -41,17 +40,17 @@ export const Link: FC<LinkProps> = ({
     hasName && (withSourceIndicator || isTablet) ? (
       <div>
         {name && (
-          <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-            <Box sx={{ fontWeight: 'bold' }}>{name}</Box>
+          <div className="inline-flex items-center gap-2">
+            <div className="font-bold">{name}</div>
             {withSourceIndicator && (
               <>
                 <span>-</span>
                 <AccountMetadataSourceIndicator source={'SelfProfessed'} withText />
               </>
             )}
-          </Box>
+          </div>
         )}
-        <Box sx={{ fontWeight: 'normal' }}>{address}</Box>
+        <div className="font-normal">{address}</div>
       </div>
     ) : isTablet ? (
       address
@@ -59,7 +58,7 @@ export const Link: FC<LinkProps> = ({
 
   return (
     <MaybeWithTooltip title={tooltipTitle}>
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+      <div className="inline-flex items-center gap-1">
         {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
         <span className={cn('font-medium', !labelOnly && 'text-primary')}>
           {isTablet ? (
@@ -75,7 +74,7 @@ export const Link: FC<LinkProps> = ({
             />
           )}
         </span>
-      </Box>
+      </div>
     </MaybeWithTooltip>
   )
 }
