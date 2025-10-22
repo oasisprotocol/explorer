@@ -23,6 +23,11 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.51.0-noble
       options: --user 1001
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,5 +44,5 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: playwright
       - name: Run playwright tests (auto-starts dev server)
-        run: yarn test
+        run: yarn test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         working-directory: playwright
