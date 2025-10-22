@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import Button from '@mui/material/Button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { useTheme } from '@mui/material/styles'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { styled } from '@mui/material/styles'
@@ -221,7 +220,6 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
   selectedScope,
 }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
   const networkNames = getNetworkNames(t)
   const layerLabels = getLayerLabels(t)
   const icons = getNetworkIcons()
@@ -234,7 +232,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           size={5}
           sx={{
             borderColor: COLORS.brandDark,
-            borderWidth: theme.spacing(1),
+            borderWidth: '2px',
             borderStyle: 'solid',
           }}
         >

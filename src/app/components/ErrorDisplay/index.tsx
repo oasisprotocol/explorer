@@ -9,14 +9,12 @@ import { ExploreOasisButton } from '../../pages/SearchResultsPage/ExploreOasisBu
 import { SearchSuggestionsLinksForNoResults } from '../Search/SearchSuggestionsLinksForNoResults'
 import { SearchScope } from '../../../types/searchScope'
 import { useScopeParam } from '../../hooks/useScopeParam'
-import { Theme } from '@mui/material/styles/createTheme'
-import { useTheme } from '@mui/material/styles'
 
 type FormattedError = { title: string; message: ReactNode }
 
 const errorMap: Record<
   AppErrors,
-  (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined, theme: Theme) => FormattedError
+  (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined) => FormattedError
 > = {
   [AppErrors.Unknown]: (t, error) => ({ title: t('errors.unknown'), message: error.message }),
   [AppErrors.InvalidAddress]: t => ({
@@ -104,13 +102,8 @@ const errorMap: Record<
   [AppErrors.InvalidVote]: t => ({ title: t('errors.invalidVote'), message: null }),
 }
 
-export const errorFormatter = (
-  t: TFunction,
-  error: ErrorPayload,
-  scope: SearchScope | undefined,
-  theme: Theme,
-) => {
-  return errorMap[error.code](t, error, scope, theme)
+export const errorFormatter = (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined) => {
+  return errorMap[error.code](t, error, scope)
 }
 
 export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: string | number }> = ({
@@ -119,7 +112,6 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: str
   minHeight,
 }) => {
   const { t } = useTranslation()
-  const theme = useTheme()
   const scope = useScopeParam()
 
   let errorPayload: ErrorPayload
@@ -135,7 +127,7 @@ export const ErrorDisplay: FC<{ error: unknown; light?: boolean; minHeight?: str
     errorPayload = { code: AppErrors.Unknown, message: error as string }
   }
 
-  const { title, message } = errorFormatter(t, errorPayload, scope, theme)
+  const { title, message } = errorFormatter(t, errorPayload, scope)
 
   return <EmptyState title={title} description={message} light={light} minHeight={minHeight} />
 }

@@ -14,7 +14,7 @@ export const ThemeByScope: FC<{
 }> = ({ network, layer, isRootTheme, children }) => (
   <ThemeProvider theme={getThemeForScope(network, layer)}>
     {isRootTheme && <CssBaseline />}
-    {children}
+    <div className={network}>{children}</div>
   </ThemeProvider>
 )
 

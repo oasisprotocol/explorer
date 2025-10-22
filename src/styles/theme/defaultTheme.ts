@@ -16,7 +16,6 @@ declare module '@mui/material/styles' {
   interface CustomLayoutPalette {
     border?: string
     contrastMain?: string
-    contrastSecondary?: string
     darkBorder?: string
     hoverBorder?: string
     lightBorder?: string
@@ -24,7 +23,6 @@ declare module '@mui/material/styles' {
     primaryBackground?: string
     secondaryBackground?: string
     networkBubbleBorder?: string
-    titleOnBackground?: string
     graphZoomOutText?: string
     helpScreenIconColor?: string
   }
@@ -71,7 +69,6 @@ export const defaultTheme = createTheme({
       main: COLORS.brandExtraDark,
       border: COLORS.white,
       contrastMain: COLORS.white,
-      contrastSecondary: COLORS.white,
       darkBorder: COLORS.brandExtraDark,
       hoverBorder: COLORS.white,
       lightBorder: COLORS.aqua,
@@ -79,7 +76,6 @@ export const defaultTheme = createTheme({
       primaryBackground: COLORS.brandExtraDark,
       secondaryBackground: COLORS.iconBackground,
       networkBubbleBorder: COLORS.white,
-      titleOnBackground: COLORS.brandExtraDark,
       graphZoomOutText: COLORS.white,
       helpScreenIconColor: COLORS.aqua,
     },

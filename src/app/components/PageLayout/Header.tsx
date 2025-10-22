@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTheme } from '@mui/material/styles'
 import { useScrolled } from '../../hooks/useScrolled'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
@@ -10,7 +9,6 @@ import { isScopeSelectorNeeded } from '../../utils/route-utils'
 import { useTranslation } from 'react-i18next'
 
 export const Header: FC = () => {
-  const theme = useTheme()
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { isDesktop } = useScreenSize()
@@ -19,12 +17,7 @@ export const Header: FC = () => {
   const scrolled = useScrolled()
 
   return (
-    <header
-      className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto shadow-md"
-      style={{
-        backgroundColor: theme.palette.layout.contrastSecondary,
-      }}
-    >
+    <header className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto shadow-md bg-theme-layout-accent">
       <div className="px-4">
         <div className="grid grid-cols-12 pt-3 pb-4 px-0 md:px-[4%]">
           <div className="col-span-6 xl:col-span-3 flex items-center">
