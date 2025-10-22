@@ -31,7 +31,7 @@ export const Header: FC = () => {
           )}
 
           {isDesktop && (
-            <div className="col-span-3 flex justify-end items-center">
+            <div className="xl:col-start-10 xl:col-span-3 flex justify-end items-center">
               <Button variant="outline" size="lg" asChild>
                 <a href="https://rose.oasis.io/" target="_blank" rel="noopener noreferrer">
                   {t('common.visitRoseApp')}
