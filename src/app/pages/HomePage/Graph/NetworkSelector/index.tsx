@@ -1,7 +1,6 @@
 import { FC, ForwardedRef, forwardRef, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../../../styles/theme/colors'
 import { getNetworkNames, Network } from '../../../../../types/network'
@@ -18,6 +17,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { getNetworkIcons } from '../../../../utils/content'
 import { optionClasses } from '@mui/base/Option'
+import { useTheme } from '@mui/material/styles'
 
 interface NetworkOption extends SelectOptionBase {
   label: Network
@@ -79,12 +79,10 @@ const SelectOption = ({ value }: NetworkOption): ReactElement => {
 
   return (
     <StyledOption key={value} value={value}>
-      <Box
-        sx={theme => ({ display: 'flex', gap: theme.spacing(3), pl: theme.spacing(3), alignItems: 'center' })}
-      >
+      <div className="flex items-center gap-2 pl-2">
         {icons[value]}
-        <Typography variant="inherit">{labels[value]}</Typography>
-      </Box>
+        <Typography className="text-inherit">{labels[value]}</Typography>
+      </div>
     </StyledOption>
   )
 }
@@ -99,17 +97,10 @@ const NetworkSelectorButton = forwardRef(
 
     return (
       <StyledButton {...restProps} ref={ref} color="inherit">
-        <Box
-          sx={theme => ({
-            display: 'flex',
-            gap: theme.spacing(3),
-            pl: theme.spacing(3),
-            alignItems: 'center',
-          })}
-        >
+        <div className="flex items-center gap-2 pl-2">
           {icons[value!]}
-          <Typography variant="inherit">{label[value!]}</Typography>
-        </Box>
+          <Typography className="text-inherit">{label[value!]}</Typography>
+        </div>
         {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </StyledButton>
     )
@@ -123,6 +114,7 @@ interface NetworkSelectProps {
 
 export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork }) => {
   const { t } = useTranslation()
+  const theme = useTheme()
 
   const options = RouteUtils.getEnabledNetworks().map(network => ({
     label: network,
@@ -139,7 +131,12 @@ export const NetworkSelector: FC<NetworkSelectProps> = ({ network, setNetwork })
       Option={SelectOption}
       listbox={StyledListbox}
       label={
-        <Typography variant="caption" sx={theme => ({ color: theme.palette.layout.contrastMain })}>
+        <Typography
+          variant="xsmall"
+          style={{
+            color: theme.palette.layout.contrastMain,
+          }}
+        >
           {t('home.selectedNetwork')}
         </Typography>
       }
