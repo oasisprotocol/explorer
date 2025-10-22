@@ -21,7 +21,7 @@ jobs:
     name: playwright
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.51.0-noble
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
       options: --user 1001
     strategy:
       fail-fast: false

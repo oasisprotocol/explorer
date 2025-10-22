@@ -3,6 +3,6 @@
     "test": "playwright test --browser all"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.0"
+    "@playwright/test": "^1.56.1"
   }
 }
