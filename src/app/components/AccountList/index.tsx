@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { Account } from '../../../oasis-nexus/api'
@@ -48,28 +47,12 @@ export const AccountList: FC<AccountListProps> = ({ isLoading, limit, pagination
       },
       {
         align: TableCellAlign.Right,
-        content: (
-          <>
-            {account.delegations_balance &&
-              t('common.valueInToken', {
-                ...getPreciseNumberFormat(account.delegations_balance),
-                ticker: account.ticker,
-              })}
-          </>
-        ),
+        content: <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />,
         key: 'staked',
       },
       {
         align: TableCellAlign.Right,
-        content: (
-          <>
-            {account.debonding_delegations_balance &&
-              t('common.valueInToken', {
-                ...getPreciseNumberFormat(account.debonding_delegations_balance),
-                ticker: account.ticker,
-              })}
-          </>
-        ),
+        content: <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />,
         key: 'debonding',
       },
       {

@@ -6,9 +6,9 @@ import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Account } from '../../../oasis-nexus/api'
 import { PieChart } from '../../components/charts/PieChart'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { RoundedBalance } from '../../components/RoundedBalance'
 
 type BalanceDistributionProps = {
   account: Account | undefined
@@ -38,10 +38,6 @@ type BalanceDistributionContentProps = {
 const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ account }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  const totalValue = t('common.valueInToken', {
-    ...getPreciseNumberFormat(account.total),
-    ticker: account.ticker,
-  })
 
   if (account.total === '0') {
     return <ConsensusAccountCardEmptyState label={t('account.noBalances')} />
@@ -69,9 +65,7 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
   return (
     <>
       <Typography variant="small" className="md:text-lg font-medium md:font-bold mb-8 text-primary">
-        {t('account.totalValue', {
-          value: totalValue,
-        })}
+        <RoundedBalance value={account.total} ticker={account.ticker} />
       </Typography>
       <div className="h-[100px] md:h-[250px]">
         <PieChart
@@ -81,7 +75,12 @@ const BalanceDistributionContent: FC<BalanceDistributionContentProps> = ({ accou
           formatters={{
             data: (value, payload) =>
               t('common.valueInToken', {
-                ...getPreciseNumberFormat(String(payload!.preciseValue)),
+                value: payload!.preciseValue,
+                formatParams: {
+                  value: {
+                    notation: 'compact',
+                  } satisfies Intl.NumberFormatOptions,
+                },
                 ticker: account.ticker,
               }),
             label: (label: string) => label,

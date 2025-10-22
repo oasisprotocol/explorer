@@ -18,7 +18,6 @@ import { ConsensusTransactionMethod } from 'app/components/ConsensusTransactionM
 import { useFormattedTimestampStringWithDistance } from 'app/hooks/useFormattedTimestamp'
 import { RoundedBalance } from 'app/components/RoundedBalance'
 import { ConsensusAccountLink } from 'app/components/Account/ConsensusAccountLink'
-import { getPreciseNumberFormat } from 'locales/getPreciseNumberFormat'
 import { CurrentFiatValue } from '../../components/CurrentFiatValue'
 import { ConsensusTransactionEvents } from '../../components/Transactions/ConsensusTransactionEvents'
 import { AllTokenPrices, useAllTokenPrices } from 'coin-gecko/api'
@@ -166,10 +165,7 @@ export const ConsensusTransactionDetailView: FC<{
         <>
           <dt>{t('common.amount')}</dt>
           <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(transaction.amount),
-              ticker: transaction.ticker,
-            })}
+            <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />
           </dd>
         </>
       )}
@@ -196,10 +192,7 @@ export const ConsensusTransactionDetailView: FC<{
           )}
           <dt>{t('common.fee')}</dt>
           <dd>
-            {t('common.valueInToken', {
-              ...getPreciseNumberFormat(transaction.fee),
-              ticker: transaction.ticker,
-            })}
+            <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
           </dd>
 
           <dt>{t('common.gasUsed')}</dt>
