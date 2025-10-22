@@ -19,7 +19,8 @@ type RoundedBalanceProps = {
   showSign?: boolean
 }
 
-const numberOfDecimals = 5
+const numberOfDecimals = 2
+const minNumber = new BigNumber('1e-99').toFixed(numberOfDecimals, BigNumber.ROUND_UP) // 0.01
 
 export const RoundedBalance: FC<RoundedBalanceProps> = ({
   compactAllNumbers,
@@ -38,7 +39,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
   }
 
   const number = new BigNumber(value)
-  const truncatedNumber = number.decimalPlaces(numberOfDecimals, BigNumber.ROUND_DOWN)
+  const roundedNumber = number.decimalPlaces(numberOfDecimals)
 
   const tickerLink =
     tickerAsLink && !!scope && !!tokenAddress ? (
@@ -80,7 +81,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
     )
   }
 
-  if (number.isEqualTo(truncatedNumber)) {
+  if (number.isEqualTo(roundedNumber)) {
     return (
       <Trans
         t={t}
@@ -91,7 +92,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
     )
   }
 
-  const almostZero = !number.isZero() && truncatedNumber.isZero()
+  const almostZero = !number.isZero() && roundedNumber.isZero()
 
   return (
     <span>
@@ -107,7 +108,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
             t={t}
             i18nKey={almostZero ? 'common.lessThanAmount' : 'common.roundedValueInToken'}
             values={{
-              value: truncatedNumber.toFixed(numberOfDecimals),
+              value: almostZero ? minNumber : roundedNumber.toFixed(numberOfDecimals),
               formatParams: {
                 value: {
                   minimumFractionDigits: numberOfDecimals,
