@@ -1,9 +1,8 @@
-import Box from '@mui/material/Box'
 import { styled, useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { COLORS } from '../../../styles/theme/colors'
 
-export const ResultListFrame = styled(Box)(({ theme: wantedTheme }) => {
+export const ResultListFrame = styled('div')(({ theme: wantedTheme }) => {
   const currentTheme = useTheme()
   const isMobile = useMediaQuery(wantedTheme.breakpoints.down('sm'))
   return isMobile

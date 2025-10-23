@@ -6,6 +6,7 @@
   --color-theme-accent-light: var(--color-theme-accent-light);
   --color-theme-accent-dark: var(--color-theme-accent-dark);
   --color-theme-layout-accent: var(--color-theme-layout-accent);
+  --color-theme-contrast-main: var(--color-theme-contrast-main);
 }
 
 .mainnet {
@@ -14,6 +15,7 @@
   --color-theme-accent-light: #6665d8;
   --color-theme-accent-dark: #000062;
   --color-theme-layout-accent: #ffffff;
+  --color-theme-contrast-main: #ffffff;
 }
 
 .testnet {
@@ -22,6 +24,7 @@
   --color-theme-accent-light: #fff0e4;
   --color-theme-accent-dark: #000062;
   --color-theme-layout-accent: #ffa800;
+  --color-theme-contrast-main: #000062;
 }
 
 .localnet {
@@ -30,6 +33,7 @@
   --color-theme-accent-light: #ebebeb;
   --color-theme-accent-dark: #000062;
   --color-theme-layout-accent: #cecece;
+  --color-theme-contrast-main: #000062;
 }
 
 /* Specific fixes needed during migration to Oasis UI Library */

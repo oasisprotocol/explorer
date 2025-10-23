@@ -1,20 +1,8 @@
 import { FC, ReactNode } from 'react'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
-import { COLORS } from '../../../styles/theme/colors'
 import { isUrlSafe } from 'app/utils/url'
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  gap: theme.spacing(5),
-  padding: '0',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  justifyContent: 'space-between',
-}))
 
 type SnapshotCardExternalLinkProps = {
   description: string
@@ -31,13 +19,8 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
 }) => {
   return (
     <SnapshotCard title={title} withContentPadding={false}>
-      <StyledBox>
-        <Typography
-          sx={{
-            fontSize: '12px',
-            color: COLORS.grayMedium,
-          }}
-        >
+      <div className="flex flex-col items-stretch justify-between gap-4">
+        <Typography textColor="muted" variant="xsmall">
           {description}
         </Typography>
         {url && isUrlSafe(url) && (
@@ -45,7 +28,7 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
             {label}
           </Button>
         )}
-      </StyledBox>
+      </div>
     </SnapshotCard>
   )
 }

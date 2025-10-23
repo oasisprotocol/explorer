@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { RuntimeEvent } from '../../../oasis-nexus/api'
-import { StatusDetails, StyledBox } from '../StatusIcon'
+import { StatusDetails, StatusBadge } from '../StatusIcon'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { RuntimeEventType } from '../../../oasis-nexus/api'
@@ -33,11 +33,11 @@ export const EventError: FC<EventErrorProps> = ({ event }) => {
   const errorMessage = `${t('errors.code')} ${error.code}, ${t('errors.module')}: ${error.module}`
   return (
     <>
-      <StyledBox status="failure" withText>
+      <StatusBadge status="failure" withText>
         {t('common.failed')}
         &nbsp;
         <CancelIcon color="error" fontSize="inherit" />
-      </StyledBox>
+      </StatusBadge>
       <StatusDetails error>{errorMessage}</StatusDetails>
     </>
   )

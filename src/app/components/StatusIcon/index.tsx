@@ -1,9 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
-import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
 import LockIcon from '@mui/icons-material/Lock'
@@ -11,6 +9,7 @@ import { TxError } from '../../../oasis-nexus/api'
 import Tooltip from '@mui/material/Tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type TxStatus = 'unknown' | 'success' | 'partialsuccess' | 'failure' | 'pending'
 
@@ -38,45 +37,42 @@ export const statusIcon: Record<TxStatus, ReactNode> = {
   pending: <HelpIcon color="inherit" fontSize="inherit" />,
 }
 
-type StyledBoxProps = {
+interface StatusBadgeProps {
   status: TxStatus
+  children: ReactNode
   withText?: boolean
 }
 
-export const StyledBox = styled(Box, {
-  shouldForwardProp: prop => prop !== 'status' && prop !== 'withText',
-})(({ status, withText }: StyledBoxProps) => {
-  return {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: withText ? undefined : '28px',
-    minHeight: '28px',
-    fontSize: '15px',
-    backgroundColor: statusBgColor[status],
-    color: statusFgColor[status],
-    borderRadius: 10,
-    padding: 4,
-    paddingLeft: 12,
-    paddingRight: 12,
-  }
-})
+export const StatusBadge: FC<StatusBadgeProps> = ({ status, children, withText }) => (
+  <div
+    className={cn(
+      'flex justify-center items-center text-sm rounded-lg',
+      withText ? 'px-3 py-1' : 'w-7 min-h-7 p-1',
+    )}
+    style={{
+      backgroundColor: statusBgColor[status],
+      color: statusFgColor[status],
+    }}
+  >
+    {children}
+  </div>
+)
 
-export const StatusDetails = styled(Box, {
-  shouldForwardProp: prop => prop !== 'error',
-})(({ error }: { error?: boolean }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '28px',
-  fontSize: '12px',
-  backgroundColor: COLORS.grayLight,
-  color: error ? COLORS.errorIndicatorBackground : COLORS.warningColor,
-  borderRadius: 10,
-  paddingLeft: 12,
-  paddingRight: 12,
-  wordBreak: 'break-all',
-}))
+interface StatusDetailsProps {
+  error?: boolean
+  children: ReactNode
+}
+
+export const StatusDetails: FC<StatusDetailsProps> = ({ error, children }) => (
+  <div
+    className="flex justify-center items-center min-h-7 text-xs rounded-lg px-3 break-all bg-gray-200"
+    style={{
+      color: error ? COLORS.errorIndicatorBackground : COLORS.warningColor,
+    }}
+  >
+    {children}
+  </div>
+)
 
 type StatusIconProps = {
   /**
@@ -132,11 +128,20 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
   if (withText) {
     return (
       <>
-        <StyledBox status={status} withText={withText}>
+        <div
+          className={cn(
+            'flex justify-center items-center text-sm rounded-lg',
+            withText ? 'px-3 py-1' : 'w-7 min-h-7 p-1',
+          )}
+          style={{
+            backgroundColor: statusBgColor[status],
+            color: statusFgColor[status],
+          }}
+        >
           {statusLabel[status]}
           &nbsp;
           {statusIcon[status]}
-        </StyledBox>
+        </div>
         {errorMessage && <StatusDetails error>{errorMessage}</StatusDetails>}
         {!errorMessage && status === 'pending' && <StatusDetails>{getPendingLabel(t, method)}</StatusDetails>}
       </>
@@ -148,9 +153,9 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
         placement="top"
         title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
       >
-        <StyledBox status={status} withText={withText}>
+        <StatusBadge status={status} withText={withText}>
           {statusIcon[status]}
-        </StyledBox>
+        </StatusBadge>
       </Tooltip>
     )
   }

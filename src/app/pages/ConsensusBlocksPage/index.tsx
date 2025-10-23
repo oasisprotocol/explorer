@@ -2,15 +2,12 @@ import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled } from '@mui/material/styles'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { useGetConsensusBlocks } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE, REFETCH_INTERVAL } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusBlockDetailView } from '../ConsensusBlockDetailPage'
-import Box from '@mui/material/Box'
-import { COLORS } from '../../../styles/theme/colors'
 import { AppErrors } from '../../../types/errors'
 import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
@@ -20,13 +17,6 @@ import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 import { LayoutDivider } from '../../components/Divider'
 
 const PAGE_SIZE = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
-
-const BlockDetails = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: `0 ${theme.spacing(2)}`,
-  backgroundColor: COLORS.brandDark,
-}))
 
 export const ConsensusBlocksPage: FC = () => {
   const [tableView, setTableView] = useState<TableLayout>(TableLayout.Horizontal)
@@ -115,7 +105,7 @@ export const ConsensusBlocksPage: FC = () => {
           />
         )}
         {tableView === TableLayout.Vertical && (
-          <BlockDetails>
+          <div className="flex flex-col bg-primary">
             {isLoading &&
               [...Array(PAGE_SIZE).keys()].map(key => (
                 <ConsensusBlockDetailView key={key} isLoading={true} block={undefined} standalone />
@@ -124,7 +114,7 @@ export const ConsensusBlocksPage: FC = () => {
               data?.data.blocks.map(block => (
                 <ConsensusBlockDetailView key={block.hash} block={block} standalone />
               ))}
-          </BlockDetails>
+          </div>
         )}
       </SubPageCard>
     </PageLayout>

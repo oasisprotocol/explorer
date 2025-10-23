@@ -1,24 +1,7 @@
 import { FC, ReactNode } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart'
 import { COLORS } from '../../../styles/theme/colors'
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  [theme.breakpoints.down('sm')]: {
-    minHeight: '150px',
-    paddingTop: theme.spacing(3),
-  },
-  [theme.breakpoints.up('sm')]: {
-    minHeight: '200px',
-    paddingTop: theme.spacing(6),
-  },
-}))
 
 type ConsensusAccountCardEmptyStateProps = {
   children?: ReactNode
@@ -30,19 +13,12 @@ export const ConsensusAccountCardEmptyState: FC<ConsensusAccountCardEmptyStatePr
   label,
 }) => {
   return (
-    <StyledBox gap={3}>
+    <div className="flex flex-col justify-center items-center gap-2 text-center min-h-36 pt-2 sm:pt-16 sm:min-h-48">
       <StackedBarChartIcon sx={{ color: COLORS.grayMedium, fontSize: 40, opacity: 0.5 }} />
-      <Typography
-        sx={{
-          color: COLORS.grayMedium,
-          fontWeight: 700,
-          textAlign: 'center',
-          opacity: 0.5,
-        }}
-      >
+      <Typography textColor="muted" className="font-semibold text-center">
         {label}
       </Typography>
       {children}
-    </StyledBox>
+    </div>
   )
 }

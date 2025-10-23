@@ -1,6 +1,5 @@
 import { FC, memo, useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import paratimeSelectorGlow from '../images/paratime-selector-glow.svg'
 import paratimeSelectorGlobe from '../images/paratime-selector-globe.svg'
 import paratimeSelectorGlowTestnet from '../images/paratime-selector-glow-testnet.svg'
@@ -17,7 +16,6 @@ import { GraphUtils } from '../Graph/graph-utils'
 import useResizeObserver from 'use-resize-observer'
 import HelpScreen from '../HelpScreen'
 import { NetworkSelector } from '../NetworkSelector'
-import { Network } from '../../../../../types/network'
 import { useSearchQueryNetworkParam } from '../../../../hooks/useSearchQueryNetworkParam'
 import { storage } from '../../../../utils/storage'
 import { StorageKeys } from '../../../../../types/storage'
@@ -28,61 +26,6 @@ import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 interface ParaTimeSelectorBaseProps {
   disabled: boolean
 }
-
-type ParaTimeSelectorGlowProps = ParaTimeSelectorBaseProps & { network: Network }
-
-const ParaTimeSelectorGlow = styled(Box, {
-  shouldForwardProp: prop => prop !== 'disabled' && prop !== 'network',
-})<ParaTimeSelectorGlowProps>(({ disabled, network, theme }) => ({
-  position: 'relative',
-  width: '130vw',
-  height: '130vw',
-  marginTop: '-5vh',
-  backgroundImage: `url("${network === 'testnet' ? paratimeSelectorGlowTestnet : paratimeSelectorGlow}")`,
-  transitionProperty: 'background-image',
-  transitionDuration: `${theme.transitions.duration.complex}ms`,
-  transitionTimingFunction: theme.transitions.easing.easeInOut,
-  backgroundSize: 'contain',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  ...(disabled
-    ? {
-        opacity: 0.25,
-      }
-    : {}),
-  [theme.breakpoints.up('sm')]: {
-    width: '80vh',
-    height: '80vh',
-    marginTop: '-17vh',
-  },
-}))
-
-type ParaTimeSelectorGlobeProps = {
-  network: Network
-}
-
-const ParaTimeSelectorGlobe = styled(Box, {
-  shouldForwardProp: prop => prop !== 'network',
-})<ParaTimeSelectorGlobeProps>(({ network, theme }) => ({
-  position: 'absolute',
-  width: '65%',
-  paddingBottom: '65%',
-  left: '50%',
-  bottom: '6%',
-  transform: 'translateX(-50%)',
-  color: theme.palette.layout.main,
-  backgroundImage: `url("${
-    network === 'testnet' || network === 'localnet' ? paratimeSelectorGlobeTestnet : paratimeSelectorGlobe
-  }")`,
-  transitionProperty: 'background-image',
-  transitionDuration: `${theme.transitions.duration.complex}ms`,
-  transitionTimingFunction: theme.transitions.easing.easeInOut,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  overflow: 'hidden',
-  borderRadius: '50%',
-}))
 
 export const ExploreBtn = styled(Button)(({ theme }) => ({
   fontWeight: 700,
@@ -231,8 +174,27 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
 
   return (
     <>
-      <ParaTimeSelectorGlow disabled={disabled} network={network}>
-        <ParaTimeSelectorGlobe network={network}>
+      <div
+        className={cn(
+          'relative bg-center bg-no-repeat bg-contain w-[130vw] h-[130vw] -mt-[5vh] sm:w-[80vh] sm:h-[80vh] sm:-mt-[17vh] transition-all duration-300 ease-in-out',
+          disabled ? 'opacity-25' : 'opacity-100',
+        )}
+        style={{
+          backgroundImage: `url("${
+            network === 'testnet' ? paratimeSelectorGlowTestnet : paratimeSelectorGlow
+          }")`,
+        }}
+      >
+        <div
+          className="text-foreground absolute w-[65%] pb-[65%] left-1/2 bottom-[6%] -translate-x-1/2 rounded-full bg-cover bg-center bg-no-repeat overflow-hidden transition-all duration-300 ease-in-out"
+          style={{
+            backgroundImage: `url("${
+              network === 'testnet' || network === 'localnet'
+                ? paratimeSelectorGlobeTestnet
+                : paratimeSelectorGlobe
+            }")`,
+          }}
+        >
           <QuickPinchZoomOuter>
             <QuickPinchZoom
               ref={quickPinchZoomRef}
@@ -288,11 +250,11 @@ const ParaTimeSelectorCmp: FC<ParaTimeSelectorProps> = ({
           {ParaTimeSelectorUtils.showMobileHelpScreen(step, isMobile, showInfoScreen) && (
             <HelpScreen setParaTimeStep={setStep} />
           )}
-        </ParaTimeSelectorGlobe>
+        </div>
         {!fixedNetwork && step === ParaTimeSelectorStep.Explore && (
           <NetworkSelector network={network} setNetwork={network => setNetwork(network ?? 'mainnet')} />
         )}
-      </ParaTimeSelectorGlow>
+      </div>
       {activeMobileGraphTooltip.current && (
         <GraphTooltipMobile
           network={network}
