@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hook'
 import { CardEmptyState } from '../../components/CardEmptyState'
@@ -31,13 +30,7 @@ export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) 
     .sort((a, b) => b.path.endsWith(entryFilePath) - a.path.endsWith(entryFilePath))
 
   return (
-    <Card
-      sx={{
-        borderTopRightRadius: 0,
-        borderTopLeftRadius: 0,
-        borderTop: 'none',
-      }}
-    >
+    <Card variant="layout" className="rounded-t-none border-t-0">
       {noCode && <CardEmptyState label={t('contract.noCode')} />}
       {contract && (contract.creation_bytecode || contract.runtime_bytecode) && (
         <CardContent>

@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { useGetConsensusValidatorsAddressHistory } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { LineChart } from '../../components/charts/LineChart'
@@ -30,9 +29,13 @@ export const StakingTrend: FC<StakingTrendProps> = ({ address, scope }) => {
     .reverse()
 
   return (
-    <Card sx={{ flex: 1 }}>
-      <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
-      <CardContent sx={{ height: 250 }}>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="h-[250px]">
         {history && filteredHistory && (
           <LineChart
             alignDomainToDataPoints

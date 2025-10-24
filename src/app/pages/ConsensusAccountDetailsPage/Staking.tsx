@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import Link from '@mui/material/Link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
-import { styled } from '@mui/material/styles'
 import {
   Account,
   useGetConsensusAccountsAddressDebondingDelegations,
@@ -19,17 +17,6 @@ import { Delegations } from '../../components/Delegations'
 import { wallet } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
-
-export const StyledCard = styled(Card)(({ theme }) => ({
-  flex: 1,
-  borderTopRightRadius: 0,
-  borderTopLeftRadius: 0,
-  borderTop: 'none',
-  '&': {
-    padding: `0 ${theme.spacing(4)}`,
-    marginBottom: 0,
-  },
-}))
 
 type StakingProps = {
   account: Account | undefined
@@ -46,8 +33,8 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
           <TabsTrigger value="staked">{t('common.staked')}</TabsTrigger>
           <TabsTrigger value="debonding">{t('common.debonding')}</TabsTrigger>
         </TabsList>
-        <StyledCard>
-          <CardContent>
+        <Card variant="layout" className="rounded-t-none border-t-0 pt-0 !mb-0">
+          <CardContent className="px-4">
             {isLoading && <Skeleton className="h-[300px] mt-8" />}
             {!isLoading && account && (
               <>
@@ -60,7 +47,7 @@ export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
               </>
             )}
           </CardContent>
-        </StyledCard>
+        </Card>
       </Tabs>
     </div>
   )

@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { RoflAppPolicy, Runtime, useGetRuntimeRoflAppsIdTransactions } from '../../../oasis-nexus/api'
 import { Network } from '../../../types/network'
@@ -34,10 +33,14 @@ export const PolicyCard: FC<PolicyCardProps> = ({ id, isFetched, network, layer,
     policy?.fees === 1 ? t('rofl.replicaPays') : policy?.fees === 2 ? t('rofl.endorsingNodePays') : undefined
 
   return (
-    <Card sx={{ flex: 1 }}>
-      <Typography variant="h3" className="mb-4">
-        {t('rofl.policy')}
-      </Typography>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3" className="mb-4">
+            {t('rofl.policy')}
+          </Typography>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         {isFetched && !policy && <EmptyStateCard />}
         {policy && (
