@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Layer, Runtime } from '../../../oasis-nexus/api'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { isNotInHiddenScope, RouteUtils } from '../../utils/route-utils'
@@ -28,14 +27,18 @@ export const ParaTimesCard: FC<ParaTimesCardProps> = ({ scope }) => {
   const spaceForSecondaryParaTimes = enabledRuntimes.length > 2
 
   return (
-    <Card>
-      <Typography variant="h3" className="mb-4">
-        <CardHeaderWithCounter
-          label={t('paratimes.listTitle')}
-          totalCount={runtimesNumber}
-          isTotalCountClipped={false}
-        />
-      </Typography>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3" className="mb-4">
+            <CardHeaderWithCounter
+              label={t('paratimes.listTitle')}
+              totalCount={runtimesNumber}
+              isTotalCountClipped={false}
+            />
+          </Typography>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <div className="grid grid-cols-12 gap-4">
           <div className={cn('col-span-12', spaceForSecondaryParaTimes ? 'lg:col-span-5' : 'lg:col-span-6')}>

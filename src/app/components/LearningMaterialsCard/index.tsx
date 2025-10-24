@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { docs } from '../../utils/externalLinks'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
@@ -14,20 +13,22 @@ export const LearningMaterialsCard: FC<LearningMaterialsCardProps> = ({ children
   const { t } = useTranslation()
 
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column' }}>
-      <div className="flex justify-between mb-4">
-        <Typography variant="h3">{t('learningMaterials.header')}</Typography>
-        <Link
-          href={docs.home}
-          rel="noopener noreferrer"
-          target="_blank"
-          textColor="primary"
-          className="font-medium px-4"
-        >
-          {t('common.viewAll')}
-        </Link>
-      </div>
-      <CardContent sx={{ flex: '1', paddingBottom: '0!important' }}>{children}</CardContent>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('learningMaterials.header')}</Typography>
+          <Link
+            href={docs.home}
+            rel="noopener noreferrer"
+            target="_blank"
+            textColor="primary"
+            className="font-medium px-4"
+          >
+            {t('common.viewAll')}
+          </Link>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1">{children}</CardContent>
     </Card>
   )
 }

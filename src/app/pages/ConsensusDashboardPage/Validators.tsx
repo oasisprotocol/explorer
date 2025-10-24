@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Link as RouterLink } from 'react-router-dom'
 import { useGetConsensusValidators } from '../../../oasis-nexus/api'
 import { Validators } from '../../components/Validators'
@@ -50,18 +49,20 @@ export const ValidatorsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <div className="flex items-center justify-between pr-4 mb-4 sm:pr-0">
-        <ErrorBoundary fallbackContent={t('validator.listTitle')}>
-          <Typography variant="h3">
-            <ValidatorsTitle scope={scope} />
-          </Typography>
-        </ErrorBoundary>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <ErrorBoundary fallbackContent={t('validator.listTitle')}>
+            <Typography variant="h3">
+              <ValidatorsTitle scope={scope} />
+            </Typography>
+          </ErrorBoundary>
 
-        <Link asChild textColor="primary" className="font-medium px-4">
-          <RouterLink to={RouteUtils.getValidatorsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
+          <Link asChild textColor="primary" className="font-medium px-4">
+            <RouterLink to={RouteUtils.getValidatorsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light={true}>
           <ValidatorsContent scope={scope} />

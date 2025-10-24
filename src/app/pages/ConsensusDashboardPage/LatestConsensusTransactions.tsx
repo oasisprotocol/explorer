@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Link as RouterLink } from 'react-router-dom'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { ConsensusScope } from '../../../types/searchScope'
@@ -63,22 +62,26 @@ export const LatestConsensusTransactions: FC<{
   const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   return (
-    <Card>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <div className="flex items-center gap-6">
-          <Typography variant="h3">{t('transactions.latest')}</Typography>
-          {shouldFilter && !isMobile && (
-            <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />
-          )}
-        </div>
-        <Link asChild className="font-medium px-4" textColor="primary">
-          <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle className="flex flex-wrap">
+          <div className="flex items-center gap-6">
+            <Typography variant="h3">{t('transactions.latest')}</Typography>
+            {shouldFilter && !isMobile && (
+              <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} />
+            )}
+          </div>
+          <Link asChild className="font-medium px-4">
+            <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
+          </Link>
 
-      {shouldFilter && isMobile && (
-        <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />
-      )}
+          {shouldFilter && isMobile && (
+            <div className="w-full mt-4">
+              <ConsensusTransactionMethodFilter value={txMethod} setValue={setTxMethod} expand />
+            </div>
+          )}
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light={true}>
           <LatestConsensusTransactionsContent scope={scope} txMethod={txMethod} setTxMethod={setTxMethod} />
