@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Card from '@mui/material/Card'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
-import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { RuntimeScope } from '../../../types/searchScope'
 import { TokenLinkWithIcon } from '../../components/Tokens/TokenLinkWithIcon'
@@ -42,7 +41,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
   const owner = nft?.owner_eth ?? nft?.owner
 
   return (
-    <Card>
+    <Card variant="layout">
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {isFetched && account && nft && (

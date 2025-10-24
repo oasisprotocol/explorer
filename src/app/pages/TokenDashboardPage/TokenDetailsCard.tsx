@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import Card from '@mui/material/Card'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import Link from '@mui/material/Link'
 import { useTokenInfo } from './hook'
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
@@ -12,7 +12,6 @@ import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { DelayedContractCreatorInfo } from '../../components/Account/ContractCreatorInfo'
-import CardContent from '@mui/material/CardContent'
 import { TokenTypeTag } from '../../components/Tokens/TokenList'
 import { RuntimeScope } from '../../../types/searchScope'
 import { RouteUtils } from '../../utils/route-utils'
@@ -35,7 +34,7 @@ export const TokenDetailsCard: FC<{
   const isLoading = tokenIsLoading || accountIsLoading
 
   return (
-    <Card>
+    <Card variant="layout">
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {!isLoading && account && token && (

@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import CardContent from '@mui/material/CardContent'
 import { SearchScope } from 'types/searchScope'
 import { useGetConsensusBlocks, Validator } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../../config'
@@ -28,8 +27,12 @@ export const ProposedBlocks: FC<ProposedBlocksProps> = ({ scope, validator }) =>
   const blocks = data?.data.blocks
 
   return (
-    <Card>
-      <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ConsensusBlocks
           isLoading={isLoading}

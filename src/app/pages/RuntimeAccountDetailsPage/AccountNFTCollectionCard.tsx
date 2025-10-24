@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import Link from '@mui/material/Link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
@@ -37,7 +36,7 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
   const firstToken = inventory?.length ? inventory?.[0].token : undefined
 
   return (
-    <Card>
+    <Card variant="layout">
       <LinkableDiv id={nftCollectionContainerId}>
         <div className="flex items-center p-4" role="heading" aria-level={3}>
           <div className="min-w-0 flex-1">
