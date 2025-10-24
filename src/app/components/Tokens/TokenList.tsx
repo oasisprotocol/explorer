@@ -8,7 +8,6 @@ import { CopyToClipboard } from '../CopyToClipboard'
 import { VerificationIcon } from '../ContractVerificationIcon'
 import { FC } from 'react'
 import { RoundedBalance } from '../RoundedBalance'
-import { useScreenSize } from 'app/hooks/useScreensize'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 type TokensProps = {
@@ -41,7 +40,6 @@ export const TokenTypeTag: FC<{ tokenType: EvmTokenType | undefined }> = ({ toke
 export const TokenList = (props: TokensProps) => {
   const { isLoading, tokens, pagination, limit } = props
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const tableColumns: TableColProps[] = [
     { key: 'index', content: '' },
     { key: 'name', content: t('common.name') },
@@ -50,7 +48,7 @@ export const TokenList = (props: TokensProps) => {
     { key: 'contract', content: t('common.smartContract') },
     {
       key: 'verification',
-      content: isMobile ? t('contract.verification.sourceShort') : t('contract.verification.source'),
+      content: t('contract.verification.source'),
     },
     {
       key: 'holders',
@@ -115,7 +113,6 @@ export const TokenList = (props: TokensProps) => {
               scope={token}
               verificationLevel={token.verification_level}
               hideLink
-              hideLabel={isMobile}
             />
           ),
         },
