@@ -73,19 +73,27 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       </dd>
       <dt>{t('account.totalBalance')}</dt>
       <dd>
-        <RoundedBalance value={account.total} ticker={account.ticker} />
+        <div className="w-full max-w-[25ex] text-right">
+          <RoundedBalance value={account.total} ticker={account.ticker} />
+        </div>
       </dd>
       <StyledListTitle>{t('account.available')}</StyledListTitle>
       <dd>
-        <RoundedBalance value={account.available} ticker={account.ticker} />
+        <div className="w-full max-w-[25ex] text-right">
+          <RoundedBalance value={account.available} ticker={account.ticker} />
+        </div>
       </dd>
       <StyledListTitle>{t('common.staked')}</StyledListTitle>
       <dd>
-        <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
+        <div className="w-full max-w-[25ex] text-right">
+          <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
+        </div>
       </dd>
       <StyledListTitle>{t('account.debonding')}</StyledListTitle>
       <dd>
-        <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
+        <div className="w-full max-w-[25ex] text-right">
+          <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
+        </div>
       </dd>
       <dt>{t('common.nonce')}</dt>
       <dd>{account.nonce}</dd>
