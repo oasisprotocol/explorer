@@ -115,18 +115,19 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
 const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
   const elementRef = useRef<HTMLDivElement>(null)
   const [truncate, setTruncate] = useState(false)
-  const [baseLabelWidth, setBaseLabelWidth] = useState(0)
+  const baseLabelWidthRef = useRef(0)
+
   const applyTruncate = useCallback(() => {
     if (elementRef.current) {
       const elementWidth = elementRef.current.offsetWidth
       const parentWidth = (elementRef.current.parentNode as HTMLElement)?.offsetWidth
-      setTruncate(elementWidth === parentWidth || baseLabelWidth > parentWidth)
+      setTruncate(elementWidth === parentWidth || baseLabelWidthRef.current > parentWidth)
     }
-  }, [elementRef, baseLabelWidth])
+  }, [])
 
   useLayoutEffect(() => {
     if (elementRef.current) {
-      setBaseLabelWidth(elementRef.current.offsetWidth)
+      baseLabelWidthRef.current = elementRef.current.offsetWidth
       applyTruncate()
     }
 
@@ -139,7 +140,7 @@ const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [applyTruncate, elementRef, props.label, props.size])
+  }, [applyTruncate, props.label, props.size])
 
   return (
     <Tooltip
