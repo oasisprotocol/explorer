@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { EvmNft } from 'oasis-nexus/api'
@@ -24,8 +23,8 @@ export const InstanceTitleCard: FC<InstanceTitleCardProps> = ({ isFetched, isLoa
   const displayAddress = token ? token.eth_contract_addr || token.contract_addr : undefined
 
   return (
-    <Card>
-      <CardContent sx={{ paddingBottom: '0!important' }}>
+    <Card variant="layout">
+      <CardContent>
         {isLoading && <Skeleton className="h-8" />}
         {isFetched && token && (
           <div className="flex flex-wrap justify-between items-center">

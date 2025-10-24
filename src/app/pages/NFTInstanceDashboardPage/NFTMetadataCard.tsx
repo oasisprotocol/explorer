@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { NftDashboardContext } from '../NFTInstanceDashboardPage'
@@ -15,7 +14,7 @@ export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, insta
   const metadata = nft?.metadata
 
   return (
-    <Card>
+    <Card variant="layout">
       {isFetched && !metadata && <CardEmptyState label={t('nft.noMetadata')} />}
       <>
         {metadata && (

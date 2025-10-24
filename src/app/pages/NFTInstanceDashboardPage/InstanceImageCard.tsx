@@ -1,8 +1,7 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@mui/base/Button'
-import CardContent from '@mui/material/CardContent'
-import Card from '@mui/material/Card'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import ContrastIcon from '@mui/icons-material/Contrast'
 import Link from '@mui/material/Link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
@@ -84,7 +83,8 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
 
   return (
     <Card
-      sx={{
+      variant="layout"
+      style={{
         background: darkMode ? COLORS.grayExtraDark : COLORS.white,
       }}
     >

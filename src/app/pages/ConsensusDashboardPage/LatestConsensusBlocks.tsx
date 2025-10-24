@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { useGetConsensusBlocks } from '../../../oasis-nexus/api'
 import { ConsensusBlocks } from '../../components/Blocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
@@ -42,14 +41,15 @@ export const LatestConsensusBlocks: FC<{ scope: ConsensusScope }> = ({ scope }) 
   const { t } = useTranslation()
 
   return (
-    <Card sx={{ flex: 1 }}>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <Typography variant="h3">{t('blocks.latest')}</Typography>
-        <Link asChild className="font-medium px-4" textColor="primary">
-          <RouterLink to={RouteUtils.getLatestBlocksRoute(scope)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
-
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('blocks.latest')}</Typography>
+          <Link asChild className="font-medium px-4" textColor="primary">
+            <RouterLink to={RouteUtils.getLatestBlocksRoute(scope)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light={true}>
           <LatestConsensusBlocksContent scope={scope} />

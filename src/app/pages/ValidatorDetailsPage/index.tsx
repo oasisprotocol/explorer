@@ -2,8 +2,7 @@ import { FC } from 'react'
 import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import {
   Validator,
   ValidatorAggStats,
@@ -117,7 +116,7 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
   stats,
 }) => {
   return (
-    <Card>
+    <Card variant="layout">
       <CardContent>
         <ValidatorDetailsView
           network={network}

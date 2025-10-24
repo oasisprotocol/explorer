@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { BlockStats } from '../../components/BlockStats'
 import { ValidatorSignedBlock } from '../../../oasis-nexus/api'
@@ -17,8 +16,12 @@ export const SignedBlocks: FC<SignedBlocksProps> = ({ isLoading, isFetched, sign
   const { t } = useTranslation()
 
   return (
-    <Card sx={{ flex: 1 }}>
-      <Typography variant="h3">{t('validator.signedBlocks')}</Typography>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('validator.signedBlocks')}</Typography>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         {isLoading && <Skeleton className="h-[240px]" />}
         {isFetched && signedBlocks && signedBlocks.length > 0 && (

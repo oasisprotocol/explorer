@@ -29,9 +29,7 @@ export const ParatimeDashboardPage: FC = () => {
         <div className="flex order-1 md:order-0">
           <LearningMaterials scope={scope} />
         </div>
-        <div className="flex">
-          <LatestRuntimeBlocks scope={scope} />
-        </div>
+        <LatestRuntimeBlocks scope={scope} />
         <div className="col-span-1 lg:col-span-2">
           <TopTokens scope={scope} />
           {paraTimesConfig[scope.layer]?.offerRoflTxTypes && <LatestRoflApps scope={scope} />}

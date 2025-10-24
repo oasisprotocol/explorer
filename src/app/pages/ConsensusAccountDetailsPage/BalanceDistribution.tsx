@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Account } from '../../../oasis-nexus/api'
 import { PieChart } from '../../components/charts/PieChart'
@@ -19,10 +18,14 @@ export const BalanceDistribution: FC<BalanceDistributionProps> = ({ account, isL
   const { t } = useTranslation()
 
   return (
-    <Card sx={{ height: '100%' }}>
-      <Typography variant="h3" className="pb-0">
-        {t('account.balanceDistribution')}
-      </Typography>
+    <Card variant="layout" className="h-full">
+      <CardHeader className="gap-0">
+        <CardTitle>
+          <Typography variant="h3" className="pb-0">
+            {t('account.balanceDistribution')}
+          </Typography>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         {isLoading && <Skeleton className="h-[300px]" />}
         {account && <BalanceDistributionContent account={account} />}

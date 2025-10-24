@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetRuntimeBlocks } from '../../../oasis-nexus/api'
@@ -44,13 +43,15 @@ export const LatestRuntimeBlocks: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
-    <Card sx={{ width: '100%' }}>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <Typography variant="h3">{t('blocks.latest')}</Typography>
-        <Link asChild className="font-medium px-4" textColor="primary">
-          <RouterLink to={RouteUtils.getLatestBlocksRoute(scope)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('blocks.latest')}</Typography>
+          <Link asChild className="font-medium px-4" textColor="primary">
+            <RouterLink to={RouteUtils.getLatestBlocksRoute(scope)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light minHeight={400}>
           <LatestRuntimeBlocksContent scope={scope} />
