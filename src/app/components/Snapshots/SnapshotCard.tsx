@@ -1,33 +1,13 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import Card from '@mui/material/Card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@oasisprotocol/ui-library/src/components/cards'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import { styled } from '@mui/material/styles'
-
-export const StyledCard = styled(Card, {
-  shouldForwardProp: prop => prop !== 'noBorder',
-})<{ noBorder?: boolean }>(({ theme, noBorder }) => ({
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  '&': {
-    padding: 0,
-    margin: 0,
-  },
-  height: 186,
-  border: noBorder ? 0 : undefined,
-  backgroundColor: '#FAFAFA',
-}))
-
-const StyledCardContent = styled(CardContent, {
-  shouldForwardProp: prop => prop !== 'withContentPadding',
-})<{ withContentPadding: boolean }>(({ theme, withContentPadding }) => ({
-  position: 'relative',
-  paddingTop: theme.spacing(withContentPadding ? 4 : 0),
-  height: '100%',
-}))
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type SnapshotCardProps = PropsWithChildren & {
   badge?: ReactNode
@@ -48,20 +28,32 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
   noBorder = false,
 }) => {
   return (
-    <StyledCard noBorder={noBorder}>
-      <Typography variant="h4" className="pl-4 pt-4 text-sm">
-        {title}
-      </Typography>
-      <StyledCardContent withContentPadding={withContentPadding}>{children}</StyledCardContent>
+    <Card
+      className={cn('flex-1 gap-0 p-0 m-0 h-[186px] bg-[#FAFAFA]', {
+        'border-0': noBorder,
+      })}
+    >
+      <CardHeader className="py-0 px-4 gap-0">
+        <CardTitle>
+          <Typography variant="h4" className="pt-4 text-sm">
+            {title}
+          </Typography>
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className={cn('relative h-full p-0 min-h-1 last:pb-6', { 'pt-4': withContentPadding })}>
+        {children}
+      </CardContent>
+
       {(badge || label || alignWithCardsWithActions) && (
-        <CardActions sx={{ minHeight: 60 }}>
-          <div className="flex justify-between items-center w-full px-4 pb-4">
+        <CardFooter className="p-0 min-h-[60px]">
+          <div className="flex justify-between items-center w-full px-4 pb-0">
             <div>{badge}</div>
             <div className="flex-1 text-muted-foreground">{label}</div>
           </div>
-        </CardActions>
+        </CardFooter>
       )}
-    </StyledCard>
+    </Card>
   )
 }
 
