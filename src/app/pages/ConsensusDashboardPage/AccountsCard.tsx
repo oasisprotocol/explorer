@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetConsensusAccounts } from '../../../oasis-nexus/api'
@@ -31,13 +30,15 @@ const AccountsContent: FC<{ scope: ConsensusScope }> = ({ scope }) => {
 export const AccountsCard: FC<{ scope: ConsensusScope }> = ({ scope }) => {
   const { t } = useTranslation()
   return (
-    <Card>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <Typography variant="h3">{t('account.listTitle')}</Typography>
-        <Link asChild textColor="primary" className="font-medium px-4">
-          <RouterLink to={RouteUtils.getAccountsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('account.listTitle')}</Typography>
+          <Link asChild textColor="primary" className="font-medium px-4">
+            <RouterLink to={RouteUtils.getAccountsRoute(scope.network)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light={true}>
           <AccountsContent scope={scope} />

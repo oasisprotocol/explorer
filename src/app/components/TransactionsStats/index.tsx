@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { BarChart } from '../../components/charts/BarChart'
 import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {
@@ -68,17 +67,19 @@ export const TransactionsStats: FC<{ scope: SearchScope }> = ({ scope }) => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
-    <Card>
-      <div className="flex flex-col mb-4 sm:flex-row sm:items-center sm:justify-between gap-1">
-        <Typography variant="h3" className="whitespace-nowrap">
-          {t('transactionStats.header')}
-        </Typography>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle className="flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <Typography variant="h3" className="whitespace-nowrap">
+            {t('transactionStats.header')}
+          </Typography>
 
-        <div className="md:ml-4 md:flex-1 md:text-right">
-          <DurationPills handleChange={setChartDuration} value={chartDuration} />
-        </div>
-      </div>
-      <CardContent sx={{ height: 450 }}>
+          <div className="md:ml-4 md:flex-1 md:text-right">
+            <DurationPills handleChange={setChartDuration} value={chartDuration} />
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="h-[450px]">
         <ErrorBoundary light={true}>
           <TransactionsStatsContent scope={scope} chartDuration={chartDuration} />
         </ErrorBoundary>

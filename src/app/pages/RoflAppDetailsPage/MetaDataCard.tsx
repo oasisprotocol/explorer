@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import Link from '@mui/material/Link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'
@@ -36,15 +35,19 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
   const homepage = metadata?.['net.oasis.rofl.homepage']
 
   return (
-    <Card sx={{ flex: 1 }}>
-      <div className="grid grid-cols-3 mb-4 gap-2">
-        <Typography variant="h3" className="col-span-1">
-          {t('rofl.metadata')}
-        </Typography>
-        <Typography variant="xsmall" className="col-span-2 flex items-center" textColor="muted">
-          {t('rofl.metadataInfo')}
-        </Typography>
-      </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <div className="grid grid-cols-3 mb-4 gap-2">
+            <Typography variant="h3" className="col-span-1">
+              {t('rofl.metadata')}
+            </Typography>
+            <Typography variant="xsmall" className="col-span-2 flex items-center" textColor="muted">
+              {t('rofl.metadataInfo')}
+            </Typography>
+          </div>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         {isFetched && !metadata && <EmptyStateCard />}
         {metadata && (

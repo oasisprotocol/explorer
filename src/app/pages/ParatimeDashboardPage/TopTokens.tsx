@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Link as RouterLink } from 'react-router-dom'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
@@ -32,13 +31,15 @@ export const TopTokens: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { t } = useTranslation()
 
   return (
-    <Card>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <Typography variant="h3">{t('common.tokens')}</Typography>
-        <Link asChild className="font-medium px-4" textColor="primary">
-          <RouterLink to={RouteUtils.getTopTokensRoute(scope)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('common.tokens')}</Typography>
+          <Link asChild className="font-medium px-4" textColor="primary">
+            <RouterLink to={RouteUtils.getTopTokensRoute(scope)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light>
           <TopTokensContent scope={scope} />

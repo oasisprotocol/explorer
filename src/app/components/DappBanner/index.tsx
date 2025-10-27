@@ -1,12 +1,10 @@
 import { FC } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { COLORS } from '../../../styles/theme/colors'
 import { SearchScope } from '../../../types/searchScope'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { EthOrOasisAddress } from '../../../oasis-nexus/api'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisAddress }> = ({
   scope,
@@ -17,36 +15,19 @@ export const DappBanner: FC<{ scope: SearchScope; ethOrOasisAddress: EthOrOasisA
 
   return (
     !!dApp?.url && (
-      <Card
-        sx={{
-          backgroundColor: COLORS.brandMedium,
-          border: `2px dashed ${COLORS.white}`,
-        }}
-      >
-        <CardContent sx={{ paddingBottom: '0!important' }}>
-          <div className="flex flex-wrap justify-center items-center gap-2">
-            <Typography variant="h3" className="text-white">
-              {dApp.description}
-            </Typography>
-            &nbsp;
-            <Button
-              href={dApp.url}
-              sx={{
-                backgroundColor: COLORS.white,
-                fontSize: '14px',
-                fontWeight: 500,
-                lineHeight: '125%',
-                textTransform: 'none',
-              }}
-              variant="outlined"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+      <div className="bg-chart-3 border-2 border-dashed border-white p-6 mb-6">
+        <div className="flex flex-wrap justify-center items-center gap-2">
+          <Typography variant="h3" className="text-white">
+            {dApp.description}
+          </Typography>
+          &nbsp;
+          <Button variant="outline" size="lg">
+            <Link className="text-[#0092f6]" href={dApp.url} target="_blank" rel="noopener noreferrer">
               {dApp.button}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+            </Link>
+          </Button>
+        </div>
+      </div>
     )
   )
 }

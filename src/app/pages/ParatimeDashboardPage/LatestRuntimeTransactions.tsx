@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+
 import { Link as RouterLink } from 'react-router-dom'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
@@ -63,21 +63,25 @@ export const LatestRuntimeTransactions: FC<{
   const { layer } = scope
 
   return (
-    <Card>
-      <div className="flex justify-between items-center mb-4 pr-4 sm:pr-0">
-        <div className="flex items-center gap-6">
-          <Typography variant="h3">{t('transactions.latest')}</Typography>
-          {shouldFilter && !isMobile && (
-            <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle className="flex flex-wrap">
+          <div className="flex items-center gap-6">
+            <Typography variant="h3">{t('transactions.latest')}</Typography>
+            {shouldFilter && !isMobile && (
+              <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} />
+            )}
+          </div>
+          <Link asChild className="font-medium px-4" textColor="primary">
+            <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
+          </Link>
+          {shouldFilter && isMobile && (
+            <div className="w-full mt-4">
+              <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} expand />
+            </div>
           )}
-        </div>
-        <Link asChild className="font-medium px-4" textColor="primary">
-          <RouterLink to={RouteUtils.getLatestTransactionsRoute(scope)}>{t('common.viewAll')}</RouterLink>
-        </Link>
-      </div>
-      {shouldFilter && isMobile && (
-        <RuntimeTransactionMethodFilter layer={layer} value={txMethod} setValue={setTxMethod} expand />
-      )}
+        </CardTitle>
+      </CardHeader>
       <CardContent>
         <ErrorBoundary light>
           <LatestRuntimeTransactionsContent scope={scope} txMethod={txMethod} />
