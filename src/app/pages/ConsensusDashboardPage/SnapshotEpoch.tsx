@@ -30,19 +30,31 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
   return (
     <SnapshotTextCard
       title={t('snapshotEpochTitle')}
+      withContentPadding={false}
       label={
         blockHeight !== undefined && (
-          <Typography className="font-normal flex gap-2 items-center">
-            <Trans
-              t={t}
-              i18nKey="consensusSnapshot.blockHeight"
-              components={{
-                BlockHeight: (
-                  <span className="font-semibold text-primary">{blockHeight.toLocaleString()}</span>
-                ),
-              }}
-            />
-          </Typography>
+          <>
+            <Typography className="font-normal flex gap-2 justify-between items-center min-h-7">
+              <Trans
+                t={t}
+                i18nKey="consensusSnapshot.currentEpoch"
+                components={{
+                  EpochNumber: <span className="font-semibold text-primary">{epoch?.toLocaleString()}</span>,
+                }}
+              />
+            </Typography>
+            <Typography className="font-normal flex gap-2 justify-between items-center min-h-7">
+              <Trans
+                t={t}
+                i18nKey="consensusSnapshot.blockHeight"
+                components={{
+                  BlockHeight: (
+                    <span className="font-semibold text-primary">{blockHeight.toLocaleString()}</span>
+                  ),
+                }}
+              />
+            </Typography>
+          </>
         )
       }
     >
