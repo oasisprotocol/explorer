@@ -4,7 +4,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { Validator } from '../../../oasis-nexus/api'
 import { COLORS } from 'styles/theme/colors'
 import { ValidatorImage } from 'app/components/Validators/ValidatorImage'
-import { TitleCard } from 'app/components/PageLayout/TitleCard'
+import { DetailsPageTitle } from 'app/components/PageLayout/DetailsPageTitle'
 import { Network } from '../../../types/network'
 import { ValidatorStatusBadge } from './ValidatorStatusBadge'
 import { AccountLink } from '../../components/Account/AccountLink'
@@ -21,7 +21,7 @@ type ValidatorTitleCardProps = {
 export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, network, validator }) => {
   const { isTablet } = useScreenSize()
   return (
-    <TitleCard
+    <DetailsPageTitle
       details={
         <>
           {validator && (
