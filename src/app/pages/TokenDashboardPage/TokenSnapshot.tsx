@@ -1,6 +1,4 @@
 import { FC } from 'react'
-import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { useTranslation } from 'react-i18next'
 import { AppendMobileSearch } from '../../components/AppendMobileSearch'
 import { TokenSupplyCard } from './TokenSupplyCard'
 import { TokenHoldersCountCard } from './TokenHoldersCountCard'
@@ -9,17 +7,11 @@ import { TokenTotalTransactionsCard } from './TokenTotalTransactionsCard'
 import { RuntimeScope } from '../../../types/searchScope'
 
 export const TokenSnapshot: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
-  const { t } = useTranslation()
-
   return (
     <>
       <div className="flex items-center gap-2 mb-4">
         <div className="w-full px-4 md:px-0">
-          <AppendMobileSearch scope={scope}>
-            <div className="flex flex-col md:flex-row mb-2">
-              <Typography variant="h3">{t('tokenSnapshot.header')}</Typography>
-            </div>
-          </AppendMobileSearch>
+          <AppendMobileSearch scope={scope} />
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4 w-full md:pb-6">
