@@ -301,65 +301,6 @@ export const defaultTheme = createTheme({
         },
       },
     },
-    MuiCard: {
-      defaultProps: {
-        elevation: 0,
-      },
-      styleOverrides: {
-        root: ({ theme }) => ({
-          borderRadius: 6,
-          border: `1px solid ${COLORS.grayLight}`,
-          boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          fontSize: '14px',
-          [theme.breakpoints.down('sm')]: {
-            marginBottom: theme.spacing(4),
-            padding: theme.spacing(4),
-            ':has(table)': {
-              paddingRight: 0,
-            },
-          },
-          [theme.breakpoints.up('sm')]: {
-            marginBottom: '24px',
-            padding: theme.spacing('24px'),
-          },
-        }),
-      },
-    },
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          padding: 0,
-        },
-      },
-    },
-    MuiCardHeader: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          color: COLORS.brandExtraDark,
-          margin: 0,
-          paddingBottom: theme.spacing(4),
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingRight: 0,
-          [theme.breakpoints.down('sm')]: {
-            paddingRight: theme.spacing(4),
-          },
-        }),
-        action: {
-          margin: 0,
-          fontWeight: 400,
-          fontSize: '14px',
-          color: COLORS.brandExtraDark,
-        },
-        title: {
-          fontWeight: 700,
-        },
-        subheader: {
-          fontStyle: 'italic',
-          color: COLORS.grayMedium,
-        },
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {
