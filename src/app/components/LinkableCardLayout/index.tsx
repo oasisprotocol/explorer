@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
@@ -13,13 +12,7 @@ type LinkableCardLayoutProps = {
 }
 export const LinkableCardLayout: FC<LinkableCardLayoutProps> = ({ children, containerId, title, action }) => {
   return (
-    <Card
-      sx={{
-        borderTopRightRadius: 0,
-        borderTopLeftRadius: 0,
-        borderTop: 'none',
-      }}
-    >
+    <Card variant="layout" className="rounded-t-none border-t-0">
       <LinkableDiv id={containerId}>
         <div className="flex items-center justify-between p-4">
           <Typography variant="h3">{title}</Typography>

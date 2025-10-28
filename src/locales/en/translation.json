@@ -427,9 +427,6 @@
     },
     "type": "Token Type"
   },
-  "tokenSnapshot": {
-    "header": "Token Snapshot"
-  },
   "tokenPrice": {
     "header": "{{ticker}} Price"
   },
@@ -893,7 +890,6 @@
     "signedBlocksDescription": "Last 100 blocks",
     "signedBlocksPercentage": "Percentage of blocks signed in the past 24h",
     "proposedBlocks": "Proposed Blocks",
-    "snapshot": "Validator Snapshot",
     "self": "Self",
     "shares": "Shares",
     "stakingTrend": "Staking Trend",

@@ -39,43 +39,45 @@ export const EscrowDistributionCard: FC<BalanceDistributionCardProps> = ({ valid
 
   return (
     <SnapshotCard title={t('validator.escrowDistribution')}>
-      {validator?.escrow.active_balance && (
-        <PieChart
-          compact
-          prependLegendList={
-            <>
-              {t('validator.totalEscrow')}
-              <Typography sx={{ fontSize: 10 }}>
+      <div className="mt-4 relative h-full w-full">
+        {validator?.escrow.active_balance && (
+          <PieChart
+            compact
+            prependLegendList={
+              <>
+                {t('validator.totalEscrow')}
+                <Typography sx={{ fontSize: 10 }}>
+                  <RoundedBalance
+                    compactLargeNumbers
+                    value={validator.escrow.active_balance}
+                    ticker={validator.ticker}
+                  />
+                </Typography>
                 <RoundedBalance
                   compactLargeNumbers
-                  value={validator.escrow.active_balance}
-                  ticker={validator.ticker}
+                  value={validator?.escrow.active_shares}
+                  ticker={t('common.shares')}
                 />
-              </Typography>
-              <RoundedBalance
-                compactLargeNumbers
-                value={validator?.escrow.active_shares}
-                ticker={t('common.shares')}
-              />
-            </>
-          }
-          data={chartData(t, validator)}
-          dataKey="value"
-          formatters={{
-            data: (value, payload) =>
-              t('common.valueInToken', {
-                value: payload!.preciseValue,
-                formatParams: {
-                  value: {
-                    notation: 'compact',
-                  } satisfies Intl.NumberFormatOptions,
-                },
-                ticker: validator.ticker,
-              }),
-            label: (label: string) => label,
-          }}
-        />
-      )}
+              </>
+            }
+            data={chartData(t, validator)}
+            dataKey="value"
+            formatters={{
+              data: (value, payload) =>
+                t('common.valueInToken', {
+                  value: payload!.preciseValue,
+                  formatParams: {
+                    value: {
+                      notation: 'compact',
+                    } satisfies Intl.NumberFormatOptions,
+                  },
+                  ticker: validator.ticker,
+                }),
+              label: (label: string) => label,
+            }}
+          />
+        )}
+      </div>
     </SnapshotCard>
   )
 }

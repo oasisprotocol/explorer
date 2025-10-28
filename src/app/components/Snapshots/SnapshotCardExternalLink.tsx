@@ -9,7 +9,7 @@ import { isUrlSafe } from 'app/utils/url'
 
 const StyledBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(5),
-  padding: `0 ${theme.spacing(4)} ${theme.spacing(4)}`,
+  padding: '0',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',

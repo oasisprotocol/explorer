@@ -7,7 +7,7 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useTranslation } from 'react-i18next'
 import { RuntimeScope } from '../../../types/searchScope'
 import { HighlightedText } from '../../components/HighlightedText'
-import { TitleCard } from '../../components/PageLayout/TitleCard'
+import { DetailsPageTitle } from '../../components/PageLayout/DetailsPageTitle'
 
 export const TokenTitleCard: FC<{
   scope: RuntimeScope
@@ -17,7 +17,7 @@ export const TokenTitleCard: FC<{
   const { isLoading, token } = useTokenInfo(scope, address)
 
   return (
-    <TitleCard
+    <DetailsPageTitle
       details={
         <>
           {token && (
