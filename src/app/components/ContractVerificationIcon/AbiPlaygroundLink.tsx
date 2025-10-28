@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Layer } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { Network } from '../../../types/network'
@@ -42,7 +42,7 @@ export const AbiPlaygroundLink: FC<{
           t={t}
           i18nKey={'contract.verification.openInAbiPlayground'}
           components={{
-            AbiPlaygroundLink: <Link {...abiPlaygroundLinkProps} />,
+            AbiPlaygroundLink: <Link className="text-inherit" {...abiPlaygroundLinkProps} />,
           }}
         />
       </div>

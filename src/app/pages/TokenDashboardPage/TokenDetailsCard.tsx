@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useTokenInfo } from './hook'
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -122,14 +122,15 @@ export const TokenDetailsCard: FC<{
               <>
                 <dt>{t('tokens.holders')}</dt>
                 <dd>
-                  <Link
-                    component={RouterLink}
-                    to={`${RouteUtils.getTokenHoldersRoute(
-                      scope,
-                      token.eth_contract_addr,
-                    )}#${holdersContainerId}`}
-                  >
-                    {t('tokens.holdersValue', { value: token.num_holders })}
+                  <Link asChild className="font-medium">
+                    <RouterLink
+                      to={`${RouteUtils.getTokenHoldersRoute(
+                        scope,
+                        token.eth_contract_addr,
+                      )}#${holdersContainerId}`}
+                    >
+                      {t('tokens.holdersValue', { value: token.num_holders })}
+                    </RouterLink>
                   </Link>
                 </dd>
               </>
@@ -139,14 +140,15 @@ export const TokenDetailsCard: FC<{
               <>
                 <dt>{t('common.transfers')}</dt>
                 <dd>
-                  <Link
-                    component={RouterLink}
-                    to={`${RouteUtils.getTokenRoute(
-                      scope,
-                      token.eth_contract_addr,
-                    )}#${tokenTransfersContainerId}`}
-                  >
-                    {token.num_transfers.toLocaleString()}
+                  <Link asChild className="font-medium">
+                    <RouterLink
+                      to={`${RouteUtils.getTokenRoute(
+                        scope,
+                        token.eth_contract_addr,
+                      )}#${tokenTransfersContainerId}`}
+                    >
+                      {token.num_transfers.toLocaleString()}
+                    </RouterLink>
                   </Link>
                 </dd>
               </>
