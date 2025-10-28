@@ -25,7 +25,7 @@
     "sizeTooltip": "This account is indicated as an {{size}} account based on sum of assets they own.",
     "startStaking": "Start staking now",
     "title": "Account",
-    "totalBalance": "Total Balance",
+    "totalBalance": "Total balance",
     "totalValue": "Total {{value}}"
   },
   "activeAccounts": {
