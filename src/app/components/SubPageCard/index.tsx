@@ -1,9 +1,7 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useScreenSize } from '../../hooks/useScreensize'
-import { styled, css } from '@mui/material/styles'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
@@ -21,34 +19,6 @@ type StyledComponentProps = {
   mainTitle?: boolean
 }
 type SubPageCardProps = PropsWithChildren<StyledComponentProps>
-
-const StyledCard = styled(Card, {
-  shouldForwardProp: prop => prop !== 'featured' && prop !== 'noPadding',
-})<StyledComponentProps>(
-  ({ featured, noPadding, theme }) => css`
-    ${noPadding && {
-      '&&': {
-        padding: 0,
-      },
-    }}
-    ${featured && {
-      [theme.breakpoints.up('sm')]: {
-        paddingRight: theme.spacing(6),
-        paddingLeft: theme.spacing(6),
-      },
-    }};
-  `,
-)
-
-const StyledCardContent = styled(CardContent, {
-  shouldForwardProp: prop => prop !== 'noPadding',
-})<Pick<StyledComponentProps, 'noPadding'>>(({ noPadding }) => ({
-  '&&': noPadding
-    ? {
-        padding: 0,
-      }
-    : {},
-}))
 
 const TitleSkeleton: FC = () => <Skeleton className="h-4" />
 
@@ -79,28 +49,32 @@ export const SubPageCard: FC<SubPageCardProps> = ({
         </div>
       )}
       {title2 && <div className="mb-4 mx-4">{title2}</div>}
-      <StyledCard featured={featured} noPadding={noPadding}>
+      <Card className={cn(featured && 'md:px-10', noPadding && 'p-0')} variant="layout">
         {!isMobile && (
-          <div className={cn(featured && 'pb-4')}>
-            <div className="flex items-start justify-between">
-              <div className="flex gap-1 items-center">
-                <Typography variant={mainTitle ? 'h2' : 'h3'}>
-                  {isLoadingTitle ? <TitleSkeleton /> : title}
-                </Typography>
+          <CardHeader>
+            <CardTitle>
+              <div className={cn(featured && 'pb-4')}>
+                <div className="flex items-start justify-between">
+                  <div className="flex gap-1 items-center">
+                    <Typography variant={mainTitle ? 'h2' : 'h3'}>
+                      {isLoadingTitle ? <TitleSkeleton /> : title}
+                    </Typography>
 
-                {subheader && (
-                  <Typography variant="p" className="inline ml-2 italic">
-                    {subheader}
-                  </Typography>
-                )}
+                    {subheader && (
+                      <Typography variant="p" className="inline ml-2 italic">
+                        {subheader}
+                      </Typography>
+                    )}
+                  </div>
+
+                  {action && <div className="ml-4 shrink-0">{action}</div>}
+                </div>
               </div>
-
-              {action && <div className="ml-4 shrink-0">{action}</div>}
-            </div>
-          </div>
+            </CardTitle>
+          </CardHeader>
         )}
-        <StyledCardContent noPadding={noPadding}>{children}</StyledCardContent>
-      </StyledCard>
+        <CardContent className={cn(noPadding && 'p-0')}>{children}</CardContent>
+      </Card>
     </div>
   )
 }
