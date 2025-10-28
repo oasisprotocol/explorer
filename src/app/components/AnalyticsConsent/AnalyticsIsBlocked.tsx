@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Trans, useTranslation } from 'react-i18next'
 import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'
 
@@ -20,11 +20,7 @@ export const AnalyticsIsBlocked = (props: { isOpen: boolean; onReload: () => voi
           t={t}
           components={{
             PrivacyPolicyLink: (
-              <Link
-                href={import.meta.env.REACT_APP_PRIVACY_POLICY}
-                target="_blank"
-                sx={{ fontWeight: 400, textDecoration: 'underline' }}
-              />
+              <Link href={import.meta.env.REACT_APP_PRIVACY_POLICY} target="_blank" className="underline" />
             ),
           }}
         />

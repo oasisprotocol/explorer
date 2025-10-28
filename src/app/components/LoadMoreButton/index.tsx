@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import { COLORS } from '../../../styles/theme/colors'
@@ -20,14 +20,12 @@ export const LoadMoreButton: FC<LoadMoreButtonProps> = ({ isLoading, pagination 
   const { t } = useTranslation()
 
   return (
-    <Link
-      component={RouterLink}
-      to={pagination.linkToPage(pagination.selectedPage + 1)}
-      preventScrollReset={true}
-    >
-      <StyledLoadMoreButton color="primary" variant="contained" disabled={isLoading}>
-        {t('common.loadMore')}
-      </StyledLoadMoreButton>
+    <Link asChild>
+      <RouterLink to={pagination.linkToPage(pagination.selectedPage + 1)} preventScrollReset={true}>
+        <StyledLoadMoreButton color="primary" variant="contained" disabled={isLoading}>
+          {t('common.loadMore')}
+        </StyledLoadMoreButton>
+      </RouterLink>
     </Link>
   )
 }

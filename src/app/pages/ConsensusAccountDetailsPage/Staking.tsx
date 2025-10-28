@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 import {
@@ -74,7 +74,7 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
   if (isFetched && !delegationsQuery.data?.data.delegations.length) {
     return (
       <ConsensusAccountCardEmptyState label={t('account.notStaking')}>
-        <Link href={wallet.homepage} rel="noopener noreferrer" target="_blank">
+        <Link className="font-medium" href={wallet.homepage} rel="noopener noreferrer" target="_blank">
           {t('account.startStaking')}
         </Link>
       </ConsensusAccountCardEmptyState>
