@@ -39,7 +39,7 @@ export const TokenPriceCard: FC<{ token: NativeTokenInfo }> = ({ token }) => {
       }
     >
       <>
-        <div className="absolute -top-1 left-4">
+        <div className="absolute inset-0">
           <CoinGeckoReferral />
         </div>
         <div className="flex items-center justify-center h-full">

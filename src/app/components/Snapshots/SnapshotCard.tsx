@@ -29,13 +29,13 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
 }) => {
   return (
     <Card
-      className={cn('flex-1 gap-0 p-0 m-0 h-[186px] bg-[#FAFAFA]', {
+      className={cn('flex-1 gap-0 p-6 m-0 h-[204px] bg-[#FAFAFA]', {
         'border-0': noBorder,
       })}
     >
-      <CardHeader className="py-0 px-4 gap-0">
+      <CardHeader className="p-0 gap-0">
         <CardTitle>
-          <Typography variant="h4" className="flex-1 pt-4 text-sm">
+          <Typography variant="h4" className="flex-1 text-sm">
             {title}
           </Typography>
         </CardTitle>
@@ -46,11 +46,9 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
       </CardContent>
 
       {(badge || label || alignWithCardsWithActions) && (
-        <CardFooter className="p-0 min-h-[60px]">
-          <div className="flex justify-between items-center w-full px-4 pb-0">
-            <div>{badge}</div>
-            <div className="flex-1 text-muted-foreground">{label}</div>
-          </div>
+        <CardFooter className="p-0 min-h-[36px]">
+          <div>{badge}</div>
+          <div className="flex-1 text-muted-foreground">{label}</div>
         </CardFooter>
       )}
     </Card>
@@ -80,7 +78,7 @@ export const SnapshotTextCard: FC<SnapshotTextCardProps> = ({
       alignWithCardsWithActions={alignWithCardsWithActions}
     >
       <div className="h-full flex items-center justify-center">
-        <span className="text-2xl font-semibold text-primary flex-1 text-center px-4">{children}</span>
+        <span className="text-2xl font-semibold text-primary flex-1 text-center">{children}</span>
       </div>
     </SnapshotCard>
   )
