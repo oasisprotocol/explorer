@@ -199,6 +199,7 @@
   },
   "consensusSnapshot": {
     "blockHeight": "Current block height <BlockHeight />",
+    "currentEpoch": "Current Epoch <EpochNumber />",
     "title": "Consensus Snapshot"
   },
   "snapshotEpochTitle": "Current epoch & block height",
