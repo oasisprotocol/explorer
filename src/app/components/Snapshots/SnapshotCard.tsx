@@ -35,7 +35,7 @@ export const SnapshotCard: FC<SnapshotCardProps> = ({
     >
       <CardHeader className="py-0 px-4 gap-0">
         <CardTitle>
-          <Typography variant="h4" className="pt-4 text-sm">
+          <Typography variant="h4" className="flex-1 pt-4 text-sm">
             {title}
           </Typography>
         </CardTitle>

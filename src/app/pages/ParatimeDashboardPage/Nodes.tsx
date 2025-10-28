@@ -15,7 +15,7 @@ export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { data, isFetched } = useGetRuntimeStatus(scope.network, scope.layer)
   const activeNodes = data?.data.active_nodes
   const title = (
-    <div className="flex justify-between items-center w-full pr-4">
+    <div className="flex justify-between items-center w-full">
       {t('nodes.title')}
       <Tooltip
         arrow
