@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useOutletContext, useParams } from 'react-router-dom'
-import { useScreenSize } from '../../hooks/useScreensize'
 import Link from '@mui/material/Link'
 import { RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -93,7 +92,6 @@ export const RuntimeBlockDetailView: FC<{
   enableBlockNavigation?: boolean
 }> = ({ enableBlockNavigation, isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(block?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -104,11 +102,7 @@ export const RuntimeBlockDetailView: FC<{
   const blockGasLimit = paraTimesConfig[block.layer]?.[block.network]?.blockGasLimit
   if (!blockGasLimit) throw new Error('blockGasLimit is not configured')
   return (
-    <StyledDescriptionList
-      titleWidth={isMobile ? '100px' : '200px'}
-      standalone={standalone}
-      highlight={block.markAsNew}
-    >
+    <StyledDescriptionList standalone={standalone} highlight={block.markAsNew}>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

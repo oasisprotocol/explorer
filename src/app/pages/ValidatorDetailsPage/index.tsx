@@ -141,13 +141,16 @@ export const ValidatorDetailsView: FC<{
   stats: ValidatorAggStats | undefined
 }> = ({ network, detailsPage, isLoading, validator, account, standalone = false, stats }) => {
   const { t } = useTranslation()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(validator?.start_date)
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!validator) return null
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>
+    <StyledDescriptionList
+      className="grid-cols-[160px_auto] sm:grid-cols-[200px_auto]"
+      standalone={standalone}
+    >
       {detailsPage && (
         <>
           <dt>

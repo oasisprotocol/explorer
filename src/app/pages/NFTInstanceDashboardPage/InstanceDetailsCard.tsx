@@ -45,7 +45,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {isFetched && account && nft && (
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             {nft.name && (
               <>
                 <dt>{t('common.name')}</dt>

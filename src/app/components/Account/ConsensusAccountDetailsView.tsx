@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardEmptyState } from '../CardEmptyState'
 import { Account } from '../../../oasis-nexus/api'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../StyledDescriptionList'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
@@ -38,7 +37,6 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   standalone,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const formattedFirstActivity = useFormattedTimestampStringWithDistance(account?.first_activity)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -50,7 +48,10 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
     : `${RouteUtils.getAccountRoute(account, account.address)}#${transactionsContainerId}`
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '160px' : '200px'} standalone={standalone}>
+    <StyledDescriptionList
+      className="grid-cols-[160px_auto] sm:grid-cols-[200px_auto]"
+      standalone={standalone}
+    >
       {showLayer && (
         <>
           <dt>{t('common.layer')}</dt>

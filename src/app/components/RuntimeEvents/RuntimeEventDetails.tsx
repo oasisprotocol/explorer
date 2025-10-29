@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import { StyledDescriptionList } from '../StyledDescriptionList'
-import { useScreenSize } from '../../hooks/useScreensize'
 import {
   Table,
   TableHeader,
@@ -273,7 +272,6 @@ const RuntimeEventDetailsInner: FC<{
   scope: SearchScope
   event: RuntimeEvent
 }> = ({ scope, event }) => {
-  const { isMobile } = useScreenSize()
   const { t } = useTranslation()
   const eventName = getRuntimeEventMethodLabel(t, event.type)
   switch (event.type) {
@@ -353,7 +351,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <dt>{t('runtimeEvent.fields.owner')}</dt>
             <dd>
               <AccountLink scope={scope} address={event.body.owner_eth || event.body.owner} />
@@ -374,7 +372,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
@@ -398,7 +396,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
@@ -422,7 +420,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
@@ -445,7 +443,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.from')}</dt>
             <dd>
@@ -477,7 +475,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.id')}</dt>
             <dd>
@@ -490,7 +488,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.id')}</dt>
             <dd>
@@ -517,7 +515,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('common.address')}</dt>
             <dd>
@@ -535,7 +533,7 @@ const RuntimeEventDetailsInner: FC<{
       return (
         <div>
           <EventTypeIcon eventType={event.type} />
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <MaybeEventErrorLine event={event} />
             <dt>{t('roflmarket.provider')}</dt>
             <dd>

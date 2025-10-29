@@ -1,29 +1,22 @@
 import { styled } from '@mui/material/styles'
 import { COLORS } from '../../../styles/theme/colors'
 import { backgroundColorAnimation } from '../../../styles/theme/animations'
+import { FC, HTMLAttributes } from 'react'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
-interface Props {
-  /**
-   * Width of `<dt>` (first column)
-   *
-   * **Syntax**: `100px | 10% | 10ch | max-content | auto | minmax(min, max)`
-   */
-  titleWidth?: string
+interface InlineDescriptionListProps extends HTMLAttributes<HTMLDListElement> {}
+
+export const InlineDescriptionList: FC<InlineDescriptionListProps> = ({ className, ...props }) => {
+  return (
+    <dl
+      className={cn(
+        'm-0 grid [&_dd]:m-0 [&_dd]:pl-8 grid-cols-[100px_auto] sm:grid-cols-[200px_auto]',
+        className,
+      )}
+      {...props}
+    />
+  )
 }
-
-export const InlineDescriptionList = styled('dl', {
-  shouldForwardProp: prop => prop !== 'titleWidth',
-})<Props>`
-  display: grid;
-  grid-template-columns:
-    ${props => props.titleWidth ?? 'max-content'}
-    auto;
-  margin: 0;
-  dd {
-    margin: 0;
-    padding-left: ${({ theme }) => theme.spacing(4)};
-  }
-`
 
 interface StyledDescriptionListProps {
   standalone?: boolean

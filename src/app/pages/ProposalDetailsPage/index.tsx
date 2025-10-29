@@ -12,7 +12,6 @@ import { SubPageCard } from '../../components/SubPageCard'
 import { StyledDescriptionList } from 'app/components/StyledDescriptionList'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { ProposalStatusIcon } from '../../components/Proposals/ProposalStatusIcon'
 import { TextSkeleton } from '../../components/Skeleton'
 import { ConsensusAccountLink } from '../../components/Account/ConsensusAccountLink'
@@ -81,14 +80,13 @@ export const ProposalDetailView: FC<{
   standalone = false,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!proposal) return null
 
   const proposalType = getTypeNameForProposal(t, proposal)
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={standalone}>
+    <StyledDescriptionList standalone={standalone}>
       {showLayer && (
         <>
           <dt>{t('common.network')}</dt>

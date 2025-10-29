@@ -38,7 +38,7 @@ export const TokenDetailsCard: FC<{
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {!isLoading && account && token && (
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <dt>{t('common.token')}</dt>
             <dd>
               <TokenLinkWithIcon

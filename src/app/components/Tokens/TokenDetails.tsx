@@ -26,7 +26,7 @@ export const TokenDetails: FC<{
   if (!token) return null
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={standalone}>
+    <StyledDescriptionList standalone={standalone}>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>
