@@ -1,8 +1,7 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import { useScreenSize } from '../../hooks/useScreensize'
 import backgroundSocial from './images/background-social.png'
 import telegram from './images/telegram.svg'
 import twitter from './images/twitter.svg'
@@ -16,7 +15,6 @@ import { socialMedia } from '../../utils/externalLinks'
 type SocialLinkProps = {
   label: string
   href: string
-  isMobile: boolean
   imgSrc?: string
   img?: ReactNode
 }
@@ -42,7 +40,6 @@ const SocialLink: FC<SocialLinkProps> = ({ label, href, imgSrc, img }) => {
 
 export const Social: FC = () => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   return (
     <div
@@ -60,56 +57,25 @@ export const Social: FC = () => {
       <div className="col-span-12 lg:col-span-8">
         <div className="flex flex-wrap items-center w-full h-full justify-center sm:gap-4 md:justify-between">
           {socialMedia.telegram && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.telegram')}
-              href={socialMedia.telegram}
-              imgSrc={telegram}
-            />
+            <SocialLink label={t('social.telegram')} href={socialMedia.telegram} imgSrc={telegram} />
           )}
           {socialMedia.twitter && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.twitter')}
-              href={socialMedia.twitter}
-              imgSrc={twitter}
-            />
+            <SocialLink label={t('social.twitter')} href={socialMedia.twitter} imgSrc={twitter} />
           )}
           {socialMedia.discord && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.discord')}
-              href={socialMedia.discord}
-              imgSrc={discord}
-            />
+            <SocialLink label={t('social.discord')} href={socialMedia.discord} imgSrc={discord} />
           )}
           {socialMedia.youtube && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.youtube')}
-              href={socialMedia.youtube}
-              imgSrc={youtube}
-            />
+            <SocialLink label={t('social.youtube')} href={socialMedia.youtube} imgSrc={youtube} />
           )}
           {socialMedia.reddit && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.reddit')}
-              href={socialMedia.reddit}
-              imgSrc={reddit}
-            />
+            <SocialLink label={t('social.reddit')} href={socialMedia.reddit} imgSrc={reddit} />
           )}
           {socialMedia.linkedin && (
-            <SocialLink
-              isMobile={isMobile}
-              label={t('social.linkedin')}
-              href={socialMedia.linkedin}
-              imgSrc={linkedin}
-            />
+            <SocialLink label={t('social.linkedin')} href={socialMedia.linkedin} imgSrc={linkedin} />
           )}
           {socialMedia.docs && (
             <SocialLink
-              isMobile={isMobile}
               label={t('social.docs')}
               href={socialMedia.docs}
               img={<NotebookText className="size-12 text-white" />}
@@ -117,7 +83,6 @@ export const Social: FC = () => {
           )}
           {socialMedia.home && (
             <SocialLink
-              isMobile={isMobile}
               label={t('social.home')}
               href={socialMedia.home}
               img={<Home className="size-12 text-white" />}
