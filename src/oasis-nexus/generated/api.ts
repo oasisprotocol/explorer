@@ -56,6 +56,8 @@ import GetRuntimeEvmTokensAddressHoldersMutator from '../replaceNetworkWithBaseU
 import GetRuntimeEvmTokensAddressNftsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeEvmTokensAddressNftsIdMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeAccountsAddressMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeAccountsAddressDelegationsMutator from '../replaceNetworkWithBaseURL';
+import GetRuntimeAccountsAddressDebondingDelegationsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeAccountsAddressNftsMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeStatusMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflAppsMutator from '../replaceNetworkWithBaseURL';
@@ -2563,6 +2565,36 @@ export const GetRuntimeEvmTokensSortBy = {
 } as const;
 
 export type GetRuntimeEvmTokensAddressHoldersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ * @minimum 1
+ * @maximum 1000
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeAccountsAddressDelegationsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ * @minimum 1
+ * @maximum 1000
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeAccountsAddressDebondingDelegationsParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -5448,6 +5480,159 @@ export function useGetRuntimeAccountsAddress<TData = Awaited<ReturnType<typeof G
   return query;
 }
 
+
+
+
+/**
+ * @summary Returns a runtime account's delegations.
+ */
+export const GetRuntimeAccountsAddressDelegations = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDelegationsParams,
+ options?: SecondParameter<typeof GetRuntimeAccountsAddressDelegationsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeAccountsAddressDelegationsMutator<DelegationList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/accounts/${encodeURIComponent(String(address))}/delegations`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeAccountsAddressDelegationsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDelegationsParams,) => {
+    return [`/${network}/${runtime}/accounts/${address}/delegations`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressDelegationsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeAccountsAddressDelegationsQueryKey(network,runtime,address,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>> = ({ signal }) => GetRuntimeAccountsAddressDelegations(network,runtime,address,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeAccountsAddressDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>>
+export type GetRuntimeAccountsAddressDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+
+/**
+ * @summary Returns a runtime account's delegations.
+ */
+
+export function useGetRuntimeAccountsAddressDelegations<TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressDelegationsMutator>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetRuntimeAccountsAddressDelegationsQueryOptions(network,runtime,address,params,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a runtime account's debonding delegations.
+ */
+export const GetRuntimeAccountsAddressDebondingDelegations = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDebondingDelegationsParams,
+ options?: SecondParameter<typeof GetRuntimeAccountsAddressDebondingDelegationsMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRuntimeAccountsAddressDebondingDelegationsMutator<DebondingDelegationList>(
+      {url: `/${encodeURIComponent(String(network))}/${encodeURIComponent(String(runtime))}/accounts/${encodeURIComponent(String(address))}/debonding_delegations`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeAccountsAddressDebondingDelegationsQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDebondingDelegationsParams,) => {
+    return [`/${network}/${runtime}/accounts/${address}/debonding_delegations`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetRuntimeAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressDebondingDelegationsMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeAccountsAddressDebondingDelegationsQueryKey(network,runtime,address,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>> = ({ signal }) => GetRuntimeAccountsAddressDebondingDelegations(network,runtime,address,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network && runtime && address), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRuntimeAccountsAddressDebondingDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>>
+export type GetRuntimeAccountsAddressDebondingDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+
+/**
+ * @summary Returns a runtime account's debonding delegations.
+ */
+
+export function useGetRuntimeAccountsAddressDebondingDelegations<TData = Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    runtime: Runtime,
+    address: EthOrOasisAddress,
+    params?: GetRuntimeAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRuntimeAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof GetRuntimeAccountsAddressDebondingDelegationsMutator>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetRuntimeAccountsAddressDebondingDelegationsQueryOptions(network,runtime,address,params,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
 
 
 
