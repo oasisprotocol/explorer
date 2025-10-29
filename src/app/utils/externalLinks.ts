@@ -56,6 +56,7 @@ export const faucets = {
 
 export const dapps = {
   wRose: 'https://rose.oasis.io/wrap',
+  stake: 'https://rose.oasis.io/stake',
   sourcifyRoot: 'https://sourcify.dev/',
   abiPlayground: 'https://abi-playground.oasis.io/',
 }
