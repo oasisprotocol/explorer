@@ -9,22 +9,15 @@ interface Props {
    * **Syntax**: `100px | 10% | 10ch | max-content | auto | minmax(min, max)`
    */
   titleWidth?: string
-
-  /**
-   * Width of `<dd>` (second column)
-   *
-   * **Syntax**: `100px | 10% | 10ch | max-content | auto | minmax(min, max)`
-   */
-  descriptionWidth?: string
 }
 
 export const InlineDescriptionList = styled('dl', {
-  shouldForwardProp: prop => prop !== 'titleWidth' && prop !== 'descriptionWidth',
+  shouldForwardProp: prop => prop !== 'titleWidth',
 })<Props>`
   display: grid;
   grid-template-columns:
     ${props => props.titleWidth ?? 'max-content'}
-    ${props => props.descriptionWidth ?? 'auto'};
+    auto;
   margin: 0;
   dd {
     margin: 0;
