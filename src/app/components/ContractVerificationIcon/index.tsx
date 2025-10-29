@@ -7,7 +7,6 @@ import { SearchScope } from '../../../types/searchScope'
 import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
 import { AbiPlaygroundLink } from './AbiPlaygroundLink'
-import Tooltip from '@mui/material/Tooltip'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 
 export const verificationIconBoxHeight = 28
@@ -17,8 +16,7 @@ export const VerificationIcon: FC<{
   scope: SearchScope
   verificationLevel?: 'full' | 'partial'
   hideLink?: boolean
-  hideLabel?: boolean
-}> = ({ address_eth, scope, verificationLevel, hideLink, hideLabel }) => {
+}> = ({ address_eth, scope, verificationLevel, hideLink }) => {
   const { t } = useTranslation()
   const [explainDelay, setExplainDelay] = useState(false)
   if (isLocalnet(scope.network)) {
@@ -42,11 +40,9 @@ export const VerificationIcon: FC<{
   }
   return (
     <>
-      <Tooltip placement="top" arrow title={hideLabel ? label : undefined}>
-        <Link {...sourcifyLinkProps}>
-          <Badge variant={statusVariant}>{hideLabel ? '' : label}</Badge>
-        </Link>
-      </Tooltip>
+      <Link {...sourcifyLinkProps}>
+        <Badge variant={statusVariant}>{label}</Badge>
+      </Link>
       {!hideLink &&
         (verificationLevel ? (
           <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
