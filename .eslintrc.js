@@ -77,7 +77,7 @@ const config = {
   overrides: [
     {
       files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': 'warn' },
+      rules: { 'prettier/prettier': process.env.CI ? 'error' : 'warn' },
     },
     {
       files: ['internals/**'],

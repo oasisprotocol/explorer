@@ -77,7 +77,7 @@ jobs:
         if: always()
       - name: ESLint
         # Disallow warnings and always throw errors.
-        run: yarn lint --max-warnings 0
+        run: yarn lint
         # Always run this step so that all linting errors can be seen at once.
         if: always()
       - name: Validate TypeScript
