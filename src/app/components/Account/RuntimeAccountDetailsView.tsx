@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../../components/StyledDescriptionList'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -43,7 +42,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   showLayer,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={8} />
   if (isError || !account) return <CardEmptyState label={t('account.cantLoadDetails')} />
@@ -60,7 +58,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   const fiatValueInfo = calculateFiatValue(account?.balances, tokenPrices, getFiatCurrencyForScope(account))
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

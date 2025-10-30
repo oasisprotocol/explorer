@@ -128,7 +128,6 @@ export const RuntimeTransactionDetailView: FC<{
   tokenPrices: AllTokenPrices
 }> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
   // @ts-expect-error Ignore index type error
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
@@ -153,11 +152,7 @@ export const RuntimeTransactionDetailView: FC<{
     <>
       {isLoading && <TextSkeleton numberOfRows={10} />}
       {transaction && (
-        <StyledDescriptionList
-          titleWidth={isMobile ? '100px' : '200px'}
-          standalone={standalone}
-          highlight={transaction.markAsNew}
-        >
+        <StyledDescriptionList standalone={standalone} highlight={transaction.markAsNew}>
           {showLayer && (
             <>
               <dt>{t('common.paratime')}</dt>

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ShowMoreTokensLink } from './ShowMoreTokensLink'
 import { RoundedBalance } from '../RoundedBalance'
@@ -19,7 +19,7 @@ export const TokenPills: FC<TokenPillsProps> = ({ account, tokens }) => {
   const { isMobile } = useScreenSize()
 
   if (!tokens.length) {
-    return <Typography sx={{ opacity: '0.5' }}>{t('account.noTokens')}</Typography>
+    return <Typography className="text-muted-foreground">{t('account.noTokens')}</Typography>
   }
   const pills = tokens.slice(0, isMobile ? 1 : 3)
 

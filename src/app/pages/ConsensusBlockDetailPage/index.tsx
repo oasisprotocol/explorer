@@ -68,7 +68,7 @@ export const ConsensusBlockDetailView: FC<{
   enableBlockNavigation?: boolean
 }> = ({ enableBlockNavigation, isLoading, block, showLayer, standalone = false }) => {
   const { t } = useTranslation()
-  const { isMobile, isTablet } = useScreenSize()
+  const { isTablet } = useScreenSize()
   const formattedTime = useFormattedTimestampStringWithDistance(block?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
@@ -76,11 +76,7 @@ export const ConsensusBlockDetailView: FC<{
   const transactionLabel = block.num_transactions.toLocaleString()
 
   return (
-    <StyledDescriptionList
-      titleWidth={isMobile ? '100px' : '200px'}
-      standalone={standalone}
-      highlight={block.markAsNew}
-    >
+    <StyledDescriptionList standalone={standalone} highlight={block.markAsNew}>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

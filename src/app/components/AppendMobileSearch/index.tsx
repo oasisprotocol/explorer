@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
 import { Search } from '../Search'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { SearchScope } from '../../../types/searchScope'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
@@ -15,14 +14,11 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
   action,
   enableMobileSearch = true,
 }) => {
-  const { isMobile } = useScreenSize()
-
   return (
     <div
       className={cn(
-        'relative w-full',
+        'relative w-full items-center sm:items-start',
         action ? 'grid grid-cols-[1fr_auto_1fr]' : 'flex justify-between',
-        isMobile ? 'items-center' : 'items-start',
         enableMobileSearch ? 'justify-between' : 'justify-center',
       )}
     >
@@ -30,8 +26,8 @@ export const AppendMobileSearch: FC<PropsWithChildren<AppendMobileSearchProps> &
 
       {action}
 
-      {isMobile && enableMobileSearch && (
-        <div className="w-[40px] h-[40px] ml-auto">
+      {enableMobileSearch && (
+        <div className="w-[40px] h-[40px] ml-auto sm:hidden">
           <Search scope={scope} expandable />
         </div>
       )}

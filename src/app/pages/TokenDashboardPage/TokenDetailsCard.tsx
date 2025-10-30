@@ -38,7 +38,7 @@ export const TokenDetailsCard: FC<{
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {!isLoading && account && token && (
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             <dt>{t('common.token')}</dt>
             <dd>
               <TokenLinkWithIcon
@@ -54,7 +54,10 @@ export const TokenDetailsCard: FC<{
                 <dd>{token.symbol}</dd>
               </>
             )}
-            <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
+            <dt>
+              <span className="sm:hidden">{t('common.smartContract_short')}</span>
+              <span className="hidden sm:inline">{t('common.smartContract')}</span>
+            </dt>
             <dd>
               <div className="inline-flex items-center">
                 <AccountLink

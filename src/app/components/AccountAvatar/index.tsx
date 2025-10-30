@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { JazzIcon } from '../JazzIcon'
 import { addressToJazzIconSeed } from './addressToJazzIconSeed'
 
@@ -11,11 +10,13 @@ type AccountAvatarProps = {
 }
 
 export const AccountAvatar: FC<AccountAvatarProps> = ({ account }) => {
-  const { isMobile } = useScreenSize()
-
   if (!account.address) {
     return null
   }
 
-  return <JazzIcon diameter={isMobile ? 30 : 40} seed={addressToJazzIconSeed(account)} />
+  return (
+    <div className="scale-75 sm:scale-100 origin-center">
+      <JazzIcon diameter={40} seed={addressToJazzIconSeed(account)} />
+    </div>
+  )
 }

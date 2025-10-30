@@ -3,7 +3,6 @@ import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card
 import { useAccount } from '../RuntimeAccountDetailsPage/hook'
 import { TextSkeleton } from '../../components/Skeleton'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -29,7 +28,6 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
   scope,
 }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const {
     account,
     isFetched: isAccountFetched,
@@ -45,7 +43,7 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
       <CardContent>
         {isLoading && <TextSkeleton numberOfRows={7} />}
         {isFetched && account && nft && (
-          <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+          <StyledDescriptionList>
             {nft.name && (
               <>
                 <dt>{t('common.name')}</dt>
@@ -87,7 +85,10 @@ export const InstanceDetailsCard: FC<InstanceDetailsCardProps> = ({
                 <dd>{nft.num_transfers.toLocaleString()}</dd>
               </>
             )}
-            <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
+            <dt>
+              <span className="sm:hidden">{t('common.smartContract_short')}</span>
+              <span className="hidden sm:inline">{t('common.smartContract')}</span>
+            </dt>
             <dd>
               <div className="inline-flex items-center">
                 <AccountLink scope={account} address={account.address_eth || account.address} />

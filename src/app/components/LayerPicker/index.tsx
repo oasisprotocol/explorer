@@ -66,7 +66,7 @@ const LayerPickerContent: FC<LayerPickerContentProps> = ({ isOutOfDate, onClose,
 
   return (
     <div className="flex flex-col w-full flex-1 lg:block lg:w-auto lg:flex-none">
-      <div className="relative mb-0 lg:mb-2 lg:mb-10">
+      <div className="relative mb-0 lg:mb-10">
         <DrawerTitle>
           <HomePageLink showText={!isMobile} />
         </DrawerTitle>

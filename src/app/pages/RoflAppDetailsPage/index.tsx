@@ -10,7 +10,6 @@ import { AppErrors } from '../../../types/errors'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { COLORS } from '../../../styles/theme/colors'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -112,13 +111,12 @@ export const RoflAppDetailsView: FC<{
   app: RoflApp | undefined
 }> = ({ app, isLoading }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={15} />
   if (!app) return <></>
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList>
       <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
       <TeeRow policy={app.policy} />
@@ -174,13 +172,12 @@ export const RoflAppDetailsViewSearchResult: FC<{
   app: RoflApp | undefined
 }> = ({ app, isLoading }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!app) return <></>
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList>
       <DetailsRow title={t('common.paratime')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
       </DetailsRow>
@@ -211,13 +208,12 @@ export const RoflAppDetailsVerticalListView: FC<{
   app: RoflApp | undefined
 }> = ({ app, isLoading }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={5} />
   if (!app) return <></>
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone>
+    <StyledDescriptionList standalone>
       <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
       <DetailsRow title={t('rofl.appId')}>

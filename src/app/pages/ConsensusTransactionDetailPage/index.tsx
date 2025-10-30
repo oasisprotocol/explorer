@@ -93,7 +93,6 @@ export const ConsensusTransactionDetailView: FC<{
   showLayer?: boolean
 }> = ({ detailsPage, isLoading, showLayer, transaction, tokenPrices }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
   const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 13 : 7} />
@@ -102,11 +101,7 @@ export const ConsensusTransactionDetailView: FC<{
   const tokenPriceInfo = tokenPrices?.[transaction.ticker]
 
   return (
-    <StyledDescriptionList
-      titleWidth={isMobile ? '100px' : '200px'}
-      standalone={!detailsPage}
-      highlight={transaction.markAsNew}
-    >
+    <StyledDescriptionList standalone={!detailsPage} highlight={transaction.markAsNew}>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>

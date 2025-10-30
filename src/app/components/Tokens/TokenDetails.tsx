@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { EvmToken } from '../../../oasis-nexus/api'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList } from '../StyledDescriptionList'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { useTranslation } from 'react-i18next'
 import { TokenLinkWithIcon } from './TokenLinkWithIcon'
 import { CopyToClipboard } from '../CopyToClipboard'
@@ -20,13 +19,12 @@ export const TokenDetails: FC<{
   standalone?: boolean
 }> = ({ isLoading, token, showLayer, standalone = false }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={7} />
   if (!token) return null
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'} standalone={standalone}>
+    <StyledDescriptionList standalone={standalone}>
       {showLayer && (
         <>
           <dt>{t('common.paratime')}</dt>
@@ -52,7 +50,10 @@ export const TokenDetails: FC<{
         <TokenTypeTag tokenType={token.type} />
       </dd>
 
-      <dt>{t(isMobile ? 'common.smartContract_short' : 'common.smartContract')}</dt>
+      <dt>
+        <span className="sm:hidden">{t('common.smartContract_short')}</span>
+        <span className="hidden sm:inline">{t('common.smartContract')}</span>
+      </dt>
       <dd>
         <div className="inline-flex items-center">
           <AccountLink
@@ -72,7 +73,11 @@ export const TokenDetails: FC<{
         />
       </dd>
 
-      <dt>{t(isMobile ? 'tokens.holders' : 'tokens.holdersCount')}</dt>
+      <dt>
+        <span className="sm:hidden">{t('tokens.holders')}</span>
+        <span className="hidden sm:inline">{t('tokens.holdersCount')}</span>
+      </dt>
+
       <dd>
         {typeof token.num_holders === 'number' ? token.num_holders.toLocaleString() : t('common.missing')}
       </dd>

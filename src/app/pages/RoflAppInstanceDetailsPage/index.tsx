@@ -6,7 +6,6 @@ import { SearchScope } from '../../../types/searchScope'
 import { AppErrors } from '../../../types/errors'
 import { RoflAppInstanceDetailsContext } from './hooks'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { getOasisAddressFromBase64PublicKey } from '../../utils/helpers'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
@@ -52,14 +51,13 @@ export const RoflAppInstanceDetailsView: FC<{
   scope: SearchScope
 }> = ({ appId, instance, isLoading, scope }) => {
   const { t } = useTranslation()
-  const { isMobile } = useScreenSize()
 
   if (isLoading) return <TextSkeleton numberOfRows={6} />
   if (!instance) return <></>
   const nodeAddress = getOasisAddressFromBase64PublicKey(instance.endorsing_node_id)
 
   return (
-    <StyledDescriptionList titleWidth={isMobile ? '100px' : '200px'}>
+    <StyledDescriptionList>
       <dt>{t('rofl.rakAbbreviation')}</dt>
       <dd>
         <span>
