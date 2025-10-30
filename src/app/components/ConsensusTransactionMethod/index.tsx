@@ -160,9 +160,6 @@ const MethodIconWithTruncatedLabel: FC<MethodIconProps> = props => {
 }
 
 const getConsensusTransactionLabel = (t: TFunction, method: ConsensusTxMethod | undefined): string => {
-  // Please note: when updating this, keep it in sync
-  // with the knownConsensusTxMethods array below!
-
   switch (method) {
     case ConsensusTxMethod.stakingTransfer:
       return t('transactions.method.stakingTransfer')
