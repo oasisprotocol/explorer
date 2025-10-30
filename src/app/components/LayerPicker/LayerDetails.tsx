@@ -6,7 +6,6 @@ import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { styled } from '@mui/material/styles'
-import { Circle } from '../Circle'
 import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
@@ -227,17 +226,9 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
   return (
     <div className="flex py-4 px-1 md:px-8" style={{ minHeight: contentMinHeight }}>
       <div className="pt-0.5 pr-4 text-primary">
-        <Circle
-          color={COLORS.white}
-          size={5}
-          sx={{
-            borderColor: COLORS.brandDark,
-            borderWidth: '2px',
-            borderStyle: 'solid',
-          }}
-        >
+        <div className="w-8 h-8 flex justify-center items-center text-inherit rounded-full border-2 border-solid border-primary">
           {icons[selectedScope.network]}
-        </Circle>
+        </div>
       </div>
       <div>
         <div className="flex items-center pb-2">

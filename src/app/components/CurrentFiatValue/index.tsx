@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiatMoneyAmountBox, FiatMoneyWarning } from '../Balance/FiatMoneyAmount'
+import { FiatMoneyWarning } from '../Balance/FiatMoneyAmount'
 import Tooltip from '@mui/material/Tooltip'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import HelpIcon from '@mui/icons-material/Help'
@@ -21,7 +21,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({
 }) => {
   const { t } = useTranslation()
   return price === undefined && !hasFailed ? null : (
-    <FiatMoneyAmountBox>
+    <div className="flex items-center justify-between gap-1 flex-1">
       <div className="inline-flex items-center">
         {hasFailed ? (
           <FiatMoneyWarning unknownTickers={[ticker]} />
@@ -43,6 +43,6 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({
         )}
       </div>
       {hasUsedCoinGecko && <CoinGeckoReferral />}
-    </FiatMoneyAmountBox>
+    </div>
   )
 }

@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
 import { styled } from '@mui/material/styles'
@@ -11,7 +10,6 @@ import { NoPreview } from '../../components/NoPreview'
 import { getNftInstanceLabel } from '../../utils/nft'
 import { EvmNft } from '../../../oasis-nexus/api'
 import { useScreenSize } from 'app/hooks/useScreensize'
-import { COLORS } from 'styles/theme/colors'
 
 const minMobileSize = '150px'
 const minSize = '210px'
@@ -28,25 +26,6 @@ const StyledImage = styled('img', {
   transition: 'opacity 250ms ease-in-out',
   '&:hover, &:focus-visible': {
     opacity: 0.15,
-  },
-}))
-
-const StyledBox = styled(Box)(() => ({
-  position: 'absolute',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  height: '100%',
-  fontSize: '14px',
-  fontWeight: 500,
-  color: COLORS.white,
-  transition: 'opacity, background-color 250ms ease-in-out',
-  opacity: 0,
-  '&:hover, &:focus-visible': {
-    opacity: 1,
-    backgroundColor: 'rgba(0,0,0,0.8)',
   },
 }))
 
@@ -73,10 +52,10 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
       ) : (
         <NoPreview placeholderSize={isMobile ? minMobileSize : minSize} />
       )}
-      <StyledBox gap={3}>
+      <div className="absolute inset-0 flex flex-col justify-center items-center gap-2 text-sm font-medium text-white opacity-0 hover:opacity-100 focus-visible:opacity-100 transition-opacity transition-colors duration-300 hover:bg-black/80 focus-visible:bg-black/80">
         <OpenInBrowserIcon sx={{ fontSize: '40px' }} />
         {t('common.view')}
-      </StyledBox>
+      </div>
     </Link>
   )
 }

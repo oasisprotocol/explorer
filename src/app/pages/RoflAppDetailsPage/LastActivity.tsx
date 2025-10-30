@@ -1,19 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
-import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
 import { RuntimeTransaction } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { TransactionLink } from '../../components/Transactions/TransactionLink'
 import { useScreenSize } from '../../hooks/useScreensize'
-
-const StyledBox = styled(Box)(() => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-  gap: 5,
-}))
 
 type LastActivityProps = {
   transaction: RuntimeTransaction | undefined
@@ -27,7 +18,7 @@ export const LastActivity: FC<LastActivityProps> = ({ scope, transaction }) => {
   return (
     <>
       {transaction ? (
-        <StyledBox>
+        <div className="flex flex-wrap items-center gap-1.5">
           <TransactionLink
             scope={scope}
             hash={transaction.eth_hash ?? transaction.hash}
@@ -40,7 +31,7 @@ export const LastActivity: FC<LastActivityProps> = ({ scope, transaction }) => {
             })}
             )
           </span>
-        </StyledBox>
+        </div>
       ) : (
         t('common.missing')
       )}

@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import Button, { buttonClasses } from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import { styled } from '@mui/material/styles'
@@ -63,13 +62,6 @@ export const StyledNetworkButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-export const StyledBox = styled(Box)(({ theme }) => ({
-  flex: 1,
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(3),
-}))
-
 type NetworkButtonProps = {
   isOutOfDate?: boolean
   layer: Layer
@@ -94,10 +86,10 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
       endIcon={<EditIcon />}
       onClick={onClick}
     >
-      <StyledBox>
+      <div className="flex flex-1 items-center gap-2">
         {getNetworkButtonLabel(t, network, layer)}
         <LayerStatus isOutOfDate={isOutOfDate} />
-      </StyledBox>
+      </div>
     </StyledNetworkButton>
   )
 }

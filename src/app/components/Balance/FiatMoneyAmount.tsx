@@ -1,20 +1,10 @@
-import { styled } from '@mui/material/styles'
 import WarningIcon from '@mui/icons-material/WarningAmber'
-import Box from '@mui/material/Box'
 import { useTranslation } from 'react-i18next'
 import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
 import Tooltip from '@mui/material/Tooltip'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-
-export const FiatMoneyAmountBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: 4,
-  flex: 1,
-}))
 
 export const FiatMoneyWarning: FC<{ unknownTickers: string[] }> = ({ unknownTickers }) => {
   const { t } = useTranslation()
@@ -38,7 +28,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
   const { t } = useTranslation()
   const hasFailed = !!unknownTickers.length
   return (
-    <FiatMoneyAmountBox>
+    <div className="flex items-center justify-between gap-1 flex-1">
       <span>
         {!hasFailed ? (
           t('common.fiatValueInUSD', {
@@ -55,6 +45,6 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
         {loading && <Skeleton className="h-4" />}
       </span>
       {hasUsedCoinGecko && <CoinGeckoReferral />}
-    </FiatMoneyAmountBox>
+    </div>
   )
 }

@@ -1,8 +1,6 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import Button from '@mui/material/Button'
@@ -14,26 +12,6 @@ import { TapIcon } from '../../../../components/CustomIcons/Tap'
 import { PinchIcon } from '../../../../components/CustomIcons/Pinch'
 import { NavigateIcon } from '../../../../components/CustomIcons/Navigate'
 import { Theme } from '@mui/material/styles/createTheme'
-
-const HelpScreenContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '65%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyItems: 'flex-end',
-  minHeight: '185px',
-  width: '90%',
-  height: '100%',
-  color: theme.palette.layout.contrastMain,
-}))
-
-const SwiperBox = styled(Box)(() => ({
-  width: '100%',
-  height: '40%',
-}))
 
 interface Step {
   icon: ReactElement
@@ -99,8 +77,8 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
   }
 
   return (
-    <HelpScreenContainer>
-      <SwiperBox>
+    <div className="absolute top-[65%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center min-h-[185px] w-[90%] h-full text-theme-contrast-main">
+      <div className="w-full h-2/5">
         <swiper-container style={{ height: '100%' }} ref={swiperElRef} slides-per-view="1">
           {allSteps.map(({ icon, label }, index) => (
             <swiper-slide
@@ -111,7 +89,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
             </swiper-slide>
           ))}
         </swiper-container>
-      </SwiperBox>
+      </div>
       <Typography variant="h4" className="text-inherit mb-10 capitalize">
         {currentStep.label}
       </Typography>
@@ -130,7 +108,7 @@ const HelpScreen: FC<HelpScreenProps> = ({ setParaTimeStep }) => {
           {t('home.helpScreen.getStarted')}
         </Button>
       )}
-    </HelpScreenContainer>
+    </div>
   )
 }
 
