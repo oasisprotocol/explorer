@@ -16,7 +16,7 @@ import {
 } from '../../utils/chart-utils'
 import { SearchScope } from '../../../types/searchScope'
 
-export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
+const getActiveAccountsWindows = (duration: ChartDuration, windows: Windows[]) => {
   switch (duration) {
     case ChartDuration.TODAY:
       return filterHourlyActiveAccounts(windows)
@@ -27,7 +27,7 @@ export const getActiveAccountsWindows = (duration: ChartDuration, windows: Windo
   }
 }
 
-export const getChartLabelFormatParams = (duration: ChartDuration) => {
+const getChartLabelFormatParams = (duration: ChartDuration) => {
   switch (duration) {
     case ChartDuration.TODAY:
       return {

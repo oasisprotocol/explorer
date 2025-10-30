@@ -102,7 +102,7 @@ const errorMap: Record<
   [AppErrors.InvalidVote]: t => ({ title: t('errors.invalidVote'), message: null }),
 }
 
-export const errorFormatter = (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined) => {
+const errorFormatter = (t: TFunction, error: ErrorPayload, scope: SearchScope | undefined) => {
   return errorMap[error.code](t, error, scope)
 }
 
