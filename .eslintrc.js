@@ -1,6 +1,6 @@
 // @ts-check
 
-/** @type { import('eslint').Linter.Config } */
+/** @type { import('eslint').Linter.LegacyConfig } */
 const config = {
   extends: [
     'eslint:recommended', // https://eslint.org/docs/rules/

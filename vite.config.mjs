@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 
-/** @type {import('vite').UserConfig} */
 export default defineConfig(() => {
   return {
     plugins: [react(), tsconfigPaths(), tailwindcss()],
@@ -20,7 +19,7 @@ export default defineConfig(() => {
     envPrefix: 'REACT_APP_',
     css: {
       modules: {
-        localsConvention: 'camelCase', // Optional: Ensures class names are imported as camelCase
+        localsConvention: /** @type {'camelCase'} */ ('camelCase'), // Optional: Ensures class names are imported as camelCase
       },
     },
   }
