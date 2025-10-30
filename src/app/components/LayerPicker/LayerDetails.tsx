@@ -224,7 +224,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
   const icons = getNetworkIcons()
 
   return (
-    <div className="flex py-4 px-1 md:px-8" style={{ minHeight: contentMinHeight }}>
+    <div className="flex py-4 px-1 md:px-8 select-text" style={{ minHeight: contentMinHeight }}>
       <div className="pt-0.5 pr-4 text-primary">
         <div className="w-8 h-8 flex justify-center items-center text-inherit rounded-full border-2 border-solid border-primary">
           {icons[selectedScope.network]}
