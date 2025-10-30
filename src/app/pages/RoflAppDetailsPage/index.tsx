@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import InfoIcon from '@mui/icons-material/Info'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
@@ -155,7 +155,7 @@ export const RoflAppDetailsView: FC<{
         title={
           <div className="flex items-center gap-4">
             {t('rofl.secrets')}
-            <Tooltip title={t('rofl.secretsTooltip')} placement="top">
+            <Tooltip title={t('rofl.secretsTooltip')}>
               <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
             </Tooltip>
           </div>

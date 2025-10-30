@@ -41,7 +41,7 @@ import { transactionEventsContainerId } from '../../utils/tabAnchors'
 import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import { RouteUtils } from '../../utils/route-utils'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { yamlDump } from '../../utils/yamlDump'
 import { useRuntimeEventTypeParam } from '../../hooks/useCommonParams'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
@@ -341,7 +341,7 @@ export const RuntimeTransactionDetailView: FC<{
               <dt>{t('common.feeProxy')}</dt>
               <dd>
                 {transaction.fee_proxy_module === 'rofl' ? (
-                  <Tooltip title={t('common.feeProxyTooltip')} arrow placement="top">
+                  <Tooltip title={t('common.feeProxyTooltip')}>
                     <span>
                       <Link
                         component={RouterLink}
@@ -357,7 +357,7 @@ export const RuntimeTransactionDetailView: FC<{
                 ) : (
                   <>
                     {t('common.module')}: {transaction.fee_proxy_module}, {t('common.id')}:&nbsp;
-                    <Tooltip title={t('common.feeProxyTooltip')} arrow placement="top">
+                    <Tooltip title={t('common.feeProxyTooltip')}>
                       <span> {base64ToHex(transaction.fee_proxy_id)}</span>
                     </Tooltip>
                   </>

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiatMoneyWarning } from '../Balance/FiatMoneyAmount'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import HelpIcon from '@mui/icons-material/Help'
 import { TokenPriceInfo } from '../../../coin-gecko/api'

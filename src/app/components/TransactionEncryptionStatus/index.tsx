@@ -4,8 +4,7 @@ import LockIcon from '@mui/icons-material/Lock'
 import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred'
 import { COLORS } from '../../../styles/theme/colors'
 import { RuntimeTransactionEncryptionEnvelope } from '../../../oasis-nexus/api'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 
 type TransactionEncryptionStatusProps = {
   envelope?: RuntimeTransactionEncryptionEnvelope
@@ -15,13 +14,7 @@ type TransactionEncryptionStatusProps = {
 export const TransactionEncrypted = () => {
   const { t } = useTranslation()
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={t('transaction.tooltips.txEncrypted')}
-      enterDelay={tooltipDelay}
-      enterNextDelay={tooltipDelay}
-    >
+    <Tooltip title={t('transaction.tooltips.txEncrypted')}>
       <LockIcon htmlColor={COLORS.eucalyptus} />
     </Tooltip>
   )
@@ -30,13 +23,7 @@ export const TransactionEncrypted = () => {
 export const TransactionNotEncrypted = () => {
   const { t } = useTranslation()
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={<Trans t={t} i18nKey="transaction.tooltips.txNotEncrypted" />}
-      enterDelay={tooltipDelay}
-      enterNextDelay={tooltipDelay}
-    >
+    <Tooltip title={<Trans t={t} i18nKey="transaction.tooltips.txNotEncrypted" />}>
       <NoEncryptionGmailerrorredIcon htmlColor={COLORS.grayMedium2} />
     </Tooltip>
   )

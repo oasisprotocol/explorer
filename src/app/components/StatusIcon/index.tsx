@@ -6,7 +6,7 @@ import { COLORS } from '../../../styles/theme/colors'
 import HelpIcon from '@mui/icons-material/Help'
 import LockIcon from '@mui/icons-material/Lock'
 import { TxError } from '../../../oasis-nexus/api'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
@@ -148,11 +148,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
     )
   } else {
     return (
-      <Tooltip
-        arrow
-        placement="top"
-        title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}
-      >
+      <Tooltip title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}>
         <StatusBadge status={status} withText={withText}>
           {statusIcon[status]}
         </StatusBadge>

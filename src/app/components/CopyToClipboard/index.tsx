@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { COLORS } from '../../../styles/theme/colors'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
@@ -39,7 +39,7 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ className, value }) 
   }, [])
 
   return (
-    <Tooltip arrow onOpen={hideTooltip} open={isCopied} placement="right" title={t('clipboard.success')}>
+    <Tooltip onOpenChange={hideTooltip} open={isCopied} side="right" title={t('clipboard.success')}>
       <button
         onClick={handleCopyToClipboard}
         aria-label={ariaLabel}

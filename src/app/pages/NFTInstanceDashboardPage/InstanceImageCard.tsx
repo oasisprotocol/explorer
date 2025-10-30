@@ -5,7 +5,7 @@ import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card
 import ContrastIcon from '@mui/icons-material/Contrast'
 import Link from '@mui/material/Link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { styled } from '@mui/material/styles'
 import { EvmNft } from 'oasis-nexus/api'

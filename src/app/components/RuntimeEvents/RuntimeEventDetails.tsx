@@ -32,8 +32,7 @@ import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
 import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
 import { fromBaseUnits } from '../../utils/number-utils'
 import { RoflAppLink } from '../Rofl/RoflAppLink'
@@ -185,13 +184,7 @@ const EvmEventParamData: FC<{
     case 'uint256': {
       if (param.evm_token?.type === 'ERC20') {
         return (
-          <Tooltip
-            arrow
-            placement="top"
-            title={t('common.valueLong', getPreciseNumberFormat(param.value_raw as string))}
-            enterDelay={tooltipDelay}
-            enterNextDelay={tooltipDelay}
-          >
+          <Tooltip title={t('common.valueLong', getPreciseNumberFormat(param.value_raw as string))}>
             <span>
               {t('common.valueInToken', {
                 ...getPreciseNumberFormat(param.value as string),
@@ -219,13 +212,7 @@ const EvmEventParamData: FC<{
       if (!maybeParsedBaseUnits.startsWith('0.0000')) {
         // Don't parse suspiciously low values.
         return (
-          <Tooltip
-            arrow
-            placement="top"
-            title={t('common.valueLong', getPreciseNumberFormat(param.value as string))}
-            enterDelay={tooltipDelay}
-            enterNextDelay={tooltipDelay}
-          >
+          <Tooltip title={t('common.valueLong', getPreciseNumberFormat(param.value as string))}>
             <span>
               {t('common.valueLong', getPreciseNumberFormat(maybeParsedBaseUnits))}
               {`e${commonEvmContractDecimals}`}

@@ -6,8 +6,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useGetRuntimeStatus } from '../../../oasis-nexus/api'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { RuntimeScope } from '../../../types/searchScope'
 
 export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
@@ -17,13 +16,7 @@ export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const title = (
     <div className="flex justify-between items-center w-full">
       {t('nodes.title')}
-      <Tooltip
-        arrow
-        placement="top"
-        title={t('nodes.tooltip')}
-        enterDelay={tooltipDelay}
-        enterNextDelay={tooltipDelay}
-      >
+      <Tooltip title={t('nodes.tooltip')}>
         <InfoIcon htmlColor={COLORS.brandDark} />
       </Tooltip>
     </div>
