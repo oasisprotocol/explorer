@@ -52,8 +52,8 @@ async function setup(page: Page, balance: string, decimals: number) {
 
   // Trigger tooltips to find all precise numbers
   await page.evaluate(() => {
-    document.querySelectorAll('[aria-label]').forEach(el => {
-      el.dispatchEvent(new MouseEvent('mouseover', { view: window, bubbles: true, cancelable: true }))
+    document.querySelectorAll('[data-slot="tooltip-trigger"]').forEach(el => {
+      el.dispatchEvent(new MouseEvent('focusin', { view: window, bubbles: true, cancelable: true }))
     })
   })
 }
@@ -62,7 +62,7 @@ test.describe('getPreciseNumberFormat', () => {
   test('small number should be precise and formatted', async ({ page }) => {
     await setup(page, '111222333444555', 9)
     // Expect precisely formatted small number even when browser doesn't support precise formatting for large numbers
-    await expect(page.getByText('111,222.333444555', { exact: true })).toBeVisible()
+    await expect(page.getByText('111,222.333444555', { exact: true }).first()).toBeVisible()
   })
 
   test('large number should be precise and formatted or fallback to precise unformatted number in browsers without support', async ({
@@ -72,8 +72,9 @@ test.describe('getPreciseNumberFormat', () => {
     await expect(
       page
         .getByText('111,222,333,444,555,666,777,888,999.111222333444555666', { exact: true })
+        .first()
         // Expect precise fallback when browser doesn't support precise formatting
-        .or(page.getByText('111222333444555666777888999.111222333444555666', { exact: true })),
+        .or(page.getByText('111222333444555666777888999.111222333444555666', { exact: true }).first()),
     ).toBeVisible()
   })
 
@@ -82,7 +83,7 @@ test.describe('getPreciseNumberFormat', () => {
   }) => {
     await setup(page, '111222333444555666777888999111222333444555666', 36)
     await expect(
-      page.getByText('111222333.444555666777888999111222333444555666', { exact: true }),
+      page.getByText('111222333.444555666777888999111222333444555666', { exact: true }).first(),
     ).toBeVisible()
   })
 })
