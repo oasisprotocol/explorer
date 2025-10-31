@@ -7,6 +7,6 @@
     "orval": "^7.10.0"
   },
   "resolutions": {
-    "@apidevtools/swagger-parser": "10.1.0"
+    "@apidevtools/swagger-parser": "10.1.1"
   }
 }
