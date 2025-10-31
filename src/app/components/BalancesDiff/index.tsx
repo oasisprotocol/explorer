@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
-import { COLORS } from '../../../styles/theme/colors'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { RoundedBalance } from '../RoundedBalance'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type BalancesDiffProps = {
   before: string | undefined
@@ -22,11 +22,7 @@ export const BalancesDiff: FC<BalancesDiffProps> = ({ before, after, ticker }) =
   const isNegative = result.isNegative()
 
   return (
-    <Typography
-      sx={{
-        color: isNegative ? COLORS.error : COLORS.eucalyptus,
-      }}
-    >
+    <Typography className={cn(isNegative ? 'text-destructive' : 'text-success')}>
       <RoundedBalance compactAllNumbers showSign value={result.toFixed()} ticker={ticker} />
     </Typography>
   )

@@ -1,9 +1,7 @@
 import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { isScopeHidden, mergeNetworksInLayerSelector, RouteUtils } from '../../utils/route-utils'
@@ -20,12 +18,7 @@ type BaseLayerMenuItemProps = {
 }
 
 const LayerMenuItemCaption: FC<PropsWithChildren> = ({ children }) => (
-  <Typography
-    component="span"
-    sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
-  >
-    {children}
-  </Typography>
+  <span className="text-[10px] italic text-muted-foreground ml-1">{children}</span>
 )
 
 export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, targetScope }) => {

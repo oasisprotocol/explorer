@@ -1,8 +1,6 @@
 import { FC } from 'react'
-import Typography from '@mui/material/Typography'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { Validator } from '../../../oasis-nexus/api'
-import { COLORS } from 'styles/theme/colors'
 import { ValidatorImage } from 'app/components/Validators/ValidatorImage'
 import { DetailsPageTitle } from 'app/components/PageLayout/DetailsPageTitle'
 import { Network } from '../../../types/network'
@@ -56,16 +54,7 @@ export const ValidatorTitleCard: FC<ValidatorTitleCardProps> = ({ isLoading, net
                   <HighlightedText text={validator?.media?.name} />
                 )}
                 &nbsp;
-                <Typography
-                  component="span"
-                  sx={{
-                    color: COLORS.grayMedium,
-                    fontSize: '24px',
-                    fontWeight: 400,
-                  }}
-                >
-                  ({validator.rank})
-                </Typography>
+                <span className="text-muted-foreground text-2xl font-normal">({validator.rank})</span>
               </div>
             </>
           )}
