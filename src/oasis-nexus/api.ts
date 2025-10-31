@@ -160,6 +160,32 @@ declare module './generated/api' {
   }
 }
 
+/** From docs for {@link generated.RuntimeTransaction.method} */
+export const knownRuntimeTxMethods = [
+  'accounts.Transfer',
+  'evm.Call',
+  'evm.Create',
+  'consensus.Deposit',
+  'consensus.Withdraw',
+  'consensus.Delegate',
+  'consensus.Undelegate',
+  'rofl.Create',
+  'rofl.Register',
+  'rofl.Remove',
+  'rofl.Update',
+  'roflmarket.ProviderCreate',
+  'roflmarket.ProviderUpdate',
+  'roflmarket.ProviderUpdateOffers',
+  'roflmarket.ProviderRemove',
+  'roflmarket.InstanceCreate',
+  'roflmarket.InstanceTopUp',
+  'roflmarket.InstanceCancel',
+  'roflmarket.InstanceExecuteCmds',
+  'roflmarket.InstanceChangeAdmin',
+  '',
+] as const
+export type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
+
 export const isAccountEmpty = (account: RuntimeAccount | Account) => {
   if (account.layer === 'consensus') {
     const {

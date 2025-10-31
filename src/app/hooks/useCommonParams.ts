@@ -5,8 +5,8 @@ import {
   GetConsensusEventsParams,
   RuntimeEventType,
   ConsensusEventType,
+  KnownRuntimeTxMethod,
 } from '../../oasis-nexus/api'
-import { KnownRuntimeTxMethod } from '../components/RuntimeTransactionMethod'
 
 export const TX_METHOD_QUERY_ARG_NAME = 'tx_method'
 
