@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
 import { styled } from '@mui/material/styles'
 import { processNftImageUrl } from 'app/utils/nft-images'
@@ -40,22 +40,24 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
   const [imageLoadError, setImageLoadError] = useState(false)
 
   return (
-    <Link component={RouterLink} to={to} sx={{ display: 'flex', position: 'relative' }}>
-      {isUrlSafe(instance.image) && !imageLoadError ? (
-        <StyledImage
-          onError={() => setImageLoadError(true)}
-          src={processNftImageUrl(instance.image)}
-          alt={getNftInstanceLabel(instance)}
-          loading="lazy"
-          isMobile={isMobile}
-        />
-      ) : (
-        <NoPreview placeholderSize={isMobile ? minMobileSize : minSize} />
-      )}
-      <div className="absolute inset-0 flex flex-col justify-center items-center gap-2 text-sm font-medium text-white opacity-0 hover:opacity-100 focus-visible:opacity-100 transition-opacity transition-colors duration-300 hover:bg-black/80 focus-visible:bg-black/80">
-        <OpenInBrowserIcon sx={{ fontSize: '40px' }} />
-        {t('common.view')}
-      </div>
+    <Link asChild className="flex relative">
+      <RouterLink to={to}>
+        {isUrlSafe(instance.image) && !imageLoadError ? (
+          <StyledImage
+            onError={() => setImageLoadError(true)}
+            src={processNftImageUrl(instance.image)}
+            alt={getNftInstanceLabel(instance)}
+            loading="lazy"
+            isMobile={isMobile}
+          />
+        ) : (
+          <NoPreview placeholderSize={isMobile ? minMobileSize : minSize} />
+        )}
+        <div className="absolute inset-0 flex flex-col justify-center items-center gap-2 text-sm font-medium text-white opacity-0 hover:opacity-100 focus-visible:opacity-100 transition-opacity transition-colors duration-300 hover:bg-black/80 focus-visible:bg-black/80">
+          <OpenInBrowserIcon sx={{ fontSize: '40px' }} />
+          {t('common.view')}
+        </div>
+      </RouterLink>
     </Link>
   )
 }

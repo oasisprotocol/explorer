@@ -12,7 +12,7 @@ import { AccountSizeBadge } from '../AccountSizeBadge'
 import { ConsensusAccountLink } from './ConsensusAccountLink'
 import { CopyToClipboard } from '../CopyToClipboard'
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RouteUtils } from '../../utils/route-utils'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 import { RoundedBalance } from '../RoundedBalance'
@@ -105,8 +105,8 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       <dt>{t('common.transactions')}</dt>
       <dd>
         {account.stats.num_txns ? (
-          <Link component={RouterLink} to={transactionsAnchor!}>
-            {transactionsLabel}
+          <Link asChild className="font-medium">
+            <RouterLink to={transactionsAnchor!}>{transactionsLabel}</RouterLink>
           </Link>
         ) : (
           transactionsLabel
