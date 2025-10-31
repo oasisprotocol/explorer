@@ -14,7 +14,13 @@ import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
 import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import LockIcon from '@mui/icons-material/Lock'
 import { MethodIcon } from '../ConsensusTransactionMethod'
-import { GetRuntimeTransactionsParams, Layer, RuntimeTransaction } from '../../../oasis-nexus/api'
+import {
+  GetRuntimeTransactionsParams,
+  KnownRuntimeTxMethod,
+  knownRuntimeTxMethods,
+  Layer,
+  RuntimeTransaction,
+} from '../../../oasis-nexus/api'
 import { paraTimesConfig } from '../../../config'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
@@ -71,31 +77,6 @@ const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) 
       return method || t('common.unknown')
   }
 }
-
-const knownRuntimeTxMethods = [
-  'accounts.Transfer',
-  'evm.Call',
-  'evm.Create',
-  'consensus.Deposit',
-  'consensus.Withdraw',
-  'consensus.Delegate',
-  'consensus.Undelegate',
-  'rofl.Create',
-  'rofl.Register',
-  'rofl.Remove',
-  'rofl.Update',
-  'roflmarket.ProviderCreate',
-  'roflmarket.ProviderUpdate',
-  'roflmarket.ProviderUpdateOffers',
-  'roflmarket.ProviderRemove',
-  'roflmarket.InstanceCreate',
-  'roflmarket.InstanceTopUp',
-  'roflmarket.InstanceCancel',
-  'roflmarket.InstanceExecuteCmds',
-  'roflmarket.InstanceChangeAdmin',
-  '',
-] as const
-export type KnownRuntimeTxMethod = (typeof knownRuntimeTxMethods)[number]
 
 export type RuntimeTxMethodFilterOption = {
   value: RuntimeTxMethodFilteringType
