@@ -160,6 +160,7 @@ declare module './generated/api' {
   }
 }
 
+/** From docs for {@link generated.RuntimeTransaction.method} */
 export const knownRuntimeTxMethods = [
   'accounts.Transfer',
   'evm.Call',

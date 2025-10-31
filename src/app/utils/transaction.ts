@@ -1,5 +1,5 @@
 import { consensusDecimals } from '../../config'
-import { ConsensusTxMethod, Transaction } from '../../oasis-nexus/api'
+import { ConsensusTxMethod, KnownRuntimeTxMethod, Transaction } from '../../oasis-nexus/api'
 import { fromBaseUnits } from './number-utils'
 
 export const getConsensusTransactionToAddress = (transaction: Transaction) => {
@@ -33,7 +33,7 @@ export const getConsensusTransactionAmount = (transaction: Transaction) => {
   }
 }
 export const isRoflTransaction = (method: string | undefined): boolean => {
-  const roflMethods = [
+  const roflMethods: string[] = [
     'rofl.Create',
     'rofl.Update',
     'rofl.Remove',
@@ -47,6 +47,6 @@ export const isRoflTransaction = (method: string | undefined): boolean => {
     'roflmarket.InstanceCancel',
     'roflmarket.InstanceExecuteCmds',
     'roflmarket.InstanceChangeAdmin',
-  ]
+  ] satisfies KnownRuntimeTxMethod[]
   return method ? roflMethods.includes(method) : false
 }

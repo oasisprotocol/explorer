@@ -96,7 +96,7 @@ export const getRuntimeTxMethodOptions = (t: TFunction, layer: Layer) => {
 }
 
 export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction) => {
-  const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update'] as const
+  const options = ['rofl.Create', 'rofl.Remove', 'rofl.Update'] satisfies KnownRuntimeTxMethod[]
 
   return options.map(
     (method): RuntimeTxMethodFilterOption => ({
@@ -112,27 +112,7 @@ export const getRuntimeRoflUpdatesMethodOptions = (t: TFunction) => {
  * May be undefined if the transaction was malformed.
  *
  * In theory, this could be any string as the runtimes evolve.
- * In practice, the nexus currently expects only the following methods:
- *   - "accounts.Transfer"
- *   - "consensus.Deposit"
- *   - "consensus.Withdraw"
- *   - "consensus.Delegate"
- *   - "consensus.Undelegate"
- *   - "evm.Create"
- *   - "evm.Call"
- *   - "rofl.Create"
- *   - "rofl.Update"
- *   - "rofl.Remove"
- *   - "rofl.Register"
- *   - "roflmarket.ProviderCreate"
- *   - "roflmarket.ProviderUpdate"
- *   - "roflmarket.ProviderUpdateOffers"
- *   - "roflmarket.ProviderRemove"
- *   - "roflmarket.InstanceCreate"
- *   - "roflmarket.InstanceTopUp"
- *   - "roflmarket.InstanceCancel"
- *   - "roflmarket.InstanceExecuteCmds"
- *   - "roflmarket.InstanceChangeAdmin"
+ * In practice, the nexus currently expects only KnownRuntimeTxMethod.
  */
 const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, truncate?: boolean) => {
   const props = {
