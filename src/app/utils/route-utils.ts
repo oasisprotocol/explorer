@@ -12,7 +12,7 @@ import { orderByLayer } from '../../types/layers'
 
 export const fixedNetwork = import.meta.env.REACT_APP_FIXED_NETWORK as Network | undefined
 export const fixedLayer = import.meta.env.REACT_APP_FIXED_LAYER as Layer | undefined
-export const skipGraph = !!fixedLayer || !!(import.meta.env.REACT_APP_SKIP_GRAPH as boolean | undefined)
+export const skipGraph = !!fixedLayer || import.meta.env.REACT_APP_SKIP_GRAPH === 'true'
 
 export type ScopeFreedom =
   | 'network' // We can select only the network
