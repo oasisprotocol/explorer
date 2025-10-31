@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 const Square = ({ success, size = 32 }: { success?: boolean; size?: number }) => {
@@ -43,9 +43,12 @@ export const BlockStats = <T extends { [key: string]: any }>({
       <div className="flex flex-wrap gap-2">
         {data.map(item => {
           const title = tooltipFormatter ? tooltipFormatter(item[dataKey].toString()) : item[dataKey]
+
           return (
-            <Tooltip key={item[dataKey]} title={title} placement="top">
-              <Square success={item[statusKey]} />
+            <Tooltip key={item[dataKey]} title={title}>
+              <div>
+                <Square success={item[statusKey]} />
+              </div>
             </Tooltip>
           )
         })}

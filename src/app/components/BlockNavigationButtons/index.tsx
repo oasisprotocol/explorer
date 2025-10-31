@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { PaginationNext, PaginationPrevious } from '@oasisprotocol/ui-library/src/components/pagination'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../../types/searchScope'
 import { useConsensusFreshness, useRuntimeFreshness } from '../OfflineBanner/hook'
 import { RouteUtils } from '../../utils/route-utils'
@@ -13,7 +13,7 @@ const PrevBlockButton: FC<{ scope: SearchScope; currentRound: number }> = ({ sco
   const [searchParams] = useSearchParams()
   const disabled = currentRound === 0
   return (
-    <Tooltip title={disabled ? t('blocks.viewingFirst') : t('blocks.viewPrevious')} placement="top">
+    <Tooltip title={disabled ? t('blocks.viewingFirst') : t('blocks.viewPrevious')}>
       <div className="ml-4">
         <PaginationPrevious
           linkComponent={RouterLink}
@@ -36,7 +36,7 @@ const NextBlockButton: FC<{ disabled: boolean; scope: SearchScope; currentRound:
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   return (
-    <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')} placement="top">
+    <Tooltip title={disabled ? t('blocks.viewingLatest') : t('blocks.viewNext')}>
       <div>
         <PaginationNext
           linkComponent={RouterLink}

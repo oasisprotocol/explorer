@@ -1,10 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import Typography from '@mui/material/Typography'
 import { SearchScope } from '../../../types/searchScope'
 import { COLORS } from '../../../styles/theme/colors'
-import { tooltipDelay } from '../../../styles/theme'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { trimLongString } from '../../utils/trimLongString'
 import { useScreenSize } from '../../hooks/useScreensize'
@@ -102,7 +101,7 @@ export const LabelValue: FC<LabelValueProps> = ({ label, trimMobile, value }) =>
     <div className="inline-flex">
       <Label>{label || t('common.amount')}</Label>
       {trimEnabled ? (
-        <Tooltip arrow placement="top" title={value} enterDelay={tooltipDelay} enterNextDelay={tooltipDelay}>
+        <Tooltip title={value}>
           <span>{trimLongString(value, 2, 18)}</span>
         </Tooltip>
       ) : (

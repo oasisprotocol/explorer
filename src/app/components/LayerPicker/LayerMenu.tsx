@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
@@ -34,7 +34,7 @@ export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, tar
   const labels = getLayerLabels(t)
 
   return (
-    <Tooltip arrow placement="top" title={t('layerPicker.comingSoonTitle')}>
+    <Tooltip title={t('layerPicker.comingSoonTitle')}>
       {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
       <div>
         <MenuItem disabled divider={divider}>

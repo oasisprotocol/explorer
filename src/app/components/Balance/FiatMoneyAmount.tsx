@@ -3,16 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 
 export const FiatMoneyWarning: FC<{ unknownTickers: string[] }> = ({ unknownTickers }) => {
   const { t } = useTranslation()
   return (
-    <Tooltip
-      title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}
-      placement="top"
-    >
+    <Tooltip title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}>
       <WarningIcon />
     </Tooltip>
   )
@@ -27,6 +24,7 @@ export const FiatMoneyAmount: FC<FiatValueInfo> = ({
 }) => {
   const { t } = useTranslation()
   const hasFailed = !!unknownTickers.length
+
   return (
     <div className="flex items-center justify-between gap-1 flex-1">
       <span>
