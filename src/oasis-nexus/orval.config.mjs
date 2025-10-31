@@ -46,7 +46,7 @@ const config = {
               /* eslint-disable no-template-curly-in-string */
               [
                 'export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */\n',
-                'export type OasisAddress = `oasis1${string}`; /* modified by afterAllFilesWrite */\n',
+                'export type OasisAddress = `oasis1${string}` | string /* TODO: remove to make stricter */; /* modified by afterAllFilesWrite */\n',
                 'export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */\n',
               ].join(''),
               /* eslint-enable no-template-curly-in-string */
