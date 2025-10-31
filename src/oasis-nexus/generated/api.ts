@@ -117,7 +117,7 @@ export type Address = OasisAddress; /* modified by afterAllFilesWrite */
  * @pattern ^oasis1[a-z0-9]{40}$|^(0x)?[0-9a-fA-F]{40}$
  */
 export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */
-export type OasisAddress = `oasis1${string}`; /* modified by afterAllFilesWrite */
+export type OasisAddress = `oasis1${string}` | string /* TODO: remove to make stricter */; /* modified by afterAllFilesWrite */
 export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */
 
 
