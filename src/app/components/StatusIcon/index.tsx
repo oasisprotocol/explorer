@@ -29,7 +29,7 @@ const statusFgColor: Record<TxStatus, string> = {
   pending: COLORS.warningColor,
 }
 
-export const statusIcon: Record<TxStatus, ReactNode> = {
+const statusIcon: Record<TxStatus, ReactNode> = {
   unknown: <LockIcon color="inherit" fontSize="inherit" />,
   success: <CheckCircleIcon color="inherit" fontSize="inherit" />,
   partialsuccess: <CheckCircleIcon color="success" fontSize="inherit" />,

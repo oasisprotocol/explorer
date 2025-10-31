@@ -30,7 +30,7 @@ type MethodIconProps = {
   truncate?: boolean
 }
 
-export const colorMap = {
+const colorMap = {
   blue: {
     primary: COLORS.brandMedium,
     secondary: COLORS.brandLightBlue,

@@ -9,6 +9,8 @@ const config = {
     'react-app', // https://github.com/facebook/create-react-app/blob/main/packages/eslint-config-react-app/index.js
     'plugin:prettier/recommended', // See .prettierrc
   ],
+  plugins: ['react-refresh'],
+
   parser: '@typescript-eslint/parser',
 
   settings: {},
@@ -68,6 +70,8 @@ const config = {
     'react/display-name': 'off', // TODO: Maybe enable
     'react/self-closing-comp': ['error', { component: true, html: true }],
 
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true /* vite */ }],
+
     '@typescript-eslint/no-empty-function': 'off', // Allow empty reducers for saga
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
@@ -77,7 +81,7 @@ const config = {
   overrides: [
     {
       files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': 'warn' },
+      rules: { 'prettier/prettier': process.env.CI ? 'error' : 'warn' },
     },
     {
       files: ['internals/**'],

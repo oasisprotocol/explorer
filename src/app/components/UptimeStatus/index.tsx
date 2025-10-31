@@ -18,7 +18,7 @@ const getUptimeItemColor = (value: number | undefined) => {
   return COLORS.errorIndicatorBackground
 }
 
-export const ensureTwelveElements = (inputArray: number[] = []) => {
+const ensureTwelveElements = (inputArray: number[] = []) => {
   return [...inputArray, ...new Array(12).fill(undefined)].slice(0, 12)
 }
 
