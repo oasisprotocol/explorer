@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import BigNumber from 'bignumber.js'
-import Tooltip from '@mui/material/Tooltip'
-import { tooltipDelay } from '../../../styles/theme'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from '../Tokens/TokenLink'
 import { PlaceholderLabel } from '../../utils/PlaceholderLabel'
@@ -53,13 +52,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
 
   if (compactAllNumbers || (number.isGreaterThan(100_000) && compactLargeNumbers)) {
     return (
-      <Tooltip
-        arrow
-        placement="top"
-        title={t('common.valueInToken', preciseValueFormat)}
-        enterDelay={tooltipDelay}
-        enterNextDelay={tooltipDelay}
-      >
+      <Tooltip title={t('common.valueInToken', preciseValueFormat)}>
         <span>
           <Trans
             t={t}
@@ -96,13 +89,7 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
 
   return (
     <span>
-      <Tooltip
-        arrow
-        placement="top"
-        title={t('common.valueInToken', preciseValueFormat)}
-        enterDelay={tooltipDelay}
-        enterNextDelay={tooltipDelay}
-      >
+      <Tooltip title={t('common.valueInToken', preciseValueFormat)}>
         <span>
           <Trans
             t={t}
