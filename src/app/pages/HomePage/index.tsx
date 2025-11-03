@@ -8,6 +8,7 @@ import { RecentBlocksCard } from './RecentBlocksCard'
 import { Ecosystem } from './Ecosystem'
 import { RoflAppsCard } from './RoflAppsCard'
 import { HomeSearch } from './HomeSearch'
+import { Header } from 'app/components/PageLayout/Header'
 
 export const HomePage: FC = () => {
   const { network } = useSearchQueryNetworkParam()
@@ -16,6 +17,7 @@ export const HomePage: FC = () => {
     <>
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
+      <Header sticky={false} />
       <div className="flex flex-col px-6">
         <HomeSearch />
         <Ecosystem />
