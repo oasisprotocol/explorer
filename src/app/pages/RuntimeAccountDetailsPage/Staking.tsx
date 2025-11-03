@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import Link from '@mui/material/Link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
@@ -18,41 +18,43 @@ import { Delegations } from '../../components/Delegations'
 import { dapps } from '../../utils/externalLinks'
 import { t } from 'i18next'
 import { AccountCardEmptyState } from './AccountCardEmptyState'
-import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 type StakingProps = {
-  className?: string
   account: RuntimeAccount | undefined
   isLoading: boolean
 }
 
-export const Staking: FC<StakingProps> = ({ className, account, isLoading }) => {
+export const Staking: FC<StakingProps> = ({ account, isLoading }) => {
   const { t } = useTranslation()
 
   return (
-    <div className={cn('flex flex-col h-full', className)}>
-      <Tabs defaultValue="staked" className="h-full" aria-label={t('validator.delegations')}>
-        <TabsList variant="layout">
-          <TabsTrigger value="staked">{t('common.staked')}</TabsTrigger>
-          <TabsTrigger value="debonding">{t('common.debonding')}</TabsTrigger>
-        </TabsList>
-        <Card variant="layout" className="rounded-t-none border-t-0 pt-0 !mb-0">
-          <CardContent className="px-4">
-            {isLoading && <Skeleton className="h-[300px] mt-8" />}
-            {!isLoading && account && (
-              <>
-                <TabsContent value="staked">
-                  <ActiveDelegations address={account?.address} />
-                </TabsContent>
-                <TabsContent value="debonding">
-                  <DebondingDelegations address={account?.address} />
-                </TabsContent>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      </Tabs>
-    </div>
+    <Card variant="layout">
+      <CardHeader>
+        <CardTitle>
+          <Typography variant="h3">{t('stakingOverview')}</Typography>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Tabs defaultValue="staked" aria-label={t('validator.delegations')}>
+          <TabsList variant="layout" className="md:max-w-[400px] rounded-b-md mb-2">
+            <TabsTrigger value="staked">{t('common.staked')}</TabsTrigger>
+            <TabsTrigger value="debonding">{t('common.debonding')}</TabsTrigger>
+          </TabsList>
+          {isLoading && <Skeleton className="h-[200px] mt-8" />}
+          {!isLoading && account && (
+            <>
+              <TabsContent value="staked" className="min-h-28">
+                <ActiveDelegations address={account?.address} />
+              </TabsContent>
+              <TabsContent value="debonding" className="min-h-28">
+                <DebondingDelegations address={account?.address} />
+              </TabsContent>
+            </>
+          )}
+        </Tabs>
+      </CardContent>
+    </Card>
   )
 }
 

@@ -86,7 +86,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
         tokenPrices={tokenPrices}
       />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
-      <Staking account={account} isLoading={isLoading} className="mb-6" />
+      <Staking account={account} isLoading={isLoading} />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },
