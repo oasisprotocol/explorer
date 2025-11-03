@@ -7,6 +7,7 @@ import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkPar
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
 import { Social } from '../../components/Social'
+import { RoflAppsCard } from './RoflAppsCard'
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
@@ -17,8 +18,11 @@ export const HomePage: FC = () => {
     <>
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
-      <Search disabled={!isApiReachable} />
-      <Social />
+      <div className="px-6">
+        <Search disabled={!isApiReachable} />
+        <RoflAppsCard />
+        <Social />
+      </div>
       <Footer />
     </>
   )
