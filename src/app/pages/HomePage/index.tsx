@@ -8,6 +8,7 @@ import { useIsApiReachable } from '../../components/OfflineBanner/hook'
 import { Social } from '../../components/Social'
 import { RecentBlocksCard } from './RecentBlocksCard'
 import { Ecosystem } from './Ecosystem'
+import { RoflAppsCard } from './RoflAppsCard'
 
 export const HomePage: FC = () => {
   const { network } = useSearchQueryNetworkParam()
@@ -17,10 +18,13 @@ export const HomePage: FC = () => {
     <>
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
-      <Search disabled={!isApiReachable} />
-      <Ecosystem />
-      <RecentBlocksCard />
-      <Social />
+      <div className="px-6">
+        <Search disabled={!isApiReachable} />
+        <Ecosystem />
+        <RecentBlocksCard />
+        <RoflAppsCard />
+        <Social />
+      </div>
       <Footer />
     </>
   )
