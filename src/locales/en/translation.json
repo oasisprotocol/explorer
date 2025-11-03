@@ -699,7 +699,8 @@
       "visitSite": "Visit their site for more info"
     },
     "activeNodes": "Active nodes",
-    "blockNumber": "Block number"
+    "blockNumber": "Block number",
+    "search": "Search across all our networks"
   },
   "paratimes": {
     "activeNodes": "{{nodes}} active",
