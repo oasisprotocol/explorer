@@ -9,6 +9,7 @@ import { Ecosystem } from './Ecosystem'
 import { RoflAppsCard } from './RoflAppsCard'
 import { HomeSearch } from './HomeSearch'
 import { Header } from 'app/components/PageLayout/Header'
+import { TotalTransactions } from 'app/components/TotalTransactions'
 
 export const HomePage: FC = () => {
   const { network } = useSearchQueryNetworkParam()
@@ -21,7 +22,10 @@ export const HomePage: FC = () => {
       <div className="flex flex-col px-6">
         <HomeSearch />
         <Ecosystem />
-        <RecentBlocksCard />
+        <div className="flex gap-6 flex-col md:flex-row">
+          <RecentBlocksCard />
+          <TotalTransactions chartContainerHeight={280} network="mainnet" />
+        </div>
         <RoflAppsCard />
         <Social />
       </div>

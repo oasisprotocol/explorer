@@ -2,16 +2,17 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { LineChart } from '../charts/LineChart'
-import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
+import { Layer, useGetLayerStatsTxVolume, useGetStatsTxVolume } from '../../../oasis-nexus/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'
 import { DurationPills } from '../DurationPills'
 import { ChartDuration, cumulativeSum } from '../../utils/chart-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { ErrorBoundary } from '../ErrorBoundary'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { Network } from '../../../types/network'
 
 const TotalTransactionsContent: FC<{
-  scope: SearchScope
+  scope: { network: Network; layer?: Layer }
   chartDuration: ChartDuration
 }> = ({ scope, chartDuration }) => {
   const { t } = useTranslation()
@@ -20,12 +21,24 @@ const TotalTransactionsContent: FC<{
     // We want to start from the beginning of offset as cumulative sum generates a line chart that always goes up
     offset: 0,
   }
-  const dailyVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer, statsParams, {
+
+  const layerVolumeQuery = useGetLayerStatsTxVolume(scope.network, scope.layer!, statsParams, {
     query: {
+      enabled: !!scope.layer,
       keepPreviousData: true,
       staleTime: chartUseQueryStaleTimeMs,
     },
   })
+
+  const networkVolumeQuery = useGetStatsTxVolume(scope.network, statsParams, {
+    query: {
+      enabled: !scope.layer,
+      keepPreviousData: true,
+      staleTime: chartUseQueryStaleTimeMs,
+    },
+  })
+
+  const dailyVolumeQuery = scope.layer ? layerVolumeQuery : networkVolumeQuery
 
   const windows = dailyVolumeQuery.data?.data.windows
     ? cumulativeSum(dailyVolumeQuery.data?.data.windows.slice().reverse(), 'tx_volume')
@@ -62,10 +75,11 @@ const TotalTransactionsContent: FC<{
   )
 }
 
-export const TotalTransactions: FC<{ chartContainerHeight?: number; scope: SearchScope }> = ({
-  chartContainerHeight = 450,
-  scope,
-}) => {
+type TotalTransactionsProps = {
+  chartContainerHeight?: number
+} & ({ scope: SearchScope } | { network: Network })
+
+export const TotalTransactions: FC<TotalTransactionsProps> = ({ chartContainerHeight = 450, ...props }) => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
@@ -81,7 +95,10 @@ export const TotalTransactions: FC<{ chartContainerHeight?: number; scope: Searc
       </CardHeader>
       <CardContent style={{ height: chartContainerHeight }}>
         <ErrorBoundary light>
-          <TotalTransactionsContent scope={scope} chartDuration={chartDuration} />
+          <TotalTransactionsContent
+            scope={'scope' in props ? props.scope : { network: props.network, layer: undefined }}
+            chartDuration={chartDuration}
+          />
         </ErrorBoundary>
       </CardContent>
     </Card>
