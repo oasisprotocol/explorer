@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
 import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { useBlocker, useLocation } from 'react-router-dom'
-import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'
@@ -111,11 +110,6 @@ export const ReopenAnalyticsConsentButton = () => {
   )
 }
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  paddingLeft: theme.spacing(5),
-  paddingRight: theme.spacing(5),
-}))
-
 export const AnalyticsConsentView = (props: {
   isOpen: boolean
   onAccept: () => void
@@ -139,12 +133,12 @@ export const AnalyticsConsentView = (props: {
       }
       actions={
         <>
-          <StyledButton onClick={() => props.onAccept()} color="primary" variant="contained">
+          <Button onClick={() => props.onAccept()} size="lg">
             {t('analyticsConsent.acceptButtonLabel')}
-          </StyledButton>
-          <StyledButton onClick={() => props.onDecline()} color="secondary" variant="outlined">
+          </Button>
+          <Button onClick={() => props.onDecline()} variant="outline" size="lg">
             {t('analyticsConsent.declineButtonLabel')}
-          </StyledButton>
+          </Button>
         </>
       }
     />

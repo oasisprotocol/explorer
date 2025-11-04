@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
@@ -231,10 +231,14 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
         </div>
       </div>
       <div>
-        <div className="flex items-center pb-2">
-          <StyledButton variant="text" onClick={handleConfirm}>
+        <div className="flex items-center pb-2 pt-1">
+          <Button
+            variant="link"
+            onClick={handleConfirm}
+            className="h-[30px] pl-0 text-2xl font-bold hover:no-underline"
+          >
             {getNameForScope(t, selectedScope)}
-          </StyledButton>
+          </Button>
           <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
         </div>
         {children}

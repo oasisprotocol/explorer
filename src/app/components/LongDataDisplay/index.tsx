@@ -1,33 +1,12 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  color: COLORS.brandDark,
-  fontWeight: 700,
-  minWidth: 'auto',
-  height: 'auto',
-  padding: 0,
-  [theme.breakpoints.down('sm')]: {
-    margin: theme.spacing(3, 0, 0, 0),
-  },
-  [theme.breakpoints.up('sm')]: {
-    margin: theme.spacing(4, 0, 0, 0),
-  },
-  '&&:hover, &&:active, &&:focus-visible': {
-    color: COLORS.brandDark,
-    textDecoration: 'none',
-    borderRadius: 0,
-  },
-}))
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 
 const lineHeight = 22
 
 export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedLinesNumber?: number }> = ({
   data,
-  fontWeight = 700,
+  fontWeight = 600,
   collapsedLinesNumber = 2,
 }) => {
   const { t } = useTranslation()
@@ -74,9 +53,14 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
         {data}
       </span>
       {(isOverflowing || isExpanded) && (
-        <StyledButton onClick={() => setIsExpanded(!isExpanded)}>
+        <Button
+          variant="link"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="font-semibold h-auto p-0 mt-2 sm:mt-4 hover:no-underline"
+          style={{ fontWeight }}
+        >
           {isExpanded ? t('common.hide') : t('common.show')}
-        </StyledButton>
+        </Button>
       )}
     </div>
   )

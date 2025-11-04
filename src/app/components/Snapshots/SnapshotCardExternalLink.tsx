@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { isUrlSafe } from 'app/utils/url'
@@ -24,8 +24,10 @@ export const SnapshotCardExternalLink: FC<SnapshotCardExternalLinkProps> = ({
           {description}
         </Typography>
         {url && isUrlSafe(url) && (
-          <Button href={url} target="_blank" rel="noopener noreferrer" color="secondary" variant="outlined">
-            {label}
+          <Button asChild variant="outline" size="lg" className="shadow-none">
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              {label}
+            </a>
           </Button>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { styled } from '@mui/material/styles'
-import Button, { ButtonProps } from '@mui/material/Button'
+import { ButtonHTMLAttributes } from 'react'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Trans, useTranslation } from 'react-i18next'
 import WidgetsIcon from '@mui/icons-material/Widgets'
 import RepeatIcon from '@mui/icons-material/Repeat'
@@ -10,23 +10,21 @@ import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
 
-const StyledPlainTextButton = styled(Button)({
-  fontSize: 'inherit',
-  textTransform: 'none',
-  paddingLeft: 0,
-  paddingRight: 0,
-  minWidth: 0,
-  height: '1em',
-})
-
-const PlainTextButton = (props: ButtonProps) => (
-  <StyledPlainTextButton variant="text" color="inherit" {...props} />
+export const SuggestionButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <Button
+    variant="link"
+    className="
+      gap-[0.2ch]
+      text-xs
+      px-0
+      h-4
+      text-inherit
+      hover:no-underline
+      focus-visible:outline-none
+    "
+    {...props}
+  />
 )
-
-export const SuggestionButton = styled(PlainTextButton)({
-  gap: '0.2ch', // Space after icon
-  lineHeight: '1',
-})
 
 interface Props {
   scope: SearchScope | undefined
