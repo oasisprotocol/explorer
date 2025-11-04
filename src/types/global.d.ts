@@ -9,7 +9,7 @@ declare global {
       REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: string
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
-      REACT_APP_LOCALNET_API?: string
+      REACT_APP_LOCALNET_API: string
       REACT_APP_SHOW_BUILD_BANNERS: 'true' | 'false'
       REACT_APP_META_TITLE: string
       REACT_APP_META_IMAGE: string
@@ -28,7 +28,7 @@ declare global {
       REACT_APP_STAGING_URLS?: string
       REACT_APP_FIXED_NETWORK?: string
       REACT_APP_FIXED_LAYER?: string
-      REACT_APP_SKIP_GRAPH?: string
+      REACT_APP_SKIP_GRAPH: 'true' | 'false'
       REACT_APP_SHOW_FIAT_VALUES: 'true' | 'false'
       REACT_APP_LOCALNET_CONSENSUS: 'true' | 'false'
       REACT_APP_LOCALNET_SAPPHIRE: 'true' | 'false'
