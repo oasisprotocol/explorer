@@ -59,14 +59,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
 
   return (
     <StyledDescriptionList>
-      {showLayer && (
-        <>
-          <dt>{t('common.paratime')}</dt>
-          <dd>
-            <DashboardLink scope={account} />
-          </dd>
-        </>
-      )}
       <StyledListTitleWithAvatar>
         <AccountAvatar account={account} />
       </StyledListTitleWithAvatar>
@@ -86,6 +78,15 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
               address={token.eth_contract_addr || token.contract_addr}
               name={token.name}
             />
+          </dd>
+        </>
+      )}
+
+      {showLayer && (
+        <>
+          <dt>{t('common.paratime')}</dt>
+          <dd>
+            <DashboardLink scope={account} />
           </dd>
         </>
       )}
