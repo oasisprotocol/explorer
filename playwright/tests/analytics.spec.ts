@@ -152,10 +152,15 @@ test.describe('analytics', () => {
         link.textContent = 'link-to-local-explorer'
         document.body.appendChild(link)
       })
-      await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
-      await expect(page.getByText('Latest Blocks')).toBeVisible({ timeout: 50000 })
-      await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
-      await page.waitForTimeout(100)
+
+      await Promise.all([
+        (async () => {
+          await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
+          await expect(page.getByText('Latest Blocks')).toBeVisible({ timeout: 50000 })
+          await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
+        })(),
+        page.waitForRequest('https://matomo.oasis.io/matomo.php?**'),
+      ])
       expect(getMatomoRequests().length).toBeGreaterThanOrEqual(3) // Tracked, possibly twice due to React StrictMode
       expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=https://wallet.oasis.io/&')
 
