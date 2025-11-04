@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import Typography from '@mui/material/Typography'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Validator } from '../../../oasis-nexus/api'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { PieChart } from '../../components/charts/PieChart'
@@ -46,7 +46,7 @@ export const EscrowDistributionCard: FC<BalanceDistributionCardProps> = ({ valid
             prependLegendList={
               <>
                 {t('validator.totalEscrow')}
-                <Typography sx={{ fontSize: 10 }}>
+                <Typography variant="xsmall" className="text-inherit">
                   <RoundedBalance
                     compactLargeNumbers
                     value={validator.escrow.active_balance}

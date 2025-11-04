@@ -1,5 +1,4 @@
 import { TooltipProps } from 'recharts'
-import Typography from '@mui/material/Typography'
 import { COLORS } from 'styles/theme/colors'
 
 export type Formatters = {
@@ -31,12 +30,12 @@ export const TooltipContent = ({
       className="inline-flex flex-col px-5 py-3 shadow-lg rounded-lg text-white text-center"
       style={{ backgroundColor: COLORS.spaceCadet }}
     >
-      <Typography paragraph={false} sx={{ fontSize: 12 }}>
+      <span className="text-xs">
         {formatters?.label ? formatters.label(payload[0].payload[labelKey]) : payload[0].payload[labelKey]}
-      </Typography>
-      <Typography paragraph={false} sx={{ fontSize: 12, fontWeight: 600 }}>
+      </span>
+      <span className="text-xs font-semibold">
         {formatters?.data ? formatters.data(payload[0].value!, payload[0].payload.payload) : payload[0].value}
-      </Typography>
+      </span>
     </div>
   )
 }

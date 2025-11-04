@@ -1,8 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
 import { getNetworkIcons } from '../../utils/content'
@@ -47,12 +45,16 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
       <div className="flex-auto">
         {labels[network]}
         {isActive && (
-          <Typography
-            component="span"
-            sx={{ fontSize: '10px', fontStyle: 'italic', color: COLORS.grayMedium, ml: 2 }}
+          <span
+            className="
+              text-[10px]
+              italic
+              text-muted-foreground
+              ml-1
+            "
           >
             {t('layerPicker.active')}
-          </Typography>
+          </span>
         )}
       </div>
       {network === selectedNetwork && <KeyboardArrowRightIcon />}
