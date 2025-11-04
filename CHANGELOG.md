@@ -12,6 +12,47 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.24.3 (2025-11-04)
+
+### Bug Fixes and Improvements
+
+- Reduce decimals in rounded numbers ("0.47956…" -> "0.48")
+  ([#2267](https://github.com/oasisprotocol/explorer/issues/2267))
+
+- Use rounded numbers everywhere
+  ([#2268](https://github.com/oasisprotocol/explorer/issues/2268))
+
+- Fix header element alignment on search results page
+  ([#2272](https://github.com/oasisprotocol/explorer/issues/2272))
+
+- Fix mobile contract badge in tokens list
+  ([#2259](https://github.com/oasisprotocol/explorer/issues/2259))
+
+### Internal Changes
+
+- Introduce Oasis UI Library
+  ([#2024](https://github.com/oasisprotocol/explorer/issues/2024),
+   [#2255](https://github.com/oasisprotocol/explorer/issues/2255),
+   [#2260](https://github.com/oasisprotocol/explorer/issues/2260),
+   [#2266](https://github.com/oasisprotocol/explorer/issues/2266),
+   [#2278](https://github.com/oasisprotocol/explorer/issues/2278),
+   [#2282](https://github.com/oasisprotocol/explorer/issues/2282),
+   [#2299](https://github.com/oasisprotocol/explorer/issues/2299),
+   [#2301](https://github.com/oasisprotocol/explorer/issues/2301))
+
+- Test named-addresses links are reachable
+  ([#2152](https://github.com/oasisprotocol/explorer/issues/2152))
+
+- Speedup CI: shard playwright tests
+  ([#2275](https://github.com/oasisprotocol/explorer/issues/2275))
+
+- Detect hot-reload issues with eslint
+  ([#2296](https://github.com/oasisprotocol/explorer/issues/2296))
+
+- Update dependencies
+  ([#2188](https://github.com/oasisprotocol/explorer/issues/2188),
+   [#2276](https://github.com/oasisprotocol/explorer/issues/2276))
+
 ## 1.24.2 (2025-10-13)
 
 ### Bug Fixes and Improvements
