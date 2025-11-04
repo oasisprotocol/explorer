@@ -36,10 +36,29 @@ const config = {
         for (const filePath of filesPaths) {
           const generatedApiFile = await fs.promises.readFile(filePath, 'utf-8')
 
-          const patchedApiFile = generatedApiFile.replaceAll(
-            '{ [key: string]: unknown };',
-            '{ [key: string]: any }; /* modified by afterAllFilesWrite */',
-          )
+          const patchedApiFile = generatedApiFile
+            .replaceAll(
+              '{ [key: string]: unknown };',
+              '{ [key: string]: any }; /* modified by afterAllFilesWrite */',
+            )
+            .replace(
+              'export type EthOrOasisAddress = string;',
+              /* eslint-disable no-template-curly-in-string */
+              [
+                'export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */\n',
+                'export type OasisAddress = `oasis1${string}` | string /* TODO: remove to make stricter */; /* modified by afterAllFilesWrite */\n',
+                'export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */\n',
+              ].join(''),
+              /* eslint-enable no-template-curly-in-string */
+            )
+            .replace(
+              'export type StakingAddress = string;',
+              'export type StakingAddress = OasisAddress; /* modified by afterAllFilesWrite */',
+            )
+            .replace(
+              'export type Address = string;',
+              'export type Address = OasisAddress; /* modified by afterAllFilesWrite */',
+            )
 
           await fs.promises.writeFile(filePath, patchedApiFile, 'utf-8')
         }

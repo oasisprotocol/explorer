@@ -100,7 +100,7 @@ export const Runtime = {
  * An Oasis-style (bech32) address.
  * @pattern ^oasis1[a-z0-9]{40}$
  */
-export type StakingAddress = string;
+export type StakingAddress = OasisAddress; /* modified by afterAllFilesWrite */
 
 /**
  * @pattern ^-?[0-9]+$
@@ -111,12 +111,15 @@ export type TextBigInt = string;
  * An Oasis-style (bech32) address.
  * @pattern ^oasis1[a-z0-9]{40}$
  */
-export type Address = string;
+export type Address = OasisAddress; /* modified by afterAllFilesWrite */
 
 /**
  * @pattern ^oasis1[a-z0-9]{40}$|^(0x)?[0-9a-fA-F]{40}$
  */
-export type EthOrOasisAddress = string;
+export type EthOrOasisAddress = OasisAddress | EthAddress; /* modified by afterAllFilesWrite */
+export type OasisAddress = `oasis1${string}` | string /* TODO: remove to make stricter */; /* modified by afterAllFilesWrite */
+export type EthAddress = `0x${string}`; /* modified by afterAllFilesWrite */
+
 
 /**
  * A base64-encoded ed25519 public key.
@@ -324,7 +327,7 @@ export type TransactionList = List & TransactionListAllOf;
 /**
  * The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables).
  */
-export type TransactionBody = { [key: string]: any };
+export type TransactionBody = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * A consensus transaction.
@@ -442,7 +445,7 @@ This object will conform to one of the `*Event` types two levels down
 the hierarchy, e.g. `TransferEvent` from `Event > staking.Event > TransferEvent`
 
  */
-export type ConsensusEventBody = { [key: string]: any };
+export type ConsensusEventBody = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * An event emitted by the consensus layer.
@@ -519,7 +522,7 @@ structure
 with `from` and `amount` fields in JSON.
 
  */
-export type RoothashMessageBody = { [key: string]: any };
+export type RoothashMessageBody = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RoothashMessage {
   /** The runtime that sent this message.
@@ -1120,7 +1123,7 @@ will add a field specifying the corresponding Ethereum address, if known. Curren
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
-export type RuntimeEventBody = { [key: string]: any };
+export type RuntimeEventBody = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * An event emitted by the runtime layer
@@ -1278,9 +1281,9 @@ export const VerificationLevel = {
 Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
 
  */
-export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
+export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
-export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
+export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RuntimeEvmContractVerification {
   verification_level?: VerificationLevel;
@@ -1306,7 +1309,7 @@ export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
 /**
  * The method call body. May be null if the transaction was malformed.
  */
-export type RuntimeTransactionBody = { [key: string]: any };
+export type RuntimeTransactionBody = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * A runtime transaction.
@@ -1772,17 +1775,17 @@ export type RoflAppList = List & RoflAppListAllOf;
 /**
  * The application authentication policy.
  */
-export type RoflAppPolicy = { [key: string]: any };
+export type RoflAppPolicy = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * Arbitrary key-value pairs.
  */
-export type RoflAppMetadata = { [key: string]: any };
+export type RoflAppMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * Arbitrary SEK-encrypted key-value pairs.
  */
-export type RoflAppSecrets = { [key: string]: any };
+export type RoflAppSecrets = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RoflApp {
   /** The identifier of the ROFL application. */
@@ -1852,12 +1855,12 @@ export type RoflAppInstanceList = List & RoflAppInstanceListAllOf;
 /**
  * The payment address configuration for this provider.
  */
-export type RoflMarketProviderPaymentAddress = { [key: string]: any };
+export type RoflMarketProviderPaymentAddress = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * Arbitrary metadata key-value pairs, assigned by the provider.
  */
-export type RoflMarketProviderMetadata = { [key: string]: any };
+export type RoflMarketProviderMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RoflMarketProvider {
   /** The address of the ROFL market provider. */
@@ -1897,17 +1900,17 @@ export type RoflMarketProviderList = List & RoflMarketProviderListAllOf;
 /**
  * The offered resources by this offer.
  */
-export type RoflMarketOfferResources = { [key: string]: any };
+export type RoflMarketOfferResources = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * The payment configuration for this offer.
  */
-export type RoflMarketOfferPayment = { [key: string]: any };
+export type RoflMarketOfferPayment = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * Arbitrary metadata key-value pairs assigned by the provider.
  */
-export type RoflMarketOfferMetadata = { [key: string]: any };
+export type RoflMarketOfferMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RoflMarketOffer {
   /** Unique offer identifier. */
@@ -1935,27 +1938,27 @@ export type RoflMarketOfferList = List & RoflMarketOfferListAllOf;
 /**
  * Arbitrary metadata key-value pairs assigned by the provider.
  */
-export type RoflMarketInstanceMetadata = { [key: string]: any };
+export type RoflMarketInstanceMetadata = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * The resources allocated to this instance.
  */
-export type RoflMarketInstanceResources = { [key: string]: any };
+export type RoflMarketInstanceResources = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * The deployment configuration for this instance.
  */
-export type RoflMarketInstanceDeployment = { [key: string]: any };
+export type RoflMarketInstanceDeployment = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * The payment information for this instance.
  */
-export type RoflMarketInstancePayment = { [key: string]: any };
+export type RoflMarketInstancePayment = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 /**
  * The commands for this instance.
  */
-export type RoflMarketInstanceCmdsItem = { [key: string]: any };
+export type RoflMarketInstanceCmdsItem = { [key: string]: any }; /* modified by afterAllFilesWrite */
 
 export interface RoflMarketInstance {
   /** Unique instance identifier. */
