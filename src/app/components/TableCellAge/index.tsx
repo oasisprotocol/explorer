@@ -1,8 +1,7 @@
 import { FC } from 'react'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { formatDistanceToNow } from '../../utils/dateFormatter'
 import { useFormattedTimestamp } from '../../hooks/useFormattedTimestamp'
-import { tooltipDelay } from '../../../styles/theme'
 import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { TableAgeType } from '../../../types/table-age-type'
@@ -31,15 +30,15 @@ export const TableCellAge: FC<{ sinceTimestamp: string }> = ({ sinceTimestamp })
     addSuffix: true,
   })
   const title = (
-    <span>
-      {defaultFormatted}
+    <>
+      <div className="font-medium">{defaultFormatted}</div>
       <div className="font-normal">{distanceWithSuffix}</div>
-    </span>
+    </>
   )
   const content = ageHeaderType === TableAgeType.DateTime ? tableFormatted : distance
 
   return (
-    <Tooltip title={title} enterDelay={tooltipDelay} placement={'top'}>
+    <Tooltip title={title}>
       <div>{content}</div>
     </Tooltip>
   )
