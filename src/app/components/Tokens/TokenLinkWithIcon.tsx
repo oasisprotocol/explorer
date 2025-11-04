@@ -4,7 +4,7 @@ import { SearchScope } from '../../../types/searchScope'
 import { TokenLink } from './TokenLink'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { InitialsAvatar } from '../AccountAvatar/InitialsAvatar'
-import Tooltip from '@mui/material/Tooltip'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Trans, useTranslation } from 'react-i18next'
 
 export const TokenLinkWithIcon: FC<{
@@ -18,9 +18,6 @@ export const TokenLinkWithIcon: FC<{
   return (
     <div className="flex items-center gap-2">
       <Tooltip
-        placement="top"
-        arrow
-        slotProps={{ tooltip: { sx: { fontWeight: 'normal' } } }}
         title={
           metadata?.origin && (
             <Trans
