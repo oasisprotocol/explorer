@@ -8,6 +8,7 @@ import { RoflAppsCard } from './RoflAppsCard'
 import { HomeSearch } from './HomeSearch'
 import { Header } from 'app/components/PageLayout/Header'
 import { RecentBlocksCard } from './RecentBlocksCard'
+import { TotalTransactions } from 'app/components/TotalTransactions'
 
 export const HomePage: FC = () => {
   const { network } = useSearchQueryNetworkParam()
@@ -21,7 +22,8 @@ export const HomePage: FC = () => {
         <HomeSearch />
         <div className="flex gap-6 flex-col md:flex-row">
           <RecentBlocksCard />
-          <div>Placeholder</div>
+          {/* TODO: Clean up commit when API supports all layers */}
+          <TotalTransactions chartContainerHeight={280} network="mainnet" />
         </div>
         <RoflAppsCard />
         <Social />
