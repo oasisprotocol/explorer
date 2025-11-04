@@ -1,5 +1,7 @@
 import '../../src/types/global.d.ts'
 import { Page, expect, test } from '@playwright/test'
+// eslint-disable-next-line no-restricted-imports
+import { RuntimeBlockList } from '../../src/oasis-nexus/generated/api'
 
 async function setup(page: Page, mode: 'allow-matomo-lib' | 'block-matomo-lib') {
   await page.route(
@@ -8,6 +10,25 @@ async function setup(page: Page, mode: 'allow-matomo-lib' | 'block-matomo-lib') 
       // Don't respond
     },
   )
+  await page.route('https://nexus.oasis.io/v1/sapphire/blocks?**', route => {
+    route.fulfill({
+      json: {
+        blocks: [
+          {
+            gas_used: 61315,
+            hash: 'b2f888813b26511570c22dbba4c8b9e9546084dd7a576d768d375ab8661b9c27',
+            min_gas_price: '100000000000',
+            num_transactions: 1,
+            round: 11318110,
+            size: 315,
+            timestamp: '2025-11-04T02:30:15Z',
+          },
+        ],
+        is_total_count_clipped: false,
+        total_count: 1,
+      } satisfies RuntimeBlockList,
+    })
+  })
   await page.route('https://matomo.oasis.io/matomo.php?**', route => {
     // Don't send tracked events
   })
@@ -38,7 +59,7 @@ test.describe('analytics', () => {
     await expect(page.getByRole('button', { name: 'Privacy Settings' })).toBeVisible()
     expect(getMatomoRequests()).toHaveLength(1) // Loaded library
 
-    await page.getByRole('link', { name: 'Oasis Explorer Home' }).click()
+    await page.getByRole('link', { name: '11,318,110' }).click()
     await page.getByRole('button', { name: 'Decline' }).click()
     expect(getMatomoRequests()).toHaveLength(1)
 
@@ -48,7 +69,7 @@ test.describe('analytics', () => {
     expect(getMatomoRequests()).toHaveLength(2) // Tracked
 
     await Promise.all([
-      page.getByRole('link', { name: 'Blocks' }).first().click(),
+      page.getByRole('link', { name: 'Go to previous page' }).click(),
       page.waitForRequest('https://matomo.oasis.io/matomo.php?**'), // Debounced https://github.com/matomo-org/matomo/blob/f51b30f8/js/piwik.js#L7192-L7201
     ])
     await page.waitForTimeout(100)
@@ -131,10 +152,15 @@ test.describe('analytics', () => {
         link.textContent = 'link-to-local-explorer'
         document.body.appendChild(link)
       })
-      await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
-      await expect(page.getByText('Latest Blocks')).toBeVisible({ timeout: 50000 })
-      await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
-      await page.waitForTimeout(100)
+
+      await Promise.all([
+        (async () => {
+          await page.getByRole('link', { name: 'link-to-local-explorer' }).click()
+          await expect(page.getByText('Latest Blocks')).toBeVisible({ timeout: 50000 })
+          await expect(page.evaluate(() => document.referrer)).resolves.toContain('https://wallet.oasis.io')
+        })(),
+        page.waitForRequest('https://matomo.oasis.io/matomo.php?**'),
+      ])
       expect(getMatomoRequests().length).toBeGreaterThanOrEqual(3) // Tracked, possibly twice due to React StrictMode
       expect(decodeURIComponent(getMatomoRequests().at(-1)!)).toContain('urlref=https://wallet.oasis.io/&')
 
