@@ -30,7 +30,7 @@ export const ProposedBlocks: FC<ProposedBlocksProps> = ({ scope, validator }) =>
     <Card variant="layout">
       <CardHeader>
         <CardTitle>
-          <Typography variant="h3">{t('validator.stakingTrend')}</Typography>
+          <Typography variant="h3">{t('validator.proposedBlocks')}</Typography>
         </CardTitle>
       </CardHeader>
       <CardContent>
