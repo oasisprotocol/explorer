@@ -1,8 +1,6 @@
 import { FC, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { COLORS } from '../../../styles/theme/colors'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { SearchScope } from '../../../types/searchScope'
 import * as externalLinks from '../../utils/externalLinks'
 import { isLocalnet } from '../../utils/route-utils'
@@ -45,29 +43,29 @@ export const VerificationIcon: FC<{
       </Link>
       {!hideLink &&
         (verificationLevel ? (
-          <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
+          <span className="text-xs">
             &nbsp; &nbsp;
             <Trans
               t={t}
               i18nKey={'contract.verification.openInSourcify'}
               components={{
-                SourcifyLink: <Link {...sourcifyLinkProps} />,
+                SourcifyLink: <Link className="text-inherit underline" {...sourcifyLinkProps} />,
               }}
             />
             <AbiPlaygroundLink address_eth={address_eth} scope={scope} />
-          </Typography>
+          </span>
         ) : (
-          <Typography component="span" sx={{ fontSize: '12px', color: COLORS.brandExtraDark }}>
+          <span className="text-xs">
             &nbsp; &nbsp;
             <Trans
               t={t}
               i18nKey={'contract.verification.verifyInSourcify'}
               components={{
-                SourcifyLink: <Link {...sourcifyLinkProps} />,
+                SourcifyLink: <Link className="text-inherit underline" {...sourcifyLinkProps} />,
               }}
             />{' '}
             {explainDelay && t('contract.verification.explainVerificationDelay')}
-          </Typography>
+          </span>
         ))}
     </>
   )

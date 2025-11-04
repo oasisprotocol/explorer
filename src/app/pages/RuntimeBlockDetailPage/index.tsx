@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useOutletContext, useParams } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -155,7 +155,9 @@ export const RuntimeBlockDetailView: FC<{
       <dt>{t('common.transactions')}</dt>
       <dd>
         {block.num_transactions ? (
-          <Link href={transactionsAnchor}>{transactionLabel}</Link>
+          <Link className="font-medium" href={transactionsAnchor}>
+            {transactionLabel}
+          </Link>
         ) : (
           transactionLabel
         )}

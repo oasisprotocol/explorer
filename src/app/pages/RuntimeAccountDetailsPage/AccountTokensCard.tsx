@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
@@ -98,8 +98,10 @@ export const AccountTokensCard: FC<AccountTokensCardProps> = ({ scope, account, 
               align: TableCellAlign.Right,
               key: 'link',
               content: (
-                <Link component={RouterLink} to={item.token_contract_addr_eth} preventScrollReset={true}>
-                  {t('common.viewAll')}
+                <Link asChild>
+                  <RouterLink to={item.token_contract_addr_eth} preventScrollReset={true}>
+                    {t('common.viewAll')}
+                  </RouterLink>
                 </Link>
               ),
             },

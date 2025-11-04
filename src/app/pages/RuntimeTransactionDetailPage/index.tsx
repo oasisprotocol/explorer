@@ -38,7 +38,7 @@ import { TokenTypeTag } from 'app/components/Tokens/TokenList'
 import { LinkableDiv } from 'app/components/PageLayout/LinkableDiv'
 import { EventBalance } from 'app/components/Tokens/TokenTransfers'
 import { transactionEventsContainerId } from '../../utils/tabAnchors'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Link as RouterLink } from 'react-router-dom'
 import { RouteUtils } from '../../utils/route-utils'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
@@ -282,12 +282,12 @@ export const RuntimeTransactionDetailView: FC<{
                     )
                   })}
                   {(totalTransfers ?? 0) > transfers.length && (
-                    <Link
-                      component={RouterLink}
-                      to={`${RouteUtils.getTransactionRoute(transaction, transaction.hash)}#${transactionEventsContainerId}`}
-                      sx={{ mt: 1, textDecoration: 'underline' }}
-                    >
-                      {t('common.seeMore')}
+                    <Link asChild className="font-medium">
+                      <RouterLink
+                        to={`${RouteUtils.getTransactionRoute(transaction, transaction.hash)}#${transactionEventsContainerId}`}
+                      >
+                        {t('common.seeMore')}
+                      </RouterLink>
                     </Link>
                   )}
                 </div>
@@ -343,14 +343,16 @@ export const RuntimeTransactionDetailView: FC<{
                 {transaction.fee_proxy_module === 'rofl' ? (
                   <Tooltip title={t('common.feeProxyTooltip')}>
                     <span>
-                      <Link
-                        component={RouterLink}
-                        to={RouteUtils.getRoflAppRoute(
-                          transaction.network,
-                          oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64')),
-                        )}
-                      >
-                        {oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))}
+                      <Link asChild>
+                        <RouterLink
+                          to={RouteUtils.getRoflAppRoute(
+                            transaction.network,
+                            oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64')),
+                          )}
+                          className="font-medium"
+                        >
+                          {oasis.address.toBech32('rofl', Buffer.from(transaction.fee_proxy_id, 'base64'))}
+                        </RouterLink>
                       </Link>
                     </span>
                   </Tooltip>

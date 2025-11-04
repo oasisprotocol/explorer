@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { styled } from '@mui/material/styles'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { EmptyStateCard } from './EmptyStateCard'
@@ -12,13 +11,6 @@ import { Email } from './Email'
 import { XProfileWidget } from '../../components/XProfileWidget'
 import { DiscordProfileWidget } from '../../components/DiscordProfileWidget'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-
-export const StyledLink = styled(Link)(() => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  wordBreak: 'break-all',
-  gap: 5,
-}))
 
 type MetaDataCardProps = {
   isFetched: boolean
@@ -64,9 +56,14 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               {!homepage ? undefined : (
                 <>
                   {isUrlSafe(homepage) && (
-                    <StyledLink href={homepage} rel="noopener noreferrer" target="_blank">
+                    <Link
+                      className="inline-flex items-center break-all gap-1"
+                      href={homepage}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
                       {homepage} <OpenInNewIcon className="text-base" />
-                    </StyledLink>
+                    </Link>
                   )}
                   {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
                   {isDiscordHandle(homepage) && <DiscordProfileWidget handle={homepage} />}
@@ -87,13 +84,14 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
               }
             >
               {isUrlSafe(metadata['net.oasis.rofl.repository']) ? (
-                <StyledLink
+                <Link
+                  className="inline-flex items-center break-all gap-1"
                   href={metadata['net.oasis.rofl.repository']}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   {metadata['net.oasis.rofl.repository']} <OpenInNewIcon className="text-base" />
-                </StyledLink>
+                </Link>
               ) : undefined}
             </GridRow>
           </div>

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
@@ -45,13 +45,13 @@ export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ sco
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <Typography variant="h3" className="text-lg font-medium">
-                      <Link
-                        preventScrollReset
-                        component={RouterLink}
-                        to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
-                        className="hover:underline"
-                      >
-                        {t('nft.accountCollection')}
+                      <Link asChild className="hover:underline">
+                        <RouterLink
+                          preventScrollReset
+                          to={RouteUtils.getAccountTokensRoute(scope, address, 'ERC721', '')}
+                        >
+                          {t('nft.accountCollection')}
+                        </RouterLink>
                       </Link>
                     </Typography>
                   </BreadcrumbItem>

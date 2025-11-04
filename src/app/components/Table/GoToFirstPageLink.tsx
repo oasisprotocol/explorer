@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams, useHref } from 'react-router-dom'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 /**
  * Link to attempt to jump to the first page (in pagination)
@@ -37,7 +37,7 @@ export const GoToFirstPageLink: FC = () => {
   // Apparently the solution is to umount and rerender the component outside the error boundary.
   // But that's hard to do selectively, so it's easier to just do a full refresh.
   return wantedParamName ? (
-    <Link href={href} sx={{ cursor: 'pointer' }}>
+    <Link href={href} className="text-inherit underline hover:text-inherit">
       {label}
     </Link>
   ) : (

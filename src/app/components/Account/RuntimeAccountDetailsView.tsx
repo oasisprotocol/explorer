@@ -8,7 +8,7 @@ import { EvmToken, type RuntimeAccount } from '../../../oasis-nexus/api'
 import { TokenPills } from './TokenPills'
 import { AccountLink } from './AccountLink'
 import { RouteUtils } from '../../utils/route-utils'
-import Link from '@mui/material/Link'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
 import { AllTokenPrices } from '../../../coin-gecko/api'
 import { ContractCreatorInfo } from './ContractCreatorInfo'
@@ -150,8 +150,8 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
       <dt>{t('common.transactions')}</dt>
       <dd>
         {account.stats.num_txns ? (
-          <Link component={RouterLink} to={transactionsAnchor!}>
-            {transactionsLabel}
+          <Link asChild className="font-medium">
+            <RouterLink to={transactionsAnchor!}>{transactionsLabel}</RouterLink>
           </Link>
         ) : (
           transactionsLabel
