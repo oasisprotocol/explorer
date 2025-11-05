@@ -375,7 +375,11 @@
     "last": "Last"
   },
   "social": {
-    "description": "Be part of the community and stay in the loop on everything Oasis",
+    "offchainPerformance": "Offchain Performance.",
+    "onchainTrust": "Onchain Trust.",
+    "getStarted": "Get started with ROFL",
+    "description": "Build trustless apps with ROFL. Start quickly with templates. Manage everything from one interface.",
+    "community": "Be part of the community and stay in the loop on everything Oasis",
     "discord": "Discord",
     "header": "Join us",
     "reddit": "Reddit",

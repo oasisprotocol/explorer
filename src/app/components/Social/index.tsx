@@ -2,7 +2,6 @@ import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import backgroundSocial from './images/background-social.png'
 import telegram from './images/telegram.svg'
 import twitter from './images/twitter.svg'
 import discord from './images/discord.svg'
@@ -10,7 +9,9 @@ import youtube from './images/youtube.svg'
 import reddit from './images/reddit.svg'
 import linkedin from './images/linkedin.svg'
 import { NotebookText, Home } from 'lucide-react'
-import { socialMedia } from '../../utils/externalLinks'
+import { roflApp, socialMedia } from '../../utils/externalLinks'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import RoflAppsImg from './images/rofl-apps.webp'
 
 type SocialLinkProps = {
   label: string
@@ -21,19 +22,14 @@ type SocialLinkProps = {
 
 const SocialLink: FC<SocialLinkProps> = ({ label, href, imgSrc, img }) => {
   return (
-    <Link
-      href={href}
-      className="flex flex-col items-center text-white mx-4 mt-4 sm:mx-0 sm:mt-0"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
+    <Link href={href} className="flex flex-col gap-2 items-center" rel="noopener noreferrer" target="_blank">
       <div className="flex justify-center mb-2">
         <>
-          {imgSrc && <img src={imgSrc} alt={label} className="h-10 w-auto inline-block" />}
-          {img && <span className="[&_svg]:h-10 [&_svg]:w-10 inline-block">{img}</span>}
+          {imgSrc && <img src={imgSrc} alt={label} className="h-9 inline-block" />}
+          {img && <span className="[&_svg]:h-9 [&_svg]:w-9 inline-block">{img}</span>}
         </>
       </div>
-      <Typography className="mb-1 text-white">{label}</Typography>
+      <Typography className="mb-1 text-white font-semibold">{label}</Typography>
     </Link>
   )
 }
@@ -42,20 +38,34 @@ export const Social: FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div
-      className="grid grid-cols-12 bg-cover rounded-md border pt-8 px-8 border-white bg-primary lg:px-16 pb-4 lg:pb-8"
-      style={{
-        backgroundImage: `url(${backgroundSocial})`,
-      }}
-    >
-      <div className="col-span-12 mb-4 lg:col-span-4 lg:mb-0">
-        <Typography variant="large" className="mb-1 text-white">
-          {t('social.header')}
-        </Typography>
-        <Typography className="text-white w-full md:w-64">{t('social.description')}</Typography>
+    <div className="w-full p-8 relative bg-primary rounded-md flex flex-col lg:flex-row gap-4 md:gap-8 justify-between items-center">
+      <div className="flex flex-row self-stretch">
+        <div className="flex flex-col items-start gap-2 lg:max-w-[340px]">
+          <div className="text-primary-foreground text-xl md:text-2xl font-bold leading-6 md:leading-8">
+            {t('social.offchainPerformance')} <br />
+            {t('social.onchainTrust')}
+          </div>
+          <div className="justify-start text-primary-foreground text-sm font-normal leading-5 mb-2">
+            {t('social.description')}
+          </div>
+          <Button color="secondary" variant="outline" asChild>
+            <Link textColor="inherit" href={roflApp.homepage} target="_blank" rel="noopener noreferrer">
+              {t('social.getStarted')}
+            </Link>
+          </Button>
+        </div>
+        <img alt={t('rofl.listTitle')} className="hidden xl:block -mt-8 max-h-[196px]" src={RoflAppsImg} />
       </div>
-      <div className="col-span-12 lg:col-span-8">
-        <div className="flex flex-wrap items-center w-full h-full justify-center sm:gap-4 md:justify-between">
+      <div className="flex flex-col self-stretch gap-8 lg:min-w-[500px]">
+        <div>
+          <Typography className="text-white text-xl md:text-2xl font-bold leading-6 md:leading-8">
+            {t('social.header')}
+          </Typography>
+          <Typography className="text-white leading-5" variant="small">
+            {t('social.community')}
+          </Typography>
+        </div>
+        <div className="flex flex-wrap items-center gap-1 sm:gap-4 justify-evenly lg:justify-around">
           {socialMedia.telegram && (
             <SocialLink label={t('social.telegram')} href={socialMedia.telegram} imgSrc={telegram} />
           )}
@@ -78,14 +88,14 @@ export const Social: FC = () => {
             <SocialLink
               label={t('social.docs')}
               href={socialMedia.docs}
-              img={<NotebookText className="size-12 text-white" />}
+              img={<NotebookText className="size-9 text-white" />}
             />
           )}
           {socialMedia.home && (
             <SocialLink
               label={t('social.home')}
               href={socialMedia.home}
-              img={<Home className="size-12 text-white" />}
+              img={<Home className="size-9 text-white" />}
             />
           )}
         </div>

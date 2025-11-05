@@ -10,6 +10,12 @@ declare module '*.svg' {
   export default url
 }
 
+declare module '*.webp' {
+  /** Image URL */
+  const url: string
+  export default url
+}
+
 declare module 'bundle-text:*.svg' {
   /** Image content */
   const content: string
