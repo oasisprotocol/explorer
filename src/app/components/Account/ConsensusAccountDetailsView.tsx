@@ -69,7 +69,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       </dd>
       {(showLayer || showBalancesOnOtherLayers) && (
         <>
-          <dt>{t('common.layer')}</dt>
+          <dt>{t('common.chain')}</dt>
           <dd className="inline!">
             <DashboardLink scope={account} />
             {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
