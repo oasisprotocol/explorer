@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Account,
+  isAccountEmpty,
   RuntimeAccount,
   useGetConsensusAccountsAddress,
   useGetRuntimeAccountsAddress,
@@ -27,7 +28,7 @@ export const BalancesOnOtherLayers: FC<{ account: Account | RuntimeAccount }> = 
 
   const activeOnLayers = queries
     .filter(query => query.data?.data.layer !== account.layer)
-    .filter(query => query.data?.data.stats.num_txns)
+    .filter(query => query.data?.data && !isAccountEmpty(query.data.data))
     .map((query, i) => {
       const account = query.data!.data
 
