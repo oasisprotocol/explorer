@@ -36,6 +36,7 @@ export const RuntimeAccountDetailsCard: FC<RuntimeAccountDetailsProps> = ({
         account={account}
         token={token}
         tokenPrices={tokenPrices}
+        showBalancesOnOtherLayers={!isContract}
       />
     </SubPageCard>
   )

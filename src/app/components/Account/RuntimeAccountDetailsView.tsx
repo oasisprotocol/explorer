@@ -23,6 +23,7 @@ import { CardEmptyState } from '../CardEmptyState'
 import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
 import { transactionsContainerId } from '../../utils/tabAnchors'
+import { BalancesOnOtherLayers } from './BalancesOnOtherLayers'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -31,6 +32,7 @@ type RuntimeAccountDetailsViewProps = {
   token?: EvmToken
   tokenPrices: AllTokenPrices
   showLayer?: boolean
+  showBalancesOnOtherLayers?: boolean
 }
 
 export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
@@ -40,6 +42,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   isError,
   tokenPrices,
   showLayer,
+  showBalancesOnOtherLayers,
 }) => {
   const { t } = useTranslation()
 
@@ -82,11 +85,12 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         </>
       )}
 
-      {showLayer && (
+      {(showLayer || showBalancesOnOtherLayers) && (
         <>
           <dt>{t('common.paratime')}</dt>
           <dd>
             <DashboardLink scope={account} />
+            {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
           </dd>
         </>
       )}

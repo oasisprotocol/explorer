@@ -16,6 +16,7 @@ import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RouteUtils } from '../../utils/route-utils'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 import { RoundedBalance } from '../RoundedBalance'
+import { BalancesOnOtherLayers } from './BalancesOnOtherLayers'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -27,6 +28,7 @@ type ConsensusAccountDetailsViewProps = {
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
+  showBalancesOnOtherLayers?: boolean
 }
 
 export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> = ({
@@ -35,6 +37,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   isLoading,
   showLayer,
   standalone,
+  showBalancesOnOtherLayers,
 }) => {
   const { t } = useTranslation()
   const formattedFirstActivity = useFormattedTimestampStringWithDistance(account?.first_activity)
@@ -64,11 +67,12 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           <CopyToClipboard value={account.address} />
         </div>
       </dd>
-      {showLayer && (
+      {(showLayer || showBalancesOnOtherLayers) && (
         <>
           <dt>{t('common.layer')}</dt>
           <dd>
             <DashboardLink scope={account} />
+            {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
           </dd>
         </>
       )}

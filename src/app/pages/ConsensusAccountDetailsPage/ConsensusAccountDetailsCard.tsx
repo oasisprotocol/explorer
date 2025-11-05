@@ -19,7 +19,12 @@ export const ConsensusAccountDetailsCard: FC<ConsensusAccountDetailsCardProps> =
 
   return (
     <SubPageCard featured isLoadingTitle={isLoading} title={t('account.title')} mainTitle>
-      <ConsensusAccountDetailsView isError={isError} isLoading={isLoading} account={account} />
+      <ConsensusAccountDetailsView
+        isError={isError}
+        isLoading={isLoading}
+        account={account}
+        showBalancesOnOtherLayers
+      />
     </SubPageCard>
   )
 }

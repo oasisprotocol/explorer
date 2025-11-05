@@ -13,6 +13,7 @@
     "firstActivity": "First activity",
     "ERC20": "ERC-20",
     "ERC721": "ERC-721",
+    "hasBalancesOnOtherLayers": "this account also has balances on",
     "listTitle": "Accounts",
     "namedByOasis": "Name appointed by Oasis",
     "namedByDeltaDao": "Identified by deltaDAO",
