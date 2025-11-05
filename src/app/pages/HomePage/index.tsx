@@ -6,6 +6,7 @@ import { BuildBanner } from '../../components/BuildBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { useIsApiReachable } from '../../components/OfflineBanner/hook'
+import { Social } from '../../components/Social'
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
@@ -17,6 +18,7 @@ export const HomePage: FC = () => {
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
       <Search disabled={!isApiReachable} />
+      <Social />
       <Footer />
     </>
   )
