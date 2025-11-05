@@ -106,7 +106,7 @@ export const TokenDetailsCard: FC<{
 
             <dt>{t('common.balance')} </dt>
             <dd>
-              <RuntimeBalanceDisplay balances={account?.balances} />
+              <RuntimeBalanceDisplay balances={account?.balances} scope={account} />
             </dd>
 
             <dt>{t('tokens.totalSupply')}</dt>

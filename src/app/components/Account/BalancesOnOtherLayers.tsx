@@ -41,7 +41,7 @@ export const BalancesOnOtherLayers: FC<{ account: Account | RuntimeAccount }> = 
         ) : (
           <>
             {t('account.availableBalance')}:{' '}
-            <RuntimeBalanceDisplay balances={account.balances} className="inline-block" />
+            <RuntimeBalanceDisplay balances={account.balances} scope={account} className="inline-block" />
           </>
         )
 
