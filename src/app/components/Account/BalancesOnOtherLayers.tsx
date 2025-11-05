@@ -10,6 +10,9 @@ import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
+import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'
+import { RoundedBalance } from '../RoundedBalance'
 
 /** Ignoring pontus-x and cipher */
 export const BalancesOnOtherLayers: FC<{ account: Account | RuntimeAccount }> = ({ account }) => {
@@ -27,20 +30,36 @@ export const BalancesOnOtherLayers: FC<{ account: Account | RuntimeAccount }> = 
     .filter(query => query.data?.data.stats.num_txns)
     .map((query, i) => {
       const account = query.data!.data
+
+      // TODO: switch both to totalBalance when runtime API returns it
+      const printBalance =
+        account.layer === 'consensus' ? (
+          <>
+            {t('account.totalBalance')}: <RoundedBalance value={account.total} ticker={account.ticker} />
+          </>
+        ) : (
+          <>
+            {t('account.availableBalance')}:{' '}
+            <RuntimeBalanceDisplay balances={account.balances} className="inline-block" />
+          </>
+        )
+
       return (
         <span key={account.layer}>
           {i > 0 && ' and '}
 
-          <Link asChild className="font-medium">
-            <RouterLink
-              to={RouteUtils.getAccountRoute(
-                account,
-                (account as RuntimeAccount).address_eth ?? account.address,
-              )}
-            >
-              {layerLabels[account.layer]}
-            </RouterLink>
-          </Link>
+          <Tooltip title={printBalance}>
+            <Link asChild className="font-medium">
+              <RouterLink
+                to={RouteUtils.getAccountRoute(
+                  account,
+                  (account as RuntimeAccount).address_eth ?? account.address,
+                )}
+              >
+                {layerLabels[account.layer]}
+              </RouterLink>
+            </Link>
+          </Tooltip>
         </span>
       )
     })

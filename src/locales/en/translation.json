@@ -2,6 +2,7 @@
   "account": {
     "active": "Active",
     "available": "Available",
+    "availableBalance": "Available balance",
     "balanceDistribution": "Balance Distribution",
     "cantLoadDetails": "Unfortunately we couldn't load the account details at this time. Please try again later.",
     "debonding": "Debonding",
