@@ -27,6 +27,7 @@ import {
   transfersContainerId,
 } from '../../utils/tabAnchors'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
+import { Staking } from './Staking'
 
 export type RuntimeAccountDetailsContext = {
   scope: RuntimeScope
@@ -85,6 +86,7 @@ export const RuntimeAccountDetailsPage: FC = () => {
         tokenPrices={tokenPrices}
       />
       <DappBanner scope={scope} ethOrOasisAddress={address} />
+      <Staking account={account} isLoading={isLoading} />
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: txLink },

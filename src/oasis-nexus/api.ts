@@ -1647,6 +1647,66 @@ export const useGetRuntimeRoflAppsIdInstancesRakTransactions: typeof generated.u
     })
   }
 
+export const useGetRuntimeAccountsAddressDelegations: typeof generated.useGetRuntimeAccountsAddressDelegations =
+  (network, layer, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer })[0].ticker
+    return generated.useGetRuntimeAccountsAddressDelegations(network, layer, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              delegations: data.delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: 'consensus',
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
+export const useGetRuntimeAccountsAddressDebondingDelegations: typeof generated.useGetRuntimeAccountsAddressDebondingDelegations =
+  (network, layer, address, params?, options?) => {
+    const ticker = getTokensForScope({ network, layer })[0].ticker
+    return generated.useGetRuntimeAccountsAddressDebondingDelegations(network, layer, address, params, {
+      ...options,
+      request: {
+        ...options?.request,
+        transformResponse: [
+          ...arrayify(axios.defaults.transformResponse),
+          (data: generated.DebondingDelegationList, headers, status) => {
+            if (status !== 200) return data
+            return {
+              ...data,
+              debonding_delegations: data.debonding_delegations.map(delegation => {
+                return {
+                  ...delegation,
+                  amount: fromBaseUnits(delegation.amount, consensusDecimals),
+                  layer: 'consensus',
+                  network,
+                  ticker,
+                }
+              }),
+            }
+          },
+          ...arrayify(options?.request?.transformResponse),
+        ],
+      },
+    })
+  }
+
 function transformRuntimeTransactionList(
   data: generated.RuntimeTransactionList,
   network: Network,
