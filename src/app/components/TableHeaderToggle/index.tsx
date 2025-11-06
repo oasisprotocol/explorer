@@ -1,14 +1,7 @@
 import { FC } from 'react'
-import Button from '@mui/material/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { styled } from '@mui/material/styles'
-
-const StyledButton = styled(Button)(() => ({
-  padding: '0px',
-  minWidth: 'auto',
-  height: 'auto',
-}))
 
 type TableHeaderToggleProps = {
   label: string
@@ -19,9 +12,9 @@ type TableHeaderToggleProps = {
 export const TableHeaderToggle: FC<TableHeaderToggleProps> = ({ label, onClick, tooltipTitle }) => {
   return (
     <Tooltip title={tooltipTitle}>
-      <StyledButton variant="text" onClick={onClick}>
+      <Button variant="link" onClick={onClick} className="p-0 min-w-auto h-auto">
         <Typography className="text-primary font-semibold">{label}</Typography>
-      </StyledButton>
+      </Button>
     </Tooltip>
   )
 }
