@@ -1,13 +1,12 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@mui/base/Button'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import ContrastIcon from '@mui/icons-material/Contrast'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import { styled } from '@mui/material/styles'
 import { EvmNft } from 'oasis-nexus/api'
 import { processNftImageUrl } from '../../utils/nft-images'
 import { isUrlSafe } from '../../utils/url'
@@ -18,26 +17,6 @@ import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 const imageSize = '350px'
 
-export const StyledImage = styled('img')({
-  maxWidth: imageSize,
-  maxHeight: imageSize,
-})
-
-const StyledButton = styled(Button, {
-  shouldForwardProp: prop => prop !== 'darkMode',
-})<{ darkMode: boolean }>(({ darkMode }) => ({
-  cursor: 'pointer',
-  border: 'none',
-  width: 36,
-  height: 36,
-  borderRadius: 18,
-  background: darkMode ? COLORS.white : COLORS.grayMedium,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: darkMode ? COLORS.grayMedium : COLORS.white,
-}))
-
 const DarkModeSwitch: FC<{ darkMode: boolean; onSetDarkMode: (darkMode: boolean) => void }> = ({
   darkMode,
   onSetDarkMode,
@@ -45,13 +24,20 @@ const DarkModeSwitch: FC<{ darkMode: boolean; onSetDarkMode: (darkMode: boolean)
   const { t } = useTranslation()
   return (
     <Tooltip title={t('nft.switchBackgroundColor')}>
-      <StyledButton
-        darkMode={darkMode}
+      <Button
         onClick={() => onSetDarkMode(!darkMode)}
         aria-label={t('nft.switchBackgroundColor')}
+        variant="ghost"
+        size="icon"
+        className={cn(
+          'w-9 h-9 rounded-full flex items-center justify-center border-none',
+          darkMode
+            ? 'bg-background text-muted-foreground hover:bg-muted/50'
+            : 'bg-muted text-foreground hover:bg-muted/70',
+        )}
       >
         <ContrastIcon />
-      </StyledButton>
+      </Button>
     </Tooltip>
   )
 }
@@ -60,9 +46,19 @@ const FullScreenButton: FC<{ darkMode: boolean; onClick: () => void }> = ({ dark
   const { t } = useTranslation()
   return (
     <Tooltip title={t('nft.openInFullscreen')}>
-      <StyledButton darkMode={darkMode} onClick={onClick}>
+      <Button
+        onClick={onClick}
+        variant="ghost"
+        size="icon"
+        className={cn(
+          'rounded-full',
+          darkMode
+            ? 'bg-background text-muted-foreground hover:bg-muted/50'
+            : 'bg-muted text-foreground hover:bg-muted/70',
+        )}
+      >
         <OpenInFullIcon />
-      </StyledButton>
+      </Button>
     </Tooltip>
   )
 }

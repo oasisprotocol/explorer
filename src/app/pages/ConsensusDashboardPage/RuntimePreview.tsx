@@ -137,13 +137,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({
         <dt className="flex items-start py-1">{t('paratimes.blockNumber')}</dt>
         <dd className="flex justify-end py-1">
           {status?.latestBlock ? (
-            <BlockLink
-              scope={{
-                layer: runtime,
-                network,
-              }}
-              height={status.latestBlock}
-            />
+            <BlockLink scope={{ layer: runtime, network }} height={status.latestBlock} />
           ) : (
             '-'
           )}

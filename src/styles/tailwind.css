@@ -58,3 +58,17 @@
 [class*='Mui'] object {
   vertical-align: revert;
 }
+
+/* Flash animation for table highlights */
+@keyframes flash {
+  0% {
+    background-color: white;
+  }
+  20%,
+  80% {
+    background-color: #e0f5ee;
+  }
+  100% {
+    background-color: white;
+  }
+}

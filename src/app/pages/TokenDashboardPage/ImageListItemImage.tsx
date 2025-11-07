@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
-import { styled } from '@mui/material/styles'
 import { processNftImageUrl } from 'app/utils/nft-images'
 import { isUrlSafe } from 'app/utils/url'
 import { NoPreview } from '../../components/NoPreview'
@@ -13,21 +12,6 @@ import { useScreenSize } from 'app/hooks/useScreensize'
 
 const minMobileSize = '150px'
 const minSize = '210px'
-
-const StyledImage = styled('img', {
-  shouldForwardProp: prop => prop !== 'isMobile',
-})<{ isMobile: boolean }>(({ isMobile }) => ({
-  minWidth: isMobile ? minMobileSize : minSize,
-  minHeight: isMobile ? minMobileSize : minSize,
-  width: '100%',
-  height: '100%',
-  maxHeight: minSize,
-  objectFit: 'cover',
-  transition: 'opacity 250ms ease-in-out',
-  '&:hover, &:focus-visible': {
-    opacity: 0.15,
-  },
-}))
 
 type ImageListItemImageProps = {
   instance: EvmNft
@@ -43,12 +27,17 @@ export const ImageListItemImage: FC<ImageListItemImageProps> = ({ instance, to }
     <Link asChild className="flex relative">
       <RouterLink to={to}>
         {isUrlSafe(instance.image) && !imageLoadError ? (
-          <StyledImage
+          <img
             onError={() => setImageLoadError(true)}
             src={processNftImageUrl(instance.image)}
             alt={getNftInstanceLabel(instance)}
             loading="lazy"
-            isMobile={isMobile}
+            style={{
+              minWidth: isMobile ? minMobileSize : minSize,
+              minHeight: isMobile ? minMobileSize : minSize,
+              maxHeight: minSize,
+            }}
+            className="w-full h-full object-cover transition-opacity duration-200 ease-in-out hover:opacity-15 focus-visible:opacity-15"
           />
         ) : (
           <NoPreview placeholderSize={isMobile ? minMobileSize : minSize} />

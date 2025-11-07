@@ -1,19 +1,10 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useTranslation } from 'react-i18next'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
 import { EvmTokenType, RuntimeAccount, type Token } from '../../../oasis-nexus/api'
 import { RouteUtils } from '../../utils/route-utils'
 import { tokenContainerId } from '../../utils/tabAnchors'
-
-export const StyledLink = styled(RouterLink)(({ theme }) => ({
-  color: COLORS.brandDark,
-  fontWeight: 700,
-  textDecoration: 'none',
-  whiteSpace: 'nowrap',
-  marginLeft: theme.spacing(4),
-}))
 
 type ShowMoreTokensLinkProps = {
   account: RuntimeAccount
@@ -49,8 +40,10 @@ export const ShowMoreTokensLink: FC<ShowMoreTokensLinkProps> = ({ account, token
   const targetShowMoreLink = hasERC20 ? erc20link : erc721Link
 
   return (
-    <StyledLink to={targetShowMoreLink} color="inherit">
-      {t('account.showMore', { counter: additionalTokensCounter })}
-    </StyledLink>
+    <Link asChild className="ml-4 font-medium">
+      <RouterLink to={targetShowMoreLink}>
+        {t('account.showMore', { counter: additionalTokensCounter })}
+      </RouterLink>
+    </Link>
   )
 }

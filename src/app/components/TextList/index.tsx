@@ -1,30 +1,13 @@
 import { FC, ReactNode } from 'react'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
 
 type TextListProps = {
   children: ReactNode
 }
 
-const StyledList = styled('ul')(({ theme }) => ({
-  listStyleType: 'disc',
-  listStylePosition: 'outside',
-  color: COLORS.brandExtraDark,
-  fontSize: '14px',
-  paddingLeft: theme.spacing(4),
-  paddingBottom: theme.spacing(3),
-  '& ul': {
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-}))
+export const TextList: FC<TextListProps> = ({ children }) => (
+  <ul className="list-disc list-outside text-sm pl-4 pb-1 [&_ul]:pt-0 [&_ul]:pb-0">{children}</ul>
+)
 
-export const TextList: FC<TextListProps> = ({ children }) => <StyledList>{children}</StyledList>
-
-const StyledListItem = styled('li')(({ theme }) => ({
-  display: 'list-item',
-  padding: 0,
-  paddingBottom: theme.spacing(1),
-}))
-
-export const TextListItem: FC<TextListProps> = ({ children }) => <StyledListItem>{children}</StyledListItem>
+export const TextListItem: FC<TextListProps> = ({ children }) => (
+  <li className="list-item pb-1">{children}</li>
+)

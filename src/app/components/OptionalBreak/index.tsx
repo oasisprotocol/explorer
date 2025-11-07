@@ -1,6 +1,9 @@
-import { styled } from '@mui/material/styles'
+import { FC, ReactNode } from 'react'
 
-/** Makes this the preferred line break point with inline-block. */
-export const OptionalBreak = styled('span')({
-  display: 'inline-block',
-})
+type OptionalBreakProps = {
+  children?: ReactNode
+}
+
+export const OptionalBreak: FC<OptionalBreakProps> = ({ children }) => (
+  <span className="inline-block">{children}</span>
+)
