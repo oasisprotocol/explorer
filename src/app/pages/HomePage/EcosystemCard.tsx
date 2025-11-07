@@ -77,7 +77,7 @@ export const EcosystemCard: FC<EcosystemCardProps> = ({
       <CardContent className="flex-1 flex items-end">
         {isLoading && <Skeleton className="h-14 w-full" />}
         {!isLoading && (
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 font-medium">
+          <div className="w-full grid grid-cols-2 gap-4 font-medium">
             <div>{t('home.blockNumber')}</div>
             <div className="text-right text-primary">
               {latestBlock !== undefined && latestBlock !== null ? latestBlock.toLocaleString() : '-'}

@@ -19,7 +19,7 @@ export const HomePage: FC = () => {
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
       <Header sticky={false} />
-      <div className="flex flex-col px-6">
+      <div className="flex flex-col px-2 md:px-6">
         <HomeSearch />
         <Ecosystem />
         <div className="flex gap-6 flex-col md:flex-row">

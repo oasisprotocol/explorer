@@ -30,7 +30,7 @@ export const Header: FC<HeaderProps> = ({ sticky = true }) => {
         },
       )}
     >
-      <div className="px-6">
+      <div className="px-2 md:px-6">
         <div className="grid grid-cols-12">
           <div className="col-span-6 xl:col-span-3 flex items-center">
             <HomePageLink showText={!sticky || (!scrolled && !isMobile)} />
