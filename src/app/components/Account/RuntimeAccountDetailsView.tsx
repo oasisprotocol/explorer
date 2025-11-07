@@ -23,6 +23,7 @@ import { CardEmptyState } from '../CardEmptyState'
 import { extractMinimalProxyERC1167 } from '../ContractVerificationIcon/extractMinimalProxyERC1167'
 import { AbiPlaygroundLink } from '../ContractVerificationIcon/AbiPlaygroundLink'
 import { transactionsContainerId } from '../../utils/tabAnchors'
+import { BalancesOnOtherLayers } from './BalancesOnOtherLayers'
 
 type RuntimeAccountDetailsViewProps = {
   isLoading?: boolean
@@ -31,6 +32,7 @@ type RuntimeAccountDetailsViewProps = {
   token?: EvmToken
   tokenPrices: AllTokenPrices
   showLayer?: boolean
+  showBalancesOnOtherLayers?: boolean
 }
 
 export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
@@ -40,6 +42,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
   isError,
   tokenPrices,
   showLayer,
+  showBalancesOnOtherLayers,
 }) => {
   const { t } = useTranslation()
 
@@ -59,14 +62,6 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
 
   return (
     <StyledDescriptionList>
-      {showLayer && (
-        <>
-          <dt>{t('common.paratime')}</dt>
-          <dd>
-            <DashboardLink scope={account} />
-          </dd>
-        </>
-      )}
       <StyledListTitleWithAvatar>
         <AccountAvatar account={account} />
       </StyledListTitleWithAvatar>
@@ -86,6 +81,16 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
               address={token.eth_contract_addr || token.contract_addr}
               name={token.name}
             />
+          </dd>
+        </>
+      )}
+
+      {(showLayer || showBalancesOnOtherLayers) && (
+        <>
+          <dt>{t('common.paratime')}</dt>
+          <dd className="inline!">
+            <DashboardLink scope={account} />
+            {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
           </dd>
         </>
       )}
@@ -130,7 +135,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
 
       <dt>{t('common.balance')}</dt>
       <dd>
-        <RuntimeBalanceDisplay balances={account.balances} />
+        <RuntimeBalanceDisplay balances={account.balances} scope={account} />
       </dd>
 
       <dt>{t('common.tokens')}</dt>

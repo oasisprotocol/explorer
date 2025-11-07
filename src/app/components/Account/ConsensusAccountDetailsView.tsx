@@ -16,6 +16,7 @@ import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RouteUtils } from '../../utils/route-utils'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 import { RoundedBalance } from '../RoundedBalance'
+import { BalancesOnOtherLayers } from './BalancesOnOtherLayers'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -27,6 +28,7 @@ type ConsensusAccountDetailsViewProps = {
   isLoading?: boolean
   showLayer?: boolean
   standalone?: boolean
+  showBalancesOnOtherLayers?: boolean
 }
 
 export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> = ({
@@ -35,6 +37,7 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
   isLoading,
   showLayer,
   standalone,
+  showBalancesOnOtherLayers,
 }) => {
   const { t } = useTranslation()
   const formattedFirstActivity = useFormattedTimestampStringWithDistance(account?.first_activity)
@@ -52,14 +55,6 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
       className="grid-cols-[160px_auto] sm:grid-cols-[200px_auto]"
       standalone={standalone}
     >
-      {showLayer && (
-        <>
-          <dt>{t('common.layer')}</dt>
-          <dd>
-            <DashboardLink scope={account} />
-          </dd>
-        </>
-      )}
       <StyledListTitleWithAvatar>
         <div className="flex items-center gap-1">
           <AccountAvatar account={account} />
@@ -72,6 +67,15 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           <CopyToClipboard value={account.address} />
         </div>
       </dd>
+      {(showLayer || showBalancesOnOtherLayers) && (
+        <>
+          <dt>{t('common.chain')}</dt>
+          <dd className="inline!">
+            <DashboardLink scope={account} />
+            {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
+          </dd>
+        </>
+      )}
       <dt>{t('account.totalBalance')}</dt>
       <dd>
         <div className="w-full max-w-[25ex] text-right">

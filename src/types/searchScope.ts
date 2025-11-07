@@ -28,7 +28,7 @@ export const MainnetEmerald: SearchScope = {
 
 export const getNameForScope = (t: TFunction, scope: SearchScope) =>
   specialScopeNames[scope.network]?.[scope.layer] ??
-  `${getLayerLabels(t)[scope.layer]} ${getNetworkNames(t)[scope.network]}`
+  `${getLayerLabels(t)[scope.layer]} ${scope.network !== 'mainnet' ? getNetworkNames(t)[scope.network] : ''}`.trim()
 
 export const getKeyForScope: (scope: SearchScope) => string = ({ network, layer }) => `${network}.${layer}`
 
