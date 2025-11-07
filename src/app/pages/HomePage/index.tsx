@@ -4,11 +4,12 @@ import { BuildBanner } from '../../components/BuildBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
 import { Social } from '../../components/Social'
+import { Header } from '../../components/PageLayout/Header'
+import { RecentBlocksCard } from './RecentBlocksCard'
+import { TotalTransactions } from '../../components/TotalTransactions'
 import { RoflAppsCard } from './RoflAppsCard'
 import { HomeSearch } from './HomeSearch'
-import { Header } from 'app/components/PageLayout/Header'
-import { RecentBlocksCard } from './RecentBlocksCard'
-import { TotalTransactions } from 'app/components/TotalTransactions'
+import { Ecosystem } from './Ecosystem'
 
 export const HomePage: FC = () => {
   const { network } = useSearchQueryNetworkParam()
@@ -20,6 +21,7 @@ export const HomePage: FC = () => {
       <Header sticky={false} />
       <div className="flex flex-col px-6">
         <HomeSearch />
+        <Ecosystem />
         <div className="flex gap-6 flex-col md:flex-row">
           <RecentBlocksCard />
           {/* TODO: Clean up commit when API supports all layers */}
