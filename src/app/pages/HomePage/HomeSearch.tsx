@@ -16,7 +16,7 @@ export const HomeSearch: FC = () => {
     <div
       id="search"
       style={{ backgroundImage: `url(${SearchBg})` }}
-      className="py-12 px-8 md:p-24 bg-[#DFDEF5] bg-cover bg-center bg-no-repeat rounded-md mb-6"
+      className="py-12 px-4 md:px-8 md:p-24 bg-[#DFDEF5] bg-cover bg-center bg-no-repeat rounded-md mb-4 md:mb-6"
     >
       <Typography
         variant="h2"
