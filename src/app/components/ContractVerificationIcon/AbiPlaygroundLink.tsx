@@ -30,7 +30,6 @@ export const AbiPlaygroundLink: FC<{
     href: scopeToPlaygroundURL[scope.network]?.[scope.layer],
     rel: 'noopener noreferrer',
     target: '_blank',
-    sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
   }
 
   if (!abiPlaygroundLinkProps.href) return null
