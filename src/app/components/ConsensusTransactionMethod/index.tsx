@@ -94,7 +94,7 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
           border: border ? `2px solid ${theme.primary}` : 'none',
         }}
       >
-        {cloneElement(icon, { sx: { fontSize: Math.ceil(size * iconRatio) } })}
+        {cloneElement(icon, { style: { fontSize: Math.ceil(size * iconRatio) } })}
       </div>
       {label && (
         <Typography
