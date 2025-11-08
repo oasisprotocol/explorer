@@ -42,7 +42,7 @@ export const AbiPlaygroundLink: FC<{
           t={t}
           i18nKey={'contract.verification.openInAbiPlayground'}
           components={{
-            AbiPlaygroundLink: <Link className="text-inherit" {...abiPlaygroundLinkProps} />,
+            AbiPlaygroundLink: <Link className="text-inherit underline" {...abiPlaygroundLinkProps} />,
           }}
         />
       </div>
