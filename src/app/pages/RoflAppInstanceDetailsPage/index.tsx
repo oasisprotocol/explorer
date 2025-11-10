@@ -70,7 +70,7 @@ export const RoflAppInstanceDetailsView: FC<{
         </div>
       </dt>
       <dd>
-        <span>
+        <span className="font-mono font-medium text-primary">
           {instance.rak} <CopyToClipboard value={instance.rak} />
         </span>
       </dd>
@@ -91,7 +91,7 @@ export const RoflAppInstanceDetailsView: FC<{
       <dd>{instance.expiration_epoch.toLocaleString()}</dd>
       <dt>{t('rofl.roflAppId')}</dt>
       <dd>
-        <RoflAppLink id={appId} network={scope.network} withSourceIndicator={false} />
+        <RoflAppLink id={appId} network={scope.network} withSourceIndicator={false} mono />
         <CopyToClipboard value={appId} />
       </dd>
       <dt>{t('rofl.endorsingNodeId')}</dt>

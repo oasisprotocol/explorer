@@ -15,7 +15,7 @@ const WithTypographyAndLink: FC<{ children: ReactNode; mobile?: boolean; to: str
   mobile,
   to,
 }) => (
-  <Link asChild className={cn('font-medium', mobile && 'max-w-[85%]')}>
+  <Link asChild className={cn('font-mono font-medium', mobile && 'max-w-[85%]')}>
     <RouterLink to={to}>{children}</RouterLink>
   </Link>
 )
