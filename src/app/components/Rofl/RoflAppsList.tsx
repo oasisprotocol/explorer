@@ -63,7 +63,7 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'status',
         },
         {
-          content: <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />,
+          content: <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} mono />,
           key: 'id',
         },
         {

@@ -11,6 +11,7 @@ type RoflAppLinkProps = {
   trimMode?: TrimMode
   withSourceIndicator?: boolean
   labelOnly?: boolean
+  mono?: boolean
 }
 
 export const RoflAppLink: FC<RoflAppLinkProps> = ({
@@ -21,6 +22,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
   trimMode,
   withSourceIndicator,
   labelOnly,
+  mono,
 }) => {
   const to = RouteUtils.getRoflAppRoute(network, id)
 
@@ -33,6 +35,7 @@ export const RoflAppLink: FC<RoflAppLinkProps> = ({
       trimMode={trimMode}
       withSourceIndicator={withSourceIndicator}
       labelOnly={labelOnly}
+      mono={mono}
     />
   )
 }
