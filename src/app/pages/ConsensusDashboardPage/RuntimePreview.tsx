@@ -4,14 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { styled } from '@mui/material/styles'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import CircleIcon from '@mui/icons-material/Circle'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
-import { InlineDescriptionList } from '../../components/StyledDescriptionList'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { RouterLinkCircle } from '../../components/StyledLinks'
 import { getLayerLabels } from '../../utils/content'
@@ -22,28 +20,23 @@ import { TransactionsChartCard } from '../ParatimeDashboardPage/TransactionsChar
 import { ActiveAccounts } from '../ParatimeDashboardPage/ActiveAccounts'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
-
-const StyledList = styled(InlineDescriptionList)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
-  'dt, dd': {
-    display: 'flex',
-    padding: theme.spacing(2, 0),
-  },
-  dt: {
-    alignItems: 'start',
-  },
-  dd: {
-    justifyContent: 'end',
-  },
-}))
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 type RuntimeProps = {
   prominentItem?: boolean
   network: Network
   runtime: Runtime
+  lastNoBorder?: boolean
+  showBothCharts?: boolean
 }
 
-export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({
+  prominentItem,
+  network,
+  runtime,
+  lastNoBorder,
+  showBothCharts,
+}) => {
   const query = useGetRuntimeStatus(network, runtime)
   const { outOfDate } = useRuntimeFreshness({
     network,
@@ -56,6 +49,8 @@ export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({ prominentItem, 
       prominentItem={prominentItem}
       network={network}
       runtime={runtime}
+      lastNoBorder={lastNoBorder}
+      showBothCharts={showBothCharts}
       status={{
         activeNodes: runtimeStatus?.active_nodes,
         latestBlock: runtimeStatus?.latest_block,
@@ -65,33 +60,24 @@ export const EnabledRuntimePreviewContent: FC<RuntimeProps> = ({ prominentItem, 
   )
 }
 
-export const EnabledRuntimePreview: FC<RuntimeProps> = ({ prominentItem, network, runtime }) => {
+export const EnabledRuntimePreview: FC<RuntimeProps> = ({
+  prominentItem,
+  network,
+  runtime,
+  lastNoBorder,
+  showBothCharts,
+}) => {
   const { t } = useTranslation()
   return (
     <ErrorBoundary light={true} fallbackContent={<b>{t('paratimes.canNotReadStatus', { name: runtime })}</b>}>
-      <EnabledRuntimePreviewContent network={network} runtime={runtime} prominentItem={prominentItem} />
+      <EnabledRuntimePreviewContent
+        network={network}
+        runtime={runtime}
+        prominentItem={prominentItem}
+        lastNoBorder={lastNoBorder}
+        showBothCharts={showBothCharts}
+      />
     </ErrorBoundary>
-  )
-}
-
-type DisabledRuntimePreviewProps = {
-  runtime: Runtime
-}
-
-export const DisabledRuntimePreview: FC<DisabledRuntimePreviewProps> = ({ runtime }) => {
-  const { t } = useTranslation()
-  const layerLabels = getLayerLabels(t)
-  const runtimeLabel = layerLabels[runtime]
-
-  return (
-    <div className="flex gap-2 flex-row items-center pt-2 lg:pt-0">
-      <Typography className="text-base font-semibold text-primary flex items-center flex-1 min-h-[44px]">
-        {runtimeLabel}
-      </Typography>
-      <div>
-        <Badge variant="info">{t('paratimes.inactive')}</Badge>
-      </div>
-    </div>
   )
 }
 
@@ -105,7 +91,14 @@ type RuntimePreviewProps = RuntimeProps & {
 
 type Panels = 'transactions' | 'accounts'
 
-const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runtime, status }) => {
+const RuntimePreview: FC<RuntimePreviewProps> = ({
+  prominentItem,
+  network,
+  runtime,
+  status,
+  lastNoBorder,
+  showBothCharts = false,
+}) => {
   const { t } = useTranslation()
   const [panel, setPanel] = useState<Panels>('transactions')
   const layerLabels = getLayerLabels(t)
@@ -113,7 +106,12 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
   const dashboardLink = RouteUtils.getDashboardRoute({ network, layer: runtime })
   const runtimeStatus = status ? (status.outOfDate ? 'outdated' : 'stable') : 'inactive'
   return (
-    <div className="flex-1 h-full pb-6 border-b border-gray-200 lg:p-0 lg:pr-4 lg:border-b-0 lg:border-r">
+    <div
+      className={cn(
+        'flex-1 h-full pb-5 border-b lg:p-0 lg:border-b-0 lg:border-r lg:pr-5',
+        lastNoBorder && 'last:border-0 last:pr-0 lg:w-1/2',
+      )}
+    >
       <div className="mb-4">
         <Typography className="text-base font-semibold text-primary flex items-center flex-1 min-h-[44px]">
           {status ? (
@@ -128,16 +126,16 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
           )}
         </Typography>
       </div>
-      <StyledList>
-        <dt>{t('common.status')}:</dt>
-        <dd>
+      <dl className="m-0 mb-4 grid grid-cols-[minmax(80px,1fr)_1fr] gap-y-1">
+        <dt className="flex items-start py-1">{t('common.status')}:</dt>
+        <dd className="flex justify-end py-1">
           <div>
             {runtimeStatus === 'stable' && <Badge variant="success">{t('common.online')}</Badge>}
             {runtimeStatus === 'outdated' && <Badge variant="error">{t('paratimes.outdated')}</Badge>}
           </div>
         </dd>
-        <dt>{t('paratimes.blockNumber')}</dt>
-        <dd>
+        <dt className="flex items-start py-1">{t('paratimes.blockNumber')}</dt>
+        <dd className="flex justify-end py-1">
           {status?.latestBlock ? (
             <BlockLink
               scope={{
@@ -150,46 +148,66 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({ prominentItem, network, runti
             '-'
           )}
         </dd>
-        <dt>{t('paratimes.nodes')} </dt>
-        <dd>{status?.activeNodes ? t('paratimes.activeNodes', { nodes: status?.activeNodes }) : '-'} </dd>
-      </StyledList>
+        <dt className="flex items-start py-1">{t('paratimes.nodes')}</dt>
+        <dd className="flex justify-end py-1">
+          {status?.activeNodes ? t('paratimes.activeNodes', { nodes: status?.activeNodes }) : '-'}
+        </dd>
+      </dl>
       <div className="flex gap-2">
-        <ChartsContainer status={status}>
-          {panel === 'transactions' && (
-            <TransactionsChartCard
-              scope={{
-                layer: runtime,
-                network,
-              }}
-              chartDuration={ChartDuration.TODAY}
-              noBorder
-            />
-          )}
-          {panel === 'accounts' && (
-            <ActiveAccounts
-              scope={{
-                layer: runtime,
-                network,
-              }}
-              chartDuration={ChartDuration.TODAY}
-              noBorder
-            />
-          )}
-        </ChartsContainer>
-        {prominentItem && (
-          <ChartsContainer status={status}>
-            <ActiveAccounts
-              scope={{
-                layer: runtime,
-                network,
-              }}
-              chartDuration={ChartDuration.TODAY}
-              noBorder
-            />
-          </ChartsContainer>
+        {showBothCharts ? (
+          <>
+            <ChartsContainer status={status}>
+              <TransactionsChartCard
+                scope={{ layer: runtime, network }}
+                chartDuration={ChartDuration.TODAY}
+                noBorder
+              />
+            </ChartsContainer>
+            <ChartsContainer status={status}>
+              <ActiveAccounts
+                scope={{ layer: runtime, network }}
+                chartDuration={ChartDuration.TODAY}
+                noBorder
+              />
+            </ChartsContainer>
+          </>
+        ) : (
+          <>
+            <ChartsContainer status={status}>
+              {panel === 'transactions' && (
+                <TransactionsChartCard
+                  scope={{
+                    layer: runtime,
+                    network,
+                  }}
+                  chartDuration={ChartDuration.TODAY}
+                  noBorder
+                />
+              )}
+              {panel === 'accounts' && (
+                <ActiveAccounts
+                  scope={{
+                    layer: runtime,
+                    network,
+                  }}
+                  chartDuration={ChartDuration.TODAY}
+                  noBorder
+                />
+              )}
+            </ChartsContainer>
+            {prominentItem && (
+              <ChartsContainer status={status}>
+                <ActiveAccounts
+                  scope={{ layer: runtime, network }}
+                  chartDuration={ChartDuration.TODAY}
+                  noBorder
+                />
+              </ChartsContainer>
+            )}
+          </>
         )}
       </div>
-      {!prominentItem && (
+      {!showBothCharts && !prominentItem && (
         <div className="flex justify-center pt-2">
           {status && (
             <>
