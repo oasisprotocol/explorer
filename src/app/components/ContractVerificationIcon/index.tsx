@@ -33,7 +33,6 @@ export const VerificationIcon: FC<{
     href: hideLink ? undefined : `${externalLinks.dapps.sourcifyRoot}#/lookup/${address_eth}`,
     rel: 'noopener noreferrer',
     target: '_blank',
-    sx: { fontWeight: 400, color: 'inherit', textDecoration: 'underline' },
     onClick: verificationLevel ? undefined : () => setExplainDelay(true),
   }
   return (
