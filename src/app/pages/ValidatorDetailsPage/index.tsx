@@ -146,6 +146,16 @@ export const ValidatorDetailsView: FC<{
   if (isLoading) return <TextSkeleton numberOfRows={10} />
   if (!validator) return null
 
+  // Workaround to right-align all balance numbers
+  const longestBalanceWidth = account && (
+    <div className="invisible [&>*]:block [&>*]:h-0">
+      <RoundedBalance value={account.total} ticker={account.ticker} />
+      <RoundedBalance value={account.available} ticker={account.ticker} />
+      <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
+      <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
+    </div>
+  )
+
   return (
     <StyledDescriptionList
       className="grid-cols-[160px_auto] sm:grid-cols-[200px_auto]"
@@ -179,25 +189,29 @@ export const ValidatorDetailsView: FC<{
           {account && (
             <>
               <dd>
-                <div className="w-full max-w-[25ex] text-right">
+                <div className="text-right">
+                  {longestBalanceWidth}
                   <RoundedBalance value={account.total} ticker={account.ticker} />
                 </div>
               </dd>
               <StyledListTitle>{t('account.available')}</StyledListTitle>
               <dd>
-                <div className="w-full max-w-[25ex] text-right">
+                <div className="text-right">
+                  {longestBalanceWidth}
                   <RoundedBalance value={account.available} ticker={account.ticker} />
                 </div>
               </dd>
               <StyledListTitle>{t('common.staked')}</StyledListTitle>
               <dd>
-                <div className="w-full max-w-[25ex] text-right">
+                <div className="text-right">
+                  {longestBalanceWidth}
                   <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
                 </div>
               </dd>
               <StyledListTitle>{t('account.debonding')}</StyledListTitle>
               <dd>
-                <div className="w-full max-w-[25ex] text-right">
+                <div className="text-right">
+                  {longestBalanceWidth}
                   <RoundedBalance value={account.debonding_delegations_balance} ticker={account.ticker} />
                 </div>
               </dd>

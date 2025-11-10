@@ -76,12 +76,14 @@ export const RoundedBalance: FC<RoundedBalanceProps> = ({
 
   if (number.isEqualTo(roundedNumber)) {
     return (
-      <Trans
-        t={t}
-        i18nKey="common.valueInTokenWithLink"
-        values={preciseValueFormat}
-        components={{ TickerLink: tickerLink }}
-      />
+      <span>
+        <Trans
+          t={t}
+          i18nKey="common.valueInTokenWithLink"
+          values={preciseValueFormat}
+          components={{ TickerLink: tickerLink }}
+        />
+      </span>
     )
   }
 
