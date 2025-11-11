@@ -12,6 +12,33 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.25.0 (2025-11-11)
+
+### Features
+
+- Show runtime account delegations
+  ([#2288](https://github.com/oasisprotocol/explorer/issues/2288))
+
+- Show balances of same account on other paratimes/consensus
+  ([#2311](https://github.com/oasisprotocol/explorer/issues/2311))
+
+### Bug Fixes and Improvements
+
+- Show "Balance: 0 ROSE" on Sapphire instead of "Balance: n/a"
+  ([#2311](https://github.com/oasisprotocol/explorer/issues/2311))
+
+- Paratime card layout update on Consensus dashboard.
+  ([#2319](https://github.com/oasisprotocol/explorer/issues/2319))
+
+### Internal Changes
+
+- Update dependencies
+  ([#2089](https://github.com/oasisprotocol/explorer/issues/2089),
+   [#2310](https://github.com/oasisprotocol/explorer/issues/2310))
+
+- Fix renovate by enabling cloneSubmodules option
+  ([#2309](https://github.com/oasisprotocol/explorer/issues/2309))
+
 ## 1.24.3 (2025-11-04)
 
 ### Bug Fixes and Improvements
