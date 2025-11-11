@@ -47,6 +47,7 @@ import { useRuntimeEventTypeParam } from '../../hooks/useCommonParams'
 import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEventTypeFilter'
 import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -92,24 +93,26 @@ export const RuntimeTransactionDetailPage: FC = () => {
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
         <LinkableDiv id={transactionEventsContainerId}>
-          <SubPageCard
-            title={t('common.events')}
-            action={
-              !isMobile && (
-                <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-              )
-            }
-          >
-            {isMobile && (
-              <>
-                <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
-                <CardDivider />
-              </>
-            )}
-            <ErrorBoundary light>
-              <RuntimeTransactionEvents transaction={transaction} eventType={eventType} />
-            </ErrorBoundary>
-          </SubPageCard>
+          <AdvancedField>
+            <SubPageCard
+              title={t('common.events')}
+              action={
+                !isMobile && (
+                  <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+                )
+              }
+            >
+              {isMobile && (
+                <>
+                  <RuntimeEventTypeFilter layer={scope.layer} value={eventType} setValue={setEventType} />
+                  <CardDivider />
+                </>
+              )}
+              <ErrorBoundary light>
+                <RuntimeTransactionEvents transaction={transaction} eventType={eventType} />
+              </ErrorBoundary>
+            </SubPageCard>
+          </AdvancedField>
         </LinkableDiv>
       )}
     </PageLayout>
@@ -337,7 +340,7 @@ export const RuntimeTransactionDetailView: FC<{
           </dd>
 
           {transaction.fee_proxy_module && transaction.fee_proxy_id && (
-            <>
+            <AdvancedField>
               <dt>{t('common.feeProxy')}</dt>
               <dd>
                 {transaction.fee_proxy_module === 'rofl' ? (
@@ -365,36 +368,40 @@ export const RuntimeTransactionDetailView: FC<{
                   </>
                 )}
               </dd>
-            </>
+            </AdvancedField>
           )}
 
           {gasPrice && (
-            <>
+            <AdvancedField>
               <dt>{t('common.gasPrice')}</dt>
               <dd>
                 <RoundedBalance value={convertToNano(gasPrice)} ticker={`n${transaction.fee_symbol}`} />
               </dd>
-            </>
+            </AdvancedField>
           )}
 
-          <dt>{t('common.gasUsed')}</dt>
-          <dd>{transaction.gas_used.toLocaleString()}</dd>
+          <AdvancedField>
+            <dt>{t('common.gasUsed')}</dt>
+            <dd>{transaction.gas_used.toLocaleString()}</dd>
+          </AdvancedField>
 
-          <dt>{t('common.gasLimit')}</dt>
-          <dd>{transaction.gas_limit.toLocaleString()}</dd>
+          <AdvancedField>
+            <dt>{t('common.gasLimit')}</dt>
+            <dd>{transaction.gas_limit.toLocaleString()}</dd>
+          </AdvancedField>
 
-          <dt>{t('common.nonce')}</dt>
-          <dd>
-            <>{transaction.signers[0].nonce.toLocaleString()}</>
-          </dd>
+          <AdvancedField>
+            <dt>{t('common.nonce')}</dt>
+            <dd>{transaction.signers[0].nonce.toLocaleString()}</dd>
+          </AdvancedField>
 
           {!!transaction.body?.data && (
-            <>
+            <AdvancedField>
               <dt>{t('transaction.rawData')}</dt>
               <dd>
                 <LongDataDisplay data={base64ToHex(transaction.body.data)} />
               </dd>
-            </>
+            </AdvancedField>
           )}
 
           {isRoflTransaction(transaction.method) && !!transaction.body && (
@@ -416,7 +423,7 @@ export const RuntimeTransactionDetailView: FC<{
           )}
 
           {envelope && (
-            <>
+            <AdvancedField>
               {envelope.public_key !== undefined && (
                 <>
                   <dt>{t('transactions.encryption.publicKey')}</dt>
@@ -461,7 +468,7 @@ export const RuntimeTransactionDetailView: FC<{
                   </dd>
                 </>
               )}
-            </>
+            </AdvancedField>
           )}
         </StyledDescriptionList>
       )}

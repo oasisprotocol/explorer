@@ -28,6 +28,7 @@ import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/ConsensusEventTypeFilter'
 import { CardDivider } from '../../components/Divider'
 import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
+import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
 
 const StyledDescriptionDetails = styled('dd')({
   '&&': { padding: 0 },
@@ -60,22 +61,32 @@ export const ConsensusTransactionDetailPage: FC = () => {
         />
       </SubPageCard>
       {transaction && (
-        <SubPageCard
-          title={t('common.events')}
-          action={
-            !isMobile && (
-              <ConsensusEventTypeFilter layer={transaction.layer} value={eventType} setValue={setEventType} />
-            )
-          }
-        >
-          {isMobile && (
-            <>
-              <ConsensusEventTypeFilter layer={transaction.layer} value={eventType} setValue={setEventType} />
-              <CardDivider />
-            </>
-          )}
-          <ConsensusTransactionEvents transaction={transaction} eventType={eventType} />
-        </SubPageCard>
+        <AdvancedField>
+          <SubPageCard
+            title={t('common.events')}
+            action={
+              !isMobile && (
+                <ConsensusEventTypeFilter
+                  layer={transaction.layer}
+                  value={eventType}
+                  setValue={setEventType}
+                />
+              )
+            }
+          >
+            {isMobile && (
+              <>
+                <ConsensusEventTypeFilter
+                  layer={transaction.layer}
+                  value={eventType}
+                  setValue={setEventType}
+                />
+                <CardDivider />
+              </>
+            )}
+            <ConsensusTransactionEvents transaction={transaction} eventType={eventType} />
+          </SubPageCard>
+        </AdvancedField>
       )}
     </PageLayout>
   )
@@ -190,23 +201,26 @@ export const ConsensusTransactionDetailView: FC<{
             <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
           </dd>
 
-          <dt>{t('common.gasUsed')}</dt>
-          <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
+          <AdvancedField>
+            <dt>{t('common.gasUsed')}</dt>
+            <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
+          </AdvancedField>
 
           {transaction.gas_limit && (
-            <>
+            <AdvancedField>
               <dt>{t('common.gasLimit')}</dt>
               <dd>
                 {t('common.valuePair', {
                   value: transaction.gas_limit,
                 })}
               </dd>
-            </>
+            </AdvancedField>
           )}
-          <dt>{t('common.nonce')}</dt>
-          <dd>
-            <>{transaction.nonce.toLocaleString()}</>
-          </dd>
+
+          <AdvancedField>
+            <dt>{t('common.nonce')}</dt>
+            <dd>{transaction.nonce.toLocaleString()}</dd>
+          </AdvancedField>
         </>
       )}
     </StyledDescriptionList>

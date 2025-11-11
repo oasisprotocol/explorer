@@ -41,6 +41,7 @@ import { Network } from '../../../types/network'
 import { HighlightedText } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 import { DashboardDivider } from '../../components/Divider'
+import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
 
 export const StyledListTitle = styled('dt')(({ theme }) => ({
   marginLeft: theme.spacing(4),
@@ -86,7 +87,9 @@ export const ValidatorDetailsPage: FC = () => {
           <SignedBlocks isLoading={isLoading} isFetched={isFetched} signedBlocks={validator?.signed_blocks} />
         </div>
       </div>
-      <ProposedBlocks scope={scope} validator={validator} />
+      <AdvancedField>
+        <ProposedBlocks scope={scope} validator={validator} />
+      </AdvancedField>
       <RouterTabs
         tabs={[
           { label: t('common.transactions'), to: transactionsLink },
@@ -248,33 +251,36 @@ export const ValidatorDetailsView: FC<{
           <dd>
             <ValidatorCommission commission={validator.current_rate} />
           </dd>
-          <dt>{t('validator.commissionBounds')}</dt>
-          <dd>
-            {validator.current_commission_bound ? (
+
+          <AdvancedField>
+            <dt>{t('validator.commissionBounds')}</dt>
+            <dd>
+              {validator.current_commission_bound ? (
+                <>
+                  <ValidatorCommission commission={validator.current_commission_bound.lower} />~
+                  <ValidatorCommission commission={validator.current_commission_bound.upper} />
+                </>
+              ) : (
+                <span>{t('validator.boundsNotSet')}</span>
+              )}
+            </dd>
+            <dt>{t('validator.entityId')}</dt>
+            <dd>{validator.entity_id}</dd>
+            <dt>{t('common.nodeId')}</dt>
+            <dd>{validator.node_id}</dd>
+            {validator.node_id && (
               <>
-                <ValidatorCommission commission={validator.current_commission_bound.lower} />~
-                <ValidatorCommission commission={validator.current_commission_bound.upper} />
+                <dt>{t('common.nodeAddress')}</dt>
+                <dd>
+                  <AccountLink
+                    alwaysTrimOnTablet
+                    scope={{ network, layer: 'consensus' }}
+                    address={getOasisAddressFromBase64PublicKey(validator.node_id)}
+                  />
+                </dd>
               </>
-            ) : (
-              <span>{t('validator.boundsNotSet')}</span>
             )}
-          </dd>
-          <dt>{t('validator.entityId')}</dt>
-          <dd>{validator.entity_id}</dd>
-          <dt>{t('common.nodeId')}</dt>
-          <dd>{validator.node_id}</dd>
-          {validator.node_id && (
-            <>
-              <dt>{t('common.nodeAddress')}</dt>
-              <dd>
-                <AccountLink
-                  alwaysTrimOnTablet
-                  scope={{ network, layer: 'consensus' }}
-                  address={getOasisAddressFromBase64PublicKey(validator.node_id)}
-                />
-              </dd>
-            </>
-          )}
+          </AdvancedField>
         </>
       )}
       {!detailsPage && (
