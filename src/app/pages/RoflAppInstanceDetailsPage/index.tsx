@@ -17,6 +17,9 @@ import { CopyToClipboard } from '../../components/CopyToClipboard'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { SimpleJsonCode } from 'app/components/CodeDisplay/SimpleJsonCode'
+import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
+import InfoIcon from '@mui/icons-material/Info'
+import { COLORS } from '../../../styles/theme/colors'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -58,13 +61,27 @@ export const RoflAppInstanceDetailsView: FC<{
 
   return (
     <StyledDescriptionList>
-      <dt>{t('rofl.rakAbbreviation')}</dt>
+      <dt>
+        <div className="flex items-center gap-4">
+          {t('rofl.rakAbbreviation')}
+          <Tooltip title={t('rofl.rakAbbreviationTooltip')}>
+            <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+          </Tooltip>
+        </div>
+      </dt>
       <dd>
         <span>
           {instance.rak} <CopyToClipboard value={instance.rak} />
         </span>
       </dd>
-      <dt>{t('rofl.rekAbbreviation')}</dt>
+      <dt>
+        <div className="flex items-center gap-4">
+          {t('rofl.rekAbbreviation')}
+          <Tooltip title={t('rofl.rekAbbreviationTooltip')}>
+            <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+          </Tooltip>
+        </div>
+      </dt>
       <dd>
         <span>
           {instance.rek} <CopyToClipboard value={instance.rek} />

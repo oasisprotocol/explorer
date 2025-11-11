@@ -148,7 +148,16 @@ export const RoflAppDetailsView: FC<{
           />
         </div>
       </DetailsRow>
-      <DetailsRow title={t('rofl.sekPublicKey')}>
+      <DetailsRow
+        title={
+          <div className="flex items-center gap-4">
+            {t('rofl.sekPublicKey')}
+            <Tooltip title={t('rofl.sekPublicKeyTooltip')}>
+              <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+            </Tooltip>
+          </div>
+        }
+      >
         <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
       </DetailsRow>
       <DetailsRow
