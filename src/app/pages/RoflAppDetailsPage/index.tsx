@@ -129,9 +129,6 @@ export const RoflAppDetailsView: FC<{
       <DetailsRow title={t('rofl.enclaveId')}>
         <Enclaves policy={app.policy} />
       </DetailsRow>
-      <DetailsRow title={t('rofl.sekPublicKey')}>
-        <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
-      </DetailsRow>
       <AdminAccountRow
         address={app.admin_eth ?? app.admin}
         scope={{ network: app.network, layer: app.layer }}
@@ -150,6 +147,18 @@ export const RoflAppDetailsView: FC<{
             groupOp={'or'} // We have an implicit default "or" for toplevel endorsement
           />
         </div>
+      </DetailsRow>
+      <DetailsRow
+        title={
+          <div className="flex items-center gap-4">
+            {t('rofl.sekPublicKey')}
+            <Tooltip title={t('rofl.sekPublicKeyTooltip')}>
+              <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+            </Tooltip>
+          </div>
+        }
+      >
+        <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
       </DetailsRow>
       <DetailsRow
         title={
