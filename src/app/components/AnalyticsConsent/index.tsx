@@ -64,7 +64,7 @@ export const AnalyticsConsentProvider = (props: { children: React.ReactNode }) =
     >
       {props.children}
       {/* Theme is needed because AnalyticsConsentProvider is outside network-themed routes */}
-      <ThemeByScope isRootTheme={false} network={'mainnet'}>
+      <ThemeByScope network={'mainnet'}>
         <AnalyticsConsentView
           isOpen={hasAccepted === 'not-chosen'}
           onAccept={async () => {

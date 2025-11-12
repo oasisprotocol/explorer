@@ -9,7 +9,7 @@ import { LayoutDivider } from '../../components/Divider'
 export const RoutingErrorPage: FC = () => {
   const scope = useScopeParam()
   return (
-    <ThemeByScope isRootTheme={true} network={scope?.network ?? 'mainnet'} layer={scope?.layer}>
+    <ThemeByScope network={scope?.network ?? 'mainnet'} layer={scope?.layer}>
       <PageLayout>
         <LayoutDivider />
         <ErrorDisplay error={useRouteError()} />
