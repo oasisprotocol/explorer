@@ -48,6 +48,7 @@ import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEv
 import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
+import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvancedFields'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
@@ -472,6 +473,7 @@ export const RuntimeTransactionDetailView: FC<{
           )}
         </StyledDescriptionList>
       )}
+      <ToggleAdvancedFields />
     </>
   )
 }

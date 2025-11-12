@@ -28,6 +28,7 @@ import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/Conse
 import { CardDivider } from '../../components/Divider'
 import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
+import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvancedFields'
 
 export const ConsensusTransactionDetailPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -107,117 +108,121 @@ export const ConsensusTransactionDetailView: FC<{
   const tokenPriceInfo = tokenPrices?.[transaction.ticker]
 
   return (
-    <StyledDescriptionList standalone={!detailsPage} highlight={transaction.markAsNew}>
-      {showLayer && (
-        <>
-          <dt>{t('common.paratime')}</dt>
-          <dd>
-            <DashboardLink scope={transaction} />
-          </dd>
-        </>
-      )}
-      <dt>{t('common.hash')}</dt>
-      <dd>
-        <TransactionLink scope={transaction} hash={transaction.hash} />
-        <CopyToClipboard value={transaction.hash} />
-      </dd>
-      <dt>{t('common.status')}</dt>
-      <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
-        <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
-      </dd>
-      <dt>{t('common.type')}</dt>
-      <dd className="p-0!">
-        <ConsensusTransactionMethod method={transaction.method} />
-      </dd>
-      <dt>{t('common.timestamp')}</dt>
-      <dd>{formattedTimestamp}</dd>
-      <dt>{t('common.height')}</dt>
-      <dd>
-        <BlockLink scope={transaction} height={transaction.block} />
-        <CopyToClipboard value={transaction.block.toString()} />
-      </dd>
-      <dt>{t('common.from')}</dt>
-      <dd>
-        <div className="inline-flex items-center">
-          <ConsensusAccountLink
-            network={transaction.network}
-            address={transaction.sender}
-            alwaysTrim={false}
-          />
-          <CopyToClipboard value={transaction.sender} />
-        </div>
-      </dd>
-      {transaction.to && (
-        <>
-          <dt>{t('common.to')}</dt>
-          <dd>
-            <div className="inline-flex items-center">
-              <ConsensusAccountLink
-                network={transaction.network}
-                address={transaction.to}
-                alwaysTrim={false}
-              />
-              <CopyToClipboard value={transaction.to} />
-            </div>
-          </dd>
-        </>
-      )}
-      {transaction.amount && (
-        <>
-          <dt>{t('common.amount')}</dt>
-          <dd>
-            <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />
-          </dd>
-        </>
-      )}
-      {detailsPage && (
-        <>
-          {transaction.amount &&
-            !!tokenPriceInfo &&
-            !tokenPriceInfo.isLoading &&
-            (tokenPriceInfo.hasFailed || (!tokenPriceInfo.isFree && tokenPriceInfo.price !== undefined)) && (
+    <>
+      <StyledDescriptionList standalone={!detailsPage} highlight={transaction.markAsNew}>
+        {showLayer && (
+          <>
+            <dt>{t('common.paratime')}</dt>
+            <dd>
+              <DashboardLink scope={transaction} />
+            </dd>
+          </>
+        )}
+        <dt>{t('common.hash')}</dt>
+        <dd>
+          <TransactionLink scope={transaction} hash={transaction.hash} />
+          <CopyToClipboard value={transaction.hash} />
+        </dd>
+        <dt>{t('common.status')}</dt>
+        <dd style={{ flexWrap: 'wrap', gap: '10px' }}>
+          <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
+        </dd>
+        <dt>{t('common.type')}</dt>
+        <dd className="p-0!">
+          <ConsensusTransactionMethod method={transaction.method} />
+        </dd>
+        <dt>{t('common.timestamp')}</dt>
+        <dd>{formattedTimestamp}</dd>
+        <dt>{t('common.height')}</dt>
+        <dd>
+          <BlockLink scope={transaction} height={transaction.block} />
+          <CopyToClipboard value={transaction.block.toString()} />
+        </dd>
+        <dt>{t('common.from')}</dt>
+        <dd>
+          <div className="inline-flex items-center">
+            <ConsensusAccountLink
+              network={transaction.network}
+              address={transaction.sender}
+              alwaysTrim={false}
+            />
+            <CopyToClipboard value={transaction.sender} />
+          </div>
+        </dd>
+        {transaction.to && (
+          <>
+            <dt>{t('common.to')}</dt>
+            <dd>
+              <div className="inline-flex items-center">
+                <ConsensusAccountLink
+                  network={transaction.network}
+                  address={transaction.to}
+                  alwaysTrim={false}
+                />
+                <CopyToClipboard value={transaction.to} />
+              </div>
+            </dd>
+          </>
+        )}
+        {transaction.amount && (
+          <>
+            <dt>{t('common.amount')}</dt>
+            <dd>
+              <RoundedBalance value={transaction.amount} ticker={transaction.ticker} />
+            </dd>
+          </>
+        )}
+        {detailsPage && (
+          <>
+            {transaction.amount &&
+              !!tokenPriceInfo &&
+              !tokenPriceInfo.isLoading &&
+              (tokenPriceInfo.hasFailed ||
+                (!tokenPriceInfo.isFree && tokenPriceInfo.price !== undefined)) && (
+                <>
+                  <dt>{t('currentFiatValue.title')}</dt>
+                  <dd>
+                    <CurrentFiatValue amount={transaction.amount} {...tokenPriceInfo} />
+                  </dd>
+                </>
+              )}
+            {transaction.body?.shares && (
               <>
-                <dt>{t('currentFiatValue.title')}</dt>
+                <dt>{t('common.shares')}</dt>
                 <dd>
-                  <CurrentFiatValue amount={transaction.amount} {...tokenPriceInfo} />
+                  <RoundedBalance compactLargeNumbers value={transaction.body?.shares} />
                 </dd>
               </>
             )}
-          {transaction.body?.shares && (
-            <>
-              <dt>{t('common.shares')}</dt>
-              <dd>
-                <RoundedBalance compactLargeNumbers value={transaction.body?.shares} />
-              </dd>
-            </>
-          )}
-          <dt>{t('common.fee')}</dt>
-          <dd>
-            <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
-          </dd>
+            <dt>{t('common.fee')}</dt>
+            <dd>
+              <RoundedBalance value={transaction.fee} ticker={transaction.ticker} />
+            </dd>
 
-          <AdvancedField>
-            <dt>{t('common.gasUsed')}</dt>
-            <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
-          </AdvancedField>
-
-          {transaction.gas_limit && (
             <AdvancedField>
-              <dt>{t('common.gasLimit')}</dt>
-              <dd>
-                {t('common.valuePair', {
-                  value: transaction.gas_limit,
-                })}
-              </dd>
+              <dt>{t('common.gasUsed')}</dt>
+              <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
             </AdvancedField>
-          )}
 
-          <AdvancedField>
-            <dt>{t('common.nonce')}</dt>
-            <dd>{transaction.nonce.toLocaleString()}</dd>
-          </AdvancedField>
-        </>
-      )}
-    </StyledDescriptionList>
+            {transaction.gas_limit && (
+              <AdvancedField>
+                <dt>{t('common.gasLimit')}</dt>
+                <dd>
+                  {t('common.valuePair', {
+                    value: transaction.gas_limit,
+                  })}
+                </dd>
+              </AdvancedField>
+            )}
+
+            <AdvancedField>
+              <dt>{t('common.nonce')}</dt>
+              <dd>{transaction.nonce.toLocaleString()}</dd>
+            </AdvancedField>
+          </>
+        )}
+      </StyledDescriptionList>
+      <ToggleAdvancedFields />
+    </>
   )
 }

@@ -36,6 +36,7 @@ import { WithHoverHighlighting } from '../../components/HoverHighlightingContext
 import { HighlightedText } from '../../components/HighlightedText'
 import { RoflAppLoaderData } from '../../utils/route-utils'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
+import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvancedFields'
 
 export const RoflAppDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -119,69 +120,72 @@ export const RoflAppDetailsView: FC<{
   if (!app) return <></>
 
   return (
-    <StyledDescriptionList>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} />
-      <VersionRow version={app.metadata['net.oasis.rofl.version']} />
-      <TeeRow policy={app.policy} />
-      <DetailsRow title={t('rofl.appId')}>
-        <WithHoverHighlighting address={app.id}>
-          <span className="font-medium">{app.id}</span>
-        </WithHoverHighlighting>
-        <CopyToClipboard value={app.id} />
-      </DetailsRow>
-      <AdvancedField>
-        <DetailsRow title={t('rofl.enclaveId')}>
-          <Enclaves policy={app.policy} />
+    <>
+      <StyledDescriptionList>
+        <NameRow name={app.metadata['net.oasis.rofl.name']} />
+        <VersionRow version={app.metadata['net.oasis.rofl.version']} />
+        <TeeRow policy={app.policy} />
+        <DetailsRow title={t('rofl.appId')}>
+          <WithHoverHighlighting address={app.id}>
+            <span className="font-medium">{app.id}</span>
+          </WithHoverHighlighting>
+          <CopyToClipboard value={app.id} />
         </DetailsRow>
-        <AdminAccountRow
-          address={app.admin_eth ?? app.admin}
+        <AdvancedField>
+          <DetailsRow title={t('rofl.enclaveId')}>
+            <Enclaves policy={app.policy} />
+          </DetailsRow>
+          <AdminAccountRow
+            address={app.admin_eth ?? app.admin}
+            scope={{ network: app.network, layer: app.layer }}
+          />
+          <StakedAmountRow stake={app.stake} ticker={app.ticker} />
+        </AdvancedField>
+        <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
+        <AdvancedField>
+          <ActiveInstancesNumberRow number={app.num_active_instances} />
+        </AdvancedField>
+        <LastActivityRow
           scope={{ network: app.network, layer: app.layer }}
+          transaction={app.last_activity_tx}
         />
-        <StakedAmountRow stake={app.stake} ticker={app.ticker} />
-      </AdvancedField>
-      <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
-      <AdvancedField>
-        <ActiveInstancesNumberRow number={app.num_active_instances} />
-      </AdvancedField>
-      <LastActivityRow
-        scope={{ network: app.network, layer: app.layer }}
-        transaction={app.last_activity_tx}
-      />
-      <AdvancedField>
-        <DetailsRow title={t('rofl.endorsement')}>
-          <div className="flex flex-1 flex-col">
-            <Endorsement
-              endorsements={app.policy.endorsements}
-              groupOp={'or'} // We have an implicit default "or" for toplevel endorsement
-            />
-          </div>
-        </DetailsRow>
-        <DetailsRow
-          title={
-            <div className="flex items-center gap-4">
-              {t('rofl.sekPublicKey')}
-              <Tooltip title={t('rofl.sekPublicKeyTooltip')}>
-                <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
-              </Tooltip>
+        <AdvancedField>
+          <DetailsRow title={t('rofl.endorsement')}>
+            <div className="flex flex-1 flex-col">
+              <Endorsement
+                endorsements={app.policy.endorsements}
+                groupOp={'or'} // We have an implicit default "or" for toplevel endorsement
+              />
             </div>
-          }
-        >
-          <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
-        </DetailsRow>
-        <DetailsRow
-          title={
-            <div className="flex items-center gap-4">
-              {t('rofl.secrets')}
-              <Tooltip title={t('rofl.secretsTooltip')}>
-                <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
-              </Tooltip>
-            </div>
-          }
-        >
-          <Secrets secrets={app.secrets} />
-        </DetailsRow>
-      </AdvancedField>
-    </StyledDescriptionList>
+          </DetailsRow>
+          <DetailsRow
+            title={
+              <div className="flex items-center gap-4">
+                {t('rofl.sekPublicKey')}
+                <Tooltip title={t('rofl.sekPublicKeyTooltip')}>
+                  <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+                </Tooltip>
+              </div>
+            }
+          >
+            <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
+          </DetailsRow>
+          <DetailsRow
+            title={
+              <div className="flex items-center gap-4">
+                {t('rofl.secrets')}
+                <Tooltip title={t('rofl.secretsTooltip')}>
+                  <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+                </Tooltip>
+              </div>
+            }
+          >
+            <Secrets secrets={app.secrets} />
+          </DetailsRow>
+        </AdvancedField>
+      </StyledDescriptionList>
+      <ToggleAdvancedFields />
+    </>
   )
 }
 
