@@ -12,6 +12,13 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.25.1 (2025-11-12)
+
+### Internal Changes
+
+- Update Oasis UI Library dependency
+  ([#2336](https://github.com/oasisprotocol/explorer/issues/2336))
+
 ## 1.25.0 (2025-11-11)
 
 ### Features
