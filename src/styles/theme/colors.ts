@@ -27,7 +27,6 @@ export const COLORS = {
   linen: '#fae8e8',
   platinum: '#e2e2e2',
   white: '#ffffff',
-  spaceCadet: '#0f0f5f',
   disabledPrimaryBackground: '#acadb0',
   disabledPrimaryText: '#d5d6d7',
   errorIndicatorBackground: '#d44c4c',

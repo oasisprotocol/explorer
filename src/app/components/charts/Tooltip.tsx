@@ -1,5 +1,4 @@
 import { TooltipProps } from 'recharts'
-import { COLORS } from 'styles/theme/colors'
 
 export type Formatters = {
   formatters?: {
@@ -26,14 +25,11 @@ export const TooltipContent = ({
   const labelKey = dataLabelKey || Object.keys(rest)[0]
 
   return (
-    <div
-      className="inline-flex flex-col px-5 py-3 shadow-lg rounded-lg text-white text-center"
-      style={{ backgroundColor: COLORS.spaceCadet }}
-    >
-      <span className="text-xs">
+    <div className="inline-flex flex-col rounded-md px-3 py-1.5 text-pretty bg-popover border text-popover-foreground text-sm shadow-md">
+      <span>
         {formatters?.label ? formatters.label(payload[0].payload[labelKey]) : payload[0].payload[labelKey]}
       </span>
-      <span className="text-xs font-semibold">
+      <span className="font-semibold">
         {formatters?.data ? formatters.data(payload[0].value!, payload[0].payload.payload) : payload[0].value}
       </span>
     </div>
