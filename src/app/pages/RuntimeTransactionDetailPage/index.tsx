@@ -287,7 +287,7 @@ export const RuntimeTransactionDetailView: FC<{
                   {(totalTransfers ?? 0) > transfers.length && (
                     <Link asChild className="font-medium">
                       <RouterLink
-                        to={`${RouteUtils.getTransactionRoute(transaction, transaction.hash)}#${transactionEventsContainerId}`}
+                        to={`${RouteUtils.getTransactionRoute(transaction, transaction.eth_hash ?? transaction.hash)}#${transactionEventsContainerId}`}
                       >
                         {t('common.seeMore')}
                       </RouterLink>
