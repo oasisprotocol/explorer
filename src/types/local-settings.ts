@@ -9,10 +9,12 @@ export interface LocalSettings {
   ageHeaderType: TableAgeType
   nodeHeaderType: NodeDisplayType
   preferredScope: SearchScope | undefined
+  showAdvancedFields: boolean
 }
 
 export const defaultLocalSettings: LocalSettings = {
   ageHeaderType: TableAgeType.Distance,
   nodeHeaderType: NodeDisplayType.Id,
   preferredScope: undefined,
+  showAdvancedFields: false,
 }

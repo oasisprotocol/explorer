@@ -34,6 +34,10 @@
     "title": "Active Accounts",
     "tooltip": "{{value, number}} accounts"
   },
+  "advancedFields": {
+    "hideAdvancedFields": "Hide advanced fields",
+    "showAdvancedFields": "Show advanced fields"
+  },
   "analyticsConsent": {
     "privacyPolicy": "Privacy Policy",
     "settings": "Privacy settings",
