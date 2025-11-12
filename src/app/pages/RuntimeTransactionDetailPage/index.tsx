@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -53,6 +53,7 @@ import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvan
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const location = useLocation()
 
   const scope = useRuntimeScope()
   const hash = useParams().hash!
@@ -94,7 +95,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
         <LinkableDiv id={transactionEventsContainerId}>
-          <AdvancedField>
+          <AdvancedField alwaysVisible={location.hash === `#${transactionEventsContainerId}`}>
             <SubPageCard
               title={t('common.events')}
               action={
