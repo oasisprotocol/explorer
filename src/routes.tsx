@@ -80,7 +80,7 @@ import { RoflAppInstanceRakTransactionsCard } from 'app/pages/RoflAppInstanceDet
 const ScopeSpecificPart = () => {
   const { network, layer } = useRequiredScopeParam()
   return (
-    <ThemeByScope isRootTheme={true} network={network} layer={layer}>
+    <ThemeByScope network={network} layer={layer}>
       <Outlet />
     </ThemeByScope>
   )

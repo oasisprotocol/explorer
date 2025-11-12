@@ -88,7 +88,7 @@ export const HomePage: FC = () => {
               </Button>
             )}
           </div>
-          <ThemeByScope isRootTheme={false} network={network}>
+          <ThemeByScope network={network}>
             <div className="z-0">
               <ParaTimeSelector
                 step={step}
