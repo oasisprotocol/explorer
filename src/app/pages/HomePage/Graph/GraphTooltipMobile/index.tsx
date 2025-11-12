@@ -105,7 +105,7 @@ interface GraphTooltipHeaderProps {
 
 const GraphTooltipHeader: FC<GraphTooltipHeaderProps> = ({ disabled, network, area }) => {
   const { t } = useTranslation()
-  const icons = getNetworkIcons({ size: 38 })
+  const icons = getNetworkIcons({ className: 'h-9 w-9' })
 
   return (
     <div
