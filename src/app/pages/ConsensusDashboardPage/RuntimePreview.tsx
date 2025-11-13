@@ -131,7 +131,7 @@ const RuntimePreview: FC<RuntimePreviewProps> = ({
         <dd className="flex justify-end py-1">
           <div>
             {runtimeStatus === 'stable' && <Badge variant="success">{t('common.online')}</Badge>}
-            {runtimeStatus === 'outdated' && <Badge variant="error">{t('paratimes.outdated')}</Badge>}
+            {runtimeStatus === 'outdated' && <Badge variant="error">{t('common.outdated')}</Badge>}
           </div>
         </dd>
         <dt className="flex items-start py-1">{t('paratimes.blockNumber')}</dt>
