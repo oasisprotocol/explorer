@@ -14,7 +14,6 @@ import {
   isOnMainnet,
 } from '../../../types/network'
 import { HideMoreResults, ShowMoreResults } from './ShowMoreResults'
-import { getThemeForScope } from '../../../styles/theme'
 import { orderByLayer } from '../../../types/layers'
 import { useRedirectIfSingleResult } from './useRedirectIfSingleResult'
 import { SearchParams } from '../../components/Search/search-utils'
@@ -47,7 +46,6 @@ export const GlobalSearchResultsView: FC<{
   }
 
   const otherNetworks = RouteUtils.getEnabledNetworks().filter(isNotMainnet)
-  const notificationTheme = getThemeForScope('testnet')
   const mainnetResults = searchResults.filter(isOnMainnet).sort(orderByLayer)
   const otherResults = searchResults.filter(isNotOnMainnet).sort(orderByLayer)
 
@@ -66,7 +64,7 @@ export const GlobalSearchResultsView: FC<{
       {otherResults.length !== 0 &&
         (othersOpen ? (
           <>
-            <HideMoreResults theme={notificationTheme} onHide={() => setOthersOpen(false)} />
+            <HideMoreResults onHide={() => setOthersOpen(false)} />
             {otherNetworks.map(net => (
               <SearchResultsList
                 key={net}
@@ -79,7 +77,6 @@ export const GlobalSearchResultsView: FC<{
           </>
         ) : (
           <ShowMoreResults
-            theme={notificationTheme}
             hasWantedResults={!!mainnetResults.length}
             otherResultsCount={otherResults.length}
             onShow={() => setOthersOpen(true)}

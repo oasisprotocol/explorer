@@ -16,7 +16,7 @@ export const ResultListFrame: FC<{ children: React.ReactNode; networkForTheme: s
     <div
       className={cn(
         expectedTheme !== networkForTheme &&
-          '[&_>_div_>_[data-slot="card"]]:rounded-none [&_>_div_>_[data-slot="card"]]:border-solid [&_>_div_>_[data-slot="card"]]:border-theme-layout-accent [&_>_div_>_[data-slot="card"]]:border-y-[10px] [&_>_div_>_[data-slot="card"]]:border-x-[1px]',
+          '[&_>_div_>_[data-slot="card"]]:rounded-none [&_>_div_>_[data-slot="card"]]:border-solid [&_>_div_>_[data-slot="card"]]:border-theme-layout-accent [&_>_div_>_[data-slot="card"]]:border-y-[10px] [&_>_div_>_[data-slot="card"]]:border-x',
         networkForTheme,
       )}
     >
