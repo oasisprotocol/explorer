@@ -1,6 +1,3 @@
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
-import { backgroundColorAnimation } from '../../../styles/theme/animations'
 import { FC, HTMLAttributes } from 'react'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
@@ -18,57 +15,28 @@ export const InlineDescriptionList: FC<InlineDescriptionListProps> = ({ classNam
   )
 }
 
-interface StyledDescriptionListProps {
+interface StyledDescriptionListProps extends HTMLAttributes<HTMLDListElement> {
   standalone?: boolean
   highlight?: boolean
 }
 
-export const StyledDescriptionList = styled(InlineDescriptionList, {
-  shouldForwardProp: prop => prop !== 'standalone' && prop !== 'highlight',
-})<StyledDescriptionListProps>(({ theme, standalone, highlight }) => ({
-  'dt, dd': {
-    display: 'flex',
-    flexWrap: 'wrap',
-    boxShadow: `0px 1px 0px ${COLORS.grayLight}`,
-    ':last-of-type': {
-      boxShadow: 'none',
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(3, 0),
-    },
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(4, 0),
-    },
-  },
-  dt: {
-    color: COLORS.grayDark,
-    alignItems: 'start',
-  },
-  dd: {
-    overflowWrap: 'anywhere',
-    alignItems: 'center',
-    maxWidth: '100%',
-    overflowX: 'hidden',
-    paddingLeft: '5px', // Needed to fix highlightedAddress being clipped by overflow-x: hidden
-  },
-  ...(standalone && {
-    '&&': {
-      padding: theme.spacing(3, 4),
-      backgroundColor: COLORS.white,
-      marginBottom: theme.spacing(4),
-      borderRadius: '6px',
-    },
-  }),
-  ...(highlight && backgroundColorAnimation),
-}))
+export const StyledDescriptionList: FC<StyledDescriptionListProps> = ({
+  className,
+  standalone,
+  highlight,
+  ...props
+}) => (
+  <dl
+    className={cn(
+      'm-0 grid grid-cols-[100px_auto] sm:grid-cols-[200px_auto] [&_dd]:m-0 [&_dt]:flex [&_dd]:flex [&_dt]:flex-wrap [&_dd]:flex-wrap [&_dt]:items-start [&_dd]:items-center [&_dt]:border-b [&_dd]:border-b border-foreground-muted [&_dt]:py-2 [&_dd]:py-2 sm:[&_dt]:py-4 sm:[&_dd]:py-4 [&_dd]:overflow-hidden [&_dd]:overflow-x-hidden [&_dd]:max-w-full [&_dd]:break-words [&_dd]:pl-1 [&_dd:last-of-type]:border-b-0 [&_dt:last-of-type]:border-b-0',
+      standalone && 'py-2 px-4 mb-4 rounded-md border',
+      highlight && 'animate-[flash_3.5s_ease-in-out_1]',
+      className,
+    )}
+    {...props}
+  />
+)
 
-export const StyledListTitleWithAvatar = styled('dt')(({ theme }) => ({
-  '&&': {
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2, 0),
-    },
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(3, 0),
-    },
-  },
-}))
+export const StyledListTitleWithAvatar: FC<HTMLAttributes<HTMLElement>> = ({ className, ...props }) => (
+  <dt className={cn('py-1! sm:py-2!', className)} {...props} />
+)

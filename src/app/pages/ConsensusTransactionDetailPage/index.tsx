@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { styled } from '@mui/material/styles'
 import { Transaction, useGetConsensusTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
 import { PageLayout } from '../../components/PageLayout'
@@ -29,10 +28,6 @@ import { ConsensusEventTypeFilter } from '../../components/ConsensusEvents/Conse
 import { CardDivider } from '../../components/Divider'
 import { useConsensusEventTypeParam } from '../../hooks/useCommonParams'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
-
-const StyledDescriptionDetails = styled('dd')({
-  '&&': { padding: 0 },
-})
 
 export const ConsensusTransactionDetailPage: FC = () => {
   const { isMobile } = useScreenSize()
@@ -131,9 +126,9 @@ export const ConsensusTransactionDetailView: FC<{
         <StatusIcon success={transaction.success} error={transaction.error} withText={true} />
       </dd>
       <dt>{t('common.type')}</dt>
-      <StyledDescriptionDetails>
+      <dd className="p-0!">
         <ConsensusTransactionMethod method={transaction.method} />
-      </StyledDescriptionDetails>
+      </dd>
       <dt>{t('common.timestamp')}</dt>
       <dd>{formattedTimestamp}</dd>
       <dt>{t('common.height')}</dt>

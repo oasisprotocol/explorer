@@ -5,8 +5,6 @@ import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import { styled } from '@mui/material/styles'
-import { COLORS } from '../../../styles/theme/colors'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { Link as RouterLink } from 'react-router-dom'
@@ -95,20 +93,6 @@ const getDetails = (t: TFunction): Details => ({
     },
   },
 })
-
-export const StyledButton = styled(Button)(({ theme }) => ({
-  height: 30,
-  paddingLeft: 0,
-  marginRight: theme.spacing(3),
-  fontSize: 24,
-  color: COLORS.brandDark,
-  fontWeight: 700,
-  '&&:hover, &&:active, &&:focus-visible': {
-    color: COLORS.brandDark,
-    textDecoration: 'none',
-    borderRadius: 0,
-  },
-}))
 
 type LayerDetailsProps<Scope = SearchScope> = {
   handleConfirm: () => void

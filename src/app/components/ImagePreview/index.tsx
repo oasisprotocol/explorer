@@ -1,22 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@mui/base/Button'
-import { styled } from '@mui/material/styles'
+import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { ImagePreviewDialog } from '@oasisprotocol/ui-library/src/components/dialog'
-
-const StyledThumbnail = styled('img', {
-  shouldForwardProp: prop => prop !== 'maxThumbnailSize',
-})<{ maxThumbnailSize: string }>(({ maxThumbnailSize }) => ({
-  maxWidth: maxThumbnailSize,
-  maxHeight: maxThumbnailSize,
-}))
-
-const StyledButton = styled(Button)({
-  cursor: 'pointer',
-  border: 'none',
-  background: 'none',
-})
-
 type ImagePreviewProps = {
   handlePreviewClose: () => void
   handlePreviewOpen: () => void
@@ -42,9 +27,17 @@ export const ImagePreview: FC<ImagePreviewProps> = ({
   return (
     <>
       <div>
-        <StyledButton onClick={handlePreviewOpen}>
-          <StyledThumbnail onError={onError} src={src} alt={label} maxThumbnailSize={maxThumbnailSize} />
-        </StyledButton>
+        <Button variant="ghost" onClick={handlePreviewOpen} className="p-0 h-auto w-auto">
+          <img
+            onError={onError}
+            src={src}
+            alt={label}
+            style={{
+              maxWidth: maxThumbnailSize,
+              maxHeight: maxThumbnailSize,
+            }}
+          />
+        </Button>
       </div>
       <ImagePreviewDialog open={previewOpen} onClose={handlePreviewClose} src={src} title={title} />
     </>

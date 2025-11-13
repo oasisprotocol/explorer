@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { styled } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
@@ -42,10 +41,6 @@ import { HighlightedText } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 import { DashboardDivider } from '../../components/Divider'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
-
-export const StyledListTitle = styled('dt')(({ theme }) => ({
-  marginLeft: theme.spacing(4),
-}))
 
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -197,21 +192,21 @@ export const ValidatorDetailsView: FC<{
                   <RoundedBalance value={account.total} ticker={account.ticker} />
                 </div>
               </dd>
-              <StyledListTitle>{t('account.available')}</StyledListTitle>
+              <dt className="ml-4">{t('account.available')}</dt>
               <dd>
                 <div className="text-right">
                   {longestBalanceWidth}
                   <RoundedBalance value={account.available} ticker={account.ticker} />
                 </div>
               </dd>
-              <StyledListTitle>{t('common.staked')}</StyledListTitle>
+              <dt className="ml-4">{t('common.staked')}</dt>
               <dd>
                 <div className="text-right">
                   {longestBalanceWidth}
                   <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
                 </div>
               </dd>
-              <StyledListTitle>{t('account.debonding')}</StyledListTitle>
+              <dt className="ml-4">{t('account.debonding')}</dt>
               <dd>
                 <div className="text-right">
                   {longestBalanceWidth}

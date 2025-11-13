@@ -1,5 +1,4 @@
 import { ComponentProps, FC, ReactNode } from 'react'
-import { styled } from '@mui/material/styles'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import {
   Table as BaseTable,
@@ -10,7 +9,6 @@ import {
   TableCell,
 } from '@oasisprotocol/ui-library/src/components/table'
 import { TablePagination, TablePaginationProps } from './TablePagination'
-import { backgroundColorAnimation } from '../../../styles/theme/animations'
 import { CardEmptyState } from '../CardEmptyState'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
@@ -37,12 +35,13 @@ type StyledTableRowProps = ComponentProps<typeof TableRow> & {
   backgroundColor?: string
 }
 
-const StyledTableRow = styled(TableRow, {
-  shouldForwardProp: prop => prop !== 'highlight' && prop !== 'backgroundColor',
-})<StyledTableRowProps>(({ backgroundColor, highlight }) => ({
-  ...(highlight && backgroundColorAnimation),
-  ...(backgroundColor && { backgroundColor }),
-}))
+export const StyledTableRow: FC<StyledTableRowProps> = ({ highlight, backgroundColor, ...props }) => (
+  <TableRow
+    {...props}
+    className={cn(highlight && 'animate-[flash_3s_ease-in-out_1]')}
+    style={backgroundColor ? { backgroundColor } : undefined}
+  />
+)
 
 export enum TableCellAlign {
   Center = 'center',

@@ -5,7 +5,6 @@ import { Account } from '../../../oasis-nexus/api'
 import { TextSkeleton } from '../Skeleton'
 import { StyledDescriptionList, StyledListTitleWithAvatar } from '../StyledDescriptionList'
 import { DashboardLink } from '../../pages/ParatimeDashboardPage/DashboardLink'
-import { styled } from '@mui/material/styles'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { AccountAvatar } from '../AccountAvatar'
 import { AccountSizeBadge } from '../AccountSizeBadge'
@@ -17,10 +16,6 @@ import { RouteUtils } from '../../utils/route-utils'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 import { RoundedBalance } from '../RoundedBalance'
 import { BalancesOnOtherLayers } from './BalancesOnOtherLayers'
-
-export const StyledListTitle = styled('dt')(({ theme }) => ({
-  marginLeft: theme.spacing(4),
-}))
 
 type ConsensusAccountDetailsViewProps = {
   account?: Account
@@ -93,21 +88,21 @@ export const ConsensusAccountDetailsView: FC<ConsensusAccountDetailsViewProps> =
           <RoundedBalance value={account.total} ticker={account.ticker} />
         </div>
       </dd>
-      <StyledListTitle>{t('account.available')}</StyledListTitle>
+      <dt className="ml-4">{t('account.available')}</dt>
       <dd>
         <div className="text-right">
           {longestBalanceWidth}
           <RoundedBalance value={account.available} ticker={account.ticker} />
         </div>
       </dd>
-      <StyledListTitle>{t('common.staked')}</StyledListTitle>
+      <dt className="ml-4">{t('common.staked')}</dt>
       <dd>
         <div className="text-right">
           {longestBalanceWidth}
           <RoundedBalance value={account.delegations_balance} ticker={account.ticker} />
         </div>
       </dd>
-      <StyledListTitle>{t('account.debonding')}</StyledListTitle>
+      <dt className="ml-4">{t('account.debonding')}</dt>
       <dd>
         <div className="text-right">
           {longestBalanceWidth}
