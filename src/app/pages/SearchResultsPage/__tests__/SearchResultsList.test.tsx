@@ -11,6 +11,7 @@ import { SearchResultsList } from '../SearchResultsList'
 import { Ticker } from '../../../../types/ticker'
 
 vi.mock('../../../hooks/useAccountMetadata')
+vi.mock('../../../hooks/useScopeParam')
 
 describe('SearchResultsView', () => {
   beforeEach(() => {

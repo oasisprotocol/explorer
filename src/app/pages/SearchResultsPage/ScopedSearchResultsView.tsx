@@ -1,13 +1,12 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getFilterForNetwork, getNetworkNames, isOnMainnet } from '../../../types/network'
+import { getFilterForNetwork, getNetworkNames } from '../../../types/network'
 import {
   getFilterForScope,
   getNameForScope,
   getInverseFilterForScope,
   SearchScope,
 } from '../../../types/searchScope'
-import { getThemeForScope } from '../../../styles/theme'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchResults } from './hooks'
 import { SearchResultsList } from './SearchResultsList'
@@ -31,7 +30,6 @@ export const ScopedSearchResultsView: FC<{
   const isNotInWantedScope = getInverseFilterForScope(wantedScope)
   const wantedResults = searchResults.filter(isInWantedScope)
   const otherResults = searchResults.filter(isNotInWantedScope)
-  const notificationTheme = getThemeForScope(otherResults.some(isOnMainnet) ? 'mainnet' : 'testnet')
 
   useRedirectIfSingleResult(wantedScope, searchParams, searchResults)
 
@@ -49,7 +47,7 @@ export const ScopedSearchResultsView: FC<{
       )}
       {othersOpen ? (
         <>
-          <HideMoreResults theme={notificationTheme} onHide={() => setOthersOpen(false)} />
+          <HideMoreResults onHide={() => setOthersOpen(false)} />
           {RouteUtils.getEnabledNetworks()
             .filter(net => net !== wantedScope.network)
             .map(net => (
@@ -65,7 +63,6 @@ export const ScopedSearchResultsView: FC<{
       ) : (
         !!otherResults.length && (
           <ShowMoreResults
-            theme={notificationTheme}
             onShow={() => setOthersOpen(true)}
             hasWantedResults={!!wantedResults.length}
             otherResultsCount={otherResults.length}

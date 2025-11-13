@@ -4,7 +4,7 @@ import ZoomOut from '@mui/icons-material/ZoomOut'
 import { Trans, useTranslation } from 'react-i18next'
 import ZoomIn from '@mui/icons-material/ZoomIn'
 
-export const HideMoreResults: FC<{ theme: Theme; onHide: () => void }> = ({ onHide }) => {
+export const HideMoreResults: FC<{ onHide: () => void }> = ({ onHide }) => {
   return (
     <div
       className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5] hover:bg-[#DDDDDE] cursor-pointer"
@@ -19,7 +19,6 @@ export const HideMoreResults: FC<{ theme: Theme; onHide: () => void }> = ({ onHi
 }
 
 export const ShowMoreResults: FC<{
-  theme: Theme
   onShow: () => void
   hasWantedResults: boolean
   otherResultsCount: number

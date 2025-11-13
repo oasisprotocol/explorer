@@ -20,7 +20,6 @@ export const localnetTheme = createTheme(
         secondary: COLORS.localnet,
         primaryBackground: COLORS.localnetLight,
         secondaryBackground: COLORS.white,
-        networkBubbleBorder: COLORS.localnet,
         graphZoomOutText: COLORS.brandDark,
         helpScreenIconColor: COLORS.brandExtraDark,
       },
