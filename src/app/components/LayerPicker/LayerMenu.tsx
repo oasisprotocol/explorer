@@ -1,13 +1,11 @@
 import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { isScopeHidden, mergeNetworksInLayerSelector, RouteUtils } from '../../utils/route-utils'
 import { Network } from '../../../types/network'
 import { orderByLayer } from '../../../types/layers'
-import { useScreenSize } from '../../hooks/useScreensize'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { SearchScope } from '../../../types/searchScope'
 import { MenuItem } from '../LayerPicker/MenuItem'
@@ -20,26 +18,6 @@ type BaseLayerMenuItemProps = {
 const LayerMenuItemCaption: FC<PropsWithChildren> = ({ children }) => (
   <span className="text-[10px] italic text-muted-foreground ml-1">{children}</span>
 )
-
-export const DisabledLayerMenuItem: FC<BaseLayerMenuItemProps> = ({ divider, targetScope }) => {
-  const { isTablet } = useScreenSize()
-  const { t } = useTranslation()
-  const labels = getLayerLabels(t)
-
-  return (
-    <Tooltip title={t('layerPicker.comingSoonTitle')}>
-      {/* Div is needed because we need an element with enabled pointer-events to make Tooltip work */}
-      <div>
-        <MenuItem disabled divider={divider}>
-          <div className="flex-auto">
-            {labels[targetScope.layer]}
-            {isTablet && <LayerMenuItemCaption>{t('layerPicker.comingSoonLabel')}</LayerMenuItemCaption>}
-          </div>
-        </MenuItem>
-      </div>
-    </Tooltip>
-  )
-}
 
 type LayerMenuItemProps = LayerMenuProps &
   BaseLayerMenuItemProps & {
@@ -121,29 +99,19 @@ export const LayerMenu: FC<LayerMenuProps> = ({ selectedNetwork, selectedScope, 
   return (
     <ul role="menu">
       {options.map((option, index) => {
-        if (!option.enabled) {
-          if (selectedNetwork === 'localnet') return null
-          return (
-            <DisabledLayerMenuItem
-              divider={index !== options.length - 1}
-              key={option.scope.network + option.scope.layer}
-              targetScope={option.scope}
-            />
-          )
-        } else {
-          return (
-            <LayerMenuItem
-              divider={index !== options.length - 1}
-              hoveredScope={hoveredScope}
-              key={option.scope.network + option.scope.layer}
-              targetScope={option.scope}
-              selectedScope={selectedScope}
-              selectedNetwork={selectedNetwork}
-              setHoveredScope={setHoveredScope}
-              setSelectedScope={setSelectedScope}
-            />
-          )
-        }
+        if (!option.enabled) return null
+        return (
+          <LayerMenuItem
+            divider={index !== options.length - 1}
+            hoveredScope={hoveredScope}
+            key={option.scope.network + option.scope.layer}
+            targetScope={option.scope}
+            selectedScope={selectedScope}
+            selectedNetwork={selectedNetwork}
+            setHoveredScope={setHoveredScope}
+            setSelectedScope={setSelectedScope}
+          />
+        )
       })}
     </ul>
   )
