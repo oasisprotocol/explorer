@@ -36,6 +36,10 @@
   --color-theme-contrast-main: #000062;
 }
 
+.mobile-card-border-override > div > [data-slot='card'] {
+  @apply rounded-none border-solid border-theme-layout-accent border-y-[10px] border-x;
+}
+
 /* Specific fixes needed during migration to Oasis UI Library */
 
 /* Override MUI styles that are applied globally */
