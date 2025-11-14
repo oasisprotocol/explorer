@@ -77,6 +77,10 @@ declare module './generated/api' {
     layer: Runtime
   }
 
+  export interface RecentBlock {
+    network: Network
+  }
+
   export interface Account {
     network: Network
     layer: 'consensus'
@@ -800,6 +804,31 @@ export const useGetRuntimeBlocks: typeof generated.useGetRuntimeBlocks = (
               return {
                 ...block,
                 layer: runtime,
+                network,
+              }
+            }),
+          }
+        },
+        ...arrayify(options?.request?.transformResponse),
+      ],
+    },
+  })
+}
+
+export const useGetRecentBlocks: typeof generated.useGetRecentBlocks = (network, options) => {
+  return generated.useGetRecentBlocks(network, {
+    ...options,
+    request: {
+      ...options?.request,
+      transformResponse: [
+        ...arrayify(axios.defaults.transformResponse),
+        (data: generated.RecentBlockList, headers, status) => {
+          if (status !== 200) return data
+          return {
+            ...data,
+            blocks: data.blocks.map(block => {
+              return {
+                ...block,
                 network,
               }
             }),

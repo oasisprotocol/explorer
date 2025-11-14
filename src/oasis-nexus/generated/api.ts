@@ -20,6 +20,7 @@ import type {
 } from '@tanstack/react-query';
 
 import getStatusMutator from '../replaceNetworkWithBaseURL';
+import GetRecentBlocksMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusTotalSupplyRawMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusCirculatingSupplyRawMutator from '../replaceNetworkWithBaseURL';
 import GetConsensusBlocksMutator from '../replaceNetworkWithBaseURL';
@@ -71,6 +72,7 @@ import GetRuntimeRoflmarketProvidersMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflmarketProvidersAddressMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflmarketProvidersAddressOffersMutator from '../replaceNetworkWithBaseURL';
 import GetRuntimeRoflmarketProvidersAddressInstancesMutator from '../replaceNetworkWithBaseURL';
+import GetStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsTxVolumeMutator from '../replaceNetworkWithBaseURL';
 import GetLayerStatsActiveAccountsMutator from '../replaceNetworkWithBaseURL';
 export type Layer = typeof Layer[keyof typeof Layer];
@@ -150,6 +152,29 @@ how far behind Nexus is from the chain.
   latest_block_time: string;
   /** The number of milliseconds since Nexus processed the latest block. */
   latest_update_age_ms: number;
+}
+
+export type RecentBlockListAllOf = {
+  blocks: RecentBlock[];
+};
+
+/**
+ * A list of recent blocks from all layers.
+
+ */
+export type RecentBlockList = List & RecentBlockListAllOf;
+
+export interface RecentBlock {
+  /** The layer the block belongs to. */
+  layer: Layer;
+  /** The block height. */
+  height: number;
+  /** The block header hash. */
+  hash: string;
+  /** The second-granular consensus time. */
+  timestamp: string;
+  /** Number of transactions in the block. */
+  num_transactions: number;
 }
 
 export type BlockListAllOf = {
@@ -2830,6 +2855,35 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 window_step_seconds?: number;
 };
 
+export type GetStatsTxVolumeParams = {
+/**
+ * The maximum numbers of items to return.
+
+ * @minimum 1
+ * @maximum 1000
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * The size of windows into which the statistic is grouped, in seconds.
+The backend supports a limited number of window sizes: 300 (5 minutes) and
+86400 (1 day). Requests with other values may be rejected.
+
+ */
+window_size_seconds?: number;
+/**
+ * The size of the step between returned statistic windows, in seconds.
+The backend supports a limited number of step sizes: 300 (5 minutes) and
+86400 (1 day). Requests with other values may be rejected.
+
+ */
+window_step_seconds?: number;
+};
+
 export type GetLayerStatsActiveAccountsParams = {
 /**
  * The maximum numbers of items to return.
@@ -2914,6 +2968,70 @@ export function useGetStatus<TData = Awaited<ReturnType<typeof getStatus>>, TErr
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetStatusQueryOptions(network,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a list of recent blocks across all layers, sorted from most to least recent. Limited to 10 blocks.
+ */
+export const GetRecentBlocks = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+ options?: SecondParameter<typeof GetRecentBlocksMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetRecentBlocksMutator<RecentBlockList>(
+      {url: `/${encodeURIComponent(String(network))}/recent_blocks`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetRecentBlocksQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',) => {
+    return [`/${network}/recent_blocks`] as const;
+    }
+
+    
+export const getGetRecentBlocksQueryOptions = <TData = Awaited<ReturnType<typeof GetRecentBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRecentBlocks>>, TError, TData>, request?: SecondParameter<typeof GetRecentBlocksMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRecentBlocksQueryKey(network);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetRecentBlocks>>> = ({ signal }) => GetRecentBlocks(network, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetRecentBlocks>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetRecentBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof GetRecentBlocks>>>
+export type GetRecentBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+
+/**
+ * @summary Returns a list of recent blocks across all layers, sorted from most to least recent. Limited to 10 blocks.
+ */
+
+export function useGetRecentBlocks<TData = Awaited<ReturnType<typeof GetRecentBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetRecentBlocks>>, TError, TData>, request?: SecondParameter<typeof GetRecentBlocksMutator>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetRecentBlocksQueryOptions(network,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -6610,6 +6728,79 @@ export function useGetRuntimeRoflmarketProvidersAddressInstances<TData = Awaited
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetRuntimeRoflmarketProvidersAddressInstancesQueryOptions(network,runtime,address,params,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Returns a timeline of the transaction volume at the chosen granularity
+combined for all layers.
+
+ */
+export const GetStatsTxVolume = (
+    network: 'mainnet' | 'testnet' | 'localnet',
+    params?: GetStatsTxVolumeParams,
+ options?: SecondParameter<typeof GetStatsTxVolumeMutator>,signal?: AbortSignal
+) => {
+      
+      
+      return GetStatsTxVolumeMutator<TxVolumeList>(
+      {url: `/${encodeURIComponent(String(network))}/stats/tx_volume`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetStatsTxVolumeQueryKey = (network: 'mainnet' | 'testnet' | 'localnet',
+    params?: GetStatsTxVolumeParams,) => {
+    return [`/${network}/stats/tx_volume`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetStatsTxVolumeQueryOptions = <TData = Awaited<ReturnType<typeof GetStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(network: 'mainnet' | 'testnet' | 'localnet',
+    params?: GetStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof GetStatsTxVolumeMutator>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetStatsTxVolumeQueryKey(network,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof GetStatsTxVolume>>> = ({ signal }) => GetStatsTxVolume(network,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(network), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof GetStatsTxVolume>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetStatsTxVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof GetStatsTxVolume>>>
+export type GetStatsTxVolumeQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+
+/**
+ * @summary Returns a timeline of the transaction volume at the chosen granularity
+combined for all layers.
+
+ */
+
+export function useGetStatsTxVolume<TData = Awaited<ReturnType<typeof GetStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ network: 'mainnet' | 'testnet' | 'localnet',
+    params?: GetStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof GetStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof GetStatsTxVolumeMutator>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetStatsTxVolumeQueryOptions(network,params,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
