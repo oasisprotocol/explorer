@@ -41,6 +41,7 @@ import { HighlightedText } from '../../components/HighlightedText'
 import { AdaptiveHighlightedText } from '../../components/HighlightedText/AdaptiveHighlightedText'
 import { DashboardDivider } from '../../components/Divider'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
+import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvancedFields'
 
 export const ValidatorDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -124,6 +125,7 @@ const ValidatorDetailsCard: FC<ValidatorDetailsCardProps> = ({
           account={account}
           stats={stats}
         />
+        <ToggleAdvancedFields />
       </CardContent>
     </Card>
   )

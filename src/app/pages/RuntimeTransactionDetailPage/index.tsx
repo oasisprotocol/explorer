@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { RuntimeTransaction, useGetRuntimeTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
@@ -48,10 +48,12 @@ import { RuntimeEventTypeFilter } from '../../components/RuntimeEvents/RuntimeEv
 import { CardDivider } from '../../components/Divider'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { AdvancedField } from '../../components/AdvancedField/AdvancedField'
+import { ToggleAdvancedFields } from '../../components/AdvancedField/ToggleAdvancedFields'
 
 export const RuntimeTransactionDetailPage: FC = () => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
+  const location = useLocation()
 
   const scope = useRuntimeScope()
   const hash = useParams().hash!
@@ -93,7 +95,7 @@ export const RuntimeTransactionDetailPage: FC = () => {
       {transaction?.to && <DappBanner scope={scope} ethOrOasisAddress={transaction?.to} />}
       {transaction && (
         <LinkableDiv id={transactionEventsContainerId}>
-          <AdvancedField>
+          <AdvancedField alwaysVisible={location.hash === `#${transactionEventsContainerId}`}>
             <SubPageCard
               title={t('common.events')}
               action={
@@ -287,7 +289,7 @@ export const RuntimeTransactionDetailView: FC<{
                   {(totalTransfers ?? 0) > transfers.length && (
                     <Link asChild className="font-medium">
                       <RouterLink
-                        to={`${RouteUtils.getTransactionRoute(transaction, transaction.hash)}#${transactionEventsContainerId}`}
+                        to={`${RouteUtils.getTransactionRoute(transaction, transaction.eth_hash ?? transaction.hash)}#${transactionEventsContainerId}`}
                       >
                         {t('common.seeMore')}
                       </RouterLink>
@@ -472,6 +474,7 @@ export const RuntimeTransactionDetailView: FC<{
           )}
         </StyledDescriptionList>
       )}
+      <ToggleAdvancedFields />
     </>
   )
 }
