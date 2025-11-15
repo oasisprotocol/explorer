@@ -12,7 +12,7 @@ import { RouteUtils } from '../../utils/route-utils'
 import { RoflAppsList } from '../../components/Rofl/RoflAppsList'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 
-const LatestRoflAppsContent: FC<{ scope: RuntimeScope }> = ({ scope }) => {
+export const LatestRoflAppsContent: FC<{ scope: RuntimeScope }> = ({ scope }) => {
   const { network, layer } = scope
   if (!paraTimesConfig[layer]?.offerRoflTxTypes) throw AppErrors.UnsupportedLayer
   const roflAppsQuery = useGetRuntimeRoflApps(network, layer, { limit })
