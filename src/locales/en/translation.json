@@ -83,6 +83,7 @@
     "debonding": "Debonding",
     "description": "Description",
     "details": "Details",
+    "devnet": "Devnet",
     "emerald": "Emerald",
     "epoch": "Epoch",
     "chain": "Chain",
@@ -107,6 +108,7 @@
     "id": "ID",
     "invalidVotes": "Invalid votes",
     "layer": "Layer",
+    "legacy": "Legacy",
     "localnet": "Localnet",
     "loadMore": "Load more",
     "lessThanAmount": "&lt;{{value, number}} <TickerLink />",
@@ -173,7 +175,9 @@
     "voter": "Voter",
     "votes": "Votes",
     "online": "Online",
+    "outdated": "Out-of-date",
     "outOfDate": "Indexing out of date",
+    "pontusx": "Pontus-X",
     "recipient": "Recipient",
     "mainnet": "Mainnet",
     "testnet": "Testnet",
@@ -707,7 +711,21 @@
     "coming": "Coming",
     "soon": "soon",
     "not": "Not",
-    "enabled": "enabled"
+    "enabled": "enabled",
+    "ecosystem": {
+      "title": "Ecosystem",
+      "sapphire": "Sapphire is the only confidential EVM that empowers Web3 & AI with Smart Privacy.",
+      "consensus": "Oasis Core is designed around the principle of modularity.",
+      "pontusx": "Pontus-X provides full visibility and control over how your data is used and shared.",
+      "comingSoon": "(Mainnet coming soon)",
+      "emerald": "Emerald is our official ParaTime which executes smart contracts inside the EVM.",
+      "by": "by",
+      "deltaDAO": "deltaDAO",
+      "deltaDAODescription": "DeltaDAO forms the foundation for the AI & Data economy of tomorrow.",
+      "visitSite": "Visit their site for more info"
+    },
+    "activeNodes": "Active nodes",
+    "blockNumber": "Block number"
   },
   "paratimes": {
     "activeNodes": "{{nodes}} active",
@@ -716,7 +734,6 @@
     "listTitle": "ParaTimes",
     "noData": "No data available",
     "nodes": "Nodes:",
-    "outdated": "Out-of-date",
     "canNotReadStatus": "Can't load status paratime '{{name}}'."
   },
   "pontusx": {
