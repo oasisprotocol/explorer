@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { register as registerSwiperElements } from 'swiper/element/bundle'
 import { routes } from './routes'
 import './styles/index.css'
 // Initialize languages
@@ -32,8 +31,6 @@ const queryClient = new QueryClient({
     },
   },
 })
-
-registerSwiperElements()
 
 const router = createBrowserRouter(routes)
 

@@ -31,7 +31,7 @@ export const LayerPicker: FC<LayerPickerProps> = ({ onClose, onConfirm, open, is
   <>
     <Drawer direction="top" open={open} onClose={onClose}>
       {/* Match MUI md breakpoint during migration */}
-      <DrawerContent className="py-4 px-[5%] z-[1200] max-lg:h-dvh max-lg:!max-h-dvh max-lg:mb-0">
+      <DrawerContent className="py-4 px-6 z-[1200] max-lg:h-dvh max-lg:!max-h-dvh max-lg:mb-0">
         <LayerPickerContent onClose={onClose} onConfirm={onConfirm} isOutOfDate={isOutOfDate} />
       </DrawerContent>
     </Drawer>

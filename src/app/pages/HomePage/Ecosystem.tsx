@@ -11,10 +11,10 @@ export const Ecosystem: FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 md:gap-6">
       <Typography variant="h3"> {t('home.ecosystem.title')}</Typography>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-6">
         <ErrorBoundary light fallbackContent={<SapphireFallbackCard />}>
           <SapphireCard />
         </ErrorBoundary>

@@ -7,8 +7,13 @@ import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
 import { useTranslation } from 'react-i18next'
+import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
-export const Header: FC = () => {
+type HeaderProps = {
+  sticky?: boolean
+}
+
+export const Header: FC<HeaderProps> = ({ sticky = true }) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
   const { isDesktop } = useScreenSize()
@@ -17,11 +22,18 @@ export const Header: FC = () => {
   const scrolled = useScrolled()
 
   return (
-    <header className="flex flex-col w-full box-border flex-shrink-0 sticky z-[1100] top-0 right-0 left-auto shadow-md bg-theme-layout-accent">
-      <div className="px-4">
-        <div className="grid grid-cols-12 pt-3 pb-4 px-0 md:px-[4%]">
+    <header
+      className={cn(
+        'h-17 flex flex-col w-full box-border flex-shrink-0 bg-theme-layout-accent justify-center',
+        {
+          'sticky z-[1100] top-0 right-0 left-auto shadow-md': sticky,
+        },
+      )}
+    >
+      <div className="px-2 md:px-6">
+        <div className="grid grid-cols-12">
           <div className="col-span-6 xl:col-span-3 flex items-center">
-            <HomePageLink showText={!scrolled && !isMobile} />
+            <HomePageLink showText={!sticky || (!scrolled && !isMobile)} />
           </div>
 
           {withScopeSelector && (

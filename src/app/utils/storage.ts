@@ -3,7 +3,6 @@ import { StorageKeys } from '../../types/storage'
 import { LocalSettings } from '../../types/local-settings'
 
 interface StorageType {
-  [StorageKeys.MobileHelpScreenShown]: boolean
   [StorageKeys.LocalSettings]: LocalSettings
 }
 
