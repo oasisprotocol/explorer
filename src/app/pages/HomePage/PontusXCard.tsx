@@ -22,6 +22,7 @@ export const PontusXCard: FC = () => {
 
   return (
     <EcosystemCard
+      network="testnet"
       isLoading={pontusxStatusQuery.isLoading}
       description={
         <>
@@ -32,25 +33,28 @@ export const PontusXCard: FC = () => {
         <span>
           {t('common.pontusx')}{' '}
           <span className="text-sm text-muted-foreground font-normal">
-            {t('home.ecosystem.by')}
-            <Tooltip
-              title={
-                <>
-                  {t('home.ecosystem.deltaDAODescription')}{' '}
-                  <Link
-                    textColor="inherit"
-                    variant="underline"
-                    href={pontusx.homepage}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {t('home.ecosystem.visitSite')}
-                  </Link>
-                </>
-              }
-            >
-              <span className="italic underline">{t('home.ecosystem.deltaDAO')}</span>
-            </Tooltip>
+            <span>
+              {t('home.ecosystem.by')}{' '}
+              <Tooltip
+                title={
+                  <>
+                    {t('home.ecosystem.deltaDAODescription')}{' '}
+                    <Link
+                      textColor="inherit"
+                      variant="underline"
+                      href={pontusx.homepage}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      {t('home.ecosystem.visitSite')}
+                    </Link>
+                  </>
+                }
+              >
+                <span className="underline">{t('home.ecosystem.deltaDAO')}</span>
+              </Tooltip>
+            </span>
           </span>
         </span>
       }
@@ -61,15 +65,15 @@ export const PontusXCard: FC = () => {
       activeNodes={pontusxStatusQuery?.data?.data?.active_nodes}
       footer={
         <>
-          <Button variant="secondary" size="lg" className="flex-1">
-            <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxtest' })}>
-              {t('common.testnet')}
-            </RouterLink>
-            <ArrowRight />
-          </Button>
-          <Button variant="link" size="lg" className="flex-1">
+          <Button variant="link" size="lg" className="flex-1" asChild>
             <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxdev' })}>
               {t('common.devnet')}
+            </RouterLink>
+          </Button>
+          <Button size="lg" className="flex-1" asChild>
+            <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxtest' })}>
+              {t('common.testnet')}
+              <ArrowRight />
             </RouterLink>
           </Button>
         </>

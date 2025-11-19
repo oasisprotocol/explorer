@@ -688,15 +688,16 @@
     "enabled": "enabled",
     "ecosystem": {
       "title": "Ecosystem",
-      "sapphire": "Sapphire is the only confidential EVM that empowers Web3 & AI with Smart Privacy.",
-      "consensus": "Oasis Core is designed around the principle of modularity.",
-      "pontusx": "Pontus-X provides full visibility and control over how your data is used and shared.",
+      "sapphire": "Oasis main EVM-compatible chain. Supports encrypted contract state and end-to-end encrypted transactions and calls.",
+      "consensus": "Oasis Layer 1 chain providing scalable, high-throughput, secure, proof-of-stake consensus run by a decentralized set of validator nodes.",
+      "pontusx": "Confidential EVM-Compatible chain offering smart contract development environment focused on building Decentralized data economy.",
       "comingSoon": "(Mainnet coming soon)",
-      "emerald": "Emerald is our official ParaTime which executes smart contracts inside the EVM.",
+      "emerald": "Oasis original EVM-compatible chain launched in 2021. Superseded by Oasis Sapphire which supports confidential state and encrypted transactions.",
       "by": "by",
       "deltaDAO": "deltaDAO",
       "deltaDAODescription": "DeltaDAO forms the foundation for the AI & Data economy of tomorrow.",
-      "visitSite": "Visit their site for more info"
+      "visitSite": "Visit their site for more info",
+      "legacyTooltip": "New EVM dApps and contracts should be deployed on Sapphire."
     },
     "activeNodes": "Active nodes",
     "blockNumber": "Block number",
