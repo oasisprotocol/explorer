@@ -12,6 +12,28 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.26.0 (2025-11-19)
+
+### Features
+
+- Implement new homepage
+  ([#2302](https://github.com/oasisprotocol/explorer/issues/2302))
+
+- Hide advanced fields
+  ([#2342](https://github.com/oasisprotocol/explorer/issues/2342))
+
+### Internal Changes
+
+- Remove usage of MUI
+  ([#2324](https://github.com/oasisprotocol/explorer/issues/2324),
+   [#2335](https://github.com/oasisprotocol/explorer/issues/2335),
+   [#2341](https://github.com/oasisprotocol/explorer/issues/2341),
+   [#2343](https://github.com/oasisprotocol/explorer/issues/2343),
+   [#2347](https://github.com/oasisprotocol/explorer/issues/2347))
+
+- Update API bindings
+  ([#2344](https://github.com/oasisprotocol/explorer/issues/2344))
+
 ## 1.25.1 (2025-11-12)
 
 ### Bug Fixes and Improvements
