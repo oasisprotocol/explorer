@@ -24,23 +24,15 @@ The format is inspired by [Keep a Changelog].
 
 ### Internal Changes
 
-- Remove usage of MUI GlobalStyles
-  ([#2324](https://github.com/oasisprotocol/explorer/issues/2324))
-
-- Remove usage of MUI CssBaseline
-  ([#2333](https://github.com/oasisprotocol/explorer/issues/2333))
-
-- Remove usage of MUI SvgIcon
-  ([#2341](https://github.com/oasisprotocol/explorer/issues/2341))
-
-- Remove MUI themes from search results
-  ([#2343](https://github.com/oasisprotocol/explorer/issues/2343))
+- Remove usage of MUI
+  ([#2324](https://github.com/oasisprotocol/explorer/issues/2324),
+   [#2335](https://github.com/oasisprotocol/explorer/issues/2335),
+   [#2341](https://github.com/oasisprotocol/explorer/issues/2341),
+   [#2343](https://github.com/oasisprotocol/explorer/issues/2343),
+   [#2347](https://github.com/oasisprotocol/explorer/issues/2347))
 
 - Update API bindings
   ([#2344](https://github.com/oasisprotocol/explorer/issues/2344))
-
-- Remove usage of MUI useMediaQuery
-  ([#2347](https://github.com/oasisprotocol/explorer/issues/2347))
 
 ## 1.25.1 (2025-11-12)
 
