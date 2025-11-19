@@ -12,6 +12,36 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.26.0 (2025-11-19)
+
+### Features
+
+- Implement new homepage
+  ([#2302](https://github.com/oasisprotocol/explorer/issues/2302))
+
+- Hide advanced fields
+  ([#2342](https://github.com/oasisprotocol/explorer/issues/2342))
+
+### Internal Changes
+
+- Remove usage of MUI GlobalStyles
+  ([#2324](https://github.com/oasisprotocol/explorer/issues/2324))
+
+- Remove usage of MUI CssBaseline
+  ([#2333](https://github.com/oasisprotocol/explorer/issues/2333))
+
+- Remove usage of MUI SvgIcon
+  ([#2341](https://github.com/oasisprotocol/explorer/issues/2341))
+
+- Remove MUI themes from search results
+  ([#2343](https://github.com/oasisprotocol/explorer/issues/2343))
+
+- Update API bindings
+  ([#2344](https://github.com/oasisprotocol/explorer/issues/2344))
+
+- Remove usage of MUI useMediaQuery
+  ([#2347](https://github.com/oasisprotocol/explorer/issues/2347))
+
 ## 1.25.1 (2025-11-12)
 
 ### Bug Fixes and Improvements
