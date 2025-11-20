@@ -1,40 +1,36 @@
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CancelIcon from '@mui/icons-material/Cancel'
 import { COLORS } from '../../../styles/theme/colors'
-import HelpIcon from '@mui/icons-material/Help'
-import LockIcon from '@mui/icons-material/Lock'
 import { TxError } from '../../../oasis-nexus/api'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { CircleCheck, CircleX, CircleHelp, Clock } from 'lucide-react'
 
-type TxStatus = 'unknown' | 'success' | 'partialsuccess' | 'failure' | 'pending'
+type TxStatus = 'unknown' | 'success' | 'failure' | 'pending'
 
 const statusBgColor: Record<TxStatus, string> = {
-  unknown: COLORS.grayMediumLight,
-  success: COLORS.eucalyptus,
-  partialsuccess: COLORS.honeydew,
-  failure: COLORS.linen,
-  pending: COLORS.warningLight,
+  unknown: 'bg-zinc-500',
+  success: 'bg-success',
+  failure: 'bg-destructive',
+  pending: 'bg-zinc-500',
 }
 
-const statusFgColor: Record<TxStatus, string> = {
-  unknown: COLORS.grayMedium,
-  success: COLORS.honeydew,
-  partialsuccess: COLORS.eucalyptus,
-  failure: COLORS.errorIndicatorBackground,
-  pending: COLORS.warningColor,
-}
+const statusIcon = (status: TxStatus, size: number, withText?: boolean): ReactNode => {
+  // [&_circle]:stroke-transparent fixes background animation on new transactions
+  const strokeClass = withText ? 'stroke-background' : '[&_circle]:stroke-transparent'
 
-const statusIcon: Record<TxStatus, ReactNode> = {
-  unknown: <LockIcon color="inherit" fontSize="inherit" />,
-  success: <CheckCircleIcon color="inherit" fontSize="inherit" />,
-  partialsuccess: <CheckCircleIcon color="success" fontSize="inherit" />,
-  failure: <CancelIcon color="error" fontSize="inherit" />,
-  pending: <HelpIcon color="inherit" fontSize="inherit" />,
+  switch (status) {
+    case 'unknown':
+      return <CircleHelp size={size} className={cn('fill-zinc-500', strokeClass)} />
+    case 'success':
+      return <CircleCheck size={size} className={cn('fill-success', strokeClass)} />
+    case 'failure':
+      return <CircleX size={size} className={cn('fill-destructive', strokeClass)} />
+    case 'pending':
+      return <Clock size={size} className={cn('fill-zinc-500', strokeClass)} />
+  }
 }
 
 interface StatusBadgeProps {
@@ -46,13 +42,10 @@ interface StatusBadgeProps {
 export const StatusBadge: FC<StatusBadgeProps> = ({ status, children, withText }) => (
   <div
     className={cn(
-      'flex justify-center items-center text-sm rounded-lg',
-      withText ? 'px-3 py-1' : 'w-7 min-h-7 p-1',
+      'flex justify-center items-center text-sm rounded-lg text-background',
+      withText ? 'px-3 py-1' : 'p-0',
+      withText && statusBgColor[status],
     )}
-    style={{
-      backgroundColor: statusBgColor[status],
-      color: statusFgColor[status],
-    }}
   >
     {children}
   </div>
@@ -106,6 +99,13 @@ const getPendingLabel = (t: TFunction, method: string | undefined, withText?: bo
   return t('transaction.startedDescription', { method: translatedMethod })
 }
 
+const getUnknownLabel = (t: TFunction, withText?: boolean) => {
+  if (withText) {
+    return t('common.unknown')
+  }
+  return t('transaction.tooltips.statusEncrypted')
+}
+
 export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, method }) => {
   const { t } = useTranslation()
   const status: TxStatus =
@@ -117,41 +117,40 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
         ? 'success'
         : 'failure'
   const statusLabel: Record<TxStatus, string> = {
-    unknown: t('common.unknown'),
+    unknown: getUnknownLabel(t, withText),
     success: t('common.success'),
-    partialsuccess: t('common.partial_success'),
     failure: t('common.failed'),
     pending: getPendingLabel(t, method, withText),
   }
   const errorMessage = useTxErrorMessage(error)
+  const iconSize = withText ? 16 : 20
 
   if (withText) {
     return (
       <>
         <div
           className={cn(
-            'flex justify-center items-center text-sm rounded-lg',
-            withText ? 'px-3 py-1' : 'w-7 min-h-7 p-1',
+            'flex justify-center items-center text-sm rounded-full text-background gap-2',
+            withText ? 'px-4 py-0.5' : 'w-7 min-h-7 p-1',
+            withText && statusBgColor[status],
           )}
-          style={{
-            backgroundColor: statusBgColor[status],
-            color: statusFgColor[status],
-          }}
         >
           {statusLabel[status]}
-          &nbsp;
-          {statusIcon[status]}
+          {statusIcon(status, iconSize, withText)}
         </div>
         {errorMessage && <StatusDetails error>{errorMessage}</StatusDetails>}
         {!errorMessage && status === 'pending' && <StatusDetails>{getPendingLabel(t, method)}</StatusDetails>}
+        {status === 'unknown' && <StatusDetails>{getUnknownLabel(t)}</StatusDetails>}
       </>
     )
   } else {
     return (
       <Tooltip title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}>
-        <StatusBadge status={status} withText={withText}>
-          {statusIcon[status]}
-        </StatusBadge>
+        <div>
+          <StatusBadge status={status} withText={withText}>
+            {statusIcon(status, iconSize, withText)}
+          </StatusBadge>
+        </div>
       </Tooltip>
     )
   }

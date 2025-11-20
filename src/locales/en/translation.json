@@ -541,6 +541,7 @@
     "started": "Started",
     "startedDescription": "{{ method }} has started, final result will be known in the next block",
     "tooltips": {
+      "statusEncrypted": "Status is encrypted.",
       "txEncrypted": "This transaction is encrypted.",
       "txNotEncrypted": "This transaction is <strong>not</strong> encrypted."
     },
