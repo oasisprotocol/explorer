@@ -24,7 +24,9 @@ export const RecentBlocksCard: FC = () => {
     <Card variant="layout">
       <CardHeader>
         <CardTitle>
-          <Typography variant="h3">{t('blocks.latest')}</Typography>
+          <Typography variant="h3" className="text-lg">
+            {t('blocks.latest')}
+          </Typography>
         </CardTitle>
       </CardHeader>
       <CardContent>
