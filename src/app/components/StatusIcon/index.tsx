@@ -138,9 +138,11 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
   } else {
     return (
       <Tooltip title={errorMessage ? `${statusLabel[status]}: ${errorMessage}` : statusLabel[status]}>
-        <StatusBadge status={status} withText={withText}>
-          {statusIcon(status, iconSize, withText)}
-        </StatusBadge>
+        <div>
+          <StatusBadge status={status} withText={withText}>
+            {statusIcon(status, iconSize, withText)}
+          </StatusBadge>
+        </div>
       </Tooltip>
     )
   }
