@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { LineChart } from '../charts/LineChart'
@@ -76,17 +76,22 @@ const TotalTransactionsContent: FC<{
 }
 
 type TotalTransactionsProps = {
+  title?: ReactNode
   chartContainerHeight?: number
 } & ({ scope: SearchScope } | { network: Network })
 
-export const TotalTransactions: FC<TotalTransactionsProps> = ({ chartContainerHeight = 450, ...props }) => {
+export const TotalTransactions: FC<TotalTransactionsProps> = ({
+  chartContainerHeight = 450,
+  title,
+  ...props
+}) => {
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
     <Card variant="layout">
       <CardHeader>
         <CardTitle className="flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <Typography variant="h3">{t('totalTransactions.header')}</Typography>
+          {title ?? <Typography variant="h3">{t('totalTransactions.header')}</Typography>}
 
           <div className="md:ml-4 md:flex-1 md:text-right">
             <DurationPills handleChange={setChartDuration} value={chartDuration} />
