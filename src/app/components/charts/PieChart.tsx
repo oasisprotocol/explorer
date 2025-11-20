@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import CircleIcon from '@mui/icons-material/Circle'
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
-import { COLORS as TESTNET_COLORS } from '../../../styles/theme/testnet/colors'
 import { Props } from 'recharts/types/component/DefaultLegendContent'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
@@ -16,7 +15,7 @@ interface PieChartProps<T extends object> extends Formatters {
   prependLegendList?: ReactNode
 }
 
-const colorPalette = [COLORS.brandDark, COLORS.brandMedium, TESTNET_COLORS.testnet, COLORS.grayMedium2]
+const colorPalette = ['#0500E2', '#0092f6', '#ffa800', '#d5d6d7']
 
 type LegendListItemProps = {
   children: ReactNode
