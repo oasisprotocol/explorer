@@ -99,6 +99,13 @@ const getPendingLabel = (t: TFunction, method: string | undefined, withText?: bo
   return t('transaction.startedDescription', { method: translatedMethod })
 }
 
+const getUnknownLabel = (t: TFunction, withText?: boolean) => {
+  if (withText) {
+    return t('common.unknown')
+  }
+  return t('transaction.tooltips.statusEncrypted')
+}
+
 export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, method }) => {
   const { t } = useTranslation()
   const status: TxStatus =
@@ -110,7 +117,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
         ? 'success'
         : 'failure'
   const statusLabel: Record<TxStatus, string> = {
-    unknown: t('common.unknown'),
+    unknown: getUnknownLabel(t, withText),
     success: t('common.success'),
     failure: t('common.failed'),
     pending: getPendingLabel(t, method, withText),
@@ -133,6 +140,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
         </div>
         {errorMessage && <StatusDetails error>{errorMessage}</StatusDetails>}
         {!errorMessage && status === 'pending' && <StatusDetails>{getPendingLabel(t, method)}</StatusDetails>}
+        {status === 'unknown' && <StatusDetails>{getUnknownLabel(t)}</StatusDetails>}
       </>
     )
   } else {
