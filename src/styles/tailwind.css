@@ -1,6 +1,7 @@
 @import '@oasisprotocol/ui-library/src/styles/global.css';
 
 @theme {
+  --font-mono: 'Roboto Mono Variable', monospace;
   --color-theme-surface: var(--color-theme-surface);
   --color-theme-accent: var(--color-theme-accent);
   --color-theme-accent-light: var(--color-theme-accent-light);
@@ -18,7 +19,7 @@
   --color-theme-contrast-main: #ffffff;
 }
 
-.testnet {
+.testnet {  
   --color-theme-surface: #fff0e4;
   --color-theme-accent: #ffa800;
   --color-theme-accent-light: #fff0e4;
@@ -38,6 +39,20 @@
 
 .mobile-card-border-override > div > [data-slot='card'] {
   @apply rounded-none border-solid border-theme-layout-accent border-y-[10px] border-x;
+}
+
+/* Specific fixes needed during migration to Oasis UI Library */
+
+/* Override Tailwind's vertical-align reset for MUI SVG components */
+[class*='Mui'] img,
+[class*='Mui'] svg,
+[class*='Mui'] video,
+[class*='Mui'] canvas,
+[class*='Mui'] audio,
+[class*='Mui'] iframe,
+[class*='Mui'] embed,
+[class*='Mui'] object {
+  vertical-align: revert;
 }
 
 /* Flash animation for table highlights */
