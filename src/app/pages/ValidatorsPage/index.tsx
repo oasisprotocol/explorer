@@ -41,6 +41,7 @@ export const ValidatorsPage: FC = () => {
   if (isFetched && offset && !validatorsData?.validators?.length) {
     throw AppErrors.PageDoesNotExist
   }
+  const totalCount = validatorsData ? validatorsData.total_count + offset : undefined
 
   return (
     <PageLayout
@@ -53,7 +54,7 @@ export const ValidatorsPage: FC = () => {
         title={
           <CardHeaderWithCounter
             label={t('validator.listTitle')}
-            totalCount={validatorsData?.total_count}
+            totalCount={totalCount}
             isTotalCountClipped={validatorsData?.is_total_count_clipped}
           />
         }
