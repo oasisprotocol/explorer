@@ -10,7 +10,6 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { EvmNft } from 'oasis-nexus/api'
 import { processNftImageUrl } from '../../utils/nft-images'
 import { isUrlSafe } from '../../utils/url'
-import { COLORS } from '../../../styles/theme/colors'
 import { ImagePreview } from '../../components/ImagePreview'
 import { NoPreview } from '../../components/NoPreview'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
@@ -78,17 +77,9 @@ export const InstanceImageCard: FC<InstanceImageCardProps> = ({ isFetched, isLoa
   const [imageLoadError, setImageLoadError] = useState(false)
 
   return (
-    <Card
-      variant="layout"
-      style={{
-        background: darkMode ? COLORS.grayExtraDark : COLORS.white,
-      }}
-    >
+    <Card variant="layout" className={cn(darkMode ? 'bg-gray-900' : 'bg-white')}>
       <CardContent>
-        <div
-          className={cn('flex flex-col items-center justify-between', darkMode ? 'bg-gray-900' : 'bg-white')}
-          style={{ minHeight: imageSize }}
-        >
+        <div className="flex flex-col items-center justify-between" style={{ minHeight: imageSize }}>
           {isLoading && <Skeleton className="w-[350px] h-[350px]" />}
           {/* API did not process NFT data fully */}
           {isFetched && !nft?.image && <NoPreview placeholderSize={imageSize} />}

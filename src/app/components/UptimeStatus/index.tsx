@@ -43,14 +43,12 @@ export const UptimeStatus: FC<UptimeStatusProps> = ({ uptime, small }) => {
           <div
             key={`${value}-${index}`}
             className={cn(
-              'inline-block',
               small
                 ? 'w-[3px] min-w-[3px] h-[15px] rounded-[2px] mr-[1px]'
                 : 'w-[7px] min-w-[7px] rounded-[4px] mr-[2px]',
             )}
             style={{
               backgroundColor: getUptimeItemColor(value),
-              color: COLORS.white,
               height: `${Math.round((value * 45) / 1200)}px`,
             }}
           />

@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Theme } from '@mui/material/styles/createTheme'
 import ZoomOut from '@mui/icons-material/ZoomOut'
 import { Trans, useTranslation } from 'react-i18next'
 import ZoomIn from '@mui/icons-material/ZoomIn'

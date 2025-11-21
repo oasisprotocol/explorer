@@ -4,7 +4,6 @@ import { Layer } from './oasis-nexus/generated/api'
 import { NativeToken, NativeTokenInfo } from './types/ticker'
 import { SearchScope } from './types/searchScope'
 import { Network } from './types/network'
-import type { Theme } from '@mui/material/styles/createTheme'
 
 export const NUMBER_OF_ITEMS_ON_DASHBOARD = 5
 export const FILTERING_ON_DASHBOARD = true
@@ -215,11 +214,6 @@ export const specialScopeNames: Partial<Record<Network, Partial<Record<Layer, st
 }
 
 export const specialScopePaths: Partial<Record<Network, Partial<Record<Layer, [string, string]>>>> = {
-  mainnet: {},
-  testnet: {},
-}
-
-export const specialScopeThemes: Partial<Record<Network, Partial<Record<Layer, Theme>>>> = {
   mainnet: {},
   testnet: {},
 }

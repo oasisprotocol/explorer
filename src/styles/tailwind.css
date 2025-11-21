@@ -40,25 +40,6 @@
   @apply rounded-none border-solid border-theme-layout-accent border-y-[10px] border-x;
 }
 
-/* Specific fixes needed during migration to Oasis UI Library */
-
-/* Override MUI styles that are applied globally */
-[class*=' text-'] {
-  font-family: 'Inter Variable', sans-serif;
-}
-
-/* Override Tailwind's vertical-align reset for MUI SVG components */
-[class*='Mui'] img,
-[class*='Mui'] svg,
-[class*='Mui'] video,
-[class*='Mui'] canvas,
-[class*='Mui'] audio,
-[class*='Mui'] iframe,
-[class*='Mui'] embed,
-[class*='Mui'] object {
-  vertical-align: revert;
-}
-
 /* Flash animation for table highlights */
 @keyframes flash {
   0% {

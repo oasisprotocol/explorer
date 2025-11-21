@@ -22,14 +22,6 @@ const config = {
       {
         paths: [
           {
-            name: '@mui/material',
-            message: "Use '@mui/material/*' instead.",
-          },
-          {
-            name: '@mui/icons-material',
-            message: "Use '@mui/icons-material/*' instead.",
-          },
-          {
             name: 'date-fns',
             message: "Use 'date-fns/*' instead.",
           },
@@ -43,10 +35,6 @@ const config = {
           },
         ],
         patterns: [
-          {
-            group: ['@mui/system', '@emotion/styled'],
-            message: "Use '@mui/material/styles' instead.",
-          },
           {
             group: ['**/oasis-nexus/generated/api'],
             message: "Import 'oasis-nexus/api' instead.",
