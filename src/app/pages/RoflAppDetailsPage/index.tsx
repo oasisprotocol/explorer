@@ -200,12 +200,20 @@ export const RoflAppDetailsViewSearchResult: FC<{
 
   return (
     <StyledDescriptionList>
+      <dt>{t('common.name')}</dt>
+      <dd>
+        <RoflAppLink
+          id={app.id}
+          name={app.metadata['net.oasis.rofl.name']}
+          network={app.network}
+          withSourceIndicator={false}
+        />
+        <CopyToClipboard value={app.metadata['net.oasis.rofl.name']} />
+      </dd>
       <DetailsRow title={t('common.paratime')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
       </DetailsRow>
-      <NameRow name={app.metadata['net.oasis.rofl.name']} />
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
-      <TeeRow policy={app.policy} />
       <DetailsRow title={t('rofl.appId')}>
         <RoflAppLink id={app.id} name={app.id} network={app.network} withSourceIndicator={false} />
         <CopyToClipboard value={app.id} />
@@ -216,7 +224,6 @@ export const RoflAppDetailsViewSearchResult: FC<{
       />
       <StakedAmountRow stake={app.stake} ticker={app.ticker} />
       <StatusBadgeRow hasActiveInstances={!!app.num_active_instances} removed={app.removed} />
-      <ActiveInstancesNumberRow number={app.num_active_instances} />
       <LastActivityRow
         scope={{ network: app.network, layer: app.layer }}
         transaction={app.last_activity_tx}

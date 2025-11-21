@@ -32,7 +32,7 @@ export function ResultsGroupByType<T>({ title, results, resultComponent, link, l
       {results.map((item, i) => (
         <div key={i}>
           {resultComponent(item)}
-          <div className="flex justify-center mt-7">
+          <div className="flex justify-center mt-2">
             <Button asChild size="lg">
               <RouterLink to={link(item)}>{linkLabel}</RouterLink>
             </Button>
