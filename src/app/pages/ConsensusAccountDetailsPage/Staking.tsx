@@ -15,7 +15,6 @@ import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { Delegations } from '../../components/Delegations'
 import { wallet } from '../../utils/externalLinks'
-import { t } from 'i18next'
 import { ConsensusAccountCardEmptyState } from './ConsensusAccountCardEmptyState'
 
 type StakingProps = {
@@ -58,6 +57,7 @@ type DelegationCardProps = {
 }
 
 const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
+  const { t } = useTranslation()
   const pagination = useSearchParamsPagination('activeDelegations')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()
@@ -104,6 +104,7 @@ const ActiveDelegations: FC<DelegationCardProps> = ({ address }) => {
 }
 
 const DebondingDelegations: FC<DelegationCardProps> = ({ address }) => {
+  const { t } = useTranslation()
   const pagination = useSearchParamsPagination('debondingDelegations')
   const offset = (pagination.selectedPage - 1) * PAGE_SIZE
   const scope = useRequiredScopeParam()

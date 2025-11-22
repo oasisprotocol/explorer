@@ -39,7 +39,10 @@ export const SubPageCard: FC<SubPageCardProps> = ({
     <div>
       {isMobile && (title || subheader || action) && (
         <div className="relative flex items-baseline mb-4 mx-4">
-          <Typography variant={mainTitle ? 'h2' : 'h3'} className="inline text-[--title-on-background]">
+          <Typography
+            variant={mainTitle ? 'h2' : 'h3'}
+            className={cn('inline text-[--title-on-background]', mainTitle && 'text-xl')}
+          >
             {isLoadingTitle ? <TitleSkeleton /> : title}
           </Typography>
           <Typography variant="p" className="inline ml-2 italic leading-6">
@@ -56,7 +59,7 @@ export const SubPageCard: FC<SubPageCardProps> = ({
               <div className={cn(featured && 'pb-4')}>
                 <div className="flex items-start justify-between">
                   <div className="flex gap-1 items-center">
-                    <Typography variant={mainTitle ? 'h2' : 'h3'}>
+                    <Typography variant={mainTitle ? 'h2' : 'h3'} className={cn(mainTitle && 'text-xl')}>
                       {isLoadingTitle ? <TitleSkeleton /> : title}
                     </Typography>
 
