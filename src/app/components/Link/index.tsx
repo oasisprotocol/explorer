@@ -22,6 +22,7 @@ type LinkProps = {
   to: string
   withSourceIndicator?: boolean
   labelOnly?: boolean
+  mono?: boolean
 }
 
 export const Link: FC<LinkProps> = ({
@@ -32,6 +33,7 @@ export const Link: FC<LinkProps> = ({
   to,
   withSourceIndicator = true,
   labelOnly,
+  mono = true,
 }) => {
   const { isTablet } = useScreenSize()
   const hasName = name?.toLowerCase() !== address.toLowerCase()
@@ -60,7 +62,7 @@ export const Link: FC<LinkProps> = ({
     <MaybeWithTooltip title={tooltipTitle}>
       <div className="inline-flex items-center gap-1">
         {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
-        <span className={cn('font-medium', !labelOnly && 'text-primary')}>
+        <span className={cn(mono ? 'font-mono' : 'font-sans', 'font-medium', !labelOnly && 'text-primary')}>
           {isTablet ? (
             <TabletLink address={address} name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
           ) : (

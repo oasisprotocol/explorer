@@ -127,7 +127,7 @@ export const RoflAppDetailsView: FC<{
         <TeeRow policy={app.policy} />
         <DetailsRow title={t('rofl.appId')}>
           <WithHoverHighlighting address={app.id}>
-            <span className="font-medium">{app.id}</span>
+            <span className="font-mono font-medium">{app.id}</span>
           </WithHoverHighlighting>
           <CopyToClipboard value={app.id} />
         </DetailsRow>
@@ -168,7 +168,7 @@ export const RoflAppDetailsView: FC<{
               </div>
             }
           >
-            <span className="font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
+            <span className="font-mono font-medium">{app.sek}</span> <CopyToClipboard value={app.sek} />
           </DetailsRow>
           <DetailsRow
             title={

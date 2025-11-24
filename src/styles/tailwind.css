@@ -1,6 +1,7 @@
 @import '@oasisprotocol/ui-library/src/styles/global.css';
 
 @theme {
+  --font-mono: 'Roboto Mono Variable', monospace;
   --color-theme-surface: var(--color-theme-surface);
   --color-theme-accent: var(--color-theme-accent);
   --color-theme-accent-light: var(--color-theme-accent-light);
