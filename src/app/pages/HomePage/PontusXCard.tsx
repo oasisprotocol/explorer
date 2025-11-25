@@ -64,8 +64,8 @@ export const PontusXCard: FC = () => {
       latestBlock={pontusxStatusQuery?.data?.data?.latest_block}
       activeNodes={pontusxStatusQuery?.data?.data?.active_nodes}
       footer={
-        <>
-          <Button variant="link" size="lg" className="flex-1" asChild>
+        <div className="flex w-full gap-4">
+          <Button variant="outline" size="lg" className="flex-1" asChild>
             <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxdev' })}>
               {t('common.devnet')}
             </RouterLink>
@@ -76,7 +76,7 @@ export const PontusXCard: FC = () => {
               <ArrowRight />
             </RouterLink>
           </Button>
-        </>
+        </div>
       }
     />
   )

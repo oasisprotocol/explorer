@@ -128,8 +128,8 @@ export const EcosystemCard: FC<EcosystemCardProps> = ({
       </CardContent>
       <CardFooter>
         {footer || (
-          <>
-            <Button variant="link" size="lg" className="flex-1" asChild>
+          <div className="flex w-full gap-4">
+            <Button variant="outline" size="lg" className="flex-1" asChild>
               <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer })}>
                 {t('common.testnet')}
               </RouterLink>
@@ -140,7 +140,7 @@ export const EcosystemCard: FC<EcosystemCardProps> = ({
                 <ArrowRight />
               </RouterLink>
             </Button>
-          </>
+          </div>
         )}
       </CardFooter>
     </Card>
