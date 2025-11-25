@@ -18,7 +18,7 @@ export const HomePage: FC = () => {
     <>
       <BuildBanner />
       <NetworkOfflineBanner wantedNetwork={network} />
-      <Header sticky={false} />
+      <Header />
       <div className="flex flex-col border-8 md:border-[15px] px-0 md:px-[4%] pt-4 md:pt-7 md:border-t-0 border-t-0 border-theme-layout-accent">
         <HomeSearch />
         <Ecosystem />
