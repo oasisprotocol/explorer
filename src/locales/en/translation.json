@@ -89,6 +89,7 @@
     "chain": "Chain",
     "cipher": "Cipher",
     "consensus": "Consensus",
+    "encryption": "Encryption",
     "eth": "ETH",
     "events": "Events",
     "failed": "Failed",
