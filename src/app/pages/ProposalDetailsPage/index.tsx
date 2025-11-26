@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
@@ -17,7 +17,6 @@ import { TextSkeleton } from '../../components/Skeleton'
 import { ConsensusAccountLink } from '../../components/Account/ConsensusAccountLink'
 import { HighlightedText } from '../../components/HighlightedText'
 import { ProposalIdLoaderData } from '../../utils/route-utils'
-import { COLORS } from 'styles/theme/colors'
 import { ProposalVotesCard } from './ProposalVotesCard'
 import { useVoteStats } from './hooks'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
@@ -144,9 +143,9 @@ export const ProposalDetailView: FC<{
       <dt>{t('networkProposal.create')}</dt>
       <dd>
         <Tooltip title={t('networkProposal.createTooltip')}>
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-2 items-center">
             {proposal.created_at}
-            <InfoIcon htmlColor={COLORS.brandDark} />
+            <Info size="18" className="stroke-zinc-500" />
           </div>
         </Tooltip>
       </dd>
@@ -154,9 +153,9 @@ export const ProposalDetailView: FC<{
       <dt>{t('networkProposal.close')}</dt>
       <dd>
         <Tooltip title={t('networkProposal.closeTooltip')}>
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-2 items-center">
             {proposal.closes_at}
-            <InfoIcon htmlColor={COLORS.brandDark} />
+            <Info size="18" className="stroke-zinc-500" />
           </div>
         </Tooltip>
       </dd>

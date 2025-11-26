@@ -1,5 +1,5 @@
 import { FC, ReactNode, useMemo } from 'react'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { MaybeWithTooltip } from '../Tooltip/MaybeWithTooltip'
 import { getAdaptiveId, ShorteningResult, useAdaptiveSizing } from './hooks'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
@@ -79,7 +79,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
       <div>{tooltipOverride ?? fullContent}</div>
       {extraTooltip && (
         <div className="inline-flex items-center gap-1">
-          <InfoIcon />
+          <Info size="18" className="stroke-zinc-500" />
           {extraTooltip}
         </div>
       )}

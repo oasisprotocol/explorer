@@ -18,8 +18,7 @@ import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { SimpleJsonCode } from 'app/components/CodeDisplay/SimpleJsonCode'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import InfoIcon from '@mui/icons-material/Info'
-import { COLORS } from '../../../styles/theme/colors'
+import { Info } from 'lucide-react'
 
 export const RoflAppInstanceDetailsPage: FC = () => {
   const { t } = useTranslation()
@@ -62,10 +61,10 @@ export const RoflAppInstanceDetailsView: FC<{
   return (
     <StyledDescriptionList>
       <dt>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           {t('rofl.rakAbbreviation')}
           <Tooltip title={t('rofl.rakAbbreviationTooltip')}>
-            <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+            <Info size="18" className="stroke-zinc-500" />
           </Tooltip>
         </div>
       </dt>
@@ -75,10 +74,10 @@ export const RoflAppInstanceDetailsView: FC<{
         </span>
       </dd>
       <dt>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           {t('rofl.rekAbbreviation')}
           <Tooltip title={t('rofl.rekAbbreviationTooltip')}>
-            <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+            <Info size="18" className="stroke-zinc-500" />
           </Tooltip>
         </div>
       </dt>
