@@ -35,7 +35,7 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
     { align: TableCellAlign.Right, key: 'change', content: t('validator.change') },
     { align: TableCellAlign.Right, key: 'delegators', content: t('validator.delegators') },
     { align: TableCellAlign.Right, key: 'commission', content: t('validator.commission') },
-    { key: 'status', content: t('common.status') },
+    { key: 'status', content: t('common.status'), align: TableCellAlign.Center },
     { align: TableCellAlign.Center, key: 'uptime', content: t('validator.uptime') },
   ]
   const tableRows = validators?.map((validator, index) => ({
