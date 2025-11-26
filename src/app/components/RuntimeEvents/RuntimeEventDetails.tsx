@@ -281,7 +281,8 @@ const RuntimeEventDetailsInner: FC<{
               {event.body.topics
                 /* @ts-expect-error -- Event body is missing types */
                 .map((base64Topic, index) => {
-                  return `${index}: 0x${Buffer.from(base64Topic, 'base64').toString('hex')}`
+                  // \xa0 is &nbsp;
+                  return `${index}:\xa00x${Buffer.from(base64Topic, 'base64').toString('hex')}`
                 })
                 .join('\n')}
             </span>
