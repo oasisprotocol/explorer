@@ -27,7 +27,7 @@ const WithTypographyAndLink: FC<{
       {labelOnly ? (
         <span className="text-foreground font-medium">{children}</span>
       ) : (
-        <Link asChild className="font-mono font-medium">
+        <Link asChild className="font-medium">
           <RouterLink to={to}>{children}</RouterLink>
         </Link>
       )}
@@ -103,13 +103,15 @@ const AdaptivelyTrimmedAccountLink: FC<
             />
           </span>
         )}
-        <AdaptiveTrimmer
-          idPrefix="account-address"
-          text={showAccountName ? `(${address})` : address}
-          strategy="middle"
-          tooltipOverride={tooltipTitle}
-          minLength={13}
-        />
+        <span className="font-mono">
+          <AdaptiveTrimmer
+            idPrefix="account-address"
+            text={showAccountName ? `(${address})` : address}
+            strategy="middle"
+            tooltipOverride={tooltipTitle}
+            minLength={13}
+          />
+        </span>
       </div>
     </WithTypographyAndLink>
   )
@@ -128,7 +130,7 @@ const TrimmedAccountLink: FC<
     <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
-          <span className="flex items-center gap-1 font-mono font-medium">
+          <span className="flex items-center gap-1 font-medium">
             <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
             {trimLongString(accountName, 12, 0)}
           </span>

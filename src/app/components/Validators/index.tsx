@@ -58,7 +58,6 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
               address={validator.entity_address}
               name={validator.media?.name}
               network={network}
-              mono={false}
             />
           </div>
         ),

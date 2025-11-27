@@ -91,7 +91,7 @@ export const RoflAppInstanceDetailsView: FC<{
       <dd>{instance.expiration_epoch.toLocaleString()}</dd>
       <dt>{t('rofl.roflAppId')}</dt>
       <dd>
-        <RoflAppLink id={appId} network={scope.network} withSourceIndicator={false} mono />
+        <RoflAppLink id={appId} network={scope.network} withSourceIndicator={false} />
         <CopyToClipboard value={appId} />
       </dd>
       <dt>{t('rofl.endorsingNodeId')}</dt>

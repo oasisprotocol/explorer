@@ -20,7 +20,7 @@ export const ConsensusAccountLink: FC<ConsensusAccountLinkProps> = ({
   const { data } = useGetConsensusValidatorsAddressNameMap(network)
 
   if (data?.data && address in data.data) {
-    return <ValidatorLink address={address} network={network} alwaysTrim={alwaysTrim} mono={false} />
+    return <ValidatorLink address={address} network={network} alwaysTrim={alwaysTrim} />
   }
 
   return (

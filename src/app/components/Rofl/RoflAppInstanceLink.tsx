@@ -8,11 +8,10 @@ type RoflAppInstanceLinkProps = {
   id: string
   network: Network
   rak: string
-  mono?: boolean
 }
 
-export const RoflAppInstanceLink: FC<RoflAppInstanceLinkProps> = ({ alwaysTrim, id, network, rak, mono }) => {
+export const RoflAppInstanceLink: FC<RoflAppInstanceLinkProps> = ({ alwaysTrim, id, network, rak }) => {
   const to = RouteUtils.getRoflAppInstanceRoute(network, id, rak)
 
-  return <Link address={rak} to={to} alwaysTrim={alwaysTrim} withSourceIndicator={false} mono={mono} />
+  return <Link address={rak} to={to} alwaysTrim={alwaysTrim} withSourceIndicator={false} />
 }

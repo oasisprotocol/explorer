@@ -134,7 +134,6 @@ export const ConsensusBlockDetailView: FC<{
               address={block.proposer?.entity_address}
               alwaysTrim
               network={block.network}
-              mono={false}
             />
           </dd>
         </>

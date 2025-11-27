@@ -55,7 +55,7 @@ export const InstancesList: FC<InstancesListProps> = ({
             data: [
               {
                 key: 'rak',
-                content: <RoflAppInstanceLink id={appId} network={scope.network} rak={instance.rak} mono />,
+                content: <RoflAppInstanceLink id={appId} network={scope.network} rak={instance.rak} />,
               },
               {
                 key: 'node',

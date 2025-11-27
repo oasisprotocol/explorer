@@ -10,7 +10,6 @@ type ValidatorLinkProps = {
   name?: string
   network: Network
   withSourceIndicator?: boolean
-  mono?: boolean
 }
 
 export const ValidatorLink: FC<ValidatorLinkProps> = ({
@@ -19,7 +18,6 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
   name,
   network,
   withSourceIndicator,
-  mono,
 }) => {
   const to = RouteUtils.getValidatorRoute(network, address)
   const validatorName = useValidatorName(network, address)
@@ -32,7 +30,6 @@ export const ValidatorLink: FC<ValidatorLinkProps> = ({
       name={displayName}
       to={to}
       withSourceIndicator={withSourceIndicator}
-      mono={mono}
     />
   )
 }
