@@ -62,7 +62,7 @@ export const Link: FC<LinkProps> = ({
     <MaybeWithTooltip title={tooltipTitle}>
       <div className="inline-flex items-center gap-1">
         {hasName && withSourceIndicator && <AccountMetadataSourceIndicator source={'SelfProfessed'} />}
-        <span className={cn(mono ? 'font-mono' : 'font-sans', 'font-medium', !labelOnly && 'text-primary')}>
+        <span className={cn(mono && 'font-mono', 'font-medium', !labelOnly && 'text-primary')}>
           {isTablet ? (
             <TabletLink address={address} name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
           ) : (
