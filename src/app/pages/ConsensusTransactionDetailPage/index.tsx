@@ -204,7 +204,7 @@ export const ConsensusTransactionDetailView: FC<{
               <dd>{transaction.gas_used ? transaction.gas_used.toLocaleString() : t('common.missing')}</dd>
             </AdvancedField>
 
-            {transaction.gas_limit && (
+            {!!transaction.gas_limit && (
               <AdvancedField>
                 <dt>{t('common.gasLimit')}</dt>
                 <dd>
