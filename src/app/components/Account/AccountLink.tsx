@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RouteUtils } from '../../utils/route-utils'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { SearchScope } from '../../../types/searchScope'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { trimLongString } from '../../utils/trimLongString'
@@ -190,7 +190,7 @@ export const AccountLink: FC<Props> = ({
 
   const extraTooltipWithIcon = extraTooltip ? (
     <div className="flex items-center align-middle gap-1">
-      <InfoIcon />
+      <Info size="18" className="stroke-zinc-500" />
       {extraTooltip}
     </div>
   ) : undefined

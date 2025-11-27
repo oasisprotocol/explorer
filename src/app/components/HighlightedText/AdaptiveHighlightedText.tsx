@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { HighlightedText, HighlightOptions } from './index'
 import { AdaptiveDynamicTrimmer } from '../AdaptiveTrimmer/AdaptiveDynamicTrimmer'
 import { HighlightedTrimmedText } from './HighlightedTrimmedText'
@@ -65,7 +65,7 @@ export const AdaptiveHighlightedText: FC<AdaptiveHighlightedTextProps> = ({
       extraTooltip={
         extraTooltip ? (
           <>
-            <InfoIcon />
+            <Info size="18" className="stroke-zinc-500" />
             {extraTooltip}
           </>
         ) : undefined

@@ -3,13 +3,12 @@ import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { AppErrors } from '../../../types/errors'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
-import { COLORS } from '../../../styles/theme/colors'
 import { PageLayout } from '../../components/PageLayout'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TextSkeleton } from '../../components/Skeleton'
@@ -160,10 +159,10 @@ export const RoflAppDetailsView: FC<{
           </DetailsRow>
           <DetailsRow
             title={
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
                 {t('rofl.sekPublicKey')}
                 <Tooltip title={t('rofl.sekPublicKeyTooltip')}>
-                  <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+                  <Info size="18" className="stroke-zinc-500" />
                 </Tooltip>
               </div>
             }
@@ -172,10 +171,10 @@ export const RoflAppDetailsView: FC<{
           </DetailsRow>
           <DetailsRow
             title={
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
                 {t('rofl.secrets')}
                 <Tooltip title={t('rofl.secretsTooltip')}>
-                  <InfoIcon htmlColor={COLORS.brandDark} fontSize="small" />
+                  <Info size="18" className="stroke-zinc-500" />
                 </Tooltip>
               </div>
             }

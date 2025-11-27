@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RouteUtils } from '../../utils/route-utils'
 import { SearchScope } from '../../../types/searchScope'
@@ -30,7 +30,7 @@ export const TransactionLink: FC<{
   const to = RouteUtils.getTransactionRoute(scope, hash)
   const extraToolTipWithIcon = extraTooltip ? (
     <div className="inline-flex items-center gap-2">
-      <InfoIcon />
+      <Info size="18" className="stroke-zinc-500" />
       {extraTooltip}
     </div>
   ) : undefined

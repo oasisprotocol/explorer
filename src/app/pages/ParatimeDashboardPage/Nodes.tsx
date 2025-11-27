@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
-import InfoIcon from '@mui/icons-material/Info'
+import { Info } from 'lucide-react'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { COLORS } from '../../../styles/theme/colors'
 import { useGetRuntimeStatus } from '../../../oasis-nexus/api'
@@ -17,7 +17,7 @@ export const Nodes: FC<{ scope: RuntimeScope }> = ({ scope }) => {
     <div className="flex justify-between items-center w-full">
       {t('nodes.title')}
       <Tooltip title={t('nodes.tooltip')}>
-        <InfoIcon htmlColor={COLORS.brandDark} />
+        <Info size="18" className="stroke-zinc-500" />
       </Tooltip>
     </div>
   )
