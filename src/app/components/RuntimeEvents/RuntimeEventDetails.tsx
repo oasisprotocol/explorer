@@ -277,7 +277,7 @@ const RuntimeEventDetailsInner: FC<{
             <b>{eventName}</b>
             <br />
             {t('runtimeEvent.fields.topics')}:
-            <span className="font-medium block whitespace-pre-wrap wrap-break-word">
+            <span className="font-mono font-medium block whitespace-pre-wrap wrap-break-word">
               {event.body.topics
                 /* @ts-expect-error -- Event body is missing types */
                 .map((base64Topic, index) => {

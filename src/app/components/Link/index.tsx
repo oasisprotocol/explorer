@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Link as UilLink } from '@oasisprotocol/ui-library/src/components/link'
@@ -86,10 +86,6 @@ type CustomTrimEndLinkLabelProps = {
   trimMode?: TrimMode
 }
 
-const LinkLabel: FC<PropsWithChildren> = ({ children }) => (
-  <span className="text-inherit font-inherit leading-inherit">{children}</span>
-)
-
 const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, labelOnly, trimMode }) => {
   const label =
     trimMode === 'adaptive' ? (
@@ -98,7 +94,7 @@ const CustomTrimEndLinkLabel: FC<CustomTrimEndLinkLabelProps> = ({ name, to, lab
       <HighlightedTrimmedText text={name} fragmentLength={14} />
     )
   return labelOnly ? (
-    <LinkLabel>{label}</LinkLabel>
+    <span>{label}</span>
   ) : (
     <UilLink asChild>
       <RouterLink to={to}>{label}</RouterLink>
@@ -119,17 +115,17 @@ const TabletLink: FC<TabletLinkProps> = ({ address, name, to, labelOnly, trimMod
     return <CustomTrimEndLinkLabel name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
   }
 
-  const label =
+  const trimmedAddr =
     trimMode === 'adaptive' ? (
       <AdaptiveTrimmer text={address} strategy={'middle'} minLength={13} />
     ) : (
       trimLongString(address)
     )
   return labelOnly ? (
-    <LinkLabel>{label}</LinkLabel>
+    <span className="font-mono">{trimmedAddr}</span>
   ) : (
-    <UilLink asChild>
-      <RouterLink to={to}>{label}</RouterLink>
+    <UilLink className="font-mono" asChild>
+      <RouterLink to={to}>{trimmedAddr}</RouterLink>
     </UilLink>
   )
 }
@@ -146,20 +142,20 @@ const DesktopLink: FC<DesktopLinkProps> = ({ address, name, to, alwaysTrim, trim
         {name ? (
           <CustomTrimEndLinkLabel name={name} to={to} labelOnly={labelOnly} trimMode={trimMode} />
         ) : labelOnly ? (
-          <LinkLabel>{trimLongString(address)}</LinkLabel>
+          <span className="font-mono">{trimLongString(address)}</span>
         ) : (
-          <UilLink asChild>
+          <UilLink className="font-mono" asChild>
             <RouterLink to={to}>{trimLongString(address)}</RouterLink>
           </UilLink>
         )}
       </WithHoverHighlighting>
     )
   }
-  const label = name ? <HighlightedText text={name} /> : address
+  const label = name ? <HighlightedText text={name} /> : <span className="font-mono">{address}</span>
   return (
     <WithHoverHighlighting address={address}>
       {labelOnly ? (
-        <LinkLabel>{label}</LinkLabel>
+        <span>{label}</span>
       ) : (
         <UilLink asChild>
           <RouterLink to={to}>{label}</RouterLink>
