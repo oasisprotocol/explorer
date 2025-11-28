@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { ExternalLink } from 'lucide-react'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'
 import { EmptyStateCard } from './EmptyStateCard'
 import { GridRow } from './GridRow'
@@ -57,12 +57,12 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
                 <>
                   {isUrlSafe(homepage) && (
                     <Link
-                      className="inline-flex items-center break-all gap-1"
+                      className="inline-flex items-end break-all gap-1"
                       href={homepage}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      {homepage} <OpenInNewIcon className="text-base" />
+                      {homepage} <ExternalLink size={18} />
                     </Link>
                   )}
                   {isTwitterHandle(homepage) && <XProfileWidget handle={homepage} />}
@@ -85,12 +85,12 @@ export const MetaDataCard: FC<MetaDataCardProps> = ({ isFetched, metadata }) => 
             >
               {isUrlSafe(metadata['net.oasis.rofl.repository']) ? (
                 <Link
-                  className="inline-flex items-center break-all gap-1"
+                  className="inline-flex items-end break-all gap-1"
                   href={metadata['net.oasis.rofl.repository']}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  {metadata['net.oasis.rofl.repository']} <OpenInNewIcon className="text-base" />
+                  {metadata['net.oasis.rofl.repository']} <ExternalLink size={18} />
                 </Link>
               ) : undefined}
             </GridRow>
