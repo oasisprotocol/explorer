@@ -46,7 +46,7 @@ export const ConsensusTransactions: FC<ConsensusTransactionsProps> = ({
   const { t } = useTranslation()
 
   const tableColumns: TableColProps[] = [
-    { key: 'status', content: t('common.status') },
+    { key: 'status', content: t('common.status'), width: '80px', align: TableCellAlign.Center },
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
     { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
