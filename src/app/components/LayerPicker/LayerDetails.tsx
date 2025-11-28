@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { ExternalLink } from 'lucide-react'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Network, getNetworkNames } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
@@ -238,7 +238,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
                 layer: layerLabels[selectedScope.layer],
                 network: networkNames[selectedScope.network],
               })}
-              <OpenInNewIcon sx={{ fontSize: '16px' }} />
+              <ExternalLink size={16} />
             </RouterLink>
           </Link>
         )}
