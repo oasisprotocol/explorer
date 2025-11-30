@@ -10,6 +10,14 @@ html {
   font-family: 'Inter Variable', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 1rem;
+
+  /*
+  Fixes display of "x" next to numbers, e.g. in search box "rofl1qze0hqur8xf2…wu23×0zp" "×":
+  http://localhost:1234/mainnet/sapphire/rofl/app/rofl1qze0hqur8xf20xfd44fke8dayysdq8p2wu23x0zp?q=rofl1qze0hqur8xf20xfd44fke8dayysdq8p2wu23x0zp
+  https://rsms.me/inter/#features
+  Unfortunately now vertical alignment of chars like ":" and "=" is worse.
+  */
+  font-feature-settings: 'calt' 0;
 }
 
 /** Use Inter for "…" instead of Roboto Mono. */
