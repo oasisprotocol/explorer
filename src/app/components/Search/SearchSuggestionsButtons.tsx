@@ -2,10 +2,6 @@ import { FC } from 'react'
 import { ButtonHTMLAttributes } from 'react'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Trans, useTranslation } from 'react-i18next'
-import WidgetsIcon from '@mui/icons-material/Widgets'
-import RepeatIcon from '@mui/icons-material/Repeat'
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
-import TokenIcon from '@mui/icons-material/Token'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'
@@ -38,21 +34,18 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
     searchSuggestionTerms.mainnet.sapphire!
   const defaultComponents = {
     OptionalBreak: <OptionalBreak />,
-    BlockIcon: <WidgetsIcon sx={{ fontSize: '18px' }} />,
     BlockLink: (
       <SuggestionButton
         onClick={() => onClickSuggestion(suggestedBlock)}
         onMouseDown={e => e.preventDefault()}
       />
     ),
-    TransactionIcon: <RepeatIcon sx={{ fontSize: '18px' }} />,
     TransactionLink: (
       <SuggestionButton
         onClick={() => onClickSuggestion(suggestedTransaction)}
         onMouseDown={e => e.preventDefault()}
       />
     ),
-    AccountIcon: <AccountBalanceWalletIcon sx={{ fontSize: '18px' }} />,
     AccountLink: (
       <SuggestionButton
         onClick={() => onClickSuggestion(suggestedAccount)}
@@ -62,7 +55,6 @@ export const SearchSuggestionsButtons: FC<Props> = ({ scope, onClickSuggestion }
   }
   const runtimeComponents = {
     ...defaultComponents,
-    TokenIcon: <TokenIcon sx={{ fontSize: '18px' }} />,
     TokenLink: (
       <SuggestionButton
         onClick={() => onClickSuggestion(suggestedTokenFragment)}
