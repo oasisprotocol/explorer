@@ -1,12 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import LockIcon from '@mui/icons-material/Lock'
 import { Table, TableCellAlign, TableColProps } from '../../components/Table'
 import { StatusIcon } from '../StatusIcon'
 import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { RoundedBalance } from '../../components/RoundedBalance'
 import { RuntimeTransaction } from '../../../oasis-nexus/api'
-import { COLORS } from '../../../styles/theme/colors'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
@@ -16,6 +14,8 @@ import { TransactionEncryptionStatus } from '../TransactionEncryptionStatus'
 import { TransferIcon } from '../TransferIcon'
 import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
+import { LockKeyhole } from 'lucide-react'
+import { useScreenSize } from '../../hooks/useScreensize'
 
 type TableRuntimeTransaction = RuntimeTransaction & {
   markAsNew?: boolean
@@ -47,6 +47,7 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
   filtered,
 }) => {
   const { t } = useTranslation()
+  const { isMobile } = useScreenSize()
   // We only want to show encryption status of we are listing transactions
   // from paratimes that actually support encrypting transactions
   const canHaveEncryption = doesAnyOfTheseLayersSupportEncryptedTransactions(
@@ -55,7 +56,12 @@ export const RuntimeTransactions: FC<TransactionsProps> = ({
   const tableColumns: TableColProps[] = [
     { key: 'status', content: t('common.status') },
     ...(verbose && canHaveEncryption
-      ? [{ key: 'encrypted', content: <LockIcon htmlColor={COLORS.grayMedium} /> }]
+      ? [
+          {
+            key: 'encrypted',
+            content: isMobile ? <LockKeyhole className="w-4 h-4 stroke-zinc-500" /> : t('common.encryption'),
+          },
+        ]
       : []),
     { key: 'hash', content: t('common.hash') },
     { key: 'block', content: t('common.block') },
