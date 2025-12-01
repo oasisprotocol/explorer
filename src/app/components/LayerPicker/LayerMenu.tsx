@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import { ChevronRight } from 'lucide-react'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { isScopeHidden, mergeNetworksInLayerSelector, RouteUtils } from '../../utils/route-utils'
@@ -57,7 +57,7 @@ export const LayerMenuItem: FC<LayerMenuItemProps> = ({
         {labels[targetScope.layer]}
         {isActive && <LayerMenuItemCaption>{t('layerPicker.active')}</LayerMenuItemCaption>}
       </div>
-      {isSelected && <KeyboardArrowRightIcon />}
+      {isSelected && <ChevronRight size={20} />}
     </MenuItem>
   )
 }
