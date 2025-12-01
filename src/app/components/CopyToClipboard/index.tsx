@@ -1,8 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { COLORS } from '../../../styles/theme/colors'
+import { Copy } from 'lucide-react'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 const clipboardTooltipDuration = 2000
@@ -43,9 +42,9 @@ export const CopyToClipboard: FC<CopyToClipboardProps> = ({ className, value }) 
       <button
         onClick={handleCopyToClipboard}
         aria-label={ariaLabel}
-        className={cn('inline-flex items-center ml-3', className)}
+        className={cn('inline-flex items-center ml-2', className)}
       >
-        <ContentCopyIcon sx={{ fontSize: '14px', color: COLORS.brandDark }} />
+        <Copy size={14} className="stroke-primary" />
       </button>
     </Tooltip>
   )
