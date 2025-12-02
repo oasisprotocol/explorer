@@ -5,7 +5,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet'
 import FileCopyIcon from '@mui/icons-material/FileCopy'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ArrowRight } from 'lucide-react'
 import MemoryIcon from '@mui/icons-material/Memory'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import LanIcon from '@mui/icons-material/Lan'
@@ -135,7 +135,7 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case 'consensus.Undelegate':
       return <MethodIcon icon={<LanOutlinedIcon />} {...props} />
     case 'accounts.Transfer':
-      return <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />
+      return <MethodIcon color="green" icon={<ArrowRight />} {...props} />
     case 'rofl.Create':
       return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
     case 'rofl.Register':

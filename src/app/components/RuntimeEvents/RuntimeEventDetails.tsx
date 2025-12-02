@@ -23,7 +23,7 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { MaybeEventErrorLine } from './EventError'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ArrowRight } from 'lucide-react'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import MemoryIcon from '@mui/icons-material/Memory'
 import LanIcon from '@mui/icons-material/Lan'
@@ -107,7 +107,7 @@ export const EventTypeIcon: FC<{
     size: 25,
   }
   const eventTypeIcons: Record<RuntimeEventType, React.ReactNode> = {
-    [RuntimeEventType.accountstransfer]: <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />,
+    [RuntimeEventType.accountstransfer]: <MethodIcon color="green" icon={<ArrowRight />} {...props} />,
     [RuntimeEventType.evmlog]: <></>,
     [RuntimeEventType.coregas_used]: <></>,
     [RuntimeEventType.consensus_accountswithdraw]: (
