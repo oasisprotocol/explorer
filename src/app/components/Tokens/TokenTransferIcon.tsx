@@ -4,7 +4,7 @@ import { TFunction } from 'i18next'
 import StreamIcon from '@mui/icons-material/Stream'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import ApprovalIcon from '@mui/icons-material/Approval'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ArrowRight } from 'lucide-react'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 
@@ -40,7 +40,7 @@ const getTokenTransferIcon = (
 
   switch (name) {
     case 'Transfer':
-      return <MethodIcon color="green" icon={<ArrowForwardIcon />} {...props} />
+      return <MethodIcon color="green" icon={<ArrowRight />} {...props} />
     case 'Approval':
       return <MethodIcon color="green" icon={<ApprovalIcon />} {...props} />
     case 'Minting':

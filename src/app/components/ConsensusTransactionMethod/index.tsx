@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ArrowRight } from 'lucide-react'
 import DnsIcon from '@mui/icons-material/Dns'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import HowToVoteIcon from '@mui/icons-material/HowToVote'
@@ -291,7 +291,7 @@ const getConsensusTransactionMethod = (
   const label = getConsensusTransactionLabel(t, method)
   switch (method) {
     case ConsensusTxMethod.stakingTransfer:
-      return <MethodIcon color="green" icon={<ArrowForwardIcon />} label={label} {...props} />
+      return <MethodIcon color="green" icon={<ArrowRight />} label={label} {...props} />
     case ConsensusTxMethod.stakingAddEscrow:
       return <MethodIcon color="green" icon={<ExitToAppIcon />} label={label} {...props} />
     case ConsensusTxMethod.stakingReclaimEscrow:
