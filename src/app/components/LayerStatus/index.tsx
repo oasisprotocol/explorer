@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import ErrorIcon from '@mui/icons-material/Error'
+import { CircleCheck, CircleX } from 'lucide-react'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 
 type LayerStatusProps = {
@@ -15,14 +14,14 @@ type LayerStatusIconProps = {
 
 const OutOfDateLayerStatusIcon: FC<LayerStatusIconProps> = ({ tooltip }) => {
   const { t } = useTranslation()
-  const errorIcon = <ErrorIcon color="error" fontSize="small" />
+  const errorIcon = <CircleX size={16} className="stroke-destructive" />
 
   return tooltip ? <Tooltip title={t('common.outOfDate')}>{errorIcon}</Tooltip> : errorIcon
 }
 
 const LayerStatusIcon: FC<LayerStatusIconProps> = ({ tooltip }) => {
   const { t } = useTranslation()
-  const successIcon = <CheckCircleIcon color="success" fontSize="small" />
+  const successIcon = <CircleCheck size={16} className="stroke-success" />
 
   return tooltip ? <Tooltip title={t('common.online')}>{successIcon}</Tooltip> : successIcon
 }

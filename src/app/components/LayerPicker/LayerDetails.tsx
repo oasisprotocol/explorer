@@ -210,7 +210,7 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
   return (
     <div className="flex py-4 px-1 md:px-8 select-text" style={{ minHeight: contentMinHeight }}>
       <div className="pt-0.5 pr-4 text-primary">
-        <div className="w-8 h-8 flex justify-center items-center text-inherit rounded-full border-2 border-solid border-primary">
+        <div className="w-8 h-8 flex justify-center items-center text-inherit rounded-full border-[0.1rem] border-solid border-primary">
           {icons[selectedScope.network]}
         </div>
       </div>
@@ -219,11 +219,13 @@ export const LayerDetailsSection: FC<LayerDetailsSectionProps> = ({
           <Button
             variant="link"
             onClick={handleConfirm}
-            className="h-[30px] pl-0 text-2xl font-bold hover:no-underline"
+            className="h-[30px] pl-0 text-2xl font-bold hover:no-underline pr-2"
           >
             {getNameForScope(t, selectedScope)}
           </Button>
-          <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
+          <div className="pt-0.5">
+            <LayerStatus isOutOfDate={isOutOfDate} withTooltip />
+          </div>
         </div>
         {children}
         {docsUrl && (

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import { ChevronRight } from 'lucide-react'
 import { Network, getNetworkNames } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
 import { getNetworkIcons } from '../../utils/content'
@@ -57,7 +57,7 @@ export const NetworkMenuItem: FC<NetworkMenuItemProps> = ({
           </span>
         )}
       </div>
-      {network === selectedNetwork && <KeyboardArrowRightIcon />}
+      {network === selectedNetwork && <ChevronRight size={20} />}
     </MenuItem>
   )
 }
