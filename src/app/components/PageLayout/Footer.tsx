@@ -35,7 +35,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
           >
             <Typography variant="xsmall" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
               <span className="whitespace-nowrap">{t('footer.mobileTitle')} |</span>
-              <span className={cn(hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
+              <span className={cn(!!hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
                 <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
               </span>

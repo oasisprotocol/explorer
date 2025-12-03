@@ -6,10 +6,6 @@ html {
   scroll-behavior: smooth;
   /* Don't scroll the target underneath sticky Header */
   scroll-padding-top: 180px;
-  /* TODO: Remove when Oasis UI library use variable fonts */
-  font-family: 'Inter Variable', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
 }
 
 /** Use Inter for "…" instead of Roboto Mono. */
