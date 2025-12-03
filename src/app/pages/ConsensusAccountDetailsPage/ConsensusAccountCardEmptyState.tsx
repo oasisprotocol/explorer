@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import StackedBarChartIcon from '@mui/icons-material/StackedBarChart'
+import { ChartColumnDecreasing } from 'lucide-react'
 import { COLORS } from '../../../styles/theme/colors'
 
 type ConsensusAccountCardEmptyStateProps = {
@@ -14,7 +14,7 @@ export const ConsensusAccountCardEmptyState: FC<ConsensusAccountCardEmptyStatePr
 }) => {
   return (
     <div className="flex flex-col justify-center items-center gap-2 text-center min-h-36 pt-2 sm:pt-16 sm:min-h-48">
-      <StackedBarChartIcon sx={{ color: COLORS.grayMedium, fontSize: 40, opacity: 0.5 }} />
+      <ChartColumnDecreasing size={36} color={COLORS.grayMedium} className="opacity-50" />
       <Typography textColor="muted" className="font-semibold text-center">
         {label}
       </Typography>

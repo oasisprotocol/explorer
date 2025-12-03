@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { FiatMoneyWarning } from '../Balance/FiatMoneyAmount'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
-import HelpIcon from '@mui/icons-material/Help'
+import { CircleHelp } from 'lucide-react'
 import { TokenPriceInfo } from '../../../coin-gecko/api'
 import BigNumber from 'bignumber.js'
 
@@ -37,7 +37,7 @@ export const CurrentFiatValue: FC<CurrentFiatValueProps> = ({
             })}
             &nbsp;
             <Tooltip title={t('currentFiatValue.explanation')}>
-              <HelpIcon />
+              <CircleHelp size={20} />
             </Tooltip>
           </>
         )}

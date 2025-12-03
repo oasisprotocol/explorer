@@ -6,7 +6,6 @@ import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
-import CircleIcon from '@mui/icons-material/Circle'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
@@ -242,7 +241,7 @@ const PanelButton: FC<PanelButtonProps> = ({ activePanel, ariaLabel, panel, setP
       className="hover:bg-black/[0.04] rounded-full w-[26px] h-[26px]"
     >
       {panel === activePanel ? (
-        <CircleIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
+        <div className="rounded-full w-[10px] h-[10px] bg-chart-5" />
       ) : (
         <RadioButtonUncheckedIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
       )}

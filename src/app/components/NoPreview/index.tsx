@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import NotInterestedIcon from '@mui/icons-material/NotInterested'
+import { Ban } from 'lucide-react'
 
 type NoPreviewProps = {
   placeholderSize: string
@@ -17,7 +17,7 @@ export const NoPreview: FC<NoPreviewProps> = ({ placeholderSize }) => {
         width: placeholderSize,
       }}
     >
-      <NotInterestedIcon sx={{ fontSize: '60px', color: '#A7A7A7' }} />
+      <Ban size={50} color="#A7A7A7" />
       {t('nft.noPreview')}
     </div>
   )

@@ -1,7 +1,6 @@
 import { FC, memo, ReactNode, useState } from 'react'
 import { Legend, ResponsiveContainer, Tooltip, PieChart as RechartsPieChart, Pie, Cell } from 'recharts'
 import { useTranslation } from 'react-i18next'
-import CircleIcon from '@mui/icons-material/Circle'
 import { TooltipContent, type Formatters } from './Tooltip'
 import { COLORS } from '../../../styles/theme/colors'
 import { Props } from 'recharts/types/component/DefaultLegendContent'
@@ -35,7 +34,10 @@ const LegendListItem: FC<LegendListItemProps> = ({ children, compact, isActive, 
         )}
         style={isActive && color ? { backgroundColor: `${color}40` } : undefined}
       >
-        <CircleIcon sx={{ color: color || COLORS.grayMedium, fontSize: compact ? 12 : 18 }} />
+        <div
+          className={cn('rounded-full', compact ? 'w-[10px] h-[10px]' : 'w-[15px] h-[15px]')}
+          style={{ backgroundColor: color || COLORS.grayMedium }}
+        />
       </div>
       <span
         className={cn(
