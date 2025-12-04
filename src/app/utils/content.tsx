@@ -4,7 +4,7 @@ import { Layer } from '../../oasis-nexus/api'
 import { Network } from '../../types/network'
 import { MainnetIcon } from '../components/CustomIcons/Mainnet'
 import { TestnetIcon } from '../components/CustomIcons/Testnet'
-import ConstructionIcon from '@mui/icons-material/Construction'
+import { Hammer } from 'lucide-react'
 
 export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
   emerald: t('common.emerald'),
@@ -18,5 +18,5 @@ export const getLayerLabels = (t: TFunction): Record<Layer, string> => ({
 export const getNetworkIcons = ({ className }: { className?: string } = {}): Record<Network, ReactNode> => ({
   mainnet: <MainnetIcon className={className} />,
   testnet: <TestnetIcon className={className} />,
-  localnet: <ConstructionIcon className={className} />,
+  localnet: <Hammer size={18} className={className} />,
 })

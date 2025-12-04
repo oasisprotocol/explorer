@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react'
 import lightBackgroundEmptyState from './images/background-empty-state.svg'
 import darkBackgroundEmptyState from './images/background-empty-state-dark.svg'
-import CancelIcon from '@mui/icons-material/Cancel'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { CircleX } from 'lucide-react'
 
 type EmptyStateProps = {
   description: ReactNode
@@ -23,7 +23,7 @@ export const EmptyState: FC<EmptyStateProps> = ({ description, title, light, min
       className="flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center h-full"
       style={{ backgroundImage: `url(${lightBackgroundEmptyState})`, minHeight }}
     >
-      <CancelIcon color="error" fontSize="large" />
+      <CircleX size={32} className="text-destructive" />
       {content}
     </div>
   ) : (

@@ -2,17 +2,16 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
-import ContrastIcon from '@mui/icons-material/Contrast'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { EvmNft } from 'oasis-nexus/api'
 import { processNftImageUrl } from '../../utils/nft-images'
 import { isUrlSafe } from '../../utils/url'
 import { ImagePreview } from '../../components/ImagePreview'
 import { NoPreview } from '../../components/NoPreview'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { Contrast, Maximize2 } from 'lucide-react'
 
 const imageSize = '350px'
 
@@ -35,7 +34,7 @@ const DarkModeSwitch: FC<{ darkMode: boolean; onSetDarkMode: (darkMode: boolean)
             : 'bg-muted text-foreground hover:bg-muted/70',
         )}
       >
-        <ContrastIcon />
+        <Contrast />
       </Button>
     </Tooltip>
   )
@@ -56,7 +55,7 @@ const FullScreenButton: FC<{ darkMode: boolean; onClick: () => void }> = ({ dark
             : 'bg-muted text-foreground hover:bg-muted/70',
         )}
       >
-        <OpenInFullIcon />
+        <Maximize2 />
       </Button>
     </Tooltip>
   )

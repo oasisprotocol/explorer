@@ -1,7 +1,6 @@
 import { FC } from 'react'
-import ZoomOut from '@mui/icons-material/ZoomOut'
 import { Trans, useTranslation } from 'react-i18next'
-import ZoomIn from '@mui/icons-material/ZoomIn'
+import { ZoomIn, ZoomOut } from 'lucide-react'
 
 export const HideMoreResults: FC<{ onHide: () => void }> = ({ onHide }) => {
   return (
@@ -9,7 +8,7 @@ export const HideMoreResults: FC<{ onHide: () => void }> = ({ onHide }) => {
       className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5] hover:bg-[#DDDDDE] cursor-pointer"
       onClick={onHide}
     >
-      <ZoomOut />
+      <ZoomOut size={18} />
       <span>
         <Trans i18nKey="search.otherResults.clickToHide" />
       </span>
@@ -28,7 +27,7 @@ export const ShowMoreResults: FC<{
       className="w-[90%] mx-auto md:w-full flex justify-center items-center gap-1 p-4 leading-tight my-8 rounded-md box-border bg-[#F4F4F5] hover:bg-[#DDDDDE] cursor-pointer"
       onClick={onShow}
     >
-      <ZoomIn />
+      <ZoomIn size={18} />
       <span>
         <Trans
           t={t}

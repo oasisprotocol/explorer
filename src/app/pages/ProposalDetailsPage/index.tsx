@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import { Info } from 'lucide-react'
-import CancelIcon from '@mui/icons-material/Cancel'
+import { Info, CircleX } from 'lucide-react'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { Proposal, useGetConsensusProposalsProposalId } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
@@ -56,7 +55,7 @@ const VoteLoadingProblemIndicator: FC = () => {
   const { t } = useTranslation()
   return (
     <Tooltip title={t('networkProposal.failedToLoadAllVotes')}>
-      <CancelIcon color="error" fontSize="inherit" sx={{ ml: 2 }} />
+      <CircleX size={14} className="ml-4 text-destructive" />
     </Tooltip>
   )
 }
