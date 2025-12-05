@@ -45,6 +45,7 @@
     "eslint-plugin-react": "7.37.4"
   },
   "dependencies": {
+    "@deltadao/pontusx-registry-hooks": "^0.2.1",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
     "@ethereumjs/util": "9.1.0",
@@ -74,6 +75,7 @@
     "react-router-dom": "6.30.0",
     "recharts": "2.15.1",
     "swiper": "11.2.5",
+    "swr": "^2.3.7",
     "use-resize-observer": "9.1.0",
     "viem": "^2.31.4"
   },
