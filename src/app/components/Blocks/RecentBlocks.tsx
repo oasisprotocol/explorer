@@ -28,7 +28,7 @@ export const RecentBlocks: FC<RecentBlocksProps> = ({ isLoading, blocks, limit }
   const { isLaptop } = useScreenSize()
   const layerLabels = getLayerLabels(t)
   const tableColumns: TableColProps[] = [
-    { key: 'layer', content: t('common.layer') },
+    { key: 'chain', content: t('common.chain') },
     { key: 'height', content: t('common.height') },
     {
       key: 'hash',

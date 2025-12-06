@@ -133,7 +133,7 @@ export const RuntimeTransactionDetailView: FC<{
   tokenPrices: AllTokenPrices
 }> = ({ isLoading, transaction, showLayer, standalone = false, tokenPrices }) => {
   const { t } = useTranslation()
-  const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
+  const formattedTime = useFormattedTimestampStringWithDistance(transaction?.timestamp)
   // @ts-expect-error Ignore index type error
   const amountSymbolPriceInfo = tokenPrices[transaction?.amount_symbol]
   const gasPrice = getGasPrice({ fee: transaction?.charged_fee, gasUsed: transaction?.gas_used.toString() })
@@ -218,7 +218,7 @@ export const RuntimeTransactionDetailView: FC<{
           </dd>
 
           <dt>{t('common.timestamp')}</dt>
-          <dd>{formattedTimestamp}</dd>
+          <dd>{formattedTime}</dd>
 
           {!!transaction?.signers.length && (
             <>

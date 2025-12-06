@@ -32,7 +32,7 @@ export const docs = {
   node: `https://docs.oasis.io/get-involved/run-node/validator-node`,
   paraTimeTransfer: `https://docs.oasis.io/general/manage-tokens/oasis-wallets/web#paratimes`,
   pontusx1: 'https://docs.pontus-x.eu/',
-  pontusx2: 'https://docs.pontus-x.eu/docs/getting-started/quick-start',
+  pontusx2: 'https://docs.pontus-x.eu/docs/introduction/overview',
   pontusx3: 'https://github.com/deltaDAO/mvg-portal/blob/main/chains.config.js',
   sapphire: `https://docs.oasis.io/dapp/sapphire/`,
   sapphireTestnet: `https://docs.oasis.io/dapp/sapphire/#testnet`,
