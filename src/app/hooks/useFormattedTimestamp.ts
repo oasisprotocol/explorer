@@ -25,8 +25,8 @@ export const useFormattedTimestamp = (
   })
 }
 
-const useFormattedTimestampWithDistance = (
-  timestamp: Date | undefined,
+export const useFormattedTimestampStringWithDistance = (
+  timestampStr: string | undefined,
   dateTimeFormatOptions: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
@@ -39,7 +39,8 @@ const useFormattedTimestampWithDistance = (
 ) => {
   const { t } = useTranslation()
   const { isMobile } = useScreenSize()
-  if (!timestamp) return ''
+  if (!timestampStr) return ''
+  const timestamp = new Date(timestampStr)
   const distance = formatDistanceStrict(timestamp, new Date(), {
     addSuffix: true,
   })
@@ -55,11 +56,6 @@ const useFormattedTimestampWithDistance = (
         },
       })
 }
-
-export const useFormattedTimestampStringWithDistance = (
-  timestamp: string | undefined,
-  dateTimeFormatOptions?: Intl.DateTimeFormatOptions,
-) => useFormattedTimestampWithDistance(timestamp ? new Date(timestamp) : undefined, dateTimeFormatOptions)
 
 export const getTimeZone = () => {
   const date = new Date()

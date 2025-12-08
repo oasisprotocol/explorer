@@ -100,7 +100,7 @@ export const ConsensusTransactionDetailView: FC<{
   showLayer?: boolean
 }> = ({ detailsPage, isLoading, showLayer, transaction, tokenPrices }) => {
   const { t } = useTranslation()
-  const formattedTimestamp = useFormattedTimestampStringWithDistance(transaction?.timestamp)
+  const formattedTime = useFormattedTimestampStringWithDistance(transaction?.timestamp)
 
   if (isLoading) return <TextSkeleton numberOfRows={detailsPage ? 13 : 7} />
   if (!transaction) return <></>
@@ -132,7 +132,7 @@ export const ConsensusTransactionDetailView: FC<{
           <ConsensusTransactionMethod method={transaction.method} />
         </dd>
         <dt>{t('common.timestamp')}</dt>
-        <dd>{formattedTimestamp}</dd>
+        <dd>{formattedTime}</dd>
         <dt>{t('common.height')}</dt>
         <dd>
           <BlockLink scope={transaction} height={transaction.block} />
