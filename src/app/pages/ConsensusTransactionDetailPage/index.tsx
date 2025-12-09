@@ -112,7 +112,7 @@ export const ConsensusTransactionDetailView: FC<{
       <StyledDescriptionList standalone={!detailsPage} highlight={transaction.markAsNew}>
         {showLayer && (
           <>
-            <dt>{t('common.paratime')}</dt>
+            <dt>{t('common.chain')}</dt>
             <dd>
               <DashboardLink scope={transaction} />
             </dd>

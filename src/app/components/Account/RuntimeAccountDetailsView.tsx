@@ -87,7 +87,7 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
 
       {(showLayer || showBalancesOnOtherLayers) && (
         <>
-          <dt>{t('common.paratime')}</dt>
+          <dt>{t('common.chain')}</dt>
           <dd className="inline!">
             <DashboardLink scope={account} />
             {showBalancesOnOtherLayers && <BalancesOnOtherLayers account={account} />}
