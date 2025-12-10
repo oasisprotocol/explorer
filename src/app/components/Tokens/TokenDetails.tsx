@@ -27,7 +27,7 @@ export const TokenDetails: FC<{
     <StyledDescriptionList standalone={standalone}>
       {showLayer && (
         <>
-          <dt>{t('common.paratime')}</dt>
+          <dt>{t('common.chain')}</dt>
           <dd>
             <DashboardLink scope={token} />
           </dd>

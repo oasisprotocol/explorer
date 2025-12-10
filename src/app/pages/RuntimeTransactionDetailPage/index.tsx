@@ -160,7 +160,7 @@ export const RuntimeTransactionDetailView: FC<{
         <StyledDescriptionList standalone={standalone} highlight={transaction.markAsNew}>
           {showLayer && (
             <>
-              <dt>{t('common.paratime')}</dt>
+              <dt>{t('common.chain')}</dt>
               <dd>
                 <DashboardLink scope={transaction} />
               </dd>

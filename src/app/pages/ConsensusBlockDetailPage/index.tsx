@@ -79,7 +79,7 @@ export const ConsensusBlockDetailView: FC<{
     <StyledDescriptionList standalone={standalone} highlight={block.markAsNew}>
       {showLayer && (
         <>
-          <dt>{t('common.paratime')}</dt>
+          <dt>{t('common.chain')}</dt>
           <dd>
             <DashboardLink scope={block} />
           </dd>

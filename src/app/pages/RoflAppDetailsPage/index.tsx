@@ -209,7 +209,7 @@ export const RoflAppDetailsViewSearchResult: FC<{
         />
         <CopyToClipboard value={app.metadata['net.oasis.rofl.name']} />
       </dd>
-      <DetailsRow title={t('common.paratime')}>
+      <DetailsRow title={t('common.chain')}>
         <DashboardLink scope={{ network: app.network, layer: app.layer }} />
       </DetailsRow>
       <VersionRow version={app.metadata['net.oasis.rofl.version']} />
