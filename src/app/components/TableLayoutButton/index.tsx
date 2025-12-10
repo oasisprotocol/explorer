@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
-import PivotTableChartIcon from '@mui/icons-material/PivotTableChart'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
+import { PivotTable } from '../MuiIcons/PivotTable'
 
 export enum TableLayout {
   Horizontal = 'horizontal',
@@ -21,13 +21,12 @@ export const TableLayoutButton: FC<TableLayoutButtonProps> = ({ tableView, setTa
     <Tooltip side="left" title={t('tableLayoutButton.changeView')}>
       <Button
         variant="ghost"
-        size="icon"
         onClick={() => {
           setTableView(tableView === TableLayout.Horizontal ? TableLayout.Vertical : TableLayout.Horizontal)
         }}
         className="hover:bg-black/[0.04]"
       >
-        <PivotTableChartIcon fontSize="medium" />
+        <PivotTable className="min-h-6 min-w-6" />
       </Button>
     </Tooltip>
   )
