@@ -103,13 +103,15 @@ const AdaptivelyTrimmedAccountLink: FC<
             />
           </span>
         )}
-        <AdaptiveTrimmer
-          idPrefix="account-address"
-          text={showAccountName ? `(${address})` : address}
-          strategy="middle"
-          tooltipOverride={tooltipTitle}
-          minLength={13}
-        />
+        <span className="font-mono">
+          <AdaptiveTrimmer
+            idPrefix="account-address"
+            text={showAccountName ? `(${address})` : address}
+            strategy="middle"
+            tooltipOverride={tooltipTitle}
+            minLength={13}
+          />
+        </span>
       </div>
     </WithTypographyAndLink>
   )
@@ -128,12 +130,12 @@ const TrimmedAccountLink: FC<
     <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 font-medium">
             <AccountMetadataSourceIndicator source={accountMetadata!.source} />{' '}
             {trimLongString(accountName, 12, 0)}
           </span>
         ) : (
-          trimLongString(address, 6, 6)
+          <span className="font-mono font-medium">{trimLongString(address, 6, 6)}</span>
         )}
       </MaybeWithTooltip>
     </WithTypographyAndLink>
@@ -155,15 +157,15 @@ const DesktopAccountLink: FC<
     <WithTypographyAndLink scope={scope} address={address} labelOnly={labelOnly}>
       <MaybeWithTooltip title={tooltipTitle}>
         {showAccountName ? (
-          <div className="flex items-center flex-wrap gap-1">
+          <div className="flex items-center flex-wrap gap-1 font-medium">
             <span className="inline-flex items-center gap-1">
               <AccountMetadataSourceIndicator source={accountMetadata!.source} />
               <HighlightedText text={accountName} />
             </span>
-            ({address})
+            <span className="font-mono">({address})</span>
           </div>
         ) : (
-          address
+          <span className="font-mono font-medium">{address}</span>
         )}
       </MaybeWithTooltip>
     </WithTypographyAndLink>
