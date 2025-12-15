@@ -50,8 +50,6 @@ const colorMap = {
   },
 }
 
-const iconRatio = 0.75
-
 export const MethodIcon: FC<MethodIconProps> = props => {
   const { label, reverseLabel, truncate } = props
   const enableTruncate = truncate && label && !reverseLabel
@@ -69,7 +67,6 @@ type MethodIconContentProps = MethodIconProps & {
 }
 
 const MethodIconContent: FC<MethodIconContentProps> = ({
-  border = true,
   color = 'blue',
   icon,
   label,
@@ -91,7 +88,7 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
           color: theme.primary,
         }}
       >
-        {cloneElement(icon, { style: { fontSize: Math.ceil(size * iconRatio) } })}
+        {icon}
       </div>
       {label && (
         <Typography
