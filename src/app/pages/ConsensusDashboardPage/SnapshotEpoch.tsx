@@ -46,9 +46,9 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
             <Typography className="font-normal flex gap-2 justify-between items-center min-h-7">
               <Trans
                 t={t}
-                i18nKey="consensusSnapshot.blockHeight"
+                i18nKey="consensusSnapshot.currentBlock"
                 components={{
-                  BlockHeight: (
+                  BlockNumber: (
                     <span className="font-semibold text-primary">{blockHeight.toLocaleString()}</span>
                   ),
                 }}

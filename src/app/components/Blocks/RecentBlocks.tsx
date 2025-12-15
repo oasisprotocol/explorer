@@ -29,7 +29,7 @@ export const RecentBlocks: FC<RecentBlocksProps> = ({ isLoading, blocks, limit }
   const layerLabels = getLayerLabels(t)
   const tableColumns: TableColProps[] = [
     { key: 'chain', content: t('common.chain') },
-    { key: 'height', content: t('common.height') },
+    { key: 'block', content: t('common.block') },
     {
       key: 'hash',
       content: t('common.hash'),

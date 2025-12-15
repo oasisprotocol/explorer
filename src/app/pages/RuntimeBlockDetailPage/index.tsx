@@ -111,7 +111,7 @@ export const RuntimeBlockDetailView: FC<{
           </dd>
         </>
       )}
-      <dt>{t('common.height')}</dt>
+      <dt>{t('common.block')}</dt>
       <dd>
         <BlockLink scope={block} height={block.round} />
         <CopyToClipboard value={block.round.toString()} />

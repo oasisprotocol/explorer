@@ -40,7 +40,7 @@ export const RuntimeBlocks: FC<RuntimeBlocksProps> = ({
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
     ...(type === BlocksTableType.Desktop ? [{ key: 'fill', content: t('common.fill') }] : []),
-    { key: 'height', content: t('common.height') },
+    { key: 'block', content: t('common.block') },
     ...(type === BlocksTableType.Desktop || type === BlocksTableType.DesktopLite
       ? [
           {

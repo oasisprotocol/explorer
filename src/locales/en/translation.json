@@ -104,7 +104,6 @@
     "gasLimit": "Gas Limit",
     "gasPrice": "Gas Price",
     "hash": "Hash",
-    "height": "Height",
     "hide": "Hide",
     "id": "ID",
     "invalidVotes": "Invalid votes",
@@ -207,11 +206,11 @@
     }
   },
   "consensusSnapshot": {
-    "blockHeight": "Current block height <BlockHeight />",
-    "currentEpoch": "Current Epoch <EpochNumber />",
+    "currentBlock": "Block <BlockNumber />",
+    "currentEpoch": "Epoch <EpochNumber />",
     "title": "Consensus Snapshot"
   },
-  "snapshotEpochTitle": "Current epoch & block height",
+  "snapshotEpochTitle": "Current progress",
   "networkProposal": {
     "close": "Closed",
     "closeTooltip": "Voting ended on epoch shown.",
@@ -273,7 +272,7 @@
     "unsupportedNetwork": "Unsupported network",
     "invalidAddress": "Invalid address",
     "invalidRoflAppId": "Invalid app ID",
-    "invalidBlockHeight": "Invalid block height",
+    "invalidBlockHeight": "Invalid block number",
     "invalidPageNumber": "Invalid page number",
     "invalidProposalId": "Invalid proposal ID",
     "invalidTxHash": "Invalid transaction hash",
@@ -700,12 +699,12 @@
       "legacyTooltip": "New EVM dApps and contracts should be deployed on Sapphire."
     },
     "activeNodes": "Active nodes",
-    "blockNumber": "Block number",
+    "blockNumber": "Current block",
     "search": "Search across all our networks"
   },
   "paratimes": {
     "activeNodes": "{{nodes}} active",
-    "blockNumber": "Block number:",
+    "blockNumber": "Current block:",
     "inactive": "Coming soon",
     "listTitle": "ParaTimes",
     "noData": "No data available",

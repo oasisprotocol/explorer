@@ -85,7 +85,7 @@ export const ConsensusBlockDetailView: FC<{
           </dd>
         </>
       )}
-      <dt>{t('common.height')}</dt>
+      <dt>{t('common.block')}</dt>
       <dd>
         <BlockLink scope={block} height={block.height} />
         <CopyToClipboard value={block.height.toString()} />
