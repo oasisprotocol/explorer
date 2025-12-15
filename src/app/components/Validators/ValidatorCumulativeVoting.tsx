@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { PercentageValue } from '../PercentageValue'
+import BigNumber from 'bignumber.js'
 
 type ValidatorCumulativeVotingProps = {
   containerMarginThemeSpacing: number
-  value: number | undefined
-  total: number | undefined
+  value: number | string | undefined
+  total: number | string | undefined
 }
 
 export const ValidatorCumulativeVoting: FC<ValidatorCumulativeVotingProps> = ({
@@ -12,11 +13,18 @@ export const ValidatorCumulativeVoting: FC<ValidatorCumulativeVotingProps> = ({
   value,
   total,
 }) => {
-  if (typeof value !== 'number' || typeof total !== 'number' || total <= 0) {
+  if (value === undefined || value === null || total === undefined || total === null) {
     return null
   }
 
-  const percentage = (value / total) * 100
+  const votes = new BigNumber(value)
+  const totalVotes = new BigNumber(total)
+
+  if (!votes || !totalVotes || totalVotes.lte(0)) {
+    return null
+  }
+
+  const percentage = votes.div(totalVotes).multipliedBy(100).toNumber()
 
   return (
     <div className="flex-1 relative text-center">

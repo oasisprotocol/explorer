@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import BigNumber from 'bignumber.js'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { LabeledProgress } from 'app/components/LabeledProgress'
@@ -18,13 +19,13 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
     <SnapshotTextCard
       title={t('validator.votingPower')}
       label={
-        typeof validator?.voting_power === 'number' && (
-          <Typography>({validator?.voting_power.toLocaleString()})</Typography>
+        validator?.voting_power !== undefined && (
+          <Typography>({new BigNumber(validator?.voting_power).toFormat()})</Typography>
         )
       }
       withContentPadding={false}
     >
-      {typeof validator?.voting_power === 'number' && stats?.total_voting_power && (
+      {validator?.voting_power !== undefined && stats?.total_voting_power && (
         <>
           <Typography className="font-normal text-xs text-muted-foreground text-left pb-2">
             {t('validator.votingPowerOverall')}

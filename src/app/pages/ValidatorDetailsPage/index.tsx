@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHref, useLoaderData } from 'react-router-dom'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import BigNumber from 'bignumber.js'
 import {
   Validator,
   ValidatorAggStats,
@@ -229,17 +230,17 @@ export const ValidatorDetailsView: FC<{
               <dd>{formattedTime}</dd>
             </>
           )}
-          {typeof validator.voting_power === 'number' && (
+          {validator.voting_power !== undefined && (
             <>
               <dt>{t('validator.votingPower')}</dt>
               <dd>
                 {stats?.total_voting_power ? (
                   <>
                     <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
-                    &nbsp; ({validator.voting_power.toLocaleString()})
+                    &nbsp; ({new BigNumber(validator.voting_power).toFormat()})
                   </>
                 ) : (
-                  validator.voting_power.toLocaleString()
+                  new BigNumber(validator.voting_power).toFormat()
                 )}
               </dd>
             </>
