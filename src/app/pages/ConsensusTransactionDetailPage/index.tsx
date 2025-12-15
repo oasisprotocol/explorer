@@ -133,7 +133,7 @@ export const ConsensusTransactionDetailView: FC<{
         </dd>
         <dt>{t('common.timestamp')}</dt>
         <dd>{formattedTime}</dd>
-        <dt>{t('common.height')}</dt>
+        <dt>{t('common.block')}</dt>
         <dd>
           <BlockLink scope={transaction} height={transaction.block} />
           <CopyToClipboard value={transaction.block.toString()} />

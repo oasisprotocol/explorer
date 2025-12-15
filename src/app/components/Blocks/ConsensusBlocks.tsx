@@ -41,7 +41,7 @@ export const ConsensusBlocks: FC<ConsensusBlocksProps> = ({
   const { t } = useTranslation()
   const { isLaptop } = useScreenSize()
   const tableColumns: TableColProps[] = [
-    { key: 'height', content: t('common.height'), align: TableCellAlign.Left },
+    { key: 'block', content: t('common.block'), align: TableCellAlign.Left },
     ...(showHash ? [{ key: 'hash', content: t('common.hash') }] : []),
     ...(showEpoch ? [{ key: 'epoch', content: t('common.epoch') }] : []),
     { key: 'age', content: <TableHeaderAge />, align: TableCellAlign.Right },
