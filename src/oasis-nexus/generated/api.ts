@@ -643,7 +643,7 @@ export type ValidatorList = List & ValidatorListAllOf;
 
 export interface ValidatorAggStats {
   /** The total voting power across all validators. */
-  total_voting_power: number;
+  total_voting_power: TextBigInt;
   /** The total number of delegators in the network. */
   total_delegators: number;
   /** The total amount of token staked to validators. */
@@ -686,9 +686,9 @@ export interface Validator {
   /** The escrow account data for this validator. */
   escrow: Escrow;
   /** The voting power of this validator. */
-  voting_power: number;
+  voting_power: TextBigInt;
   /** The cumulative voting power of this validator and all other validators ranked higher than itself. */
-  voting_power_cumulative?: number;
+  voting_power_cumulative?: TextBigInt;
   /** Whether the entity has a node that is registered for being a validator, node is up to date, and has successfully registered itself. It may or may not be part of validator set. */
   active: boolean;
   /** The second-granular consensus time. */
