@@ -1,23 +1,25 @@
-import { FC, ReactElement, Ref, cloneElement, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { FC, ReactElement, Ref, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import { ArrowRight } from 'lucide-react'
-import DnsIcon from '@mui/icons-material/Dns'
-import ExitToAppIcon from '@mui/icons-material/ExitToApp'
-import HowToVoteIcon from '@mui/icons-material/HowToVote'
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck'
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices'
-import PersonIcon from '@mui/icons-material/Person'
-import PriceChangeIcon from '@mui/icons-material/PriceChange'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import {
+  ArrowRight,
+  ArrowDown,
+  CircleHelp,
+  UserRound,
+  Banknote,
+  CopyCheck,
+  LogOut,
+  Landmark,
+} from 'lucide-react'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { ConsensusTxMethod, GetConsensusTransactionsParams } from '../../../oasis-nexus/api'
 import { COLORS } from '../../../styles/theme/colors'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { Dns } from '../MuiIcons/Dns'
+import { MiscellaneousServices } from '../MuiIcons/MiscellaneousServices'
+import { CastVote } from '../MuiIcons/CastVote'
 
 type MethodIconProps = {
   border?: boolean
@@ -86,12 +88,7 @@ const MethodIconContent: FC<MethodIconContentProps> = ({
       <div
         className="flex items-center justify-center"
         style={{
-          width: size,
-          minWidth: size,
-          height: size,
-          borderRadius: size,
           color: theme.primary,
-          border: border ? `2px solid ${theme.primary}` : 'none',
         }}
       >
         {cloneElement(icon, { style: { fontSize: Math.ceil(size * iconRatio) } })}
@@ -293,35 +290,35 @@ const getConsensusTransactionMethod = (
     case ConsensusTxMethod.stakingTransfer:
       return <MethodIcon color="green" icon={<ArrowRight />} label={label} {...props} />
     case ConsensusTxMethod.stakingAddEscrow:
-      return <MethodIcon color="green" icon={<ExitToAppIcon />} label={label} {...props} />
+      return <MethodIcon color="green" icon={<LogOut />} label={label} {...props} />
     case ConsensusTxMethod.stakingReclaimEscrow:
-      return <MethodIcon icon={<ExitToAppIcon />} label={label} {...props} />
+      return <MethodIcon icon={<LogOut />} label={label} {...props} />
     case ConsensusTxMethod.stakingAmendCommissionSchedule:
-      return <MethodIcon icon={<PriceChangeIcon />} label={label} {...props} />
+      return <MethodIcon icon={<Banknote />} label={label} {...props} />
     case ConsensusTxMethod.stakingAllow:
-      return <MethodIcon icon={<LibraryAddCheckIcon />} label={label} {...props} />
+      return <MethodIcon icon={<CopyCheck />} label={label} {...props} />
     case ConsensusTxMethod.stakingWithdraw:
-      return <MethodIcon color="green" icon={<ArrowDownwardIcon />} label={label} {...props} />
+      return <MethodIcon color="green" icon={<ArrowDown />} label={label} {...props} />
     case ConsensusTxMethod.roothashExecutorCommit:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod.roothashExecutorProposerTimeout:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterEntity:
-      return <MethodIcon icon={<PersonIcon />} label={label} {...props} />
+      return <MethodIcon icon={<UserRound />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterNode:
-      return <MethodIcon icon={<DnsIcon />} label={label} {...props} />
+      return <MethodIcon icon={<Dns />} label={label} {...props} />
     case ConsensusTxMethod.registryRegisterRuntime:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod.governanceCastVote:
-      return <MethodIcon icon={<HowToVoteIcon />} label={label} {...props} />
+      return <MethodIcon icon={<CastVote />} label={label} {...props} />
     case ConsensusTxMethod.governanceSubmitProposal:
-      return <MethodIcon icon={<AccountBalanceIcon />} label={label} {...props} />
+      return <MethodIcon icon={<Landmark />} label={label} {...props} />
     case ConsensusTxMethod.beaconPVSSCommit:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod.beaconPVSSReveal:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod.beaconVRFProve:
-      return <MethodIcon icon={<MiscellaneousServicesIcon />} label={label} {...props} />
+      return <MethodIcon icon={<MiscellaneousServices />} label={label} {...props} />
     case ConsensusTxMethod['keymanager/churpApply']: // TODO: provide dedicated icon
     case ConsensusTxMethod['keymanager/churpConfirm']: // TODO: provide dedicated icon
     case ConsensusTxMethod['keymanager/churpCreate']: // TODO: provide dedicated icon
@@ -340,10 +337,10 @@ const getConsensusTransactionMethod = (
     case ConsensusTxMethod.consensusMeta: // TODO: provide dedicated icon
     case ConsensusTxMethod.stakingBurn: // TODO: provide dedicated icon
     case undefined:
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} label={label} {...props} />
+      return <MethodIcon color="gray" icon={<CircleHelp />} label={label} {...props} />
     default:
       exhaustedTypeWarning('Unexpected consensus transaction method', method)
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} label={label} {...props} />
+      return <MethodIcon color="gray" icon={<CircleHelp />} label={label} {...props} />
   }
 }
 
