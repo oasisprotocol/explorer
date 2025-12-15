@@ -1,3 +1,8 @@
+/**
+ * Copyright 2024 https://github.com/google/material-design-icons
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { FC } from 'react'
 import { Icon, IconNode } from 'lucide-react'
 

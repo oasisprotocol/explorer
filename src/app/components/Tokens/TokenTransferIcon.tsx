@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
 import { ArrowRight, Flame, CircleHelp, Stamp } from 'lucide-react'
 import { MethodIcon } from '../ConsensusTransactionMethod'
-import { Stream } from '../CustomIcons/Stream'
+import { Stream } from '../MuiIcons/Stream'
 
 const getTokenTransferLabel = (t: TFunction, name: string | undefined): string => {
   switch (name) {
