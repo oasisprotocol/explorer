@@ -12,6 +12,20 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.26.1 (2025-12-15)
+
+### Internal Changes
+
+- Update dependencies
+  ([#1984](https://github.com/oasisprotocol/explorer/issues/1984),
+   [#2348](https://github.com/oasisprotocol/explorer/issues/2348))
+
+- Remove MUI themes and eslint rules
+  ([#2351](https://github.com/oasisprotocol/explorer/issues/2351))
+
+- Generate signed commits in cron CI job
+  ([#2369](https://github.com/oasisprotocol/explorer/issues/2369))
+
 ## 1.26.0 (2025-11-19)
 
 ### Features
