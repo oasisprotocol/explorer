@@ -14,17 +14,34 @@ The format is inspired by [Keep a Changelog].
 
 ## 1.26.1 (2025-12-15)
 
+### Bug Fixes and Improvements
+
+- Homepage updates
+  ([#2356](https://github.com/oasisprotocol/explorer/issues/2356),
+   [#2360](https://github.com/oasisprotocol/explorer/issues/2360))
+
+- Tweaks around ROFL apps search results
+  ([#2358](https://github.com/oasisprotocol/explorer/issues/2358))
+
+- Unify and simplify terminology
+  ([#2381](https://github.com/oasisprotocol/explorer/issues/2381),
+   [#2382](https://github.com/oasisprotocol/explorer/issues/2382),
+   [#2387](https://github.com/oasisprotocol/explorer/issues/2387))
+
 ### Internal Changes
 
-- Update dependencies
-  ([#1984](https://github.com/oasisprotocol/explorer/issues/1984),
-   [#2348](https://github.com/oasisprotocol/explorer/issues/2348))
+- Revert fetching balances from gRPC
+  ([#2248](https://github.com/oasisprotocol/explorer/issues/2248))
 
 - Remove MUI themes and eslint rules
   ([#2351](https://github.com/oasisprotocol/explorer/issues/2351))
 
 - Generate signed commits in cron CI job
   ([#2369](https://github.com/oasisprotocol/explorer/issues/2369))
+
+- Update dependencies
+  ([#1984](https://github.com/oasisprotocol/explorer/issues/1984),
+   [#2348](https://github.com/oasisprotocol/explorer/issues/2348))
 
 ## 1.26.0 (2025-11-19)
 
