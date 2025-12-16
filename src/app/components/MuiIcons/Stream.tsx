@@ -1,11 +1,7 @@
-/**
- * Copyright 2024 https://github.com/google/material-design-icons
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { FC } from 'react'
 import { Icon, IconNode } from 'lucide-react'
 
+// From https://github.com/mui/material-ui/blob/4c336b8bd492749117a34947db44b0157a44c18b/packages/mui-icons-material/lib/esm/Stream.js#L5
 const streamNode: IconNode = [
   [
     'circle',
