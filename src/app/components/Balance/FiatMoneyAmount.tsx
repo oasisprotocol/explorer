@@ -1,16 +1,16 @@
-import WarningIcon from '@mui/icons-material/WarningAmber'
 import { useTranslation } from 'react-i18next'
 import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { TriangleAlert } from 'lucide-react'
 
 export const FiatMoneyWarning: FC<{ unknownTickers: string[] }> = ({ unknownTickers }) => {
   const { t } = useTranslation()
   return (
     <Tooltip title={t('account.failedToLookUpTickers', { tickers: unknownTickers.join(', ') })}>
-      <WarningIcon />
+      <TriangleAlert />
     </Tooltip>
   )
 }

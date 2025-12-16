@@ -1,18 +1,8 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import TextSnippetIcon from '@mui/icons-material/TextSnippet'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import { ArrowRight } from 'lucide-react'
-import MemoryIcon from '@mui/icons-material/Memory'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
-import LanIcon from '@mui/icons-material/Lan'
-import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
-import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
-import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
-import LockIcon from '@mui/icons-material/Lock'
+import { DeveloperBoard } from '../MuiIcons/DeveloperBoard'
+import { DeveloperBoardOff } from '../MuiIcons/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import {
   GetRuntimeTransactionsParams,
@@ -24,6 +14,7 @@ import {
 import { paraTimesConfig } from '../../../config'
 import { exhaustedTypeWarning } from '../../../types/errors'
 import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'
+import { ArrowRight, ArrowUp, ArrowDown, Cpu, CircleHelp, Network, Files, Lock, FileText } from 'lucide-react'
 
 const getRuntimeTransactionLabel = (t: TFunction, method: KnownRuntimeTxMethod) => {
   // TODO: when adding new types here, please also update knownRuntimeTxMethods below.
@@ -123,27 +114,27 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
 
   switch (method) {
     case 'evm.Call':
-      return <MethodIcon icon={<TextSnippetIcon />} {...props} />
+      return <MethodIcon icon={<FileText />} {...props} />
     case 'evm.Create':
-      return <MethodIcon icon={<FileCopyIcon />} {...props} />
+      return <MethodIcon icon={<Files />} {...props} />
     case 'consensus.Deposit':
-      return <MethodIcon color="green" icon={<ArrowDownwardIcon />} {...props} />
+      return <MethodIcon color="green" icon={<ArrowDown />} {...props} />
     case 'consensus.Withdraw':
-      return <MethodIcon color="orange" icon={<ArrowUpwardIcon />} {...props} />
+      return <MethodIcon color="orange" icon={<ArrowUp />} {...props} />
     case 'consensus.Delegate':
-      return <MethodIcon icon={<LanIcon />} {...props} />
+      return <MethodIcon icon={<Network className="[&_rect]:fill-current" />} {...props} />
     case 'consensus.Undelegate':
-      return <MethodIcon icon={<LanOutlinedIcon />} {...props} />
+      return <MethodIcon icon={<Network />} {...props} />
     case 'accounts.Transfer':
       return <MethodIcon color="green" icon={<ArrowRight />} {...props} />
     case 'rofl.Create':
-      return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
+      return <MethodIcon color="green" icon={<Cpu />} {...props} />
     case 'rofl.Register':
-      return <MethodIcon icon={<MemoryIcon />} {...props} />
+      return <MethodIcon icon={<Cpu />} {...props} />
     case 'rofl.Remove':
-      return <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />
+      return <MethodIcon color="orange" icon={<Cpu />} {...props} />
     case 'rofl.Update':
-      return <MethodIcon color="green" icon={<MemoryIcon />} {...props} />
+      return <MethodIcon color="green" icon={<Cpu />} {...props} />
     case 'roflmarket.ProviderCreate':
       return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.ProviderUpdate':
@@ -151,13 +142,13 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case 'roflmarket.ProviderUpdateOffers':
       return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.ProviderRemove':
-      return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+      return <MethodIcon color="orange" icon={<DeveloperBoardOff />} {...props} />
     case 'roflmarket.InstanceCreate':
       return <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.InstanceTopUp':
       return <MethodIcon icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.InstanceCancel':
-      return <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+      return <MethodIcon color="orange" icon={<DeveloperBoardOff />} {...props} />
     case 'roflmarket.InstanceExecuteCmds':
       return <MethodIcon icon={<DeveloperBoard />} {...props} />
     case 'roflmarket.InstanceChangeAdmin':
@@ -165,10 +156,10 @@ const getRuntimeTransactionIcon = (method: KnownRuntimeTxMethod, label: string, 
     case '':
       // Method may be empty if the transaction was malformed, or encrypted (oasis_encryption_envelope).
       // TODO: differentiate malformed and encrypted
-      return <MethodIcon color="green" icon={<LockIcon />} {...props} />
+      return <MethodIcon color="green" icon={<Lock />} {...props} />
     default:
       exhaustedTypeWarning('Unknown runtime tx method', method)
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
+      return <MethodIcon color="gray" icon={<CircleHelp />} {...props} />
   }
 }
 

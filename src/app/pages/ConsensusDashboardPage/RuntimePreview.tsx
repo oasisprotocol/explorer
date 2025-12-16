@@ -4,10 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import FilterNoneIcon from '@mui/icons-material/FilterNone'
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+import { CircleOff } from 'lucide-react'
 import { Runtime, useGetRuntimeStatus } from 'oasis-nexus/api'
-import { COLORS } from '../../../styles/theme/colors'
 import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
 import { BlockLink } from '../../components/Blocks/BlockLink'
 import { RouterLinkCircle } from '../../components/StyledLinks'
@@ -243,7 +241,7 @@ const PanelButton: FC<PanelButtonProps> = ({ activePanel, ariaLabel, panel, setP
       {panel === activePanel ? (
         <div className="rounded-full w-[10px] h-[10px] bg-chart-5" />
       ) : (
-        <RadioButtonUncheckedIcon sx={{ color: COLORS.brandDark, fontSize: '10px' }} />
+        <div className="rounded-full w-[10px] h-[10px] border border-chart-5" />
       )}
     </Button>
   )
@@ -266,10 +264,10 @@ const ChartsContainer: FC<ChartsContainerProps> = ({ children, status }) => {
       <div className="flex flex-1 flex-col items-center gap-2">
         {status && <div className="w-full">{children}</div>}
         {!status && (
-          <>
-            <FilterNoneIcon sx={{ color: COLORS.brandDark, fontSize: '33px' }} />
+          <span className="flex flex-col gap-2 items-center text-center text-muted-foreground">
+            <CircleOff size={30} className="text-muted-foreground" />
             {t('paratimes.noData')}
-          </>
+          </span>
         )}
       </div>
     </div>

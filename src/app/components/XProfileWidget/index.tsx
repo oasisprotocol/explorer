@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './XProfileWidget.module.css'
-import XIcon from '@mui/icons-material/X'
+import { X } from '../MuiIcons/X'
 
 export const XProfileWidget: React.FC<{ handle: string }> = ({ handle }) => {
   // Clean the handle (remove '@' if present)
@@ -27,7 +27,7 @@ export const XProfileWidget: React.FC<{ handle: string }> = ({ handle }) => {
           </div>
         </div>
         at
-        <XIcon />
+        <X />
       </div>
     </a>
   )
