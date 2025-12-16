@@ -1,12 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TFunction } from 'i18next'
-import StreamIcon from '@mui/icons-material/Stream'
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
-import ApprovalIcon from '@mui/icons-material/Approval'
-import { ArrowRight } from 'lucide-react'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import { ArrowRight, Flame, CircleHelp, Stamp } from 'lucide-react'
 import { MethodIcon } from '../ConsensusTransactionMethod'
+import { Stream } from '../MuiIcons/Stream'
 
 const getTokenTransferLabel = (t: TFunction, name: string | undefined): string => {
   switch (name) {
@@ -42,13 +39,13 @@ const getTokenTransferIcon = (
     case 'Transfer':
       return <MethodIcon color="green" icon={<ArrowRight />} {...props} />
     case 'Approval':
-      return <MethodIcon color="green" icon={<ApprovalIcon />} {...props} />
+      return <MethodIcon color="green" icon={<Stamp />} {...props} />
     case 'Minting':
-      return <MethodIcon color="green" icon={<StreamIcon />} {...props} />
+      return <MethodIcon color="green" icon={<Stream />} {...props} />
     case 'Burning':
-      return <MethodIcon color="orange" icon={<LocalFireDepartmentIcon />} {...props} />
+      return <MethodIcon color="orange" icon={<Flame />} {...props} />
     default:
-      return <MethodIcon color="gray" icon={<QuestionMarkIcon />} {...props} />
+      return <MethodIcon color="gray" icon={<CircleHelp />} {...props} />
   }
 }
 

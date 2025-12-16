@@ -18,18 +18,12 @@ import { exhaustedTypeWarning } from '../../../types/errors'
 import { LongDataDisplay } from '../LongDataDisplay'
 import { parseEvmEvent } from '../../utils/parseEvmEvent'
 import { TokenTransferIcon } from '../Tokens/TokenTransferIcon'
-import StreamIcon from '@mui/icons-material/Stream'
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import { ArrowRight, ArrowUp, ArrowDown, Cpu, Flame, Network } from 'lucide-react'
+import { DeveloperBoard } from '../MuiIcons/DeveloperBoard'
+import { DeveloperBoardOff } from '../MuiIcons/DeveloperBoardOff'
+import { Stream } from '../MuiIcons/Stream'
 import { getPreciseNumberFormat } from '../../../locales/getPreciseNumberFormat'
 import { MaybeEventErrorLine } from './EventError'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import { ArrowRight } from 'lucide-react'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import MemoryIcon from '@mui/icons-material/Memory'
-import LanIcon from '@mui/icons-material/Lan'
-import LanOutlinedIcon from '@mui/icons-material/LanOutlined'
-import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
-import DeveloperBoardOffIcon from '@mui/icons-material/DeveloperBoardOff'
 import { MethodIcon } from '../ConsensusTransactionMethod'
 import { TransactionLink } from '../Transactions/TransactionLink'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
@@ -111,24 +105,24 @@ export const EventTypeIcon: FC<{
     [RuntimeEventType.evmlog]: <></>,
     [RuntimeEventType.coregas_used]: <></>,
     [RuntimeEventType.consensus_accountswithdraw]: (
-      <MethodIcon color="orange" icon={<ArrowUpwardIcon />} {...props} />
+      <MethodIcon color="orange" icon={<ArrowUp />} {...props} />
     ),
     [RuntimeEventType.consensus_accountsdeposit]: (
-      <MethodIcon color="green" icon={<ArrowDownwardIcon />} {...props} />
+      <MethodIcon color="green" icon={<ArrowDown />} {...props} />
     ),
-    [RuntimeEventType.consensus_accountsdelegate]: <MethodIcon icon={<LanIcon />} {...props} />,
-    [RuntimeEventType.consensus_accountsundelegate_start]: (
-      <MethodIcon icon={<LanOutlinedIcon />} {...props} />
+    [RuntimeEventType.consensus_accountsdelegate]: (
+      <MethodIcon icon={<Network className="[&_rect]:fill-current" />} {...props} />
     ),
-    [RuntimeEventType.consensus_accountsundelegate_done]: <MethodIcon icon={<LanIcon />} {...props} />,
-    [RuntimeEventType.accountsmint]: <MethodIcon color="green" icon={<StreamIcon />} {...props} />,
-    [RuntimeEventType.accountsburn]: (
-      <MethodIcon color="orange" icon={<LocalFireDepartmentIcon />} {...props} />
+    [RuntimeEventType.consensus_accountsundelegate_start]: <MethodIcon icon={<Network />} {...props} />,
+    [RuntimeEventType.consensus_accountsundelegate_done]: (
+      <MethodIcon icon={<Network className="[&_rect]:fill-current" />} {...props} />
     ),
-    [RuntimeEventType.roflapp_created]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
-    [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<MemoryIcon />} {...props} />,
-    [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
-    [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<MemoryIcon />} {...props} />,
+    [RuntimeEventType.accountsmint]: <MethodIcon color="green" icon={<Stream />} {...props} />,
+    [RuntimeEventType.accountsburn]: <MethodIcon color="orange" icon={<Flame />} {...props} />,
+    [RuntimeEventType.roflapp_created]: <MethodIcon color="green" icon={<Cpu />} {...props} />,
+    [RuntimeEventType.roflapp_removed]: <MethodIcon color="orange" icon={<Cpu />} {...props} />,
+    [RuntimeEventType.roflapp_updated]: <MethodIcon color="green" icon={<Cpu />} {...props} />,
+    [RuntimeEventType.roflinstance_registered]: <MethodIcon color="green" icon={<Cpu />} {...props} />,
     [RuntimeEventType.roflmarketprovider_created]: (
       <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     ),
@@ -136,7 +130,7 @@ export const EventTypeIcon: FC<{
       <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
     ),
     [RuntimeEventType.roflmarketprovider_removed]: (
-      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+      <MethodIcon color="orange" icon={<DeveloperBoardOff />} {...props} />
     ),
     [RuntimeEventType.roflmarketinstance_created]: (
       <MethodIcon color="green" icon={<DeveloperBoard />} {...props} />
@@ -146,10 +140,10 @@ export const EventTypeIcon: FC<{
     ),
     [RuntimeEventType.roflmarketinstance_accepted]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
     [RuntimeEventType.roflmarketinstance_cancelled]: (
-      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+      <MethodIcon color="orange" icon={<DeveloperBoardOff />} {...props} />
     ),
     [RuntimeEventType.roflmarketinstance_removed]: (
-      <MethodIcon color="orange" icon={<DeveloperBoardOffIcon />} {...props} />
+      <MethodIcon color="orange" icon={<DeveloperBoardOff />} {...props} />
     ),
     [RuntimeEventType.roflmarketinstance_command_queued]: <MethodIcon icon={<DeveloperBoard />} {...props} />,
   }
