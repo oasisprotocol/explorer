@@ -205,7 +205,11 @@ export const RuntimeTransactionDetailView: FC<{
               <dt>{t('transactions.method.evm.call')}</dt>
               <dd>
                 <LongDataDisplay
-                  data={`${transaction.evm_fn_name}(\n${yamlDump(transaction.evm_fn_params.map(a => ({ [a.name]: a.value })))})`}
+                  data={
+                    transaction.evm_fn_params.length >= 1
+                      ? `${transaction.evm_fn_name}(\n${yamlDump(transaction.evm_fn_params.map(a => ({ [a.name]: a.value })))})`
+                      : `${transaction.evm_fn_name}()`
+                  }
                   collapsedLinesNumber={8}
                   fontWeight={400}
                 />
