@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import BigNumber from 'bignumber.js'
+import { calculatePercentage } from '../../utils/number-utils'
 
 type PercentageValueProps = {
   adaptMaximumFractionDigits?: boolean
@@ -17,18 +17,11 @@ export const PercentageValue: FC<PercentageValueProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  if (value === undefined || value === null || total === undefined || total === null) {
+  const percentageValue = calculatePercentage(value, total, false)
+
+  if (percentageValue === null) {
     return null
   }
-
-  const votes = new BigNumber(value)
-  const totalVotes = new BigNumber(total)
-
-  if (!votes || !totalVotes || totalVotes.lte(0)) {
-    return null
-  }
-
-  const percentageValue = votes.div(totalVotes).toNumber()
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Progress } from '@oasisprotocol/ui-library/src/components/progress'
-import BigNumber from 'bignumber.js'
+import { calculatePercentage } from '../../utils/number-utils'
 
 type LabeledProgresssProps = {
   value?: number | string
@@ -9,18 +9,11 @@ type LabeledProgresssProps = {
 }
 
 export const LabeledProgress: FC<LabeledProgresssProps> = ({ value, max, label }) => {
-  if (!value || !max) {
+  const percentage = calculatePercentage(value, max)
+
+  if (percentage === null) {
     return null
   }
-
-  const progressValue = new BigNumber(value)
-  const progressMax = new BigNumber(max)
-
-  if (!progressValue || !progressMax || progressMax.lte(0)) {
-    return null
-  }
-
-  const percentage = progressValue.div(progressMax).multipliedBy(100).toNumber()
 
   return (
     <div className="w-full relative">
