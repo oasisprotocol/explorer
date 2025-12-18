@@ -19,6 +19,7 @@ export interface SearchProps {
   disabled?: boolean
   onFocusChange?: (hasFocus: boolean) => void
   expandable?: boolean
+  autoFocus?: boolean
 }
 
 export const Search: FC<SearchProps> = ({
@@ -26,6 +27,7 @@ export const Search: FC<SearchProps> = ({
   expandable,
   disabled,
   onFocusChange: onFocusChangeProp,
+  autoFocus,
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -86,6 +88,7 @@ export const Search: FC<SearchProps> = ({
           )}
           size="lg"
           onChange={onChange}
+          autoFocus={autoFocus}
           onFocus={() => onFocusChange(true)}
           onBlur={() => onFocusChange(false)}
           placeholder={searchPlaceholderTranslated}

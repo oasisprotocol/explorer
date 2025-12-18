@@ -25,7 +25,7 @@ export const HomeSearch: FC = () => {
         {t('home.search')}
       </Typography>
 
-      <Search disabled={!isApiReachable} />
+      <Search disabled={!isApiReachable} autoFocus />
     </div>
   )
 }
