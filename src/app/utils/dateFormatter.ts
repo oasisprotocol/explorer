@@ -16,9 +16,9 @@ export const intlDateFormat = (date: Date | number) => dateFormat.format(date)
 // TODO: Works only in en-US locale, as suffixes are hardcoded
 export const formatDistanceToNow = (
   date: Date | number,
-  options: { baseDate?: Date | number; locale?: string; keepSuffix?: true } = {},
+  options: { baseDate?: Date | number; locale?: string; keepSuffix?: true; style?: 'short' | 'long' } = {},
 ) => {
-  const { baseDate = new Date(), locale = 'en-US', keepSuffix = false } = options
+  const { baseDate = new Date(), locale = 'en-US', keepSuffix = false, style = 'short' } = options
 
   const diffInSeconds = differenceInSeconds(date, baseDate)
   let unit: Intl.RelativeTimeFormatUnit
@@ -41,7 +41,7 @@ export const formatDistanceToNow = (
 
   const distanceWithSuffix = intlFormatDistance(date, baseDate, {
     unit,
-    style: 'short',
+    style,
     numeric: 'always',
     locale,
   })

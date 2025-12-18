@@ -1,4 +1,4 @@
-import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
+import { formatDistanceToNow } from '../utils/dateFormatter'
 import { useTranslation } from 'react-i18next'
 import { useScreenSize } from './useScreensize'
 
@@ -41,8 +41,9 @@ export const useFormattedTimestampStringWithDistance = (
   const { isMobile } = useScreenSize()
   if (!timestampStr) return ''
   const timestamp = new Date(timestampStr)
-  const distance = formatDistanceStrict(timestamp, new Date(), {
-    addSuffix: true,
+  const distance = formatDistanceToNow(timestamp, {
+    keepSuffix: true,
+    style: 'long',
   })
   return isMobile
     ? distance

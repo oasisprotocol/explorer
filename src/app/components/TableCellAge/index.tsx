@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { formatDistanceToNow } from '../../utils/dateFormatter'
 import { useFormattedTimestamp } from '../../hooks/useFormattedTimestamp'
-import { formatDistanceStrict } from 'date-fns/formatDistanceStrict'
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { TableAgeType } from '../../../types/table-age-type'
 
@@ -26,9 +25,7 @@ export const TableCellAge: FC<{ sinceTimestamp: string }> = ({ sinceTimestamp })
   if (isNaN(date.getTime())) return null
 
   const distance = formatDistanceToNow(date)
-  const distanceWithSuffix = formatDistanceStrict(sinceTimestamp, new Date(), {
-    addSuffix: true,
-  })
+  const distanceWithSuffix = formatDistanceToNow(date, { keepSuffix: true, style: 'long' })
   const title = (
     <>
       <div className="font-medium">{defaultFormatted}</div>
