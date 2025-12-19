@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { calculatePercentage } from '../../utils/number-utils'
 
 type PercentageValueProps = {
   adaptMaximumFractionDigits?: boolean
-  total?: number
-  value: number | undefined
+  total?: number | string
+  value: number | string | undefined
   maximumFractionDigits?: number
 }
 
@@ -16,11 +17,11 @@ export const PercentageValue: FC<PercentageValueProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  if (typeof value !== 'number' || typeof total !== 'number' || total <= 0) {
+  const percentageValue = calculatePercentage(value, total, false)
+
+  if (percentageValue === null) {
     return null
   }
-
-  const percentageValue = value / total
 
   return (
     <>
