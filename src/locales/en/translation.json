@@ -287,7 +287,6 @@
     "invalidUrl": "This URL doesn't exist",
     "invalidVote": "Invalid vote",
     "alternativelyGoExplore": "Alternatively, discover our ecosystem by exploring Oasis.",
-    "revertedWithoutMessage": "reverted without a message",
     "storage": "Access to browser storage denied"
   },
   "footer": {
