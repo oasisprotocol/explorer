@@ -12,6 +12,24 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.26.2 (2025-12-22)
+
+### Bug Fixes and Improvements
+
+- Prepare Explorer for incoming breaking changes in Nexus API
+  ([#2399](https://github.com/oasisprotocol/explorer/issues/2399))
+
+- Fix inconsistent relative time displays
+  ([#2401](https://github.com/oasisprotocol/explorer/issues/2401))
+
+- Add missing keys to custom Lucide icons
+  ([#2403](https://github.com/oasisprotocol/explorer/issues/2403))
+
+### Internal Changes
+
+- Remove MUI dependencies
+  ([#2390](https://github.com/oasisprotocol/explorer/issues/2390))
+
 ## 1.26.1 (2025-12-15)
 
 ### Bug Fixes and Improvements
