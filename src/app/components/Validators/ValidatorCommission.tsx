@@ -6,5 +6,5 @@ type ValidatorCommissionProps = {
 }
 
 export const ValidatorCommission: FC<ValidatorCommissionProps> = ({ commission }) => {
-  return <PercentageValue value={commission} total={100000} />
+  return <PercentageValue value={commission} total={100000} fractionDigits={0} />
 }
