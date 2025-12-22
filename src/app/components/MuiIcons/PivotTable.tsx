@@ -10,6 +10,7 @@ const pivotTableNode: IconNode = [
 
       fill: 'currentColor',
       stroke: 'none',
+      key: 'pivot-table-path',
     },
   ],
 ]
