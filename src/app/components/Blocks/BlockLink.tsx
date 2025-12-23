@@ -27,10 +27,8 @@ export const BlockHashLink: FC<{
     // Table view
     return (
       <MaybeWithTooltip title={hash}>
-        <Link asChild>
-          <RouterLink to={to} className="text-primary font-medium">
-            {trimLongString(hash)}
-          </RouterLink>
+        <Link asChild className="font-mono font-medium">
+          <RouterLink to={to}>{trimLongString(hash)}</RouterLink>
         </Link>
       </MaybeWithTooltip>
     )
@@ -39,7 +37,7 @@ export const BlockHashLink: FC<{
   if (!isTablet) {
     // Desktop view
     return (
-      <Link asChild className="font-medium">
+      <Link asChild className="font-mono font-medium">
         <RouterLink to={to}>{hash}</RouterLink>
       </Link>
     )
@@ -48,8 +46,8 @@ export const BlockHashLink: FC<{
   // Mobile view
   return (
     <span className="max-w-full overflow-x-hidden">
-      <Link asChild>
-        <RouterLink to={to} className="text-primary font-medium">
+      <Link asChild className="font-mono font-medium">
+        <RouterLink to={to}>
           <AdaptiveTrimmer text={hash} strategy="middle" minLength={13} />
         </RouterLink>
       </Link>

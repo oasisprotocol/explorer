@@ -434,7 +434,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.publicKey')}</dt>
                   <dd>
-                    <span className="font-normal">{envelope.public_key}</span>
+                    <span className="font-mono font-normal">{envelope.public_key}</span>
                   </dd>
                 </>
               )}
@@ -443,7 +443,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.dataNonce')}</dt>
                   <dd>
-                    <span className="font-normal">{envelope.data_nonce}</span>
+                    <span className="font-mono font-normal">{envelope.data_nonce}</span>
                   </dd>
                 </>
               )}
@@ -461,7 +461,7 @@ export const RuntimeTransactionDetailView: FC<{
                 <>
                   <dt>{t('transactions.encryption.resultNonce')}</dt>
                   <dd>
-                    <span className="font-normal">{envelope.result_nonce}</span>
+                    <span className="font-mono font-normal">{envelope.result_nonce}</span>
                   </dd>
                 </>
               )}
