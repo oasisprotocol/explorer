@@ -71,6 +71,11 @@ export function getOasisAddressFromBase64PublicKey(key: string) {
 export const isValidPublicKey = (key: string): boolean => {
   try {
     const keyBytes = new Uint8Array(Buffer.from(key, 'base64'))
+
+    if (keyBytes.length !== 32) {
+      return false
+    }
+
     const address = oasis.staking.addressFromPublicKey(keyBytes)
     return !!address
   } catch (e) {
