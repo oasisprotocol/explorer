@@ -7,6 +7,7 @@ import {
   isValidEthAddress,
   isValidRoflAppId,
   uniq,
+  isValidPublicKey,
 } from '../../utils/helpers'
 import { RouteUtils, SpecifiedPerEnabledLayer } from '../../utils/route-utils'
 import { AppError, AppErrors } from '../../../types/errors'
@@ -213,6 +214,14 @@ export const validateAndNormalize = {
   },
 
   roflAppNameFragment: (searchTerm: string) => textSearch.roflAppName(searchTerm).result,
+
+  validatorEntityOrNodeId: (searchTerm: string) => {
+    const normalized = searchTerm.replace(/\s/g, '')
+
+    if (isValidPublicKey(normalized)) {
+      return normalized
+    }
+  },
 
   evmAccount: (searchTerm: string): string | undefined => {
     if (isValidEthAddress(`0x${searchTerm}`)) {

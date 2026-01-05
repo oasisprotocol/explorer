@@ -68,6 +68,16 @@ export function getOasisAddressFromBase64PublicKey(key: string) {
   return oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(keyBytes))
 }
 
+export const isValidPublicKey = (key: string): boolean => {
+  try {
+    const keyBytes = new Uint8Array(Buffer.from(key, 'base64'))
+    const address = oasis.staking.addressFromPublicKey(keyBytes)
+    return !!address
+  } catch (e) {
+    return false
+  }
+}
+
 export const isValidTxOasisHash = (hash: string): boolean => /^[0-9a-fA-F]{64}$/.test(hash)
 
 export const isValidTxEthHash = (hash: string): boolean => /^0x[0-9a-fA-F]{64}$/.test(hash)
