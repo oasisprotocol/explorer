@@ -7,6 +7,8 @@ import { useTxErrorMessage } from '../../hooks/useTxErrorMessage'
 import { TFunction } from 'i18next'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 import { CircleCheck, CircleX, CircleHelp, Clock } from 'lucide-react'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { AdvancedField } from '../AdvancedField/AdvancedField'
 
 type TxStatus = 'unknown' | 'success' | 'failure' | 'pending'
 
@@ -122,7 +124,7 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
     failure: t('common.failed'),
     pending: getPendingLabel(t, method, withText),
   }
-  const errorMessage = useTxErrorMessage(error)
+  const { errorMessage, decode4BytesErrorLink } = useTxErrorMessage(error)
   const iconSize = withText ? 16 : 20
 
   if (withText) {
@@ -138,7 +140,18 @@ export const StatusIcon: FC<StatusIconProps> = ({ success, error, withText, meth
           {statusLabel[status]}
           {statusIcon(status, iconSize, withText)}
         </div>
-        {errorMessage && <StatusDetails error>{errorMessage}</StatusDetails>}
+        {errorMessage && (
+          <>
+            <StatusDetails error>{errorMessage} </StatusDetails>
+            {decode4BytesErrorLink && (
+              <AdvancedField>
+                <Link href={decode4BytesErrorLink} rel="noopener noreferrer" target="_blank">
+                  {t('errors.attemptToDecode4Bytes')}
+                </Link>
+              </AdvancedField>
+            )}
+          </>
+        )}
         {!errorMessage && status === 'pending' && <StatusDetails>{getPendingLabel(t, method)}</StatusDetails>}
         {status === 'unknown' && <StatusDetails>{getUnknownLabel(t)}</StatusDetails>}
       </>

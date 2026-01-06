@@ -59,6 +59,7 @@ export const dapps = {
   stake: 'https://rose.oasis.io/stake',
   sourcifyRoot: 'https://sourcify.dev/',
   abiPlayground: 'https://abi-playground.oasis.io/',
+  decode4bytes: 'https://calldata.swiss-knife.xyz/decoder?calldata=0xf92ee8a9',
 }
 
 export const api = {
