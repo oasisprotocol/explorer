@@ -9,11 +9,32 @@ import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { socialMedia } from '../../utils/externalLinks'
+import telegram from '../Social/images/telegram_black.svg'
+import twitter from '../Social/images/twitter_black.svg'
+import discord from '../Social/images/discord_black.svg'
+import youtube from '../Social/images/youtube_black.svg'
+import reddit from '../Social/images/reddit_black.svg'
 
 interface FooterProps {
   scope?: SearchScope
   mobileSearchAction?: ReactNode
   enableMobileSearch?: boolean
+}
+
+type SocialLinkProps = {
+  label: string
+  href: string
+  imgSrc?: string
+  img?: ReactNode
+}
+
+const SocialLinkFooter: FC<SocialLinkProps> = ({ label, href, imgSrc }) => {
+  return (
+    <Link href={href} rel="noopener noreferrer" target="_blank">
+      {imgSrc && <img src={imgSrc} alt={label} className="h-5 inline-block" />}
+    </Link>
+  )
 }
 
 export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobileSearch = true }) => {
@@ -23,10 +44,8 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
   const hasMobileAction = isMobile && mobileSearchAction
 
   return (
-    <footer>
-      <div
-        className={cn('flex justify-between items-center py-6 sm:px-6', enableMobileSearch ? 'px-2' : 'px-4')}
-      >
+    <footer className="flex flex-col py-4 md:pb-4 md:pt-6">
+      <div className={cn('flex justify-between items-center sm:px-0', enableMobileSearch ? 'px-2' : 'px-4')}>
         {isTablet ? (
           <AppendMobileSearch
             scope={scope}
@@ -44,7 +63,7 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
           </AppendMobileSearch>
         ) : (
           <>
-            <div className="flex items-center">
+            <div className="flex flex-1 flex-wrap items-center">
               {import.meta.env.REACT_APP_BUILD_SHA && (
                 <Typography variant="xsmall" textColor="muted">
                   <Trans
@@ -107,9 +126,46 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
                 </Typography>
               </div>
             </div>
-            <Typography variant="xsmall" textColor="muted">
-              {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
-            </Typography>
+            <div className="flex items-center gap-6 ">
+              <Typography variant="xsmall" textColor="muted">
+                {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
+              </Typography>
+              <div>
+                <div className="h-5 flex items-center gap-4 justify-between">
+                  {socialMedia.telegram && (
+                    <SocialLinkFooter
+                      label={t('social.telegram')}
+                      href={socialMedia.telegram}
+                      imgSrc={telegram}
+                    />
+                  )}
+                  {socialMedia.twitter && (
+                    <SocialLinkFooter
+                      label={t('social.twitter')}
+                      href={socialMedia.twitter}
+                      imgSrc={twitter}
+                    />
+                  )}
+                  {socialMedia.discord && (
+                    <SocialLinkFooter
+                      label={t('social.discord')}
+                      href={socialMedia.discord}
+                      imgSrc={discord}
+                    />
+                  )}
+                  {socialMedia.youtube && (
+                    <SocialLinkFooter
+                      label={t('social.youtube')}
+                      href={socialMedia.youtube}
+                      imgSrc={youtube}
+                    />
+                  )}
+                  {socialMedia.reddit && (
+                    <SocialLinkFooter label={t('social.reddit')} href={socialMedia.reddit} imgSrc={reddit} />
+                  )}
+                </div>
+              </div>
+            </div>
           </>
         )}
       </div>
