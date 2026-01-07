@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-libr
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { RouteUtils } from '../../utils/route-utils'
 import { Link as RouterLink } from 'react-router-dom'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
+import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 export const RoflAppsCard: FC = () => {
   const { t } = useTranslation()
@@ -13,9 +15,10 @@ export const RoflAppsCard: FC = () => {
     <Card variant="layout">
       <CardHeader>
         <CardTitle>
-          <div>
-            <RouterLink to={RouteUtils.getRoflAppsRoute('mainnet')}>{t('rofl.listTitle')}</RouterLink>
-          </div>
+          <Typography variant="h3">{t('rofl.listTitle')}</Typography>
+          <Link asChild textColor="primary" className="font-medium px-4">
+            <RouterLink to={RouteUtils.getRoflAppsRoute('mainnet')}>{t('common.viewAll')}</RouterLink>
+          </Link>
         </CardTitle>
       </CardHeader>
       <CardContent>
