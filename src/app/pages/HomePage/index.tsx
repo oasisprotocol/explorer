@@ -25,6 +25,7 @@ export const HomePage: FC = () => {
       <div className="flex flex-col border-8 md:border-[15px] px-0 md:px-[4%] pt-4 md:pt-7 md:border-t-0 border-t-0 border-theme-layout-accent">
         <HomeSearch />
         <Ecosystem />
+        <RoflAppsCard />
         <div className="flex gap-6 flex-col md:flex-row">
           <RecentBlocksCard />
           <TotalTransactions
@@ -37,7 +38,6 @@ export const HomePage: FC = () => {
             }
           />
         </div>
-        <RoflAppsCard />
         <Social />
       </div>
       <Footer />
