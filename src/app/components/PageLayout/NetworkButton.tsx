@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
-import { Pen } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { getNetworkNames, Network } from '../../../types/network'
 import { Layer } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
@@ -33,13 +33,13 @@ export const NetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer, netw
 shadow-none gap-0
   focus-visible:ring-0 z-20"
     >
-      <div className="flex w-full items-center justify-between gap-2 px-4">
-        {getNetworkButtonLabel(t, network, layer)}
+      <div className="flex w-full items-center gap-2 px-4">
         <LayerStatus isOutOfDate={isOutOfDate} />
+        {getNetworkButtonLabel(t, network, layer)}
       </div>
 
-      <div className="flex items-center justify-center h-10 px-4 border-l rounded-r-md">
-        <Pen className="text-primary w-4 h-4" />
+      <div className="flex items-center justify-center h-10 px-3 border-l rounded-r-md">
+        <ChevronDown className="w-5 h-5" />
       </div>
     </Button>
   )
@@ -52,10 +52,10 @@ export const MobileNetworkButton: FC<NetworkButtonProps> = ({ isOutOfDate, layer
     <Button
       variant="outline"
       onClick={onClick}
-      className="flex items-center gap-3 h-[30px] px-4 rounded-md font-medium shadow-none"
+      className="flex items-center gap-2 h-[30px] px-4 rounded-md font-medium shadow-none"
     >
-      {getNetworkButtonLabel(t, network, layer)}
       <LayerStatus isOutOfDate={isOutOfDate} />
+      {getNetworkButtonLabel(t, network, layer)}
     </Button>
   )
 }
