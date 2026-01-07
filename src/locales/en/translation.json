@@ -263,6 +263,7 @@
     "value": "{{value, number}}"
   },
   "errors": {
+    "attemptToDecode4Bytes": "Attempt to decode",
     "code": "error code",
     "module": "module",
     "error": "Error",
