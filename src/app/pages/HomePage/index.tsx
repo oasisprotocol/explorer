@@ -4,7 +4,7 @@ import { Footer } from '../../components/PageLayout/Footer'
 import { BuildBanner } from '../../components/BuildBanner'
 import { useSearchQueryNetworkParam } from '../../hooks/useSearchQueryNetworkParam'
 import { NetworkOfflineBanner } from '../../components/OfflineBanner'
-import { Social } from '../../components/Social'
+import { DiscoverMore } from '../../components/Social'
 import { RecentBlocksCard } from './RecentBlocksCard'
 import { Ecosystem } from './Ecosystem'
 import { RoflAppsCard } from './RoflAppsCard'
@@ -38,7 +38,8 @@ export const HomePage: FC = () => {
             }
           />
         </div>
-        <Social />
+        <RoflAppsCard />
+        <DiscoverMore />
       </div>
       <Footer />
     </>
