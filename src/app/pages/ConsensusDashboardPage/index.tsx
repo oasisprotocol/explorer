@@ -4,7 +4,7 @@ import { isLocalnet } from '../../utils/route-utils'
 import { PageLayout } from '../../components/PageLayout'
 import { TotalTransactions } from '../../components/TotalTransactions'
 import { TransactionsStats } from '../../components/TransactionsStats'
-import { Social } from '../../components/Social'
+import { DiscoverMore } from '../../components/DiscoverMore'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { LearningMaterials } from './LearningMaterials'
 import { NetworkProposalsCard } from './NetworkProposalsCard'
@@ -46,7 +46,7 @@ export const ConsensusDashboardPage: FC = () => {
         </>
       )}
       <LearningMaterials />
-      {!isLocal && <Social />}
+      {!isLocal && <DiscoverMore />}
     </PageLayout>
   )
 }

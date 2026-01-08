@@ -38,7 +38,6 @@ export const HomePage: FC = () => {
             }
           />
         </div>
-        <RoflAppsCard />
         <DiscoverMore />
         <Footer />
       </div>
