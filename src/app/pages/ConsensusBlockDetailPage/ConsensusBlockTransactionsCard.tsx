@@ -5,7 +5,7 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { ConsensusTransactions } from '../../components/Transactions'
 import { AppErrors } from '../../../types/errors'
 import { SearchScope } from '../../../types/searchScope'
-import { ConsensusBlockDetailsContext } from '.'
+import { ConsensusBlockDetailsContext } from './types'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'

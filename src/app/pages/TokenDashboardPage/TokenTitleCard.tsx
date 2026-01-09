@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { useTokenInfo } from './hook'
+import { useTokenInfo } from './hooks'
 import { VerificationIcon } from '../../components/ContractVerificationIcon'
 import { AccountLink } from '../../components/Account/AccountLink'
 import { CopyToClipboard } from '../../components/CopyToClipboard'

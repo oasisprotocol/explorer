@@ -5,22 +5,15 @@ import { TokenTitleCard } from './TokenTitleCard'
 import { TokenSnapshot } from './TokenSnapshot'
 import { TokenDetailsCard } from './TokenDetailsCard'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
-import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
-import { useTokenInfo } from './hook'
+import { useHref, useLoaderData } from 'react-router-dom'
+import { useTokenInfo } from './hooks'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useTranslation } from 'react-i18next'
 import { DappBanner } from '../../components/DappBanner'
-import { RuntimeScope } from '../../../types/searchScope'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { codeContainerId, holdersContainerId, inventoryContainerId } from '../../utils/tabAnchors'
-
-export type TokenDashboardContext = {
-  scope: RuntimeScope
-  address: string
-}
-
-export const useTokenDashboardProps = () => useOutletContext<TokenDashboardContext>()
+import { TokenDashboardContext } from './types'
 
 export const TokenDashboardPage: FC = () => {
   const { t } = useTranslation()

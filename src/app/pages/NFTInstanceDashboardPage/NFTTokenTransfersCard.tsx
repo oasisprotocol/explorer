@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
-import { NftDashboardContext } from './'
+import { NftDashboardContext } from './types'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { useNFTInstanceTransfers } from '../TokenDashboardPage/hook'
+import { useNFTInstanceTransfers } from '../TokenDashboardPage/hooks'
 import { nftTokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const NFTTokenTransfersCard: FC<NftDashboardContext> = props => {
