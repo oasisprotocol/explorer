@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { BarChart } from '../../components/charts/BarChart'
 import { useGetLayerStatsTxVolume } from '../../../oasis-nexus/api'
 import {

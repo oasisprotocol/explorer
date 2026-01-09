@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { useHref, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Info } from 'lucide-react'
 import { RoflApp, RoflAppPolicy, RuntimeTransaction, useGetRuntimeRoflAppsId } from '../../../oasis-nexus/api'

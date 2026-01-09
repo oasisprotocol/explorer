@@ -1,4 +1,4 @@
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Trans, useTranslation } from 'react-i18next'
 import { AnalyticsDialogLayout } from './AnalyticsDialogLayout'

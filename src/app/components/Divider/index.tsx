@@ -1,4 +1,4 @@
-import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
+import { Separator } from '@oasisprotocol/ui-library/src/components/separator'
 
 export const LayoutDivider = () => <Separator className="my-6" />
 export const DashboardDivider = () => {

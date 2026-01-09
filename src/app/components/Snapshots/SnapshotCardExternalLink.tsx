@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
 import { isUrlSafe } from 'app/utils/url'

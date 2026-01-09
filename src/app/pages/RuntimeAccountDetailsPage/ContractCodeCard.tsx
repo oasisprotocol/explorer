@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { useAccount } from './hooks'
 import { CardEmptyState } from '../../components/CardEmptyState'
@@ -11,7 +11,7 @@ import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { VerificationIcon } from 'app/components/ContractVerificationIcon'
 import { useTokenInfo } from '../TokenDashboardPage/hooks'
 import { base64ToHex } from '../../utils/helpers'
-import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
+import { Separator } from '@oasisprotocol/ui-library/src/components/separator'
 
 export const ContractCodeCard: FC<TokenDashboardContext> = ({ scope, address }) => {
   const { t } = useTranslation()

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { useAccount } from '../RuntimeAccountDetailsPage/hooks'
 import { TextSkeleton } from '../../components/Skeleton'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'
