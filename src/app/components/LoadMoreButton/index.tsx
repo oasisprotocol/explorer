@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'
 import { useTranslation } from 'react-i18next'
 import { FC } from 'react'

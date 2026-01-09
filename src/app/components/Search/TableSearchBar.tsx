@@ -1,6 +1,6 @@
 import { FC, KeyboardEventHandler, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { CardEmptyState } from '../CardEmptyState'
 import { SearchInput } from '@oasisprotocol/ui-library/src/components/input'
 

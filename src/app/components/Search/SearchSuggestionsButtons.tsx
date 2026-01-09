@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { ButtonHTMLAttributes } from 'react'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Trans, useTranslation } from 'react-i18next'
 import { searchSuggestionTerms } from './search-utils'
 import { OptionalBreak } from '../OptionalBreak'

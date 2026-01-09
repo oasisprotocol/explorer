@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks -- REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS won't change in runtime */
 import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { useBlocker, useLocation } from 'react-router-dom'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Trans, useTranslation } from 'react-i18next'
 import * as matomo from './initializeMatomo'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { useGetConsensusValidatorsAddressHistory } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'
 import { LineChart } from '../../components/charts/LineChart'

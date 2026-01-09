@@ -8,7 +8,7 @@ import {
   useGetRuntimeTransactionsTxHash,
 } from '../../../oasis-nexus/api'
 import { AccountLink } from './AccountLink'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 
 const TxSender: FC<{ scope: RuntimeScope; txHash: string; alwaysTrim?: boolean }> = ({
   scope,

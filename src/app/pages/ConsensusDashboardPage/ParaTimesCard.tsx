@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { Layer, Runtime } from '../../../oasis-nexus/api'
 import { CardHeaderWithCounter } from '../../components/CardHeaderWithCounter'
 import { isNotInHiddenScope, RouteUtils } from '../../utils/route-utils'

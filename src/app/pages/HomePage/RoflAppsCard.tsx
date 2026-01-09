@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LatestRoflAppsContent } from '../ParatimeDashboardPage/LatestRoflApps'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { RouteUtils } from '../../utils/route-utils'
 import { Link as RouterLink } from 'react-router-dom'

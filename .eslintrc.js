@@ -39,6 +39,10 @@ const config = {
             group: ['**/oasis-nexus/generated/api'],
             message: "Import 'oasis-nexus/api' instead.",
           },
+          {
+            group: ['@oasisprotocol/ui-library/src/components/ui/*'],
+            message: "Import '@oasisprotocol/ui-library/components' instead.",
+          },
         ],
       },
     ],

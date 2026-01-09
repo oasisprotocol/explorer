@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useGetRecentBlocks } from '../../../oasis-nexus/api'
 import { RecentBlocks } from '../../components/Blocks/RecentBlocks'

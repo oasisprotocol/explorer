@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { ExternalLink } from 'lucide-react'
 import { RoflAppMetadata } from '../../../oasis-nexus/api'

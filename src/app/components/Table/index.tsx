@@ -1,5 +1,5 @@
 import { ComponentProps, FC, ReactNode } from 'react'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import {
   Table as BaseTable,
   TableHeader,

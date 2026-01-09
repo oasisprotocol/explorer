@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
