@@ -66,7 +66,10 @@ export const PontusXCard: FC = () => {
       footer={
         <div className="flex w-full lg:flex-col xl:flex-row gap-4">
           <Button variant="outline" size="lg" className="flex-1 py-[10px]" asChild>
-            <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxdev' })}>
+            <RouterLink
+              to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxdev' })}
+              className="text-primary"
+            >
               {t('common.devnet')}
             </RouterLink>
           </Button>
