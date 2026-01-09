@@ -4,9 +4,9 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { useAccount } from '../RuntimeAccountDetailsPage/hook'
-import { useTokenInfo, useTokenTransfers } from './hook'
-import { TokenDashboardContext } from './index'
+import { useAccount } from '../RuntimeAccountDetailsPage/hooks'
+import { useTokenInfo, useTokenTransfers } from './hooks'
+import { TokenDashboardContext } from './types'
 import { tokenTransfersContainerId } from '../../utils/tabAnchors'
 
 export const TokenTransfersCard: FC<TokenDashboardContext> = ({ scope, address }) => {

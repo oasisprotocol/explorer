@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useParams, useOutletContext } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { PageLayout } from '../../components/PageLayout'
 import { InstanceTitleCard } from './InstanceTitleCard'
@@ -8,17 +8,9 @@ import { InstanceDetailsCard } from './InstanceDetailsCard'
 import { InstanceImageCard } from './InstanceImageCard'
 import { AppErrors } from '../../../types/errors'
 import { RouterTabs } from 'app/components/RouterTabs'
-import { RuntimeScope } from '../../../types/searchScope'
-import { useNFTInstance } from '../TokenDashboardPage/hook'
+import { useNFTInstance } from '../TokenDashboardPage/hooks'
 import { metadataContainerId } from '../../utils/tabAnchors'
-
-export type NftDashboardContext = {
-  scope: RuntimeScope
-  address: string
-  instanceId: string
-}
-
-export const useNftDetailsProps = () => useOutletContext<NftDashboardContext>()
+import { NftDashboardContext } from './types'
 
 export const NFTInstanceDashboardPage: FC = () => {
   const { t } = useTranslation()

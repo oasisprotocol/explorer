@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SnapshotCard } from '../../components/Snapshots/SnapshotCard'
-import { useAccount } from '../RuntimeAccountDetailsPage/hook'
+import { useAccount } from '../RuntimeAccountDetailsPage/hooks'
 import { RuntimeScope } from '../../../types/searchScope'
 
 export const TokenGasUsedCard: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {

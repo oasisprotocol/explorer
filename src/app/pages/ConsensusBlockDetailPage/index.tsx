@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useOutletContext, useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Block, EntityMetadata, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'
-import { ConsensusScope } from '../../../types/searchScope'
 import { useFormattedTimestampStringWithDistance } from '../../hooks/useFormattedTimestamp'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -19,17 +18,11 @@ import { AdaptiveTrimmer } from '../../components/AdaptiveTrimmer/AdaptiveTrimme
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { ValidatorLink } from '../../components/Validators/ValidatorLink'
 import { eventsContainerId } from '../../utils/tabAnchors'
+import { ConsensusBlockDetailsContext } from './types'
 
 export type BlockDetailConsensusBlock = Block & {
   markAsNew?: boolean
 }
-
-export type ConsensusBlockDetailsContext = {
-  scope: ConsensusScope
-  blockHeight?: number
-}
-
-export const useConsensusBlockDetailsProps = () => useOutletContext<ConsensusBlockDetailsContext>()
 
 export const ConsensusBlockDetailPage: FC = () => {
   const { t } = useTranslation()

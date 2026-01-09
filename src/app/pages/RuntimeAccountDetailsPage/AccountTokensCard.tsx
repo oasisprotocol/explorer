@@ -17,7 +17,7 @@ import {
   getTokenTypeStrictName,
 } from '../../../types/tokens'
 import { SearchScope } from '../../../types/searchScope'
-import { RuntimeAccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './types'
 import { tokenContainerId } from '../../utils/tabAnchors'
 import { RoundedBalance } from '../../components/RoundedBalance'
 

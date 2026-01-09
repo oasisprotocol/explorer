@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { NftDashboardContext } from '../NFTInstanceDashboardPage'
+import { NftDashboardContext } from '../NFTInstanceDashboardPage/types'
 import { CodeDisplay } from '../../components/CodeDisplay'
-import { useNFTInstance } from '../TokenDashboardPage/hook'
+import { useNFTInstance } from '../TokenDashboardPage/hooks'
 import { metadataContainerId } from '../../utils/tabAnchors'
 
 export const NFTMetadataCard: FC<NftDashboardContext> = ({ scope, address, instanceId }) => {

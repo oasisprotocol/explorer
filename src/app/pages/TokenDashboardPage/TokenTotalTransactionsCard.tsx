@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
-import { useTokenInfo } from './hook'
+import { useTokenInfo } from './hooks'
 import { RuntimeScope } from '../../../types/searchScope'
 
 export const TokenTotalTransactionsCard: FC<{ scope: RuntimeScope; address: string }> = ({

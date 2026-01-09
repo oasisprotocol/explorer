@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useOutletContext, useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router-dom'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { RuntimeBlock, useGetRuntimeBlockByHeight } from '../../../oasis-nexus/api'
 import { RouterTabs } from '../../components/RouterTabs'
@@ -17,26 +17,9 @@ import { RouteUtils } from '../../utils/route-utils'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { DashboardLink } from '../ParatimeDashboardPage/DashboardLink'
 import { RuntimeNextBlockButton, RuntimePrevBlockButton } from '../../components/BlockNavigationButtons'
-import { RuntimeScope } from 'types/searchScope'
-import {
-  RuntimeEventFilteringType,
-  RuntimeTxMethodFilteringType,
-  useRuntimeEventTypeParam,
-  useRuntimeTxMethodParam,
-} from '../../hooks/useCommonParams'
+import { useRuntimeEventTypeParam, useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { eventsContainerId, transactionsContainerId } from '../../utils/tabAnchors'
-import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
-
-export type RuntimeBlockDetailsContext = {
-  scope: RuntimeScope
-  blockHeight?: number
-  txMethod: RuntimeTxMethodFilteringType
-  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
-  eventType: RuntimeEventFilteringType
-  setEventType: ParamSetterFunction<RuntimeEventFilteringType>
-}
-
-export const useRuntimeBlockDetailsProps = () => useOutletContext<RuntimeBlockDetailsContext>()
+import { RuntimeBlockDetailsContext } from './types'
 
 export const RuntimeBlockDetailPage: FC = () => {
   const { t } = useTranslation()

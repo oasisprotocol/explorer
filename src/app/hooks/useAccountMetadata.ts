@@ -4,7 +4,7 @@ import { AccountMetadataInfo, AccountNameSearchResults } from '../data/named-acc
 import { useOasisAccountMetadata, useSearchForOasisAccountsByName } from '../data/oasis-account-names'
 import { getOasisAddress } from '../utils/helpers'
 import { isLocalnet } from '../utils/route-utils'
-import { useTokenInfo } from '../pages/TokenDashboardPage/hook'
+import { useTokenInfo } from '../pages/TokenDashboardPage/hooks'
 
 /**
  * Find out the metadata for an account
