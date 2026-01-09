@@ -397,7 +397,10 @@
     "youtube": "Youtube",
     "linkedin": "LinkedIn",
     "docs": "Documentation",
-    "home": "Home"
+    "home": "Home",
+    "roseApp": "ROSE App:",
+    "secureScalablePrivate": "Secure, Scalable, Private.",
+    "roseAppDescription": "  Create decentralized apps with ROFL. Use pre-built templates and manage from a single interface."
   },
   "table": {
     "headers": {
