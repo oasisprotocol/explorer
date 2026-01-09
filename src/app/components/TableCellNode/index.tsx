@@ -23,5 +23,5 @@ export const TableCellNode: FC<TableCellNodeProps> = ({ id, scope }) => {
     return <AccountLink alwaysTrimOnTablet scope={scope} address={getOasisAddressFromBase64PublicKey(id)} />
   }
 
-  return <span className="font-medium">{isTablet ? trimLongString(id) : id}</span>
+  return <span className="font-mono font-medium">{isTablet ? trimLongString(id) : id}</span>
 }
