@@ -64,13 +64,13 @@ export const PontusXCard: FC = () => {
       latestBlock={pontusxStatusQuery?.data?.data?.latest_block}
       activeNodes={pontusxStatusQuery?.data?.data?.active_nodes}
       footer={
-        <div className="flex w-full gap-4">
-          <Button variant="outline" size="lg" className="flex-1" asChild>
+        <div className="flex w-full lg:flex-col xl:flex-row gap-4">
+          <Button variant="outline" size="lg" className="flex-1 py-[10px]" asChild>
             <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxdev' })}>
               {t('common.devnet')}
             </RouterLink>
           </Button>
-          <Button size="lg" className="flex-1" asChild>
+          <Button size="lg" className="flex-1 py-[10px]" asChild>
             <RouterLink to={RouteUtils.getDashboardRoute({ network: 'testnet', layer: 'pontusxtest' })}>
               {t('common.testnet')}
               <ArrowRight />
