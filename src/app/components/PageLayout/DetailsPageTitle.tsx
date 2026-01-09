@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 
 const TitleSkeleton: FC = () => <Skeleton className="min-w-[20ex] h-4" />

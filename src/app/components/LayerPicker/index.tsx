@@ -5,8 +5,8 @@ import {
   DrawerContent,
   DrawerTitle,
   DrawerDescription,
-} from '@oasisprotocol/ui-library/src/components/ui/drawer'
-import { Separator } from '@oasisprotocol/ui-library/src/components/ui/separator'
+} from '@oasisprotocol/ui-library/src/components/drawer'
+import { Separator } from '@oasisprotocol/ui-library/src/components/separator'
 import { HomePageLink } from '../PageLayout/Logotype'
 import { Network } from '../../../types/network'
 import { SearchScope } from '../../../types/searchScope'
@@ -17,7 +17,7 @@ import { LayerDetails } from './LayerDetails'
 import { scopeFreedom, RouteUtils, mergeNetworksInLayerSelector } from '../../utils/route-utils'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { MobileNetworkButton } from '../PageLayout/NetworkButton'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { ChevronLeft } from 'lucide-react'
 
 type LayerPickerProps = {

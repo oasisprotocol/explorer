@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 
 type TextSkeletonProps = {
   numberOfRows: number

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { SearchScope } from '../../../types/searchScope'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { EthOrOasisAddress } from '../../../oasis-nexus/api'
 import { useAccountMetadata } from '../../hooks/useAccountMetadata'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'

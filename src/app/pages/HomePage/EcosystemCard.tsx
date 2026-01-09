@@ -9,11 +9,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@oasisprotocol/ui-library/src/components/cards'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+} from '@oasisprotocol/ui-library/src/components/card'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Network } from '../../../types/network'
 import { RouteUtils } from '../../utils/route-utils'
