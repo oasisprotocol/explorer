@@ -263,6 +263,7 @@ export const useGetConsensusTransactions: typeof generated.useGetConsensusTransa
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                  // Doesn't handle `negative` field.
                   amount_change: tx.body?.amount_change
                     ? fromBaseUnits(tx.body.amount_change, consensusDecimals)
                     : undefined,
@@ -364,6 +365,7 @@ export const useGetConsensusTransactionsTxHash: typeof generated.useGetConsensus
                 body: {
                   ...tx.body,
                   amount: tx.body?.amount ? fromBaseUnits(tx.body.amount, consensusDecimals) : undefined,
+                  // Doesn't handle `negative` field.
                   amount_change: tx.body?.amount_change
                     ? fromBaseUnits(tx.body.amount_change, consensusDecimals)
                     : undefined,
@@ -1012,7 +1014,7 @@ export const useGetConsensusEvents: typeof generated.useGetConsensusEvents = (ne
                   allowance: event.body.allowance
                     ? fromBaseUnits(event.body.allowance, consensusDecimals)
                     : undefined,
-                  // staking.allowance_change
+                  // staking.allowance_change. Doesn't handle `negative` field.
                   amount_change: event.body.amount_change
                     ? fromBaseUnits(event.body.amount_change, consensusDecimals)
                     : undefined,
