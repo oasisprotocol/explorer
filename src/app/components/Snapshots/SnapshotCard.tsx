@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@oasisprotocol/ui-library/src/components/cards'
+} from '@oasisprotocol/ui-library/src/components/card'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 

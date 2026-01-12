@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useTokenInfo } from './hooks'
 import { useAccount } from '../RuntimeAccountDetailsPage/hooks'

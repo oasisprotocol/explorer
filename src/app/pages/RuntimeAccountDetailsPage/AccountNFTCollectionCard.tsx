@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { RuntimeAccountDetailsContext } from './types'
@@ -26,7 +26,7 @@ import {
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from '@oasisprotocol/ui-library/src/components/ui/breadcrumb'
+} from '@oasisprotocol/ui-library/src/components/breadcrumb'
 
 export const AccountNFTCollectionCard: FC<RuntimeAccountDetailsContext> = ({ scope, address }) => {
   const { t } = useTranslation()

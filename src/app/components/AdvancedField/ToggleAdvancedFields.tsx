@@ -1,7 +1,7 @@
 import { useLocalSettings } from '../../hooks/useLocalSettings'
 import { useTranslation } from 'react-i18next'
 import { ChevronsDownIcon, ChevronsUpIcon } from 'lucide-react'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 
 export function ToggleAdvancedFields() {
   const { t } = useTranslation()

@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { CoinGeckoReferral } from '../CoinGeckoReferral'
 import { FiatValueInfo } from './hooks'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
-import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
+import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { TriangleAlert } from 'lucide-react'
 
 export const FiatMoneyWarning: FC<{ unknownTickers: string[] }> = ({ unknownTickers }) => {

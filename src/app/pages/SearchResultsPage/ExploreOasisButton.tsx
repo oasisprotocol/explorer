@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, useCallback } from 'react'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 

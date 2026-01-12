@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { LinkableDiv } from '../../components/PageLayout/LinkableDiv'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'

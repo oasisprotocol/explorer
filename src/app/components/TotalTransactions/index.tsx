@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/cards'
+import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { LineChart } from '../charts/LineChart'
 import { Layer, useGetLayerStatsTxVolume, useGetStatsTxVolume } from '../../../oasis-nexus/api'
 import { chartUseQueryStaleTimeMs, durationToQueryParams } from '../../utils/chart-utils'

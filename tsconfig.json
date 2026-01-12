@@ -8,6 +8,9 @@
 
     // Modules
     "baseUrl": "./src",
+    "paths": {
+      "@oasisprotocol/ui-library/src/*": ["../ui-library/src/*"]
+    },
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": true,

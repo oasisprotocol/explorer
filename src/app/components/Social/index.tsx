@@ -10,7 +10,7 @@ import reddit from './images/reddit.svg'
 import linkedin from './images/linkedin.svg'
 import { NotebookText, Home } from 'lucide-react'
 import { roflApp, socialMedia } from '../../utils/externalLinks'
-import { Button } from '@oasisprotocol/ui-library/src/components/ui/button'
+import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import RoflAppsImg from './images/rofl-apps.webp'
 
 type SocialLinkProps = {
