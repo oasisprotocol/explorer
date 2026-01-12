@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Table, TableCellAlign, TableColProps } from '../../components/Table'
+import { Table, TableColProps } from '../../components/Table'
+import { TableCellAlign } from '../../components/Table/types'
 import { Validator, ValidatorAggStats } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { StatusIcon } from '../StatusIcon'

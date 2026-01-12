@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Block, EntityMetadata } from '../../../oasis-nexus/api'
-import { Table, TableCellAlign, TableColProps } from '../../components/Table'
+import { Table, TableColProps } from '../../components/Table'
+import { TableCellAlign } from '../../components/Table/types'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockHashLink, BlockLink } from './BlockLink'
 import { useScreenSize } from '../../hooks/useScreensize'

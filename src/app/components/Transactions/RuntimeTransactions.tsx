@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Table, TableCellAlign, TableColProps } from '../../components/Table'
+import { Table, TableColProps } from '../../components/Table'
+import { TableCellAlign } from '../../components/Table/types'
 import { StatusIcon } from '../StatusIcon'
 import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { RoundedBalance } from '../../components/RoundedBalance'

@@ -3,11 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { PivotTable } from '../MuiIcons/PivotTable'
-
-export enum TableLayout {
-  Horizontal = 'horizontal',
-  Vertical = 'vertical',
-}
+import { TableLayout } from '../Table/types'
 
 export interface TableLayoutButtonProps {
   tableView: TableLayout
