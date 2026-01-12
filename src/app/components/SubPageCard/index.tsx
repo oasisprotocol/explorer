@@ -68,9 +68,8 @@ export const SubPageCard: FC<SubPageCardProps> = ({
                         {subheader}
                       </Typography>
                     )}
+                    {action && <div className="ml-4 shrink-0">{action}</div>}
                   </div>
-
-                  {action && <div className="ml-4 shrink-0">{action}</div>}
                 </div>
               </div>
             </CardTitle>
