@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { useTokenHolders, useTokenInfo } from './hook'
+import { useTokenHolders, useTokenInfo } from './hooks'
 import { TokenHolders } from '../../components/Tokens/TokenHolders'
-import { TokenDashboardContext } from './index'
+import { TokenDashboardContext } from './types'
 import { holdersContainerId } from '../../utils/tabAnchors'
 
 export const TokenHoldersCard: FC<TokenDashboardContext> = ({ scope, address }) => {

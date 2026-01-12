@@ -1,45 +1,27 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData, useOutletContext } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router-dom'
 import { PageLayout } from '../../components/PageLayout'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useAllTokenPrices } from '../../../coin-gecko/api'
-import { EvmTokenType, RuntimeAccount } from '../../../oasis-nexus/api'
-import { useAccount } from './hook'
+import { EvmTokenType } from '../../../oasis-nexus/api'
+import { useAccount } from './hooks'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
-import { useTokenInfo } from '../TokenDashboardPage/hook'
+import { useTokenInfo } from '../TokenDashboardPage/hooks'
 import { getTokenTypePluralName } from '../../../types/tokens'
-import { RuntimeScope } from '../../../types/searchScope'
 import { RuntimeAccountDetailsCard } from './RuntimeAccountDetailsCard'
 import { DappBanner } from '../../components/DappBanner'
 import { AddressLoaderData } from '../../utils/route-utils'
 import { getFiatCurrencyForScope } from '../../../config'
-import {
-  RuntimeEventFilteringType,
-  RuntimeTxMethodFilteringType,
-  useRuntimeEventTypeParam,
-  useRuntimeTxMethodParam,
-} from '../../hooks/useCommonParams'
+import { useRuntimeEventTypeParam, useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import {
   codeContainerId,
   eventsContainerId,
   tokenContainerId,
   transfersContainerId,
 } from '../../utils/tabAnchors'
-import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { Staking } from './Staking'
-
-export type RuntimeAccountDetailsContext = {
-  scope: RuntimeScope
-  address: string
-  account?: RuntimeAccount
-  txMethod: RuntimeTxMethodFilteringType
-  setTxMethod: ParamSetterFunction<RuntimeTxMethodFilteringType>
-  eventType: RuntimeEventFilteringType
-  setEventType: ParamSetterFunction<RuntimeEventFilteringType>
-}
-
-export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
+import { RuntimeAccountDetailsContext } from './types'
 
 export const RuntimeAccountDetailsPage: FC = () => {
   const { t } = useTranslation()

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
 import { CardEmptyState } from '../../components/CardEmptyState'
-import { useTokenTransfers } from '../TokenDashboardPage/hook'
+import { useTokenTransfers } from '../TokenDashboardPage/hooks'
 import { TokenTransfers } from '../../components/Tokens/TokenTransfers'
-import { RuntimeAccountDetailsContext } from './index'
+import { RuntimeAccountDetailsContext } from './types'
 import { transfersContainerId } from '../../utils/tabAnchors'
 
 export const AccountTokenTransfersCard: FC<RuntimeAccountDetailsContext> = context => {

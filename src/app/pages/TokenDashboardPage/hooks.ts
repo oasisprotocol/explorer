@@ -1,3 +1,4 @@
+import { useOutletContext } from 'react-router-dom'
 import {
   RuntimeEvent,
   RuntimeEventList,
@@ -16,6 +17,9 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useComprehensiveSearchParamsPagination } from '../../components/Table/useComprehensiveSearchParamsPagination'
 import { getOasisAddress } from '../../utils/helpers'
+import { TokenDashboardContext } from './types'
+
+export const useTokenDashboardProps = () => useOutletContext<TokenDashboardContext>()
 
 interface UseTokenInfoParams {
   /** Defaults to true */

@@ -1,3 +1,4 @@
+import { useOutletContext } from 'react-router-dom'
 import {
   useGetRuntimeAccountsAddress,
   useGetRuntimeEvents,
@@ -9,6 +10,9 @@ import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { RuntimeScope } from '../../../types/searchScope'
 import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
 import { getRuntimeEventTypeFilteringParam, RuntimeEventFilteringType } from '../../hooks/useCommonParams'
+import { RuntimeAccountDetailsContext } from './types'
+
+export const useRuntimeAccountDetailsProps = () => useOutletContext<RuntimeAccountDetailsContext>()
 
 export const useAccount = (scope: RuntimeScope, address: string) => {
   const { network, layer } = scope

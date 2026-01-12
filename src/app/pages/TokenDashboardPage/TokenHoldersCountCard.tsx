@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/ui/skeleton'
 import { SnapshotTextCard } from '../../components/Snapshots/SnapshotCard'
 import { RuntimeScope } from '../../../types/searchScope'
-import { useTokenInfo } from './hook'
+import { useTokenInfo } from './hooks'
 
 export const TokenHoldersCountCard: FC<{ scope: RuntimeScope; address: string }> = ({ scope, address }) => {
   const { t } = useTranslation()
