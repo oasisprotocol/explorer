@@ -18,7 +18,7 @@ import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPag
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
-import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
+import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod/helpers'
 import { LayoutDivider } from '../../components/Divider'
 
 export const ConsensusTransactionsPage: FC = () => {

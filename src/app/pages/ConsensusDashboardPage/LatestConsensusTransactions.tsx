@@ -10,11 +10,8 @@ import {
   FILTERING_ON_DASHBOARD as shouldFilter,
 } from '../../../config'
 import { RouteUtils } from '../../utils/route-utils'
-import {
-  getConsensusTransactionMethodFilteringParam,
-  ConsensusTxMethodFilterOption,
-} from '../../components/ConsensusTransactionMethod'
-
+import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
+import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod/helpers'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { ErrorBoundary } from '../../components/ErrorBoundary'

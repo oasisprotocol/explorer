@@ -10,10 +10,8 @@ import { LinkableCardLayout } from 'app/components/LinkableCardLayout'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
 import { useScreenSize } from '../../hooks/useScreensize'
-import {
-  getConsensusTransactionMethodFilteringParam,
-  ConsensusTxMethodFilterOption,
-} from '../../components/ConsensusTransactionMethod'
+import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
+import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod/helpers'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<{
