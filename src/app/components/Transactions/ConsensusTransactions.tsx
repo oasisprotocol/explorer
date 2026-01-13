@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Transaction } from '../../../oasis-nexus/api'
 import { Table, TableColProps } from '../../components/Table'
 import { TableCellAlign } from '../../components/Table/types'
 import { RoundedBalance } from '../../components/RoundedBalance'
@@ -14,16 +13,7 @@ import { TransferIcon } from '../TransferIcon'
 import { ConsensusAccountLink } from '../Account/ConsensusAccountLink'
 import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
-
-type TableConsensusTransaction = Transaction & {
-  markAsNew?: boolean
-}
-
-export type TableConsensusTransactionList = {
-  transactions: TableConsensusTransaction[]
-  total_count: number
-  is_total_count_clipped: boolean
-}
+import { TableConsensusTransaction } from './types'
 
 type ConsensusTransactionsProps = {
   transactions?: TableConsensusTransaction[]

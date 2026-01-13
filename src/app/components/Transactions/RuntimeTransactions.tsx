@@ -5,7 +5,6 @@ import { TableCellAlign } from '../../components/Table/types'
 import { StatusIcon } from '../StatusIcon'
 import { RuntimeTransactionMethod } from '../../components/RuntimeTransactionMethod'
 import { RoundedBalance } from '../../components/RoundedBalance'
-import { RuntimeTransaction } from '../../../oasis-nexus/api'
 import { TablePaginationProps } from '../Table/TablePagination'
 import { BlockLink } from '../Blocks/BlockLink'
 import { AccountLink } from '../Account/AccountLink'
@@ -17,16 +16,7 @@ import { TableHeaderAge } from '../TableHeaderAge'
 import { TableCellAge } from '../TableCellAge'
 import { LockKeyhole } from 'lucide-react'
 import { useScreenSize } from '../../hooks/useScreensize'
-
-type TableRuntimeTransaction = RuntimeTransaction & {
-  markAsNew?: boolean
-}
-
-export type TableRuntimeTransactionList = {
-  transactions: TableRuntimeTransaction[]
-  total_count: number
-  is_total_count_clipped: boolean
-}
+import { TableRuntimeTransaction } from './types'
 
 type TransactionsProps = {
   transactions?: TableRuntimeTransaction[]

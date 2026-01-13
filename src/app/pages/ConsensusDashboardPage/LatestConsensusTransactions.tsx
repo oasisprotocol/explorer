@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-libr
 import { Link as RouterLink } from 'react-router-dom'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { ConsensusScope } from '../../../types/searchScope'
-import { ConsensusTransactions } from '../../components/Transactions'
+import { ConsensusTransactions } from '../../components/Transactions/ConsensusTransactions'
 import {
   NUMBER_OF_ITEMS_ON_DASHBOARD as limit,
   FILTERING_ON_DASHBOARD as shouldFilter,
