@@ -28,7 +28,8 @@ import {
   roflAppParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
-import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
+import { ThemeByScope } from './app/components/ThemeByScope'
+import { withDefaultTheme } from './app/components/ThemeByScope/withDefaultTheme'
 import { useRequiredScopeParam } from './app/hooks/useScopeParam'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { AccountEventsCard } from 'app/pages/RuntimeAccountDetailsPage/AccountEventsCard'
@@ -80,9 +81,9 @@ import { useRoflAppInstanceDetailsProps } from 'app/pages/RoflAppInstanceDetails
 import { RoflAppInstanceRakTransactionsCard } from 'app/pages/RoflAppInstanceDetailsPage/RoflAppInstanceRakTransactionsCard'
 
 const ScopeSpecificPart = () => {
-  const { network, layer } = useRequiredScopeParam()
+  const { network } = useRequiredScopeParam()
   return (
-    <ThemeByScope network={network} layer={layer}>
+    <ThemeByScope network={network}>
       <Outlet />
     </ThemeByScope>
   )
