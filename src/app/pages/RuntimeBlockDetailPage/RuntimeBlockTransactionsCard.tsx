@@ -8,7 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { RuntimeBlockDetailsContext } from './types'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
-import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod/helpers'
 import { transactionsContainerId } from '../../utils/tabAnchors'
 
 const TransactionList: FC<RuntimeBlockDetailsContext> = ({ scope, blockHeight, txMethod }) => {

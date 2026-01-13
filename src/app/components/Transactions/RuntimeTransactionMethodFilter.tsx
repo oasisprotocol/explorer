@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import { getRuntimeTxMethodOptions, RuntimeTxMethodFilterOption } from '../RuntimeTransactionMethod'
+import { RuntimeTxMethodFilterOption } from '../RuntimeTransactionMethod/types'
+import { getRuntimeTxMethodOptions } from '../RuntimeTransactionMethod/helpers'
 import { useTranslation } from 'react-i18next'
 import { Layer } from '../../../oasis-nexus/api'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'

@@ -3,7 +3,7 @@ import { useGetRuntimeRoflAppsIdInstancesRakTransactions } from '../../../oasis-
 import { AppErrors } from '../../../types/errors'
 import { RuntimeScope } from '../../../types/searchScope'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit, paraTimesConfig } from '../../../config'
-import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod/helpers'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { RuntimeTxMethodFilteringType } from '../../hooks/useCommonParams'

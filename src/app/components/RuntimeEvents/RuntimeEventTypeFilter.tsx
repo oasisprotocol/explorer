@@ -4,7 +4,7 @@ import { Layer, RuntimeEventType } from '../../../oasis-nexus/api'
 import { RuntimeEventFilteringType } from '../../hooks/useCommonParams'
 import { TFunction } from 'i18next'
 import { paraTimesConfig } from '../../../config'
-import { getRuntimeEventMethodLabel } from './RuntimeEventDetails'
+import { getRuntimeEventMethodLabel } from './helpers'
 import { FilterByType } from '../FilterByType'
 
 type RuntimeEventTypeFilterOption = { value: RuntimeEventFilteringType; label: string }

@@ -21,7 +21,7 @@ import { getFiatCurrencyForScope } from '../../../config'
 import { useRuntimeListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useRuntimeTxMethodParam } from '../../hooks/useCommonParams'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
-import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod/helpers'
 import { LayoutDivider } from '../../components/Divider'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE
