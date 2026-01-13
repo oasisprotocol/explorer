@@ -5,7 +5,7 @@ import { ConsensusEventFilteringType } from '../../hooks/useCommonParams'
 import { TFunction } from 'i18next'
 import { paraTimesConfig } from '../../../config'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
-import { getConsensusEventTypeLabel } from './ConsensusEventDetails'
+import { getConsensusEventTypeLabel } from './helpers'
 import { FilterByType } from '../FilterByType'
 
 type Option = {

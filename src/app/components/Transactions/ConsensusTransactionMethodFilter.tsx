@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import { getConsensusTxMethodOptions, ConsensusTxMethodFilterOption } from '../ConsensusTransactionMethod'
+import { ConsensusTxMethodFilterOption } from '../ConsensusTransactionMethod'
+import { getConsensusTxMethodOptions } from '../ConsensusTransactionMethod/helpers'
 import { useTranslation } from 'react-i18next'
 import { ParamSetterFunction } from '../../hooks/useTypedSearchParam'
 import { FilterByType } from '../FilterByType'

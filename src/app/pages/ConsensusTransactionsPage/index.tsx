@@ -10,14 +10,15 @@ import { useSearchParamsPagination } from '../../components/Table/useSearchParam
 import { AxiosResponse } from 'axios'
 import { AppErrors } from '../../../types/errors'
 import { LoadMoreButton } from '../../components/LoadMoreButton'
-import { TableLayout, TableLayoutButton } from '../../components/TableLayoutButton'
+import { TableLayoutButton } from '../../components/TableLayoutButton'
+import { TableLayout } from '../../components/Table/types'
 import { useConsensusScope } from '../../hooks/useScopeParam'
 import { VerticalList } from '../../components/VerticalList'
 import { ConsensusTransactionDetailView } from '../ConsensusTransactionDetailPage'
 import { useConsensusListBeforeDate } from '../../hooks/useListBeforeDate'
 import { useConsensusTxMethodParam } from '../../hooks/useCommonParams'
 import { ConsensusTransactionMethodFilter } from '../../components/Transactions/ConsensusTransactionMethodFilter'
-import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod'
+import { getConsensusTransactionMethodFilteringParam } from '../../components/ConsensusTransactionMethod/helpers'
 import { LayoutDivider } from '../../components/Divider'
 
 export const ConsensusTransactionsPage: FC = () => {

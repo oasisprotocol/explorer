@@ -6,7 +6,7 @@ import { SearchScope } from 'types/searchScope'
 import { useGetConsensusBlocks, Validator } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD as PAGE_SIZE } from '../../../config'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
-import { ConsensusBlocks } from '../../components/Blocks'
+import { ConsensusBlocks } from '../../components/Blocks/ConsensusBlocks'
 
 type ProposedBlocksProps = {
   scope: SearchScope

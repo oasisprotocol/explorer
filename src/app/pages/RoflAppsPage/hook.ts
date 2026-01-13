@@ -1,5 +1,5 @@
 import { Runtime, useGetRuntimeRoflApps } from 'oasis-nexus/api'
-import { TableLayout } from '../../components/TableLayoutButton'
+import { TableLayout } from '../../components/Table/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'

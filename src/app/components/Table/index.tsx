@@ -11,6 +11,7 @@ import {
 import { TablePagination, TablePaginationProps } from './TablePagination'
 import { CardEmptyState } from '../CardEmptyState'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { TableCellAlign } from './types'
 
 type SkeletonTableRowsProps = {
   rowsNumber: number
@@ -42,12 +43,6 @@ export const StyledTableRow: FC<StyledTableRowProps> = ({ highlight, backgroundC
     style={backgroundColor ? { backgroundColor } : undefined}
   />
 )
-
-export enum TableCellAlign {
-  Center = 'center',
-  Left = 'left',
-  Right = 'right',
-}
 
 const getAlignClass = (align?: TableCellAlign): string => {
   switch (align) {
