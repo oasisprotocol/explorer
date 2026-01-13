@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { HighlightedText, HighlightOptions } from './index'
-import { useHighlightPattern } from '../PatternHighlightingContext'
+import { useHighlightPattern } from '../PatternHighlightingContext/hooks'
 import { trimAroundMatch } from './text-trimming'
 
 type HighlightedTrimmedTextProps = {

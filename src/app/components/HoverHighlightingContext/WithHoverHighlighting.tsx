@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect } from 'react'
-import { useHoverHighlighting } from './index'
+import { useHoverHighlighting } from './hooks'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
