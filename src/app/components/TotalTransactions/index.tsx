@@ -88,12 +88,12 @@ export const TotalTransactions: FC<TotalTransactionsProps> = ({
   const { t } = useTranslation()
   const [chartDuration, setChartDuration] = useState<ChartDuration>(ChartDuration.MONTH)
   return (
-    <Card variant="layout">
+    <Card variant="layout" className="min-w-0 flex-1">
       <CardHeader>
-        <CardTitle className="flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+        <CardTitle className="flex-col flex-wrap sm:flex-row sm:items-center sm:justify-between gap-1">
           {title ?? <Typography variant="h3">{t('totalTransactions.header')}</Typography>}
 
-          <div className="md:ml-4 md:flex-1 md:text-right">
+          <div className="lg:ml-4 md:flex-1 md:text-right">
             <DurationPills handleChange={setChartDuration} value={chartDuration} />
           </div>
         </CardTitle>
