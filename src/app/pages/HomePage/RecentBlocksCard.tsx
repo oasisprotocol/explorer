@@ -21,7 +21,7 @@ export const RecentBlocksCard: FC = () => {
   const { t } = useTranslation()
 
   return (
-    <Card variant="layout">
+    <Card variant="layout" className="min-w-0 flex-1">
       <CardHeader>
         <CardTitle>
           <Typography variant="h3" className="text-lg">
