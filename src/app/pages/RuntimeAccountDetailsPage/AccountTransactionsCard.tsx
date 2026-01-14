@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
-import { RuntimeTransactions } from '../../components/Transactions'
+import { RuntimeTransactions } from '../../components/Transactions/RuntimeTransactions'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useAccountTransactions } from './hooks'
 import { RuntimeAccountDetailsContext } from './types'

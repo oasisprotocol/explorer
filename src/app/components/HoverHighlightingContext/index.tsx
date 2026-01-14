@@ -1,19 +1,6 @@
-import { createContext, FC, ReactNode, useContext, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
+import { HoverHighlightingContext } from './context'
 import { getEvmBech32Address, isValidEthAddress } from '../../utils/helpers'
-
-interface HoverHighlightingContextInfo {
-  shouldHighlight: (address: string) => boolean
-  selectAddress: (value: string) => void
-  releaseAddress: (value: string) => void
-}
-
-const HoverHighlightingContext = createContext<HoverHighlightingContextInfo | null>(null)
-
-const noContext: HoverHighlightingContextInfo = {
-  shouldHighlight: () => false,
-  selectAddress: () => {},
-  releaseAddress: () => {},
-}
 
 /**
  * Convert highlight address to a uniform format:
@@ -42,13 +29,4 @@ export const HoverHighlightingContextProvider: FC<{ children: ReactNode }> = ({ 
       {children}
     </HoverHighlightingContext.Provider>
   )
-}
-
-export const useHoverHighlighting = () => {
-  const context = useContext(HoverHighlightingContext)
-  if (!context) {
-    console.log('Warning: highlighting context is not provided!')
-    return noContext
-  }
-  return context
 }

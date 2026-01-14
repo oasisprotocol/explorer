@@ -11,7 +11,7 @@
     "clean": "rm -rf build/ node_modules/.vite/",
     "start": "vite",
     "checkTs": "tsc --noEmit",
-    "lint": "eslint --ext js,ts,tsx ./",
+    "lint": "eslint --ext js,ts,tsx ./  --max-warnings 0",
     "lint:fix": "yarn run lint --fix",
     "lint-git": "node ./internals/scripts/gitlint.js",
     "lint-docs": "markdownlint --ignore '**/node_modules/**' '**/*.md'",

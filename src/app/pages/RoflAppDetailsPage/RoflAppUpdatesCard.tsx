@@ -4,9 +4,9 @@ import { useScreenSize } from '../../hooks/useScreensize'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { updatesContainerId } from '../../utils/tabAnchors'
 import { LinkableCardLayout } from '../../components/LinkableCardLayout'
-import { RuntimeTransactions } from '../../components/Transactions'
+import { RuntimeTransactions } from '../../components/Transactions/RuntimeTransactions'
 import { RuntimeTransactionMethodFilter } from '../../components/Transactions/RuntimeTransactionMethodFilter'
-import { getRuntimeRoflUpdatesMethodOptions } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeRoflUpdatesMethodOptions } from '../../components/RuntimeTransactionMethod/helpers'
 import { RoflAppDetailsContext, useRoflAppUpdates } from './hooks'
 
 export const RoflAppUpdatesCard: FC<RoflAppDetailsContext> = context => {

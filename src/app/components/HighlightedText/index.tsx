@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { findTextMatches, NormalizerOptions, PositiveMatchInfo } from './text-matching'
 import { FC, ReactNode } from 'react'
-import { useHighlightPattern } from '../PatternHighlightingContext'
+import { useHighlightPattern } from '../PatternHighlightingContext/hooks'
 
 export interface HighlightOptions {
   /**
@@ -11,8 +11,6 @@ export interface HighlightOptions {
 }
 
 export type HighlightPattern = string[]
-
-export const NoHighlights: HighlightPattern = []
 
 interface HighlightedTextProps {
   /**

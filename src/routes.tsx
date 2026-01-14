@@ -1,4 +1,4 @@
-import { Outlet, RouteObject, ScrollRestoration, useNavigate } from 'react-router-dom'
+import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
 import { HomePage } from './app/pages/HomePage'
 import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'
@@ -23,13 +23,11 @@ import {
   proposalIdParamLoader,
   fixedNetwork,
   fixedLayer,
-  RouteUtils,
   skipGraph,
   roflAppParamLoader,
 } from './app/utils/route-utils'
 import { RoutingErrorPage } from './app/pages/RoutingErrorPage'
-import { ThemeByScope, withDefaultTheme } from './app/components/ThemeByScope'
-import { useRequiredScopeParam } from './app/hooks/useScopeParam'
+import { withDefaultTheme } from './app/components/ThemeByScope/withDefaultTheme'
 import { TokensPage } from './app/pages/TokensOverviewPage'
 import { AccountEventsCard } from 'app/pages/RuntimeAccountDetailsPage/AccountEventsCard'
 import { ContractCodeCard } from './app/pages/RuntimeAccountDetailsPage/ContractCodeCard'
@@ -67,10 +65,8 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { RoflAppsPage } from './app/pages/RoflAppsPage'
 import { RoflAppDetailsPage } from 'app/pages/RoflAppDetailsPage'
-import { FC, useEffect } from 'react'
 import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HoverHighlightingContextProvider } from './app/components/HoverHighlightingContext'
-import { useLocalSettings } from './app/hooks/useLocalSettings'
 import { InstancesCard } from './app/pages/RoflAppDetailsPage/InstancesCard'
 import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
 import { RoflAppUpdatesCard } from './app/pages/RoflAppDetailsPage/RoflAppUpdatesCard'
@@ -78,45 +74,8 @@ import { RoflAppInstanceTransactionsCard } from 'app/pages/RoflAppDetailsPage/Ro
 import { RoflAppInstanceDetailsPage } from 'app/pages/RoflAppInstanceDetailsPage'
 import { useRoflAppInstanceDetailsProps } from 'app/pages/RoflAppInstanceDetailsPage/hooks'
 import { RoflAppInstanceRakTransactionsCard } from 'app/pages/RoflAppInstanceDetailsPage/RoflAppInstanceRakTransactionsCard'
-
-const ScopeSpecificPart = () => {
-  const { network, layer } = useRequiredScopeParam()
-  return (
-    <ThemeByScope network={network} layer={layer}>
-      <Outlet />
-    </ThemeByScope>
-  )
-}
-
-/**
- * In case of being restricted to a specific layer or layers, jump to a dashboard
- *
- * This should be rendered on the landing page, since we don't want the opening graph.
- */
-const RedirectToDashboard: FC = () => {
-  const navigate = useNavigate()
-  const {
-    settings: { preferredScope },
-  } = useLocalSettings()
-
-  const getPreferredScope = () =>
-    !preferredScope
-      ? undefined
-      : RouteUtils.getEnabledScopes().find(
-          scope => scope.network === preferredScope.network && scope.layer === preferredScope.layer,
-        )
-
-  const getDefaultScope = (): SearchScope => ({
-    network:
-      (fixedNetwork ?? fixedLayer)
-        ? RouteUtils.getEnabledNetworksForLayer(fixedLayer)[0]!
-        : RouteUtils.getEnabledScopes()[0].network,
-    layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
-  })
-
-  useEffect(() => navigate(RouteUtils.getDashboardRoute(getPreferredScope() ?? getDefaultScope())))
-  return null
-}
+import { ScopeSpecificPart } from 'app/components/ScopeSpecificPart'
+import { RedirectToDashboard } from 'app/components/RedirectToDashboard'
 
 export const routes: RouteObject[] = [
   {

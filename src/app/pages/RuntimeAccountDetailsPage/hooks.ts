@@ -8,7 +8,7 @@ import { AppErrors } from '../../../types/errors'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
 import { RuntimeScope } from '../../../types/searchScope'
-import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod'
+import { getRuntimeTransactionMethodFilteringParam } from '../../components/RuntimeTransactionMethod/helpers'
 import { getRuntimeEventTypeFilteringParam, RuntimeEventFilteringType } from '../../hooks/useCommonParams'
 import { RuntimeAccountDetailsContext } from './types'
 

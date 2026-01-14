@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useGetConsensusTransactions } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE as limit } from '../../../config'
-import { ConsensusTransactions } from '../../components/Transactions'
+import { ConsensusTransactions } from '../../components/Transactions/ConsensusTransactions'
 import { useSearchParamsPagination } from '../../components/Table/useSearchParamsPagination'
 import { ConsensusAccountDetailsContext } from './hooks'
 import { LinkableCardLayout } from 'app/components/LinkableCardLayout'

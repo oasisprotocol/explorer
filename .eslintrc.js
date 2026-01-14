@@ -62,7 +62,7 @@ const config = {
     'react/display-name': 'off', // TODO: Maybe enable
     'react/self-closing-comp': ['error', { component: true, html: true }],
 
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true /* vite */ }],
+    'react-refresh/only-export-components': ['error', { allowConstantExport: true /* vite */ }],
 
     '@typescript-eslint/no-empty-function': 'off', // Allow empty reducers for saga
     '@typescript-eslint/no-non-null-assertion': 'off',

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { render } from '@testing-library/react'
-import { withDefaultTheme } from '../../components/ThemeByScope'
+import { withDefaultTheme } from '../../components/ThemeByScope/withDefaultTheme'
 import React from 'react'
 import { useIsApiReachable, useRuntimeFreshness } from '../../components/OfflineBanner/hook'
 import { LocalSettingsContextProvider } from '../../providers/LocalSettingsProvider'
