@@ -168,7 +168,7 @@
     "valueInTokenWithLink": "{{value, number}} <TickerLink />",
     "view": "View",
     "viewAll": "View all",
-    "visitRoseApp": "Visit ROSE app",
+    "exportCsvReport": "Export CSV Report",
     "vote": "Vote",
     "voter": "Voter",
     "votes": "Votes",
