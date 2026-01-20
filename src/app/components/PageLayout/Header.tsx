@@ -3,11 +3,14 @@ import { useScrolled } from '../../hooks/useScrolled'
 import { HomePageLink } from './Logotype'
 import { NetworkSelector } from './NetworkSelector'
 import { Button } from '@oasisprotocol/ui-library/src/components/button'
+import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useScopeParam } from '../../hooks/useScopeParam'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { isScopeSelectorNeeded } from '../../utils/route-utils'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
+import { csvExport } from '../../utils/externalLinks'
+import { ArrowUpRight } from 'lucide-react'
 
 type HeaderProps = {
   sticky?: boolean
@@ -44,10 +47,11 @@ export const Header: FC<HeaderProps> = ({ sticky = true }) => {
 
           {isDesktop && (
             <div className="xl:col-start-10 xl:col-span-3 flex justify-end items-center">
-              <Button variant="outline" size="lg" asChild>
-                <a href="https://rose.oasis.io/" target="_blank" rel="noopener noreferrer">
-                  {t('common.visitRoseApp')}
-                </a>
+              <Button color="secondary" variant="outline" size="lg" asChild>
+                <Link textColor="primary" href={csvExport.homepage} target="_blank" rel="noopener noreferrer">
+                  {t('common.exportCsvReport')}
+                  <ArrowUpRight />
+                </Link>
               </Button>
             </div>
           )}

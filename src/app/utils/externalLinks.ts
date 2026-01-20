@@ -98,3 +98,7 @@ export const roflApp = {
 export const pontusx = {
   homepage: 'https://pontus-x.eu/',
 }
+
+export const csvExport = {
+  homepage: 'https://reports.oasis.io/',
+}
