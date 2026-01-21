@@ -384,10 +384,10 @@
     "last": "Last"
   },
   "social": {
-    "offchainPerformance": "Offchain Performance.",
-    "onchainTrust": "Onchain Trust.",
-    "getStarted": "Get started with ROFL",
-    "description": "Build trustless apps with ROFL. Start quickly with templates. Manage everything from one interface.",
+    "offchainPerformanceonchainTrust": "Offchain Performance. Onchain Trust.",
+    "roflApp": "ROFL APP",
+    "discoverRoflApp": "Discover ROFL App",
+    "description": "Build trustless apps with ROFL. Use pre-built templates and manage from a single interface.",
     "community": "Be part of the community and stay in the loop on everything Oasis",
     "discord": "Discord",
     "header": "Join us",
@@ -397,7 +397,11 @@
     "youtube": "Youtube",
     "linkedin": "LinkedIn",
     "docs": "Documentation",
-    "home": "Home"
+    "home": "Home",
+    "roseApp": "ROSE APP",
+    "roseAppTitle": "Stake, move, wrap.",
+    "roseAppDescription": "Quickest way into the Oasis Ecosystem. Easily discover, stake, move, buy or wrap ROSE.",
+    "visitRoseApp": "Visit ROSE App"
   },
   "table": {
     "headers": {

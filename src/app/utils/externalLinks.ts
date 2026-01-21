@@ -95,6 +95,10 @@ export const wallet = {
 export const roflApp = {
   homepage: 'https://rofl.app/',
 }
+
+export const roseApp = {
+  homepage: 'https://rose.oasis.io/',
+}
 export const pontusx = {
   homepage: 'https://pontus-x.eu/',
 }

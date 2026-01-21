@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { DashboardDivider } from '../../components/Divider'
 import { isLocalnet } from '../../utils/route-utils'
-import { Social } from '../../components/Social'
+import { DiscoverMore } from '../../components/DiscoverMore'
 import { LearningMaterials } from './LearningMaterials'
 import { LatestRuntimeBlocks } from './LatestRuntimeBlocks'
 import { LatestRuntimeTransactions } from './LatestRuntimeTransactions'
@@ -45,7 +45,7 @@ export const ParatimeDashboardPage: FC = () => {
               <TotalTransactions scope={scope} />
             </div>
           </div>
-          <Social />
+          <DiscoverMore />
         </>
       )}
     </PageLayout>
