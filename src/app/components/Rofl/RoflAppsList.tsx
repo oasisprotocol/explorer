@@ -19,7 +19,7 @@ type RoflAppsListProps = {
 
 export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, pagination, apps }) => {
   const { t } = useTranslation()
-  const { isTablet } = useScreenSize()
+  const { isTablet, isLaptop } = useScreenSize()
 
   const tableColumns: TableColProps[] = [
     { key: 'order', content: '' },
@@ -64,7 +64,14 @@ export const RoflAppsList: FC<RoflAppsListProps> = ({ isLoading, limit, paginati
           key: 'status',
         },
         {
-          content: <RoflAppLink id={app.id} network={app.network} withSourceIndicator={false} />,
+          content: (
+            <RoflAppLink
+              id={app.id}
+              network={app.network}
+              withSourceIndicator={false}
+              alwaysTrim={isLaptop}
+            />
+          ),
           key: 'id',
         },
         {
