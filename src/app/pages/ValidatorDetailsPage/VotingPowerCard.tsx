@@ -36,12 +36,7 @@ export const VotingPowerCard: FC<VotingPowerCardProps> = ({ validator, stats }) 
               max={stats.total_voting_power}
               label={
                 <span className="font-bold">
-                  <PercentageValue
-                    adaptMaximumFractionDigits
-                    value={validator.voting_power}
-                    total={stats.total_voting_power}
-                    maximumFractionDigits={2}
-                  />
+                  <PercentageValue value={validator.voting_power} total={stats.total_voting_power} adaptive />
                 </span>
               }
             />
