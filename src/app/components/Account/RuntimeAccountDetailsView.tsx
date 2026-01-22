@@ -152,6 +152,9 @@ export const RuntimeAccountDetailsView: FC<RuntimeAccountDetailsViewProps> = ({
         </>
       )}
 
+      <dt>{t('common.nonce')}</dt>
+      <dd>{account.nonce ?? t('common.missing')}</dd>
+
       <dt>{t('common.transactions')}</dt>
       <dd>
         {account.stats.num_txns ? (
