@@ -36,11 +36,7 @@ export const LongDataDisplay: FC<{ data: string; fontWeight?: number; collapsedL
     <div>
       <span
         ref={textRef}
-        className="
-    font-medium
-    overflow-hidden
-    whitespace-pre-wrap
-  "
+        className="font-mono font-medium overflow-hidden whitespace-pre-wrap"
         style={{
           display: '-webkit-box',
           WebkitBoxOrient: 'vertical',
