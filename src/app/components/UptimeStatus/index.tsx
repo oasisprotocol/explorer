@@ -55,10 +55,7 @@ export const UptimeStatus: FC<UptimeStatusProps> = ({ uptime, small }) => {
         ))}
       </div>
       {uptime?.window_uptime && uptime?.window_length && (
-        <PercentageValue
-          value={(uptime.window_uptime / uptime.window_length) * 100}
-          maximumFractionDigits={1}
-        />
+        <PercentageValue value={(uptime.window_uptime / uptime.window_length) * 100} fractionDigits={1} />
       )}
     </div>
   )
