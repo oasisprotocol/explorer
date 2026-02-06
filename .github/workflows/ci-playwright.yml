@@ -21,7 +21,7 @@ jobs:
     name: playwright
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
       options: --user 1001
     strategy:
       fail-fast: false
@@ -36,7 +36,7 @@ jobs:
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '20.20.0'
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile
