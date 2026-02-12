@@ -89,7 +89,7 @@ export const AdaptiveDynamicTrimmer: FC<AdaptiveDynamicTrimmerProps> = ({
   )
 
   return (
-    <span ref={textRef} className="max-w-full overflow-x-hidden">
+    <span ref={textRef} className="max-w-full">
       <MaybeWithTooltip
         title={title}
         spanClassName={cn('whitespace-nowrap', isFinal ? 'opacity-100' : 'opacity-0')}

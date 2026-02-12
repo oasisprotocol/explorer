@@ -107,11 +107,11 @@ export const ConsensusBlockDetailView: FC<{
           <dt>{t('common.stateRoot')}</dt>
           <dd>
             {isTablet ? (
-              <span className="max-w-full overflow-x-hidden">
+              <span className="font-mono max-w-full overflow-x-hidden">
                 <AdaptiveTrimmer text={block.state_root} strategy="middle" minLength={13} />
               </span>
             ) : (
-              <span>{block.state_root}</span>
+              <span className="font-mono">{block.state_root}</span>
             )}
             <CopyToClipboard value={block.state_root} />
           </dd>

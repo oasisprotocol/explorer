@@ -263,9 +263,9 @@ export const ValidatorDetailsView: FC<{
               )}
             </dd>
             <dt>{t('validator.entityId')}</dt>
-            <dd>{validator.entity_id}</dd>
+            <dd className="font-mono">{validator.entity_id}</dd>
             <dt>{t('common.nodeId')}</dt>
-            <dd>{validator.node_id}</dd>
+            <dd className="font-mono">{validator.node_id}</dd>
             {validator.node_id && (
               <>
                 <dt>{t('common.nodeAddress')}</dt>

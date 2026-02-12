@@ -20,7 +20,7 @@ export const Enclaves: FC<EnclavesProps> = ({ policy }) => {
         {policy.enclaves.map((enclave: string) => (
           <tr key={enclave}>
             <td>
-              <span className="font-medium">{enclave}</span>
+              <span className="font-mono font-medium">{enclave}</span>
             </td>
             <td>
               <CopyToClipboard value={enclave} />

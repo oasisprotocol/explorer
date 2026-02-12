@@ -69,7 +69,7 @@ export const RoflAppInstanceDetailsView: FC<{
         </div>
       </dt>
       <dd>
-        <span>
+        <span className="font-mono font-medium text-primary">
           {instance.rak} <CopyToClipboard value={instance.rak} />
         </span>
       </dd>
@@ -82,7 +82,7 @@ export const RoflAppInstanceDetailsView: FC<{
         </div>
       </dt>
       <dd>
-        <span>
+        <span className="font-mono font-medium">
           {instance.rek} <CopyToClipboard value={instance.rek} />
         </span>
       </dd>
@@ -95,7 +95,7 @@ export const RoflAppInstanceDetailsView: FC<{
       </dd>
       <dt>{t('rofl.endorsingNodeId')}</dt>
       <dd>
-        <span>
+        <span className="font-mono font-medium">
           {instance.endorsing_node_id} <CopyToClipboard value={instance.endorsing_node_id} />
         </span>
       </dd>
