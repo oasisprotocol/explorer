@@ -6,7 +6,6 @@ declare global {
       REACT_APP_BUILD_SHA: string
       REACT_APP_BUILD_VERSION: string
       REACT_APP_PRIVACY_POLICY: string
-      REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: string
       REACT_APP_API: string
       REACT_APP_TESTNET_API: string
       REACT_APP_LOCALNET_API: string
@@ -34,10 +33,6 @@ declare global {
       REACT_APP_LOCALNET_SAPPHIRE: 'true' | 'false'
       REACT_APP_LOCALNET_EMERALD: 'true' | 'false'
     }
-  }
-
-  interface Window {
-    REACT_APP_ENABLE_OASIS_MATOMO_ANALYTICS: 'true' | 'false'
   }
 }
 

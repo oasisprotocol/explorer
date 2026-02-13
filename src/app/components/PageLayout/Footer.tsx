@@ -5,11 +5,10 @@ import { useConstant } from '../../hooks/useConstant'
 import { AppendMobileSearch } from '../AppendMobileSearch'
 import { SearchScope } from '../../../types/searchScope'
 import { api, github } from '../../utils/externalLinks'
-import { ReopenAnalyticsConsentButton } from 'app/components/AnalyticsConsent'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
-import { socialMedia } from '../../utils/externalLinks'
+import { socialMedia, legalDocuments } from '../../utils/externalLinks'
 import telegram from '../DiscoverMore/images/telegram_black.svg'
 import twitter from '../DiscoverMore/images/twitter_black.svg'
 import discord from '../DiscoverMore/images/discord_black.svg'
@@ -57,7 +56,6 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             <Typography variant="xsmall" textColor="muted" className="flex items-center gap-0.5 flex-wrap">
               <span className="whitespace-nowrap">{t('footer.mobileTitle')} |</span>
               <span className={cn(!!hasMobileAction && 'order-1 basis-full sm:order-none sm:basis-auto')}>
-                <ReopenAnalyticsConsentButton />
                 {!hasMobileAction && ' | '}
               </span>
               <span>{currentYear}</span>
@@ -130,7 +128,17 @@ export const Footer: FC<FooterProps> = ({ scope, mobileSearchAction, enableMobil
             </div>
             <div className="flex items-center gap-6 ">
               <Typography variant="xsmall" textColor="muted">
-                {t('footer.title')} | <ReopenAnalyticsConsentButton /> | {currentYear}
+                {t('footer.title')} {' | '}
+                <Link
+                  textColor="inherit"
+                  href={legalDocuments.privacyPolicy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('privacyPolicy')}
+                </Link>
+                {' | '}
+                {currentYear}
               </Typography>
               <div>
                 <div className="h-5 flex items-center gap-4 justify-between">

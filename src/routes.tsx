@@ -65,7 +65,6 @@ import { useConsensusAccountDetailsProps } from './app/pages/ConsensusAccountDet
 import { ConsensusAccountTransactionsCard } from './app/pages/ConsensusAccountDetailsPage/ConsensusAccountTransactionsCard'
 import { RoflAppsPage } from './app/pages/RoflAppsPage'
 import { RoflAppDetailsPage } from 'app/pages/RoflAppDetailsPage'
-import { AnalyticsConsentProvider } from './app/components/AnalyticsConsent'
 import { HoverHighlightingContextProvider } from './app/components/HoverHighlightingContext'
 import { InstancesCard } from './app/pages/RoflAppDetailsPage/InstancesCard'
 import { useRoflAppDetailsProps } from './app/pages/RoflAppDetailsPage/hooks'
@@ -79,18 +78,14 @@ import { RedirectToDashboard } from 'app/components/RedirectToDashboard'
 
 export const routes: RouteObject[] = [
   {
-    errorElement: (
-      <AnalyticsConsentProvider>
-        <RoutingErrorPage />
-      </AnalyticsConsentProvider>
-    ),
+    errorElement: <RoutingErrorPage />,
     element: (
-      <AnalyticsConsentProvider>
+      <>
         <ScrollRestoration />
         <HoverHighlightingContextProvider>
           <Outlet />
         </HoverHighlightingContextProvider>
-      </AnalyticsConsentProvider>
+      </>
     ),
     children: [
       { path: '/', element: skipGraph ? <RedirectToDashboard /> : withDefaultTheme(<HomePage />, true) },
