@@ -46,8 +46,8 @@
   },
   "dependencies": {
     "@ethereumjs/util": "9.1.0",
-    "@fontsource-variable/inter": "^5.2.6",
-    "@fontsource-variable/roboto-mono": "^5.0.17",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/roboto-mono": "^5.2.8",
     "@metamask/jazzicon": "2.0.0",
     "@monaco-editor/react": "^4.7.0",
     "@oasisprotocol/client": "1.2.0",
