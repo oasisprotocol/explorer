@@ -1,7 +1,7 @@
 import { useLocalSettings } from 'app/hooks/useLocalSettings'
 import { RouteUtils, fixedNetwork, fixedLayer } from 'app/utils/route-utils'
 import { FC, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { SearchScope } from 'types/searchScope'
 
 /**
@@ -30,6 +30,8 @@ export const RedirectToDashboard: FC = () => {
     layer: fixedLayer ?? RouteUtils.getEnabledScopes()[0].layer,
   })
 
-  useEffect(() => navigate(RouteUtils.getDashboardRoute(getPreferredScope() ?? getDefaultScope())))
+  useEffect(() => {
+    navigate(RouteUtils.getDashboardRoute(getPreferredScope() ?? getDefaultScope()))
+  })
   return null
 }

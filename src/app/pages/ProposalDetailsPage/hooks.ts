@@ -12,7 +12,7 @@ import { useClientSidePagination } from '../../components/Table/useClientSidePag
 import { NUMBER_OF_ITEMS_ON_SEPARATE_PAGE } from '../../../config'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { getHighlightPattern, textSearch } from '../../components/Search/search-utils'
 
 export type AllVotesData = List & {

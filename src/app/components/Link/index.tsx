@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Link as UilLink } from '@oasisprotocol/ui-library/src/components/link'
 import { trimLongString } from '../../utils/trimLongString'

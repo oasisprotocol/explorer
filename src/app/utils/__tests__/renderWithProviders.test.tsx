@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router'
 import { render } from '@testing-library/react'
 import { withDefaultTheme } from '../../components/ThemeByScope/withDefaultTheme'
 import React from 'react'

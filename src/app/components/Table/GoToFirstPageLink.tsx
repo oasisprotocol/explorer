@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams, useHref } from 'react-router-dom'
+import { useSearchParams, useHref } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 
 /**

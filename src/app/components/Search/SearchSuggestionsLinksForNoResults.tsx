@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { searchSuggestionTerms } from './search-utils'
 import { Trans, useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { RouteUtils } from '../../utils/route-utils'
 import { OptionalBreak } from '../OptionalBreak'
 import { SearchScope } from '../../../types/searchScope'

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { useGetConsensusProposals } from '../../../oasis-nexus/api'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'

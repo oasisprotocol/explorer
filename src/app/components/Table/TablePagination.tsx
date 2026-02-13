@@ -5,7 +5,7 @@ import {
 } from '@oasisprotocol/ui-library/src/components/pagination'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, To } from 'react-router-dom'
+import { Link, To } from 'react-router'
 import { cn } from '@oasisprotocol/ui-library/src/lib/utils'
 
 export type TablePaginationProps = {

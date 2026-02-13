@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { isConsensusBlock, isConsensusTransaction, SearchResults } from './hooks'
 import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 import { isItemInScope, SearchScope } from '../../../types/searchScope'

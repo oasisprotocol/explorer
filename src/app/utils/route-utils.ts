@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from 'react-router-dom'
+import { LoaderFunctionArgs } from 'react-router'
 import { isValidProposalId, isValidRoflAppId, isValidTxHash, isValidTxOasisHash } from './helpers'
 import { isValidBlockHeight, isValidOasisAddress, isValidEthAddress } from './helpers'
 import { AppError, AppErrors } from '../../types/errors'

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { NetworkButton, MobileNetworkButton } from './NetworkButton'
 import { Network, getNetworkNames } from '../../../types/network'

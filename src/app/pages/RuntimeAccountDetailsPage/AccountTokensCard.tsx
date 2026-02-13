@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, Link as RouterLink } from 'react-router-dom'
+import { useLocation, Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { CardEmptyState } from '../../components/CardEmptyState'
 import { Table, TableColProps } from '../../components/Table'

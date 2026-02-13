@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { useGetConsensusBlocks } from '../../../oasis-nexus/api'
 import { ConsensusBlocks } from '../../components/Blocks/ConsensusBlocks'

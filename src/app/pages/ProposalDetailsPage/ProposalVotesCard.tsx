@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { useRequiredScopeParam } from '../../hooks/useScopeParam'
 import { SubPageCard } from '../../components/SubPageCard'
 import { TablePaginationProps } from '../../components/Table/TablePagination'

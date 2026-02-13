@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { RoflInstance, useGetRuntimeRoflAppsIdInstancesRak } from '../../../oasis-nexus/api'
 import { SearchScope } from '../../../types/searchScope'

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Transaction, useGetConsensusTransactionsTxHash } from '../../../oasis-nexus/api'
 import { StyledDescriptionList } from '../../components/StyledDescriptionList'

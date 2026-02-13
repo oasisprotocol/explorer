@@ -1,4 +1,4 @@
-import { To, useSearchParams } from 'react-router-dom'
+import { To, useSearchParams } from 'react-router'
 import { AppErrors } from '../../../types/errors'
 import { ComprehensivePaginationEngine } from './PaginationEngine'
 import { List } from '../../../oasis-nexus/api'

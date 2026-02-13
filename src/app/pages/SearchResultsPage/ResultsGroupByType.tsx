@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { CardDivider } from '../../components/Divider'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'

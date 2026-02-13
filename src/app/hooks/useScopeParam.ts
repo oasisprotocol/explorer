@@ -1,4 +1,4 @@
-import { useRouteLoaderData, useParams } from 'react-router-dom'
+import { useRouteLoaderData, useParams } from 'react-router'
 import { Network } from '../../types/network'
 import { AppError, AppErrors } from '../../types/errors'
 import { ConsensusScope, RuntimeScope, SearchScope } from '../../types/searchScope'

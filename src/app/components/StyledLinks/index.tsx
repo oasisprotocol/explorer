@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { ArrowRight } from 'lucide-react'
 

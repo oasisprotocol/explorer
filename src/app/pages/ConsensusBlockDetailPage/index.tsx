@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router'
 import { AppErrors } from '../../../types/errors'
 import { useScreenSize } from '../../hooks/useScreensize'
 import { Block, EntityMetadata, useGetConsensusBlockByHeight } from '../../../oasis-nexus/api'

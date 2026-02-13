@@ -1,4 +1,4 @@
-import { To } from 'react-router-dom'
+import { To } from 'react-router'
 import { TablePaginationProps } from './TablePagination'
 import { List } from '../../../oasis-nexus/api'
 

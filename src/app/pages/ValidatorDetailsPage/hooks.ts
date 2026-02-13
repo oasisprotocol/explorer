@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router'
 import { ConsensusScope } from '../../../types/searchScope'
 import { ConsensusTxMethodFilterOption } from '../../components/ConsensusTransactionMethod'
 import { ConsensusEventFilteringType } from '../../hooks/useCommonParams'

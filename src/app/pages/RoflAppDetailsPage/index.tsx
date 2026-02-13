@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'

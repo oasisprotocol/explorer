@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router'
 import { useGetRuntimeRoflAppsIdInstancesRakTransactions } from '../../../oasis-nexus/api'
 import { AppErrors } from '../../../types/errors'
 import { RuntimeScope } from '../../../types/searchScope'

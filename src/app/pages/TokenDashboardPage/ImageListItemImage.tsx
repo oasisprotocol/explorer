@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { processNftImageUrl } from 'app/utils/nft-images'
 import { isUrlSafe } from 'app/utils/url'

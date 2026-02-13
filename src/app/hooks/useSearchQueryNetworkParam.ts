@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { Network } from '../../types/network'
 import { fixedNetwork, RouteUtils } from '../utils/route-utils'
 import { AppErrors } from '../../types/errors'

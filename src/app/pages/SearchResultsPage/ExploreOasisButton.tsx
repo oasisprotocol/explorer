@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { FC, useCallback } from 'react'
 import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { ArrowRight } from 'lucide-react'

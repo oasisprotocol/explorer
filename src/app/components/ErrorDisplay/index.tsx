@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { isRouteErrorResponse } from 'react-router-dom'
+import { isRouteErrorResponse } from 'react-router'
 import { EmptyState } from '../EmptyState'
 import { AppError, AppErrors, ErrorPayload } from '../../../types/errors'
 import { TFunction } from 'i18next'
