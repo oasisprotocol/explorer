@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData, Link as RouterLink, To } from 'react-router-dom'
+import { useLoaderData, Link as RouterLink, To } from 'react-router'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'

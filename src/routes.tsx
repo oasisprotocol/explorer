@@ -1,4 +1,4 @@
-import { Outlet, RouteObject, ScrollRestoration } from 'react-router-dom'
+import { Outlet, RouteObject, ScrollRestoration } from 'react-router'
 import { HomePage } from './app/pages/HomePage'
 import { RuntimeBlocksPage } from './app/pages/RuntimeBlocksPage'
 import { RuntimeTransactionsPage } from './app/pages/RuntimeTransactionsPage'

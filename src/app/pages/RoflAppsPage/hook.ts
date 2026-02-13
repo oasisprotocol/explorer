@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { useTypedSearchParam } from '../../hooks/useTypedSearchParam'
 import { textSearch } from '../../components/Search/search-utils'
 import { getHighlightPattern } from '../../components/Search/search-utils'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router'
 import { encodeURIComponentPretty, RouteUtils } from '../../utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_SEPARATE_PAGE

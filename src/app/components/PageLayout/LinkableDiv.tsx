@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 export const LinkableDiv: FC<JSX.IntrinsicElements['div'] & { id: string }> = props => {
   const { id } = props

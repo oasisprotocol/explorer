@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Info } from 'lucide-react'
 import { useScreenSize } from '../../hooks/useScreensize'

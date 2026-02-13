@@ -9,7 +9,7 @@ import {
 } from '../../../oasis-nexus/api'
 import { getLayerLabels } from '../../utils/content'
 import { RouteUtils } from '../../utils/route-utils'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { RuntimeBalanceDisplay } from '../Balance/RuntimeBalanceDisplay'

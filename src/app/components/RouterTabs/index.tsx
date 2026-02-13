@@ -1,4 +1,4 @@
-import { useLocation, Outlet, useMatches } from 'react-router-dom'
+import { useLocation, Outlet, useMatches } from 'react-router'
 import { NonScrollingRouterLink } from '../NonScrollingRouterLink'
 import { Tabs, TabsList, TabsTrigger } from '@oasisprotocol/ui-library/src/components/tabs'
 

@@ -1,5 +1,5 @@
 import { useRequiredScopeParam } from 'app/hooks/useScopeParam'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import { ThemeByScope } from '../ThemeByScope'
 
 export const ScopeSpecificPart = () => {

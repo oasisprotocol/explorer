@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Button } from '@oasisprotocol/ui-library/src/components/button'
 import { useSearchParamsPagination } from '../Table/useSearchParamsPagination'

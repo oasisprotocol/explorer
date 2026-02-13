@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router'
 import { Card, CardContent } from '@oasisprotocol/ui-library/src/components/card'
 import BigNumber from 'bignumber.js'
 import {

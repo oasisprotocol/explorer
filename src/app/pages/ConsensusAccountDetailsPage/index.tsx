@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router'
 import { useGetConsensusAccountsAddress } from '../../../oasis-nexus/api'
 import { PageLayout } from '../../components/PageLayout'
 import { AddressLoaderData } from '../../utils/route-utils'

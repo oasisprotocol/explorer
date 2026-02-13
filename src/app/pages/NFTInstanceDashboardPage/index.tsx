@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useParams } from 'react-router-dom'
+import { useHref, useParams } from 'react-router'
 import { useRuntimeScope } from '../../hooks/useScopeParam'
 import { PageLayout } from '../../components/PageLayout'
 import { InstanceTitleCard } from './InstanceTitleCard'

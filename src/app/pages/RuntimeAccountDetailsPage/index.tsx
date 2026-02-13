@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHref, useLoaderData } from 'react-router-dom'
+import { useHref, useLoaderData } from 'react-router'
 import { PageLayout } from '../../components/PageLayout'
 import { RouterTabs } from '../../components/RouterTabs'
 import { useAllTokenPrices } from '../../../coin-gecko/api'

@@ -4,7 +4,7 @@ import { LatestRoflAppsContent } from '../ParatimeDashboardPage/LatestRoflApps'
 import { Card, CardContent, CardHeader, CardTitle } from '@oasisprotocol/ui-library/src/components/card'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
 import { RouteUtils } from '../../utils/route-utils'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Link } from '@oasisprotocol/ui-library/src/components/link'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 

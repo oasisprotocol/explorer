@@ -1,4 +1,4 @@
-import { To, useSearchParams } from 'react-router-dom'
+import { To, useSearchParams } from 'react-router'
 import { AppErrors } from '../../../types/errors'
 import { SimplePaginationEngine } from './PaginationEngine'
 

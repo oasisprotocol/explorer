@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
 import { useScreenSize } from '../../hooks/useScreensize'

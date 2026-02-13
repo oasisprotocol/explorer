@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link as RouterLink, useSearchParams } from 'react-router-dom'
+import { Link as RouterLink, useSearchParams } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { PaginationNext, PaginationPrevious } from '@oasisprotocol/ui-library/src/components/pagination'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'

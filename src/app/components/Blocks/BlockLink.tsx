@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import { RouteUtils } from '../../utils/route-utils'
 import { trimLongString } from '../../utils/trimLongString'
 import { SearchScope } from '../../../types/searchScope'
