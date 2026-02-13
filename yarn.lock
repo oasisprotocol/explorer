@@ -6356,11 +6356,6 @@ math-intrinsics@^1.1.0:
   resolved "https://registry.yarnpkg.com/math-intrinsics/-/math-intrinsics-1.1.0.tgz#a0dd74be81e2aa5c2f27e65ce283605ee4e2b7f9"
   integrity sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==
 
-matomo-js-client-types@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/matomo-js-client-types/-/matomo-js-client-types-5.0.0.tgz#6b08bd1eaa4b294663bfd82a6fc9e5c55d35c2c0"
-  integrity sha512-CF41gD+0MjLz/yTtEC0WDTt+NT2qJiW5kl+dZse3f6WMPM1gR9LTcHm5VH86UIKZBJmh1gqQhb71n8v3jEnzBw==
-
 mdurl@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-2.0.0.tgz#80676ec0433025dd3e17ee983d0fe8de5a2237e0"
