@@ -78,13 +78,8 @@ export const Validators: FC<ValidatorsProps> = ({ isLoading, limit, pagination, 
       {
         align: TableCellAlign.Right,
         content: (
-          <PercentageValue
-            value={validator.voting_power}
-            total={stats?.total_voting_power}
-            adaptMaximumFractionDigits
-          />
+          <PercentageValue value={validator.voting_power} total={stats?.total_voting_power} adaptive />
         ),
-
         key: 'voting',
       },
       {

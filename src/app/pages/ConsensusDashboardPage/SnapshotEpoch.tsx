@@ -68,7 +68,7 @@ export const SnapshotEpoch: FC<{ scope: SearchScope }> = ({ scope }) => {
               <PercentageValue
                 value={completedBlocksInCurrentEpoch}
                 total={epochDiffHeight}
-                maximumFractionDigits={1}
+                fractionDigits={1}
               />
               )
             </>
