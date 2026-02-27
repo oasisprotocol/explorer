@@ -15,6 +15,9 @@ on:
       - master
       - stable/*
 
+# Explicitly disable secrets.GITHUB_TOKEN permissions.
+permissions: {}
+
 jobs:
   lint:
     # NOTE: This name appears in GitHub's Checks API.
