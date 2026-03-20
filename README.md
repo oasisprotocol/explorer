@@ -50,7 +50,7 @@ yarn
 yarn start
 ```
 
-Then go to <http://localhost:1234> to access the app.
+Then go to <http://localhost:5173> to access the app.
 
 ### Code style
 

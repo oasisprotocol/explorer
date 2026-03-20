@@ -192,7 +192,7 @@ const splitUrls = (input: string | undefined): string[] =>
 export const deploys = {
   production: splitUrls(import.meta.env.REACT_APP_PRODUCTION_URLS),
   staging: splitUrls(import.meta.env.REACT_APP_STAGING_URLS),
-  localhost: 'http://localhost:1234',
+  localhost: 'http://localhost:5173',
 }
 
 export const getAppTitle = () => import.meta.env.REACT_APP_META_TITLE
