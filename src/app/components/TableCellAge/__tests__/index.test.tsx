@@ -16,11 +16,17 @@ describe('TableCellAge', () => {
     vi.setSystemTime(new Date('2024-02-05T10:14:35.000Z'))
 
     // Fix locale-specific mock output
-    vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(
-      () =>
-        ({
-          format: () => '05-02-2024, 10:14:40',
-        }) as unknown as Intl.DateTimeFormat,
+    const OriginalDateTimeFormat = Intl.DateTimeFormat
+    vi.stubGlobal(
+      'Intl',
+      Object.assign({}, Intl, {
+        DateTimeFormat: function (...args: ConstructorParameters<typeof Intl.DateTimeFormat>) {
+          const instance = new OriginalDateTimeFormat(...args)
+          return Object.assign({}, instance, {
+            format: () => '05-02-2024, 10:14:40',
+          })
+        },
+      }),
     )
   })
 
