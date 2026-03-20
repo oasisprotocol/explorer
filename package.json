@@ -70,7 +70,7 @@
     "viem": "^2.31.4"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.2.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -82,7 +82,7 @@
     "@types/react-dom": "18.3.5",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
-    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react": "^6.0.1",
     "buffer": "^6.0.3",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
@@ -93,17 +93,16 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "events": "^3.1.0",
     "jsdom": "^26.1.0",
-    "markdownlint-cli": "0.44.0",
+    "markdownlint-cli": "^0.48.0",
     "node-fetch": "2.7.0",
     "prettier": "3.5.3",
     "process": "0.11.10",
     "react-app-polyfill": "3.0.0",
     "stream-browserify": "3.0.0",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.2",
     "typescript": "5.6.3",
-    "vite": "^6.4.1",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.4"
+    "vite": "^8.0.1",
+    "vitest": "^4.1.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

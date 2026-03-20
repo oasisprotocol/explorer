@@ -46,7 +46,7 @@ async function setup(page: Page, balance: string, decimals: number) {
   })
 
   await page.goto(
-    'http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/tokens/erc-20#tokens',
+    'http://localhost:5173/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/tokens/erc-20#tokens',
   )
   await expect(page.getByText('TokenForTests')).toBeVisible()
 

@@ -33,7 +33,7 @@ Development deploy is available at <https://explorer.dev.oasis.io>.
   transactions;
 - **Non-Fungible Tokens (NFTs)**: Provides information about NFT ownership,
   metadata, transactions history and minting information. (
-  See [more...](./docs/NFTs.md))
+  See [NFT documentation](./docs/NFTs.md))
 - **Contract Reading and Writing** *(upcoming)*: Can read contract details and
   record new contract interactions.
 
@@ -50,7 +50,7 @@ yarn
 yarn start
 ```
 
-Then go to <http://localhost:1234> to access the app.
+Then go to <http://localhost:5173> to access the app.
 
 ### Code style
 
