@@ -113,7 +113,7 @@ async function setup(page: Page) {
   )
 
   await page.goto(
-    'http://localhost:1234/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/events',
+    'http://localhost:5173/mainnet/sapphire/address/0x0000000000000000000000000000000000000000/events',
   )
 }
 

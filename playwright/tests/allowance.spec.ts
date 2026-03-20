@@ -78,7 +78,7 @@ async function setup(page: Page) {
 test('Allowance transaction should display relative amount', async ({ page }) => {
   await setup(page)
   await page.goto(
-    'http://localhost:1234/testnet/consensus/tx/10dc8edd24ae89b264a295a046d9ac9b99a59d81acf3b0394bac309c09bdd7c7',
+    'http://localhost:5173/testnet/consensus/tx/10dc8edd24ae89b264a295a046d9ac9b99a59d81acf3b0394bac309c09bdd7c7',
   )
   await expect(page.getByText('+1 TEST')).toBeVisible()
 })
@@ -86,7 +86,7 @@ test('Allowance transaction should display relative amount', async ({ page }) =>
 test('Allowance transaction should display negative amount', async ({ page }) => {
   await setup(page)
   await page.goto(
-    'http://localhost:1234/mainnet/consensus/tx/4d4903206ee68d5c60ea9b26f4a7b218b263e66e032772f2faa61a2bf7d27b2b',
+    'http://localhost:5173/mainnet/consensus/tx/4d4903206ee68d5c60ea9b26f4a7b218b263e66e032772f2faa61a2bf7d27b2b',
   )
   await expect(page.getByText('-5,000,000 ROSE')).toBeVisible()
 })
