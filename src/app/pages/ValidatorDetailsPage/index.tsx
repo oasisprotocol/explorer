@@ -236,7 +236,11 @@ export const ValidatorDetailsView: FC<{
               <dd>
                 {stats?.total_voting_power ? (
                   <>
-                    <PercentageValue value={validator.voting_power} total={stats.total_voting_power} />
+                    <PercentageValue
+                      value={validator.voting_power}
+                      total={stats.total_voting_power}
+                      adaptive
+                    />
                     &nbsp; ({new BigNumber(validator.voting_power).toFormat()})
                   </>
                 ) : (
@@ -306,11 +310,7 @@ export const ValidatorDetailsView: FC<{
           </dd>
           <dt>{t('validator.voting')}</dt>
           <dd>
-            <PercentageValue
-              value={validator.voting_power}
-              total={stats?.total_voting_power}
-              adaptMaximumFractionDigits
-            />
+            <PercentageValue value={validator.voting_power} total={stats?.total_voting_power} adaptive />
           </dd>
           <dt>{t('common.staked')}</dt>
           <dd>
