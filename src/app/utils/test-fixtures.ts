@@ -27,6 +27,7 @@ export const sapphireParsedBlock: BlockResult = {
 
 export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances({
   address: 'oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t',
+  nonce: 1,
   address_preimage: {
     address_data: 'ulBIGP3Y09ui74/ZtPTVxxrR0dM=',
     context: 'oasis-runtime-sdk/address: secp256k1eth',
@@ -65,6 +66,7 @@ export const suggestedParsedAccount: RuntimeAccount = groupAccountTokenBalances(
 
 export const suggestedEmptyAccount: RuntimeAccount = groupAccountTokenBalances({
   address: 'oasis1qz64azk6qr5nzq537l5cgpd4uxltrhpkhqdx5tqy',
+  nonce: 1,
   address_preimage: undefined,
   address_eth: undefined,
   balances: [],

@@ -1522,6 +1522,8 @@ export interface RuntimeTransactionSigner {
 export interface RuntimeAccount {
   /** The staking address for this account. */
   address: string;
+  /** The expected nonce for the next transaction (= last used nonce + 1) */
+  nonce: number;
   address_preimage?: AddressPreimage;
   /** The balance(s) of this account in this runtime. Most runtimes use only one denomination, and thus
 produce only one balance here. These balances do not include "layer (n+1) tokens", i.e. tokens
