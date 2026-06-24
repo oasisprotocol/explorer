@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { calculatePercentage } from '../../utils/number-utils'
 
 type PercentageValueProps = {
-  adaptMaximumFractionDigits?: boolean
-  total?: number | string
   value: number | string | undefined
-  maximumFractionDigits?: number
+  total?: number | string
+  fractionDigits?: number
+  adaptive?: boolean
 }
 
 export const PercentageValue: FC<PercentageValueProps> = ({
-  maximumFractionDigits,
-  adaptMaximumFractionDigits = 2,
   value,
   total = 100,
+  fractionDigits = 2,
+  adaptive = false,
 }) => {
   const { t } = useTranslation()
 
@@ -23,6 +23,8 @@ export const PercentageValue: FC<PercentageValueProps> = ({
     return null
   }
 
+  const maximumFractionDigits = adaptive && percentageValue < 0.001 ? 3 : fractionDigits
+
   return (
     <>
       {t('common.valuePair', {
@@ -30,8 +32,7 @@ export const PercentageValue: FC<PercentageValueProps> = ({
         formatParams: {
           value: {
             style: 'percent',
-            maximumFractionDigits:
-              adaptMaximumFractionDigits && percentageValue < 0.001 ? 3 : maximumFractionDigits,
+            maximumFractionDigits,
           } satisfies Intl.NumberFormatOptions,
         },
       })}
