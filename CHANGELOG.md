@@ -12,6 +12,51 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.26.3 (2026-09-08)
+
+### Bug Fixes and Improvements
+
+- Parse raw tx error signatures and link to heuristic 4bytes decoding
+  ([#2409](https://github.com/oasisprotocol/explorer/issues/2409))
+
+- Format common consensus events
+  ([#2419](https://github.com/oasisprotocol/explorer/issues/2419))
+
+- Fix Total Transactions and Latest Blocks responsive alignment
+  ([#2423](https://github.com/oasisprotocol/explorer/issues/2423))
+
+### Internal Changes
+
+- Update dependencies
+  ([#2396](https://github.com/oasisprotocol/explorer/issues/2396),
+   [#2432](https://github.com/oasisprotocol/explorer/issues/2432),
+   [#2435](https://github.com/oasisprotocol/explorer/issues/2435),
+   [#2436](https://github.com/oasisprotocol/explorer/issues/2436),
+   [#2440](https://github.com/oasisprotocol/explorer/issues/2440),
+   [#2442](https://github.com/oasisprotocol/explorer/issues/2442),
+   [#2443](https://github.com/oasisprotocol/explorer/issues/2443),
+   [#2444](https://github.com/oasisprotocol/explorer/issues/2444),
+   [#2445](https://github.com/oasisprotocol/explorer/issues/2445),
+   [#2448](https://github.com/oasisprotocol/explorer/issues/2448),
+   [#2449](https://github.com/oasisprotocol/explorer/issues/2449),
+   [#2450](https://github.com/oasisprotocol/explorer/issues/2450),
+   [#2451](https://github.com/oasisprotocol/explorer/issues/2451),
+   [#2452](https://github.com/oasisprotocol/explorer/issues/2452),
+   [#2453](https://github.com/oasisprotocol/explorer/issues/2453),
+   [#2454](https://github.com/oasisprotocol/explorer/issues/2454))
+
+- Remove Matomo analytics and fix Towncrier in CI
+  ([#2434](https://github.com/oasisprotocol/explorer/issues/2434))
+
+- Add permissions to GitHub workflows
+  ([#2437](https://github.com/oasisprotocol/explorer/issues/2437))
+
+- Update build dependencies
+  ([#2439](https://github.com/oasisprotocol/explorer/issues/2439))
+
+- Remove orval dependency
+  ([#2458](https://github.com/oasisprotocol/explorer/issues/2458))
+
 ## 1.26.2 (2025-12-22)
 
 ### Bug Fixes and Improvements
