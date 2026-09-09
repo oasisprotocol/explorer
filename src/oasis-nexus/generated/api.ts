@@ -2239,6 +2239,12 @@ a name that is a superstring of the input param.
 
  */
 name?: string;
+/**
+ * A filter on the entity or node ID (base64-encoded ed25519 public key).
+Returns the validator whose entity_id matches the provided value, or whose node's node_id matches the provided value.
+
+ */
+id?: string;
 };
 
 export type GetConsensusValidatorsAddressHistoryParams = {
