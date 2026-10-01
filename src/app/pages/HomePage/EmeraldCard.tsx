@@ -2,19 +2,21 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGetRuntimeStatus } from '../../../oasis-nexus/api'
 import { useRuntimeFreshness } from '../../components/OfflineBanner/hook'
+import { Network } from '../../../types/network'
 import { EcosystemCard } from './EcosystemCard'
 import emeraldBg from './images/emerald-bg.svg'
 
-export const EmeraldCard: FC = () => {
+export const EmeraldCard: FC<{ network: Network }> = ({ network }) => {
   const { t } = useTranslation()
-  const emeraldStatusQuery = useGetRuntimeStatus('mainnet', 'emerald')
+  const emeraldStatusQuery = useGetRuntimeStatus(network, 'emerald')
   const { outOfDate: emeraldOutOfDate } = useRuntimeFreshness({
-    network: 'mainnet',
+    network,
     layer: 'emerald',
   })
 
   return (
     <EcosystemCard
+      network={network}
       isLoading={emeraldStatusQuery.isLoading}
       description={t('home.ecosystem.emerald')}
       title={t('common.emerald')}
@@ -28,11 +30,12 @@ export const EmeraldCard: FC = () => {
   )
 }
 
-export const EmeraldFallbackCard: FC = () => {
+export const EmeraldFallbackCard: FC<{ network: Network }> = ({ network }) => {
   const { t } = useTranslation()
 
   return (
     <EcosystemCard
+      network={network}
       description={t('home.ecosystem.emerald')}
       title={t('common.emerald')}
       background={emeraldBg}

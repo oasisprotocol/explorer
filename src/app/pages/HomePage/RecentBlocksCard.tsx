@@ -6,11 +6,12 @@ import { useGetRecentBlocks } from '../../../oasis-nexus/api'
 import { RecentBlocks } from '../../components/Blocks/RecentBlocks'
 import { NUMBER_OF_ITEMS_ON_DASHBOARD } from '../../../config'
 import { ErrorBoundary } from '../../components/ErrorBoundary'
+import { isLocalnetEnabled } from '../../utils/route-utils'
 
 const limit = NUMBER_OF_ITEMS_ON_DASHBOARD
 
 const RecentBlocksContent: FC = () => {
-  const recentBlocksQuery = useGetRecentBlocks('mainnet')
+  const recentBlocksQuery = useGetRecentBlocks(isLocalnetEnabled() ? 'localnet' : 'mainnet')
   const recentBlocks = recentBlocksQuery.data?.data.blocks
   const filteredBlocks = recentBlocks?.slice(0, 5)
 

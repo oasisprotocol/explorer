@@ -16,7 +16,7 @@ import { Badge } from '@oasisprotocol/ui-library/src/components/badge'
 import { Skeleton } from '@oasisprotocol/ui-library/src/components/skeleton'
 import { Tooltip } from '@oasisprotocol/ui-library/src/components/tooltip'
 import { Network } from '../../../types/network'
-import { RouteUtils } from '../../utils/route-utils'
+import { isLocalnet, RouteUtils } from '../../utils/route-utils'
 
 type EcosystemCardProps = {
   activeNodes?: number
@@ -127,24 +127,31 @@ export const EcosystemCard: FC<EcosystemCardProps> = ({
         )}
       </CardContent>
       <CardFooter>
-        {footer || (
-          <div className="flex w-full lg:flex-col xl:flex-row gap-4">
-            <Button variant="outline" size="lg" className="flex-1 py-[10px]" asChild>
-              <RouterLink
-                to={RouteUtils.getDashboardRoute({ network: 'testnet', layer })}
-                className="text-primary"
-              >
-                {t('common.testnet')}
+        {footer ||
+          (isLocalnet(network) ? (
+            <Button variant="outline" size="lg" className="w-full py-[10px]" asChild>
+              <RouterLink to={RouteUtils.getDashboardRoute({ network, layer })} className="text-primary">
+                {t('common.localnet')}
               </RouterLink>
             </Button>
-            <Button size="lg" className="flex-1 py-[10px]" asChild>
-              <RouterLink to={RouteUtils.getDashboardRoute({ network: 'mainnet', layer })}>
-                {t('common.mainnet')}
-                <ArrowRight />
-              </RouterLink>
-            </Button>
-          </div>
-        )}
+          ) : (
+            <div className="flex w-full lg:flex-col xl:flex-row gap-4">
+              <Button variant="outline" size="lg" className="flex-1 py-[10px]" asChild>
+                <RouterLink
+                  to={RouteUtils.getDashboardRoute({ network: 'testnet', layer })}
+                  className="text-primary"
+                >
+                  {t('common.testnet')}
+                </RouterLink>
+              </Button>
+              <Button size="lg" className="flex-1 py-[10px]" asChild>
+                <RouterLink to={RouteUtils.getDashboardRoute({ network: 'mainnet', layer })}>
+                  {t('common.mainnet')}
+                  <ArrowRight />
+                </RouterLink>
+              </Button>
+            </div>
+          ))}
       </CardFooter>
     </Card>
   )

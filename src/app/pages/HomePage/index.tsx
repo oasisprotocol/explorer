@@ -12,6 +12,7 @@ import { HomeSearch } from './HomeSearch'
 import { Header } from 'app/components/PageLayout/Header'
 import { TotalTransactions } from 'app/components/TotalTransactions'
 import { Typography } from '@oasisprotocol/ui-library/src/components/typography'
+import { isLocalnetEnabled } from '../../utils/route-utils'
 
 export const HomePage: FC = () => {
   const { t } = useTranslation()
@@ -28,15 +29,17 @@ export const HomePage: FC = () => {
         <RoflAppsCard />
         <div className="flex gap-6 flex-col md:flex-row">
           <RecentBlocksCard />
-          <TotalTransactions
-            chartContainerHeight={280}
-            network="mainnet"
-            title={
-              <Typography variant="h3" className="text-lg">
-                {t('totalTransactions.header')}
-              </Typography>
-            }
-          />
+          {!isLocalnetEnabled() && (
+            <TotalTransactions
+              chartContainerHeight={280}
+              network="mainnet"
+              title={
+                <Typography variant="h3" className="text-lg">
+                  {t('totalTransactions.header')}
+                </Typography>
+              }
+            />
+          )}
         </div>
         <DiscoverMore />
         <Footer />
