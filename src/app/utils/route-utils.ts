@@ -463,3 +463,5 @@ export const isScopeSelectorNeeded = (sourceScope: SearchScope) => {
 }
 
 export const isLocalnet = (network: Network) => network === 'localnet'
+
+export const isLocalnetEnabled = () => RouteUtils.getEnabledNetworks().some(isLocalnet)
