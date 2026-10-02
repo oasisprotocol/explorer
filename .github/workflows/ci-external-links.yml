@@ -1,0 +1,34 @@
+# NOTE: This name appears in GitHub's Checks API and in workflow's status badge.
+name: ci-external-links
+
+# Trigger the workflow when:
+on:
+  # Every day, since external links depend on third-party services and are too
+  # flaky to block pull requests.
+  schedule:
+    - cron: '0 7 * * *'
+  # Or when triggered manually.
+  workflow_dispatch:
+
+# Explicitly disable secrets.GITHUB_TOKEN permissions.
+permissions: {}
+
+jobs:
+  test-external-links:
+    # NOTE: This name appears in GitHub's Checks API.
+    name: test-external-links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run external links tests
+        run: yarn test:external-links
