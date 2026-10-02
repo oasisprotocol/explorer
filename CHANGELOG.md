@@ -12,6 +12,13 @@ The format is inspired by [Keep a Changelog].
 
 <!-- TOWNCRIER -->
 
+## 1.27.0 (2026-10-02)
+
+### Features
+
+- Show localnet data on homepage
+  ([#2462](https://github.com/oasisprotocol/explorer/issues/2462))
+
 ## 1.26.3 (2026-09-08)
 
 ### Bug Fixes and Improvements
