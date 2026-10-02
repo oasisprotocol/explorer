@@ -19,8 +19,9 @@
     "changelog": "node ./internals/scripts/changelog.js",
     "release-tag": "node ./internals/scripts/release-tag.js",
     "prettify": "prettier src internals --write",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --exclude src/app/utils/__tests__/externalLinks.test.ts",
+    "test:watch": "vitest --exclude src/app/utils/__tests__/externalLinks.test.ts",
+    "test:external-links": "vitest run src/app/utils/__tests__/externalLinks.test.ts"
   },
   "browserslist": {
     "production": [
