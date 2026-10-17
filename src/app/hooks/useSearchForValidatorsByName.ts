@@ -5,7 +5,7 @@ import {
   ValidatorAddressNameMap,
 } from 'oasis-nexus/api'
 import { Network } from 'types/network'
-import { AccountNameSearchValidatorResults, AccountNameSearchConsensusMatch } from '../data/named-accounts'
+import { ValidatorAccountSearchResults, AccountNameSearchConsensusMatch } from '../data/named-accounts'
 
 function findAddressesWithMatch(
   addressMap: ValidatorAddressNameMap,
@@ -26,7 +26,7 @@ function findAddressesWithMatch(
 export const useSearchForValidatorsByName = (
   network: Network,
   nameFragment: string[],
-): AccountNameSearchValidatorResults => {
+): ValidatorAccountSearchResults => {
   const { isLoading, isError, data } = useGetConsensusValidatorsAddressNameMap(network)
   const matches =
     data?.data && !!nameFragment.length ? findAddressesWithMatch(data?.data, nameFragment, network) : []

@@ -54,7 +54,7 @@ export type AccountNameSearchResults = {
   isError: boolean
 }
 
-export type AccountNameSearchValidatorResults = {
+export type ValidatorAccountSearchResults = {
   results: Account[] | undefined
   isLoading: boolean
   isError: boolean
