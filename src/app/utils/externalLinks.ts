@@ -13,11 +13,6 @@ export const socialMedia = {
   home: import.meta.env.REACT_APP_SOCIAL_HOME,
 }
 
-export const marketingPage = {
-  tokenomics: `https://oasisprotocol.org/rose-and-tokenomics`,
-  validators: `https://oasisprotocol.org/node-operators`,
-}
-
 export const docs = {
   cipher: `https://docs.oasis.io/dapp/cipher`,
   consensus: 'https://docs.oasis.io/core/consensus',
@@ -39,7 +34,9 @@ export const docs = {
   sapphireTestnetHardhat: `https://docs.oasis.io/dapp/sapphire/quickstart/#add-the-sapphire-testnet-to-hardhat`,
   sapphireTestnetNode: `https://docs.oasis.io/node/testnet/#sapphire`,
   token: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution`,
+  tokenomics: `https://docs.oasis.io/general/oasis-network/token-metrics-and-distribution/`,
   tools: 'https://docs.oasis.io/build/tools',
+  validators: `https://docs.oasis.io/node/`,
 }
 
 export const referrals = { coinGecko: 'https://www.coingecko.com' }
@@ -108,5 +105,5 @@ export const csvExport = {
 }
 
 export const legalDocuments = {
-  privacyPolicy: 'https://oasisprotocol.org/privacy-policy',
+  privacyPolicy: 'https://oasis.net/privacy-policy',
 }
