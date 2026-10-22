@@ -3352,6 +3352,13 @@ bip39@^3.1.0:
   dependencies:
     "@noble/hashes" "^1.2.0"
 
+bip39@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/bip39/-/bip39-3.1.2.tgz#17e31b77e80ded2e7388cb88a327cd640917baf7"
+  integrity sha512-inxKLEH+Weos8f5rBYNKuOrpOIcNWtKnrLur9x72s4Cb8w4Mm0jJktUPkev7+1pQuivxFqkiut9+AcrwunLHxA==
+  dependencies:
+    "@noble/hashes" "^1.2.0"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
