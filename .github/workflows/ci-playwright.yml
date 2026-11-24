@@ -36,10 +36,11 @@ jobs:
         uses: actions/checkout@v7
         with:
           submodules: true
-      - name: Set up Node.js 24
+      - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          # Reuse the version pinned by .nvmrc instead of a floating 24.x.
+          node-version-file: .nvmrc
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile
