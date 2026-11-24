@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
           # Checkout pull request HEAD commit instead of merge commit.
@@ -36,10 +36,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          # Reuse the version pinned by .nvmrc instead of a floating 24.x.
+          node-version-file: .nvmrc
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile
