@@ -60,7 +60,7 @@
     "bignumber.js": "9.1.2",
     "bip39": "^3.1.0",
     "date-fns": "3.6.0",
-    "i18next": "23.16.8",
+    "i18next": "26.3.4",
     "js-yaml": "^4.1.0",
     "monaco-editor": "^0.52.2",
     "react": "18.3.1",
