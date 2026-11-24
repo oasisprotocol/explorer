@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LearningMaterialsCard } from 'app/components/LearningMaterialsCard'
 import { LearningSection } from '../../components/LearningMaterialsCard/LearningSection'
-import { docs, marketingPage } from '../../utils/externalLinks'
+import { docs } from '../../utils/externalLinks'
 
 export const LearningMaterials: FC = () => {
   const { t } = useTranslation()
@@ -24,7 +24,7 @@ export const LearningMaterials: FC = () => {
               className="h-full flex-1"
               description={t('learningMaterials.consensus.tokenomicsDescription')}
               title={t('learningMaterials.consensus.tokenomics')}
-              url={marketingPage.tokenomics}
+              url={docs.tokenomics}
             />
             <LearningSection
               className="h-full flex-1"
@@ -48,7 +48,7 @@ export const LearningMaterials: FC = () => {
               className="h-full flex-1"
               description={t('learningMaterials.consensus.validatorsDescription')}
               title={t('learningMaterials.consensus.validators')}
-              url={marketingPage.validators}
+              url={docs.validators}
             />
             <LearningSection
               className="h-full flex-1"
