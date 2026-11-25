@@ -30,7 +30,7 @@ export const ValidatorCumulativeVoting: FC<ValidatorCumulativeVotingProps> = ({
         }}
       />
       <span className="relative z-10">
-        <PercentageValue value={value} total={total} />
+        <PercentageValue value={value} total={total} fractionDigits={0} />
       </span>
     </div>
   )
