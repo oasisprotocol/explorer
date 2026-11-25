@@ -30,6 +30,7 @@ import { SearchParams } from '../../components/Search/search-utils'
 import { SearchScope } from '../../../types/searchScope'
 import { useSearchForAccountsByName } from '../../hooks/useAccountMetadata'
 import { useSearchForValidatorsByName } from '../../hooks/useSearchForValidatorsByName'
+import { useSearchForValidatorsByEntityOrNodeId } from '../../hooks/useSearchForValidatorsByEntityOrNodeId'
 
 function isDefined<T>(item: T): item is NonNullable<T> {
   return item != null
@@ -343,6 +344,22 @@ export function useNamedAccountConditionally(
   }
 }
 
+export function useValidatorEntityOrNodeIdConditionally(id: string | undefined): ConditionalResults<Account> {
+  const queries = RouteUtils.getEnabledNetworksForLayer('consensus').map(network =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useSearchForValidatorsByEntityOrNodeId(network, id),
+  )
+
+  return {
+    isLoading: queries.some(query => query.isLoading),
+    isError: queries.some(query => query.isError),
+    results: queries
+      .map(query => query.results)
+      .filter(isDefined)
+      .flat(),
+  }
+}
+
 export function useNamedValidatorConditionally(nameFragment: string[]) {
   const queries = RouteUtils.getEnabledNetworksForLayer('consensus').map(network =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -415,6 +432,7 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     roflAppId: useRoflAppIdConditionally(q.roflAppId),
     roflAppName: useRoflAppNameConditionally(q.roflAppNameFragment),
     accountsByName: useNamedAccountConditionally(currentScope, q.accountNameFragment),
+    validatorByEntityId: useValidatorEntityOrNodeIdConditionally(q.validatorEntityOrNodeId),
     validatorByName: useNamedValidatorConditionally(q.validatorNameFragment),
     tokens: useRuntimeTokenConditionally(currentScope, q.evmTokenNameFragment),
     proposals: useNetworkProposalsConditionally(q.networkProposalNameFragment),
@@ -443,7 +461,11 @@ export const useSearch = (currentScope: SearchScope | undefined, q: SearchParams
     .filter(a => !alreadyAToken.has(a.network + a.layer + a.address)) // Deduplicate tokens
   const roflApps = [...queries.roflAppId.results, ...queries.roflAppName.results]
   const proposals = queries.proposals.results
-  const validators = [...queries.validatorByName.results, ...queries.oasisConsensusAccount.results]
+  const validators = [
+    ...queries.validatorByName.results,
+    ...queries.validatorByEntityId.results,
+    ...queries.oasisConsensusAccount.results,
+  ]
   const results: SearchResultItem[] = isLoading
     ? []
     : [
